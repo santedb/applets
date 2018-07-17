@@ -3,7 +3,78 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27703.2035
 MinimumVisualStudioVersion = 10.0.40219.1
+Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "uicore", "uicore\", "{999D8ED4-53C9-4785-AB47-FBA57C920C7C}"
+	ProjectSection(WebsiteProperties) = preProject
+		TargetFrameworkMoniker = ".NETFramework,Version%3Dv4.0"
+		Debug.AspNetCompiler.VirtualPath = "/localhost_52379"
+		Debug.AspNetCompiler.PhysicalPath = "uicore\"
+		Debug.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_52379\"
+		Debug.AspNetCompiler.Updateable = "true"
+		Debug.AspNetCompiler.ForceOverwrite = "true"
+		Debug.AspNetCompiler.FixedNames = "false"
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.VirtualPath = "/localhost_52379"
+		Release.AspNetCompiler.PhysicalPath = "uicore\"
+		Release.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_52379\"
+		Release.AspNetCompiler.Updateable = "true"
+		Release.AspNetCompiler.ForceOverwrite = "true"
+		Release.AspNetCompiler.FixedNames = "false"
+		Release.AspNetCompiler.Debug = "False"
+		VWDPort = "52379"
+	EndProjectSection
+EndProject
+Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "core", "core\", "{EA1AE347-8C37-4C04-BC46-D518A3E7FD7E}"
+	ProjectSection(WebsiteProperties) = preProject
+		TargetFrameworkMoniker = ".NETFramework,Version%3Dv4.0"
+		Debug.AspNetCompiler.VirtualPath = "/localhost_52376"
+		Debug.AspNetCompiler.PhysicalPath = "core\"
+		Debug.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_52376\"
+		Debug.AspNetCompiler.Updateable = "true"
+		Debug.AspNetCompiler.ForceOverwrite = "true"
+		Debug.AspNetCompiler.FixedNames = "false"
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.VirtualPath = "/localhost_52376"
+		Release.AspNetCompiler.PhysicalPath = "core\"
+		Release.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_52376\"
+		Release.AspNetCompiler.Updateable = "true"
+		Release.AspNetCompiler.ForceOverwrite = "true"
+		Release.AspNetCompiler.FixedNames = "false"
+		Release.AspNetCompiler.Debug = "False"
+		VWDPort = "52376"
+	EndProjectSection
+EndProject
+Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "config", "config\", "{AFFADA52-446C-493B-B160-3AC1298A6C80}"
+	ProjectSection(WebsiteProperties) = preProject
+		TargetFrameworkMoniker = ".NETFramework,Version%3Dv4.0"
+		Debug.AspNetCompiler.VirtualPath = "/localhost_52377"
+		Debug.AspNetCompiler.PhysicalPath = "config\"
+		Debug.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_52377\"
+		Debug.AspNetCompiler.Updateable = "true"
+		Debug.AspNetCompiler.ForceOverwrite = "true"
+		Debug.AspNetCompiler.FixedNames = "false"
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.VirtualPath = "/localhost_52377"
+		Release.AspNetCompiler.PhysicalPath = "config\"
+		Release.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_52377\"
+		Release.AspNetCompiler.Updateable = "true"
+		Release.AspNetCompiler.ForceOverwrite = "true"
+		Release.AspNetCompiler.FixedNames = "false"
+		Release.AspNetCompiler.Debug = "False"
+		VWDPort = "52377"
+	EndProjectSection
+EndProject
 Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{999D8ED4-53C9-4785-AB47-FBA57C920C7C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{999D8ED4-53C9-4785-AB47-FBA57C920C7C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EA1AE347-8C37-4C04-BC46-D518A3E7FD7E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EA1AE347-8C37-4C04-BC46-D518A3E7FD7E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AFFADA52-446C-493B-B160-3AC1298A6C80}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AFFADA52-446C-493B-B160-3AC1298A6C80}.Debug|Any CPU.Build.0 = Debug|Any CPU
+	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
