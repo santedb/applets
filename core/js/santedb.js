@@ -30,7 +30,7 @@ var __SanteDBAppService = window.SanteDBAppService || {};
  * @param {function} always The callback that is always executed at the end of the operation
  */
 
-var SanteDB = 
+var SanteDB =
     /**
      * @class
      * @constructor
@@ -38,8 +38,8 @@ var SanteDB =
      * @description This class exists as a simple interface which is implemented by host implementations of the SanteDB hostable core. This interface remains the same even though the 
      *              implementations of this file on each platform (Admin, BRE, Client, etc.) are different.
      */
-    new function() {
-            "use strict";
+    new function () {
+        "use strict";
 
         /**
          * @class APIWrapper
@@ -73,10 +73,10 @@ var SanteDB =
              * @param {any} configuration.data The data that is to be posted
              * @param {any} configuration.state A piece of state data which is passed back to the caller for state tracking
              * @param {bool} configuration.sync When true, executes the request in synchronous mode
-             * @return {Promise} The promise for the operation
+             * @returns {Promise} The promise for the operation
              */
-            this.post = function (configuration) {
-                return new Promise(function(fulfill, reject) {
+            this.postAsync = function (configuration) {
+                return new Promise(function (fulfill, reject) {
                     $.ajax({
                         method: 'POST',
                         url: _config.base + configuration.resource,
@@ -120,10 +120,10 @@ var SanteDB =
              * @param {any} configuration.state A piece of state data which is passed back to the caller for state tracking
              * @param {bool} configuration.sync When true, executes the request in synchronous mode
              * @param {string} configuration.id The identifier of the object on the interface to update
-             * @return {Promise} The promise for the operation
+             * @returns {Promise} The promise for the operation
              */
-            this.put = function (configuration) {
-                return new Promise(function(fulfill, reject) {
+            this.putAsync = function (configuration) {
+                return new Promise(function (fulfill, reject) {
                     $.ajax({
                         method: 'PUT',
                         url: _config.base + configuration.resource + (_config.idByQuery ? "?_id=" + configuration.id : "/" + configuration.id),
@@ -167,10 +167,10 @@ var SanteDB =
              * @param {any} configuration.state A piece of state data which is passed back to the caller for state tracking
              * @param {bool} configuration.sync When true, executes the request in synchronous mode
              * @param {any} configuration.query The query to be applied to the get
-             * @return {Promise} The promise for the operation
+             * @returns {Promise} The promise for the operation
              */
-            this.get = function (configuration) {
-                return new Promise(function(fulfill, reject) {
+            this.getAsync = function (configuration) {
+                return new Promise(function (fulfill, reject) {
                     $.ajax({
                         method: 'GET',
                         url: _config.base + configuration.resource,
@@ -217,13 +217,13 @@ var SanteDB =
              * @param {any} configuration.id The object that is to be deleted on the server
              * @param {any} configuration.data The additional data that should be sent for the delete command
              * @param {string} configuration.mode The mode in which the delete should occur. Can be NULLIFY, CANCEL or OBSOLETE (default)
-             * @return {Promise} The promise for the operation
+             * @returns {Promise} The promise for the operation
              */
-            this.delete = function (configuration) {
-                return new Promise(function(fulfill, reject) {
+            this.deleteAsync = function (configuration) {
+                return new Promise(function (fulfill, reject) {
                     $.ajax({
                         method: 'DELETE',
-                        url: _config.base + configuration.resource + (_config.idByQuery ? "?_id=" + configuration.id : "/" + configuration.id),
+                        url: _config.base + configuration.resource + (configuration.id ? (_config.idByQuery ? "?_id=" + configuration.id : "/" + configuration.id) : ""),
                         data: JSON.stringify(configuration.data),
                         headers: { "X-Delete-Mode": configuration.mode || "OBSOLETE" },
                         dataType: 'json',
@@ -276,11 +276,16 @@ var SanteDB =
              * @summary Retrieves a specific instance of the resource this wrapper wraps
              * @param {string} id The unique identifier of the resource to retrieve
              * @param {any} state A unique state object which is passed back to the caller
-             * @return {Promise} The promise for the operation
+             * @returns {Promise} The promise for the operation
              */
-            this.get = function (id, state) {
-                return _config.api.get({
-                    query: { _id: id },
+            this.getAsync = function (id, state) {
+
+                // Prepare query
+                var _query = {};
+                if (id) _query.id = id;
+
+                return _config.api.getAsync({
+                    query: _query,
                     state: state,
                     resource: _config.resource
                 });
@@ -292,10 +297,10 @@ var SanteDB =
              * @summary Queries for instances of the resource this wrapper wraps
              * @param {any} query The HDSI query to filter on
              * @param {any} state A unique state object which is passed back to the caller
-             * @return {Promise} The promise for the operation
+             * @returns {Promise} The promise for the operation
              */
-            this.find = function (query, state) {
-                return _config.api.get({
+            this.findAsync = function (query, state) {
+                return _config.api.getAsync({
                     query: query,
                     state: state,
                     resource: _config.resource
@@ -310,13 +315,13 @@ var SanteDB =
              * @param {any} state A unique state object which is passed back to the caller
              * @returns {Promise} The promise for the operation
              */
-            this.insert = function (data, state) {
+            this.insertAsync = function (data, state) {
 
                 if (data.$type !== _config.resource)
-                    throw new SanteDBModel.Exception("ArgumentException", "Invalid Argument Type", `Invalid type, resource wrapper expects ${_config.resource} however ${data.$type} specified`);
+                    throw new SanteDBModel.Exception("ArgumentException", "error.invalidType", `Invalid type, resource wrapper expects ${_config.resource} however ${data.$type} specified`);
 
                 // Perform post
-                return _config.api.post({
+                return _config.api.postAsync({
                     data: data,
                     state: state,
                     resource: _config.resource
@@ -330,17 +335,17 @@ var SanteDB =
              * @param {string} id The unique identifier for the object to be updated
              * @param {any} data The data / resource which is to be updated
              * @param {any} state A unique state object which is passed back to the caller
-             * @return {Promise} The promise for the operation
+             * @returns {Promise} The promise for the operation
              */
-            this.update = function (id, data, state) {
+            this.updateAsync = function (id, data, state) {
 
                 if (data.$type !== _config.resource)
-                    throw new SanteDBModel.Exception("ArgumentException", "Invalid Argument Type", `Invalid type, resource wrapper expects ${_config.resource} however ${data.$type} specified`);
+                    throw new SanteDBModel.Exception("ArgumentException", "error.invalidType", `Invalid type, resource wrapper expects ${_config.resource} however ${data.$type} specified`);
                 else if (data.id && data.id !== id)
-                    throw new SanteDBModel.Exception("ArgumentException", "Invalid Argument Value", `Identifier mismatch, PUT identifier  ${id} doesn't match ${data.id}`);
+                    throw new SanteDBModel.Exception("ArgumentException", "error.invalidValue", `Identifier mismatch, PUT identifier  ${id} doesn't match ${data.id}`);
 
                 // Send PUT
-                return _config.api.put({
+                return _config.api.putAsync({
                     data: data,
                     id: id,
                     state: state,
@@ -354,10 +359,10 @@ var SanteDB =
             * @summary Performs an obsolete (delete) operation on the server
             * @param {string} id The unique identifier for the object to be deleted
             * @param {any} state A unique state object which is passed back to the caller
-            * @return {Promise} The promise for the operation
+            * @returns {Promise} The promise for the operation
             */
-            this.delete = function (id, state) {
-                return _config.api.delete({
+            this.deleteAsync = function (id, state) {
+                return _config.api.deleteAsync({
                     id: id,
                     state: state,
                     resource: _config.resource
@@ -372,10 +377,10 @@ var SanteDB =
              * @description A nullify differs from a delete in that a nullify marks an object as "never existed"
              * @param {string} id The unique identifier for the object to be nullified
              * @param {any} state A unique state object which is passed back to the caller
-             * @return {Promise} The promise for the operation
+             * @returns {Promise} The promise for the operation
              */
-            this.nullify = function (id, state) {
-                return _config.api.delete({
+            this.nullifyAsync = function (id, state) {
+                return _config.api.deleteAsync({
                     id: id,
                     mode: "NULLIFY",
                     state: state,
@@ -392,8 +397,8 @@ var SanteDB =
              * @param {any} state A unique state object which is passed back to the caller
              * @returns {Promise} The promise for the operation
              */
-            this.cancel = function (id, state) {
-                return _config.api.delete({
+            this.cancelAsync = function (id, state) {
+                return _config.api.deleteAsync({
                     id: id,
                     mode: "CANCEL",
                     state: state,
@@ -406,185 +411,481 @@ var SanteDB =
         this.APIWrapper = APIWrapper;
         this.ResourceWrapper = ResourceWrapper;
 
-        /**
-        * @property {SanteDB.APIWrapper} Hdsi
-        * @summary Represents a property which wraps the HDSI interface
-        * @memberof SanteDB
-        */
-        this.Hdsi = new APIWrapper({
+        // hdsi internal
+        var _hdsi = new APIWrapper({
             idByQuery: true,
             base: "/__imsi/",
         });
-
-        /**
-        * @property {SanteDB.APIWrapper} Ami
-        * @memberof SanteDB
-        * @summary Represents a property which communicates with the AMI
-        */
-        this.Ami = new APIWrapper({
+        // ami internal
+        var _ami = new APIWrapper({
             idByQuery: true,
             base: "/__ami/"
         });
 
+        // Resources internal
+        var _resources = {
             /**
-             * @property {SanteDB.ResourceWrapper} Patient
-             * @memberof SanteDB
+             * @property {SanteDB.ResourceWrapper} 
+             * @memberof SanteDB.resources
              * @summary Represents the Patient Resource
              */
-            this.Patient = new ResourceWrapper({
+            patient: new ResourceWrapper({
                 resource: "Patient",
-                api: this.Hdsi
-            });
-
+                api: _hdsi
+            }),
             /**
-             * @property {SanteDB.ResourceWrapper} SubstanceAdministration
-             * @memberof SanteDB
+             * @property {SanteDB.ResourceWrapper} 
+             * @memberof SanteDB.resources
              * @summary Represents the SubstanceAdministration Resource
              */
-            this.SubstanceAdministration = new ResourceWrapper({
+            substanceAdministration: new ResourceWrapper({
                 resource: "SubstanceAdministration",
-                api: this.Hdsi
-            });
-
+                api: _hdsi
+            }),
             /**
-             * @property {SanteDB.ResourceWrapper} Act
-             * @memberof SanteDB
+             * @property {SanteDB.ResourceWrapper}
+             * @memberof SanteDB.resources
              * @summary Represents the Act Resource
              */
-            this.Act = new ResourceWrapper({
+            act: new ResourceWrapper({
                 resource: "Act",
-                api: this.Hdsi
-            });
-
+                api: _hdsi
+            }),
             /**
-             * @property {SanteDB.ResourceWrapper} Observation
-             * @memberof SanteDB
+             * @property {SanteDB.ResourceWrapper} 
+             * @summary Represents the entity resource
+             * @memberof SanteDB.resources
+             */
+            entity: new ResourceWrapper({
+                resource: "Entity",
+                api: _hdsi
+            }),
+            /**
+             * @property {SanteDB.ResourceWrapper} 
+             * @summary Represents the entity relationship resource
+             * @memberof SanteDB.resources
+             */
+            entityRelationship: new ResourceWrapper({
+                resource: "EntityRelationship",
+                api: _hdsi
+            }),
+            /**
+             * @property {SanteDB.ResourceWrapper} 
+             * @memberof SanteDB.resources
              * @summary Represents the Observation Resource
              */
-            this.Observation = new ResourceWrapper({
+            observation: new ResourceWrapper({
                 resource: "Observation",
-                api: this.Hdsi
-            });
-
+                api: _hdsi
+            }),
             /**
-             * @property {SanteDB.ResourceWrapper} Place
-             * @memberof SanteDB
+             * @property {SanteDB.ResourceWrapper} 
+             * @memberof SanteDB.resources
              * @summary Represents the Place Resource
              */
-            this.Observation = new ResourceWrapper({
+            place: new ResourceWrapper({
                 resource: "Place",
-                api: this.Hdsi
-            });
-
+                api: _hdsi
+            }),
             /**
-             * @property {SanteDB.ResourceWrapper} Provider
-             * @memberof SanteDB
+             * @property {SanteDB.ResourceWrapper} 
+             * @memberof SanteDB.resources
              * @summary Represents the Provider Resource
              */
-            this.Provider = new ResourceWrapper({
+            provider: new ResourceWrapper({
                 resource: "Provider",
-                api: this.Hdsi
-            });
-
+                api: _hdsi
+            }),
             /**
-             * @property {SanteDB.ResourceWrapper} UserEntity
-             * @memberof SanteDB
+             * @property {SanteDB.ResourceWrapper} 
+             * @memberof SanteDB.resources
              * @summary Represents the UserEntity Resource
              */
-            this.UserEntity = new ResourceWrapper({
+            userEntity: new ResourceWrapper({
                 resource: "UserEntity",
-                api: this.Hdsi
-            });
-
+                api: _hdsi
+            }),
             /**
-             * @property {SanteDB.ResourceWrapper} Organization
-             * @memberof SanteDB
+             * @property {SanteDB.ResourceWrapper} 
+             * @memberof SanteDB.resources
              * @summary Represents the Organization Resource
              */
-            this.Organization = new ResourceWrapper({
+            organization: new ResourceWrapper({
                 resource: "Organization",
-                api: this.Hdsi
-            });
-
+                api: _hdsi
+            }),
             /**
-             * @property {SanteDB.ResourceWrapper} Material
-             * @memberof SanteDB
+             * @property {SanteDB.ResourceWrapper} 
+             * @memberof SanteDB.resources
              * @summary Represents the Material Resource
              */
-            this.Material = new ResourceWrapper({
+            material: new ResourceWrapper({
                 resource: "Material",
-                api: this.Hdsi
-            });
-
+                api: _hdsi
+            }),
             /**
-             * @property {SanteDB.ResourceWrapper} ManufacturedMaterial
-             * @memberof SanteDB
+             * @property {SanteDB.ResourceWrapper} 
+             * @memberof SanteDB.resources
              * @summary Represents the ManufacturedMaterial Resource
              */
-            this.ManufacturedMaterial = new ResourceWrapper({
+            manufacturedMaterial: new ResourceWrapper({
                 resource: "ManufacturedMaterial",
-                api: this.Hdsi
-            });
-
+                api: _hdsi
+            }),
             /**
-             * @property {SanteDB.ResourceWrapper} Concept
-             * @memberof SanteDB
+             * @property {SanteDB.ResourceWrapper} 
+             * @memberof SanteDB.resources
              * @summary Represents the ManufacturedMaterial Resource
              */
-            this.Concept = new ResourceWrapper({
+            concept: new ResourceWrapper({
                 resource: "Concept",
-                api: this.Ami
-            });
-
+                api: _ami
+            }),
             /**
-             * @property {SanteDB.ResourceWrapper} ConceptSet
-             * @memberof SanteDB
+             * @property {SanteDB.ResourceWrapper} 
+             * @memberof SanteDB.resources
              * @summary Represents the ConceptSet Resource
              */
-            this.ConceptSet = new ResourceWrapper({
+            conceptSet: new ResourceWrapper({
                 resource: "ConceptSet",
-                api: this.Ami
-            });
-
+                api: _ami
+            }),
             /**
-             * @property {SanteDB.ResourceWrapper} ReferenceTerm
-             * @memberof SanteDB
+             * @property {SanteDB.ResourceWrapper} 
+             * @memberof SanteDB.resources
              * @summary Represents the ReferenceTerm Resource
              */
-            this.ReferenceTerm = new ResourceWrapper({
+            referenceTerm: new ResourceWrapper({
                 resource: "ReferenceTerm",
-                api: this.Ami
-            });
-
-
+                api: _ami
+            }),
             /**
-             * @property {SanteDB.ResourceWrapper} CodeSystem
-             * @memberof SanteDB
+             * @property {SanteDB.ResourceWrapper} 
+             * @memberof SanteDB.resources
              * @summary Represents the CodeSystem Resource
              */
-            this.CodeSystem = new ResourceWrapper({
+            codeSystem: new ResourceWrapper({
                 resource: "CodeSystem",
-                api: this.Ami
-            });
-
-
+                api: _ami
+            }),
             /**
-             * @property {SanteDB.ResourceWrapper} DeviceEntity
-             * @memberof SanteDB
+             * @property {SanteDB.ResourceWrapper} 
+             * @memberof SanteDB.resources
              * @summary Represents the DeviceEntity Resource
              */
-            this.DeviceEntity = new ResourceWrapper({
+            deviceEntity: new ResourceWrapper({
                 resource: "DeviceEntity",
-                api: this.Ami
-            });
-
+                api: _ami
+            }),
             /**
-             * @property {SanteDB.ResourceWrapper} ApplicationEntity
-             * @memberof SanteDB
+             * @property {SanteDB.ResourceWrapper} 
+             * @memberof SanteDB.resources
              * @summary Represents the ApplicationEntity Resource
              */
-            this.ApplicationEntity = new ResourceWrapper({
+            applicationEntity: new ResourceWrapper({
                 resource: "ApplicationEntity",
-                api: this.Ami
-            });
+                api: _ami
+            }),
+            /**
+             * @property {SanteDB.ResourceWrapper} 
+             * @memberof SanteDB.resources
+             * @summary Gets the configuration resource
+             */
+            configuration: new ResourceWrapper({
+                resource: "Configuration",
+                api: _ami
+            }),
+            /**
+             * @property {SanteDB.ResourceWrapper}
+             * @memberof SanteDB.resources
+             * @summary Gets the queue control resource
+             */
+            queue: new ResourceWrapper({
+                resource: "Queue",
+                api: _ami
+            })
+        };
+
+        // master configuration closure
+        var _masterConfig = null;
+        var _configuration = {
+
+            /**
+             * @method
+             * @memberof SanteDB.configuration
+             * @summary Get the configuration, nb: this caches the configuration
+             * @returns {Promise} The configuration
+             */
+            getAsync: function () {
+                return new Promise(function (fulfill, reject) {
+                    try {
+                        if (_masterConfig)
+                            fulfill(_masterConfig);
+                        else {
+                            _resources.configuration.getAsync()
+                                .then(function (d) {
+                                    fulfill(_masterConfig);
+                                })
+                                .catch(function (e) {
+                                    reject(e);
+                                });
+                        }
+                    }
+                    catch (e) {
+                        reject(e);
+                    }
+                });
+            },
+
+            /**
+             * @method
+             * @memberof SanteDB.configuration
+             * @summary Get the specified configuration key
+             * @returns {string} The application key setting
+             * @param {string} key The key of the setting to find
+             */
+            getAppSetting: function (key) {
+                try {
+                    if (!_masterConfig) throw new SanteDBModel.Exception("Exception", "error.invalidOperation", "You need to call configuration.getAsync() before calling getAppSetting()");
+                    var _setting = _masterConfig.application.setting.find((k) => k.key == key);
+                    if (_setting)
+                        return _setting.value;
+                    else
+                        return null;
+                }
+                catch (e) {
+                    if (!e.$type)
+                        throw new SanteDBModel.Exception("Exception", "error.unknown", e.detail, e);
+                    else
+                        throw e;
+                }
+            },
+
+            /**
+             * @method 
+             * @memberof SanteDB.configuration
+             * @summary Sets the specified application setting
+             * @param {string} key The key of the setting to set
+             * @param {string} value The value of the application setting
+             * @see SanteDB.configuration.save To save the updated configuration
+             */
+            setAppSetting: function (key, value) {
+                try {
+                    if (!_masterConfig) throw new SanteDBModel.Exception("Exception", "error.invalidOperation", "You need to call configuration.getAsync() before calling getAppSetting()");
+                    var _setting = _masterConfig.application.setting.find((k) => k.key == key);
+                    if (_setting)
+                        _setting.value = value;
+                    else
+                        _masterConfig.application.setting.push({ key: key, value: value });
+                }
+                catch (e) {
+                    if (!e.$type)
+                        throw new SanteDBModel.Exception("Exception", "error.unknown", e.detail, e);
+                    else
+                        throw e;
+                }
+            },
+
+            /**
+             * @method
+             * @memberof SanteDB.configuration
+             * @summary Gets the currently configured realm
+             * @returns {string} The name of the security realm
+             */
+            getRealm: function() {
+                try {
+                    if (!_masterConfig) throw new SanteDBModel.Exception("Exception", "error.invalidOperation", "You need to call configuration.getAsync() before calling getAppSetting()");
+                    return _masterConfig.realmName;
+                }
+                catch (e) {
+                    if (!e.$type)
+                        throw new SanteDBModel.Exception("Exception", "error.unknown", e.detail, e);
+                    else
+                        throw e;
+                }
+            },
+
+            /**
+             * @method 
+             * @summary Gets the specified section name
+             * @memberof SanteDB.configuration
+             * @param {any} name The name of the configuration section
+             * @returns {any} A JSON object representing the configuration setting section
+             */
+            getSection: function(name) {
+                try {
+                    if (!_masterConfig) throw new SanteDBModel.Exception("Exception", "error.invalidOperation", "You need to call configuration.getAsync() before calling getAppSetting()");
+                    return _masterConfig[name];
+                }
+                catch (e) {
+                    if (!e.$type)
+                        throw new SanteDBModel.Exception("Exception", "error.unknown", e.detail, e);
+                    else
+                        throw e;
+                }
+            },
+
+            /**
+             * @method
+             * @summary Instructs the current system to join a realm
+             * @memberof SanteDB.configuration
+             * @returns {Promise} The configuration file after joining the realm
+             * @param {any} configData The configuration data for the realm
+             * @param {string} configData.domain The domain to which the application is to be joined
+             * @param {string} configData.deviceName The name of the device to join as
+             * @param {boolean} configData.replaceExisting When true, instructs the application to replace an existing registration
+             * @param {boolean} configData.enableTrace When true, enables log file tracing of requests
+             * @param {boolean} configData.enableSSL When true, enables HTTPS
+             * @param {number} configData.port The port number to connect to the realm on
+             */
+            joinRealmAsync: function(configData) {
+                return new Promise(function (fulfill, reject) {
+                    try {
+                        _ami.postAsync({
+                            resource: "Configuration/Realm",
+                            data: {
+                                realmUri: configData.domain,
+                                deviceName: configData.deviceName,
+                                replaceExisting: configData.replaceExisting,
+                                enableTrace: configData.enableTrace,
+                                enableSSL: configData.enableSSL,
+                                port: configData.port
+                            }
+                        }).then(function (d) {
+                            _masterConfig = d;
+                            fulfill(d);
+                        }).catch(function (e) {
+                            console.error(`Error joining realm: ${e}`);
+                            reject(e);
+                        });
+                    }
+                    catch (e) {
+                        if (!e.$type)
+                            e = new SanteDBModel.Exception("Exception", "error.general", e);
+                        reject(e);
+                    }
+                });
+            },
+            /**
+             * @method
+             * @memberof SanteDB.configuration
+             * @summary Instructs the application to remove realm configuration
+             * @returns {Promise} A promise that is fulfilled when the leave operation succeeds
+             */
+            leaveRealmAsync: function() {
+                return new Promise(function (fulfill, reject) {
+                    try {
+                        _ami.deleteAsync({
+                            resource: "Configuration/Realm"
+                        })
+                            .then(function (d) { fulfill(d); })
+                            .catch(function (e) { reject(e); });
+                    }
+                    catch (e) {
+                        if (!e.$type)
+                            e = new SanteDBModel.Exception("Exception", "error.general", e);
+                        reject(e);
+                    }
+                });
+            },
+            /**
+             * @method
+             * @memberof SanteDB.configuration
+             * @summary Save the configuration object
+             * @param {any} configuration The configuration object to save
+             * @returns {Promise} A promise object indicating whether the save was successful
+             */
+            saveAsync: function (configuration) {
+                return new Promise(function (fulfill, reject) {
+                    try {
+                        _resources.configuration.insertAsync(configuration)
+                            .then(function (d) { fulfill(d); })
+                            .catch(function (e) { reject(e); });
+                    }
+                    catch (e) {
+                        if (!e.$type)
+                            e = new SanteDBModel.Exception("Exception", "error.general", e);
+                        reject(e);
+                    }
+                });
+            },
+            /**
+             * @method
+             * @memberof SanteDB.configuration
+             * @summary Gets the user specific preferences
+             * @returns {Promise} A promise representing the retrieval of the user settings
+             */
+            getUserPreferencesAsync: function () {
+                return new Promise(function (fulfill, reject) {
+                    try {
+                        _ami.getAsync({
+                            resource: "Configuration/User"
+                        })
+                            .then(function (d) { fulfill(d); })
+                            .catch(function (e) { reject(e); });
+                    }
+                    catch (e) {
+                        if (!e.$type)
+                            e = new SanteDBModel.Exception("Exception", "error.general", e);
+                        reject(e);
+                    }
+                });
+            },
+            /**
+             * @method
+             * @memberof SanteDB.configuration
+             * @summary Saves the user preferences
+             * @param {any} preferences A dictionary of preferences to be saved
+             * @returns {Promise} A promise which indicates when preferences were saved
+             * @example Save user preference for color
+             * SanteDB.configuration.saveUserPreferences([
+             *  { key: "color", value: "red" }
+             * ]);
+             */
+            saveUserPreferencesAsync: function (preferences) {
+                return new Promise(function (fulfill, reject) {
+                    try {
+                        _ami.postAsync({
+                            resource: "Configuration/User",
+                            data: preferences
+                        })
+                            .then(function (d) { fulfill(d); })
+                            .catch(function (e) { reject(e); });
+                    }
+                    catch (e) {
+                        if (!e.$type)
+                            e = new SanteDBModel.Exception("Exception", "error.general", e);
+                        reject(e);
+                    }
+                });
+            }
+        };
+
+        // Public bindings
+        /**
+        * @property {SanteDB.APIWrapper}
+        * @summary Represents a property which wraps the HDSI interface
+        * @memberof SanteDB
+        */
+        this.hdsi = _hdsi;
+        /**
+        * @property {SanteDB.APIWrapper}
+        * @memberof SanteDB
+        * @summary Represents a property which communicates with the AMI
+        */
+        this.ami = _ami;
+        /**
+         * @property
+         * @memberof SanteDB
+         * @summary Provides access to resource handlers
+         */
+        this.resources = _resources;
+        /**
+         * @summary Configuration routines for SanteDB
+         * @class
+         * @static
+         * @memberof SanteDB
+         */
+        this.configuration = _configuration;
     }();
+

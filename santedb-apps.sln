@@ -21,6 +21,7 @@ Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "uicore", "uicore\", "{999D8
 		Release.AspNetCompiler.FixedNames = "false"
 		Release.AspNetCompiler.Debug = "False"
 		VWDPort = "52379"
+		SlnRelativePath = "uicore\"
 	EndProjectSection
 EndProject
 Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "core", "core\", "{EA1AE347-8C37-4C04-BC46-D518A3E7FD7E}"
@@ -41,6 +42,7 @@ Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "core", "core\", "{EA1AE347-
 		Release.AspNetCompiler.FixedNames = "false"
 		Release.AspNetCompiler.Debug = "False"
 		VWDPort = "52376"
+		SlnRelativePath = "core\"
 	EndProjectSection
 EndProject
 Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "config", "config\", "{AFFADA52-446C-493B-B160-3AC1298A6C80}"
@@ -61,6 +63,7 @@ Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "config", "config\", "{AFFAD
 		Release.AspNetCompiler.FixedNames = "false"
 		Release.AspNetCompiler.Debug = "False"
 		VWDPort = "52377"
+		SlnRelativePath = "config\"
 	EndProjectSection
 EndProject
 Global
