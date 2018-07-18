@@ -73,6 +73,7 @@ var SanteDB =
              * @param {any} configuration.data The data that is to be posted
              * @param {any} configuration.state A piece of state data which is passed back to the caller for state tracking
              * @param {bool} configuration.sync When true, executes the request in synchronous mode
+             * @param {string} configuration.contentType Identifies the content type of the data
              * @returns {Promise} The promise for the operation
              */
             this.postAsync = function (configuration) {
@@ -80,9 +81,9 @@ var SanteDB =
                     $.ajax({
                         method: 'POST',
                         url: _config.base + configuration.resource,
-                        data: JSON.stringify(configuration.data),
+                        data: configuration.contentType == 'application/json' ? JSON.stringify(configuration.data) : configuration.data,
                         dataType: 'json',
-                        contentType: 'application/json',
+                        contentType: configuration.contentType || 'application/json',
                         async: !configuration.sync,
                         success: function (xhr) {
                             try {
@@ -120,6 +121,7 @@ var SanteDB =
              * @param {any} configuration.state A piece of state data which is passed back to the caller for state tracking
              * @param {bool} configuration.sync When true, executes the request in synchronous mode
              * @param {string} configuration.id The identifier of the object on the interface to update
+             * @param {string} configuration.contentType Identifies the content type of the data
              * @returns {Promise} The promise for the operation
              */
             this.putAsync = function (configuration) {
@@ -127,9 +129,9 @@ var SanteDB =
                     $.ajax({
                         method: 'PUT',
                         url: _config.base + configuration.resource + (_config.idByQuery ? "?_id=" + configuration.id : "/" + configuration.id),
-                        data: JSON.stringify(configuration.data),
+                        data: configuration.contentType == 'application/json' ? JSON.stringify(configuration.data) : configuration.data,
                         dataType: 'json',
-                        contentType: 'application/json',
+                        contentType: configuration.contentType || 'application/json',
                         async: !configuration.sync,
                         success: function (xhr) {
                             try {
@@ -177,7 +179,6 @@ var SanteDB =
                         data: configuration.query,
                         dataType: 'json',
                         accept: 'application/json',
-                        contentType: 'application/json',
                         async: !configuration.sync,
                         success: function (xhr) {
                             try {
@@ -217,6 +218,7 @@ var SanteDB =
              * @param {any} configuration.id The object that is to be deleted on the server
              * @param {any} configuration.data The additional data that should be sent for the delete command
              * @param {string} configuration.mode The mode in which the delete should occur. Can be NULLIFY, CANCEL or OBSOLETE (default)
+             * @param {string} configuration.contentType Identifies the content type of the data
              * @returns {Promise} The promise for the operation
              */
             this.deleteAsync = function (configuration) {
@@ -224,11 +226,11 @@ var SanteDB =
                     $.ajax({
                         method: 'DELETE',
                         url: _config.base + configuration.resource + (configuration.id ? (_config.idByQuery ? "?_id=" + configuration.id : "/" + configuration.id) : ""),
-                        data: JSON.stringify(configuration.data),
+                        data: configuration.contentType == 'application/json' ? JSON.stringify(configuration.data) : configuration.data,
                         headers: { "X-Delete-Mode": configuration.mode || "OBSOLETE" },
                         dataType: 'json',
                         accept: 'application/json',
-                        contentType: 'application/json',
+                        contentType: configuration.contentType || 'application/json',
                         async: !configuration.sync,
                         success: function (xhr) {
                             try {
@@ -420,6 +422,11 @@ var SanteDB =
         var _ami = new APIWrapper({
             idByQuery: true,
             base: "/__ami/"
+        });
+        // auth internal
+        var _auth = new APIWrapper({
+            idByQuery: true,
+            base: "/__auth/"
         });
 
         // Resources internal
@@ -624,6 +631,7 @@ var SanteDB =
                         else {
                             _resources.configuration.getAsync()
                                 .then(function (d) {
+                                    _masterConfig = d;
                                     fulfill(_masterConfig);
                                 })
                                 .catch(function (e) {
@@ -773,19 +781,8 @@ var SanteDB =
              * @returns {Promise} A promise that is fulfilled when the leave operation succeeds
              */
             leaveRealmAsync: function() {
-                return new Promise(function (fulfill, reject) {
-                    try {
-                        _ami.deleteAsync({
-                            resource: "Configuration/Realm"
-                        })
-                            .then(function (d) { fulfill(d); })
-                            .catch(function (e) { reject(e); });
-                    }
-                    catch (e) {
-                        if (!e.$type)
-                            e = new SanteDBModel.Exception("Exception", "error.general", e);
-                        reject(e);
-                    }
+                return _ami.deleteAsync({
+                    resource: "Configuration/Realm"
                 });
             },
             /**
@@ -796,18 +793,7 @@ var SanteDB =
              * @returns {Promise} A promise object indicating whether the save was successful
              */
             saveAsync: function (configuration) {
-                return new Promise(function (fulfill, reject) {
-                    try {
-                        _resources.configuration.insertAsync(configuration)
-                            .then(function (d) { fulfill(d); })
-                            .catch(function (e) { reject(e); });
-                    }
-                    catch (e) {
-                        if (!e.$type)
-                            e = new SanteDBModel.Exception("Exception", "error.general", e);
-                        reject(e);
-                    }
-                });
+                return _resources.configuration.insertAsync(configuration);
             },
             /**
              * @method
@@ -816,19 +802,8 @@ var SanteDB =
              * @returns {Promise} A promise representing the retrieval of the user settings
              */
             getUserPreferencesAsync: function () {
-                return new Promise(function (fulfill, reject) {
-                    try {
-                        _ami.getAsync({
-                            resource: "Configuration/User"
-                        })
-                            .then(function (d) { fulfill(d); })
-                            .catch(function (e) { reject(e); });
-                    }
-                    catch (e) {
-                        if (!e.$type)
-                            e = new SanteDBModel.Exception("Exception", "error.general", e);
-                        reject(e);
-                    }
+                return _ami.getAsync({
+                    resource: "Configuration/User"
                 });
             },
             /**
@@ -843,37 +818,313 @@ var SanteDB =
              * ]);
              */
             saveUserPreferencesAsync: function (preferences) {
+                return _ami.postAsync({
+                    resource: "Configuration/User",
+                    data: preferences
+                });
+            }
+        };
+
+        // Session and auth data
+        var _session = null;
+        var _sessionInfo = null;
+        var _elevationCredentials = null;
+        var _authentication = {
+
+            /**
+             * @method
+             * @memberof SanteDB.authentication
+             * @returns {any} The oauth session response with an access token, etc.
+             * @summary Gets the current session 
+             */
+            getSession: function () {
+                return _session ? {
+                    access_token: _session.access_token,
+                    expires_in: _session.expires_in
+                } : null;
+            },
+            /**
+             * @method
+             * @memberof SanteDB.authentication
+             * @returns {Promise} A promise representing the fulfillment or rejection of the get request
+             * @summary Gets the extended session information
+             */
+            getSessionInfoAsync: function () {
+                return new Promise(function (fulfill, reject) {
+                    if (_sessionInfo)
+                        fulfill(_sessionInfo);
+                    else
+                        try {
+                            _auth.getAsync({
+                                resource: "session"
+                            })
+                                .then(function (s) {
+                                    _sessionInfo = s;
+                                    fulfill(s);
+                                })
+                                .catch(reject);
+                        }
+                        catch (e) {
+                            var ex = e;
+                            if (!ex.$type)
+                                ex = new SanteDBModel.Exception("Exception", "error.general", e);
+                            reject(ex);
+                        }
+                });
+            },
+            /**
+             * @method
+             * @memberof SanteDB.authentication
+             * @summary Requests a two-factor authentication secret to be sent
+             * @param {string} mode The mode of two-factor authentication (email, sms, etc.)
+             * @returns {Promise} A promise representing the outcome of the TFA secret send
+             */
+            sendTfaSecretAsync: function (mode) {
+                return _auth.postAsync({
+                    resource: "tfa",
+                    data: { mode: mode }
+                })
+            },
+            /**
+             * @method
+             * @memberof SanteDB.authentication
+             * @summary Retrieves information about the two-factor authentication modes supported by the server
+             * @returns {Promise} The promise representing the fulfillment or rejection of the get request
+             */
+            getTfaModeAsync: function () {
+                return _auth.getAsync({
+                    resource: "tfa"
+                });
+            },
+            /**
+             * @method 
+             * @memberof SanteDB.authentication
+             * @summary Performs a OAUTH password login
+             * @param {string} userName The name of the user which is logging in
+             * @param {string} password The password of the user
+             * @param {string} tfaSecret The two-factor secret if provided
+             * @param {bool} noSession When true indicates that there should not be a persistent session (i.e. one time authentication)
+             * @returns {Promise} A promise representing the login request
+             */
+            passwordLoginAsync: function (userName, password, tfaSecret, noSession) {
                 return new Promise(function (fulfill, reject) {
                     try {
-                        _ami.postAsync({
-                            resource: "Configuration/User",
-                            data: preferences
+                        _auth.postAsync({
+                            resource: "authenticate",
+                            data: {
+                                username: userName,
+                                password: password,
+                                tfaSecret: tfaSecret,
+                                grant_type: 'password',
+                                scope: "*"
+                            },
+                            contentType: 'application/x-www-urlform-encoded'
                         })
-                            .then(function (d) { fulfill(d); })
-                            .catch(function (e) { reject(e); });
+                            .then(function (d) {
+                                if (!noSession) {
+                                    _session = d;
+                                    _authentication.getSessionInfoAsync().then(fulfill).catch(reject);
+                                }
+                            })
+                            .catch(reject);
                     }
                     catch (e) {
-                        if (!e.$type)
-                            e = new SanteDBModel.Exception("Exception", "error.general", e);
-                        reject(e);
+                        var ex = e;
+                        if (!ex.$type)
+                            ex = new SanteDBModel.Exception("Exception", "error.general", e);
+                        reject(ex);
+                    }
+                }
+            },
+            /**
+             * @method
+             * @memberof SanteDB.authentication
+             * @summary Performs an OAUTH client credentials login
+             * @description A client credentials login is a login principal which only has an application principal. This is useful for password resets, etc.
+             * @returns {Promise} A promise representing the login request
+             * @param {bool} noSession When true, indicates that a session should not be replaced that the request is a one time use token
+             */
+            clientCredentialLoginAsync: function (noSession) {
+                return new Promise(function (fulfill, reject) {
+                    try {
+                        _auth.postAsync({
+                            resource: "authenticate",
+                            data: {
+                                grant_type: 'client_credentials',
+                                scope: "*"
+                            },
+                            contentType: 'application/x-www-urlform-encoded'
+                        })
+                            .then(function (d) {
+                                if (!noSession) {
+                                    _session = d;
+                                    _authentication.getSessionInfoAsync().then(fulfill).catch(reject);
+                                }
+                                fulfill(d);
+                            })
+                            .catch(reject);
+                    }
+                    catch (e) {
+                        var ex = e;
+                        if (!ex.$type)
+                            ex = new SanteDBModel.Exception("Exception", "error.general", e);
+                        reject(ex);
+                    }
+                }
+            },
+            /**
+             * @method
+             * @memberof SanteDB.authentication
+             * @summary Performs an OAUTH authorization code grant
+             * @description This function should be called *after* the authorization code has been obtained from the authorization server
+             * @param {bool} noSession When true, indicates that there should not be a persistent session created
+             * @returns {Promise} A promise representing the session request
+             */
+            authorizationCodeLoginAsync: function (code, redirect_uri, noSession) {
+                return new Promise(function (fulfill, reject) {
+                    try {
+                        _auth.postAsync({
+                            resource: "authenticate",
+                            data: {
+                                grant_type: 'authorization_code',
+                                code: code,
+                                redirect_uri: redirect_uri,
+                                scope: "*"
+                            },
+                            contentType: 'application/x-www-urlform-encoded'
+                        })
+                            .then(function (d) {
+                                if (!noSession) {
+                                    _session = d;
+                                    _authentication.getSessionInfoAsync().then(fulfill).catch(reject);
+                                }
+                                fulfill(d);
+                            })
+                            .catch(reject);
+                    }
+                    catch (e) {
+                        var ex = e;
+                        if (!ex.$type)
+                            ex = new SanteDBModel.Exception("Exception", "error.general", e);
+                        reject(ex);
+                    }
+                }
+            },
+            /**
+             * @method
+             * @memberof SanteDB.authentication
+             * @summary Performs a refresh token grant
+             * @returns {Promise} A promise representing the session refresh request
+             */
+            refreshLoginAsync: function () {
+                return new Promise(function (fullfill, reject) {
+                    try {
+
+                        if (_session) {
+                            _auth.postAsync({
+                                resource: "authenticate",
+                                data: {
+                                    grant_type: 'refresh_token',
+                                    refresh_token: _session.refresh_token,
+                                    scope: "*"
+                                },
+                                contentType: 'application/x-www-urlform-encoded'
+                            })
+                                .then(function (d) {
+                                    if (!noSession) {
+                                        _session = d;
+                                        _authentication.getSessionInfoAsync().then(fulfill).catch(reject);
+                                    }
+                                    fulfill(d);
+                                })
+                                .catch(reject);
+                        }
+                        else {
+                            reject(new SanteDBModel.Exception("SecurityException", "error.security", "Cannot refresh a null session"));
+                        }
+                    }
+                    catch (e) {
+                        var ex = e;
+                        if (!ex.$type)
+                            ex = new SanteDBModel.Exception("Exception", "error.general", e);
+                        reject(ex);
+                    }
+                });
+            },
+            /**
+             * @method
+             * @memberof SanteDB.authentication
+             * @summary Sets the password of the currently logged in user
+             * @param {string} passwd The password to set the currently logged in user to
+             * @returns {Promise} The promise representing the fulfillment or rejection of the password change
+             */ 
+            setPasswordAsync: function (passwd) {
+                if (!_sessionInfo || !_session)
+                    throw new SanteDBModel.Exception("SecurityException", "error.security", "Can only set password with active session");
+                return _ami.postAsync({
+                    resource: "SecurityUser",
+                    data: {
+                        passwordOnly: true,
+                        entity: new SanteDBModel.SecurityUser({
+                            userName: _sessionInfo.securityUser.userName,
+                            password: passwd
+                        })
+                    }
+                });
+            },
+            /**
+             * @method
+             * @memberof SanteDB.authentication
+             * @summary Abandons the current SanteDB session
+             * @returns {Promise} The promise representing the fulfillment or rejection of the logout request
+             */
+            logoutAsync: function () {
+                return new Promise(function (fulfill, reject) {
+                    if (!_session)
+                        reject(new SanteDBModel.Exception("SecurityException", "error.security", "Cannot logout of non-existant session"));
+                    try {
+                        _auth.deleteAsync({
+                            resource: "session"
+                        })
+                            .then(function (d) {
+                                _session = null;
+                                _sessionInfo = null;
+                                fulfill(d);
+                            })
+                            .catch(reject);
+                    }
+                    catch (e) {
+                        var ex = e;
+                        if (!ex.$type)
+                            ex = new SanteDBModel.Exception("Exception", "error.general", e);
+                        reject(ex);
                     }
                 });
             }
         };
 
         // Public bindings
-        /**
-        * @property {SanteDB.APIWrapper}
-        * @summary Represents a property which wraps the HDSI interface
-        * @memberof SanteDB
-        */
-        this.hdsi = _hdsi;
-        /**
-        * @property {SanteDB.APIWrapper}
-        * @memberof SanteDB
-        * @summary Represents a property which communicates with the AMI
-        */
-        this.ami = _ami;
+        this.api = {
+            /**
+            * @property {SanteDB.APIWrapper}
+            * @summary Represents a property which wraps the HDSI interface
+            * @memberof SanteDB
+            */
+            hdsi : _hdsi,
+            /**
+            * @property {SanteDB.APIWrapper}
+            * @memberof SanteDB
+            * @summary Represents a property which communicates with the AMI
+            */
+            ami : _ami,
+            /**
+             * @property {SanteDB.APIWrapper}
+             * @memberof SanteDB
+             * @summary Represents a property which communicates with the AUTH service
+             */
+            auth : _auth
+        };
+
         /**
          * @property
          * @memberof SanteDB
@@ -887,5 +1138,12 @@ var SanteDB =
          * @memberof SanteDB
          */
         this.configuration = _configuration;
+        /**
+         * @summary Authentication functions for SanteDB
+         * @class
+         * @static
+         * @memberof SanteDB
+         */
+        this.authentication = _authentication;
     }();
 
