@@ -62,7 +62,7 @@ var SanteDB =
              */
             this.configure = function (config) {
                 _config = config;
-            }
+            };
 
             /**
              * @method
@@ -257,7 +257,7 @@ var SanteDB =
                 });
             };
 
-        }
+        };
 
         /**
          * @class ResourceWrapper
@@ -326,7 +326,7 @@ var SanteDB =
                     state: state,
                     resource: _config.resource
                 });
-            }
+            };
 
             /**
              * @method
@@ -351,7 +351,7 @@ var SanteDB =
                     state: state,
                     resource: _config.resource
                 });
-            }
+            };
 
             /**
             * @method
@@ -367,7 +367,7 @@ var SanteDB =
                     state: state,
                     resource: _config.resource
                 });
-            }
+            };
 
 
             /**
@@ -386,7 +386,7 @@ var SanteDB =
                     state: state,
                     resource: _config.resource
                 });
-            }
+            };
 
             /**
              * @method
@@ -404,7 +404,7 @@ var SanteDB =
                     state: state,
                     resource: _config.resource
                 });
-            }
+            };
         };
 
         // Public exposeing
@@ -414,7 +414,7 @@ var SanteDB =
         // hdsi internal
         var _hdsi = new APIWrapper({
             idByQuery: true,
-            base: "/__imsi/",
+            base: "/__imsi/"
         });
         // ami internal
         var _ami = new APIWrapper({
@@ -647,7 +647,7 @@ var SanteDB =
             getAppSetting: function (key) {
                 try {
                     if (!_masterConfig) throw new SanteDBModel.Exception("Exception", "error.invalidOperation", "You need to call configuration.getAsync() before calling getAppSetting()");
-                    var _setting = _masterConfig.application.setting.find((k) => k.key == key);
+                    var _setting = _masterConfig.application.setting.find((k) => k.key === key);
                     if (_setting)
                         return _setting.value;
                     else
@@ -672,7 +672,7 @@ var SanteDB =
             setAppSetting: function (key, value) {
                 try {
                     if (!_masterConfig) throw new SanteDBModel.Exception("Exception", "error.invalidOperation", "You need to call configuration.getAsync() before calling getAppSetting()");
-                    var _setting = _masterConfig.application.setting.find((k) => k.key == key);
+                    var _setting = _masterConfig.application.setting.find((k) => k.key === key);
                     if (_setting)
                         _setting.value = value;
                     else
@@ -760,9 +760,10 @@ var SanteDB =
                         });
                     }
                     catch (e) {
-                        if (!e.$type)
-                            e = new SanteDBModel.Exception("Exception", "error.general", e);
-                        reject(e);
+                        var ex = e;
+                        if (!ex.$type)
+                            ex = new SanteDBModel.Exception("Exception", "error.general", e);
+                        reject(ex);
                     }
                 });
             },
@@ -782,9 +783,10 @@ var SanteDB =
                             .catch(function (e) { reject(e); });
                     }
                     catch (e) {
-                        if (!e.$type)
-                            e = new SanteDBModel.Exception("Exception", "error.general", e);
-                        reject(e);
+                        var ex = e;
+                        if (!ex.$type)
+                            ex = new SanteDBModel.Exception("Exception", "error.general", e);
+                        reject(ex);
                     }
                 });
             },
@@ -803,9 +805,10 @@ var SanteDB =
                             .catch(function (e) { reject(e); });
                     }
                     catch (e) {
-                        if (!e.$type)
-                            e = new SanteDBModel.Exception("Exception", "error.general", e);
-                        reject(e);
+                        var ex = e;
+                        if (!ex.$type)
+                            ex = new SanteDBModel.Exception("Exception", "error.general", e);
+                        reject(ex);
                     }
                 });
             },
@@ -825,9 +828,10 @@ var SanteDB =
                             .catch(function (e) { reject(e); });
                     }
                     catch (e) {
-                        if (!e.$type)
-                            e = new SanteDBModel.Exception("Exception", "error.general", e);
-                        reject(e);
+                        var ex = e;
+                        if (!ex.$type)
+                            ex = new SanteDBModel.Exception("Exception", "error.general", e);
+                        reject(ex);
                     }
                 });
             },
@@ -853,9 +857,10 @@ var SanteDB =
                             .catch(function (e) { reject(e); });
                     }
                     catch (e) {
-                        if (!e.$type)
-                            e = new SanteDBModel.Exception("Exception", "error.general", e);
-                        reject(e);
+                        var ex = e;
+                        if (!ex.$type)
+                            ex = new SanteDBModel.Exception("Exception", "error.general", e);
+                        reject(ex);
                     }
                 });
             }
