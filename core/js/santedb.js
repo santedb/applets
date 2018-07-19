@@ -542,6 +542,7 @@ function SanteDBWrapper() {
          * @returns {Promise} The promise representing the async request
          */
         getLogInfoAsync: function (_id) {
+            var query;
             if (_id)
                 query = { _id: _id };
             return _app.getAsync({
@@ -1246,7 +1247,7 @@ function SanteDBWrapper() {
                         ex = new SanteDBModel.Exception("Exception", "error.general", e);
                     reject(ex);
                 }
-            }
+            });
         },
         /**
             * @method
@@ -1282,7 +1283,7 @@ function SanteDBWrapper() {
                         ex = new SanteDBModel.Exception("Exception", "error.general", e);
                     reject(ex);
                 }
-            }
+            });
         },
         /**
             * @method
@@ -1320,7 +1321,7 @@ function SanteDBWrapper() {
                         ex = new SanteDBModel.Exception("Exception", "error.general", e);
                     reject(ex);
                 }
-            }
+            });
         },
         /**
             * @method

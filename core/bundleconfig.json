@@ -4,5 +4,17 @@
     "inputFiles": [
       "js/santedb.js"
     ]
+  },
+  {
+    "outputFileName": "js/santedb-model.min.js",
+    "inputFiles": [
+      "js/santedb-model.js"
+    ]
+  },
+  {
+    "outputFileName": "js/santedb-bre.min.js",
+    "inputFiles": [
+      "js/santedb-bre.js"
+    ]
   }
 ]

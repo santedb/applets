@@ -24,205 +24,10 @@
  * @property {uuid} EmptyGuid A property which represents an empty UUID
  */
 var SanteDBModel = {
-    // SanteDB.Core.Model.BaseEntityData, SanteDB.Core.Model, Version=0.9.7.27948, Culture=neutral, PublicKeyToken=null
     /**
      * @class
      * @memberof SanteDBModel
      * @public
-     * @abstract
-     * @extends SanteDBModel.IdentifiedData
-     * @summary             Represents the root of all model classes in the SanteDB Core            
-     * @description 
-     *             This abstract class is used to encapsulate the key properties of base data elements in the SanteDB
-     *             model, namely it keeps track of which entities created and obsoleted a particular resource and when those
-     *             events occurred.
-     *             
-     * @property {date} creationTimeModel [Delay loaded from creationTime],             Gets or sets the time at which the data was created            
-     * @property {string} creationTime            Gets or sets the creation time in XML format            
-     * @property {date} obsoletionTimeModel [Delay loaded from obsoletionTime],             Gets or sets the time when the data is or will become invalid            
-     * @property {string} obsoletionTime            Gets or sets the creation time in XML format            
-     * @property {SanteDBModel.SecurityUser} createdByModel [Delay loaded from createdBy],             Gets or sets the user that created this base data            
-     * @property {date} modifiedOn            Gets the time that the object was last modified (from base data, default to CreationTime)            
-     * @property {SanteDBModel.SecurityUser} obsoletedByModel [Delay loaded from obsoletedBy],             Gets or sets the user that obsoleted this base data            
-     * @property {uuid} createdBy            Gets or sets the identifier of the user which created the data            
-     * @property {uuid} obsoletedBy            Gets or sets the identifier of the user which obsoleted the data            
-     * @property {uuid} id            The internal primary key value of the entity            
-     * @property {string} $type            Gets the type            
-     * @param {SanteDBModel.BaseEntityData} copyData Copy constructor (if present)
-     */
-    BaseEntityData: function (copyData) {
-        this.$type = 'BaseEntityData';
-        if (copyData) {
-            this.id = copyData.id;
-            this.obsoletedBy = copyData.obsoletedBy;
-            this.createdBy = copyData.createdBy;
-            this.obsoletedByModel = copyData.obsoletedByModel;
-            this.modifiedOn = copyData.modifiedOn;
-            this.createdByModel = copyData.createdByModel;
-            this.obsoletionTime = copyData.obsoletionTime;
-            this.obsoletionTimeModel = copyData.obsoletionTimeModel;
-            this.creationTime = copyData.creationTime;
-            this.creationTimeModel = copyData.creationTimeModel;
-        }
-    },  // BaseEntityData 
-    // SanteDB.Core.Model.Association`1, SanteDB.Core.Model, Version=0.9.7.27948, Culture=neutral, PublicKeyToken=null
-    /**
-     * @class
-     * @memberof SanteDBModel
-     * @public
-     * @abstract
-     * @extends SanteDBModel.IdentifiedData
-     * @summary             Represents a bse class for bound relational data            
-     * @property {date} modifiedOn            Get the modification date            
-     * @property {uuid} source            Gets or sets the source entity's key (where the relationship is FROM)            
-     * @property {SanteDBModel.IdentifiedData} sourceModel [Delay loaded from source],             The entity that this relationship targets            
-     * @property {uuid} id            The internal primary key value of the entity            
-     * @property {string} $type            Gets the type            
-     * @param {SanteDBModel.Association} copyData Copy constructor (if present)
-     */
-    Association: function (copyData) {
-        this.$type = 'Association';
-        if (copyData) {
-            this.id = copyData.id;
-            this.sourceModel = copyData.sourceModel;
-            this.source = copyData.source;
-            this.modifiedOn = copyData.modifiedOn;
-        }
-    },  // Association 
-    // SanteDB.Core.Model.IdentifiedData, SanteDB.Core.Model, Version=0.9.7.27948, Culture=neutral, PublicKeyToken=null
-    /**
-     * @class
-     * @memberof SanteDBModel
-     * @public
-     * @abstract
-     * @summary             Represents data that is identified by a key            
-     * @property {uuid} id            The internal primary key value of the entity            
-     * @property {string} $type            Gets the type            
-     * @property {date} modifiedOn            Gets or sets the modified on time            
-     * @param {SanteDBModel.IdentifiedData} copyData Copy constructor (if present)
-     */
-    IdentifiedData: function (copyData) {
-        this.$type = 'IdentifiedData';
-        if (copyData) {
-            this.modifiedOn = copyData.modifiedOn;
-            this.id = copyData.id;
-        }
-    },  // IdentifiedData 
-    // SanteDB.Core.Model.NonVersionedEntityData, SanteDB.Core.Model, Version=0.9.7.27948, Culture=neutral, PublicKeyToken=null
-    /**
-     * @class
-     * @memberof SanteDBModel
-     * @public
-     * @extends SanteDBModel.BaseEntityData
-     * @summary             Updateable entity data which is not versioned            
-     * @property {string} updatedTime            Gets or sets the creation time in XML format            
-     * @property {date} modifiedOn            Gets the time this item was modified            
-     * @property {uuid} updatedBy            Gets or sets the created by identifier            
-     * @property {date} creationTimeModel [Delay loaded from creationTime],             Gets or sets the time at which the data was created            
-     * @property {string} creationTime            Gets or sets the creation time in XML format            
-     * @property {date} obsoletionTimeModel [Delay loaded from obsoletionTime],             Gets or sets the time when the data is or will become invalid            
-     * @property {string} obsoletionTime            Gets or sets the creation time in XML format            
-     * @property {SanteDBModel.SecurityUser} createdByModel [Delay loaded from createdBy],             Gets or sets the user that created this base data            
-     * @property {SanteDBModel.SecurityUser} obsoletedByModel [Delay loaded from obsoletedBy],             Gets or sets the user that obsoleted this base data            
-     * @property {uuid} createdBy            Gets or sets the identifier of the user which created the data            
-     * @property {uuid} obsoletedBy            Gets or sets the identifier of the user which obsoleted the data            
-     * @property {uuid} id            The internal primary key value of the entity            
-     * @property {string} $type            Gets the type            
-     * @param {SanteDBModel.NonVersionedEntityData} copyData Copy constructor (if present)
-     */
-    NonVersionedEntityData: function (copyData) {
-        this.$type = 'NonVersionedEntityData';
-        if (copyData) {
-            this.id = copyData.id;
-            this.obsoletedBy = copyData.obsoletedBy;
-            this.createdBy = copyData.createdBy;
-            this.obsoletedByModel = copyData.obsoletedByModel;
-            this.createdByModel = copyData.createdByModel;
-            this.obsoletionTime = copyData.obsoletionTime;
-            this.obsoletionTimeModel = copyData.obsoletionTimeModel;
-            this.creationTime = copyData.creationTime;
-            this.creationTimeModel = copyData.creationTimeModel;
-            this.updatedBy = copyData.updatedBy;
-            this.modifiedOn = copyData.modifiedOn;
-            this.updatedTime = copyData.updatedTime;
-        }
-    },  // NonVersionedEntityData 
-    // SanteDB.Core.Model.VersionedAssociation`1, SanteDB.Core.Model, Version=0.9.7.27948, Culture=neutral, PublicKeyToken=null
-    /**
-     * @class
-     * @memberof SanteDBModel
-     * @public
-     * @abstract
-     * @extends SanteDBModel.Association
-     * @summary             Represents a relational class which is bound on a version boundary            
-     * @property {number} effectiveVersionSequence            Gets or sets the effective version of this type            
-     * @property {number} obsoleteVersionSequence            Gets or sets the obsoleted version identifier            
-     * @property {date} modifiedOn
-     * @property {uuid} source
-     * @property {SanteDBModel.VersionedEntityData} sourceModel [Delay loaded from source], 
-     * @property {uuid} id            The internal primary key value of the entity            
-     * @property {string} $type            Gets the type            
-     * @param {SanteDBModel.VersionedAssociation} copyData Copy constructor (if present)
-     */
-    VersionedAssociation: function (copyData) {
-        this.$type = 'VersionedAssociation';
-        if (copyData) {
-            this.id = copyData.id;
-            this.sourceModel = copyData.sourceModel;
-            this.source = copyData.source;
-            this.modifiedOn = copyData.modifiedOn;
-            this.obsoleteVersionSequence = copyData.obsoleteVersionSequence;
-            this.effectiveVersionSequence = copyData.effectiveVersionSequence;
-        }
-    },  // VersionedAssociation 
-    // SanteDB.Core.Model.VersionedEntityData`1, SanteDB.Core.Model, Version=0.9.7.27948, Culture=neutral, PublicKeyToken=null
-    /**
-     * @class
-     * @memberof SanteDBModel
-     * @public
-     * @abstract
-     * @extends SanteDBModel.BaseEntityData
-     * @summary             Represents versioned based data, that is base data which has versions            
-     * @property {uuid} previousVersion            Gets or sets the previous version key            
-     * @property {uuid} version            Gets or sets the key which represents the version of the entity            
-     * @property {number} sequence            The sequence number of the version (for ordering)            
-     * @property {date} creationTimeModel [Delay loaded from creationTime],             Gets or sets the time at which the data was created            
-     * @property {string} creationTime            Gets or sets the creation time in XML format            
-     * @property {date} obsoletionTimeModel [Delay loaded from obsoletionTime],             Gets or sets the time when the data is or will become invalid            
-     * @property {string} obsoletionTime            Gets or sets the creation time in XML format            
-     * @property {SanteDBModel.SecurityUser} createdByModel [Delay loaded from createdBy],             Gets or sets the user that created this base data            
-     * @property {date} modifiedOn            Gets the time that the object was last modified (from base data, default to CreationTime)            
-     * @property {SanteDBModel.SecurityUser} obsoletedByModel [Delay loaded from obsoletedBy],             Gets or sets the user that obsoleted this base data            
-     * @property {uuid} createdBy            Gets or sets the identifier of the user which created the data            
-     * @property {uuid} obsoletedBy            Gets or sets the identifier of the user which obsoleted the data            
-     * @property {uuid} id            The internal primary key value of the entity            
-     * @property {string} $type            Gets the type            
-     * @param {SanteDBModel.VersionedEntityData} copyData Copy constructor (if present)
-     */
-    VersionedEntityData: function (copyData) {
-        this.$type = 'VersionedEntityData';
-        if (copyData) {
-            this.id = copyData.id;
-            this.obsoletedBy = copyData.obsoletedBy;
-            this.createdBy = copyData.createdBy;
-            this.obsoletedByModel = copyData.obsoletedByModel;
-            this.modifiedOn = copyData.modifiedOn;
-            this.createdByModel = copyData.createdByModel;
-            this.obsoletionTime = copyData.obsoletionTime;
-            this.obsoletionTimeModel = copyData.obsoletionTimeModel;
-            this.creationTime = copyData.creationTime;
-            this.creationTimeModel = copyData.creationTimeModel;
-            this.sequence = copyData.sequence;
-            this.version = copyData.version;
-            this.previousVersion = copyData.previousVersion;
-        }
-    },  // VersionedEntityData 
-    // SanteDB.Core.Model.Security.SecurityApplication, SanteDB.Core.Model, Version=0.9.7.27948, Culture=neutral, PublicKeyToken=null
-    /**
-     * @class
-     * @memberof SanteDBModel
-     * @public
-     * @extends SanteDBModel.SecurityEntity
      * @summary             Represents a security application            
      * @property {string} applicationSecret            Gets or sets the application secret used for authenticating the application            
      * @property {string} name            Gets or sets the name of the security device/user/role/device.            
@@ -347,7 +152,6 @@ var SanteDBModel = {
      * @class
      * @memberof SanteDBModel
      * @public
-     * @extends SanteDBModel.BaseEntityData
      * @summary             Represents a simply security policy            
      * @property {string} handler            Gets or sets the handler which may handle this policy            
      * @property {string} name            Gets or sets the name of the policy            
@@ -392,7 +196,6 @@ var SanteDBModel = {
      * @class
      * @memberof SanteDBModel
      * @public
-     * @extends SanteDBModel.Association
      * @summary             Represents a security policy instance            
      * @property {date} modifiedOn
      * @property {uuid} source
@@ -415,7 +218,6 @@ var SanteDBModel = {
      * @class
      * @memberof SanteDBModel
      * @public
-     * @extends SanteDBModel.SecurityEntity
      * @summary             Security role            
      * @property {string} name            Gets or sets the name of the security role            
      * @property {string} description            Description of the role            
@@ -458,7 +260,6 @@ var SanteDBModel = {
      * @class
      * @memberof SanteDBModel
      * @public
-     * @extends SanteDBModel.SecurityEntity
      * @summary             Security user represents a user for the purpose of security             
      * @property {string} email            Gets or sets the email address of the user            
      * @property {bool} emailConfirmed            Gets or sets whether the email address is confirmed            
@@ -1220,86 +1021,6 @@ var SanteDBModel = {
             this.providerSpecialty = copyData.providerSpecialty;
         }
     },  // Provider 
-    // SanteDB.Core.Model.Patch.Patch, SanteDB.Core.Model, Version=0.9.7.27948, Culture=neutral, PublicKeyToken=null
-    /**
-     * @class
-     * @memberof SanteDBModel
-     * @public
-     * @extends SanteDBModel.BaseEntityData
-     * @summary             Represents a series of patch instructions             
-     * @property {SanteDBModel.PatchTarget} appliesTo            Application version            
-     * @property {SanteDBModel.PatchOperation} change            A list of patch operations to be applied to the object            
-     * @property {date} creationTimeModel [Delay loaded from creationTime],             Gets or sets the time at which the data was created            
-     * @property {string} creationTime            Gets or sets the creation time in XML format            
-     * @property {date} obsoletionTimeModel [Delay loaded from obsoletionTime],             Gets or sets the time when the data is or will become invalid            
-     * @property {string} obsoletionTime            Gets or sets the creation time in XML format            
-     * @property {SanteDBModel.SecurityUser} createdByModel [Delay loaded from createdBy],             Gets or sets the user that created this base data            
-     * @property {date} modifiedOn            Gets the time that the object was last modified (from base data, default to CreationTime)            
-     * @property {SanteDBModel.SecurityUser} obsoletedByModel [Delay loaded from obsoletedBy],             Gets or sets the user that obsoleted this base data            
-     * @property {uuid} createdBy            Gets or sets the identifier of the user which created the data            
-     * @property {uuid} obsoletedBy            Gets or sets the identifier of the user which obsoleted the data            
-     * @property {uuid} id            The internal primary key value of the entity            
-     * @property {string} $type            Gets the type            
-     * @param {SanteDBModel.Patch} copyData Copy constructor (if present)
-     */
-    Patch: function (copyData) {
-        this.$type = 'Patch';
-        if (copyData) {
-            this.id = copyData.id;
-            this.obsoletedBy = copyData.obsoletedBy;
-            this.createdBy = copyData.createdBy;
-            this.obsoletedByModel = copyData.obsoletedByModel;
-            this.modifiedOn = copyData.modifiedOn;
-            this.createdByModel = copyData.createdByModel;
-            this.obsoletionTime = copyData.obsoletionTime;
-            this.obsoletionTimeModel = copyData.obsoletionTimeModel;
-            this.creationTime = copyData.creationTime;
-            this.creationTimeModel = copyData.creationTimeModel;
-            this.change = copyData.change;
-            this.appliesTo = copyData.appliesTo;
-        }
-    },  // Patch 
-    // SanteDB.Core.Model.Patch.PatchOperation, SanteDB.Core.Model, Version=0.9.7.27948, Culture=neutral, PublicKeyToken=null
-    /**
-     * @class
-     * @memberof SanteDBModel
-     * @public
-     * @summary             Represents a single patch operation            
-     * @property {SanteDBModel.PatchOperationType} op            Gets or sets the operation type            (see: {@link SanteDBModel.PatchOperationType} for values)
-     * @property {string} path            Gets or sets the path            
-     * @property {Object} value            Get or sets the value            
-     * @param {SanteDBModel.PatchOperation} copyData Copy constructor (if present)
-     */
-    PatchOperation: function (copyData) {
-        this.$type = 'PatchOperation';
-        if (copyData) {
-            this.value = copyData.value;
-            this.path = copyData.path;
-            this.op = copyData.op;
-        }
-    },  // PatchOperation 
-    // SanteDB.Core.Model.Patch.PatchTarget, SanteDB.Core.Model, Version=0.9.7.27948, Culture=neutral, PublicKeyToken=null
-    /**
-     * @class
-     * @memberof SanteDBModel
-     * @public
-     * @summary             Represents a target of a patch            
-     * @property {string} type            Identifies the target type            
-     * @property {uuid} id            Gets or sets the key            
-     * @property {uuid} version            Gets or sets the key            
-     * @property {string} etag            Gets or sets the tag of the item            
-     * @param {SanteDBModel.PatchTarget} copyData Copy constructor (if present)
-     */
-    PatchTarget: function (copyData) {
-        this.$type = 'PatchTarget';
-        if (copyData) {
-            this.etag = copyData.etag;
-            this.version = copyData.version;
-            this.id = copyData.id;
-            this.type = copyData.type;
-        }
-    },  // PatchTarget 
-    // SanteDB.Core.Model.Entities.Container, SanteDB.Core.Model, Version=0.9.7.27948, Culture=neutral, PublicKeyToken=null
     /**
      * @class
      * @memberof SanteDBModel
@@ -3293,36 +3014,6 @@ var SanteDBModel = {
             this.useModel = copyData.useModel;
         }
     },  // EntityTelecomAddress 
-    // SanteDB.Core.Model.Entities.GenericComponentValues`1, SanteDB.Core.Model, Version=0.9.7.27948, Culture=neutral, PublicKeyToken=null
-    /**
-     * @class
-     * @memberof SanteDBModel
-     * @public
-     * @abstract
-     * @extends SanteDBModel.Association
-     * @summary             A generic class representing components of a larger item (i.e. address, name, etc);            
-     * @property {SanteDBModel.Concept} typeModel [Delay loaded from type],             Gets or sets the type of address component            
-     * @property {uuid} type            Component type key            
-     * @property {string} value            Gets or sets the value of the name component            
-     * @property {date} modifiedOn
-     * @property {uuid} source
-     * @property {SanteDBModel.IdentifiedData} sourceModel [Delay loaded from source], 
-     * @property {uuid} id            The internal primary key value of the entity            
-     * @property {string} $type            Gets the type            
-     * @param {SanteDBModel.GenericComponentValues} copyData Copy constructor (if present)
-     */
-    GenericComponentValues: function (copyData) {
-        this.$type = 'GenericComponentValues';
-        if (copyData) {
-            this.id = copyData.id;
-            this.sourceModel = copyData.sourceModel;
-            this.source = copyData.source;
-            this.modifiedOn = copyData.modifiedOn;
-            this.value = copyData.value;
-            this.type = copyData.type;
-            this.typeModel = copyData.typeModel;
-        }
-    },  // GenericComponentValues 
     // SanteDB.Core.Model.Entities.ManufacturedMaterial, SanteDB.Core.Model, Version=0.9.7.27948, Culture=neutral, PublicKeyToken=null
     /**
      * @class
@@ -5547,42 +5238,6 @@ var SanteDBModel = {
             this.name = copyData.name;
         }
     },  // ConceptSet 
-    // SanteDB.Core.Model.DataTypes.Extension`1, SanteDB.Core.Model, Version=0.9.7.27948, Culture=neutral, PublicKeyToken=null
-    /**
-     * @class
-     * @memberof SanteDBModel
-     * @public
-     * @abstract
-     * @extends SanteDBModel.VersionedAssociation
-     * @summary             Represents a base entity extension            
-     * @property {bytea} value            Gets or sets the value of the extension            
-     * @property {string} valueModel [Delay loaded from value],             Value as string of bytes            
-     * @property {uuid} extensionType            Gets or sets the extension type key            
-     * @property {SanteDBModel.ExtensionType} extensionTypeModel [Delay loaded from extensionType],             Gets or sets the extension type            
-     * @property {number} effectiveVersionSequence
-     * @property {number} obsoleteVersionSequence
-     * @property {date} modifiedOn
-     * @property {uuid} source
-     * @property {SanteDBModel.VersionedEntityData} sourceModel [Delay loaded from source], 
-     * @property {uuid} id            The internal primary key value of the entity            
-     * @property {string} $type            Gets the type            
-     * @param {SanteDBModel.Extension} copyData Copy constructor (if present)
-     */
-    Extension: function (copyData) {
-        this.$type = 'Extension';
-        if (copyData) {
-            this.id = copyData.id;
-            this.sourceModel = copyData.sourceModel;
-            this.source = copyData.source;
-            this.modifiedOn = copyData.modifiedOn;
-            this.obsoleteVersionSequence = copyData.obsoleteVersionSequence;
-            this.effectiveVersionSequence = copyData.effectiveVersionSequence;
-            this.extensionTypeModel = copyData.extensionTypeModel;
-            this.extensionType = copyData.extensionType;
-            this.valueModel = copyData.valueModel;
-            this.value = copyData.value;
-        }
-    },  // Extension 
     // SanteDB.Core.Model.DataTypes.EntityExtension, SanteDB.Core.Model, Version=0.9.7.27948, Culture=neutral, PublicKeyToken=null
     /**
      * @class
@@ -5696,106 +5351,7 @@ var SanteDBModel = {
             this.handlerClass = copyData.handlerClass;
         }
     },  // ExtensionType 
-    // SanteDB.Core.Model.DataTypes.EntityIdentifier, SanteDB.Core.Model, Version=0.9.7.27948, Culture=neutral, PublicKeyToken=null
-    /**
-     * @class
-     * @memberof SanteDBModel
-     * @public
-     * @extends SanteDBModel.IdentifierBase
-     * @summary             Entity identifiers            
-     * @property {string} value
-     * @property {SanteDBModel.IdentifierType} type
-     * @property {SanteDBModel.AssigningAuthority} authority
-     * @property {number} effectiveVersionSequence
-     * @property {number} obsoleteVersionSequence
-     * @property {date} modifiedOn
-     * @property {uuid} source
-     * @property {SanteDBModel.Entity} sourceModel [Delay loaded from source], 
-     * @property {uuid} id            The internal primary key value of the entity            
-     * @property {string} $type            Gets the type            
-     * @param {SanteDBModel.EntityIdentifier} copyData Copy constructor (if present)
-     */
-    EntityIdentifier: function (copyData) {
-        this.$type = 'EntityIdentifier';
-        if (copyData) {
-            this.id = copyData.id;
-            this.sourceModel = copyData.sourceModel;
-            this.source = copyData.source;
-            this.modifiedOn = copyData.modifiedOn;
-            this.obsoleteVersionSequence = copyData.obsoleteVersionSequence;
-            this.effectiveVersionSequence = copyData.effectiveVersionSequence;
-            this.authority = copyData.authority;
-            this.type = copyData.type;
-            this.value = copyData.value;
-        }
-    },  // EntityIdentifier 
-    // SanteDB.Core.Model.DataTypes.ActIdentifier, SanteDB.Core.Model, Version=0.9.7.27948, Culture=neutral, PublicKeyToken=null
-    /**
-     * @class
-     * @memberof SanteDBModel
-     * @public
-     * @extends SanteDBModel.IdentifierBase
-     * @summary             Act identifier            
-     * @property {string} value
-     * @property {SanteDBModel.IdentifierType} type
-     * @property {SanteDBModel.AssigningAuthority} authority
-     * @property {number} effectiveVersionSequence
-     * @property {number} obsoleteVersionSequence
-     * @property {date} modifiedOn
-     * @property {uuid} source
-     * @property {SanteDBModel.Act} sourceModel [Delay loaded from source], 
-     * @property {uuid} id            The internal primary key value of the entity            
-     * @property {string} $type            Gets the type            
-     * @param {SanteDBModel.ActIdentifier} copyData Copy constructor (if present)
-     */
-    ActIdentifier: function (copyData) {
-        this.$type = 'ActIdentifier';
-        if (copyData) {
-            this.id = copyData.id;
-            this.sourceModel = copyData.sourceModel;
-            this.source = copyData.source;
-            this.modifiedOn = copyData.modifiedOn;
-            this.obsoleteVersionSequence = copyData.obsoleteVersionSequence;
-            this.effectiveVersionSequence = copyData.effectiveVersionSequence;
-            this.authority = copyData.authority;
-            this.type = copyData.type;
-            this.value = copyData.value;
-        }
-    },  // ActIdentifier 
-    // SanteDB.Core.Model.DataTypes.IdentifierBase`1, SanteDB.Core.Model, Version=0.9.7.27948, Culture=neutral, PublicKeyToken=null
-    /**
-     * @class
-     * @memberof SanteDBModel
-     * @public
-     * @abstract
-     * @extends SanteDBModel.VersionedAssociation
-     * @summary             Represents an external assigned identifier            
-     * @property {string} value            Gets or sets the value of the identifier            
-     * @property {SanteDBModel.IdentifierType} type            Gets or sets the identifier type            
-     * @property {SanteDBModel.AssigningAuthority} authority            Gets or sets a minimal assigning authority from XML data            
-     * @property {number} effectiveVersionSequence
-     * @property {number} obsoleteVersionSequence
-     * @property {date} modifiedOn
-     * @property {uuid} source
-     * @property {SanteDBModel.VersionedEntityData} sourceModel [Delay loaded from source], 
-     * @property {uuid} id            The internal primary key value of the entity            
-     * @property {string} $type            Gets the type            
-     * @param {SanteDBModel.IdentifierBase} copyData Copy constructor (if present)
-     */
-    IdentifierBase: function (copyData) {
-        this.$type = 'IdentifierBase';
-        if (copyData) {
-            this.id = copyData.id;
-            this.sourceModel = copyData.sourceModel;
-            this.source = copyData.source;
-            this.modifiedOn = copyData.modifiedOn;
-            this.obsoleteVersionSequence = copyData.obsoleteVersionSequence;
-            this.effectiveVersionSequence = copyData.effectiveVersionSequence;
-            this.authority = copyData.authority;
-            this.type = copyData.type;
-            this.value = copyData.value;
-        }
-    },  // IdentifierBase 
+ 
     // SanteDB.Core.Model.DataTypes.IdentifierType, SanteDB.Core.Model, Version=0.9.7.27948, Culture=neutral, PublicKeyToken=null
     /**
      * @class
@@ -5839,40 +5395,6 @@ var SanteDBModel = {
             this.scopeConcept = copyData.scopeConcept;
         }
     },  // IdentifierType 
-    // SanteDB.Core.Model.DataTypes.Note`1, SanteDB.Core.Model, Version=0.9.7.27948, Culture=neutral, PublicKeyToken=null
-    /**
-     * @class
-     * @memberof SanteDBModel
-     * @public
-     * @abstract
-     * @extends SanteDBModel.VersionedAssociation
-     * @summary             Generic note class            
-     * @property {string} text            Gets or sets the note text            
-     * @property {uuid} author            Gets or sets the author key            
-     * @property {SanteDBModel.Entity} authorModel [Delay loaded from author],             Gets or sets the author entity            
-     * @property {number} effectiveVersionSequence
-     * @property {number} obsoleteVersionSequence
-     * @property {date} modifiedOn
-     * @property {uuid} source
-     * @property {SanteDBModel.VersionedEntityData} sourceModel [Delay loaded from source], 
-     * @property {uuid} id            The internal primary key value of the entity            
-     * @property {string} $type            Gets the type            
-     * @param {SanteDBModel.Note} copyData Copy constructor (if present)
-     */
-    Note: function (copyData) {
-        this.$type = 'Note';
-        if (copyData) {
-            this.id = copyData.id;
-            this.sourceModel = copyData.sourceModel;
-            this.source = copyData.source;
-            this.modifiedOn = copyData.modifiedOn;
-            this.obsoleteVersionSequence = copyData.obsoleteVersionSequence;
-            this.effectiveVersionSequence = copyData.effectiveVersionSequence;
-            this.authorModel = copyData.authorModel;
-            this.author = copyData.author;
-            this.text = copyData.text;
-        }
-    },  // Note 
     // SanteDB.Core.Model.DataTypes.EntityNote, SanteDB.Core.Model, Version=0.9.7.27948, Culture=neutral, PublicKeyToken=null
     /**
      * @class
@@ -6077,50 +5599,6 @@ var SanteDBModel = {
             this.language = copyData.language;
         }
     },  // ReferenceTermName 
-    // SanteDB.Core.Model.DataTypes.Tag`1, SanteDB.Core.Model, Version=0.9.7.27948, Culture=neutral, PublicKeyToken=null
-    /**
-     * @class
-     * @memberof SanteDBModel
-     * @public
-     * @abstract
-     * @extends SanteDBModel.BaseEntityData
-     * @summary             Represents the base class for tags            
-     * @property {string} key            Gets or sets the key of the tag            
-     * @property {string} value            Gets or sets the value of the tag            
-     * @property {uuid} source            Gets or sets the source entity's key (where the relationship is FROM)            
-     * @property {SanteDBModel.IdentifiedData} sourceModel [Delay loaded from source],             The entity that this relationship targets            
-     * @property {date} creationTimeModel [Delay loaded from creationTime],             Gets or sets the time at which the data was created            
-     * @property {string} creationTime            Gets or sets the creation time in XML format            
-     * @property {date} obsoletionTimeModel [Delay loaded from obsoletionTime],             Gets or sets the time when the data is or will become invalid            
-     * @property {string} obsoletionTime            Gets or sets the creation time in XML format            
-     * @property {SanteDBModel.SecurityUser} createdByModel [Delay loaded from createdBy],             Gets or sets the user that created this base data            
-     * @property {date} modifiedOn            Gets the time that the object was last modified (from base data, default to CreationTime)            
-     * @property {SanteDBModel.SecurityUser} obsoletedByModel [Delay loaded from obsoletedBy],             Gets or sets the user that obsoleted this base data            
-     * @property {uuid} createdBy            Gets or sets the identifier of the user which created the data            
-     * @property {uuid} obsoletedBy            Gets or sets the identifier of the user which obsoleted the data            
-     * @property {uuid} id            The internal primary key value of the entity            
-     * @property {string} $type            Gets the type            
-     * @param {SanteDBModel.Tag} copyData Copy constructor (if present)
-     */
-    Tag: function (copyData) {
-        this.$type = 'Tag';
-        if (copyData) {
-            this.id = copyData.id;
-            this.obsoletedBy = copyData.obsoletedBy;
-            this.createdBy = copyData.createdBy;
-            this.obsoletedByModel = copyData.obsoletedByModel;
-            this.modifiedOn = copyData.modifiedOn;
-            this.createdByModel = copyData.createdByModel;
-            this.obsoletionTime = copyData.obsoletionTime;
-            this.obsoletionTimeModel = copyData.obsoletionTimeModel;
-            this.creationTime = copyData.creationTime;
-            this.creationTimeModel = copyData.creationTimeModel;
-            this.sourceModel = copyData.sourceModel;
-            this.source = copyData.source;
-            this.value = copyData.value;
-            this.key = copyData.key;
-        }
-    },  // Tag 
     // SanteDB.Core.Model.DataTypes.EntityTag, SanteDB.Core.Model, Version=0.9.7.27948, Culture=neutral, PublicKeyToken=null
     /**
      * @class
@@ -6650,179 +6128,6 @@ var SanteDBModel = {
             this.target = copyData.target;
         }
     },  // CarePlan 
-    // SanteDB.Core.Model.Acts.ControlAct, SanteDB.Core.Model, Version=0.9.7.27948, Culture=neutral, PublicKeyToken=null
-    /**
-     * @class
-     * @memberof SanteDBModel
-     * @public
-     * @extends SanteDBModel.Act
-     * @summary             Represents an act which indicates why data was created/changed            
-     * @property {bool} isNegated            Gets or sets an indicator which identifies whether the object is negated            
-     * @property {uuid} template            Gets the template key            
-     * @property {SanteDBModel.TemplateDefinition} templateModel [Delay loaded from template],             Gets or sets the template definition            
-     * @property {string} actTime            Gets or sets the creation time in XML format            
-     * @property {string} startTime            Gets or sets the creation time in XML format            
-     * @property {string} stopTime            Gets or sets the creation time in XML format            
-     * @property {uuid} classConcept            Class concept            (see: {@link SanteDBModel.ActClassKeys} for values)
-     * @property {uuid} moodConcept            Mood concept            (see: {@link SanteDBModel.ActMoodKeys} for values)
-     * @property {uuid} reasonConcept            Reason concept            (see: {@link SanteDBModel.ActReasonKeys} for values)
-     * @property {uuid} statusConcept            Status concept id            (see: {@link SanteDBModel.StatusKeys} for values)
-     * @property {uuid} typeConcept            Type concept identifier            
-     * @property {SanteDBModel.Concept} classConceptModel [Delay loaded from classConcept],             Class concept datal load property            
-     * @property {SanteDBModel.Concept} moodConceptModel [Delay loaded from moodConcept],             Mood concept data load property            
-     * @property {SanteDBModel.Concept} reasonConceptModel [Delay loaded from reasonConcept],             Mood concept data load property            
-     * @property {SanteDBModel.Concept} statusConceptModel [Delay loaded from statusConcept],             Status concept id            
-     * @property {SanteDBModel.Concept} typeConceptModel [Delay loaded from typeConcept],             Type concept identifier            
-     * @property {object} identifier            Gets the identifiers associated with this act            
-     * @property {SanteDBModel.ActIdentifier} identifier.classifier  where classifier is from {@link SanteDBModel.IdentifierBase} authority
-     * @property {object} relationship            Gets a list of all associated acts for this act            
-     * @property {SanteDBModel.ActRelationship} relationship.Appends             Indicates that the source act appends information contained in the target act            
-     * @property {SanteDBModel.ActRelationship} relationship.Arrival             Links the transortation act from another act            
-     * @property {SanteDBModel.ActRelationship} relationship.Departure             Links a transporation act from another act indicating departure of the subject            
-     * @property {SanteDBModel.ActRelationship} relationship.Documents             The source act documents the target act            
-     * @property {SanteDBModel.ActRelationship} relationship.EpisodeLink             Links two instances of the same act over time (example: chronic conditions)            
-     * @property {SanteDBModel.ActRelationship} relationship.Evaluates             Used to link a goal to an observation            
-     * @property {SanteDBModel.ActRelationship} relationship.Fulfills             Indicates that the source act fulfills the target act            
-     * @property {SanteDBModel.ActRelationship} relationship.HasAuthorization             Indicates that the target act authorizes the source act            
-     * @property {SanteDBModel.ActRelationship} relationship.HasComponent             Indicates that the target act is a component of the source act            
-     * @property {SanteDBModel.ActRelationship} relationship.HasControlVariable             Relationship from an act to one or more control variables (for example: device settings, or environment)            
-     * @property {SanteDBModel.ActRelationship} relationship.HasManifestation             The assertion that a new observation may be a manifestation of another            
-     * @property {SanteDBModel.ActRelationship} relationship.HasPrecondition             Indicates that the target act is a pre-condition of the source act            
-     * @property {SanteDBModel.ActRelationship} relationship.HasReason             Indicates a reasoning as to why the source act is occurring            
-     * @property {SanteDBModel.ActRelationship} relationship.HasReferenceValues             Indicates that the source act contains reference values from the target            
-     * @property {SanteDBModel.ActRelationship} relationship.HasSubject             Indicates the subject of a particular act (example: clinical act is a subject of a control act)            
-     * @property {SanteDBModel.ActRelationship} relationship.HasSupport             Indicates an existing act is suggesting evidence for a new observation.            
-     * @property {SanteDBModel.ActRelationship} relationship.IsCauseOf             Indicates that the source act is the cause of the target act            
-     * @property {SanteDBModel.ActRelationship} relationship.IsDerivedFrom             Indicates the source act is derived from information contained in the target act            
-     * @property {SanteDBModel.ActRelationship} relationship.IsExcerptOf             Indicates that the source act is an excerpt of the target act            
-     * @property {SanteDBModel.ActRelationship} relationship.RefersTo             Indicates that the source act refers to the target act            
-     * @property {SanteDBModel.ActRelationship} relationship.Replaces             The source act replaces the target act            
-     * @property {SanteDBModel.ActRelationship} relationship.StartsAfterStartOf             Indicates that the source act starts after the start of another act            
-     * @property {SanteDBModel.ActRelationship} relationship.Transforms             Indicates that the source act transforms the target act            
-     * @property {SanteDBModel.ActRelationship} relationship.$other Unclassified
-     * @property {SanteDBModel.SecurityPolicyInstance} policy            Gets or sets the policy instances            
-     * @property {object} extension            Gets a list of all extensions associated with the act            
-     * @property {string} extension.classifier  where classifier is from {@link SanteDBModel.Extension} extensionType
-     * @property {string} note            Gets a list of all notes associated with the act            
-     * @property {object} tag            Gets a list of all tags associated with the act            
-     * @property {string} tag.classifier  where classifier is from {@link SanteDBModel.Tag} key
-     * @property {SanteDBModel.ActProtocol} protocol            Identifies protocols attached to the act            
-     * @property {object} participation            Participations            
-     * @property {SanteDBModel.ActParticipation} participation.Admitter             The player entity was the person who was responsible for admitting the patient into a facility or care scenario.            
-     * @property {SanteDBModel.ActParticipation} participation.Attender             The player entity represents the attending physician for the patient            
-     * @property {SanteDBModel.ActParticipation} participation.Authenticator             The player entity represents an entity which authenticates the provision of care            
-     * @property {SanteDBModel.ActParticipation} participation.Authororiginator             The player entity is responsible for the creation of data described in the act            
-     * @property {SanteDBModel.ActParticipation} participation.Baby             The player is a resultant person in that it was the baby             
-     * @property {SanteDBModel.ActParticipation} participation.Beneficiary             The player is a beneficiary of the act such a receiver of a financial instrument, or other good            
-     * @property {SanteDBModel.ActParticipation} participation.CallbackContact             The player entity represents something that should be contacted upon completion of the act            
-     * @property {SanteDBModel.ActParticipation} participation.CausativeAgent             The player entity is an agent which caused the act to occur            
-     * @property {SanteDBModel.ActParticipation} participation.Consultant             The player entity is acting as a consult to the carrying out of the act            
-     * @property {SanteDBModel.ActParticipation} participation.Consumable             The player entity was or is to be consumed during the process of carrying out the act.            
-     * @property {SanteDBModel.ActParticipation} participation.CoverageTarget             The player entity represents the target coverage entity of the act            
-     * @property {SanteDBModel.ActParticipation} participation.Custodian             The player entity is the data custodian of the act (is responsible for storing and securing the act)            
-     * @property {SanteDBModel.ActParticipation} participation.DataEnterer             The player entity represents the person or device which phisically entered the data at the terminal            
-     * @property {SanteDBModel.ActParticipation} participation.Destination             The player etity represents the ultimate destination of the goods/materials/services described in the act            
-     * @property {SanteDBModel.ActParticipation} participation.Device             The player entity represents the device on which the act or data from the act was acquired or recorded            
-     * @property {SanteDBModel.ActParticipation} participation.DirectTarget             The player entity represents the directed target of care provided in the act            
-     * @property {SanteDBModel.ActParticipation} participation.Discharger             The player entity represents the person who is responsible for the discharging of the patient from an encounter            
-     * @property {SanteDBModel.ActParticipation} participation.Distributor             The player entity is the source distribution point for the financial or material instruments contained in the message            
-     * @property {SanteDBModel.ActParticipation} participation.Donor             The player entity represents the donor of tissue or materials used in the act            
-     * @property {SanteDBModel.ActParticipation} participation.EntryLocation             The location where the act was entered.            
-     * @property {SanteDBModel.ActParticipation} participation.Escort             The player entity was responsible for escorting the patient during the course of the act            
-     * @property {SanteDBModel.ActParticipation} participation.Exposure             The player entity something to which the patient was exposed            
-     * @property {SanteDBModel.ActParticipation} participation.ExposureAgent             The player entity represents the agent (material) to which the patient was exposed            
-     * @property {SanteDBModel.ActParticipation} participation.ExposureSource             The player entity describes the source of the material to which the patient was exposed            
-     * @property {SanteDBModel.ActParticipation} participation.ExposureTarget             The player entity describes the target to which the agent was exposed            
-     * @property {SanteDBModel.ActParticipation} participation.GuarantorParty             The player represents a party which is used as a financial guarantor for payment in the carrying out of the act            
-     * @property {SanteDBModel.ActParticipation} participation.Holder             The player is responsible for holding the act            
-     * @property {SanteDBModel.ActParticipation} participation.IndirectTarget             The entity not directly present in the act but which will be the focust of th act.            
-     * @property {SanteDBModel.ActParticipation} participation.Informant             The player was a person or device which informed data presented in the act. (Example: A mother telling a nurse that their child had a reaction)            
-     * @property {SanteDBModel.ActParticipation} participation.InformationRecipient             The player entity represents something that should be cc'ed on the act            
-     * @property {SanteDBModel.ActParticipation} participation.LegalAuthenticator             The player entity is responsible for legally authenticating the content of the act            
-     * @property {SanteDBModel.ActParticipation} participation.Location             The location where the service was performed.            
-     * @property {SanteDBModel.ActParticipation} participation.NonreuseableDevice             The player represents a consumable that can no longer be used            
-     * @property {SanteDBModel.ActParticipation} participation.Origin             The player represents the origin of the act            
-     * @property {SanteDBModel.ActParticipation} participation.Participation             The player entity participates in the act in no particular classification            
-     * @property {SanteDBModel.ActParticipation} participation.Performer             The player entity is responsible for performing the clinical steps documented in the act            
-     * @property {SanteDBModel.ActParticipation} participation.PrimaryInformationRecipient             The player entity represents a high priority contact which should be informed or cc'ed on the act            
-     * @property {SanteDBModel.ActParticipation} participation.PrimaryPerformer             The player entity was the primary performer of the act. This is used in procedures where more than one performer is present            
-     * @property {SanteDBModel.ActParticipation} participation.Product             The player represents a product that is not necessarily consumed but informs the act            
-     * @property {SanteDBModel.ActParticipation} participation.Receiver             The player represents the entity which is the intended receiver of the act            
-     * @property {SanteDBModel.ActParticipation} participation.RecordTarget             The player represents the entity to which the act is recorded against            
-     * @property {SanteDBModel.ActParticipation} participation.ReferredBy             The player represents the entity which referred the act or caused the act to be undertaken            
-     * @property {SanteDBModel.ActParticipation} participation.ReferredTo             The player entity represents the entity which was referred to            
-     * @property {SanteDBModel.ActParticipation} participation.Referrer             The player entity represents the person who was originally the referrer.            
-     * @property {SanteDBModel.ActParticipation} participation.Remote             The player entity represents a remote portion of the act            
-     * @property {SanteDBModel.ActParticipation} participation.ResponsibleParty             The player entity is ultimately responsible for the carrying out of the act            
-     * @property {SanteDBModel.ActParticipation} participation.ReusableDevice             The player entity represents a device which can be reused in future acts            
-     * @property {SanteDBModel.ActParticipation} participation.SecondaryPerformer             The secondary performing person (support clinician).            
-     * @property {SanteDBModel.ActParticipation} participation.Specimen             The player entity represents a specimen collected for the purpose of testing and diagnosis            
-     * @property {SanteDBModel.ActParticipation} participation.Subject             The player entity is the subject of an act, but not necessarily the record target (meaning the act is about a particular entity but not to be attached to their record)            
-     * @property {SanteDBModel.ActParticipation} participation.Tracker             The player entity is responsible for tracking the progress of the act            
-     * @property {SanteDBModel.ActParticipation} participation.Transcriber             The person who transcribed data from the original act.            
-     * @property {SanteDBModel.ActParticipation} participation.UgentNotificationContact             The player entity represents a contact entity in case of an emergency occurs during the act.            
-     * @property {SanteDBModel.ActParticipation} participation.Verifier             The player entity was responsible for verifying the accuracy of the data in the act            
-     * @property {SanteDBModel.ActParticipation} participation.Via             The player entity represents an entity where the act occurred "via" this entity (i.e. in transport)            
-     * @property {SanteDBModel.ActParticipation} participation.Witness             The player entity represents a legal witness to the act occurring.            
-     * @property {SanteDBModel.ActParticipation} participation.$other Unclassified
-     * @property {uuid} previousVersion
-     * @property {uuid} version
-     * @property {number} sequence
-     * @property {date} creationTimeModel [Delay loaded from creationTime],             Gets or sets the time at which the data was created            
-     * @property {string} creationTime            Gets or sets the creation time in XML format            
-     * @property {date} obsoletionTimeModel [Delay loaded from obsoletionTime],             Gets or sets the time when the data is or will become invalid            
-     * @property {string} obsoletionTime            Gets or sets the creation time in XML format            
-     * @property {SanteDBModel.SecurityUser} createdByModel [Delay loaded from createdBy],             Gets or sets the user that created this base data            
-     * @property {date} modifiedOn            Gets the time that the object was last modified (from base data, default to CreationTime)            
-     * @property {SanteDBModel.SecurityUser} obsoletedByModel [Delay loaded from obsoletedBy],             Gets or sets the user that obsoleted this base data            
-     * @property {uuid} createdBy            Gets or sets the identifier of the user which created the data            
-     * @property {uuid} obsoletedBy            Gets or sets the identifier of the user which obsoleted the data            
-     * @property {uuid} id            The internal primary key value of the entity            
-     * @property {string} $type            Gets the type            
-     * @param {SanteDBModel.ControlAct} copyData Copy constructor (if present)
-     */
-    ControlAct: function (copyData) {
-        this.$type = 'ControlAct';
-        if (copyData) {
-            this.id = copyData.id;
-            this.obsoletedBy = copyData.obsoletedBy;
-            this.createdBy = copyData.createdBy;
-            this.obsoletedByModel = copyData.obsoletedByModel;
-            this.modifiedOn = copyData.modifiedOn;
-            this.createdByModel = copyData.createdByModel;
-            this.obsoletionTime = copyData.obsoletionTime;
-            this.obsoletionTimeModel = copyData.obsoletionTimeModel;
-            this.creationTime = copyData.creationTime;
-            this.creationTimeModel = copyData.creationTimeModel;
-            this.sequence = copyData.sequence;
-            this.version = copyData.version;
-            this.previousVersion = copyData.previousVersion;
-            this.participation = copyData.participation;
-            this.protocol = copyData.protocol;
-            this.tag = copyData.tag;
-            this.note = copyData.note;
-            this.extension = copyData.extension;
-            this.policy = copyData.policy;
-            this.relationship = copyData.relationship;
-            this.identifier = copyData.identifier;
-            this.typeConceptModel = copyData.typeConceptModel;
-            this.statusConceptModel = copyData.statusConceptModel;
-            this.reasonConceptModel = copyData.reasonConceptModel;
-            this.moodConceptModel = copyData.moodConceptModel;
-            this.classConceptModel = copyData.classConceptModel;
-            this.typeConcept = copyData.typeConcept;
-            this.statusConcept = copyData.statusConcept;
-            this.reasonConcept = copyData.reasonConcept;
-            this.moodConcept = copyData.moodConcept;
-            this.classConcept = copyData.classConcept;
-            this.stopTime = copyData.stopTime;
-            this.startTime = copyData.startTime;
-            this.actTime = copyData.actTime;
-            this.templateModel = copyData.templateModel;
-            this.template = copyData.template;
-            this.isNegated = copyData.isNegated;
-        }
-    },  // ControlAct 
     // SanteDB.Core.Model.Acts.Observation, SanteDB.Core.Model, Version=0.9.7.27948, Culture=neutral, PublicKeyToken=null
     /**
      * @class
@@ -9203,32 +8508,6 @@ var SanteDBModel = {
          */
         WorkPlace: 'eaa6f08e-bb8e-4457-9dc0-3a1555fadf5c',
     },  // TelecomAddressUseKeys 
-    // SanteDB.Core.Model.Patch.PatchOperationType, SanteDB.Core.Model, Version=0.9.7.27948, Culture=neutral, PublicKeyToken=null
-    /**
-     * @enum {uuid}
-     * @memberof SanteDBModel
-     * @public
-     * @readonly
-     * @summary             Represents a patch operation type            
-     */
-    PatchOperationType: {
-        /** 
-         *             Patch operation adds the specified value to the array            
-         */
-        Add: 'Add',
-        /** 
-         *             Patch operation removes the specified value from the array            
-         */
-        Remove: 'Remove',
-        /** 
-         *             Patch operation replaces the specified item at the path             
-         */
-        Replace: 'Replace',
-        /** 
-         *             Patch should test value before proceeding            
-         */
-        Test: 'Test',
-    },  // PatchOperationType 
     // SanteDB.Core.Model.Constants.AddressComponentKeys, SanteDB.Core.Model, Version=0.9.7.27948, Culture=neutral, PublicKeyToken=null
     /**
      * @enum {uuid}
