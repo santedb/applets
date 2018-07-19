@@ -21,6 +21,24 @@ Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "uicore", "uicore\", "{999D8
 		Release.AspNetCompiler.FixedNames = "false"
 		Release.AspNetCompiler.Debug = "False"
 		VWDPort = "52379"
+	EndProjectSection
+	ProjectSection(WebsiteProperties) = preProject
+		TargetFrameworkMoniker = ".NETFramework,Version%3Dv4.0"
+		Debug.AspNetCompiler.VirtualPath = "/localhost_52379"
+		Debug.AspNetCompiler.PhysicalPath = "uicore\"
+		Debug.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_52379\"
+		Debug.AspNetCompiler.Updateable = "true"
+		Debug.AspNetCompiler.ForceOverwrite = "true"
+		Debug.AspNetCompiler.FixedNames = "false"
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.VirtualPath = "/localhost_52379"
+		Release.AspNetCompiler.PhysicalPath = "uicore\"
+		Release.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_52379\"
+		Release.AspNetCompiler.Updateable = "true"
+		Release.AspNetCompiler.ForceOverwrite = "true"
+		Release.AspNetCompiler.FixedNames = "false"
+		Release.AspNetCompiler.Debug = "False"
+		VWDPort = "52379"
 		SlnRelativePath = "uicore\"
 	EndProjectSection
 EndProject
@@ -46,6 +64,24 @@ Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "core", "core\", "{EA1AE347-
 	EndProjectSection
 EndProject
 Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "config", "config\", "{AFFADA52-446C-493B-B160-3AC1298A6C80}"
+	ProjectSection(WebsiteProperties) = preProject
+		TargetFrameworkMoniker = ".NETFramework,Version%3Dv4.0"
+		Debug.AspNetCompiler.VirtualPath = "/localhost_52377"
+		Debug.AspNetCompiler.PhysicalPath = "config\"
+		Debug.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_52377\"
+		Debug.AspNetCompiler.Updateable = "true"
+		Debug.AspNetCompiler.ForceOverwrite = "true"
+		Debug.AspNetCompiler.FixedNames = "false"
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.VirtualPath = "/localhost_52377"
+		Release.AspNetCompiler.PhysicalPath = "config\"
+		Release.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_52377\"
+		Release.AspNetCompiler.Updateable = "true"
+		Release.AspNetCompiler.ForceOverwrite = "true"
+		Release.AspNetCompiler.FixedNames = "false"
+		Release.AspNetCompiler.Debug = "False"
+		VWDPort = "52377"
+	EndProjectSection
 	ProjectSection(WebsiteProperties) = preProject
 		TargetFrameworkMoniker = ".NETFramework,Version%3Dv4.0"
 		Debug.AspNetCompiler.VirtualPath = "/localhost_52377"

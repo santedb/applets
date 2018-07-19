@@ -434,6 +434,15 @@ var SanteDB =
             /**
              * @property {SanteDB.ResourceWrapper}
              * @memberof SanteDB.resources
+             * @summary Represents a resource wrapper that persists bundles
+             */
+            bundle: new ResourceWrapper({
+                resource: "Bundle",
+                api: _hdsi
+            }),
+            /**
+             * @property {SanteDB.ResourceWrapper}
+             * @memberof SanteDB.resources
              * @summary Represents an resource wrapper that interoperates with the care planner
              */
             carePlan: new ResourceWrapper({
@@ -646,7 +655,16 @@ var SanteDB =
             tickle: new ResourceWrapper({
                 resource: "Notification",
                 api: _ami
-            }) 
+            }),
+            /**
+             * @property {SanteDB.ResourceWrapper}
+             * @memberof SanteDB.resources
+             * @summary A wrapper for locale information which comes from the server
+             */
+            locale: new ResourceWrapper({
+                resource: "Locale",
+                api: _ami
+            })
         };
 
         // master configuration closure
@@ -1139,6 +1157,95 @@ var SanteDB =
             }
         };
 
+        // Provides localization support functions
+        var _localeCache = {};
+        var _localization = {
+            /**
+             * @summary Gets a string from the current user interface localization
+             * @memberof SanteDB.localiztion
+             * @method
+             * @param {string} stringId The id of the localization string to get
+             * @returns {string} The localized string
+             */
+            getString: function (stringId) {
+                try {
+                    var retVal = __SanteDBAppService.GetString(stringId);
+                    return retVal || stringId;
+                }
+                catch (e) {
+                    console.error(e);
+                    return stringId;
+                }
+            },
+            /**
+             * @summary Get the currently configured locale
+             * @memberof SanteDB.localization
+             * @method
+             * @return {string} The ISO language code and country code of the application
+             */
+            getLocale: function () {
+                var retVal = __SanteDBAppService.GetLocale();
+                return retVal;
+            },
+            /**
+             * @summary Get the currently configured language
+             * @memberof SanteDB.localization
+             * @method
+             * @return {string} The ISO language code
+             */
+            getLanguage: function () {
+                return __SanteDBAppService.GetLocale().substr(0, 2);
+            },
+            /**
+             * @summary Get the currently configured country code
+             * @memberof SanteDB.localization
+             * @method
+             * @return {string} The 2 digit ISO country code
+             */
+            getCountry: function () {
+                return __SanteDBAppService.GetLocale().substr(4, 2);
+            },
+            /**
+             * @summary Set the current locale of the application
+             * @memberof SanteDB.localization
+             * @method
+             * @param {string} locale The ISO locale (i.e. en-US, en-CA, sw-TZ to set)
+             */
+            setLocale: function (locale) {
+                return __SanteDBAppService.SetLocale(locale);
+            },
+            /**
+             * @summary Get localization format information for the specified locale
+             * @memberof SanteDB.localization
+             * @method
+             * @param {string} locale The locale for which the format information should be retrieved
+             * @returns {Promise} The promise representing the operation to fetch locale
+             * @description The localization information contains formatting for currency, formatting for dates, and formatting for numbers
+             */
+            getFormatInformationAsync: function (locale) {
+                return new Promise(function (reject, fulfill) {
+                    try {
+                        if (_localeCache[locale])
+                            fulfill(_localeCache[locale]);
+                        else {
+                            _resources.locale.getAsync(locale)
+                                .then(function (d) {
+                                    _localeCache[locale] = d;
+                                    fulfill(d);
+                                })
+                                .catch(reject);
+                        }
+                    }
+                    catch (e) {
+                        var ex = e;
+                        if (!ex.$type)
+                            ex = new SanteDBModel.Exception("LocalizationException", "error.general", e);
+                        reject(ex);
+                    }
+                });
+            },
+
+        }
 
         // Public bindings
         this.api = {
