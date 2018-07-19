@@ -9,14 +9,7 @@ var SanteDBBre =
      */
     new function () {
 
-        // Backing of execution environment
-        var ExecutionEnvironment = {
-            Unknown: 0,
-            Server: 1,
-            Mobile: 2,
-            UserInterface: 3
-        };
-
+       
         // Issue priority
         var IssuePriority = {
             /**
@@ -54,7 +47,7 @@ var SanteDBBre =
          * @memberof SanteDBBre
          * @summary Indicates whether the business rules are running in the front-end or server side
          */
-        this.Environment = ExecutionEnvironment.UserInterface;
+        this.Environment = __SanteDBAppService.ExecutionEnvironment;
 
         /**
          * @method
