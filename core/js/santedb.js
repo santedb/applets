@@ -432,6 +432,15 @@ var SanteDB =
         // Resources internal
         var _resources = {
             /**
+             * @property {SanteDB.ResourceWrapper}
+             * @memberof SanteDB.resources
+             * @summary Represents an resource wrapper that interoperates with the care planner
+             */
+            carePlan: new ResourceWrapper({
+                resource: "CarePlan",
+                api: _hdsi
+            }),
+            /**
              * @property {SanteDB.ResourceWrapper} 
              * @memberof SanteDB.resources
              * @summary Represents the Patient Resource
@@ -610,13 +619,39 @@ var SanteDB =
             queue: new ResourceWrapper({
                 resource: "Queue",
                 api: _ami
-            })
+            }),
+            /**
+             * @property {SanteDB.ResourceWrapper}
+             * @memberof SanteDB.resources
+             * @summary Resource wrapper which interacts with the administrative task scheduler
+             */
+            task: new ResourceWrapper({
+                resource: "Task",
+                api: _ami
+            }),
+            /**
+             * @property {SanteDB.ResourceWrapper}
+             * @memberof SanteDB.resources
+             * @summary A resource wrapper for alerts which are messages between users
+             */
+            mail: new ResourceWrapper({
+                resource: "Mail",
+                api: _ami
+            }),
+            /**
+             * @property {SanteDB.ResourceWrapper}
+             * @memberof SanteDB.resources
+             * @summary A wrapper which is used for fetching user notifications
+             **/
+            tickle: new ResourceWrapper({
+                resource: "Notification",
+                api: _ami
+            }) 
         };
 
         // master configuration closure
         var _masterConfig = null;
         var _configuration = {
-
             /**
              * @method
              * @memberof SanteDB.configuration
@@ -1102,6 +1137,7 @@ var SanteDB =
                 });
             }
         };
+
 
         // Public bindings
         this.api = {
