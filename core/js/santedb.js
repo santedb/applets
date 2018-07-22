@@ -309,6 +309,22 @@ function SanteDBWrapper() {
         };
 
         /**
+         * @method
+         * @memberof SanteDBWrapper.ResourceWrapper
+         * @param {any} query The query for the object that you are looking for
+         * @summary Queries for instances of the resource this wrapper wraps in a synchronous fashion
+         * @see {SanteDBWrapper.findAsync} For asynchronous method
+         * @return {Promise} A promise which is blocked and not executed until the operation is complete
+         */
+        this.find = function (query) {
+            return _config.api.getAsync({
+                sync: true,
+                resource: _config.resource,
+                query: query
+            });
+        }
+
+        /**
             * @method
             * @memberof SanteDBWrapper.ResourceWrapper
             * @summary Inserts a specific instance of the wrapped resource

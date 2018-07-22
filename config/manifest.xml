@@ -1,4 +1,4 @@
-﻿<!--
+<!--
  - Copyright 2015-2018 Mohawk College of Applied Arts and Technology
  -
  - 
@@ -15,29 +15,12 @@
  - the License.
  - 
  - User: justi
- - Date: 2018-7-20
+ - Date: 2018-7-22
  -->
 <AppletManifest xmlns="http://santedb.org/applet">
-  <info id="org.santedb.i18n.fr" version="1.0.0.0">
-    <icon>/org.santedb.core/img/i18n.png</icon>
-    <name lang="fr">Support français</name>
+  <info id="org.santedb.config" version="1.0.0.0">
+    <icon>/org.santedb.core/img/icon.png</icon>
+    <name lang="en">SanteDB Configuration Applet</name>
     <author>Mohawk College of Applied Arts and Technology - mHealth &amp; eHealth Development &amp; Innovation Centre</author>
   </info>
-  <locales>
-    <locale code="fr">
-      <asset>/org.santedb.i18n.fr/lib/angular/fr.js</asset>
-    </locale>
-    <locale code="fr-be">
-      <asset>/org.santedb.i18n.fr/lib/angular/fr-be.js</asset>
-    </locale>
-    <locale code="fr-ca">
-      <asset>/org.santedb.i18n.fr/lib/angular/fr-ca.js</asset>
-    </locale>
-    <locale code="fr-ch">
-      <asset>/org.santedb.i18n.fr/lib/angular/fr-ch.js</asset>
-    </locale>
-    <locale code="fr-fr">
-      <asset>/org.santedb.i18n.fr/lib/angular/fr-fr.js</asset>
-    </locale>
-  </locales>
 </AppletManifest>
