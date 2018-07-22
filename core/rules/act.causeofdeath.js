@@ -20,7 +20,7 @@
 SanteDBBre.AddBusinessRule("CodedObservation", "AfterInsert", {
     typeConcept: "6fb8487c-cd6f-44f1-ab63-27dc65405792", // Clinical status
     value: "6df3720b-857f-4ba2-826f-b7f1d3c3adbb", //dead
-    statusConcept: SanteDBModel.StatusKeys.Completed
+    statusConcept: StatusKeys.Completed
     },
     function (act) {
 

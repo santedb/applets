@@ -20,11 +20,11 @@
 
 /** 
  * @summary Performs redirect of any record target which has been replaced
- * @param {SanteDBModel.Act} act The act being corrected for merge
- * @returns {SanteDBModel.Act} The correct act
+ * @param {Act} act The act being corrected for merge
+ * @returns {Act} The correct act
  */
 function __ActMergeFunction(act) {
-
+    
     act.tag = act.tag || {};
     if (!act.participation.RecordTarget ||
             act.tag["hasDuplicateFix"])
