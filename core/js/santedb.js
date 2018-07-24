@@ -97,12 +97,12 @@ if(!SanteDBWrapper)
                             var error = e.responseJSON;
 
                             if (reject) {
-                                if (error.error !== undefined) // oauth2
+                                if (error && error.error !== undefined) // oauth2
                                     reject(new Exception(error.type, error.error, error.error_description, error.caused_by), configuration.state);
-                                else if (error.$type === "Exception" || error.type)
+                                else if (error && (error.$type === "Exception" || error.type))
                                     reject(new Exception(error.type, error.message, error.detail, error.caused_by), configuration.state);
                                 else
-                                    reject(new Exception("Exception", "error.general." + error, e, null), configuration.state);
+                                    reject(new Exception("Exception", "error.general." + e, e, null), configuration.state);
                             }
                             else
                                 console.error("UNHANDLED PROMISE REJECT: " + JSON.stringif(e));
@@ -146,12 +146,12 @@ if(!SanteDBWrapper)
                             var error = e.responseJSON;
 
                             if (reject) {
-                                if (error.error !== undefined) // oauth2
+                                if (error && error.error !== undefined) // oauth2
                                     reject(new Exception(error.type, error.error, error.error_description, error.caused_by), configuration.state);
-                                else if (error.$type === "Exception" || error.type)
+                                else if (error && (error.$type === "Exception" || error.type))
                                     reject(new Exception(error.type, error.message, error.detail, error.caused_by), configuration.state);
                                 else
-                                    reject(new Exception("Exception", "error.general." + error, e, null), configuration.state);
+                                    reject(new Exception("Exception", "error.general." + e, e, null), configuration.state);
                             }
                             else
                                 console.error("UNHANDLED PROMISE REJECT: " + JSON.stringif(e));
@@ -193,12 +193,12 @@ if(!SanteDBWrapper)
                             var error = e.responseJSON;
 
                             if (reject) {
-                                if (error.error !== undefined) // oauth2
+                                if (error && error.error !== undefined) // oauth2
                                     reject(new Exception(error.type, error.error, error.error_description, error.caused_by), configuration.state);
-                                else if (error.$type === "Exception" || error.type)
+                                else if (error && (error.$type === "Exception" || error.type))
                                     reject(new Exception(error.type, error.message, error.detail, error.caused_by), configuration.state);
                                 else
-                                    reject(new Exception("Exception", "error.general." + error, e, null), configuration.state);
+                                    reject(new Exception("Exception", "error.general." + e, e, null), configuration.state);
                             }
                             else
                                 console.error("UNHANDLED PROMISE REJECT: " + JSON.stringif(e));
@@ -245,12 +245,12 @@ if(!SanteDBWrapper)
                             var error = e.responseJSON;
 
                             if (reject) {
-                                if (error.error !== undefined) // oauth2
+                                if (error && error.error !== undefined) // oauth2
                                     reject(new Exception(error.type, error.error, error.error_description, error.caused_by), configuration.state);
-                                else if (error.$type === "Exception" || error.type)
+                                else if (error && (error.$type === "Exception" || error.type))
                                     reject(new Exception(error.type, error.message, error.detail, error.caused_by), configuration.state);
                                 else
-                                    reject(new Exception("Exception", "error.general." + error, e, null), configuration.state);
+                                    reject(new Exception("Exception", "error.general." + e, e, null), configuration.state);
                             }
                             else
                                 console.error("UNHANDLED PROMISE REJECT: " + JSON.stringif(e));
@@ -268,7 +268,7 @@ if(!SanteDBWrapper)
             * @summary Represents a wrapper for a SanteDB resource
             * @param {any} _config The configuration object
             * @param {string} _config.resource The resource that is being wrapped
-            * @param {SanteDB.APIWrapper} _config.api The API to use for this resource
+            * @param {APIWrapper} _config.api The API to use for this resource
             */
         function ResourceWrapper (_config) {
 
@@ -445,7 +445,7 @@ if(!SanteDBWrapper)
             base: "/__auth/"
         });
         // Backing data for app API
-        var _app = new SanteDB.APIWrapper({
+        var _app = new APIWrapper({
             base: "/__app/",
             idByQuery: true
         });
@@ -947,6 +947,17 @@ if(!SanteDBWrapper)
         var _masterConfig = null;
         var _configuration = {
             /**
+             * @method
+             * @memberof SanteDBWrapper.configuration
+             * @return {Promise} The data providers
+             * @summary Gets a list of data providers available on this offline provider mode
+             */
+            getProvidersAsync: function() {
+                return _ami.getAsync({
+                    resource: "dbp"
+                });
+            },
+            /**
                 * @method
                 * @memberof SanteDBWrapper.configuration
                 * @summary Get the configuration, nb: this caches the configuration
@@ -961,15 +972,15 @@ if(!SanteDBWrapper)
                             _resources.configuration.getAsync()
                                 .then(function (d) {
                                     _masterConfig = d;
-                                    fulfill(_masterConfig);
+                                    if (fulfill) fulfill(_masterConfig);
                                 })
                                 .catch(function (e) {
-                                    reject(e);
+                                    if (reject) reject(e);
                                 });
                         }
                     }
                     catch (e) {
-                        reject(e);
+                        if (reject) reject(e);
                     }
                 });
             },
@@ -1090,17 +1101,17 @@ if(!SanteDBWrapper)
                             }
                         }).then(function (d) {
                             _masterConfig = d;
-                            fulfill(d);
+                            if (fulfill) fulfill(d);
                         }).catch(function (e) {
                             console.error(`Error joining realm: ${e}`);
-                            reject(e);
+                            if (reject) reject(e);
                         });
                     }
                     catch (e) {
                         var ex = e;
                         if (!ex.$type)
                             ex = new Exception("Exception", "error.general", e);
-                        reject(ex);
+                            if (reject) reject(ex);
                     }
                 });
             },
@@ -1190,7 +1201,7 @@ if(!SanteDBWrapper)
                             })
                                 .then(function (s) {
                                     _sessionInfo = s;
-                                    fulfill(s);
+                                    if(fulfill) fulfill(s);
                                 })
                                 .catch(reject);
                         }
@@ -1198,7 +1209,7 @@ if(!SanteDBWrapper)
                             var ex = e;
                             if (!ex.$type)
                                 ex = new Exception("Exception", "error.general", e);
-                            reject(ex);
+                            if (reject) reject(ex);
                         }
                 });
             },
@@ -1262,7 +1273,7 @@ if(!SanteDBWrapper)
                         var ex = e;
                         if (!ex.$type)
                             ex = new Exception("Exception", "error.general", e);
-                        reject(ex);
+                        if (reject) reject(ex);
                     }
                 });
             },
@@ -1290,7 +1301,7 @@ if(!SanteDBWrapper)
                                     _session = d;
                                     _authentication.getSessionInfoAsync().then(fulfill).catch(reject);
                                 }
-                                fulfill(d);
+                                if (fulfill) fulfill(d);
                             })
                             .catch(reject);
                     }
@@ -1298,7 +1309,7 @@ if(!SanteDBWrapper)
                         var ex = e;
                         if (!ex.$type)
                             ex = new Exception("Exception", "error.general", e);
-                        reject(ex);
+                            if (reject) reject(ex);
                     }
                 });
             },
@@ -1328,7 +1339,7 @@ if(!SanteDBWrapper)
                                     _session = d;
                                     _authentication.getSessionInfoAsync().then(fulfill).catch(reject);
                                 }
-                                fulfill(d);
+                                if(fulfill) fulfill(d);
                             })
                             .catch(reject);
                     }
@@ -1336,7 +1347,7 @@ if(!SanteDBWrapper)
                         var ex = e;
                         if (!ex.$type)
                             ex = new Exception("Exception", "error.general", e);
-                        reject(ex);
+                            if (reject) reject(ex);
                     }
                 });
             },
@@ -1365,19 +1376,19 @@ if(!SanteDBWrapper)
                                         _session = d;
                                         _authentication.getSessionInfoAsync().then(fulfill).catch(reject);
                                     }
-                                    fulfill(d);
+                                    if(fulfill) fulfill(d);
                                 })
                                 .catch(reject);
                         }
                         else {
-                            reject(new Exception("SecurityException", "error.security", "Cannot refresh a null session"));
+                            if (reject) reject(new Exception("SecurityException", "error.security", "Cannot refresh a null session"));
                         }
                     }
                     catch (e) {
                         var ex = e;
                         if (!ex.$type)
                             ex = new Exception("Exception", "error.general", e);
-                        reject(ex);
+                            if (reject) reject(ex);
                     }
                 });
             },
@@ -1410,8 +1421,9 @@ if(!SanteDBWrapper)
                 */
             logoutAsync: function () {
                 return new Promise(function (fulfill, reject) {
-                    if (!_session)
-                        reject(new Exception("SecurityException", "error.security", "Cannot logout of non-existant session"));
+                    if (!_session) {
+                        if (reject) reject(new Exception("SecurityException", "error.security", "Cannot logout of non-existant session"));
+                    }
                     try {
                         _auth.deleteAsync({
                             resource: "session"
@@ -1419,7 +1431,7 @@ if(!SanteDBWrapper)
                             .then(function (d) {
                                 _session = null;
                                 _sessionInfo = null;
-                                fulfill(d);
+                                if (fulfill) fulfill(d);
                             })
                             .catch(reject);
                     }
@@ -1427,7 +1439,7 @@ if(!SanteDBWrapper)
                         var ex = e;
                         if (!ex.$type)
                             ex = new Exception("Exception", "error.general", e);
-                        reject(ex);
+                        if(reject) reject(ex);
                     }
                 });
             }
@@ -1507,7 +1519,7 @@ if(!SanteDBWrapper)
                             _resources.locale.getAsync(locale)
                                 .then(function (d) {
                                     _localeCache[locale] = d;
-                                    fulfill(d);
+                                    if(fulfill) fulfill(d);
                                 })
                                 .catch(reject);
                         }
@@ -1516,7 +1528,7 @@ if(!SanteDBWrapper)
                         var ex = e;
                         if (!ex.$type)
                             ex = new Exception("LocalizationException", "error.general", e);
-                        reject(ex);
+                        if(reject) reject(ex);
                     }
                 });
             },

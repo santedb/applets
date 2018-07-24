@@ -9553,7 +9553,7 @@ if(!SchemaPropertyType)
  * @readonly
  * @summary             Identifies the type which a schema property carries            
  */
-const SchemaPropertyType = { 
+var SchemaPropertyType = { 
 	/** 
 	 *             The object represents a string            
 	 */
@@ -9608,7 +9608,7 @@ if(!SchemaPropertyAttributes)
  * @readonly
  * @summary             Identifies the type which a schema property carries            
  */
-const SchemaPropertyAttributes = { 
+var SchemaPropertyAttributes = { 
 	/** 
 	 *             No attributes            
 	 */
@@ -9635,7 +9635,7 @@ if(!UserClassKeys)
  * @readonly
  * @summary             Represents user classification keys            
  */
-const UserClassKeys = { 
+var UserClassKeys = { 
 	/** 
 	 *             Represents a user which is an application            
 	 */
@@ -9658,7 +9658,7 @@ if(!DatePrecision)
  * @readonly
  * @summary             Represents a date precision object            
  */
-const DatePrecision = { 
+var DatePrecision = { 
 	/** 
 	 *             Represents full date precision.            
 	 */
@@ -9697,7 +9697,7 @@ if(!AddressUseKeys)
  * @readonly
  * @summary             Address use keys            
  */
-const AddressUseKeys = { 
+var AddressUseKeys = { 
 	/** 
 	 *             Represents an alphabetic address used for matching             
 	 */
@@ -9768,7 +9768,7 @@ if(!EntityClassKeys)
  * @readonly
  * @summary             Entity class concept keys            
  */
-const EntityClassKeys = { 
+var EntityClassKeys = { 
 	/** 
 	 *             Animal            
 	 */
@@ -9859,7 +9859,7 @@ if(!DeterminerKeys)
  * @readonly
  * @summary             Determiner codes classify an entity into one of three categories.             
  */
-const DeterminerKeys = { 
+var DeterminerKeys = { 
 	/** 
 	 *             Indicates the entity is not a particular instance of a thing, rather a type of thing            
 	 */
@@ -9882,7 +9882,7 @@ if(!NameUseKeys)
  * @readonly
  * @summary             Name use keys            
  */
-const NameUseKeys = { 
+var NameUseKeys = { 
 	/** 
 	 *             The name used is an alphabetic representation of the name (ex: romaji in Japanese)            
 	 */
@@ -9957,7 +9957,7 @@ if(!ActParticipationKey)
  * @readonly
  * @summary             Represents the participation concepts which an entity can participate in an act            
  */
-const ActParticipationKey = { 
+var ActParticipationKey = { 
 	/** 
 	 *             The player entity was the person who was responsible for admitting the patient into a facility or care scenario.            
 	 */
@@ -10192,7 +10192,7 @@ if(!EntityRelationshipTypeKeys)
  * @readonly
  * @summary             Base entity relationship type keys            
  */
-const EntityRelationshipTypeKeys = { 
+var EntityRelationshipTypeKeys = { 
 	/** 
 	 *             The access            
 	 */
@@ -10823,7 +10823,7 @@ if(!StatusKeys)
  * @readonly
  * @summary             Status concepts represent the current status of entities, acts, and concepts.            
  */
-const StatusKeys = { 
+var StatusKeys = { 
 	/** 
 	 *             When an entity or act is active, it means the information or entity is currently correct and ongoing            
 	 */
@@ -10858,7 +10858,7 @@ if(!TelecomAddressUseKeys)
  * @readonly
  * @summary             Telecommunications address use keys            
  */
-const TelecomAddressUseKeys = { 
+var TelecomAddressUseKeys = { 
 	/** 
 	 *             answering service            
 	 */
@@ -10897,7 +10897,7 @@ if(!PatchOperationType)
  * @readonly
  * @summary             Represents a patch operation type            
  */
-const PatchOperationType = { 
+var PatchOperationType = { 
 	/** 
 	 *             Patch operation adds the specified value to the array            
 	 */
@@ -10924,7 +10924,7 @@ if(!AddressComponentKeys)
  * @readonly
  * @summary             Represents address component types            
  */
-const AddressComponentKeys = { 
+var AddressComponentKeys = { 
 	/** 
 	 *             An additional locator (example: Beside the red barn).            
 	 */
@@ -11047,7 +11047,7 @@ if(!NameComponentKeys)
  * @readonly
  * @summary             Name component type keys            
  */
-const NameComponentKeys = { 
+var NameComponentKeys = { 
 	/** 
 	 *             The name component represents a delimeter in a name such as hyphen or space            
 	 */
@@ -11082,7 +11082,7 @@ if(!PhoneticAlgorithmKeys)
  * @readonly
  * @summary             Phonetic algorithm keys for built in phonetic algorithms in SanteDB            
  */
-const PhoneticAlgorithmKeys = { 
+var PhoneticAlgorithmKeys = { 
 	/** 
 	 *             Represents the metaphone phonetic algorithm            
 	 */
@@ -11105,7 +11105,7 @@ if(!ConceptRelationshipTypeKeys)
  * @readonly
  * @summary             Reference type identifiers            
  */
-const ConceptRelationshipTypeKeys = { 
+var ConceptRelationshipTypeKeys = { 
 	/** 
 	 *             The source concept has the inverse meaning of the target concept            
 	 */
@@ -11132,7 +11132,7 @@ if(!ConceptClassKeys)
  * @readonly
  * @summary             Concept classification identifiers for built-in concept classes            
  */
-const ConceptClassKeys = { 
+var ConceptClassKeys = { 
 	/** 
 	 *             Classification codes            
 	 */
@@ -11195,7 +11195,7 @@ if(!CodeSystemKeys)
  * @readonly
  * @summary             Code system identifiers            
  */
-const CodeSystemKeys = { 
+var CodeSystemKeys = { 
 	/** 
 	 *             Commonn Vaccination Codes (CDC)            
 	 */
@@ -11254,7 +11254,7 @@ if(!ActClassKeys)
  * @readonly
  * @summary             Represents a series of class keys for use on acts.            
  */
-const ActClassKeys = { 
+var ActClassKeys = { 
 	/** 
 	 *             The act represents generic account management such as adjudications, financial adjustments, stock counting, etc.            
 	 */
@@ -11321,7 +11321,7 @@ if(!ActMoodKeys)
  * @readonly
  * @summary             Act Mood keys            
  */
-const ActMoodKeys = { 
+var ActMoodKeys = { 
 	/** 
 	 *             The ACT represents an appointment that was made to do something            
 	 */
@@ -11368,7 +11368,7 @@ if(!ActReasonKeys)
  * @readonly
  * @summary             Represents act reasons (reasons for an act)            
  */
-const ActReasonKeys = { 
+var ActReasonKeys = { 
 	/** 
 	 *             The patient started too late for the therapy            
 	 */
@@ -11419,7 +11419,7 @@ if(!ActRelationshipTypeKeys)
  * @readonly
  * @summary             Act relationship types            
  */
-const ActRelationshipTypeKeys = { 
+var ActRelationshipTypeKeys = { 
 	/** 
 	 *             Indicates that the source act appends information contained in the target act            
 	 */
@@ -11522,7 +11522,7 @@ if(!NullReasonKeys)
  * @readonly
  * @summary             In SanteDB, any concept can be replaced with a null reason. A null reason indicates why a particular field is not present rather than being null            
  */
-const NullReasonKeys = { 
+var NullReasonKeys = { 
 	/** 
 	 *             The reason that the requested value was not provided is that it is not available            
 	 */
@@ -11587,7 +11587,7 @@ const NullReasonKeys = {
 
 // Empty guid
 if(!EmptyGuid)
-    EmptyGuid = "00000000-0000-0000-0000-000000000000";
+    var EmptyGuid = "00000000-0000-0000-0000-000000000000";
 
 if(!Exception)
     /**
