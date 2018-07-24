@@ -1,6 +1,20 @@
 <div xmlns="http://www.w3.org/1999/xhtml">
-    <h3>Welcome To SanteDB!</h3>
+    <h3> <img src="/org.santedb.core/img/icon.png"/> Welcome To SanteDB!</h3>
     <p>Welcome to SanteDB Version {{$root.system.version}}. This is the default applet welcome screen. You will need to install
         one or more plugins into the SanteDB server in order for more useful screens to appear.
     </p>
+    <h4>Configuration might be needed</h4>
+    <p>You may also be seeing this page because you have not fully configured this instance of the SanteDB disconnected service
+        you are running. To configure this instance jump over to the
+        <a ui-sref="santedb-config.initial">Initial Configuration Screen</a>
+    </p>
+    <h4>Developing your own app?</h4>
+    <p>If you're developing your own application, you have configured your instance and still see this page, try adding a reference
+        to your application source code directory by using:</p>
+    <blockquote>
+        <code>sdb-are --ref=org.santedb.core.pak --ref=org.santedb.uicore.pak --applet=path_to_your_applet</code>
+    </blockquote>
+    <p>However, if you're seeing this message on a mobile device, a disconnected server, or production (non-development tool)
+        it may be your application is not registered or does not have a startup asset.</p>
+    <p>Please contact your system administrator for more information.</p>
 </div>
