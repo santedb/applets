@@ -27,30 +27,68 @@
     <locale code="en">
       <asset>/org.santedb.i18n.en/lib/angular/en.js</asset>
       <asset>/org.santedb.i18n.en/lib/select2/en.js</asset>
+      <asset>/org.santedb.i18n.en/lib/santedb/en.js</asset>
     </locale>
     <locale code="en-au">
       <asset>/org.santedb.i18n.en/lib/angular/en-au.js</asset>
+      <asset>/org.santedb.i18n.en/lib/santedb/en.js</asset>
       <asset>/org.santedb.i18n.en/lib/select2/en.js</asset>
     </locale>
     <locale code="en-ca">
       <asset>/org.santedb.i18n.en/lib/angular/en-ca.js</asset>
       <asset>/org.santedb.i18n.en/lib/select2/en.js</asset>
+      <asset>/org.santedb.i18n.en/lib/santedb/en.js</asset>
     </locale>
     <locale code="en-gb">
       <asset>/org.santedb.i18n.en/lib/angular/en-gb.js</asset>
       <asset>/org.santedb.i18n.en/lib/select2/en.js</asset>
+      <asset>/org.santedb.i18n.en/lib/santedb/en.js</asset>
     </locale>
     <locale code="en-iso">
       <asset>/org.santedb.i18n.en/lib/angular/en-iso.js</asset>
       <asset>/org.santedb.i18n.en/lib/select2/en.js</asset>
+      <asset>/org.santedb.i18n.en/lib/santedb/en.js</asset>
     </locale>
     <locale code="en-nz">
       <asset>/org.santedb.i18n.en/lib/angular/en-nz.js</asset>
       <asset>/org.santedb.i18n.en/lib/select2/en.js</asset>
+      <asset>/org.santedb.i18n.en/lib/santedb/en.js</asset>
     </locale>
     <locale code="en-ph">
       <asset>/org.santedb.i18n.en/lib/angular/en-ph.js</asset>
       <asset>/org.santedb.i18n.en/lib/select2/en.js</asset>
+      <asset>/org.santedb.i18n.en/lib/santedb/en.js</asset>
     </locale>
   </locales>
+  <strings lang="en">
+    <!-- Logins -->
+    <string key="ui.login.input.username">Username</string>
+    <string key="ui.login.input.password">Password</string>
+    <string key="ui.login.input.pin">PIN #</string>
+    <string key="ui.login.title.elevate">User Elevation</string>
+    <string key="ui.login.input.purpose">Reason</string>
+    <string key="ui.login.realm">Enter security details for realm</string>
+    <!-- Errors -->
+    <string key="ui.error.title">System Error</string>
+    <string key="ui.error.description">Additional details follow:</string>
+    <string key="ui.error.contactSysAdmin">Please file a bug report, or contact your system administrator with this information</string>
+    <string key="error.http.404">The requested resource could not be found</string>
+    <string key="error.type.Exception">General Error</string>
+    <string key="error.type.HttpException">Communications Error</string>
+
+
+    <!-- Actions -->
+    <string key="ui.action.ok">Ok</string>
+    <string key="ui.action.cancel">Cancel</string>
+    <string key="ui.action.save">Save</string>
+    <string key="ui.action.search">Search</string>
+    <string key="ui.action.login">Login</string>
+    <string key="ui.action.ignore">Ignore</string>
+    <string key="ui.action.next">Next</string>
+    <string key="ui.action.prev">Back</string>
+    <!-- General Dialog Preferences -->
+    <string key="ui.pref.nevershow">Never show this message again</string>
+
+  </strings>
+
 </AppletManifest>

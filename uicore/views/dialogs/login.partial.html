@@ -1,0 +1,26 @@
+<!-- Login Partial -->
+<div class="modal fade" role="dialog" id="loginModal" xmlns="http://www.w3.org/1999/xhtml" xmlns:sdb="http://santedb.org/applet"
+    ng-controller="LoginController">
+    <div class="modal-dialog" role="document">
+        <form class="form" ng-submit="doLogin(loginForm)" name="loginForm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">
+                        <i class="fa fa-shield-alt"></i> {{ 'ui.login.title.elevate' | i18n }}</h5>
+                    <button type="button" class="close" data-dismiss="modal">
+                        <i class="fa fa-times"></i>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <!-- #include virtual="~/views/security/login.partial.html" -->
+                </div>
+                <div class="modal-footer">
+                    <div class="btn-group">
+                        <button type="submit" class="btn btn-lg btn-secondary" data-dismiss="modal"><i class="fa fa-times"></i> {{ 'ui.action.cancel' | i18n }}</button>
+                        <button type="submit" class="btn btn-lg btn-primary"><i class="fa fa-check"></i> {{ 'ui.action.login' | i18n }}</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

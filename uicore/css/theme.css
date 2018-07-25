@@ -1,0 +1,20 @@
+.form-group > label.control-label {
+    text-align: right;
+    font-weight: bold
+}
+
+html, body {
+    height:100%
+}
+
+.action-footer {
+    border-top: solid 1px #e9ecef;;
+    position: relative;
+    margin-top: -81px; /* negative value of footer height */
+    height: 81px;
+    clear:both;
+    padding-top:20px;
+    display: flex;
+    justify-content: flex-end;
+    padding: 1rem;
+  } 

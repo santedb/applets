@@ -2,7 +2,7 @@
 /**
  * SanteDB Root JS View
  */
-var santedbApp = angular.module('santedb', ['ngSanitize', 'ui.router', 'oc.lazyLoad'])
+var santedbApp = angular.module('santedb', ['ngSanitize', 'ui.router', 'oc.lazyLoad', 'santedb-lib'])
     .config(['$compileProvider', '$stateProvider', '$urlRouterProvider', function ($compileProvider, $stateProvider, $urlRouterProvider) {
         $compileProvider.aHrefSanitizationWhitelist(/^\s*(http|https|tel):/);
         $compileProvider.imgSrcSanitizationWhitelist(/^\s*(http|https):/);
@@ -28,6 +28,7 @@ var santedbApp = angular.module('santedb', ['ngSanitize', 'ui.router', 'oc.lazyL
             $stateProvider.state(state);
         });
 
+        // Startup asset
         if (!startupAsset)
             $stateProvider.state({
                 name: 'santedb-index',
@@ -40,9 +41,26 @@ var santedbApp = angular.module('santedb', ['ngSanitize', 'ui.router', 'oc.lazyL
                     }
                 }
             });
-        //        $urlRouterProvider.otherwise('/');
+
+        
+    }]).controller("RootIndexController", ["$scope", function($scope) {
+        $scope.login = {
+            grant_type: "password",
+            requirePou: true,
+            forbidPin: true
+        };
     }])
-    .run(['$rootScope', '$state', '$templateCache', '$transitions', function ($rootScope, $state, $templateCache, $transitions) {
+    .run(['$rootScope', '$state', '$templateCache', '$transitions', '$ocLazyLoad', function ($rootScope, $state, $templateCache, $transitions, $ocLazyLoad) {
+
+        // Localization
+        SanteDB.resources.locale.findAsync().then(function(locale) {
+            var localeAsset = locale[SanteDB.locale.getLocale()];
+            localeAsset.forEach(function(l) {
+                $.getScript(l);
+            });
+        }).catch(function(e) { 
+            $rootScope.errorHandler(e);
+        });
 
         if (window.location.hash == "")
             window.location.hash = "#!/";
@@ -52,7 +70,7 @@ var santedbApp = angular.module('santedb', ['ngSanitize', 'ui.router', 'oc.lazyL
             $rootScope.system.config = d;
             $rootScope.system.version = SanteDB.application.getVersion();
             $rootScope.$apply();
-        }).catch(function (e) { console.error(e); });
+        }).catch(function (e) { $rootScope.errorHandler(e); });
 
         // Transitions
         $transitions.onBefore({}, function (transition) {
@@ -63,6 +81,22 @@ var santedbApp = angular.module('santedb', ['ngSanitize', 'ui.router', 'oc.lazyL
             $("#pageTransitioner").hide();
         });
 
-        // 
+        // Get session
+        SanteDB.authentication.getSessionInfoAsync().then(function(s) {
+            $rootScope.session = s;
+        }).catch(function(e) { $rootScope.errorHandler(e); });
 
+
+        /**
+         * @summary Global Error Handler
+         */
+        $rootScope.errorHandler = function(e) {
+            console.error(e);
+            $rootScope.error = {
+                details: e.details || e,
+                message: e.message || 'ui.error.title',
+                type: e.type
+            };
+            $("#errorModal").modal({ backdrop: 'static' });
+        }
     }]);

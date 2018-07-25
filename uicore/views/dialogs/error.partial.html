@@ -1,0 +1,28 @@
+<!-- Error -->
+<div class="modal fade" data-backdrop-limit="1" role="dialog" tabindex="-1" id="errorModal" xmlns="http://www.w3.org/1999/xhtml">
+    <div class="modal-dialog" role="document" >
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="modal-title">
+                    <i class="fa fa-exclamation-triangle"></i> {{ ( 'error.type.' + ($root.error.type || 'Exception')) | i18n }}</div>
+                <button type="button" class="close" data-dismiss="modal">
+                    <i class="fa fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>
+                    {{ $root.error.message | i18n }}. {{ 'ui.error.description' | i18n }}
+                </p>
+                <blockquote>
+                    <p class="text-danger">
+                    {{ $root.error.details }}
+                </p>
+                </blockquote>
+                <p>{{ 'ui.error.contactSysAdmin' | i18n }}</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-dismiss="modal">{{ 'ui.action.ok' | i18n }}</button>
+            </div>
+        </div>
+    </div>
+</div>

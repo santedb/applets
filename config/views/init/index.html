@@ -7,6 +7,55 @@
             <sdb:title lang="en">Setup SanteDB</sdb:title>
         </sdb:view>
     </sdb:state>
-    <i class="fa fa-coins"></i>
-    Settings Loaded!
+    <div class="container-fluid" style="min-height: 100%">
+        <div class="row">
+            <div class="col-lg-2 col-sm-4 col-md-3 d-none d-sm-block">
+                <ul class="nav nav-pills flex-column" role="tablist">
+                    <li class="active nav-item" role="presentation">
+                        <a class="nav-link active" href="javascript:" data-target="#realmTab" data-toggle="tab">
+                            <i class="fa fa-globe"></i> {{ 'ui.config.realm.title' | i18n }}</a>
+                    </li>
+                    <li role="presentation" class="nav-item">
+                        <a class="nav-link" href="javascript:" data-target="#syncTab" data-toggle="tab">
+                            <i class="fa fa-cloud-download-alt"></i> {{ 'ui.config.sync.title' | i18n }}</a>
+                    </li>
+                    <li role="presentation" class="nav-item">
+                        <a class="nav-link" href="javascript:" data-target="#dataTab" data-toggle="tab">
+                            <i class="fa fa-database"></i> {{ 'ui.config.data.title' | i18n }}</a>
+                    </li>
+                    <li role="presentation" class="nav-item">
+                        <a class="nav-link" href="javascript:" data-target="#logTab" data-toggle="tab">
+                            <i class="fa fa-list-ol"></i> {{ 'ui.config.log.title' | i18n }}</a>
+                    </li>
+                    <li role="presentation" class="nav-item">
+                        <a class="nav-link" href="javascript:" data-target="#securityTab" data-toggle="tab">
+                            <i class="fa fa-shield-alt"></i> {{ 'ui.config.security.title' | i18n }}</a>
+                    </li>
+                    <li role="presentation" class="nav-item">
+                        <a class="nav-link" href="javascript:" data-target="#networkTab" data-toggle="tab">
+                            <i class="fa fa-wifi"></i> {{ 'ui.config.network.title' | i18n }}</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="col-lg-10 col-sm-8 col-md-9 col-xs-12" style="padding-bottom: 150px; overflow:auto; max-height: 100%">
+                <div class="tab-content">
+                    <div role="tabpanel" class="tab-pane active" id="realmTab">
+                        <h4>
+                            <i class="fa fa-globe"></i> {{ 'ui.config.realm.title' | i18n }}</h4>
+                        <p>{{ 'ui.config.realm.description' | i18n }}</p>
+                        <!-- #include virtual="~/views/realm/content.html" -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <footer class="action-footer">
+        <div class="btn-group">
+            <button class="btn btn-lg btn-secondary" ng-disabled="wizardStep > 0">
+                <i class="fa fa-chevron-left"></i> {{ 'ui.action.prev' | i18n }}</button>
+            <button class="btn btn-lg btn-primary">{{ 'ui.action.next' | i18n }}
+                <i class="fa fa-chevron-right"></i>
+            </button>
+        </div>
+    </footer>
 </div>

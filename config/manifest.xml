@@ -23,4 +23,28 @@
     <name lang="en">SanteDB Configuration Applet</name>
     <author>Mohawk College of Applied Arts and Technology - mHealth &amp; eHealth Development &amp; Innovation Centre</author>
   </info>
+  <strings lang="en">
+    <string key="ui.config.realm.title">Domain</string>
+    <string key="ui.config.realm.description">This SanteDB client application needs to contact a centralized instanced called a "domain". This screen will allow you to configure the specific details of how this mobile device will contact the domain.</string>
+    <string key="ui.config.realm.deviceName.label">Device ID</string>
+    <string key="ui.config.realm.deviceName.help">A name for this device. For example: 'GoodHealthTablet1'</string>
+    <string key="ui.config.realm.name.label">Domain Controller</string>
+    <string key="ui.config.realm.name.help">The IP address or host name of the domain controller</string>
+    <string key="ui.config.realm.trace.label">Enable Tracing</string>
+    <string key="ui.config.realm.trace.help">- Log all requests to the server</string>
+    <string key="ui.config.realm.port.label">Port</string>
+    <string key="ui.config.realm.port.help">The port to contact the domain on (default: 8080 or 8443)</string>
+    <string key="ui.config.realm.ssl.label">Use SSL/TLS</string>
+    <string key="ui.config.realm.ssl.help">- Force the use of encryption for communication</string>
+
+    <string key="ui.config.sync.title">Synchronization</string>
+    <string key="ui.config.data.title">Database</string>
+    <string key="ui.config.log.title">Logging</string>
+    <string key="ui.config.security.title">Security</string>
+    <string key="ui.config.network.title">Network</string>
+
+    <string key="ui.config.action.realm.join">Join Domain</string>
+    <string key="ui.config.action.realm.leave">Leave Domain</string>
+
+  </strings>
 </AppletManifest>

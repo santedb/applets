@@ -102,7 +102,7 @@ if(!SanteDBWrapper)
                                 else if (error && (error.$type === "Exception" || error.type))
                                     reject(new Exception(error.type, error.message, error.detail, error.caused_by), configuration.state);
                                 else
-                                    reject(new Exception("Exception", "error.general." + e, e, null), configuration.state);
+                                    reject(new Exception("HttpException", "error.http." + e.status, e, null), configuration.state);
                             }
                             else
                                 console.error("UNHANDLED PROMISE REJECT: " + JSON.stringif(e));
@@ -151,7 +151,7 @@ if(!SanteDBWrapper)
                                 else if (error && (error.$type === "Exception" || error.type))
                                     reject(new Exception(error.type, error.message, error.detail, error.caused_by), configuration.state);
                                 else
-                                    reject(new Exception("Exception", "error.general." + e, e, null), configuration.state);
+                                    reject(new Exception("HttpException", "error.http." + e.status, e, null), configuration.state);
                             }
                             else
                                 console.error("UNHANDLED PROMISE REJECT: " + JSON.stringif(e));
@@ -198,7 +198,7 @@ if(!SanteDBWrapper)
                                 else if (error && (error.$type === "Exception" || error.type))
                                     reject(new Exception(error.type, error.message, error.detail, error.caused_by), configuration.state);
                                 else
-                                    reject(new Exception("Exception", "error.general." + e, e, null), configuration.state);
+                                    reject(new Exception("HttpException", "error.http." + e.status, e, null), configuration.state);
                             }
                             else
                                 console.error("UNHANDLED PROMISE REJECT: " + JSON.stringif(e));
@@ -250,7 +250,7 @@ if(!SanteDBWrapper)
                                 else if (error && (error.$type === "Exception" || error.type))
                                     reject(new Exception(error.type, error.message, error.detail, error.caused_by), configuration.state);
                                 else
-                                    reject(new Exception("Exception", "error.general." + e, e, null), configuration.state);
+                                    reject(new Exception("HttpException", "error.http." + e.status, e, null), configuration.state);
                             }
                             else
                                 console.error("UNHANDLED PROMISE REJECT: " + JSON.stringif(e));
@@ -939,7 +939,7 @@ if(!SanteDBWrapper)
                 */
             locale: new ResourceWrapper({
                 resource: "locale",
-                api: _ami
+                api: _app
             })
         };
 
@@ -1169,9 +1169,19 @@ if(!SanteDBWrapper)
         // Session and auth data
         var _session = null;
         var _sessionInfo = null;
-        var _elevationCredentials = null;
+        var _elevator = null;
         var _authentication = {
-
+            /**
+             * @method 
+             * @summary Sets the elevator function
+             * @param {any} elevator An elevation implementation
+             * @param {function():String} elevator.getToken A function to get the current token
+             * @param {function(boolean):void} elevator.elevate A function to perform elevation
+             * @memberof SanteDBWrapper.authentication
+             */
+            setElevator: function(elevator){
+                _elevator = elevator;
+            },
             /**
                 * @method
                 * @memberof SanteDBWrapper.authentication
@@ -1203,7 +1213,15 @@ if(!SanteDBWrapper)
                                     _sessionInfo = s;
                                     if(fulfill) fulfill(s);
                                 })
-                                .catch(reject);
+                                .catch(function(e) {
+
+                                    if(e.details.status <= 204) {
+                                        _sessionInfo = null;
+                                        fulfill(null);
+                                    }
+                                    else if(reject) reject(e);
+                                    
+                                });
                         }
                         catch (e) {
                             var ex = e;
@@ -1558,6 +1576,12 @@ if(!SanteDBWrapper)
         };
 
         /**
+         * @property 
+         * @memberof SanteDBWrapper
+         * @summary Provide access to localization data
+         */
+        this.locale = _localization;
+        /**
             * @property
             * @memberof SanteDBWrapper
             * @summary Provides access to resource handlers
@@ -1585,7 +1609,51 @@ if(!SanteDBWrapper)
          * @memberof SanteDBWrapper
          */
         this.application = _application;
+
+        // Application magic 
+        var _magic = null;
+
+        // Setup JQuery to send up authentication and cookies!
+        $.ajaxSetup({
+            cache: false,
+            beforeSend: function (data, settings) {
+                if (_elevator  && _elevator.getToken()) {
+                    data.setRequestHeader("Authorization", "BEARER " +
+                        _elevator.getToken());
+                }
+                if (!_magic)
+                    _magic = __SanteDBAppService.GetMagic();
+                data.setRequestHeader("X-SdbMagic", _magic);
+            },
+            converters: {
+                "text json": function (data) {
+                    return $.parseJSON(data, true);
+                }
+            }
+        });
+
+        // Handles error conditions related to expiration of tokens and to authentication problems
+        $(document).ajaxError(function (e, data, setting, err) {
+            if ((data.status == 401 || data.status == 403)) {
+                if (_session && _session.exp > Date.now // User has a session that is valid, but is still 401 hmm... elevation!!!
+                    && _elevator
+                    && !_elevator.getToken()) {
+
+                        // Was the response a security policy exception where the back end is asking for elevation on the same user account?
+                        if(data.responseJSON &&
+                            data.responseJSON.type == "SecurityPolicyException" &&
+                            data.responseJSON.message == "error.elevate")
+                            _elevator.elevate(true);
+                        else
+                            _elevator.elevate(false);
+                }
+            }
+            else
+                console.warn(new OpenIZModel.Exception("Exception", "error.general", err, null));
+        });
     };
 
 if(!SanteDB) 
     var SanteDB = new SanteDBWrapper();
+
+
