@@ -20,6 +20,10 @@
                             <i class="fa fa-cloud-download-alt"></i> {{ 'ui.config.sync.title' | i18n }}</a>
                     </li>
                     <li role="presentation" class="nav-item">
+                        <a class="nav-link" href="javascript:" data-target="#subscribeTab" data-toggle="tab">
+                            <i class="fas fa-rss-square"></i> {{ 'ui.config.subscribe.title' | i18n }}</a>
+                    </li>
+                    <li role="presentation" class="nav-item">
                         <a class="nav-link" href="javascript:" data-target="#dataTab" data-toggle="tab">
                             <i class="fa fa-database"></i> {{ 'ui.config.data.title' | i18n }}</a>
                     </li>
@@ -39,13 +43,46 @@
             </div>
             <div class="col-lg-10 col-sm-8 col-md-9 col-xs-12" style="padding-bottom: 150px; overflow:auto; max-height: 100%">
                 <div class="tab-content">
-                    <div role="tabpanel" class="tab-pane active" id="realmTab">
+                    <div role="tabpanel" class="tab-pane fade show active" id="realmTab">
                         <h4>
                             <i class="fa fa-globe"></i> {{ 'ui.config.realm.title' | i18n }}</h4>
                         <p>{{ 'ui.config.realm.description' | i18n }}</p>
                         <!-- #include virtual="~/views/realm/content.html" -->
                     </div>
+                    <div role="tabpanel" class="tab-pane fade" id="syncTab">
+                        <h4>
+                            <i class="fa fa-cloud-download-alt"></i> {{ 'ui.config.sync.title' | i18n }}</h4>
+                        <p>{{ 'ui.config.sync.description' | i18n }}</p>
+                        <!-- #include virtual="~/views/sync/content.html" -->
+                    </div>
+                    <div role="tabpanel" class="tab-pane fade" id="subscribeTab">
+                        <h4>
+                            <i class="fas fa-rss-square"></i> {{ 'ui.config.subscribe.title' | i18n }}</h4>
+                        <p>{{ 'ui.config.subscribe.description' | i18n }}</p>
+                        <!-- #include virtual="~/views/subscription/content.html" -->
+                    </div>
+                    <div role="tabpanel" class="tab-pane fade" id="dataTab">
+                        <h4>
+                            <i class="fa fa-database"></i> {{ 'ui.config.data.title' | i18n }}</h4>
+                        <p>{{ 'ui.config.data.description' | i18n }}</p>
+                    </div>
+                    <div role="tabpanel" class="tab-pane fade" id="logTab">
+                        <h4>
+                            <i class="fa fa-list-ol"></i> {{ 'ui.config.log.title' | i18n }}</h4>
+                        <p>{{ 'ui.config.log.description' | i18n }}</p>
+                    </div>
+                    <div role="tabpanel" class="tab-pane fade" id="securityTab">
+                        <h4>
+                            <i class="fa fa-shield-alt"></i> {{ 'ui.config.security.title' | i18n }}</h4>
+                        <p>{{ 'ui.config.security.description' | i18n }}</p>
+                    </div>
+                    <div role="tabpanel" class="tab-pane fade" id="networkTab">
+                        <h4>
+                            <i class="fa fa-wifi"></i> {{ 'ui.config.network.title' | i18n }}</h4>
+                        <p>{{ 'ui.config.network.description' | i18n }}</p>
+                    </div>
                 </div>
+
             </div>
         </div>
     </div>

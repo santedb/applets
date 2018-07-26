@@ -86,6 +86,8 @@
     <string key="ui.action.ignore">Ignore</string>
     <string key="ui.action.next">Next</string>
     <string key="ui.action.prev">Back</string>
+    <string key="ui.action.selectAll">Select All</string>
+    <string key="ui.wait">Please Wait...</string>
     <!-- General Dialog Preferences -->
     <string key="ui.pref.nevershow">Never show this message again</string>
 

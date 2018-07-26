@@ -1,7 +1,29 @@
 /// <reference path="../../core/js/santedb.js"/>
 
+var ___originalButtonTexts = {};
+
 // Add render of concept name
 SanteDBWrapper.prototype.display = {
+    /**
+     * @method
+     * @memberof SanteDBWrapper.display
+     * @summary Replaces the content of the button with a defined wait state
+     * @param {String} target The target of the wait button
+     * @param {boolean} state True if the object is loading, false if not
+     */
+    buttonWait: function(target, state) {
+        var btn = $(target);
+        if(btn) {
+            if(state)  {
+                ___originalButtonTexts[target] = btn.html();
+                btn.html(`<i class="fas fa-circle-notch fa-spin"></i> ${SanteDB.locale.getString("ui.wait")}`);
+            }
+            else {
+                btn.html(___originalButtonTexts[target]);
+                delete(___originalButtonTexts[target]);
+            }
+        }
+    },
     /**
      * @method
      * @memberof SanteDBWrapper.display

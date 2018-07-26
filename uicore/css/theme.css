@@ -17,4 +17,9 @@ html, body {
     display: flex;
     justify-content: flex-end;
     padding: 1rem;
+    background-color:white
   } 
+
+  entity-search ~ .select2-container {
+      width:100%
+  }

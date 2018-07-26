@@ -1649,7 +1649,7 @@ if(!SanteDBWrapper)
                 }
             }
             else
-                console.warn(new OpenIZModel.Exception("Exception", "error.general", err, null));
+                console.warn(new Exception("Exception", "error.general", err, null));
         });
     };
 

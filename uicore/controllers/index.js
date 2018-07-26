@@ -47,7 +47,7 @@ var santedbApp = angular.module('santedb', ['ngSanitize', 'ui.router', 'oc.lazyL
         $scope.login = {
             grant_type: "password",
             requirePou: true,
-            forbidPin: true
+            forbidPin: false
         };
     }])
     .run(['$rootScope', '$state', '$templateCache', '$transitions', '$ocLazyLoad', function ($rootScope, $state, $templateCache, $transitions, $ocLazyLoad) {

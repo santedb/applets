@@ -51,14 +51,11 @@
     </div>
     <div class="btn-group float-right">
         <button class="btn-danger btn btn-lg" ng-disabled="config.realmName == null" ng-click="leaveRealm(config.security)">
-            <span>
-                <span class="glyphicon glyphicon-resize-full"></span> {{ 'ui.config.action.realm.leave' | i18n }}
-            </span>
+                 {{ 'ui.config.action.realm.leave' | i18n }}
         </button>
         <button class="btn-success btn btn-lg" id="joinRealmButton" ng-click="joinRealm(config.security)" ng-disabled="realmForm.$invalid || config.realmName != null">
-            <span>
-                <span class="glyphicon glyphicon-resize-small"></span> {{ 'ui.config.action.realm.join' | i18n }}
-            </span>
+                {{ 'ui.config.action.realm.join' | i18n }}
         </button>
     </div>
+    <div class="clearfix"></div>
 </div>
