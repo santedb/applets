@@ -1,6 +1,12 @@
 .form-group > label.control-label {
-    text-align: right;
+    text-align: left;
     font-weight: bold
+}
+
+@media only screen and (min-width:600px) {
+    .form-group > label.control-label {
+        text-align: right
+    }
 }
 
 html, body {
@@ -22,4 +28,15 @@ html, body {
 
   entity-search ~ .select2-container {
       width:100%
+  }
+
+  ul.checklist-box {
+      min-height: 1em;
+      height: 6em;
+      overflow: auto;
+      list-style-type: none;
+      padding-left: 1em;
+      border: 1px solid #ced4da;
+        border-radius: .25rem;
+        transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
   }

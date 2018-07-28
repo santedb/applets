@@ -949,10 +949,21 @@ if(!SanteDBWrapper)
             /**
              * @method
              * @memberof SanteDBWrapper.configuration
+             * @return {Promise}
+             * @summary Get a complete list of filter providers asynchronously
+             */
+            getSubscriptionDefinitionsAsync : function() {
+                return _ami.getAsync({
+                    resource: "subscriptionDefinition"
+                });
+            },
+            /**
+             * @method
+             * @memberof SanteDBWrapper.configuration
              * @return {Promise} The data providers
              * @summary Gets a list of data providers available on this offline provider mode
              */
-            getProvidersAsync: function() {
+            getDataProvidersAsync: function() {
                 return _ami.getAsync({
                     resource: "dbp"
                 });

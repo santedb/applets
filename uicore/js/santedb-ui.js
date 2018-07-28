@@ -15,10 +15,13 @@ SanteDBWrapper.prototype.display = {
         var btn = $(target);
         if(btn) {
             if(state)  {
+                btn.attr('disabled', 'disabled');
                 ___originalButtonTexts[target] = btn.html();
                 btn.html(`<i class="fas fa-circle-notch fa-spin"></i> ${SanteDB.locale.getString("ui.wait")}`);
             }
             else {
+                btn.removeAttr('disabled');
+
                 btn.html(___originalButtonTexts[target]);
                 delete(___originalButtonTexts[target]);
             }

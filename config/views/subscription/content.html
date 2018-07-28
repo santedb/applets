@@ -5,23 +5,23 @@
         </div>
     </div>
     <div class="row">
-        <div class="col-sm-11 offset-sm-1">
+        <div class="col-sm-11 offset-sm-1  col-xs-12">
             <dl>
                 <dd>
                     <label>
-                        <input type="radio" name="subscriptionMode" ng-model="config.subscription.mode" value="all" /> {{ 'ui.config.subscribe.mode.all.label' | i18n }}</label>
+                        <input type="radio" name="subscriptionMode" ng-model="config.subscription.mode" value="All" /> {{ 'ui.config.subscribe.mode.all.label' | i18n }}</label>
                 </dd>
                 <dd>
                     <label>
-                        <input type="radio" name="subscriptionMode" ng-model="config.subscription.mode" value="specific" /> {{ 'ui.config.subscribe.mode.specific.label' | i18n }}</label>
+                        <input type="radio" name="subscriptionMode" ng-model="config.subscription.mode" value="Subscription" /> {{ 'ui.config.subscribe.mode.specific.label' | i18n }}</label>
                 </dd>
             </dl>
         </div>
     </div>
-    <div class="form-group row" ng-if="config.subscription.mode == 'specific'">
-        <label for="subscribeFacility" class="col-sm-2 control-label">{{ 'ui.config.subscribe.place.label' | i18n }}</label>
-        <div class="col-sm-10">
-            <entity-search type="Place" ng-required="config.subscription.mode == 'specific'" class="form-control" name="subscribeFacility" ng-model="config.subscription.facility" filter='{ "statusConcept.mnemonic" : "ACTIVE" }'
+    <div class="form-group row" ng-if="config.subscription.mode == 'Subscription'">
+        <label for="subscribeFacility" class="col-sm-2 col-xs-12 control-label">{{ 'ui.config.subscribe.place.label' | i18n }}</label>
+        <div class="col-sm-10 col-xs-12">
+            <select entity-search="Place" ng-required="config.subscription.mode == 'Subscription'" class="form-control" name="subscribeFacility" ng-model="config.sync.subscribe" filter='{ "statusConcept.mnemonic" : "ACTIVE" }'
             />
             <div class="form-text text-muted">
                 {{ 'ui.config.subscribe.place.help' | i18n }}
@@ -29,12 +29,14 @@
         </div>
     </div>
     <div class="form-group row">
-        <label for="subscribeObjects" class="col-sm-2 control-label">{{ 'ui.config.subscribe.objects.label' | i18n }}</label>
-        <div class="col-sm-10">
-            <select size="10" multiple="multiple" class="form-control" ng-model="config.subscription.subscriptions"></select>
+        <label for="subscribeObjects" class="col-sm-2 col-xs-12 control-label">{{ 'ui.config.subscribe.objects.label' | i18n }}</label>
+        <div class="col-sm-10 col-xs-12">
+            <ul class="checklist-box" style="height:10em">
+                <li ng-repeat="filter in reference.subscriptions track by $index" ng-if="(!filter.guard || checkGuard(filter)) &amp;&amp; (config.subscription.mode == filter.mode || filter.mode == 'AllOrSubscription')" ng-init="config.sync.resource[filter.name] = true"><label><input type="checkbox" ng-model="config.sync.resource[filter.name]" value="true"/> {{ filter.name | i18n }} ({{ filter.resource }})</label></li>
+            </ul>
             <div class="btn-group float-right">
-                <button type="button" class="btn btn-lg btn-info">{{ 'ui.action.selectAll' | i18n }}</button>
-            </div>
+                    <button type="button" class="btn btn-lg btn-info">{{ 'ui.action.selectAll' | i18n }}</button>
+                </div>
         </div>
     </div>
 </div>

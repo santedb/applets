@@ -91,6 +91,47 @@
     <!-- General Dialog Preferences -->
     <string key="ui.pref.nevershow">Never show this message again</string>
 
+
+    <!-- Subscriptions -->
+    <string key="ui.subscription.person.all">All Persons</string>
+    <string key="ui.subscription.act.all">All Acts</string>
+    <string key="ui.subscription.place.all">All Places</string>
+    <string key="ui.subscription.organization.all">All Organizations</string>
+    <string key="ui.subscription.userEntity.all">All Users</string>
+    <string key="ui.subscription.provider.all">All Providers</string>
+    <string key="ui.subscription.patientEncounter.all">All Encounters</string>
+    <string key="ui.subscription.substanceAdministration.all">All Substance Administrations (immunization, drug administrations, etc.)</string>
+    <string key="ui.subscription.codedObservation.all">All coded observations (problems, pain scales, etc.)</string>
+    <string key="ui.subscription.textObservation.all">All text observations (notes, etc.)</string>
+    <string key="ui.subscription.quantityObservation.all">All quantified observations (weight, height, etc.)</string>
+    <string key="ui.subscription.conceptSet.all">All concept sets (recommended)</string>
+    <string key="ui.subscription.concept.all">All concepts (recommended)</string>
+    <string key="ui.subscription.assigningAuthority.all">All assinging authorities (recommended)</string>
+    <string key="ui.subscription.identifierType.all">All identifier types (recommended)</string>
+    <string key="ui.subscription.templateDefinition.all">All clinical templates (recommended)</string>
+    <string key="ui.subscription.extensionType.all">All extension types (recommended)</string>
+    <string key="ui.subscription.conceptClass.all">All concept classes (recommended)</string>
+    <string key="ui.subscription.material.all">All material kinds (recommended)</string>
+    <string key="ui.subscription.manufacturedMaterial.all">All manufactured materials (recommended)</string>
+    <string key="ui.subscription.place.me">My subscribed place data (stock, policies, etc.)</string>
+    <string key="ui.subscription.place.state">All places in my state/province</string>
+    <string key="ui.subscription.place.county">All places in my county/district</string>
+    <string key="ui.subscription.place.all">All places in my country (not-recommended)</string>
+    <string key="ui.subscription.place.outOfState">All places out of my state/province (background after start)</string>
+    <string key="ui.subscription.place.outOfCounty">All places out of my county/district (background after start)</string>
+    <string key="ui.subscription.place.assigned">All places that are assigned to my facility</string>
+    <!-- Clinical data on subscriptions -->
+    <string key="ui.subscription.userEntity.assigned">Only users assigned to my facility</string>
+    <string key="ui.subscription.provider.assigned">Only providers assigned to my facility</string>
+    <string key="ui.subscription.patient.assigned">Only patients assigned to my facility or who came to my facility</string>
+    <string key="ui.subscription.person.assigned">Only persons (relatives) of patients who are assigned to my facility</string>
+    <string key="ui.subscription.act.other.me">Only acts (stock orders, adjustments, etc.) done by my facility</string>
+    <string key="ui.subscription.act.procedure.me">Only procedures performed at my facility</string>
+    <string key="ui.subscription.act.substanceAdministration.me">Only substance administrations performed at my facility</string>
+    <string key="ui.subscription.act.codedObservation.me">Only coded observations taken at my facility</string>
+    <string key="ui.subscription.act.quantityObservation.me">Only quantified observations taken at my facility</string>
+    <string key="ui.subscription.act.textObservation.me">Only text observations taken at my facility</string>
+    <string key="ui.subscription.act.PatientEncounter.me">Only patient encounters performed at my facility</string>
   </strings>
 
 </AppletManifest>

@@ -1,0 +1,32 @@
+<div class="container" xmlns="http://www.w3.org/1999/xhtml">
+    <table class="table-striped table">
+        <thead>
+            <tr>
+                <th>{{ 'ui.config.other.setting' | i18n }}</th>
+                <th colspan="2">{{ 'ui.config.other.value' | i18n }}</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="set in config.application.setting track by $index">
+                <td>{{set.key}}</td>
+                <td colspan="2">
+                    <input type="text" class="form-control" ng-model="set.value" required="required" />
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <input type="text" class="form-control" ng-model="newItem.key" />
+                </td>
+                <td>
+                    <input type="text" class="form-control" ng-model="newItem.value" />
+                </td>
+                <td>
+                    <button type="button" class="btn btn-lg btn-success">
+                        <i class="fa fa-plus"></i>
+                    </button>
+
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
