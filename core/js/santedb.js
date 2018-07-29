@@ -1095,20 +1095,24 @@ if(!SanteDBWrapper)
                 * @param {boolean} configData.replaceExisting When true, instructs the application to replace an existing registration
                 * @param {boolean} configData.enableTrace When true, enables log file tracing of requests
                 * @param {boolean} configData.enableSSL When true, enables HTTPS
+                * @param {boolean} configData.noTimeout When true, removes all timeouts from the configuration
                 * @param {number} configData.port The port number to connect to the realm on
+                * @param {boolean} overwrite Overwrites the existing configuration if needed
                 */
-            joinRealmAsync: function(configData) {
+            joinRealmAsync: function(configData, overwrite) {
                 return new Promise(function (fulfill, reject) {
                     try {
                         _ami.postAsync({
-                            resource: "Configuration/Realm",
+                            resource: "configuration/realm",
+                            contentType: 'application/json',
                             data: {
                                 realmUri: configData.domain,
                                 deviceName: configData.deviceName,
-                                replaceExisting: configData.replaceExisting,
-                                enableTrace: configData.enableTrace,
-                                enableSSL: configData.enableSSL,
-                                port: configData.port
+                                enableTrace: configData.enableTrace || false,
+                                enableSSL: configData.enableSSL || false,
+                                port: configData.port,
+                                noTimeout : false,
+                                replaceExisting: overwrite || false
                             }
                         }).then(function (d) {
                             _masterConfig = d;
@@ -1134,7 +1138,7 @@ if(!SanteDBWrapper)
                 */
             leaveRealmAsync: function() {
                 return _ami.deleteAsync({
-                    resource: "Configuration/Realm"
+                    resource: "configuration/realm"
                 });
             },
             /**
@@ -1155,7 +1159,7 @@ if(!SanteDBWrapper)
                 */
             getUserPreferencesAsync: function () {
                 return _ami.getAsync({
-                    resource: "Configuration/User"
+                    resource: "configuration/user"
                 });
             },
             /**
@@ -1171,7 +1175,7 @@ if(!SanteDBWrapper)
                 */
             saveUserPreferencesAsync: function (preferences) {
                 return _ami.postAsync({
-                    resource: "Configuration/User",
+                    resource: "configuration/user",
                     data: preferences
                 });
             }
@@ -1286,6 +1290,45 @@ if(!SanteDBWrapper)
                                 password: password,
                                 tfaSecret: tfaSecret,
                                 grant_type: 'password',
+                                scope: "*"
+                            },
+                            contentType: 'application/x-www-urlform-encoded'
+                        })
+                            .then(function (d) {
+                                if (!noSession) {
+                                    _session = d;
+                                    _authentication.getSessionInfoAsync().then(fulfill).catch(reject);
+                                }
+                            })
+                            .catch(reject);
+                    }
+                    catch (e) {
+                        var ex = e;
+                        if (!ex.$type)
+                            ex = new Exception("Exception", "error.general", e);
+                        if (reject) reject(ex);
+                    }
+                });
+            },
+            /**
+                * @method 
+                * @memberof SanteDBWrapper.authentication
+                * @summary Performs a local pin login
+                * @param {string} userName The name of the user which is logging in
+                * @param {string} password The password of the user
+                * @param {string} tfaSecret The two-factor secret if provided
+                * @param {boolean} noSession When true indicates that there should not be a persistent session (i.e. one time authentication)
+                * @returns {Promise} A promise representing the login request
+                */
+            pinLoginAsync: function (userName, pin, noSession) {
+                return new Promise(function (fulfill, reject) {
+                    try {
+                        _auth.postAsync({
+                            resource: "authenticate",
+                            data: {
+                                username: userName,
+                                pin: pin,
+                                grant_type: 'pin',
                                 scope: "*"
                             },
                             contentType: 'application/x-www-urlform-encoded'
@@ -1648,15 +1691,16 @@ if(!SanteDBWrapper)
             if ((data.status == 401 || data.status == 403)) {
                 if (_session && _session.exp > Date.now // User has a session that is valid, but is still 401 hmm... elevation!!!
                     && _elevator
-                    && !_elevator.getToken()) {
+                    && !_elevator.getToken() ||
+                    _session == null && _elevator) {
 
                         // Was the response a security policy exception where the back end is asking for elevation on the same user account?
                         if(data.responseJSON &&
                             data.responseJSON.type == "SecurityPolicyException" &&
                             data.responseJSON.message == "error.elevate")
-                            _elevator.elevate(true);
+                            _elevator.elevate(_session);
                         else
-                            _elevator.elevate(false);
+                            _elevator.elevate(null);
                 }
             }
             else
