@@ -36,6 +36,10 @@
     <string key="ui.config.realm.port.help">The port to contact the domain on (default: 8080 or 8443)</string>
     <string key="ui.config.realm.ssl.label">Use SSL/TLS</string>
     <string key="ui.config.realm.ssl.help">- Force the use of encryption for communication</string>
+    <string key="ui.config.realm.authMode.label">Secret Mode</string>
+    <string key="ui.config.realm.authMode.help">By default, SanteDB iCDR uses HTTP BASIC headers to express client identity, use this setting if your OAUTH2 server requires client_id in the body of the OAUTH2 request</string>
+    <string key="ui.config.realm.secretOverride.label">Override Application Secret</string>
+    <string key="ui.config.realm.secretOverride.help">If your environment has modified the default application secret for this app then use this option to override the default</string>
 
     <string key="ui.config.sync.title">Synchronization</string>
     <string key="ui.config.sync.description">The SanteDB client application synchronizes data with the centalized server to get the most up to date information. This screen will allow you to configure the behavior of the SanteDB synchronization process</string>

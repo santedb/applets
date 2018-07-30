@@ -1112,7 +1112,9 @@ if(!SanteDBWrapper)
                                 enableSSL: configData.enableSSL || false,
                                 port: configData.port,
                                 noTimeout : false,
-                                replaceExisting: overwrite || false
+                                replaceExisting: overwrite || false,
+                                client_secret: configData.client_secret,
+                                domainSecurity: configData.domainSecurity
                             }
                         }).then(function (d) {
                             _masterConfig = d;
@@ -1299,6 +1301,7 @@ if(!SanteDBWrapper)
                                     _session = d;
                                     _authentication.getSessionInfoAsync().then(fulfill).catch(reject);
                                 }
+                                if(fulfill) fulfill(d);                                
                             })
                             .catch(reject);
                     }
@@ -1338,6 +1341,7 @@ if(!SanteDBWrapper)
                                     _session = d;
                                     _authentication.getSessionInfoAsync().then(fulfill).catch(reject);
                                 }
+                                if(fulfill) fulfill(d);
                             })
                             .catch(reject);
                     }

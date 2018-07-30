@@ -33,7 +33,10 @@ function SanteDBElevator(continueWith) {
             requirePou: sessionToUse != null,
             _lockUserName: sessionToUse != null,
             grant_type: sessionToUse ? "pin" : "password",
-            onLogin: continueWith
+            onLogin: function(s) {
+                _token = s.id;
+                continueWith();
+            }
         };
         angular.element("#loginModal").scope().$apply();
         $("#loginModal").modal({

@@ -1,7 +1,7 @@
 <div xmlns="http://www.w3.org/1999/xhtml" class="container">
     <div class="form-group row">
-        <label for="dataProviderType" class="control-label col-sm-2  col-xs-12">{{ 'ui.config.data.provider.label' | i18n }}</label>
-        <div class="col-sm-10  col-xs-12">
+        <label for="dataProviderType" class="control-label col-md-2  col-xs-12">{{ 'ui.config.data.provider.label' | i18n }}</label>
+        <div class="col-md-10  col-xs-12">
             <select ng-model="config.data.provider" class="form-control" size="1" required="required" name="dataProviderType">
                 <option ng-repeat="dbp in reference.dataProviders" value="{{dbp.invariant}}">{{dbp.name}} ({{ 'ui.config.dbp.help.' + dbp.name | i18n }})</option>
             </select>
@@ -12,8 +12,8 @@
     </div>
     <div class="form-group row" ng-if="reference.providerData">
 
-        <label class="control-label col-sm-2 col-xs-12">{{ reference.providerData.name }} {{ 'ui.config.data.options.label' | i18n }}</label>
-        <div class="col-sm-10 col-xs-12">
+        <label class="control-label col-md-2 col-xs-12">{{ reference.providerData.name }} {{ 'ui.config.data.options.label' | i18n }}</label>
+        <div class="col-md-10 col-xs-12">
             <table class="table table-striped">
                 <thead>
                     <tr>

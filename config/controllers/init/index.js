@@ -94,7 +94,7 @@ angular.module('santedb').controller('InitialSettingsController', ['$scope', '$r
             var joinRealmFn = function (override) {
 
                 SanteDB.display.buttonWait("#joinRealmButton", true);
-                SanteDB.configuration.joinRealmAsync($scope.config.security, override)
+                SanteDB.configuration.joinRealmAsync($scope.config.security, override === true)
                     .then(function (config) {
                         alert(SanteDB.locale.getString("ui.config.realm.success"));
                         _processConfiguration(config);

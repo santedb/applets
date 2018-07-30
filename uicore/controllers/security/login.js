@@ -14,6 +14,7 @@ angular.module("santedb").controller("LoginController", ['$scope', '$rootScope',
                     .then(function (d) {
                         $scope.login.onLogin(d);
                         SanteDB.display.buttonWait("#loginButton", false);
+                        $("#loginModal").modal('hide');
                     })
                     .catch(function (e) {
                         $rootScope.errorHandler(e);
@@ -25,6 +26,7 @@ angular.module("santedb").controller("LoginController", ['$scope', '$rootScope',
                     .then(function (d) {
                         $scope.login.onLogin(d);
                         SanteDB.display.buttonWait("#loginButton", false);
+                        $("#loginModal").modal('hide');
                     })
                     .catch(function (e) {
                         $rootScope.errorHandler(e);
