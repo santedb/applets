@@ -76,7 +76,7 @@
             <button class="btn-danger btn btn-lg" ng-disabled="config.realmName == null" ng-click="leaveRealm(config.security)">
                 {{ 'ui.config.action.realm.leave' | i18n }}
             </button>
-            <button class="btn-success btn btn-lg" id="joinRealmButton" type="submit" ng-disabled="realmForm.$invalid || config.realmName != null">
+            <button class="btn-success btn btn-lg" id="joinRealmButton" type="submit" ng-disabled="!realmForm.$valid || config.realmName != null">
                 {{ 'ui.config.action.realm.join' | i18n }}
             </button>
         </div>

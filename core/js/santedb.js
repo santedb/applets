@@ -1716,3 +1716,4 @@ if(!SanteDB)
     var SanteDB = new SanteDBWrapper();
 
 
+SanteDB.resources.mail

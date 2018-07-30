@@ -97,27 +97,26 @@ angular.module('santedb').controller('InitialSettingsController', ['$scope', '$r
                 SanteDB.configuration.joinRealmAsync($scope.config.security, override === true)
                     .then(function (config) {
                         alert(SanteDB.locale.getString("ui.config.realm.success"));
+                        SanteDB.display.buttonWait("#joinRealmButton", false);
                         _processConfiguration(config);
                         SanteDB.authentication.setElevator(null);
-                        SanteDB.display.buttonWait("#joinRealmButton", false);
 
                     })
                     .catch(function (e) {
 
+                        SanteDB.display.buttonWait("#joinRealmButton", false);
                         if (e.type == "DuplicateNameException" && !override) {
-                            if (confirm(SanteDB.locale.getString("ui.config.error.replaceDuplicateDevice")))
+                            if (confirm(SanteDB.locale.getString("ui.config.realm.error.duplicate")))
                                 joinRealmFn(true);
                             else {
                                 $rootScope.errorHandler(e);
                                 SanteDB.authentication.setElevator(null);
-                                SanteDB.display.buttonWait("#joinRealmButton", false);
                             }    
                         }
                         else if(e.type != "UnauthorizedAccessException") // We can elevate, so let's just leave it 
                         {
                             $rootScope.errorHandler(e);
                             SanteDB.authentication.setElevator(null);
-                            SanteDB.display.buttonWait("#joinRealmButton", false);
                         }
 
                     });
