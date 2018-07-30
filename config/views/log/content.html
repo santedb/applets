@@ -1,0 +1,22 @@
+<div xmlns="http://www.w3.org/1999/xhtml" class="container">
+    <div class="form-group row">
+        <label for="logLevel" class="control-label col-md-2 col-xs-12">{{ 'ui.config.log.verbosity.label' | i18n }}</label>
+        <div class="col-md-10 col-xs-12">
+            <select ng-model="config.log.mode" class="form-control">
+                <optgroup label="{{ 'ui.config.log.verbosity.debug' | i18n }}">
+                    <option value="LogAlways">{{ 'ui.config.log.verbosity.always' | i18n }}</option>
+                    <option value="Information">{{ 'ui.config.log.verbosity.informational' | i18n }}</option>
+                    <option value="Verbose">{{ 'ui.config.log.verbosity.verbose' | i18n }}</option>
+                </optgroup>
+                <optgroup label="{{ 'ui.config.log.verbosity.production' | i18n }}">
+                    <option value="Critical">{{ 'ui.config.log.verbosity.critical' | i18n }}</option>
+                    <option value="Error">{{ 'ui.config.log.verbosity.error' | i18n }}</option>
+                    <option value="Warning">{{ 'ui.config.log.verbosity.warning' | i18n }}</option>
+                </optgroup>
+            </select>
+            <div class="form-text text-muted">
+                    {{ 'ui.config.log.verbosity.help' | i18n }}
+                </div>
+        </div>
+    </div>
+</div>
