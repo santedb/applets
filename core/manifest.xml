@@ -24,18 +24,18 @@
     <author>Mohawk College of Applied Arts and Technology - mHealth &amp; eHealth Development &amp; Innovation Centre</author>
   </info>
   <viewModel key="base">
-    <definition>/org.santedb.core/views/viewmodel/base.xml</definition>
+    <definition>/org.santedb.core/model/base.xml</definition>
   </viewModel>
   <viewModel key="min">
-    <definition>/org.santedb.core/views/viewmodel/min.xml</definition>
+    <definition>/org.santedb.core/model/min.xml</definition>
   </viewModel>
   <viewModel key="full">
-    <definition>/org.santedb.core/views/viewmodel/full.xml</definition>
+    <definition>/org.santedb.core/model/full.xml</definition>
   </viewModel>
   <viewModel key="fastview">
-    <definition>/org.santedb.core/views/viewmodel/fastview.xml</definition>
+    <definition>/org.santedb.core/model/fastview.xml</definition>
   </viewModel>
   <viewModel key="dropdown">
-    <definition>/org.santedb.core/views/viewmodel/dropdown.xml</definition>
+    <definition>/org.santedb.core/model/dropdown.xml</definition>
   </viewModel>
 </AppletManifest>

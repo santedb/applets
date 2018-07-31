@@ -223,11 +223,7 @@ angular.module('santedb-lib', [])
                                             text = eval(displayString);
                                         }
                                         else if (o.name !== undefined) {
-                                            if (o.name.OfficialRecord) {
-                                                text = OpenIZ.Util.renderName(o.name.OfficialRecord);
-                                            } else if (o.name.Assigned) {
-                                                text = OpenIZ.Util.renderName(o.name.Assigned);
-                                            }
+                                                text = SanteDB.display.renderEntityName(o.name);
                                         }
                                         o.text = o.text || text;
                                         o.id = o[resultProperty];
@@ -313,14 +309,14 @@ angular.module('santedb-lib', [])
                                 return eval(displayString);
                             }
                             else if (result.classConcept != EntityClassKeys.ServiceDeliveryLocation && result.name != null && result.typeConceptModel != null && result.typeConceptModel.name != null && result.name.OfficialRecord) {
-                                retVal = "<div class='label label-info'>" +
+                                retVal = "<div class='badge badge-info'>" +
                                     SanteDB.display.renderConcept(result.typeConceptModel) + "</div> " + SanteDB.display.renderEntityName(result.name.OfficialRecord || result.name.$other);
                                 if (result.address)
                                     retVal += " - <small>(<i class='fa fa-map-marker'></i> " + SanteDB.display.renderEntityAddress(result.address) + ")</small>";
                                 return retVal;
                             }
                             else if (result.classConcept == EntityClassKeys.ServiceDeliveryLocation && result.name != null && result.typeConceptModel != null && result.typeConceptModel.name != null) {
-                                retVal = "<div class='label label-info'>" +
+                                retVal = "<div class='badge badge-info'>" +
                                     SanteDB.display.renderConcept(result.typeConceptModel) + "</div> " + SanteDB.display.renderEntityName(result.name.OfficialRecord || result.name.Assigned || result.name.$other );
                                 if (result.relationship && result.relationship.Parent && result.relationship.Parent.targetModel && result.relationship.Parent.targetModel.name)
                                     retVal += " - <small>(<i class='fa fa-share-alt'></i> " + SanteDB.display.renderEntityName(result.relationship.Parent.targetModel.name.OfficialRecord || result.relationship.Parent.targetModel.name.Assigned) + ")</small>";
@@ -329,7 +325,7 @@ angular.module('santedb-lib', [])
                                 return retVal;
                             }
                             else if (result.name != null && result.typeConceptModel != null && result.typeConceptModel.name != null && result.name.Assigned) {
-                                var retVal = "<div class='label label-default'>" +
+                                var retVal = "<div class='badge badge-default'>" +
                                     SanteDB.display.renderConcept(result.typeConceptModel) + "</div> " + SanteDB.display.renderEntityName(result.name.Assigned || result.name.$other);
 
                                 if (result.address)
@@ -337,13 +333,13 @@ angular.module('santedb-lib', [])
                                 return retVal;
                             }
                             else if (result.name != null && result.name.OfficialRecord)
-                                return "<div class='label label-default'>" +
+                                return "<div class='badge badge-default'>" +
                                     result.$type + "</div> " + SanteDB.display.renderEntityName(result.name.OfficialRecord);
                             else if (result.name != null && result.name.Assigned)
-                                return "<div class='label label-default'>" +
+                                return "<div class='badge badge-default'>" +
                                     result.$type + "</div> " + SanteDB.display.renderEntityName(result.name.Assigned)
                             else if (result.name != null && result.name.$other)
-                                return "<div class='label label-default'>" +
+                                return "<div class='badge badge-default'>" +
                                     result.$type + "</div> " + SanteDB.display.renderEntityName(result.name.$other)
                             else
                                 return result.text;

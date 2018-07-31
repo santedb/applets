@@ -99,7 +99,7 @@ angular.module('santedb').controller('InitialSettingsController', ['$scope', '$r
                         alert(SanteDB.locale.getString("ui.config.realm.success"));
                         SanteDB.display.buttonWait("#joinRealmButton", false);
                         _processConfiguration(config);
-                        SanteDB.authentication.setElevator(null);
+                        //SanteDB.authentication.setElevator(null);
 
                     })
                     .catch(function (e) {

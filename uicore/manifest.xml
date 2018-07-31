@@ -51,15 +51,15 @@
     <add name="ui.subscription.codedObservation.all" resource="CodedObservation" mode="all" trigger="always"></add>
     <add name="ui.subscription.textObservation.all" resource="TextObservation" mode="all" trigger="always"/>
     <add name="ui.subscription.quantityObservation.all" resource="QuantityObservation" mode="all" trigger="always"/>
-    <add name="ui.subscription.conceptSet.all" resource="ConceptSet" mode="*" trigger="on-start"/>
-    <add name="ui.subscription.concept.all" resource="Concept" mode="*" trigger="on-start" >
+    <add system="true" name="ui.subscription.conceptSet.all" resource="ConceptSet" mode="*" trigger="on-start"/>
+    <add system="true" name="ui.subscription.concept.all" resource="Concept" mode="*" trigger="on-start" >
       <filter>statusConcept=!CD4AA3C4-02D5-4CC9-9088-EF8F31E321C5</filter>
     </add>
-    <add name="ui.subscription.assigningAuthority.all" resource="AssigningAuthority" mode="*" trigger="on-start"/>
-    <add name="ui.subscription.identifierType.all" resource="IdentifierType" mode="*" trigger="on-start"/>
-    <add name="ui.subscription.templateDefinition.all" resource="TemplateDefinition" mode="*" trigger="on-start"/>
-    <add name="ui.subscription.extensionType.all" resource="ExtensionType" mode="*" trigger="on-start"/>
-    <add name="ui.subscription.conceptClass.all" resource="ConceptClass" mode="*" trigger="on-start"/>
+    <add system="true" name="ui.subscription.assigningAuthority.all" resource="AssigningAuthority" mode="*" trigger="on-start"/>
+    <add system="true" name="ui.subscription.identifierType.all" resource="IdentifierType" mode="*" trigger="on-start"/>
+    <add system="true" name="ui.subscription.templateDefinition.all" resource="TemplateDefinition" mode="*" trigger="on-start"/>
+    <add system="true" name="ui.subscription.extensionType.all" resource="ExtensionType" mode="*" trigger="on-start"/>
+    <add system="true" name="ui.subscription.conceptClass.all" resource="ConceptClass" mode="*" trigger="on-start"/>
     <add name="ui.subscription.material.all" resource="Material" mode="*" trigger="always">
       <filter>classConcept=D39073BE-0F8F-440E-B8C8-7034CC138A95&amp;statusConcept=!CD4AA3C4-02D5-4CC9-9088-EF8F31E321C5</filter>
     </add>

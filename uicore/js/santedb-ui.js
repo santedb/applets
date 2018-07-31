@@ -108,7 +108,7 @@ SanteDBWrapper.prototype.display = {
                 if (name.component.$other.join)
                     nameStr += name.component.$other.join(' ');
                 else if (name.component.$other.value)
-                    nameStr += entityName.component.$other.value;
+                    nameStr += name.component.$other.value;
                 else
                     nameStr += name.component.$other;
             }
