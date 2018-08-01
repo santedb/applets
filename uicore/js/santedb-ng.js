@@ -199,7 +199,7 @@ angular.module('santedb-lib', [])
                         },
                         dataAdapter: $.fn.select2.amd.require('select2/data/extended-ajax'),
                         ajax: {
-                            url: ((modelType == "SecurityUser" || modelType == "SecurityRole") ? "/__ami/" : "/__ims/") + modelType,
+                            url: ((modelType == "SecurityUser" || modelType == "SecurityRole") ? "/__ami/" : "/__hdsi/") + modelType,
                             dataType: 'json',
                             delay: 500,
                             method: "GET",

@@ -284,7 +284,7 @@ if(!SanteDBWrapper)
 
                 // Prepare query
                 var _query = {};
-                if (id) _query.id = id;
+                if (id) _query._id = id;
 
                 return _config.api.getAsync({
                     query: _query,
@@ -432,7 +432,7 @@ if(!SanteDBWrapper)
         // hdsi internal
         var _hdsi = new APIWrapper({
             idByQuery: true,
-            base: "/__imsi/"
+            base: "/__hdsi/"
         });
         // ami internal
         var _ami = new APIWrapper({
@@ -1280,9 +1280,10 @@ if(!SanteDBWrapper)
                 * @param {string} password The password of the user
                 * @param {string} tfaSecret The two-factor secret if provided
                 * @param {boolean} noSession When true indicates that there should not be a persistent session (i.e. one time authentication)
+                * @param {String} purposeOfUse The identifier of the purpose of use for the access
                 * @returns {Promise} A promise representing the login request
                 */
-            passwordLoginAsync: function (userName, password, tfaSecret, noSession) {
+            passwordLoginAsync: function (userName, password, tfaSecret, noSession, purposeOfUse) {
                 return new Promise(function (fulfill, reject) {
                     try {
                         _auth.postAsync({
@@ -1292,14 +1293,14 @@ if(!SanteDBWrapper)
                                 password: password,
                                 tfaSecret: tfaSecret,
                                 grant_type: 'password',
-                                scope: "*"
+                                scope: noSession ? "elevate" : "*",
+                                purposeOfUse: purposeOfUse
                             },
                             contentType: 'application/x-www-urlform-encoded'
                         })
                             .then(function (d) {
                                 if (!noSession) {
                                     _session = d;
-                                    _authentication.getSessionInfoAsync().then(fulfill).catch(reject);
                                 }
                                 if(fulfill) fulfill(d);                                
                             })
@@ -1321,9 +1322,10 @@ if(!SanteDBWrapper)
                 * @param {string} password The password of the user
                 * @param {string} tfaSecret The two-factor secret if provided
                 * @param {boolean} noSession When true indicates that there should not be a persistent session (i.e. one time authentication)
+                * @param {String} purposeOfUse The reason the authentication is happening
                 * @returns {Promise} A promise representing the login request
                 */
-            pinLoginAsync: function (userName, pin, noSession) {
+            pinLoginAsync: function (userName, pin, noSession, purposeOfUse) {
                 return new Promise(function (fulfill, reject) {
                     try {
                         _auth.postAsync({
@@ -1332,14 +1334,14 @@ if(!SanteDBWrapper)
                                 username: userName,
                                 pin: pin,
                                 grant_type: 'pin',
-                                scope: "*"
+                                scope: noSession ? "elevate" : "*",
+                                purposeOfUse: purposeOfUse
                             },
                             contentType: 'application/x-www-urlform-encoded'
                         })
                             .then(function (d) {
                                 if (!noSession) {
                                     _session = d;
-                                    _authentication.getSessionInfoAsync().then(fulfill).catch(reject);
                                 }
                                 if(fulfill) fulfill(d);
                             })
@@ -1375,7 +1377,6 @@ if(!SanteDBWrapper)
                             .then(function (d) {
                                 if (!noSession) {
                                     _session = d;
-                                    _authentication.getSessionInfoAsync().then(fulfill).catch(reject);
                                 }
                                 if (fulfill) fulfill(d);
                             })
@@ -1413,7 +1414,6 @@ if(!SanteDBWrapper)
                             .then(function (d) {
                                 if (!noSession) {
                                     _session = d;
-                                    _authentication.getSessionInfoAsync().then(fulfill).catch(reject);
                                 }
                                 if(fulfill) fulfill(d);
                             })

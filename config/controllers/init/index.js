@@ -62,8 +62,8 @@ angular.module('santedb').controller('InitialSettingsController', ['$scope', '$r
     $scope.$watch('config.sync.subscribe.length', function (n, o) {
         // Find in new
         if (n)
-            n.foreach(function (sid) {
-                var existingInfo = $scope.referece.places.find(function (p) { return p.id === sid });
+            $scope.config.sync.subscribe.forEach(function (sid) {
+                var existingInfo = $scope.reference.places.find(function (p) { return p.id === sid });
                 if (!existingInfo)
                     SanteDB.resources.place.getAsync(sid).then(function (placeInfo) {
                         $scope.reference.places.push(placeInfo);
@@ -77,12 +77,42 @@ angular.module('santedb').controller('InitialSettingsController', ['$scope', '$r
 
     // Verifies that a guard condition on a filter passes
     $scope.checkGuard = function (filter) {
+
+        if($scope.reference.places.length == 0) return false;
+
         var retVal = true;
+        var guardFilterRegex = new RegExp('^([\\!\\sA-Za-z\\.&|]*?)\\[([A-Za-z]*?)\\](.*)$');
+        var newGuard = "" , oldGuard = filter.guard;
+        while(oldGuard.length > 0) {
+            var match = guardFilterRegex.exec(oldGuard);
+            if(!match)
+                newGuard += oldGuard;
+            else {
+                newGuard += `${match[1]}.${match[2]}`;
+                oldGuard = match[3];
+            }
+        }
         $scope.reference.places.forEach(function (subscribed) {
-            retVal &= eval(filter.guard);
+            var e = $scope.$eval(newGuard, { "subscribed": subscribed });
+            retVal &= (e != null) && (e !== false);
         });
         return retVal
     }
+
+    // Function to advance to next option
+    $scope.next = function() {
+        // Find the next option
+        var next = $("#configurationStages li.nav-item:has(a.active)~li:first a");
+        if(next)
+            next.tab('show');
+    };
+
+    // Function to advance to previous option
+    $scope.back = function() {
+        var prev = $("#configurationStages li.nav-item:has(a.active)").prev().children("a:first");
+        if(prev)
+            prev.tab('show');
+    };
 
     // Join the realm
     $scope.joinRealm = function (form) {
@@ -100,7 +130,7 @@ angular.module('santedb').controller('InitialSettingsController', ['$scope', '$r
                         SanteDB.display.buttonWait("#joinRealmButton", false);
                         _processConfiguration(config);
                         //SanteDB.authentication.setElevator(null);
-
+                        $scope.next();
                     })
                     .catch(function (e) {
 

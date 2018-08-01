@@ -71,31 +71,31 @@
     <add name="ui.subscription.place.me" resource="Place" mode="subscription" trigger="always">
       <filter>_id=$subscribed.id$</filter>
     </add>
-    <add name="ui.subscription.place.state" resource="Place" mode="subscription" trigger="always" guard="subscribed.address.component[State]">
+    <add name="ui.subscription.place.state" resource="Place" mode="subscription" trigger="always" guard="subscribed.address[Direct].component[State]">
       <!-- SDL in same state -->
       <filter>statusConcept=!CD4AA3C4-02D5-4CC9-9088-EF8F31E321C5&amp;classConept=FF34DFA7-C6D3-4F8B-BC9F-14BCDC13BA6C&amp;address.component[State].value=$subscribed.address.component[State].value$&amp;_exclude=relationship&amp;_exclude=participation</filter>
       <!-- non-SDL in same state -->
       <filter>statusConcept=!CD4AA3C4-02D5-4CC9-9088-EF8F31E321C5&amp;classConept=!FF34DFA7-C6D3-4F8B-BC9F-14BCDC13BA6C&amp;address.component[State].value=$subscribed.address.component[State].value$&amp;_exclude=relationship&amp;_exclude=participation</filter>
     </add>
-    <add name="ui.subscription.place.county" resource="Place" mode="subscription" trigger="always" guard="subscribed.address.component[County] &amp;&amp; !subscribed.address.component[State]">
+    <add name="ui.subscription.place.county" resource="Place" mode="subscription" trigger="always" guard="subscribed.address[Direct].component[County] &amp;&amp; !subscribed.address[Direct].component[State]">
       <!-- SDL in same county -->
       <filter>statusConcept=!CD4AA3C4-02D5-4CC9-9088-EF8F31E321C5&amp;classConept=FF34DFA7-C6D3-4F8B-BC9F-14BCDC13BA6C&amp;address.component[County].value=$subscribed.address.component[County].value$&amp;_exclude=relationship&amp;_exclude=participation</filter>
       <!-- non-SDL in same county -->
       <filter>statusConcept=!CD4AA3C4-02D5-4CC9-9088-EF8F31E321C5&amp;classConept=!FF34DFA7-C6D3-4F8B-BC9F-14BCDC13BA6C&amp;address.component[County].value=$subscribed.address.component[County].value$&amp;_exclude=relationship&amp;_exclude=participation</filter>
     </add>
-    <add name="ui.subscription.place.all" resource="Place" mode="subscription" trigger="always" guard="!subscribed.address.component[County] &amp;&amp; !subscribed.address.component[State]">
+    <add name="ui.subscription.place.all" resource="Place" mode="subscription" trigger="always" guard="!subscribed.address[Direct].component[County] &amp;&amp; !subscribed.address[Direct].component[State]">
       <!-- SDL in same county -->
       <filter>statusConcept=!CD4AA3C4-02D5-4CC9-9088-EF8F31E321C5&amp;classConept=FF34DFA7-C6D3-4F8B-BC9F-14BCDC13BA6C&amp;_exclude=relationship&amp;_exclude=participation</filter>
       <!-- non-SDL in same county -->
       <filter>statusConcept=!CD4AA3C4-02D5-4CC9-9088-EF8F31E321C5&amp;classConept=!FF34DFA7-C6D3-4F8B-BC9F-14BCDC13BA6C&amp;_exclude=relationship&amp;_exclude=participation</filter>
     </add>
-    <add name="ui.subscription.place.outOfState" resource="Place" mode="subscription" trigger="periodic" guard="subscribed.address.component[State]">
+    <add name="ui.subscription.place.outOfState" resource="Place" mode="subscription" trigger="periodic" guard="subscribed.address[Direct].component[State]">
       <!-- SDL in same state -->
       <filter>statusConcept=!CD4AA3C4-02D5-4CC9-9088-EF8F31E321C5&amp;classConept=FF34DFA7-C6D3-4F8B-BC9F-14BCDC13BA6C&amp;address.component[State].value=!$subscribed.address.component[State].value$&amp;_exclude=relationship&amp;_exclude=participation</filter>
       <!-- non-SDL in same state -->
       <filter>statusConcept=!CD4AA3C4-02D5-4CC9-9088-EF8F31E321C5&amp;classConept=!FF34DFA7-C6D3-4F8B-BC9F-14BCDC13BA6C&amp;address.component[State].value=!$subscribed.address.component[State].value$&amp;_exclude=relationship&amp;_exclude=participation</filter>
     </add>
-    <add name="ui.subscription.place.outOfCounty" resource="Place" mode="subscription" trigger="periodic" guard="subscribed.address.component[County] &amp;&amp; !subscribed.address.component[State]">
+    <add name="ui.subscription.place.outOfCounty" resource="Place" mode="subscription" trigger="periodic" guard="subscribed.address[Direct].component[County] &amp;&amp; !subscribed.address[Direct].component[State]">
       <!-- SDL in same county -->
       <filter>statusConcept=!CD4AA3C4-02D5-4CC9-9088-EF8F31E321C5&amp;classConept=FF34DFA7-C6D3-4F8B-BC9F-14BCDC13BA6C&amp;address.component[County].value=!$subscribed.address.component[County].value$&amp;_exclude=relationship&amp;_exclude=participation</filter>
       <!-- non-SDL in same county -->
