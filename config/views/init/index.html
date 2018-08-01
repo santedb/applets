@@ -39,7 +39,7 @@
                         <a class="nav-link" href="javascript:" data-target="#networkTab" data-toggle="tab" ng-class="{ 'disabled' : !config.realmName }">
                             <i class="fa fa-wifi"></i> {{ 'ui.config.network.title' | i18n }}</a>
                     </li>
-                    <li role="presentation" class="nav-item">
+                    <li role="presentation" class="nav-item" id="lastTab">
                             <a class="nav-link" href="javascript:" data-target="#otherTab" data-toggle="tab" ng-class="{ 'disabled' : !config.realmName }">
                                 <i class="fa fa-cog"></i> {{ 'ui.config.other.title' | i18n }}</a>
                         </li>
@@ -107,9 +107,21 @@
         <div class="btn-group">
             <button class="btn btn-lg btn-secondary" type="button" ng-click="back()" ng-disabled="wizardStep > 0">
                 <i class="fa fa-chevron-left"></i> {{ 'ui.action.prev' | i18n }}</button>
-            <button class="btn btn-lg btn-primary" type="button" ng-click="next()" >{{ 'ui.action.next' | i18n }}
+            <button class="btn btn-lg btn-primary" type="button" ng-if="!lastTab" ng-click="next()" >{{ 'ui.action.next' | i18n }}
+                <i class="fa fa-chevron-right"></i>
+            </button>
+            <button class="btn btn-lg btn-success" ng-if="lastTab" type="button" ng-click="save()" >{{ 'ui.action.next' | i18n }}
                 <i class="fa fa-chevron-right"></i>
             </button>
         </div>
     </footer>
+    <div class="modal" id="completeModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-body text-center">
+                    <h5><i class="fa fa-exclamation-circle"></i> {{ 'ui.config.complete' | i18n }}</h5>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>

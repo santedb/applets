@@ -453,6 +453,14 @@ if(!SanteDBWrapper)
         // App controller internal
         var _application = {
             /**
+             * @summary Closes the application or restarts it in the case of the mobile
+             * @method
+             * @memberof SanteDBWrapper.app
+             */
+            close: function() {
+                __SanteDBAppService.Close();
+            },
+            /**
              * @summary Instructs the back end service to perform a system upgrade
              * @param {string} appId The id of the applet which should be updated
              * @returns {Promise} A promise representing the fulfillment or rejection of update

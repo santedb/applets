@@ -130,6 +130,6 @@
   
     <string key="ui.config.action.realm.join">Join Domain</string>
     <string key="ui.config.action.realm.leave">Leave Domain</string>
-
+    <string key="ui.config.complete">You have successfully configured your instance of the SanteDB client services! If you are seeing this message, please restart the application</string>  
   </strings>
 </AppletManifest>

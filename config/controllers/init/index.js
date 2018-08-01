@@ -103,16 +103,32 @@ angular.module('santedb').controller('InitialSettingsController', ['$scope', '$r
     $scope.next = function() {
         // Find the next option
         var next = $("#configurationStages li.nav-item:has(a.active)~li:first a");
-        if(next)
+        if(next) 
             next.tab('show');
+        else
+            $scope.lastTab = true;
     };
 
     // Function to advance to previous option
     $scope.back = function() {
         var prev = $("#configurationStages li.nav-item:has(a.active)").prev().children("a:first");
-        if(prev)
+        if(prev) {
             prev.tab('show');
+            $scope.lastTab = false;
+        }
     };
+
+    // Save configuration settings
+    $scope.save = function(form) {
+        SanteDB.configuration.saveAsync($scope.config)
+            .then(function(c) {
+                SanteDB.application.close();
+                $("#completeModal").modal({
+                    backdrop: 'static'
+                });
+            })
+            .catch($rootScope.errorHandler);
+    }
 
     // Join the realm
     $scope.joinRealm = function (form) {
