@@ -31,6 +31,11 @@ angular.module('santedb').controller('InitialSettingsController', ['$scope', '$r
 
         $scope.config.security.offline = { enable: true };
 
+        if(config.realmName) 
+            SanteDB.application.getAppSolutionsAsync().then(function(s) {
+                $scope.solutions = s;
+                $scope.$apply();
+            });
         // Get data providers
         SanteDB.configuration.getDataProvidersAsync().then(function (d) {
             $scope.reference.dataProviders = d;
@@ -145,6 +150,7 @@ angular.module('santedb').controller('InitialSettingsController', ['$scope', '$r
                         alert(SanteDB.locale.getString("ui.config.realm.success"));
                         SanteDB.display.buttonWait("#joinRealmButton", false);
                         _processConfiguration(config);
+                        
                         //SanteDB.authentication.setElevator(null);
                         $scope.next();
                     })

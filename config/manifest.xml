@@ -134,5 +134,8 @@
 
     <string key="ui.config.role.title">Applets</string>
     <string key="ui.config.role.description">This application can operate in one of many roles on your server. This screen will allow you to configure which role you would like this application to take on within your SanteDB deployment.</string>
+    <string key="ui.config.role.applet.label">Role</string>
+    <string key="ui.config.role.applet.help">Select the role/solution that this application will run as. If your deployment does not use solutions or applet roles you can leave this blank.</string>
+    
   </strings>
 </AppletManifest>

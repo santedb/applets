@@ -453,6 +453,16 @@ if(!SanteDBWrapper)
         // App controller internal
         var _application = {
             /**
+             * @summary Gets the solution
+             * @method
+             * @memberof SnateDBWrapper.app
+             */
+            getAppSolutionsAsync: function() {
+                return _app.getAsync({
+                    resource: "solutions"
+                });
+            },
+            /**
              * @summary Closes the application or restarts it in the case of the mobile
              * @method
              * @memberof SanteDBWrapper.app

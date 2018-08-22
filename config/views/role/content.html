@@ -1,0 +1,13 @@
+<div class="container" xmlns="http://www.w3.org/1999/xhtml">
+    <div class="form-group row">
+        <label class="col-md-2 col-xs-12 control-label" for="syncInterval">{{ 'ui.config.role.applet.label' | i18n }}</label>
+        <div class="col-md-10 col-xs-12">
+            <select class="form-control" name="syncInterval" ng-model="config.applet.solution">
+               <option ng-repeat="sln in solutions" value="{{sln.id}}">{{sln.id}}</option>
+            </select>
+            <div class="form-text text-muted">
+                {{ 'ui.config.role.applet.help' | i18n }}
+            </div>
+        </div>
+    </div>
+</div>
