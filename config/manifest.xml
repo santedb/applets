@@ -131,5 +131,8 @@
     <string key="ui.config.action.realm.join">Join Domain</string>
     <string key="ui.config.action.realm.leave">Leave Domain</string>
     <string key="ui.config.complete">You have successfully configured your instance of the SanteDB client services! If you are seeing this message, please restart the application</string>  
+
+    <string key="ui.config.role.title">Applets</string>
+    <string key="ui.config.role.description">This application can operate in one of many roles on your server. This screen will allow you to configure which role you would like this application to take on within your SanteDB deployment.</string>
   </strings>
 </AppletManifest>

@@ -16,6 +16,10 @@
                             <i class="fa fa-globe"></i> {{ 'ui.config.realm.title' | i18n }}</a>
                     </li>
                     <li role="presentation" class="nav-item">
+                        <a class="nav-link" href="javascript:" data-target="#roleTab" data-toggle="tab" ng-class="{ 'disabled' : !config.realmName }">
+                            <i class="far fa-window-maximize"></i> {{ 'ui.config.role.title' | i18n }}</a>
+                    </li>
+                    <li role="presentation" class="nav-item">
                         <a class="nav-link" href="javascript:" data-target="#syncTab" data-toggle="tab" ng-class="{ 'disabled' : !config.realmName }">
                             <i class="fa fa-cloud-download-alt"></i> {{ 'ui.config.sync.title' | i18n }}</a>
                     </li>
@@ -52,6 +56,13 @@
                             <i class="fa fa-globe"></i> {{ 'ui.config.realm.title' | i18n }}</h4>
                         <p>{{ 'ui.config.realm.description' | i18n }}</p>
                         <!-- #include virtual="/org.santedb.config/views/realm/content.html" -->
+                    </div>
+                    <div role="tabpanel" class="tab-pane fade" id="roleTab">
+                        <h4>
+                            <i class="far fa-window-maximize"></i> {{ 'ui.config.role.title' | i18n }}</h4>
+                        <p>{{ 'ui.config.role.description' | i18n }}</p>
+                        <!-- #include virtual="/org.santedb.config/views/role/content.html" -->
+
                     </div>
                     <div role="tabpanel" class="tab-pane fade" id="syncTab">
                         <h4>
