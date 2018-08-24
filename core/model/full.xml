@@ -60,7 +60,12 @@
     <property name="key" all="true"/>
     <property name="quantity" all="true"/>
   </type>
-
+  <type type="ReferenceTerm" all="false">
+	<property name="name" behavior="always" all="true"/>
+	<property name="codeSystem"/>
+	<property name="mnemonic"/>
+  </type>
+  
   <!-- Entity Information -->
   <type type="Entity" all="true">
     <property name="templateModel" behavior="always" all="false">
