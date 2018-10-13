@@ -24,11 +24,11 @@
                             <i class="fa fa-cloud-download-alt"></i> {{ 'ui.config.sync.title' | i18n }}</a>
                     </li>
                     <li role="presentation" class="nav-item">
-                        <a class="nav-link" href="javascript:" data-target="#subscribeTab" data-toggle="tab" ng-class="{ 'disabled' : !config.realmName }">
+                        <a class="nav-link" href="javascript:" data-target="#subscribeTab" data-toggle="tab" ng-class="{ 'disabled' : !config.realmName }" ng-if="config.sync.mode == 'sync'">
                             <i class="fas fa-rss-square"></i> {{ 'ui.config.subscribe.title' | i18n }}</a>
                     </li>
                     <li role="presentation" class="nav-item">
-                        <a class="nav-link" href="javascript:" data-target="#dataTab" data-toggle="tab" ng-class="{ 'disabled' : !config.realmName }">
+                        <a class="nav-link" href="javascript:" data-target="#dataTab" data-toggle="tab" ng-class="{ 'disabled' : !config.realmName }" ng-if="config.sync.mode == 'sync'">
                             <i class="fa fa-database"></i> {{ 'ui.config.data.title' | i18n }}</a>
                     </li>
                     <li role="presentation" class="nav-item">
@@ -36,7 +36,7 @@
                             <i class="fa fa-list-ol"></i> {{ 'ui.config.log.title' | i18n }}</a>
                     </li>
                     <li role="presentation" class="nav-item">
-                        <a class="nav-link" href="javascript:" data-target="#securityTab" data-toggle="tab" ng-class="{ 'disabled' : !config.realmName }">
+                        <a class="nav-link" href="javascript:" data-target="#securityTab" data-toggle="tab" ng-class="{ 'disabled' : !config.realmName }"  ng-if="config.sync.mode == 'sync'">
                             <i class="fa fa-shield-alt"></i> {{ 'ui.config.security.title' | i18n }}</a>
                     </li>
                     <li role="presentation" class="nav-item">
