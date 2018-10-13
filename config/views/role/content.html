@@ -3,7 +3,7 @@
         <label class="col-md-2 col-xs-12 control-label" for="syncInterval">{{ 'ui.config.role.applet.label' | i18n }}</label>
         <div class="col-md-10 col-xs-12">
             <select class="form-control" name="syncInterval" ng-model="config.applet.solution">
-               <option ng-repeat="sln in solutions" value="{{sln.id}}">{{sln.id}}</option>
+               <option ng-repeat="sln in solutions" value="{{sln.applet.id}}">{{sln.applet.id}} - {{sln.applet.name[0].value}}</option>
             </select>
             <div class="form-text text-muted">
                 {{ 'ui.config.role.applet.help' | i18n }}

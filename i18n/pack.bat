@@ -5,7 +5,7 @@
 	FOR /D %%G IN (.\*) DO (
 		PUSHD %%G
 		IF EXIST "manifest.xml" (
-			sdb-pakr --compile --optimize --source=.\ --output=..\..\bin\org.santedb.%%~nxG.pak 
+			sdb-pakr --compile --optimize --source=.\ --output=..\..\bin\org.santedb.i18n.%%~nxG.pak 
 		)
 		POPD
 	)
