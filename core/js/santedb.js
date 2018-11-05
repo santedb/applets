@@ -342,6 +342,7 @@ if(!SanteDBWrapper)
                 return _config.api.postAsync({
                     data: data,
                     state: state,
+                    contentType: "application/json",
                     resource: _config.resource
                 });
             };
@@ -367,6 +368,7 @@ if(!SanteDBWrapper)
                     data: data,
                     id: id,
                     state: state,
+                    contentType: "application/json",
                     resource: _config.resource
                 });
             };

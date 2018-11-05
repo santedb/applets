@@ -15,13 +15,13 @@
             </tr>
             <tr>
                 <td>
-                    <input type="text" class="form-control" ng-model="newItem.key" />
+                    <input type="text" ng-class="{ 'is-invalid' : newItem.keyMissingError }" class="form-control" ng-model="newItem.key" />
                 </td>
                 <td>
                     <input type="text" class="form-control" ng-model="newItem.value" />
                 </td>
                 <td>
-                    <button type="button" class="btn btn-lg btn-success">
+                    <button type="button" ng-click="addOtherSetting(newItem)" class="btn btn-lg btn-success">
                         <i class="fa fa-plus"></i>
                     </button>
 

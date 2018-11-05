@@ -92,13 +92,14 @@ var santedbApp = angular.module('santedb', ['ngSanitize', 'ui.router', 'oc.lazyL
             }
 
             // User preferences
-            SanteDB.configuration.getUserPreferencesAsync().then(function(prefs) {
-                $rootScope.session.prefs = {};
-                prefs.application.setting.forEach(function(e) {
-                    $rootScope.session.prefs[e.key] = e.value;
-                });
-                $rootScope.$apply();
-            }).catch(function(e) {});
+            if(s)
+                SanteDB.configuration.getUserPreferencesAsync().then(function(prefs) {
+                    $rootScope.session.prefs = {};
+                    prefs.application.setting.forEach(function(e) {
+                        $rootScope.session.prefs[e.key] = e.value;
+                    });
+                    $rootScope.$apply();
+                }).catch(function(e) {});
         }).catch(function (e) { $rootScope.errorHandler(e); });
 
 
