@@ -28,7 +28,7 @@ angular.module('santedb').controller('InitialSettingsController', ['$scope', '$r
         $scope.config.network.optimize = "gzip";
         $scope.config.sync.mode = "sync";
         $scope.config.log.mode = $scope.config.log.trace[0].filter || "Warning";
-        $scope.config.sync.subscribe = [];
+        $scope.config.sync._resource = {};
         $scope.config.data = {
             provider: "sqlite",
             options: {}
@@ -79,6 +79,8 @@ angular.module('santedb').controller('InitialSettingsController', ['$scope', '$r
     // Get subscription reference
     SanteDB.configuration.getSubscriptionDefinitionsAsync().then(function (d) {
         $scope.reference.subscriptions = d;
+        for(var s in $scope.reference.subscriptions)
+            $scope.config.sync._resource[s.name] = { selected: true };
     }).catch($rootScope.errorHandler);
 
     // Watch for change in data provider
@@ -153,12 +155,21 @@ angular.module('santedb').controller('InitialSettingsController', ['$scope', '$r
         }
     };
 
+    // Select all guard conditions
+    $scope.setSubscriptionSelection = function(value) {
+        $scope.reference.subscriptions.forEach(function(s) {
+            $scope.config.sync._resource[s.name] = $scope.config.sync._resource[s.name] || {};
+            $scope.config.sync._resource[s.name].selected = value;
+        });
+    }
+    
     // Save configuration settings
     $scope.save = function(form) {
 
-
         // Find the resource definition 
-        $scope.config.sync.resource = Object.keys($scope.config.sync._resource).map(function(k) {
+        $scope.config.sync.resource = Object.keys($scope.config.sync._resource).filter(function(i) {
+            return i.selected;
+        }).map(function(k) {
             var refData = $scope.reference.subscriptions.find(function(p) { return p.name == k });
             return refData;
         });

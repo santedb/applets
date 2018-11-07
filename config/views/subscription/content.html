@@ -32,10 +32,11 @@
         <label for="subscribeObjects" class="col-md-2 col-xs-12 control-label">{{ 'ui.config.subscribe.objects.label' | i18n }}</label>
         <div class="col-md-10 col-xs-12">
             <ul class="checklist-box" style="height:10em">
-                <li ng-repeat="filter in reference.subscriptions track by $index" ng-if="(!filter.guard || checkGuard(filter)) &amp;&amp; (config.subscription.mode == filter.mode || filter.mode == 'AllOrSubscription')" ng-init="config.sync._resource[filter.name] = true"><label><input type="checkbox" ng-model="config.sync._resource[filter.name]" value="true"/> {{ filter.name | i18n }} ({{ filter.resource }})</label></li>
+                <li ng-repeat="filter in reference.subscriptions track by $index" ng-if="(!filter.guard || checkGuard(filter)) &amp;&amp; (config.subscription.mode == filter.mode || filter.mode == 'AllOrSubscription')"><label><input type="checkbox" ng-model="config.sync._resource[filter.name].selected" value="true"/> {{ filter.name | i18n }} ({{ filter.resource }})</label></li>
             </ul>
             <div class="btn-group float-right">
-                    <button type="button" class="btn btn-lg btn-info">{{ 'ui.action.selectAll' | i18n }}</button>
+                <button type="button" class="btn btn-lg btn-default" ng-click="setSubscriptionSelection(false)">{{ 'ui.action.selectNone' | i18n }}</button>
+                <button type="button" class="btn btn-lg btn-info" ng-click="setSubscriptionSelection(true)">{{ 'ui.action.selectAll' | i18n }}</button>
                 </div>
         </div>
     </div>
