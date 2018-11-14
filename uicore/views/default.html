@@ -3,8 +3,8 @@
     <p>Welcome to SanteDB Version {{$root.system.version}}. This is the default applet welcome screen. You will need to install
         one or more plugins into the SanteDB server in order for more useful screens to appear.
     </p>
-    <h4>Configuration might be needed</h4>
-    <p>You may also be seeing this page because you have not fully configured this instance of the SanteDB disconnected service
+    <h4 ng-if="!$root.system.config.isConfigured">Configuration might be needed</h4>
+    <p ng-if="!$root.system.config.isConfigured">You may also be seeing this page because you have not fully configured this instance of the SanteDB disconnected service
         you are running. To configure this instance jump over to the
         <a ui-sref="santedb-config.initial">Initial Configuration Screen</a>
     </p>

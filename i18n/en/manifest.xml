@@ -75,7 +75,7 @@
     <string key="error.http.404">The requested resource could not be found</string>
     <string key="error.type.Exception">General Error</string>
     <string key="error.type.HttpException">Communications Error</string>
-
+    <string key="error.type.WebException">Communications Error</string>
 
     <!-- Actions -->
     <string key="ui.action.ok">Ok</string>
@@ -175,7 +175,7 @@
     <string key="ui.config.sync.interval.60">Every hour</string>
     <string key="ui.config.sync.interval.help">Use this option to control how often automatic polling occurs</string>
     <string key="ui.config.sync.safePatchOnly">Do not auto-merge conflicts on server</string>
-    
+    <string key="ui.config.alreadyConfigured">Your instance of SanteDB is already configured!</string>
     <string key="ui.config.subscribe.title">Subscription</string>
     <string key="ui.config.subscribe.description">SanteDB can either synchronize the entire database, or can synchronize a subset of data based on places (geographic regions, villages, facilities, etc.)</string>
     <string key="ui.config.subscribe.mode.label">Subscription Mode</string>

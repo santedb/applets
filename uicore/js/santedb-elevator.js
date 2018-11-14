@@ -32,6 +32,7 @@ function SanteDBElevator(continueWith) {
             enablePin: sessionToUse != null,
             requirePou: sessionToUse != null,
             _lockUserName: sessionToUse != null,
+            noSession: true,
             grant_type: sessionToUse ? "pin" : "password",
             onLogin: function(s) {
                 _token = s.token;

@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!--
+ - Copyright 2015-2018 Mohawk College of Applied Arts and Technology
+ -
+ - 
+ - Licensed under the Apache License, Version 2.0 (the "License"); you 
+ - may not use this file except in compliance with the License. You may 
+ - obtain a copy of the License at 
+ - 
+ - http://www.apache.org/licenses/LICENSE-2.0 
+ - 
+ - Unless required by applicable law or agreed to in writing, software
+ - distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+ - WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the 
+ - License for the specific language governing permissions and limitations under 
+ - the License.
+ - 
+ - User: justi
+ - Date: 2018-7-22
+ -->
+<AppletManifest xmlns="http://santedb.org/applet">
+  <info id="org.santedb.admin" version="1.0.0.0">
+    <icon>/org.santedb.admin/img/icon.png</icon>
+    <name lang="en">SanteDB Administrative Panel</name>
+    <author>Mohawk College of Applied Arts and Technology - mHealth &amp; eHealth Development &amp; Innovation Centre</author>
+  </info>
+
+  <loginAsset>/org.santedb.admin/views/login.html</loginAsset>
+
+  <menuItem context="org.santedb.admin" launch="#!/"  asset="/org.santedb.admin/views/index.html">
+    <icon>fas fa-tachometer-alt</icon>
+    <text lang="en">Dashboard</text>
+  </menuItem>
+  <menuItem context="org.santedb.admin">
+    <icon>fas fa-cogs</icon>
+    <text lang="en">System</text>
+    <menuItem launch="#!/system/applets" asset="/org.santedb.admin/views/security/users/index.html" context="org.santedb.admin">
+      <icon>fab fa-html5</icon>
+      <text lang="en">Applets</text>
+    </menuItem>
+    <menuItem launch="#!/system/logs" asset="/org.santedb.admin/views/security/users/index.html" context="org.santedb.admin">
+      <icon>far fa-list-alt</icon>
+      <text lang="en">Logs</text>
+    </menuItem>
+    <menuItem launch="#!/system/about" asset="/org.santedb.admin/views/security/users/index.html" context="org.santedb.admin">
+      <icon>fas fa-info-circle</icon>
+      <text lang="en">Server Status</text>
+    </menuItem>
+  </menuItem>
+  <menuItem context="org.santedb.admin">
+    <icon>fas fa-shield-alt</icon>
+    <text lang="en">Security</text>
+    <menuItem launch="#!/security/users" asset="/org.santedb.admin/views/security/users/index.html" context="org.santedb.admin">
+      <icon>fas fa-user</icon>
+      <text lang="en">Users</text>
+    </menuItem>
+    <menuItem launch="#!/security/groups" asset="/org.santedb.admin/views/security/groups/index.html" context="org.santedb.admin">
+      <icon>fas fa-users</icon>
+      <text lang="en">Groups</text>
+    </menuItem>
+    <menuItem launch="#!/security/policies" asset="/org.santedb.admin/views/security/policies/index.html" context="org.santedb.admin">
+      <icon>fas fa-certificate</icon>
+      <text lang="en">Policies</text>
+    </menuItem>
+    <menuItem launch="#!/security/devices" asset="/org.santedb.admin/views/security/devices/index.html" context="org.santedb.admin">
+      <icon>fas fa-tablet-alt</icon>
+      <text lang="en">Devices</text>
+    </menuItem>
+    <menuItem launch="#!/security/applications" asset="/org.santedb.admin/views/security/applications/index.html" context="org.santedb.admin">
+      <icon>far fa-window-maximize</icon>
+      <text lang="en">Applications</text>
+    </menuItem>
+  </menuItem>
+
+  <strings lang="en">
+    <string key="ui.admin.brand.title"><![CDATA[<img src="/org.santedb.core/img/icon.png" height="24px"/> SanteDB Admin]]></string>
+  </strings>
+</AppletManifest>

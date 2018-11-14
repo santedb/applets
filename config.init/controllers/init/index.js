@@ -9,11 +9,11 @@ angular.module('santedb').controller('InitialSettingsController', ['$scope', '$r
     $scope.newItem = {};
 
     // Add other setting
-    $scope.addOtherSetting = function(newItem) {
-        if(!newItem.key)
+    $scope.addOtherSetting = function (newItem) {
+        if (!newItem.key)
             newItem.keyMissingError = true;
         else {
-            delete(newItem.keyMissingError);
+            delete (newItem.keyMissingError);
             $scope.config.application.setting.push(angular.copy(newItem));
             newItem.key = "";
             newItem.value = "";
@@ -23,46 +23,58 @@ angular.module('santedb').controller('InitialSettingsController', ['$scope', '$r
     // Process configuration
     function _processConfiguration(config) {
         $scope.config = config;
-        $scope.config.security.port = 8080;
-        $scope.config.network.useProxy = $scope.config.network.proxyAddress != null;
-        $scope.config.network.optimize = "gzip";
-        $scope.config.sync.mode = "sync";
-        $scope.config.log.mode = $scope.config.log.trace[0].filter || "Warning";
-        $scope.config.sync._resource = {};
-        $scope.config.data = {
-            provider: "sqlite",
-            options: {}
-        };
 
-        var configuredHasher = $scope.config.application.service.find(function (e) { return e.indexOf('PasswordHasher') > -1 });
-        if (configuredHasher) {
-            configuredHasher = configuredHasher.replace("SanteDB.DisconnectedClient.Xamarin.Security.", "");
-            configuredHasher = configuredHasher.substr(0, configuredHasher.indexOf(","));
-            $scope.config.security.hasher = configuredHasher;
+        if (!config.isConfigured) {
+            $scope.config.security.port = 8080;
+            $scope.config.network.useProxy = $scope.config.network.proxyAddress != null;
+            $scope.config.network.optimize = "gzip";
+            $scope.config.sync = $scope.config.sync || {};
+            $scope.config.sync.mode = "sync";
+            $scope.config.log.mode = $scope.config.log.trace[0].filter || "Warning";
+            $scope.config.sync._resource = {};
+            $scope.config.data = {
+                provider: "sqlite",
+                options: {}
+            };
+
+            // Get subscription reference
+            SanteDB.configuration.getSubscriptionDefinitionsAsync().then(function (d) {
+                $scope.reference.subscriptions = d;
+                for (var s in $scope.reference.subscriptions)
+                    $scope.config.sync._resource[s.name] = { selected: true };
+            }).catch($rootScope.errorHandler);
+
+            var configuredHasher = $scope.config.application.service.find(function (e) { return e.indexOf('PasswordHasher') > -1 });
+            if (configuredHasher) {
+                configuredHasher = configuredHasher.replace("SanteDB.DisconnectedClient.Xamarin.Security.", "");
+                configuredHasher = configuredHasher.substr(0, configuredHasher.indexOf(","));
+                $scope.config.security.hasher = configuredHasher;
+            }
+            else
+                $scope.config.security.hasher = "SHA256PasswordHasher";
+
+            $scope.config.security.offline = { enable: true };
+
+            if (config.realmName)
+                SanteDB.application.getAppSolutionsAsync().then(function (s) {
+                    $scope.solutions = s;
+                    $scope.$apply();
+                }).catch(function (e) {
+                    if (e.type != "UnauthorizedAccessException") // We can elevate, so let's just leave it 
+                    {
+                        $rootScope.errorHandler(e);
+                    }
+                });
+            // Get data providers
+            SanteDB.configuration.getDataProvidersAsync().then(function (d) {
+                $scope.reference.dataProviders = d;
+                if ($scope.config.data.provider)
+                    $scope.reference.providerData = $scope.reference.dataProviders.find(function (o) { return o.invariant == $scope.config.data.provider });
+            }).catch($rootScope.errorHandler);
+
         }
-        else
-            $scope.config.security.hasher = "SHA256PasswordHasher";
-
-        $scope.config.security.offline = { enable: true };
-
-        if(config.realmName) 
-            SanteDB.application.getAppSolutionsAsync().then(function(s) {
-                $scope.solutions = s;
-                $scope.$apply();
-            }).catch(function(e) { 
-                if(e.type != "UnauthorizedAccessException") // We can elevate, so let's just leave it 
-                {
-                    $rootScope.errorHandler(e);
-                }                
-            });
-        // Get data providers
-        SanteDB.configuration.getDataProvidersAsync().then(function (d) {
-            $scope.reference.dataProviders = d;
-            if ($scope.config.data.provider)
-                $scope.reference.providerData = $scope.reference.dataProviders.find(function (o) { return o.invariant == $scope.config.data.provider });
-        }).catch($rootScope.errorHandler);
-
-
+        else 
+            $("#alreadyConfiguredModal").modal({backdrop: 'static'});
         $scope.$apply();
     }
 
@@ -75,13 +87,6 @@ angular.module('santedb').controller('InitialSettingsController', ['$scope', '$r
 
     SanteDB.authentication.setElevator(new SanteDBElevator(_getConfiguration));
     _getConfiguration();
-    
-    // Get subscription reference
-    SanteDB.configuration.getSubscriptionDefinitionsAsync().then(function (d) {
-        $scope.reference.subscriptions = d;
-        for(var s in $scope.reference.subscriptions)
-            $scope.config.sync._resource[s.name] = { selected: true };
-    }).catch($rootScope.errorHandler);
 
     // Watch for change in data provider
     $scope.$watch('config.data.provider', function (n, o) {
@@ -109,14 +114,14 @@ angular.module('santedb').controller('InitialSettingsController', ['$scope', '$r
     // Verifies that a guard condition on a filter passes
     $scope.checkGuard = function (filter) {
 
-        if($scope.reference.places.length == 0) return false;
+        if ($scope.reference.places.length == 0) return false;
 
         var retVal = true;
         var guardFilterRegex = new RegExp('^([\\!\\sA-Za-z\\.&|]*?)\\[([A-Za-z]*?)\\](.*)$');
-        var newGuard = "" , oldGuard = filter.guard;
-        while(oldGuard.length > 0) {
+        var newGuard = "", oldGuard = filter.guard;
+        while (oldGuard.length > 0) {
             var match = guardFilterRegex.exec(oldGuard);
-            if(!match)
+            if (!match)
                 newGuard += oldGuard;
             else {
                 newGuard += `${match[1]}.${match[2]}`;
@@ -130,52 +135,60 @@ angular.module('santedb').controller('InitialSettingsController', ['$scope', '$r
         return retVal
     }
 
-    $("#configurationStages li.nav-item").children("a").on('shown.bs.tab', function(e) {
+    $("#configurationStages li.nav-item").children("a").on('shown.bs.tab', function (e) {
         $scope.lastTab = e.currentTarget.innerHTML == $("#configurationStages li.nav-item").children("a").last().html();
         $scope.$apply();
     });
 
     // Function to advance to next option
-    $scope.next = function() {
+    $scope.next = function () {
         // Find the next option
         var next = $("#configurationStages li.nav-item:has(a.active)~li a");
-        if(next.length > 0) 
+        if (next.length > 0)
             $(next[0]).tab('show');
     };
 
     // Function to advance to previous option
-    $scope.back = function() {
+    $scope.back = function () {
         var prev = $("#configurationStages li.nav-item:has(a.active)").prev();
-        if(prev.length == 0) return;
-        while(prev.children("a:first").length == 0)
+        if (prev.length == 0) return;
+        while (prev.children("a:first").length == 0)
             prev = $(prev).prev();
-        if(prev) {
+        if (prev) {
             prev.children("a:first").tab('show');
             $scope.lastTab = false;
         }
     };
 
     // Select all guard conditions
-    $scope.setSubscriptionSelection = function(value) {
-        $scope.reference.subscriptions.forEach(function(s) {
-            $scope.config.sync._resource[s.name] = $scope.config.sync._resource[s.name] || {};
-            $scope.config.sync._resource[s.name].selected = value;
+    $scope.setSubscriptionSelection = function (value) {
+        $scope.reference.subscriptions.forEach(function (s) {
+            if (value &&
+                (!s.guard ^ (s.guard && $scope.checkGuard(s))) &&
+                ($scope.config.subscription.mode == s.mode || s.mode == 'AllOrSubscription')) {
+                $scope.config.sync._resource[s.name] = $scope.config.sync._resource[s.name] || {};
+                $scope.config.sync._resource[s.name].selected = value;
+            }
+            else {
+                $scope.config.sync._resource[s.name] = $scope.config.sync._resource[s.name] || {};
+                $scope.config.sync._resource[s.name].selected = false;
+            }
         });
     }
-    
+
     // Save configuration settings
-    $scope.save = function(form) {
+    $scope.save = function (form) {
 
         // Find the resource definition 
-        $scope.config.sync.resource = Object.keys($scope.config.sync._resource).filter(function(i) {
-            return i.selected;
-        }).map(function(k) {
-            var refData = $scope.reference.subscriptions.find(function(p) { return p.name == k });
+        $scope.config.sync.resource = Object.keys($scope.config.sync._resource).filter(function (i) {
+            return $scope.config.sync._resource[i].selected;
+        }).map(function (k) {
+            var refData = $scope.reference.subscriptions.find(function (p) { return p.name == k });
             return refData;
-        });
+        }).filter(function (i) { return i != null; });
 
         SanteDB.configuration.saveAsync($scope.config)
-            .then(function(c) {
+            .then(function (c) {
                 SanteDB.application.close();
                 $("#completeModal").modal({
                     backdrop: 'static'
@@ -199,7 +212,7 @@ angular.module('santedb').controller('InitialSettingsController', ['$scope', '$r
                         alert(SanteDB.locale.getString("ui.config.realm.success"));
                         SanteDB.display.buttonWait("#joinRealmButton", false);
                         _processConfiguration(config);
-                        
+
                         //SanteDB.authentication.setElevator(null);
                         $scope.next();
                     })
@@ -212,9 +225,9 @@ angular.module('santedb').controller('InitialSettingsController', ['$scope', '$r
                             else {
                                 $rootScope.errorHandler(e);
                                 SanteDB.authentication.setElevator(null);
-                            }    
+                            }
                         }
-                        else if(e.type != "UnauthorizedAccessException") // We can elevate, so let's just leave it 
+                        else if (e.type != "UnauthorizedAccessException") // We can elevate, so let's just leave it 
                         {
                             $rootScope.errorHandler(e);
                             SanteDB.authentication.setElevator(null);

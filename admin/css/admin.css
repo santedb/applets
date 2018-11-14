@@ -1,0 +1,25 @@
+div.login-panel {
+    margin-left: auto;
+    margin-right: auto;
+    width: 400px;
+}
+
+div.logo-centered {
+    margin: auto;
+    width: 64px;
+    height: 64px;
+    background-image: url('/org.santedb.core/img/icon.png');
+}
+
+.navbar-collapse .navbar-sidenav .nav-link-collapse.collapsed:after, .rotate{
+    -moz-transition: all 0.2s linear;
+    -webkit-transition: all 0.2s linear;
+    transition: all 0.2s linear;
+}
+
+.navbar-collapse .navbar-sidenav .nav-link-collapse[aria-expanded="true"]:after, .rotate[aria-expanded="true"]{
+    -ms-transform: rotate(90deg);
+    -moz-transform: rotate(90deg);
+    -webkit-transform: rotate(90deg);
+    transform: rotate(90deg);
+}

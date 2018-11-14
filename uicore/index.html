@@ -37,9 +37,8 @@
 
 <body ng-controller="RootIndexController">
     
-    <div>
-        <ui-view/>
-    </div>
+    <ui-view>
+    </ui-view>
 
     <!-- #include virtual="~/views/dialogs/login.partial.html" -->
     <!-- #include virtual="~/views/dialogs/error.partial.html" -->
@@ -48,9 +47,10 @@
     <!-- Page Transitioner -->
     <div id="pageTransitioner" class="pageloader">
         <div class="cssload-loader">
-            <div class="cssload-inner cssload-one"></div>
-            <div class="cssload-inner cssload-two"></div>
-            <div class="cssload-inner cssload-three"></div>
+            <div class="spinner">
+                <div class="dot1"></div>
+                <div class="dot2"></div>
+              </div>
         </div>
     </div>
 

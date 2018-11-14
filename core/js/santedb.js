@@ -691,11 +691,13 @@ if(!SanteDBWrapper)
              * @summary Get all available user interface menus for the current user
              * @method
              * @memberof SanteDBWrapper.app
+             * @param {string} contextName The name of the context to retrieve
              * @returns {any} A structure of menus the user is allowed to access
              */
-            getMenusAsync: function () {
+            getMenusAsync: function (contextName) {
                 return _app.getAsync({
-                    resource: "menu"
+                    resource: "menu",
+                    query: { context: contextName }
                 });
             },
             /**

@@ -1,4 +1,5 @@
 /// <Reference path="../../core/js/santedb.js"/>
+
 /**
  * SanteDB Root JS View
  */
@@ -49,6 +50,11 @@ var santedbApp = angular.module('santedb', ['ngSanitize', 'ui.router', 'oc.lazyL
     }])
     .run(['$rootScope', '$state', '$templateCache', '$transitions', '$ocLazyLoad', '$interval', function ($rootScope, $state, $templateCache, $transitions, $ocLazyLoad, $interval) {
 
+        $(window).bind("resize", function() {
+            $rootScope.windowSize = window.innerWidth;
+            $rootScope.$apply();
+        });
+        $rootScope.windowSize = window.innerWidth;
         // Extend toast information
         var _extendToast = null;
 
@@ -75,7 +81,10 @@ var santedbApp = angular.module('santedb', ['ngSanitize', 'ui.router', 'oc.lazyL
         // Transitions
         $transitions.onBefore({}, function (transition) {
             console.info(`Transitioned to ${transition._targetState._definition.self.name}`);
-            $("#pageTransitioner").show();
+            $(".modal").modal('hide');
+           
+            if(transition._targetState._definition.self.name != transition._targetState._definition.self.name != $state.$current.name)
+                $("#pageTransitioner").show();
         });
         $transitions.onSuccess({}, function () {
             $("#pageTransitioner").hide();

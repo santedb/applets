@@ -1,7 +1,7 @@
 <div xmlns="http://www.w3.org/1999/xhtml" class="container-fluid">
     <div class="row">
         <div class="col-sm-12 text-center">
-            {{ 'ui.login.realm' | i18n }} : <strong>{{ $root.system.realm }}</strong>
+            {{ login.welcomeMessage || 'ui.login.realm' | i18n }} : <strong>{{ $root.system.config.realmName }}</strong>
         </div>
     </div>
     <div class="form-group row">
@@ -13,14 +13,14 @@
     <div class="form-group row" ng-if="login.grant_type == 'password'">
         <label for="loginPassword" class="col-sm-3 control-label">{{ 'ui.login.input.password' | i18n }}</label>
         <div class="col-sm-9">
-            <input type="password" id="authUserPasswordInput" ng-required="login.grant_type == 'password'" ng-model="login.password" name="loginPassword" class="form-control"
+            <input type="password" id="{{scopeId}}authUserPasswordInput" ng-required="login.grant_type == 'password'" ng-model="login.password" name="loginPassword" class="form-control"
             />
         </div>
     </div>
     <div class="form-group row" ng-if="login.grant_type != 'password'">
         <label for="loginPin" class="col-sm-3 control-label">{{ 'ui.login.input.pin' | i18n }}</label>
         <div class="col-sm-9">
-            <input type="password" id="authUserPinInput" minlength="4" maxlength="8" pattern="[0-9]{4,8}" ng-required="login.grant_type != 'password'" inputmode="numeric" ng-model="login.pin"
+            <input type="password" id="{{scopeId}}authUserPinInput" minlength="4" maxlength="8" pattern="[0-9]{4,8}" ng-required="login.grant_type != 'password'" inputmode="numeric" ng-model="login.pin"
                 name="loginPin" class="form-control" />
         </div>
     </div>
