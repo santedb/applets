@@ -434,22 +434,22 @@ if(!SanteDBWrapper)
         // hdsi internal
         var _hdsi = new APIWrapper({
             idByQuery: true,
-            base: "/__hdsi/"
+            base: "/hdsi/"
         });
         // ami internal
         var _ami = new APIWrapper({
             idByQuery: true,
-            base: "/__ami/"
+            base: "/ami/"
         });
         // auth internal
         var _auth = new APIWrapper({
             idByQuery: true,
-            base: "/__auth/"
+            base: "/auth/"
         });
         // Backing data for app API
         var _app = new APIWrapper({
-            base: "/__app/",
-            idByQuery: true
+            base: "/app/",
+            idByQuery: false
         });
 
         // App controller internal
@@ -735,7 +735,7 @@ if(!SanteDBWrapper)
                 * @summary Represents a resource wrapper that persists bundles
                 */
             bundle: new ResourceWrapper({
-                resource: "bundle",
+                resource: "Bundle",
                 api: _hdsi
             }),
             /**
@@ -744,7 +744,7 @@ if(!SanteDBWrapper)
                 * @summary Represents an resource wrapper that interoperates with the care planner
                 */
             carePlan: new ResourceWrapper({
-                resource: "careplan",
+                resource: "CarePlan",
                 api: _hdsi
             }),
             /**
@@ -753,7 +753,7 @@ if(!SanteDBWrapper)
                 * @summary Represents the Patient Resource
                 */
             patient: new ResourceWrapper({
-                resource: "patient",
+                resource: "Patient",
                 api: _hdsi
             }),
             /**
@@ -762,7 +762,7 @@ if(!SanteDBWrapper)
                 * @summary Represents the SubstanceAdministration Resource
                 */
             substanceAdministration: new ResourceWrapper({
-                resource: "substanceadministration",
+                resource: "SubstanceAdministration",
                 api: _hdsi
             }),
             /**
@@ -771,7 +771,7 @@ if(!SanteDBWrapper)
                 * @summary Represents the Act Resource
                 */
             act: new ResourceWrapper({
-                resource: "act",
+                resource: "Act",
                 api: _hdsi
             }),
             /**
@@ -780,7 +780,7 @@ if(!SanteDBWrapper)
                 * @memberof SanteDBWrapper.resources
                 */
             entity: new ResourceWrapper({
-                resource: "entity",
+                resource: "Entity",
                 api: _hdsi
             }),
             /**
@@ -789,7 +789,7 @@ if(!SanteDBWrapper)
                 * @memberof SanteDBWrapper.resources
                 */
             entityRelationship: new ResourceWrapper({
-                resource: "entityrelationship",
+                resource: "EntityRelationship",
                 api: _hdsi
             }),
             /**
@@ -798,7 +798,7 @@ if(!SanteDBWrapper)
                 * @summary Represents the Observation Resource
                 */
             observation: new ResourceWrapper({
-                resource: "observation",
+                resource: "Observation",
                 api: _hdsi
             }),
             /**
@@ -807,7 +807,7 @@ if(!SanteDBWrapper)
                 * @summary Represents the Place Resource
                 */
             place: new ResourceWrapper({
-                resource: "place",
+                resource: "Place",
                 api: _hdsi
             }),
             /**
@@ -816,7 +816,7 @@ if(!SanteDBWrapper)
                 * @summary Represents the Provider Resource
                 */
             provider: new ResourceWrapper({
-                resource: "provider",
+                resource: "Provider",
                 api: _hdsi
             }),
             /**
@@ -825,7 +825,7 @@ if(!SanteDBWrapper)
                 * @summary Represents the UserEntity Resource
                 */
             userEntity: new ResourceWrapper({
-                resource: "userentity",
+                resource: "UserEntity",
                 api: _hdsi
             }),
             /**
@@ -834,7 +834,7 @@ if(!SanteDBWrapper)
                 * @summary Represents the Organization Resource
                 */
             organization: new ResourceWrapper({
-                resource: "organization",
+                resource: "Organization",
                 api: _hdsi
             }),
             /**
@@ -843,7 +843,7 @@ if(!SanteDBWrapper)
                 * @summary Represents the Material Resource
                 */
             material: new ResourceWrapper({
-                resource: "material",
+                resource: "Material",
                 api: _hdsi
             }),
             /**
@@ -852,7 +852,7 @@ if(!SanteDBWrapper)
                 * @summary Represents the ManufacturedMaterial Resource
                 */
             manufacturedMaterial: new ResourceWrapper({
-                resource: "manufacturedmaterial",
+                resource: "ManufacturedMaterial",
                 api: _hdsi
             }),
             /**
@@ -861,7 +861,7 @@ if(!SanteDBWrapper)
                 * @summary Represents the ManufacturedMaterial Resource
                 */
             concept: new ResourceWrapper({
-                resource: "concept",
+                resource: "Concept",
                 api: _ami
             }),
             /**
@@ -870,7 +870,7 @@ if(!SanteDBWrapper)
                 * @summary Represents the ConceptSet Resource
                 */
             conceptSet: new ResourceWrapper({
-                resource: "conceptset",
+                resource: "ConceptSet",
                 api: _ami
             }),
             /**
@@ -879,7 +879,7 @@ if(!SanteDBWrapper)
                 * @summary Represents the ReferenceTerm Resource
                 */
             referenceTerm: new ResourceWrapper({
-                resource: "referenceterm",
+                resource: "ReferenceTerm",
                 api: _ami
             }),
             /**
@@ -888,7 +888,7 @@ if(!SanteDBWrapper)
                 * @summary Represents the CodeSystem Resource
                 */
             codeSystem: new ResourceWrapper({
-                resource: "codesystem",
+                resource: "CodeSystem",
                 api: _ami
             }),
             /**
@@ -897,7 +897,7 @@ if(!SanteDBWrapper)
                 * @summary Represents the DeviceEntity Resource
                 */
             deviceEntity: new ResourceWrapper({
-                resource: "deviceentity",
+                resource: "DeviceEntity",
                 api: _ami
             }),
             /**
@@ -906,7 +906,7 @@ if(!SanteDBWrapper)
                 * @summary Represents the ApplicationEntity Resource
                 */
             applicationEntity: new ResourceWrapper({
-                resource: "applicationentity",
+                resource: "ApplicationEntity",
                 api: _ami
             }),
             /**
@@ -915,8 +915,8 @@ if(!SanteDBWrapper)
                 * @summary Gets the configuration resource
                 */
             configuration: new ResourceWrapper({
-                resource: "configuration",
-                api: _ami
+                resource: "Configuration",
+                api: _app
             }),
             /**
                 * @property {SanteDB.ResourceWrapper}
@@ -924,8 +924,8 @@ if(!SanteDBWrapper)
                 * @summary Gets the queue control resource
                 */
             queue: new ResourceWrapper({
-                resource: "queue",
-                api: _ami
+                resource: "Queue",
+                api: _app
             }),
             /**
                 * @property {SanteDB.ResourceWrapper}
@@ -933,7 +933,7 @@ if(!SanteDBWrapper)
                 * @summary Resource wrapper which interacts with the administrative task scheduler
                 */
             task: new ResourceWrapper({
-                resource: "task",
+                resource: "Task",
                 api: _ami
             }),
             /**
@@ -942,7 +942,7 @@ if(!SanteDBWrapper)
                 * @summary A resource wrapper for alerts which are messages between users
                 */
             mail: new ResourceWrapper({
-                resource: "mail",
+                resource: "Mail",
                 api: _ami
             }),
             /**
@@ -951,8 +951,8 @@ if(!SanteDBWrapper)
                 * @summary A wrapper which is used for fetching user notifications
                 **/
             tickle: new ResourceWrapper({
-                resource: "notification",
-                api: _ami
+                resource: "Notification",
+                api: _app
             }),
             /**
                 * @property {SanteDB.ResourceWrapper}
@@ -960,7 +960,7 @@ if(!SanteDBWrapper)
                 * @summary A wrapper for locale information which comes from the server
                 */
             locale: new ResourceWrapper({
-                resource: "locale",
+                resource: "Locale",
                 api: _app
             })
         };
@@ -975,8 +975,8 @@ if(!SanteDBWrapper)
              * @summary Get a complete list of filter providers asynchronously
              */
             getSubscriptionDefinitionsAsync : function() {
-                return _ami.getAsync({
-                    resource: "subscriptionDefinition"
+                return _app.getAsync({
+                    resource: "SubscriptionDefinition"
                 });
             },
             /**
@@ -986,8 +986,8 @@ if(!SanteDBWrapper)
              * @summary Gets a list of data providers available on this offline provider mode
              */
             getDataProvidersAsync: function() {
-                return _ami.getAsync({
-                    resource: "dbp"
+                return _app.getAsync({
+                    resource: "DataProviders"
                 });
             },
             /**

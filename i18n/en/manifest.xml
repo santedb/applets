@@ -73,6 +73,8 @@
     <string key="ui.error.description">Additional details follow:</string>
     <string key="ui.error.contactSysAdmin">Please file a bug report, or contact your system administrator with this information</string>
     <string key="error.http.404">The requested resource could not be found</string>
+    <string key="error.http.405">Method not supported</string>
+    <string key="error.http.501">Method not implemented</string>
     <string key="error.type.Exception">General Error</string>
     <string key="error.type.HttpException">Communications Error</string>
     <string key="error.type.WebException">Communications Error</string>

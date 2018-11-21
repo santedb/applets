@@ -13,11 +13,12 @@
                 <p>
                     {{ $root.error.message | i18n }}. {{ 'ui.error.description' | i18n }}
                 </p>
-                <blockquote>
-                    <p class="text-danger">
-                    {{ $root.error.details }}
-                </p>
-                </blockquote>
+                <div ng-switch="ng-switch">
+                    <p class="text-danger" ng-case-when="$root.error.details.responseJSON">
+                        <b>{{ $root.error.details.responseJSON.message }} : </b>
+                        <pre>{{ $root.error.details.responseJSON.detail }}</pre>
+                    </p>
+                </div>
                 <p>{{ 'ui.error.contactSysAdmin' | i18n }}</p>
             </div>
             <div class="modal-footer">
