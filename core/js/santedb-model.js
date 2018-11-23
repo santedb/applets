@@ -1,3 +1,23 @@
+/*
+ * Copyright 2015-2018 Mohawk College of Applied Arts and Technology
+ * 
+ * 
+ * Licensed under the Apache License, Version 2.0 (the "License"); you 
+ * may not use this file except in compliance with the License. You may 
+ * obtain a copy of the License at 
+ * 
+ * http://www.apache.org/licenses/LICENSE-2.0 
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+ * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the 
+ * License for the specific language governing permissions and limitations under 
+ * the License.
+ * 
+ * User: justin
+ * Date: 2018-7-23
+ */
+
 // SanteDB.Core.Model.NonVersionedEntityData, SanteDB.Core.Model, Version=1.1.0.35405, Culture=neutral, PublicKeyToken=null
 if(!NonVersionedEntityData)
 /**
@@ -11603,15 +11623,21 @@ if(!Exception)
     * @param {any} detail Any detail / diagnostic information
     * @param {Exception} cause The cause of the exception
     */
-    function Exception (type, message, detail, cause) {
+    function Exception (type, message, detail, cause, stack, policy, rules) {
         _self = this;
         /** @type {string} */
-        this.type = type;
+        this.$type = type;
         /** @type {string} */
         this.message = message;
         /** @type {string} */
-        this.details = detail;
+        this.detail = detail;
         /** @type {Exception} */
-        this.caused_by = cause;
+		this.cause = cause;
+		/** @type {string} */
+		this.stack = stack;
+		/** @type {string} */
+		this.policy = policy;
+		/** @type {Array} */
+		this.rules = rules;
     }
 

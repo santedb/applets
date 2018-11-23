@@ -1,6 +1,26 @@
+<!--
+ - Copyright 2015-2018 Mohawk College of Applied Arts and Technology
+ -
+ - 
+ - Licensed under the Apache License, Version 2.0 (the "License"); you 
+ - may not use this file except in compliance with the License. You may 
+ - obtain a copy of the License at 
+ - 
+ - http://www.apache.org/licenses/LICENSE-2.0 
+ - 
+ - Unless required by applicable law or agreed to in writing, software
+ - distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+ - WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the 
+ - License for the specific language governing permissions and limitations under 
+ - the License.
+ - 
+ - User: justin
+ - Date: 2018-7-26
+ -->
+
 <!-- Error -->
 <div class="modal fade" data-backdrop-limit="1" role="dialog" tabindex="-1" id="errorModal" xmlns="http://www.w3.org/1999/xhtml">
-    <div class="modal-dialog" role="document" >
+    <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <div class="modal-title">
@@ -14,10 +34,25 @@
                     {{ $root.error.message | i18n }}. {{ 'ui.error.description' | i18n }}
                 </p>
                 <div ng-switch="ng-switch">
-                    <p class="text-danger" ng-case-when="$root.error.details.responseJSON">
-                        <b>{{ $root.error.details.responseJSON.message }} : </b>
-                        <pre>{{ $root.error.details.responseJSON.detail }}</pre>
-                    </p>
+                    <div ng-case-when="$root.error.message || $root.error.details.responseJSON">
+                        <div>
+                            <span>
+                                <strong>
+                                    <a data-toggle="collapse" class="collapse-indicator text-danger" data-target="#errorDetail" href="">
+                                        <i class="fa fa-chevron-right"></i> {{ $root.error.message  | i18n }}
+                                    </a>
+                                </strong>
+                            </span>
+                            <pre class="collapse out" id="errorDetail">({{$root.error.type}}) : {{ $root.error.details.responseText || $root.error.details }}</pre>
+                        </div>
+                        <div ng-repeat="cause in $root.error.cause">
+                            <a data-toggle="collapse" class="collapse-indicator" data-target="#causeDetail" href="">
+                                <i class="fa fa-chevron-right"></i> {{ 'ui.error.causedBy' | i18n }}
+                                <span class="text-danger">{{ cause.message  | i18n }}</span>
+                            </a>
+                            <pre class="collapse out" id="causeDetail">({{cause.type}}) : {{ cause.detail }}</pre>
+                        </div>
+                    </div>
                 </div>
                 <p>{{ 'ui.error.contactSysAdmin' | i18n }}</p>
             </div>

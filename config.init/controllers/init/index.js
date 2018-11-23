@@ -1,4 +1,23 @@
 /// <reference path="../../../core/js/santedb.js"/>
+/*
+ * Copyright 2015-2018 Mohawk College of Applied Arts and Technology
+ *
+ * 
+ * Licensed under the Apache License, Version 2.0 (the "License"); you 
+ * may not use this file except in compliance with the License. You may 
+ * obtain a copy of the License at 
+ * 
+ * http://www.apache.org/licenses/LICENSE-2.0 
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+ * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the 
+ * License for the specific language governing permissions and limitations under 
+ * the License.
+ * 
+ * User: justin
+ * Date: 2018-10-14
+ */
 
 angular.module('santedb').controller('InitialSettingsController', ['$scope', '$rootScope', function ($scope, $rootScope) {
 
@@ -23,7 +42,12 @@ angular.module('santedb').controller('InitialSettingsController', ['$scope', '$r
     // Process configuration
     function _processConfiguration(config) {
         $scope.config = config;
-
+        
+        $("#configurationStages li.nav-item").children("a").on('shown.bs.tab', function (e) {
+            $scope.lastTab = e.currentTarget.innerHTML == $("#configurationStages li.nav-item").children("a").last().html();
+            $scope.$apply();
+        });
+        
         if (!config.isConfigured) {
             $scope.config.security.port = 8080;
             $scope.config.network.useProxy = $scope.config.network.proxyAddress != null;
@@ -60,10 +84,7 @@ angular.module('santedb').controller('InitialSettingsController', ['$scope', '$r
                     $scope.solutions = s;
                     $scope.$apply();
                 }).catch(function (e) {
-                    if (e.type != "UnauthorizedAccessException") // We can elevate, so let's just leave it 
-                    {
-                        $rootScope.errorHandler(e);
-                    }
+                    $rootScope.errorHandler(e);
                 });
             // Get data providers
             SanteDB.configuration.getDataProvidersAsync().then(function (d) {
@@ -132,13 +153,10 @@ angular.module('santedb').controller('InitialSettingsController', ['$scope', '$r
             var e = $scope.$eval(newGuard, { "subscribed": subscribed });
             retVal &= (e != null) && (e !== false);
         });
+
+
         return retVal
     }
-
-    $("#configurationStages li.nav-item").children("a").on('shown.bs.tab', function (e) {
-        $scope.lastTab = e.currentTarget.innerHTML == $("#configurationStages li.nav-item").children("a").last().html();
-        $scope.$apply();
-    });
 
     // Function to advance to next option
     $scope.next = function () {
@@ -219,20 +237,16 @@ angular.module('santedb').controller('InitialSettingsController', ['$scope', '$r
                     .catch(function (e) {
 
                         SanteDB.display.buttonWait("#joinRealmButton", false);
-                        if (e.type == "DuplicateNameException" && !override) {
+                        if (e.$type == "DuplicateNameException" && !override) {
                             if (confirm(SanteDB.locale.getString("ui.config.realm.error.duplicate")))
                                 joinRealmFn(true);
-                            else {
+                            else 
                                 $rootScope.errorHandler(e);
-                                SanteDB.authentication.setElevator(null);
-                            }
+                            
                         }
-                        else if (e.type != "UnauthorizedAccessException") // We can elevate, so let's just leave it 
-                        {
+                        else 
                             $rootScope.errorHandler(e);
-                            SanteDB.authentication.setElevator(null);
-                        }
-
+                        
                     });
             };
             SanteDB.authentication.setElevator(new SanteDBElevator(joinRealmFn));

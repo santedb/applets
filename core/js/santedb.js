@@ -15,8 +15,8 @@
  * License for the specific language governing permissions and limitations under 
  * the License.
  * 
- * User: justi
- * Date: 2018-7-17
+ * User: justin
+ * Date: 2018-7-23
  */
 
 // Interactive SHIM between host environment and browser
@@ -40,6 +40,37 @@ if(!SanteDBWrapper)
      */
     function SanteDBWrapper() {
         "use strict";
+
+        var _viewModelJsonMime = "application/json+sdb-viewModel";
+        
+        /**
+         * @summary Global error handler
+         * @param {xhr} e The Errored request
+         * @param {*} data 
+         * @param {*} setting 
+         * @param {*} err 
+         */
+        var _globalErrorHandler = function (data, setting, err) {
+            if (data.status == 401 && data.getResponseHeader("WWW-Authenticate")) {
+                if (_session && _session.exp > Date.now // User has a session that is valid, but is still 401 hmm... elevation!!!
+                    && _elevator
+                    && !_elevator.getToken() ||
+                    _session == null && _elevator) {
+
+                        // Was the response a security policy exception where the back end is asking for elevation on the same user account?
+                        if(data.responseJSON &&
+                            data.responseJSON.type == "SecurityPolicyException" &&
+                            data.responseJSON.message == "error.elevate")
+                            _elevator.elevate(_session);
+                        else
+                            _elevator.elevate(null);
+                        return true;
+                }
+            }
+            else 
+                console.warn(new Exception("Exception", "error.general", err, null));
+            return false;
+        };
 
         /**
             * @class APIWrapper
@@ -84,23 +115,26 @@ if(!SanteDBWrapper)
                         data: configuration.contentType == 'application/json' ? JSON.stringify(configuration.data) : configuration.data,
                         dataType: 'json',
                         contentType: configuration.contentType || 'application/json',
+                        headers: configuration.headers,
                         async: !configuration.sync,
                         success: function (xhr) {
                             try {
                                 if (fulfill) fulfill(xhr, configuration.state);
                             }
                             catch (e) {
-                                if (reject) reject(e, configuration.state);
+                                if (reject) reject(e.responseJSON || e, configuration.state);
                             }
                         },
-                        error: function (e) {
+                        error: function (e, data, setting) {
+                            if(_globalErrorHandler(e, data, setting))
+                                return;
                             var error = e.responseJSON;
 
                             if (reject) {
                                 if (error && error.error !== undefined) // oauth2
                                     reject(new Exception(error.type, error.error, error.error_description, error.caused_by), configuration.state);
-                                else if (error && (error.$type === "Exception" || error.type))
-                                    reject(new Exception(error.type, error.message, error.detail, error.caused_by), configuration.state);
+                                else if (error && (error.$type === "Exception" || error.$type))
+                                    reject(new Exception(error.$type, error.message, error.detail, error.cause, error.stack, error.policy, error.rules), configuration.state);
                                 else
                                     reject(new Exception("HttpException", "error.http." + e.status, e, null), configuration.state);
                             }
@@ -132,24 +166,26 @@ if(!SanteDBWrapper)
                         data: configuration.contentType == 'application/json' ? JSON.stringify(configuration.data) : configuration.data,
                         dataType: 'json',
                         contentType: configuration.contentType || 'application/json',
+                        headers: configuration.headers,
                         async: !configuration.sync,
                         success: function (xhr) {
                             try {
                                 if (fulfill) fulfill(xhr, configuration.state);
                             }
                             catch (e) {
-                                if (reject) reject(e, configuration.state);
+                                if (reject) reject(e.responseJSON || e, configuration.state);
                             }
                         },
-                        error: function (e) {
-
+                        error: function (e, data, setting) {
+                            if(_globalErrorHandler(e, data, setting))
+                                return;
                             var error = e.responseJSON;
 
                             if (reject) {
                                 if (error && error.error !== undefined) // oauth2
                                     reject(new Exception(error.type, error.error, error.error_description, error.caused_by), configuration.state);
-                                else if (error && (error.$type === "Exception" || error.type))
-                                    reject(new Exception(error.type, error.message, error.detail, error.caused_by), configuration.state);
+                                else if (error && (error.$type === "Exception" || error.$type))
+                                    reject(new Exception(error.$type, error.message, error.detail, error.cause, error.stack, error.policy, error.rules), configuration.state);
                                 else
                                     reject(new Exception("HttpException", "error.http." + e.status, e, null), configuration.state);
                             }
@@ -178,25 +214,26 @@ if(!SanteDBWrapper)
                         url: _config.base + configuration.resource,
                         data: configuration.query,
                         dataType: 'json',
-                        accept: 'application/json',
+                        headers: configuration.headers,
                         async: !configuration.sync,
                         success: function (xhr) {
                             try {
                                 if (fulfill) fulfill(xhr, configuration.state);
                             }
                             catch (e) {
-                                if (reject) reject(e, configuration.state);
+                                if (reject) reject(e.responseJSON || e, configuration.state);
                             }
                         },
-                        error: function (e) {
-
+                        error: function (e, data, setting) {
+                            if(_globalErrorHandler(e, data, setting))
+                                return;
                             var error = e.responseJSON;
 
                             if (reject) {
                                 if (error && error.error !== undefined) // oauth2
                                     reject(new Exception(error.type, error.error, error.error_description, error.caused_by), configuration.state);
-                                else if (error && (error.$type === "Exception" || error.type))
-                                    reject(new Exception(error.type, error.message, error.detail, error.caused_by), configuration.state);
+                                else if (error && (error.$type === "Exception" || error.$type))
+                                    reject(new Exception(error.$type, error.message, error.detail, error.cause, error.stack, error.policy, error.rules), configuration.state);
                                 else
                                     reject(new Exception("HttpException", "error.http." + e.status, e, null), configuration.state);
                             }
@@ -231,24 +268,26 @@ if(!SanteDBWrapper)
                         dataType: 'json',
                         accept: 'application/json',
                         contentType: configuration.contentType || 'application/json',
+                        headers: configuration.headers,
                         async: !configuration.sync,
                         success: function (xhr) {
                             try {
                                 if (fulfill) fulfill(xhr, configuration.state);
                             }
                             catch (e) {
-                                if (reject) reject(e, configuration.state);
+                                if (reject) reject(e.responseJSON || e, configuration.state);
                             }
                         },
-                        error: function (e) {
-
+                        error: function (e, data, setting) {
+                            if(_globalErrorHandler(e, data, setting))
+                                return;
                             var error = e.responseJSON;
 
                             if (reject) {
                                 if (error && error.error !== undefined) // oauth2
                                     reject(new Exception(error.type, error.error, error.error_description, error.caused_by), configuration.state);
-                                else if (error && (error.$type === "Exception" || error.type))
-                                    reject(new Exception(error.type, error.message, error.detail, error.caused_by), configuration.state);
+                                else if (error && (error.$type === "Exception" || error.$type))
+                                    reject(new Exception(error.$type, error.message, error.detail, error.cause, error.stack, error.policy, error.rules), configuration.state);
                                 else
                                     reject(new Exception("HttpException", "error.http." + e.status, e, null), configuration.state);
                             }
@@ -287,6 +326,9 @@ if(!SanteDBWrapper)
                 if (id) _query._id = id;
 
                 return _config.api.getAsync({
+                    headers: {
+                        Accept: _config.accept
+                    },
                     query: _query,
                     state: state,
                     resource: _config.resource
@@ -303,6 +345,9 @@ if(!SanteDBWrapper)
                 */
             this.findAsync = function (query, state) {
                 return _config.api.getAsync({
+                    headers: {
+                        Accept: _config.accept
+                    },
                     query: query,
                     state: state,
                     resource: _config.resource
@@ -319,6 +364,9 @@ if(!SanteDBWrapper)
              */
             this.find = function (query) {
                 return _config.api.getAsync({
+                    headers: {
+                        Accept: _config.accept
+                    },
                     sync: true,
                     resource: _config.resource,
                     query: query
@@ -340,6 +388,9 @@ if(!SanteDBWrapper)
 
                 // Perform post
                 return _config.api.postAsync({
+                    headers: {
+                        Accept: _config.accept
+                    },
                     data: data,
                     state: state,
                     contentType: "application/json",
@@ -365,6 +416,9 @@ if(!SanteDBWrapper)
 
                 // Send PUT
                 return _config.api.putAsync({
+                    headers: {
+                        Accept: _config.accept
+                    },
                     data: data,
                     id: id,
                     state: state,
@@ -383,6 +437,9 @@ if(!SanteDBWrapper)
             */
             this.deleteAsync = function (id, state) {
                 return _config.api.deleteAsync({
+                    headers: {
+                        Accept: _config.accept
+                    },
                     id: id,
                     state: state,
                     resource: _config.resource
@@ -401,6 +458,9 @@ if(!SanteDBWrapper)
                 */
             this.nullifyAsync = function (id, state) {
                 return _config.api.deleteAsync({
+                    headers: {
+                        Accept: _config.accept
+                    },
                     id: id,
                     mode: "NULLIFY",
                     state: state,
@@ -419,6 +479,9 @@ if(!SanteDBWrapper)
                 */
             this.cancelAsync = function (id, state) {
                 return _config.api.deleteAsync({
+                    headers: {
+                        Accept: _config.accept
+                    },
                     id: id,
                     mode: "CANCEL",
                     state: state,
@@ -433,17 +496,17 @@ if(!SanteDBWrapper)
 
         // hdsi internal
         var _hdsi = new APIWrapper({
-            idByQuery: true,
+            idByQuery: false,
             base: "/hdsi/"
         });
         // ami internal
         var _ami = new APIWrapper({
-            idByQuery: true,
+            idByQuery: false,
             base: "/ami/"
         });
         // auth internal
         var _auth = new APIWrapper({
-            idByQuery: true,
+            idByQuery: false,
             base: "/auth/"
         });
         // Backing data for app API
@@ -455,13 +518,14 @@ if(!SanteDBWrapper)
         // App controller internal
         var _application = {
             /**
-             * @summary Gets the solution
+             * @summary Gets solutions that can be installed on this appliccation
              * @method
              * @memberof SnateDBWrapper.app
              */
             getAppSolutionsAsync: function() {
-                return _app.getAsync({
-                    resource: "solutions"
+                return _ami.getAsync({
+                    resource: "AppletSolution",
+                    query:"_extern=true"
                 });
             },
             /**
@@ -481,7 +545,7 @@ if(!SanteDBWrapper)
              */
             doUpdateAsync: function (appId) {
                 return _app.postAsync({
-                    resource: "update"
+                    resource: "/Update"
                 });
             },
             /**
@@ -493,7 +557,7 @@ if(!SanteDBWrapper)
              */
             compactAsync: function (takeBackup) {
                 return _app.post({
-                    resource: "data",
+                    resource: "Data",
                     data: { backup: takeBackup },
                     contentType: 'application/x-www-urlform-encoded'
                 });
@@ -507,7 +571,7 @@ if(!SanteDBWrapper)
              */
             purgeAsync: function (takeBackup) {
                 return _app.deleteAsync({
-                    resource: "data",
+                    resource: "Data",
                     data: { backup: takeBackup },
                     contentType: 'application/x-www-urlform-encoded'
                 });
@@ -520,7 +584,7 @@ if(!SanteDBWrapper)
              */
             restoreAsync: function () {
                 return _app.postAsync({
-                    resource: "data/restore"
+                    resource: "Data/Restore"
                 });
             },
             /**
@@ -532,7 +596,7 @@ if(!SanteDBWrapper)
              */
             createBackupAsync: function (makePublic) {
                 return _app.postAsync({
-                    resource: "data/backup",
+                    resource: "Data/Backup",
                     data: { makePublic: makePublic },
                     contentType: 'application/x-www-urlform-encoded'
                 });
@@ -545,7 +609,7 @@ if(!SanteDBWrapper)
              */
             getBackupAsync: function () {
                 return _app.getAsync({
-                    resource: "data/backup",
+                    resource: "Data/Backup",
                 });
             },
             /**
@@ -566,8 +630,8 @@ if(!SanteDBWrapper)
              * @returns {Promise} The promise to fulfill or reject the request
              */
             submitBugReportAsync: function (bugReport) {
-                return _app.postAsync({
-                    resource: "bug",
+                return _ami.postAsync({
+                    resource: "Sherlock",
                     data: bugReport
                 });
             },
@@ -582,8 +646,8 @@ if(!SanteDBWrapper)
                 var query;
                 if (_id)
                     query = { _id: _id };
-                return _app.getAsync({
-                    resource: "log",
+                return _ami.getAsync({
+                    resource: "Log",
                     query: query
                 });
             },
@@ -604,8 +668,8 @@ if(!SanteDBWrapper)
              * @param {boolean} checkForUpdates When true, check the master server for updates
              */
             getAppInfoAsync: function (checkForUpdates) {
-                return _app.getAsync({
-                    resource: "info",
+                return _ami.getAsync({
+                    resource: "Sherlock",
                     query: { _updates: true }
                 });
             },
@@ -616,8 +680,8 @@ if(!SanteDBWrapper)
              * @returns {Promise} The promise from the async operation
              */
             getHealthAsync: function () {
-                return _app.getAsync({
-                    resource: "health"
+                return _ami.getAsync({
+                    resource: "Health"
                 });
             },
             /**
@@ -696,7 +760,7 @@ if(!SanteDBWrapper)
              */
             getMenusAsync: function (contextName) {
                 return _app.getAsync({
-                    resource: "menu",
+                    resource: "Menu",
                     query: { context: contextName }
                 });
             },
@@ -735,6 +799,7 @@ if(!SanteDBWrapper)
                 * @summary Represents a resource wrapper that persists bundles
                 */
             bundle: new ResourceWrapper({
+                accept: _viewModelJsonMime,
                 resource: "Bundle",
                 api: _hdsi
             }),
@@ -744,6 +809,7 @@ if(!SanteDBWrapper)
                 * @summary Represents an resource wrapper that interoperates with the care planner
                 */
             carePlan: new ResourceWrapper({
+                accept: _viewModelJsonMime,
                 resource: "CarePlan",
                 api: _hdsi
             }),
@@ -753,6 +819,7 @@ if(!SanteDBWrapper)
                 * @summary Represents the Patient Resource
                 */
             patient: new ResourceWrapper({
+                accept: _viewModelJsonMime,
                 resource: "Patient",
                 api: _hdsi
             }),
@@ -762,6 +829,7 @@ if(!SanteDBWrapper)
                 * @summary Represents the SubstanceAdministration Resource
                 */
             substanceAdministration: new ResourceWrapper({
+                accept: _viewModelJsonMime,
                 resource: "SubstanceAdministration",
                 api: _hdsi
             }),
@@ -771,6 +839,7 @@ if(!SanteDBWrapper)
                 * @summary Represents the Act Resource
                 */
             act: new ResourceWrapper({
+                accept: _viewModelJsonMime,
                 resource: "Act",
                 api: _hdsi
             }),
@@ -780,6 +849,7 @@ if(!SanteDBWrapper)
                 * @memberof SanteDBWrapper.resources
                 */
             entity: new ResourceWrapper({
+                accept: _viewModelJsonMime,
                 resource: "Entity",
                 api: _hdsi
             }),
@@ -789,6 +859,7 @@ if(!SanteDBWrapper)
                 * @memberof SanteDBWrapper.resources
                 */
             entityRelationship: new ResourceWrapper({
+                accept: _viewModelJsonMime,
                 resource: "EntityRelationship",
                 api: _hdsi
             }),
@@ -798,6 +869,7 @@ if(!SanteDBWrapper)
                 * @summary Represents the Observation Resource
                 */
             observation: new ResourceWrapper({
+                accept: _viewModelJsonMime,
                 resource: "Observation",
                 api: _hdsi
             }),
@@ -807,6 +879,7 @@ if(!SanteDBWrapper)
                 * @summary Represents the Place Resource
                 */
             place: new ResourceWrapper({
+                accept: _viewModelJsonMime,
                 resource: "Place",
                 api: _hdsi
             }),
@@ -816,6 +889,7 @@ if(!SanteDBWrapper)
                 * @summary Represents the Provider Resource
                 */
             provider: new ResourceWrapper({
+                accept: _viewModelJsonMime,
                 resource: "Provider",
                 api: _hdsi
             }),
@@ -825,6 +899,7 @@ if(!SanteDBWrapper)
                 * @summary Represents the UserEntity Resource
                 */
             userEntity: new ResourceWrapper({
+                accept: _viewModelJsonMime,
                 resource: "UserEntity",
                 api: _hdsi
             }),
@@ -834,6 +909,7 @@ if(!SanteDBWrapper)
                 * @summary Represents the Organization Resource
                 */
             organization: new ResourceWrapper({
+                accept: _viewModelJsonMime,
                 resource: "Organization",
                 api: _hdsi
             }),
@@ -843,6 +919,7 @@ if(!SanteDBWrapper)
                 * @summary Represents the Material Resource
                 */
             material: new ResourceWrapper({
+                accept: _viewModelJsonMime,
                 resource: "Material",
                 api: _hdsi
             }),
@@ -852,6 +929,7 @@ if(!SanteDBWrapper)
                 * @summary Represents the ManufacturedMaterial Resource
                 */
             manufacturedMaterial: new ResourceWrapper({
+                accept: _viewModelJsonMime,
                 resource: "ManufacturedMaterial",
                 api: _hdsi
             }),
@@ -861,6 +939,7 @@ if(!SanteDBWrapper)
                 * @summary Represents the ManufacturedMaterial Resource
                 */
             concept: new ResourceWrapper({
+                accept: _viewModelJsonMime,
                 resource: "Concept",
                 api: _ami
             }),
@@ -870,6 +949,7 @@ if(!SanteDBWrapper)
                 * @summary Represents the ConceptSet Resource
                 */
             conceptSet: new ResourceWrapper({
+                accept: _viewModelJsonMime,
                 resource: "ConceptSet",
                 api: _ami
             }),
@@ -879,6 +959,7 @@ if(!SanteDBWrapper)
                 * @summary Represents the ReferenceTerm Resource
                 */
             referenceTerm: new ResourceWrapper({
+                accept: _viewModelJsonMime,
                 resource: "ReferenceTerm",
                 api: _ami
             }),
@@ -888,6 +969,7 @@ if(!SanteDBWrapper)
                 * @summary Represents the CodeSystem Resource
                 */
             codeSystem: new ResourceWrapper({
+                accept: _viewModelJsonMime,
                 resource: "CodeSystem",
                 api: _ami
             }),
@@ -897,6 +979,7 @@ if(!SanteDBWrapper)
                 * @summary Represents the DeviceEntity Resource
                 */
             deviceEntity: new ResourceWrapper({
+                accept: _viewModelJsonMime,
                 resource: "DeviceEntity",
                 api: _ami
             }),
@@ -906,6 +989,7 @@ if(!SanteDBWrapper)
                 * @summary Represents the ApplicationEntity Resource
                 */
             applicationEntity: new ResourceWrapper({
+                accept: _viewModelJsonMime,
                 resource: "ApplicationEntity",
                 api: _ami
             }),
@@ -1008,12 +1092,12 @@ if(!SanteDBWrapper)
                                     if (fulfill) fulfill(_masterConfig);
                                 })
                                 .catch(function (e) {
-                                    if (reject) reject(e);
+                                    if (reject) reject(e.responseJSON || e);
                                 });
                         }
                     }
                     catch (e) {
-                        if (reject) reject(e);
+                        if (reject) reject(e.responseJSON || e);
                     }
                 });
             },
@@ -1124,8 +1208,8 @@ if(!SanteDBWrapper)
             joinRealmAsync: function(configData, overwrite) {
                 return new Promise(function (fulfill, reject) {
                     try {
-                        _ami.postAsync({
-                            resource: "configuration/realm",
+                        _app.postAsync({
+                            resource: "Configuration/Realm",
                             contentType: 'application/json',
                             data: {
                                 realmUri: configData.domain,
@@ -1143,11 +1227,11 @@ if(!SanteDBWrapper)
                             if (fulfill) fulfill(d);
                         }).catch(function (e) {
                             console.error(`Error joining realm: ${e}`);
-                            if (reject) reject(e);
+                            if (reject) reject(e.responseJSON || e);
                         });
                     }
                     catch (e) {
-                        var ex = e;
+                        var ex = e.responseJSON || e;
                         if (!ex.$type)
                             ex = new Exception("Exception", "error.general", e);
                             if (reject) reject(ex);
@@ -1161,8 +1245,8 @@ if(!SanteDBWrapper)
                 * @returns {Promise} A promise that is fulfilled when the leave operation succeeds
                 */
             leaveRealmAsync: function() {
-                return _ami.deleteAsync({
-                    resource: "configuration/realm"
+                return _app.deleteAsync({
+                    resource: "Configuration/Realm"
                 });
             },
             /**
@@ -1182,8 +1266,8 @@ if(!SanteDBWrapper)
                 * @returns {Promise} A promise representing the retrieval of the user settings
                 */
             getUserPreferencesAsync: function () {
-                return _ami.getAsync({
-                    resource: "configuration/user"
+                return _app.getAsync({
+                    resource: "Configuration/User"
                 });
             },
             /**
@@ -1198,8 +1282,8 @@ if(!SanteDBWrapper)
                 * ]);
                 */
             saveUserPreferencesAsync: function (preferences) {
-                return _ami.postAsync({
-                    resource: "configuration/user",
+                return _app.postAsync({
+                    resource: "Configuration/User",
                     data: preferences
                 });
             }
@@ -1258,12 +1342,12 @@ if(!SanteDBWrapper)
                                         _sessionInfo = null;
                                         fulfill(null);
                                     }
-                                    else if(reject) reject(e);
+                                    else if(reject) reject(e.responseJSON || e);
                                     
                                 });
                         }
                         catch (e) {
-                            var ex = e;
+                            var ex = e.responseJSON || e;
                             if (!ex.$type)
                                 ex = new Exception("Exception", "error.general", e);
                             if (reject) reject(ex);
@@ -1278,8 +1362,8 @@ if(!SanteDBWrapper)
                 * @returns {Promise} A promise representing the outcome of the TFA secret send
                 */
             sendTfaSecretAsync: function (mode) {
-                return _auth.postAsync({
-                    resource: "tfa",
+                return _ami.postAsync({
+                    resource: "Tfa",
                     data: { mode: mode }
                 })
             },
@@ -1290,8 +1374,8 @@ if(!SanteDBWrapper)
                 * @returns {Promise} The promise representing the fulfillment or rejection of the get request
                 */
             getTfaModeAsync: function () {
-                return _auth.getAsync({
-                    resource: "tfa"
+                return _ami.getAsync({
+                    resource: "Tfa"
                 });
             },
             /**
@@ -1301,27 +1385,31 @@ if(!SanteDBWrapper)
                 * @param {string} userName The name of the user which is logging in
                 * @param {string} password The password of the user
                 * @param {string} tfaSecret The two-factor secret if provided
-                * @param {boolean} noSession When true indicates that there should not be a persistent session (i.e. one time authentication)
+                * @param {string} scope When true indicates that there should not be a persistent session (i.e. one time authentication)
                 * @param {String} purposeOfUse The identifier of the purpose of use for the access
                 * @returns {Promise} A promise representing the login request
                 */
-            passwordLoginAsync: function (userName, password, tfaSecret, noSession, purposeOfUse) {
+            passwordLoginAsync: function (userName, password, tfaSecret, uacPrompt, purposeOfUse, scope) {
                 return new Promise(function (fulfill, reject) {
                     try {
                         _auth.postAsync({
-                            resource: "authenticate",
+                            resource: "oauth2_token",
                             data: {
                                 username: userName,
                                 password: password,
-                                tfaSecret: tfaSecret,
                                 grant_type: 'password',
-                                scope: noSession ? "elevate" : "*",
-                                purposeOfUse: purposeOfUse
+                                scope: (scope || ["*"]).join(",")
+                            },
+                            headers: {
+                                "X-SanteDB-TfaSecret" : tfaSecret,
+                                "X-SanteDBClient-UserAccessControl": uacPrompt,
+                                "X-SanteDBClient-Claim" :
+                                    `${btoa(`http://santedb.org/claims/override=${uacPrompt && (purposeOfUse || false)}`)},${btoa(`urn:oasis:names:tc:xacml:2.0:action:purpose=${purposeOfUse || null}`)}`
                             },
                             contentType: 'application/x-www-urlform-encoded'
                         })
                             .then(function (d) {
-                                if (!noSession) {
+                                if (!uacPrompt) {
                                     _session = d;
                                 }
                                 if(fulfill) fulfill(d);                                
@@ -1329,7 +1417,7 @@ if(!SanteDBWrapper)
                             .catch(reject);
                     }
                     catch (e) {
-                        var ex = e;
+                        var ex = e.responseJSON || e;
                         if (!ex.$type)
                             ex = new Exception("Exception", "error.general", e);
                         if (reject) reject(ex);
@@ -1345,24 +1433,30 @@ if(!SanteDBWrapper)
                 * @param {string} tfaSecret The two-factor secret if provided
                 * @param {boolean} noSession When true indicates that there should not be a persistent session (i.e. one time authentication)
                 * @param {String} purposeOfUse The reason the authentication is happening
+                * @param {Array} scope The requested scope of the session
                 * @returns {Promise} A promise representing the login request
                 */
-            pinLoginAsync: function (userName, pin, noSession, purposeOfUse) {
+            pinLoginAsync: function (userName, pin, uacPrompt, purposeOfUse, tfaSecret, scope) {
                 return new Promise(function (fulfill, reject) {
                     try {
                         _auth.postAsync({
-                            resource: "authenticate",
+                            resource: "oauth2_token",
                             data: {
                                 username: userName,
                                 pin: pin,
                                 grant_type: 'pin',
-                                scope: noSession ? "elevate" : "*",
-                                purposeOfUse: purposeOfUse
+                                scope: (scope || ["*"]).join(",")
+                            },
+                            headers: {
+                                "X-SanteDB-TfaSecret" : tfaSecret,
+                                "X-SanteDBClient-Sessionless": uacPrompt,
+                                "X-SanteDBClient-Claim" :
+                                    `${btoa(`http://santedb.org/claims/override=${uacPrompt && (purposeOfUse || false)}`)},${btoa(`urn:oasis:names:tc:xacml:2.0:action:purpose=${purposeOfUse || null}`)}`
                             },
                             contentType: 'application/x-www-urlform-encoded'
                         })
                             .then(function (d) {
-                                if (!noSession) {
+                                if (!uacPrompt) {
                                     _session = d;
                                 }
                                 if(fulfill) fulfill(d);
@@ -1370,7 +1464,7 @@ if(!SanteDBWrapper)
                             .catch(reject);
                     }
                     catch (e) {
-                        var ex = e;
+                        var ex = e.responseJSON || e;
                         if (!ex.$type)
                             ex = new Exception("Exception", "error.general", e);
                         if (reject) reject(ex);
@@ -1389,7 +1483,7 @@ if(!SanteDBWrapper)
                 return new Promise(function (fulfill, reject) {
                     try {
                         _auth.postAsync({
-                            resource: "authenticate",
+                            resource: "oauth2_token",
                             data: {
                                 grant_type: 'client_credentials',
                                 scope: "*"
@@ -1405,7 +1499,7 @@ if(!SanteDBWrapper)
                             .catch(reject);
                     }
                     catch (e) {
-                        var ex = e;
+                        var ex = e.responseJSON || e;
                         if (!ex.$type)
                             ex = new Exception("Exception", "error.general", e);
                             if (reject) reject(ex);
@@ -1424,7 +1518,7 @@ if(!SanteDBWrapper)
                 return new Promise(function (fulfill, reject) {
                     try {
                         _auth.postAsync({
-                            resource: "authenticate",
+                            resource: "oauth2_token",
                             data: {
                                 grant_type: 'authorization_code',
                                 code: code,
@@ -1442,7 +1536,7 @@ if(!SanteDBWrapper)
                             .catch(reject);
                     }
                     catch (e) {
-                        var ex = e;
+                        var ex = e.responseJSON || e;
                         if (!ex.$type)
                             ex = new Exception("Exception", "error.general", e);
                             if (reject) reject(ex);
@@ -1461,7 +1555,7 @@ if(!SanteDBWrapper)
 
                         if (_session) {
                             _auth.postAsync({
-                                resource: "authenticate",
+                                resource: "oauth2_token",
                                 data: {
                                     grant_type: 'refresh_token',
                                     refresh_token: _session.refresh_token,
@@ -1483,7 +1577,7 @@ if(!SanteDBWrapper)
                         }
                     }
                     catch (e) {
-                        var ex = e;
+                        var ex = e.responseJSON || e;
                         if (!ex.$type)
                             ex = new Exception("Exception", "error.general", e);
                             if (reject) reject(ex);
@@ -1534,7 +1628,7 @@ if(!SanteDBWrapper)
                             .catch(reject);
                     }
                     catch (e) {
-                        var ex = e;
+                        var ex = e.responseJSON || e;
                         if (!ex.$type)
                             ex = new Exception("Exception", "error.general", e);
                         if(reject) reject(ex);
@@ -1623,7 +1717,7 @@ if(!SanteDBWrapper)
                         }
                     }
                     catch (e) {
-                        var ex = e;
+                        var ex = e.responseJSON || e;
                         if (!ex.$type)
                             ex = new Exception("LocalizationException", "error.general", e);
                         if(reject) reject(ex);
@@ -1712,26 +1806,6 @@ if(!SanteDBWrapper)
             }
         });
 
-        // Handles error conditions related to expiration of tokens and to authentication problems
-        $(document).ajaxError(function (e, data, setting, err) {
-            if ((data.status == 401 || data.status == 403)) {
-                if (_session && _session.exp > Date.now // User has a session that is valid, but is still 401 hmm... elevation!!!
-                    && _elevator
-                    && !_elevator.getToken() ||
-                    _session == null && _elevator) {
-
-                        // Was the response a security policy exception where the back end is asking for elevation on the same user account?
-                        if(data.responseJSON &&
-                            data.responseJSON.type == "SecurityPolicyException" &&
-                            data.responseJSON.message == "error.elevate")
-                            _elevator.elevate(_session);
-                        else
-                            _elevator.elevate(null);
-                }
-            }
-            else
-                console.warn(new Exception("Exception", "error.general", err, null));
-        });
     };
 
 if(!SanteDB) 

@@ -14,8 +14,8 @@
  - License for the specific language governing permissions and limitations under 
  - the License.
  - 
- - User: justi
- - Date: 2018-7-20
+ - User: justin
+ - Date: 2018-7-23
  -->
 <AppletManifest xmlns="http://santedb.org/applet">
   <info id="org.santedb.i18n.sw" version="1.0.0.0">

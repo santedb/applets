@@ -1,9 +1,28 @@
+<!--
+ - Copyright 2015-2018 Mohawk College of Applied Arts and Technology
+ -
+ - 
+ - Licensed under the Apache License, Version 2.0 (the "License"); you 
+ - may not use this file except in compliance with the License. You may 
+ - obtain a copy of the License at 
+ - 
+ - http://www.apache.org/licenses/LICENSE-2.0 
+ - 
+ - Unless required by applicable law or agreed to in writing, software
+ - distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+ - WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the 
+ - License for the specific language governing permissions and limitations under 
+ - the License.
+ - 
+ - User: justin
+ - Date: 2018-8-25
+ -->
 <div class="container" xmlns="http://www.w3.org/1999/xhtml">
     <div class="form-group row">
         <label class="col-md-2 col-xs-12 control-label" for="syncInterval">{{ 'ui.config.role.applet.label' | i18n }}</label>
         <div class="col-md-10 col-xs-12">
             <select class="form-control" name="syncInterval" ng-model="config.applet.solution">
-               <option ng-repeat="sln in solutions" value="{{sln.applet.id}}">{{sln.applet.id}} - {{sln.applet.name[0].value}}</option>
+               <option ng-repeat="sln in solutions.item" value="{{sln.applet.id}}">{{sln.applet.id}} - {{sln.applet.name[0].value}}</option>
             </select>
             <div class="form-text text-muted">
                 {{ 'ui.config.role.applet.help' | i18n }}

@@ -14,8 +14,8 @@
  * License for the specific language governing permissions and limitations under 
  * the License.
  * 
- * User: justi
- * Date: 2018-7-22
+ * User: justin
+ * Date: 2018-7-23
  */
 SanteDBBre.AddBusinessRule("CodedObservation", "AfterInsert", {
     typeConcept: "6fb8487c-cd6f-44f1-ab63-27dc65405792", // Clinical status

@@ -14,8 +14,8 @@
  - License for the specific language governing permissions and limitations under 
  - the License.
  - 
- - User: justi
- - Date: 2018-7-20
+ - User: justin
+ - Date: 2018-7-23
  -->
 <AppletManifest xmlns="http://santedb.org/applet">
   <info id="org.santedb.i18n.en" version="1.0.0.0">
@@ -71,10 +71,14 @@
     <!-- Errors -->
     <string key="ui.error.title">System Error</string>
     <string key="ui.error.description">Additional details follow:</string>
+    <string key="ui.error.causedBy">Cause:</string>
     <string key="ui.error.contactSysAdmin">Please file a bug report, or contact your system administrator with this information</string>
     <string key="error.http.404">The requested resource could not be found</string>
     <string key="error.http.405">Method not supported</string>
+    <string key="error.http.0">Fatal Error</string>
+    <string key="error.http.500">General Error</string>
     <string key="error.http.501">Method not implemented</string>
+    <string key="error.http.502">Proxy Error</string>
     <string key="error.type.Exception">General Error</string>
     <string key="error.type.HttpException">Communications Error</string>
     <string key="error.type.WebException">Communications Error</string>
