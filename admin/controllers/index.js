@@ -19,8 +19,32 @@
  * Date: 2018-11-14
  */
 
-angular.module('santedb').controller('AdminLayoutController', ["$scope", "$rootScope", "$state", function ($scope, $rootScope, $state) {
+angular.module('santedb').controller('AdminLayoutController', ["$scope", "$rootScope", "$state", "$templateCache", function ($scope, $rootScope, $state, $templateCache) {
 
+    // Shows the elevation dialog, elevates and then refreshes the state
+    $scope.overrideRefresh = function() {
+        new SanteDBElevator(
+            function() {
+                $templateCache.removeAll();
+                $state.reload();
+            }
+        ).elevate($rootScope.session);
+    }
+    
+    $("#logoutModal").on("hidden.bs.modal", function() {
+        if(!window.sessionStorage.getItem("token"))
+        {
+            $templateCache.removeAll();
+            $state.transitionTo('login'); 
+        }
+    });
+
+    // abandon session
+    $scope.abandonSession = function() {
+        SanteDB.authentication.logoutAsync().then(function() { 
+            $("#logoutModal").modal('hide');
+        });
+    }
 
     // Load menus for the current user
     function loadMenus() {

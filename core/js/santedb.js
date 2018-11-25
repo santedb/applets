@@ -1291,7 +1291,6 @@ if(!SanteDBWrapper)
 
         // Session and auth data
         var _session = null;
-        var _sessionInfo = null;
         var _elevator = null;
         var _authentication = {
             /**
@@ -1325,21 +1324,21 @@ if(!SanteDBWrapper)
                 */
             getSessionInfoAsync: function () {
                 return new Promise(function (fulfill, reject) {
-                    if (_sessionInfo)
-                        fulfill(_sessionInfo);
+                    if (_session)
+                        fulfill(_session);
                     else
                         try {
                             _auth.getAsync({
                                 resource: "session"
                             })
                                 .then(function (s) {
-                                    _sessionInfo = s;
+                                    _session = s;
                                     if(fulfill) fulfill(s);
                                 })
                                 .catch(function(e) {
 
-                                    if(e.details.status <= 204) {
-                                        _sessionInfo = null;
+                                    if(e.detail.status <= 204) {
+                                        _session = null;
                                         fulfill(null);
                                     }
                                     else if(reject) reject(e.responseJSON || e);
@@ -1592,14 +1591,14 @@ if(!SanteDBWrapper)
                 * @returns {Promise} The promise representing the fulfillment or rejection of the password change
                 */ 
             setPasswordAsync: function (passwd) {
-                if (!_sessionInfo || !_session)
+                if (!_session || !_session)
                     throw new Exception("SecurityException", "error.security", "Can only set password with active session");
                 return _ami.postAsync({
                     resource: "SecurityUser",
                     data: {
                         passwordOnly: true,
                         entity: new SecurityUser({
-                            userName: _sessionInfo.securityUser.userName,
+                            userName: _session.securityUser.userName,
                             password: passwd
                         })
                     }
@@ -1622,7 +1621,7 @@ if(!SanteDBWrapper)
                         })
                             .then(function (d) {
                                 _session = null;
-                                _sessionInfo = null;
+                                window.sessionStorage.removeItem('token');
                                 if (fulfill) fulfill(d);
                             })
                             .catch(reject);
@@ -1795,6 +1794,9 @@ if(!SanteDBWrapper)
                     data.setRequestHeader("Authorization", "BEARER " +
                         _elevator.getToken());
                 }
+                else if(window.sessionStorage.getItem('token'))
+                    data.setRequestHeader("Authorization", "BEARER " + 
+                        window.sessionStorage.getItem("token"));
                 if (!_magic)
                     _magic = __SanteDBAppService.GetMagic();
                 data.setRequestHeader("X-SdbMagic", _magic);

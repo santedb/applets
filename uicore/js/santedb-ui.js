@@ -18,7 +18,6 @@
  * User: justin
  * Date: 2018-7-26
  */
-
 var ___originalButtonTexts = {};
 
 // Add render of concept name
@@ -35,7 +34,8 @@ SanteDBWrapper.prototype.display = {
         if(btn) {
             if(state)  {
                 btn.attr('disabled', 'disabled');
-                ___originalButtonTexts[target] = btn.html();
+                if(!___originalButtonTexts[target])
+                    ___originalButtonTexts[target] = btn.html();
                 btn.html(`<i class="fas fa-circle-notch fa-spin"></i> ${SanteDB.locale.getString("ui.wait")}`);
             }
             else {

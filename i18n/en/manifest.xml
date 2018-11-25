@@ -73,6 +73,8 @@
     <string key="ui.error.description">Additional details follow:</string>
     <string key="ui.error.causedBy">Cause:</string>
     <string key="ui.error.contactSysAdmin">Please file a bug report, or contact your system administrator with this information</string>
+    <string key="error.http.403">Access Denied</string>
+    <string key="error.http.403.text">Your request has been denied and audited. In order to access this resource, you must first either elevate your current session, obtain appropriate authorization, or temporary authenticate as someone else. You can attempt to elevate your session by selecting the override option below</string>
     <string key="error.http.404">The requested resource could not be found</string>
     <string key="error.http.405">Method not supported</string>
     <string key="error.http.0">Fatal Error</string>
@@ -92,6 +94,8 @@
     <string key="ui.action.ignore">Ignore</string>
     <string key="ui.action.next">Next</string>
     <string key="ui.action.prev">Back</string>
+    <string key="ui.action.home">Go Home</string>
+    <string key="ui.action.override">Override</string>
     <string key="ui.action.finish">Finish</string>
     <string key="ui.action.selectAll">Select All</string>
     <string key="ui.action.selectNone">Select None</string>

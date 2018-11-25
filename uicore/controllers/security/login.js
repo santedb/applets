@@ -18,7 +18,7 @@
  * User: justin
  * Date: 2018-7-26
  */
-angular.module("santedb").controller("LoginController", ['$scope', '$rootScope', '$state', '$templateCache', function ($scope, $rootScope, $state, $templateCache) {
+angular.module("santedb").controller("LoginController", ['$scope', '$rootScope', '$state', '$templateCache', '$stateParams', function ($scope, $rootScope, $state, $templateCache, $stateParams) {
 
     // Send login request and then call continue with for the authentication elevator
     $scope.doLogin = function (form) {
@@ -29,18 +29,27 @@ angular.module("santedb").controller("LoginController", ['$scope', '$rootScope',
         // Perform login then call the elevator's continue with function
         switch ($scope.login.grant_type) {
             case 'password':
-            
+
                 SanteDB.authentication.passwordLoginAsync($scope.login.userName, $scope.login.password, $scope.login.tfaSecret, $scope.login.noSession, $scope.login.scope)
                     .then(function (d) {
-                        if($scope.login.onLogin)
+
+                        if ($scope.login.onLogin) {
                             $scope.login.onLogin(d);
-                        else  {
-                            $templateCache.removeAll();
-                            $state.reload();
+                        }
+                        else {
+
+                            if (!$scope.login.noSession) {
+                                $templateCache.removeAll();
+                                window.sessionStorage.setItem('token', d.token);
+                                $rootScope.session = d;
+                            }
+
+                            if ($stateParams.returnState)
+                                $state.transitionTo($stateParams.returnState);
+                            else 
+                                window.location.hash = "#!/";
                         }
 
-                        if(!$scope.login.noSession)
-                            $rootScope.session = d;
                         SanteDB.display.buttonWait("#loginButton", false);
                         $("#loginModal").modal('hide');
                     })
@@ -52,15 +61,23 @@ angular.module("santedb").controller("LoginController", ['$scope', '$rootScope',
             case 'pin':
                 SanteDB.authentication.pinLoginAsync($scope.login.userName, $scope.login.password, $scope.login.tfaSecret, $scope.login.noSession, $scope.login.scope)
                     .then(function (d) {
-                        if($scope.login.onLogin)
+                        if ($scope.login.onLogin) {
                             $scope.login.onLogin(d);
-                        else  {
-                            $templateCache.removeAll();
-                            $state.reload();
+                        }
+                        else {
+
+                            if (!$scope.login.noSession) {
+                                $templateCache.removeAll();
+                                window.sessionStorage.setItem('token', d.token);
+                                $rootScope.session = d;
+                            }
+
+                            if ($stateParams.returnState)
+                                $state.transitionTo($stateParams.returnState);
+                            else 
+                                window.location.hash = "#!/";
                         }
 
-                        if(!$scope.login.noSession)
-                            $rootScope.session = d;
                         SanteDB.display.buttonWait("#loginButton", false);
                         $("#loginModal").modal('hide');
                     })

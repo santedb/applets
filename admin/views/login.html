@@ -21,11 +21,18 @@
     ng-init="login = { grant_type: 'password', forbidPin: true, welcomeMessage: 'ui.admin.loginMessage', noSession: false }" class="login-panel">
     <sdb:style static="false">~/css/admin.css</sdb:style>
     <sdb:style static="false">~/css/sb-admin.css</sdb:style>
+    <sdb:state name="login">
+        <sdb:url>/login?returnState</sdb:url>
+        <sdb:view>
+        </sdb:view>
+    </sdb:state>
     <div class="logo-centered"></div>
     <form class="form" ng-submit="doLogin(loginForm)" name="loginForm">
         <!-- #include virtual="/org.santedb.uicore/partials/security/login.html" -->
+        <div class="btn-group float-right">
         <button type="submit" id="loginButton" class="btn btn-lg btn-primary">
             <i class="fa fa-check"></i> {{ 'ui.action.login' | i18n }}</button>
+        </div>
     </form>
 
 </div>

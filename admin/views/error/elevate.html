@@ -1,0 +1,10 @@
+<div xmlns="http://www.w3.org/1999/xhtml">
+
+    <h2><i class="fas fa-lock"></i> {{ 'error.http.403' | i18n }}</h2>
+    <p>{{ 'error.http.403.text' | i18n }}</p>
+    <div class="btn btn-group float-right">
+        <a href="#!/" class="btn btn-lg btn-primary"><i class="fas fa-home"></i> {{ 'ui.action.home' | i18n }}</a>
+        <button type="button" class="btn btn-lg btn-danger" ng-click="overrideRefresh()"><i class="fas fa-shield-alt"></i> {{ 'ui.action.override' | i18n }} </button>
+    </div>
+    
+</div>

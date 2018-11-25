@@ -1,4 +1,5 @@
 /// <Reference path="../../core/js/santedb.js"/>
+/// <Reference path="../js/santedb-elevator.js"/>
 /*
  * Copyright 2015-2018 Mohawk College of Applied Arts and Technology
  * 
@@ -23,9 +24,11 @@
  * SanteDB Root JS View
  */
 var santedbApp = angular.module('santedb', ['ngSanitize', 'ui.router', 'oc.lazyLoad', 'santedb-lib'])
-    .config(['$compileProvider', '$stateProvider', '$urlRouterProvider', function ($compileProvider, $stateProvider, $urlRouterProvider) {
+    .config(['$compileProvider', '$stateProvider', '$urlRouterProvider', '$httpProvider', function ($compileProvider, $stateProvider, $urlRouterProvider, $httpProvider) {
         $compileProvider.aHrefSanitizationWhitelist(/^\s*(http|https|tel):/);
         $compileProvider.imgSrcSanitizationWhitelist(/^\s*(http|https):/);
+
+        $httpProvider.interceptors.push('AuthInterceptor');
 
         var startupAsset = false;
         SanteDB.UserInterface.states.forEach(function (state) {
@@ -69,7 +72,7 @@ var santedbApp = angular.module('santedb', ['ngSanitize', 'ui.router', 'oc.lazyL
     }])
     .run(['$rootScope', '$state', '$templateCache', '$transitions', '$ocLazyLoad', '$interval', function ($rootScope, $state, $templateCache, $transitions, $ocLazyLoad, $interval) {
 
-        $(window).bind("resize", function() {
+        $(window).bind("resize", function () {
             $rootScope.windowSize = window.innerWidth;
             $rootScope.$apply();
         });
@@ -89,11 +92,16 @@ var santedbApp = angular.module('santedb', ['ngSanitize', 'ui.router', 'oc.lazyL
 
         if (window.location.hash == "")
             window.location.hash = "#!/";
+
         // Get configuration
         SanteDB.configuration.getAsync().then(function (d) {
             $rootScope.system = {};
             $rootScope.system.config = d;
             $rootScope.system.version = SanteDB.application.getVersion();
+
+            if (!$rootScope.system.config.isConfigured && $state.$current.name != 'santedb-config.initial')
+                $state.transitionTo('santedb-config.initial');
+
             $rootScope.$apply();
         }).catch(function (e) { $rootScope.errorHandler(e); });
 
@@ -101,14 +109,17 @@ var santedbApp = angular.module('santedb', ['ngSanitize', 'ui.router', 'oc.lazyL
         $transitions.onBefore({}, function (transition) {
             console.info(`Transitioned to ${transition._targetState._definition.self.name}`);
             $(".modal").modal('hide');
-           
-            if(transition._targetState._definition.self.name != transition._targetState._definition.self.name != $state.$current.name)
+
+            if (transition._targetState._definition.self.name != transition._targetState._definition.self.name != $state.$current.name)
                 $("#pageTransitioner").show();
         });
         $transitions.onSuccess({}, function () {
             $("#pageTransitioner").hide();
         });
+        $transitions.onError({}, function (transition) {
+            $("#pageTransitioner").hide();
 
+        });
         // Get session
         SanteDB.authentication.getSessionInfoAsync().then(function (s) {
             $rootScope.session = s;
@@ -120,14 +131,16 @@ var santedbApp = angular.module('santedb', ['ngSanitize', 'ui.router', 'oc.lazyL
             }
 
             // User preferences
-            if(s)
-                SanteDB.configuration.getUserPreferencesAsync().then(function(prefs) {
+            if (s) {
+                window.sessionStorage.setItem('token', s.token);
+                SanteDB.configuration.getUserPreferencesAsync().then(function (prefs) {
                     $rootScope.session.prefs = {};
-                    prefs.application.setting.forEach(function(e) {
+                    prefs.application.setting.forEach(function (e) {
                         $rootScope.session.prefs[e.key] = e.value;
                     });
                     $rootScope.$apply();
-                }).catch(function(e) {});
+                }).catch(function (e) { });
+            }
         }).catch(function (e) { $rootScope.errorHandler(e); });
 
 
@@ -143,7 +156,7 @@ var santedbApp = angular.module('santedb', ['ngSanitize', 'ui.router', 'oc.lazyL
                 cause: []
             };
             var cause = e.cause;
-            while(cause) {
+            while (cause) {
                 $rootScope.error.cause.push({
                     detail: cause.detail || cause,
                     message: cause.message || 'ui.error.title',
@@ -183,6 +196,7 @@ var santedbApp = angular.module('santedb', ['ngSanitize', 'ui.router', 'oc.lazyL
 
                 if (expiry < 0) // abandon the session
                     SanteDB.authentication.logoutAsync().then(function () {
+                        window.sessionStorage.removeItem('token');
                         $rootScope.session = null;
                         $templateCache.removeAll();
                         $state.reload();
@@ -193,7 +207,7 @@ var santedbApp = angular.module('santedb', ['ngSanitize', 'ui.router', 'oc.lazyL
                         closeButton: false,
                         preventDuplicates: true,
                         onclick: function () {
-                            SanteDB.authentication.refreshLoginAsync().then(function (s) { $rootScope.session = s; _extendToast = null; toastr.clear(); }).catch($rootScope.errorHandler);
+                            SanteDB.authentication.refreshLoginAsync().then(function (s) { window.sessionStorage.setItem('token', s.token); $rootScope.session = s; _extendToast = null; toastr.clear(); }).catch($rootScope.errorHandler);
                         },
                         positionClass: "toast-bottom-center",
                         timeOut: 0,
@@ -213,8 +227,8 @@ var santedbApp = angular.module('santedb', ['ngSanitize', 'ui.router', 'oc.lazyL
         $.fn.select2.defaults.set('language', SanteDB.locale.getLocale());
 
         // Fix modal scrolling
-        $(document).on('hidden.bs.modal', function() {
-            if($('.modal.in').length > 0)
+        $(document).on('hidden.bs.modal', function () {
+            if ($('.modal.in').length > 0)
                 $('body').addClass('modal-open');
         });
 

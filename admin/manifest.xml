@@ -25,7 +25,9 @@
     <author>Mohawk College of Applied Arts and Technology - mHealth &amp; eHealth Development &amp; Innovation Centre</author>
   </info>
 
-  <loginAsset>/org.santedb.admin/views/login.html</loginAsset>
+  <errors>
+    <add code="403" asset="/org.santedb.admin/views/error/elevate.html"/>
+  </errors>
 
   <menuItem context="org.santedb.admin" launch="#!/"  asset="/org.santedb.admin/views/index.html">
     <icon>fas fa-tachometer-alt</icon>
