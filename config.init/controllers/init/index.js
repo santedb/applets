@@ -26,6 +26,13 @@ angular.module('santedb').controller('InitialSettingsController', ['$scope', '$r
         places: []
     };
     $scope.newItem = {};
+    $scope.serverCaps = {};
+    $scope.widgets = {};
+    
+    // Get the widgets for the config panel
+    SanteDB.application.getWidgetsAsync("Configuration", "Tab").then(function(d) {
+        $scope.widgets = d;
+    }).catch(function(e) { console.error(e); });
 
     // Add other setting
     $scope.addOtherSetting = function (newItem) {
@@ -79,13 +86,17 @@ angular.module('santedb').controller('InitialSettingsController', ['$scope', '$r
 
             $scope.config.security.offline = { enable: true };
 
-            if (config.realmName)
+            if (config.realmName) {
                 SanteDB.application.getAppSolutionsAsync().then(function (s) {
                     $scope.solutions = s;
                     $scope.$apply();
-                }).catch(function (e) {
-                    $rootScope.errorHandler(e);
-                });
+                }).catch($rootScope.errorHandler);
+
+                SanteDB.application.getAppInfoAsync().then(function(d) {
+                    $scope.serverCaps = d;
+                    $scope.$apply();
+                }).catch($rootScope.errorHandler);
+            }
             // Get data providers
             SanteDB.configuration.getDataProvidersAsync().then(function (d) {
                 $scope.reference.dataProviders = d;
@@ -204,6 +215,10 @@ angular.module('santedb').controller('InitialSettingsController', ['$scope', '$r
             var refData = $scope.reference.subscriptions.find(function (p) { return p.name == k });
             return refData;
         }).filter(function (i) { return i != null; });
+
+        // Define the services
+        $scope.config.application.service = $scope.serverCaps.appInfo.service.filter(function(s) { return s.active; })
+            .map(function(m) { return m.type });
 
         SanteDB.configuration.saveAsync($scope.config)
             .then(function (c) {

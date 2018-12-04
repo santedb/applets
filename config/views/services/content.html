@@ -1,0 +1,13 @@
+<div class="container" xmlns="http://www.w3.org/1999/xhtml">
+    <div class="form-group row">
+        <label for="subscribeObjects" class="col-md-2 col-xs-12 control-label">{{ 'ui.config.services.type.label' | i18n }}</label>
+        <div class="col-md-10 col-xs-12">
+            <ul class="checklist-box" style="height:10em">
+                <li ng-repeat="service in serverCaps.appInfo.service track by $index"><label><input type="checkbox" ng-model="service.active" value="true"/>
+                    <i class="fa " ng-class="{'fa-database' : service.class == 'Data', 'fa-play-circle' : service.class == 'Daemon', 'fa-cloud': service.class == 'Repository', 'fa-cog': service.class == 'Passive'}"></i>
+                    {{ service.description | i18n }}
+                    </label></li>
+            </ul>
+        </div>
+    </div>
+</div>

@@ -322,16 +322,18 @@ if(!SanteDBWrapper)
             this.getAsync = function (id, state) {
 
                 // Prepare query
-                var _query = {};
-                if (id) _query._id = id;
-
+                var url = null;
+                if(id)
+                    url = `${_config.resource}/${id}`;
+                else
+                    url = _config.resource;
+                    
                 return _config.api.getAsync({
                     headers: {
                         Accept: _config.accept
                     },
-                    query: _query,
                     state: state,
-                    resource: _config.resource
+                    resource: url
                 });
             };
 
@@ -517,6 +519,26 @@ if(!SanteDBWrapper)
 
         // App controller internal
         var _application = {
+            /**
+             * Get the specified widgets
+             * @param context The context to fetch widgets for
+             */
+            getWidgetsAsync: function(context, type) {
+                return new Promise(function (fulfill, reject) {
+                    _app.getAsync({
+                        resource: "Widgets",
+                        query: {
+                            context: context,
+                            type: type
+                        }
+                    }).then(function(widgets) {
+                        widgets.forEach(function(w) {
+                            w.htmlId = w.name.replace(/\./g,"_");
+                        });
+                        fulfill(widgets);
+                    }).catch(function(e) { reject(e); });
+                });
+            },
             /**
              * @summary Gets solutions that can be installed on this appliccation
              * @method

@@ -40,7 +40,7 @@
     <div class="form-group row" ng-if="config.subscription.mode == 'Subscription'">
         <label for="subscribeFacility" class="col-md-2 col-xs-12 control-label">{{ 'ui.config.subscribe.place.label' | i18n }}</label>
         <div class="col-md-10 col-xs-12">
-            <select entity-search="Place" style="height:3em;" ng-required="config.subscription.mode == 'Subscription'" class="form-control" name="subscribeFacility" ng-model="config.sync.subscribe" filter='{ "statusConcept.mnemonic" : "ACTIVE", "classConcept.mnemonic" : "ServiceDeliveryLocation" }'
+            <entity-search type="Place" style="height:3em;" ng-required="config.subscription.mode == 'Subscription'" class="form-control" name="subscribeFacility" ng-model="config.sync.subscribe" filter='{ "statusConcept.mnemonic" : "ACTIVE", "classConcept.mnemonic" : "ServiceDeliveryLocation" }'
             multiple="multiple"/>
             <div class="form-text text-muted">
                 {{ 'ui.config.subscribe.place.help' | i18n }}

@@ -63,8 +63,16 @@
                                 <i class="fa fa-shield-alt"></i> {{ 'ui.config.security.title' | i18n }}</a>
                         </li>
                         <li role="presentation" class="nav-item">
+                            <a class="nav-link" href="javascript:" data-target="#servicesTab" data-toggle="tab" ng-class="{ 'disabled' : !config.realmName }">
+                                <i class="fa fa-cogs"></i> {{ 'ui.config.services.title' | i18n }}</a>
+                        </li>
+                        <li role="presentation" class="nav-item">
                             <a class="nav-link" href="javascript:" data-target="#networkTab" data-toggle="tab" ng-class="{ 'disabled' : !config.realmName }">
                                 <i class="fa fa-wifi"></i> {{ 'ui.config.network.title' | i18n }}</a>
+                        </li>
+                        <li role="presentation" class="nav-item" ng-repeat="widget in widgets">
+                            <a class="nav-link" href="javascript:" data-target="#{{widget.htmlId}}Tab" data-toggle="tab" ng-class="{ 'disabled' : !config.realmName }">
+                                <i class="{{widget.icon}}"></i> {{ widget.name | i18n }}</a>
                         </li>
                         <li role="presentation" class="nav-item" id="lastTab">
                             <a class="nav-link" href="javascript:" data-target="#otherTab" data-toggle="tab" ng-class="{ 'disabled' : !config.realmName }">
@@ -119,11 +127,24 @@
                             <p>{{ 'ui.config.security.description' | i18n }}</p>
                             <!-- #include virtual="/org.santedb.config/views/security/content.html" -->
                         </div>
+                        <div role="tabpanel" class="tab-pane fade" id="servicesTab">
+                            <h4>
+                                <i class="fa fa-cogs"></i> {{ 'ui.config.services.title' | i18n }}</h4>
+                            <p>{{ 'ui.config.services.description' | i18n }}</p>
+                            <!-- #include virtual="/org.santedb.config/views/services/content.html" -->
+                        </div>
                         <div role="tabpanel" class="tab-pane fade" id="networkTab">
                             <h4>
                                 <i class="fa fa-wifi"></i> {{ 'ui.config.network.title' | i18n }}</h4>
                             <p>{{ 'ui.config.network.description' | i18n }}</p>
                             <!-- #include virtual="/org.santedb.config/views/network/content.html" -->
+                        </div>
+                        <div role="tabpanel" class="tab-pane fade" id="{{widget.htmlId}}Tab" ng-repeat="widget in widgets">
+                            <h4>
+                                <i class="{{widget.icon}}"></i> {{ widget.name | i18n }}</h4>
+                            <p>{{ widget.description[0].value | i18n }}</p>
+                            <ng-include src="'/app/Widgets/' + widget.name"></ng-include>
+
                         </div>
                         <div role="tabpanel" class="tab-pane fade" id="otherTab">
                             <h4>

@@ -262,6 +262,9 @@
     <string key="ui.config.role.applet.autoUpdate.label">Automatically update applets</string>
     <string key="ui.config.role.applet.autoUpdate.help">Selecting this option will automatically update applets</string>
     
+    <string key="ui.config.services.title">Application Services</string>
+    <string key="ui.config.services.description">In SanteDB a 'service' is a native plugin that operates within the application host context. You can use this screen to enable or disable services in the SanteDB application context. Warning: If you're unsure what this panel does, leave the defaults enabled</string>
+    <string key="ui.config.services.type.label">Enabled Services</string>
   </strings>
 
 </AppletManifest>

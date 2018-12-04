@@ -27,8 +27,8 @@ angular.module('santedb-lib', [])
      * @memberof Angular
      * @summary Renders a localized string
      */
-    .filter('i18n', function() {
-        return function(value) {
+    .filter('i18n', function () {
+        return function (value) {
             return SanteDB.locale.getString(value);
         }
     })
@@ -75,8 +75,8 @@ angular.module('santedb-lib', [])
      *      <div class="col-md-2">Common Name:</div>
      *      <div class="col-md-2">{{ patient.name | name: 'OfficialRecord' }}</div>
      */
-    .filter('name', function() {
-        return function(modelValue, type) {
+    .filter('name', function () {
+        return function (modelValue, type) {
             return SanteDB.display.renderEntityName(modelValue, type);
         }
     })
@@ -90,8 +90,8 @@ angular.module('santedb-lib', [])
      *      <div class="col-md-2">Home Address:</div>
      *      <div class="col-md-2">{{ patient.address | address: 'Home' }}</div>
      */
-    .filter('address', function() {
-        return function(modelValue, type) {
+    .filter('address', function () {
+        return function (modelValue, type) {
             return SanteDB.display.renderEntityAddress(modelValue, type);
         }
     })
@@ -104,8 +104,8 @@ angular.module('santedb-lib', [])
      *      <div class="col-md-2">Date Of Birth:</div>
      *      <div class="col-md-2">{{ patient.dateOfBirth | extDate: patient.dateOfBirthPrecision }}</div>
      */
-    .filter('extDate', function() {
-        return function(date, precision) {
+    .filter('extDate', function () {
+        return function (date, precision) {
             var dateFormat;
 
             switch (precision) {
@@ -154,7 +154,7 @@ angular.module('santedb-lib', [])
             }
 
             return null;
-        } 
+        }
     })
     /**
      * @method entitySearch
@@ -176,13 +176,93 @@ angular.module('santedb-lib', [])
                     filter='{ "statusConcept.mnemonic" : "ACTIVE" }'/>
      */
     .directive('entitySearch', function ($timeout) {
+
+        var renderObject = function (selection) {
+
+            if(selection.text)
+                return selection.text;
+                
+            var retVal = "";
+            switch (selection.$type) {
+                case "UserEntity":
+                case "Provider":
+                case "Patient":
+                    retVal += "<i class='fa fa-user'></i>";
+                    break;
+                case "Material":
+                case "ManufacturedMaterial":
+                    retVal += "<i class='fa fa-flask'></i>";
+                    break;
+                case "Place":
+                    retVal += "<i class='fa fa-map-pin'></i>";
+                    break;
+                case "Entity":
+                    retVal += "<i class='fa fa-share-alt'></i>";
+                    break;
+                default:
+                    retVal += "<i class='fa fa-box'></i>";
+                    break;
+            }
+            retVal += "&nbsp;";
+
+
+            if (selection.name != null && selection.name.OfficialRecord != null)
+                retVal += SanteDB.display.renderEntityName(selection.name.OfficialRecord);
+            else if (selection.name != null && selection.name.Assigned != null)
+                retVal += SanteDB.display.renderEntityName(selection.name.Assigned);
+            else if (selection.name != null && selection.name.$other != null)
+                retVal += SanteDB.display.renderEntityName(selection.name.$other);
+            else if (selection.element !== undefined)
+                retVal += selection.element.innerText.trim();
+            else if (selection.text)
+                retVal += selection.text;
+
+            if (selection.address)
+                retVal += " - <small>(<i class='fa fa-map-marker'></i> " + SanteDB.display.renderEntityAddress(selection.address) + ")</small>";
+            return retVal;
+        }
+
         return {
             scope: {
                 defaultResults: '='
             },
-            link: function (scope, element, attrs, ctrl) {
+            restrict: 'E',
+            require: 'ngModel',
+            replace: true,
+            transclude: true,
+            templateUrl: './org.santedb.uicore/directives/entitySearch.html',
+            controller: ['$scope', '$rootScope',
+                function ($scope, $rootScope) {
+
+                    $scope.setValue = (selectControl, resource, value) => {
+                        if (!value || Array.isArray(value) && value.length == 0) {
+                            $(selectControl).find('option').remove();
+                            $(selectControl).trigger('change.select2');
+                        }
+                        else {
+                            var api = SanteDB.resources[resource.toLowerCase()];
+
+                            if (!Array.isArray(value))
+                                value = [value];
+
+                            $(selectControl).find('option[value="? undefined:undefined ?"]').remove();
+                            value.forEach(function (v) {
+                                api.getAsync(v)
+                                    .then(function (res) {
+
+                                        if($(selectControl).find(`option[value=${v}]`).length == 0) {
+                                            $(selectControl)[0].add(new Option(renderObject(res), v, false, true));
+                                            $(selectControl).trigger('change.select2');
+                                        }
+                                    });
+                            });
+                        }
+                    }
+                }
+            ],
+            link: function (scope, element, attrs, ngModel) {
                 $timeout(function () {
-                    var modelType = attrs.entitySearch || attrs.type;
+                    var modelType = attrs.model || attrs.type;
                     var filterString = attrs.filter;
                     var displayString = attrs.display;
                     var searchProperty = attrs.searchfield || "name.component.value";
@@ -221,7 +301,7 @@ angular.module('santedb-lib', [])
                             delay: 500,
                             method: "GET",
                             headers: {
-                                "Accept" : "application/json+sdb-viewmodel"
+                                "Accept": "application/json+sdb-viewmodel"
                             },
                             data: function (params) {
                                 filter[searchProperty] = "~" + params.term;
@@ -243,7 +323,7 @@ angular.module('santedb-lib', [])
                                             text = eval(displayString);
                                         }
                                         else if (o.name !== undefined) {
-                                                text = SanteDB.display.renderEntityName(o.name);
+                                            text = SanteDB.display.renderEntityName(o.name);
                                         }
                                         o.text = o.text || text;
                                         o.id = o[resultProperty];
@@ -279,124 +359,43 @@ angular.module('santedb-lib', [])
                         },
                         escapeMarkup: function (markup) { return markup; }, // Format normally
                         minimumInputLength: 2,
-                        templateSelection: function (selection) {
-                            var retVal = "";
-                            switch (modelType) {
-                                case "UserEntity":
-                                case "Provider":
-                                case "Patient":
-                                    retVal += "<i class='fa fa-user'></i>";
-                                    break;
-                                case "Material":
-                                case "ManufacturedMaterial":
-                                    retVal += "<i class='fa fa-flask'></i>";
-                                    break;
-                                case "Place":
-                                    retVal += "<i class='fa fa-map-pin'></i>";
-                                    break;
-                                case "Entity":
-                                    retVal += "<i class='fa fa-share-alt'></i>";
-                                    break;
-                            }
-                            retVal += "&nbsp;";
-
-
-                            if (displayString != null) {
-                                var scope = selection;
-                                retVal += eval(displayString);
-                            }
-                            else if (selection.name != null && selection.name.OfficialRecord != null)
-                                retVal += SanteDB.display.renderEntityName(selection.name.OfficialRecord);
-                            else if (selection.name != null && selection.name.Assigned != null)
-                                retVal += SanteDB.display.renderEntityName(selection.name.Assigned);
-                            else if (selection.name != null && selection.name.$other != null)
-                                retVal += SanteDB.display.renderEntityName(selection.name.$other);
-                            else if (selection.element !== undefined)
-                                retVal += selection.element.innerText.trim();
-                            else if (selection.text)
-                                retVal += selection.text;
-
-                            if (selection.address)
-                                    retVal += " - <small>(<i class='fa fa-map-marker'></i> " + SanteDB.display.renderEntityAddress(selection.address) + ")</small>";
-                            return retVal;
-                        },
+                        templateSelection: renderObject,
                         keepSearchResults: true,
-                        templateResult: function (result) {
-                            if (result.loading) return result.text;
-
-                            if (displayString != null) {
-                                var scope = result;
-                                return eval(displayString);
-                            }
-                            else if (result.classConcept != EntityClassKeys.ServiceDeliveryLocation && result.name != null && result.typeConceptModel != null && result.typeConceptModel.name != null && result.name.OfficialRecord) {
-                                retVal = "<div class='badge badge-info'>" +
-                                    SanteDB.display.renderConcept(result.typeConceptModel) + "</div> " + SanteDB.display.renderEntityName(result.name.OfficialRecord || result.name.$other);
-                                if (result.address)
-                                    retVal += " - <small>(<i class='fa fa-map-marker'></i> " + SanteDB.display.renderEntityAddress(result.address) + ")</small>";
-                                return retVal;
-                            }
-                            else if (result.classConcept == EntityClassKeys.ServiceDeliveryLocation && result.name != null && result.typeConceptModel != null && result.typeConceptModel.name != null) {
-                                retVal = "<div class='badge badge-info'>" +
-                                    SanteDB.display.renderConcept(result.typeConceptModel) + "</div> " + SanteDB.display.renderEntityName(result.name.OfficialRecord || result.name.Assigned || result.name.$other );
-                                if (result.relationship && result.relationship.Parent && result.relationship.Parent.targetModel && result.relationship.Parent.targetModel.name)
-                                    retVal += " - <small>(<i class='fa fa-share-alt'></i> " + SanteDB.display.renderEntityName(result.relationship.Parent.targetModel.name.OfficialRecord || result.relationship.Parent.targetModel.name.Assigned) + ")</small>";
-                                if (result.address)
-                                    retVal += " - <small>(<i class='fa fa-map-marker'></i> " + SanteDB.display.renderEntityAddress(result.address) + ")</small>";
-                                return retVal;
-                            }
-                            else if (result.name != null && result.typeConceptModel != null && result.typeConceptModel.name != null && result.name.Assigned) {
-                                var retVal = "<div class='badge badge-default'>" +
-                                    SanteDB.display.renderConcept(result.typeConceptModel) + "</div> " + SanteDB.display.renderEntityName(result.name.Assigned || result.name.$other);
-
-                                if (result.address)
-                                    retVal += " - <small>(<i class='fa fa-map-marker'></i> " + SanteDB.display.renderEntityAddress(result.address) + ")</small>";
-                                return retVal;
-                            }
-                            else if (result.name != null && result.name.OfficialRecord)
-                                return "<div class='badge badge-default'>" +
-                                    result.$type + "</div> " + SanteDB.display.renderEntityName(result.name.OfficialRecord);
-                            else if (result.name != null && result.name.Assigned)
-                                return "<div class='badge badge-default'>" +
-                                    result.$type + "</div> " + SanteDB.display.renderEntityName(result.name.Assigned)
-                            else if (result.name != null && result.name.$other)
-                                return "<div class='badge badge-default'>" +
-                                    result.$type + "</div> " + SanteDB.display.renderEntityName(result.name.$other)
-                            else
-                                return result.text;
-                        }
+                        templateResult: renderObject
                     });
 
-                    // HACK: For angular values, after select2 has "selected" the value, it will be a ? string: ID ? value we do not want this
-                    // we want the actual value, so this little thing corrects this bugginess
-                    $(element).on("select2:select", function (e) {
-                        if (e.currentTarget.value.indexOf("? string:") == 0) {
-                            e.currentTarget.value = e.currentTarget.value.substring(9, e.currentTarget.value.length - 2);
-                        }
-                        e.currentTarget.options.selectedIndex = e.currentTarget.options.length - 1;
+                    // On change
+                    element.on('select2:select', function (e) {
+                        var val = $(element).select2("val");
+                        //e.currentTarget.options.selectedIndex = e.currentTarget.options.length - 1;
+                        scope.$apply(() => ngModel.$setViewValue(val));
                     });
+                    ngModel.$render = function () {
+                        scope.setValue(element, modelType, ngModel.$viewValue);
+                    };
                 });
             }
         };
-    }).factory('AuthInterceptor', ['$rootScope', '$q', '$window', '$location','$injector', function ($rootScope, $q, $window, $location, $injector) {
+    }).factory('AuthInterceptor', ['$rootScope', '$q', '$window', '$location', '$injector', function ($rootScope, $q, $window, $location, $injector) {
         return {
-          request: function (config) {
-            config.headers = config.headers || {};
-            if (window.sessionStorage.getItem('token')) {
-              config.headers.Authorization = 'BEARER ' + window.sessionStorage.getItem('token');
+            request: function (config) {
+                config.headers = config.headers || {};
+                if (window.sessionStorage.getItem('token')) {
+                    config.headers.Authorization = 'BEARER ' + window.sessionStorage.getItem('token');
+                }
+                return config;
+            },
+
+            responseError: function (response) {
+                if (response.status === 401) {
+                    var oldState = $injector.get('$state').$current.name;
+                    $injector.get('$state').transitionTo('login', {
+                        returnState: oldState == "login" ? null : oldState
+                    });
+                    window.sessionStorage.removeItem('token');// obvi this token doesn't work
+                    return $q.reject(response);;
+                }
+                return $q.reject(response);
             }
-            return config;
-          },
-        
-          responseError: function (response) {
-            if (response.status === 401) {
-                var oldState = $injector.get('$state').$current.name;
-                $injector.get('$state').transitionTo('login', {
-                    returnState : oldState == "login" ? null : oldState
-                });
-                window.sessionStorage.removeItem('token');// obvi this token doesn't work
-                return $q.reject(response);;
-            }
-            return $q.reject(response);
-          }
         };
-        }]);
+    }]);
