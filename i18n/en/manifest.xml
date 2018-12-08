@@ -61,14 +61,12 @@
     </locale>
   </locales>
   <strings lang="en">
-    <!-- Logins -->
     <string key="ui.login.input.username">Username</string>
     <string key="ui.login.input.password">Password</string>
     <string key="ui.login.input.pin">PIN #</string>
     <string key="ui.login.title.elevate">User Elevation</string>
     <string key="ui.login.input.purpose">Reason</string>
     <string key="ui.login.realm">Enter security details for realm</string>
-    <!-- Errors -->
     <string key="ui.error.title">System Error</string>
     <string key="ui.error.description">Additional details follow:</string>
     <string key="ui.error.causedBy">Cause:</string>
@@ -84,8 +82,6 @@
     <string key="error.type.Exception">General Error</string>
     <string key="error.type.HttpException">Communications Error</string>
     <string key="error.type.WebException">Communications Error</string>
-
-    <!-- Actions -->
     <string key="ui.action.ok">Ok</string>
     <string key="ui.action.cancel">Cancel</string>
     <string key="ui.action.save">Save</string>
@@ -100,11 +96,7 @@
     <string key="ui.action.selectAll">Select All</string>
     <string key="ui.action.selectNone">Select None</string>
     <string key="ui.wait">Please Wait...</string>
-    <!-- General Dialog Preferences -->
     <string key="ui.pref.nevershow">Never show this message again</string>
-
-
-    <!-- Subscriptions -->
     <string key="ui.subscription.person.all">All Persons</string>
     <string key="ui.subscription.act.all">All Acts</string>
     <string key="ui.subscription.place.all">All Places</string>
@@ -132,8 +124,9 @@
     <string key="ui.subscription.place.outOfState">All places out of my state/province (background after start)</string>
     <string key="ui.subscription.place.outOfCounty">All places out of my county/district (background after start)</string>
     <string key="ui.subscription.place.assigned">All places that are assigned to my facility</string>
-
-    <!-- Clinical data on subscriptions -->
+    <string key="ui.config.subscribe.type.label">Subscription Type</string>
+    <string key="ui.config.subscribe.authority.label">Assigning Authority</string>
+    <string key="ui.config.subscribe.authority.help">Use this option to subscribe to patients with a particular identifier</string>
     <string key="ui.subscription.userEntity.assigned">Only users assigned to my facility</string>
     <string key="ui.subscription.provider.assigned">Only providers assigned to my facility</string>
     <string key="ui.subscription.patient.assigned">Only patients assigned to my facility or who came to my facility</string>
@@ -145,9 +138,7 @@
     <string key="ui.subscription.act.quantityObservation.me">Only quantified observations taken at my facility</string>
     <string key="ui.subscription.act.textObservation.me">Only text observations taken at my facility</string>
     <string key="ui.subscription.act.PatientEncounter.me">Only patient encounters performed at my facility</string>
-
-    <!-- Configuration Screens -->
-        <string key="ui.config.realm.title">Domain</string>
+    <string key="ui.config.realm.title">Domain</string>
     <string key="ui.config.realm.description">This SanteDB client application needs to contact a centralized instanced called a "domain". This screen will allow you to configure the specific details of how this mobile device will contact the domain.</string>
     <string key="ui.config.realm.deviceName.label">Device ID</string>
     <string key="ui.config.realm.deviceName.help">A name for this device. For example: 'GoodHealthTablet1'</string>
@@ -214,7 +205,6 @@
     <string key="ui.config.log.verbosity.error">Errors only</string>
     <string key="ui.config.log.verbosity.warning">Errors &amp;amp; Warnings</string>
     <string key="ui.config.log.verbosity.critical">Fatal Events Only</string>
-
     <string key="ui.config.security.title">Security</string>
     <string key="ui.config.security.description">SanteDB disconnected client keeps several security logs and audits of user activity on this device. This is helpful if this device will be offline for extended periods of time. Here you can control various security settings for this device</string>
     <string key="ui.config.security.password.label">Passwords</string>
@@ -232,7 +222,6 @@
     <string key="ui.config.security.audit.7yr">Retain for 7 years</string>
     <string key="ui.config.security.onlySubscribed">Only allow users from subscribed facilities to login</string>
     <string key="ui.config.security.localAuth">Allow users to login when the central authentication server is unavailable</string>
-    
     <string key="ui.config.network.title">Network</string>
     <string key="ui.config.network.description">SanteDB can optimize the bandwidth that this device will use when communicating with the central instance, which can be set here. You can also setup any proxy information required for your local network</string>
     <string key="ui.config.network.optimize.label">Optimization</string>
@@ -245,23 +234,19 @@
     <string key="ui.config.network.useProxy">Use a proxy to access the server</string>
     <string key="ui.config.network.proxyAddress.label">Address</string>
     <string key="ui.config.network.proxyAddress.help">Use this setting to configure the address of your HTTP proxy</string>
-  
     <string key="ui.config.other.title">Other Settings</string>
     <string key="ui.config.other.description">SanteDB allows you to set additional settings on this page to further control the behavior of this instance</string>
     <string key="ui.config.other.setting">Application Setting</string>
     <string key="ui.config.other.value">Value</string>
-  
     <string key="ui.config.action.realm.join">Join Domain</string>
     <string key="ui.config.action.realm.leave">Leave Domain</string>
-    <string key="ui.config.complete">You have successfully configured your instance of the SanteDB client services! If you are seeing this message, please restart the application</string>  
-
+    <string key="ui.config.complete">You have successfully configured your instance of the SanteDB client services! If you are seeing this message, please restart the application</string>
     <string key="ui.config.role.title">Applets</string>
     <string key="ui.config.role.description">This application can operate in one of many roles on your server. This screen will allow you to configure which role you would like this application to take on within your SanteDB deployment.</string>
     <string key="ui.config.role.applet.label">Role</string>
     <string key="ui.config.role.applet.help">Select the role/solution that this application will run as. If your deployment does not use solutions or applet roles you can leave this blank.</string>
     <string key="ui.config.role.applet.autoUpdate.label">Automatically update applets</string>
     <string key="ui.config.role.applet.autoUpdate.help">Selecting this option will automatically update applets</string>
-    
     <string key="ui.config.services.title">Application Services</string>
     <string key="ui.config.services.description">In SanteDB a 'service' is a native plugin that operates within the application host context. You can use this screen to enable or disable services in the SanteDB application context. Warning: If you're unsure what this panel does, leave the defaults enabled</string>
     <string key="ui.config.services.type.label">Enabled Services</string>

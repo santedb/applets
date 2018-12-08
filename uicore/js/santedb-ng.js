@@ -187,20 +187,23 @@ angular.module('santedb-lib', [])
                 case "UserEntity":
                 case "Provider":
                 case "Patient":
-                    retVal += "<i class='fa fa-user'></i>";
+                    retVal += "<i class='fa fa-user'></i> ";
                     break;
                 case "Material":
                 case "ManufacturedMaterial":
-                    retVal += "<i class='fa fa-flask'></i>";
+                    retVal += "<i class='fa fa-flask'></i> ";
                     break;
                 case "Place":
-                    retVal += "<i class='fa fa-map-pin'></i>";
+                    retVal += "<i class='fa fa-map-pin'></i> ";
                     break;
                 case "Entity":
-                    retVal += "<i class='fa fa-share-alt'></i>";
+                    retVal += "<i class='fa fa-share-alt'></i> ";
+                    break;
+                    case "AssigningAuthority":
+                    retVal += "<i class='fa fa-id-card'></i> ";
                     break;
                 default:
-                    retVal += "<i class='fa fa-box'></i>";
+                    retVal += "<i class='fa fa-box'></i> ";
                     break;
             }
             retVal += "&nbsp;";
@@ -212,6 +215,8 @@ angular.module('santedb-lib', [])
                 retVal += SanteDB.display.renderEntityName(selection.name.Assigned);
             else if (selection.name != null && selection.name.$other != null)
                 retVal += SanteDB.display.renderEntityName(selection.name.$other);
+            else if(selection.name != null)
+                retVal += selection.name;
             else if (selection.element !== undefined)
                 retVal += selection.element.innerText.trim();
             else if (selection.text)
@@ -219,6 +224,8 @@ angular.module('santedb-lib', [])
 
             if (selection.address)
                 retVal += " - <small>(<i class='fa fa-map-marker'></i> " + SanteDB.display.renderEntityAddress(selection.address) + ")</small>";
+            else if(selection.oid)
+                retVal += " - <small>(<i class='fa fa-cogs'></i> " + selection.oid +")</small>";
             return retVal;
         }
 
@@ -265,7 +272,7 @@ angular.module('santedb-lib', [])
                     var modelType = attrs.model || attrs.type;
                     var filterString = attrs.filter;
                     var displayString = attrs.display;
-                    var searchProperty = attrs.searchfield || "name.component.value";
+                    var searchProperty = attrs.searchField || "name.component.value";
                     var defaultResults = attrs.default;
                     var groupString = attrs.groupBy;
                     var groupDisplayString = attrs.groupDisplay;
@@ -273,9 +280,6 @@ angular.module('santedb-lib', [])
                     var filter = {}, defaultFilter = {};
                     if (filterString !== undefined)
                         filter = JSON.parse(filterString);
-
-                    if (modelType != "SecurityUser" && modelType != "SecurityRole")
-                        filter.statusConcept = 'C8064CBD-FA06-4530-B430-1A52F1530C27';
 
                     // Bind select 2 search
                     $(element).select2({
@@ -323,7 +327,7 @@ angular.module('santedb-lib', [])
                                             text = eval(displayString);
                                         }
                                         else if (o.name !== undefined) {
-                                            text = SanteDB.display.renderEntityName(o.name);
+                                            text = renderObject(o);
                                         }
                                         o.text = o.text || text;
                                         o.id = o[resultProperty];

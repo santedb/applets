@@ -1,62 +1,59 @@
-<!--
- - Copyright 2015-2018 Mohawk College of Applied Arts and Technology
- -
- - 
- - Licensed under the Apache License, Version 2.0 (the "License"); you 
- - may not use this file except in compliance with the License. You may 
- - obtain a copy of the License at 
- - 
- - http://www.apache.org/licenses/LICENSE-2.0 
- - 
- - Unless required by applicable law or agreed to in writing, software
- - distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
- - WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the 
- - License for the specific language governing permissions and limitations under 
- - the License.
- - 
- - User: justin
- - Date: 2018-7-26
- -->
 <div class="container" xmlns="http://www.w3.org/1999/xhtml">
     <div class="row">
-        <div class="col-xs-12">
-            <strong>{{ 'ui.config.subscribe.mode.label' | i18n }}</strong>
-        </div>
+      <div class="col-xs-12">
+        <strong>{{ 'ui.config.subscribe.mode.label' | i18n }}</strong>
+      </div>
     </div>
     <div class="row">
-        <div class="col-sm-11 offset-sm-1  col-xs-12">
-            <dl>
-                <dd>
-                    <label>
-                        <input type="radio" name="subscriptionMode" ng-model="config.subscription.mode" value="All" /> {{ 'ui.config.subscribe.mode.all.label' | i18n }}</label>
-                </dd>
-                <dd>
-                    <label>
-                        <input type="radio" name="subscriptionMode" ng-model="config.subscription.mode" value="Subscription" /> {{ 'ui.config.subscribe.mode.specific.label' | i18n }}</label>
-                </dd>
-            </dl>
-        </div>
+      <div class="col-sm-11 offset-sm-1  col-xs-12">
+        <dl>
+          <dd>
+            <label>
+              <input type="radio" name="subscriptionMode" ng-model="config.subscription.mode" value="All" /> {{ 'ui.config.subscribe.mode.all.label' | i18n }}</label>
+          </dd>
+          <dd>
+            <label>
+              <input type="radio" name="subscriptionMode" ng-model="config.subscription.mode" value="Subscription" /> {{ 'ui.config.subscribe.mode.specific.label' | i18n }}</label>
+          </dd>
+        </dl>
+      </div>
     </div>
     <div class="form-group row" ng-if="config.subscription.mode == 'Subscription'">
-        <label for="subscribeFacility" class="col-md-2 col-xs-12 control-label">{{ 'ui.config.subscribe.place.label' | i18n }}</label>
-        <div class="col-md-10 col-xs-12">
-            <entity-search type="Place" style="height:3em;" ng-required="config.subscription.mode == 'Subscription'" class="form-control" name="subscribeFacility" ng-model="config.sync.subscribe" filter='{ "statusConcept.mnemonic" : "ACTIVE", "classConcept.mnemonic" : "ServiceDeliveryLocation" }'
-            multiple="multiple"/>
-            <div class="form-text text-muted">
-                {{ 'ui.config.subscribe.place.help' | i18n }}
-            </div>
-        </div>
+      <label for="subscribeType" class="col-md-2 col-xs-12 control-label">{{ 'ui.config.subscribe.type.label' | i18n }}</label>
+      <div class="col-md-10 col-xs-12">
+        <select name="subscribeType" ng-model="config.sync.subscribeType" class="form-control">
+          <option value="Place">{{ 'ui.config.subscribe.place.label' | i18n }}</option>
+          <option value="AssigningAuthority">{{ 'ui.config.subscribe.authority.label' | i18n}}</option>
+        </select>
+      </div>
+    </div>
+    <div class="form-group row" ng-if="config.subscription.mode == 'Subscription'">
+      <label for="subscribeFacility" class="col-md-2 col-xs-12 control-label" ng-if="config.sync.subscribeType == 'Place'">{{ 'ui.config.subscribe.place.label' | i18n }}</label>
+      <label for="subscribeFacility" class="col-md-2 col-xs-12 control-label" ng-if="config.sync.subscribeType == 'AssigningAuthority'">{{ 'ui.config.subscribe.authority.label' | i18n }}</label>
+      <div class="col-md-10 col-xs-12">
+        <entity-search ng-if="config.sync.subscribeType == 'Place'" type="Place" style="height:3em;" ng-required="config.subscription.mode == 'Subscription'" class="form-control" name="subscribeFacility" ng-model="config.sync.subscribe" filter="{ &quot;statusConcept.mnemonic&quot; : &quot;ACTIVE&quot;, &quot;classConcept.mnemonic&quot; : &quot;ServiceDeliveryLocation&quot; }" multiple="multiple" />
+        <entity-search ng-if="config.sync.subscribeType == 'AssigningAuthority'" search-field="name" type="AssigningAuthority" style="height:3em;" ng-required="config.subscription.mode == 'Subscription'" class="form-control" name="subscribeFacility" ng-model="config.sync.subscribe" multiple="multiple" />
+        <div class="form-text text-muted" ng-if="config.sync.subscribeType == 'Place'">
+          {{ 'ui.config.subscribe.place.help' | i18n }}
+      </div>
+        <div class="form-text text-muted" ng-if="config.sync.subscribeType == 'AssigningAuthority'">
+          {{ 'ui.config.subscribe.authority.help' | i18n }}
+      </div>
+      </div>
     </div>
     <div class="form-group row">
-        <label for="subscribeObjects" class="col-md-2 col-xs-12 control-label">{{ 'ui.config.subscribe.objects.label' | i18n }}</label>
-        <div class="col-md-10 col-xs-12">
-            <ul class="checklist-box" style="height:10em">
-                <li ng-repeat="filter in reference.subscriptions track by $index" ng-if="(!filter.guard || checkGuard(filter)) &amp;&amp; (config.subscription.mode == filter.mode || filter.mode == 'AllOrSubscription')"><label><input type="checkbox" ng-model="config.sync._resource[filter.name].selected" value="true"/> {{ filter.name | i18n }} ({{ filter.resource }})</label></li>
-            </ul>
-            <div class="btn-group float-right">
-                <button type="button" class="btn btn-lg btn-default" ng-click="setSubscriptionSelection(false)">{{ 'ui.action.selectNone' | i18n }}</button>
-                <button type="button" class="btn btn-lg btn-info" ng-click="setSubscriptionSelection(true)">{{ 'ui.action.selectAll' | i18n }}</button>
-                </div>
+      <label for="subscribeObjects" class="col-md-2 col-xs-12 control-label">{{ 'ui.config.subscribe.objects.label' | i18n }}</label>
+      <div class="col-md-10 col-xs-12">
+        <ul class="checklist-box" style="height:10em">
+          <li ng-repeat="filter in reference.subscriptions track by $index" ng-if="(!filter.guard || checkGuard(filter)) &amp;&amp; (config.subscription.mode == filter.mode || filter.mode == 'AllOrSubscription')">
+            <label>
+              <input type="checkbox" ng-model="config.sync._resource[filter.name].selected" value="true" /> {{ filter.name | i18n }} ({{ filter.resource }})</label>
+          </li>
+        </ul>
+        <div class="btn-group float-right">
+          <button type="button" class="btn btn-lg btn-default" ng-click="setSubscriptionSelection(false)">{{ 'ui.action.selectNone' | i18n }}</button>
+          <button type="button" class="btn btn-lg btn-info" ng-click="setSubscriptionSelection(true)">{{ 'ui.action.selectAll' | i18n }}</button>
         </div>
+      </div>
     </div>
-</div>
+  </div>

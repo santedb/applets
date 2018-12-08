@@ -23,7 +23,8 @@ angular.module('santedb').controller('InitialSettingsController', ['$scope', '$r
 
     // Reference data
     $scope.reference = {
-        places: []
+        place: [],
+        assigningauthority: []
     };
     $scope.newItem = {};
     $scope.serverCaps = {};
@@ -61,6 +62,7 @@ angular.module('santedb').controller('InitialSettingsController', ['$scope', '$r
             $scope.config.network.optimize = "gzip";
             $scope.config.sync = $scope.config.sync || {};
             $scope.config.sync.mode = "sync";
+            $scope.config.sync.subscribeType = "Place";
             $scope.config.log.mode = $scope.config.log.trace[0].filter || "Warning";
             $scope.config.sync._resource = {};
             $scope.config.data = {
@@ -131,10 +133,10 @@ angular.module('santedb').controller('InitialSettingsController', ['$scope', '$r
         // Find in new
         if (n)
             $scope.config.sync.subscribe.forEach(function (sid) {
-                var existingInfo = $scope.reference.places.find(function (p) { return p.id === sid });
+                var existingInfo = $scope.reference[$scope.config.sync.subscribeType.toLowerCase()].find(function (p) { return p.id === sid });
                 if (!existingInfo)
-                    SanteDB.resources.place.getAsync(sid).then(function (placeInfo) {
-                        $scope.reference.places.push(placeInfo);
+                    SanteDB.resources[$scope.config.sync.subscribeType.toLowerCase()].getAsync(sid).then(function (placeInfo) {
+                        $scope.reference[$scope.config.sync.subscribeType.toLowerCase()].push(placeInfo);
                         try {
                             $scope.$apply(); // Apply scope to refresh the check guard conditions
                         }
@@ -146,21 +148,23 @@ angular.module('santedb').controller('InitialSettingsController', ['$scope', '$r
     // Verifies that a guard condition on a filter passes
     $scope.checkGuard = function (filter) {
 
-        if ($scope.reference.places.length == 0) return false;
+        if ($scope.reference[$scope.config.sync.subscribeType.toLowerCase()].length == 0) return false;
 
         var retVal = true;
         var guardFilterRegex = new RegExp('^([\\!\\sA-Za-z\\.&|]*?)\\[([A-Za-z]*?)\\](.*)$');
         var newGuard = "", oldGuard = filter.guard;
         while (oldGuard.length > 0) {
             var match = guardFilterRegex.exec(oldGuard);
-            if (!match)
+            if (!match) {
                 newGuard += oldGuard;
+                break;
+            }
             else {
                 newGuard += `${match[1]}.${match[2]}`;
                 oldGuard = match[3];
             }
         }
-        $scope.reference.places.forEach(function (subscribed) {
+        $scope.reference[$scope.config.sync.subscribeType.toLowerCase()].forEach(function (subscribed) {
             var e = $scope.$eval(newGuard, { "subscribed": subscribed });
             retVal &= (e != null) && (e !== false);
         });
