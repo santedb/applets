@@ -195,11 +195,12 @@ angular.module('santedb-lib', [])
                     break;
                 case "Place":
                     retVal += "<i class='fa fa-map-pin'></i> ";
+                    
                     break;
                 case "Entity":
                     retVal += "<i class='fa fa-share-alt'></i> ";
                     break;
-                    case "AssigningAuthority":
+                case "AssigningAuthority":
                     retVal += "<i class='fa fa-id-card'></i> ";
                     break;
                 default:
@@ -222,7 +223,7 @@ angular.module('santedb-lib', [])
             else if (selection.text)
                 retVal += selection.text;
 
-            if (selection.address)
+            if (selection.address) 
                 retVal += " - <small>(<i class='fa fa-map-marker'></i> " + SanteDB.display.renderEntityAddress(selection.address) + ")</small>";
             else if(selection.oid)
                 retVal += " - <small>(<i class='fa fa-cogs'></i> " + selection.oid +")</small>";
@@ -247,7 +248,7 @@ angular.module('santedb-lib', [])
                             $(selectControl).trigger('change.select2');
                         }
                         else {
-                            var api = SanteDB.resources[resource.toLowerCase()];
+                            var api = SanteDB.resources[resource.toCamelCase()];
 
                             if (!Array.isArray(value))
                                 value = [value];

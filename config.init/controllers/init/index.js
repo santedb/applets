@@ -24,6 +24,7 @@ angular.module('santedb').controller('InitialSettingsController', ['$scope', '$r
     // Reference data
     $scope.reference = {
         place: [],
+        facility: [],
         assigningauthority: []
     };
     $scope.newItem = {};
@@ -62,7 +63,7 @@ angular.module('santedb').controller('InitialSettingsController', ['$scope', '$r
             $scope.config.network.optimize = "gzip";
             $scope.config.sync = $scope.config.sync || {};
             $scope.config.sync.mode = "sync";
-            $scope.config.sync.subscribeType = "Place";
+            $scope.config.sync.subscribeType = "Facility";
             $scope.config.log.mode = $scope.config.log.trace[0].filter || "Warning";
             $scope.config.sync._resource = {};
             $scope.config.data = {
@@ -135,7 +136,7 @@ angular.module('santedb').controller('InitialSettingsController', ['$scope', '$r
             $scope.config.sync.subscribe.forEach(function (sid) {
                 var existingInfo = $scope.reference[$scope.config.sync.subscribeType.toLowerCase()].find(function (p) { return p.id === sid });
                 if (!existingInfo)
-                    SanteDB.resources[$scope.config.sync.subscribeType.toLowerCase()].getAsync(sid).then(function (placeInfo) {
+                    SanteDB.resources[$scope.config.sync.subscribeType.toCamelCase()].getAsync(sid).then(function (placeInfo) {
                         $scope.reference[$scope.config.sync.subscribeType.toLowerCase()].push(placeInfo);
                         try {
                             $scope.$apply(); // Apply scope to refresh the check guard conditions
@@ -164,7 +165,9 @@ angular.module('santedb').controller('InitialSettingsController', ['$scope', '$r
                 oldGuard = match[3];
             }
         }
-        $scope.reference[$scope.config.sync.subscribeType.toLowerCase()].forEach(function (subscribed) {
+        $scope.reference[$scope.config.sync.subscribeType.toLowerCase()]
+        .filter(function(f) { return $scope.config.sync.subscribe.indexOf(f.id) > -1; })
+        .forEach(function (subscribed) {
             var e = $scope.$eval(newGuard, { "subscribed": subscribed });
             retVal &= (e != null) && (e !== false);
         });

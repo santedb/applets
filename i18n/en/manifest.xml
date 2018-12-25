@@ -119,6 +119,10 @@
     <string key="ui.subscription.manufacturedMaterial.all">All manufactured materials (recommended)</string>
     <string key="ui.subscription.place.me">My subscribed place data (stock, policies, etc.)</string>
     <string key="ui.subscription.place.state">All places in my state/province</string>
+    <string key="ui.subscription.codeSystem.all">All Code Systems (recommended)</string>
+    <string key="ui.subscription.patient.liveInCounty">Patients who live in my county</string>
+    <string key="ui.subscription.codeSystem.liveInState">Patients who live in my state</string>
+    <string key="ui.subscription.referenceTerm.all">All Reference Terms (recommended)</string>
     <string key="ui.subscription.place.county">All places in my county/district</string>
     <string key="ui.subscription.place.all">All places in my country (not-recommended)</string>
     <string key="ui.subscription.place.outOfState">All places out of my state/province (background after start)</string>
@@ -184,6 +188,8 @@
     <string key="ui.config.subscribe.mode.specific.label">Subscribe to a particular place (region, district, facility, etc.)</string>
     <string key="ui.config.subscribe.place.label">Place</string>
     <string key="ui.config.subscribe.place.help">Enter one or more places you wish this tablet to subscribe to.</string>
+    <string key="ui.config.subscribe.facility.label">Facility</string>
+    <string key="ui.config.subscribe.facility.help">One or more facilities that you are subscribing to</string>
     <string key="ui.config.subscribe.objects.label">Subscriptions</string>
     <string key="ui.config.data.title">Database</string>
     <string key="ui.config.data.description">SanteDB's disconnected client needs to cache data locally for offline use. There are a variety of storage engines which may be available on your platform, select the data storage options here.</string>

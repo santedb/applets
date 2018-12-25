@@ -122,6 +122,12 @@
       <filter>relationship[ServiceDeliveryLocation|DedicatedServiceDeliveryLocation|IncidentalServiceDeliveryLocation].target=$subscribed.id$</filter>
       <filter>participation[RecordTarget].source.participation[Location].player=$subscribed.id$&amp;relationship[ServiceDeliveryLocation|DedicatedServiceDeliveryLocation|IncidentalServiceDeliveryLocation].target=!$subscribed.id$</filter>
     </add>
+    <add resource="Patient" name="ui.subscription.patient.liveInCounty" mode="subscription" ignoreModifiedOn="false" trigger="always" guard="subscribed.address[Direct].component[County]">
+      <filter>address.component[County]=$subscribed.address.component[County].value$</filter>
+    </add>
+    <add resource="Patient" name="ui.subscription.patient.liveInState" mode="subscription" ignoreModifiedOn="false" trigger="always" guard="subscribed.address[Direct].component[State]">
+      <filter>address.component[State]=$subscribed.address.component[State].value$</filter>
+    </add>
     <add resource="Person" name="ui.subscription.person.assigned" mode="subscription" ignoreModifiedOn="false" trigger="always" guard="subscribed.typeConcept">
       <filter>classConcept=9de2a846-ddf2-4ebc-902e-84508c5089ea&amp;relationship.source.classConcept=bacd9c6f-3fa9-481e-9636-37457962804d&amp;relationship.source.relationship[DedicatedServiceDeliveryLocation|IncidentalServiceDeliveryLocation|ServiceDeliveryLocation].target=$subscribed.id$</filter>
       <filter>participation[RecordTarget].source.participation[Location].player=$subscribed.id$&amp;participation[RecordTarget].source.statusConcept=C8064CBD-FA06-4530-B430-1A52F1530C27&amp;participation[RecordTarget].source.classConcept=54B52119-1709-4098-8911-5DF6D6C84140</filter>

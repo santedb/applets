@@ -876,6 +876,16 @@ if(!SanteDBWrapper)
                 api: _hdsi
             }),
             /**
+             * @property {SanteDB.ResourceWrapper}
+             * @summary A resource wrapper for Assigning Authorities
+             * @memberof SanteDBWrapper.resources
+             */
+            assigningAuthority: new ResourceWrapper({
+                accept: _viewModelJsonMime,
+                resource: "AssigningAuthority",
+                api: _hdsi
+            }),
+            /**
                 * @property {SanteDB.ResourceWrapper} 
                 * @summary Represents the entity relationship resource
                 * @memberof SanteDBWrapper.resources
@@ -1835,5 +1845,13 @@ if(!SanteDBWrapper)
 if(!SanteDB) 
     var SanteDB = new SanteDBWrapper();
 
-
-SanteDB.resources.mail
+    /**
+     * Return the string as a camel case
+     * @param {String} str The String
+     */
+String.prototype.toCamelCase = function() {
+    return this
+        .replace(/\s(.)/g, function($1) { return $1.toUpperCase(); })
+        .replace(/\s/g, '')
+        .replace(/^(.)/, function($1) { return $1.toLowerCase(); });
+}
