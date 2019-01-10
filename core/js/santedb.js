@@ -581,7 +581,7 @@ if(!SanteDBWrapper)
                 return _app.post({
                     resource: "Data",
                     data: { backup: takeBackup },
-                    contentType: 'application/x-www-urlform-encoded'
+                    contentType: 'application/x-www-form-urlencoded'
                 });
             },
             /**
@@ -595,7 +595,7 @@ if(!SanteDBWrapper)
                 return _app.deleteAsync({
                     resource: "Data",
                     data: { backup: takeBackup },
-                    contentType: 'application/x-www-urlform-encoded'
+                    contentType: 'application/x-www-form-urlencoded'
                 });
             },
             /**
@@ -620,7 +620,7 @@ if(!SanteDBWrapper)
                 return _app.postAsync({
                     resource: "Data/Backup",
                     data: { makePublic: makePublic },
-                    contentType: 'application/x-www-urlform-encoded'
+                    contentType: 'application/x-www-form-urlencoded'
                 });
             },
             /**
@@ -1081,6 +1081,9 @@ if(!SanteDBWrapper)
             })
         };
 
+        // HACK: Wrapper pointer facility = place
+        _resources.facility = _resources.place;
+
         // master configuration closure
         var _masterConfig = null;
         var _configuration = {
@@ -1437,7 +1440,7 @@ if(!SanteDBWrapper)
                                 "X-SanteDBClient-Claim" :
                                     `${btoa(`http://santedb.org/claims/override=${uacPrompt && (purposeOfUse || false)}`)},${btoa(`urn:oasis:names:tc:xacml:2.0:action:purpose=${purposeOfUse || null}`)}`
                             },
-                            contentType: 'application/x-www-urlform-encoded'
+                            contentType: 'application/x-www-form-urlencoded'
                         })
                             .then(function (d) {
                                 if (!uacPrompt) {
@@ -1484,7 +1487,7 @@ if(!SanteDBWrapper)
                                 "X-SanteDBClient-Claim" :
                                     `${btoa(`http://santedb.org/claims/override=${uacPrompt && (purposeOfUse || false)}`)},${btoa(`urn:oasis:names:tc:xacml:2.0:action:purpose=${purposeOfUse || null}`)}`
                             },
-                            contentType: 'application/x-www-urlform-encoded'
+                            contentType: 'application/x-www-form-urlencoded'
                         })
                             .then(function (d) {
                                 if (!uacPrompt) {
@@ -1519,7 +1522,7 @@ if(!SanteDBWrapper)
                                 grant_type: 'client_credentials',
                                 scope: "*"
                             },
-                            contentType: 'application/x-www-urlform-encoded'
+                            contentType: 'application/x-www-form-urlencoded'
                         })
                             .then(function (d) {
                                 if (!noSession) {
@@ -1556,7 +1559,7 @@ if(!SanteDBWrapper)
                                 redirect_uri: redirect_uri,
                                 scope: "*"
                             },
-                            contentType: 'application/x-www-urlform-encoded'
+                            contentType: 'application/x-www-form-urlencoded'
                         })
                             .then(function (d) {
                                 if (!noSession) {
@@ -1592,7 +1595,7 @@ if(!SanteDBWrapper)
                                     refresh_token: _session.refresh_token,
                                     scope: "*"
                                 },
-                                contentType: 'application/x-www-urlform-encoded'
+                                contentType: 'application/x-www-form-urlencoded'
                             })
                                 .then(function (d) {
                                     if (!noSession) {
