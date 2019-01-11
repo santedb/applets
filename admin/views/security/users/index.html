@@ -25,5 +25,9 @@
             <sdb:title lang="en">Users</sdb:title>
         </sdb:view>
     </sdb:state>
-    Users?
+    <entity-table type="SecurityUser" 
+        search-field="userName" 
+        default-query="{ 'obsoletionTime' : 'null' }"
+        properties="[ 'userName', 'creationTime', 'updatedTime' ]">
+    </entity-table>
 </div>

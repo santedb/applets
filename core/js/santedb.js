@@ -1078,6 +1078,42 @@ if(!SanteDBWrapper)
             locale: new ResourceWrapper({
                 resource: "Locale",
                 api: _app
+            }),
+            /**
+             * @property {SanteDB.ResourceWrapper}
+             * @memberOf SanteDBWrapper.resources
+             * @summary Wrapper for Security USers
+             */
+            securityUser: new ResourceWrapper({
+                resource: "SecurityUser",
+                api: _ami
+            }),
+            /**
+             * @property {SanteDB.ResourceWrapper}
+             * @memberOf SanteDBWrapper.resources
+             * @summary Wrapper for Security Roles
+             */
+            securityRole : new ResourceWrapper({
+                resource: "SecurityRole",
+                api: _ami
+            }),
+            /**
+             * @property {SanteDB.ResourceWrapper}
+             * @memberOf SanteDBWrapper.resources
+             * @summary Wrapper for Security Devices
+             */
+            securityDevice: new ResourceWrapper({
+                resource: "SecurityDevice",
+                api: _ami
+            }),
+            /**
+             * @property {SanteDB.ResourceWrapper}
+             * @memberOf SanteDBWrapper.resources
+             * @summary Wrapper for Security Applications
+             */
+            securityApplication: new ResourceWrapper({
+                resource: "SecurityApplication",
+                api: _ami
             })
         };
 

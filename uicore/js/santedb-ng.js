@@ -381,7 +381,84 @@ angular.module('santedb-lib', [])
                 });
             }
         };
-    }).factory('AuthInterceptor', ['$rootScope', '$q', '$window', '$location', '$injector', function ($rootScope, $q, $window, $location, $injector) {
+    })
+    /**
+     * @summary Directive for rendering a table of entities
+     */
+    .directive('entityTable', ['$timeout','$compile', function($timeout, $compile) {
+        var dt = null;
+        return {
+            scope : {
+                properties: "=",
+                external: "=",
+                defaultQuery: "="
+            },
+            restrict: 'E',
+            replace: true,
+            transclude: true,
+            templateUrl: './org.santedb.uicore/directives/entityTable.html',
+            controller: ['$scope', '$rootScope',
+                function ($scope, $rootScope) {
+                }
+            ],
+            link: function (scope, element, attrs, ngModel) {
+
+                var columns = scope.properties.map(function(m) {
+                    return {
+                        data: m,
+                        render: m.indexOf("Time") > -1 ? function(d, t, r) {
+                            return moment(date).format(SanteDB.locale.dateFormats.second);
+                        } : null
+                    };
+                });
+                columns.unshift({ data: "id", visible: false });
+
+                scope.translatePrefix = attrs.translatePrefix;
+                dt = $("table", element).DataTable({
+                    lengthChange: false,
+                    buttons: [ 
+                        {
+                            text: "<i class='fas fa-sync-alt'></i> Reload",
+                            className: "btn btn-info",
+                            action: function(e, dt, node, config) {
+                                dt.ajax.reload();
+                            }
+                        }
+                    ],
+                    serverSide: true,
+                    ajax: function (data, callback, settings) {
+
+                        var query = scope.defaultQuery;
+                        if (data.search.value.length > 0)
+                            query[attrs.searchField] = `~*${data.search.value}*`;
+                        if (data.order[0].column != 0) {
+                            var colname = scope.properties[data.order[0].column];
+                            query["_orderBy"] = `${colname}:${data.order[0].dir}`;
+                        }
+                        if(scope.extenral)
+                            query["_extern"] = true;
+
+                        query["_count"] = data.length;
+                        query["_offset"] = data.start;
+
+                        SanteDB.resources[attrs.type.toCamelCase()].findAsync(query)
+                            .then(function (res) {
+                                callback({
+                                    data: res.item,
+                                    recordsTotal: res.totalResults,
+                                    recordsFiltered: res.count
+                                });
+                            })
+                            .catch(function(err) { $rootScope.errorHandler(err) });
+                    },
+                    createdRow: function(r, d, i) { $compile(angular.element(r).contents())($scope); },
+                    columns: columns
+                });
+                debugger;
+            }
+        };
+    }])
+    .factory('AuthInterceptor', ['$rootScope', '$q', '$window', '$location', '$injector', function ($rootScope, $q, $window, $location, $injector) {
         return {
             request: function (config) {
                 config.headers = config.headers || {};
