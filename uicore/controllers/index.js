@@ -83,9 +83,10 @@ var santedbApp = angular.module('santedb', ['ngSanitize', 'ui.router', 'oc.lazyL
         // Localization
         SanteDB.resources.locale.findAsync().then(function (locale) {
             var localeAsset = locale[SanteDB.locale.getLocale()];
-            localeAsset.forEach(function (l) {
-                $.getScript(l);
-            });
+            if(localeAsset)
+                localeAsset.forEach(function (l) {
+                    $.getScript(l);
+                });
         }).catch(function (e) {
             $rootScope.errorHandler(e);
         });

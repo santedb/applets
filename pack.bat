@@ -15,7 +15,3 @@ sdb-pakr --compose --source=%cwd%\santedb.core.sln.xml -o santedb.core.sln.pak -
 sdb-pakr --compose --source=%cwd%\santedb.admin.sln.xml -o santedb.admin.sln.pak --keyFile=%cwd%\..\..\keys\org.openiz.core.pfx --embedCert --keyPassword=%cwd%\..\..\keys\org.openiz.core.pass --embedcert
 POPD
 
-PUSHD i18n
-CALL pack.bat
-POPD
-
