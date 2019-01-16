@@ -25,5 +25,9 @@
             <sdb:title lang="en">Groups</sdb:title>
         </sdb:view>
     </sdb:state>
-    Groups
+    <entity-table type="SecurityRole" 
+        search-field="name" 
+        property-path="entity"
+        properties="[ 'name', 'creationTime', 'updatedTime' ]">
+    </entity-table>
 </div>

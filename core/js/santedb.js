@@ -1114,6 +1114,15 @@ if(!SanteDBWrapper)
             securityApplication: new ResourceWrapper({
                 resource: "SecurityApplication",
                 api: _ami
+            }),
+            /**
+             * @property {SanteDB.ResourceWrapper}
+             * @memberOf SanteDBWrapper.resources
+             * @summary Wrapper for Security Policies
+             */
+            securityPolicy: new ResourceWrapper({
+                resource: "SecurityPolicy",
+                api: _ami
             })
         };
 
