@@ -403,7 +403,6 @@ angular.module('santedb-lib', [])
             ],
             link: function (scope, element, attrs, ngModel) {
 
-
                 var columns = scope.properties.map(function(m) {
                     return {
                         data: m,
@@ -414,53 +413,57 @@ angular.module('santedb-lib', [])
                 });
                 columns.unshift({ data: "id", visible: false });
 
-                scope.translatePrefix = attrs.translatePrefix;
-                scope.propertyPath = attrs.propertyPath;
-
-                dt = $("table", element).DataTable({
-                    lengthChange: false,
-                    buttons: [ 
-                        {
-                            text: "<i class='fas fa-sync-alt'></i> Reload",
-                            className: "btn btn-info",
-                            action: function(e, dt, node, config) {
-                                dt.ajax.reload();
+                $timeout(function() {
+    
+                    scope.translatePrefix = attrs.translatePrefix;
+                    scope.propertyPath = attrs.propertyPath;
+    
+                    dt = $("table", element).DataTable({
+                        lengthChange: false,
+                        buttons: [ 
+                            {
+                                text: "<i class='fas fa-sync-alt'></i> Reload",
+                                className: "btn btn-info",
+                                action: function(e, dt, node, config) {
+                                    dt.ajax.reload();
+                                }
                             }
-                        }
-                    ],
-                    serverSide: true,
-                    ajax: function (data, callback, settings) {
-
-                        var query = scope.defaultQuery || {};
-                        if (data.search.value.length > 0)
-                            query[attrs.searchField] = `~*${data.search.value}*`;
-                        if (data.order[0].column != 0) {
-                            var colname = scope.properties[data.order[0].column];
-                            query["_orderBy"] = `${colname}:${data.order[0].dir}`;
-                        }
-                        if(scope.extenral)
-                            query["_extern"] = true;
-
-                        query["_count"] = data.length;
-                        query["_offset"] = data.start;
-
-                        SanteDB.resources[attrs.type.toCamelCase()].findAsync(query)
-                            .then(function (res) {
-                                callback({
-                                    data: res.item.map(function(item) {
-                                        if(scope.propertyPath)
-                                            return item[scope.propertyPath];
-                                        else 
-                                            return item;
-                                    }),
-                                    recordsTotal: res.totalResults || res.size,
-                                    recordsFiltered: res.count || res.item.length
-                                });
-                            })
-                            .catch(function(err) { $rootScope.errorHandler(err) });
-                    },
-                    createdRow: function(r, d, i) { $compile(angular.element(r).contents())(scope); },
-                    columns: columns
+                        ],
+                        serverSide: true,
+                        ajax: function (data, callback, settings) {
+    
+                            var query = scope.defaultQuery || {};
+                            if (data.search.value.length > 0)
+                                query[attrs.searchField] = `~*${data.search.value}*`;
+                            if (data.order[0].column != 0) {
+                                var colname = scope.properties[data.order[0].column];
+                                query["_orderBy"] = `${colname}:${data.order[0].dir}`;
+                            }
+                            if(scope.extenral)
+                                query["_extern"] = true;
+    
+                            query["_count"] = data.length;
+                            query["_offset"] = data.start;
+    
+                            SanteDB.resources[attrs.type.toCamelCase()].findAsync(query)
+                                .then(function (res) {
+                                    callback({
+                                        data: res.item.map(function(item) {
+                                            if(scope.propertyPath)
+                                                return item[scope.propertyPath];
+                                            else 
+                                                return item;
+                                        }),
+                                        recordsTotal: res.totalResults || res.size,
+                                        recordsFiltered: res.count || res.item.length
+                                    });
+                                })
+                                .catch(function(err) { $rootScope.errorHandler(err) });
+                        },
+                        createdRow: function(r, d, i) { $compile(angular.element(r).contents())(scope); },
+                        columns: columns
+                    });
+    
                 });
             }
         };
