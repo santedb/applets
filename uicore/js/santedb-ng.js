@@ -403,18 +403,17 @@ angular.module('santedb-lib', [])
             ],
             link: function (scope, element, attrs, ngModel) {
 
-                var columns = scope.properties.map(function(m) {
-                    return {
-                        data: m,
-                        render: m.indexOf("Time") > -1 ? function(d, t, r) {
-                            return moment(d).format(SanteDB.locale.dateFormats.second);
-                        } : null
-                    };
-                });
-                columns.unshift({ data: "id", visible: false });
-
                 $timeout(function() {
-    
+                    var columns = scope.properties.map(function(m) {
+                        return {
+                            data: m,
+                            render: m.indexOf("Time") > -1 ? function(d, t, r) {
+                                return moment(d).format(SanteDB.locale.dateFormats.second);
+                            } : null
+                        };
+                    });
+                    columns.unshift({ data: "id", visible: false });
+        
                     scope.translatePrefix = attrs.translatePrefix;
                     scope.propertyPath = attrs.propertyPath;
     
@@ -430,13 +429,16 @@ angular.module('santedb-lib', [])
                             }
                         ],
                         serverSide: true,
+                        "language": {
+                            "infoFiltered": ""
+                        },
                         ajax: function (data, callback, settings) {
     
                             var query = scope.defaultQuery || {};
                             if (data.search.value.length > 0)
-                                query[attrs.searchField] = `~*${data.search.value}*`;
+                                query[attrs.searchField] = `~${data.search.value}`;
                             if (data.order[0].column != 0) {
-                                var colname = scope.properties[data.order[0].column];
+                                var colname = scope.properties[data.order[0].column - 1]; // -1 because the ID column is hidden
                                 query["_orderBy"] = `${colname}:${data.order[0].dir}`;
                             }
                             if(scope.extenral)
@@ -454,8 +456,8 @@ angular.module('santedb-lib', [])
                                             else 
                                                 return item;
                                         }),
-                                        recordsTotal: res.totalResults || res.size,
-                                        recordsFiltered: res.count || res.item.length
+                                        recordsTotal: undefined,
+                                        recordsFiltered: res.totalResults || res.size
                                     });
                                 })
                                 .catch(function(err) { $rootScope.errorHandler(err) });
