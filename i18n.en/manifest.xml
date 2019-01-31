@@ -1,4 +1,4 @@
-﻿<!--
+<!--
  - Copyright 2015-2018 Mohawk College of Applied Arts and Technology
  -
  - 
@@ -91,6 +91,10 @@
     <string key="ui.action.next">Next</string>
     <string key="ui.action.prev">Back</string>
     <string key="ui.action.home">Go Home</string>
+    <string key="ui.action.reload">Reload</string>
+    <string key="ui.action.create">Create</string>
+    <string key="ui.action.delete">Delete</string>
+    <string key="ui.action.view">View</string>
     <string key="ui.action.override">Override</string>
     <string key="ui.action.finish">Finish</string>
     <string key="ui.action.selectAll">Select All</string>

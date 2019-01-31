@@ -25,4 +25,10 @@
             <sdb:title lang="en">Devices</sdb:title>
         </sdb:view>
     </sdb:state>
+    <entity-table type="SecurityDevice" 
+        search-field="name" 
+        default-query="{ 'obsoletionTime' : 'null' }"
+        property-path="entity"
+        properties="[ 'name', 'creationTime', 'updatedTime' ]">
+</entity-table>
 </div>

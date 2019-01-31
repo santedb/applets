@@ -391,7 +391,9 @@ angular.module('santedb-lib', [])
             scope : {
                 properties: "=",
                 external: "=",
-                defaultQuery: "="
+                defaultQuery: "=",
+                itemActions: "=",
+                actions: "="
             },
             restrict: 'E',
             replace: true,
@@ -404,6 +406,10 @@ angular.module('santedb-lib', [])
             link: function (scope, element, attrs, ngModel) {
 
                 $timeout(function() {
+                    
+                    scope.translatePrefix = attrs.translatePrefix;
+                    scope.propertyPath = attrs.propertyPath;
+    
                     var columns = scope.properties.map(function(m) {
                         return {
                             data: m,
@@ -414,20 +420,31 @@ angular.module('santedb-lib', [])
                     });
                     columns.unshift({ data: "id", visible: false });
         
-                    scope.translatePrefix = attrs.translatePrefix;
-                    scope.propertyPath = attrs.propertyPath;
-    
+                    // Buttons
+                    var buttons = (scope.actions || []).map(function(b) {
+                        return {
+                            text: `<i class="${b.icon}"></i> ` + SanteDB.locale.getString((scope.translatePrefix || 'ui.action.') + b.name),
+                            className: `btn ${b.className || 'btn-default' }`,
+                            action : function(e, dt, node, config) {
+                                alert('clicked!');
+                            }
+                        }
+                    });
+
+                    // Add refresh button
+                    buttons.push(
+                        {
+                            text: "<i class='fas fa-sync-alt'></i> " + SanteDB.locale.getString("ui.action.reload"),
+                            className: "btn btn-info",
+                            action: function(e, dt, node, config)  {
+                                dt.ajax.reload();
+                            }
+                        }
+                    );
+
                     dt = $("table", element).DataTable({
                         lengthChange: false,
-                        buttons: [ 
-                            {
-                                text: "<i class='fas fa-sync-alt'></i> Reload",
-                                className: "btn btn-info",
-                                action: function(e, dt, node, config) {
-                                    dt.ajax.reload();
-                                }
-                            }
-                        ],
+                        buttons: buttons,
                         serverSide: true,
                         "language": {
                             "infoFiltered": ""
@@ -466,6 +483,7 @@ angular.module('santedb-lib', [])
                         columns: columns
                     });
     
+                    $timeout(function() {  dt.buttons().container().appendTo($('.dataTables_wrapper .col-md-6:eq(0)', element)); }, 500);
                 });
             }
         };
