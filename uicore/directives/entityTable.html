@@ -3,7 +3,8 @@
         <thead>
             <tr>
                 <th>id</th>
-                <th ng-repeat="property in properties">{{ translationPrefix + property | i18n }}</th>
+                <th ng-repeat="property in properties">{{ i18nPrefix + property | i18n }}</th>
+                <th ng-if="itemActions.length > 0"></th>
             </tr>
         </thead>
         <tbody>

@@ -1123,6 +1123,16 @@ if(!SanteDBWrapper)
             securityPolicy: new ResourceWrapper({
                 resource: "SecurityPolicy",
                 api: _ami
+            }),
+            /**
+             * @property {SanteDB.ResourceWrapper}
+             * @memberOf SanteDBWrapper.resources
+             * @summary Wrapper for audit API
+             */
+            audit: new ResourceWrapper({
+                resource: "Audit",
+                accept: _viewModelJsonMime,
+                api: _ami
             })
         };
 

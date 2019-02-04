@@ -385,15 +385,17 @@ angular.module('santedb-lib', [])
     /**
      * @summary Directive for rendering a table of entities
      */
-    .directive('entityTable', ['$timeout','$compile','$rootScope', function($timeout, $compile, $rootScope) {
+    .directive('entityTable', ['$timeout','$compile','$rootScope','$state', function($timeout, $compile, $rootScope, $state) {
         var dt = null;
         return {
             scope : {
-                properties: "=",
-                external: "=",
-                defaultQuery: "=",
-                itemActions: "=",
-                actions: "="
+                properties: "<",
+                external: "<",
+                defaultQuery: "<",
+                itemActions: "<",
+                actions: "<",
+                render: "<",
+                i18nPrefix: "<"
             },
             restrict: 'E',
             replace: true,
@@ -407,26 +409,50 @@ angular.module('santedb-lib', [])
 
                 $timeout(function() {
                     
-                    scope.translatePrefix = attrs.translatePrefix;
                     scope.propertyPath = attrs.propertyPath;
-    
+                    
                     var columns = scope.properties.map(function(m) {
+                        var renderer = scope.render ? scope.render[m] : null;
+
                         return {
+
                             data: m,
-                            render: m.indexOf("Time") > -1 ? function(d, t, r) {
-                                return moment(d).format(SanteDB.locale.dateFormats.second);
+                            render: renderer ? 
+                                function(d, t, r) { return scope.$parent[renderer](r) } : 
+                                m.indexOf("Time") > -1 ? 
+                                    function(d, t, r) { return d ? moment(d).format(SanteDB.locale.dateFormats.second) : 
+                                null;
                             } : null
                         };
                     });
                     columns.unshift({ data: "id", visible: false });
-        
+                    
+                    // Add buttons 
+                    if(scope.itemActions && scope.itemActions.length > 0) 
+                    {
+                        columns.push({
+                            render: function(d, t, r) {
+                                var retVal = "<div class='btn-group'>";
+                                scope.itemActions.forEach(function(b) {
+                                    if(b.sref)
+                                        retVal += `<a ui-sref="${b.sref}({ id: '${r.id}' })" class="btn ${(b.className || 'btn-default')}">`;
+                                    else
+                                        retVal += `<a href="" ng-click="$parent.${b.action}('${r.id}')" class="btn ${(b.className || 'btn-default')}">`;
+                                    retVal += `<i class="${b.icon || 'fas fas-eye-open'}"></i> ${SanteDB.locale.getString('ui.action.' + b.name)}</a>`;
+
+                                });
+                                return retVal + "</div>";
+                            }
+                        })
+                    }
+
                     // Buttons
                     var buttons = (scope.actions || []).map(function(b) {
                         return {
-                            text: `<i class="${b.icon}"></i> ` + SanteDB.locale.getString((scope.translatePrefix || 'ui.action.') + b.name),
+                            text: `<i class="${b.icon}"></i> ` + SanteDB.locale.getString('ui.action.' + b.name),
                             className: `btn ${b.className || 'btn-default' }`,
                             action : function(e, dt, node, config) {
-                                alert('clicked!');
+                                $state.transitionTo(b.sref);
                             }
                         }
                     });
@@ -483,7 +509,12 @@ angular.module('santedb-lib', [])
                         columns: columns
                     });
     
-                    $timeout(function() {  dt.buttons().container().appendTo($('.dataTables_wrapper .col-md-6:eq(0)', element)); }, 500);
+                    var bindButtons = function() { 
+                        dt.buttons().container().appendTo($('.dataTables_wrapper .col-md-6:eq(0)', element)); 
+                        if(dt.buttons().container().length == 0) 
+                            $timeout(bindButtons, 100);                        
+                    };
+                    bindButtons();
                 });
             }
         };

@@ -18,10 +18,12 @@
  - Date: 2018-11-14
  -->
 <div xmlns="http://www.w3.org/1999/xhtml" xmlns:sdb="http://santedb.org/applet">
-    <sdb:state name="santedb-admin.security.applications" abstract="false">
+    <sdb:script static="false">~/controllers/applications/index.js</sdb:script>
+    <sdb:state name="santedb-admin.security.applications.index" abstract="false">
         <sdb:demand>1.3.6.1.4.1.33349.3.1.5.9.2.0.6</sdb:demand>
-        <sdb:url>/applications</sdb:url>
+        <sdb:url></sdb:url>
         <sdb:view>
+            <sdb:controller>ApplicationIndexController</sdb:controller>
             <sdb:title lang="en">Applications</sdb:title>
         </sdb:view>
     </sdb:state>
@@ -29,8 +31,8 @@
         search-field="name" 
         default-query="{ 'obsoletionTime' : 'null' }" 
         property-path="entity"
-        properties="[ 'name', 'creationTime', 'updatedTime' ]"
-        item-actions="[ { name: 'view', sref: 'santedb-admin.security.applications.view', className: 'btn-primary', icon: 'fas fas-eye' }, { name: 'delete', sref: 'santedb-admin.security.applications.delete', demand: '1.3.6.1.4.1.33349.3.1.5.9.2.0.6', className: 'btn-danger', icon: 'fas fas-trash' } ]"
+        properties="[ 'name', 'creationTime', 'updatedTime', 'obsoletionTime' ]"
+        item-actions="[ { name: 'edit', sref: 'santedb-admin.security.applications.edit', className: 'btn-primary', icon: 'fa fa-pencil-alt' }, { name: 'delete', action: 'delete', demand: '1.3.6.1.4.1.33349.3.1.5.9.2.0.6', className: 'btn-danger', icon: 'fa fa-trash' } ]"
         actions="[ { name: 'create', demand: '1.3.6.1.4.1.33349.3.1.5.9.2.0.6', sref: 'santedb-admin.security.applications.create', className: 'btn-primary', icon: 'fas fas-plus-circle' }]">
 </entity-table>
 </div>

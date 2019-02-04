@@ -95,10 +95,12 @@
     <string key="ui.action.create">Create</string>
     <string key="ui.action.delete">Delete</string>
     <string key="ui.action.view">View</string>
+    <string key="ui.action.edit">Edit</string>
     <string key="ui.action.override">Override</string>
     <string key="ui.action.finish">Finish</string>
     <string key="ui.action.selectAll">Select All</string>
     <string key="ui.action.selectNone">Select None</string>
+    <string key="ui.action.lock">Lock</string>
     <string key="ui.wait">Please Wait...</string>
     <string key="ui.pref.nevershow">Never show this message again</string>
     <string key="ui.subscription.person.all">All Persons</string>
