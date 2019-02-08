@@ -1482,7 +1482,7 @@ if(!SanteDBWrapper)
                 return new Promise(function (fulfill, reject) {
                     try {
                         _auth.postAsync({
-                            resource: "oauth2_token",
+                            resource: "session",
                             data: {
                                 username: userName,
                                 password: password,
@@ -1529,7 +1529,7 @@ if(!SanteDBWrapper)
                 return new Promise(function (fulfill, reject) {
                     try {
                         _auth.postAsync({
-                            resource: "oauth2_token",
+                            resource: "session",
                             data: {
                                 username: userName,
                                 pin: pin,
@@ -1572,7 +1572,7 @@ if(!SanteDBWrapper)
                 return new Promise(function (fulfill, reject) {
                     try {
                         _auth.postAsync({
-                            resource: "oauth2_token",
+                            resource: "session",
                             data: {
                                 grant_type: 'client_credentials',
                                 scope: "*"
@@ -1607,7 +1607,7 @@ if(!SanteDBWrapper)
                 return new Promise(function (fulfill, reject) {
                     try {
                         _auth.postAsync({
-                            resource: "oauth2_token",
+                            resource: "session",
                             data: {
                                 grant_type: 'authorization_code',
                                 code: code,
@@ -1644,7 +1644,7 @@ if(!SanteDBWrapper)
 
                         if (_session) {
                             _auth.postAsync({
-                                resource: "oauth2_token",
+                                resource: "session",
                                 data: {
                                     grant_type: 'refresh_token',
                                     refresh_token: _session.refresh_token,

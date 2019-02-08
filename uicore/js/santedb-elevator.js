@@ -55,7 +55,7 @@ function SanteDBElevator(continueWith) {
             noSession: true,
             grant_type: sessionToUse ? "pin" : "password",
             onLogin: function(s) {
-                _token = s.token;
+                _token = s.access_token || s.token;
                 continueWith();
             }
         };

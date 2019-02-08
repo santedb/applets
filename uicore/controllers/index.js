@@ -133,7 +133,7 @@ var santedbApp = angular.module('santedb', ['ngSanitize', 'ui.router', 'oc.lazyL
 
             // User preferences
             if (s) {
-                window.sessionStorage.setItem('token', s.token);
+                window.sessionStorage.setItem('token', s.access_token || s.token);
                 SanteDB.configuration.getUserPreferencesAsync().then(function (prefs) {
                     $rootScope.session.prefs = {};
                     prefs.application.setting.forEach(function (e) {
@@ -208,7 +208,7 @@ var santedbApp = angular.module('santedb', ['ngSanitize', 'ui.router', 'oc.lazyL
                         closeButton: false,
                         preventDuplicates: true,
                         onclick: function () {
-                            SanteDB.authentication.refreshLoginAsync().then(function (s) { window.sessionStorage.setItem('token', s.token); $rootScope.session = s; _extendToast = null; toastr.clear(); }).catch($rootScope.errorHandler);
+                            SanteDB.authentication.refreshLoginAsync().then(function (s) { window.sessionStorage.setItem('token', s.access_token || s.token); $rootScope.session = s; _extendToast = null; toastr.clear(); }).catch($rootScope.errorHandler);
                         },
                         positionClass: "toast-bottom-center",
                         timeOut: 0,
