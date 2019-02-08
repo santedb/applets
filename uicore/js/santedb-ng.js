@@ -23,6 +23,70 @@
 
 angular.module('santedb-lib', [])
     /**
+     * @method breadcrumbService
+     * @memberof Angular
+     * @summary A service which gathers the path to the current page 
+     */
+    .provider("breadcrumbService", function breadcrumbProvider() {
+
+        this.$get = ['$state', function ($state) {
+
+            var breadcrumb = function () {
+                this.list = [];
+                this.getProperty = (object, path) => {
+                    function index(obj, i) {
+                        return obj[i];
+                    }
+
+                    return path.split('.').reduce(index, object);
+                };
+                this.addBreadcrumb = (title, state) => {
+                    
+                    this.list.push({
+                        title: SanteDB.locale.getString(title),
+                        state: state
+                    });
+                };
+                this.generateBreadcrumbs = (state) => {
+                    if (angular.isDefined(state.parent) && state.parent) {
+                        this.generateBreadcrumbs(state.parent);
+                    }
+
+                    if (angular.isDefined(state.self.displayName)) {
+                        this.addBreadcrumb(state.self.displayName, state.name);
+                    }
+                };
+                this.appendTitle = (translation, index) => {
+                    var title = translation;
+
+                    if (index < this.list.length - 1) {
+                        title += ' > ';
+                    }
+
+                    return title;
+                };
+                this.generateTitle = () => {
+                    title = '';
+
+                    angular.forEach(this.list, function (breadcrumb, index) {
+                        title = breadcrumb.title;
+                    });
+                };
+                this.generate = () => {
+                    this.list = [  ];
+                    this.generateBreadcrumbs($state.$current);
+                    this.generateTitle();
+                    if(this.change)
+                        this.change();
+                },
+                this.getList = () => {
+                    return this.list;
+                }
+            }
+            return new breadcrumb();
+        }];
+    })
+    /**
      * @method i18n
      * @memberof Angular
      * @summary Renders a localized string
@@ -540,5 +604,26 @@ angular.module('santedb-lib', [])
                 }
                 return $q.reject(response);
             }
+        };
+    }])
+    /**
+     * @method breadcrumbs
+     * @memberof Angular
+     * @summary Represents a directive which gathers breadcrumbs
+     */
+    .directive("breadcrumbs", ['breadcrumbService', function (breadcrumbService) {
+        return {
+            restrict: 'E',
+            replace: true,
+            priority: 100,
+            templateUrl: './org.santedb.uicore/directives/breadcrumb.html',
+            link: {
+                pre: function (scope, element, attrs) {
+                    breadcrumbService.generate();
+                    scope.breadcrumbs = breadcrumbService.list;
+                    breadcrumbService.change = () => scope.breadcrumbs = breadcrumbService.list;
+                }
+            }
+            // controller: ['$scope', 'BreadcrumbService', function ($scope, BreadcrumbService) { BreadcrumbService.generate(); $scope.breadcrumbList = BreadcrumbService.list; }]
         };
     }]);

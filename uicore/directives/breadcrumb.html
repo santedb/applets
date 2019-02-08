@@ -1,0 +1,6 @@
+<ol class="breadcrumb" xmlns="http://www.w3.org/1999/xhtml">
+    <li class="breadcrumb-item" ng-class="{ 'active' : $last}" ng-repeat="breadcrumb in breadcrumbs">
+        <a ui-sref="{{breadcrumb.state}}">{{breadcrumb.title}}</a>
+    </li>
+</ol>
+
