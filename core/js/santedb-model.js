@@ -11623,7 +11623,7 @@ if(!Exception)
     * @param {any} detail Any detail / diagnostic information
     * @param {Exception} cause The cause of the exception
     */
-    function Exception (type, message, detail, cause, stack, policy, rules) {
+    function Exception (type, message, detail, cause, stack, policy, rules, data) {
         _self = this;
         /** @type {string} */
         this.$type = type;
@@ -11639,5 +11639,7 @@ if(!Exception)
 		this.policy = policy;
 		/** @type {Array} */
 		this.rules = rules;
+		/** @type {Array} */
+		this.data = data;
     }
 

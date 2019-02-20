@@ -59,7 +59,14 @@ function SanteDBElevator(continueWith) {
                 continueWith();
             }
         };
-        angular.element("#loginModal").scope().$apply();
+
+        // Try to refresh scope
+        try {
+            angular.element("#loginModal").scope().$apply();
+        }
+        catch (e) {
+
+        }
         $("#loginModal").modal({
             backdrop:'static'
         });

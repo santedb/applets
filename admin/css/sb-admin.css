@@ -41,6 +41,7 @@ body.fixed-nav {
 .content-wrapper {
   min-height: calc(100vh - 56px);
   padding-top: 1rem;
+  max-height: calc(100vh - 56px)
 }
 
 .scroll-to-top {
@@ -168,7 +169,7 @@ body.fixed-nav {
   text-overflow: ellipsis;
 }
 
-@media (min-width: 992px) {
+@media (min-width: 1100px) {
   #mainNav .navbar-brand {
     width: 250px;
   }
@@ -227,7 +228,7 @@ body.fixed-nav {
   display: none;
 }
 
-@media (min-width: 992px) {
+@media (min-width: 1100px) {
   #mainNav.fixed-top .navbar-sidenav {
     height: calc(100vh - 112px);
   }
@@ -268,12 +269,12 @@ body.fixed-nav {
 
 body.sidenav-toggled #mainNav.fixed-top .sidenav-toggler {
   overflow-x: hidden;
-  width: 55px;
+  width: 75px;
 }
 
 body.sidenav-toggled #mainNav.fixed-top .sidenav-toggler .nav-item,
 body.sidenav-toggled #mainNav.fixed-top .sidenav-toggler .nav-link {
-  width: 55px !important;
+  width: 75px !important;
 }
 
 body.sidenav-toggled #mainNav.fixed-top #sidenavToggler i {
@@ -289,7 +290,7 @@ body.sidenav-toggled #mainNav.fixed-top #sidenavToggler i {
   display: none;
 }
 
-@media (min-width: 992px) {
+@media (min-width: 1100px) {
   #mainNav.static-top .sidenav-toggler {
     display: flex;
   }
@@ -309,7 +310,7 @@ body.sidenav-toggled #mainNav.static-top #sidenavToggler i {
   background: white;
 }
 
-@media (min-width: 992px) {
+@media (min-width: 1100px) {
   .content-wrapper {
     margin-left: 250px;
   }
@@ -323,37 +324,53 @@ body.sidenav-toggled #mainNav.static-top #sidenavToggler i {
   display: none;
 }
 
-@media (min-width: 992px) {
+@media (min-width: 1100px) {
   body.sidenav-toggled .content-wrapper {
-    margin-left: 55px;
+    margin-left: 75px;
+  }
+
+  body.sidenav-toggled .navbar-sidenav {
+    width: 75px;
+  }
+
+  body.sidenav-toggled .navbar-sidenav .nav-link-text {
+    display: none;
+  }
+
+  body.sidenav-toggled .navbar-sidenav .nav-item,
+  body.sidenav-toggled .navbar-sidenav .nav-link {
+    width: 75px !important;
+  }
+
+  body.sidenav-toggled .navbar-sidenav .nav-item:after,
+  body.sidenav-toggled .navbar-sidenav .nav-link:after {
+    display: none;
+  }
+
+  body.sidenav-toggled .navbar-sidenav .nav-item {
+    white-space: nowrap;
+  }
+
+  body.sidenav-toggled .navbar-sidenav-tooltip.show {
+    display: flex;
+  }
+
+
+  body.sidenav-toggled .navbar-collapse .navbar-sidenav .nav-link-collapse:after {
+    display: inline;
+    float: right;
+    content: '\f054';
+    font-family: 'Font Awesome\ 5 Free';
+    font-weight: 900
+  }
+
+  body.sidenav-toggled .navbar-collapse .navbar-sidenav .nav-link-collapse.collapsed:after {
+    content: '\f054';
+    font-weight: 900
+    
   }
 }
 
-body.sidenav-toggled .navbar-sidenav {
-  width: 55px;
-}
-
-body.sidenav-toggled .navbar-sidenav .nav-link-text {
-  display: none;
-}
-
-body.sidenav-toggled .navbar-sidenav .nav-item,
-body.sidenav-toggled .navbar-sidenav .nav-link {
-  width: 55px !important;
-}
-
-body.sidenav-toggled .navbar-sidenav .nav-item:after,
-body.sidenav-toggled .navbar-sidenav .nav-link:after {
-  display: none;
-}
-
-body.sidenav-toggled .navbar-sidenav .nav-item {
-  white-space: nowrap;
-}
-
-body.sidenav-toggled .navbar-sidenav-tooltip.show {
-  display: flex;
-}
 
 #mainNav.navbar-dark .navbar-collapse .navbar-sidenav .nav-link-collapse:after {
   color: #868e96;
@@ -382,7 +399,7 @@ body.sidenav-toggled .navbar-sidenav-tooltip.show {
   color: #adb5bd;
 }
 
-@media (min-width: 992px) {
+@media (min-width: 1100px) {
   #mainNav.navbar-dark .navbar-collapse .navbar-sidenav {
     background: #343a40;
   }
@@ -426,7 +443,7 @@ body.sidenav-toggled .navbar-sidenav-tooltip.show {
   color: rgba(0, 0, 0, 0.5);
 }
 
-@media (min-width: 992px) {
+@media (min-width: 1100px) {
   #mainNav.navbar-light .navbar-collapse .navbar-sidenav {
     background: #f8f9fa;
   }
@@ -482,15 +499,15 @@ footer.sticky-footer {
   line-height: 55px;
 }
 
-@media (min-width: 992px) {
+@media (min-width: 1100px) {
   footer.sticky-footer {
     width: calc(100% - 250px);
   }
 }
 
-@media (min-width: 992px) {
+@media (min-width: 1100px) {
   body.sidenav-toggled footer.sticky-footer {
-    width: calc(100% - 55px);
+    width: calc(100% - 75px);
   }
 }
 

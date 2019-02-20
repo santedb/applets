@@ -54,6 +54,11 @@ angular.module("santedb").controller("LoginController", ['$scope', '$rootScope',
                         $("#loginModal").modal('hide');
                     })
                     .catch(function (e) {
+                        if(e.data && e.data.length > 0 && e.data[0].error_description) {
+                            e.userMessage = e.data[0].error_description;
+                        }
+                        else 
+                            e.userMessage = e.message;
                         $rootScope.errorHandler(e);
                         SanteDB.display.buttonWait("#loginButton", false);
                     });

@@ -30,7 +30,7 @@ var ExecutionEnvironment = {
     UserInterface: 3
 };
 
-if(!SanteDBWrapper)
+if (!SanteDBWrapper)
     /**
      * @class
      * @constructor
@@ -42,7 +42,7 @@ if(!SanteDBWrapper)
         "use strict";
 
         var _viewModelJsonMime = "application/json+sdb-viewModel";
-        
+
         /**
          * @summary Global error handler
          * @param {xhr} e The Errored request
@@ -57,17 +57,17 @@ if(!SanteDBWrapper)
                     && !_elevator.getToken() ||
                     _session == null && _elevator) {
 
-                        // Was the response a security policy exception where the back end is asking for elevation on the same user account?
-                        if(data.responseJSON &&
-                            data.responseJSON.type == "SecurityPolicyException" &&
-                            data.responseJSON.message == "error.elevate")
-                            _elevator.elevate(_session);
-                        else
-                            _elevator.elevate(null);
-                        return true;
+                    // Was the response a security policy exception where the back end is asking for elevation on the same user account?
+                    if (data.responseJSON &&
+                        data.responseJSON.type == "SecurityPolicyException" &&
+                        data.responseJSON.message == "error.elevate")
+                        _elevator.elevate(_session);
+                    else
+                        _elevator.elevate(null);
+                    return true;
                 }
             }
-            else 
+            else
                 console.warn(new Exception("Exception", "error.general", err, null));
             return false;
         };
@@ -126,7 +126,7 @@ if(!SanteDBWrapper)
                             }
                         },
                         error: function (e, data, setting) {
-                            if(_globalErrorHandler(e, data, setting))
+                            if (_globalErrorHandler(e, data, setting))
                                 return;
                             var error = e.responseJSON;
 
@@ -134,12 +134,12 @@ if(!SanteDBWrapper)
                                 if (error && error.error !== undefined) // oauth2
                                     reject(new Exception(error.type, error.error, error.error_description, error.caused_by), configuration.state);
                                 else if (error && (error.$type === "Exception" || error.$type))
-                                    reject(new Exception(error.$type, error.message, error.detail, error.cause, error.stack, error.policy, error.rules), configuration.state);
+                                    reject(new Exception(error.$type, error.message, error.detail, error.cause, error.stack, error.policy, error.rules, error.data), configuration.state);
                                 else
                                     reject(new Exception("HttpException", "error.http." + e.status, e, null), configuration.state);
                             }
                             else
-                                console.error("UNHANDLED PROMISE REJECT: " + JSON.stringif(e));
+                                console.error("UNHANDLED PROMISE REJECT: " + JSON.stringify(e));
                         }
                     });
                 });
@@ -177,7 +177,7 @@ if(!SanteDBWrapper)
                             }
                         },
                         error: function (e, data, setting) {
-                            if(_globalErrorHandler(e, data, setting))
+                            if (_globalErrorHandler(e, data, setting))
                                 return;
                             var error = e.responseJSON;
 
@@ -190,7 +190,7 @@ if(!SanteDBWrapper)
                                     reject(new Exception("HttpException", "error.http." + e.status, e, null), configuration.state);
                             }
                             else
-                                console.error("UNHANDLED PROMISE REJECT: " + JSON.stringif(e));
+                                console.error("UNHANDLED PROMISE REJECT: " + JSON.stringify(e));
                         }
                     });
                 });
@@ -225,7 +225,7 @@ if(!SanteDBWrapper)
                             }
                         },
                         error: function (e, data, setting) {
-                            if(_globalErrorHandler(e, data, setting))
+                            if (_globalErrorHandler(e, data, setting))
                                 return;
                             var error = e.responseJSON;
 
@@ -238,7 +238,7 @@ if(!SanteDBWrapper)
                                     reject(new Exception("HttpException", "error.http." + e.status, e, null), configuration.state);
                             }
                             else
-                                console.error("UNHANDLED PROMISE REJECT: " + JSON.stringif(e));
+                                console.error("UNHANDLED PROMISE REJECT: " + JSON.stringify(e));
                         }
                     });
                 });
@@ -266,7 +266,6 @@ if(!SanteDBWrapper)
                         data: configuration.contentType == 'application/json' ? JSON.stringify(configuration.data) : configuration.data,
                         headers: { "X-Delete-Mode": configuration.mode || "OBSOLETE" },
                         dataType: 'json',
-                        accept: 'application/json',
                         contentType: configuration.contentType || 'application/json',
                         headers: configuration.headers,
                         async: !configuration.sync,
@@ -279,7 +278,7 @@ if(!SanteDBWrapper)
                             }
                         },
                         error: function (e, data, setting) {
-                            if(_globalErrorHandler(e, data, setting))
+                            if (_globalErrorHandler(e, data, setting))
                                 return;
                             var error = e.responseJSON;
 
@@ -292,12 +291,107 @@ if(!SanteDBWrapper)
                                     reject(new Exception("HttpException", "error.http." + e.status, e, null), configuration.state);
                             }
                             else
-                                console.error("UNHANDLED PROMISE REJECT: " + JSON.stringif(e));
+                                console.error("UNHANDLED PROMISE REJECT: " + JSON.stringify(e));
                         }
                     });
                 });
             };
 
+            /**
+                * @method
+                * @memberof SanteDBWrapper.APIWrapper
+                * @summary Performs a LOCK on an existing item on the instance
+                * @param {any} configuration The configuration object
+                * @param {string} configuration.resource The resource that is to be locked
+                * @param {any} configuration.state A piece of state data which is passed back to the caller for state tracking
+                * @param {boolean} configuration.sync When true, executes the request in synchronous mode
+                * @param {any} configuration.id The object that is to be locked on the server
+                * @param {any} configuration.data The additional data that should be sent for the delete command
+                * @param {string} configuration.contentType Identifies the content type of the data
+                * @returns {Promise} The promise for the operation
+                */
+            this.lockAsync = function (configuration) {
+                return new Promise(function (fulfill, reject) {
+                    $.ajax({
+                        method: 'LOCK',
+                        url: _config.base + configuration.resource + (configuration.id ? (_config.idByQuery ? "?_id=" + configuration.id : "/" + configuration.id) : ""),
+                        headers: configuration.headers,
+                        async: !configuration.sync,
+                        success: function (xhr) {
+                            try {
+                                if (fulfill) fulfill(xhr, configuration.state);
+                            }
+                            catch (e) {
+                                if (reject) reject(e.responseJSON || e, configuration.state);
+                            }
+                        },
+                        error: function (e, data, setting) {
+                            if (_globalErrorHandler(e, data, setting))
+                                return;
+                            var error = e.responseJSON;
+
+                            if (reject) {
+                                if (error && error.error !== undefined) // oauth2
+                                    reject(new Exception(error.type, error.error, error.error_description, error.caused_by), configuration.state);
+                                else if (error && (error.$type === "Exception" || error.$type))
+                                    reject(new Exception(error.$type, error.message, error.detail, error.cause, error.stack, error.policy, error.rules), configuration.state);
+                                else
+                                    reject(new Exception("HttpException", "error.http." + e.status, e, null), configuration.state);
+                            }
+                            else
+                                console.error("UNHANDLED PROMISE REJECT: " + JSON.stringify(e));
+                        }
+                    });
+                });
+            };
+
+            /**
+                * @method
+                * @memberof SanteDBWrapper.APIWrapper
+                * @summary Performs a UNLOCK on an existing item on the instance
+                * @param {any} configuration The configuration object
+                * @param {string} configuration.resource The resource that is to be locked
+                * @param {any} configuration.state A piece of state data which is passed back to the caller for state tracking
+                * @param {boolean} configuration.sync When true, executes the request in synchronous mode
+                * @param {any} configuration.id The object that is to be locked on the server
+                * @param {any} configuration.data The additional data that should be sent for the delete command
+                * @param {string} configuration.contentType Identifies the content type of the data
+                * @returns {Promise} The promise for the operation
+                */
+               this.unLockAsync = function (configuration) {
+                return new Promise(function (fulfill, reject) {
+                    $.ajax({
+                        method: 'UNLOCK',
+                        url: _config.base + configuration.resource + (configuration.id ? (_config.idByQuery ? "?_id=" + configuration.id : "/" + configuration.id) : ""),
+                        headers: configuration.headers,
+                        async: !configuration.sync,
+                        success: function (xhr) {
+                            try {
+                                if (fulfill) fulfill(xhr, configuration.state);
+                            }
+                            catch (e) {
+                                if (reject) reject(e.responseJSON || e, configuration.state);
+                            }
+                        },
+                        error: function (e, data, setting) {
+                            if (_globalErrorHandler(e, data, setting))
+                                return;
+                            var error = e.responseJSON;
+
+                            if (reject) {
+                                if (error && error.error !== undefined) // oauth2
+                                    reject(new Exception(error.type, error.error, error.error_description, error.caused_by), configuration.state);
+                                else if (error && (error.$type === "Exception" || error.$type))
+                                    reject(new Exception(error.$type, error.message, error.detail, error.cause, error.stack, error.policy, error.rules), configuration.state);
+                                else
+                                    reject(new Exception("HttpException", "error.http." + e.status, e, null), configuration.state);
+                            }
+                            else
+                                console.error("UNHANDLED PROMISE REJECT: " + JSON.stringify(e));
+                        }
+                    });
+                });
+            };
         };
 
         /**
@@ -309,7 +403,7 @@ if(!SanteDBWrapper)
             * @param {string} _config.resource The resource that is being wrapped
             * @param {APIWrapper} _config.api The API to use for this resource
             */
-        function ResourceWrapper (_config) {
+        function ResourceWrapper(_config) {
 
             /**
                 * @method
@@ -323,7 +417,7 @@ if(!SanteDBWrapper)
 
                 // Prepare query
                 var url = null;
-                if(id)
+                if (id)
                     url = `${_config.resource}/${id}`;
                 else
                     url = _config.resource;
@@ -331,7 +425,7 @@ if(!SanteDBWrapper)
                 var headers = {
                     Accept: _config.accept
                 };
-                if(_config.viewModel)
+                if (_config.viewModel)
                     headers["X-SanteDB-ViewModel"] = _config.viewModel;
 
                 return _config.api.getAsync({
@@ -354,7 +448,7 @@ if(!SanteDBWrapper)
                 var headers = {
                     Accept: _config.accept
                 };
-                if(_config.viewModel)
+                if (_config.viewModel)
                     headers["X-SanteDB-ViewModel"] = _config.viewModel;
 
                 return _config.api.getAsync({
@@ -378,7 +472,7 @@ if(!SanteDBWrapper)
                 var headers = {
                     Accept: _config.accept
                 };
-                if(_config.viewModel)
+                if (_config.viewModel)
                     headers["X-SanteDB-ViewModel"] = _config.viewModel;
 
                 return _config.api.getAsync({
@@ -405,15 +499,15 @@ if(!SanteDBWrapper)
                 var headers = {
                     Accept: _config.accept
                 };
-                if(_config.viewModel)
+                if (_config.viewModel)
                     headers["X-SanteDB-ViewModel"] = _config.viewModel;
-                
+
                 // Perform post
                 return _config.api.postAsync({
                     headers: headers,
                     data: data,
                     state: state,
-                    contentType: "application/json",
+                    contentType: _config.accept,
                     resource: _config.resource
                 });
             };
@@ -437,16 +531,16 @@ if(!SanteDBWrapper)
                 var headers = {
                     Accept: _config.accept
                 };
-                if(_config.viewModel)
+                if (_config.viewModel)
                     headers["X-SanteDB-ViewModel"] = _config.viewModel;
-                    
+
                 // Send PUT
                 return _config.api.putAsync({
                     headers: headers,
                     data: data,
                     id: id,
                     state: state,
-                    contentType: "application/json",
+                    contentType: _config.accept,
                     resource: _config.resource
                 });
             };
@@ -464,10 +558,35 @@ if(!SanteDBWrapper)
                 var headers = {
                     Accept: _config.accept
                 };
-                if(_config.viewModel)
+                if (_config.viewModel)
                     headers["X-SanteDB-ViewModel"] = _config.viewModel;
 
                 return _config.api.deleteAsync({
+                    headers: headers,
+                    id: id,
+                    state: state,
+                    contentType: _config.accept,
+                    resource: _config.resource
+                });
+            };
+
+            /**
+            * @method
+            * @memberof SanteDBWrapper.ResourceWrapper
+            * @summary Performs the specified LOCK operation on the server
+            * @param {string} id The unique identifier for the object on which the invokation is to be called
+            * @param {any} state A unique state object which is passed back to the caller
+            * @returns {Promise} The promise for the operation
+            */
+            this.lockAsync = function (id, state) {
+
+                var headers = {
+                    Accept: _config.accept
+                };
+                if (_config.viewModel)
+                    headers["X-SanteDB-ViewModel"] = _config.viewModel;
+
+                return _config.api.lockAsync({
                     headers: headers,
                     id: id,
                     state: state,
@@ -475,6 +594,29 @@ if(!SanteDBWrapper)
                 });
             };
 
+            /**
+            * @method
+            * @memberof SanteDBWrapper.ResourceWrapper
+            * @summary Performs the specified UNLOCK operation on the server
+            * @param {string} id The unique identifier for the object on which the invokation is to be called
+            * @param {any} state A unique state object which is passed back to the caller
+            * @returns {Promise} The promise for the operation
+            */
+            this.unLockAsync = function (id, state) {
+
+                var headers = {
+                    Accept: _config.accept
+                };
+                if (_config.viewModel)
+                    headers["X-SanteDB-ViewModel"] = _config.viewModel;
+
+                return _config.api.unLockAsync({
+                    headers: headers,
+                    id: id,
+                    state: state,
+                    resource: _config.resource
+                });
+            };
 
             /**
                 * @method
@@ -490,11 +632,11 @@ if(!SanteDBWrapper)
                 var headers = {
                     Accept: _config.accept
                 };
-                if(_config.viewModel)
+                if (_config.viewModel)
                     headers["X-SanteDB-ViewModel"] = _config.viewModel;
 
                 return _config.api.deleteAsync({
-                    headers:headers,
+                    headers: headers,
                     id: id,
                     mode: "NULLIFY",
                     state: state,
@@ -515,7 +657,7 @@ if(!SanteDBWrapper)
                 var headers = {
                     Accept: _config.accept
                 };
-                if(_config.viewModel)
+                if (_config.viewModel)
                     headers["X-SanteDB-ViewModel"] = _config.viewModel;
 
                 return _config.api.deleteAsync({
@@ -559,7 +701,7 @@ if(!SanteDBWrapper)
              * Get the specified widgets
              * @param context The context to fetch widgets for
              */
-            getWidgetsAsync: function(context, type) {
+            getWidgetsAsync: function (context, type) {
                 return new Promise(function (fulfill, reject) {
                     _app.getAsync({
                         resource: "Widgets",
@@ -567,12 +709,12 @@ if(!SanteDBWrapper)
                             context: context,
                             type: type
                         }
-                    }).then(function(widgets) {
-                        widgets.forEach(function(w) {
-                            w.htmlId = w.name.replace(/\./g,"_");
+                    }).then(function (widgets) {
+                        widgets.forEach(function (w) {
+                            w.htmlId = w.name.replace(/\./g, "_");
                         });
                         fulfill(widgets);
-                    }).catch(function(e) { reject(e); });
+                    }).catch(function (e) { reject(e); });
                 });
             },
             /**
@@ -580,10 +722,10 @@ if(!SanteDBWrapper)
              * @method
              * @memberof SnateDBWrapper.app
              */
-            getAppSolutionsAsync: function() {
+            getAppSolutionsAsync: function () {
                 return _ami.getAsync({
                     resource: "AppletSolution",
-                    query:"_extern=true"
+                    query: "_extern=true"
                 });
             },
             /**
@@ -591,7 +733,7 @@ if(!SanteDBWrapper)
              * @method
              * @memberof SanteDBWrapper.app
              */
-            close: function() {
+            close: function () {
                 __SanteDBAppService.Close();
             },
             /**
@@ -1129,7 +1271,7 @@ if(!SanteDBWrapper)
              * @memberOf SanteDBWrapper.resources
              * @summary Wrapper for Security Roles
              */
-            securityRole : new ResourceWrapper({
+            securityRole: new ResourceWrapper({
                 resource: "SecurityRole",
                 api: _ami
             }),
@@ -1195,7 +1337,7 @@ if(!SanteDBWrapper)
              * @return {Promise}
              * @summary Get a complete list of filter providers asynchronously
              */
-            getSubscriptionDefinitionsAsync : function() {
+            getSubscriptionDefinitionsAsync: function () {
                 return _app.getAsync({
                     resource: "SubscriptionDefinition"
                 });
@@ -1206,7 +1348,7 @@ if(!SanteDBWrapper)
              * @return {Promise} The data providers
              * @summary Gets a list of data providers available on this offline provider mode
              */
-            getDataProvidersAsync: function() {
+            getDataProvidersAsync: function () {
                 return _app.getAsync({
                     resource: "DataProviders"
                 });
@@ -1294,7 +1436,7 @@ if(!SanteDBWrapper)
                 * @summary Gets the currently configured realm
                 * @returns {string} The name of the security realm
                 */
-            getRealm: function() {
+            getRealm: function () {
                 try {
                     if (!_masterConfig) throw new Exception("Exception", "error.invalidOperation", "You need to call configuration.getAsync() before calling getAppSetting()");
                     return _masterConfig.realmName;
@@ -1314,7 +1456,7 @@ if(!SanteDBWrapper)
                 * @param {any} name The name of the configuration section
                 * @returns {any} A JSON object representing the configuration setting section
                 */
-            getSection: function(name) {
+            getSection: function (name) {
                 try {
                     if (!_masterConfig) throw new Exception("Exception", "error.invalidOperation", "You need to call configuration.getAsync() before calling getAppSetting()");
                     return _masterConfig[name];
@@ -1342,7 +1484,7 @@ if(!SanteDBWrapper)
                 * @param {number} configData.port The port number to connect to the realm on
                 * @param {boolean} overwrite Overwrites the existing configuration if needed
                 */
-            joinRealmAsync: function(configData, overwrite) {
+            joinRealmAsync: function (configData, overwrite) {
                 return new Promise(function (fulfill, reject) {
                     try {
                         _app.postAsync({
@@ -1354,7 +1496,7 @@ if(!SanteDBWrapper)
                                 enableTrace: configData.enableTrace || false,
                                 enableSSL: configData.enableSSL || false,
                                 port: configData.port,
-                                noTimeout : false,
+                                noTimeout: false,
                                 replaceExisting: overwrite || false,
                                 client_secret: configData.client_secret,
                                 domainSecurity: configData.domainSecurity
@@ -1371,7 +1513,7 @@ if(!SanteDBWrapper)
                         var ex = e.responseJSON || e;
                         if (!ex.$type)
                             ex = new Exception("Exception", "error.general", e);
-                            if (reject) reject(ex);
+                        if (reject) reject(ex);
                     }
                 });
             },
@@ -1381,7 +1523,7 @@ if(!SanteDBWrapper)
                 * @summary Instructs the application to remove realm configuration
                 * @returns {Promise} A promise that is fulfilled when the leave operation succeeds
                 */
-            leaveRealmAsync: function() {
+            leaveRealmAsync: function () {
                 return _app.deleteAsync({
                     resource: "Configuration/Realm"
                 });
@@ -1431,6 +1573,14 @@ if(!SanteDBWrapper)
         var _elevator = null;
         var _authentication = {
             /**
+             * SID for SYSTEM USER
+             */
+            SYSTEM_USER: "fadca076-3690-4a6e-af9e-f1cd68e8c7e8",
+            /**
+             * SID for ANONYMOUS user
+             */
+            ANONYMOUS_USER: "c96859f0-043c-4480-8dab-f69d6e86696c",
+            /**
              * @method 
              * @summary Sets the elevator function
              * @param {any} elevator An elevation implementation
@@ -1438,7 +1588,7 @@ if(!SanteDBWrapper)
              * @param {function(boolean):void} elevator.elevate A function to perform elevation
              * @memberof SanteDBWrapper.authentication
              */
-            setElevator: function(elevator){
+            setElevator: function (elevator) {
                 _elevator = elevator;
             },
             /**
@@ -1470,16 +1620,16 @@ if(!SanteDBWrapper)
                             })
                                 .then(function (s) {
                                     _session = s;
-                                    if(fulfill) fulfill(s);
+                                    if (fulfill) fulfill(s);
                                 })
-                                .catch(function(e) {
+                                .catch(function (e) {
 
-                                    if(e.detail.status <= 204) {
+                                    if (e.detail.status <= 204) {
                                         _session = null;
                                         fulfill(null);
                                     }
-                                    else if(reject) reject(e.responseJSON || e);
-                                    
+                                    else if (reject) reject(e.responseJSON || e);
+
                                 });
                         }
                         catch (e) {
@@ -1537,9 +1687,9 @@ if(!SanteDBWrapper)
                                 scope: (scope || ["*"]).join(",")
                             },
                             headers: {
-                                "X-SanteDB-TfaSecret" : tfaSecret,
+                                "X-SanteDB-TfaSecret": tfaSecret,
                                 "X-SanteDBClient-UserAccessControl": uacPrompt,
-                                "X-SanteDBClient-Claim" :
+                                "X-SanteDBClient-Claim":
                                     `${btoa(`http://santedb.org/claims/override=${uacPrompt && (purposeOfUse || false)}`)},${btoa(`urn:oasis:names:tc:xacml:2.0:action:purpose=${purposeOfUse || null}`)}`
                             },
                             contentType: 'application/x-www-form-urlencoded'
@@ -1548,7 +1698,7 @@ if(!SanteDBWrapper)
                                 if (!uacPrompt) {
                                     _session = d;
                                 }
-                                if(fulfill) fulfill(d);                                
+                                if (fulfill) fulfill(d);
                             })
                             .catch(reject);
                     }
@@ -1584,9 +1734,9 @@ if(!SanteDBWrapper)
                                 scope: (scope || ["*"]).join(",")
                             },
                             headers: {
-                                "X-SanteDB-TfaSecret" : tfaSecret,
+                                "X-SanteDB-TfaSecret": tfaSecret,
                                 "X-SanteDBClient-Sessionless": uacPrompt,
-                                "X-SanteDBClient-Claim" :
+                                "X-SanteDBClient-Claim":
                                     `${btoa(`http://santedb.org/claims/override=${uacPrompt && (purposeOfUse || false)}`)},${btoa(`urn:oasis:names:tc:xacml:2.0:action:purpose=${purposeOfUse || null}`)}`
                             },
                             contentType: 'application/x-www-form-urlencoded'
@@ -1595,7 +1745,7 @@ if(!SanteDBWrapper)
                                 if (!uacPrompt) {
                                     _session = d;
                                 }
-                                if(fulfill) fulfill(d);
+                                if (fulfill) fulfill(d);
                             })
                             .catch(reject);
                     }
@@ -1638,7 +1788,7 @@ if(!SanteDBWrapper)
                         var ex = e.responseJSON || e;
                         if (!ex.$type)
                             ex = new Exception("Exception", "error.general", e);
-                            if (reject) reject(ex);
+                        if (reject) reject(ex);
                     }
                 });
             },
@@ -1667,7 +1817,7 @@ if(!SanteDBWrapper)
                                 if (!noSession) {
                                     _session = d;
                                 }
-                                if(fulfill) fulfill(d);
+                                if (fulfill) fulfill(d);
                             })
                             .catch(reject);
                     }
@@ -1675,7 +1825,7 @@ if(!SanteDBWrapper)
                         var ex = e.responseJSON || e;
                         if (!ex.$type)
                             ex = new Exception("Exception", "error.general", e);
-                            if (reject) reject(ex);
+                        if (reject) reject(ex);
                     }
                 });
             },
@@ -1704,7 +1854,7 @@ if(!SanteDBWrapper)
                                         _session = d;
                                         _authentication.getSessionInfoAsync().then(fulfill).catch(reject);
                                     }
-                                    if(fulfill) fulfill(d);
+                                    if (fulfill) fulfill(d);
                                 })
                                 .catch(reject);
                         }
@@ -1716,7 +1866,7 @@ if(!SanteDBWrapper)
                         var ex = e.responseJSON || e;
                         if (!ex.$type)
                             ex = new Exception("Exception", "error.general", e);
-                            if (reject) reject(ex);
+                        if (reject) reject(ex);
                     }
                 });
             },
@@ -1726,7 +1876,7 @@ if(!SanteDBWrapper)
                 * @summary Sets the password of the currently logged in user
                 * @param {string} passwd The password to set the currently logged in user to
                 * @returns {Promise} The promise representing the fulfillment or rejection of the password change
-                */ 
+                */
             setPasswordAsync: function (passwd) {
                 if (!_session || !_session)
                     throw new Exception("SecurityException", "error.security", "Can only set password with active session");
@@ -1767,7 +1917,7 @@ if(!SanteDBWrapper)
                         var ex = e.responseJSON || e;
                         if (!ex.$type)
                             ex = new Exception("Exception", "error.general", e);
-                        if(reject) reject(ex);
+                        if (reject) reject(ex);
                     }
                 });
             }
@@ -1847,7 +1997,7 @@ if(!SanteDBWrapper)
                             _resources.locale.getAsync(locale)
                                 .then(function (d) {
                                     _localeCache[locale] = d;
-                                    if(fulfill) fulfill(d);
+                                    if (fulfill) fulfill(d);
                                 })
                                 .catch(reject);
                         }
@@ -1856,7 +2006,7 @@ if(!SanteDBWrapper)
                         var ex = e.responseJSON || e;
                         if (!ex.$type)
                             ex = new Exception("LocalizationException", "error.general", e);
-                        if(reject) reject(ex);
+                        if (reject) reject(ex);
                     }
                 });
             },
@@ -1870,19 +2020,19 @@ if(!SanteDBWrapper)
             * @summary Represents a property which wraps the HDSI interface
             * @memberof SanteDBWrapper
             */
-            hdsi : _hdsi,
+            hdsi: _hdsi,
             /**
             * @type {APIWrapper}
             * @memberof SanteDBWrapper
             * @summary Represents a property which communicates with the AMI
             */
-            ami : _ami,
+            ami: _ami,
             /**
                 * @type {APIWrapper}
                 * @memberof SanteDBWrapper
                 * @summary Represents a property which communicates with the AUTH service
                 */
-            auth : _auth
+            auth: _auth
         };
 
         /**
@@ -1927,12 +2077,12 @@ if(!SanteDBWrapper)
         $.ajaxSetup({
             cache: false,
             beforeSend: function (data, settings) {
-                if (_elevator  && _elevator.getToken()) {
+                if (_elevator && _elevator.getToken()) {
                     data.setRequestHeader("Authorization", "BEARER " +
                         _elevator.getToken());
                 }
-                else if(window.sessionStorage.getItem('token'))
-                    data.setRequestHeader("Authorization", "BEARER " + 
+                else if (window.sessionStorage.getItem('token'))
+                    data.setRequestHeader("Authorization", "BEARER " +
                         window.sessionStorage.getItem("token"));
                 if (!_magic)
                     _magic = __SanteDBAppService.GetMagic();
@@ -1947,16 +2097,16 @@ if(!SanteDBWrapper)
 
     };
 
-if(!SanteDB) 
+if (!SanteDB)
     var SanteDB = new SanteDBWrapper();
 
-    /**
-     * Return the string as a camel case
-     * @param {String} str The String
-     */
-String.prototype.toCamelCase = function() {
+/**
+ * Return the string as a camel case
+ * @param {String} str The String
+ */
+String.prototype.toCamelCase = function () {
     return this
-        .replace(/\s(.)/g, function($1) { return $1.toUpperCase(); })
+        .replace(/\s(.)/g, function ($1) { return $1.toUpperCase(); })
         .replace(/\s/g, '')
-        .replace(/^(.)/, function($1) { return $1.toLowerCase(); });
+        .replace(/^(.)/, function ($1) { return $1.toLowerCase(); });
 }
