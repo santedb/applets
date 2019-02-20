@@ -29,60 +29,66 @@ angular.module('santedb-lib', [])
      */
     .provider("breadcrumbService", function breadcrumbProvider() {
 
-        this.$get = ['$state', function ($state) {
+        this.$get = ['$state', '$transitions', function ($state, $transitions) {
 
             var breadcrumb = function () {
+                var _this = this;
                 this.list = [];
-                this.getProperty = (object, path) => {
+                this.getProperty = function (object, path) {
                     function index(obj, i) {
                         return obj[i];
                     }
 
                     return path.split('.').reduce(index, object);
                 };
-                this.addBreadcrumb = (title, state) => {
-                    
-                    this.list.push({
+                this.addBreadcrumb = function (title, state) {
+
+                    _this.list.push({
                         title: SanteDB.locale.getString(title),
                         state: state
                     });
                 };
-                this.generateBreadcrumbs = (state) => {
+                this.generateBreadcrumbs = function (state) {
                     if (angular.isDefined(state.parent) && state.parent) {
-                        this.generateBreadcrumbs(state.parent);
+                        _this.generateBreadcrumbs(state.parent);
                     }
 
                     if (angular.isDefined(state.self.displayName)) {
-                        this.addBreadcrumb(state.self.displayName, state.name);
+                        _this.addBreadcrumb(state.self.displayName, state.name);
                     }
                 };
-                this.appendTitle = (translation, index) => {
+                this.appendTitle = function (translation, index) {
                     var title = translation;
 
-                    if (index < this.list.length - 1) {
+                    if (index < _this.list.length - 1) {
                         title += ' > ';
                     }
 
                     return title;
                 };
-                this.generateTitle = () => {
+                this.generateTitle = function () {
                     title = '';
 
-                    angular.forEach(this.list, function (breadcrumb, index) {
+                    angular.forEach(_this.list, function (breadcrumb, index) {
                         title = breadcrumb.title;
                     });
                 };
-                this.generate = () => {
-                    this.list = [  ];
-                    this.generateBreadcrumbs($state.$current);
-                    this.generateTitle();
-                    if(this.change)
-                        this.change();
+                this.generate = function () {
+                    _this.list = [];
+                    _this.generateBreadcrumbs($state.$current);
+                    _this.generateTitle();
+                    if (_this.change)
+                        _this.change();
                 },
-                this.getList = () => {
-                    return this.list;
-                }
+                    this.getList = function () {
+                        return _this.list;
+                    }
+
+                $transitions.onSuccess({}, function () {
+                    _this.generate();
+                });
             }
+
             return new breadcrumb();
         }];
     })
@@ -159,6 +165,45 @@ angular.module('santedb-lib', [])
             return SanteDB.display.renderEntityAddress(modelValue, type);
         }
     })
+    /**
+     * @method provenance
+     * @memberof Angular
+     * @summary Displays provenance data for the user
+     */
+    .filter('provenance', ['$compile', function($compile) {
+        var alreadyFetching = [];
+        var uniqueId = 0;
+        return function(value, timeOfEvent, sessionNav) {
+
+            if(alreadyFetching.indexOf(value) == -1)
+            {
+                alreadyFetching.push(value);
+                SanteDB.resources.securityProvenance.getAsync(value)
+                    .then(function(provData) {
+                        var html = "";
+                        // Provenance is for a user session
+                        if(provData.userModel)
+                            html += `<i class="fas fa-user"></i> ${provData.userModel.userName}`;
+                        else 
+                            html += `<i class="fas fa-desktop"></i> ${provData.deviceModel.name}`;
+                        
+                        // Add popover for information
+                        var id = uniqueId++;
+                        var extraInfo = `<i class='fas fa-window-maximize'></i> ${SanteDB.locale.getString(provData.applicationModel.name)}`;
+                        if(timeOfEvent)
+                            extraInfo += `<br/><i class='fas fa-clock'></i> ${moment(timeOfEvent).format(SanteDB.locale.dateFormats.second)}`;
+                        if(provData.session && sessionNav)
+                            extraInfo += `<br/><i class='fas fa-asterisk'></i> <a href='${sessionNav}/${provData.session}'>${provData.session.substring(0, 8)}</a>`;
+                        html += `<button type="button" class="btn btn-link" data-toggle="popover" data-trigger="focus" data-title="${SanteDB.locale.getString("ui.provenance.extraInfo")}" data-content="${extraInfo}" ><i class="fas fa-info-circle"></i></button> `
+                        $(`.${provData.id}`).html(html);
+                        $(`.${value} button`).popover({ html: true });
+                        alreadyFetching.splice(alreadyFetching.indexOf(value), 1);
+                    });
+            }
+
+            return `<div class='${value}'><i class="fas fa-circle-notch fa-spin"></i></div>`;
+        }
+    }])
     /**
      * @method extDate
      * @memberof Angular
@@ -243,9 +288,9 @@ angular.module('santedb-lib', [])
 
         var renderObject = function (selection) {
 
-            if(selection.text)
+            if (selection.text)
                 return selection.text;
-                
+
             var retVal = "";
             switch (selection.$type) {
                 case "UserEntity":
@@ -259,7 +304,7 @@ angular.module('santedb-lib', [])
                     break;
                 case "Place":
                     retVal += "<i class='fa fa-map-pin'></i> ";
-                    
+
                     break;
                 case "Entity":
                     retVal += "<i class='fa fa-share-alt'></i> ";
@@ -280,17 +325,17 @@ angular.module('santedb-lib', [])
                 retVal += SanteDB.display.renderEntityName(selection.name.Assigned);
             else if (selection.name != null && selection.name.$other != null)
                 retVal += SanteDB.display.renderEntityName(selection.name.$other);
-            else if(selection.name != null)
+            else if (selection.name != null)
                 retVal += selection.name;
             else if (selection.element !== undefined)
                 retVal += selection.element.innerText.trim();
             else if (selection.text)
                 retVal += selection.text;
 
-            if (selection.address) 
+            if (selection.address)
                 retVal += " - <small>(<i class='fa fa-map-marker'></i> " + SanteDB.display.renderEntityAddress(selection.address) + ")</small>";
-            else if(selection.oid)
-                retVal += " - <small>(<i class='fa fa-cogs'></i> " + selection.oid +")</small>";
+            else if (selection.oid)
+                retVal += " - <small>(<i class='fa fa-cogs'></i> " + selection.oid + ")</small>";
             return retVal;
         }
 
@@ -322,7 +367,7 @@ angular.module('santedb-lib', [])
                                 api.getAsync(v)
                                     .then(function (res) {
 
-                                        if($(selectControl).find(`option[value=${v}]`).length == 0) {
+                                        if ($(selectControl).find(`option[value=${v}]`).length == 0) {
                                             $(selectControl)[0].add(new Option(renderObject(res), v, false, true));
                                             $(selectControl).trigger('change.select2');
                                         }
@@ -449,10 +494,10 @@ angular.module('santedb-lib', [])
     /**
      * @summary Directive for rendering a table of entities
      */
-    .directive('entityTable', ['$timeout','$compile','$rootScope','$state', function($timeout, $compile, $rootScope, $state) {
+    .directive('entityTable', ['$timeout', '$compile', '$rootScope', '$state', function ($timeout, $compile, $rootScope, $state) {
         var dt = null;
         return {
-            scope : {
+            scope: {
                 properties: "<",
                 external: "<",
                 defaultQuery: "<",
@@ -471,34 +516,34 @@ angular.module('santedb-lib', [])
             ],
             link: function (scope, element, attrs, ngModel) {
 
-                $timeout(function() {
-                    
+                $timeout(function () {
+
                     scope.propertyPath = attrs.propertyPath;
-                    
-                    var columns = scope.properties.map(function(m) {
+
+                    var columns = scope.properties.map(function (m) {
                         var renderer = scope.render ? scope.render[m] : null;
 
                         return {
 
                             data: m,
-                            render: renderer ? 
-                                function(d, t, r) { return scope.$parent[renderer](r) } : 
-                                m.indexOf("Time") > -1 ? 
-                                    function(d, t, r) { return d ? moment(d).format(SanteDB.locale.dateFormats.second) : 
-                                null;
-                            } : null
+                            render: renderer ?
+                                function (d, t, r) { return scope.$parent[renderer](r) } :
+                                m.indexOf("Time") > -1 ?
+                                    function (d, t, r) {
+                                        return d ? moment(d).format(SanteDB.locale.dateFormats.second) :
+                                            null;
+                                    } : null
                         };
                     });
                     columns.unshift({ data: "id", visible: false });
-                    
+
                     // Add buttons 
-                    if(scope.itemActions && scope.itemActions.length > 0) 
-                    {
+                    if (scope.itemActions && scope.itemActions.length > 0) {
                         columns.push({
-                            render: function(d, t, r) {
+                            render: function (d, t, r) {
                                 var retVal = "<div class='btn-group'>";
-                                scope.itemActions.forEach(function(b) {
-                                    if(b.sref)
+                                scope.itemActions.forEach(function (b) {
+                                    if (b.sref)
                                         retVal += `<a ui-sref="${b.sref}({ id: '${r.id}' })" class="btn ${(b.className || 'btn-default')}">`;
                                     else
                                         retVal += `<a href="" ng-click="$parent.${b.action}('${r.id}')" class="btn ${(b.className || 'btn-default')}">`;
@@ -511,11 +556,11 @@ angular.module('santedb-lib', [])
                     }
 
                     // Buttons
-                    var buttons = (scope.actions || []).map(function(b) {
+                    var buttons = (scope.actions || []).map(function (b) {
                         return {
                             text: `<i class="${b.icon}"></i> ` + SanteDB.locale.getString('ui.action.' + b.name),
-                            className: `btn ${b.className || 'btn-default' }`,
-                            action : function(e, dt, node, config) {
+                            className: `btn ${b.className || 'btn-default'}`,
+                            action: function (e, dt, node, config) {
                                 $state.transitionTo(b.sref);
                             }
                         }
@@ -526,7 +571,7 @@ angular.module('santedb-lib', [])
                         {
                             text: "<i class='fas fa-sync-alt'></i> " + SanteDB.locale.getString("ui.action.reload"),
                             className: "btn btn-info",
-                            action: function(e, dt, node, config)  {
+                            action: function (e, dt, node, config) {
                                 dt.ajax.reload();
                             }
                         }
@@ -540,43 +585,46 @@ angular.module('santedb-lib', [])
                             "infoFiltered": ""
                         },
                         ajax: function (data, callback, settings) {
-    
-                            var query = scope.defaultQuery || {};
+
+                            var query = angular.copy(scope.defaultQuery) || {};
                             if (data.search.value.length > 0)
                                 query[attrs.searchField] = `~${data.search.value}`;
                             if (data.order[0].column != 0) {
                                 var colname = scope.properties[data.order[0].column - 1]; // -1 because the ID column is hidden
                                 query["_orderBy"] = `${colname}:${data.order[0].dir}`;
                             }
-                            if(scope.extenral)
+                            if (scope.extenral)
                                 query["_extern"] = true;
-    
+
                             query["_count"] = data.length;
                             query["_offset"] = data.start;
-    
+
                             SanteDB.resources[attrs.type.toCamelCase()].findAsync(query)
                                 .then(function (res) {
                                     callback({
-                                        data: res.item.map(function(item) {
-                                            if(scope.propertyPath)
+                                        data: res.item.map(function (item) {
+                                            if (scope.propertyPath)
                                                 return item[scope.propertyPath];
-                                            else 
+                                            else
                                                 return item;
                                         }),
                                         recordsTotal: undefined,
                                         recordsFiltered: res.totalResults || res.size
                                     });
                                 })
-                                .catch(function(err) { $rootScope.errorHandler(err) });
+                                .catch(function (err) { $rootScope.errorHandler(err) });
                         },
-                        createdRow: function(r, d, i) { $compile(angular.element(r).contents())(scope); },
+                        createdRow: function (r, d, i) { 
+                            $compile(angular.element(r).contents())(scope); 
+                            scope.$digest()
+                        },
                         columns: columns
                     });
-    
-                    var bindButtons = function() { 
-                        dt.buttons().container().appendTo($('.dataTables_wrapper .col-md-6:eq(0)', element)); 
-                        if(dt.buttons().container().length == 0) 
-                            $timeout(bindButtons, 100);                        
+
+                    var bindButtons = function () {
+                        dt.buttons().container().appendTo($('.dataTables_wrapper .col-md-6:eq(0)', element));
+                        if (dt.buttons().container().length == 0)
+                            $timeout(bindButtons, 100);
                     };
                     bindButtons();
                 });

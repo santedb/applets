@@ -327,11 +327,15 @@ if(!SanteDBWrapper)
                     url = `${_config.resource}/${id}`;
                 else
                     url = _config.resource;
-                    
+
+                var headers = {
+                    Accept: _config.accept
+                };
+                if(_config.viewModel)
+                    headers["X-SanteDB-ViewModel"] = _config.viewModel;
+
                 return _config.api.getAsync({
-                    headers: {
-                        Accept: _config.accept
-                    },
+                    headers: headers,
                     state: state,
                     resource: url
                 });
@@ -346,10 +350,15 @@ if(!SanteDBWrapper)
                 * @returns {Promise} The promise for the operation
                 */
             this.findAsync = function (query, state) {
+
+                var headers = {
+                    Accept: _config.accept
+                };
+                if(_config.viewModel)
+                    headers["X-SanteDB-ViewModel"] = _config.viewModel;
+
                 return _config.api.getAsync({
-                    headers: {
-                        Accept: _config.accept
-                    },
+                    headers: headers,
                     query: query,
                     state: state,
                     resource: _config.resource
@@ -365,10 +374,15 @@ if(!SanteDBWrapper)
              * @return {Promise} A promise which is blocked and not executed until the operation is complete
              */
             this.find = function (query) {
+
+                var headers = {
+                    Accept: _config.accept
+                };
+                if(_config.viewModel)
+                    headers["X-SanteDB-ViewModel"] = _config.viewModel;
+
                 return _config.api.getAsync({
-                    headers: {
-                        Accept: _config.accept
-                    },
+                    headers: headers,
                     sync: true,
                     resource: _config.resource,
                     query: query
@@ -388,11 +402,15 @@ if(!SanteDBWrapper)
                 if (data.$type !== _config.resource)
                     throw new Exception("ArgumentException", "error.invalidType", `Invalid type, resource wrapper expects ${_config.resource} however ${data.$type} specified`);
 
+                var headers = {
+                    Accept: _config.accept
+                };
+                if(_config.viewModel)
+                    headers["X-SanteDB-ViewModel"] = _config.viewModel;
+                
                 // Perform post
                 return _config.api.postAsync({
-                    headers: {
-                        Accept: _config.accept
-                    },
+                    headers: headers,
                     data: data,
                     state: state,
                     contentType: "application/json",
@@ -416,11 +434,15 @@ if(!SanteDBWrapper)
                 else if (data.id && data.id !== id)
                     throw new Exception("ArgumentException", "error.invalidValue", `Identifier mismatch, PUT identifier  ${id} doesn't match ${data.id}`);
 
+                var headers = {
+                    Accept: _config.accept
+                };
+                if(_config.viewModel)
+                    headers["X-SanteDB-ViewModel"] = _config.viewModel;
+                    
                 // Send PUT
                 return _config.api.putAsync({
-                    headers: {
-                        Accept: _config.accept
-                    },
+                    headers: headers,
                     data: data,
                     id: id,
                     state: state,
@@ -438,10 +460,15 @@ if(!SanteDBWrapper)
             * @returns {Promise} The promise for the operation
             */
             this.deleteAsync = function (id, state) {
+
+                var headers = {
+                    Accept: _config.accept
+                };
+                if(_config.viewModel)
+                    headers["X-SanteDB-ViewModel"] = _config.viewModel;
+
                 return _config.api.deleteAsync({
-                    headers: {
-                        Accept: _config.accept
-                    },
+                    headers: headers,
                     id: id,
                     state: state,
                     resource: _config.resource
@@ -459,10 +486,15 @@ if(!SanteDBWrapper)
                 * @returns {Promise} The promise for the operation
                 */
             this.nullifyAsync = function (id, state) {
+
+                var headers = {
+                    Accept: _config.accept
+                };
+                if(_config.viewModel)
+                    headers["X-SanteDB-ViewModel"] = _config.viewModel;
+
                 return _config.api.deleteAsync({
-                    headers: {
-                        Accept: _config.accept
-                    },
+                    headers:headers,
                     id: id,
                     mode: "NULLIFY",
                     state: state,
@@ -480,10 +512,14 @@ if(!SanteDBWrapper)
                 * @returns {Promise} The promise for the operation
                 */
             this.cancelAsync = function (id, state) {
+                var headers = {
+                    Accept: _config.accept
+                };
+                if(_config.viewModel)
+                    headers["X-SanteDB-ViewModel"] = _config.viewModel;
+
                 return _config.api.deleteAsync({
-                    headers: {
-                        Accept: _config.accept
-                    },
+                    headers: headers,
                     id: id,
                     mode: "CANCEL",
                     state: state,
@@ -1123,6 +1159,17 @@ if(!SanteDBWrapper)
             securityPolicy: new ResourceWrapper({
                 resource: "SecurityPolicy",
                 api: _ami
+            }),
+            /**
+             * @property {SanteDB.ResourceWrapper}
+             * @memberOf SanteDBWrapper.resources
+             * @summary Wrapper for provenance
+             */
+            securityProvenance: new ResourceWrapper({
+                resource: "SecurityProvenance",
+                api: _ami,
+                accept: _viewModelJsonMime,
+                viewModel: 'base'
             }),
             /**
              * @property {SanteDB.ResourceWrapper}

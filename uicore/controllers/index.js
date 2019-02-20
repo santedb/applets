@@ -178,6 +178,7 @@ var santedbApp = angular.module('santedb', ['ngSanitize', 'ui.router', 'oc.lazyL
 
         // The online interval to check online state
         $interval(function () {
+            $rootScope.system = $rootScope.system || {};
             $rootScope.system.online = SanteDB.application.getOnlineState();
 
             // Page information

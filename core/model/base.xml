@@ -27,7 +27,18 @@
   <type type="IdentifiedData" all="true">
     <property name="etag" behavior="never"/>
   </type>
-
+  <type type="SecurityProvenance">
+    <property name="userModel" behavior="always">
+      <property name="userName"/>
+    </property>
+    <property name="applicationModel" behavior="always">
+      <property name="name"/>
+    </property>
+    <property name="deviceModel" behavior="always">
+      <property name="name"/>
+    </property>
+    <property name="session" behavior="always"/>
+  </type>
   <type type="EntityName" all="false">
     <property name="source" behavior="never"/>
     <property name="use" behavior="always" ref="Concept"/>
