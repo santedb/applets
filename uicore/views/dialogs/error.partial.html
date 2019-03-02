@@ -30,10 +30,11 @@
                 </button>
             </div>
             <div class="modal-body">
-                <p>
+                <p ng-if="$root.error.userMessage">{{ $root.error.userMessage | i18n }}</p>
+                <p ng-if="!$root.error.userMessage">
                     {{ $root.error.message | i18n }}. {{ 'ui.error.description' | i18n }}
                 </p>
-                <div ng-switch="ng-switch">
+                <div ng-switch="ng-switch"  ng-if="!$root.error.userMessage">
                     <div ng-case-when="$root.error.message || $root.error.details.responseJSON">
                         <div>
                             <span>
@@ -54,7 +55,7 @@
                         </div>
                     </div>
                 </div>
-                <p>{{ 'ui.error.contactSysAdmin' | i18n }}</p>
+                <p  ng-if="!$root.error.userMessage">{{ 'ui.error.contactSysAdmin' | i18n }}</p>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-primary" data-dismiss="modal">{{ 'ui.action.ok' | i18n }}</button>

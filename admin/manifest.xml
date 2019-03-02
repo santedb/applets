@@ -78,9 +78,13 @@
     <string key="ui.admin.brand.title"><![CDATA[<img src="/org.santedb.core/img/icon.png" height="24px"/> SanteDB Admin]]></string>
 
     <!-- User Screen Translations --> 
+    <string key="ui.action.reset">Password</string>
     <string key="ui.admin.users.userName">User Name</string>
     <string key="ui.admin.users.lastLoginTime">Last Login</string>
-    <string key="ui.admin.users.invalidLoginAttempts">Invalid Login</string>
+    <string key="ui.admin.users.updatedBy">Last Update</string>
     <string key="ui.admin.users.lockout">Lock</string>
+    <string key="ui.admin.users.confirmDelete">Are you sure you want to delete this user?</string>
+    <string key="ui.admin.users.confirmLock">Are you sure you want to lock this user account?</string>
+    <string key="ui.admin.users.confirmUnlock">Are you sure you want to unlock this user account?</string>
   </strings>
 </AppletManifest>

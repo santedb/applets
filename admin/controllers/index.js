@@ -21,6 +21,8 @@
 
 angular.module('santedb').controller('AdminLayoutController', ["$scope", "$rootScope", "$state", "$templateCache", function ($scope, $rootScope, $state, $templateCache) {
 
+    initializeSideNavTriggers();
+    
     // Shows the elevation dialog, elevates and then refreshes the state
     $scope.overrideRefresh = function() {
         new SanteDBElevator(

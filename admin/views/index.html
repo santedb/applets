@@ -17,10 +17,11 @@
  - User: justin
  - Date: 2018-11-14
  -->
-<div xmlns="http://www.w3.org/1999/xhtml" xmlns:sdb="http://santedb.org/applet">
+ <div xmlns="http://www.w3.org/1999/xhtml" xmlns:sdb="http://santedb.org/applet">
     <sdb:style static="false">~/css/sb-admin.css</sdb:style>
     <sdb:style static="false">~/css/admin.css</sdb:style>
     <sdb:script static="false">~/controllers/index.js</sdb:script>
+    <sdb:script>~/lib/sb-admin.js</sdb:script>
     <sdb:state name="santedb-admin">
         <sdb:demand>1.3.6.1.4.1.33349.3.1.5.9.2.1</sdb:demand>
         <sdb:url>/</sdb:url>
@@ -38,10 +39,10 @@
                 aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
-            <div class="collapse navbar-collapse" id="navbarResponsive" ng-class="{'navbar-collapse-small' : windowSize &lt; 768}">
+            <div class="collapse navbar-collapse" id="navbarResponsive" ng-class="{'navbar-collapse-small' : windowSize &lt; 1100}">
                 <ul class="navbar-nav navbar-sidenav" id="menuAccordian">
 
-                    <li ng-repeat="m in menuItems" class="nav-item" data-toggle="tooltip" title="m.text">
+                    <li ng-repeat="m in menuItems" class="nav-item" data-toggle="tooltip" title="{{m.text}}">
                         <a class="nav-link" ng-if="!m.menu" ng-href="{{::m.action}}" data-toggle="collapse" data-target=".navbar-collapse-small">
                             <i class="{{m.icon}}"></i> 
                             <span class="nav-link-text">{{::m.text}}</span>
@@ -51,7 +52,7 @@
                             <span class="nav-link-text">{{::m.text}}</span>
                         </a>
                         <ul ng-if="m.menu" class="sidenav-second-level collapse" id="Collapse{{$index}}">
-                            <li ng-repeat="c in ::m.menu">
+                            <li ng-repeat="c in ::m.menu"  title="{{c.text}}">
                                 <a ng-href="{{::c.action}}" data-toggle="collapse" data-target=".navbar-collapse-small">
                                     <i class="{{c.icon}}"></i>
                                     <span class="nav-link-text">{{c.text}}</span>
@@ -218,7 +219,7 @@
                 </div>
                 <div class="row">
                     <div class="col-md-12">
-                        <div class="container-fluid">
+                            <div class="container-fluid">
                             <ui-view/>
                         </div>
                     </div>
@@ -245,7 +246,7 @@
                     <button class="close" type="button" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">
                             <i class="fa fa-times"></i>
-                        </span>
+                        </span> 
                     </button>
                 </div>
                 <div class="modal-body">

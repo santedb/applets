@@ -151,6 +151,7 @@ var santedbApp = angular.module('santedb', ['ngSanitize', 'ui.router', 'oc.lazyL
         $rootScope.errorHandler = function (e) {
             console.error(e);
             $rootScope.error = {
+                userMessage: e.userMessage,
                 details: e.detail || e,
                 message: e.message || 'ui.error.title',
                 type: e.$type,
@@ -178,6 +179,7 @@ var santedbApp = angular.module('santedb', ['ngSanitize', 'ui.router', 'oc.lazyL
 
         // The online interval to check online state
         $interval(function () {
+            $rootScope.system = $rootScope.system || {};
             $rootScope.system.online = SanteDB.application.getOnlineState();
 
             // Page information
