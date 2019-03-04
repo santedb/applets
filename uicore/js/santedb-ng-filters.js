@@ -128,6 +128,9 @@ angular.module('santedb-lib')
                         $(`.${provData.id}`).html(html);
                         $(`.${value} button`).popover({ html: true });
                         alreadyFetching.splice(alreadyFetching.indexOf(value), 1);
+                    })
+                    .catch(function(e) {
+                        alreadyFetching.splice(alreadyFetching.indexOf(value), 1);
                     });
             }
 

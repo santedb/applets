@@ -338,10 +338,12 @@ angular.module('santedb-lib')
 
                     dt = $("table", element).DataTable({
                         lengthChange: false,
+                        processing: true,
                         buttons: buttons,
                         serverSide: true,
                         "language": {
-                            "infoFiltered": ""
+                            "infoFiltered": "",
+                            "processing": "<i class='fa fa-circle-notch fa-spin'></i> " + SanteDB.locale.getString("ui.wait")
                         },
                         ajax: function (data, callback, settings) {
 

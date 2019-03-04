@@ -1,4 +1,5 @@
 /// <reference path="../../../core/js/santedb.js"/>
+/// <reference path="../../../uicore/js/santedb-ui.js"/>
 /*
  * Copyright 2015-2018 Mohawk College of Applied Arts and Technology
  *
@@ -78,11 +79,11 @@ angular.module('santedb').controller('InitialSettingsController', ['$scope', '$r
                     $scope.config.sync._resource[s.name] = { selected: true };
             }).catch($rootScope.errorHandler);
 
-            var configuredHasher = $scope.config.application.service.find(function (e) { return e.indexOf('PasswordHasher') > -1 });
+            var configuredHasher = $scope.config.application.service.find(function (e) { return e.type.indexOf('PasswordHasher') > -1 });
             if (configuredHasher) {
-                configuredHasher = configuredHasher.replace("SanteDB.DisconnectedClient.Xamarin.Security.", "");
-                configuredHasher = configuredHasher.substr(0, configuredHasher.indexOf(","));
-                $scope.config.security.hasher = configuredHasher;
+                configuredHasher.type = configuredHasher.type.replace("SanteDB.DisconnectedClient.Xamarin.Security.", "");
+                configuredHasher.type = configuredHasher.type.substr(0, configuredHasher.type.indexOf(","));
+                $scope.config.security.hasher = configuredHasher.type;
             }
             else
                 $scope.config.security.hasher = "SHA256PasswordHasher";
@@ -98,15 +99,18 @@ angular.module('santedb').controller('InitialSettingsController', ['$scope', '$r
                 SanteDB.application.getAppInfoAsync().then(function(d) {
                     $scope.serverCaps = d;
                     $scope.$apply();
-                }).catch($rootScope.errorHandler);
-            }
-            // Get data providers
-            SanteDB.configuration.getDataProvidersAsync().then(function (d) {
-                $scope.reference.dataProviders = d;
-                if ($scope.config.data.provider)
-                    $scope.reference.providerData = $scope.reference.dataProviders.find(function (o) { return o.invariant == $scope.config.data.provider });
-            }).catch($rootScope.errorHandler);
 
+                    SanteDB.configuration.getDataProvidersAsync().then(function (d) {
+                        $scope.reference.dataProviders = d;
+                        if ($scope.config.data.provider)
+                            $scope.reference.providerData = $scope.reference.dataProviders.find(function (o) { return o.invariant == $scope.config.data.provider });
+                    }).catch($rootScope.errorHandler);
+
+                }).catch($rootScope.errorHandler);
+
+
+            }
+            
         }
         else 
             $("#alreadyConfiguredModal").modal({backdrop: 'static'});
@@ -120,6 +124,8 @@ angular.module('santedb').controller('InitialSettingsController', ['$scope', '$r
         }).catch($rootScope.errorHandler);
     }
 
+
+    // Get necessary information
     SanteDB.authentication.setElevator(new SanteDBElevator(_getConfiguration));
     _getConfiguration();
 
@@ -215,6 +221,8 @@ angular.module('santedb').controller('InitialSettingsController', ['$scope', '$r
     // Save configuration settings
     $scope.save = function (form) {
 
+        try {
+        SanteDB.display.buttonWait("#finishButton", true);
         // Find the resource definition 
         $scope.config.sync.resource = Object.keys($scope.config.sync._resource).filter(function (i) {
             return $scope.config.sync._resource[i].selected;
@@ -225,16 +233,25 @@ angular.module('santedb').controller('InitialSettingsController', ['$scope', '$r
 
         // Define the services
         $scope.config.application.service = $scope.serverCaps.appInfo.service.filter(function(s) { return s.active; })
-            .map(function(m) { return m.type });
+            .map(function(m) { return { type: m.type }});
 
         SanteDB.configuration.saveAsync($scope.config)
             .then(function (c) {
+                SanteDB.display.buttonWait("#finishButton", false);
                 SanteDB.application.close();
                 $("#completeModal").modal({
                     backdrop: 'static'
                 });
             })
-            .catch($rootScope.errorHandler);
+            .catch(function(e) { 
+                SanteDB.display.buttonWait("#finishButton", false);
+                $rootScope.errorHandler(e);
+            });
+        }
+        catch(e) {
+            SanteDB.display.buttonWait("#finishButton", false);
+            $rootScope.errorHandler(e);
+        }
     }
 
     // Join the realm

@@ -1209,6 +1209,7 @@ if (!SanteDBWrapper)
                 * @summary Gets the configuration resource
                 */
             configuration: new ResourceWrapper({
+                accept: "application/json",
                 resource: "Configuration",
                 api: _app
             }),
@@ -1218,6 +1219,7 @@ if (!SanteDBWrapper)
                 * @summary Gets the queue control resource
                 */
             queue: new ResourceWrapper({
+                accept: "application/json",
                 resource: "Queue",
                 api: _app
             }),
@@ -1227,6 +1229,7 @@ if (!SanteDBWrapper)
                 * @summary Resource wrapper which interacts with the administrative task scheduler
                 */
             task: new ResourceWrapper({
+                accept: "application/json",
                 resource: "Task",
                 api: _ami
             }),
@@ -1236,6 +1239,7 @@ if (!SanteDBWrapper)
                 * @summary A resource wrapper for alerts which are messages between users
                 */
             mail: new ResourceWrapper({
+                accept:  _viewModelJsonMime,
                 resource: "Mail",
                 api: _ami
             }),
@@ -1245,6 +1249,7 @@ if (!SanteDBWrapper)
                 * @summary A wrapper which is used for fetching user notifications
                 **/
             tickle: new ResourceWrapper({
+                accept: _viewModelJsonMime,
                 resource: "Notification",
                 api: _app
             }),
@@ -1254,6 +1259,7 @@ if (!SanteDBWrapper)
                 * @summary A wrapper for locale information which comes from the server
                 */
             locale: new ResourceWrapper({
+                accept:  _viewModelJsonMime,
                 resource: "Locale",
                 api: _app
             }),
@@ -1263,6 +1269,7 @@ if (!SanteDBWrapper)
              * @summary Wrapper for Security USers
              */
             securityUser: new ResourceWrapper({
+                accept:  _viewModelJsonMime,
                 resource: "SecurityUser",
                 api: _ami
             }),
@@ -1272,6 +1279,7 @@ if (!SanteDBWrapper)
              * @summary Wrapper for Security Roles
              */
             securityRole: new ResourceWrapper({
+                accept:  _viewModelJsonMime,
                 resource: "SecurityRole",
                 api: _ami
             }),
@@ -1281,6 +1289,7 @@ if (!SanteDBWrapper)
              * @summary Wrapper for Security Devices
              */
             securityDevice: new ResourceWrapper({
+                accept:  _viewModelJsonMime,
                 resource: "SecurityDevice",
                 api: _ami
             }),
@@ -1290,6 +1299,7 @@ if (!SanteDBWrapper)
              * @summary Wrapper for Security Applications
              */
             securityApplication: new ResourceWrapper({
+                accept:  _viewModelJsonMime,
                 resource: "SecurityApplication",
                 api: _ami
             }),
@@ -1299,6 +1309,7 @@ if (!SanteDBWrapper)
              * @summary Wrapper for Security Policies
              */
             securityPolicy: new ResourceWrapper({
+                accept:  _viewModelJsonMime,
                 resource: "SecurityPolicy",
                 api: _ami
             }),
