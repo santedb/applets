@@ -157,29 +157,38 @@ angular.module('santedb').controller('InitialSettingsController', ['$scope', '$r
 
         if ($scope.reference[$scope.config.sync.subscribeType.toLowerCase()].length == 0) return false;
 
-        var retVal = true;
-        var guardFilterRegex = new RegExp('^([\\!\\sA-Za-z\\.&|]*?)\\[([A-Za-z]*?)\\](.*)$');
-        var newGuard = "", oldGuard = filter.guard;
-        while (oldGuard.length > 0) {
-            var match = guardFilterRegex.exec(oldGuard);
-            if (!match) {
-                newGuard += oldGuard;
-                break;
+        try {
+            SanteDB.display.buttonWait("#selectAllButton", true);
+            $("#nextButton").prop("disabled", true);
+
+            var retVal = true;
+            var guardFilterRegex = new RegExp('^([\\!\\sA-Za-z\\.&|]*?)\\[([A-Za-z]*?)\\](.*)$');
+            var newGuard = "", oldGuard = filter.guard;
+            while (oldGuard.length > 0) {
+                var match = guardFilterRegex.exec(oldGuard);
+                if (!match) {
+                    newGuard += oldGuard;
+                    break;
+                }
+                else {
+                    newGuard += `${match[1]}.${match[2]}`;
+                    oldGuard = match[3];
+                }
             }
-            else {
-                newGuard += `${match[1]}.${match[2]}`;
-                oldGuard = match[3];
-            }
+            $scope.reference[$scope.config.sync.subscribeType.toLowerCase()]
+            .filter(function(f) { return $scope.config.sync.subscribe.indexOf(f.id) > -1; })
+            .forEach(function (subscribed) {
+                var e = $scope.$eval(newGuard, { "subscribed": subscribed });
+                retVal &= (e != null) && (e !== false);
+            });
+            return retVal
+
         }
-        $scope.reference[$scope.config.sync.subscribeType.toLowerCase()]
-        .filter(function(f) { return $scope.config.sync.subscribe.indexOf(f.id) > -1; })
-        .forEach(function (subscribed) {
-            var e = $scope.$eval(newGuard, { "subscribed": subscribed });
-            retVal &= (e != null) && (e !== false);
-        });
+        finally {
+            SanteDB.display.buttonWait("#selectAllButton", false);
+            $("#nextButton").prop("disabled", false);
 
-
-        return retVal
+        }
     }
 
     // Function to advance to next option
