@@ -131,6 +131,9 @@ angular.module('santedb-lib')
 
                     // Bind select 2 search
                     $(element).select2({
+                        language: {
+                            searching: function() { return `<i class="fa fa-circle-notch fa-spin"></i> ${SanteDB.locale.getString("ui.search")}`; }
+                        },
                         defaultResults: function () {
                             var s = scope;
                             if (defaultResults) {

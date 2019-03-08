@@ -102,6 +102,7 @@
     <string key="ui.action.selectNone">Select None</string>
     <string key="ui.action.lock">Lock</string>
     <string key="ui.wait">Please Wait...</string>
+    <string key="ui.search">Searching</string>
     <string key="ui.pref.nevershow">Never show this message again</string>
     <string key="ui.subscription.person.all">All Persons</string>
     <string key="ui.subscription.act.all">All Acts</string>
