@@ -119,7 +119,10 @@ angular.module('santedb-lib')
                         
                         // Add popover for information
                         var id = uniqueId++;
-                        var extraInfo = `<i class='fas fa-window-maximize'></i> ${SanteDB.locale.getString(provData.applicationModel.name)}`;
+
+                        var extraInfo = "";
+                        if(provData.applicationModel != null)
+                            extraInfo += `<i class='fas fa-window-maximize'></i> ${SanteDB.locale.getString(provData.applicationModel.name)}`;
                         if(timeOfEvent)
                             extraInfo += `<br/><i class='fas fa-clock'></i> ${moment(timeOfEvent).format(SanteDB.locale.dateFormats.second)}`;
                         if(provData.session && sessionNav)
@@ -131,6 +134,7 @@ angular.module('santedb-lib')
                     })
                     .catch(function(e) {
                         alreadyFetching.splice(alreadyFetching.indexOf(value), 1);
+                        $(`.${value}`).html(`<i class="fa fa-exclamation-circle"></i> ${SanteDB.locale.getString("ui.provenance.unknown")}`);
                     });
             }
 

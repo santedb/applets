@@ -1,0 +1,12 @@
+<AppletManifest xmlns="http://santedb.org/applet">
+  <info id="santedb.sln.core" version="1.0.0.0">
+    <icon>/org.santedb.core/img/icon.png</icon>
+    <name lang="en">SanteDB Core Solution</name>
+    <author>Mohawk College of Applied Arts and Technology - mHealth &amp; eHealth Development &amp; Innovation Centre</author>
+    <dependency id="org.santedb.core" version="1.0.0.0"/>
+    <dependency id="org.santedb.uicore" version="1.0.0.0"/>
+    <dependency id="org.santedb.config" version="1.0.0.0"/>
+    <dependency id="org.santedb.config.init" version="1.0.0.0"/>
+    <dependency id="org.santedb.i18n.en" version="1.0.0.0"/>
+  </info>
+</AppletManifest>

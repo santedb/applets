@@ -264,7 +264,7 @@
     <string key="ui.config.services.description">In SanteDB a 'service' is a native plugin that operates within the application host context. You can use this screen to enable or disable services in the SanteDB application context. Warning: If you're unsure what this panel does, leave the defaults enabled</string>
     <string key="ui.config.services.type.label">Enabled Services</string>
     <string key="ui.provenance.extraInfo">Provenance Data</string>
-
+    <string key="ui.provenance.unknown">Not Available</string>
     <!-- Authentication Issues -->
     <string key="AUTH_LCK">Your account is locked. Please try logging in at a later time, or contacting support</string>
     <string key="AUTH_INV">Invalid Username and/or Password. Please check the details you entered and try again</string>
