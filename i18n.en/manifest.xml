@@ -61,16 +61,41 @@
     </locale>
   </locales>
   <strings lang="en">
+
+    <!-- Login Translations -->
     <string key="ui.login.input.username">Username</string>
     <string key="ui.login.input.password">Password</string>
     <string key="ui.login.input.pin">PIN #</string>
     <string key="ui.login.title.elevate">User Elevation</string>
     <string key="ui.login.input.purpose">Reason</string>
     <string key="ui.login.realm">Enter security details for realm</string>
+
+    <!-- Password Translations -->
+    <string key="ui.password.title">Set Password</string>
+    <string key="ui.password.help">Set the password for user account</string>
+    <string key="ui.password.existing.label">Current Password</string>
+    <string key="ui.password.existing.help">Enter your current password</string>
+    <string key="ui.password.new.label">New Password</string>
+    <string key="ui.password.new.help">Enter the new password for this user account</string>
+    <string key="ui.password.confirm.label">Confirm Password</string>
+    <string key="ui.password.confirm.help">Re-enter your password to confirm</string>
+    <string key="ui.password.pin.new.label">New PIN</string>
+    <string key="ui.password.pin.new.help">Enter the new PIN number for this account on this device</string>
+    <string key="ui.password.pin.confirm.label">Confirm PIN</string>
+    <string key="ui.password.pin.confirm.help">Re-enter your PIN code to confirm</string>
+    <string key="ui.password.strength.lowlow">Very Weak</string>
+    <string key="ui.password.strength.low">Weak</string>
+    <string key="ui.password.strength.moderate">Moderate</string>
+    <string key="ui.password.strength.high">Strong</string>
+    <string key="ui.password.strength.highhigh">Very Strong</string>
+    <string key="ui.password.strength.label">Strength</string>
+    <string key="ui.password.error.mismatch">Passwords must match</string>
+    <!-- Common Errors -->
     <string key="ui.error.title">System Error</string>
     <string key="ui.error.description">Additional details follow:</string>
     <string key="ui.error.causedBy">Cause:</string>
     <string key="ui.error.contactSysAdmin">Please file a bug report, or contact your system administrator with this information</string>
+    <string key="ui.error.required">Required field missing</string>
     <string key="error.http.403">Access Denied</string>
     <string key="error.http.403.text">Your request has been denied and audited. In order to access this resource, you must first either elevate your current session, obtain appropriate authorization, or temporary authenticate as someone else. You can attempt to elevate your session by selecting the override option below</string>
     <string key="error.http.404">The requested resource could not be found</string>
@@ -82,6 +107,12 @@
     <string key="error.type.Exception">General Error</string>
     <string key="error.type.HttpException">Communications Error</string>
     <string key="error.type.WebException">Communications Error</string>
+    <string key="error.type.NotImplementedException">Not Implemented</string>
+    <string key="error.type.NotImplementedException.userMessage">The function you are trying to perform is not yet implemented</string>
+    <string key="error.type.NotSupportedException">Not Supported</string>
+    <string key="error.type.NotSupportedException.userMessage">The function you are trying to perform is not supported under your current configuration</string>
+
+    <!-- Common Action buttons -->
     <string key="ui.action.ok">Ok</string>
     <string key="ui.action.cancel">Cancel</string>
     <string key="ui.action.save">Save</string>
@@ -101,9 +132,12 @@
     <string key="ui.action.selectAll">Select All</string>
     <string key="ui.action.selectNone">Select None</string>
     <string key="ui.action.lock">Lock</string>
+
     <string key="ui.wait">Please Wait...</string>
     <string key="ui.search">Searching</string>
     <string key="ui.pref.nevershow">Never show this message again</string>
+
+    <!-- Subscription Type Translations -->
     <string key="ui.subscription.person.all">All Persons</string>
     <string key="ui.subscription.act.all">All Acts</string>
     <string key="ui.subscription.place.all">All Places</string>
@@ -135,9 +169,6 @@
     <string key="ui.subscription.place.outOfState">All places out of my state/province (background after start)</string>
     <string key="ui.subscription.place.outOfCounty">All places out of my county/district (background after start)</string>
     <string key="ui.subscription.place.assigned">All places that are assigned to my facility</string>
-    <string key="ui.config.subscribe.type.label">Subscription Type</string>
-    <string key="ui.config.subscribe.authority.label">Assigning Authority</string>
-    <string key="ui.config.subscribe.authority.help">Use this option to subscribe to patients with a particular identifier</string>
     <string key="ui.subscription.userEntity.assigned">Only users assigned to my facility</string>
     <string key="ui.subscription.provider.assigned">Only providers assigned to my facility</string>
     <string key="ui.subscription.patient.assigned">Only patients assigned to my facility or who came to my facility</string>
@@ -149,6 +180,11 @@
     <string key="ui.subscription.act.quantityObservation.me">Only quantified observations taken at my facility</string>
     <string key="ui.subscription.act.textObservation.me">Only text observations taken at my facility</string>
     <string key="ui.subscription.act.PatientEncounter.me">Only patient encounters performed at my facility</string>
+
+    <!-- Configuration Translations -->
+    <string key="ui.config.subscribe.type.label">Subscription Type</string>
+    <string key="ui.config.subscribe.authority.label">Assigning Authority</string>
+    <string key="ui.config.subscribe.authority.help">Use this option to subscribe to patients with a particular identifier</string>
     <string key="ui.config.realm.title">Domain</string>
     <string key="ui.config.realm.description">This SanteDB client application needs to contact a centralized instanced called a "domain". This screen will allow you to configure the specific details of how this mobile device will contact the domain.</string>
     <string key="ui.config.realm.deviceName.label">Device ID</string>
@@ -265,6 +301,7 @@
     <string key="ui.config.services.type.label">Enabled Services</string>
     <string key="ui.provenance.extraInfo">Provenance Data</string>
     <string key="ui.provenance.unknown">Not Available</string>
+
     <!-- Authentication Issues -->
     <string key="AUTH_LCK">Your account is locked. Please try logging in at a later time, or contacting support</string>
     <string key="AUTH_INV">Invalid Username and/or Password. Please check the details you entered and try again</string>

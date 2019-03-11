@@ -570,7 +570,7 @@ if(!SecurityUser)
  * @property {boolean} emailConfirmed            Gets or sets whether the email address is confirmed            
  * @property {number} invalidLoginAttempts            Gets or sets the number of invalid login attempts by the user            
  * @property {string} lockout            Gets or sets the creation time in XML format            
- * @property {string} passwordHash            Gets or sets whether the password hash is enabled            
+ * @property {string} password            Gets or sets whether the password hash is enabled            
  * @property {string} securityStamp            Gets or sets whether the security has is enabled            
  * @property {boolean} twoFactorEnabled            Gets or sets whether two factor authentication is required            
  * @property {string} userName            Gets or sets the logical user name ofthe user            
@@ -638,7 +638,7 @@ function SecurityUser (copyData) {
 	/** @type {string} */
 	this.securityStamp = copyData.securityStamp;
 	/** @type {string} */
-	this.passwordHash = copyData.passwordHash;
+	this.password = copyData.password;
 	/** @type {string} */
 	this.lockout = copyData.lockout;
 	/** @type {number} */

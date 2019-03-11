@@ -112,7 +112,7 @@ if (!SanteDBWrapper)
                     $.ajax({
                         method: 'POST',
                         url: _config.base + configuration.resource,
-                        data: configuration.contentType == 'application/json' ? JSON.stringify(configuration.data) : configuration.data,
+                        data: configuration.contentType.indexOf('application/json') == 0 ? JSON.stringify(configuration.data) : configuration.data,
                         dataType: 'json',
                         contentType: configuration.contentType || 'application/json',
                         headers: configuration.headers,
@@ -163,7 +163,7 @@ if (!SanteDBWrapper)
                     $.ajax({
                         method: 'PUT',
                         url: _config.base + configuration.resource + (_config.idByQuery ? "?_id=" + configuration.id : "/" + configuration.id),
-                        data: configuration.contentType == 'application/json' ? JSON.stringify(configuration.data) : configuration.data,
+                        data: configuration.contentType.indexOf('application/json') == 0 ? JSON.stringify(configuration.data) : configuration.data,
                         dataType: 'json',
                         contentType: configuration.contentType || 'application/json',
                         headers: configuration.headers,
@@ -1683,6 +1683,7 @@ if (!SanteDBWrapper)
                 * @param {string} password The password of the user
                 * @param {string} tfaSecret The two-factor secret if provided
                 * @param {string} scope When true indicates that there should not be a persistent session (i.e. one time authentication)
+                * @param {boolean} uacPrompt True if the authentication is part of a UAC prompt and no perminant session is to be 
                 * @param {String} purposeOfUse The identifier of the purpose of use for the access
                 * @returns {Promise} A promise representing the login request
                 */
@@ -1884,19 +1885,24 @@ if (!SanteDBWrapper)
             /**
                 * @method
                 * @memberof SanteDBWrapper.authentication
-                * @summary Sets the password of the currently logged in user
+                * @summary Sets the password of the specified user
+                * @param {string} sid The security identifier of the user which is being updated
+                * @param {string} userName The name of the user to set the password to
                 * @param {string} passwd The password to set the currently logged in user to
                 * @returns {Promise} The promise representing the fulfillment or rejection of the password change
                 */
-            setPasswordAsync: function (passwd) {
+            setPasswordAsync: function (sid, userName, passwd) {
                 if (!_session || !_session)
                     throw new Exception("SecurityException", "error.security", "Can only set password with active session");
-                return _ami.postAsync({
+                return _ami.putAsync({
+                    id: sid,
                     resource: "SecurityUser",
+                    contentType: _viewModelJsonMime,
                     data: {
+                        $type: "SecurityUserInfo",
                         passwordOnly: true,
                         entity: new SecurityUser({
-                            userName: _session.securityUser.userName,
+                            userName: userName,
                             password: passwd
                         })
                     }

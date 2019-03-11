@@ -308,7 +308,7 @@ angular.module('santedb-lib')
                                         retVal += `<a title="${SanteDB.locale.getString('ui.action.' + b.name)}" href="" ng-click="$parent.${b.action}('${r.id}', ${m.row})" class="btn ${(b.className || 'btn-default')}">`;
                                     retVal += `<i class="${b.icon || 'fas fas-eye-open'}"></i>&nbsp;`;
                                     if(b.name)
-                                        retVal += `<span class="d-md-none d-lg-inline">${SanteDB.locale.getString('ui.action.' + b.name)}</span>`;
+                                        retVal += `<span class="d-sm-none d-lg-inline">${SanteDB.locale.getString('ui.action.' + b.name)}</span>`;
                                     retVal += "</a>";
 
                                 });

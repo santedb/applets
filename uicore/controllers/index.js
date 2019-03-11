@@ -150,22 +150,33 @@ var santedbApp = angular.module('santedb', ['ngSanitize', 'ui.router', 'oc.lazyL
          */
         $rootScope.errorHandler = function (e) {
             console.error(e);
-            $rootScope.error = {
-                userMessage: e.userMessage,
-                details: e.detail || e,
-                message: e.message || 'ui.error.title',
-                type: e.$type,
-                cause: []
-            };
-            var cause = e.cause;
-            while (cause) {
-                $rootScope.error.cause.push({
-                    detail: cause.detail || cause,
-                    message: cause.message || 'ui.error.title',
-                    type: cause.$type
-                });
-                cause = cause.cause;
+            var userMessageKey = `error.type.${e.$type}.userMessage`;
+            var userMessage = SanteDB.locale.getString(userMessageKey);
+
+            if(userMessage == userMessageKey) // no special user message - show default
+            {
+                $rootScope.error = {
+                    userMessage: e.userMessage,
+                    details: e.detail || e,
+                    message: e.message || 'ui.error.title',
+                    type: e.$type,
+                    cause: []
+                };
+                var cause = e.cause;
+                while (cause) {
+                    $rootScope.error.cause.push({
+                        detail: cause.detail || cause,
+                        message: cause.message || 'ui.error.title',
+                        type: cause.$type
+                    });
+                    cause = cause.cause;
+                }
             }
+            else 
+                $rootScope.error = {
+                    userMessage: userMessage,
+                    type: e.$type
+                }
             $("#errorModal").modal({ backdrop: 'static' });
             $rootScope.$apply();
         }
