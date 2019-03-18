@@ -201,14 +201,14 @@ var santedbApp = angular.module('santedb', ['ngSanitize', 'ui.router', 'oc.lazyL
             };
 
             // Session for expiry?
-            if ($rootScope.session && $rootScope.session.exp && ($rootScope.session.exp - Date.now < 120000)) {
-                var expiresIn = Math.round(($rootScope.session.exp - Date.now) / 1000);
-                var mins = Math.trunc(expiry / 60), secs = expiry % 60;
+            if ($rootScope.session && $rootScope.session.exp && ($rootScope.session.exp - Date.now() < 120000)) {
+                var expiresIn = Math.round(($rootScope.session.exp - Date.now()) / 1000);
+                var mins = Math.trunc(expiresIn / 60), secs = expiresIn % 60;
                 if (("" + secs).length < 2)
                     secs = "0" + secs;
                 var messageStr = `${SanteDB.locale.getString("ui.session.aboutToExpire")} ${mins}:${secs} ${SanteDB.locale.getString("ui.session.action.extend")}`;
 
-                if (expiry < 0) // abandon the session
+                if (expiresIn < 0) // already expired
                     SanteDB.authentication.logoutAsync().then(function () {
                         window.sessionStorage.removeItem('token');
                         $rootScope.session = null;
@@ -217,7 +217,7 @@ var santedbApp = angular.module('santedb', ['ngSanitize', 'ui.router', 'oc.lazyL
                         toastr.clear();
                     }).catch($rootScope.errorHandler);
                 else if (!$rootScope.extendToast) {
-                    _extendToast = toastr.warn(messageStr, {
+                    _extendToast = toastr.warning(messageStr, {
                         closeButton: false,
                         preventDuplicates: true,
                         onclick: function () {

@@ -138,7 +138,7 @@ angular.module('santedb-lib')
                     });
             }
 
-            return `<div class='${value}'><i class="fas fa-circle-notch fa-spin"></i></div>`;
+            return `<span class='${value}'><i class="fas fa-circle-notch fa-spin"></i></span>`;
         }
     }])
     /**
@@ -186,7 +186,7 @@ angular.module('santedb-lib')
 
             if (date) {
                 // Non timed
-                switch (format) {
+                switch (dateFormat) {
                     case 1:   // Year, Month, Day always expressed in UTC for Javascript will take the original server value and adjust.
                     case 'Y':
                     case 2:

@@ -82,7 +82,9 @@ angular.module('santedb').controller('UserIndexController', ["$scope", "$rootSco
      * @summary Render the lockout status
      */
     $scope.renderLockout = function (user) {
-        return user.lockout > new Date() ? `<i class="fa fa-lock"></i> ${moment(user.lockout).format(SanteDB.locale.dateFormats.second)}` : '<i class="fa fa-lock-open"></i>';
+        return user.obsoletionTime ? `<i title="${SanteDB.locale.getString("ui.state.obsolete")}" class="fa fa-trash"></i>` :
+            user.lockout > new Date() ? `<i title="${SanteDB.locale.getString("ui.state.locked")}" class="fa fa-lock"></i> ${moment(user.lockout).format(SanteDB.locale.dateFormats.second)}` : 
+            `<i title="${SanteDB.locale.getString("ui.state.active")}" class="fa fa-check"></i>`;
     }
 
     /**

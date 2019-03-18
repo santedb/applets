@@ -112,7 +112,15 @@
     <string key="error.type.NotSupportedException">Not Supported</string>
     <string key="error.type.NotSupportedException.userMessage">The function you are trying to perform is not supported under your current configuration</string>
 
+    <!-- Common States -->
+    <string key="ui.state.active">Active</string>
+    <string key="ui.state.new">New</string>
+    <string key="ui.state.obsolete">Obsolete</string>
+    <string key="ui.state.cancelled">Cancelled</string>
+    <string key="ui.state.nullified">Nullified</string>
+    <string key="ui.state.locked">Locked</string>
     <!-- Common Action buttons -->
+    <string key="ui.action">Actions</string>
     <string key="ui.action.ok">Ok</string>
     <string key="ui.action.cancel">Cancel</string>
     <string key="ui.action.save">Save</string>
@@ -132,9 +140,12 @@
     <string key="ui.action.selectAll">Select All</string>
     <string key="ui.action.selectNone">Select None</string>
     <string key="ui.action.lock">Lock</string>
-
+    <string key="ui.action.showAll">Show All</string>
     <string key="ui.wait">Please Wait...</string>
     <string key="ui.search">Searching</string>
+    <string key="ui.action.reset">Reset</string>
+    <string key="ui.action.reactivate">Re-Activate</string>
+
     <string key="ui.pref.nevershow">Never show this message again</string>
 
     <!-- Subscription Type Translations -->
@@ -305,6 +316,18 @@
     <!-- Authentication Issues -->
     <string key="AUTH_LCK">Your account is locked. Please try logging in at a later time, or contacting support</string>
     <string key="AUTH_INV">Invalid Username and/or Password. Please check the details you entered and try again</string>
+
+    <!-- Model Descriptions -->
+    <string key="ui.model.securityUser.id">Security ID</string>
+    <string key="ui.model.securityUser.userName">Username</string>
+    <string key="ui.model.securityUser.createdBy">Created By</string>
+    <string key="ui.model.securityUser.updatedBy">Last Updated By</string>
+    <string key="ui.model.securityUser.obsoletedBy">Deleted By</string>
+    <string key="ui.model.securityUser.lastLoginTime">Last Login</string>
+    <string key="ui.model.securityUser.invalidLoginAttempts">Invalid Logins</string>
+    <string key="ui.model.securityUser.title">User</string>
+    <string key="ui.model.securityUser.password">Password</string>
+    <string key="ui.model.securityRole.title">Role</string>
   </strings>
 
 </AppletManifest>

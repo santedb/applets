@@ -34,7 +34,11 @@ angular.module('santedb-lib')
                     }
 
                     if (angular.isDefined(state.self.displayName)) {
-                        _this.addBreadcrumb(state.self.displayName, state.name);
+
+                        if(state.self.abstract)
+                            _this.addBreadcrumb(state.self.displayName, state.name + ".index");
+                        else
+                            _this.addBreadcrumb(state.self.displayName, state.name);
                     }
                 };
                 this.appendTitle = function (translation, index) {

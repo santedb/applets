@@ -28,15 +28,19 @@ SanteDBWrapper.prototype.display = {
      * @summary Replaces the content of the button with a defined wait state
      * @param {String} target The target of the wait button
      * @param {boolean} state True if the object is loading, false if not
+     * @param {boolean} onlyGlyph True if only a wait glyph should be shown
      */
-    buttonWait: function(target, state) {
+    buttonWait: function(target, state, onlyGlyph) {
         var btn = $(target);
         if(btn) {
             if(state)  {
                 btn.attr('disabled', 'disabled');
                 if(!___originalButtonTexts[target])
                     ___originalButtonTexts[target] = btn.html();
-                btn.html(`<i class="fas fa-circle-notch fa-spin"></i> ${SanteDB.locale.getString("ui.wait")}`);
+                if(!onlyGlyph)
+                    btn.html(`<i class="fas fa-circle-notch fa-spin"></i> ${SanteDB.locale.getString("ui.wait")}`);
+                else 
+                    btn.html('<i class="fas fa-circle-notch fa-spin"></i>');
             }
             else {
                 btn.removeAttr('disabled');

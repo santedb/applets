@@ -43,13 +43,13 @@ html, body {
         transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
   }
 
-  .collapse-indicator i {
+  .collapse-indicator i:last-child {
     -moz-transition: all 0.2s linear;
     -webkit-transition: all 0.2s linear;
     transition: all 0.2s linear;
 }
 
-.collapse-indicator[aria-expanded="true"] i {
+.collapse-indicator[aria-expanded="true"] i:last-child {
     -ms-transform: rotate(90deg);
     -moz-transform: rotate(90deg);
     -webkit-transform: rotate(90deg);

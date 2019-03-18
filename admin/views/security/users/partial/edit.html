@@ -1,0 +1,144 @@
+<div xmlns="http://www.w3.org/1999/xhtml">
+    <form ng-submit="saveUser(userForm)" name="userForm" novalidate="novalidate">
+        <div class="accordion" id="userAccordion">
+            <div class="card">
+                <div class="card-header">
+                    <h2 class="mb-0">
+                        <button type="button" class="collapse-indicator btn btn-link" data-toggle="collapse"
+                            data-target="#coreUserProps" aria-expanded="true">
+                            <i class="fa fa-user"></i> {{ 'ui.admin.users.edit.core.title' | i18n }}
+                            <i class="fa fa-chevron-right"></i>
+                        </button>
+                    </h2>
+                </div>
+                <div class="collapse show" id="coreUserProps">
+                    <div class="card-body container-fluid">
+                        <div class="form-group row">
+                            <label class="col-sm-12 col-md-2 control-label"
+                                for="sid">{{ 'ui.model.securityUser.id' | i18n }}</label>
+                            <div class="col-sm-12 col-md-10 input-group">
+                                <input name="sid" readonly="readonly" type="text" class="form-control"
+                                    ng-model="user.securityUser.id" />
+                                <input-copy-button class="btn btn-outline-secondary" source="user.securityUser.id" />
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-sm-12 col-md-2 control-label"
+                                for="username">{{ 'ui.model.securityUser.userName' | i18n }}</label>
+                            <div class="col-sm-12 col-md-10 input-group">
+                                <input name="username" ng-readonly="user.securityUser.id" type="text"
+                                    class="form-control" pattern="^[A-Za-z0-9_\.\@]{3,}" minlength="3" maxlength="32"
+                                    required="required" ng-model="user.securityUser.userName" />
+                                <input-copy-button id="usernameCopyButton" class="btn btn-outline-secondary"
+                                    source="user.securityUser.userName" />
+                            </div>
+                            <div class="col-sm-12 col-md-10 offset-md-2">
+                                <div ng-show="userForm.username.$error['duplicate']" class="alert-danger">
+                                    <i class="fa fa-exclamation-triangle"></i>
+                                    {{ 'ui.admin.users.duplicateUser' | i18n }}
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="form-group row" ng-if="user.securityUser.createdBy">
+                            <label
+                                class="col-sm-12 col-md-2 control-label">{{ 'ui.model.securityUser.createdBy' | i18n }}</label>
+                            <div class="col-md-10 col-sm-12">
+                                <span
+                                    ng-bind-html="user.securityUser.createdBy | provenance: user.securityUser.creationTime"></span>
+                                 {{ user.securityUser.creationTime | extDate }}
+                            </div>
+                        </div>
+                        <div class="form-group row" ng-if="user.securityUser.updatedBy">
+                            <label
+                                class="col-sm-12 col-md-2 control-label">{{ 'ui.model.securityUser.updatedBy' | i18n }}</label>
+                            <div class="col-md-10 col-sm-12">
+                                <span
+                                    ng-bind-html="user.securityUser.updatedBy | provenance: user.securityUser.updatedTime"></span>
+                                 {{ user.securityUser.updatedTime | extDate }}
+                            </div>
+                        </div>
+                        <div class="form-group row" ng-if="user.securityUser.obsoletedBy">
+                            <label
+                                class="col-sm-12 col-md-2 control-label">{{ 'ui.model.securityUser.obsoletedBy' | i18n }}</label>
+                            <div class="col-md-10 col-sm-12">
+                                <span
+                                    ng-bind-html="user.securityUser.obsoletedBy | provenance: user.securityUser.obsoletionTime"></span>
+                                 {{ user.securityUser.obsoletionTime | extDate }} <button
+                                    ng-click="reactivateUser()" type="button" class="btn btn-info"><i
+                                        class="fas fa-trash-restore"></i> {{ 'ui.action.reactivate' | i18n }}</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-header">
+                    <h2 class="mb-0">
+                        <button type="button" class="collapse-indicator btn btn-link" data-toggle="collapse" aria-expanded="true"
+                            data-target="#securityProps">
+                            <i class="fa fa-shield-alt"></i> {{ 'ui.admin.users.edit.security.title' | i18n }}
+                            <i class="fa fa-chevron-right"></i>
+                        </button>
+                    </h2>
+                </div>
+                <div class="collapse show" id="securityProps">
+                    <div class="card-body container-fluid">
+                        <div class="form-group row">
+                            <label
+                                class="col-xs-12 col-md-2 control-label">{{ 'ui.model.securityUser.lastLoginTime' | i18n }}</label>
+                            <div class="col-xs-12 col-md-10" ng-if="user.securityUser.lastLoginTime">{{ user.securityUser.lastLoginTime | extDate: 'F' }}</div>
+                            <div class="col-xs-12 col-md-10" ng-if="!user.securityUser.lastLoginTime">{{ 'ui.admin.users.edit.security.neverLoggedIn' | i18n }}</div>
+                        </div>
+                        <div class="form-group row">
+                            <label
+                                class="col-xs-12 col-md-2 control-label">{{ 'ui.model.securityUser.invalidLoginAttempts' | i18n }}</label>
+                            <div class="col-xs-12 col-md-10">
+                                {{ user.securityUser.invalidLoginAttempts }}
+                                <button ng-click="resetInvalidLogins()" type="button" class="btn btn-info">
+                                    <i class="fas fa-undo"></i> {{ 'ui.action.reset' | i18n }}
+                                </button>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="roles"
+                                class="col-xs-12 col-md-2 control-label">{{ 'ui.model.securityRole.title' | i18n }}</label>
+                            <div class="col-xs-12 col-md-10">
+                                <entity-search name="roles" type="'SecurityRole'" filter="{ obsoletionTime: 'null'}"
+                                    key="'name'" selector="'entity'" ng-model="user.role" search-field="'name'"
+                                    class="form-control" multiple="multiple" />
+                            </div>
+                        </div>
+                        <div class="form-group row" ng-if="user.securityUser.id">
+                            <label
+                                class="col-xs-12 col-md-2 control-label">{{ 'ui.model.securityUser.password' | i18n }}</label>
+                            <div class="col-xs-12 col-md-2">
+                                <button ng-click="resetPassword()" id="resetPasswordButton" class="btn btn-info"
+                                    type="button">
+                                    <i class="fa fa-asterisk"></i> {{ 'ui.action.resetPassword' | i18n }}
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-header">
+                    <h2 class="mb-0">
+                        <button type="button" class="collapse-indicator btn btn-link" data-toggle="collapse"
+                            data-target="#demographicProps">
+                            <i class="fa fa-id-badge"></i> {{ 'ui.admin.users.edit.demographics.title' | i18n }}
+                            <i class="fa fa-chevron-right"></i>
+                        </button>
+                    </h2>
+                </div>
+                <div class="collapse" id="demographicProps">
+                    <div class="card-body">Test</div>
+                </div>
+            </div>
+        </div>
+
+    </form>
+    <!-- #include virtual="/org.santedb.uicore/views/dialogs/password.partial.html" -->
+</div>

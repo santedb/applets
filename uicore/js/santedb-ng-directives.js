@@ -16,7 +16,7 @@ angular.module('santedb-lib')
      * @param {string} data-groupDisplay The property on the group property which is to be displayed
      * @param {string} data-resultField The field on the result objects which contains the result
      * @example
-     * <entity-search type="Place" 
+     * <entity-search type="'Place'" 
                     class="form-control" 
                     name="subscribeFacility" 
                     ng-model="config.subscription.facility" 
@@ -42,13 +42,22 @@ angular.module('santedb-lib')
                     break;
                 case "Place":
                     retVal += "<i class='fa fa-map-pin'></i> ";
-
                     break;
                 case "Entity":
                     retVal += "<i class='fa fa-share-alt'></i> ";
                     break;
                 case "AssigningAuthority":
                     retVal += "<i class='fa fa-id-card'></i> ";
+                    break;
+                case "SecurityRole":
+                case "SecurityRoleInfo":
+                case "SanteDB.Core.Model.AMI.Auth.SecurityRoleInfo, SanteDB.Core.Model.AMI":
+                    retVal += "<i class='fa fa-users'></i>";
+                    break;
+                case "SecurityUser":
+                case "SecurityUserInfo":
+                case "SanteDB.Core.Model.AMI.Auth.SecurityUserInfo, SanteDB.Core.Model.AMI":
+                    retVal += "<i class='fa fa-users'></i>";
                     break;
                 default:
                     retVal += "<i class='fa fa-box'></i> ";
@@ -69,7 +78,8 @@ angular.module('santedb-lib')
                 retVal += selection.element.innerText.trim();
             else if (selection.text)
                 retVal += selection.text;
-
+            else if(selection.entity) 
+                retVal += (selection.entity.name || selection.entity.userName);
             if (selection.address)
                 retVal += " - <small>(<i class='fa fa-map-marker'></i> " + SanteDB.display.renderEntityAddress(selection.address) + ")</small>";
             else if (selection.oid)
@@ -79,7 +89,16 @@ angular.module('santedb-lib')
 
         return {
             scope: {
-                defaultResults: '='
+                defaultResults: '=',
+                type: '<',
+                display: '<',
+                searchField: '<',
+                defaultResults: '<',
+                groupBy: '<',
+                filter: '<',
+                groupDisplay: '<',
+                key: '<',
+                selector: '<'
             },
             restrict: 'E',
             require: 'ngModel',
@@ -102,14 +121,36 @@ angular.module('santedb-lib')
 
                             $(selectControl).find('option[value="? undefined:undefined ?"]').remove();
                             value.forEach(function (v) {
-                                api.getAsync(v)
-                                    .then(function (res) {
 
-                                        if ($(selectControl).find(`option[value=${v}]`).length == 0) {
-                                            $(selectControl)[0].add(new Option(renderObject(res), v, false, true));
-                                            $(selectControl).trigger('change.select2');
-                                        }
-                                    });
+                                if($scope.key != "id") {
+                                    var query = {};
+                                    query[$scope.key] = v;
+                                    api.findAsync(query)
+                                        .then(function(res) {
+                                            // Matching item
+                                            if(res.item.length == 1)
+                                                if ($(selectControl).find(`option[value=${v}]`).length == 0) {
+                                                    var obj = res.item[0];
+                                                    if($scope.selector)
+                                                        obj = obj[$scope.selector] || obj;
+                                                    $(selectControl)[0].add(new Option(renderObject(res.item[0]), v, false, true));
+                                                    $(selectControl).trigger('change.select2');
+                                                }
+
+                                        });
+                                }
+                                else // Lookup by ID
+                                    api.getAsync(v)
+                                        .then(function (res) {
+
+                                            if ($(selectControl).find(`option[value=${v}]`).length == 0) {
+                                                var obj = res;
+                                                if($scope.selector)
+                                                    obj = obj[$scope.selector] || obj;
+                                                $(selectControl)[0].add(new Option(renderObject(obj), v, false, true));
+                                                $(selectControl).trigger('change.select2');
+                                            }
+                                        });
                             });
                         }
                     }
@@ -117,17 +158,16 @@ angular.module('santedb-lib')
             ],
             link: function (scope, element, attrs, ngModel) {
                 $timeout(function () {
-                    var modelType = attrs.model || attrs.type;
-                    var filterString = attrs.filter;
-                    var displayString = attrs.display;
-                    var searchProperty = attrs.searchField || "name.component.value";
-                    var defaultResults = attrs.default;
-                    var groupString = attrs.groupBy;
-                    var groupDisplayString = attrs.groupDisplay;
-                    var resultProperty = attrs.resultfield || "id";
-                    var filter = {}, defaultFilter = {};
-                    if (filterString !== undefined)
-                        filter = JSON.parse(filterString);
+                    var modelType = scope.type;
+                    var filter = scope.filter;
+                    var displayString = scope.display;
+                    var searchProperty = scope.searchField || "name.component.value";
+                    var defaultResults = scope.defaultResults;
+                    var groupString = scope.groupBy;
+                    var groupDisplayString = scope.groupDisplay;
+                    var resultProperty = scope.key || "id";
+                    var selector = scope.selector;
+                    var filter = {};
 
                     // Bind select 2 search
                     $(element).select2({
@@ -172,6 +212,10 @@ angular.module('santedb-lib')
 
                                 if (groupString == null && data !== undefined) {
                                     retVal.results = retVal.results.concat($.map(data, function (o) {
+
+                                        if(selector && o[selector])
+                                            o = o[selector];
+
                                         var text = "";
                                         if (displayString) {
                                             scope = o;
@@ -181,7 +225,7 @@ angular.module('santedb-lib')
                                             text = renderObject(o);
                                         }
                                         o.text = o.text || text;
-                                        o.id = o[resultProperty];
+                                        o.id = eval(`o.${resultProperty}`) || o.id;
                                         return o;
                                     }));
                                 }
@@ -263,7 +307,8 @@ angular.module('santedb-lib')
                 itemActions: "<",
                 actions: "<",
                 render: "<",
-                i18nPrefix: "<"
+                i18nPrefix: "<",
+                multiSelect: "<"
             },
             restrict: 'E',
             replace: true,
@@ -294,6 +339,8 @@ angular.module('santedb-lib')
                                     } : null
                         };
                     });
+
+                    // Add ID
                     columns.unshift({ data: "id", visible: false });
 
                     // Add buttons 
@@ -307,8 +354,9 @@ angular.module('santedb-lib')
                                     else
                                         retVal += `<a title="${SanteDB.locale.getString('ui.action.' + b.name)}" href="" ng-click="$parent.${b.action}('${r.id}', ${m.row})" class="btn ${(b.className || 'btn-default')}">`;
                                     retVal += `<i class="${b.icon || 'fas fas-eye-open'}"></i>&nbsp;`;
+                                    
                                     if(b.name)
-                                        retVal += `<span class="d-sm-none d-lg-inline">${SanteDB.locale.getString('ui.action.' + b.name)}</span>`;
+                                        retVal += `<span class="d-sm-none d-lg-inline">${SanteDB.locale.getString(b.label || 'ui.action.' + b.name)}</span>`;
                                     retVal += "</a>";
 
                                 });
@@ -332,12 +380,31 @@ angular.module('santedb-lib')
                     buttons.push(
                         {
                             text: "<i class='fas fa-sync-alt'></i> " + SanteDB.locale.getString("ui.action.reload"),
-                            className: "btn btn-info",
+                            className: "btn btn-success",
                             action: function (e, dt, node, config) {
                                 dt.ajax.reload();
                             }
                         }
                     );
+
+                    // Add a show obsolete button
+                    buttons.push({
+                        text: "<i class='fas fa-check-double'></i> " + SanteDB.locale.getString("ui.action.showAll"),
+                        className: "btn btn-info",
+                        action: function(e, dt, node, config) {
+                            if(scope.oldQuery) {
+                                scope.defaultQuery = scope.oldQuery;
+                                scope.oldQuery = undefined;
+                                $("button.btn-info:has(i.fa-check-double)", element).removeClass("active");
+                            }
+                            else {
+                                scope.oldQuery = scope.defaultQuery;
+                                scope.defaultQuery = {};
+                                $("button.btn-info:has(i.fa-check-double)", element).addClass("active");
+                            }
+                            dt.ajax.reload();
+                        }
+                    });
 
                     dt = $("table", element).DataTable({
                         lengthChange: false,
@@ -415,4 +482,21 @@ angular.module('santedb-lib')
             }
             // controller: ['$scope', 'BreadcrumbService', function ($scope, BreadcrumbService) { BreadcrumbService.generate(); $scope.breadcrumbList = BreadcrumbService.list; }]
         };
-    }]);
+    }])
+    .directive("inputCopyButton", function() {
+        return {
+            restrict: 'E',
+            replace: true,
+            templateUrl: './org.santedb.uicore/directives/inputCopy.html',
+            scope: {
+                source: '='
+            },
+            controller: ["$scope", function($scope) {
+                $scope.copyInput = function() {
+                    if(navigator.clipboard) 
+                        navigator.clipboard.writeText($scope.source);
+                    
+                }
+            }]
+        }
+    });
