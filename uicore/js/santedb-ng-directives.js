@@ -122,7 +122,7 @@ angular.module('santedb-lib')
                             $(selectControl).find('option[value="? undefined:undefined ?"]').remove();
                             value.forEach(function (v) {
 
-                                if($scope.key != "id") {
+                                if($scope.key && $scope.key != "id") {
                                     var query = {};
                                     query[$scope.key] = v;
                                     api.findAsync(query)
@@ -483,6 +483,12 @@ angular.module('santedb-lib')
             // controller: ['$scope', 'BreadcrumbService', function ($scope, BreadcrumbService) { BreadcrumbService.generate(); $scope.breadcrumbList = BreadcrumbService.list; }]
         };
     }])
+    /**
+     * @method inputCopyButton
+     * @memberof Angular
+     * @summary Creates an input button with an easy copy button
+     * @param {string} source The source copy
+     */
     .directive("inputCopyButton", function() {
         return {
             restrict: 'E',
@@ -498,5 +504,48 @@ angular.module('santedb-lib')
                     
                 }
             }]
+        }
+    })
+    /**
+     * @method tagInput
+     * @memberof Angular
+     * @summary Creates a tagged input
+     */
+    .directive("tagInput", function() {
+        return {
+            require: 'ngModel',
+            restrict: 'E',
+            replace: true,
+            templateUrl: './org.santedb.uicore/directives/tagInput.html',
+            scope: {
+
+            },
+            link: function(scope, element, attrs, ngModel) {
+
+                // Parsers
+                ngModel.$parsers.unshift(function(viewValue) {
+                    if (Array.isArray(viewValue))
+                        return viewValue.join(",")
+                    return viewValue.split(",");
+                });
+                ngModel.$formatters.unshift(function(viewValue) {
+                    return String(viewValue).split(',');
+                });
+
+                // Token field initialization
+                $(element).tokenfield({
+                    createTokensOnBlur: true,
+                    delimiter: [',', ' ']
+                });
+
+                ngModel.$render = function () {
+                    var viewValue = ngModel.$viewValue;
+                    if(Array.isArray(viewValue)) 
+                        $(element).tokenfield('setTokens', viewValue);
+                    else if(viewValue)
+                        $(element).tokenfield('setTokens', viewValue.split(','));
+                    //$(element).trigger('change');
+                };
+            }
         }
     });

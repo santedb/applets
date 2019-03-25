@@ -65,7 +65,7 @@ angular.module('santedb').controller('InitialSettingsController', ['$scope', '$r
             $scope.config.sync = $scope.config.sync || {};
             $scope.config.sync.mode = "sync";
             $scope.config.sync.subscribeType = "Facility";
-            $scope.config.log.mode = $scope.config.log.trace[0].filter || "Warning";
+            $scope.config.log.mode = $scope.config.log.writers[0].filter || "Warning";
             $scope.config.sync._resource = {};
             $scope.config.data = {
                 provider: "sqlite",
