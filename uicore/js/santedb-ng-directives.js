@@ -65,6 +65,9 @@ angular.module('santedb-lib')
             }
             retVal += "&nbsp;";
 
+            if(selection.typeConceptModel) {
+                retVal += `<span class="badge badge-info">${SanteDB.display.renderConcept(selection.typeConceptModel)}</span> `;
+            }
 
             if (selection.name != null && selection.name.OfficialRecord != null)
                 retVal += SanteDB.display.renderEntityName(selection.name.OfficialRecord);
@@ -167,7 +170,6 @@ angular.module('santedb-lib')
                     var groupDisplayString = scope.groupDisplay;
                     var resultProperty = scope.key || "id";
                     var selector = scope.selector;
-                    var filter = {};
 
                     // Bind select 2 search
                     $(element).select2({

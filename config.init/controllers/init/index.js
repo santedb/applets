@@ -141,7 +141,10 @@ angular.module('santedb').controller('InitialSettingsController', ['$scope', '$r
         if (n)
             $scope.config.sync.subscribe.forEach(function (sid) {
                 var existingInfo = $scope.reference[$scope.config.sync.subscribeType.toLowerCase()].find(function (p) { return p.id === sid });
-                if (!existingInfo)
+                if (!existingInfo) {
+                    SanteDB.display.buttonWait("#selectAllButton", true);
+                    $("#nextButton").prop("disabled", true);
+
                     SanteDB.resources[$scope.config.sync.subscribeType.toCamelCase()].getAsync(sid).then(function (placeInfo) {
                         $scope.reference[$scope.config.sync.subscribeType.toLowerCase()].push(placeInfo);
                         try {
@@ -149,6 +152,7 @@ angular.module('santedb').controller('InitialSettingsController', ['$scope', '$r
                         }
                         catch (e) { }
                     });
+                }
             });
     });
 
