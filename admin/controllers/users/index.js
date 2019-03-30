@@ -1,5 +1,6 @@
 angular.module('santedb').controller('UserIndexController', ["$scope", "$rootScope", "$state", "$templateCache", function ($scope, $rootScope, $state, $templateCache) {
 
+    $scope.UserClassKeys = UserClassKeys;
     /**
      * @summary Delete the specified user
      */

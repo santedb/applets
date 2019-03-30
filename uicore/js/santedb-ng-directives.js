@@ -125,9 +125,11 @@ angular.module('santedb-lib')
                             $(selectControl).find('option[value="? undefined:undefined ?"]').remove();
                             value.forEach(function (v) {
 
+                                // Key selector is ID
                                 if($scope.key && $scope.key != "id") {
                                     var query = {};
                                     query[$scope.key] = v;
+                                    query._viewModel = "dropdown";
                                     api.findAsync(query)
                                         .then(function(res) {
                                             // Matching item
@@ -143,7 +145,7 @@ angular.module('santedb-lib')
                                         });
                                 }
                                 else // Lookup by ID
-                                    api.getAsync(v)
+                                    api.getAsync({ id: v, viewModel: "dropdown" })
                                         .then(function (res) {
 
                                             if ($(selectControl).find(`option[value=${v}]`).length == 0) {

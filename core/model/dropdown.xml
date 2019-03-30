@@ -18,7 +18,7 @@
  - User: justin
  - Date: 2018-7-23
  -->
-<ViewModel xmlns="http://satendb.org/model/view">
+<ViewModel xmlns="http://santedb.org/model/view">
   <include>base</include>
 
   <type type="ActProtocol" all="false">
@@ -85,6 +85,7 @@
   <type type="Place" all="true">
     <property name="name" all="true" ref="EntityName" behavior="always"/>
     <property name="address" all="true" ref="EntityAddress" behavior="always"/>
+    <property name="typeConceptModel" all="true" ref="Concept" behavior="always"/>
   </type>
 
 </ViewModel>

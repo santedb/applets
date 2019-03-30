@@ -31,7 +31,7 @@
         id="SecurityUserTable"
         type="SecurityUser" 
         search-field="userName" 
-        default-query="{ 'obsoletionTime' : 'null' }"
+        default-query="{ 'obsoletionTime' : 'null', 'userClass' : UserClassKeys.HumanUser }"
         property-path="entity"
         i18n-prefix="'ui.admin.users.'"
         render="{ lockout: 'renderLockout', updatedBy: 'renderUpdatedBy' }"

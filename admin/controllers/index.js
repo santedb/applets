@@ -1,4 +1,5 @@
 /// <reference path="../../core/js/santedb.js"/>
+/// <reference path="../../core/js/santedb-model.js"/>
 /*
  * Copyright 2015-2018 Mohawk College of Applied Arts and Technology
  *

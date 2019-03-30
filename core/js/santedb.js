@@ -413,12 +413,16 @@ if (!SanteDBWrapper)
                 * @param {any} state A unique state object which is passed back to the caller
                 * @returns {Promise} The promise for the operation
                 */
-            this.getAsync = function (id, state) {
+            this.getAsync = function (id, viewModel, state) {
 
                 // Prepare query
                 var url = null;
-                if (id)
-                    url = `${_config.resource}/${id}`;
+                if (id) {
+                    if(id.id)
+                        url = `${_config.resource}/${id.id}`;
+                    else 
+                        url = `${_config.resource}/${id}`;
+                }
                 else
                     url = _config.resource;
 
@@ -427,6 +431,8 @@ if (!SanteDBWrapper)
                 };
                 if (_config.viewModel)
                     headers["X-SanteDB-ViewModel"] = _config.viewModel;
+                else if (id && id.viewModel)
+                    headers["X-SanteDB-ViewModel"] = id.viewModel;
 
                 return _config.api.getAsync({
                     headers: headers,

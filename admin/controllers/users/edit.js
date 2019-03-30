@@ -1,6 +1,8 @@
 /// <reference path="../../../core/js/santedb.js"/>
 angular.module('santedb').controller('EditUserController', ["$scope", "$rootScope", "$state", "$templateCache", "$stateParams", function ($scope, $rootScope, $state, $templateCache, $stateParams) {
 
+    $scope.EntityClassKeys = EntityClassKeys;
+    
     // Get the specified user
     if ($stateParams.id) {
         $scope.isLoading = true;

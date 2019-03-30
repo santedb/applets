@@ -156,7 +156,7 @@ SanteDBWrapper.prototype.display = {
         // Render address
         if (!address)
             return "";
-        else {
+        else if(address.component){
             var addrStr = "";
             if (address.component.AdditionalLocator)
                 addrStr += address.component.AdditionalLocator + ", ";
