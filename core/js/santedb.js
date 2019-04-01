@@ -117,8 +117,10 @@ if (!SanteDBWrapper)
                         contentType: configuration.contentType || 'application/json',
                         headers: configuration.headers,
                         async: !configuration.sync,
-                        success: function (xhr) {
+                        success: function (xhr, status, response) {
                             try {
+                                if(xhr)
+                                    xhr.etag = response.getResponseHeader("etag");
                                 if (fulfill) fulfill(xhr, configuration.state);
                             }
                             catch (e) {
@@ -168,7 +170,61 @@ if (!SanteDBWrapper)
                         contentType: configuration.contentType || 'application/json',
                         headers: configuration.headers,
                         async: !configuration.sync,
-                        success: function (xhr) {
+                        success: function (xhr, status, response) {
+                            try {
+                                if(xhr)
+                                    xhr.etag = response.getResponseHeader("etag");
+                                if (fulfill) fulfill(xhr, configuration.state);
+                            }
+                            catch (e) {
+                                if (reject) reject(e.responseJSON || e, configuration.state);
+                            }
+                        },
+                        error: function (e, data, setting) {
+                            if (_globalErrorHandler(e, data, setting))
+                                return;
+                            var error = e.responseJSON;
+
+                            if (reject) {
+                                if (error && error.error !== undefined) // oauth2
+                                    reject(new Exception(error.type, error.error, error.error_description, error.caused_by), configuration.state);
+                                else if (error && (error.$type === "Exception" || error.$type))
+                                    reject(new Exception(error.$type, error.message, error.detail, error.cause, error.stack, error.policy, error.rules), configuration.state);
+                                else
+                                    reject(new Exception("HttpException", "error.http." + e.status, e, null), configuration.state);
+                            }
+                            else
+                                console.error("UNHANDLED PROMISE REJECT: " + JSON.stringify(e));
+                        }
+                    });
+                });
+            };
+
+
+            /**
+                * @method
+                * @memberof SanteDBWrapper.APIWrapper
+                * @summary Patches an existing item on the instance
+                * @param {any} configuration The configuration object
+                * @param {string} configuration.resource The resource that is to be posted
+                * @param {any} configuration.data The data that is to be posted
+                * @param {any} configuration.state A piece of state data which is passed back to the caller for state tracking
+                * @param {boolean} configuration.sync When true, executes the request in synchronous mode
+                * @param {string} configuration.id The identifier of the object on the interface to update
+                * @param {string} configuration.contentType Identifies the content type of the data
+                * @returns {Promise} The promise for the operation
+                */
+               this.patchAsync = function (configuration) {
+                return new Promise(function (fulfill, reject) {
+                    $.ajax({
+                        method: 'PATCH',
+                        url: _config.base + configuration.resource + (_config.idByQuery ? "?_id=" + configuration.id : "/" + configuration.id),
+                        data: configuration.contentType.indexOf('application/json') == 0 ? JSON.stringify(configuration.data) : configuration.data,
+                        dataType: 'json',
+                        contentType: configuration.contentType || 'application/json',
+                        headers: configuration.headers,
+                        async: !configuration.sync,
+                        success: function (xhr, status, response) {
                             try {
                                 if (fulfill) fulfill(xhr, configuration.state);
                             }
@@ -216,8 +272,10 @@ if (!SanteDBWrapper)
                         dataType: 'json',
                         headers: configuration.headers,
                         async: !configuration.sync,
-                        success: function (xhr) {
+                        success: function (xhr, status, response) {
                             try {
+                                if(xhr)
+                                    xhr.etag = response.getResponseHeader("etag");
                                 if (fulfill) fulfill(xhr, configuration.state);
                             }
                             catch (e) {
@@ -269,8 +327,10 @@ if (!SanteDBWrapper)
                         contentType: configuration.contentType || 'application/json',
                         headers: configuration.headers,
                         async: !configuration.sync,
-                        success: function (xhr) {
+                        success: function (xhr, status, response) {
                             try {
+                                if(xhr)
+                                    xhr.etag = response.getResponseHeader("etag");
                                 if (fulfill) fulfill(xhr, configuration.state);
                             }
                             catch (e) {
@@ -317,8 +377,10 @@ if (!SanteDBWrapper)
                         url: _config.base + configuration.resource + (configuration.id ? (_config.idByQuery ? "?_id=" + configuration.id : "/" + configuration.id) : ""),
                         headers: configuration.headers,
                         async: !configuration.sync,
-                        success: function (xhr) {
+                        success: function (xhr, status, response) {
                             try {
+                                if(xhr)
+                                    xhr.etag = response.getResponseHeader("etag");
                                 if (fulfill) fulfill(xhr, configuration.state);
                             }
                             catch (e) {
@@ -358,15 +420,17 @@ if (!SanteDBWrapper)
                 * @param {string} configuration.contentType Identifies the content type of the data
                 * @returns {Promise} The promise for the operation
                 */
-               this.unLockAsync = function (configuration) {
+            this.unLockAsync = function (configuration) {
                 return new Promise(function (fulfill, reject) {
                     $.ajax({
                         method: 'UNLOCK',
                         url: _config.base + configuration.resource + (configuration.id ? (_config.idByQuery ? "?_id=" + configuration.id : "/" + configuration.id) : ""),
                         headers: configuration.headers,
                         async: !configuration.sync,
-                        success: function (xhr) {
+                        success: function (xhr, status, response) {
                             try {
+                                if(xhr)
+                                    xhr.etag = response.getResponseHeader("etag");
                                 if (fulfill) fulfill(xhr, configuration.state);
                             }
                             catch (e) {
@@ -418,9 +482,9 @@ if (!SanteDBWrapper)
                 // Prepare query
                 var url = null;
                 if (id) {
-                    if(id.id)
+                    if (id.id)
                         url = `${_config.resource}/${id.id}`;
-                    else 
+                    else
                         url = `${_config.resource}/${id}`;
                 }
                 else
@@ -517,6 +581,35 @@ if (!SanteDBWrapper)
                     resource: _config.resource
                 });
             };
+
+            /**
+             * @method
+             * @memberof SantedBWrapper.ResourceWrapper
+             * @summary Sends a patch to the service
+             * @param {string} id The identifier of the object to patch
+             * @param {string} etag The e-tag to assert
+             * @param {Patch} patch The patch to be applied
+             * @param {any} state A unique state object which is passed back to the caller
+             * @returns {Promise} The promise for the operation
+             */
+            this.patchAsync = function (id, etag, patch, state) {
+                if (patch.$type !== "Patch")
+                    throw new Exception("ArgumentException", "error.invalidType", `Invalid type, resource wrapper expects ${_config.resource} however ${data.$type} specified`);
+                else if(etag == null)
+                    throw new Exception("ArgumentException", "error.invalidArgument", `Missing etag parameter`);
+
+                // Send PUT
+                return _config.api.patchAsync({
+                    headers: {
+                        "If-Match" : etag
+                    },
+                    data: patch,
+                    id: id,
+                    state: state,
+                    contentType: "application/json+sdb-patch",
+                    resource: _config.resource
+                });
+            }
 
             /**
                 * @method
@@ -703,6 +796,26 @@ if (!SanteDBWrapper)
 
         // App controller internal
         var _application = {
+            /**
+             * @summary Calculates the strength of the supplied password
+             * @param {*} password The password
+             * @returns {number} The strength of the password between 0 and 5
+             */
+            calculatePasswordStrength: function(password) {
+                var strength = 0;
+                if (password.length >= 6) {
+                    strength++;
+                    if(password.length > 10)
+                        strength++;
+                    if (/(?=.*[a-z])(?=.*[A-Z])/.test(password))
+                        strength++;
+                    if (/(?:[^A-Za-z0-9]{1,})/.test(password))
+                        strength++;
+                    if (/(?:[0-9]{1,})/.test(password))
+                        strength++;
+                }
+                return strength;
+            },
             /**
              * Get the specified widgets
              * @param context The context to fetch widgets for
@@ -1245,7 +1358,7 @@ if (!SanteDBWrapper)
                 * @summary A resource wrapper for alerts which are messages between users
                 */
             mail: new ResourceWrapper({
-                accept:  _viewModelJsonMime,
+                accept: _viewModelJsonMime,
                 resource: "Mail",
                 api: _ami
             }),
@@ -1265,7 +1378,7 @@ if (!SanteDBWrapper)
                 * @summary A wrapper for locale information which comes from the server
                 */
             locale: new ResourceWrapper({
-                accept:  _viewModelJsonMime,
+                accept: _viewModelJsonMime,
                 resource: "Locale",
                 api: _app
             }),
@@ -1275,7 +1388,7 @@ if (!SanteDBWrapper)
              * @summary Wrapper for Security USers
              */
             securityUser: new ResourceWrapper({
-                accept:  _viewModelJsonMime,
+                accept: _viewModelJsonMime,
                 resource: "SecurityUser",
                 api: _ami
             }),
@@ -1285,7 +1398,7 @@ if (!SanteDBWrapper)
              * @summary Wrapper for Security Roles
              */
             securityRole: new ResourceWrapper({
-                accept:  _viewModelJsonMime,
+                accept: _viewModelJsonMime,
                 resource: "SecurityRole",
                 api: _ami
             }),
@@ -1295,7 +1408,7 @@ if (!SanteDBWrapper)
              * @summary Wrapper for Security Devices
              */
             securityDevice: new ResourceWrapper({
-                accept:  _viewModelJsonMime,
+                accept: _viewModelJsonMime,
                 resource: "SecurityDevice",
                 api: _ami
             }),
@@ -1305,7 +1418,7 @@ if (!SanteDBWrapper)
              * @summary Wrapper for Security Applications
              */
             securityApplication: new ResourceWrapper({
-                accept:  _viewModelJsonMime,
+                accept: _viewModelJsonMime,
                 resource: "SecurityApplication",
                 api: _ami
             }),
@@ -1315,7 +1428,7 @@ if (!SanteDBWrapper)
              * @summary Wrapper for Security Policies
              */
             securityPolicy: new ResourceWrapper({
-                accept:  _viewModelJsonMime,
+                accept: _viewModelJsonMime,
                 resource: "SecurityPolicy",
                 api: _ami
             }),

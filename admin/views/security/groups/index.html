@@ -18,16 +18,25 @@
  - Date: 2018-11-14
  -->
 <div xmlns="http://www.w3.org/1999/xhtml" xmlns:sdb="http://santedb.org/applet">
-    <sdb:state name="santedb-admin.security.groups" abstract="false">
+    <sdb:script static="false">~/controllers/groups/index.js</sdb:script>
+    <sdb:state name="santedb-admin.security.groups.list" abstract="false">
         <sdb:demand>1.3.6.1.4.1.33349.3.1.5.9.2.0.3</sdb:demand>
-        <sdb:url>/groups</sdb:url>
+        <sdb:url></sdb:url>
         <sdb:view>
-            <sdb:title lang="en">Groups</sdb:title>
+            <sdb:controller>GroupIndexController</sdb:controller>
+            <sdb:title lang="en">Index</sdb:title>
         </sdb:view>
     </sdb:state>
-    <entity-table type="SecurityRole" 
+    <entity-table 
+        id="SecurityRoleTable"
+        type="SecurityRole" 
         search-field="name" 
+        default-query="{ 'obsoletionTime' : 'null' }"
         property-path="entity"
-        properties="[ 'name', 'description' ]">
+        i18n-prefix="'ui.admin.groups.'"
+        render="{ updatedBy : 'renderUpdatedBy', state: 'renderState' }"
+        properties="[ 'name', 'description', 'state', 'updatedBy' ]"
+        item-actions="[ { name: 'edit', sref: 'santedb-admin.security.groups.edit', demand: '1.3.6.1.4.1.33349.3.1.5.9.2.0.3', className: 'btn-primary', icon: 'fa fa-pencil-alt' }, { name: 'delete', action: 'delete', demand: '1.3.6.1.4.1.33349.3.1.5.9.2.0.3', className: 'btn-danger', icon: 'fa fa-trash' } ]"
+        actions="[ { name: 'create', demand: '1.3.6.1.4.1.33349.3.1.5.9.2.0.2', sref: 'santedb-admin.security.groups.create', className: 'btn-primary', icon: 'fa fa-plus-circle' }]">
     </entity-table>
 </div>

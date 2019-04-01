@@ -85,19 +85,7 @@ angular.module("santedb").controller("PasswordController", ['$scope', '$rootScop
      * @summary Watch for password changes
      */
     $scope.$watch("password.entity.password", function (n, o) {
-        if(n) {
-            $scope.strength = 0;
-            if (n.length >= 6) {
-                $scope.strength++;
-                if(n.length > 10)
-                    $scope.strength++;
-                if (/(?=.*[a-z])(?=.*[A-Z])/.test(n))
-                    $scope.strength++;
-                if (/(?:[^A-Za-z0-9]{1,})/.test(n))
-                    $scope.strength++;
-                if (/(?:[0-9]{1,})/.test(n))
-                    $scope.strength++;
-            }
-        }
-    })
+        if(n) 
+            $scope.strength = SanteDB.application.calculatePasswordStrength(n);
+    });
 }]);

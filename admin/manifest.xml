@@ -87,11 +87,31 @@
     <string key="ui.admin.users.confirmLock">Are you sure you want to lock this user account?</string>
     <string key="ui.admin.users.confirmUnlock">Are you sure you want to unlock this user account?</string>
     <string key="ui.admin.users.systemUser">This action cannot be performed on a system user</string>
-
+    <string key="ui.admin.users.reactivate.confirm">Are you sure you want to reactivate this user account?</string>
+    <string key="ui.admin.users.invalidLogin.reset">Are you sure you want to reset this user's invalid login count?</string>
+    <string key="ui.admin.users.duplicateUser">Username is already taken by another user</string>
     <!-- Strings for User Edit Screen -->
     <string key="ui.admin.users.edit.core.title">Core Properties</string>
     <string key="ui.admin.users.edit.security.title">Security Properties</string>
     <string key="ui.admin.users.edit.demographics.title">Demographic Properties</string>
     <string key="ui.admin.users.edit.security.neverLoggedIn">User has never logged in</string>
+
+    <!-- Strings for Groups -->
+    <string key="ui.admin.groups.name">Role Name</string>
+    <string key="ui.admin.groups.description">Description</string>
+    <string key="ui.admin.groups.state">Status</string>
+    <string key="ui.admin.groups.updatedBy">Last Update</string>
+    
+    <!-- Strings for policy -->
+    <string key="ui.admin.policy.oid">OID</string>
+    <string key="ui.admin.policy.name">Policy Name</string>
+    <string key="ui.admin.policy.updatedBy">Last Update</string>
+    <string key="ui.admin.policy.state">Status</string>
+
+    <!-- Strings for Devices -->
+    <string key="ui.admin.devices.name">Device Name</string>
+    <string key="ui.admin.devices.lastAuthenticationTime">Last Auth</string>
+    <string key="ui.admin.devices.state">Status</string>
+    <string key="ui.admin.devices.updatedBy">Last Update</string>
   </strings>
 </AppletManifest>

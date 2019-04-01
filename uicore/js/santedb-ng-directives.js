@@ -43,6 +43,9 @@ angular.module('santedb-lib')
                 case "Place":
                     retVal += "<i class='fa fa-map-pin'></i> ";
                     break;
+                case "Organization":
+                    retVal += "<i class='fa fa-building'></i> ";
+                    break;
                 case "Entity":
                     retVal += "<i class='fa fa-share-alt'></i> ";
                     break;
@@ -123,6 +126,9 @@ angular.module('santedb-lib')
                                 value = [value];
 
                             $(selectControl).find('option[value="? undefined:undefined ?"]').remove();
+                            $(selectControl).find("option[value='loading']").remove();
+                            $(selectControl)[0].add(new Option(`<i class='fa fa-circle-notch fa-spin'></i> ${SanteDB.locale.getString("ui.wait")}`, "loading", true, true));
+
                             value.forEach(function (v) {
 
                                 // Key selector is ID
@@ -132,6 +138,8 @@ angular.module('santedb-lib')
                                     query._viewModel = "dropdown";
                                     api.findAsync(query)
                                         .then(function(res) {
+                                            $(selectControl).find("option[value='loading']").remove();
+
                                             // Matching item
                                             if(res.item.length == 1)
                                                 if ($(selectControl).find(`option[value=${v}]`).length == 0) {
@@ -147,6 +155,7 @@ angular.module('santedb-lib')
                                 else // Lookup by ID
                                     api.getAsync({ id: v, viewModel: "dropdown" })
                                         .then(function (res) {
+                                            $(selectControl).find("option[value='loading']").remove();
 
                                             if ($(selectControl).find(`option[value=${v}]`).length == 0) {
                                                 var obj = res;
@@ -324,6 +333,9 @@ angular.module('santedb-lib')
             ],
             link: function (scope, element, attrs, ngModel) {
 
+                var lastQuery = "";
+                var queryId = null;
+
                 $timeout(function () {
 
                     scope.propertyPath = attrs.propertyPath;
@@ -332,7 +344,7 @@ angular.module('santedb-lib')
                         var renderer = scope.render ? scope.render[m] : null;
 
                         return {
-
+                            orderable: renderer == null,
                             data: m,
                             render: renderer ?
                                 function (d, t, r) { return scope.$parent[renderer](r) } :
@@ -386,6 +398,7 @@ angular.module('santedb-lib')
                             text: "<i class='fas fa-sync-alt'></i> " + SanteDB.locale.getString("ui.action.reload"),
                             className: "btn btn-success",
                             action: function (e, dt, node, config) {
+                                queryId = SanteDB.application.newGuid();
                                 dt.ajax.reload();
                             }
                         }
@@ -431,6 +444,13 @@ angular.module('santedb-lib')
                             if (scope.extenral)
                                 query["_extern"] = true;
 
+                            var thisQuery = JSON.stringify(query);
+                            if(lastQuery != thisQuery) {
+                                lastQuery = thisQuery;
+                                queryId = SanteDB.application.newGuid();
+                            }
+
+                            query["_queryId"] = queryId;
                             query["_count"] = data.length;
                             query["_offset"] = data.start;
 
@@ -533,7 +553,8 @@ angular.module('santedb-lib')
                     return viewValue.split(",");
                 });
                 ngModel.$formatters.unshift(function(viewValue) {
-                    return String(viewValue).split(',');
+                    if(viewValue)
+                        return String(viewValue).split(',');
                 });
 
                 // Token field initialization

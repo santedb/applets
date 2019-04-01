@@ -90,6 +90,7 @@
     <string key="ui.password.strength.highhigh">Very Strong</string>
     <string key="ui.password.strength.label">Strength</string>
     <string key="ui.password.error.mismatch">Passwords must match</string>
+
     <!-- Common Errors -->
     <string key="ui.error.title">System Error</string>
     <string key="ui.error.description">Additional details follow:</string>
@@ -119,6 +120,7 @@
     <string key="ui.state.cancelled">Cancelled</string>
     <string key="ui.state.nullified">Nullified</string>
     <string key="ui.state.locked">Locked</string>
+
     <!-- Common Action buttons -->
     <string key="ui.action">Actions</string>
     <string key="ui.action.ok">Ok</string>
@@ -140,12 +142,12 @@
     <string key="ui.action.selectAll">Select All</string>
     <string key="ui.action.selectNone">Select None</string>
     <string key="ui.action.lock">Lock</string>
+    <string key="ui.action.unlock">Unlock</string>
     <string key="ui.action.showAll">Show All</string>
     <string key="ui.wait">Please Wait...</string>
     <string key="ui.search">Searching</string>
     <string key="ui.action.reset">Reset</string>
     <string key="ui.action.reactivate">Re-Activate</string>
-
     <string key="ui.pref.nevershow">Never show this message again</string>
 
     <!-- Subscription Type Translations -->
@@ -328,6 +330,13 @@
     <string key="ui.model.securityUser.title">User</string>
     <string key="ui.model.securityUser.password">Password</string>
     <string key="ui.model.securityRole.title">Role</string>
+    <string key="ui.model.securityUser.email">E-Mail Address</string>
+    <string key="ui.model.securityUser.phoneNumber">Phone Number</string>
+    <string key="ui.model.userEntity.givenName">Given Name</string>
+    <string key="ui.model.userEntity.familyName">Family Name</string>
+    <string key="ui.model.userEntity.relationship.DedicatedServiceDeliveryLocation">Primary Facility</string>
+    <string key="ui.model.userEntity.relationship.Employee">Employer</string>
+    <string key="ui.model.securityUser.lockout">Locked Until</string>
   </strings>
 
 </AppletManifest>

@@ -8,10 +8,11 @@ angular.module('santedb').controller('EditUserController', ["$scope", "$rootScop
         $scope.isLoading = true;
         SanteDB.resources.securityUser.getAsync($stateParams.id)
             .then(function (u) {
-                $scope.isLoading = !$scope.user;
-                $scope.user = $scope.user || {};
-                $scope.user.role = u.role;
-                $scope.user.securityUser = u.entity;
+                $scope.isLoading = !$scope.target;
+                $scope.target = $scope.target || {};
+                $scope.target.role = u.role;
+                $scope.target.securityUser = u.entity;
+                $scope.target.securityUser.etag = u.etag;
                 $scope.$apply();
             })
             .catch($rootScope.errorHandler);
@@ -19,13 +20,13 @@ angular.module('santedb').controller('EditUserController', ["$scope", "$rootScop
         // Get the related user entity at the same time
         SanteDB.resources.userEntity.findAsync({ securityUser: $stateParams.id })
             .then(function (u) {
-                $scope.isLoading = !$scope.user;
-                $scope.user = $scope.user || {};
+                $scope.isLoading = !$scope.target;
+                $scope.target = $scope.target || {};
 
                 if (u.item && u.item.length > 0)
-                    $scope.user.entity = u.item[0];
+                    $scope.target.entity = u.item[0];
                 else
-                    $scope.user.entity = new UserEntity();
+                    $scope.target.entity = new UserEntity();
 
                 $scope.$apply();
             })
@@ -33,7 +34,7 @@ angular.module('santedb').controller('EditUserController', ["$scope", "$rootScop
     }
     else  // New user
     {
-        $scope.user = {
+        $scope.target = {
             securityUser: new SecurityUser(),
             entity: new UserEntity(),
             roles: []
@@ -42,16 +43,16 @@ angular.module('santedb').controller('EditUserController', ["$scope", "$rootScop
         /**
          * @summary Watch for changes to the username if we're creating and warn of duplicates
          */
-        $scope.$watch("user.securityUser.userName", function (n, o) {
+        $scope.$watch("target.securityUser.userName", function (n, o) {
             if (n && n.length > 3) {
                 SanteDB.display.buttonWait("#usernameCopyButton button", true, true);
                 SanteDB.resources.securityUser.findAsync({ userName: n })
                     .then(function (r) {
                         SanteDB.display.buttonWait("#usernameCopyButton button", false, true);
                         if (r.item.length > 0) // Alert error for duplicate
-                            $scope.userForm.username.$setValidity('duplicate', false);
+                            $scope.targetForm.username.$setValidity('duplicate', false);
                         else
-                            $scope.userForm.username.$setValidity('duplicate', true);
+                            $scope.targetForm.username.$setValidity('duplicate', true);
 
                         try { $scope.$apply(); }
                         catch (e) { }
@@ -73,10 +74,10 @@ angular.module('santedb').controller('EditUserController', ["$scope", "$rootScop
 
         // Setup password change request
         $scope.password = {
-            id: $scope.user.securityUser.id,
+            id: $scope.target.securityUser.id,
             entity: {
-                userName: $scope.user.securityUser.userName,
-                id: $scope.user.securityUser.id,
+                userName: $scope.target.securityUser.userName,
+                id: $scope.target.securityUser.id,
                 password: null
             },
             passwordOnly : true
@@ -90,4 +91,100 @@ angular.module('santedb').controller('EditUserController', ["$scope", "$rootScop
         });
 
     }
+
+    /**
+     * @summary Reactivate Inactive User
+     */
+    $scope.reactivateUser = function() {
+        if(!confirm(SanteDB.locale.getString("ui.admin.users.reactivate.confirm")))
+            return;
+        
+        var patch = new Patch({
+            change: [
+                new PatchOperation({
+                    op: PatchOperationType.Remove,
+                    path: 'obsoletionTime',
+                    value: null
+                }),
+                new PatchOperation({
+                    op: PatchOperationType.Remove,
+                    path: 'obsoletedBy',
+                    value: null
+                })
+            ]
+        });
+
+        // Send the patch
+        SanteDB.display.buttonWait("#reactivateUserButton", true);
+        SanteDB.resources.securityUser.patchAsync($stateParams.id, $scope.target.securityUser.etag, patch)
+            .then(function(r) {
+                $scope.target.securityUser.obsoletionTime = null;
+                $scope.target.securityUser.obsoletedBy = null;
+                SanteDB.display.buttonWait("#reactivateUserButton", false);
+                $scope.$apply();
+            })
+            .catch(function(e) { 
+                $rootScope.errorHandler(e); 
+                SanteDB.display.buttonWait("#reactivateUserButton", false);
+            });
+
+    }
+
+    /**
+     * @summary Reset invalid logins
+     */
+    $scope.resetInvalidLogins = function() {
+        if(!confirm(SanteDB.locale.getString("ui.admin.users.invalidLogin.reset")))
+            return;
+
+        var patch = new Patch({
+            change: [
+                new PatchOperation({
+                    op: PatchOperationType.Replace,
+                    path: "invalidLoginAttempts",
+                    value: 0
+                })
+            ]
+        });
+
+        SanteDB.display.buttonWait("#resetInvalidLoginButton", true);
+        SanteDB.resources.securityUser.patchAsync($stateParams.id, $scope.target.securityUser.etag, patch)
+            .then(function(r) {
+                SanteDB.display.buttonWait("#resetInvalidLoginButton", false);
+                $scope.target.securityUser.invalidLoginAttempts = 0;
+                $scope.$apply();
+            })
+            .catch(function(e) {
+                $rootScope.errorHandler(e);
+                SanteDB.display.buttonWait("#resetInvalidLoginButton", false);
+            })
+    }
+
+     /**
+     * @summary Unlock user
+     */
+    $scope.unlock = function() {
+        if(!confirm(SanteDB.locale.getString("ui.admin.users.confirmUnlock")))
+            return;
+
+        SanteDB.display.buttonWait("#unlockButton", true);
+        SanteDB.resources.securityUser.unLockAsync($stateParams.id)
+            .then(function(r) {
+                SanteDB.display.buttonWait("#unlockButton", false);
+                $scope.target.securityUser.lockout = null;
+                $scope.$apply();
+            })
+            .catch(function(e) {
+                $rootScope.errorHandler(e);
+                SanteDB.display.buttonWait("#unlockButton", false);
+            })
+    }
+
+     /**
+     * @summary Watch for password changes
+     */
+    $scope.$watch("target.securityUser.password", function (n, o) {
+        if(n) 
+            $scope.strength = SanteDB.application.calculatePasswordStrength(n);
+    })
 }]);

@@ -216,16 +216,18 @@ var santedbApp = angular.module('santedb', ['ngSanitize', 'ui.router', 'oc.lazyL
                         $state.reload();
                         toastr.clear();
                     }).catch($rootScope.errorHandler);
-                else if (!$rootScope.extendToast) {
-                    _extendToast = toastr.warning(messageStr, {
+                else if (!_extendToast) {
+                    _extendToast = toastr.warning(messageStr, null, {
                         closeButton: false,
                         preventDuplicates: true,
                         onclick: function () {
                             SanteDB.authentication.refreshLoginAsync().then(function (s) { window.sessionStorage.setItem('token', s.access_token || s.token); $rootScope.session = s; _extendToast = null; toastr.clear(); }).catch($rootScope.errorHandler);
                         },
                         positionClass: "toast-bottom-center",
-                        timeOut: 0,
-                        extendedTimeout: 0
+                        showDuration: "0",
+                        hideDuration: "0",
+                        timeOut: "0",
+                        extendedTimeOut: "0"
                     });
                 }
                 else {
