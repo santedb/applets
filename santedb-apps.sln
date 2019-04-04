@@ -84,6 +84,24 @@ Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "i18n", "i18n\", "{ABF576BD-
 		Release.AspNetCompiler.FixedNames = "false"
 		Release.AspNetCompiler.Debug = "False"
 		VWDPort = "59411"
+	EndProjectSection
+	ProjectSection(WebsiteProperties) = preProject
+		TargetFrameworkMoniker = ".NETFramework,Version%3Dv4.0"
+		Debug.AspNetCompiler.VirtualPath = "/localhost_59411"
+		Debug.AspNetCompiler.PhysicalPath = "i18n\"
+		Debug.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_59411\"
+		Debug.AspNetCompiler.Updateable = "true"
+		Debug.AspNetCompiler.ForceOverwrite = "true"
+		Debug.AspNetCompiler.FixedNames = "false"
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.VirtualPath = "/localhost_59411"
+		Release.AspNetCompiler.PhysicalPath = "i18n\"
+		Release.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_59411\"
+		Release.AspNetCompiler.Updateable = "true"
+		Release.AspNetCompiler.ForceOverwrite = "true"
+		Release.AspNetCompiler.FixedNames = "false"
+		Release.AspNetCompiler.Debug = "False"
+		VWDPort = "59411"
 		SlnRelativePath = "i18n\"
 	EndProjectSection
 EndProject
@@ -105,6 +123,7 @@ Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "admin", "admin\", "{CE913DD
 		Release.AspNetCompiler.FixedNames = "false"
 		Release.AspNetCompiler.Debug = "False"
 		VWDPort = "27810"
+		SlnRelativePath = "admin\"
 	EndProjectSection
 EndProject
 Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "config.init", "config.init\", "{A497773F-24D2-47AC-B8EE-8D0B7D0B88D3}"
@@ -125,6 +144,13 @@ Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "config.init", "config.init\
 		Release.AspNetCompiler.FixedNames = "false"
 		Release.AspNetCompiler.Debug = "False"
 		VWDPort = "27841"
+		SlnRelativePath = "config.init\"
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solutions", "Solutions", "{202158B9-D0F2-47FB-89FE-FA99CE1FBCDE}"
+	ProjectSection(SolutionItems) = preProject
+		santedb.admin.sln.xml = santedb.admin.sln.xml
+		santedb.core.sln.xml = santedb.core.sln.xml
 	EndProjectSection
 EndProject
 Global

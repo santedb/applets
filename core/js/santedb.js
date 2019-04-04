@@ -1452,6 +1452,15 @@ if (!SanteDBWrapper)
                 resource: "Audit",
                 accept: _viewModelJsonMime,
                 api: _ami
+            }),
+            /**
+             * @property {SanteDB.ResourceWrapper}
+             * @memberOf SanteDBWrapper.resources
+             * @summary Wrapper for subscription definition API
+             */
+            subscriptionDefinition : new ResourceWrapper({
+                resource: "SubscriptionDefinition",
+                api: _ami
             })
         };
 
@@ -1461,17 +1470,6 @@ if (!SanteDBWrapper)
         // master configuration closure
         var _masterConfig = null;
         var _configuration = {
-            /**
-             * @method
-             * @memberof SanteDBWrapper.configuration
-             * @return {Promise}
-             * @summary Get a complete list of filter providers asynchronously
-             */
-            getSubscriptionDefinitionsAsync: function () {
-                return _app.getAsync({
-                    resource: "SubscriptionDefinition"
-                });
-            },
             /**
              * @method
              * @memberof SanteDBWrapper.configuration

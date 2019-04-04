@@ -51,9 +51,7 @@
       <filter>classConcept=CA44A469-81D7-4484-9189-CA1D55AFECBC</filter>
       <filter>classConcept=A064984F-9847-4480-8BEA-DDDF64B3C77C</filter>
     </add>
-    <add resource="Place" name="ui.subscription.place.all" mode="all" ignoreModifiedOn="false" trigger="on-start on-x-net">
-      <filter>statusConcept=!CD4AA3C4-02D5-4CC9-9088-EF8F31E321C5</filter>
-    </add>
+    
     <add resource="Organization" name="ui.subscription.organization.all" mode="*" ignoreModifiedOn="false" trigger="on-start on-x-net">
       <filter>statusConcept=!CD4AA3C4-02D5-4CC9-9088-EF8F31E321C5</filter>
     </add>

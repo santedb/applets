@@ -64,20 +64,16 @@ angular.module('santedb').controller('InitialSettingsController', ['$scope', '$r
             $scope.config.network.optimize = "gzip";
             $scope.config.sync = $scope.config.sync || {};
             $scope.config.sync.mode = "sync";
+            $scope.config.sync.subscribe = $scope.config.sync.subscribe || [];
             $scope.config.sync.subscribeType = "Facility";
+            $scope.config.subscription = $scope.config.subscription || {};
+            $scope.config.subscription.mode = $scope.config.subscription.mode || "Subscription";
             $scope.config.log.mode = $scope.config.log.writers[0].filter || "Warning";
             $scope.config.sync._resource = {};
             $scope.config.data = {
                 provider: "sqlite",
                 options: {}
             };
-
-            // Get subscription reference
-            SanteDB.configuration.getSubscriptionDefinitionsAsync().then(function (d) {
-                $scope.reference.subscriptions = d;
-                for (var s in $scope.reference.subscriptions)
-                    $scope.config.sync._resource[s.name] = { selected: true };
-            }).catch($rootScope.errorHandler);
 
             var configuredHasher = $scope.config.application.service.find(function (e) { return e.type.indexOf('PasswordHasher') > -1 });
             if (configuredHasher) {
@@ -91,6 +87,23 @@ angular.module('santedb').controller('InitialSettingsController', ['$scope', '$r
             $scope.config.security.offline = { enable: true };
 
             if (config.realmName) {
+
+                // Get subscription reference
+                SanteDB.resources.subscriptionDefinition.findAsync({ _extern: true }).then(function (d) {
+                    $scope.reference.subscriptions = [];
+                    d.item.forEach(function(itm) {
+                        itm.definitions.forEach(function(defn) { 
+                            $scope.reference.subscriptions.push(defn); 
+                            $scope.config.sync._resource[defn.name] = { selected: true };
+                        });
+                    });
+                    try {
+                    $scope.$apply();
+                    }
+                    catch (e) {}
+                }).catch($rootScope.errorHandler);
+
+
                 SanteDB.application.getAppSolutionsAsync().then(function (s) {
                     $scope.solutions = s;
                     $scope.$apply();
@@ -148,6 +161,8 @@ angular.module('santedb').controller('InitialSettingsController', ['$scope', '$r
                     SanteDB.resources[$scope.config.sync.subscribeType.toCamelCase()].getAsync(sid).then(function (placeInfo) {
                         $scope.reference[$scope.config.sync.subscribeType.toLowerCase()].push(placeInfo);
                         try {
+                            SanteDB.display.buttonWait("#selectAllButton", false);
+                            $("#nextButton").prop("disabled", false);
                             $scope.$apply(); // Apply scope to refresh the check guard conditions
                         }
                         catch (e) { }
@@ -166,25 +181,31 @@ angular.module('santedb').controller('InitialSettingsController', ['$scope', '$r
             $("#nextButton").prop("disabled", true);
 
             var retVal = true;
-            var guardFilterRegex = new RegExp('^([\\!\\sA-Za-z\\.&|]*?)\\[([A-Za-z]*?)\\](.*)$');
-            var newGuard = "", oldGuard = filter.guard;
-            while (oldGuard.length > 0) {
-                var match = guardFilterRegex.exec(oldGuard);
-                if (!match) {
-                    newGuard += oldGuard;
-                    break;
+            filter.guards.forEach(function(oldGuard) {
+                if(!retVal) return;
+
+                // Rewrtie guard
+                var guardFilterRegex = new RegExp('^([\\!\\sA-Za-z\\.&|]*?)\\[([A-Za-z]*?)\\](.*)$');
+                var newGuard = "";
+                while (oldGuard.length > 0) {
+                    var match = guardFilterRegex.exec(oldGuard);
+                    if (!match) {
+                        newGuard += oldGuard;
+                        break;
+                    }
+                    else {
+                        newGuard += `${match[1]}.${match[2]}`;
+                        oldGuard = match[3];
+                    }
                 }
-                else {
-                    newGuard += `${match[1]}.${match[2]}`;
-                    oldGuard = match[3];
-                }
-            }
-            $scope.reference[$scope.config.sync.subscribeType.toLowerCase()]
-            .filter(function(f) { return $scope.config.sync.subscribe.indexOf(f.id) > -1; })
-            .forEach(function (subscribed) {
-                var e = $scope.$eval(newGuard, { "subscribed": subscribed });
-                retVal &= (e != null) && (e !== false);
+                $scope.reference[$scope.config.sync.subscribeType.toLowerCase()]
+                .filter(function(f) { return $scope.config.sync.subscribe.indexOf(f.id) > -1; })
+                .forEach(function (subscribed) {
+                    var e = $scope.$eval(newGuard, { "subscribed": subscribed });
+                    retVal &= (e != null) && (e !== false);
+                });
             });
+            
             return retVal
 
         }

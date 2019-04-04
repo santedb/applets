@@ -1,0 +1,70 @@
+<SubscriptionDefinition xmlns="http://santedb.org/subscription" resource="Place">
+    <client>
+      <definition resource="Place" name="ui.subscription.place.all" mode="all" ignoreModifiedOn="false" trigger="on-start on-x-net">
+        <filters>
+          <add>statusConcept=!CD4AA3C4-02D5-4CC9-9088-EF8F31E321C5</add>
+        </filters>
+      </definition>
+      <definition resource="Place" name="ui.subscription.place.me" mode="subscription" ignoreModifiedOn="true" trigger="always">
+        <guards>
+          <add>subscribed.typeConcept</add>
+        </guards>
+        <filters>
+          <add>id=$subscribed.id$</add>
+        </filters>
+      </definition>
+      <definition resource="Place" name="ui.subscription.place.state" mode="subscription" ignoreModifiedOn="false" trigger="always">
+        <guards>
+          <add>subscribed.definitionress[Direct].component[State]</add>
+        </guards>
+        <filters>
+          <add>statusConcept=!CD4AA3C4-02D5-4CC9-9088-EF8F31E321C5&amp;classConcept=FF34DFA7-C6D3-4F8B-BC9F-14BCDC13BA6C&amp;definitionress.component[State].value=$subscribed.definitionress.component[State].value$&amp;_exclude=relationship&amp;_exclude=participation</add>
+          <add>statusConcept=!CD4AA3C4-02D5-4CC9-9088-EF8F31E321C5&amp;classConcept=!FF34DFA7-C6D3-4F8B-BC9F-14BCDC13BA6C&amp;definitionress.component[State].value=$subscribed.definitionress.component[State].value$&amp;_exclude=relationship&amp;_exclude=participation</add>
+        </filters>
+      </definition>
+      <definition resource="Place" name="ui.subscription.place.county" mode="subscription" ignoreModifiedOn="false" trigger="always">
+        <guards>
+          <add>subscribed.definitionress[Direct].component[County] &amp;&amp; !subscribed.definitionress[Direct].component[State]</add>
+        </guards>
+        <filters>
+          <add>statusConcept=!CD4AA3C4-02D5-4CC9-9088-EF8F31E321C5&amp;classConcept=FF34DFA7-C6D3-4F8B-BC9F-14BCDC13BA6C&amp;definitionress.component[County].value=$subscribed.definitionress.component[County].value$&amp;_exclude=relationship&amp;_exclude=participation</add>
+          <add>statusConcept=!CD4AA3C4-02D5-4CC9-9088-EF8F31E321C5&amp;classConcept=!FF34DFA7-C6D3-4F8B-BC9F-14BCDC13BA6C&amp;definitionress.component[County].value=$subscribed.definitionress.component[County].value$&amp;_exclude=relationship&amp;_exclude=participation</add>
+        </filters>
+      </definition>
+      <definition resource="Place" name="ui.subscription.place.all" mode="subscription" ignoreModifiedOn="false" trigger="always">
+        <guards>
+          <add>!subscribed.definitionress[Direct].component[County] &amp;&amp; !subscribed.definitionress[Direct].component[State]</add>
+        </guards>
+        <filters>
+          <add>statusConcept=!CD4AA3C4-02D5-4CC9-9088-EF8F31E321C5&amp;classConcept=FF34DFA7-C6D3-4F8B-BC9F-14BCDC13BA6C&amp;_exclude=relationship&amp;_exclude=participation</add>
+          <add>statusConcept=!CD4AA3C4-02D5-4CC9-9088-EF8F31E321C5&amp;classConcept=!FF34DFA7-C6D3-4F8B-BC9F-14BCDC13BA6C&amp;_exclude=relationship&amp;_exclude=participation</add>
+        </filters>
+      </definition>
+      <definition resource="Place" name="ui.subscription.place.outOfState" mode="subscription" ignoreModifiedOn="false" trigger="periodic">
+        <guards>
+          <add>subscribed.definitionress[Direct].component[State]</add>
+        </guards>
+        <filters>
+          <add>statusConcept=!CD4AA3C4-02D5-4CC9-9088-EF8F31E321C5&amp;classConcept=FF34DFA7-C6D3-4F8B-BC9F-14BCDC13BA6C&amp;definitionress.component[State].value=!$subscribed.definitionress.component[State].value$&amp;_exclude=relationship&amp;_exclude=participation</add>
+          <add>statusConcept=!CD4AA3C4-02D5-4CC9-9088-EF8F31E321C5&amp;classConcept=!FF34DFA7-C6D3-4F8B-BC9F-14BCDC13BA6C&amp;definitionress.component[State].value=!$subscribed.definitionress.component[State].value$&amp;_exclude=relationship&amp;_exclude=participation</add>
+        </filters>
+      </definition>
+      <definition resource="Place" name="ui.subscription.place.outOfCounty" mode="subscription" ignoreModifiedOn="false" trigger="periodic">
+        <guards>
+          <add>subscribed.definitionress[Direct].component[County] &amp;&amp; !subscribed.definitionress[Direct].component[State]</add>
+        </guards>
+        <filters>
+          <add>statusConcept=!CD4AA3C4-02D5-4CC9-9088-EF8F31E321C5&amp;classConcept=FF34DFA7-C6D3-4F8B-BC9F-14BCDC13BA6C&amp;definitionress.component[County].value=!$subscribed.definitionress.component[County].value$&amp;_exclude=relationship&amp;_exclude=participation</add>
+          <add>statusConcept=!CD4AA3C4-02D5-4CC9-9088-EF8F31E321C5&amp;classConcept=!FF34DFA7-C6D3-4F8B-BC9F-14BCDC13BA6C&amp;definitionress.component[County].value=!$subscribed.definitionress.component[County].value$&amp;_exclude=relationship&amp;_exclude=participation</add>
+        </filters>
+      </definition>
+      <definition resource="Place" name="ui.subscription.place.assigned" mode="subscription" ignoreModifiedOn="false" trigger="always">
+        <guards>
+          <add>subscribed.typeConcept</add>
+        </guards>
+        <filters>
+          <add>statusConcept=!CD4AA3C4-02D5-4CC9-9088-EF8F31E321C5&amp;classConcept=!FF34DFA7-C6D3-4F8B-BC9F-14BCDC13BA6C&amp;relationship[DedicatedServiceDeliveryLocation].target=$subscribed.id$</add>
+        </filters>
+      </definition>
+    </client>
+</SubscriptionDefinition>

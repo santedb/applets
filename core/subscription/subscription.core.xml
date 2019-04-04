@@ -1,0 +1,49 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<SubscriptionDefinition xmlns="http://santedb.org/subscription" resource="Concept">
+  <client>
+    <definition resource="CodeSystem" name="ui.subscription.codeSystem.all" mode="*" ignoreModifiedOn="false" trigger="on-start on-x-net" />
+    <definition resource="ReferenceTerm" name="ui.subscription.referenceTerm.all" mode="*" ignoreModifiedOn="false" trigger="on-start on-x-net" />
+    <definition resource="Organization" name="ui.subscription.organization.all" mode="*" ignoreModifiedOn="false" trigger="on-start on-x-net">
+      <filters>
+        <add>statusConcept=!CD4AA3C4-02D5-4CC9-9088-EF8F31E321C5</add>
+      </filters>
+    </definition>
+    <definition resource="ConceptSet" name="ui.subscription.conceptSet.all" mode="*" ignoreModifiedOn="false" trigger="on-start" />
+    <definition resource="Concept" name="ui.subscription.concept.all" mode="*" ignoreModifiedOn="false" trigger="on-start">
+      <filters>
+        <add>statusConcept=!CD4AA3C4-02D5-4CC9-9088-EF8F31E321C5</add>
+      </filters>
+    </definition>
+    <definition resource="AssigningAuthority" name="ui.subscription.assigningAuthority.all" mode="*" ignoreModifiedOn="false" trigger="on-start" />
+    <definition resource="IdentifierType" name="ui.subscription.identifierType.all" mode="*" ignoreModifiedOn="false" trigger="on-start" />
+    <definition resource="TemplateDefinition" name="ui.subscription.templateDefinition.all" mode="*" ignoreModifiedOn="false" trigger="on-start" />
+    <definition resource="ExtensionType" name="ui.subscription.extensionType.all" mode="*" ignoreModifiedOn="false" trigger="on-start" />
+    <definition resource="ConceptClass" name="ui.subscription.conceptClass.all" mode="*" ignoreModifiedOn="false" trigger="on-start" />
+    <definition resource="Material" name="ui.subscription.material.all" mode="*" ignoreModifiedOn="false" trigger="always">
+      <filters>
+        <add>classConcept=D39073BE-0F8F-440E-B8C8-7034CC138A95&amp;statusConcept=!CD4AA3C4-02D5-4CC9-9088-EF8F31E321C5</add>
+      </filters>
+    </definition>
+    <definition resource="ManufacturedMaterial" name="ui.subscription.manufacturedMaterial.all" mode="*" ignoreModifiedOn="false" trigger="always">
+      <filters>
+        <add>classConcept=D39073BE-0F8F-440E-B8C8-7034CC138A95&amp;statusConcept=!CD4AA3C4-02D5-4CC9-9088-EF8F31E321C5</add>
+      </filters>
+    </definition>
+    <add resource="Person" name="ui.subscription.person.all" mode="all" ignoreModifiedOn="false" trigger="always">
+      <filters>
+        <add>classConcept=BACD9C6F-3FA9-481E-9636-37457962804D</add>
+        <add>classConcept=9DE2A846-DDF2-4EBC-902E-84508C5089EA&amp;relationship.source.classConcept=BACD9C6F-3FA9-481E-9636-37457962804D</add>
+      </filters>
+    </add>
+    <add resource="UserEntity" name="ui.subscription.userEntity.all" mode="all" ignoreModifiedOn="false" trigger="on-start on-x-net">
+      <filters>
+        <add>statusConcept=!CD4AA3C4-02D5-4CC9-9088-EF8F31E321C5</add>
+      </filters>
+    </add>
+    <add resource="Provider" name="ui.subscription.provider.all" mode="all" ignoreModifiedOn="false" trigger="on-start on-x-net">
+      <filters>
+        <add>statusConcept=!CD4AA3C4-02D5-4CC9-9088-EF8F31E321C5</add>
+      </filters>
+    </add>
+  </client>
+</SubscriptionDefinition>

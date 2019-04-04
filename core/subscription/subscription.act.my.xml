@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<SubscriptionDefinition xmlns="http://santedb.org/subscription" uuid="decad40c-a232-482f-b93d-317b25c1ef0d" resource="Act">
+  <server>
+    <definition invariant="npgsql">
+      <![CDATA[
+      SELECT * FROM
+        ACT_VRSN_TBL
+        INNER JOIN ACT_TBL USING (ACT_ID)
+      WHERE ACT_ID IN (
+        SELECT DISTINCT ACT_ID FROM (
+          SELECT ACT_ID FROM ACT_PTCPT_TBL WHERE ENT_ID = $placeid$
+          UNION ALL
+          SELECT ACT_ID FROM ACT_PTCPT_TBL WHERE ENT_ID IN (SELECT SRC_ENT_ID FROM ENT_REL_TBL WHERE TRG_ENT_ID = $placeid$)
+      ) I)
+      ]]>
+    </definition>
+    <definition invariant="fbsql">
+      <![CDATA[
+      SELECT * FROM
+        ACT_VRSN_TBL
+        INNER JOIN ACT_TBL USING (ACT_ID)
+      WHERE ACT_ID IN (
+        SELECT DISTINCT ACT_ID FROM (
+          SELECT ACT_ID FROM ACT_PTCPT_TBL WHERE ENT_ID = $placeid$
+          UNION ALL
+          SELECT ACT_ID FROM ACT_PTCPT_TBL WHERE ENT_ID IN (SELECT SRC_ENT_ID FROM ENT_REL_TBL WHERE TRG_ENT_ID = $placeid$)
+      ) I)
+      ]]>
+    </definition>
+  </server>
+  <client>
+    <definition resource="Act" name="ui.subscription.act.my" mode="subscription" ignoreModifiedOn="false" trigger="always">
+      <guards>
+        <when>subscribed.classConcept == 'ff34dfa7-c6d3-4f8b-bc9f-14bcdc13ba6c'</when>
+        <when>subscribed.id</when>
+      </guards>
+       <filters>
+        <add>_subscription=decad40c-a232-482f-b93d-317b25c1ef0d&amp;_placeid=$subscribed.id$&amp;_expand=relationship&amp;_expand=participation</add>
+      </filters>
+    </definition>
+    <definition resource="Act" name="ui.subscription.act.all" mode="all" ignoreModifiedOn="false" trigger="always">
+    </definition>
+  </client>
+</SubscriptionDefinition>

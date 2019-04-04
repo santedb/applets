@@ -18,7 +18,7 @@
  - Date: 2018-10-14
  -->
 <AppletManifest xmlns="http://santedb.org/applet">
-  <info id="org.santedb.config.init" version="1.0.0.0">
+  <info id="org.santedb.config.init" version="1.31.*.0">
     <icon>/org.santedb.core/img/icon.png</icon>
     <name lang="en">SanteDB Initial Configuration Applet</name>
     <author>Mohawk College of Applied Arts and Technology - mHealth &amp; eHealth Development &amp; Innovation Centre</author>

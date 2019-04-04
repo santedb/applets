@@ -51,7 +51,7 @@
       <label for="subscribeObjects" class="col-md-2 col-xs-12 control-label">{{ 'ui.config.subscribe.objects.label' | i18n }}</label>
       <div class="col-md-10 col-xs-12">
         <ul class="checklist-box" style="height:10em">
-          <li ng-repeat="filter in reference.subscriptions track by $index" ng-if="(!filter.guard || checkGuard(filter)) &amp;&amp; (config.subscription.mode == filter.mode || filter.mode == 'AllOrSubscription')">
+          <li ng-repeat="filter in reference.subscriptions track by $index" ng-if="(!filter.guards || filter.guards.length == 0 || checkGuard(filter)) &amp;&amp; (config.subscription.mode == filter.mode || filter.mode == 'AllOrSubscription')">
             <label>
               <input type="checkbox" ng-model="config.sync._resource[filter.name].selected" value="true" /> {{ filter.name | i18n }} ({{ filter.resource }})</label>
           </li>
