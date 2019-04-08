@@ -74,6 +74,10 @@
     </menuItem>
   </menuItem>
 
+  <viewModel key="relationship_full">
+    <definition>/org.santedb.admin/model/relationship_full.xml</definition>
+  </viewModel>
+
   <strings lang="en">
     <string key="ui.admin.brand.title"><![CDATA[<img src="/org.santedb.core/img/icon.png" height="24px"/> SanteDB Admin]]></string>
 

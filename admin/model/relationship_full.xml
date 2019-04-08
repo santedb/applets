@@ -1,0 +1,41 @@
+<ViewModel xmlns="http://santedb.org/model/view">
+  <include>base</include>
+
+  <type type="EntityRelationship" all="false">
+    <property name="source" all="true"/>
+    <property name="target" all="true"/>
+    <property name="targetModel" all="true" behavior="never" ref="Entity"/>
+    <property name="relationshipType" all="true" behavior="never"/>
+    <property name="holderModel" behavior="never"/>
+    <property name="sourceModel" behavior="never"/>
+    <property name="relationshipTypeModel" behavior="always" all="false">
+      <property name="mnemonic"/>
+    </property>
+    <property name="key" all="true"/>
+    <property name="quantity" all="true"/>
+  </type>
+  <type type="ActRelationship" all="false">
+    <property name="source" all="true"/>
+    <property name="target" all="true"/>
+    <property name="targetModel" all="true" behavior="never" ref="Act"/>
+    <property name="relationshipType" all="true"/>
+    <property name="holderModel" behavior="never"/>
+    <property name="sourceModel" behavior="never"/>
+    <property name="relationshipTypeModel" behavior="always" all="false">
+      <property name="mnemonic"/>
+    </property>
+    <property name="key" all="true"/>
+    <property name="quantity" all="true"/>
+  </type>
+  <type type="ActParticipation" all="false">
+    <property name="source" all="true"/>
+    <property name="target" all="true"/>
+    <property name="playerModel" all="true" ref="Entity" behavior="never"/>
+    <property name="participationRole" all="true"/>
+    <property name="key" all="true"/>
+    <property name="quantity" all="true"/>
+    <property name="participationRoleModel" behavior="always" all="false">
+      <property name="mnemonic"/>
+    </property>
+  </type>
+</ViewModel>

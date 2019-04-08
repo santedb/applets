@@ -44,6 +44,32 @@ if (!SanteDBWrapper)
         var _viewModelJsonMime = "application/json+sdb-viewModel";
 
         /**
+         * @summary Re-orders the JSON object properties so that $type appears as the first property
+         * @param {any} object The object whose properites should be reordered
+         * @returns {any} The appropriately ordered object
+         */
+        var _reorderProperties = function(object) {
+
+            // Object has $type and $type is not the first property
+            if(object.$type) {
+                var retVal = { $type: object.$type };
+                Object.keys(object).filter(function(d) { return d != "$type" })
+                    .forEach(function(k) { 
+                        retVal[k] = object[k]; 
+                        if(!retVal[k]) ;
+                        else if(retVal[k].$type) // reorder k
+                            retVal[k] = _reorderProperties(retVal[k]);
+                        else if(Array.isArray(retVal[k]))
+                            for(var i in retVal[k])
+                                if(retVal[k][i].$type)
+                                    retVal[k][i] = _reorderProperties(retVal[k][i]);
+                    })
+                return retVal;
+            }
+            return object;
+        };
+
+        /**
          * @summary Global error handler
          * @param {xhr} e The Errored request
          * @param {*} data 
@@ -112,7 +138,7 @@ if (!SanteDBWrapper)
                     $.ajax({
                         method: 'POST',
                         url: _config.base + configuration.resource,
-                        data: configuration.contentType.indexOf('application/json') == 0 ? JSON.stringify(configuration.data) : configuration.data,
+                        data: configuration.contentType.indexOf('application/json') == 0 ? JSON.stringify(_reorderProperties(configuration.data)) : configuration.data,
                         dataType: 'json',
                         contentType: configuration.contentType || 'application/json',
                         headers: configuration.headers,
@@ -165,7 +191,7 @@ if (!SanteDBWrapper)
                     $.ajax({
                         method: 'PUT',
                         url: _config.base + configuration.resource + (_config.idByQuery ? "?_id=" + configuration.id : "/" + configuration.id),
-                        data: configuration.contentType.indexOf('application/json') == 0 ? JSON.stringify(configuration.data) : configuration.data,
+                        data: configuration.contentType.indexOf('application/json') == 0 ? JSON.stringify(_reorderProperties(configuration.data)) : configuration.data,
                         dataType: 'json',
                         contentType: configuration.contentType || 'application/json',
                         headers: configuration.headers,
@@ -219,7 +245,7 @@ if (!SanteDBWrapper)
                     $.ajax({
                         method: 'PATCH',
                         url: _config.base + configuration.resource + (_config.idByQuery ? "?_id=" + configuration.id : "/" + configuration.id),
-                        data: configuration.contentType.indexOf('application/json') == 0 ? JSON.stringify(configuration.data) : configuration.data,
+                        data: configuration.contentType.indexOf('application/json') == 0 ? JSON.stringify(_reorderProperties(configuration.data)) : configuration.data,
                         dataType: 'json',
                         contentType: configuration.contentType || 'application/json',
                         headers: configuration.headers,
@@ -321,7 +347,7 @@ if (!SanteDBWrapper)
                     $.ajax({
                         method: 'DELETE',
                         url: _config.base + configuration.resource + (configuration.id ? (_config.idByQuery ? "?_id=" + configuration.id : "/" + configuration.id) : ""),
-                        data: configuration.contentType == 'application/json' ? JSON.stringify(configuration.data) : configuration.data,
+                        data: configuration.contentType == 'application/json' ? JSON.stringify(_reorderProperties(configuration.data)) : configuration.data,
                         headers: { "X-Delete-Mode": configuration.mode || "OBSOLETE" },
                         dataType: 'json',
                         contentType: configuration.contentType || 'application/json',
@@ -563,7 +589,7 @@ if (!SanteDBWrapper)
                 */
             this.insertAsync = function (data, state) {
 
-                if (data.$type !== _config.resource)
+                if (data.$type !== _config.resource && data.$type !== `${_config.resource}Info`)
                     throw new Exception("ArgumentException", "error.invalidType", `Invalid type, resource wrapper expects ${_config.resource} however ${data.$type} specified`);
 
                 var headers = {
@@ -622,7 +648,7 @@ if (!SanteDBWrapper)
                 */
             this.updateAsync = function (id, data, state) {
 
-                if (data.$type !== _config.resource)
+                if (data.$type !== _config.resource && data.$type !== `${_config.resource}Info`)
                     throw new Exception("ArgumentException", "error.invalidType", `Invalid type, resource wrapper expects ${_config.resource} however ${data.$type} specified`);
                 else if (data.id && data.id !== id)
                     throw new Exception("ArgumentException", "error.invalidValue", `Identifier mismatch, PUT identifier  ${id} doesn't match ${data.id}`);

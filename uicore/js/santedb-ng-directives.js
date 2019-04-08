@@ -104,7 +104,8 @@ angular.module('santedb-lib')
                 filter: '<',
                 groupDisplay: '<',
                 key: '<',
-                selector: '<'
+                selector: '<',
+                valueProperty: '<'
             },
             restrict: 'E',
             require: 'ngModel',
@@ -181,6 +182,7 @@ angular.module('santedb-lib')
                     var groupDisplayString = scope.groupDisplay;
                     var resultProperty = scope.key || "id";
                     var selector = scope.selector;
+                    var valueProperty = scope.valueProperty;
 
                     // Bind select 2 search
                     $(element).select2({
@@ -280,10 +282,33 @@ angular.module('santedb-lib')
                     element.on('select2:select', function (e) {
                         var val = $(element).select2("val");
                         //e.currentTarget.options.selectedIndex = e.currentTarget.options.length - 1;
-                        scope.$apply(() => ngModel.$setViewValue(val));
+                        if(valueProperty)
+                        {
+                            var modelVal = {};
+                            if(Array.isArray(val)) 
+                                modelVal = val.map(function(v) {
+                                    var retVal = {};
+                                    retVal[valueProperty] = v;
+                                    return retVal;
+                                });
+                            
+                            else 
+                                modelVal[valueProperty] = val;
+                            scope.$apply(() => ngModel.$setViewValue(modelVal));
+
+                        }
+                        else
+                            scope.$apply(() => ngModel.$setViewValue(val));
                     });
                     ngModel.$render = function () {
-                        scope.setValue(element, modelType, ngModel.$viewValue);
+                        if(valueProperty) {
+                            if(Array.isArray(ngModel.$viewValue))
+                                scope.setValue(element, modelType, ngModel.$viewValue.map(function(e) { return e[valueProperty]; }));
+                            else
+                                scope.setValue(element, modelType, ngModel.$viewValue[valueProperty]);
+                        }
+                        else
+                            scope.setValue(element, modelType, ngModel.$viewValue);
                     };
                 });
             }

@@ -43,13 +43,13 @@
             </div>
         </div>
     </div> -->
-    <div class="form-group row">
+    <div class="form-group row" ng-if="config.sync.mode == 'sync'">
         <label class="col-md-10 col-xs-12 offset-md-2" >
             <input type="checkbox" ng-model="config.sync.safePatchOnly" value="true"/>
             {{ 'ui.config.sync.safePatchOnly' | i18n }}
         </label>
     </div>
-    <div class="form-group row">
+    <div class="form-group row" ng-if="config.sync.mode == 'sync'">
         <label class="col-md-2 col-xs-12 control-label" for="syncInterval">{{ 'ui.config.sync.interval.label' | i18n }}</label>
         <div class="col-md-10 col-xs-12">
             <select class="form-control" name="syncInterval" ng-model="config.sync.pollInterval">

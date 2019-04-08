@@ -1,5 +1,5 @@
 <div xmlns="http://www.w3.org/1999/xhtml">
-    <form ng-submit="saveUser(userForm)" name="userForm" novalidate="novalidate">
+    <form ng-submit="saveUser(targetForm)" name="targetForm" novalidate="novalidate">
         <div class="accordion" id="userAccordion">
             <div class="card">
                 <div class="card-header">
@@ -33,11 +33,11 @@
                                     source="target.securityUser.userName" />
                             </div>
                             <div class="col-sm-12 col-md-10 offset-md-2">
-                                <div ng-show="userForm.username.$error['duplicate']" class="alert-danger">
+                                <div ng-show="targetForm.username.$error['duplicate']" class="alert-danger">
                                     <i class="fa fa-exclamation-triangle"></i>
                                     {{ 'ui.admin.users.duplicateUser' | i18n }}
                                 </div>
-                                <div ng-show="userForm.username.$error['required'] &amp;&amp; userForm.$submitted"
+                                <div ng-show="targetForm.username.$error['required'] &amp;&amp; targetForm.$submitted"
                                     class="alert-danger">
                                     <i class="fa fa-exclamation-triangle"></i> {{ 'ui.error.required' | i18n }}
                                 </div>
@@ -124,7 +124,7 @@
                                 <entity-search name="roles" type="'SecurityRole'" filter="{ obsoletionTime: 'null'}"
                                     key="'name'" selector="'entity'" ng-model="target.role" search-field="'name'"
                                     class="form-control" multiple="multiple" required="required" />
-                            <div ng-show="userForm.roles.$error['required'] &amp;&amp; userForm.$submitted"
+                            <div ng-show="targetForm.roles.$error['required'] &amp;&amp; targetForm.$submitted"
                                     class="alert-danger">
                                     <i class="fa fa-exclamation-triangle"></i> {{ 'ui.error.required' | i18n }}
                                 </div>
@@ -147,13 +147,13 @@
                                 <input type="password" name="newPassword" ng-model="target.securityUser.password"
                                     class="form-control" required="required"
                                     pattern="[A-Za-z0-9@!#\$\%\^\&amp;\*\(\)\~\`\,\.\?\/\;\'\[\]\{\}\s_]+"
-                                    ng-class="{'is-invalid': userForm.newPassword.$invalid &amp;&amp; userForm.$submitted}"
-                                    ng-change="userForm.newPassword.$error['err.password'] ? userForm.newPassword.$error['err.password']=false : null" />
-                                <div ng-show="userForm.newPassword.$error['required'] &amp;&amp; userForm.$submitted"
+                                    ng-class="{'is-invalid': targetForm.newPassword.$invalid &amp;&amp; targetForm.$submitted}"
+                                    ng-change="targetForm.newPassword.$error['err.password'] ? targetForm.newPassword.$error['err.password']=false : null" />
+                                <div ng-show="targetForm.newPassword.$error['required'] &amp;&amp; targetForm.$submitted"
                                     class="alert-danger">
                                     <i class="fa fa-exclamation-triangle"></i> {{ 'ui.error.required' | i18n }}
                                 </div>
-                                <div ng-show="userForm.newPassword.$error['err.password'] &amp;&amp; userForm.$submitted"
+                                <div ng-show="targetForm.newPassword.$error['err.password'] &amp;&amp; targetForm.$submitted"
                                     class="alert-danger">
                                     <i class="fa fa-exclamation-triangle"></i> {{ 'ui.password.complexity' | i18n }}
                                 </div>
@@ -166,12 +166,12 @@
                                 <input type="password" name="confirmPassword"
                                     ng-model="target.securityUser.confirmPassword" class="form-control"
                                     required="required" ng-pattern="target.securityUser.password"
-                                    ng-class="{'is-invalid': userForm.confirmPassword.$invalid &amp;&amp; userForm.$submitted}" />
-                                <div ng-show="userForm.confirmPassword.$error['required'] &amp;&amp; userForm.$submitted"
+                                    ng-class="{'is-invalid': targetForm.confirmPassword.$invalid &amp;&amp; targetForm.$submitted}" />
+                                <div ng-show="targetForm.confirmPassword.$error['required'] &amp;&amp; targetForm.$submitted"
                                     class="alert-danger">
                                     <i class="fa fa-exclamation-triangle"></i> {{ 'ui.error.required' | i18n }}
                                 </div>
-                                <div ng-show="userForm.confirmPassword.$error['pattern']" class="alert-danger">
+                                <div ng-show="targetForm.confirmPassword.$error['pattern']" class="alert-danger">
                                     <i class="fa fa-exclamation-triangle"></i> {{ 'ui.password.error.mismatch' | i18n }}
                                 </div>
                             </div>
@@ -208,7 +208,7 @@
                             <label for="phoneNumber"
                                 class="col-xs-12 col-md-2 control-label">{{ 'ui.model.securityUser.phoneNumber' | i18n }}</label>
                             <div class="col-xs-12 col-md-10">
-                                <input name="phoneNumber" type="email" class="form-control"
+                                <input name="phoneNumber" type="tel" class="form-control"
                                     ng-model="target.securityUser.phoneNumber" />
                             </div>
                         </div>
@@ -218,7 +218,7 @@
                             <div class="col-xs-12 col-md-10">
                                 <tag-input name="givenName" ng-model="target.entity.name.OfficialRecord.component.Given"
                                     required="required" class="form-control" />
-                                    <div ng-show="userForm.givenName.$error['required'] &amp;&amp; userForm.$submitted"
+                                    <div ng-show="targetForm.givenName.$error['required'] &amp;&amp; targetForm.$submitted"
                                     class="alert-danger">
                                     <i class="fa fa-exclamation-triangle"></i> {{ 'ui.error.required' | i18n }}
                                 </div>
@@ -239,7 +239,8 @@
                                 <entity-search type="'Place'"
                                     filter="{ obsoletionTime: 'null', classConcept: EntityClassKeys.ServiceDeliveryLocation }"
                                     class="form-control"
-                                    ng-model="target.entity.relationship.DedicatedServiceDeliveryLocation.target"
+                                    ng-model="target.entity.relationship.DedicatedServiceDeliveryLocation"
+                                    value-property="'target'"
                                     multiple="multiple" />
                             </div>
                         </div>
@@ -248,7 +249,8 @@
                                 class="col-xs-12 col-md-2 control-label">{{ 'ui.model.userEntity.relationship.Employee' | i18n }}</label>
                             <div class="col-xs-12 col-md-10">
                                 <entity-search type="'Organization'" filter="{ obsoletionTime: 'null' }"
-                                    class="form-control" ng-model="target.entity.relationship.Employee.source"
+                                    class="form-control" ng-model="target.entity.relationship.Employee"
+                                    value-property="'source'"
                                     multiple="multiple" />
                             </div>
                         </div>
@@ -258,7 +260,7 @@
             </div>
         </div>
         <div class="btn-group float-right">
-            <button type="submit" class="btn btn-primary"><i class="fa fa-check"></i>
+            <button type="submit" id="saveUserButton" class="btn btn-primary"><i class="fa fa-check"></i>
                 {{ 'ui.action.save' | i18n }}</button>
         </div>
     </form>
