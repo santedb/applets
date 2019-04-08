@@ -12,6 +12,7 @@ angular.module('santedb').controller('UserIndexController', ["$scope", "$rootSco
             $("#action_grp_" + index + " a i.fa-trash").removeClass("fa-trash").addClass("fa-circle-notch fa-spin");
             SanteDB.resources.securityUser.deleteAsync(id)
                 .then(function (e) {
+                    $("#SecurityUserTable").attr("newQuery", true);
                     $("#SecurityUserTable table").DataTable().draw();
                 })
                 .catch($rootScope.errorHandler);

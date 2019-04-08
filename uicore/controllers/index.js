@@ -110,7 +110,8 @@ var santedbApp = angular.module('santedb', ['ngSanitize', 'ui.router', 'oc.lazyL
         $transitions.onBefore({}, function (transition) {
             console.info(`Transitioned to ${transition._targetState._definition.self.name}`);
             $(".modal").modal('hide');
-
+            $('.popover').popover('hide');
+            
             if (transition._targetState._definition.self.name != transition._targetState._definition.self.name != $state.$current.name)
                 $("#pageTransitioner").show();
         });

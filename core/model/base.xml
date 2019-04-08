@@ -38,6 +38,9 @@
       <property name="name"/>
     </property>
     <property name="session" behavior="always"/>
+    <property name="device"/>
+    <property name="application"/>
+    <property name="user"/>
   </type>
   <type type="EntityName" all="false">
     <property name="source" behavior="never"/>

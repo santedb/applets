@@ -224,10 +224,14 @@ angular.module('santedb').controller('EditUserController', ["$scope", "$rootScop
             $scope.target.entity.relationship.DedicatedServiceDeliveryLocation = $scope.target.entity.relationship.DedicatedServiceDeliveryLocation.map(function(d) {
                 return { source: $scope.target.entity.id,  target: d.target };
             });
+
         if(Array.isArray($scope.target.entity.relationship.Employee))
             $scope.target.entity.relationship.Employee = $scope.target.entity.relationship.Employee.map(function(d) {
-                return { target: $scope.target.entity.id, source: d.source };
+                return { target: $scope.target.entity.id, holder: d.holder };
             });
+        else if($scope.target.entity.relationship.Employee)
+            $scope.target.entity.relationship.Employee.holder = $scope.target.entity.id;
+
 
         // Show wait state
         SanteDB.display.buttonWait("#saveUserButton", true);
@@ -255,15 +259,17 @@ angular.module('santedb').controller('EditUserController', ["$scope", "$rootScop
         // user is already registered we are updating them 
         if($scope.target.securityUser.id)
         {
-            // Now create a bundle for our update
-            var bundle = new Bundle({ item:[] });
-            bundle.item.push($scope.target.securityUser);
-            bundle.item.push($scope.target.entity);
-            
-            // First we save the securityUser information
-            SanteDB.resources.bundle.insertAsync(bundle)
-                .then(successFn)
-                .catch(errorFn);
+            // Register the user first
+            SanteDB.resources.securityUser.updateAsync($scope.target.securityUser.id, {
+                $type: "SecurityUserInfo",
+                role: $scope.target.role,
+                entity: $scope.target.securityUser
+            }).then(function(u) {
+                SanteDB.resources.userEntity.insertAsync($scope.target.entity)
+                    .then(successFn)
+                    .catch(errorFn)
+            })
+            .catch(errorFn);
         }
         else {
             // Register the user first

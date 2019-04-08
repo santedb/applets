@@ -598,6 +598,12 @@ if (!SanteDBWrapper)
                 if (_config.viewModel)
                     headers["X-SanteDB-ViewModel"] = _config.viewModel;
 
+                    
+                if(data.createdBy)
+                    delete(data.createdBy);
+                if(data.creationTime)
+                    delete(data.creationTime);
+
                 // Perform post
                 return _config.api.postAsync({
                     headers: headers,
@@ -652,6 +658,11 @@ if (!SanteDBWrapper)
                     throw new Exception("ArgumentException", "error.invalidType", `Invalid type, resource wrapper expects ${_config.resource} however ${data.$type} specified`);
                 else if (data.id && data.id !== id)
                     throw new Exception("ArgumentException", "error.invalidValue", `Identifier mismatch, PUT identifier  ${id} doesn't match ${data.id}`);
+
+                if(data.updatedBy)
+                    delete(data.updatedBy);
+                if(data.updatedTime)
+                    delete(data.updatedTime);
 
                 var headers = {
                     Accept: _config.accept

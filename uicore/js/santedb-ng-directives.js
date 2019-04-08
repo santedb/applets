@@ -279,7 +279,7 @@ angular.module('santedb-lib')
                     });
 
                     // On change
-                    element.on('select2:select', function (e) {
+                    element.on('change', function (e) {
                         var val = $(element).select2("val");
                         //e.currentTarget.options.selectedIndex = e.currentTarget.options.length - 1;
                         if(valueProperty)
@@ -470,9 +470,10 @@ angular.module('santedb-lib')
                                 query["_extern"] = true;
 
                             var thisQuery = JSON.stringify(query);
-                            if(lastQuery != thisQuery) {
+                            if(lastQuery != thisQuery || element.attr("newQuery") == "true") {
                                 lastQuery = thisQuery;
                                 queryId = SanteDB.application.newGuid();
+                                element.attr("newQuery", false);
                             }
 
                             query["_queryId"] = queryId;
