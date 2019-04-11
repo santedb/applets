@@ -1,0 +1,90 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<BisPackage xmlns="http://santedb.org/bi" id="org.santedb.bi.core">
+  <parameters>
+    <!-- Parameter for Gender -->
+    <add id="org.santedb.bi.parameter.gender" name="gender" label="ui.santedb.bi.core.gender" type="uuid">
+      <annotation>
+        <div xmlns="http://www.w3.org/1999/xhtml">
+          <p>The gender of the patient/person being filtered</p>
+        </div>
+      </annotation>
+      <query ref="#org.santedb.bi.query.gender"/>
+    </add>
+  </parameters>
+  <queries>
+    <!-- Query Source for Gender -->
+    <add id="org.santedb.bi.query.gender" name="gender" label="ui.santedb.bi.core.gender">
+      <dataSources>
+        <add ref="#org.santedb.bi.dataSource.main" name="main"/>
+      </dataSources>
+      <definitions>
+        <add>
+          <providers>
+            <invariant>npgsql</invariant>
+            <invariant>fbsql</invariant>
+          </providers>
+          <![CDATA[
+          SELECT cd_id AS key, val AS label
+          FROM
+	          cd_set_mem_assoc_tbl 
+	          INNER JOIN cd_name_tbl USING (cd_id)
+          WHERE
+	          set_id = 'e9eecd3c-7b80-47f9-9cb6-55c8d3110fb0'
+	          AND lang_cs = ${Context.Language}
+          ]]>
+        </add>
+        <add>
+          <providers>
+            <invariant>sqlite</invariant>
+          </providers>
+          <![CDATA[
+          SELECT concept_uuid AS id, concept_name.value AS label 
+          FROM 
+	          concept_concept_set
+	          INNER JOIN concept_name USING (concept_uuid)
+          WHERE
+	          concept_set_uuid = X'3CCDEEE9807BF9479CB655C8D3110FB0'
+	          AND "language" = ${Context.Language}          
+          ]]>
+        </add>
+      </definitions>
+    </add>
+    <!-- Query Source for View All Patients -->
+    <add id="org.santedb.bi.query.patients" label="ui.santedb.core.query.patient">
+      <policies>
+        <demand>1.3.6.1.4.1.33349.3.1.5.9.2.2.0</demand>
+      </policies>
+      <dataSources>
+        <add ref="#org.santedb.bi.dataSource.main" name="main"/>
+      </dataSources>
+      <parameters>
+        <add ref="#org.santedb.bi.parameter.gender" name="gender" required="true" type="ref" />
+        <add name="month" type="int" required="true">
+          <values>
+            <add value="1">Jan</add>
+            <add value="2">Feb</add>
+            <add value="3">Mar</add>
+            <add value="4">Apr</add>
+          </values>
+        </add>
+      </parameters>
+      <definitions>
+        <add>
+          <providers>
+            <invariant>npgsql</invariant>
+          </providers>
+          <![CDATA[
+          select * 
+          from 
+	          pat_tbl
+	          inner join psn_tbl using (ent_vrsn_id)
+	          inner join ent_vrsn_tbl using (ent_vrsn_id)
+	          inner join ent_tbl using (ent_id)
+          where
+	          gndr_cd_id = ${gender};
+          ]]>
+        </add>
+      </definitions>
+    </add>
+  </queries>
+</BisPackage>
