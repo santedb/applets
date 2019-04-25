@@ -116,6 +116,7 @@ if(!SanteDBBre)
              * @memberof SanteDBBre
              */
             this.IssuePriority = IssuePriority;
+
             /**
              * @enum
              * @summary Represents execution environments
@@ -256,4 +257,3 @@ if(!SanteDBBre)
 
             };
         }();
-
