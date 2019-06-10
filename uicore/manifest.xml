@@ -19,7 +19,7 @@
  - Date: 2018-7-23
  -->
 <AppletManifest xmlns="http://santedb.org/applet">
-  <info id="org.santedb.uicore" version="1.31.*.0">
+  <info id="org.santedb.uicore" version="1.46.*.0">
     <icon>/org.santedb.core/img/icon.png</icon>
     <name lang="en">SanteDB User Interface Core</name>
     <author>Mohawk College of Applied Arts and Technology - mHealth &amp; eHealth Development &amp; Innovation Centre</author>

@@ -60,16 +60,5 @@
       </definitions>
     </add>
   </queries>
-  <reports>
-    <add id="">
-      <views>
-        <add id="">
-          <div xmlns="http://www.w3.org/1999/xhtml" xmlns:rpt="http://santedb.org/bi">
-            
-          </div>
-        </add>
-      </views>
-      
-    </add>
-  </reports>
+ 
 </BiPackage>
