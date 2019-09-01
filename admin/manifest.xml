@@ -19,7 +19,7 @@
  - Date: 2018-11-14
  -->
 <AppletManifest xmlns="http://santedb.org/applet">
-  <info id="org.santedb.admin" version="1.31.*.0">
+  <info id="org.santedb.admin" version="1.46.*.0">
     <icon>/org.santedb.admin/img/icon.png</icon>
     <name lang="en">SanteDB Administrative Panel</name>
     <author>Mohawk College of Applied Arts and Technology - mHealth &amp; eHealth Development &amp; Innovation Centre</author>
@@ -28,6 +28,12 @@
   <errors>
     <add code="403" asset="/org.santedb.admin/views/error/elevate.html"/>
   </errors>
+
+  <configuration>
+    <appSettings>
+      <add name="oauth2.login.asset" value="/org.santedb.admin/oauth/index.html"/>
+    </appSettings>
+  </configuration>
 
   <menuItem context="org.santedb.admin" launch="#!/"  asset="/org.santedb.admin/views/index.html">
     <icon>fas fa-tachometer-alt</icon>
