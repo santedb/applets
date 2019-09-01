@@ -326,6 +326,11 @@ angular.module('santedb').controller('InitialSettingsController', ['$scope', '$r
 
                     });
             };
+            var elevator = new SanteDBElevator(joinRealmFn);
+            elevator.setCloseCallback(function() {
+                SanteDB.display.buttonWait("#joinRealmButton", false);
+            });
+            
             SanteDB.authentication.setElevator(new SanteDBElevator(joinRealmFn));
             joinRealmFn();
         }

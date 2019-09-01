@@ -22,15 +22,30 @@
  * @summary Represents an elevator implementation that uses the uicore elevation controls
  * @constructor
  * @class
- * @param {function():void} continueWith The function to continue with
+ * @param {function():void} continueWith The function to continue with when login is successful
  */
 function SanteDBElevator(continueWith) {
 
     var _token = null;
+    var _onCloseFunction = null;
 
     // Focus function
     var _focusFunction = function() {};
     $("#loginModal").on("shown.bs.modal", function() { _focusFunction(); });
+    $("#loginModal").on("hidden.bs.modal", function() {
+        if(_onCloseFunction)
+            _onCloseFunction();
+        $("#loginModal").off("shown.bs.modal");
+        $("#loginModal").off("hidden.bs.modal");
+    });
+
+    /**
+     * @summary Sets a special function to be called when the modal is closed regardless of outcome
+     * @param {function():void} closeCallback The callback to be alled
+     */
+    this.setCloseCallback = function(closeCallback) {
+        _onCloseFunction = closeCallback;
+    }
 
     /**
      * @method

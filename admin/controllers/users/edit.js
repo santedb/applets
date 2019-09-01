@@ -245,12 +245,17 @@ angular.module('santedb').controller('EditUserController', ["$scope", "$rootScop
         };
         var errorFn = function(e) {
             SanteDB.display.buttonWait("#saveUserButton", false);
-            if(e.$type == "DetectedIssueException") {// Error with password
+            if(e.$type == "DetectedIssueException") { // Error with password?
                 userForm.newPassword.$error = {};
-                e.rules.filter(function(d) { return d.priority == "Error"; }).forEach(function(d) {
-                    userForm.newPassword.$error[d.text] = true;
-                });
-                $scope.$apply();
+                var passwdRules = e.rules.filter(function(d) { return d.priority == "Error" && d.text == "err.password"; }); 
+                if(passwdRules.length == e.rules.length) {
+                    passwdRules.forEach(function(d) {
+                        userForm.newPassword.$error[d.text] = true;
+                    });
+                    $scope.$apply();
+                }
+                else
+                    $rootScope.errorHandler(e);
             }
             else 
                 $rootScope.errorHandler(e);
