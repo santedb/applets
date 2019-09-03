@@ -29,7 +29,16 @@
                     <i class="fa fa-times"></i>
                 </button>
             </div>
-            <div class="modal-body">
+            <div class="modal-body" ng-if="$root.error.type == 'DetectedIssueException'">
+                {{ 'error.type.DetectedIssueException.detail' | i18n }}
+                <ul class="list-unstyled">
+                    <li ng-repeat="rule in $root.error.rules" ng-class="{'text-danger': rule.priority == 'Error', 'text-warning': rule.priority == 'Warning' }">
+                        <i ng-class="{ 'fa-exclamation-circle' : rule.priority == 'Error', 'fa-exclamation-triangle': rule.priority == 'Warning', 'fa-info-circle': rule.priority == 'Informational' }" class="fas"></i>
+                        {{ rule.text }}
+                    </li>
+                </ul>
+            </div>
+            <div class="modal-body" ng-if="$root.error.type != 'DetectedIssueException'">
                 <p ng-if="$root.error.userMessage">{{ $root.error.userMessage | i18n }}</p>
                 <p ng-if="!$root.error.userMessage">
                     {{ $root.error.message | i18n }}. {{ 'ui.error.description' | i18n }}

@@ -55,3 +55,9 @@ html, body {
     -webkit-transform: rotate(90deg);
     transform: rotate(90deg);
 }
+
+
+.select2-container .select2-selection--single, .select2-container .select2-selection--multiple {
+    line-height: 1.5;
+    height: calc(1.5em + .75rem + 2px);
+}

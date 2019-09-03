@@ -7,15 +7,50 @@ angular.module('santedb').controller('UserIndexController', ["$scope", "$rootSco
     $scope.delete = function (id, index) {
         if (id === SanteDB.authentication.SYSTEM_USER || id === SanteDB.authentication.ANONYMOUS_USER)
             alert(SanteDB.locale.getString("ui.admin.users.systemUser"));
-        else if (confirm(SanteDB.locale.getString("ui.admin.users.confirmDelete"))) {
-            $("#action_grp_" + index + " a").addClass("disabled");
-            $("#action_grp_" + index + " a i.fa-trash").removeClass("fa-trash").addClass("fa-circle-notch fa-spin");
-            SanteDB.resources.securityUser.deleteAsync(id)
-                .then(function (e) {
-                    $("#SecurityUserTable").attr("newQuery", true);
-                    $("#SecurityUserTable table").DataTable().draw();
-                })
-                .catch($rootScope.errorHandler);
+        else {
+            var data = $("#SecurityUserTable table").DataTable().row(index).data();
+            if (!data.obsoletionTime && confirm(SanteDB.locale.getString("ui.admin.users.confirmDelete"))) {
+                $("#action_grp_" + index + " a").addClass("disabled");
+                $("#action_grp_" + index + " a i.fa-trash").removeClass("fa-trash").addClass("fa-circle-notch fa-spin");
+                SanteDB.resources.securityUser.deleteAsync(id)
+                    .then(function (e) {
+                        $("#SecurityUserTable").attr("newQuery", true);
+                        $("#SecurityUserTable table").DataTable().draw();
+                    })
+                    .catch($rootScope.errorHandler);
+            }
+            else if(data.obsoletionTime && confirm(SanteDB.locale.getString("ui.admin.users.confirmUnDelete")))
+            {
+                $("#action_grp_" + index + " a").addClass("disabled");
+                $("#action_grp_" + index + " a i.fa-trash-restore").removeClass("fa-trash-restore").addClass("fa-circle-notch fa-spin");
+                
+                // Patch the user
+                var patch = new Patch({
+                    change: [
+                        new PatchOperation({
+                            op: PatchOperationType.Remove,
+                            path: 'obsoletionTime',
+                            value: null
+                        }),
+                        new PatchOperation({
+                            op: PatchOperationType.Remove,
+                            path: 'obsoletedBy',
+                            value: null
+                        })
+                    ]
+                });
+
+                SanteDB.resources.securityUser.patchAsync(id, data.securityStamp, patch)
+                    .then(function (e) {
+                        $("#SecurityUserTable").attr("newQuery", true);
+                        $("#SecurityUserTable table").DataTable().draw();
+                    })
+                    .catch(function(e) {
+                        $("#action_grp_" + index + " a").removeClass("disabled");
+                        $("#action_grp_" + index + " a i.fa-circle-notch").removeClass("fa-circle-notch fa-spin").addClass("fa-trash-restore");
+                        $rootScope.errorHandler(e);
+                    });
+            }
         }
     }
 

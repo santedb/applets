@@ -90,11 +90,13 @@
     <string key="ui.password.strength.highhigh">Very Strong</string>
     <string key="ui.password.strength.label">Strength</string>
     <string key="ui.password.error.mismatch">Passwords must match</string>
+    <string key="ui.password.notification.success">Password changes saved!</string>
 
     <!-- Common Errors -->
     <string key="ui.error.title">System Error</string>
     <string key="ui.error.description">Additional details follow:</string>
     <string key="ui.error.causedBy">Cause:</string>
+    <string key="error.type.DetectedIssueException.detail">Business rule violations encountered:</string>
     <string key="ui.error.contactSysAdmin">Please file a bug report, or contact your system administrator with this information</string>
     <string key="ui.error.required">Required field missing</string>
     <string key="error.http.403">Access Denied</string>
@@ -102,9 +104,12 @@
     <string key="error.http.404">The requested resource could not be found</string>
     <string key="error.http.405">Method not supported</string>
     <string key="error.http.0">Fatal Error</string>
+    <string key="error.http.409">Conflict</string>
+    <string key="error.http.409.text">There was an update conflict detected. This commonly occurs when someone else is editing the same record as you. Please refresh the page and try your request again</string>
     <string key="error.http.500">General Error</string>
     <string key="error.http.501">Method not implemented</string>
     <string key="error.http.502">Proxy Error</string>
+    <string key="error.type.DetectedIssueException">Business Rules Violation</string>
     <string key="error.type.Exception">General Error</string>
     <string key="error.type.HttpException">Communications Error</string>
     <string key="error.type.WebException">Communications Error</string>
@@ -135,6 +140,7 @@
     <string key="ui.action.reload">Reload</string>
     <string key="ui.action.create">Create</string>
     <string key="ui.action.delete">Delete</string>
+    <string key="ui.action.undelete">Un-Delete</string>
     <string key="ui.action.view">View</string>
     <string key="ui.action.edit">Edit</string>
     <string key="ui.action.override">Override</string>
@@ -144,6 +150,7 @@
     <string key="ui.action.lock">Lock</string>
     <string key="ui.action.unlock">Unlock</string>
     <string key="ui.action.showAll">Show All</string>
+    <string key="ui.action.showDeleted">Show Deleted</string>
     <string key="ui.wait">Please Wait...</string>
     <string key="ui.search">Searching</string>
     <string key="ui.action.reset">Reset</string>

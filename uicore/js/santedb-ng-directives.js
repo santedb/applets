@@ -390,16 +390,18 @@ angular.module('santedb-lib')
                             render: function (d, t, r, m) {
                                 var retVal = `<div class='btn-group' id='action_grp_${m.row}'>`;
                                 scope.itemActions.forEach(function (b) {
-                                    if (b.sref)
-                                        retVal += `<a title="${SanteDB.locale.getString('ui.action.' + b.name)}" ui-sref="${b.sref}({ id: '${r.id}' })" class="btn ${(b.className || 'btn-default')}">`;
-                                    else
-                                        retVal += `<a title="${SanteDB.locale.getString('ui.action.' + b.name)}" href="" ng-click="$parent.${b.action}('${r.id}', ${m.row})" class="btn ${(b.className || 'btn-default')}">`;
-                                    retVal += `<i class="${b.icon || 'fas fas-eye-open'}"></i>&nbsp;`;
-                                    
-                                    if(b.name)
-                                        retVal += `<span class="d-sm-none d-lg-inline">${SanteDB.locale.getString(b.label || 'ui.action.' + b.name)}</span>`;
-                                    retVal += "</a>";
 
+                                    if(!b.when || eval(b.when)) {
+                                        if (b.sref)
+                                            retVal += `<a title="${SanteDB.locale.getString('ui.action.' + b.name)}" ui-sref="${b.sref}({ id: '${r.id}' })" class="btn ${(b.className || 'btn-default')}">`;
+                                        else
+                                            retVal += `<a title="${SanteDB.locale.getString('ui.action.' + b.name)}" href="" ng-click="$parent.${b.action}('${r.id}', ${m.row})" class="btn ${(b.className || 'btn-default')}">`;
+                                        retVal += `<i class="${b.icon || 'fas fas-eye-open'}"></i>&nbsp;`;
+                                        
+                                        if(b.name)
+                                            retVal += `<span class="d-sm-none d-lg-inline">${SanteDB.locale.getString(b.label || 'ui.action.' + b.name)}</span>`;
+                                        retVal += "</a>";
+                                    }
                                 });
                                 return retVal + "</div>";
                             }
@@ -431,17 +433,15 @@ angular.module('santedb-lib')
 
                     // Add a show obsolete button
                     buttons.push({
-                        text: "<i class='fas fa-check-double'></i> " + SanteDB.locale.getString("ui.action.showAll"),
-                        className: "btn btn-info",
+                        text: "<i class='fas fa-trash'></i> " + SanteDB.locale.getString("ui.action.showDeleted"),
+                        className: "btn btn-secondary",
                         action: function(e, dt, node, config) {
-                            if(scope.oldQuery) {
-                                scope.defaultQuery = scope.oldQuery;
-                                scope.oldQuery = undefined;
+                            if(!scope.defaultQuery.obsoletionTime || scope.defaultQuery.obsoletionTime == 'null') {
+                                scope.defaultQuery.obsoletionTime = '!null';
                                 $("button.btn-info:has(i.fa-check-double)", element).removeClass("active");
                             }
                             else {
-                                scope.oldQuery = scope.defaultQuery;
-                                scope.defaultQuery = {};
+                                scope.defaultQuery.obsoletionTime = 'null';
                                 $("button.btn-info:has(i.fa-check-double)", element).addClass("active");
                             }
                             dt.ajax.reload();

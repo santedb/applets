@@ -26,7 +26,7 @@ angular.module('santedb').controller('EditUserController', ["$scope", "$rootScop
                 if (u.item && u.item.length > 0) {
                     $scope.target.entity = u.item[0];
                     // Load inverse relationships
-                    if(!u.item[0].relationship.Employee)
+                    if(u.item[0].relationship && !u.item[0].relationship.Employee)
                         SanteDB.resources.entityRelationship.findAsync({ target: u.item[0].id, relationshipType: EntityRelationshipTypeKeys.Employee, _viewModel: "relationship_full" })
                             .then(function(er) {
                                 if(er.item)
@@ -37,7 +37,7 @@ angular.module('santedb').controller('EditUserController', ["$scope", "$rootScop
                                     });
                             })
                 }
-                else
+                else 
                     $scope.target.entity = new UserEntity();
 
                 $scope.$apply();
@@ -56,7 +56,7 @@ angular.module('santedb').controller('EditUserController', ["$scope", "$rootScop
          * @summary Watch for changes to the username if we're creating and warn of duplicates
          */
         $scope.$watch("target.securityUser.userName", function (n, o) {
-            if (n && n.length > 3) {
+            if (n != o && n && n.length >= 3) {
                 SanteDB.display.buttonWait("#usernameCopyButton button", true, true);
                 SanteDB.resources.securityUser.findAsync({ userName: n })
                     .then(function (r) {
@@ -218,34 +218,37 @@ angular.module('santedb').controller('EditUserController', ["$scope", "$rootScop
             $scope.target.entity.telecom.WorkPlace.push({ value: `mailto:${$scope.target.securityUser.email}` });
         
         // Correct arrays and assign id
-        if(!$scope.target.entity.id)
+        if(!$scope.target.entity.id) {
             $scope.target.entity.id = SanteDB.application.newGuid();
-        if(Array.isArray($scope.target.entity.relationship.DedicatedServiceDeliveryLocation))
-            $scope.target.entity.relationship.DedicatedServiceDeliveryLocation = $scope.target.entity.relationship.DedicatedServiceDeliveryLocation.map(function(d) {
-                return { source: $scope.target.entity.id,  target: d.target };
-            });
+        }
 
-        if(Array.isArray($scope.target.entity.relationship.Employee))
-            $scope.target.entity.relationship.Employee = $scope.target.entity.relationship.Employee.map(function(d) {
-                return { target: $scope.target.entity.id, holder: d.holder };
-            });
-        else if($scope.target.entity.relationship.Employee)
-            $scope.target.entity.relationship.Employee.holder = $scope.target.entity.id;
+        if($scope.target.entity.relationship) {
+            if(Array.isArray($scope.target.entity.relationship.DedicatedServiceDeliveryLocation))
+                $scope.target.entity.relationship.DedicatedServiceDeliveryLocation = $scope.target.entity.relationship.DedicatedServiceDeliveryLocation.map(function(d) {
+                    return { source: $scope.target.entity.id,  target: d.target };
+                });
 
+            if(Array.isArray($scope.target.entity.relationship.Employee))
+                $scope.target.entity.relationship.Employee = $scope.target.entity.relationship.Employee.map(function(d) {
+                    return { target: $scope.target.entity.id, holder: d.holder };
+                });
+            else if($scope.target.entity.relationship.Employee)
+                $scope.target.entity.relationship.Employee.holder = $scope.target.entity.id;
 
+        }
         // Show wait state
         SanteDB.display.buttonWait("#saveUserButton", true);
 
         // Success fn
         var successFn = function(r) { 
             // Now save the user entity
-            toastr.info(SanteDB.locale.getString("ui.admin.users.saveConfirm"));
+            toastr.success(SanteDB.locale.getString("ui.admin.users.saveConfirm"));
             SanteDB.display.buttonWait("#saveUserButton", false);
             $state.transitionTo("santedb-admin.security.users.index");
         };
         var errorFn = function(e) {
             SanteDB.display.buttonWait("#saveUserButton", false);
-            if(e.$type == "DetectedIssueException") { // Error with password?
+            if(e.$type == "DetectedIssueException" && userForm.newPassword) { // Error with password?
                 userForm.newPassword.$error = {};
                 var passwdRules = e.rules.filter(function(d) { return d.priority == "Error" && d.text == "err.password"; }); 
                 if(passwdRules.length == e.rules.length) {
@@ -270,6 +273,7 @@ angular.module('santedb').controller('EditUserController', ["$scope", "$rootScop
                 role: $scope.target.role,
                 entity: $scope.target.securityUser
             }).then(function(u) {
+               // $scope.target.entity.securityUser = u.entity.id;
                 SanteDB.resources.userEntity.insertAsync($scope.target.entity)
                     .then(successFn)
                     .catch(errorFn)

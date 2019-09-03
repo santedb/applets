@@ -627,14 +627,14 @@ if (!SanteDBWrapper)
             this.patchAsync = function (id, etag, patch, state) {
                 if (patch.$type !== "Patch")
                     throw new Exception("ArgumentException", "error.invalidType", `Invalid type, resource wrapper expects ${_config.resource} however ${data.$type} specified`);
-                else if(etag == null)
-                    throw new Exception("ArgumentException", "error.invalidArgument", `Missing etag parameter`);
+
+                var headers  = {};
+                if(etag)
+                    headers['If-Match'] = etag;
 
                 // Send PUT
                 return _config.api.patchAsync({
-                    headers: {
-                        "If-Match" : etag
-                    },
+                    headers: headers,
                     data: patch,
                     id: id,
                     state: state,

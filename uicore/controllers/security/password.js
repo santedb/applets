@@ -35,6 +35,8 @@ angular.module("santedb").controller("PasswordController", ['$scope', '$rootScop
             SanteDB.authentication.setPasswordAsync($scope.password.entity.id, $scope.password.entity.userName, $scope.password.entity.password)
                 .then(function(result) {
                     $scope.closeForm(form);
+                    toastr.success(SanteDB.locale.getString("ui.password.notification.success"));
+
                 })
                 .catch(function(e) {
                     SanteDB.display.buttonWait("#passwordButton", false);
@@ -52,7 +54,7 @@ angular.module("santedb").controller("PasswordController", ['$scope', '$rootScop
 
         SanteDB.display.buttonWait("#passwordButton", true);
         // First we should authenticate ourselves to reset the password if we're resetting our own
-        if($scope.password.entity.userName == $rootScope.session.user.userName) {
+        if($scope.password.entity.userName == $rootScope.session.username) {
             // Verify current password
             SanteDB.authentication.passwordLoginAsync($scope.password.entity.userName, $scope.password.entity.existingPassword, undefined, true, undefined, undefined)
                 .then(function(session) {

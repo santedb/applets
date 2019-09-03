@@ -156,11 +156,14 @@ var santedbApp = angular.module('santedb', ['ngSanitize', 'ui.router', 'oc.lazyL
 
             if(userMessage == userMessageKey) // no special user message - show default
             {
+                userMessageKey = e.message + '.text';
+                userMessage = SanteDB.locale.getString(userMessageKey);
                 $rootScope.error = {
-                    userMessage: e.userMessage,
+                    userMessage: e.userMessage ? e.userMessage : userMessage != userMessageKey ? userMessage : null,
                     details: e.detail || e,
                     message: e.message || 'ui.error.title',
                     type: e.$type,
+                    rules: e.rules,
                     cause: []
                 };
                 var cause = e.cause;
