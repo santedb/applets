@@ -321,6 +321,9 @@
     <string key="ui.config.services.type.label">Enabled Services</string>
     <string key="ui.provenance.extraInfo">Provenance Data</string>
     <string key="ui.provenance.unknown">Not Available</string>
+    <string key="ui.provenance.timestamp">Time</string>
+    <string key="ui.provenance.application">App</string>
+    <string key="ui.provenance.session">Session</string>
 
     <!-- Authentication Issues -->
     <string key="AUTH_LCK">Your account is locked. Please try logging in at a later time, or contacting support</string>
@@ -344,6 +347,10 @@
     <string key="ui.model.userEntity.relationship.DedicatedServiceDeliveryLocation">Primary Facility</string>
     <string key="ui.model.userEntity.relationship.Employee">Employer</string>
     <string key="ui.model.securityUser.lockout">Locked Until</string>
+
+    <!-- Default applications -->
+    <string key="org.santedb.debug">SanteDB SDK</string>
+    <string key="org.santedb.administration">SanteDB Admin Console</string>
   </strings>
 
 </AppletManifest>

@@ -636,11 +636,11 @@ angular.module('santedb-lib')
                             // Construct a popover of extra info
                             var extraInfo = "";
                             if(provData.applicationModel != null)
-                                extraInfo += `<i class='fas fa-window-maximize'></i> ${SanteDB.locale.getString(provData.applicationModel.name)}`;
+                                extraInfo += `<b><i class='fas fa-window-maximize'></i> ${SanteDB.locale.getString('ui.provenance.application')}:</b> ${SanteDB.locale.getString(provData.applicationModel.name)}`;
                             if(scope.provenanceTime)
-                                extraInfo += `<br/><i class='fas fa-clock'></i> ${moment(scope.provenanceTime).format(SanteDB.locale.dateFormats.second)}`;
+                                extraInfo += `<br/><b><i class='fas fa-clock'></i> ${SanteDB.locale.getString('ui.provenance.timestamp')}:</b>  ${moment(scope.provenanceTime).format(SanteDB.locale.dateFormats.second)}`;
                             if(provData.session)
-                                extraInfo += `<br/><i class='fas fa-asterisk'></i> Session ${provData.session.substring(0, 8)}`;
+                                extraInfo += `<br/><b><i class='fas fa-asterisk'></i>  ${SanteDB.locale.getString('ui.provenance.session')}:</b> ${provData.session.substring(0, 8)}`;
     
 
                             scope.$apply();
