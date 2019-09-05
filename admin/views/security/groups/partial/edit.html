@@ -1,0 +1,79 @@
+<div xmlns="http://www.w3.org/1999/xhtml">
+    <form ng-submit="saveGroup(targetForm)" name="targetForm" novalidate="novalidate">
+        <div class="accordion" id="userAccordion">
+            <div class="card">
+                <div class="card-header">
+                    <h2 class="mb-0">
+                        <button type="button" class="collapse-indicator btn btn-link" data-toggle="collapse"
+                            data-target="#coreGroupProps" aria-expanded="true">
+                            <i class="fa fa-users"></i> {{ 'ui.admin.group.edit.core.title' | i18n }}
+                            <i class="fa fa-chevron-right"></i>
+                        </button>
+                    </h2>
+                </div>
+                <div class="collapse show" id="coreGroupProps">
+                    <div class="card-body container-fluid">
+                        <div class="form-group row">
+                            <label class="col-sm-12 col-md-2 control-label"
+                                for="sid">{{ 'ui.model.securityRole.id' | i18n }}</label>
+                            <div class="col-sm-12 col-md-10 input-group">
+                                <input name="sid" readonly="readonly" type="text" class="form-control"
+                                    ng-model="target.securityRole.id" />
+                                <input-copy-button class="btn btn-outline-secondary" source="target.securityRole.id" />
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-sm-12 col-md-2 control-label"
+                                for="rolename">{{ 'ui.model.securityRole.name' | i18n }}</label>
+                            <div class="col-sm-12 col-md-10 input-group">
+                                <input name="rolename" ng-readonly="target.securityRole.id" type="text"
+                                    class="form-control" pattern="^[A-Za-z0-9_\.\@]{3,}" minlength="3" maxlength="32"
+                                    required="required" ng-model="target.securityRole.name" />
+                                <input-copy-button id="rolenameCopyButton" class="btn btn-outline-secondary"
+                                    source="target.securityRole.name" />
+                            </div>
+                            <div class="col-sm-12 col-md-10 offset-md-2">
+                                <div ng-show="targetForm.rolename.$error['duplicate']" class="alert-danger">
+                                    <i class="fa fa-exclamation-triangle"></i>
+                                    {{ 'ui.admin.roles.duplicateRole' | i18n }}
+                                </div>
+                                <div ng-show="targetForm.rolename.$error['required'] &amp;&amp; targetForm.$submitted"
+                                    class="alert-danger">
+                                    <i class="fa fa-exclamation-triangle"></i> {{ 'ui.error.required' | i18n }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group row" ng-if="target.securityRole.createdBy">
+                            <label
+                                class="col-sm-12 col-md-2 control-label">{{ 'ui.model.securityRole.createdBy' | i18n }}</label>
+                            <div class="col-md-10 col-sm-12">
+                                <provenance provenance-id="target.securityRole.createdBy" provenance-time="target.securityRole.creationTime"></provenance>
+                                {{ target.securityRole.creationTime | extDate }}
+                            </div>
+                        </div>
+                        <div class="form-group row" ng-if="target.securityRole.updatedBy">
+                            <label
+                                class="col-sm-12 col-md-2 control-label">{{ 'ui.model.securityRole.updatedBy' | i18n }}</label>
+                            <div class="col-md-10 col-sm-12">
+                                    <provenance provenance-id="target.securityRole.updatedBy" provenance-time="target.securityRole.updatedTime"></provenance>
+                                    {{ target.securityRole.updatedTime | extDate }}
+                            </div>
+                        </div>
+                        <div class="form-group row" ng-if="target.securityRole.obsoletedBy">
+                            <label
+                                class="col-sm-12 col-md-2 control-label">{{ 'ui.model.securityRole.obsoletedBy' | i18n }}</label>
+                            <div class="col-md-10 col-sm-12">
+                                    <provenance provenance-id="target.securityRole.obsoletedBy" provenance-time="target.securityRole.obsoletionTime"></provenance>
+
+                                {{ target.securityRole.obsoletionTime | extDate }} <button id="reactivateUserButton"
+                                    ng-click="reactivateRole()" type="button" class="btn btn-info"><i
+                                        class="fas fa-trash-restore"></i>
+                                    {{ 'ui.action.reactivate' | i18n }}</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>

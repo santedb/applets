@@ -58,10 +58,10 @@ angular.module('santedb').controller('EditUserController', ["$scope", "$rootScop
         $scope.$watch("target.securityUser.userName", function (n, o) {
             if (n != o && n && n.length >= 3) {
                 SanteDB.display.buttonWait("#usernameCopyButton button", true, true);
-                SanteDB.resources.securityUser.findAsync({ userName: n })
+                SanteDB.resources.securityUser.findAsync({ userName: n, _count: 0 })
                     .then(function (r) {
                         SanteDB.display.buttonWait("#usernameCopyButton button", false, true);
-                        if (r.item.length > 0) // Alert error for duplicate
+                        if (r.size > 0) // Alert error for duplicate
                             $scope.targetForm.username.$setValidity('duplicate', false);
                         else
                             $scope.targetForm.username.$setValidity('duplicate', true);
@@ -273,7 +273,7 @@ angular.module('santedb').controller('EditUserController', ["$scope", "$rootScop
                 role: $scope.target.role,
                 entity: $scope.target.securityUser
             }).then(function(u) {
-               // $scope.target.entity.securityUser = u.entity.id;
+                $scope.target.entity.securityUser = u.entity.id;
                 SanteDB.resources.userEntity.insertAsync($scope.target.entity)
                     .then(successFn)
                     .catch(errorFn)

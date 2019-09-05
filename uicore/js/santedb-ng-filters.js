@@ -96,52 +96,6 @@ angular.module('santedb-lib')
         }
     })
     /**
-     * @method provenance
-     * @memberof Angular
-     * @summary Displays provenance data for the user
-     */
-    .filter('provenance', ['$compile', function($compile) {
-        var alreadyFetching = [];
-        var uniqueId = 0;
-        return function(value, timeOfEvent, sessionNav) {
-
-            if(alreadyFetching.indexOf(value) == -1)
-            {
-                alreadyFetching.push(value);
-                SanteDB.resources.securityProvenance.getAsync(value)
-                    .then(function(provData) {
-                        var html = "";
-                        // Provenance is for a user session
-                        if(provData.userModel)
-                            html += `<i class="fas fa-user"></i> ${provData.userModel.userName}`;
-                        else 
-                            html += `<i class="fas fa-desktop"></i> ${provData.deviceModel.name}`;
-                        
-                        // Add popover for information
-                        var id = uniqueId++;
-
-                        var extraInfo = "";
-                        if(provData.applicationModel != null)
-                            extraInfo += `<i class='fas fa-window-maximize'></i> ${SanteDB.locale.getString(provData.applicationModel.name)}`;
-                        if(timeOfEvent)
-                            extraInfo += `<br/><i class='fas fa-clock'></i> ${moment(timeOfEvent).format(SanteDB.locale.dateFormats.second)}`;
-                        if(provData.session && sessionNav)
-                            extraInfo += `<br/><i class='fas fa-asterisk'></i> <a href='${sessionNav}/${provData.session}'>${provData.session.substring(0, 8)}</a>`;
-                        html += `<button type="button" class="btn btn-link" data-toggle="popover" data-trigger="focus" data-title="${SanteDB.locale.getString("ui.provenance.extraInfo")}" data-content="${extraInfo}" ><i class="fas fa-info-circle"></i></button> `
-                        $(`.${provData.id}`).html(html);
-                        $(`.${value} button`).popover({ html: true });
-                        alreadyFetching.splice(alreadyFetching.indexOf(value), 1);
-                    })
-                    .catch(function(e) {
-                        alreadyFetching.splice(alreadyFetching.indexOf(value), 1);
-                        $(`.${value}`).html(`<i class="fa fa-exclamation-circle"></i> ${SanteDB.locale.getString("ui.provenance.unknown")}`);
-                    });
-            }
-
-            return `<span class='${value}'><i class="fas fa-circle-notch fa-spin"></i></span>`;
-        }
-    }])
-    /**
      * @method extDate
      * @memberof Angular
      * @summary Renders an extended date with a specified precision

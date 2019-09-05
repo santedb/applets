@@ -47,8 +47,7 @@
                             <label
                                 class="col-sm-12 col-md-2 control-label">{{ 'ui.model.securityUser.createdBy' | i18n }}</label>
                             <div class="col-md-10 col-sm-12">
-                                <span
-                                    ng-bind-html="target.securityUser.createdBy | provenance: user.securityUser.creationTime"></span>
+                                    <provenance provenance-id="target.securityUser.createdBy" provenance-time="target.securityUser.creationTime"></provenance>
                                 {{ target.securityUser.creationTime | extDate }}
                             </div>
                         </div>
@@ -56,8 +55,7 @@
                             <label
                                 class="col-sm-12 col-md-2 control-label">{{ 'ui.model.securityUser.updatedBy' | i18n }}</label>
                             <div class="col-md-10 col-sm-12">
-                                <span
-                                    ng-bind-html="target.securityUser.updatedBy | provenance: user.securityUser.updatedTime"></span>
+                                    <provenance provenance-id="target.securityUser.updatedBy" provenance-time="target.securityUser.updatedTime"></provenance>
                                 {{ target.securityUser.updatedTime | extDate }}
                             </div>
                         </div>
@@ -65,8 +63,7 @@
                             <label
                                 class="col-sm-12 col-md-2 control-label">{{ 'ui.model.securityUser.obsoletedBy' | i18n }}</label>
                             <div class="col-md-10 col-sm-12">
-                                <span
-                                    ng-bind-html="target.securityUser.obsoletedBy | provenance: user.securityUser.obsoletionTime"></span>
+                                    <provenance provenance-id="target.securityUser.obsoletedBy" provenance-time="target.securityUser.obsoletionTime"></provenance>
                                 {{ target.securityUser.obsoletionTime | extDate }} <button id="reactivateUserButton"
                                     ng-click="reactivateUser()" type="button" class="btn btn-info"><i
                                         class="fas fa-trash-restore"></i>

@@ -54,9 +54,9 @@ angular.module('santedb').controller('GroupIndexController', ["$scope", "$rootSc
      */
     $scope.renderUpdatedBy = function (role) {
         if (role.updatedBy != null)
-            return `<span ng-bind-html="'${role.updatedBy}' | provenance: '${role.updatedTime}':'#!/security/session/'"></span>`;
+            return `<provenance provenance-id="'${role.updatedBy}'" sessionfn="$parent.sessionFunction" provenance-time="'${role.updatedTime}'"></provenance>`;
         else if (role.createdBy != null)
-            return `<span ng-bind-html="'${role.createdBy}' | provenance: '${role.creationTime}':'#!/security/session/'"></span>`;
+            return `<provenance provenance-id="'${role.createdBy}'" sessionfn="$parent.sessionFunction" provenance-time="'${role.creationTime}'"></provenance>`;
         return "";
     }
 
@@ -68,5 +68,11 @@ angular.module('santedb').controller('GroupIndexController', ["$scope", "$rootSc
             `<i title="${SanteDB.locale.getString("ui.state.active")}" class="fa fa-check"></i>`;
     }
 
+    /**
+     * @summary Display session information
+     */
+    $scope.sessionFunction = function(id) {
+        
+    }
     
 }]);

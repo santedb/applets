@@ -127,11 +127,18 @@ angular.module('santedb').controller('UserIndexController', ["$scope", "$rootSco
     /**
      * @summary Render updated by
      */
-    $scope.renderUpdatedBy = function (user) {
-        if (user.updatedBy != null)
-            return `<span ng-bind-html="'${user.updatedBy}' | provenance: '${user.updatedTime}':'#!/security/session/'"></span>`;
-        else if (user.createdBy != null)
-            return `<span ng-bind-html="'${user.createdBy}' | provenance: '${user.creationTime}':'#!/security/session/'"></span>`;
+    $scope.renderUpdatedBy = function (role) {
+        if (role.updatedBy != null)
+            return `<provenance provenance-id="'${role.updatedBy}'" sessionfn="$parent.sessionFunction" provenance-time="'${role.updatedTime}'"></provenance>`;
+        else if (role.createdBy != null)
+            return `<provenance provenance-id="'${role.createdBy}'" sessionfn="$parent.sessionFunction" provenance-time="'${role.creationTime}'"></provenance>`;
         return "";
+    }
+
+    /**
+     * @summary Handles clicking on the session info
+     */
+    $scope.sessionFunction = function(data) {
+
     }
 }]);

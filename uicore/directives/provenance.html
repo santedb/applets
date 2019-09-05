@@ -1,0 +1,15 @@
+<div xmlns="http://www.w3.org/1999/xhtml" style="min-width:250px; display:inline">
+    <i class="fas fa-circle-notch fa-spin" ng-if="isLoading"></i>
+    <div ng-if="!isLoading" style="display:inline">
+        <span ng-if="provData.userModel"><i class="fas fa-user"></i> {{ provData.userModel.userName }}
+        </span><span ng-if="provData.deviceModel">
+            <i class="fas fa-desktop" ng-if="provData.deviceModel"></i> {{ provData.deviceModel.name }}
+        </span>
+        <div class="btn-group d-inline"><button type="button" class="btn btn-link" data-toggle="popover" data-trigger="focus"
+                data-title="{{ 'ui.provenance.extraInfo' | i18n }}" data-content=""><i
+                    class="fas fa-info-circle"></i></button>
+            <button ng-if="sessionfn" class="btn btn-link" ng-click="sessionfn(provData.id)"><i
+                    class="fas fa-external-link-square-alt"></i></button>
+        </div>
+    </div>
+</div>
