@@ -6,7 +6,7 @@
                     <h2 class="mb-0">
                         <button type="button" class="collapse-indicator btn btn-link" data-toggle="collapse"
                             data-target="#coreGroupProps" aria-expanded="true">
-                            <i class="fa fa-users"></i> {{ 'ui.admin.group.edit.core.title' | i18n }}
+                            <i class="fa fa-users-cog"></i> {{ 'ui.admin.group.edit.core.title' | i18n }}
                             <i class="fa fa-chevron-right"></i>
                         </button>
                     </h2>
@@ -47,7 +47,8 @@
                             <label
                                 class="col-sm-12 col-md-2 control-label">{{ 'ui.model.securityRole.createdBy' | i18n }}</label>
                             <div class="col-md-10 col-sm-12">
-                                <provenance provenance-id="target.securityRole.createdBy" provenance-time="target.securityRole.creationTime"></provenance>
+                                <provenance provenance-id="target.securityRole.createdBy"
+                                    provenance-time="target.securityRole.creationTime"></provenance>
                                 {{ target.securityRole.creationTime | extDate }}
                             </div>
                         </div>
@@ -55,15 +56,17 @@
                             <label
                                 class="col-sm-12 col-md-2 control-label">{{ 'ui.model.securityRole.updatedBy' | i18n }}</label>
                             <div class="col-md-10 col-sm-12">
-                                    <provenance provenance-id="target.securityRole.updatedBy" provenance-time="target.securityRole.updatedTime"></provenance>
-                                    {{ target.securityRole.updatedTime | extDate }}
+                                <provenance provenance-id="target.securityRole.updatedBy"
+                                    provenance-time="target.securityRole.updatedTime"></provenance>
+                                {{ target.securityRole.updatedTime | extDate }}
                             </div>
                         </div>
                         <div class="form-group row" ng-if="target.securityRole.obsoletedBy">
                             <label
                                 class="col-sm-12 col-md-2 control-label">{{ 'ui.model.securityRole.obsoletedBy' | i18n }}</label>
                             <div class="col-md-10 col-sm-12">
-                                    <provenance provenance-id="target.securityRole.obsoletedBy" provenance-time="target.securityRole.obsoletionTime"></provenance>
+                                <provenance provenance-id="target.securityRole.obsoletedBy"
+                                    provenance-time="target.securityRole.obsoletionTime"></provenance>
 
                                 {{ target.securityRole.obsoletionTime | extDate }} <button id="reactivateUserButton"
                                     ng-click="reactivateRole()" type="button" class="btn btn-info"><i
@@ -71,9 +74,51 @@
                                     {{ 'ui.action.reactivate' | i18n }}</button>
                             </div>
                         </div>
+                        <div class="form-group row">
+                            <label
+                                class="col-sm-12 col-md-2 control-label">{{ 'ui.model.securityRole.description' | i18n }}</label>
+                            <div class="col-md-10 col-sm-12">
+                                <textarea ng-model="target.securityRole.description" maxlength="2048"
+                                    class="form-control" rows="3"></textarea>
+                            </div>
+                            <div class="col-sm-12 text-right">
+                                {{ 2048 - target.securityRole.description.length}} {{ 'ui.common.charsRemain' | i18n }}
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
+            <div class="card">
+                <div class="card-header">
+                    <h2 class="mb-0">
+                        <button type="button" class="collapse-indicator btn btn-link" data-toggle="collapse"
+                            data-target="#policyGroupProps" aria-expanded="true">
+                            <i class="fa fa-certificate"></i> {{ 'ui.admin.group.edit.policy.title' | i18n }}
+                            <i class="fa fa-chevron-right"></i>
+                        </button>
+                    </h2>
+                </div>
+                <div class="collapse show" id="policyGroupProps">
+                    <div class="card-body container-fluid">
+                        <entity-policy-admin securable="target.securityRole" policy="target.policy"></entity-policy-admin>
+                    </div>
+                </div>
+            </div>
+            <div class="card">
+                    <div class="card-header">
+                        <h2 class="mb-0">
+                            <button type="button" class="collapse-indicator btn btn-link" data-toggle="collapse"
+                                data-target="#membersGroupProps" aria-expanded="true">
+                                <i class="fa fa-users"></i> {{ 'ui.admin.group.edit.users.title' | i18n }}
+                                <i class="fa fa-chevron-right"></i>
+                            </button>
+                        </h2>
+                    </div>
+                    <div class="collapse show" id="membersGroupProps">
+                        <div class="card-body container-fluid">
+                        </div>
+                    </div>
+                </div>
         </div>
     </form>
 </div>

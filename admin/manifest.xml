@@ -100,6 +100,12 @@
     <string key="ui.admin.users.reactivate.confirm">Are you sure you want to reactivate this user account?</string>
     <string key="ui.admin.users.invalidLogin.reset">Are you sure you want to reset this user's invalid login count?</string>
     <string key="ui.admin.users.duplicateUser">Username is already taken by another user</string>
+
+
+    <!-- Role Screen Translations -->
+    <string key="ui.admin.group.edit.core.title">Core Properties</string>
+    <string key="ui.admin.group.edit.policy.title">Assigned Policies</string>
+    <string key="ui.admin.group.edit.users.title">Members</string>
     <!-- Strings for User Edit Screen -->
     <string key="ui.admin.users.edit.core.title">Core Properties</string>
     <string key="ui.admin.users.edit.security.title">Security Properties</string>

@@ -57,7 +57,12 @@ html, body {
 }
 
 
-.select2-container .select2-selection--single, .select2-container .select2-selection--multiple {
+.select2-container .select2-selection--single, 
+.select2-container .select2-selection--multiple {
     line-height: 1.5;
     height: calc(1.5em + .75rem + 2px);
+}
+
+.tokenfield {
+    min-height: 38px
 }

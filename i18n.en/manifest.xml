@@ -62,6 +62,8 @@
   </locales>
   <strings lang="en">
 
+    <!-- Common Phrases -->
+    <string key="ui.common.charsRemain">characters remain</string>
     <!-- Login Translations -->
     <string key="ui.login.input.username">Username</string>
     <string key="ui.login.input.password">Password</string>
@@ -145,6 +147,7 @@
     <string key="ui.action.edit">Edit</string>
     <string key="ui.action.override">Override</string>
     <string key="ui.action.finish">Finish</string>
+    <string key="ui.action.add">Add</string>
     <string key="ui.action.selectAll">Select All</string>
     <string key="ui.action.selectNone">Select None</string>
     <string key="ui.action.lock">Lock</string>
@@ -347,7 +350,18 @@
     <string key="ui.model.userEntity.relationship.DedicatedServiceDeliveryLocation">Primary Facility</string>
     <string key="ui.model.userEntity.relationship.Employee">Employer</string>
     <string key="ui.model.securityUser.lockout">Locked Until</string>
+    <string key="ui.model.securityRole.id">Security ID</string>
+    <string key="ui.model.securityRole.name">Name</string>
+    <string key="ui.model.securityRole.createdBy">Created By</string>
+    <string key="ui.model.securityRole.updatedBy">Updated By</string>
+    <string key="ui.model.securityRole.obsoletedBy">Deleted By</string>
+    <string key="ui.model.securityRole.description">Description</string>
+    <string key="ui.model.securityPolicyInstance.policy">Policy</string>
+    <string key="ui.model.securityPolicyInstance.grant">Permission</string>
 
+    <string key="ui.model.securityPolicyInstance.grant.Grant">Grant</string>
+    <string key="ui.model.securityPolicyInstance.grant.Deny">Deny</string>
+    <string key="ui.model.securityPolicyInstance.grant.Elevate">Elevate</string>
     <!-- Default applications -->
     <string key="org.santedb.debug">SanteDB SDK</string>
     <string key="org.santedb.administration">SanteDB Admin Console</string>

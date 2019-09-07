@@ -22,7 +22,7 @@ angular.module('santedb-lib')
                 if (response.status === 401) {
                     var oldState = $injector.get('$state').$current.name;
                     $injector.get('$state').transitionTo('login', {
-                        returnState: oldState == "login" ? null : oldState
+                        returnState: oldState == "login" ? null : (oldState || $rootScope._transition)
                     });
                     window.sessionStorage.removeItem('token');// obvi this token doesn't work
                     return $q.reject(response);;

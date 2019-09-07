@@ -62,13 +62,18 @@ angular.module('santedb-lib')
                 case "SanteDB.Core.Model.AMI.Auth.SecurityUserInfo, SanteDB.Core.Model.AMI":
                     retVal += "<i class='fa fa-users'></i>";
                     break;
+
+                case "SecurityPolicy":
+                case "SecurityPolicyInstance":
+                    retVal += "<i class='fa fa-certificate'></i>";
+                    break;
                 default:
                     retVal += "<i class='fa fa-box'></i> ";
                     break;
             }
             retVal += "&nbsp;";
 
-            if(selection.typeConceptModel) {
+            if (selection.typeConceptModel) {
                 retVal += `<span class="badge badge-info">${SanteDB.display.renderConcept(selection.typeConceptModel)}</span> `;
             }
 
@@ -84,7 +89,7 @@ angular.module('santedb-lib')
                 retVal += selection.element.innerText.trim();
             else if (selection.text)
                 retVal += selection.text;
-            else if(selection.entity) 
+            else if (selection.entity)
                 retVal += (selection.entity.name || selection.entity.userName);
             if (selection.address)
                 retVal += " - <small>(<i class='fa fa-map-marker'></i> " + SanteDB.display.renderEntityAddress(selection.address) + ")</small>";
@@ -133,19 +138,19 @@ angular.module('santedb-lib')
                             value.forEach(function (v) {
 
                                 // Key selector is ID
-                                if($scope.key && $scope.key != "id") {
+                                if ($scope.key && $scope.key != "id") {
                                     var query = {};
                                     query[$scope.key] = v;
                                     query._viewModel = "dropdown";
                                     api.findAsync(query)
-                                        .then(function(res) {
+                                        .then(function (res) {
                                             $(selectControl).find("option[value='loading']").remove();
 
                                             // Matching item
-                                            if(res.item.length == 1)
+                                            if (res.item.length == 1)
                                                 if ($(selectControl).find(`option[value=${v}]`).length == 0) {
                                                     var obj = res.item[0];
-                                                    if($scope.selector)
+                                                    if ($scope.selector)
                                                         obj = obj[$scope.selector] || obj;
                                                     $(selectControl)[0].add(new Option(renderObject(res.item[0]), v, false, true));
                                                     $(selectControl).trigger('change.select2');
@@ -160,7 +165,7 @@ angular.module('santedb-lib')
 
                                             if ($(selectControl).find(`option[value=${v}]`).length == 0) {
                                                 var obj = res;
-                                                if($scope.selector)
+                                                if ($scope.selector)
                                                     obj = obj[$scope.selector] || obj;
                                                 $(selectControl)[0].add(new Option(renderObject(obj), v, false, true));
                                                 $(selectControl).trigger('change.select2');
@@ -174,7 +179,7 @@ angular.module('santedb-lib')
             link: function (scope, element, attrs, ngModel) {
                 $timeout(function () {
                     var modelType = scope.type;
-                    var filter = scope.filter;
+                    var filter = scope.filter || { };
                     var displayString = scope.display;
                     var searchProperty = scope.searchField || "name.component.value";
                     var defaultResults = scope.defaultResults;
@@ -184,10 +189,11 @@ angular.module('santedb-lib')
                     var selector = scope.selector;
                     var valueProperty = scope.valueProperty;
 
+                    $(element).find('option[value="? undefined:undefined ?"]').remove();
                     // Bind select 2 search
                     $(element).select2({
                         language: {
-                            searching: function() { return `<i class="fa fa-circle-notch fa-spin"></i> ${SanteDB.locale.getString("ui.search")}`; }
+                            searching: function () { return `<i class="fa fa-circle-notch fa-spin"></i> ${SanteDB.locale.getString("ui.search")}`; }
                         },
                         defaultResults: function () {
                             var s = scope;
@@ -206,7 +212,7 @@ angular.module('santedb-lib')
                         },
                         dataAdapter: $.fn.select2.amd.require('select2/data/extended-ajax'),
                         ajax: {
-                            url: ((modelType == "SecurityUser" || modelType == "SecurityRole") ? "/ami/" : "/hdsi/") + modelType,
+                            url: ((modelType == "SecurityUser" || modelType == "SecurityRole" || modelType == "SecurityPolicy") ? "/ami/" : "/hdsi/") + modelType,
                             dataType: 'json',
                             delay: 500,
                             method: "GET",
@@ -228,7 +234,7 @@ angular.module('santedb-lib')
                                 if (groupString == null && data !== undefined) {
                                     retVal.results = retVal.results.concat($.map(data, function (o) {
 
-                                        if(selector && o[selector])
+                                        if (selector && o[selector])
                                             o = o[selector];
 
                                         var text = "";
@@ -282,17 +288,16 @@ angular.module('santedb-lib')
                     element.on('change', function (e) {
                         var val = $(element).select2("val");
                         //e.currentTarget.options.selectedIndex = e.currentTarget.options.length - 1;
-                        if(valueProperty)
-                        {
+                        if (valueProperty) {
                             var modelVal = {};
-                            if(Array.isArray(val)) 
-                                modelVal = val.map(function(v) {
+                            if (Array.isArray(val))
+                                modelVal = val.map(function (v) {
                                     var retVal = {};
                                     retVal[valueProperty] = v;
                                     return retVal;
                                 });
-                            
-                            else 
+
+                            else
                                 modelVal[valueProperty] = val;
                             scope.$apply(() => ngModel.$setViewValue(modelVal));
 
@@ -301,9 +306,9 @@ angular.module('santedb-lib')
                             scope.$apply(() => ngModel.$setViewValue(val));
                     });
                     ngModel.$render = function () {
-                        if(valueProperty) {
-                            if(Array.isArray(ngModel.$viewValue))
-                                scope.setValue(element, modelType, ngModel.$viewValue.map(function(e) { return e[valueProperty]; }));
+                        if (valueProperty) {
+                            if (Array.isArray(ngModel.$viewValue))
+                                scope.setValue(element, modelType, ngModel.$viewValue.map(function (e) { return e[valueProperty]; }));
                             else
                                 scope.setValue(element, modelType, ngModel.$viewValue[valueProperty]);
                         }
@@ -317,15 +322,15 @@ angular.module('santedb-lib')
     /**
      * @summary Blocks a button whenever the current principal does not have permission
      */
-    .directive("demand", ['$rootScope', function($rootScope) {
+    .directive("demand", ['$rootScope', function ($rootScope) {
         return {
             restrict: 'A',
             replace: true,
-            link: function(scope, element, attrs) {
+            link: function (scope, element, attrs) {
                 // Ensure ID Data exists
-                if(!$rootScope.session.id_data)
+                if (!$rootScope.session.id_data)
                     $rootScope.session.id_data = JSON.parse(atob($rootScope.session.id_token));
-                if($rootScope.session.id_data.scope.indexOf(attrs.sdbDemand) == -1) {
+                if ($rootScope.session.id_data.scope.indexOf(attrs.sdbDemand) == -1) {
                     element.addClass("disabled");
                     element.attr("disabled", "disabled");
                 }
@@ -391,14 +396,14 @@ angular.module('santedb-lib')
                                 var retVal = `<div class='btn-group' id='action_grp_${m.row}'>`;
                                 scope.itemActions.forEach(function (b) {
 
-                                    if(!b.when || eval(b.when)) {
+                                    if (!b.when || eval(b.when)) {
                                         if (b.sref)
                                             retVal += `<a title="${SanteDB.locale.getString('ui.action.' + b.name)}" ui-sref="${b.sref}({ id: '${r.id}' })" class="btn ${(b.className || 'btn-default')}">`;
                                         else
                                             retVal += `<a title="${SanteDB.locale.getString('ui.action.' + b.name)}" href="" ng-click="$parent.${b.action}('${r.id}', ${m.row})" class="btn ${(b.className || 'btn-default')}">`;
                                         retVal += `<i class="${b.icon || 'fas fas-eye-open'}"></i>&nbsp;`;
-                                        
-                                        if(b.name)
+
+                                        if (b.name)
                                             retVal += `<span class="d-sm-none d-lg-inline">${SanteDB.locale.getString(b.label || 'ui.action.' + b.name)}</span>`;
                                         retVal += "</a>";
                                     }
@@ -435,8 +440,8 @@ angular.module('santedb-lib')
                     buttons.push({
                         text: "<i class='fas fa-trash'></i> " + SanteDB.locale.getString("ui.action.showDeleted"),
                         className: "btn btn-secondary",
-                        action: function(e, dt, node, config) {
-                            if(!scope.defaultQuery.obsoletionTime || scope.defaultQuery.obsoletionTime == 'null') {
+                        action: function (e, dt, node, config) {
+                            if (!scope.defaultQuery.obsoletionTime || scope.defaultQuery.obsoletionTime == 'null') {
                                 scope.defaultQuery.obsoletionTime = '!null';
                                 $("button.btn-info:has(i.fa-check-double)", element).removeClass("active");
                             }
@@ -470,7 +475,7 @@ angular.module('santedb-lib')
                                 query["_extern"] = true;
 
                             var thisQuery = JSON.stringify(query);
-                            if(lastQuery != thisQuery || element.attr("newQuery") == "true") {
+                            if (lastQuery != thisQuery || element.attr("newQuery") == "true") {
                                 lastQuery = thisQuery;
                                 queryId = SanteDB.application.newGuid();
                                 element.attr("newQuery", false);
@@ -495,8 +500,8 @@ angular.module('santedb-lib')
                                 })
                                 .catch(function (err) { $rootScope.errorHandler(err) });
                         },
-                        createdRow: function (r, d, i) { 
-                            $compile(angular.element(r).contents())(scope); 
+                        createdRow: function (r, d, i) {
+                            $compile(angular.element(r).contents())(scope);
                             scope.$digest()
                         },
                         columns: columns
@@ -539,7 +544,7 @@ angular.module('santedb-lib')
      * @summary Creates an input button with an easy copy button
      * @param {string} source The source copy
      */
-    .directive("inputCopyButton", function() {
+    .directive("inputCopyButton", function () {
         return {
             restrict: 'E',
             replace: true,
@@ -547,11 +552,11 @@ angular.module('santedb-lib')
             scope: {
                 source: '='
             },
-            controller: ["$scope", function($scope) {
-                $scope.copyInput = function() {
-                    if(navigator.clipboard) 
+            controller: ["$scope", function ($scope) {
+                $scope.copyInput = function () {
+                    if (navigator.clipboard)
                         navigator.clipboard.writeText($scope.source);
-                    
+
                 }
             }]
         }
@@ -561,7 +566,7 @@ angular.module('santedb-lib')
      * @memberof Angular
      * @summary Creates a tagged input
      */
-    .directive("tagInput", function() {
+    .directive("tagInput", function () {
         return {
             require: 'ngModel',
             restrict: 'E',
@@ -570,16 +575,16 @@ angular.module('santedb-lib')
             scope: {
 
             },
-            link: function(scope, element, attrs, ngModel) {
+            link: function (scope, element, attrs, ngModel) {
 
                 // Parsers
-                ngModel.$parsers.unshift(function(viewValue) {
+                ngModel.$parsers.unshift(function (viewValue) {
                     if (Array.isArray(viewValue))
                         return viewValue.join(",")
                     return viewValue.split(",");
                 });
-                ngModel.$formatters.unshift(function(viewValue) {
-                    if(viewValue)
+                ngModel.$formatters.unshift(function (viewValue) {
+                    if (viewValue)
                         return String(viewValue).split(',');
                 });
 
@@ -591,9 +596,9 @@ angular.module('santedb-lib')
 
                 ngModel.$render = function () {
                     var viewValue = ngModel.$viewValue;
-                    if(Array.isArray(viewValue)) 
+                    if (Array.isArray(viewValue))
                         $(element).tokenfield('setTokens', viewValue);
-                    else if(viewValue)
+                    else if (viewValue)
                         $(element).tokenfield('setTokens', viewValue.split(','));
                     //$(element).trigger('change');
                 };
@@ -605,7 +610,7 @@ angular.module('santedb-lib')
      * @memberof Angular
      * @summary Renders a provenance info box
      */
-    .directive("provenance", ['$timeout', function($timeout) {
+    .directive("provenance", ['$timeout', function ($timeout) {
 
         var alreadyFetching = [];
         var uiqueId = 0;
@@ -618,47 +623,47 @@ angular.module('santedb-lib')
                 provenanceTime: '<',
                 sessionfn: "<"
             },
-            link: function(scope, element, attrs) {
+            link: function (scope, element, attrs) {
 
 
-                if(alreadyFetching.indexOf(scope.provenanceId) == -1) // Not yet fetching
+                if (alreadyFetching.indexOf(scope.provenanceId) == -1) // Not yet fetching
                 {
                     scope.isLoading = true;
                     alreadyFetching.push(scope.provenanceId);
 
                     // Fetch provenance
                     SanteDB.resources.securityProvenance.getAsync(scope.provenanceId)
-                        .then(function(provData) {
+                        .then(function (provData) {
                             alreadyFetching.splice(alreadyFetching.indexOf(provData.id), 1);
                             scope.isLoading = false;
                             scope.provData = provData;
 
                             // Construct a popover of extra info
                             var extraInfo = "";
-                            if(provData.applicationModel != null)
+                            if (provData.applicationModel != null)
                                 extraInfo += `<b><i class='fas fa-window-maximize'></i> ${SanteDB.locale.getString('ui.provenance.application')}:</b> ${SanteDB.locale.getString(provData.applicationModel.name)}`;
-                            if(scope.provenanceTime)
+                            if (scope.provenanceTime)
                                 extraInfo += `<br/><b><i class='fas fa-clock'></i> ${SanteDB.locale.getString('ui.provenance.timestamp')}:</b>  ${moment(scope.provenanceTime).format(SanteDB.locale.dateFormats.second)}`;
-                            if(provData.session)
+                            if (provData.session)
                                 extraInfo += `<br/><b><i class='fas fa-asterisk'></i>  ${SanteDB.locale.getString('ui.provenance.session')}:</b> ${provData.session.substring(0, 8)}`;
-    
+
 
                             scope.$apply();
-                            $timeout(function() {
+                            $timeout(function () {
                                 $('button:first', element).attr('data-content', extraInfo);
                                 $('button:first', element).popover({ html: true });
                             });
 
                             // Set the scope of all elements
-                            $(`div.prv_${scope.provenanceId}`).each(function(i, e) { 
-                                if(e == $(element)[0]) return;
+                            $(`div.prv_${scope.provenanceId}`).each(function (i, e) {
+                                if (e == $(element)[0]) return;
                                 $(e).removeClass(`prv_${scope.provenanceId}`);
 
                                 var sscope = angular.element(e).isolateScope();
                                 sscope.provData = provData;
                                 sscope.isLoading = false;
                                 sscope.$apply();
-                                $timeout(function() {
+                                $timeout(function () {
                                     $('button:first', e).attr('data-content', extraInfo);
                                     $('button:first', e).popover({ html: true });
                                 });
@@ -666,7 +671,7 @@ angular.module('santedb-lib')
                             });
 
 
-                        }).catch(function(e) {
+                        }).catch(function (e) {
                             alreadyFetching.splice(alreadyFetching.indexOf(scope.provenanceId), 1);
                             scope.isLoading = false;
                             scope.error = true;
@@ -678,4 +683,92 @@ angular.module('santedb-lib')
                 }
             }
         }
+    }])
+    /**
+     * @summary Security policy instance editor
+     * @memberof Angular
+     * @method entityPolicyAdmin
+     */
+    .directive('entityPolicyAdmin', ['$timeout', function ($timeout) {
+        return {
+            restrict: 'E',
+            replace: true,
+            templateUrl: './org.santedb.uicore/directives/policyAdmin.html',
+            scope: {
+                securable: '=',
+                policy: '='
+            },
+            controller: ['$scope', '$rootScope', function ($scope, $rootScope) {
+
+                $scope.deletePolicy = function(index) {
+
+                    if(confirm(SanteDB.locale.getString("ui.confirm.delete"))) {
+                        $scope.policy.splice(index, 1);
+                        $scope.unsaved = true;
+                    }
+                }
+
+                // Mark grant as dirty
+                $scope.updateGrant = function(pi) {
+                    $scope.unsaved = true;
+                }
+                
+                // Add a a new policy to the group
+                $scope.addPolicy = function() {
+                    
+                    
+                    SanteDB.resources.securityPolicy.getAsync($scope.newPolicy.id)
+                        .then(function(pol) {
+                            pol.grant = 'Grant';
+                            $scope.unsaved = true;
+                            $scope.policy.push(pol);
+                            delete($scope.newPolicy);
+                            $scope.$apply();
+                        })
+                        .catch($rootScope.errorHandler);
+                }
+            }],
+            link: function (scope, element, attrs) {
+
+                if (!scope.policy) {
+                    // TODO: Get the policy instances here
+                }
+
+                var dt = null;
+                // Create datatable
+                scope.$watch(function (s) { return (s.policy || []).length; }, function (n, o) {
+                    if (n && !dt) {
+                        dt = $('table', element).DataTable({
+                            bLengthChange: false,
+                            searching: false,
+                            serverSide: false,
+                            columnDefs: [
+                                {
+                                    orderable: false,
+                                    targets: [0, 1, 2]
+                                }
+                            ],
+                            buttons: [
+                                'copy'
+                            ]
+                        });
+
+                      
+                        // Bind buttons
+                        var bindButtons = function () {
+                            dt.buttons().container().appendTo($('.col-md-6:eq(1)', dt.table().container()));
+                            if (dt.buttons().container().length == 0)
+                                $timeout(bindButtons, 100);
+                            else {
+                                $("#addPolicy", element).appendTo($('.col-md-6:eq(0)', dt.table().container()));
+                            }
+                        };
+                        bindButtons();
+                    }
+                });
+
+
+            }
+        }
     }]);
+;
