@@ -804,6 +804,123 @@ if (!SanteDBWrapper)
                     resource: _config.resource
                 });
             };
+
+            /**
+             * @method
+             * @memberof SanteDBWrapper.ResourceWrapper
+             * @summary Performs a find operation on an association
+             * @description Some resources allow you to chain queries which automatically scopes the results to the container
+             * @param {string} id The identifier of the object whose children you want query 
+             * @param {string} property The property path you would like to filter on 
+             * @param {any} query The query you want to execute
+             * @returns {Promise} A promise for when the request completes
+             */
+            this.findAssociatedAsync = function(id, property, query, state) {
+
+                if(!id)
+                    throw new Exception("ArgumentNullException", "Missing scoping identifier");
+                else if(!property)
+                    throw new Exception("ArgumentNullException", "Missing scoping property");
+
+                var headers = {
+                    Accept: _config.accept
+                };
+                if(_config.viewModel)
+                    headers["X-SanteDB-ViewModel"] = _config.viewModel;
+                
+                // Prepare query
+                var url = null;
+                if (id.id)
+                    url = `${_config.resource}/${id.id}/${property}`;
+                else
+                    url = `${_config.resource}/${id}/${property}`;
+
+                return _config.api.getAsync({
+                    headers: headers,
+                    query: query,
+                    state: state,
+                    resource: url
+                });
+            };
+
+            /**
+             * @method
+             * @memberof SanteDBWrapper.ResourceWrapper
+             * @summary Adds a new association to the specified parent object
+             * @param {string} id The identifier of the container
+             * @param {string} property The associative property you want to add the value to
+             * @param {any} data The data to be added as an associative object (note: Most resources require that this object already exist)
+             * @param {any} state A stateful object for callback correlation
+             * @returns {Promise} A promise which is fulfilled when the request is complete
+             */
+            this.addAssociatedAsync = function(id, property, data, state) {
+
+                if(!id)
+                    throw new Exception("ArgumentNullException", "Missing scoping identifier");
+                else if(!property)
+                    throw new Exception("ArgumentNullException", "Missing scoping property");
+
+                var headers = {
+                    Accept: _config.accept
+                };
+                if (_config.viewModel)
+                    headers["X-SanteDB-ViewModel"] = _config.viewModel;
+
+                // Prepare path
+                var url = null;
+                if (id.id)
+                    url = `${_config.resource}/${id.id}/${property}`;
+                else
+                    url = `${_config.resource}/${id}/${property}`;
+
+                return _config.api.postAsync({
+                    headers: headers,
+                    data: data,
+                    state: state,
+                    resource: url,
+                    contentType: _config.accept
+                });
+            };
+
+            /**
+             * @method 
+             * @memberof SanteDBWrapper.ResourceWrapper
+             * @summary Removes an existing associated object from the specified scoper
+             * @param {string} id The identifier of the container object
+             * @param {string} property The property path from which the object is to be removed
+             * @param {string} associatedId The identifier of the sub-object to be removed
+             * @param {any} state A state for correlating multiple requests
+             * @returns {Promise} A promise which is fulfilled when the request comletes
+             */
+            this.removeAssociatedAsync = function(id, property, associatedId, state) {
+                if(!id)
+                throw new Exception("ArgumentNullException", "Missing scoping identifier");
+            else if(!property)
+                throw new Exception("ArgumentNullException", "Missing scoping property");
+            else if (!associatedId)
+                throw new Exception("ArgumentNullException", "Missing associated object id");
+
+            var headers = {
+                Accept: _config.accept
+            };
+            if (_config.viewModel)
+                headers["X-SanteDB-ViewModel"] = _config.viewModel;
+
+            // Prepare path
+            var url = null;
+            if (id.id)
+                url = `${_config.resource}/${id.id}/${property}`;
+            else
+                url = `${_config.resource}/${id}/${property}`;
+
+            return _config.api.deleteAsync({
+                headers: headers,
+                id: associatedId,
+                state: state,
+                resource: url,
+                contentType: _config.accept
+            });   
+            }
         };
 
         // Public exposeing

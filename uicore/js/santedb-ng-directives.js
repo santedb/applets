@@ -179,7 +179,7 @@ angular.module('santedb-lib')
             link: function (scope, element, attrs, ngModel) {
                 $timeout(function () {
                     var modelType = scope.type;
-                    var filter = scope.filter || { };
+                    var filter = scope.filter || {};
                     var displayString = scope.display;
                     var searchProperty = scope.searchField || "name.component.value";
                     var defaultResults = scope.defaultResults;
@@ -700,39 +700,96 @@ angular.module('santedb-lib')
             },
             controller: ['$scope', '$rootScope', function ($scope, $rootScope) {
 
-                $scope.deletePolicy = function(index) {
+                $scope.deletePolicy = function (index) {
 
-                    if(confirm(SanteDB.locale.getString("ui.confirm.delete"))) {
-                        $scope.policy.splice(index, 1);
-                        $scope.unsaved = true;
+                    
+                    if (confirm(SanteDB.locale.getString("ui.confirm.delete"))) {
+                        var pol = $scope.policy[index];
+                        pol.exec = 'deleting';
+                        SanteDB.resources.securityPolicy.findAsync({ oid: pol.oid, _count: 1 })
+                            .then(function (res) {
+                                pol = res.item[0];
+                                pol.exec = 'deleting';
+                                var resource = SanteDB.resources[$scope.securable.$type.toCamelCase()];
+                                if (resource == null)
+                                    return;
+                                resource.removeAssociatedAsync($scope.securable.id, "policy", pol.id)
+                                    .then(function (d) {
+                                        $scope.policy.splice(index, 1);
+                                        delete (pol.exec);
+                                        $scope.$apply();
+                                    })
+                                    .catch(function (e) {
+                                        delete (pol.exec);
+                                        $rootScope.errorHandler(e);
+                                    });
+                            }).catch(function (e) {
+                                delete (pol.exec);
+                                $rootScope.errorHandler(e);
+                            });
                     }
                 }
 
                 // Mark grant as dirty
-                $scope.updateGrant = function(pi) {
-                    $scope.unsaved = true;
+                $scope.updateGrant = function (index) {
+
+                    var pol = $scope.policy[index];
+                    pol.exec = 'granting';
+                    SanteDB.resources.securityPolicy.findAsync({ oid: pol.oid, _count: 1 })
+                        .then(function (res) {
+                            var g = pol.grnat;
+                            pol = res.item[0];
+                            pol.grant = g;
+                            pol.exec = 'granting';
+                            var resource = SanteDB.resources[$scope.securable.$type.toCamelCase()];
+                            if (resource == null)
+                                return;
+                            resource.addAssociatedAsync($scope.securable.id, "policy", pol)
+                                .then(function (d) {
+                                    $scope.policy[index] = d;
+                                    $scope.$apply();
+                                })
+                                .catch(function (e) {
+                                    delete (pol.exec);
+                                    $rootScope.errorHandler(e);
+                                });
+                        }).catch(function (e) {
+                            delete (pol.exec);
+                            $rootScope.errorHandler(e);
+                        });
+
                 }
-                
+
                 // Add a a new policy to the group
-                $scope.addPolicy = function() {
-                    
-                    
+                $scope.addPolicy = function () {
+
+                    $scope.newPolicy.exec = 'adding';
                     SanteDB.resources.securityPolicy.getAsync($scope.newPolicy.id)
-                        .then(function(pol) {
+                        .then(function (pol) {
+                            pol.$type = 'SecurityPolicyInfo';
                             pol.grant = 'Grant';
-                            $scope.unsaved = true;
-                            $scope.policy.push(pol);
-                            delete($scope.newPolicy);
-                            $scope.$apply();
+                            var resource = SanteDB.resources[$scope.securable.$type.toCamelCase()];
+                            if (resource == null)
+                                return;
+                            resource.addAssociatedAsync($scope.securable.id, "policy", pol)
+                                .then(function (d) {
+                                    $scope.policy.push(d);
+                                    delete ($scope.newPolicy);
+                                    $scope.$apply();
+                                })
+                                .catch(function (e) {
+                                    delete ($scope.newPolicy);
+                                    $rootScope.errorHandler(e);
+                                });
                         })
-                        .catch($rootScope.errorHandler);
+                        .catch(function (e) {
+                            delete ($scope.newPolicy);
+                            $rootScope.errorHandler(e);
+                        });
                 }
             }],
             link: function (scope, element, attrs) {
 
-                if (!scope.policy) {
-                    // TODO: Get the policy instances here
-                }
 
                 var dt = null;
                 // Create datatable
@@ -753,7 +810,7 @@ angular.module('santedb-lib')
                             ]
                         });
 
-                      
+
                         // Bind buttons
                         var bindButtons = function () {
                             dt.buttons().container().appendTo($('.col-md-6:eq(1)', dt.table().container()));

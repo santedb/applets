@@ -16,15 +16,15 @@
             <td>
                 <div class="btn-group btn-group-toggle">
                     <label class="btn btn-info" ng-class="{'active btn-primary':pi.grant == 'Grant'}"><input
-                            type="radio" name="rdo{{pi.oid}}" ng-model="pi.grant" ng-change="updateGrant(pi)" value="Grant" /> <i
+                            type="radio" name="rdo{{pi.oid}}" ng-model="pi.grant" ng-change="updateGrant($index)" value="Grant" /> <i
                             class="fas fa-thumbs-up"></i> <span class="d-sm-none d-lg-inline">
                             {{ 'ui.model.securityPolicyInstance.grant.Grant' | i18n }}</span></label>
                     <label class="btn btn-info" ng-class="{'active btn-primary':pi.grant == 'Deny'}"><input type="radio"
-                            name="rdo{{pi.oid}}"  ng-change="updateGrant(pi)" ng-model="pi.grant" value="Deny" /> <i class="fas fa-thumbs-down"></i>
+                            name="rdo{{pi.oid}}"  ng-change="updateGrant($index)" ng-model="pi.grant" value="Deny" /> <i class="fas fa-thumbs-down"></i>
                         <span class="d-sm-none d-lg-inline">
                             {{ 'ui.model.securityPolicyInstance.grant.Deny' | i18n }}</span></label>
                     <label class="btn btn-info" ng-class="{'active btn-primary':pi.grant == 'Elevate'}"><input
-                            type="radio" name="rdo{{pi.oid}}"  ng-change="updateGrant(pi)" ng-model="pi.grant" value="Elevate" /> <i
+                            type="radio" name="rdo{{pi.oid}}"  ng-change="updateGrant($index)" ng-model="pi.grant" value="Elevate" /> <i
                             class="fas fa-arrow-circle-up"></i> <span class="d-sm-none d-lg-inline">
                             {{ 'ui.model.securityPolicyInstance.grant.Elevate' | i18n }}</span></label>
                 </div>
@@ -46,7 +46,7 @@
                 search-field="'name'"
                 ng-model="newPolicy.id"
                 filter="{ obsoletionTime: 'null' }"/>
-            <button type="button" class="btn btn-primary input-group-btn" ng-disabled="!newPolicy"
-                ng-click="addPolicy()"><i class="fas fa-plus-circle"></i></button>
+            <button type="button" class="btn btn-primary input-group-btn" ng-disabled="!newPolicy || newPolicy.exec"
+                ng-click="addPolicy()"><i class="fas" ng-class="{'fa-plus-circle': !newPolicy.exec, 'fa-circle-notch fa-spin': newPolicy.exec }"></i></button>
     </div>
 </div>
