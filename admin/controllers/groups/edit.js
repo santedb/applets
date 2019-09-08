@@ -1,8 +1,10 @@
 /// <reference path="../../../core/js/santedb.js"/>
-angular.module('santedb').controller('EditGroupController', ["$scope", "$rootScope", "$state", "$templateCache", "$stateParams", function ($scope, $rootScope, $state, $templateCache, $stateParams) {
+angular.module('santedb').controller('EditGroupController', ["$scope", "$rootScope", "$state", "$templateCache", "$stateParams", "$compile", '$timeout', function ($scope, $rootScope, $state, $templateCache, $stateParams, $compile, $timeout) {
 
     $scope.EntityClassKeys = EntityClassKeys;
     
+    
+
     // Get the specified user
     if ($stateParams.id) {
         $scope.isLoading = true;
@@ -132,4 +134,62 @@ angular.module('santedb').controller('EditGroupController', ["$scope", "$rootSco
             .catch(errorFn);
         }
     }
+
+    // Now create datatables
+    var dt = $("#groupMembershipTable").DataTable({
+        lengthChange: false,
+        processing: true,
+        buttons: [
+        ],
+        serverSide: true,
+        ajax: function (data, callback, settings) {
+
+            var query = { "roles.id" : $stateParams.id };
+            if (data.search.value.length > 0)
+                query["userName"] = `~${data.search.value}`;
+            if (data.order[0]) {
+                query["_orderBy"] = `userName:${data.order[0].dir}`;
+            }
+            
+            query["_count"] = data.length;
+            query["_offset"] = data.start;
+
+            SanteDB.resources.securityUser.findAsync(query)
+                .then(function (res) {
+                    callback({
+                        data: res.item.map(function(item) { return item.entity; }),
+                        recordsTotal: undefined,
+                        recordsFiltered: res.totalResults || res.size
+                    });
+                })
+                .catch(function (err) { $rootScope.errorHandler(err) });
+        },
+        createdRow: function (r, d, i) {
+            $compile(angular.element(r).contents())($scope);
+            $scope.$digest()
+        },
+        columns: [
+            {
+                data: 'userName',
+                defaultValue: ''
+            },
+            {
+                orderable: false,
+                render: function(d, t, r, m) {
+                    return "";
+                }
+            }
+        ]
+    });
+
+     // Bind buttons
+     var bindButtons = function () {
+        dt.buttons().container().appendTo($('.col-md-6:eq(1)', dt.table().container()));
+        if (dt.buttons().container().length == 0)
+            $timeout(bindButtons, 100);
+        else {
+            $("#addUserToGroup").appendTo($('.col-md-6:eq(0)', dt.table().container()));
+        }
+    };
+    bindButtons();
 }]);

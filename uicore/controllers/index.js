@@ -72,6 +72,28 @@ var santedbApp = angular.module('santedb', ['ngSanitize', 'ui.router', 'oc.lazyL
     }])
     .run(['$rootScope', '$state', '$templateCache', '$transitions', '$ocLazyLoad', '$interval', function ($rootScope, $state, $templateCache, $transitions, $ocLazyLoad, $interval) {
 
+
+        
+        /**
+         * Register the reload button
+         */
+        $.fn.dataTable.ext.buttons.reload = {
+            text: '<i class="fa fa-sync"></i> ' + SanteDB.locale.getString("ui.action.reload"),
+            className: 'btn btn-success',
+            action: function (e, dt) {
+                dt.ajax.reload();
+            }
+        };
+
+        /** Setup defaults */
+        $.extend(true, $.fn.dataTable.defaults, {
+            "language": {
+                "infoFiltered": "",
+                "processing": "<i class='fa fa-circle-notch fa-spin'></i> " + SanteDB.locale.getString("ui.wait")
+            }
+        });
+
+
         $(window).bind("resize", function () {
             $rootScope.windowSize = window.innerWidth;
             $rootScope.$apply();
@@ -258,3 +280,5 @@ var santedbApp = angular.module('santedb', ['ngSanitize', 'ui.router', 'oc.lazyL
         });
 
     }]);
+
+    

@@ -60,7 +60,7 @@ angular.module('santedb-lib')
                 case "SecurityUser":
                 case "SecurityUserInfo":
                 case "SanteDB.Core.Model.AMI.Auth.SecurityUserInfo, SanteDB.Core.Model.AMI":
-                    retVal += "<i class='fa fa-users'></i>";
+                    retVal += "<i class='fa fa-user'></i>";
                     break;
 
                 case "SecurityPolicy":
@@ -85,12 +85,14 @@ angular.module('santedb-lib')
                 retVal += SanteDB.display.renderEntityName(selection.name.$other);
             else if (selection.name != null)
                 retVal += selection.name;
+            else if (selection.userName)
+                retVal += selection.userName;
+            else if (selection.entity)
+                retVal += (selection.entity.name || selection.entity.userName);
             else if (selection.element !== undefined)
                 retVal += selection.element.innerText.trim();
             else if (selection.text)
                 retVal += selection.text;
-            else if (selection.entity)
-                retVal += (selection.entity.name || selection.entity.userName);
             if (selection.address)
                 retVal += " - <small>(<i class='fa fa-map-marker'></i> " + SanteDB.display.renderEntityAddress(selection.address) + ")</small>";
             else if (selection.oid)
@@ -426,14 +428,7 @@ angular.module('santedb-lib')
 
                     // Add refresh button
                     buttons.push(
-                        {
-                            text: "<i class='fas fa-sync-alt'></i> " + SanteDB.locale.getString("ui.action.reload"),
-                            className: "btn btn-success",
-                            action: function (e, dt, node, config) {
-                                queryId = SanteDB.application.newGuid();
-                                dt.ajax.reload();
-                            }
-                        }
+                       'reload'
                     );
 
                     // Add a show obsolete button
@@ -458,10 +453,6 @@ angular.module('santedb-lib')
                         processing: true,
                         buttons: buttons,
                         serverSide: true,
-                        "language": {
-                            "infoFiltered": "",
-                            "processing": "<i class='fa fa-circle-notch fa-spin'></i> " + SanteDB.locale.getString("ui.wait")
-                        },
                         ajax: function (data, callback, settings) {
 
                             var query = angular.copy(scope.defaultQuery) || {};

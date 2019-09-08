@@ -178,3 +178,4 @@ SanteDBWrapper.prototype.display = {
 
     }
 };
+
