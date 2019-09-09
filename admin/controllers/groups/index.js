@@ -11,6 +11,7 @@ angular.module('santedb').controller('GroupIndexController', ["$scope", "$rootSc
             $("#action_grp_" + index + " a i.fa-trash").removeClass("fa-trash").addClass("fa-circle-notch fa-spin");
             SanteDB.resources.securityRole.deleteAsync(id)
                 .then(function (e) {
+                    $("#SecurityRoleTable").attr("newQuery", true);
                     $("#SecurityRoleTable table").DataTable().draw();
                 })
                 .catch($rootScope.errorHandler);

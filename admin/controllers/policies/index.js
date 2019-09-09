@@ -1,19 +1,55 @@
 angular.module('santedb').controller('PolicyIndexController', ["$scope", "$rootScope", "$state", "$templateCache", function ($scope, $rootScope, $state, $templateCache) {
 
-    /**
-     * @summary Delete the specified user
+   /**
+     * @summary Delete the specified policy
      */
     $scope.delete = function (id, index) {
-        if (confirm(SanteDB.locale.getString("ui.admin.policy.confirmDelete"))) {
+        var data = $("#SecurityPolicyTable table").DataTable().row(index).data();
+
+        if (!data.obsoletionTime && confirm(SanteDB.locale.getString("ui.admin.policy.confirmDelete"))) {
             $("#action_grp_" + index + " a").addClass("disabled");
             $("#action_grp_" + index + " a i.fa-trash").removeClass("fa-trash").addClass("fa-circle-notch fa-spin");
             SanteDB.resources.securityPolicy.deleteAsync(id)
                 .then(function (e) {
+                    $("#SecurityPolicyTable").attr("newQuery", true);
                     $("#SecurityPolicyTable table").DataTable().draw();
                 })
                 .catch($rootScope.errorHandler);
         }
+        else if (data.obsoletionTime && confirm(SanteDB.locale.getString("ui.admin.policy.confirmUnDelete"))) {
+            $("#action_grp_" + index + " a").addClass("disabled");
+            $("#action_grp_" + index + " a i.fa-trash-restore").removeClass("fa-trash-restore").addClass("fa-circle-notch fa-spin");
+
+            // Patch the user
+            var patch = new Patch({
+                change: [
+                    new PatchOperation({
+                        op: PatchOperationType.Remove,
+                        path: 'obsoletionTime',
+                        value: null
+                    }),
+                    new PatchOperation({
+                        op: PatchOperationType.Remove,
+                        path: 'obsoletedBy',
+                        value: null
+                    })
+                ]
+            });
+
+            SanteDB.resources.securityPolicy.patchAsync(id, null, patch)
+                .then(function (e) {
+                    $("#SecurityPolicyTable").attr("newQuery", true);
+                    $("#SecurityPolicyTable table").DataTable().draw();
+                })
+                .catch(function (e) {
+                    $("#action_grp_" + index + " a").removeClass("disabled");
+                    $("#action_grp_" + index + " a i.fa-circle-notch").removeClass("fa-circle-notch fa-spin").addClass("fa-trash-restore");
+                    $rootScope.errorHandler(e);
+                });
+
+        }
     }
+
 
     /**
      * @summary Render updated by

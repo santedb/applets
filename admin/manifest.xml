@@ -94,6 +94,7 @@
     <string key="ui.admin.users.updatedBy">Last Update</string>
     <string key="ui.admin.users.lockout">Status</string>
     <string key="ui.admin.users.confirmDelete">Are you sure you want to delete this user?</string>
+    <string key="ui.admin.users.confirmUnDelete">Are you sure you want to reactivate this user?</string>
     <string key="ui.admin.users.confirmLock">Are you sure you want to lock this user account?</string>
     <string key="ui.admin.users.confirmUnlock">Are you sure you want to unlock this user account?</string>
     <string key="ui.admin.users.systemUser">This action cannot be performed on a system user</string>
@@ -106,6 +107,7 @@
     <string key="ui.admin.group.edit.core.title">Core Properties</string>
     <string key="ui.admin.group.edit.policy.title">Assigned Policies</string>
     <string key="ui.admin.group.edit.users.title">Members</string>
+
     <!-- Strings for User Edit Screen -->
     <string key="ui.admin.users.edit.core.title">Core Properties</string>
     <string key="ui.admin.users.edit.security.title">Security Properties</string>
@@ -117,13 +119,18 @@
     <string key="ui.admin.groups.description">Description</string>
     <string key="ui.admin.groups.state">Status</string>
     <string key="ui.admin.groups.updatedBy">Last Update</string>
+    <string key="ui.admin.groups.confirmDelete">Are you sure you want to delete this group?</string>
+    <string key="ui.admin.groups.confirmUnDelete">Are you sure you want to reactivate this group?</string>
     
     <!-- Strings for policy -->
     <string key="ui.admin.policy.oid">OID</string>
     <string key="ui.admin.policy.name">Policy Name</string>
     <string key="ui.admin.policy.updatedBy">Last Update</string>
     <string key="ui.admin.policy.state">Status</string>
-
+    <string key="ui.admin.policy.confirmDelete">Are you sure you want to delete this policy? Note that the policy will continue to be applied on any existing objects which are associated with it.</string>
+    <string key="ui.admin.policy.confirmUnDelete">Are you sure you want to reactivate this policy?</string>
+    <string key="ui.admin.policy.edit.core.title">Core Properties</string>
+    <string key="ui.admin.policy.edit.readonly">Once saved, your policy cannot be edited. This is to ensure the consistency of audits</string>
     <!-- Strings for Devices -->
     <string key="ui.admin.devices.name">Device Name</string>
     <string key="ui.admin.devices.lastAuthenticationTime">Last Auth</string>
