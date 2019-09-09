@@ -35,11 +35,15 @@
                             <div class="col-sm-12 col-md-10 offset-md-2">
                                 <div ng-show="targetForm.rolename.$error['duplicate']" class="alert-danger">
                                     <i class="fa fa-exclamation-triangle"></i>
-                                    {{ 'ui.admin.roles.duplicateRole' | i18n }}
+                                    {{ 'ui.error.duplicate' | i18n }}
                                 </div>
                                 <div ng-show="targetForm.rolename.$error['required'] &amp;&amp; targetForm.$submitted"
                                     class="alert-danger">
                                     <i class="fa fa-exclamation-triangle"></i> {{ 'ui.error.required' | i18n }}
+                                </div>
+                                <div ng-show="targetForm.rolename.$error['pattern'] &amp;&amp; targetForm.$submitted"
+                                    class="alert-danger">
+                                    <i class="fa fa-exclamation-triangle"></i> {{ 'ui.error.pattern' | i18n }}
                                 </div>
                             </div>
                         </div>
@@ -69,7 +73,7 @@
                                     provenance-time="target.securityRole.obsoletionTime"></provenance>
 
                                 {{ target.securityRole.obsoletionTime | extDate }} <button id="reactivateUserButton"
-                                    ng-click="reactivateRole()" type="button" class="btn btn-info"><i
+                                    ng-click="reactivateGroup()" type="button" class="btn btn-info"><i
                                         class="fas fa-trash-restore"></i>
                                     {{ 'ui.action.reactivate' | i18n }}</button>
                             </div>
@@ -88,7 +92,7 @@
                     </div>
                 </div>
             </div>
-            <div class="card">
+            <div class="card" ng-show="target.securityRole.id">
                 <div class="card-header">
                     <h2 class="mb-0">
                         <button type="button" class="collapse-indicator btn btn-link" data-toggle="collapse"
@@ -104,7 +108,7 @@
                     </div>
                 </div>
             </div>
-            <div class="card">
+            <div class="card"  ng-show="target.securityRole.id">
                     <div class="card-header">
                         <h2 class="mb-0">
                             <button type="button" class="collapse-indicator btn btn-link" data-toggle="collapse"
@@ -132,11 +136,11 @@
                                 <entity-search 
                                     type="'SecurityUser'" 
                                     selector="'entity'"
-                                    key='"id"'
+                                    key='"userName"'
                                     class="form-control" 
                                     style="width:75%" 
                                     search-field="'userName'"
-                                    ng-model="newUser.id"
+                                    ng-model="newUser.userName"
                                     filter="{ obsoletionTime: 'null' }"/>
                                 <button type="button" class="btn btn-primary input-group-btn" ng-disabled="!newUser || newUser.exec"
                                     ng-click="addUser()"><i class="fas" ng-class="{'fa-plus-circle': !newUser.exec, 'fa-circle-notch fa-spin': newUser.exec }"></i></button>
@@ -144,5 +148,9 @@
                     </div>
                 </div>
         </div>
+        <div class="btn-group float-right">
+                <button type="submit" id="saveGroupButton" class="btn btn-primary"><i class="fa fa-check"></i>
+                    {{ 'ui.action.save' | i18n }}</button>
+            </div>
     </form>
 </div>

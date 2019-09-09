@@ -11,8 +11,9 @@
             </tr>
         </thead>
         <tr ng-repeat="pi in policy track by $index">
-            <td><i class="fas fa-shield-alt" ng-if="!pi.canOverride"
-                    title="{{ 'ui.model.securityPolicyInstance.canOverride' | i18n }}"></i> {{ pi.name }}</td>
+            <td><i class="fas fa-shield-alt" title="{{ pi.canOverride ? 'ui.model.securityPolicy.canOverride.true' : 'ui.model.securityPolicy.canOverride.false' | i18n }}"></i>
+                <span class="indicator-overlay" ng-class="{ 'text-warning' : pi.canOverride, 'text-success': !pi.canOverride}"><i class="fa fa-fw fa-circle"></i></span> 
+                {{ pi.name }}</td>
             <td>
                 <div class="btn-group btn-group-toggle">
                     <label class="btn btn-info" ng-class="{'active btn-primary':pi.grant == 'Grant'}"><input
@@ -30,8 +31,8 @@
                 </div>
             </td>
             <td>
-                <button class="btn btn-danger" ng-click="deletePolicy($index)"><i class="fas fa-trash"></i> <span
-                        class="d-sm-none d-lg-inline"> {{ 'ui.action.delete' | i18n }}</span></button>
+                <button class="btn btn-danger" ng-click="deletePolicy($index)"><i class="fas fa-times"></i> <span
+                        class="d-sm-none d-lg-inline"> {{ 'ui.action.remove' | i18n }}</span></button>
             </td>
         </tr>
     </table>

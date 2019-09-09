@@ -101,6 +101,8 @@
     <string key="error.type.DetectedIssueException.detail">Business rule violations encountered:</string>
     <string key="ui.error.contactSysAdmin">Please file a bug report, or contact your system administrator with this information</string>
     <string key="ui.error.required">Required field missing</string>
+    <string key="ui.error.pattern">Invalid format (please ensure input is in correct format)</string>
+    <string key="ui.error.duplicate">Duplicate record detected</string>
     <string key="error.http.403">Access Denied</string>
     <string key="error.http.403.text">Your request has been denied and audited. In order to access this resource, you must first either elevate your current session, obtain appropriate authorization, or temporary authenticate as someone else. You can attempt to elevate your session by selecting the override option below</string>
     <string key="error.http.404">The requested resource could not be found</string>
@@ -119,7 +121,7 @@
     <string key="error.type.NotImplementedException.userMessage">The function you are trying to perform is not yet implemented</string>
     <string key="error.type.NotSupportedException">Not Supported</string>
     <string key="error.type.NotSupportedException.userMessage">The function you are trying to perform is not supported under your current configuration</string>
-
+    
     <!-- Common States -->
     <string key="ui.state.active">Active</string>
     <string key="ui.state.new">New</string>
@@ -127,6 +129,7 @@
     <string key="ui.state.cancelled">Cancelled</string>
     <string key="ui.state.nullified">Nullified</string>
     <string key="ui.state.locked">Locked</string>
+    <string key="ui.state.readonly">Readonly</string>
 
     <!-- Common Action buttons -->
     <string key="ui.action">Actions</string>
@@ -148,6 +151,7 @@
     <string key="ui.action.override">Override</string>
     <string key="ui.action.finish">Finish</string>
     <string key="ui.action.add">Add</string>
+    <string key="ui.action.remove">Remove</string>
     <string key="ui.action.selectAll">Select All</string>
     <string key="ui.action.selectNone">Select None</string>
     <string key="ui.action.lock">Lock</string>
@@ -358,7 +362,9 @@
     <string key="ui.model.securityRole.description">Description</string>
     <string key="ui.model.securityPolicyInstance.policy">Policy</string>
     <string key="ui.model.securityPolicyInstance.grant">Permission</string>
-
+    <string key="ui.model.securityPolicy.canOverride.true">The policy system will allow the user to override this policy decision</string>
+    <string key="ui.model.securityPolicy.canOverride.true.summary">Overridable</string>
+    <string key="ui.model.securityPolicy.canOverride.false">The user cannot override the policy decision</string>
     <string key="ui.model.securityPolicyInstance.grant.Grant">Grant</string>
     <string key="ui.model.securityPolicyInstance.grant.Deny">Deny</string>
     <string key="ui.model.securityPolicyInstance.grant.Elevate">Elevate</string>

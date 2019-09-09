@@ -44,19 +44,21 @@ angular.module('santedb').controller('DeviceIndexController', ["$scope", "$rootS
      * @summary Render the lockout status
      */
     $scope.renderLockout = function (device) {
-        return device.obsoletionTime ? `<i title="${SanteDB.locale.getString("ui.state.obsolete")}" class="fa fa-trash"></i>` :
-            device.lockout > new Date() ? `<i title="${SanteDB.locale.getString("ui.state.locked")}" class="fa fa-lock"></i> ${moment(device.lockout).format(SanteDB.locale.dateFormats.second)}` : 
-            `<i title="${SanteDB.locale.getString("ui.state.active")}" class="fa fa-check"></i>`;
+        return device.obsoletionTime ? `<i title="${SanteDB.locale.getString("ui.state.obsolete")}" class="fa fa-trash"></i>  <span class="badge badge-pill badge-danger"> ${SanteDB.locale.getString("ui.state.obsolete")}</span>` :
+            device.lockout > new Date() ? `<i title="${SanteDB.locale.getString("ui.state.locked")}" class="fa fa-lock"></i>  <span class="badge badge-pill badge-warning"> ${SanteDB.locale.getString("ui.state.locked")} (${moment(device.lockout).format(SanteDB.locale.dateFormats.second)})</span>` :
+                `<i title="${SanteDB.locale.getString("ui.state.active")}" class="fa fa-check"></i> <span class="badge badge-pill badge-success"> ${SanteDB.locale.getString("ui.state.active")}</span>`;
     }
 
     /**
      * @summary Render updated by
      */
     $scope.renderUpdatedBy = function (device) {
-        if (device.updatedBy != null)
-            return `<span ng-bind-html="'${device.updatedBy}' | provenance: '${device.updatedTime}':'#!/security/session/'"></span>`;
+        if(device.obsoletedBy != null)
+            return `<provenance provenance-id="'${device.obsoletedBy}'" sessionfn="$parent.sessionFunction" provenance-time="'${device.obsoletedBy}'"></provenance>`;
+        else if (device.updatedBy != null)
+            return `<provenance provenance-id="'${device.updatedBy}'" sessionfn="$parent.sessionFunction" provenance-time="'${device.updatedTime}'"></provenance>`;
         else if (device.createdBy != null)
-            return `<span ng-bind-html="'${device.createdBy}' | provenance: '${device.creationTime}':'#!/security/session/'"></span>`;
+            return `<provenance provenance-id="'${device.createdBy}'" sessionfn="$parent.sessionFunction" provenance-time="'${device.creationTime}'"></provenance>`;
         return "";
     }
 }]);

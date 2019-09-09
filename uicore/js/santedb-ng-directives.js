@@ -728,10 +728,12 @@ angular.module('santedb-lib')
                     pol.exec = 'granting';
                     SanteDB.resources.securityPolicy.findAsync({ oid: pol.oid, _count: 1 })
                         .then(function (res) {
-                            var g = pol.grnat;
+                            var g = pol.grant;
                             pol = res.item[0];
                             pol.grant = g;
                             pol.exec = 'granting';
+                            pol.$type = 'SecurityPolicyInfo';
+
                             var resource = SanteDB.resources[$scope.securable.$type.toCamelCase()];
                             if (resource == null)
                                 return;

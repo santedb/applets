@@ -35,11 +35,15 @@
                             <div class="col-sm-12 col-md-10 offset-md-2">
                                 <div ng-show="targetForm.username.$error['duplicate']" class="alert-danger">
                                     <i class="fa fa-exclamation-triangle"></i>
-                                    {{ 'ui.admin.users.duplicateUser' | i18n }}
+                                    {{ 'ui.error.duplicate' | i18n }}
                                 </div>
                                 <div ng-show="targetForm.username.$error['required'] &amp;&amp; targetForm.$submitted"
                                     class="alert-danger">
                                     <i class="fa fa-exclamation-triangle"></i> {{ 'ui.error.required' | i18n }}
+                                </div>
+                                <div ng-show="targetForm.username.$error['pattern'] &amp;&amp; targetForm.$submitted"
+                                    class="alert-danger">
+                                    <i class="fa fa-exclamation-triangle"></i> {{ 'ui.error.pattern' | i18n }}
                                 </div>
                             </div>
                         </div>

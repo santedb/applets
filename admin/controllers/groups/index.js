@@ -15,10 +15,10 @@ angular.module('santedb').controller('GroupIndexController', ["$scope", "$rootSc
                 })
                 .catch($rootScope.errorHandler);
         }
-        else if(data.obsoletionTime && confirm(SanteDB.locale.getString("ui.admin.groups.confirmUnDelete"))) {
+        else if (data.obsoletionTime && confirm(SanteDB.locale.getString("ui.admin.groups.confirmUnDelete"))) {
             $("#action_grp_" + index + " a").addClass("disabled");
             $("#action_grp_" + index + " a i.fa-trash-restore").removeClass("fa-trash-restore").addClass("fa-circle-notch fa-spin");
-            
+
             // Patch the user
             var patch = new Patch({
                 change: [
@@ -40,7 +40,7 @@ angular.module('santedb').controller('GroupIndexController', ["$scope", "$rootSc
                     $("#SecurityRoleTable").attr("newQuery", true);
                     $("#SecurityRoleTable table").DataTable().draw();
                 })
-                .catch(function(e) {
+                .catch(function (e) {
                     $("#action_grp_" + index + " a").removeClass("disabled");
                     $("#action_grp_" + index + " a i.fa-circle-notch").removeClass("fa-circle-notch fa-spin").addClass("fa-trash-restore");
                     $rootScope.errorHandler(e);
@@ -53,7 +53,9 @@ angular.module('santedb').controller('GroupIndexController', ["$scope", "$rootSc
      * @summary Render updated by
      */
     $scope.renderUpdatedBy = function (role) {
-        if (role.updatedBy != null)
+        if (role.obsoletedBy != null)
+            return `<provenance provenance-id="'${role.obsoletedBy}'" sessionfn="$parent.sessionFunction" provenance-time="'${role.obsoletedBy}'"></provenance>`;
+        else if (role.updatedBy != null)
             return `<provenance provenance-id="'${role.updatedBy}'" sessionfn="$parent.sessionFunction" provenance-time="'${role.updatedTime}'"></provenance>`;
         else if (role.createdBy != null)
             return `<provenance provenance-id="'${role.createdBy}'" sessionfn="$parent.sessionFunction" provenance-time="'${role.creationTime}'"></provenance>`;
@@ -64,15 +66,15 @@ angular.module('santedb').controller('GroupIndexController', ["$scope", "$rootSc
      * @summary Render the lockout status
      */
     $scope.renderState = function (role) {
-        return role.obsoletionTime ? `<i title="${SanteDB.locale.getString("ui.state.obsolete")}" class="fa fa-trash"></i>` :
-            `<i title="${SanteDB.locale.getString("ui.state.active")}" class="fa fa-check"></i>`;
+        return role.obsoletionTime ? `<i title="${SanteDB.locale.getString("ui.state.obsolete")}" class="fa fa-trash"></i>  <span class="badge badge-pill badge-danger"> ${SanteDB.locale.getString("ui.state.obsolete")}</span>` :
+            `<i title="${SanteDB.locale.getString("ui.state.active")}" class="fa fa-check"></i>  <span class="badge badge-pill badge-success"> ${SanteDB.locale.getString("ui.state.active")}</span>`;
     }
 
     /**
      * @summary Display session information
      */
-    $scope.sessionFunction = function(id) {
-        
+    $scope.sessionFunction = function (id) {
+
     }
-    
+
 }]);

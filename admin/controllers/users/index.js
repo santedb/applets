@@ -119,19 +119,21 @@ angular.module('santedb').controller('UserIndexController', ["$scope", "$rootSco
      * @summary Render the lockout status
      */
     $scope.renderLockout = function (user) {
-        return user.obsoletionTime ? `<i title="${SanteDB.locale.getString("ui.state.obsolete")}" class="fa fa-trash"></i>` :
-            user.lockout > new Date() ? `<i title="${SanteDB.locale.getString("ui.state.locked")}" class="fa fa-lock"></i> ${moment(user.lockout).format(SanteDB.locale.dateFormats.second)}` : 
-            `<i title="${SanteDB.locale.getString("ui.state.active")}" class="fa fa-check"></i>`;
+        return user.obsoletionTime ? `<i title="${SanteDB.locale.getString("ui.state.obsolete")}" class="fa fa-trash"></i>  <span class="badge badge-pill badge-danger"> ${SanteDB.locale.getString("ui.state.obsolete")}</span>` :
+            user.lockout > new Date() ? `<i title="${SanteDB.locale.getString("ui.state.locked")}" class="fa fa-lock"></i>  <span class="badge badge-pill badge-warning"> ${SanteDB.locale.getString("ui.state.locked")} (${moment(user.lockout).format(SanteDB.locale.dateFormats.second)})</span>` : 
+            `<i title="${SanteDB.locale.getString("ui.state.active")}" class="fa fa-check"></i> <span class="badge badge-pill badge-success"> ${SanteDB.locale.getString("ui.state.active")}</span>`;
     }
 
     /**
      * @summary Render updated by
      */
-    $scope.renderUpdatedBy = function (role) {
-        if (role.updatedBy != null)
-            return `<provenance provenance-id="'${role.updatedBy}'" sessionfn="$parent.sessionFunction" provenance-time="'${role.updatedTime}'"></provenance>`;
-        else if (role.createdBy != null)
-            return `<provenance provenance-id="'${role.createdBy}'" sessionfn="$parent.sessionFunction" provenance-time="'${role.creationTime}'"></provenance>`;
+    $scope.renderUpdatedBy = function (user) {
+        if(user.obsoletedBy != null)
+            return `<provenance provenance-id="'${user.obsoletedBy}'" sessionfn="$parent.sessionFunction" provenance-time="'${user.obsoletedBy}'"></provenance>`;
+        else if (user.updatedBy != null)
+            return `<provenance provenance-id="'${user.updatedBy}'" sessionfn="$parent.sessionFunction" provenance-time="'${user.updatedTime}'"></provenance>`;
+        else if (user.createdBy != null)
+            return `<provenance provenance-id="'${user.createdBy}'" sessionfn="$parent.sessionFunction" provenance-time="'${user.creationTime}'"></provenance>`;
         return "";
     }
 

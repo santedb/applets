@@ -20,9 +20,9 @@ angular.module('santedb').controller('PolicyIndexController', ["$scope", "$rootS
      */
     $scope.renderUpdatedBy = function (policy) {
         if (policy.updatedBy != null)
-            return `<span ng-bind-html="'${policy.updatedBy}' | provenance: '${policy.updatedTime}':'#!/security/session/'"></span>`;
+            return `<provenance provenance-id="'${policy.updatedBy}'" sessionfn="$parent.sessionFunction" provenance-time="'${policy.updatedTime}'"></provenance>`;
         else if (policy.createdBy != null)
-            return `<span ng-bind-html="'${policy.createdBy}' | provenance: '${policy.creationTime}':'#!/security/session/'"></span>`;
+            return `<provenance provenance-id="'${policy.createdBy}'" sessionfn="$parent.sessionFunction" provenance-time="'${policy.creationTime}'"></provenance>`;
         return "";
     }
 
@@ -30,9 +30,19 @@ angular.module('santedb').controller('PolicyIndexController', ["$scope", "$rootS
      * @summary Render the lockout status
      */
     $scope.renderState = function (policy) {
-        return policy.obsoletionTime ? `<i title="${SanteDB.locale.getString("ui.state.obsolete")}" class="fa fa-trash"></i>` :
-            `<i title="${SanteDB.locale.getString("ui.state.active")}" class="fa fa-check"></i>`;
+        
+        // Render the specified object 
+        if(policy.obsoletionTime)
+            return `<i title="${SanteDB.locale.getString("ui.state.obsolete")}" class="fa fa-trash"></i> <span class="badge badge-pill badge-danger"> ${SanteDB.locale.getString("ui.state.obsolete")}</span>` ;
+        else if(policy.canOverride)
+            return `<i title='${SanteDB.locale.getString("ui.model.securityPolicy.canOverride.true")}' class="fas fa-shield-alt"></i><span class="indicator-overlay"><i class="fas fa-circle text-warning"></i></span> <span class="badge badge-pill badge-warning"> ${SanteDB.locale.getString("ui.model.securityPolicy.canOverride.true.summary")}</span>`;
+        else if(!policy.isPublic) 
+            return `<i title="${SanteDB.locale.getString("ui.state.readonly")}" class="fas fa-lock"></i> <span class="badge badge-pill badge-dark"> ${SanteDB.locale.getString("ui.state.readonly")}</span>`;
+        else
+            return `<i title="${SanteDB.locale.getString("ui.state.active")}" class="fa fa-check"></i> <span class="badge badge-pill badge-success"> ${SanteDB.locale.getString("ui.state.active")}</span>` ;
+        
     }
+
 
     
 }]);
