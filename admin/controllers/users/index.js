@@ -65,8 +65,7 @@ angular.module('santedb').controller('UserIndexController', ["$scope", "$rootSco
             if (confirm(SanteDB.locale.getString(data.lockout ? "ui.admin.users.confirmUnlock" : "ui.admin.users.confirmLock"))) {
                 $("#action_grp_" + index + " a").addClass("disabled");
                 $("#action_grp_" + index + " a i.fa-lock").removeClass("fa-lock").addClass("fa-circle-notch fa-spin");
-            $("#action_grp_" + index + " a i.fa-unlock").removeClass("fa-unlock").addClass("fa-circle-notch fa-spin");
-
+                $("#action_grp_" + index + " a i.fa-unlock").removeClass("fa-unlock").addClass("fa-circle-notch fa-spin");
                 if (data.lockout) {
                     SanteDB.resources.securityUser.unLockAsync(id)
                         .then(function (e) {

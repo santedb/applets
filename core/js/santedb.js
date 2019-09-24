@@ -512,6 +512,9 @@ if (!SanteDBWrapper)
                         url = `${_config.resource}/${id.id}`;
                     else
                         url = `${_config.resource}/${id}`;
+
+                    if(id.version)
+                        url += `/history/${id.version}`;
                 }
                 else
                     url = _config.resource;
@@ -1125,6 +1128,29 @@ if (!SanteDBWrapper)
                 });
             },
             /**
+             * @summary Generates a new random password
+             * @method
+             * @memberof SanteDBWrapper.app
+             * @returns {string} A new random password
+             */
+            generatePassword: function() {
+                var specChars = [ '@','_','-','~','!','#','$'];
+                var secret = SanteDB.application.newGuid().replace(/-/g, function() {
+                    return specChars[Math.trunc(Math.random() * specChars.length)];
+                });
+        
+                var repl = "";
+                for(var i = 0; i < secret.length; i++)
+                    if(secret[i] >= 'a' && secret[i] <= 'f')
+                        repl += String.fromCharCode(97 + Math.trunc(Math.random() * 24));
+                    else if(i % 2 == 1)
+                        repl += String.fromCharCode(65 + Math.trunc(Math.random() * 24));
+                    else
+                        repl += secret[i];
+                
+                return repl;
+            },
+            /**
              * @summary Create a new UUID
              * @method
              * @memberof SanteDBWrapper.app
@@ -1464,7 +1490,7 @@ if (!SanteDBWrapper)
             deviceEntity: new ResourceWrapper({
                 accept: _viewModelJsonMime,
                 resource: "DeviceEntity",
-                api: _ami
+                api: _hdsi
             }),
             /**
                 * @property {SanteDB.ResourceWrapper} 
@@ -1474,7 +1500,7 @@ if (!SanteDBWrapper)
             applicationEntity: new ResourceWrapper({
                 accept: _viewModelJsonMime,
                 resource: "ApplicationEntity",
-                api: _ami
+                api: _hdsi
             }),
             /**
                 * @property {SanteDB.ResourceWrapper} 

@@ -378,6 +378,7 @@ angular.module('santedb-lib')
                         return {
                             orderable: renderer == null,
                             data: m,
+                            defaultContent: '',
                             render: renderer ?
                                 function (d, t, r) { return scope.$parent[renderer](r) } :
                                 m.indexOf("Time") > -1 ?
@@ -675,6 +676,76 @@ angular.module('santedb-lib')
             }
         }
     }])
+    /**
+     * @summary Shows history of entity edits
+     * @memberof Angular
+     * @method entityHistory
+     */
+    .directive('entityHistory', function() {
+        return {
+            restrict: 'E',
+            replace: true,
+            templateUrl: './org.santedb.uicore/directives/entityHistory.html',
+            scope: {
+                target: '='
+            },
+            controller: ['$scope', '$rootScope', function($scope, $rootScope) {
+
+                var ignoreProperties = [ "$id", "$ref", "etag", "createdBy", "creationTime", "obsoletedBy", "obsoletionTime", "creationTimeModel", "obsoletionTimeModel", "version", "sequence", "previousVersion" ];
+
+                // Diff two objects 
+                $scope.diff = function(oldVersion, newVersion) {
+                    var retVal = [];
+                    for(var k in Object.keys(oldVersion)) {
+                        var kName = Object.keys(oldVersion)[k];
+                        if(ignoreProperties.indexOf(kName) == -1 && newVersion[kName] != oldVersion[kName])
+                            retVal.push(kName);
+                    }
+                    return retVal;
+                }
+
+                // Push history information to the result array
+                $scope.pushHistory = function(typeName, id, version) {
+                    var tName = typeName.toCamelCase();
+                    $scope.isLoading = true;
+                    SanteDB.resources[tName].getAsync({
+                        id: id,
+                        version: version
+                    }, "_min")
+                        .then(function(d) {
+                            $scope.history.push(d);
+                            var prev = $scope.history[$scope.history.length - 2];
+                            prev.diff = $scope.diff(prev, d);
+                            if(d.previousVersion)
+                                $scope.pushHistory(typeName, id, d.previousVersion);
+                            else {
+                                $scope.isLoading = true;
+                                $scope.$apply();
+                            }
+                        })
+                        .catch(function(e) {
+                            $scope.isLoading = false;
+                            $rootScope.errorHandler(e);
+                        });
+                }
+
+                // Watch target for changes
+                $scope.$watch(function(s) { return s.target; }, function(n, o) {
+                    // Get the element type changed
+                    if(n && (!o || o.id != n.id || !$scope.history)) {
+                        $scope.history = [];
+                        $scope.history.push($scope.target);
+                        if(n.previousVersion)
+                            $scope.pushHistory(n.$type, n.id, n.previousVersion);
+                    }
+                });
+            }],
+            link: function(scope, element, attrs) {
+                scope.isLoading = false;
+
+            }
+        }
+    })
     /**
      * @summary Security policy instance editor
      * @memberof Angular

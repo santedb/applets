@@ -87,6 +87,8 @@
   <strings lang="en">
     <string key="ui.admin.brand.title"><![CDATA[<img src="/org.santedb.core/img/icon.png" height="24px"/> SanteDB Admin]]></string>
 
+    <!-- History -->
+    <string key="ui.admin.history.title">Version History</string>
     <!-- User Screen Translations --> 
     <string key="ui.action.resetPassword">Reset Password</string>
     <string key="ui.admin.users.userName">User Name</string>
@@ -114,6 +116,13 @@
     <string key="ui.admin.users.edit.demographics.title">Demographic Properties</string>
     <string key="ui.admin.users.edit.security.neverLoggedIn">User has never logged in</string>
 
+    <!-- Strings for devices -->
+    <string key="ui.admin.devices.edit.core.title">Core Properties</string>
+    <string key="ui.admin.devices.edit.security.title">Security Properties</string>
+    <string key="ui.admin.devices.edit.demographics.title">Extended Properties</string>
+    <string key="ui.admin.devices.edit.security.neverLoggedIn">Never Authenticated</string>
+    <string key="ui.admin.devices.edit.policy.title">Assigned Policies</string>
+    
     <!-- Strings for Groups -->
     <string key="ui.admin.groups.name">Role Name</string>
     <string key="ui.admin.groups.description">Description</string>
@@ -136,5 +145,11 @@
     <string key="ui.admin.devices.lastAuthenticationTime">Last Auth</string>
     <string key="ui.admin.devices.state">Status</string>
     <string key="ui.admin.devices.updatedBy">Last Update</string>
+
+    <!-- Strings for Applications -->
+    <string key="ui.admin.applications.name">Application Name</string>
+    <string key="ui.admin.applications.lastAuthenticationTime">Last Auth</string>
+    <string key="ui.admin.applications.state">Status</string>
+    <string key="ui.admin.applications.updatedBy">Last Update</string>
   </strings>
 </AppletManifest>

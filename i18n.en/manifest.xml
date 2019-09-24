@@ -376,6 +376,23 @@
     <string key="ui.model.securityPolicyInstance.grant.Grant">Grant</string>
     <string key="ui.model.securityPolicyInstance.grant.Deny">Deny</string>
     <string key="ui.model.securityPolicyInstance.grant.Elevate">Elevate</string>
+    <string key="ui.model.securityDevice.id">Security ID</string>
+    <string key="ui.model.securityDevice.name">Name</string>
+    <string key="ui.model.securityDevice.createdBy">Created By</string>
+    <string key="ui.model.securityDevice.updatedBy">Updated By</string>
+    <string key="ui.model.securityDevice.obsoletedBy">Deleted By</string>
+    <string key="ui.model.securityDevice.lastAuthenticationTime">Last Authentication</string>
+    <string key="ui.model.securityDevice.invalidAuth">Invalid Authentications</string>
+    <string key="ui.model.securityDevice.secret">Device Secret</string>
+    <string key="ui.model.deviceEntity.manufacturerModelName">Model Name</string>
+    <string key="ui.model.deviceEntity.operatingSystemName">Operating System</string>
+    <string key="ui.model.deviceEntity.relationship.DedicatedServiceDeliveryLocation">Designated Facility</string>
+
+    <string key="ui.model.version.sequence">Sequence</string>
+    <string key="ui.model.version.createdBy">Created</string>
+    <string key="ui.model.version.replaces">Replaces Version</string>
+    <string key="ui.model.version.changed">Changed Properties</string>
+    <string key="ui.model.version.initial">Initial Version</string>
     <!-- Default applications -->
     <string key="org.santedb.debug">SanteDB SDK</string>
     <string key="org.santedb.administration">SanteDB Admin Console</string>

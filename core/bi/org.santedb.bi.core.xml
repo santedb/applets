@@ -59,7 +59,7 @@
 	          cd_set_mem_assoc_tbl 
 	          INNER JOIN cd_name_tbl USING (cd_id)
           WHERE
-	          set_id = 'e9eecd3c-7b80-47f9-9cb6-55c8d3110fb0'
+	          set_id = char_to_uuid('e9eecd3c-7b80-47f9-9cb6-55c8d3110fb0')
 	          AND lang_cs = ${language}
           ]]>
         </add>

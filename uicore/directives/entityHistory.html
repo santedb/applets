@@ -1,0 +1,14 @@
+<table class="table table-striped" xmlns="http://www.w3.org/1999/xhtml">
+    <tr>
+        <th>{{ 'ui.model.version.sequence' | i18n }}</th>
+        <th>{{ 'ui.model.version.createdBy' | i18n }}</th>
+        <th>{{ 'ui.model.version.replaces' | i18n }}</th>
+        <th>{{ 'ui.model.version.changed' | i18n }}</th>
+    </tr>
+    <tr ng-repeat="ver in history track by $index">
+        <td><i class="fas fa-code-branch"></i> {{ ver.sequence }}</td>
+        <td><provenance provenance-id="ver.createdBy" provenance-time="ver.creationTime"/> {{ ver.creationTime | extDate: 'F' }}</td>
+        <td>{{ (history[$index + 1].sequence || 'ui.model.version.initial') | i18n }}</td>
+        <td>{{ ver.diff }}</td>
+    </tr>
+</table>
