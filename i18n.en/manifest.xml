@@ -383,11 +383,26 @@
     <string key="ui.model.securityDevice.obsoletedBy">Deleted By</string>
     <string key="ui.model.securityDevice.lastAuthenticationTime">Last Authentication</string>
     <string key="ui.model.securityDevice.invalidAuth">Invalid Authentications</string>
+    <string key="ui.model.securityDevice.lockout">Lockout</string>
+
     <string key="ui.model.securityDevice.secret">Device Secret</string>
     <string key="ui.model.deviceEntity.manufacturerModelName">Model Name</string>
     <string key="ui.model.deviceEntity.operatingSystemName">Operating System</string>
     <string key="ui.model.deviceEntity.relationship.DedicatedServiceDeliveryLocation">Designated Facility</string>
 
+    <string key="ui.model.securityApplication.id">Security ID</string>
+    <string key="ui.model.securityApplication.name">Name</string>
+    <string key="ui.model.securityApplication.createdBy">Created By</string>
+    <string key="ui.model.securityApplication.updatedBy">Updated By</string>
+    <string key="ui.model.securityApplication.obsoletedBy">Deleted By</string>
+    <string key="ui.model.securityApplication.lastAuthenticationTime">Last Authentication</string>
+    <string key="ui.model.securityApplication.invalidAuth">Invalid Authentications</string>
+    <string key="ui.model.securityApplication.lockout">Lockout</string>
+    <string key="ui.model.securityApplication.secret">Application Secret</string>
+    
+    <string key="ui.model.applicationEntity.softwareName">Software Name</string>
+    <string key="ui.model.applicationEntity.vendorName">Vendor</string>
+    <string key="ui.model.applicationEntity.versionName">Version</string>
     <string key="ui.model.version.sequence">Sequence</string>
     <string key="ui.model.version.createdBy">Created</string>
     <string key="ui.model.version.replaces">Replaces Version</string>

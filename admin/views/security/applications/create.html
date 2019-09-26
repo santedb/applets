@@ -1,11 +1,11 @@
 <div xmlns="http://www.w3.org/1999/xhtml" xmlns:sdb="http://santedb.org/applet">
     <sdb:script static="false">~/controllers/applications/edit.js</sdb:script>
-    <sdb:state name="santedb-admin.security.applications.edit" abstract="false">
+    <sdb:state name="santedb-admin.security.applications.create" abstract="false">
         <sdb:demand>1.3.6.1.4.1.33349.3.1.5.9.2.0.6</sdb:demand>
-        <sdb:url>/{id}</sdb:url>
+        <sdb:url>/</sdb:url>
         <sdb:view>
             <sdb:controller>EditApplicationController</sdb:controller>
-            <sdb:title lang="en">Edit Application</sdb:title>
+            <sdb:title lang="en">Create Application</sdb:title>
         </sdb:view>
     </sdb:state>
     <!-- #include virtual="~/views/security/applications/partial/edit.html" -->

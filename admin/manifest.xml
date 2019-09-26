@@ -151,5 +151,10 @@
     <string key="ui.admin.applications.lastAuthenticationTime">Last Auth</string>
     <string key="ui.admin.applications.state">Status</string>
     <string key="ui.admin.applications.updatedBy">Last Update</string>
+    <string key="ui.admin.applications.edit.core.title">Core Application Properties</string>
+    <string key="ui.admin.applications.edit.security.title">Security Properties</string>
+    <string key="ui.admin.applications.edit.policy.title">Associated Policies</string>
+    <string key="ui.admin.applications.edit.demographics.title">Extended Properties</string>
+    <string key="ui.admin.applications.edit.security.neverLoggedIn">Never Authenticated</string>
   </strings>
 </AppletManifest>
