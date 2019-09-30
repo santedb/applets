@@ -10,31 +10,7 @@
                 <th></th>
             </tr>
         </thead>
-        <tr ng-repeat="pi in policy track by $index">
-            <td><i class="fas fa-shield-alt" title="{{ pi.canOverride ? 'ui.model.securityPolicy.canOverride.true' : 'ui.model.securityPolicy.canOverride.false' | i18n }}"></i>
-                <span class="indicator-overlay" ng-class="{ 'text-warning' : pi.canOverride, 'text-success': !pi.canOverride}"><i class="fa fa-fw fa-circle"></i></span> 
-                {{ pi.name }}</td>
-            <td>
-                <div class="btn-group btn-group-toggle">
-                    <label class="btn btn-info" ng-class="{'active btn-primary':pi.grant == 'Grant'}"><input
-                            type="radio" name="rdo{{pi.oid}}" ng-model="pi.grant" ng-change="updateGrant($index)" value="Grant" /> <i
-                            class="fas fa-thumbs-up"></i> <span class="d-sm-none d-lg-inline">
-                            {{ 'ui.model.securityPolicyInstance.grant.Grant' | i18n }}</span></label>
-                    <label class="btn btn-info" ng-class="{'active btn-primary':pi.grant == 'Deny'}"><input type="radio"
-                            name="rdo{{pi.oid}}"  ng-change="updateGrant($index)" ng-model="pi.grant" value="Deny" /> <i class="fas fa-thumbs-down"></i>
-                        <span class="d-sm-none d-lg-inline">
-                            {{ 'ui.model.securityPolicyInstance.grant.Deny' | i18n }}</span></label>
-                    <label class="btn btn-info" ng-class="{'active btn-primary':pi.grant == 'Elevate'}"><input
-                            type="radio" name="rdo{{pi.oid}}"  ng-change="updateGrant($index)" ng-model="pi.grant" value="Elevate" /> <i
-                            class="fas fa-arrow-circle-up"></i> <span class="d-sm-none d-lg-inline">
-                            {{ 'ui.model.securityPolicyInstance.grant.Elevate' | i18n }}</span></label>
-                </div>
-            </td>
-            <td>
-                <button class="btn btn-danger" type="button" ng-click="deletePolicy($index)"><i class="fas fa-times"></i> <span
-                        class="d-sm-none d-lg-inline"> {{ 'ui.action.remove' | i18n }}</span></button>
-            </td>
-        </tr>
+        
     </table>
     <div id="addPolicy" class="input-group mb-3">
             <div class="input-group-append">

@@ -632,13 +632,15 @@ angular.module('santedb-lib')
 
                             // Construct a popover of extra info
                             var extraInfo = "";
+                            if(provData.userModel != null)
+                                extraInfo += `<br/><b><i class='fas fa-user'></i> ${SanteDB.locale.getString('ui.provenance.user')}:</b> ${provData.userModel.userName}`;
                             if (provData.applicationModel != null)
-                                extraInfo += `<b><i class='fas fa-window-maximize'></i> ${SanteDB.locale.getString('ui.provenance.application')}:</b> ${SanteDB.locale.getString(provData.applicationModel.name)}`;
+                                extraInfo += `<br/><b><i class='fas fa-window-maximize'></i> ${SanteDB.locale.getString('ui.provenance.application')}:</b> ${provData.applicationModel.name}`;
                             if (scope.provenanceTime)
                                 extraInfo += `<br/><b><i class='fas fa-clock'></i> ${SanteDB.locale.getString('ui.provenance.timestamp')}:</b>  ${moment(scope.provenanceTime).format(SanteDB.locale.dateFormats.second)}`;
                             if (provData.session)
                                 extraInfo += `<br/><b><i class='fas fa-asterisk'></i>  ${SanteDB.locale.getString('ui.provenance.session')}:</b> ${provData.session.substring(0, 8)}`;
-
+                            extraInfo = extraInfo.substring(5);
 
                             scope.$apply();
                             $timeout(function () {
@@ -751,7 +753,7 @@ angular.module('santedb-lib')
      * @memberof Angular
      * @method entityPolicyAdmin
      */
-    .directive('entityPolicyAdmin', ['$timeout', function ($timeout) {
+    .directive('entityPolicyAdmin', ['$timeout', '$compile', '$rootScope', function ($timeout, $compile, $rootScope) {
         return {
             restrict: 'E',
             replace: true,
@@ -762,47 +764,41 @@ angular.module('santedb-lib')
             },
             controller: ['$scope', '$rootScope', function ($scope, $rootScope) {
 
-                $scope.deletePolicy = function (index) {
-
-                    
+                $scope.deletePolicy = function (oid, index) {
                     if (confirm(SanteDB.locale.getString("ui.confirm.delete"))) {
-                        var pol = $scope.policy[index];
-                        pol.exec = 'deleting';
-                        SanteDB.resources.securityPolicy.findAsync({ oid: pol.oid, _count: 1 })
-                            .then(function (res) {
-                                pol = res.item[0];
-                                pol.exec = 'deleting';
+                        SanteDB.display.buttonWait("#delPolicy" + index, true);
+
+                        SanteDB.resources.securityPolicy.findAsync({ oid: oid, _count: 1})
+                            .then(function(pol) {
                                 var resource = SanteDB.resources[$scope.securable.$type.toCamelCase()];
                                 if (resource == null)
                                     return;
-                                resource.removeAssociatedAsync($scope.securable.id, "policy", pol.id)
+                                resource.removeAssociatedAsync($scope.securable.id, "policy", pol.item[0].id)
                                     .then(function (d) {
-                                        $scope.policy.splice(index, 1);
-                                        delete (pol.exec);
-                                        $scope.$apply();
+                                        SanteDB.display.buttonWait("#delPolicy" + index, false);
+                                        $scope.refresh();
                                     })
                                     .catch(function (e) {
-                                        delete (pol.exec);
+                                        SanteDB.display.buttonWait("#delPolicy" + index, false);
                                         $rootScope.errorHandler(e);
                                     });
-                            }).catch(function (e) {
-                                delete (pol.exec);
+                            })
+                            .catch(function (e) {
+                                SanteDB.display.buttonWait("#delPolicy" + index, false);
                                 $rootScope.errorHandler(e);
                             });
+                        
                     }
                 }
 
                 // Mark grant as dirty
-                $scope.updateGrant = function (index) {
+                $scope.updateGrant = function (oid, grant, index) {
 
-                    var pol = $scope.policy[index];
-                    pol.exec = 'granting';
-                    SanteDB.resources.securityPolicy.findAsync({ oid: pol.oid, _count: 1 })
+                    SanteDB.display.buttonWait("#grant" + index, true);
+                    SanteDB.resources.securityPolicy.findAsync({ oid: oid, _count: 1 })
                         .then(function (res) {
-                            var g = pol.grant;
                             pol = res.item[0];
-                            pol.grant = g;
-                            pol.exec = 'granting';
+                            pol.grant = grant;
                             pol.$type = 'SecurityPolicyInfo';
 
                             var resource = SanteDB.resources[$scope.securable.$type.toCamelCase()];
@@ -810,15 +806,15 @@ angular.module('santedb-lib')
                                 return;
                             resource.addAssociatedAsync($scope.securable.id, "policy", pol)
                                 .then(function (d) {
-                                    $scope.policy[index] = d;
-                                    $scope.$apply();
+                                    SanteDB.display.buttonWait("#grant" + index, false);
+                                    $scope.refresh();
                                 })
                                 .catch(function (e) {
-                                    delete (pol.exec);
+                                    SanteDB.display.buttonWait("#grant" + index, false);
                                     $rootScope.errorHandler(e);
                                 });
                         }).catch(function (e) {
-                            delete (pol.exec);
+                            SanteDB.display.buttonWait("#grant" + index, false);
                             $rootScope.errorHandler(e);
                         });
 
@@ -837,17 +833,19 @@ angular.module('santedb-lib')
                                 return;
                             resource.addAssociatedAsync($scope.securable.id, "policy", pol)
                                 .then(function (d) {
-                                    $scope.policy.push(d);
                                     delete ($scope.newPolicy);
                                     $scope.$apply();
+                                    $scope.refresh();
                                 })
                                 .catch(function (e) {
                                     delete ($scope.newPolicy);
+                                    $scope.$apply();
                                     $rootScope.errorHandler(e);
                                 });
                         })
                         .catch(function (e) {
                             delete ($scope.newPolicy);
+                            $scope.$apply();
                             $rootScope.errorHandler(e);
                         });
                 }
@@ -855,39 +853,105 @@ angular.module('santedb-lib')
             link: function (scope, element, attrs) {
 
 
-                var dt = null;
-                // Create datatable
-                scope.$watch(function (s) { return (s.policy || []).length; }, function (n, o) {
-                    if (n && !dt) {
-                        dt = $('table', element).DataTable({
-                            bLengthChange: false,
-                            searching: false,
-                            serverSide: false,
-                            columnDefs: [
-                                {
-                                    orderable: false,
-                                    targets: [0, 1, 2]
-                                }
-                            ],
-                            buttons: [
-                                'copy'
-                            ]
-                        });
-
-
-                        // Bind buttons
-                        var bindButtons = function () {
-                            dt.buttons().container().appendTo($('.col-md-6:eq(1)', dt.table().container()));
-                            if (dt.buttons().container().length == 0)
-                                $timeout(bindButtons, 100);
-                            else {
-                                $("#addPolicy", element).appendTo($('.col-md-6:eq(0)', dt.table().container()));
+                var dt = $('table', element).DataTable({
+                    bLengthChange: false,
+                    searching: true,
+                    serverSide: true,
+                    columnDefs: [
+                        {
+                            orderable: false,
+                            targets: [0, 1, 2]
+                        }
+                    ],
+                    buttons: [
+                        'copy'
+                    ],
+                    columns: [
+                        {
+                            orderable: false,
+                            render: function(d,t,r) {
+                                return `<i class="fas fa-shield-alt" title="${ SanteDB.locale.getString(r.canOverride ? 'ui.model.securityPolicy.canOverride.true' : 'ui.model.securityPolicy.canOverride.false') }"></i>
+                                <span class="indicator-overlay ${ r.canOverride ? 'text-warning' : 'text-success'}"><i class="fa fa-fw fa-circle"></i></span> 
+                                ${r.name} <small>${r.oid}</small>`
                             }
-                        };
-                        bindButtons();
-                    }
+                        },
+                        {
+                            orderable: false,
+                            render: function(d, t, r, i) {
+                                return `<div class="btn-group btn-group-toggle" id="grant${i.row}"><label class="btn btn-info ${ r.grant == 'Grant' ? 'active btn-primary' : ''}"><input
+                                        type="radio" name="rdo${r.oid}" ng-click="updateGrant('${r.oid}', 'Grant', ${i.row})" value="Grant" /> <i
+                                        class="fas fa-thumbs-up"></i> <span class="d-sm-none d-lg-inline">
+                                        {{ 'ui.model.securityPolicyInstance.grant.Grant' | i18n }}</span></label>
+                                        <label class="btn btn-info ${ r.grant == 'Deny' ? 'active btn-primary' : ''}"><input type="radio"
+                                        name="rdo${r.oid}"  ng-click="updateGrant('${r.oid}', 'Deny', ${i.row})" value="Deny" /> <i class="fas fa-thumbs-down"></i>
+                                        <span class="d-sm-none d-lg-inline">
+                                        {{ 'ui.model.securityPolicyInstance.grant.Deny' | i18n }}</span></label>
+                                        <label class="btn btn-info ${ r.grant == 'Elevate' ? 'active btn-primary' : ''}"><input
+                                        type="radio" name="rdo${r.oid}"  ng-click="updateGrant('${r.oid}', 'Elevate', ${i.row})" value="Elevate" /> <i
+                                        class="fas fa-arrow-circle-up"></i> <span class="d-sm-none d-lg-inline">
+                                        {{ 'ui.model.securityPolicyInstance.grant.Elevate' | i18n }}</span></label>
+                                        </div>`;
+                            }
+                        },
+                        {
+                            orderable: false,
+                            render: function(d, t, r, i) {
+                                return `<button class="btn btn-danger" type="button" id="delPolicy${i.row}" ng-click="deletePolicy('${r.oid}', ${i.row})"><i class="fas fa-times"></i> <span
+                                class="d-sm-none d-lg-inline"> {{ 'ui.action.remove' | i18n }}</span></button>`;
+                            }
+                        }
+                    ],
+                    ajax: function (data, callback, settings) {
+
+                        if(!scope.securable) { 
+                            callback( { data: [], recordsFiltered: 0, recordsTotal: 0 } );
+                            return;
+                        }
+
+                        var query = {};
+                        if (data.search.value.length > 0)
+                            query.name = `~${data.search.value}`;
+                        
+                        query["_count"] = data.length;
+                        query["_offset"] = data.start;
+
+                        SanteDB.resources[scope.securable.$type.toCamelCase()].findAssociatedAsync(scope.securable.id, 'policy', query)
+                            .then(function (res) {
+                                callback({
+                                    data: res.item.map(function (item) {
+                                        return item;
+                                    }),
+                                    recordsTotal: undefined,
+                                    recordsFiltered: res.totalResults || res.size
+                                });
+                            })
+                            .catch(function (err) { $rootScope.errorHandler(err) });
+                    },
+                    createdRow: function (r, d, i) {
+                        $compile(angular.element(r).contents())(scope);
+                        scope.$digest()
+                    },
                 });
 
+
+                scope.refresh = function() {
+                    dt.ajax.reload();
+                }
+
+                scope.$watch("securable", function(n, o) {
+                    if(n)
+                        dt.ajax.reload();
+                });
+                // Bind buttons
+                var bindButtons = function () {
+                    dt.buttons().container().appendTo($('.col-md-6:eq(1)', dt.table().container()));
+                    if (dt.buttons().container().length == 0)
+                        $timeout(bindButtons, 100);
+                    else {
+                        $("#addPolicy", element).appendTo($('.col-md-6:eq(0)', dt.table().container()));
+                    }
+                };
+                bindButtons();
 
             }
         }

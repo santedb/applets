@@ -329,6 +329,7 @@
     <string key="ui.provenance.extraInfo">Provenance Data</string>
     <string key="ui.provenance.unknown">Not Available</string>
     <string key="ui.provenance.timestamp">Time</string>
+    <string key="ui.provenance.user">User</string>
     <string key="ui.provenance.application">App</string>
     <string key="ui.provenance.session">Session</string>
 
