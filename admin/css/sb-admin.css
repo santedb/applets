@@ -825,3 +825,7 @@ table.dataTable thead .sorting_desc_disabled {
   }
 }
 
+.text-gray {
+  color: #aaaaaa;
+  
+}

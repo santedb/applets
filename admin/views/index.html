@@ -41,19 +41,20 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarResponsive" ng-class="{'navbar-collapse-small' : windowSize &lt; 1100}">
                 <ul class="navbar-nav navbar-sidenav" id="menuAccordian">
-
+                    <li>
+                    </li>
                     <li ng-repeat="m in menuItems" class="nav-item" data-toggle="tooltip" title="{{m.text}}">
-                        <a class="nav-link" ng-if="!m.menu" ng-href="{{::m.action}}" data-toggle="collapse" data-target=".navbar-collapse-small">
+                        <a class="nav-link" ng-if="!m.menu" ui-sref="{{ ::m.action }}" data-toggle="collapse" data-target=".navbar-collapse-small">
                             <i class="{{m.icon}}"></i> 
                             <span class="nav-link-text"> {{::m.text}}</span>
                         </a>
-                        <a ng-if="m.menu"  class="nav-link nav-link-collapse" data-toggle="collapse" data-target="#Collapse{{$index}}" role="button" aria-haspopup="true" aria-expanded="false">
+                        <a ng-if="m.menu"  class="nav-link nav-link-collapse"  ui-sref="{{ ::m.action }}" data-toggle="collapse" data-target="#Collapse{{$index}}" role="button" aria-haspopup="true" aria-expanded="false">
                             <i class="{{m.icon}}"></i>
                             <span class="nav-link-text"> {{::m.text}}</span>
                         </a>
                         <ul ng-if="m.menu" class="sidenav-second-level collapse" id="Collapse{{$index}}">
                             <li ng-repeat="c in ::m.menu"  title="{{c.text}}">
-                                <a ng-href="{{::c.action}}" data-toggle="collapse" data-target=".navbar-collapse-small">
+                                <a ui-sref="{{ ::c.action }}" data-toggle="collapse" data-target=".navbar-collapse-small">
                                     <i class="{{c.icon}}"></i>
                                     <span class="nav-link-text"> {{c.text}}</span>
                                 </a>

@@ -1116,14 +1116,16 @@ if (!SanteDBWrapper)
              * @method
              * @memberof SanteDBWrapper.app
              * @param {string} _id The id of the log file to fetch contents of
+             * @param {any} query The query filters to use / apply
              * @returns {Promise} The promise representing the async request
              */
-            getLogInfoAsync: function (_id) {
-                var query;
+            getLogInfoAsync: function (_id, query) {
+                var resource = "Log";
                 if (_id)
-                    query = { _id: _id };
+                    resource += "/" + _id;
+
                 return _ami.getAsync({
-                    resource: "Log",
+                    resource: resource,
                     query: query
                 });
             },
