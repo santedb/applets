@@ -172,6 +172,22 @@
     <string key="ui.admin.security.applications.create">New App</string>
     <string key="ui.admin.security.applications.count">active apps</string>
 
+    <!-- System Information -->
+    <string key="ui.admin.system.info.local.title">Local Server</string>
+    <string key="ui.admin.system.info.realm.title">Realm Server</string>
+    <string key="ui.admin.system.info.coreInfo">Core Info</string>
+    <string key="ui.admin.system.info.version">Version</string>
+    <string key="ui.admin.system.info.product">Product</string>
+    <string key="ui.admin.system.info.environment">Operating System</string>
+    <string key="ui.admin.system.info.cpuInfo">CPU Cores</string>
+    <string key="ui.admin.system.info.workers">workers</string>
+    <string key="ui.admin.system.info.memory">Used Memory</string>
+    <string key="ui.admin.system.info.uptime">Uptime</string>
+    <string key="ui.admin.system.applets.title">Applets</string>
+    <string key="ui.admin.system.applets.name">Name</string>
+    <string key="ui.admin.system.applets.version">Version</string>
+    <string key="ui.admin.system.applets.id">ID</string>
+    <string key="ui.admin.system.applets.author">Author</string>
     <!-- System -->
   </strings>
 </AppletManifest>

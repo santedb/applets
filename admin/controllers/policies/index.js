@@ -1,3 +1,4 @@
+/// <reference path="../../../core/js/santedb.js"/>
 angular.module('santedb').controller('PolicyIndexController', ["$scope", "$rootScope", "$state", "$templateCache", function ($scope, $rootScope, $state, $templateCache) {
 
    /**

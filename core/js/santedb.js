@@ -1166,12 +1166,14 @@ if (!SanteDBWrapper)
              * @method
              * @memberof SanteDBWrapper.app
              * @returns {Promise} The promise from the async representation
-             * @param {boolean} checkForUpdates When true, check the master server for updates
+             * @param {any} settings The settings to use for the server diagnostic report
+             * @param {boolean} settings.updates When true check for updates
+             * @param {boolean} settings.remote When true check the remote server
              */
-            getAppInfoAsync: function (checkForUpdates) {
+            getAppInfoAsync: function (settings) {
                 return _ami.getAsync({
                     resource: "Sherlock",
-                    query: { _updates: true }
+                    query: { _includeUpdates: (settings || {}).updates, _extern: (settings || {}).remote  }
                 });
             },
             /**
@@ -1181,7 +1183,7 @@ if (!SanteDBWrapper)
              * @returns {Promise} The promise from the async operation
              */
             getHealthAsync: function () {
-                return _ami.getAsync({
+                return _app.getAsync({
                     resource: "Health"
                 });
             },
