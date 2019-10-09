@@ -2,6 +2,13 @@
 angular.module('santedb').controller('LogIndexController', ["$scope", "$rootScope", "$timeout", "$compile", function ($scope, $rootScope, $timeout, $compile) {
  
     
+    // Change handler for show option
+    $scope.updateView = function() {
+        dt.ajax.reload();
+    }
+
+    // Initial value 
+    $scope.extern = 'false';
     var dt = $("#logInfoTable").DataTable({
         serverSide: true,
         buttons: [
@@ -35,7 +42,7 @@ angular.module('santedb').controller('LogIndexController', ["$scope", "$rootScop
         ajax: function (data, callback, settings) {
 
             var query = {
-                _extern: true,
+                _extern: $scope.extern,
                 _count: data.length,
                 _offset: data.start
             };
@@ -79,9 +86,11 @@ angular.module('santedb').controller('LogIndexController', ["$scope", "$rootScop
 
     // Bind buttons
     var bindButtons = function () {
-        dt.buttons().container().appendTo($('.col-md-6:eq(0)', dt.table().container()));
+        dt.buttons().container().appendTo($('.col-md-6:eq(1)', dt.table().container()));
         if (dt.buttons().container().length == 0)
             $timeout(bindButtons, 100);
+        else 
+            $("#extraControls").appendTo($('.col-md-6:eq(0)', dt.table().container()));
     };
     bindButtons();
  }]);

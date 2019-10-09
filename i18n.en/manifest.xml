@@ -126,6 +126,7 @@
     <string key="ui.state.active">Active</string>
     <string key="ui.state.inactive">Inactive</string>
     <string key="ui.state.new">New</string>
+    <string key="ui.state.running">Running</string>
     <string key="ui.state.obsolete">Obsolete</string>
     <string key="ui.state.cancelled">Cancelled</string>
     <string key="ui.state.nullified">Nullified</string>

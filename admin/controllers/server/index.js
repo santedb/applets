@@ -2,10 +2,13 @@
 angular.module('santedb').controller('SystemInfoController', ["$scope", "$rootScope", "$state", "$interval", function ($scope, $rootScope, $state, $interval) {
 
 
+    $scope.isLoading = true;
+
     // Get application information
     SanteDB.application.getAppInfoAsync({ updates: true })
         .then(function(d) {
             $scope.info = d;
+            $scope.isLoading = $scope.server === undefined;
             $scope.$apply();
         })
         .catch($rootScope.errorHandler);
@@ -14,6 +17,7 @@ angular.module('santedb').controller('SystemInfoController', ["$scope", "$rootSc
     SanteDB.application.getAppInfoAsync({ remote: true })
     .then(function(d) {
         $scope.server = d;
+        $scope.isLoading = $scope.info === undefined;
         $scope.$apply();
     })
     .catch($rootScope.errorHandler);

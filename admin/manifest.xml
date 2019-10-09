@@ -188,6 +188,13 @@
     <string key="ui.admin.system.applets.version">Version</string>
     <string key="ui.admin.system.applets.id">ID</string>
     <string key="ui.admin.system.applets.author">Author</string>
+    <string key="ui.admin.system.services.title">Services</string>
+    <string key="ui.admin.system.services.name">Name</string>
+    <string key="ui.admin.system.services.state">Status</string>
+    <string key="ui.admin.system.applets.signed">Digitally Signed</string>
+    <string key="ui.admin.system.logs.show">Show Logs From</string>
+    <string key="ui.admin.system.logs.local">Local Service</string>
+    <string key="ui.admin.system.logs.remote">Realm Service</string>
     <!-- System -->
   </strings>
 </AppletManifest>

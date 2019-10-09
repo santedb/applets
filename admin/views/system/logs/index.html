@@ -19,4 +19,13 @@
         </thead>
         <tbody></tbody>
     </table>
+    <div id="extraControls" class="input-group">
+        <div class="input-group-prepend">
+            <span class="input-group-text">{{ 'ui.admin.system.logs.show' | i18n }}</span>
+        </div>
+        <select class="form-control" ng-model="extern" ng-change="updateView()">
+            <option value="false">{{ 'ui.admin.system.logs.local' | i18n }}</option>
+            <option ng-if="$root.system.online" value="true">{{ 'ui.admin.system.logs.remote' | i18n }}</option>
+        </select>
+    </div>
 </div>
