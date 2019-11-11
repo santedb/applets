@@ -17,7 +17,6 @@
     <add>
       <providers>
         <invariant>npgsql</invariant>
-        <invariant>fbsql</invariant>
       </providers>
       <![CDATA[
         select 
@@ -43,7 +42,38 @@
 	        left join sec_app_tbl using (app_id) 
 	        left join sec_dev_tbl using (dev_id)
         where
-          crt_utc between ${from-date} and ${to-date}
+          sec_ses_tbl.crt_utc between ${from-date} and ${to-date}
+      ]]>
+    </add>
+    <add>
+      <providers>
+        <invariant>fbsql</invariant>
+      </providers>
+      <![CDATA[
+        select 
+          uuid_to_char(ses_id) as ses_id, 
+          case 
+            when usr_id is not null then 'USER'
+            when dev_id is not null then 'DEV'
+            when app_id is not null then 'APP'
+          end as ses_typ,
+          uuid_to_char(dev_id) as dev_id, 
+          uuid_to_char(app_id) as app_id, 
+          uuid_to_char(usr_id) as usr_id, 
+          exp_utc, 
+          aud, 
+          sec_ses_tbl.crt_utc, 
+          uuid_to_char(sec_usr_tbl.cls_id) as cls_id, 
+          sec_usr_tbl.usr_name, 
+          sec_dev_tbl.dev_pub_id, 
+          sec_app_tbl.app_pub_id
+        from 
+	        sec_ses_tbl 
+	        left join sec_usr_tbl using(usr_id) 
+	        left join sec_app_tbl using (app_id) 
+	        left join sec_dev_tbl using (dev_id)
+        where
+          sec_ses_tbl.crt_utc between ${from-date} and ${to-date}
       ]]>
     </add>
   </definitions>

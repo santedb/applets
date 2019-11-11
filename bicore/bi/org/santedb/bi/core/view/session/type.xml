@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<BiViewDefinition xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="by-type-date" id="org.santedb.bi.core.view.session.type" xmlns="http://santedb.org/bi">
+  <meta status="active">
+    <authors>
+      <add>Justin Fyfe (Fyfe Software Inc.) &lt;justin@fyfesoftware.ca&gt;</add>
+    </authors>
+    <policies />
+  </meta>
+  <query ref="#org.santedb.bi.core.query.session">
+    <dataSources />
+    <parameters />
+  </query>
+  <aggregations>
+    <add>
+      <providers />
+      <grouping>
+        <column name="crt_utc">cast(crt_utc as DATE)</column>
+        <column name="ses_typ">ses_typ</column>
+      </grouping>
+      <select>
+        <column name="ses_typ" fn="value">ses_typ</column>
+        <column name="ses_date" fn="value">cast(crt_utc as DATE)</column>
+        <column name="n_sessions" fn="count-distinct">ses_id</column>
+      </select>
+    </add>
+  </aggregations>
+  <pivot key="ses_date" columnDef="ses_typ" value="n_sessions" fn="sum" />
+</BiViewDefinition>
