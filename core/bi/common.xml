@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<BiPackage xmlns="http://santedb.org/bi" id="org.santedb.bi.common">
+  <meta status="active">
+    <authors>
+      <add>Justin Fyfe (Fyfe Software Inc.) &lt;justin@fyfesoftware.ca></add>
+    </authors>
+    <annotation lang="en">
+      <div xmlns="http://www.w3.org/1999/xhtml">
+        <p>This common package defines common parameters which cross clinical/security/audit domains</p>
+      </div>
+    </annotation>
+  </meta>
+  <parameters>
+    <add id="org.santedb.bi.parameter.common.date.from" name="from-date" type="date" max="to-date" label="ui.santedb.bi.core.common.date.from"  />
+    <add id="org.santedb.bi.parameter.common.date.to" name="to-date" type="date" min="from-date" label="ui.santedb.bi.core.common.date.to"/>
+  </parameters>
+</BiPackage>

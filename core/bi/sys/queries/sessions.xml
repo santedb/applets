@@ -1,0 +1,50 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<BiQueryDefinition xmlns="http://santedb.org/bi" id="org.santedb.bi.query.sys.session" label="ui.santedb.bi.core.query.session">
+  <meta status="active">
+    <authors>
+      <add>Justin Fyfe (Fyfe Software Inc.) &lt;justin@fyfesoftware.ca></add>
+    </authors>
+  </meta>
+  <dataSources>
+    <add ref="#org.santedb.bi.dataSource.main"/>
+  </dataSources>
+  <parameters>
+    <add ref="#org.santedb.bi.parameter.sys.user.class" name="user-class" type="uuid"/>
+    <add ref="#org.santedb.bi.parameter.common.date.from" name="from-date" type="date"/>
+    <add ref="#org.santedb.bi.parameter.common.date.to" name="to-date" type="date"/>
+  </parameters>
+  <definitions>
+    <add>
+      <providers>
+        <invariant>npgsql</invariant>
+        <invariant>fbsql</invariant>
+      </providers>
+      <![CDATA[
+        select 
+          ses_id, 
+          case 
+            when usr_id is not null then 'USER'
+            when dev_id is not null then 'DEV'
+            when app_id is not null then 'APP'
+          end as ses_typ,
+          dev_id, 
+          app_id, 
+          usr_id, 
+          exp_utc, 
+          aud, 
+          sec_ses_tbl.crt_utc, 
+          sec_usr_tbl.cls_id, 
+          sec_usr_tbl.usr_name, 
+          sec_dev_tbl.dev_pub_id, 
+          sec_app_tbl.app_pub_id
+        from 
+	        sec_ses_tbl 
+	        left join sec_usr_tbl using(usr_id) 
+	        left join sec_app_tbl using (app_id) 
+	        left join sec_dev_tbl using (dev_id)
+        where
+          crt_utc between ${from-date} and ${to-date}
+      ]]>
+    </add>
+  </definitions>
+</BiQueryDefinition>

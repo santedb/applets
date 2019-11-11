@@ -1,0 +1,31 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<BiQueryDefinition xmlns="http://santedb.org/bi" id="org.santedb.bi.query.user" name="users" label="ui.santedb.bi.core.query.user">
+  <meta status="active">
+    <authors>
+      <add>Justin Fyfe (Fyfe Software Inc.) &lt;justin@fyfesoftware.ca></add>
+    </authors>
+    <annotation>
+      <div xmlns="http://www.w3.org/1999/xhtml">
+        <p>Query which produces a list of <strong>all</strong> users matching the specified class</p>
+      </div>
+    </annotation>
+  </meta>
+  <dataSources>
+    <add name="main" ref="#org.santedb.bi.dataSource.main"/>
+  </dataSources>
+  <parameters>
+    <add type="uuid" ref="#org.santedb.bi.parameter.sys.user.class" name="user-class" default="33932B42-6F4B-4659-8849-6ACA54139D8E"/>
+  </parameters>
+  <definitions>
+    <add>
+      <providers>
+        <invariant>npgsql</invariant>
+        <invariant>fbsql</invariant>
+      </providers>
+      <![CDATA[SELECT * 
+      FROM sec_usr_tbl
+      WHERE 
+        cls_id = COALESCE(${user-class}, cls_id)]]>
+    </add>
+  </definitions>
+</BiQueryDefinition>

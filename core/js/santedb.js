@@ -1001,7 +1001,7 @@ if (!SanteDBWrapper)
             getAppSolutionsAsync: function () {
                 return _ami.getAsync({
                     resource: "AppletSolution",
-                    query: "_extern=true"
+                    query: "_upstream=true"
                 });
             },
             /**
@@ -1173,7 +1173,7 @@ if (!SanteDBWrapper)
             getAppInfoAsync: function (settings) {
                 return _ami.getAsync({
                     resource: "Sherlock",
-                    query: { _includeUpdates: (settings || {}).updates, _extern: (settings || {}).remote  }
+                    query: { _includeUpdates: (settings || {}).updates, _upstream: (settings || {}).remote  }
                 });
             },
             /**
@@ -1584,6 +1584,16 @@ if (!SanteDBWrapper)
             securityRole: new ResourceWrapper({
                 accept: _viewModelJsonMime,
                 resource: "SecurityRole",
+                api: _ami
+            }),
+             /**
+             * @property {SanteDB.ResourceWrapper}
+             * @memberOf SanteDBWrapper.resources
+             * @summary Wrapper for session information
+             */
+            sessionInfo: new ResourceWrapper({
+                accept: _viewModelJsonMime,
+                resource: "SessionInfo",
                 api: _ami
             }),
             /**

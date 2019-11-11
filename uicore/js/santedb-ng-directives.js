@@ -464,7 +464,7 @@ angular.module('santedb-lib')
                                 query["_orderBy"] = `${colname}:${data.order[0].dir}`;
                             }
                             if (scope.extenral)
-                                query["_extern"] = true;
+                                query["_upstream"] = true;
 
                             var thisQuery = JSON.stringify(query);
                             if (lastQuery != thisQuery || element.attr("newQuery") == "true") {

@@ -1,0 +1,60 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<BiQueryDefinition xmlns="http://santedb.org/bi" id="org.santedb.bi.query.clinical.gender" name="gender" label="ui.santedb.bi.core.gender">
+  <meta status="active">
+    <annotation>
+      <div xmlns="http://www.w3.org/1999/xhtml">
+        <p>Query definition for all gender codes</p>
+      </div>
+    </annotation>
+  </meta>
+  <dataSources>
+    <add ref="#org.santedb.bi.dataSource.main"/>
+  </dataSources>
+  <parameters>
+    <add name="language" required="true" type="string" default="en" />
+  </parameters>
+  <definitions>
+    <add>
+      <providers>
+        <invariant>npgsql</invariant>
+      </providers>
+      <![CDATA[
+          SELECT cd_id AS key, val AS label, lang_cs as language
+          FROM
+	          cd_set_mem_assoc_tbl 
+	          INNER JOIN cd_name_tbl USING (cd_id)
+          WHERE
+	          set_id = 'e9eecd3c-7b80-47f9-9cb6-55c8d3110fb0'
+	          AND lang_cs = ${language}
+          ]]>
+    </add>
+    <add>
+      <providers>
+        <invariant>fbsql</invariant>
+      </providers>
+      <![CDATA[
+          SELECT uuid_to_char(cd_id) AS key, val AS label, lang_cs as language
+          FROM
+	          cd_set_mem_assoc_tbl 
+	          INNER JOIN cd_name_tbl USING (cd_id)
+          WHERE
+	          set_id = char_to_uuid('e9eecd3c-7b80-47f9-9cb6-55c8d3110fb0')
+	          AND lang_cs = ${language}
+          ]]>
+    </add>
+    <add>
+      <providers>
+        <invariant>sqlite</invariant>
+      </providers>
+      <![CDATA[
+          SELECT concept_uuid AS id, concept_name.value AS label, language
+          FROM 
+	          concept_concept_set
+	          INNER JOIN concept_name USING (concept_uuid)
+          WHERE
+	          concept_set_uuid = X'3CCDEEE9807BF9479CB655C8D3110FB0'
+	          AND "language" = ${language}          
+          ]]>
+    </add>
+  </definitions>
+</BiQueryDefinition>

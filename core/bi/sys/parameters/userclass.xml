@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<BiParameterDefinition xmlns="http://santedb.org/bi" id="org.santedb.bi.parameter.sys.userclass" name="user-class" label="ui.santedb.bi.core.user.class" type="uuid" default="33932B42-6F4B-4659-8849-6ACA54139D8E">
+  <meta status="active">
+    <authors>
+      <add>Justin Fyfe (Fyfe Software Inc.) &lt;justin@fyfesoftware.ca></add>
+    </authors>
+    <annotation lang="en">
+      <div xmlns="http://www.w3.org/1999/xhtml">
+        <p>This parameter defines values for user classification</p>
+      </div>
+    </annotation>
+  </meta>
+  <values>
+    <add value="E9CD4DAD-2759-4022-AB07-92FCFB236A98">ui.santedb.core.user.class.application</add>
+    <add value="33932B42-6F4B-4659-8849-6ACA54139D8E">ui.santedb.core.user.class.human</add>
+    <add value="9F71BB34-9691-440F-8249-9C831EA16D58">ui.santedb.core.user.class.system</add>
+  </values>
+</BiParameterDefinition>

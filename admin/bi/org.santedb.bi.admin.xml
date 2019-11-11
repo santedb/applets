@@ -1,0 +1,4 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<BiPackage xmlns="http://santedb.org/bi" id="org.santedb.bi.admin" label="org.santedb.bi.admin" name="Administrative BI Data Elements">
+  
+</BiPackage>
