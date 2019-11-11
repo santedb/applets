@@ -1,0 +1,41 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<BiPackage xmlns="http://santedb.org/bi" id="org.santedb.bi.view.sys.session">
+  <meta status="active">
+    <authors>
+      <add>Justin Fyfe (Fyfe Software Inc.) &lt;justin@fyfesoftware.ca></add>
+    </authors>
+  </meta>
+  <views>
+    <add name="by-date" id="org.santedb.bi.view.sys.session.date">
+      <query ref="#org.santedb.bi.query.sys.session" />
+      <aggregations>
+        <add>
+          <grouping>
+            <column name="crt_utc">cast(crt_utc as DATE)</column>
+          </grouping>
+          <select>
+            <column name="ses_date">cast(crt_utc as DATE)</column>
+            <column name="n_sessions" fn="count-distinct">ses_id</column>
+          </select>
+        </add>
+      </aggregations>
+    </add>
+    <add name="by-type-date" id="org.santedb.bi.view.sys.session.date.type">
+      <query ref="#org.santedb.bi.query.sys.session" />
+      <aggregations>
+        <add>
+          <grouping>
+            <column name="crt_utc">cast(crt_utc as DATE)</column>
+            <column name="ses_typ">ses_typ</column>
+          </grouping>
+          <select>
+            <column name="ses_typ">ses_typ</column>
+            <column name="ses_date">cast(crt_utc as DATE)</column>
+            <column name="n_sessions" fn="count-distinct">ses_id</column>
+          </select>
+        </add>
+      </aggregations>
+      <pivot key="ses_date" columnDef="ses_typ" fn="sum" value="n_sessions"/>
+    </add>
+  </views>
+</BiPackage>

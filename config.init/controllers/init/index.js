@@ -89,7 +89,7 @@ angular.module('santedb').controller('InitialSettingsController', ['$scope', '$r
             if (config.realmName) {
 
                 // Get subscription reference
-                SanteDB.resources.subscriptionDefinition.findAsync({ _extern: true }).then(function (d) {
+                SanteDB.resources.subscriptionDefinition.findAsync({ _upstream: true }).then(function (d) {
                     $scope.reference.subscriptions = [];
                     d.item.forEach(function (itm) {
                         itm.definitions.forEach(function (defn) {

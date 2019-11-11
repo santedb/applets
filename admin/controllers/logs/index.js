@@ -42,7 +42,7 @@ angular.module('santedb').controller('LogIndexController', ["$scope", "$rootScop
         ajax: function (data, callback, settings) {
 
             var query = {
-                _extern: $scope.extern,
+                _upstream: $scope.extern,
                 _count: data.length,
                 _offset: data.start
             };

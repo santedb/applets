@@ -78,6 +78,10 @@
       <icon>far fa-window-maximize</icon>
       <text lang="en">Applications</text>
     </menuItem>
+    <menuItem launch="santedb-admin.security.provenance.index" asset="/org.santedb.admin/views/security/provenance/index.html" context="org.santedb.admin">
+      <icon>fas fa-user-shield</icon>
+      <text lang="en">Provenance</text>
+    </menuItem>
   </menuItem>
 
   <viewModel key="relationship_full">
@@ -161,16 +165,16 @@
     <string key="ui.admin.security.dashboard.index">SanteDB Security Center</string>
     <string key="ui.admin.security.users.title">User Management</string>
     <string key="ui.admin.security.users.create">New User</string>
-    <string key="ui.admin.security.users.count">active users</string>
+    <string key="ui.admin.security.users.count">registered users</string>
     <string key="ui.admin.security.groups.title">Group Management</string>
     <string key="ui.admin.security.groups.create">New Group</string>
-    <string key="ui.admin.security.groups.count">active groups</string>
+    <string key="ui.admin.security.groups.count">registered groups</string>
     <string key="ui.admin.security.devices.title">Device Management</string>
     <string key="ui.admin.security.devices.create">New Device</string>
-    <string key="ui.admin.security.devices.count">active devices</string>
+    <string key="ui.admin.security.devices.count">registered devices</string>
     <string key="ui.admin.security.applications.title">App Management</string>
     <string key="ui.admin.security.applications.create">New App</string>
-    <string key="ui.admin.security.applications.count">active apps</string>
+    <string key="ui.admin.security.applications.count">registered apps</string>
 
     <!-- System Information -->
     <string key="ui.admin.system.info.local.title">Local Server</string>
