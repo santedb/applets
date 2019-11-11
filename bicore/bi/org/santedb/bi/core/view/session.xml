@@ -1,13 +1,13 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<BiPackage xmlns="http://santedb.org/bi" id="org.santedb.bi.view.sys.session">
+<BiPackage xmlns="http://santedb.org/bi" id="org.santedb.bi.core.view.session">
   <meta status="active">
     <authors>
       <add>Justin Fyfe (Fyfe Software Inc.) &lt;justin@fyfesoftware.ca></add>
     </authors>
   </meta>
   <views>
-    <add name="by-date" id="org.santedb.bi.view.sys.session.date">
-      <query ref="#org.santedb.bi.query.sys.session" />
+    <add name="by-date" id="org.santedb.bi.core.view.session.date">
+      <query ref="#org.santedb.bi.core.query.session" />
       <aggregations>
         <add>
           <grouping>
@@ -20,8 +20,8 @@
         </add>
       </aggregations>
     </add>
-    <add name="by-type-date" id="org.santedb.bi.view.sys.session.date.type">
-      <query ref="#org.santedb.bi.query.sys.session" />
+    <add name="by-type-date" id="org.santedb.bi.core.view.session.type">
+      <query ref="#org.santedb.bi.core.query.session" />
       <aggregations>
         <add>
           <grouping>

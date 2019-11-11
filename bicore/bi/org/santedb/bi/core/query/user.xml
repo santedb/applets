@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<BiQueryDefinition xmlns="http://santedb.org/bi" id="org.santedb.bi.query.user" name="users" label="ui.santedb.bi.core.query.user">
+<BiQueryDefinition xmlns="http://santedb.org/bi" id="org.santedb.bi.core.query.user" name="users" label="ui.santedb.bi.core.query.user">
   <meta status="active">
     <authors>
       <add>Justin Fyfe (Fyfe Software Inc.) &lt;justin@fyfesoftware.ca></add>
@@ -14,7 +14,7 @@
     <add name="main" ref="#org.santedb.bi.dataSource.main"/>
   </dataSources>
   <parameters>
-    <add type="uuid" ref="#org.santedb.bi.parameter.sys.user.class" name="user-class" default="33932B42-6F4B-4659-8849-6ACA54139D8E"/>
+    <add type="uuid" ref="#org.santedb.bi.core.parameter.user.class" name="user-class" default="33932B42-6F4B-4659-8849-6ACA54139D8E"/>
   </parameters>
   <definitions>
     <add>

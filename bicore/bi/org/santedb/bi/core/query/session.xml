@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<BiQueryDefinition xmlns="http://santedb.org/bi" id="org.santedb.bi.query.sys.session" label="ui.santedb.bi.core.query.session">
+<BiQueryDefinition xmlns="http://santedb.org/bi" id="org.santedb.bi.core.query.session" label="ui.santedb.bi.core.query.session">
   <meta status="active">
     <authors>
       <add>Justin Fyfe (Fyfe Software Inc.) &lt;justin@fyfesoftware.ca></add>
@@ -9,9 +9,9 @@
     <add ref="#org.santedb.bi.dataSource.main"/>
   </dataSources>
   <parameters>
-    <add ref="#org.santedb.bi.parameter.sys.user.class" name="user-class" type="uuid"/>
-    <add ref="#org.santedb.bi.parameter.common.date.from" name="from-date" type="date"/>
-    <add ref="#org.santedb.bi.parameter.common.date.to" name="to-date" type="date"/>
+    <add ref="#org.santedb.bi.core.parameter.user.class" name="user-class" type="uuid"/>
+    <add ref="#org.santedb.bi.core.parameter.common.date.from" name="from-date" type="date"/>
+    <add ref="#org.santedb.bi.core.parameter.common.date.to" name="to-date" type="date"/>
   </parameters>
   <definitions>
     <add>
