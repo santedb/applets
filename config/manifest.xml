@@ -21,6 +21,6 @@
   <info id="org.santedb.config" version="1.46.*.0">
     <icon>/org.santedb.core/img/icon.png</icon>
     <name lang="en">SanteDB Configuration Applet</name>
-    <author>Mohawk College of Applied Arts and Technology - mHealth &amp; eHealth Development &amp; Innovation Centre</author>
+    <author>SanteSuite Contributors</author>
   </info>
 </AppletManifest>

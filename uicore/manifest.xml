@@ -22,7 +22,7 @@
   <info id="org.santedb.uicore" version="1.46.*.0">
     <icon>/org.santedb.core/img/icon.png</icon>
     <name lang="en">SanteDB User Interface Core</name>
-    <author>Mohawk College of Applied Arts and Technology - mHealth &amp; eHealth Development &amp; Innovation Centre</author>
+    <author>SanteSuite Contributors</author>
   </info>
 
   <strings lang="en">
