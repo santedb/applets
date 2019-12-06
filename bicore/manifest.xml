@@ -22,5 +22,25 @@
     <icon>/org.santedb.core/img/icon.png</icon>
     <name lang="en">SanteDB Core BI Definitions</name>
     <author>Fyfe Software Inc.</author>
+    <dependency id="org.santedb.core" />
+    <dependency id="org.santedb.uicore" />
   </info>
+
+  <strings lang="en">
+    <string key="ui.bi.common.tabular">Tabular</string>
+    <string key="ui.bi.common.chart">Chart</string>
+    <string key="ui.bi.common.parameters">Filter</string>
+    
+    <!-- Common Parameter Labels -->
+    <string key="ui.bi.core.user.class">User Class</string>
+    <string key="ui.bi.core.date.from">From</string>
+    <string key="ui.bi.core.date.to">Until</string>
+
+    <!-- Common Output -->
+    <string key="ui.bi.core.label.date">Date</string>
+    <string key="ui.bi.core.label.count">Count</string>
+    <string key="ui.bi.core.label.total">Total</string>
+    <!-- Default BI Core Reports--> 
+    <string key="ui.bi.core.report.session.date">System Sessions</string>
+  </strings>
 </AppletManifest>

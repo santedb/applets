@@ -1,0 +1,39 @@
+<div xmlns="http://www.w3.org/1999/xhtml" class="card shadow">
+    <div class="card-header">
+        <h5 class="mb-0">{{ report.label | i18n }} {{ filter}}</h5>
+    </div>
+    <form class="form card-body" name="reportFilterForm" ng-submit="updateParameterValues(reportFilterForm)">
+        <div class="tab-content">
+            <div class="tab-pane fade show active" id="{{htmlId}}_parms">
+                <div class="container-fluid">
+                    <div ng-repeat="parm in report.parameterDefinitions track by $index">
+                        <report-parameter values="parameters" parameter="parm" />
+                    </div>
+                    <div class="float-right btn-group">
+                        <button type="submit" class="btn btn-primary"><i class="fas fa-check"></i> {{ 'ui.action.apply' | i18n }}</button>
+                    </div>
+                </div>
+            </div>
+            <div class="tab-pane fade"
+                ng-repeat="viewDefinition in report.views" id="{{htmlId}}_{{viewDefinition.name}}">
+                <div>
+                </div>
+            </div>
+        </div>
+    </form>
+    <div class="card-footer">
+        <ul class="nav nav-pills">
+            <li id="{{htmlId}}_{{viewDefinition.name}}_tab" class="nav-item"
+                ng-repeat="viewDefinition in report.views">
+                <a class="nav-link" 
+                    data-target="#{{htmlId}}_{{viewDefinition.name}}" data-toggle="tab"><i class="fas"
+                        ng-class="{ 'fa-chart-pie' : viewDefinition.name == 'chart' , 'fa-table' : viewDefinition.name == 'tabular', 'fa-file-alt' : null }"></i>
+                    {{ viewDefinition.label | i18n }}</a>
+            </li>
+            <li id="{{htmlId}}_parms_tab" class="nav-item active">
+                <a class="nav-link" data-target="#{{htmlId}}_parms" data-toggle="tab"><i class="fas fa-filter"></i>
+                    {{ 'ui.bi.common.parameters' | i18n }}</a>
+            </li>
+        </ul>
+    </div>
+</div>

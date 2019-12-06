@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<BiReportDefinition xmlns="http://santedb.org/bi" id="org.santedb.bi.core.reports.session.date" label="org.santedb.bi.core.reports.session.date">
+<BiReportDefinition xmlns="http://santedb.org/bi" id="org.santedb.bi.core.reports.session.date" label="ui.bi.core.report.session.date">
   <meta>
     <authors>
       <add>Justin Fyfe (Fyfe Software Inc.) &lt;justin@fyfesoftware.ca></add>
@@ -9,121 +9,103 @@
         <p>A simple report showing the rendering of session data as a graph or as tabular data</p>
       </div>
     </annotation>
-    
+
   </meta>
   <dataSources>
     <view ref="org.santedb.bi.core.view.session.date" name="main-date"/>
   </dataSources>
   <views>
-    <add id="org.santedb.bi.core.reports.session.date.tabular" label="ui.common.tabular" name="tabular">
+    <add id="org.santedb.bi.core.reports.session.date.tabular" label="ui.bi.common.tabular" name="tabular">
       <div xmlns="http://www.w3.org/1999/xhtml" xmlns:bi="http://santedb.org/bi/view">
-        <table border="1">
-          <thead>
-            <tr>
-              <th>
-                <bi:locale>ui.date</bi:locale>
-              </th>
-              <th>
-                <bi:locale>ui.count</bi:locale>
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-            <bi:repeat source="main-date">
+        <div>
+          <h3>
+            Report run in <bi:value>(DataSource("main-date").StopTime - DataSource("main-date").StartTime).TotalMilliseconds</bi:value> ms
+          </h3>
+          <table border="1">
+            <thead>
               <tr>
-                <td>
-                  <bi:value when="changed" format="yyyy-MM-dd">ses_date</bi:value>
-                </td>
-                <bi:switch expr="rec.n_sessions">
-                  <bi:when op="lte" value="5">
-                    <td bgcolor="#f00">
-                      <bi:value format="#,###">n_sessions</bi:value>
-                    </td>
-                  </bi:when>
-                  <bi:when op="lte" value="50">
-                    <td bgcolor="#ff0">
-                      <bi:value format="#,###">n_sessions</bi:value>
-                    </td>
-                  </bi:when>
-                  <bi:default>
-                    <td bgcolor="#0f0">
-                      <bi:value format="#,###">n_sessions</bi:value>
-                    </td>
-                  </bi:default>
-                </bi:switch>
+                <th>
+                  <bi:locale>ui.bi.core.label.date</bi:locale>
+                </th>
+                <th>
+                  <bi:locale>ui.bi.core.label.count</bi:locale>
+                </th>
               </tr>
-            </bi:repeat>
-          </tbody>
-          <tfoot>
-            <th></th>
-            <th>
-              <bi:aggregate fn="sum" source="main-date" format="#,###">n_sessions</bi:aggregate>
-            </th>
-          </tfoot>
-        </table>
+            </thead>
+            <tbody>
+              <bi:repeat source="main-date">
+                <tr>
+                  <td>
+                    <bi:value when="changed" format="yyyy-MM-dd">ses_date</bi:value>
+                  </td>
+                  <bi:switch value="n_sessions">
+                    <bi:when op="lte" value="5" not="false">
+                      <td bgcolor="#ff0000">
+                        <bi:value format="#,###">n_sessions</bi:value>
+                      </td>
+                    </bi:when>
+                    <bi:when op="lte" value="50" not="false">
+                      <td bgcolor="#ffff00">
+                        <bi:value format="#,###">n_sessions</bi:value>
+                      </td>
+                    </bi:when>
+                    <bi:default>
+                      <td bgcolor="#00ff00">
+                        <bi:value format="#,###">n_sessions</bi:value>
+                      </td>
+                    </bi:default>
+                  </bi:switch>
+                </tr>
+              </bi:repeat>
+            </tbody>
+            <tfoot>
+              <tr>
+                <th>
+                  <bi:locale>ui.total</bi:locale>
+                </th>
+                <th>
+                  <bi:aggregate fn="sum" source="main-date" format="#,###">n_sessions</bi:aggregate>
+                </th>
+              </tr>
+              <tr>
+                <th>
+                  <bi:locale>ui.count</bi:locale>
+                </th>
+                <th>
+                  <bi:aggregate fn="count-distinct" source="main-date">ses_date</bi:aggregate>
+                </th>
+              </tr>
+              <tr>
+                <th>
+                  <bi:locale>ui.count (Not Today)</bi:locale>
+                </th>
+                <th>
+                  <bi:aggregate fn="count" source="main-date">ses_date &lt; DateTime.Now.Date</bi:aggregate>
+                </th>
+              </tr>
+            </tfoot>
+          </table>
+        </div>
       </div>
     </add>
-    <add id="org.santedb.bi.core.reports.session.date.chart" label="ui.common.chart" name="chart">
+    <add id="org.santedb.bi.core.reports.session.date.chart" label="ui.bi.common.chart" name="chart">
       <div xmlns="http://www.w3.org/1999/xhtml" xmlns:bi="http://santedb.org/bi/view">
-        <ul>
-          <li>
-            <!-- Shows bar -->
+         <!-- Shows line -->
             <bi:chart source="main-date" type="bar">
-              <bi:title>ui.mytitle</bi:title>
-              <bi:layout padding="0,0,0,0" />
-              <bi:labels format="yyyy-MM-dd" stacked="false" data="ses_date"/>
-              <bi:dataset label="ui.count" format="#,###" stacked="false" aggregation="sum">n_sessions</bi:dataset>
-              <bi:colors>
-                <bi:color>rgba(255,0,0,0)</bi:color>
-                <bi:color>rgba(0,255,0,0)</bi:color>
-                <bi:color>rgba(0,0,255,0)</bi:color>
-              </bi:colors>
+              <bi:title>Sessions By Date - Line</bi:title>
+              <bi:labels data="ses_date" format="yyyy-MM-dd"/>
+              <bi:dataset label="# Sessions">n_sessions</bi:dataset>
             </bi:chart>
-          </li>
-          <li>
-            <!-- Shows line -->
-            <bi:chart source="main-date" type="line">
-              <bi:title>ui.mytitle</bi:title>
-              <bi:layout padding="0,0,0,0" />
-              <bi:labels format="yyyy-MM-dd" stacked="false" data="ses_date"/>
-              <bi:dataset label="ui.count" format="#,###" aggregation="sum">n_sessions</bi:dataset>
-              <bi:colors>
-                <bi:color>rgba(255,0,0,0)</bi:color>
-                <bi:color>rgba(0,255,0,0)</bi:color>
-                <bi:color>rgba(0,0,255,0)</bi:color>
-              </bi:colors>
+      </div>
+    </add>
+    <add id="org.santedb.bi.core.reports.session.date.chart" label="ui.bi.common.day_of_week" name="day-of-week">
+      <div xmlns="http://www.w3.org/1999/xhtml" xmlns:bi="http://santedb.org/bi/view">
+         <!-- Shows line -->
+            <bi:chart source="main-date" type="radar">
+              <bi:title>Sessions By Weekday</bi:title>
+              <bi:labels data="ses_date" format="ddd"/>
+              <bi:dataset label="# Sessions">n_sessions</bi:dataset>
             </bi:chart>
-          </li>
-          <li>
-            <!-- Shows mix of line and bar -->
-            <bi:chart source="main-date" type="bar">
-              <bi:title>ui.mytitle</bi:title>
-              <bi:layout padding="0,0,0,0" />
-              <bi:labels format="yyyy-MM-dd" stacked="false" data="ses_date"/>
-              <bi:dataset label="ui.count" format="#,###" stacked="false" type="bar" aggregation="sum">n_sessions</bi:dataset>
-              <bi:dataset label="ui.count" format="#,###" type="line" aggregation="sum">n_sessions</bi:dataset>
-              <bi:colors>
-                <bi:color>rgba(255,0,0,0)</bi:color>
-                <bi:color>rgba(0,255,0,0)</bi:color>
-                <bi:color>rgba(0,0,255,0)</bi:color>
-              </bi:colors>
-            </bi:chart>
-          </li>
-          <li>
-            <!-- Pie chart -->
-            <bi:chart source="main-date" type="pie">
-              <bi:title>ui.mytitle</bi:title>
-              <bi:layout padding="0,0,0,0" />
-              <bi:labels format="yyyy-MM" stacked="false" data="ses_date"/>
-              <bi:dataset label="ui.count" format="#,###" stacked="false" type="bar" aggregation="sum">n_sessions</bi:dataset>
-              <bi:colors>
-                <bi:color>rgba(255,0,0,0)</bi:color>
-                <bi:color>rgba(0,255,0,0)</bi:color>
-                <bi:color>rgba(0,0,255,0)</bi:color>
-              </bi:colors>
-            </bi:chart>
-          </li>
-        </ul>
       </div>
     </add>
   </views>

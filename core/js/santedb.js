@@ -139,13 +139,13 @@ if (!SanteDBWrapper)
                         method: 'POST',
                         url: _config.base + configuration.resource,
                         data: configuration.contentType.indexOf('application/json') == 0 ? JSON.stringify(_reorderProperties(configuration.data)) : configuration.data,
-                        dataType: 'json',
+                        dataType: configuration.dataType || 'json',
                         contentType: configuration.contentType || 'application/json',
                         headers: configuration.headers,
                         async: !configuration.sync,
                         success: function (xhr, status, response) {
                             try {
-                                if(xhr)
+                                if(xhr && response.getResponseHeader("etag"))
                                     xhr.etag = response.getResponseHeader("etag");
                                 if (fulfill) fulfill(xhr, configuration.state);
                             }
@@ -192,13 +192,13 @@ if (!SanteDBWrapper)
                         method: 'PUT',
                         url: _config.base + configuration.resource + (_config.idByQuery ? "?_id=" + configuration.id : "/" + configuration.id),
                         data: configuration.contentType.indexOf('application/json') == 0 ? JSON.stringify(_reorderProperties(configuration.data)) : configuration.data,
-                        dataType: 'json',
+                        dataType: configuration.dataType ||'json',
                         contentType: configuration.contentType || 'application/json',
                         headers: configuration.headers,
                         async: !configuration.sync,
                         success: function (xhr, status, response) {
                             try {
-                                if(xhr)
+                                if(xhr && response.getResponseHeader("etag"))
                                     xhr.etag = response.getResponseHeader("etag");
                                 if (fulfill) fulfill(xhr, configuration.state);
                             }
@@ -246,7 +246,7 @@ if (!SanteDBWrapper)
                         method: 'PATCH',
                         url: _config.base + configuration.resource + (_config.idByQuery ? "?_id=" + configuration.id : "/" + configuration.id),
                         data: configuration.contentType.indexOf('application/json') == 0 ? JSON.stringify(_reorderProperties(configuration.data)) : configuration.data,
-                        dataType: 'json',
+                        dataType: configuration.dataType ||'json',
                         contentType: configuration.contentType || 'application/json',
                         headers: configuration.headers,
                         async: !configuration.sync,
@@ -295,12 +295,12 @@ if (!SanteDBWrapper)
                         method: 'GET',
                         url: _config.base + configuration.resource,
                         data: configuration.query,
-                        dataType: 'json',
+                        dataType: configuration.dataType ||'json',
                         headers: configuration.headers,
                         async: !configuration.sync,
                         success: function (xhr, status, response) {
                             try {
-                                if(xhr)
+                                if(xhr && response.getResponseHeader("etag"))
                                     xhr.etag = response.getResponseHeader("etag");
                                 if (fulfill) fulfill(xhr, configuration.state);
                             }
@@ -349,13 +349,13 @@ if (!SanteDBWrapper)
                         url: _config.base + configuration.resource + (configuration.id ? (_config.idByQuery ? "?_id=" + configuration.id : "/" + configuration.id) : ""),
                         data: configuration.contentType == 'application/json' ? JSON.stringify(_reorderProperties(configuration.data)) : configuration.data,
                         headers: { "X-Delete-Mode": configuration.mode || "OBSOLETE" },
-                        dataType: 'json',
+                        dataType: configuration.dataType ||'json',
                         contentType: configuration.contentType || 'application/json',
                         headers: configuration.headers,
                         async: !configuration.sync,
                         success: function (xhr, status, response) {
                             try {
-                                if(xhr)
+                                if(xhr && response.getResponseHeader("etag"))
                                     xhr.etag = response.getResponseHeader("etag");
                                 if (fulfill) fulfill(xhr, configuration.state);
                             }
@@ -405,7 +405,7 @@ if (!SanteDBWrapper)
                         async: !configuration.sync,
                         success: function (xhr, status, response) {
                             try {
-                                if(xhr)
+                                if(xhr && response.getResponseHeader("etag"))
                                     xhr.etag = response.getResponseHeader("etag");
                                 if (fulfill) fulfill(xhr, configuration.state);
                             }

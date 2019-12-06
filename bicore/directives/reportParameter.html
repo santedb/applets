@@ -1,0 +1,9 @@
+<div xmlns="http://www.w3.org/1999/xhtml" class="form-group row">
+    <label class="control-label col-sm-12 col-md-4" for="{{parameter.name}}">{{ parameter.label | i18n }}</label>
+    <div class="col-sm-12 col-md-8" ng-switch="parameter.type">
+        <input ng-switch-when="Date" ng-required="parameter.required" ng-model="values[parameter.name]" ng-min="parameter.min ? values[parameter.min] : null" ng-max="parameter.max ? values[parameter.max] : null"  type="date" name="{{parameter.name}}"  class="form-control"/>
+        <select ng-switch-when="Uuid" ng-required="parameter.required" ng-model="values[parameter.name]" class="form-control">
+            <option ng-repeat="val in parameter.values.list" value="{{val.value}}">{{ val.text | i18n }}</option>
+        </select>
+    </div>
+</div>

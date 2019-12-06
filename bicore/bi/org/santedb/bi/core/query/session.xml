@@ -74,6 +74,7 @@
 	        left join sec_dev_tbl using (dev_id)
         where
           sec_ses_tbl.crt_utc between ${from-date} and ${to-date}
+          
       ]]>
     </add>
   </definitions>
