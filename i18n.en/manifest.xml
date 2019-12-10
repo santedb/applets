@@ -163,6 +163,7 @@
     <string key="ui.wait">Please Wait...</string>
     <string key="ui.search">Searching</string>
     <string key="ui.action.reset">Reset</string>
+    <string key="ui.action.apply">Apply</string>
     <string key="ui.action.reactivate">Re-Activate</string>
     <string key="ui.pref.nevershow">Never show this message again</string>
 

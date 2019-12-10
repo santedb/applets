@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<BiParameterDefinition xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="from-date" id="org.santedb.bi.core.parameter.common.date.from" label="ui.santedb.bi.core.parameter.common.date.from" type="date" max="to-date" xmlns="http://santedb.org/bi">
+<BiParameterDefinition xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="from-date" id="org.santedb.bi.core.parameter.common.date.from" label="ui.bi.core.date.from" type="date" max="to-date" xmlns="http://santedb.org/bi">
   <meta version="1.0" status="active">
     <authors>
       <add>Justin Fyfe (Fyfe Software Inc.) &lt;justin@fyfesoftware.ca&gt;</add>

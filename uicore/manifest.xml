@@ -23,9 +23,7 @@
     <icon>/org.santedb.core/img/icon.png</icon>
     <name lang="en">SanteDB User Interface Core</name>
     <author>SanteSuite Contributors</author>
+    <dependency id="org.santedb.core"/>
   </info>
 
-  <strings lang="en">
-    <string key="ui.admin.loginMessage">Login To SanteDB Administration</string>
-  </strings>
 </AppletManifest>
