@@ -293,3 +293,5 @@ SanteDB.sln.GhostDoc.xml
 Help/
 
 */js/*.min.js
+
+bicore/bi/org/santedb/bi/dataSource/*
