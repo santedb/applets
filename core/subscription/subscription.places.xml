@@ -2,68 +2,68 @@
     <client>
       <definition resource="Place" name="ui.subscription.place.all" mode="all" ignoreModifiedOn="false" trigger="on-start on-x-net">
         <filters>
-          <add>statusConcept=!CD4AA3C4-02D5-4CC9-9088-EF8F31E321C5</add>
+          <when>statusConcept=!CD4AA3C4-02D5-4CC9-9088-EF8F31E321C5</when>
         </filters>
       </definition>
       <definition resource="Place" name="ui.subscription.place.me" mode="subscription" ignoreModifiedOn="true" trigger="always">
         <guards>
-          <add>subscribed.typeConcept</add>
+          <when>subscribed.typeConcept</when>
         </guards>
         <filters>
-          <add>id=$subscribed.id$</add>
+          <when>id=$subscribed.id$</when>
         </filters>
       </definition>
       <definition resource="Place" name="ui.subscription.place.state" mode="subscription" ignoreModifiedOn="false" trigger="always">
         <guards>
-          <add>subscribed.address[Direct].component[State]</add>
+          <when>subscribed.address[Direct].component[State]</when>
         </guards>
         <filters>
-          <add>statusConcept=!CD4AA3C4-02D5-4CC9-9088-EF8F31E321C5&amp;classConcept=FF34DFA7-C6D3-4F8B-BC9F-14BCDC13BA6C&amp;address.component[State].value=$subscribed.address.component[State].value$&amp;_exclude=relationship&amp;_exclude=participation</add>
-          <add>statusConcept=!CD4AA3C4-02D5-4CC9-9088-EF8F31E321C5&amp;classConcept=!FF34DFA7-C6D3-4F8B-BC9F-14BCDC13BA6C&amp;address.component[State].value=$subscribed.address.component[State].value$&amp;_exclude=relationship&amp;_exclude=participation</add>
+          <when>statusConcept=!CD4AA3C4-02D5-4CC9-9088-EF8F31E321C5&amp;classConcept=FF34DFA7-C6D3-4F8B-BC9F-14BCDC13BA6C&amp;address.component[State].value=$subscribed.address.component[State].value$&amp;_exclude=relationship&amp;_exclude=participation</when>
+          <when>statusConcept=!CD4AA3C4-02D5-4CC9-9088-EF8F31E321C5&amp;classConcept=!FF34DFA7-C6D3-4F8B-BC9F-14BCDC13BA6C&amp;address.component[State].value=$subscribed.address.component[State].value$&amp;_exclude=relationship&amp;_exclude=participation</when>
         </filters>
       </definition>
       <definition resource="Place" name="ui.subscription.place.county" mode="subscription" ignoreModifiedOn="false" trigger="always">
         <guards>
-          <add>subscribed.address[Direct].component[County] &amp;&amp; !subscribed.address[Direct].component[State]</add>
+          <when>subscribed.address[Direct].component[County] &amp;&amp; !subscribed.address[Direct].component[State]</when>
         </guards>
         <filters>
-          <add>statusConcept=!CD4AA3C4-02D5-4CC9-9088-EF8F31E321C5&amp;classConcept=FF34DFA7-C6D3-4F8B-BC9F-14BCDC13BA6C&amp;address.component[County].value=$subscribed.address.component[County].value$&amp;_exclude=relationship&amp;_exclude=participation</add>
-          <add>statusConcept=!CD4AA3C4-02D5-4CC9-9088-EF8F31E321C5&amp;classConcept=!FF34DFA7-C6D3-4F8B-BC9F-14BCDC13BA6C&amp;address.component[County].value=$subscribed.address.component[County].value$&amp;_exclude=relationship&amp;_exclude=participation</add>
+          <when>statusConcept=!CD4AA3C4-02D5-4CC9-9088-EF8F31E321C5&amp;classConcept=FF34DFA7-C6D3-4F8B-BC9F-14BCDC13BA6C&amp;address.component[County].value=$subscribed.address.component[County].value$&amp;_exclude=relationship&amp;_exclude=participation</when>
+          <when>statusConcept=!CD4AA3C4-02D5-4CC9-9088-EF8F31E321C5&amp;classConcept=!FF34DFA7-C6D3-4F8B-BC9F-14BCDC13BA6C&amp;address.component[County].value=$subscribed.address.component[County].value$&amp;_exclude=relationship&amp;_exclude=participation</when>
         </filters>
       </definition>
       <definition resource="Place" name="ui.subscription.place.all" mode="subscription" ignoreModifiedOn="false" trigger="periodic">
         <guards>
-          <add>!subscribed.address[Direct].component[County] &amp;&amp; !subscribed.address[Direct].component[State]</add>
+          <when>!subscribed.address[Direct].component[County] &amp;&amp; !subscribed.address[Direct].component[State]</when>
         </guards>
         <filters>
-          <add>statusConcept=!CD4AA3C4-02D5-4CC9-9088-EF8F31E321C5&amp;classConcept=FF34DFA7-C6D3-4F8B-BC9F-14BCDC13BA6C&amp;_exclude=relationship&amp;_exclude=participation</add>
-          <add>statusConcept=!CD4AA3C4-02D5-4CC9-9088-EF8F31E321C5&amp;classConcept=!FF34DFA7-C6D3-4F8B-BC9F-14BCDC13BA6C&amp;_exclude=relationship&amp;_exclude=participation</add>
+          <when>statusConcept=!CD4AA3C4-02D5-4CC9-9088-EF8F31E321C5&amp;classConcept=FF34DFA7-C6D3-4F8B-BC9F-14BCDC13BA6C&amp;_exclude=relationship&amp;_exclude=participation</when>
+          <when>statusConcept=!CD4AA3C4-02D5-4CC9-9088-EF8F31E321C5&amp;classConcept=!FF34DFA7-C6D3-4F8B-BC9F-14BCDC13BA6C&amp;_exclude=relationship&amp;_exclude=participation</when>
         </filters>
       </definition>
       <definition resource="Place" name="ui.subscription.place.outOfState" mode="subscription" ignoreModifiedOn="false" trigger="periodic">
         <guards>
-          <add>subscribed.address[Direct].component[State]</add>
+          <when>subscribed.address[Direct].component[State]</when>
         </guards>
         <filters>
-          <add>statusConcept=!CD4AA3C4-02D5-4CC9-9088-EF8F31E321C5&amp;classConcept=FF34DFA7-C6D3-4F8B-BC9F-14BCDC13BA6C&amp;address.component[State].value=!$subscribed.address.component[State].value$&amp;_exclude=relationship&amp;_exclude=participation</add>
-          <add>statusConcept=!CD4AA3C4-02D5-4CC9-9088-EF8F31E321C5&amp;classConcept=!FF34DFA7-C6D3-4F8B-BC9F-14BCDC13BA6C&amp;address.component[State].value=!$subscribed.address.component[State].value$&amp;_exclude=relationship&amp;_exclude=participation</add>
+          <when>statusConcept=!CD4AA3C4-02D5-4CC9-9088-EF8F31E321C5&amp;classConcept=FF34DFA7-C6D3-4F8B-BC9F-14BCDC13BA6C&amp;address.component[State].value=!$subscribed.address.component[State].value$&amp;_exclude=relationship&amp;_exclude=participation</when>
+          <when>statusConcept=!CD4AA3C4-02D5-4CC9-9088-EF8F31E321C5&amp;classConcept=!FF34DFA7-C6D3-4F8B-BC9F-14BCDC13BA6C&amp;address.component[State].value=!$subscribed.address.component[State].value$&amp;_exclude=relationship&amp;_exclude=participation</when>
         </filters>
       </definition>
       <definition resource="Place" name="ui.subscription.place.outOfCounty" mode="subscription" ignoreModifiedOn="false" trigger="periodic">
         <guards>
-          <add>subscribed.address[Direct].component[County] &amp;&amp; !subscribed.address[Direct].component[State]</add>
+          <when>subscribed.address[Direct].component[County] &amp;&amp; !subscribed.address[Direct].component[State]</when>
         </guards>
         <filters>
-          <add>statusConcept=!CD4AA3C4-02D5-4CC9-9088-EF8F31E321C5&amp;classConcept=FF34DFA7-C6D3-4F8B-BC9F-14BCDC13BA6C&amp;address.component[County].value=!$subscribed.address.component[County].value$&amp;_exclude=relationship&amp;_exclude=participation</add>
-          <add>statusConcept=!CD4AA3C4-02D5-4CC9-9088-EF8F31E321C5&amp;classConcept=!FF34DFA7-C6D3-4F8B-BC9F-14BCDC13BA6C&amp;address.component[County].value=!$subscribed.address.component[County].value$&amp;_exclude=relationship&amp;_exclude=participation</add>
+          <when>statusConcept=!CD4AA3C4-02D5-4CC9-9088-EF8F31E321C5&amp;classConcept=FF34DFA7-C6D3-4F8B-BC9F-14BCDC13BA6C&amp;address.component[County].value=!$subscribed.address.component[County].value$&amp;_exclude=relationship&amp;_exclude=participation</when>
+          <when>statusConcept=!CD4AA3C4-02D5-4CC9-9088-EF8F31E321C5&amp;classConcept=!FF34DFA7-C6D3-4F8B-BC9F-14BCDC13BA6C&amp;address.component[County].value=!$subscribed.address.component[County].value$&amp;_exclude=relationship&amp;_exclude=participation</when>
         </filters>
       </definition>
       <definition resource="Place" name="ui.subscription.place.assigned" mode="subscription" ignoreModifiedOn="false" trigger="always">
         <guards>
-          <add>subscribed.typeConcept</add>
+          <when>subscribed.typeConcept</when>
         </guards>
         <filters>
-          <add>statusConcept=!CD4AA3C4-02D5-4CC9-9088-EF8F31E321C5&amp;classConcept=!FF34DFA7-C6D3-4F8B-BC9F-14BCDC13BA6C&amp;relationship[DedicatedServiceDeliveryLocation].target=$subscribed.id$</add>
+          <when>statusConcept=!CD4AA3C4-02D5-4CC9-9088-EF8F31E321C5&amp;classConcept=!FF34DFA7-C6D3-4F8B-BC9F-14BCDC13BA6C&amp;relationship[DedicatedServiceDeliveryLocation].target=$subscribed.id$</when>
         </filters>
       </definition>
     </client>

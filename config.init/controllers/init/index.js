@@ -64,7 +64,7 @@ angular.module('santedb').controller('InitialSettingsController', ['$scope', '$r
             $scope.config.network.optimize = "gzip";
             $scope.config.sync = $scope.config.sync || {};
             $scope.config.sync.mode = "sync";
-            $scope.config.sync.facilities = $scope.config.sync.facilities || [];
+            $scope.config.sync.subscribeTo = $scope.config.sync.subscribeTo || [];
             $scope.config.sync.subscribeType = "Facility";
             $scope.config.subscription = $scope.config.subscription || {};
             $scope.config.subscription.mode = $scope.config.subscription.mode || "Subscription";
@@ -149,10 +149,10 @@ angular.module('santedb').controller('InitialSettingsController', ['$scope', '$r
     });
 
     // Watch scope and refresh list of subscriptions
-    $scope.$watch('config.sync.facilities.length', function (n, o) {
+    $scope.$watch('config.sync.subscribeTo.length', function (n, o) {
         // Find in new
         if (n)
-            $scope.config.sync.facilities.forEach(function (sid) {
+            $scope.config.sync.subscribeTo.forEach(function (sid) {
                 var existingInfo = $scope.reference[$scope.config.sync.subscribeType.toLowerCase()].find(function (p) { return p.id === sid });
                 if (!existingInfo) {
                     SanteDB.display.buttonWait("#selectAllButton", true);
@@ -199,7 +199,7 @@ angular.module('santedb').controller('InitialSettingsController', ['$scope', '$r
                     }
                 }
                 $scope.reference[$scope.config.sync.subscribeType.toLowerCase()]
-                    .filter(function (f) { return $scope.config.sync.facilities.indexOf(f.id) > -1; })
+                    .filter(function (f) { return $scope.config.sync.subscribeTo.indexOf(f.id) > -1; })
                     .forEach(function (subscribed) {
                         var e = $scope.$eval(newGuard, { "subscribed": subscribed });
                         retVal &= (e != null) && (e !== false);

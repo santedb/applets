@@ -311,8 +311,13 @@ if (!SanteDBWrapper)
                         error: function (e, data, setting) {
                             if (_globalErrorHandler(e, data, setting))
                                 return;
-                            var error = e.responseJSON;
-
+                            var error = {};
+                            if(e.responseJSON)
+                                error = e.responseJSON;
+                            else if(e.responseText)
+                                try { error = JSON.parse(e.responseText); }
+                                catch {};
+                                
                             if (reject) {
                                 if (error && error.error !== undefined) // oauth2
                                     reject(new Exception(error.type, error.error, error.error_description, error.caused_by), configuration.state);

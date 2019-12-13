@@ -192,6 +192,7 @@ angular.module('santedb-lib')
                     var valueProperty = scope.valueProperty;
 
                     $(element).find('option[value="? undefined:undefined ?"]').remove();
+                    
                     // Bind select 2 search
                     $(element).select2({
                         language: {
@@ -317,6 +318,11 @@ angular.module('santedb-lib')
                         else
                             scope.setValue(element, modelType, ngModel.$viewValue);
                     };
+
+                    // HACK: Screw Select2 , it is so random
+                    if(ngModel.$viewValue)
+                        scope.setValue(element, modelType, ngModel.$viewValue);
+
                 });
             }
         };
@@ -668,7 +674,13 @@ angular.module('santedb-lib')
                         }).catch(function (e) {
                             alreadyFetching.splice(alreadyFetching.indexOf(scope.provenanceId), 1);
                             scope.isLoading = false;
+                            scope.provData = { "userModel": { "userName": "E" }};
                             scope.error = true;
+
+                            try {
+                                scope.$apply();
+                            }
+                            catch (e) {}
                         })
                 }
                 else {

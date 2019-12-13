@@ -91,10 +91,11 @@
   <strings lang="en">
     <string key="ui.admin.brand.title"><![CDATA[<img src="/org.santedb.core/img/icon.png" height="24px"/> SanteDB Admin]]></string>
 
+    <string key="ui.admin.syncMode.warning">Your device is operating in offline/synchronized mode, these settings are not propogated to the central server (nor do they represent the entire dataset). For more information please see the SanteDB documentation.</string>
     <!-- History -->
     <string key="ui.admin.history.title">Version History</string>
     <!-- User Screen Translations --> 
-    <string key="ui.action.resetPassword">Reset Password</string>
+    <string key="ui.action.resetPassword">Reset Pwd</string>
     <string key="ui.admin.users.userName">User Name</string>
     <string key="ui.admin.users.lastLoginTime">Last Login</string>
     <string key="ui.admin.users.updatedBy">Last Update</string>

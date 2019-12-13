@@ -1,40 +1,69 @@
 <?xml version="1.0" encoding="utf-8"?>
 <SubscriptionDefinition xmlns="http://santedb.org/subscription"  uuid="81b65812-c14e-4bb4-b7a1-ca7bcee83dbc" resource="Entity">
-  <server>
+<server>
     <definition invariant="npgsql">
       <![CDATA[
-      SELECT * FROM
-	      ENT_VRSN_TBL 
-	      INNER JOIN ENT_TBL USING (ENT_ID)
-      WHERE ENT_ID IN 
-      (
-	      WITH CTE0 AS (
-		      SELECT SRC_ENT_ID FROM ENT_REL_TBL WHERE TRG_ENT_ID = $placeid$
-	      )
-	      SELECT * FROM CTE0 -- ASSIGNED TO MY FACILITY
-	      UNION ALL 
-	      SELECT TRG_ENT_ID FROM ENT_REL_TBL WHERE SRC_ENT_ID IN (SELECT SRC_ENT_ID FROM CTE0) -- ENTITIES THAT ARE RELATED TO MY FACILITY
-	      UNION ALL 
-	      SELECT ENT_ID FROM ACT_PTCPT_TBL WHERE ACT_ID IN (SELECT ACT_ID FROM ACT_PTCPT_TBL WHERE ENT_ID = $placeid$)
-      )
+     SELECT * FROM 
+	    ENT_VRSN_TBL 
+      INNER JOIN ENT_TBL USING (ENT_ID)
+    WHERE
+	    OBSLT_UTC IS NULL 
+	    AND ENT_ID IN (
+		    WITH cte_ents AS ( -- ALL ENTITIES ASSIGNED TO MY FACILITY
+			    SELECT SRC_ENT_ID
+			    FROM
+				    ENT_REL_TBL
+			    WHERE
+				    TRG_ENT_ID = $placeid$
+            AND REL_TYP_CD_ID IN ('455f1772-f580-47e8-86bd-b5ce25d351f9', '41baf7aa-5ffd-4421-831f-42d4ab3de38a', 'ff34dfa7-c6d3-4f8b-bc9f-14bcdc13ba6c')
+            AND OBSLT_VRSN_SEQ_ID IS NULL
+		    )
+		    SELECT SRC_ENT_ID FROM cte_ents -- JUST PICK THE ENTITIES ASSIGNED TO MY FACILITY
+		    UNION 
+		    SELECT TRG_ENT_ID  -- ALL ENTITIES WHICH ARE RELATED TO ENTITIES ASSIGNED TO MY FACILITY
+		    FROM 
+			    ENT_REL_TBL 
+		    WHERE 
+			    SRC_ENT_ID IN (SELECT SRC_ENT_ID FROM cte_ents)
+		    --UNION ALL 
+		    -- ALL RECORD TARGETS WHO PARTICIPATED IN ANY ACT ON MY
+		    --SELECT ENT_ID FROM 
+			  --  ACT_PTCPT_PART_RCT_TBL
+		    --WHERE
+			  --  ACT_ID IN (SELECT ACT_ID FROM ACT_PTCPT_PART_LOC_TBL WHERE ENT_ID = $placeid$)
+	    )
       ]]>
     </definition>
     <definition invariant="fbsql">
       <![CDATA[
-      SELECT * FROM
-	      ENT_VRSN_TBL 
-	      INNER JOIN ENT_TBL USING (ENT_ID)
-      WHERE ENT_ID IN 
-      (
-	      WITH CTE0 AS (
-		      SELECT SRC_ENT_ID FROM ENT_REL_TBL WHERE TRG_ENT_ID = $placeid$
-	      )
-	      SELECT * FROM CTE0 -- ASSIGNED TO MY FACILITY
-	      UNION ALL 
-	      SELECT TRG_ENT_ID FROM ENT_REL_TBL WHERE SRC_ENT_ID IN (SELECT SRC_ENT_ID FROM CTE0) -- ENTITIES THAT ARE RELATED TO MY FACILITY
-	      UNION ALL 
-	      SELECT ENT_ID FROM ACT_PTCPT_TBL WHERE ACT_ID IN (SELECT ACT_ID FROM ACT_PTCPT_TBL WHERE ENT_ID = $placeid$)
-      )
+     SELECT * FROM 
+	    ENT_VRSN_TBL 
+    WHERE
+	    OBSLT_UTC IS NULL 
+	    AND ENT_ID IN (
+		    WITH cte_ents AS ( -- ALL ENTITIES ASSIGNED TO MY FACILITY
+			    SELECT SRC_ENT_ID
+			    FROM
+				    ENT_REL_TBL
+			    WHERE
+				    TRG_ENT_ID = $placeid$
+            AND REL_TYP_CD_ID IN AND REL_TYP_CD_ID IN (char_to_uuid('455f1772-f580-47e8-86bd-b5ce25d351f9'), char_to_uuid('41baf7aa-5ffd-4421-831f-42d4ab3de38a'), char_to_uuid('ff34dfa7-c6d3-4f8b-bc9f-14bcdc13ba6c'))
+            AND OBSLT_VRSN_SEQ_ID IS NULL
+		    )
+		    SELECT SRC_ENT_ID FROM cte_ents -- JUST PICK THE ENTITIES ASSIGNED TO MY FACILITY
+		    UNION 
+		    SELECT TRG_ENT_ID  -- ALL ENTITIES WHICH ARE RELATED TO ENTITIES ASSIGNED TO MY FACILITY
+		    FROM 
+			    ENT_REL_TBL 
+		    WHERE 
+			    SRC_ENT_ID IN (SELECT SRC_ENT_ID FROM cte_ents)
+		    --UNION ALL 
+		    -- ALL RECORD TARGETS WHO PARTICIPATED IN ANY ACT ON MY
+		    --SELECT ENT_ID FROM 
+			  --  ACT_PTCPT_PART_RCT_TBL
+		    --WHERE
+			  --  ACT_ID IN (SELECT ACT_ID FROM ACT_PTCPT_PART_LOC_TBL WHERE ENT_ID = $placeid$)
+	    )
       ]]>
     </definition>
   </server>

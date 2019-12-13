@@ -166,7 +166,13 @@ angular.module('santedb-lib')
                                 scope.isRendering = false;
                                 setReportContent(d, true);
                             })
-                            .catch($rootScope.errorHandler)
+                            .catch(function(e) {
+                                var cause = e;
+                                while(cause.cause)
+                                    cause = cause.cause;
+                                scope.isRendering = false;
+                                setReportContent(`<div class='text-danger'>${SanteDB.locale.getString(cause.message)}</div>`, true);
+                            });
                     }
                 }
 
