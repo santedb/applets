@@ -19,5 +19,5 @@ angular.module('santedb').controller('SecurityDashboardController', ["$scope", f
             console.error(e);
         }
     }
-    fetchStats().then($scope.$apply);
+    fetchStats().then(() => $scope.$apply());
 }]);

@@ -86,6 +86,7 @@
     <property name="name" all="true" ref="EntityName" behavior="always"/>
     <property name="address" all="true" ref="EntityAddress" behavior="always"/>
     <property name="typeConceptModel" all="true" ref="Concept" behavior="always"/>
+    <property name="classConceptModel" all="true" ref="Concept" behavior="always"/>
   </type>
 
 </ViewModel>

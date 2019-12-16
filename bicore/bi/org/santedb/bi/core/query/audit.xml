@@ -1,0 +1,59 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<BiQueryDefinition xmlns="http://santedb.org/bi" id="org.santedb.bi.core.query.audit" label="ui.santedb.bi.core.query.audit">
+  <meta status="active">
+    <authors>
+      <add>Justin Fyfe (Fyfe Software Inc.) &lt;justin@fyfesoftware.ca></add>
+    </authors>
+  </meta>
+  <dataSources>
+    <add ref="#org.santedb.bi.dataSource.audit"/>
+  </dataSources>
+  <parameters>
+    <add ref="#org.santedb.bi.core.parameter.common.date.from" name="from-date" type="date"/>
+    <add ref="#org.santedb.bi.core.parameter.common.date.to" name="to-date" type="date"/>
+    <add name="type" label="ui.bi.core.audit.type" type="string" />
+  </parameters>
+  <definitions>
+    <add>
+      <providers>
+        <invariant>npgsql</invariant>
+        <invariant>fbsql</invariant>
+      </providers>
+      <![CDATA[
+        SELECT 
+          AUD_TBL.ID AS ID,
+          OUTC_CS,
+          ACT_CS, 
+          TYP_CS, 
+          EVT_UTC, 
+          MNEMONIC 
+        FROM 
+          AUD_TBL 
+          INNER JOIN AUD_CD_TBL AS CLS_CD ON (CLS_CD.ID = CLS_CD_ID)
+        WHERE
+          AUD_TBL.EVT_UTC BETWEEN ${from-date} AND ${to-date}
+          AND MNEMONIC = COALESCE(${type}, MNEMONIC)
+          
+      ]]>
+    </add>
+    <add>
+      <providers>
+        <invariant>sqlite</invariant>
+      </providers>
+      <![CDATA[
+        SELECT 
+          audit.id as id,
+          outcome as outc_cs, 
+          action as act_cs, 
+          type as typ_cs, 
+          eventTime as evt_utc, 
+          code as mnemonic 
+        from 
+          audit inner join audit_code on (audit_code.id = class)
+        WHERE
+          (eventTime - 621355968000000000) /  10000000 BETWEEN ${from-date} AND ${to-date}
+          AND code = COALESCE(${type}, code)
+      ]]>
+    </add>
+  </definitions>
+</BiQueryDefinition>

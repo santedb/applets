@@ -37,10 +37,10 @@
                 <div class="card shadow">
                     <div class="card-body">
                         <div class="row no-gutters align-items-center">
-                                <div class="col-auto">
-                                        <h1 class="mb-0">{{ dashboard.users }}</h1>
-                                    </div>
-                                    <div class="col mr-2 ml-2">
+                            <div class="col-auto">
+                                <h1 class="mb-0">{{ dashboard.users }}</h1>
+                            </div>
+                            <div class="col mr-2 ml-2">
                                 <a ui-sref="santedb-admin.security.users.index"
                                     class="text-xs font-weight-bold text-primary text-uppercase mb-1">{{ 'ui.admin.security.users.title' | i18n }}</a>
                                 <div class="h5 mb-0 font-weight-bold text-gray">
@@ -63,10 +63,10 @@
                 <div class="card shadow">
                     <div class="card-body">
                         <div class="row no-gutters align-items-center">
-                                <div class="col-auto">
-                                        <h1 class="mb-0">{{ dashboard.groups }}</h1>
-                                    </div>
-                                    <div class="col mr-2 ml-2">
+                            <div class="col-auto">
+                                <h1 class="mb-0">{{ dashboard.groups }}</h1>
+                            </div>
+                            <div class="col mr-2 ml-2">
                                 <a ui-sref="santedb-admin.security.groups.index"
                                     class="text-xs font-weight-bold text-primary text-uppercase mb-1">{{ 'ui.admin.security.groups.title' | i18n }}</a>
                                 <div class="h5 mb-0 font-weight-bold text-gray">
@@ -89,10 +89,10 @@
                 <div class="card shadow">
                     <div class="card-body">
                         <div class="row no-gutters align-items-center">
-                                <div class="col-auto">
-                                        <h1 class="mb-0">{{ dashboard.devices }}</h1>
-                                    </div>
-                                    <div class="col mr-2 ml-2">
+                            <div class="col-auto">
+                                <h1 class="mb-0">{{ dashboard.devices }}</h1>
+                            </div>
+                            <div class="col mr-2 ml-2">
                                 <a ui-sref="santedb-admin.security.devices.index"
                                     class="text-xs font-weight-bold text-primary text-uppercase mb-1">{{ 'ui.admin.security.devices.title' | i18n }}</a>
                                 <div class="h5 mb-0 font-weight-bold text-gray">
@@ -140,12 +140,22 @@
             </div>
         </div>
         <div class="row mt-2">
-            <div class="col-6">
-                <report-view id="'org.santedb.bi.core.reports.session.date'" parameters="dashboard.sessions" view="'chart'"/>
+            <div class="col-3">
+                <report-view id="'org.santedb.bi.core.reports.audit.eventType'" parameters="dashboard.sessions"
+                    view="'chart'" />
             </div>
-            <div class="col-6">
-                <report-view id="'org.santedb.bi.core.reports.session.date'" parameters="dashboard.sessions" view="'day-of-week'"/>
+            <div class="col-3">
+                <report-view id="'org.santedb.bi.core.reports.audit.dateEvent'" parameters="dashboard.sessions"
+                    view="'chart'" />
             </div>
+            <div class="col-3">
+                <report-view id="'org.santedb.bi.core.reports.audit.dateEvent'" parameters="dashboard.sessions"
+                    view="'by_day'" />
+            </div>
+            <div class="col-3">
+                    <report-view id="'org.santedb.bi.core.reports.audit.outcomeType'" parameters="dashboard.sessions"
+                        view="'chart'" />
+                </div>
         </div>
     </div>
 </div>

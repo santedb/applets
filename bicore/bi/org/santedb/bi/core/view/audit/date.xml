@@ -1,0 +1,41 @@
+<?xml version="1.0"?>
+<BiViewDefinition xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="by-date" id="org.santedb.bi.core.view.audit.date" xmlns="http://santedb.org/bi">
+  <meta status="active">
+    <authors>
+      <add>Justin Fyfe (Fyfe Software Inc.) &lt;justin@fyfesoftware.ca&gt;</add>
+    </authors>
+    
+  </meta>
+  <query ref="#org.santedb.bi.core.query.audit">
+  </query>
+  <aggregations>
+    <add>
+      <providers>
+        <invariant>npgsql</invariant>
+        <invariant>fbsql</invariant>
+      </providers>
+      <grouping>
+        <column name="evt_utc">cast(evt_utc as DATE)</column>
+        <column name="outcome">case when outc_cs = 0 then 'Success' when outc_cs = 4 or outc_cs = 8 then 'Minor Fail' else 'Serious Fail' end</column>
+        <column name="type">mnemonic</column>
+      </grouping>
+      <select>
+        <column name="id" fn="count-distinct">id</column>
+      </select>
+    </add>
+    <add>
+      <providers>
+        <invariant>sqlite</invariant>
+      </providers>
+      <grouping>
+        <column name="evt_utc">evt_utc - evt_utc % 864000000000</column>
+        <column name="outcome">case when outc_cs = 0 then 'Success' when outc_cs = 4 or outc_cs = 8 then 'Minor Fail' else 'Serious Fail' end</column>
+        <column name="type">mnemonic</column>
+      </grouping>
+      <select>
+        <column name="id" fn="count-distinct">id</column>
+      </select>
+    </add>
+  </aggregations>
+  
+</BiViewDefinition>

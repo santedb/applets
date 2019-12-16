@@ -172,17 +172,19 @@
     <string key="ui.sync.clear">No Conflicts</string>
     <string key="ui.sync.conflict">Conflicts</string>
     <string key="ui.sync.outbox.title">Outbox Queue</string>
-    <string key="ui.sync.outbox.text">Messages to be sent</string>
+    <string key="ui.sync.outbox.text">(to be sent)</string>
     <string key="ui.sync.inbox.title">Inbox Queue</string>
-    <string key="ui.sync.inbox.text">Messages to be processed</string>
+    <string key="ui.sync.inbox.text">(to be processed)</string>
     <string key="ui.sync.admin.title">Admin Queue</string>
-    <string key="ui.sync.admin.text">Audits to be sent</string>
+    <string key="ui.sync.admin.text">(to be sent)</string>
     <string key="ui.sync.dead.title">Conflicts</string>
-    <string key="ui.sync.dead.text">Messages which need to be resolved</string>
+    <string key="ui.sync.dead.text">(to be resolved)</string>
     <string key="ui.sync.log">Synchronization Log</string>
     <string key="ui.sync.log.resource">Resource</string>
     <string key="ui.sync.log.etag">Last Version</string>
     <string key="ui.sync.log.date">Sync Timestamp</string>
+    <string key="ui.sync.retry">Re-Queue Conflicted</string>
+    <string key="ui.sync.now">Synchronize Now</string>
     <!-- Common Action buttons -->
     <string key="ui.action">Actions</string>
     <string key="ui.action.ok">Ok</string>

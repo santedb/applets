@@ -83,34 +83,46 @@
                 </div>
             </div>
         </div>
-            <div class="row mt-2">
-                <div class="col-12">
-                    <h3>{{ 'ui.sync.log' | i18n }}</h3>
-                    <table class="table table-striped">
-                        <thead>
-                            <tr>
-                                <th>{{ 'ui.sync.log.resource' | i18n }}</th>
-                                <th>{{ 'ui.sync.log.etag' | i18n }}</th>
-                                <th>{{ 'ui.sync.log.date' | i18n }}</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr ng-if="syncLog.length == 0">
-                                <td colspan="3" align="center">
-                                    <i class="fas fa-circle-notch fa-spin"></i> {{ 'ui.wait' | i18n }}
-                                </td>
-                            </tr>
-                            <tr ng-repeat="log in syncLog">
-                                <td>{{ log.ResourceType | i18n }}</td>
-                                <td>{{ log.LastETag }}</td>
-                                <td>{{ log.LastSync | extDate: 'f' }}</td>
-                            </tr>
-                        </tbody>
-                    </table>
-
+        <div class="row mt-2">
+            <div class="col-12">
+                <div class="btn-group float-right">
+                    <button type="button" ng-click="retryAll()" class="btn btn-warning indicator-container"><i class="fas fa-fw fa-random fa-rotate-270"></i>{{ 'ui.sync.retry' | i18n }}</button>
+                    <button type="button" id="btnSync" ng-click="syncNow()" class="btn btn-primary"><i class="fas fa-fw fa-sync-alt"></i> {{ 'ui.sync.now' | i18n }}</button>
                 </div>
             </div>
         </div>
+        <div class="row mt-2">
+            <div class="col-12">
+                <h3>{{ 'ui.sync.log' | i18n }}</h3>
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>{{ 'ui.sync.log.resource' | i18n }}</th>
+                            <th>{{ 'ui.sync.log.etag' | i18n }}</th>
+                            <th>{{ 'ui.sync.log.date' | i18n }}</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-if="!syncLog">
+                            <td colspan="3" align="center">
+                                <i class="fas fa-circle-notch fa-spin"></i> {{ 'ui.wait' | i18n }}
+                            </td>
+                        </tr>
+                        <tr ng-if="syncLog.length == 0">
+                            <td colspan="3" align="center">
+                                <i class="fas fa-info-circle"></i> {{ 'ui.sync.log.none' | i18n }}
+                            </td>
+                        </tr>
+                        <tr ng-repeat="log in syncLog">
+                            <td>{{ log.ResourceType | i18n }} <br/><small><i class="fas fa-filter"></i> <span>{{ ::(log.Filter || "ALL").substring(0, 100) }}</span></small></td>
+                            <td>{{ log.LastETag }}</td>
+                            <td>{{ log.LastSync | extDate: 'f' }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
 
 
 </div>

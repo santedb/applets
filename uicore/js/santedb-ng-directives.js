@@ -97,6 +97,9 @@ angular.module('santedb-lib')
                 retVal += " - <small>(<i class='fa fa-map-marker'></i> " + SanteDB.display.renderEntityAddress(selection.address) + ")</small>";
             else if (selection.oid)
                 retVal += " - <small>(<i class='fa fa-cogs'></i> " + selection.oid + ")</small>";
+
+            if(selection.classConceptModel)
+                retVal += ` <span class='badge badge-info'>${SanteDB.display.renderConcept(selection.classConceptModel)}</span>`;
             return retVal;
         }
 
@@ -226,7 +229,7 @@ angular.module('santedb-lib')
                                 filter[searchProperty] = "~" + params.term;
                                 filter["_count"] = 20;
                                 filter["_offset"] = 0;
-                                filter["_viewModel"] = "min";
+                                filter["_viewModel"] = "dropdown";
                                 return filter;
                             },
                             processResults: function (data, params) {

@@ -1,0 +1,29 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<BiReportDefinition xmlns="http://santedb.org/bi" id="org.santedb.bi.core.reports.audit.outcomeType" label="ui.bi.core.report.audit.outcomeType">
+  <meta>
+    <authors>
+      <add>Justin Fyfe (Fyfe Software Inc.) &lt;justin@fyfesoftware.ca></add>
+    </authors>
+    <annotation>
+      <div xmlns="http://www.w3.org/1999/xhtml">
+        <p>A simple report showing the rendering of audit by outcome type</p>
+      </div>
+    </annotation>
+
+  </meta>
+  <dataSources>
+    <view ref="org.santedb.bi.core.view.audit.date" name="main-date"/>
+  </dataSources>
+  <views>
+    <add id="org.santedb.bi.core.reports.audit.outcomeType.chart" label="ui.bi.common.chart" name="chart">
+      <div xmlns="http://www.w3.org/1999/xhtml" xmlns:bi="http://santedb.org/bi/view">
+         <!-- Shows line chart with each audit event type -->
+            <bi:chart source="main-date" type="radar">
+              <bi:title>Event Outcome</bi:title>
+              <bi:labels data="outcome"/>
+              <bi:dataset label="# Audits" >id</bi:dataset>
+            </bi:chart>
+      </div>
+    </add>
+  </views>
+</BiReportDefinition>

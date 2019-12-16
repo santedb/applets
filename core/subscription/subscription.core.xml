@@ -29,21 +29,21 @@
         <add>classConcept=D39073BE-0F8F-440E-B8C8-7034CC138A95&amp;statusConcept=!CD4AA3C4-02D5-4CC9-9088-EF8F31E321C5</add>
       </filters>
     </definition>
-    <add resource="Person" name="ui.subscription.person.all" mode="all" ignoreModifiedOn="false" trigger="always">
+    <definition resource="Person" name="ui.subscription.person.all" mode="all" ignoreModifiedOn="false" trigger="always">
       <filters>
         <add>classConcept=BACD9C6F-3FA9-481E-9636-37457962804D</add>
         <add>classConcept=9DE2A846-DDF2-4EBC-902E-84508C5089EA&amp;relationship.source.classConcept=BACD9C6F-3FA9-481E-9636-37457962804D</add>
       </filters>
-    </add>
-    <add resource="UserEntity" name="ui.subscription.userEntity.all" mode="all" ignoreModifiedOn="false" trigger="on-start on-x-net">
+    </definition>
+    <definition resource="UserEntity" name="ui.subscription.userEntity.all" mode="*" ignoreModifiedOn="false" trigger="on-start on-x-net">
       <filters>
         <add>statusConcept=!CD4AA3C4-02D5-4CC9-9088-EF8F31E321C5</add>
       </filters>
-    </add>
-    <add resource="Provider" name="ui.subscription.provider.all" mode="all" ignoreModifiedOn="false" trigger="on-start on-x-net">
+    </definition>
+    <definition resource="Provider" name="ui.subscription.provider.all" mode="*" ignoreModifiedOn="false" trigger="on-start on-x-net">
       <filters>
         <add>statusConcept=!CD4AA3C4-02D5-4CC9-9088-EF8F31E321C5</add>
       </filters>
-    </add>
+    </definition>
   </client>
 </SubscriptionDefinition>

@@ -1,0 +1,39 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<BiReportDefinition xmlns="http://santedb.org/bi" id="org.santedb.bi.core.reports.audit.dateEvent" label="ui.bi.core.report.audit.date">
+  <meta>
+    <authors>
+      <add>Justin Fyfe (Fyfe Software Inc.) &lt;justin@fyfesoftware.ca></add>
+    </authors>
+    <annotation>
+      <div xmlns="http://www.w3.org/1999/xhtml">
+        <p>A simple report showing the rendering of audit values</p>
+      </div>
+    </annotation>
+
+  </meta>
+  <dataSources>
+    <view ref="org.santedb.bi.core.view.audit.date" name="main-date"/>
+  </dataSources>
+  <views>
+    <add id="org.santedb.bi.core.reports.audit.date.chart" label="ui.bi.common.chart" name="chart">
+      <div xmlns="http://www.w3.org/1999/xhtml" xmlns:bi="http://santedb.org/bi/view">
+         <!-- Shows line chart with each audit event type -->
+            <bi:chart source="main-date" type="line">
+              <bi:title>Audits By Date</bi:title>
+              <bi:labels data="evt_utc" format="yyyy-MM-dd"/>
+              <bi:dataset label="# Audits">id</bi:dataset>
+            </bi:chart>
+      </div>
+    </add>
+    <add id="org.santedb.bi.core.reports.audit.date.chart" label="ui.bi.common.chart" name="by_day">
+      <div xmlns="http://www.w3.org/1999/xhtml" xmlns:bi="http://santedb.org/bi/view">
+        <!-- Shows line chart with each audit event type -->
+        <bi:chart source="main-date" type="radar">
+          <bi:title>Audits By Date</bi:title>
+          <bi:labels data="evt_utc" format="ddd"/>
+          <bi:dataset label="# Audits">id</bi:dataset>
+        </bi:chart>
+      </div>
+    </add>
+  </views>
+</BiReportDefinition>
