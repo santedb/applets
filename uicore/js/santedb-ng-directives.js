@@ -707,6 +707,8 @@ angular.module('santedb-lib')
 
                 var ignoreProperties = [ "$id", "$ref", "etag", "createdBy", "creationTime", "obsoletedBy", "obsoletionTime", "creationTimeModel", "obsoletionTimeModel", "version", "sequence", "previousVersion" ];
 
+                var previousVersionStack = [];
+
                 // Diff two objects 
                 $scope.diff = function(oldVersion, newVersion) {
                     var retVal = [];
@@ -730,8 +732,10 @@ angular.module('santedb-lib')
                             $scope.history.push(d);
                             var prev = $scope.history[$scope.history.length - 2];
                             prev.diff = $scope.diff(prev, d);
-                            if(d.previousVersion)
+                            if(d.previousVersion && previousVersionStack.indexOf(d.previousVersion) == -1) {
+                                previousVersionStack.push(d.previousVersion);
                                 $scope.pushHistory(typeName, id, d.previousVersion);
+                            }
                             else {
                                 $scope.isLoading = true;
                                 $scope.$apply();
@@ -880,10 +884,11 @@ angular.module('santedb-lib')
                     ],
                     columns: [
                         {
+                            className: "indicator-container",
                             orderable: false,
                             render: function(d,t,r) {
                                 return `<i class="fas fa-shield-alt" title="${ SanteDB.locale.getString(r.canOverride ? 'ui.model.securityPolicy.canOverride.true' : 'ui.model.securityPolicy.canOverride.false') }"></i>
-                                <span class="indicator-overlay ${ r.canOverride ? 'text-warning' : 'text-success'}"><i class="fa fa-fw fa-circle"></i></span> 
+                                <span class="indicator ${ r.canOverride ? 'text-warning' : 'text-success'}"><i class="fa fa-fw fa-circle"></i></span> 
                                 ${r.name} <small>${r.oid}</small>`
                             }
                         },

@@ -20,7 +20,7 @@
  * Date: 2018-11-14
  */
 
-angular.module('santedb').controller('AdminLayoutController', ["$scope", "$rootScope", "$state", "$templateCache", function ($scope, $rootScope, $state, $templateCache) {
+angular.module('santedb').controller('AdminLayoutController', ["$scope", "$rootScope", "$state", "$templateCache", "$interval", function ($scope, $rootScope, $state, $templateCache, $interval) {
 
     initializeSideNavTriggers();
     
@@ -34,6 +34,7 @@ angular.module('santedb').controller('AdminLayoutController', ["$scope", "$rootS
         ).elevate($rootScope.session);
     }
     
+    // On logout transition to the login state
     $("#logoutModal").on("hidden.bs.modal", function() {
         if(!window.sessionStorage.getItem("token"))
         {
@@ -59,6 +60,7 @@ angular.module('santedb').controller('AdminLayoutController', ["$scope", "$rootS
             .catch($rootScope.errorHandler);
     }
 
+    // Watch the session and load menus accordingly (in case user elevates)
     $rootScope.$watch('session', function (nv, ov) {
         if (nv && nv.user) {
             // Add menu items
@@ -67,7 +69,72 @@ angular.module('santedb').controller('AdminLayoutController', ["$scope", "$rootS
         else
             $scope.menuItems = null;
     });
+
     if($rootScope.session)
         loadMenus();
 
+    // Check for new mail
+    var checkMail = function() {
+
+        SanteDB.resources.mail.findAsync({ flags: 0 })
+            .then(function(d) {
+                $scope.mailbox = d.item;
+                $scope.$apply();
+            })
+            .catch(function(e) { 
+                toastr.warn(SanteDB.locale.getString("ui.admin.mailError"));
+                console.error(e) 
+            });
+    };
+
+    // Check for new tickles
+    var checkTickles = function() {
+        SanteDB.resources.tickle.findAsync({})
+            .then(function(d) {
+                $scope.tickles = d;
+
+
+                // Any tickles that need toast?
+                d.forEach(function(t) {
+
+                    if(t.type & 4) {
+                        if(t.type & 2)
+                            toastr.error(t.text, null, { preventDuplicates: true });
+                        else 
+                            toastr.info(t.text, null, { preventDuplicates: true });
+                        
+                        SanteDB.resources.tickle.deleteAsync(t.id);
+                    }
+                    t.isError = (t.typ3 & 5);
+                });
+                $scope.$apply();
+            })
+            .catch(function(e) { 
+                toastr.warn(SanteDB.locale.getString("ui.admin.tickleError"));
+                console.error(e); });
+    }
+
+    // Check for conflict status
+    var checkConflicts = function() {
+        SanteDB.resources.queue.getAsync("dead")
+            .then(function(queue) {
+                $scope.deadletterQueue = queue;
+                $scope.$apply();
+            })
+            .catch(function(e) {
+                toastr.warn(SanteDB.locale.getString("ui.admin.queueError"));
+                console.error(e);
+            });
+    }
+
+    checkMail();
+    checkTickles();
+    checkConflicts();
+
+    // Mailbox
+    $interval(function() {
+        checkTickles();
+        checkMail();
+        checkConflicts();
+    } , 60000);
 }]);

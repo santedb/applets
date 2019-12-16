@@ -606,6 +606,10 @@ if (!SanteDBWrapper)
                 if (_config.viewModel)
                     headers["X-SanteDB-ViewModel"] = _config.viewModel;
 
+                var resource = _config.resource;
+                // Does the resource have an ID? If so then do CreateOrUpdate
+                if(data.id)
+                    resource += "/" + data.id;
                     
                 if(data.createdBy)
                     delete(data.createdBy);
@@ -618,7 +622,7 @@ if (!SanteDBWrapper)
                     data: data,
                     state: state,
                     contentType: _config.accept,
-                    resource: _config.resource
+                    resource: resource
                 });
             };
 
@@ -1182,17 +1186,6 @@ if (!SanteDBWrapper)
                 });
             },
             /**
-             * @summary Get the health of the application (current utilization)
-             * @method 
-             * @memberof SanteDBWrapper.app
-             * @returns {Promise} The promise from the async operation
-             */
-            getHealthAsync: function () {
-                return _app.getAsync({
-                    resource: "Health"
-                });
-            },
-            /**
              * @summary Get the online status of the application
              * @method
              * @memberof SanteDBWrapper.app
@@ -1548,7 +1541,7 @@ if (!SanteDBWrapper)
                 */
             mail: new ResourceWrapper({
                 accept: _viewModelJsonMime,
-                resource: "Mail",
+                resource: "MailMessage",
                 api: _ami
             }),
             /**
@@ -1558,7 +1551,7 @@ if (!SanteDBWrapper)
                 **/
             tickle: new ResourceWrapper({
                 accept: _viewModelJsonMime,
-                resource: "Notification",
+                resource: "Tickle",
                 api: _app
             }),
             /**
@@ -1651,6 +1644,26 @@ if (!SanteDBWrapper)
                 resource: "Audit",
                 accept: _viewModelJsonMime,
                 api: _ami
+            }),
+            /**
+             * @property {SanteDB.ResourceWrapper}
+             * @memberOf SanteDBWrapper.resources
+             * @summary Wrapper for probe API
+             */
+            probe: new ResourceWrapper({
+                resource: "Probe",
+                accept: _viewModelJsonMime,
+                api: _ami
+            }),
+            /**
+             * @property {SanteDB.ResourceWrapper}
+             * @memberOf SanteDBWrapper.resources
+             * @summary Wrapper for sync log API
+             */
+            sync: new ResourceWrapper({
+                resource: "Sync",
+                accept: _viewModelJsonMime,
+                api: _app
             }),
             /**
              * @property {SanteDB.ResourceWrapper}
@@ -2322,7 +2335,7 @@ if (!SanteDBWrapper)
                 * @description The localization information contains formatting for currency, formatting for dates, and formatting for numbers
                 */
             getFormatInformationAsync: function (locale) {
-                return new Promise(function (reject, fulfill) {
+                return new Promise(function (fulfill, reject) {
                     try {
                         if (_localeCache[locale])
                             fulfill(_localeCache[locale]);

@@ -171,7 +171,7 @@ angular.module('santedb-lib')
                                 while(cause.cause)
                                     cause = cause.cause;
                                 scope.isRendering = false;
-                                setReportContent(`<div class='text-danger'>${SanteDB.locale.getString(cause.message)}</div>`, true);
+                                setReportContent(`<div class='alert alert-info'><i class="fas fa-exclamation-triangle"></i> ${SanteDB.locale.getString(cause.message)}</div>`, true);
                             });
                     }
                 }

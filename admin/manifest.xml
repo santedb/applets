@@ -164,18 +164,18 @@
 
     <!-- Security Dashboard -->
     <string key="ui.admin.security.dashboard.index">SanteDB Security Center</string>
-    <string key="ui.admin.security.users.title">User Management</string>
+    <string key="ui.admin.security.users.title">Users</string>
     <string key="ui.admin.security.users.create">New User</string>
-    <string key="ui.admin.security.users.count">registered users</string>
-    <string key="ui.admin.security.groups.title">Group Management</string>
+    <string key="ui.admin.security.users.count">User management</string>
+    <string key="ui.admin.security.groups.title">Groups</string>
     <string key="ui.admin.security.groups.create">New Group</string>
-    <string key="ui.admin.security.groups.count">registered groups</string>
-    <string key="ui.admin.security.devices.title">Device Management</string>
+    <string key="ui.admin.security.groups.count">Group management</string>
+    <string key="ui.admin.security.devices.title">Devices</string>
     <string key="ui.admin.security.devices.create">New Device</string>
-    <string key="ui.admin.security.devices.count">registered devices</string>
-    <string key="ui.admin.security.applications.title">App Management</string>
+    <string key="ui.admin.security.devices.count">Device management</string>
+    <string key="ui.admin.security.applications.title">Applications</string>
     <string key="ui.admin.security.applications.create">New App</string>
-    <string key="ui.admin.security.applications.count">registered apps</string>
+    <string key="ui.admin.security.applications.count">Application management</string>
 
     <!-- System Information -->
     <string key="ui.admin.system.info.local.title">Local Server</string>
@@ -200,6 +200,18 @@
     <string key="ui.admin.system.logs.show">Show Logs From</string>
     <string key="ui.admin.system.logs.local">Local Service</string>
     <string key="ui.admin.system.logs.remote">Realm Service</string>
-    <!-- System -->
+    
+    <!-- Mail  -->
+    <string key="ui.admin.mail">Messages</string>
+    <string key="ui.admin.mail.new">New Messages</string>
+    <string key="ui.admin.mail.none">No Messages Yet</string>
+    <string key="ui.admin.mail.all">All Messages</string>
+
+    <!-- Tickles -->
+    <string key="ui.admin.alerts">Notifications</string>
+    <string key="ui.admin.alerts.none">No Notifications Yet</string>
+
+    <!-- Login Message -->
+    <string key="ui.admin.loginMessage">Welcome to SanteDB Administration Center</string>
   </strings>
 </AppletManifest>

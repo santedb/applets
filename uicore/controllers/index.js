@@ -69,11 +69,18 @@ var santedbApp = angular.module('santedb', ['ngSanitize', 'ui.router', 'oc.lazyL
 
 
     }]).controller("RootIndexController", ["$scope", function ($scope) {
+
+        try {
+            eval('async () => {}');
+        } catch (e) {
+            if (e instanceof SyntaxError)
+                $scope.asyncUnavailable = true;
+        }
+        
     }])
     .run(['$rootScope', '$state', '$templateCache', '$transitions', '$ocLazyLoad', '$interval', function ($rootScope, $state, $templateCache, $transitions, $ocLazyLoad, $interval) {
 
-
-        
+       
         /**
          * Register the reload button
          */

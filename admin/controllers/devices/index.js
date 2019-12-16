@@ -3,18 +3,18 @@ angular.module('santedb').controller('DeviceIndexController', ["$scope", "$rootS
     /**
      * @summary Delete the specified user
      */
-    $scope.delete = function (id, index) {
+    $scope.delete = async function (id, index) {
 
         var data = $("#SecurityDeviceTable table").DataTable().row(index).data();
         if (!data.obsoletionTime && confirm(SanteDB.locale.getString("ui.admin.devices.confirmDelete"))) {
             $("#action_grp_" + index + " a").addClass("disabled");
             $("#action_grp_" + index + " a i.fa-trash").removeClass("fa-trash").addClass("fa-circle-notch fa-spin");
-            SanteDB.resources.securityDevice.deleteAsync(id)
-                .then(function (e) {
-                    $("#SecurityDeviceTable").attr("newQuery", true);
-                    $("#SecurityDeviceTable table").DataTable().draw();
-                })
-                .catch($rootScope.errorHandler);
+            try {
+                await SanteDB.resources.securityDevice.deleteAsync(id);
+                $("#SecurityDeviceTable").attr("newQuery", true);
+                $("#SecurityDeviceTable table").DataTable().draw();
+            } catch(e) { $rootScope.errorHandler(e); };
+
         }
         else if (data.obsoletionTime && confirm(SanteDB.locale.getString("ui.admin.devices.confirmUnDelete"))) {
             $("#action_grp_" + index + " a").addClass("disabled");
@@ -36,41 +36,39 @@ angular.module('santedb').controller('DeviceIndexController', ["$scope", "$rootS
                 ]
             });
 
-            SanteDB.resources.securityDevice.patchAsync(id, data.securityStamp, patch)
-                .then(function (e) {
-                    $("#SecurityDeviceTable").attr("newQuery", true);
-                    $("#SecurityDeviceTable table").DataTable().draw();
-                })
-                .catch(function (e) {
+            try {
+                await  SanteDB.resources.securityDevice.patchAsync(id, data.securityStamp, patch);
+                $("#SecurityDeviceTable").attr("newQuery", true);
+                $("#SecurityDeviceTable table").DataTable().draw();
+            } catch(e) {
                     $("#action_grp_" + index + " a").removeClass("disabled");
                     $("#action_grp_" + index + " a i.fa-circle-notch").removeClass("fa-circle-notch fa-spin").addClass("fa-trash-restore");
                     $rootScope.errorHandler(e);
-                });
+            };
         }
     }
 
     /**
      * @summary Lock the specified device
      */
-    $scope.lock = function (id, index) {
+    $scope.lock = async function (id, index) {
         var data = $("#SecurityDeviceTable table").DataTable().row(index).data();
         if (confirm(SanteDB.locale.getString(data.lockout ? "ui.admin.devices.confirmUnlock" : "ui.admin.devices.confirmLock"))) {
             $("#action_grp_" + index + " a").addClass("disabled");
             $("#action_grp_" + index + " a i.fa-lock").removeClass("fa-lock").addClass("fa-circle-notch fa-spin");
             $("#action_grp_" + index + " a i.fa-unlock").removeClass("fa-unlock").addClass("fa-circle-notch fa-spin");
-            if (data.lockout) {
-                SanteDB.resources.securityDevice.unLockAsync(id)
-                    .then(function (e) {
-                        $("#SecurityDeviceTable table").DataTable().draw();
-                    })
-                    .catch($rootScope.errorHandler);
+            try {
+                if (data.lockout) {
+                    await SanteDB.resources.securityDevice.unLockAsync(id);
+                    $("#SecurityDeviceTable table").DataTable().draw();
+                }
+                else {
+                    await SanteDB.resources.securityDevice.lockAsync(id);
+                    $("#SecurityDeviceTable table").DataTable().draw();
+                }
             }
-            else {
-                SanteDB.resources.securityDevice.lockAsync(id)
-                    .then(function (e) {
-                        $("#SecurityDeviceTable table").DataTable().draw();
-                    })
-                    .catch($rootScope.errorHandler);
+            catch(e) {
+                $rootScope.errorHandler(e);
             }
         }
     }

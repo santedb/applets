@@ -67,9 +67,15 @@ html, body {
     min-height: 38px
 }
 
-.indicator-overlay {
-    margin-left: -0.5rem;
-    margin-top: 0.25rem;
-    font-size: 0.5rem;
+
+.indicator-container  {
+    position: relative;
+    min-width: 45px;
+}
+
+.indicator-container  .indicator {
     position: absolute;
+    top: 5px;
+    left: 21px;
+    font-size: 10px;
 }

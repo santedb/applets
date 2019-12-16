@@ -37,10 +37,13 @@
                 <div class="card shadow">
                     <div class="card-body">
                         <div class="row no-gutters align-items-center">
-                            <div class="col mr-2">
+                                <div class="col-auto">
+                                        <h1 class="mb-0">{{ dashboard.users }}</h1>
+                                    </div>
+                                    <div class="col mr-2 ml-2">
                                 <a ui-sref="santedb-admin.security.users.index"
                                     class="text-xs font-weight-bold text-primary text-uppercase mb-1">{{ 'ui.admin.security.users.title' | i18n }}</a>
-                                <div class="h5 mb-0 font-weight-bold text-gray">{{ dashboard.users }}
+                                <div class="h5 mb-0 font-weight-bold text-gray">
                                     {{ 'ui.admin.security.users.count' | i18n }} </div>
                             </div>
                             <div class="col-auto">
@@ -60,10 +63,13 @@
                 <div class="card shadow">
                     <div class="card-body">
                         <div class="row no-gutters align-items-center">
-                            <div class="col mr-2">
+                                <div class="col-auto">
+                                        <h1 class="mb-0">{{ dashboard.groups }}</h1>
+                                    </div>
+                                    <div class="col mr-2 ml-2">
                                 <a ui-sref="santedb-admin.security.groups.index"
                                     class="text-xs font-weight-bold text-primary text-uppercase mb-1">{{ 'ui.admin.security.groups.title' | i18n }}</a>
-                                <div class="h5 mb-0 font-weight-bold text-gray">{{ dashboard.groups }}
+                                <div class="h5 mb-0 font-weight-bold text-gray">
                                     {{ 'ui.admin.security.groups.count' | i18n }} </div>
                             </div>
                             <div class="col-auto">
@@ -83,10 +89,13 @@
                 <div class="card shadow">
                     <div class="card-body">
                         <div class="row no-gutters align-items-center">
-                            <div class="col mr-2">
+                                <div class="col-auto">
+                                        <h1 class="mb-0">{{ dashboard.devices }}</h1>
+                                    </div>
+                                    <div class="col mr-2 ml-2">
                                 <a ui-sref="santedb-admin.security.devices.index"
                                     class="text-xs font-weight-bold text-primary text-uppercase mb-1">{{ 'ui.admin.security.devices.title' | i18n }}</a>
-                                <div class="h5 mb-0 font-weight-bold text-gray">{{ dashboard.devices }}
+                                <div class="h5 mb-0 font-weight-bold text-gray">
                                     {{ 'ui.admin.security.devices.count' | i18n }} </div>
                             </div>
                             <div class="col-auto">
@@ -106,10 +115,13 @@
                 <div class="card shadow">
                     <div class="card-body">
                         <div class="row no-gutters align-items-center">
-                            <div class="col mr-2">
+                            <div class="col-auto">
+                                <h1 class="mb-0">{{ dashboard.applications }}</h1>
+                            </div>
+                            <div class="col mr-2 ml-2">
                                 <a ui-sref="santedb-admin.security.applications.index"
                                     class="text-xs font-weight-bold text-primary text-uppercase mb-1">{{ 'ui.admin.security.applications.title' | i18n }}</a>
-                                <div class="h5 mb-0 font-weight-bold text-gray">{{ dashboard.applications }}
+                                <div class="h5 mb-0 font-weight-bold text-gray">
                                     {{ 'ui.admin.security.applications.count' | i18n }} </div>
                             </div>
                             <div class="col-auto">
@@ -127,8 +139,7 @@
                 </div>
             </div>
         </div>
-        <div class="row">
-
+        <div class="row mt-2">
             <div class="col-6">
                 <report-view id="'org.santedb.bi.core.reports.session.date'" parameters="dashboard.sessions" view="'chart'"/>
             </div>

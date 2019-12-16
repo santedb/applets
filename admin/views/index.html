@@ -17,7 +17,7 @@
  - User: justin
  - Date: 2018-11-14
  -->
- <div xmlns="http://www.w3.org/1999/xhtml" xmlns:sdb="http://santedb.org/applet">
+<div xmlns="http://www.w3.org/1999/xhtml" xmlns:sdb="http://santedb.org/applet">
     <sdb:style static="false">~/css/sb-admin.css</sdb:style>
     <sdb:style static="false">~/css/admin.css</sdb:style>
     <sdb:script static="false">~/controllers/index.js</sdb:script>
@@ -35,26 +35,32 @@
             <a class="navbar-brand" ui-shref="santedb-admin">
                 {{ 'ui.admin.brand.title' | i18n }}
             </a>
-            <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive"
-                aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+            <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse"
+                data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false"
+                aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
-            <div class="collapse navbar-collapse" id="navbarResponsive" ng-class="{'navbar-collapse-small' : windowSize &lt; 1100}">
+            <div class="collapse navbar-collapse" id="navbarResponsive"
+                ng-class="{'navbar-collapse-small' : windowSize &lt; 1100}">
                 <ul class="navbar-nav navbar-sidenav" id="menuAccordian">
                     <li>
                     </li>
                     <li ng-repeat="m in menuItems" class="nav-item" data-toggle="tooltip" title="{{m.text}}">
-                        <a class="nav-link" ng-if="!m.menu" ui-sref="{{ ::m.action }}" data-toggle="collapse" data-target=".navbar-collapse-small">
-                            <i class="{{m.icon}}"></i> 
+                        <a class="nav-link" ng-if="!m.menu" ui-sref="{{ ::m.action }}" data-toggle="collapse"
+                            data-target=".navbar-collapse-small">
+                            <i class="{{m.icon}}"></i>
                             <span class="nav-link-text"> {{::m.text}}</span>
                         </a>
-                        <a ng-if="m.menu"  class="nav-link nav-link-collapse"  ui-sref="{{ ::m.action }}" data-toggle="collapse" data-target="#Collapse{{$index}}" role="button" aria-haspopup="true" aria-expanded="false">
+                        <a ng-if="m.menu" class="nav-link nav-link-collapse" ui-sref="{{ ::m.action }}"
+                            data-toggle="collapse" data-target="#Collapse{{$index}}" role="button" aria-haspopup="true"
+                            aria-expanded="false">
                             <i class="{{m.icon}}"></i>
                             <span class="nav-link-text"> {{::m.text}}</span>
                         </a>
                         <ul ng-if="m.menu" class="sidenav-second-level collapse" id="Collapse{{$index}}">
-                            <li ng-repeat="c in ::m.menu"  title="{{c.text}}">
-                                <a ui-sref="{{ ::c.action }}" data-toggle="collapse" data-target=".navbar-collapse-small">
+                            <li ng-repeat="c in ::m.menu" title="{{c.text}}">
+                                <a ui-sref="{{ ::c.action }}" data-toggle="collapse"
+                                    data-target=".navbar-collapse-small">
                                     <i class="{{c.icon}}"></i>
                                     <span class="nav-link-text"> {{c.text}}</span>
                                 </a>
@@ -71,87 +77,115 @@
                     </li>
                 </ul>
                 <ul class="navbar-nav ml-auto">
+                    
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle mr-lg-2" id="messagesDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <a class="nav-link dropdown-toggle mr-lg-2" id="messagesDropdown" data-toggle="dropdown"
+                            aria-haspopup="true" aria-expanded="false">
                             <i class="fa fa-fw fa-envelope"></i>
-                            <span class="d-lg-none">Messages
-                                <span class="badge badge-pill badge-primary">12 New</span>
+                            <span class="d-lg-none">{{ 'ui.admin.mail' | i18n }}
+                                <span class="badge badge-pill badge-primary"
+                                    ng-if="mailbox.length > 0">{{ mailbox.new.length }}
+                                    {{ 'ui.admin.mail.new' | i18n }}</span>
                             </span>
-                            <span class="indicator text-primary d-none d-lg-block">
+                            <span class="indicator text-primary d-none d-lg-block" ng-if="mailbox.length > 0">
                                 <i class="fa fa-fw fa-circle"></i>
                             </span>
                         </a>
                         <div class="dropdown-menu" aria-labelledby="messagesDropdown">
-                            <h6 class="dropdown-header">New Messages:</h6>
+                            <h6 class="dropdown-header">{{ 'ui.admin.mail.new' | i18n }}:</h6>
+                            <div ng-repeat="msg in mailbox">
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" ui-sref="santedb-admin.user.mail.message(msg.id)">
+                                    <strong>{{ msg.from }}</strong>
+                                    <span
+                                        class="small float-right text-muted">{{ msg.creationTime | extDate: 'M'}}</span>
+                                    <div class="dropdown-message small">{{ msg.subject }} </div>
+                                </a>
+                            </div>
+                            <div ng-if="mailbox.length == 0">
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" ui-sref="santedb-admin.user.mail.message(msg.id)">
+                                    {{ 'ui.admin.mail.none' | i18n }}
+                                </a>
+                            </div>
                             <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="#">
-                                <strong>David Miller</strong>
-                                <span class="small float-right text-muted">11:21 AM</span>
-                                <div class="dropdown-message small">Hey there! This new version of SB Admin is pretty awesome! These messages clip off when they
-                                    reach the end of the box so they don't overflow over to the sides!</div>
-                            </a>
-                            <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="#">
-                                <strong>Jane Smith</strong>
-                                <span class="small float-right text-muted">11:21 AM</span>
-                                <div class="dropdown-message small">I was wondering if you could meet for an appointment at 3:00 instead of 4:00. Thanks!</div>
-                            </a>
-                            <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="#">
-                                <strong>John Doe</strong>
-                                <span class="small float-right text-muted">11:21 AM</span>
-                                <div class="dropdown-message small">I've sent the final files over to you for review. When you're able to sign off of them let
-                                    me know and we can discuss distribution.</div>
-                            </a>
-                            <div class="dropdown-divider"></div>
-                            <a class="dropdown-item small" href="#">View all messages</a>
+                            <a class="dropdown-item small"
+                                ui-sref="santedb-admin.user.mail.index">{{ 'ui.admin.mail.all' | i18n }}</a>
                         </div>
                     </li>
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle mr-lg-2" id="alertsDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <a class="nav-link dropdown-toggle mr-lg-2" id="alertsDropdown" data-toggle="dropdown"
+                            aria-haspopup="true" aria-expanded="false">
                             <i class="fa fa-fw fa-bell"></i>
-                            <span class="d-lg-none">Alerts
-                                <span class="badge badge-pill badge-warning">6 New</span>
+                            <span class="d-lg-none" ng-if="tickles.length > 0">{{ 'ui.admin.alerts' | i18n}}
+                                <span class="badge badge-pill badge-warning">{{ tickles.length }}</span>
                             </span>
-                            <span class="indicator text-warning d-none d-lg-block">
+                            <span class="indicator text-warning d-none d-lg-block" ng-if="tickles.length > 0">
                                 <i class="fa fa-fw fa-circle"></i>
                             </span>
                         </a>
                         <div class="dropdown-menu" aria-labelledby="alertsDropdown">
-                            <h6 class="dropdown-header">New Alerts:</h6>
-                            <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="#">
-                                <span class="text-success">
-                                    <strong>
-                                        <i class="fa fa-long-arrow-up fa-fw"></i>Status Update</strong>
-                                </span>
-                                <span class="small float-right text-muted">11:21 AM</span>
-                                <div class="dropdown-message small">This is an automated server response message. All systems are online.</div>
-                            </a>
-                            <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="#">
-                                <span class="text-danger">
-                                    <strong>
-                                        <i class="fa fa-long-arrow-down fa-fw"></i>Status Update</strong>
-                                </span>
-                                <span class="small float-right text-muted">11:21 AM</span>
-                                <div class="dropdown-message small">This is an automated server response message. All systems are online.</div>
-                            </a>
-                            <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="#">
-                                <span class="text-success">
-                                    <strong>
-                                        <i class="fa fa-long-arrow-up fa-fw"></i>Status Update</strong>
-                                </span>
-                                <span class="small float-right text-muted">11:21 AM</span>
-                                <div class="dropdown-message small">This is an automated server response message. All systems are online.</div>
-                            </a>
-                            <div class="dropdown-divider"></div>
-                            <a class="dropdown-item small" href="#">View all alerts</a>
+                            <h6 class="dropdown-header">{{ 'ui.admin.alerts' | i18n }}:</h6>
+                            <div ng-repeat="t in tickles">
+                                <div class="dropdown-divider"></div>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="#">
+                                    <span ng-class="{'text-danger' : t.isError, ' text-success' : !t.isError }">
+                                        <strong ng-if="t.isError">
+                                            <i class="fa fa-exclamation-triangle fa-fw"></i>
+                                            {{ 'ui.priority.danger' | i18n }}
+                                        </strong>
+                                        <strong ng-if="!t.isError">
+                                            <i class="fa fa-info-circle fa-fw"></i> {{ 'ui.priority.info' | i18n }}
+                                        </strong>
+                                    </span>
+                                    <span
+                                        class="small float-right text-muted">{{ t.creationTime | date: 'HH:mm' }}</span>
+                                    <div class="dropdown-message small">{{ t.text }}</div>
+                                </a>
+                            </div>
+                            <div ng-if="tickles.length == 0">
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="#">{{ 'ui.admin.alerts.none' | i18n }}</a>
+                            </div>
                         </div>
                     </li>
+                    <li class="nav-item indicator-container">
+                            <a class="nav-link mr-lg-2">
+                                <i class="fa fa-fw fa-wifi"></i>
+                                <span class="d-lg-none">{{ 'ui.state' | i18n }}
+                                    <span class="badge badge-pill badge-success" ng-if="$root.system.online">
+                                        {{ 'ui.state.online' | i18n }}
+                                    </span>
+                                    <span class="badge badge-pill badge-danger" ng-if="!$root.system.online">
+                                        {{ 'ui.state.online' | i18n }}
+                                    </span>
+                                </span>
+                                <span class="indicator d-none d-lg-block"
+                                    ng-class="{ 'text-success' : $root.system.online , 'text-danger' : !$root.system.online }">
+                                    <i class="fa fa-fw fa-circle"></i>
+                                </span>
+                            </a>
+                        </li>
+                        <li class="nav-item indicator-container">
+                                <a ui-sref="santedb-admin.sync" class="nav-link mr-lg-2" ng-disabled="!$root.system.online">
+                                    <i class="fa fa-fw fa-sync-alt"></i>
+                                    <span class="d-lg-none">{{ 'ui.sync' | i18n }}
+                                        <span class="badge badge-pill badge-success" ng-if="deadletterQueue.length == 0">
+                                            <i class="fas fa-check-circle"></i> {{ 'ui.sync.clear' | i18n }}
+                                        </span>
+                                        <span class="badge badge-pill badge-danger" ng-if="deadletterQueue.length > 0">
+                                                <i class="fas fa-exclamation-circle"></i> {{ deadletterQueue.length }} {{ 'ui.sync.conflict' | i18n }}
+                                        </span>
+                                    </span>
+                                    <span class="indicator d-none d-lg-block"
+                                        ng-class="{ 'text-danger' : deadletterQueue.length > 0, 'text-success' : deadletterQueue.length == 0 }">
+                                        <i class="fa fa-fw" ng-class="{ 'fa-exclamation-circle' : deadletterQueue.length > 0, 'fa-check-circle' : deadletterQueue.length == 0 }"></i>
+                                    </span>
+                                </a>
+                            </li>
                     <li class="nav-item">
-                        <form class="form-inline my-2 my-lg-0 mr-lg-2">
+                        <!-- <form class="form-inline my-2 my-lg-0 mr-lg-2">
                             <div class="input-group">
                                 <input class="form-control" type="text" placeholder="Search for..." />
                                 <span class="input-group-append">
@@ -160,19 +194,20 @@
                                     </button>
                                 </span>
                             </div>
-                        </form>
+                        </form> -->
                     </li>
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle mr-lg-2" id="alertsDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <a class="nav-link dropdown-toggle mr-lg-2" id="alertsDropdown" data-toggle="dropdown"
+                            aria-haspopup="true" aria-expanded="false">
                             <i class="fa fa-fw fa-user"></i>
                             <span>{{$root.session.username}}</span>
                         </a>
                         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="alertsDropdown">
                             <h6 class="dropdown-header">{{$root.session.displayName}}
-                                <br/>
+                                <br />
                                 <small>
                                     <i class="fa fa-envelope"></i> {{$root.session.user.email}}
-                                    <br/>
+                                    <br />
                                     <i class="fa fa-phone"></i> {{$root.session.user.phoneNumber }}</small>
                             </h6>
                             <div class="dropdown-divider"></div>
@@ -220,8 +255,8 @@
                 </div>
                 <div class="row">
                     <div class="col-md-12">
-                            <div class="container-fluid">
-                            <ui-view/>
+                        <div class="container-fluid">
+                            <ui-view />
                         </div>
                     </div>
                 </div>
@@ -238,7 +273,8 @@
         </div>
     </div>
 
-    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="logoutModalTitle" aria-hidden="true">
+    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="logoutModalTitle"
+        aria-hidden="true">
         <div class="modal-dialog modal-sm" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -247,7 +283,7 @@
                     <button class="close" type="button" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">
                             <i class="fa fa-times"></i>
-                        </span> 
+                        </span>
                     </button>
                 </div>
                 <div class="modal-body">

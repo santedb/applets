@@ -2,13 +2,14 @@
 angular.module('santedb').controller('SystemInfoController', ["$scope", "$rootScope", "$state", "$interval", function ($scope, $rootScope, $state, $interval) {
 
 
-    $scope.isLoading = true;
+    $scope.isRemoteLoading = true;
+    $scope.isLocalLoading = true;
 
     // Get application information
-    SanteDB.application.getAppInfoAsync({ updates: true })
+    SanteDB.application.getAppInfoAsync({ updates: false })
         .then(function(d) {
             $scope.info = d;
-            $scope.isLoading = $scope.server === undefined;
+            $scope.isLocalLoading = false;
             $scope.$apply();
         })
         .catch($rootScope.errorHandler);
@@ -17,16 +18,14 @@ angular.module('santedb').controller('SystemInfoController', ["$scope", "$rootSc
     SanteDB.application.getAppInfoAsync({ remote: true })
     .then(function(d) {
         $scope.server = d;
-        $scope.isLoading = $scope.info === undefined;
+        $scope.isRemoteLoading = false;
         $scope.$apply();
     })
-    .catch($rootScope.errorHandler);
-
-    // Get application health
-    $interval(function() {
-        SanteDB.application.getHealthAsync().then(function(d) { $scope.health = d; $scope.$apply(); }).catch($rootScope.errorHandler);
-        $scope.online = SanteDB.application.getOnlineState();
-    }, 10000);
+    .catch(function(e) { 
+        toastr.error(e.message, SanteDB.locale.getString("ui.error.remote.error"));
+        $scope.isRemoteLoading = false;
+        
+    });
 
 
 }]);

@@ -60,7 +60,28 @@
       <asset>/org.santedb.i18n.en/lib/santedb/en.js</asset>
     </locale>
   </locales>
+
   <strings lang="en">
+    <string key="ui.locale.en">English</string>
+    <string key="ui.locale.en-au">English (Australia)</string>
+    <string key="ui.locale.en-ca">English (Canada)</string>
+    <string key="ui.locale.en-gb">English (UK)</string>
+    <string key="ui.locale.en-iso">English (ISO)</string>
+    <string key="ui.locale.en-nz">English (New Zealand)</string>
+    <string key="ui.locale.en-ph">English (Philippines)</string>
+    <string key="ui.locale.es">Spanish</string>
+    <string key="ui.locale.es-es">Spanish (Spain)</string>
+    <string key="ui.locale.es-mx">Spanish (Mexico)</string>
+    <string key="ui.locale.es-us">Spanish (US)</string>
+    <string key="ui.locale.fr">French</string>
+    <string key="ui.locale.fr-be">French (Belgiun)</string>
+    <string key="ui.locale.fr-ca">French (Canada)</string>
+    <string key="ui.locale.fr-ch">French (Swiss)</string>
+    <string key="ui.locale.fr-fr">French (France)</string>
+    <string key="ui.locale.sw">Swahili</string>
+    <string key="ui.locale.sw-ke">Swahili (Kenya)</string>
+    <string key="ui.locale.sw-tz">Swahili (Tanzania)</string>
+    <string key="ui.locale.sw-ug">Swahili (Uganda)</string>
 
     <!-- Common Phrases -->
     <string key="ui.common.charsRemain">characters remain</string>
@@ -122,7 +143,13 @@
     <string key="error.type.NotSupportedException">Not Supported</string>
     <string key="error.type.NotSupportedException.userMessage">The function you are trying to perform is not supported under your current configuration</string>
     
+    <string key="error.noScript.title">Enable JavaScript</string>
+    <string key="error.noScript.text">SanteDB requires the use of JavaScript to function. It appears that your browser does not support JavaScript or has JavaScript disabled. Please check your security settings and refresh the page</string>
+
+    <string key="error.invalidBrowser.title">Invalid Browser</string>
+    <string key="error.invalidBrowser.text">SanteDB won't work on this browser. Supported browsers including: &lt;ul>&lt;li>Google Chrome&lt;/li>&lt;li>Mozilla Firefox&lt;/li>&lt;li>Microsoft Edge&lt;/li>&lt;li>Android 5.0 or higher&lt;/li>&lt;/ul></string>
     <!-- Common States -->
+    <string key="ui.state">Status</string>
     <string key="ui.state.active">Active</string>
     <string key="ui.state.inactive">Inactive</string>
     <string key="ui.state.new">New</string>
@@ -132,7 +159,30 @@
     <string key="ui.state.nullified">Nullified</string>
     <string key="ui.state.locked">Locked</string>
     <string key="ui.state.readonly">Readonly</string>
+    <string key="ui.state.offline">Offline</string>
+    <string key="ui.state.online">Online</string>
 
+    <!-- Priority -->
+    <string key="ui.priority.info">Info</string>
+    <string key="ui.priority.warn">Warning</string>
+    <string key="ui.priority.error">Notice</string>
+
+    <!-- Synchornization -->
+    <string key="ui.sync">Synchronization</string>
+    <string key="ui.sync.clear">No Conflicts</string>
+    <string key="ui.sync.conflict">Conflicts</string>
+    <string key="ui.sync.outbox.title">Outbox Queue</string>
+    <string key="ui.sync.outbox.text">Messages to be sent</string>
+    <string key="ui.sync.inbox.title">Inbox Queue</string>
+    <string key="ui.sync.inbox.text">Messages to be processed</string>
+    <string key="ui.sync.admin.title">Admin Queue</string>
+    <string key="ui.sync.admin.text">Audits to be sent</string>
+    <string key="ui.sync.dead.title">Conflicts</string>
+    <string key="ui.sync.dead.text">Messages which need to be resolved</string>
+    <string key="ui.sync.log">Synchronization Log</string>
+    <string key="ui.sync.log.resource">Resource</string>
+    <string key="ui.sync.log.etag">Last Version</string>
+    <string key="ui.sync.log.date">Sync Timestamp</string>
     <!-- Common Action buttons -->
     <string key="ui.action">Actions</string>
     <string key="ui.action.ok">Ok</string>
@@ -164,6 +214,7 @@
     <string key="ui.search">Searching</string>
     <string key="ui.action.reset">Reset</string>
     <string key="ui.action.apply">Apply</string>
+    <string key="ui.action.download">Download</string>
     <string key="ui.action.reactivate">Re-Activate</string>
     <string key="ui.pref.nevershow">Never show this message again</string>
 
@@ -417,6 +468,7 @@
     <string key="ui.model.logFileInfo.modified">Last Modified</string>
     <string key="ui.model.logFileInfo.size">Size</string>
     <string key="ui.model.logFileInfo.$type">Log</string>
+    
     <!-- Default applications -->
     <string key="org.santedb.debug">SanteDB SDK</string>
     <string key="org.santedb.administration">SanteDB Admin Console</string>

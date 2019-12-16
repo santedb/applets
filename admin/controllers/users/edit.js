@@ -3,6 +3,14 @@ angular.module('santedb').controller('EditUserController', ["$scope", "$rootScop
 
     $scope.EntityClassKeys = EntityClassKeys;
     
+    // Get format information
+    SanteDB.locale.getFormatInformationAsync()
+        .then(function(d) {
+            $scope.refLangs = Object.keys(d);
+            $scope.$apply();
+        })
+        .catch(function(f) { console.warn(f); });
+
     // Get the specified user
     if ($stateParams.id) {
         $scope.isLoading = true;
@@ -25,6 +33,7 @@ angular.module('santedb').controller('EditUserController', ["$scope", "$rootScop
 
                 if (u.item && u.item.length > 0) {
                     $scope.target.entity = u.item[0];
+                    
                     // Load inverse relationships
                     if(u.item[0].relationship && !u.item[0].relationship.Employee)
                         SanteDB.resources.entityRelationship.findAsync({ target: u.item[0].id, relationshipType: EntityRelationshipTypeKeys.Employee, _viewModel: "relationship_full" })
@@ -38,7 +47,27 @@ angular.module('santedb').controller('EditUserController', ["$scope", "$rootScop
                             })
                 }
                 else 
-                    $scope.target.entity = new UserEntity();
+                    $scope.target.entity = new UserEntity({
+                        language : [
+                            {
+                                "languageCode" : SanteDB.locale.getLanguage(),
+                                "isPreferred" : true
+                            }
+                        ]
+                    });
+
+                // Set language
+                if(!$scope.target.entity.language)
+                    $scope.target.preferredLanguage = SanteDB.locale.getLanguage();
+                else if(!Array.isArray($scope.target.entity.language))
+                    $scope.target.preferredLanguage = $scope.target.entity.language.languageCode;
+                else 
+                {
+                    var lng = $scope.target.entity.language.find(function(l) { return l.isPreferred; });
+                    if(!lng)
+                        lng = { "languageCode" : SanteDB.locale.getLanguage() };
+                    $scope.target.preferredLanguage = lng.languageCode;
+                }
 
                 $scope.$apply();
             })
@@ -48,7 +77,15 @@ angular.module('santedb').controller('EditUserController', ["$scope", "$rootScop
     {
         $scope.target = {
             securityUser: new SecurityUser(),
-            entity: new UserEntity(),
+            entity: new UserEntity({
+                language : [
+                    {
+                        "languageCode" : SanteDB.locale.getLanguage(),
+                        "isPreferred" : true
+                    }
+                ]
+            }),
+            preferredLanguage:  SanteDB.locale.getLanguage(),
             roles: []
         };
 
@@ -221,6 +258,13 @@ angular.module('santedb').controller('EditUserController', ["$scope", "$rootScop
         if(!$scope.target.entity.id) {
             $scope.target.entity.id = SanteDB.application.newGuid();
         }
+
+        // Set preferred language
+        delete($scope.target.entity.language);
+        $scope.target.entity.language = {
+            "isPreferred" : true,
+            "languageCode" : $scope.target.preferredLanguage
+        };
 
         if($scope.target.entity.relationship) {
             if(Array.isArray($scope.target.entity.relationship.DedicatedServiceDeliveryLocation))

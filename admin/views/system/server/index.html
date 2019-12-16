@@ -9,14 +9,13 @@
         </sdb:view>
     </sdb:state>
 
-    <div ng-if="!isLoading">
         <ul class="nav nav-tabs" role="tablist">
             <li class="nav-item"><a class="nav-link active" data-toggle="tab" role="tab" data-target="#localServerInfo"
-                    aria-selected="true"><i class="fas fa-info-circle"></i>
+                    aria-selected="true"><i class="fas fa" ng-class="{ 'fa-circle-notch fa-spin' : isLocalLoading , 'fa-laptop-medical' : !isLocalLoading }"></i>
                     {{ 'ui.admin.system.info.local.title' | i18n }}
                 </a></li>
-            <li class="nav-item"><a class="nav-link" data-toggle="tab" role="tab" data-target="#remoteServerInfo"
-                    aria-selected="false"><i class="fas fa-server"></i> {{ 'ui.admin.system.info.realm.title' | i18n }}
+            <li class="nav-item" ng-if="isRemoteLoading || server"><a  class="nav-link" data-toggle="tab" role="tab" data-target="#remoteServerInfo" 
+                    aria-selected="false"><i class="fas fa" ng-class="{ 'fa-circle-notch fa-spin' : isRemoteLoading , 'fa-server' : !isRemoteLoading }"></i> {{ 'ui.admin.system.info.realm.title' | i18n }}
                 </a>
             </li>
         </ul>
@@ -286,5 +285,4 @@
                 </div>
             </div>
         </div>
-    </div>
 </div>

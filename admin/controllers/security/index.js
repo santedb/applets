@@ -1,5 +1,5 @@
 /// <reference path="../../../core/js/santedb.js"/>
-angular.module('santedb').controller('SecurityDashboardController', ["$scope", "$rootScope", "$state", "$interval", function ($scope, $rootScope, $state, $interval) {
+angular.module('santedb').controller('SecurityDashboardController', ["$scope", function ($scope) {
 
     $scope.dashboard = {
         sessions : { 
@@ -8,29 +8,16 @@ angular.module('santedb').controller('SecurityDashboardController', ["$scope", "
         }
     };
 
-    SanteDB.resources.securityUser.findAsync({_count:0}).then(function(d) { 
-        $scope.dashboard = $scope.dashboard || {};
-        $scope.dashboard.users = d.size;
-        try { $scope.$apply(); }
-        catch {}
-    });
-    SanteDB.resources.securityRole.findAsync({_count:0}).then(function(d) { 
-        $scope.dashboard = $scope.dashboard || {};
-        $scope.dashboard.groups = d.size;
-        try { $scope.$apply(); }
-        catch {}
-    });
-    SanteDB.resources.securityDevice.findAsync({_count:0}).then(function(d) { 
-        $scope.dashboard = $scope.dashboard || {};
-        $scope.dashboard.devices = d.size;
-        try { $scope.$apply(); }
-        catch {}
-    });
-    SanteDB.resources.securityApplication.findAsync({_count:0}).then(function(d) { 
-        $scope.dashboard = $scope.dashboard || {};
-        $scope.dashboard.applications = d.size;
-        try { $scope.$apply(); }
-        catch {}
-    });
-
+    async function fetchStats() {
+        try {
+            $scope.dashboard.users = (await SanteDB.resources.securityUser.findAsync({_count:0})).size;
+            $scope.dashboard.groups = (await SanteDB.resources.securityRole.findAsync({_count:0})).size;
+            $scope.dashboard.devices = (await SanteDB.resources.securityDevice.findAsync({_count:0})).size;
+            $scope.dashboard.applications = (await SanteDB.resources.securityApplication.findAsync({_count:0})).size;
+        }
+        catch(e) {
+            console.error(e);
+        }
+    }
+    fetchStats().then($scope.$apply);
 }]);

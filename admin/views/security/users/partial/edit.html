@@ -235,7 +235,20 @@
                         </div>
                         <div class="form-group row">
                             <label for="familyName"
-                                class="col-xs-12 col-md-2 control-label">{{ 'ui.model.userEntity.relationship.DedicatedServiceDeliveryLocation' | i18n }}</label>
+                                class="col-xs-12 col-md-2 control-label">{{ 'ui.model.userEntity.language' | i18n }}</label>
+                            <div class="col-xs-12 col-md-10">
+                                <select 
+                                    class="form-control"
+                                    ng-model="target.preferredLanguage">
+                                    <option ng-repeat="lang in refLangs" value="{{lang}}">{{ 'ui.locale.' + lang | i18n }}</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="familyName"
+                                class="col-xs-12 col-md-2 control-label">
+                                {{ 'ui.model.userEntity.relationship.DedicatedServiceDeliveryLocation' | i18n }}
+                            </label>
                             <div class="col-xs-12 col-md-10">
                                 <entity-search type="'Place'"
                                     filter="{ obsoletionTime: 'null', classConcept: EntityClassKeys.ServiceDeliveryLocation }"

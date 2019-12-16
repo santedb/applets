@@ -24,22 +24,22 @@
     <author>Mohawk College of Applied Arts and Technology - mHealth &amp; eHealth Development &amp; Innovation Centre</author>
   </info>
   <locales>
-    <locale code="sw">
+    <locale code="sw" name="Kiswahili">
       <asset>/org.santedb.i18n.sw/lib/angular/sw.js</asset>
       <asset>/org.santedb.i18n.sw/lib/fullcalendar/sw.js</asset>
       <asset>/org.santedb.i18n.sw/lib/select2/sw.js</asset>
     </locale>
-    <locale code="sw-ke">
+    <locale code="sw-ke" name="Kiswahili (Kenya)">
       <asset>/org.santedb.i18n.sw/lib/angular/sw-ke.js</asset>
       <asset>/org.santedb.i18n.sw/lib/fullcalendar/sw.js</asset>
       <asset>/org.santedb.i18n.sw/lib/select2/sw.js</asset>
     </locale>
-    <locale code="sw-tz">
+    <locale code="sw-tz" name="Kiswahili (Tanzania)">
       <asset>/org.santedb.i18n.sw/lib/angular/sw-tz.js</asset>
       <asset>/org.santedb.i18n.sw/lib/fullcalendar/sw.js</asset>
       <asset>/org.santedb.i18n.sw/lib/select2/sw.js</asset>
     </locale>
-    <locale code="sw-ug">
+    <locale code="sw-ug" name="Kiswahili (Uganda)">
       <asset>/org.santedb.i18n.sw/lib/angular/sw-ug.js</asset>
       <asset>/org.santedb.i18n.sw/lib/fullcalendar/sw.js</asset>
       <asset>/org.santedb.i18n.sw/lib/select2/sw.js</asset>

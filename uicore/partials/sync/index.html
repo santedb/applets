@@ -1,0 +1,116 @@
+<div xmlns="http://www.w3.org/1999/xhtml" xmlns:sdb="http://santedb.org/applet">
+    <sdb:script static="false">~/controllers/sync/index.js</sdb:script>
+    <div ng-controller="SyncController" class="container-fluid">
+        <div class="row">
+            <div class="col-md-6 col-lg-3">
+                <div class="card shadow">
+                    <div class="card-body">
+                        <div class="row no-gutters align-items-center">
+                            <div class="col-auto">
+                                <h1 class="mb-0">{{ queue.outbound }}</h1>
+                            </div>
+                            <div class="col ml-2 mr-2">
+                                <a
+                                    class="text-xs font-weight-bold text-primary text-uppercase mb-1">{{ 'ui.sync.outbox.title' | i18n }}</a>
+                                <div class="h5 mb-0 font-weight-bold text-gray">
+                                    {{ 'ui.sync.outbox.text' | i18n }} </div>
+                            </div>
+                            <div class="col-auto">
+                                <i class="fas fa-upload fa-2x text-gray"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-3">
+                <div class="card shadow">
+                    <div class="card-body">
+                        <div class="row no-gutters align-items-center">
+                            <div class="col-auto">
+                                <h1 class="mb-0">{{ queue.inbound }}</h1>
+                            </div>
+                            <div class="col ml-2 mr-2">
+                                <a
+                                    class="text-xs font-weight-bold text-primary text-uppercase mb-1">{{ 'ui.sync.inbox.title' | i18n }}</a>
+                                <div class="h5 mb-0 font-weight-bold text-gray">
+                                    {{ 'ui.sync.inbox.text' | i18n }} </div>
+                            </div>
+                            <div class="col-auto">
+                                <i class="fas fa-download fa-2x text-gray"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-3">
+                <div class="card shadow">
+                    <div class="card-body">
+                        <div class="row no-gutters align-items-center">
+                            <div class="col-auto">
+                                <h1 class="mb-0">{{ queue.admin }}</h1>
+                            </div>
+                            <div class="col ml-2 mr-2">
+                                <a
+                                    class="text-xs font-weight-bold text-primary text-uppercase mb-1">{{ 'ui.sync.admin.title' | i18n }}</a>
+                                <div class="h5 mb-0 font-weight-bold text-gray">
+                                    {{ 'ui.sync.admin.text' | i18n }} </div>
+                            </div>
+                            <div class="col-auto">
+                                <i class="fas fa-cogs fa-2x text-gray"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-3">
+                <div class="card shadow">
+                    <div class="card-body">
+                        <div class="row no-gutters align-items-center">
+                            <div class="col-auto">
+                                <h1 class="mb-0">{{ queue.dead }}</h1>
+                            </div>
+                            <div class="col ml-2 mr-2">
+                                <a
+                                    class="text-xs font-weight-bold text-primary text-uppercase mb-1">{{ 'ui.sync.dead.title' | i18n }}</a>
+                                <div class="h5 mb-0 font-weight-bold text-gray">
+                                    {{ 'ui.sync.dead.text' | i18n }} </div>
+                            </div>
+                            <div class="col-auto">
+                                <i class="fas fa-random fa-2x text-gray"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+            <div class="row mt-2">
+                <div class="col-12">
+                    <h3>{{ 'ui.sync.log' | i18n }}</h3>
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>{{ 'ui.sync.log.resource' | i18n }}</th>
+                                <th>{{ 'ui.sync.log.etag' | i18n }}</th>
+                                <th>{{ 'ui.sync.log.date' | i18n }}</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-if="syncLog.length == 0">
+                                <td colspan="3" align="center">
+                                    <i class="fas fa-circle-notch fa-spin"></i> {{ 'ui.wait' | i18n }}
+                                </td>
+                            </tr>
+                            <tr ng-repeat="log in syncLog">
+                                <td>{{ log.ResourceType | i18n }}</td>
+                                <td>{{ log.LastETag }}</td>
+                                <td>{{ log.LastSync | extDate: 'f' }}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                </div>
+            </div>
+        </div>
+
+
+</div>
