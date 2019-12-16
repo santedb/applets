@@ -362,7 +362,8 @@ angular.module('santedb-lib')
                 actions: "<",
                 render: "<",
                 i18nPrefix: "<",
-                multiSelect: "<"
+                multiSelect: "<",
+                sort: "<"
             },
             restrict: 'E',
             replace: true,
@@ -385,7 +386,7 @@ angular.module('santedb-lib')
                         var renderer = scope.render ? scope.render[m] : null;
 
                         return {
-                            orderable: renderer == null,
+                            orderable: renderer == null || (Array.isArray(scope.sort) ? scope.sort.indexOf(m) != -1 : false),
                             data: m,
                             defaultContent: '',
                             render: renderer ?
@@ -404,6 +405,7 @@ angular.module('santedb-lib')
                     // Add buttons 
                     if (scope.itemActions && scope.itemActions.length > 0) {
                         columns.push({
+                            orderable: false,
                             render: function (d, t, r, m) {
                                 var retVal = `<div class='btn-group' id='action_grp_${m.row}'>`;
                                 scope.itemActions.forEach(function (b) {
@@ -442,21 +444,22 @@ angular.module('santedb-lib')
                     );
 
                     // Add a show obsolete button
-                    buttons.push({
-                        text: "<i class='fas fa-trash'></i> " + SanteDB.locale.getString("ui.action.showDeleted"),
-                        className: "btn btn-secondary",
-                        action: function (e, dt, node, config) {
-                            if (!scope.defaultQuery.obsoletionTime || scope.defaultQuery.obsoletionTime == 'null') {
-                                scope.defaultQuery.obsoletionTime = '!null';
-                                $("button.btn-info:has(i.fa-check-double)", element).removeClass("active");
+                    if(scope.defaultQuery && scope.defaultQuery.obsoletionTime)
+                        buttons.push({
+                            text: "<i class='fas fa-trash'></i> " + SanteDB.locale.getString("ui.action.showDeleted"),
+                            className: "btn btn-secondary",
+                            action: function (e, dt, node, config) {
+                                if (!scope.defaultQuery.obsoletionTime || scope.defaultQuery.obsoletionTime == 'null') {
+                                    scope.defaultQuery.obsoletionTime = '!null';
+                                    $("button.btn-info:has(i.fa-check-double)", element).removeClass("active");
+                                }
+                                else {
+                                    scope.defaultQuery.obsoletionTime = 'null';
+                                    $("button.btn-info:has(i.fa-check-double)", element).addClass("active");
+                                }
+                                dt.ajax.reload();
                             }
-                            else {
-                                scope.defaultQuery.obsoletionTime = 'null';
-                                $("button.btn-info:has(i.fa-check-double)", element).addClass("active");
-                            }
-                            dt.ajax.reload();
-                        }
-                    });
+                        });
 
                     dt = $("table", element).DataTable({
                         lengthChange: false,

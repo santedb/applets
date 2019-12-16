@@ -1642,7 +1642,7 @@ if (!SanteDBWrapper)
              */
             audit: new ResourceWrapper({
                 resource: "Audit",
-                accept: _viewModelJsonMime,
+                accept: "application/json",
                 api: _ami
             }),
             /**

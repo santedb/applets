@@ -82,7 +82,7 @@ angular.module('santedb').controller('AdminLayoutController', ["$scope", "$rootS
                 $scope.$apply();
             })
             .catch(function(e) { 
-                toastr.warn(SanteDB.locale.getString("ui.admin.mailError"));
+                toastr.warning(SanteDB.locale.getString("ui.admin.mailError"));
                 console.error(e) 
             });
     };
@@ -110,21 +110,22 @@ angular.module('santedb').controller('AdminLayoutController', ["$scope", "$rootS
                 $scope.$apply();
             })
             .catch(function(e) { 
-                toastr.warn(SanteDB.locale.getString("ui.admin.tickleError"));
+                toastr.warning(SanteDB.locale.getString("ui.admin.tickleError"));
                 console.error(e); });
     }
 
     // Check for conflict status
     var checkConflicts = function() {
-        SanteDB.resources.queue.getAsync("dead")
-            .then(function(queue) {
-                $scope.deadletterQueue = queue;
-                $scope.$apply();
-            })
-            .catch(function(e) {
-                toastr.warn(SanteDB.locale.getString("ui.admin.queueError"));
-                console.error(e);
-            });
+        if($rootScope.system.config.sync && $rootScope.system.config.sync.mode == 'Sync')
+            SanteDB.resources.queue.getAsync("dead")
+                .then(function(queue) {
+                    $scope.deadletterQueue = queue;
+                    $scope.$apply();
+                })
+                .catch(function(e) {
+                    toastr.warning(SanteDB.locale.getString("ui.admin.queueError"));
+                    console.error(e);
+                });
     }
 
     checkMail();

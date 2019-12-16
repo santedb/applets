@@ -167,7 +167,7 @@
                                 </span>
                             </a>
                         </li>
-                        <li class="nav-item indicator-container">
+                        <li class="nav-item indicator-container" ng-if="$root.system.config.sync.mode == 'Sync'">
                                 <a ui-sref="santedb-admin.sync" class="nav-link mr-lg-2" ng-disabled="!$root.system.online">
                                     <i class="fa fa-fw fa-sync-alt"></i>
                                     <span class="d-lg-none">{{ 'ui.sync' | i18n }}

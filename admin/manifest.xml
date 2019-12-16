@@ -82,6 +82,10 @@
       <icon>fas fa-user-shield</icon>
       <text lang="en">Provenance</text>
     </menuItem>
+    <menuItem launch="santedb-admin.security.audit.index" asset="/org.santedb.admin/views/security/audit/index.html" context="org.santedb.admin">
+      <icon>fas fa-search-plus</icon>
+      <text lang="en">Audit Repository</text>
+    </menuItem>
   </menuItem>
 
   <viewModel key="relationship_full">
