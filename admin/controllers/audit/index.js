@@ -6,12 +6,12 @@ angular.module('santedb').controller('AuditIndexController', ["$scope", "$rootSc
     $scope.renderOutcome = function (audit) {
         switch (audit.outcome) {
             case "Success":
-                return `<span class='badge badge-success'><i class='fas fa-check'></i> ${SanteDB.locale.getString("ui.model.audit.state.success")}</span>`;
+                return `<span class='badge badge-success'><i class='fas fa-check'></i> ${SanteDB.locale.getString("ui.model.audit.outcome.success")}</span>`;
             case "MinorFail":
             case "SeriousFail":
-                return `<span class='badge badge-warning'><i class='fas fa-info-circle'></i> ${SanteDB.locale.getString("ui.model.audit.state.warning")}</span>`;
+                return `<span class='badge badge-warning'><i class='fas fa-info-circle'></i> ${SanteDB.locale.getString("ui.model.audit.outcome.warning")}</span>`;
             case "EpicFail":
-                return `<span class='badge badge-danger'><i class='fas fa-exclamation-circle'></i> ${SanteDB.locale.getString("ui.model.audit.state.error")}</span>`;
+                return `<span class='badge badge-danger'><i class='fas fa-exclamation-circle'></i> ${SanteDB.locale.getString("ui.model.audit.outcome.error")}</span>`;
             default:
                 return audit.outcome;
         }

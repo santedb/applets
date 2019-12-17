@@ -199,7 +199,7 @@ angular.module('santedb-lib')
             var value = context.dataset.data[index];
             if (value < 0) // -ve values in red
                 return `rgba(220, 53, 69, ${alpha})`;
-            else switch (index % 5) {
+            else switch (index % 9) {
                 case 0:
                     return `rgba(232,62,140, ${alpha})`;
                 case 1:
@@ -208,8 +208,18 @@ angular.module('santedb-lib')
                     return `rgba(32,201,151, ${alpha})`;
                 case 3:
                     return `rgba(0,123,255, ${alpha})`;
-                default:
+                case 4:
                     return `rgba(23,162,184, ${alpha})`;
+                case 5:
+                    return `rgba(116,31,70, ${alpha})`;
+                case 6:
+                    return `rgba(51,8,121, ${alpha})`;
+                case 7:
+                    return `rgba(16,100,75, ${alpha})`;
+                case 8:
+                    return `rgba(0,62,128, ${alpha})`;
+                default:
+                    return `rgba(11,81,92, ${alpha})`;
             }
         };
 

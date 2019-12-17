@@ -466,6 +466,16 @@
     <string key="ui.model.version.changed">Changed Properties</string>
     <string key="ui.model.version.initial">Initial Version</string>
 
+
+    <!-- Audit Logs -->
+    <string key="ui.model.audit.action">Action</string>
+    <string key="ui.model.audit.event">Event</string>
+    <string key="ui.model.audit.outcome">Outcome</string>
+    <string key="ui.model.audit.outcome.success">Success</string>
+    <string key="ui.model.audit.outcome.warning">Minor/Moderate Fail</string>
+    <string key="ui.model.audit.outcome.fail">Serious Fail</string>
+    <string key="ui.model.audit.timestamp">Timestamp</string>
+    <string key="ui.model.audit.actor">Actor</string>
     <string key="ui.model.logFileInfo.name">Log File</string>
     <string key="ui.model.logFileInfo.modified">Last Modified</string>
     <string key="ui.model.logFileInfo.size">Size</string>

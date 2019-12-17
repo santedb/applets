@@ -29,11 +29,7 @@
     <add code="403" asset="/org.santedb.admin/views/error/elevate.html"/>
   </errors>
 
-  <configuration>
-    <appSettings>
-      <add name="oauth2.login.asset" value="/org.santedb.admin/oauth/index.html"/>
-    </appSettings>
-  </configuration>
+ 
 
   <menuItem context="org.santedb.admin" launch="santedb-admin.index"  asset="/org.santedb.admin/views/index.html">
     <icon>fas fa-tachometer-alt</icon>

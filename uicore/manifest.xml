@@ -26,4 +26,9 @@
     <dependency id="org.santedb.core"/>
   </info>
 
+ <configuration>
+    <appSettings>
+      <add name="oauth2.login" value="/org.santedb.uicore/oauth/"/>
+    </appSettings>
+  </configuration>
 </AppletManifest>

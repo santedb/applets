@@ -1,0 +1,17 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <title>{{ 'ui.login.title' | i18n }}</title>
+    </head>
+    <body>
+        <h1><img src="./img/icon.png"/> {{ 'ui.login.message' | i18n }}</h1>
+        <form method="POST" action="./authz.do?client_id={{ $client_id }}&amp;redirect_uri={{ $redirect_uri }}">
+            <input type="hidden" name="dsig" value="{{ $dsig }}"/>
+            <input type="hidden" name="scope" value="{{ $scope }}" />
+            <label for="username">{{ 'ui.login.input.username' | i18n }}</label>
+            <input type="text" name="username" required="required"/>
+            <label for="password">{{ 'ui.login.input.password' | i18n }}</label>
+            <input type="password" name="password" required="required"/>
+            <button type="submit">{{ 'ui.action.login' | i18n }}</button>
+        </form>
+    </body>
+</html>
