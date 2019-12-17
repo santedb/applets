@@ -23,7 +23,23 @@ angular.module('santedb').controller('AuditIndexController', ["$scope", "$rootSc
     }
 
     $scope.renderAction = function (audit) {
-        return "todo";
+
+        var retVal = "";
+        switch(audit.action) {
+            case "Read":
+                retVal =  "<i class='fas fa-database text-success fa-fw'></i> ";
+                break;
+            case "Create":
+            case "Update":
+            case "Delete":
+                retVal =  "<i class='fas fa-database text-danger fa-fw'></i> ";
+                break;
+            case "Execute":
+                retVal = "<i class='fas fa-play'></i> ";
+                break;
+        }
+        retVal += audit.action;
+        return retVal;
     }
 
     $scope.renderEvent = function (audit) {

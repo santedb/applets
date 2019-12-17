@@ -195,29 +195,35 @@ angular.module('santedb-lib')
     .directive('chart', function () {
 
         var randomColor = function (alpha, context) {
-            var index = context.dataIndex;
-            var value = context.dataset.data[index];
-            if (value < 0) // -ve values in red
-                return `rgba(220, 53, 69, ${alpha})`;
-            else switch (index % 9) {
+
+            if(isNaN(context)) {
+                var index = context.dataIndex;
+                var value = context.dataset.data[index];
+                if (value < 0) // -ve values in red
+                    return `rgba(220, 66, 66, ${alpha})`;
+            }
+            else 
+                index = context;
+    
+            switch (index % 9) {
                 case 0:
-                    return `rgba(232,62,140, ${alpha})`;
+                    return `rgba(14,54,124, ${alpha})`;
                 case 1:
-                    return `rgba(102,16,242, ${alpha})`;
+                    return `rgba(65,200,240, ${alpha})`;
                 case 2:
-                    return `rgba(32,201,151, ${alpha})`;
+                    return `rgba(251,162,87, ${alpha})`;
                 case 3:
-                    return `rgba(0,123,255, ${alpha})`;
+                    return `rgba(68,49,51, ${alpha})`;
                 case 4:
-                    return `rgba(23,162,184, ${alpha})`;
+                    return `rgba(171,52,52, ${alpha})`;
                 case 5:
-                    return `rgba(116,31,70, ${alpha})`;
+                    return `rgba(208,107,38, ${alpha})`;
                 case 6:
                     return `rgba(51,8,121, ${alpha})`;
                 case 7:
-                    return `rgba(16,100,75, ${alpha})`;
+                    return `rgba(,100,75, ${alpha})`;
                 case 8:
-                    return `rgba(0,62,128, ${alpha})`;
+                    return `rgba(15,76,129, ${alpha})`;
                 default:
                     return `rgba(11,81,92, ${alpha})`;
             }
@@ -246,10 +252,19 @@ angular.module('santedb-lib')
                     scope.data = [scope.data];
 
                 for (var i in scope.data) {
-                    scope.data[i].backgroundColor = scope.data[i].backgroundColor || randomColor.bind(null, 0.5),
-                        scope.data[i].borderColor = scope.data[i].borderColor || randomColor.bind(null, 1),
-                        scope.data[i].borderWidth = 1;
+                    if(scope.type == "line" || scope.type == "radar") {
+                        scope.data[i].backgroundColor = scope.data[i].backgroundColor || randomColor(0.5, parseInt(i));
+                        scope.data[i].borderColor = scope.data[i].borderColor || randomColor(1, parseInt(i));
+                        scope.data[i].pointBackgroundColor = 'rgba(0,0,0,0.1)';
+                        scope.data[i].pointBorderColor = 'rgba(0,0,0,0.1)';
+                    }
+                    else {
+                        scope.data[i].backgroundColor = scope.data[i].backgroundColor || randomColor.bind(null, 0.5);
+                        scope.data[i].borderColor = scope.data[i].borderColor || randomColor.bind(null,1);
+                    }
+                    scope.data[i].borderWidth = 1;
                 }
+
                 scope.chart = new Chart(element[0].getContext("2d"), {
                     type: scope.type,
                     data: {
