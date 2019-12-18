@@ -363,7 +363,8 @@ angular.module('santedb-lib')
                 render: "<",
                 i18nPrefix: "<",
                 multiSelect: "<",
-                sort: "<"
+                sort: "<",
+                defaultFilter: "<"
             },
             restrict: 'E',
             replace: true,
@@ -466,6 +467,7 @@ angular.module('santedb-lib')
                         processing: true,
                         buttons: buttons,
                         serverSide: true,
+                        "oSearch": {"sSearch": scope.defaultFilter},
                         ajax: function (data, callback, settings) {
 
                             var query = angular.copy(scope.defaultQuery) || {};

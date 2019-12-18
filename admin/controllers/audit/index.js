@@ -1,7 +1,13 @@
 /// <reference path="../../../core/js/santedb.js"/>
 angular.module('santedb').controller('AuditIndexController', ["$scope", "$rootScope", "$state", "$templateCache", "$stateParams", function ($scope, $rootScope, $state, $templateCache, $stateParams) {
 
-
+    $("#auditModal").on('hidden.bs.modal', function() {
+        if($scope.navPush) {
+            var nav = $scope.navPush;
+            delete($scope.navPush);
+            $state.transitionTo(nav.state, nav.params);
+        }
+    });
     // Render the outcome
     $scope.renderOutcome = function (audit) {
         switch (audit.outcome) {
@@ -22,6 +28,7 @@ angular.module('santedb').controller('AuditIndexController', ["$scope", "$rootSc
         return moment(audit.timestamp).format('YYYY-MM-DD HH:mm:ss Z');
     }
 
+    // Render the action column
     $scope.renderAction = function (audit) {
 
         var retVal = "";
@@ -42,6 +49,40 @@ angular.module('santedb').controller('AuditIndexController', ["$scope", "$rootSc
         return retVal;
     }
 
+    // Open the view
+    $scope.view = async function(audit) {
+        try {
+            $("#auditModal").modal('show');
+            $scope.audit = await SanteDB.resources.audit.getAsync(audit);
+
+            if($scope.audit.meta) {
+                $scope.audit.metaDisplay = {};
+                $scope.audit.meta.forEach((o) => $scope.audit.metaDisplay[o.key] = o.value );
+            }
+            if($scope.audit.actor) 
+                $scope.audit.actorDisplay = {
+                    "source" : $scope.audit.actor.find((o) => o.role.find((r) => r.code == "110153")),
+                    "destination" : $scope.audit.actor.find((o) => o.role.find((r) => r.code == "110152")),
+                }
+            
+                $scope.audit.query = $scope.audit.object.find((o)=>o.role == 'Query');
+                
+            $scope.$apply();
+        }
+        catch(e) {
+            $rootScope.errorHandler(e);
+        }
+    }
+
+    // Transition
+    $scope.navigate = function(state, params) {
+
+        $scope.navPush = { state: state, params: params };
+        
+        $("#auditModal").modal('hide');
+    }
+
+    // Render the event column
     $scope.renderEvent = function (audit) {
 
         var icon = "fa-circle";
@@ -100,7 +141,18 @@ angular.module('santedb').controller('AuditIndexController', ["$scope", "$rootSc
     }
 
     $scope.renderActor = function (audit) {
-        if(audit.actor && audit.actor.length) return `<i class="fas fa-user"></i> ${audit.actor[0].uname}`;
+        if(audit.actor && audit.actor.length)  {
+            var retVal = "";
+            
+            audit.actor.forEach(function(a) { 
+                if(a.isReq)
+                    retVal +=  ` ; <i class="fas fa-user"></i> ${a.uname} `;
+                else 
+                    retVal += ` ; <i class="fas fa-circle"></i> ${a.uname} `;
+            });
+
+            return retVal.substring(2);
+        }
         return "N/A"
     }
 }]);

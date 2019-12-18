@@ -148,10 +148,14 @@ var santedbApp = angular.module('santedb', ['ngSanitize', 'ui.router', 'oc.lazyL
                 $("#pageTransitioner").show();
         });
         $transitions.onSuccess({}, function () {
+            $(".modal").modal('hide');
+            $('.popover').popover('hide');
             $("#pageTransitioner").hide();
             delete($rootScope._transition);
         });
         $transitions.onError({}, function (transition) {
+            $(".modal").modal('hide');
+            $('.popover').popover('hide');
             $("#pageTransitioner").hide();
             delete($rootScope._transition);
 

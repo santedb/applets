@@ -1,5 +1,6 @@
-angular.module('santedb').controller('DeviceIndexController', ["$scope", "$rootScope", "$state", "$templateCache", function ($scope, $rootScope, $state, $templateCache) {
+angular.module('santedb').controller('DeviceIndexController', ["$scope", "$rootScope", "$stateParams", "$templateCache", function ($scope, $rootScope, $stateParams, $templateCache) {
 
+    $scope.initialFilter = $stateParams.q;
     /**
      * @summary Delete the specified user
      */

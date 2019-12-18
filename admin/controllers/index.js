@@ -116,7 +116,7 @@ angular.module('santedb').controller('AdminLayoutController', ["$scope", "$rootS
 
     // Check for conflict status
     var checkConflicts = function() {
-        if($rootScope.system.config.sync && $rootScope.system.config.sync.mode == 'Sync')
+        if($rootScope.system && $rootScope.system.config && $rootScope.system.config.sync && $rootScope.system.config.sync.mode == 'Sync')
             SanteDB.resources.queue.getAsync("dead")
                 .then(function(queue) {
                     $scope.deadletterQueue = queue;

@@ -281,7 +281,7 @@ angular.module('santedb-lib')
                             text: scope.title
                         },
                         legend: scope.legend || {
-                            display: true,
+                            display: scope.ledgend,
                             position: 'bottom'
                         }
                     }

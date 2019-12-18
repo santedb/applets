@@ -211,7 +211,35 @@
     <string key="ui.admin.alerts">Notifications</string>
     <string key="ui.admin.alerts.none">No Notifications Yet</string>
 
+    <!-- Audits -->
+    <string key="ui.admin.audit.title">Audit Event Details</string>
+    <string key="ui.admin.audit.core">Event Information</string>
+    <string key="ui.admin.audit.core.action">Action</string>
+    <string key="ui.admin.audit.core.event">Event</string>
+    <string key="ui.admin.audit.core.outcome">Outcome</string>
+    <string key="ui.admin.audit.core.timestamp">Timestamp</string>
+    <string key="ui.admin.audit.core.process">Process</string>
+    <string key="ui.admin.audit.core.source">Source</string>
+    <string key="ui.admin.audit.core.sid">EID</string>
+    <string key="ui.admin.audit.network.url">URL</string>
+    
+    <string key="ui.admin.audit.network">Network</string>
+    <string key="ui.admin.audit.actors">Users &amp; Computers</string>
+    <string key="ui.admin.audit.actors.uname">User Name</string>
+    <string key="ui.admin.audit.actors.apInfo">Machine</string>
+    <string key="ui.admin.audit.actors.initiator">R</string>
+    <string key="ui.admin.audit.actors.role">Roles</string>
+    <string key="ui.admin.audit.objects">Data &amp; Objects</string>
+    <string key="ui.admin.audit.object.type">Type</string>
+    <string key="ui.admin.audit.object.lifecycle">LC</string>
+    <string key="ui.admin.audit.object.id">ID</string>
+    <string key="ui.admin.audit.object.data">Data</string>
+    <string key="ui.admin.audit.object.role">Role</string>
+    <string key="ui.admin.audit.query">Query Executed</string>
+    <!-- Profile -->
+    <string key="ui.admin.profile">Profile</string>
     <!-- Login Message -->
     <string key="ui.admin.loginMessage">Welcome to SanteDB Administration Center</string>
+    <string key="ui.title">SanteDB Administration</string>
   </strings>
 </AppletManifest>

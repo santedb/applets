@@ -21,7 +21,7 @@
     <sdb:state name="santedb-admin.security.users.index" abstract="false">
     <sdb:script static="false">~/controllers/users/index.js</sdb:script>
     <sdb:demand>1.3.6.1.4.1.33349.3.1.5.9.2.0.8</sdb:demand>
-        <sdb:url></sdb:url>
+        <sdb:url>?{q}</sdb:url>
         <sdb:view>
             <sdb:controller>UserIndexController</sdb:controller>
             <sdb:title lang="en">Index</sdb:title>
@@ -34,6 +34,7 @@
         default-query="{ 'obsoletionTime' : 'null', 'userClass' : [ UserClassKeys.HumanUser, UserClassKeys.SystemUser ] }"
         property-path="entity"
         i18n-prefix="'ui.admin.users.'"
+        default-filter="initialFilter"
         render="{ lockout: 'renderLockout', updatedBy: 'renderUpdatedBy' }"
         properties="[ 'userName', 'lastLoginTime', 'lockout', 'updatedBy' ]"
         item-actions="[ { name: 'edit', sref: 'santedb-admin.security.users.edit', demand: '1.3.6.1.4.1.33349.3.1.5.9.2.0.8', className: 'btn-primary', icon: 'fa fa-pencil-alt' }, { name: 'delete', action: 'delete', demand: '1.3.6.1.4.1.33349.3.1.5.9.2.0.8', className: 'btn-danger', icon: 'fa fa-trash', when: '!r.obsoletionTime' },  { name: 'undelete', action: 'delete', demand: '1.3.6.1.4.1.33349.3.1.5.9.2.0.8', className: 'btn-success', icon: 'fa fa-trash-restore', when: 'r.obsoletionTime' }, { name: 'lock', action: 'lock', demand: '1.3.6.1.4.1.33349.3.1.5.9.2.0.8', className: 'btn-info', icon: 'fa fa-lock', when: '!r.lockout' }, { name: 'unlock', action: 'lock', demand: '1.3.6.1.4.1.33349.3.1.5.9.2.0.8', className: 'btn-info', icon: 'fa fa-unlock', when: 'r.lockout' }, { name: 'reset', label: 'ui.action.resetPassword', action: 'resetPassword', demand: '1.3.6.1.4.1.33349.3.1.5.9.2.0.1', className: 'btn-secondary', icon: 'fa fa-asterisk', when: '!r.obsoletionTime' } ]"

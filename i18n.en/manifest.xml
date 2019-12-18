@@ -93,6 +93,8 @@
     <string key="ui.login.input.purpose">Reason</string>
     <string key="ui.login.realm">Enter security details for realm</string>
 
+    <string key="ui.logout">Logout</string>
+    <string key="ui.logout.confirm">Are you sure you want to end your session?</string>
     <!-- Password Translations -->
     <string key="ui.password.title">Set Password</string>
     <string key="ui.password.help">Set the password for user account</string>
@@ -218,6 +220,8 @@
     <string key="ui.action.apply">Apply</string>
     <string key="ui.action.download">Download</string>
     <string key="ui.action.reactivate">Re-Activate</string>
+    <string key="ui.action.logout">Logout</string>
+    <string key="ui.action.close">Close</string>
     <string key="ui.pref.nevershow">Never show this message again</string>
 
     <!-- Subscription Type Translations -->
@@ -408,6 +412,7 @@
     <string key="ui.model.securityUser.phoneNumber">Phone Number</string>
     <string key="ui.model.userEntity.givenName">Given Name</string>
     <string key="ui.model.userEntity.familyName">Family Name</string>
+    <string key="ui.model.userEntity.language">Preferred Language</string>
     <string key="ui.model.userEntity.relationship.DedicatedServiceDeliveryLocation">Primary Facility</string>
     <string key="ui.model.userEntity.relationship.Employee">Employer</string>
     <string key="ui.model.securityUser.lockout">Locked Until</string>
@@ -473,7 +478,7 @@
     <string key="ui.model.audit.outcome">Outcome</string>
     <string key="ui.model.audit.outcome.success">Success</string>
     <string key="ui.model.audit.outcome.warning">Minor/Moderate Fail</string>
-    <string key="ui.model.audit.outcome.fail">Serious Fail</string>
+    <string key="ui.model.audit.outcome.error">Serious Fail</string>
     <string key="ui.model.audit.timestamp">Timestamp</string>
     <string key="ui.model.audit.actor">Actor</string>
     <string key="ui.model.logFileInfo.name">Log File</string>

@@ -213,11 +213,11 @@
                             <div class="dropdown-divider"></div>
                             <a class="dropdown-item" ui-sref="admin.users.profile">
                                 <strong>
-                                    <i class="fa fa-user-circle"></i> Profile </strong>
+                                    <i class="fa fa-user-circle"></i> {{ 'ui.admin.profile' | i18n }} </strong>
                             </a>
                             <a class="dropdown-item" data-toggle="modal" data-target="#logoutModal">
                                 <strong>
-                                    <i class="fa fa-sign-out-alt"></i>Logout</strong>
+                                    <i class="fa fa-sign-out-alt"></i>{{ 'ui.action.logout' | i18n }}</strong>
                             </a>
                         </div>
                     </li>
@@ -279,7 +279,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="logoutModalTitle">
-                        <i class="fa fa-fw fa-sign-out-alt"></i> Logout</h5>
+                        <i class="fa fa-fw fa-sign-out-alt"></i> {{ 'ui.logout' | i18n }}</h5>
                     <button class="close" type="button" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">
                             <i class="fa fa-times"></i>
@@ -287,13 +287,13 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    This will end your session. Are you sure?
+                    {{ 'ui.logout.confirm' | i18n }}
                 </div>
                 <div class="modal-footer">
                     <button class="btn btn-secondary" type="button" data-dismiss="modal">
-                        <i class="fa fa-times"></i> Cancel</button>
+                        <i class="fa fa-times"></i> {{ 'ui.action.cancel' | i18n }}</button>
                     <button type="button" ng-click="abandonSession()" class="btn btn-primary">
-                        <i class="fa fa-sign-out-alt"></i> Logout</button>
+                        <i class="fa fa-sign-out-alt"></i> {{ 'ui.action.logout' | i18n }}</button>
                 </div>
             </div>
         </div>
