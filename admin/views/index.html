@@ -47,7 +47,7 @@
                     </li>
                     <li ng-repeat="m in menuItems" class="nav-item" data-toggle="tooltip" title="{{m.text}}">
                         <a class="nav-link" ng-if="!m.menu" ui-sref="{{ ::m.action }}" data-toggle="collapse"
-                            data-target=".navbar-collapse-small">
+                            data-target=".navbar-collapse-small" >
                             <i class="{{m.icon}}"></i>
                             <span class="nav-link-text"> {{::m.text}}</span>
                         </a>
@@ -57,7 +57,7 @@
                             <i class="{{m.icon}}"></i>
                             <span class="nav-link-text"> {{::m.text}}</span>
                         </a>
-                        <ul ng-if="m.menu" class="sidenav-second-level collapse" id="Collapse{{$index}}">
+                        <ul ng-if="m.menu" class="sidenav-second-level collapse" id="Collapse{{$index}}"  data-parent="#menuAccordian">
                             <li ng-repeat="c in ::m.menu" title="{{c.text}}">
                                 <a ui-sref="{{ ::c.action }}" data-toggle="collapse"
                                     data-target=".navbar-collapse-small">

@@ -1,6 +1,6 @@
 ﻿/// <reference path="./santedb-model.js"/>
 /*
- * Copyright 2015-2018 Mohawk College of Applied Arts and Technology
+ * Copyright 2015-2019 Mohawk College of Applied Arts and Technology
  * 
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you 
@@ -15,8 +15,8 @@
  * License for the specific language governing permissions and limitations under 
  * the License.
  * 
- * User: justin
- * Date: 2018-7-23
+ * User: Justin Fyfe
+ * Date: 2019-8-8
  */
 
 // Interactive SHIM between host environment and browser
@@ -2455,4 +2455,14 @@ String.prototype.toCamelCase = function () {
         .replace(/\s(.)/g, function ($1) { return $1.toUpperCase(); })
         .replace(/\s/g, '')
         .replace(/^(.)/, function ($1) { return $1.toLowerCase(); });
+}
+
+
+/**
+ * Pad the specified string
+ * @param {String} str The String
+ */
+String.prototype.pad = function (len) {
+    var pad = "0".repeat(len);
+    return (pad + this).slice(-len);
 }

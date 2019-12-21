@@ -1,6 +1,6 @@
 /// <reference path="../../core/js/santedb.js"/>
 /*
- * Copyright 2015-2018 Mohawk College of Applied Arts and Technology
+ * Copyright 2015-2019 Mohawk College of Applied Arts and Technology
  * 
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you 
@@ -15,8 +15,8 @@
  * License for the specific language governing permissions and limitations under 
  * the License.
  * 
- * User: justin
- * Date: 2018-7-26
+ * User: Justin Fyfe
+ * Date: 2019-8-8
  */
 
 /// <reference path="./santedb-ui.js"/>
@@ -108,6 +108,17 @@ angular.module('santedb-lib')
         return function (date, precision) {
             var dateFormat;
 
+            if(!SanteDB.locale.dateFormats)
+                SanteDB.resources.locale.findAsync().then(function (locale) {
+                    var localeAsset = locale[SanteDB.locale.getLocale()];
+                    if(localeAsset)
+                        localeAsset.forEach(function (l) {
+                            $.getScript(l);
+                        });
+                }).catch(function (e) {
+                   console.error(e);
+                });
+                
             switch (precision) {
                 case 1:   // Year     "Y"
                 case 'Y':

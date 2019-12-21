@@ -1,8 +1,8 @@
 /// <reference path="../../../core/js/santedb.js"/>
 /// <reference path="../../../uicore/js/santedb-ui.js"/>
 /*
- * Copyright 2015-2018 Mohawk College of Applied Arts and Technology
- *
+ * Portions Copyright 2015-2019 Mohawk College of Applied Arts and Technology
+ * Portions Copyright 2019-2019 SanteSuite Contributors (See NOTICE)
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you 
  * may not use this file except in compliance with the License. You may 
@@ -16,10 +16,9 @@
  * License for the specific language governing permissions and limitations under 
  * the License.
  * 
- * User: justin
- * Date: 2018-10-14
+ * User: Justin Fyfe
+ * Date: 2019-8-8
  */
-
 angular.module('santedb').controller('InitialSettingsController', ['$scope', '$rootScope', function ($scope, $rootScope) {
 
     // Reference data

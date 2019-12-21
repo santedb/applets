@@ -27,7 +27,7 @@
                                 for="devicename">{{ 'ui.model.securityDevice.name' | i18n }}</label>
                             <div class="col-sm-12 col-md-10 input-group">
                                 <input name="devicename" ng-readonly="target.securityDevice.id" type="text"
-                                    class="form-control" pattern="^[A-Za-z0-9_\-\.\@]{3,}" minlength="3" maxlength="32"
+                                    class="form-control" pattern="^[A-Za-z0-9_\-\.\@\|]{3,}" minlength="3" maxlength="32"
                                     required="required" ng-model="target.securityDevice.name" />
                                 <input-copy-button id="devicenameCopyButton" class="btn btn-outline-secondary"
                                     source="target.securityDevice.name" />
