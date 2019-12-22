@@ -165,9 +165,9 @@ angular.module('santedb').controller('AuditIndexController', ["$scope", "$rootSc
             
             audit.actor.forEach(function(a) { 
                 if(a.isReq)
-                    retVal +=  ` ; <i class="fas fa-user"></i> ${a.uname} `;
+                    retVal +=  ` ; <i class="fas fa-user"></i> ${a.uname || a.apId } `;
                 else 
-                    retVal += ` ; <i class="fas fa-circle"></i> ${a.uname} `;
+                    retVal += ` ; <i class="fas fa-circle"></i> ${a.uname || a.apId } `;
             });
 
             return retVal.substring(2);

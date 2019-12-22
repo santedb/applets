@@ -150,9 +150,12 @@ angular.module('santedb').controller('InitialSettingsController', ['$scope', '$r
     // Watch scope and refresh list of subscriptions
     $scope.$watch('config.sync.subscribeTo.length', function (n, o) {
         // Find in new
-        if (n)
+        if (n) {
+            $scope.permittedSubscriptions = [];
             $scope.config.sync.subscribeTo.forEach(function (sid) {
                 var existingInfo = $scope.reference[$scope.config.sync.subscribeType.toLowerCase()].find(function (p) { return p.id === sid });
+                
+                // Don't have any info on this object - Look it up
                 if (!existingInfo) {
                     SanteDB.display.buttonWait("#selectAllButton", true);
                     $("#nextButton").prop("disabled", true);
@@ -162,12 +165,18 @@ angular.module('santedb').controller('InitialSettingsController', ['$scope', '$r
                         try {
                             SanteDB.display.buttonWait("#selectAllButton", false);
                             $("#nextButton").prop("disabled", false);
+                            $scope.permittedSubscriptions = $scope.reference.subscriptions.filter((filter) =>  (!filter.guards || filter.guards.length == 0 || $scope.checkGuard(filter)) && ($scope.config.subscription.mode == filter.mode || filter.mode == 'AllOrSubscription'));
                             $scope.$apply(); // Apply scope to refresh the check guard conditions
                         }
                         catch (e) { }
-                    });
+                    }).catch((e)=>console.error(e));
+
+                }
+                else {
+                    $scope.permittedSubscriptions = $scope.reference.subscriptions.filter((filter) => (!filter.guards || filter.guards.length == 0 || $scope.checkGuard(filter)) && ($scope.subscription.mode == filter.mode || filter.mode == 'AllOrSubscription'));
                 }
             });
+        }
     });
 
     // Verifies that a guard condition on a filter passes
@@ -198,13 +207,14 @@ angular.module('santedb').controller('InitialSettingsController', ['$scope', '$r
                     }
                 }
                 $scope.reference[$scope.config.sync.subscribeType.toLowerCase()]
-                    .filter(function (f) { return $scope.config.sync.subscribeTo.indexOf(f.id) > -1; })
+                    .filter(function (f) { return $scope.config.sync.subscribeTo && $scope.config.sync.subscribeTo.indexOf(f.id) > -1; })
                     .forEach(function (subscribed) {
                         var e = $scope.$eval(newGuard, { "subscribed": subscribed });
                         retVal &= (e != null) && (e !== false);
                     });
             });
 
+            console.info(filter.resource, filter.name, filter.trigger, filter.guards, retVal);
             return retVal
 
         }

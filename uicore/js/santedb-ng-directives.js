@@ -224,7 +224,7 @@ angular.module('santedb-lib')
                             var s = scope;
                             if (defaultResults) {
                                 try {
-                                    return eval(defaultResults);
+                                    return scope.$eval(defaultResults);
                                 } catch (e) {
 
                                 }
@@ -265,13 +265,13 @@ angular.module('santedb-lib')
                                         var text = "";
                                         if (displayString) {
                                             scope = o;
-                                            text = eval(displayString);
+                                            text = scope.$eval(displayString);
                                         }
                                         else if (o.name !== undefined) {
                                             text = renderObject(o);
                                         }
                                         o.text = o.text || text;
-                                        o.id = eval(`o.${resultProperty}`) || o.id;
+                                        o.id = o[resultProperty] || o.id;
                                         return o;
                                     }));
                                 }
@@ -280,10 +280,10 @@ angular.module('santedb-lib')
                                     for (var itm in data) {
                                         // parent obj
                                         try {
-                                            var scope = eval('data[itm].' + groupString);
+                                            var scope = scope.$eval('data[itm].' + groupString);
                                             var groupDisplay = "";
                                             if (groupDisplayString != null)
-                                                groupDisplay = eval(groupDisplayString);
+                                                groupDisplay = scope.$eval(groupDisplayString);
                                             else
                                                 groupDisplay = scope;
 
@@ -430,7 +430,7 @@ angular.module('santedb-lib')
                                 var retVal = `<div class='btn-group' id='action_grp_${m.row}'>`;
                                 scope.itemActions.forEach(function (b) {
 
-                                    if (!b.when || eval(b.when)) {
+                                    if (!b.when || scope.$eval(b.when)) {
                                         if (b.sref)
                                             retVal += `<a title="${SanteDB.locale.getString('ui.action.' + b.name)}" ui-sref="${b.sref}({ id: '${r.id}' })" class="btn ${(b.className || 'btn-default')}">`;
                                         else
