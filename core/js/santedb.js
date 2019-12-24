@@ -1452,7 +1452,7 @@ if (!SanteDBWrapper)
             concept: new ResourceWrapper({
                 accept: _viewModelJsonMime,
                 resource: "Concept",
-                api: _ami
+                api: _hdsi
             }),
             /**
                 * @property {SanteDB.ResourceWrapper} 
@@ -1462,7 +1462,7 @@ if (!SanteDBWrapper)
             conceptSet: new ResourceWrapper({
                 accept: _viewModelJsonMime,
                 resource: "ConceptSet",
-                api: _ami
+                api: _hdsi
             }),
             /**
                 * @property {SanteDB.ResourceWrapper} 
@@ -1472,7 +1472,7 @@ if (!SanteDBWrapper)
             referenceTerm: new ResourceWrapper({
                 accept: _viewModelJsonMime,
                 resource: "ReferenceTerm",
-                api: _ami
+                api: _hdsi
             }),
             /**
                 * @property {SanteDB.ResourceWrapper} 
@@ -1482,7 +1482,7 @@ if (!SanteDBWrapper)
             codeSystem: new ResourceWrapper({
                 accept: _viewModelJsonMime,
                 resource: "CodeSystem",
-                api: _ami
+                api: _hdsi
             }),
             /**
                 * @property {SanteDB.ResourceWrapper} 

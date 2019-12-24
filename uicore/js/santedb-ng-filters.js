@@ -106,65 +106,7 @@ angular.module('santedb-lib')
      */
     .filter('extDate', function () {
         return function (date, precision) {
-            var dateFormat;
-
-            if(!SanteDB.locale.dateFormats)
-                SanteDB.resources.locale.findAsync().then(function (locale) {
-                    var localeAsset = locale[SanteDB.locale.getLocale()];
-                    if(localeAsset)
-                        localeAsset.forEach(function (l) {
-                            $.getScript(l);
-                        });
-                }).catch(function (e) {
-                   console.error(e);
-                });
-                
-            switch (precision) {
-                case 1:   // Year     "Y"
-                case 'Y':
-                    dateFormat = SanteDB.locale.dateFormats.year;
-                    break;
-                case 2:   // Month    "m"
-                case 'm':
-                    dateFormat = SanteDB.locale.dateFormats.month;
-                    break;
-                case 3:   // Day      "D"
-                case 'D':
-                    dateFormat = SanteDB.locale.dateFormats.day;
-                    break;
-                case 4:   // Hour     "H"
-                case 'H':
-                    dateFormat = SanteDB.locale.dateFormats.hour;
-                    break;
-                case 5:   // Minute   "M"
-                case 'M':
-                    dateFormat = SanteDB.locale.dateFormats.minute;
-                    break;
-                case 6:   // Second   "S"
-                case 'S':
-                case 0:   // Full     "F"
-                case 'F':
-                default:
-                    dateFormat = SanteDB.locale.dateFormats.second;
-                    break;
-            }
-
-            if (date) {
-                // Non timed
-                switch (dateFormat) {
-                    case 1:   // Year, Month, Day always expressed in UTC for Javascript will take the original server value and adjust.
-                    case 'Y':
-                    case 2:
-                    case 'm':
-                    case 3:
-                    case 'D':
-                        return moment(date).utc().format(dateFormat);
-                    default:
-                        return moment(date).format(dateFormat);
-                }
-            }
-
-            return null;
+            return SanteDB.display.renderDate(date, precision);
         }
     });
     

@@ -376,14 +376,16 @@ angular.module('santedb-lib')
             scope: {
                 properties: "<",
                 external: "<",
-                defaultQuery: "<",
+                defaultQuery: "=",
                 itemActions: "<",
                 actions: "<",
                 render: "<",
                 i18nPrefix: "<",
                 multiSelect: "<",
                 sort: "<",
-                defaultFilter: "<"
+                defaultFilter: "<",
+                canFilter: "<",
+                canSize: "<"
             },
             restrict: 'E',
             replace: true,
@@ -406,11 +408,16 @@ angular.module('santedb-lib')
                         var renderer = scope.render ? scope.render[m] : null;
 
                         return {
-                            orderable: renderer == null || (Array.isArray(scope.sort) ? scope.sort.indexOf(m) != -1 : false),
+                            orderable: renderer == null || scope.sort[m] !== undefined,
                             data: m,
                             defaultContent: '',
                             render: renderer ?
-                                function (d, t, r) { return scope.$parent[renderer](r) } :
+                                function (d, t, r) { 
+                                    if(typeof(renderer) == "function")
+                                        return renderer(r);
+                                    else 
+                                        return scope.$parent[renderer](r);
+                                 } :
                                 m.indexOf("Time") > -1 ?
                                     function (d, t, r) {
                                         return d ? moment(d).format(SanteDB.locale.dateFormats.second) :
@@ -482,19 +489,26 @@ angular.module('santedb-lib')
                         });
 
                     dt = $("table", element).DataTable({
-                        lengthChange: false,
+                        lengthChange: scope.canSize,
                         processing: true,
                         buttons: buttons,
                         serverSide: true,
-                        "oSearch": {"sSearch": scope.defaultFilter},
+                        searching: scope.canSearch,
+                        "oSearch": scope.defaultFilter ? {"sSearch": scope.defaultFilter} : undefined,
                         ajax: function (data, callback, settings) {
 
                             var query = angular.copy(scope.defaultQuery) || {};
-                            if (data.search.value.length > 0)
-                                query[attrs.searchField] = `~${data.search.value}`;
+
+                            if(data.search.value) {
+                                if (data.search.value.length > 0)
+                                    query[attrs.searchField] = `~${data.search.value}`;
+                            }
                             if (data.order[0].column != 0) {
-                                var colname = scope.properties[data.order[0].column - 1]; // -1 because the ID column is hidden
-                                query["_orderBy"] = `${colname}:${data.order[0].dir}`;
+                                var orderExpr = colname = scope.properties[data.order[0].column - 1]; // -1 because the ID column is hidden
+                                if(scope.sort && scope.sort[colname])
+                                    orderExpr = scope.sort[colname];
+
+                                query["_orderBy"] = `${orderExpr}:${data.order[0].dir}`;
                             }
                             if (scope.extenral)
                                 query["_upstream"] = true;
@@ -512,6 +526,8 @@ angular.module('santedb-lib')
 
                             SanteDB.resources[attrs.type.toCamelCase()].findAsync(query)
                                 .then(function (res) {
+
+                                    res.item = res.item || [];
                                     callback({
                                         data: res.item.map(function (item) {
                                             if (scope.propertyPath)
@@ -537,6 +553,9 @@ angular.module('santedb-lib')
                         if (dt.buttons().container().length == 0)
                             $timeout(bindButtons, 100);
                     };
+
+                    // Add watch to scope query
+                    scope.$watch('defaultQuery', function(n,o) { if(n && n != o) dt.ajax.reload(); });
                     bindButtons();
                 });
             }

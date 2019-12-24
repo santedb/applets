@@ -224,6 +224,14 @@
     <string key="ui.action.close">Close</string>
     <string key="ui.pref.nevershow">Never show this message again</string>
 
+    <!-- Common Operators -->
+    <string key="ui.operator.eq">Equals</string>
+    <string key="ui.operator.ne">Not Equal</string>
+    <string key="ui.operator.similar">Similar</string>
+    <string key="ui.operator.le">Less</string>
+    <string key="ui.operator.ge">Greater</string> 
+    <string key="ui.operator.gte">Greater or Equal</string>
+    <string key="ui.operator.lte">Less or Equal</string>
     <!-- Subscription Type Translations -->
     <string key="ui.subscription.person.all">All Persons</string>
     <string key="ui.subscription.act.all">All Acts</string>
@@ -471,6 +479,11 @@
     <string key="ui.model.version.changed">Changed Properties</string>
     <string key="ui.model.version.initial">Initial Version</string>
 
+    <string key="ui.model.patient.name">Name</string>
+    <string key="ui.model.patient.dateOfBirth">DOB</string>
+    <string key="ui.model.patient.gender">Admin. Gender</string>
+    <string key="ui.model.patient.identifier">Identifier(s)</string>
+    <string key="ui.model.patient.creationTime">Timestamp</string>
 
     <!-- Audit Logs -->
     <string key="ui.model.audit.action">Action</string>

@@ -139,23 +139,37 @@
                 </div>
             </div>
         </div>
-        <div class="row mt-2">
-            <div class="col-3">
-                <report-view ledgend='false' id="'org.santedb.bi.core.reports.audit.eventType'" parameters="dashboard.sessions"
-                    view="'chart'" />
-            </div>
-            <div class="col-3">
-                <report-view id="'org.santedb.bi.core.reports.audit.dateEvent'" parameters="dashboard.sessions"
-                    view="'chart'" />
-            </div>
-            <div class="col-3">
-                <report-view id="'org.santedb.bi.core.reports.audit.dateEvent'" parameters="dashboard.sessions"
-                    view="'by_day'" />
-            </div>
-            <div class="col-3">
-                    <report-view id="'org.santedb.bi.core.reports.audit.outcomeType'" parameters="dashboard.sessions"
-                        view="'chart'" />
+        <div class="row mt-3">
+            <div class="col">
+                <div class="card shadow">
+                    <div class="card-header bg-light">
+                        <h2 class="m-2">{{ 'ui.admin.security.audits' | i18n }}</h2>
+                    </div>
+                    <div class="card-body">
+                        <div class="container-fluid">
+                            <div class="row">
+                                <div class="col-3">
+                                    <report-view ledgend='false' id="'org.santedb.bi.core.reports.audit.eventType'"
+                                        parameters="dashboard.sessions" view="'chart'" />
+                                </div>
+                                <div class="col-3">
+                                    <report-view id="'org.santedb.bi.core.reports.audit.dateEvent'" parameters="dashboard.sessions"
+                                        view="'chart'" />
+                                </div>
+                                <div class="col-3">
+                                    <report-view id="'org.santedb.bi.core.reports.audit.dateEvent'" parameters="dashboard.sessions"
+                                        view="'by_day'" />
+                                </div>
+                                <div class="col-3">
+                                    <report-view id="'org.santedb.bi.core.reports.audit.outcomeType'" parameters="dashboard.sessions"
+                                        view="'chart'" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
+                
+            </div>
         </div>
     </div>
 </div>

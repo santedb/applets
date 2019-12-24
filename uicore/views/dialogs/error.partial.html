@@ -55,7 +55,7 @@
                             </span>
                             <pre class="collapse out" id="errorDetail">({{$root.error.type}}) : {{ $root.error.details.responseText || $root.error.details }}</pre>
                         </div>
-                        <div ng-repeat="cause in $root.error.cause">
+                        <div ng-if="'{{ $env_type }}' == 'debug'" ng-repeat="cause in $root.error.cause">
                             <a data-toggle="collapse" class="collapse-indicator" data-target="#causeDetail" href="">
                                 <i class="fa fa-chevron-right"></i> {{ 'ui.error.causedBy' | i18n }}
                                 <span class="text-danger">{{ cause.message  | i18n }}</span>

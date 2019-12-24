@@ -177,7 +177,7 @@
     <string key="ui.admin.security.applications.title">Applications</string>
     <string key="ui.admin.security.applications.create">New App</string>
     <string key="ui.admin.security.applications.count">Application management</string>
-
+    <string key="ui.admin.security.audits">Audit Snapshot</string>
     <!-- System Information -->
     <string key="ui.admin.system.info.local.title">Local Server</string>
     <string key="ui.admin.system.info.realm.title">Realm Server</string>
