@@ -18,7 +18,7 @@
  - Date: 2018-7-23
  -->
 <AppletManifest xmlns="http://santedb.org/applet">
-  <info id="org.santedb.i18n.en" version="1.100.*.0">
+  <info id="org.santedb.i18n.en" version="1.100.0.0">
     <icon>/org.santedb.core/img/i18n.png</icon>
     <name lang="en">English Applet Support</name>
     <author>Mohawk College of Applied Arts and Technology - mHealth &amp; eHealth Development &amp; Innovation Centre</author>
@@ -62,6 +62,7 @@
   </locales>
 
   <strings lang="en">
+    <string key="ui.locale">Language</string>
     <string key="ui.locale.en">English</string>
     <string key="ui.locale.en-au">English (Australia)</string>
     <string key="ui.locale.en-ca">English (Canada)</string>
@@ -92,7 +93,8 @@
     <string key="ui.login.title.elevate">User Elevation</string>
     <string key="ui.login.input.purpose">Reason</string>
     <string key="ui.login.realm">Enter security details for realm</string>
-
+    <string key="ui.login.title">Login To SanteDB</string>
+    <string key="ui.login.message">Welcome to SanteDB</string>
     <string key="ui.logout">Logout</string>
     <string key="ui.logout.confirm">Are you sure you want to end your session?</string>
     <!-- Password Translations -->

@@ -963,6 +963,35 @@ if (!SanteDBWrapper)
         // App controller internal
         var _application = {
             /**
+             * @method
+             * @summary Gets an applet object 
+             * @param {string} appletId The identifier of the applet from which you want to fetch something
+             * @param {string} assetPath The path within that asset to the content
+             * @returns {Promise} A promise representing the fetch operation
+             */
+            getAppletAssetAsync: function(appletId, assetPath, state) {
+                return new Promise(function(fulfill, reject) {
+                    $.ajax({
+                        method: 'GET',
+                        url: `/${appletId}/${assetPath}`,
+                        dataType: 'text',
+                        success: function (xhr, status, response) {
+                            try {
+                                fulfill(xhr, state);
+                            }
+                            catch (e) {
+                                if (reject) reject(e);
+                            }
+                        },
+                        error: function (e, data, setting) {
+                            if (_globalErrorHandler(e, data, setting))
+                                return;
+                            reject(e);
+                        }
+                    });
+                });
+            },
+            /**
              * @summary Calculates the strength of the supplied password
              * @param {*} password The password
              * @returns {number} The strength of the password between 0 and 5

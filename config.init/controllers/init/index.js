@@ -340,7 +340,7 @@ angular.module('santedb').controller('InitialSettingsController', ['$scope', '$r
                 SanteDB.display.buttonWait("#joinRealmButton", false);
             });
             
-            SanteDB.authentication.setElevator(new SanteDBElevator(joinRealmFn));
+            SanteDB.authentication.setElevator(elevator);
             joinRealmFn();
         }
     }

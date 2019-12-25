@@ -18,19 +18,67 @@
  - Date: 2019-8-8
  -->
 <html xmlns="http://www.w3.org/1999/xhtml">
-    <head>
-        <title>{{ 'ui.login.title' | i18n }}</title>
-    </head>
-    <body>
-        <h1><img src="./img/icon.png"/> {{ 'ui.login.message' | i18n }}</h1>
-        <form method="POST" action="./authz.do?client_id={{ $client_id }}&amp;redirect_uri={{ $redirect_uri }}">
-            <input type="hidden" name="dsig" value="{{ $dsig }}"/>
-            <input type="hidden" name="scope" value="{{ $scope }}" />
-            <label for="username">{{ 'ui.login.input.username' | i18n }}</label>
-            <input type="text" name="username" required="required"/>
-            <label for="password">{{ 'ui.login.input.password' | i18n }}</label>
-            <input type="password" name="password" required="required"/>
-            <button type="submit">{{ 'ui.action.login' | i18n }}</button>
-        </form>
-    </body>
+
+<head>
+    <title>{{ 'ui.login.title' | i18n }}</title>
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css" />
+    <meta http-equiv="cache-control" content="no-cache" />
+</head>
+
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-5 m-auto">
+                <form method="POST" action="index.html">
+                    <input type="hidden" name="client_id" value="{{ $client_id }}" />
+                    <input type="hidden" name="redirect_uri" value="{{ $redirect_uri }}" />
+                    <input type="hidden" name="dsig" value="{{ $dsig }}" />
+                    <input type="hidden" name="scope" value="{{ $scope }}" />
+                    <input type="hidden" name="state" value="{{ $state }}" />
+                    <div class="card shadow">
+                        <div class="card-header">
+                            <h4><img src="./img/icon.png" /> {{ 'ui.login.message' | i18n }}</h4>
+                        </div>
+                        <div class="card-body">
+                            <div class="form-group d-none" id="authError">
+                                <p class="text-danger">Error: {{ $auth_error }}</p>
+                            </div>
+                            <div class="form-group">
+                                <label for="username">{{ 'ui.login.input.username' | i18n }}</label>
+                                <input class="form-control" type="text" name="username" required="required" />
+                            </div>
+                            <div class="form-group">
+                                <label for="password">{{ 'ui.login.input.password' | i18n }}</label>
+                                <input class="form-control" type="password" name="password" required="required" />
+                            </div>
+                        </div>
+                        <div class="card-footer">
+                            <div class="btn-grp float-right">
+                                <button type="submit" class="btn btn-primary">{{ 'ui.action.login' | i18n }}</button>
+                            </div>
+                        </div>
+
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript">
+        //<![CDATA[
+            if( '{{ $auth_error }}' != '&nbsp;') {
+                switch('{{ $auth_error }}') {
+                    case "AUTH_INV":
+                        document.getElementById("authError").innerText = "Invalid Username/Password";
+                        break;
+                    case "AUTH_LCK":
+                        document.getElementById("authError").innerText = "Account is Locked";
+                        break;
+                }
+                document.getElementById("authError").className = 'text-danger';
+            }
+        //]]>
+        </script>
+
+</body>
+
 </html>
