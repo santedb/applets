@@ -1,0 +1,96 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<!--
+ - Portions Copyright 2015-2019 Mohawk College of Applied Arts and Technology
+ - Portions Copyright 2019-2019 SanteSuite Contributors (See NOTICE)
+ - 
+ - 
+ - Licensed under the Apache License, Version 2.0 (the "License"); you 
+ - may not use this file except in compliance with the License. You may 
+ - obtain a copy of the License at 
+ - 
+ - http://www.apache.org/licenses/LICENSE-2.0 
+ - 
+ - Unless required by applicable law or agreed to in writing, software
+ - distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+ - WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the 
+ - License for the specific language governing permissions and limitations under 
+ - the License.
+ - 
+ - User: Justin Fyfe
+ - Date: 2019-12-16
+ -->
+<BiReportDefinition xmlns="http://santedb.org/bi" id="org.santedb.bi.core.reports.patient.regDate" label="ui.bi.core.report.patient.regDate">
+  <meta>
+    <authors>
+      <add>Justin Fyfe (Fyfe Software Inc.) &lt;justin@fyfesoftware.ca></add>
+    </authors>
+    <annotation>
+      <div xmlns="http://www.w3.org/1999/xhtml">
+        <p>Report for patient registrations by registration date</p>
+      </div>
+    </annotation>
+  </meta>
+  <dataSources>
+    <view name="by-date">
+      <query ref="#org.santedb.bi.core.query.patient" />
+      <aggregations>
+        <add>
+          <providers>
+            <invariant>fbsql</invariant>
+            <invariant>npgsql</invariant>
+          </providers>
+          <grouping>
+            <column name="created_date">cast(created_time as DATE)</column>
+            <column name="gender">gender</column>
+          </grouping>
+          <select>
+            <column name="n_patients" fn="count-distinct">id</column>
+          </select>
+        </add>
+      </aggregations>
+      <pivot key="created_date" columnDef="gender" fn="sum" value="n_patients"/>
+    </view>
+    <view name="by-gender">
+      <query ref="#org.santedb.bi.core.query.patient" />
+      <aggregations>
+        <add>
+          <providers>
+            <invariant>fbsql</invariant>
+            <invariant>npgsql</invariant>
+          </providers>
+          <grouping>
+            <column name="gender">gender</column>
+          </grouping>
+          <select>
+            <column name="n_patients" fn="count-distinct">id</column>
+          </select>
+        </add>
+      </aggregations>
+    </view>
+
+  </dataSources>
+  <views>
+    <add id="org.santedb.bi.core.reports.audit.outcomeType.chart" label="ui.bi.common.chart" name="chart">
+      <div xmlns="http://www.w3.org/1999/xhtml" xmlns:bi="http://santedb.org/bi/view">
+        <!-- Shows line chart with each audit event type -->
+        <bi:chart source="by-date" type="bar">
+          <bi:title>Registrations By Date</bi:title>
+          <bi:labels data="created_date" format="yyyy-MM"/>
+          <bi:dataset label="Males">Male</bi:dataset>
+          <bi:dataset label="Female">Females</bi:dataset>
+          <bi:dataset label="Undifferentiated">Undifferentiated</bi:dataset>
+        </bi:chart>
+      </div>
+    </add>
+    <add id="org.santedb.bi.core.reports.audit.outcomeType.chart" label="ui.bi.common.pie" name="pie">
+      <div xmlns="http://www.w3.org/1999/xhtml" xmlns:bi="http://santedb.org/bi/view">
+        <!-- Shows line chart with each audit event type -->
+        <bi:chart source="by-gender" type="pie">
+          <bi:title>Patient Population (Gender)</bi:title>
+          <bi:labels data="gender"/>
+          <bi:dataset label="# Patients" fn="sum">n_patients</bi:dataset>
+        </bi:chart>
+      </div>
+    </add>
+  </views>
+</BiReportDefinition>

@@ -1,0 +1,72 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<!--
+ - Portions Copyright 2015-2019 Mohawk College of Applied Arts and Technology
+ - Portions Copyright 2019-2019 SanteSuite Contributors (See NOTICE)
+ - 
+ - 
+ - Licensed under the Apache License, Version 2.0 (the "License"); you 
+ - may not use this file except in compliance with the License. You may 
+ - obtain a copy of the License at 
+ - 
+ - http://www.apache.org/licenses/LICENSE-2.0 
+ - 
+ - Unless required by applicable law or agreed to in writing, software
+ - distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+ - WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the 
+ - License for the specific language governing permissions and limitations under 
+ - the License.
+ - 
+ - User: Justin Fyfe
+ - Date: 2019-12-16
+ -->
+<BiQueryDefinition xmlns="http://santedb.org/bi" id="org.santedb.bi.core.query.patient" label="ui.santedb.bi.core.query.patient">
+  <meta status="active">
+    <authors>
+      <add>Justin Fyfe (Fyfe Software Inc.) &lt;justin@fyfesoftware.ca></add>
+    </authors>
+    <annotation>
+      <div xmlns="http://www.w3.org/1999/xhtml">
+        This query provides a view of all patient data in the SanteDB system
+      </div>
+    </annotation>
+  </meta>
+  <dataSources>
+    <add ref="#org.santedb.bi.dataSource.main"/>
+  </dataSources>
+  <parameters>
+    <add ref="#org.santedb.bi.core.parameter.common.date.from" name="dob-from" type="date"/>
+    <add ref="#org.santedb.bi.core.parameter.common.date.to" name="dob-to" type="date"/>
+    <add ref="#org.santedb.bi.core.parameter.patient.gender" name="gender" type="uuid" />
+  </parameters>
+  <definitions>
+    <add>
+      <providers>
+        <invariant>npgsql</invariant>
+        <invariant>fbsql</invariant>
+      </providers>
+      <![CDATA[
+        select 
+          ent_id as id,
+          dcsd_utc as death_time,
+          mb_ord as multi_birth,
+          dob as birth_time,
+          gndr.mnemonic as gender,
+          crt_utc as created_time,
+          mrtl.mnemonic as marital_status,
+          edu_lvl.mnemonic as edu_level
+        from 
+          pat_tbl 
+          inner join psn_tbl using (ent_vrsn_id) 
+          inner join ent_vrsn_tbl using (ent_vrsn_id) 
+          inner join cd_vrsn_tbl gndr on (gndr_cd_id = gndr.cd_id and obslt_vrsn_seq_id is null)
+          left join cd_vrsn_tbl mrtl on (mrtl_sts_cd_id = mrtl.cd_id .cd_id and obslt_vrsn_seq_id is null)
+          left join cd_vrsn_tbl edu_lvl on (edu_lvl_cd_id = edu_lvl.cd_id and obslt_vrsn_seq_id is null)
+        where 
+          obslt_utc is null
+          and dob between coalesce(${dob-from}, '0001-01-01') and coalesce(${dob-to}, current_date)
+          and gndr_cd_id = COALESCE(${gender}, gndr_cd_id);
+      ]]>
+    </add>
+   
+  </definitions>
+</BiQueryDefinition>

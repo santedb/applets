@@ -408,7 +408,7 @@ angular.module('santedb-lib')
                         var renderer = scope.render ? scope.render[m] : null;
 
                         return {
-                            orderable: renderer == null || scope.sort[m] !== undefined,
+                            orderable: renderer == null || scope.sort && scope.sort[m] !== undefined,
                             data: m,
                             defaultContent: '',
                             render: renderer ?

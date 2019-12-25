@@ -1,0 +1,57 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<!--
+ - Portions Copyright 2015-2019 Mohawk College of Applied Arts and Technology
+ - Portions Copyright 2019-2019 SanteSuite Contributors (See NOTICE)
+ - 
+ - 
+ - Licensed under the Apache License, Version 2.0 (the "License"); you 
+ - may not use this file except in compliance with the License. You may 
+ - obtain a copy of the License at 
+ - 
+ - http://www.apache.org/licenses/LICENSE-2.0 
+ - 
+ - Unless required by applicable law or agreed to in writing, software
+ - distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+ - WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the 
+ - License for the specific language governing permissions and limitations under 
+ - the License.
+ - 
+ - User: Justin Fyfe
+ - Date: 2019-11-13
+ -->
+<BiParameterDefinition xmlns="http://santedb.org/bi" id="org.santedb.bi.core.parameter.patient.gender" name="patient-gender" label="ui.bi.core.patient.gender" type="uuid">
+  <meta status="active">
+    <authors>
+      <add>Justin Fyfe (Fyfe Software Inc.) &lt;justin@fyfesoftware.ca></add>
+    </authors>
+    <annotation lang="en">
+      <div xmlns="http://www.w3.org/1999/xhtml">
+        <p>This parameter defines values for patient genders</p>
+      </div>
+    </annotation>
+  </meta>
+  <query>
+    <dataSources>
+      <add ref="#org.santedb.bi.dataSource.main" name="main"/>
+    </dataSources>
+    <definitions>
+      <add>
+        <providers>
+          <invariant>npgsql</invariant>
+          <invariant>fbsql</invariant>
+        </providers>
+        <![CDATA[
+           select 
+            cd_id as id, val 
+            from cd_set_mem_assoc_tbl 
+              inner join cd_vrsn_tbl using (cd_id) 
+              left join cd_name_tbl using (cd_id) 
+            where 
+              obslt_vrsn_seq_id is null 
+              and lang_cs = COALESCE(${Context_Language}, 'en')
+              and set_id = 'e9eecd3c-7b80-47f9-9cb6-55c8d3110fb0';        
+            ]]>
+      </add>
+    </definitions>
+  </query>
+</BiParameterDefinition>
