@@ -108,5 +108,40 @@ angular.module('santedb-lib')
         return function (date, precision) {
             return SanteDB.display.renderDate(date, precision);
         }
+    })
+    /**
+     * @method dotNetType
+     * @memberof Angular
+     * @summary Renders a .NET assembly qualified name
+     */
+    .filter('dotNetType', function () {
+        return function (aqm) {
+            if(!aqm)
+                return '';
+            else 
+            {
+                aqm = aqm.substring(0, aqm.indexOf(',')); // Get full name
+                aqm = aqm.substring(aqm.lastIndexOf('.') + 1);
+                return aqm;                
+            }
+        }
+    })
+    /**
+     * @method rawValueSummary
+     * @memberof Angular
+     * @summary Renders a raw value summary
+     */
+    .filter('rawValueSummary', function () {
+        return function (v) {
+            
+            if(Array.isArray(v))
+                return `[${(v[0] || {}).$type}] - size = ${v.length}`;
+            else if(v.value)
+                return v.value;
+            else if(v.$type)
+                return `${v.$type}`;
+            else 
+                return v;
+        }
     });
     

@@ -385,7 +385,8 @@ angular.module('santedb-lib')
                 sort: "<",
                 defaultFilter: "<",
                 canFilter: "<",
-                canSize: "<"
+                canSize: "<",
+                buttonBar: "<"
             },
             restrict: 'E',
             replace: true,
@@ -488,6 +489,11 @@ angular.module('santedb-lib')
                             }
                         });
 
+                    // Button bar requires something
+                    if(scope.buttonBar) 
+                        buttons = [ 'copy' ];
+
+
                     dt = $("table", element).DataTable({
                         lengthChange: scope.canSize,
                         processing: true,
@@ -550,12 +556,15 @@ angular.module('santedb-lib')
 
                     var bindButtons = function () {
                         dt.buttons().container().appendTo($('.dataTables_wrapper .col-md-6:eq(0)', element));
-                        if (dt.buttons().container().length == 0)
+                        if (dt.buttons().container().length == 0) {
                             $timeout(bindButtons, 100);
+                        } else if(scope.buttonBar) {
+                            $(scope.buttonBar).appendTo($('.col-md-6:eq(0)', dt.table().container()));
+                        }
                     };
 
                     // Add watch to scope query
-                    scope.$watch('defaultQuery', function(n,o) { if(n && n != o) dt.ajax.reload(); });
+                    scope.$watch((s)=>JSON.stringify(s.defaultQuery), function(n,o) { if(n && n != o) dt.ajax.reload(); });
                     bindButtons();
                 });
             }

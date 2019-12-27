@@ -19,6 +19,7 @@
  -->
 <div xmlns="http://www.w3.org/1999/xhtml" xmlns:sdb="http://santedb.org/applet">
     <sdb:script static="false">~/controllers/sync/index.js</sdb:script>
+
     <div ng-controller="SyncController" class="container-fluid">
         <div class="row">
             <div class="col-md-6 col-lg-3">
@@ -29,10 +30,10 @@
                                 <h1 class="mb-0">{{ queue.outbound }}</h1>
                             </div>
                             <div class="col ml-2 mr-2">
-                                <a
-                                    class="text-xs font-weight-bold text-primary text-uppercase mb-1">{{ 'ui.sync.outbox.title' | i18n }}</a>
+                                <button ng-click="openQueue('outbound')"
+                                    class="p-0 btn btn-link text-xs font-weight-bold text-primary text-uppercase">{{ 'ui.sync.outbound' | i18n }}</button>
                                 <div class="h5 mb-0 font-weight-bold text-gray">
-                                    {{ 'ui.sync.outbox.text' | i18n }} </div>
+                                    {{ 'ui.sync.outbound.text' | i18n }} </div>
                             </div>
                             <div class="col-auto">
                                 <i class="fas fa-upload fa-2x text-gray"></i>
@@ -49,10 +50,10 @@
                                 <h1 class="mb-0">{{ queue.inbound }}</h1>
                             </div>
                             <div class="col ml-2 mr-2">
-                                <a
-                                    class="text-xs font-weight-bold text-primary text-uppercase mb-1">{{ 'ui.sync.inbox.title' | i18n }}</a>
+                                <button ng-click="openQueue('inbound')"
+                                    class="btn btn-link text-xs font-weight-bold text-primary text-uppercase p-0 ">{{ 'ui.sync.inbound' | i18n }}</button>
                                 <div class="h5 mb-0 font-weight-bold text-gray">
-                                    {{ 'ui.sync.inbox.text' | i18n }} </div>
+                                    {{ 'ui.sync.inbound.text' | i18n }} </div>
                             </div>
                             <div class="col-auto">
                                 <i class="fas fa-download fa-2x text-gray"></i>
@@ -69,8 +70,8 @@
                                 <h1 class="mb-0">{{ queue.admin }}</h1>
                             </div>
                             <div class="col ml-2 mr-2">
-                                <a
-                                    class="text-xs font-weight-bold text-primary text-uppercase mb-1">{{ 'ui.sync.admin.title' | i18n }}</a>
+                                <button ng-click="openQueue('admin')"
+                                    class="btn btn-link text-xs font-weight-bold text-primary text-uppercase p-0 ">{{ 'ui.sync.admin' | i18n }}</button>
                                 <div class="h5 mb-0 font-weight-bold text-gray">
                                     {{ 'ui.sync.admin.text' | i18n }} </div>
                             </div>
@@ -89,8 +90,8 @@
                                 <h1 class="mb-0">{{ queue.dead }}</h1>
                             </div>
                             <div class="col ml-2 mr-2">
-                                <a
-                                    class="text-xs font-weight-bold text-primary text-uppercase mb-1">{{ 'ui.sync.dead.title' | i18n }}</a>
+                                <button ng-click="openQueue('dead')"
+                                    class="btn btn-link text-xs font-weight-bold text-primary text-uppercase p-0 ">{{ 'ui.sync.dead' | i18n }}</button>
                                 <div class="h5 mb-0 font-weight-bold text-gray">
                                     {{ 'ui.sync.dead.text' | i18n }} </div>
                             </div>
@@ -105,8 +106,10 @@
         <div class="row mt-2">
             <div class="col-12">
                 <div class="btn-group float-right">
-                    <button type="button" ng-click="retryAll()" class="btn btn-warning indicator-container"><i class="fas fa-fw fa-random fa-rotate-270"></i>{{ 'ui.sync.retry' | i18n }}</button>
-                    <button type="button" id="btnSync" ng-click="syncNow()" class="btn btn-primary"><i class="fas fa-fw fa-sync-alt"></i> {{ 'ui.sync.now' | i18n }}</button>
+                    <button type="button" ng-click="retryAll()" class="btn btn-warning indicator-container"><i
+                            class="fas fa-fw fa-random fa-rotate-270"></i>{{ 'ui.sync.retry' | i18n }}</button>
+                    <button type="button" id="btnSync" ng-click="syncNow()" class="btn btn-primary"><i
+                            class="fas fa-fw fa-sync-alt"></i> {{ 'ui.sync.now' | i18n }}</button>
                 </div>
             </div>
         </div>
@@ -133,7 +136,8 @@
                             </td>
                         </tr>
                         <tr ng-repeat="log in syncLog">
-                            <td>{{ log.ResourceType | i18n }} <br/><small><i class="fas fa-filter"></i> <span>{{ ::(log.Filter || "ALL").substring(0, 100) }}</span></small></td>
+                            <td>{{ log.ResourceType | i18n }} <br /><small><i class="fas fa-filter"></i>
+                                    <span>{{ ::(log.Filter || "ALL").substring(0, 100) }}</span></small></td>
                             <td>{{ log.LastETag }}</td>
                             <td>{{ log.LastSync | extDate: 'f' }}</td>
                         </tr>
@@ -141,7 +145,167 @@
                 </table>
             </div>
         </div>
+
+
+        <div class="modal fade" id="queueModal" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog modal-xl" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">
+
+                            <i class="fas"
+                                ng-class="{ 'fa-upload' : queue.name == 'outbound', 'fa-download' : queue.name == 'inbound', 'fa-cogs' : queue.name == 'admin', 'fa-random' : queue.name = 'dead' }"></i>
+                            {{ 'ui.sync.' + currentQueue.name | i18n }}
+                        </h5><button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">
+                                <i class="fa fa-times"></i>
+                            </span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="container-fluid">
+                            <div class="col" ng-if="!currentQueue.content">
+                                <p class="m-auto"><i class="fas fa-circle-notch fa-spin"></i> {{ 'ui.wait' | i18n }}</p>
+                            </div>
+                            <div class="col" ng-if="currentQueue.content"
+                                style="max-height:500px; overflow-y: auto; overflow-x:auto">
+                                <table class="table table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th>{{ 'ui.sync.queue.id' | i18n }}</th>
+                                            <th>{{ 'ui.sync.queue.action' | i18n }}</th>
+                                            <th>{{ 'ui.sync.queue.data' | i18n }}</th>
+                                            <th>{{ 'ui.sync.queue.state' | i18n }}</th>
+                                            <th>{{ 'ui.sync.queue.originalDate' | i18n }}</th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="q in currentQueue.content">
+                                            <td>{{ q.id }}</td>
+                                            <td>{{ q.operation }}</td>
+                                            <td>{{ q.type | dotNetType }}</td>
+                                            <td ng-if="currentQueue.name != 'dead'">
+                                                <span class="badge"
+                                                    ng-class="{ 'badge-success' : !q.isRetry , 'badge-warning' : q.isRetry }">
+                                                    <i class="fas"
+                                                        ng-class="{ 'fa-sort' : q.isRetry, 'fa-plus' : !q.isRetry }"></i>
+                                                    <span ng-if="q.isRetry"> {{ q.retryCount }}
+                                                        {{ 'ui.sync.retries' | i18n }}</span>
+                                                    <span ng-if="!q.isRetry"> {{ 'ui.sync.new' | i18n }}</span>
+                                                </span>
+                                            </td>
+                                            <td ng-if="currentQueue.name == 'dead'">
+                                                <span class="badge badge-danger">
+                                                    <i class="fas fa-exclamation-triangle"></i>
+                                                    {{ 'ui.sync.conflict' | i18n }}
+                                                </span>
+                                            </td>
+                                            <td>
+                                                {{ q.creationTime | extDate }}
+                                            </td>
+                                            <td>
+                                                <div class="btn-group" ng-if="currentQueue.name == 'dead'">
+                                                    <button class="btn btn-primary" ng-click="viewObject(q.id)"
+                                                        title="{{ 'ui.action.view' | i18n }}"><i
+                                                            class="fas fa-file"></i></button>
+                                                    <button class="btn btn-warning" ng-click="resubmitObject(q.id)"
+                                                        title="{{ 'ui.sync.queue.resubmit' | i18n }}"><i
+                                                            class="fas fa-upload"></i></button>
+                                                    <button class="btn btn-success" ng-disabled="!$root.system.online" ng-click="resolveObject(q.id)"
+                                                        title="{{ 'ui.sync.queue.resolve' | i18n }}"><i
+                                                            class="fas fa-compress-arrows-alt"></i></button>
+                                                    <button class="btn btn-danger" ng-click="ignoreObject(q.id)"
+                                                        title="{{ 'ui.sync.queue.ignore' | i18n }}"><i
+                                                            class="fas fa-trash"></i></button>
+                                                </div>
+                                                <div class="btn-group" ng-if="currentQueue.name != 'dead'">
+                                                    <button class="btn btn-primary" ng-click="viewObject(q.id)"
+                                                        title="{{ 'ui.action.view' | i18n }}"><i
+                                                            class="fas fa-file"></i></button>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-secondary" type="button" data-dismiss="modal">
+                            <i class="fa fa-times"></i> {{ 'ui.action.close' | i18n }}</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="currentItemModal" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog modal-lg shadow" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">
+                            <i class="fas fa-search-plus"></i>
+                            {{ currentObject.$type | i18n }} - {{ currentObject.id }}
+                        </h5><button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">
+                                <i class="fa fa-times"></i>
+                            </span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="container-fluid">
+                            <div class="col" ng-if="!currentObject">
+                                <p class="m-auto"><i class="fas fa-circle-notch fa-spin"></i> {{ 'ui.wait' | i18n }}</p>
+                            </div>
+                            <div class="col" ng-if="currentObject.$type == 'Patch'">
+                                <div class="container-fluid">
+                                    <div class="row">
+                                        <label class="control-label col-2">{{ 'ui.sync.patch.applyTo' | i18n }}</label>
+                                        <div class="col-4">{{ currentObject.appliesTo.type | dotNetType }}</div>
+                                        <label class="control-label col-2">{{ 'ui.sync.patch.version' | i18n }}</label>
+                                        <div class="col-4">{{ currentObject.appliesTo.etag }}</div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col">
+                                            <table class="table table-striped">
+                                                <caption>{{ 'ui.sync.patch.actions' | i18n }}</caption>
+                                                <thead>
+                                                    <tr>
+                                                        <th>{{ 'ui.sync.patch.actions.operation' | i18n }}</th>
+                                                        <th>{{ 'ui.sync.patch.actions.path' | i18n }}</th>
+                                                        <th>{{ 'ui.sync.patch.actions.value' | i18n }}</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr ng-repeat="a in currentObject.change">
+                                                        <td>{{ a.op }}</td>
+                                                        <td>{{ a.path }}</td>
+                                                        <td>{{ a.value | rawValueSummary }}</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col" ng-if="currentObject.$type != 'Patch'">
+                                <div class="container-fluid">
+                                    <div class="row">
+                                        <div class="col-6" ng-repeat="(k,v) in currentObject" ng-if="v">
+                                            <strong>{{ k }} :</strong> {{ v | rawValueSummary }}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-secondary" type="button" data-dismiss="modal">
+                            <i class="fa fa-times"></i> {{ 'ui.action.close' | i18n }}</button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-
-
 </div>

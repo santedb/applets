@@ -20,6 +20,10 @@
  */
 angular.module('santedb').controller('AuditIndexController', ["$scope", "$rootScope", "$state", "$templateCache", "$stateParams", function ($scope, $rootScope, $state, $templateCache, $stateParams) {
 
+    $scope.currentFilter = {
+       
+    };
+
     $("#auditModal").on('hidden.bs.modal', function () {
         if ($scope.navPush) {
             var nav = $scope.navPush;
@@ -33,10 +37,11 @@ angular.module('santedb').controller('AuditIndexController', ["$scope", "$rootSc
             case "Success":
                 return `<span class='badge badge-success'><i class='fas fa-check'></i> ${SanteDB.locale.getString("ui.model.audit.outcome.success")}</span>`;
             case "MinorFail":
-            case "SeriousFail":
                 return `<span class='badge badge-warning'><i class='fas fa-info-circle'></i> ${SanteDB.locale.getString("ui.model.audit.outcome.warning")}</span>`;
+            case "SeriousFail":
+                return `<span class='badge badge-warning'><i class='fas fa-info-circle'></i> ${SanteDB.locale.getString("ui.model.audit.outcome.error")}</span>`;
             case "EpicFail":
-                return `<span class='badge badge-danger'><i class='fas fa-exclamation-circle'></i> ${SanteDB.locale.getString("ui.model.audit.outcome.error")}</span>`;
+                return `<span class='badge badge-danger'><i class='fas fa-exclamation-circle'></i> ${SanteDB.locale.getString("ui.model.audit.outcome.epic")}</span>`;
             default:
                 return audit.outcome;
         }
