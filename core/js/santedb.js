@@ -2302,6 +2302,17 @@ if (!SanteDBWrapper)
         var _localeCache = {};
         var _localization = {
             /**
+             * @summary Default date formats
+             */
+            dateFormats : {
+                year: 'YYYY',
+                month: 'YYYY-MM',
+                day: 'YYYY-MM-DD',
+                hour: 'YYYY-MM-DD HH',
+                minute: 'YYYY-MM-DD HH:mm',
+                second: 'YYYY-MM-DD HH:mm:ss'
+            },
+            /**
                 * @summary Gets a string from the current user interface localization
                 * @memberof SanteDBWrapper.localiztion
                 * @method

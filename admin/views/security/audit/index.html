@@ -219,7 +219,7 @@
                                                                     </tr>
                                                                 </thead>
                                                                 <tbody>
-                                                                    <tr ng-repeat="o in audit.object" ng-if="o.role != 'Query'">
+                                                                    <tr ng-repeat="o in audit.object track by $index" ng-if="o.role != 'Query' &amp;&amp; $index &lt; 15">
                                                                         <td title="{{o.type}}">
                                                                             <i class="fas"
                                                                                 ng-class="{ 'fa-user' : o.type == 'Person', 'fa-cog' : o.type == 'SystemObject', 'fa-building' : o.type == 'Organization', 'fa-question' : o.type == 'Other' }"></i>
@@ -236,10 +236,15 @@
                                                                             <span ng-switch="o.idType">
                                                                                 <a ng-switch-when="Uri" href="{{o.id}}">{{ o.id }}</a>
                                                                                 <a ng-switch-when="UserIdentifier" ng-click="navigate('santedb-admin.security.users.edit', {id:o.id})">{{ o.id }}</a>
+                                                                                <a ng-switch-when="PatientNumber" ng-click="navigate('santedb-admin.mpi.patients.view', { id: o.id })">{{ o.id }}</a>
+                                                                                <span ng-switch-when="Custom">{{ o.id }}</span>
                                                                                 <span ng-switch-when="ReportNumber">{{ o.id }}</span>
                     
                                                                             </span>
                                                                         </td>
+                                                                    </tr>
+                                                                    <tr ng-if="audit.object.length > 15">
+                                                                        <td colspan="4">{{ audit.object.length - 15 }} {{ 'ui.audit.more' | i18n }}</td>
                                                                     </tr>
                                                                 </tbody>
                                                             </table>

@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="utf-8" ?>
 <!--
  - Portions Copyright 2015-2019 Mohawk College of Applied Arts and Technology
  - Portions Copyright 2019-2019 SanteSuite Contributors (See NOTICE)
@@ -19,7 +19,7 @@
  - User: Justin Fyfe
  - Date: 2019-12-16
  -->
-<BiReportDefinition xmlns="http://santedb.org/bi" id="org.santedb.bi.core.reports.patient.regDate" label="ui.bi.core.report.patient.regDate">
+<BiReportDefinition xmlns="http://santedb.org/bi" id="org.santedb.bi.core.reports.patient.gender" label="ui.bi.core.report.patient.regDate">
   <meta>
     <authors>
       <add>Justin Fyfe (Fyfe Software Inc.) &lt;justin@fyfesoftware.ca></add>
@@ -31,28 +31,16 @@
     </annotation>
   </meta>
   <dataSources>
-    <view name="by-date">
+    <view name="by-gender">
       <query ref="#org.santedb.bi.core.query.patient" />
       <aggregations>
         <add>
           <providers>
             <invariant>fbsql</invariant>
             <invariant>npgsql</invariant>
-          </providers>
-          <grouping>
-            <column name="created_date">cast(created_time as DATE)</column>
-            <column name="gender">gender</column>
-          </grouping>
-          <select>
-            <column name="n_patients" fn="count-distinct">id</column>
-          </select>
-        </add>
-        <add>
-          <providers>
             <invariant>sqlite</invariant>
           </providers>
           <grouping>
-            <column name="created_date">created_time - created_time % 864000000000</column>
             <column name="gender">gender</column>
           </grouping>
           <select>
@@ -60,18 +48,16 @@
           </select>
         </add>
       </aggregations>
-      <pivot key="created_date" columnDef="gender" fn="sum" value="n_patients"/>
     </view>
   </dataSources>
   <views>
-    <add id="org.santedb.bi.core.reports.patients.registrationDate" label="ui.bi.common.chart" name="chart">
+    <add id="org.santedb.bi.core.reports.patient.gender.chart" label="ui.bi.common.pie" name="chart">
       <div xmlns="http://www.w3.org/1999/xhtml" xmlns:bi="http://santedb.org/bi/view">
         <!-- Shows line chart with each audit event type -->
-        <bi:chart source="by-date" type="bar" legend="true">
-          <bi:title>Registrations By Date</bi:title>
-          <bi:labels data="created_date" format="yyyy-MM"/>
-          <bi:dataset backgroundColor="rgba(0,0,128,0.5)" borderColor="rgba(0,0,128,1)" label="Male">Male</bi:dataset>
-          <bi:dataset backgroundColor="rgba(244,91,225,0.5)"  borderColor="rgba(244,91,225,1)" label="Female">Female</bi:dataset>
+        <bi:chart source="by-gender" type="pie" legend="true">
+          <bi:title>Patient Population (Gender)</bi:title>
+          <bi:labels data="gender"/>
+          <bi:dataset label="# Patients" fn="sum">n_patients</bi:dataset>
         </bi:chart>
       </div>
     </add>

@@ -26,7 +26,7 @@
     </authors>
     <annotation>
       <div xmlns="http://www.w3.org/1999/xhtml">
-        This query provides a view of all patient data in the SanteDB system
+        <p>This query provides a view of all patient data in the SanteDB system</p>
       </div>
     </annotation>
   </meta>
@@ -67,6 +67,31 @@
           and gndr_cd_id = COALESCE(${gender}, gndr_cd_id);
       ]]>
     </add>
-   
+    <add>
+      <providers>
+        <invariant>sqlite</invariant>
+      </providers>
+      <![CDATA[
+      select 
+        entity.uuid as id,
+        deceasedDate as death_time,
+        birth_order as multi_birth,
+        dateOfBirth as birth_time,
+        gender.mnemonic as gender,
+        entity.creationTime as created_time,
+        marital.mnemonic as marital_status,
+        education.mnemonic as edu_level
+      from 
+        patient 
+        inner join person on (patient.uuid = person.uuid) 
+        inner join entity on (patient.uuid = entity.uuid) 
+        inner join concept as gender on (genderConcept = gender.uuid) 
+        left join concept as marital on (marital.uuid = marital_status) 
+        left join concept as education on (education.uuid = education_level)
+      where
+        (dateOfBirth - 621355968000000000) /  10000000  between coalesce(${dob-from},-0xfffffffffff) and coalesce(${dob-to}, 0xfffffffffff)
+        and genderConcept = COALESCE(${gender}, genderConcept)
+      ]]>
+    </add>
   </definitions>
 </BiQueryDefinition>

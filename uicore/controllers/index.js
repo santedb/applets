@@ -112,6 +112,19 @@ var santedbApp = angular.module('santedb', ['ngSanitize', 'ui.router', 'oc.lazyL
         // Localization
         SanteDB.resources.locale.findAsync().then(function (locale) {
             var localeAsset = locale[SanteDB.locale.getLocale()];
+            $rootScope.system = $rootScope.system || {};
+            $rootScope.system.locale = SanteDB.locale.getLocale();
+            $rootScope.system.locales = Object.keys(locale);
+
+            // Watch for user request to change default language in browser
+            $rootScope.$watch("system.locale", function(n,o) { 
+                if(n && n != o) {
+                    SanteDB.locale.setLocale(n);
+                    $templateCache.removeAll();
+                    $state.reload();
+                }
+             });
+
             if(localeAsset)
                 localeAsset.forEach(function (l) {
                     $.getScript(l);
@@ -125,7 +138,7 @@ var santedbApp = angular.module('santedb', ['ngSanitize', 'ui.router', 'oc.lazyL
 
         // Get configuration
         SanteDB.configuration.getAsync().then(function (d) {
-            $rootScope.system = {};
+            $rootScope.system = $rootScope.system || {};
             $rootScope.system.config = d;
             $rootScope.system.version = SanteDB.application.getVersion();
 

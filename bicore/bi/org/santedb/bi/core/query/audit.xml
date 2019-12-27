@@ -51,7 +51,7 @@
           AUD_TBL 
           INNER JOIN AUD_CD_TBL AS CLS_CD ON (CLS_CD.ID = CLS_CD_ID)
         WHERE
-          AUD_TBL.EVT_UTC BETWEEN ${from-date} AND ${to-date}
+          AUD_TBL.EVT_UTC BETWEEN COALESCE(${from-date}, '0001-01-01') AND COALESCE(${to-date}, CURRENT_TIMESTAMP)
           AND MNEMONIC = COALESCE(${type}, MNEMONIC)
           
       ]]>
@@ -71,8 +71,9 @@
         from 
           audit inner join audit_code on (audit_code.id = class)
         WHERE
-          (eventTime - 621355968000000000) /  10000000 BETWEEN ${from-date} AND ${to-date}
+          ((eventTime - 621355968000000000) /  10000000) BETWEEN COALESCE(${from-date}, 0) AND COALESCE(${to-date}, 0xffffffffffff)
           AND code = COALESCE(${type}, code)
+          
       ]]>
     </add>
   </definitions>

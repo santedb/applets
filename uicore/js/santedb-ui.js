@@ -60,7 +60,7 @@ SanteDBWrapper.prototype.display = {
     renderDate : function(date, precision) {
         var dateFormat;
 
-            if(!SanteDB.locale.dateFormats)
+            if(!SanteDB.locale.dateFormats) {
                 SanteDB.resources.locale.findAsync().then(function (locale) {
                     var localeAsset = locale[SanteDB.locale.getLocale()];
                     if(localeAsset)
@@ -70,6 +70,8 @@ SanteDBWrapper.prototype.display = {
                 }).catch(function (e) {
                    console.error(e);
                 });
+                SanteDB
+            }
                 
             switch (precision) {
                 case 1:   // Year     "Y"

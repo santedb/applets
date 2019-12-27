@@ -372,11 +372,11 @@
     <string key="ui.config.network.description">SanteDB can optimize the bandwidth that this device will use when communicating with the central instance, which can be set here. You can also setup any proxy information required for your local network</string>
     <string key="ui.config.network.optimize.label">Optimization</string>
     <string key="ui.config.network.optimize.help">SanteDB can optimize the bandwidth used by this device by compressing data</string>
-    <string key="ui.config.network.optimize.lzma">Ultra - 2g / dial-up / satellite</string>
-    <string key="ui.config.network.optimize.bzip2">High -3g / ISDN / DSL</string>
-    <string key="ui.config.network.optimize.gzip">Medium - 4g / LTE / DSL / Broadband</string>
-    <string key="ui.config.network.optimize.deflate">Low - Broadband Wi-Fi</string>
-    <string key="ui.config.network.optimize.none">None - Do not optimize traffic</string>
+    <string key="ui.config.network.optimize.lzma">Slow (2g / dial-up / satellite)</string>
+    <string key="ui.config.network.optimize.bzip2">Moderate (3g / ISDN / DSL)</string>
+    <string key="ui.config.network.optimize.gzip">Fast (4g / LTE / DSL)</string>
+    <string key="ui.config.network.optimize.deflate">Very Fast (5g / Broadband / Wi-Fi)</string>
+    <string key="ui.config.network.optimize.none">Local Network (Do not optimize traffic)</string>
     <string key="ui.config.network.useProxy">Use a proxy to access the server</string>
     <string key="ui.config.network.proxyAddress.label">Address</string>
     <string key="ui.config.network.proxyAddress.help">Use this setting to configure the address of your HTTP proxy</string>

@@ -174,10 +174,10 @@ angular.module('santedb-lib')
                 // Report rendering function
                 scope.renderReport = function (n, o) {
                     if (scope.id &&
-                        scope.parameters &&
                         scope.view &&
                         !scope.isRendering) {
                             hasRendered = true;
+                            scope.parameters = scope.parameters || {};
                         setReportContent(`<i class='fas fa-circle-notch fa-spin'></i> ${SanteDB.locale.getString("ui.wait")}`, false);
                         scope.isRendering = true;
                         SanteDBBi.renderReportAsync(scope.id, scope.view, "html", scope.parameters)
@@ -284,6 +284,19 @@ angular.module('santedb-lib')
                     scope.data[i].borderWidth = 1;
                 }
 
+                if(scope.type == 'bar' || scope.type == 'line') {
+                    var scale = {
+                        yAxes: [{
+                            ticks: {
+                                beginAtZero: true
+                            }
+                        }]
+                    };
+                    if(scope.axis)
+                        scale.xAxes = scope.axis;
+                }
+
+                // Construct the chart
                 scope.chart = new Chart(element[0].getContext("2d"), {
                     type: scope.type,
                     data: {
@@ -291,16 +304,14 @@ angular.module('santedb-lib')
                         datasets: scope.data
                     },
                     options: {
-                        scales: scope.axis ? {
-                            xAxes: [scope.axis]
-                        } : undefined,
+                        scales: scale,
                         responsive: true,
                         title: {
                             display: true,
                             text: scope.title
                         },
-                        legend: scope.legend || {
-                            display: scope.ledgend,
+                        legend:  {
+                            display: scope.legend,
                             position: 'bottom'
                         }
                     }

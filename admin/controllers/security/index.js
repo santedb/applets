@@ -22,8 +22,8 @@ angular.module('santedb').controller('SecurityDashboardController', ["$scope", f
 
     $scope.dashboard = {
         sessions : { 
-            "from-date" : new Date(new Date().getFullYear(), 0, 1),
-            "to-date": new Date(new Date().getFullYear(), 11, 31)
+            "from-date": new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate()-15),
+            "to-date": new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate()+1)
         }
     };
 
