@@ -81,6 +81,28 @@ angular.module('santedb-lib')
         }
     })
     /**
+     * @method nameType
+     * @memberof Angular
+     * @summary Renders an entity name type concept to the display
+     * @param {string} type The type of name to render if the name is an array of names
+     * @see {SanteDBModel.EntityName}
+     */
+    .filter('nameType', function () {
+        return function (modelValue, type) {
+
+            var candidateKey = Object.keys(modelValue)[0];
+            var name = modelValue[candidateKey];
+            if(type)
+                name = modelValue[type];
+
+            if(name.useModel)
+                return SanteDB.display.renderConcept(name.useModel);
+            else if(name.$type) 
+                return candidateKey;
+            return 'TODO';
+        }
+    })
+    /**
      * @method address
      * @memberof Angular
      * @summary Renders an entity address to the display
@@ -107,6 +129,23 @@ angular.module('santedb-lib')
     .filter('extDate', function () {
         return function (date, precision) {
             return SanteDB.display.renderDate(date, precision);
+        }
+    })
+    /**
+     * @method age
+     * @memberof Angular
+     * @summary Renders the age from the date
+     * @param {string} display The age to display (let this choose)
+     */
+    .filter('age', function () {
+        return function (date, display) {
+            var diff = moment().diff(date, 'days');
+            if(display == 'D' || diff < 45)
+                return diff + ' d/o';
+            diff = moment().diff(date, 'months');
+            if(display == 'M' || diff < 18)
+                return diff + ' m/o';
+            return moment().diff(date, 'years') + ' y/o';
         }
     })
     /**
@@ -142,6 +181,24 @@ angular.module('santedb-lib')
                 return `${v.$type}`;
             else 
                 return v;
+        }
+    })
+    /**
+     * @method exception
+     * @memberof Angular
+     * @summary Renders exception data
+     */
+    .filter('exceptionData', function () {
+        return function (v) {
+            
+            var rawValue = atob(v);
+            // Is there a server exception?
+            var parseResult = SanteDB.application.parseException(rawValue);
+
+            if(parseResult.rules && parseResult.rules.length > 0)
+                return parseResult.rules[0].text;
+            else 
+                return parseResult.message;
         }
     });
     

@@ -54,8 +54,7 @@
       </definition>
       <definition resource="Place" name="ui.subscription.place.all" mode="subscription" ignoreModifiedOn="false" trigger="periodic">
         <guards>
-          <when>!subscribed.address[Direct].component[County] &amp;&amp; !subscribed.address[Direct].component[State]</when>
-          <when>subscribed.classConcept == 'ff34dfa7-c6d3-4f8b-bc9f-14bcdc13ba6c'</when>
+          <when>subscribed.$type != 'Place'</when>
         </guards>
         <filters>
           <add>statusConcept=!CD4AA3C4-02D5-4CC9-9088-EF8F31E321C5&amp;classConcept=FF34DFA7-C6D3-4F8B-BC9F-14BCDC13BA6C&amp;_exclude=relationship&amp;_exclude=participation</add>

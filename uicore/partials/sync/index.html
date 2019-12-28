@@ -96,7 +96,7 @@
                                     {{ 'ui.sync.dead.text' | i18n }} </div>
                             </div>
                             <div class="col-auto">
-                                <i class="fas fa-random fa-2x text-gray"></i>
+                                <i class="fas fa-code-branch fa-2x text-gray"></i>
                             </div>
                         </div>
                     </div>
@@ -154,7 +154,7 @@
                         <h5 class="modal-title">
 
                             <i class="fas"
-                                ng-class="{ 'fa-upload' : queue.name == 'outbound', 'fa-download' : queue.name == 'inbound', 'fa-cogs' : queue.name == 'admin', 'fa-random' : queue.name = 'dead' }"></i>
+                                ng-class="{ 'fa-upload' : queue.name == 'outbound', 'fa-download' : queue.name == 'inbound', 'fa-cogs' : queue.name == 'admin', 'fa-code-branch' : queue.name = 'dead' }"></i>
                             {{ 'ui.sync.' + currentQueue.name | i18n }}
                         </h5><button class="close" type="button" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">
@@ -176,6 +176,7 @@
                                             <th>{{ 'ui.sync.queue.action' | i18n }}</th>
                                             <th>{{ 'ui.sync.queue.data' | i18n }}</th>
                                             <th>{{ 'ui.sync.queue.state' | i18n }}</th>
+                                            <th ng-if="currentQueue.name == 'dead'">{{ 'ui.sync.queue.error' | i18n }}</th>
                                             <th>{{ 'ui.sync.queue.originalDate' | i18n }}</th>
                                             <th></th>
                                         </tr>
@@ -201,6 +202,10 @@
                                                     {{ 'ui.sync.conflict' | i18n }}
                                                 </span>
                                             </td>
+                                            <td ng-if="currentQueue.name == 'dead'">
+                                                {{ q.tag | exceptionData }}
+                                            </td>
+                                            
                                             <td>
                                                 {{ q.creationTime | extDate }}
                                             </td>

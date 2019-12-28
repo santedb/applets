@@ -223,6 +223,7 @@
     <property name="determinerConceptModel" behavior="never"/>
     <property name="determinerConcept" behavior="never"/>
     <property name="statusConceptModel" behavior="never"/>
+    <property name="formConceptModel" behavior="always" ref="Concept"/>
     <property name="typeConceptModel" behavior="always" ref="Concept"/>
     <property name="relationship" all="true" behavior="always">
       <property name="*" all="true" ref="EntityRelationship"/>
@@ -235,13 +236,13 @@
     <property name="templateModel" behavior="always" all="false">
       <property name="mnemonic"/>
     </property>
-    <property name="createdBy" behavior="never"/>
-    <property name="creationTime" behavior="never"/>
+    <property name="createdBy" behavior="always" />
+    <property name="creationTime" behavior="always"/>
     <property name="creationTimeModel" behavior="never"/>
     <property name="version" behavior="never"/>
     <property name="name" all="true" ref="EntityName" behavior="always"/>
     <property name="address" all="true" ref="EntityAddress" behavior="always"/>
-    <property name="classConceptModel" behavior="never"/>
+    <property name="classConceptModel" behavior="always" ref="Concept"/>
     <property name="classConcept" behavior="never"/>
     <property name="determinerConceptModel" behavior="never"/>
     <property name="determinerConcept" behavior="never"/>

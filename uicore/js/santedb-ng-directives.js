@@ -475,15 +475,31 @@ angular.module('santedb-lib')
                     if(scope.defaultQuery && scope.defaultQuery.obsoletionTime)
                         buttons.push({
                             text: "<i class='fas fa-trash'></i> " + SanteDB.locale.getString("ui.action.showDeleted"),
-                            className: "btn btn-secondary",
+                            className: "btn btn-light",
                             action: function (e, dt, node, config) {
                                 if (!scope.defaultQuery.obsoletionTime || scope.defaultQuery.obsoletionTime == 'null') {
                                     scope.defaultQuery.obsoletionTime = '!null';
-                                    $("button.btn-info:has(i.fa-check-double)", element).removeClass("active");
+                                    $("button.btn-light:has(i.fa-trash)", element).addClass("active");
                                 }
                                 else {
                                     scope.defaultQuery.obsoletionTime = 'null';
-                                    $("button.btn-info:has(i.fa-check-double)", element).addClass("active");
+                                    $("button.btn-light:has(i.fa-trash)", element).removeClass("active");
+                                }
+                                dt.ajax.reload();
+                            }
+                        });
+                    else if(scope.defaultQuery && scope.defaultQuery.statusConcept)
+                        buttons.push({
+                            text: "<i class='fas fa-trash'></i> " + SanteDB.locale.getString("ui.action.showDeleted"),
+                            className: "btn btn-light",
+                            action: function (e, dt, node, config) {
+                                if (!scope.defaultQuery.statusConcept || scope.defaultQuery.statusConcept == StatusKeys.Active) {
+                                    scope.defaultQuery.statusConcept = '!' + StatusKeys.Active;
+                                    $("button.btn-light:has(i.fa-trash)", element).addClass("active");
+                                }
+                                else {
+                                    scope.defaultQuery.statusConcept = StatusKeys.Active;
+                                    $("button.btn-light:has(i.fa-trash)", element).removeClass("active");
                                 }
                                 dt.ajax.reload();
                             }
@@ -542,7 +558,9 @@ angular.module('santedb-lib')
                                                 return item;
                                         }),
                                         recordsTotal: undefined,
-                                        recordsFiltered: res.totalResults || res.size
+                                        recordsFiltered: res.totalResults || res.size,
+                                        iTotalRecords:res.totalResults || res.size,
+                                        iTotalDisplayRecords: res.totalResults  || res.size
                                     });
                                 })
                                 .catch(function (err) { $rootScope.errorHandler(err) });
@@ -729,11 +747,37 @@ angular.module('santedb-lib')
                         }).catch(function (e) {
                             alreadyFetching.splice(alreadyFetching.indexOf(scope.provenanceId), 1);
                             scope.isLoading = false;
-                            scope.provData = { "userModel": { "userName": "E" }};
+                            var provData = scope.provData = { "userModel": { "userName": "$R" }};
                             scope.error = true;
+
+                            var extraInfo = "";
+                            if(provData.userModel != null)
+                                extraInfo += `<b><i class='fas fa-user'></i> ${SanteDB.locale.getString('ui.provenance.user')}:</b> ${provData.userModel.userName}`;
+                            if (scope.provenanceTime)
+                                extraInfo += `<br/><b><i class='fas fa-clock'></i> ${SanteDB.locale.getString('ui.provenance.timestamp')}:</b>  ${moment(scope.provenanceTime).format(SanteDB.locale.dateFormats.second)}`;
 
                             try {
                                 scope.$apply();
+                                $timeout(function () {
+                                    $('button:first', element).attr('data-content', extraInfo);
+                                    $('button:first', element).popover({ html: true });
+                                });
+
+                                // Set the scope of all elements
+                                $(`div.prv_${scope.provenanceId}`).each(function (i, e) {
+                                    if (e == $(element)[0]) return;
+                                    $(e).removeClass(`prv_${scope.provenanceId}`);
+
+                                    var sscope = angular.element(e).isolateScope();
+                                    sscope.provData = provData;
+                                    sscope.isLoading = false;
+                                    sscope.$apply();
+                                    $timeout(function () {
+                                        $('button:first', e).attr('data-content', extraInfo);
+                                        $('button:first', e).popover({ html: true });
+                                    });
+
+                                });
                             }
                             catch (e) {}
                         })

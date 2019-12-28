@@ -37,7 +37,7 @@
     <text lang="en">Dashboard</text>
   </menuItem>
   <menuItem context="org.santedb.admin">
-    <icon>fas fa-cogs</icon>
+    <icon>fas fa-tools</icon>
     <text lang="en">System</text>
     <menuItem launch="santedb-admin.system.applets.index" asset="/org.santedb.admin/views/security/users/index.html" context="org.santedb.admin">
       <icon>fab fa-html5</icon>
@@ -52,7 +52,7 @@
       <text lang="en">Server Status</text>
     </menuItem>
   </menuItem>
-  <menuItem context="org.santedb.admin" launch="santedb-admin.security.index" asset="/org.santedb.admin.views/security/index.html">
+  <menuItem context="org.santedb.admin" launch="santedb-admin.security.index" asset="/org.santedb.admin/views/security/index.html">
     <icon>fas fa-shield-alt</icon>
     <text lang="en">Security</text>
     <menuItem launch="santedb-admin.security.users.index" asset="/org.santedb.admin/views/security/users/index.html" context="org.santedb.admin">
@@ -82,6 +82,42 @@
     <menuItem launch="santedb-admin.security.audit.index" asset="/org.santedb.admin/views/security/audit/index.html" context="org.santedb.admin">
       <icon>fas fa-search-plus</icon>
       <text lang="en">Audit Repository</text>
+    </menuItem>
+  </menuItem>
+  <menuItem context="org.santedb.admin" launch="santedb-admin.data.index" asset="/org.santedb.admin/views/data/index.html">
+    <icon>fas fa-database</icon>
+    <text lang="en">Reference Data</text>
+    <menuItem context="org.santedb.admin" launch="santedb-admin.data.domain.index" asset="/org.santedb.admin/views/data/domains/index.html">
+      <icon>fas fa-id-badge</icon>
+      <text lang="en">Identity Domains</text>
+    </menuItem>
+    <menuItem context="org.santedb.admin" launch="santedb-admin.data.place.index" asset="/org.santedb.admin/views/data/places/index.html">
+      <icon>fas fa-map</icon>
+      <text lang="en">Places</text>
+    </menuItem>
+    <menuItem context="org.santedb.admin" launch="santedb-admin.data.facility.index" asset="/org.santedb.admin/views/data/facilities/index.html">
+      <icon>fas fa-hospital-alt</icon>
+      <text lang="en">Facilities</text>
+    </menuItem>
+    <menuItem context="org.santedb.admin" launch="santedb-admin.data.material.index" asset="/org.santedb.admin/views/data/materials/index.html">
+      <icon>fas fa-pills</icon>
+      <text lang="en">Materials</text>
+    </menuItem>
+  </menuItem>
+  <menuItem context="org.santedb.admin" launch="santedb-admin.concept.index" asset="/org.santedb.admin/views/concept/index.html">
+    <icon>fas fa-stethoscope</icon>
+    <text lang="en">Concept Dictionary</text>
+    <menuItem context="org.santedb.admin" launch="santedb-admin.concept.refTerms.index" asset="/org.santedb.admin/views/concept/refterms/index.html">
+      <icon>fas fa-code</icon>
+      <text lang="en">Code Systems</text>
+    </menuItem>
+    <menuItem context="org.santedb.admin" launch="santedb-admin.concept.sets.index" asset="/org.santedb.admin/views/concept/sets/index.html">
+      <icon>fas fa-project-diagram</icon>
+      <text lang="en">Concept Sets</text>
+    </menuItem>
+    <menuItem context="org.santedb.admin" launch="santedb-admin.concept.concepts.index" asset="/org.santedb.admin/views/concept/concepts/index.html">
+      <icon>fas fa-th-list</icon>
+      <text lang="en">Concepts</text>
     </menuItem>
   </menuItem>
 
@@ -242,5 +278,20 @@
     <!-- Login Message -->
     <string key="ui.admin.loginMessage">Welcome to SanteDB Administration Center</string>
     <string key="ui.title">SanteDB Administration</string>
+
+    <!-- Data Strings -->
+    <string key="ui.admin.data.dashboard.index">SanteDB Reference Data</string>
+    <string key="ui.admin.data.domains.title">Identity Domains</string>
+    <string key="ui.admin.data.domains.count">Authority Management</string>
+    <string key="ui.admin.data.domains.create">Create ID Domain</string>
+    <string key="ui.admin.data.places.title">Places</string>
+    <string key="ui.admin.data.places.count">Geographics Management</string>
+    <string key="ui.admin.data.places.create">Create Place</string>
+    <string key="ui.admin.data.facilities.title">Facilities</string>
+    <string key="ui.admin.data.facilities.count">Clinic / Hospital Management</string>
+    <string key="ui.admin.data.facilities.create">Create Facility</string>
+    <string key="ui.admin.data.materials.title">Materials</string>
+    <string key="ui.admin.data.materials.count">Materials Management</string>
+    <string key="ui.admin.data.materials.create">Create Material</string>
   </strings>
 </AppletManifest>

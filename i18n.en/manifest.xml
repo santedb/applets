@@ -160,7 +160,7 @@
     <string key="ui.state.running">Running</string>
     <string key="ui.state.obsolete">Obsolete</string>
     <string key="ui.state.cancelled">Cancelled</string>
-    <string key="ui.state.nullified">Nullified</string>
+    <string key="ui.state.nullified">Entered in Error</string>
     <string key="ui.state.locked">Locked</string>
     <string key="ui.state.readonly">Readonly</string>
     <string key="ui.state.offline">Offline</string>
@@ -203,6 +203,7 @@
     <string key="ui.sync.patch.actions.path">On Property</string>
     <string key="ui.sync.patch.actions.value">New Value</string>
     <string key="ui.sync.patch.actions">Actions to be applied</string>
+    <string key="ui.sync.queue.error">Error</string>
     <!-- Common Action buttons -->
     <string key="ui.action">Actions</string>
     <string key="ui.action.ok">Ok</string>
@@ -489,6 +490,12 @@
     <string key="ui.model.applicationEntity.softwareName">Software Name</string>
     <string key="ui.model.applicationEntity.vendorName">Vendor</string>
     <string key="ui.model.applicationEntity.versionName">Version</string>
+
+    <string key="ui.model.assigningAuthority.oid">Universal ID</string>
+    <string key="ui.model.assigningAuthority.domainName">Namespace ID</string>
+    <string key="ui.model.assigningAuthority.name">Name</string>
+    <string key="ui.model.assigningAuthority.isUnique">Unique</string>
+    <string key="ui.model.assigningAuthority.updatedBy">Last Update</string>
     <string key="ui.model.version.sequence">Sequence</string>
     <string key="ui.model.version.createdBy">Created</string>
     <string key="ui.model.version.replaces">Replaces Version</string>
@@ -501,6 +508,19 @@
     <string key="ui.model.patient.identifier">Identifier(s)</string>
     <string key="ui.model.patient.creationTime">Timestamp</string>
 
+    <string key="ui.model.place.name">Name</string>
+    <string key="ui.model.place.classConcept">Classification</string>
+    <string key="ui.model.place.typeConcept">Type</string>
+    <string key="ui.model.place.address">Address</string>
+    <string key="ui.model.place.updatedBy">Last Update</string>
+    <string key="ui.model.place.statusConcept">Status</string>
+
+    <string key="ui.model.material.name">Name</string>
+    <string key="ui.model.material.classConcept">Class</string>
+    <string key="ui.model.material.typeConcept">Material Type</string>
+    <string key="ui.model.material.formConcept">Form</string>
+    <string key="ui.model.material.statusConcept">Status</string>
+    <string key="ui.model.material.updatedBy">Last Update</string>
     <!-- Audit Logs -->
     <string key="ui.model.audit.action">Action</string>
     <string key="ui.model.audit.event">Event</string>

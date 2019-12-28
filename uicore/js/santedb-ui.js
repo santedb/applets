@@ -136,6 +136,8 @@ SanteDBWrapper.prototype.display = {
             return concept.name[SanteDB.locale.getLanguage()];
         else if (concept.name)
             return concept.name[Object.keys(concept.name)[0]];
+        else if (concept.mnemonic)
+            return concept.mnemonic;
         else if (concept[SanteDB.locale.getLanguage()])
             return concept[SanteDB.locale.getLanguage()];
         else

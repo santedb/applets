@@ -49,20 +49,20 @@
                         <a class="nav-link" ng-if="!m.menu" ui-sref="{{ ::m.action }}" data-toggle="collapse"
                             data-target=".navbar-collapse-small" >
                             <i class="{{m.icon}}"></i>
-                            <span class="nav-link-text"> {{::m.text}}</span>
+                            <span class="nav-link-text"> {{::m.text || m.action | i18n }}</span>
                         </a>
                         <a ng-if="m.menu" class="nav-link nav-link-collapse" ui-sref="{{ ::m.action }}"
                             data-toggle="collapse" data-target="#Collapse{{$index}}" role="button" aria-haspopup="true"
                             aria-expanded="false">
                             <i class="{{m.icon}}"></i>
-                            <span class="nav-link-text"> {{::m.text}}</span>
+                            <span class="nav-link-text"> {{::m.text || m.action | i18n}}</span>
                         </a>
                         <ul ng-if="m.menu" class="sidenav-second-level collapse" id="Collapse{{$index}}"  data-parent="#menuAccordian">
                             <li ng-repeat="c in ::m.menu" title="{{c.text}}">
                                 <a ui-sref="{{ ::c.action }}" data-toggle="collapse"
                                     data-target=".navbar-collapse-small">
                                     <i class="{{c.icon}}"></i>
-                                    <span class="nav-link-text"> {{c.text}}</span>
+                                    <span class="nav-link-text"> {{::c.text ||c.action | i18n}}</span>
                                 </a>
                             </li>
                         </ul>
@@ -128,7 +128,6 @@
                             <h6 class="dropdown-header">{{ 'ui.admin.alerts' | i18n }}:</h6>
                             <div ng-repeat="t in tickles">
                                 <div class="dropdown-divider"></div>
-                                <div class="dropdown-divider"></div>
                                 <a class="dropdown-item" href="#">
                                     <span ng-class="{'text-danger' : t.isError, ' text-success' : !t.isError }">
                                         <strong ng-if="t.isError">
@@ -148,6 +147,8 @@
                                 <div class="dropdown-divider"></div>
                                 <a class="dropdown-item" href="#">{{ 'ui.admin.alerts.none' | i18n }}</a>
                             </div>
+                            <div class="dropdown-divider"></div>
+                            <button class="btn btn-link" type="button" ng-click="clearTickles()">{{ 'ui.action.acknowledge' | i18n }}</button>
                         </div>
                     </li>
                     <li class="nav-item indicator-container">

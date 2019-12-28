@@ -527,7 +527,10 @@ if (!SanteDBWrapper)
                 var headers = {
                     Accept: _config.accept
                 };
-                if (_config.viewModel)
+
+                if(viewModel) 
+                    headers["X-SanteDB-ViewModel"] = viewModel;
+                else if (_config.viewModel)
                     headers["X-SanteDB-ViewModel"] = _config.viewModel;
                 else if (id && id.viewModel)
                     headers["X-SanteDB-ViewModel"] = id.viewModel;
@@ -962,6 +965,31 @@ if (!SanteDBWrapper)
 
         // App controller internal
         var _application = {
+            /**
+             * @method
+             * @summary Parses an exception string into a local object
+             * @param {string} exceptionString The exception string to be parsed
+             */
+            parseException: function(exceptionString) {
+                var retVal = new Exception();
+                try {
+                    // Server Exceptions
+                    var exceptionRegex = /--SERVER\sFAULT--(.*?)--END SERVER FAULT--/gs;
+                    var result = exceptionRegex.exec(exceptionString);
+                    
+                    if(result) {
+                        return JSON.parse(result[1]);
+                    }
+                    else {
+                        exceptionRegex = /\[(\w*?Exception)\:(.*?)\]/g;
+                        var result = exceptionRegex.exec(exceptionString);
+                        
+                    }
+                }
+                catch(e) {
+                    return new Exception("JavaScript", e);
+                }
+            },
             /**
              * @method
              * @summary Gets an applet object 

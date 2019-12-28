@@ -1,0 +1,12 @@
+<div xmlns="http://www.w3.org/1999/xhtml">
+    <ul class="nav nav-tabs" role="tablist">
+        <li class="nav-item" ng-repeat="tabWidget in widgets">
+            <a class="nav-link" ng-class="{'active' : $index == 0}" id="tabWidget-{{tabWidget.name}}" data-toggle="tab" data-target="#widget_{{$index}}" role="tab"><i ng-class="tabWidget.icon"></i> {{ tabWidget.name | i18n }}</a>
+        </li>
+    </ul>
+    <div class="tab-content">
+        <div class="tab-pane fade" ng-repeat="tabWidget in widgets" ng-class="{ 'show active' : $index == 0 }"  id="widget_{{$index}}" role="tabpanel">
+            <ng-include src="'/app/Widgets/' + tabWidget.name"></ng-include>
+        </div>
+    </div>
+</div>

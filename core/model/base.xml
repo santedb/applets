@@ -45,6 +45,7 @@
   <type type="EntityName" all="false">
     <property name="source" behavior="never"/>
     <property name="use" behavior="always" ref="Concept"/>
+    <property name="useModel" ref="Concept"/>
     <property name="id"  />
     <property name="component" all="true" behavior="always" >
       <property name="*" all="true"/>

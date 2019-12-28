@@ -1,0 +1,49 @@
+<div xmlns="http://www.w3.org/1999/xhtml">
+    <div ng-if="!patient" class="alert alert-warning"><i class="fas fa-bug"></i> YOU HAVE TO HAVE AN OBJECT NAMED
+        patient ON YOUR SCOPE</div>
+    <div class="card shadow">
+        <div class="card-body">
+            <div class="row">
+                <div class="col-4">
+                    <div class="p-2 flex-grow-1">
+                        <h5 class="m-0">{{ patient.name | name }} ({{ patient.name | nameType}})</h5>
+                    </div>
+                </div>
+                <div class="col-8">
+                    <div class="d-flex flex-wrap justify-content-end">
+                        <div class="p-2 flex-grow-1">
+                            <h5 class="m-0 p-0"><i class="fas fa-id-card"></i> {{ patient.identifier[$root.system.config.application.setting['aa.preferred']].value }} <span
+                                class="badge badge-info">{{ patient.identifier[$root.system.config.application.setting['aa.preferred']].authority.name }}</span></h5>
+                        </div>
+                        <div class="p-2"><i class="fas"
+                                ng-class="{ 'fa-male' : patient.genderConceptModel.mnemonic == 'Male' , 'fa-female' :  patient.genderConceptModel.mnemonic == 'Female' }"></i>
+                            {{ patient.genderConceptModel | concept }}</div>
+                        <div class="p-2"><i class="fas fa-birthday-cake"></i>
+                            {{ patient.dateOfBirth | extDate: patient.dateOfBirthPrecision }} (
+                            {{ patient.dateOfBirth | age: 'y' }} )</div>
+                        <div class="p-2">
+                            <button type="button" class="btn btn-link collapse-indicator" data-toggle="collapse"
+                                data-target="#additionalDemographics"><i class="fa fa-chevron-right"></i></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="collapse" id="additionalDemographics">
+                <div class="row">
+                    <div class="col-4">
+                        <div class="p-2 flex-grow-1"><i class="fas fa-home"></i> {{ patient.address | address }}</div>
+                    </div>
+                    <div class="col-8">
+                        <div class="d-flex flex-wrap justify-content-end">
+                            <div class="p-2" ng-if="domain != $root.system.config.application.setting['aa.preferred']" ng-repeat="(domain, id) in patient.identifier track by $index">
+                                <i class="far fa-id-card"></i> {{ id.value }} <span
+                                    class="badge badge-info">{{ id.authority.name }}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>

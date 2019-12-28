@@ -142,6 +142,11 @@ var santedbApp = angular.module('santedb', ['ngSanitize', 'ui.router', 'oc.lazyL
             $rootScope.system.config = d;
             $rootScope.system.version = SanteDB.application.getVersion();
 
+            // Make app settings easier to handle
+            var appSettings = {};
+            d.application.setting.forEach((k)=>appSettings[k.key] = k.value);
+            $rootScope.system.config.application.setting = appSettings;
+
             // Is there a branding environment variable
             if (!$rootScope.system.config.isConfigured && $state.$current.name != 'santedb-config.initial')
                 $state.transitionTo('santedb-config.initial');
