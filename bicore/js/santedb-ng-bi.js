@@ -277,6 +277,10 @@ angular.module('santedb-lib')
                         scope.data[i].pointBackgroundColor = 'rgba(0,0,0,0.1)';
                         scope.data[i].pointBorderColor = 'rgba(0,0,0,0.1)';
                     }
+                    else if(scope.type == "bar"){
+                        scope.data[i].backgroundColor = scope.data[i].backgroundColor || randomColor(0.5, parseInt(i));
+                        scope.data[i].borderColor = scope.data[i].borderColor || randomColor(1, parseInt(i));
+                    }
                     else {
                         scope.data[i].backgroundColor = scope.data[i].backgroundColor || randomColor.bind(null, 0.5);
                         scope.data[i].borderColor = scope.data[i].borderColor || randomColor.bind(null,1);

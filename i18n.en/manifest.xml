@@ -62,6 +62,8 @@
   </locales>
 
   <strings lang="en">
+
+    <string key="ui.debug">DEBUG COMPILE - NOT FOR RELEASE</string>
     <string key="ui.locale">Language</string>
     <string key="ui.locale.en">English</string>
     <string key="ui.locale.en-au">English (Australia)</string>
@@ -204,9 +206,11 @@
     <string key="ui.sync.patch.actions.value">New Value</string>
     <string key="ui.sync.patch.actions">Actions to be applied</string>
     <string key="ui.sync.queue.error">Error</string>
+    <string key="ui.sync.dead.ignoreConfirm">Are you sure you want to ignore this conflict? YOUR CHANGES WILL NOT BE SENT TO CENTRAL SERVER!</string>
     <!-- Common Action buttons -->
     <string key="ui.action">Actions</string>
     <string key="ui.action.ok">Ok</string>
+    <string key="ui.action.dismiss">Dismiss</string>
     <string key="ui.action.cancel">Cancel</string>
     <string key="ui.action.save">Save</string>
     <string key="ui.action.search">Search</string>
@@ -504,7 +508,7 @@
 
     <string key="ui.model.patient.name">Name</string>
     <string key="ui.model.patient.dateOfBirth">DOB</string>
-    <string key="ui.model.patient.gender">Admin. Gender</string>
+    <string key="ui.model.patient.genderConcept">Gender</string>
     <string key="ui.model.patient.identifier">Identifier(s)</string>
     <string key="ui.model.patient.creationTime">Timestamp</string>
 

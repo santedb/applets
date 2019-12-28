@@ -39,15 +39,19 @@
   <menuItem context="org.santedb.admin">
     <icon>fas fa-tools</icon>
     <text lang="en">System</text>
-    <menuItem launch="santedb-admin.system.applets.index" asset="/org.santedb.admin/views/security/users/index.html" context="org.santedb.admin">
+    <menuItem launch="santedb-admin.system.applets.index" asset="/org.santedb.admin/views/system/applets/index.html" context="org.santedb.admin">
       <icon>fab fa-html5</icon>
       <text lang="en">Applets</text>
     </menuItem>
-    <menuItem launch="santedb-admin.system.logs.index" asset="/org.santedb.admin/views/security/users/index.html" context="org.santedb.admin">
+    <menuItem launch="santedb-admin.system.jobs" asset="/org.santedb.admin/views/system/jobs/index.html" context="org.santedb.admin">
+      <icon>fas fa-cogs</icon>
+      <text lang="en">Jobs</text>
+    </menuItem>
+    <menuItem launch="santedb-admin.system.logs.index" asset="/org.santedb.admin/views/system/logs/index.html" context="org.santedb.admin">
       <icon>far fa-list-alt</icon>
       <text lang="en">Logs</text>
     </menuItem>
-    <menuItem launch="santedb-admin.system.info" asset="/org.santedb.admin/views/security/users/index.html" context="org.santedb.admin">
+    <menuItem launch="santedb-admin.system.info" asset="/org.santedb.admin/views/system/server/index.html" context="org.santedb.admin">
       <icon>fas fa-info-circle</icon>
       <text lang="en">Server Status</text>
     </menuItem>
@@ -127,8 +131,9 @@
 
   <strings lang="en">
     <string key="ui.admin.brand.title"><![CDATA[<img src="/org.santedb.core/img/icon.png" height="24px"/> SanteDB Admin]]></string>
-
-    <string key="ui.admin.syncMode.warning">Your device is operating in offline/synchronized mode, these settings are not propogated to the central server (nor do they represent the entire dataset). For more information please see the SanteDB documentation.</string>
+    <string key="ui.admin.tickleError">Error fetching application alerts</string>
+    <string key="ui.admin.mailError">Error retrieving mail</string>
+    <string key="ui.admin.syncMode.warning">Your device is operating in synchronized mode, these settings will not be propogated to the central server and may not represent the entire dataset. Any changes you make here will be local changes only and may be overwritten upon synchronization. For more information please see the SanteDB documentation.</string>
     <!-- History -->
     <string key="ui.admin.history.title">Version History</string>
     <!-- User Screen Translations --> 

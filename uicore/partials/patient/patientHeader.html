@@ -13,7 +13,7 @@
                     <div class="d-flex flex-wrap justify-content-end">
                         <div class="p-2 flex-grow-1">
                             <h5 class="m-0 p-0"><i class="fas fa-id-card"></i> {{ patient.identifier[$root.system.config.application.setting['aa.preferred']].value }} <span
-                                class="badge badge-info">{{ patient.identifier[$root.system.config.application.setting['aa.preferred']].authority.name }}</span></h5>
+                                class="badge badge-primary">{{ patient.identifier[$root.system.config.application.setting['aa.preferred']].authority.name }}</span></h5>
                         </div>
                         <div class="p-2"><i class="fas"
                                 ng-class="{ 'fa-male' : patient.genderConceptModel.mnemonic == 'Male' , 'fa-female' :  patient.genderConceptModel.mnemonic == 'Female' }"></i>

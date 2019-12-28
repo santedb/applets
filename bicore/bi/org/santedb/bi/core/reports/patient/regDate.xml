@@ -70,8 +70,8 @@
         <bi:chart source="by-date" type="bar" legend="true">
           <bi:title>Registrations By Date</bi:title>
           <bi:labels data="created_date" format="yyyy-MM"/>
-          <bi:dataset backgroundColor="rgba(0,0,128,0.5)" borderColor="rgba(0,0,128,1)" label="Male">Male</bi:dataset>
-          <bi:dataset backgroundColor="rgba(244,91,225,0.5)"  borderColor="rgba(244,91,225,1)" label="Female">Female</bi:dataset>
+          <bi:dataset label="Female">Female</bi:dataset>
+          <bi:dataset label="Male">Male</bi:dataset>
         </bi:chart>
       </div>
     </add>

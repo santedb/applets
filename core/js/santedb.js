@@ -352,7 +352,7 @@ if (!SanteDBWrapper)
                     $.ajax({
                         method: 'DELETE',
                         url: _config.base + configuration.resource + (configuration.id ? (_config.idByQuery ? "?_id=" + configuration.id : "/" + configuration.id) : ""),
-                        data: configuration.contentType == 'application/json' ? JSON.stringify(_reorderProperties(configuration.data)) : configuration.data,
+                        data: configuration.contentType == 'application/json' && configuration.data ? JSON.stringify(_reorderProperties(configuration.data)) : configuration.data,
                         headers: { "X-Delete-Mode": configuration.mode || "OBSOLETE" },
                         dataType: configuration.dataType ||'json',
                         contentType: configuration.contentType || 'application/json',
@@ -1730,7 +1730,16 @@ if (!SanteDBWrapper)
             subscriptionDefinition : new ResourceWrapper({
                 resource: "SubscriptionDefinition",
                 api: _ami
-            })
+            }),
+            /**
+             * @property {SanteDB.ResourceWrapper}
+             * @memberOf SanteDBWrapper.resources
+             * @summary Wrapper for subscription definition API
+             */
+            job : new ResourceWrapper({
+                resource: "Job",
+                api: _ami
+            }),
         };
 
         // HACK: Wrapper pointer facility = place

@@ -27,6 +27,10 @@ angular.module("santedb").controller("SyncController", ['$scope', '$rootScope', 
         // Fetch the queues from the server
         try {
             $scope.queue = await SanteDB.resources.queue.findAsync();
+
+            if($scope.currentQueue) {
+                await $scope.openQueue($scope.currentQueue.name);
+            }
             await $scope.$applyAsync();
         }
         catch(e) {
@@ -63,6 +67,10 @@ angular.module("santedb").controller("SyncController", ['$scope', '$rootScope', 
     refreshQueues().then(() => $scope.$apply());
     $interval(refreshQueues, 10000);
 
+    $("#queueModal").on("hidden.bs.modal", function() {
+        $scope.currentQueue = null;
+    });
+    
     // Open a queue
     $scope.openQueue= async function(queueName) {
         try {
@@ -89,4 +97,31 @@ angular.module("santedb").controller("SyncController", ['$scope', '$rootScope', 
     }
     getLog().then(() => $scope.$apply());
 
+    // Resubmit object to queue
+    $scope.resubmitObject = async function(id) {
+        try {
+            $scope.currentQueue = null;
+            await SanteDB.resources.queue.addAssociatedAsync("dead", id, {});
+        }
+        catch(e) {
+            $rootScope.errorHandler(e);
+        }
+        finally {
+            $scope.openQueue("dead");
+        }
+    }
+
+    // Ignore the queue object
+    $scope.ignoreObject = async function(id) {
+        try {
+            if(confirm(SanteDB.locale.getString("ui.sync.dead.ignoreConfirm")))
+                SanteDB.resources.queue.removeAssociatedAsync("dead", "confirm", id);
+        }
+        catch(e) {
+            $rootScope.errorHandler(e);
+        }
+        finally {
+            $scope.openQueue("dead");
+        }
+    }
 }]);

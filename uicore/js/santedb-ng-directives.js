@@ -477,15 +477,19 @@ angular.module('santedb-lib')
                             text: "<i class='fas fa-trash'></i> " + SanteDB.locale.getString("ui.action.showDeleted"),
                             className: "btn btn-light",
                             action: function (e, dt, node, config) {
-                                if (!scope.defaultQuery.obsoletionTime || scope.defaultQuery.obsoletionTime == 'null') {
-                                    scope.defaultQuery.obsoletionTime = '!null';
-                                    $("button.btn-light:has(i.fa-trash)", element).addClass("active");
-                                }
-                                else {
+                                
+                                var btn = $("button.btn-light:has(i.fa-trash)", element);
+                                if(btn.hasClass("active")) { // active to inactive
                                     scope.defaultQuery.obsoletionTime = 'null';
                                     $("button.btn-light:has(i.fa-trash)", element).removeClass("active");
                                 }
+                                else {
+                                    scope.defaultQuery.obsoletionTime = '!null';
+                                    $("button.btn-light:has(i.fa-trash)", element).addClass("active");
+                                }
+                                
                                 dt.ajax.reload();
+                                
                             }
                         });
                     else if(scope.defaultQuery && scope.defaultQuery.statusConcept)
@@ -557,10 +561,10 @@ angular.module('santedb-lib')
                                             else
                                                 return item;
                                         }),
-                                        recordsTotal: undefined,
-                                        recordsFiltered: res.totalResults || res.size,
-                                        iTotalRecords:res.totalResults || res.size,
-                                        iTotalDisplayRecords: res.totalResults  || res.size
+                                        recordsTotal: res.totalResults || res.size || 0,
+                                        recordsFiltered: res.totalResults || res.size || 0,
+                                        iTotalRecords: res.totalResults || res.size || 0,
+                                        iTotalDisplayRecords: res.totalResults  || res.size  || 0
                                     });
                                 })
                                 .catch(function (err) { $rootScope.errorHandler(err) });

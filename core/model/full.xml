@@ -66,6 +66,9 @@
 	<property name="mnemonic"/>
   </type>
   
+  <type type="AssigningAuthority" all="true">
+    <property name="scopeModel" behavior="always" ref="Concept"/>
+  </type>
   <!-- Entity Information -->
   <type type="Entity" all="true">
     <property name="templateModel" behavior="always" all="false">
