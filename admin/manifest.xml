@@ -43,7 +43,7 @@
       <icon>fab fa-html5</icon>
       <text lang="en">Applets</text>
     </menuItem>
-    <menuItem launch="santedb-admin.system.jobs" asset="/org.santedb.admin/views/system/jobs/index.html" context="org.santedb.admin">
+    <menuItem launch="santedb-admin.system.jobs" asset="/org.santedb.admin/views/system/jobs.html" context="org.santedb.admin">
       <icon>fas fa-cogs</icon>
       <text lang="en">Jobs</text>
     </menuItem>
@@ -298,5 +298,9 @@
     <string key="ui.admin.data.materials.title">Materials</string>
     <string key="ui.admin.data.materials.count">Materials Management</string>
     <string key="ui.admin.data.materials.create">Create Material</string>
+
+    <string key="ui.admin.job.neverRun">Never Run</string>
+    <string key="ui.admin.job.runJob.confirm">Are you sure you want to manually run this job?</string>
+    <string key="ui.admin.job.cancelJob.confirm">Are you sure you want cancel this running job? </string>
   </strings>
 </AppletManifest>

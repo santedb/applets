@@ -63,7 +63,7 @@
 
   <strings lang="en">
 
-    <string key="ui.debug">DEBUG COMPILE - NOT FOR RELEASE</string>
+    <string key="ui.debug">DEBUG COMPILE - NOT FOR PRODUCTION USE</string>
     <string key="ui.locale">Language</string>
     <string key="ui.locale.en">English</string>
     <string key="ui.locale.en-au">English (Australia)</string>
@@ -162,6 +162,9 @@
     <string key="ui.state.running">Running</string>
     <string key="ui.state.obsolete">Obsolete</string>
     <string key="ui.state.cancelled">Cancelled</string>
+    <string key="ui.state.complete">Complete</string>
+    <string key="ui.state.abort">Aborted</string>
+    <string key="ui.state.stop">Stopped</string>
     <string key="ui.state.nullified">Entered in Error</string>
     <string key="ui.state.locked">Locked</string>
     <string key="ui.state.readonly">Readonly</string>
@@ -226,6 +229,8 @@
     <string key="ui.action.view">View</string>
     <string key="ui.action.edit">Edit</string>
     <string key="ui.action.override">Override</string>
+    <string key="ui.action.run">Run</string>
+
     <string key="ui.action.finish">Finish</string>
     <string key="ui.action.add">Add</string>
     <string key="ui.action.remove">Remove</string>
@@ -525,6 +530,11 @@
     <string key="ui.model.material.formConcept">Form</string>
     <string key="ui.model.material.statusConcept">Status</string>
     <string key="ui.model.material.updatedBy">Last Update</string>
+
+    <string key="ui.model.job.name">Job Name</string>
+    <string key="ui.model.job.tag">Version</string>
+    <string key="ui.model.job.state">Current State</string>
+    <string key="ui.model.job.lastRun">Last Run</string>
     <!-- Audit Logs -->
     <string key="ui.model.audit.action">Action</string>
     <string key="ui.model.audit.event">Event</string>

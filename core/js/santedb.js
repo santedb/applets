@@ -1729,6 +1729,7 @@ if (!SanteDBWrapper)
              */
             subscriptionDefinition : new ResourceWrapper({
                 resource: "SubscriptionDefinition",
+                accept: "application/json",
                 api: _ami
             }),
             /**
@@ -1736,8 +1737,9 @@ if (!SanteDBWrapper)
              * @memberOf SanteDBWrapper.resources
              * @summary Wrapper for subscription definition API
              */
-            job : new ResourceWrapper({
-                resource: "Job",
+            jobInfo : new ResourceWrapper({
+                resource: "JobInfo",
+                accept: "application/json",
                 api: _ami
             }),
         };

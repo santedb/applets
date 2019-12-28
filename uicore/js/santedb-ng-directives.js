@@ -416,8 +416,10 @@ angular.module('santedb-lib')
                                 function (d, t, r) { 
                                     if(typeof(renderer) == "function")
                                         return renderer(r);
-                                    else 
+                                    else if(typeof(scope.$parent[renderer]) === "function")
                                         return scope.$parent[renderer](r);
+                                    else 
+                                        return `<span class='alert alert-danger'><i class='fas fa-bug'></i> ${renderer} not a function</span>`;
                                  } :
                                 m.indexOf("Time") > -1 ?
                                     function (d, t, r) {
@@ -438,7 +440,7 @@ angular.module('santedb-lib')
                                 var retVal = `<div class='btn-group' id='action_grp_${m.row}'>`;
                                 scope.itemActions.forEach(function (b) {
 
-                                    if (!b.when || scope.$eval(b.when)) {
+                                    if (!b.when || scope.$eval(b.when, { r: r , StatusKeys: StatusKeys})) {
                                         if (b.sref)
                                             retVal += `<a title="${SanteDB.locale.getString('ui.action.' + b.name)}" ui-sref="${b.sref}({ id: '${r.id}' })" class="btn ${(b.className || 'btn-default')}">`;
                                         else

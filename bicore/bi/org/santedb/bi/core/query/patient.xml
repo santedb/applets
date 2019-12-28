@@ -51,20 +51,20 @@
           mb_ord as multi_birth,
           dob as birth_time,
           gndr.mnemonic as gender,
-          crt_utc as created_time,
+          ent_vrsn_tbl.crt_utc as created_time,
           mrtl.mnemonic as marital_status,
           edu_lvl.mnemonic as edu_level
         from 
           pat_tbl 
           inner join psn_tbl using (ent_vrsn_id) 
           inner join ent_vrsn_tbl using (ent_vrsn_id) 
-          inner join cd_vrsn_tbl gndr on (gndr_cd_id = gndr.cd_id and obslt_vrsn_seq_id is null)
-          left join cd_vrsn_tbl mrtl on (mrtl_sts_cd_id = mrtl.cd_id .cd_id and obslt_vrsn_seq_id is null)
-          left join cd_vrsn_tbl edu_lvl on (edu_lvl_cd_id = edu_lvl.cd_id and obslt_vrsn_seq_id is null)
+          inner join cd_vrsn_tbl gndr on (gndr_cd_id = gndr.cd_id and gndr.obslt_utc is null)
+          left join cd_vrsn_tbl mrtl on (mrtl_sts_cd_id = mrtl.cd_id and mrtl.obslt_utc is null)
+          left join cd_vrsn_tbl edu_lvl on (edu_lvl_cd_id = edu_lvl.cd_id and edu_lvl.obslt_utc is null)
         where 
-          obslt_utc is null
-          and dob between coalesce(${dob-from}, '0001-01-01') and coalesce(${dob-to}, current_date)
-          and gndr_cd_id = COALESCE(${gender}, gndr_cd_id);
+          ent_vrsn_tbl.obslt_utc is null
+          and dob between CAST(coalesce(${dob-from}, '0001-01-01') AS DATE) and CAST(coalesce(${dob-to}, current_date) AS DATE)
+          and gndr_cd_id = COALESCE(${gender}, gndr_cd_id)
       ]]>
     </add>
     <add>

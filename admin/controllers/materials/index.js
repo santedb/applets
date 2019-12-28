@@ -41,10 +41,10 @@ angular.module('santedb').controller('MaterialIndexController', ["$scope", "$roo
      * @summary Render class of material
      */
     $scope.renderClassConcept = function (matl) {
-        if (matl.classConcept == EntityClassKeys.ManufacturedMaterial)
-            return `<i class="fas fa-file-prescription"></i> MANUF`;
+        if (matl.$type == 'ManufacturedMaterial')
+            return `<i class="fas fa-prescription"></i> MMAT`;
         else
-            return `<i class="fas fa-file"></i> KIND`;
+            return `<i class="fas fa-file"></i> MAT`;
     }
 
     /** 

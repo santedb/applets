@@ -197,7 +197,7 @@
     <property name="statusConceptModel" behavior="never"/>
     <property name="name" all="true" ref="EntityName" behavior="always"/>
     <property name="identifier" all="true" ref="EntityIdentifier" behavior="always"/>
-    <property name="typeConceptModel" behavior="always"/>
+    <property name="typeConceptModel" behavior="always" ref="Concept"/>
     <property name="relationship" all="true">
       <property name="*" all="true" ref="EntityRelationship"/>
     </property>
@@ -657,4 +657,11 @@
     </property>
   </type>
 
+<!-- Concepts -->
+  <type type="Concept" all="false">
+    <property name="name" behavior="always" all="true"/>
+    <property name="mnemonic" behavior="always"/>
+    <property name="id" behavior="always"/>
+  </type>
+  
 </ViewModel>

@@ -1,8 +1,9 @@
 <div xmlns="http://www.w3.org/1999/xhtml">
-    <div ng-if="!patient" class="alert alert-warning"><i class="fas fa-bug"></i> YOU HAVE TO HAVE AN OBJECT NAMED
-        patient ON YOUR SCOPE</div>
+    
     <div class="card shadow">
-        <div class="card-body">
+        <div class="card-body" ng-if="!patient">
+                <i class="fas fa-circle-notch fa-spin"></i> {{ 'ui.wait' | i18n }}</div>
+        <div class="card-body" ng-if="patient">
             <div class="row">
                 <div class="col-4">
                     <div class="p-2 flex-grow-1">
@@ -10,8 +11,8 @@
                     </div>
                 </div>
                 <div class="col-8">
-                    <div class="d-flex flex-wrap justify-content-end">
-                        <div class="p-2 flex-grow-1">
+                    <div class="d-flex flex-wrap justify-content-end" >
+                        <div class="p-2 flex-grow-1" ng-if="$root.system.config.application.setting['aa.preferred']">
                             <h5 class="m-0 p-0"><i class="fas fa-id-card"></i> {{ patient.identifier[$root.system.config.application.setting['aa.preferred']].value }} <span
                                 class="badge badge-primary">{{ patient.identifier[$root.system.config.application.setting['aa.preferred']].authority.name }}</span></h5>
                         </div>
