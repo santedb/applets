@@ -81,7 +81,9 @@ angular.module('santedb-lib')
                 case "SanteDB.Core.Model.AMI.Auth.SecurityUserInfo, SanteDB.Core.Model.AMI":
                     retVal += "<i class='fa fa-user'></i>";
                     break;
-
+                case "Concept":
+                    retVal += "<i class='fa fa-book-medical'></i>";
+                    break;
                 case "SecurityPolicy":
                 case "SecurityPolicyInstance":
                     retVal += "<i class='fa fa-certificate'></i>";
@@ -102,6 +104,8 @@ angular.module('santedb-lib')
                 retVal += SanteDB.display.renderEntityName(selection.name.Assigned);
             else if (selection.name != null && selection.name.$other != null)
                 retVal += SanteDB.display.renderEntityName(selection.name.$other);
+            else if(selection.name != null && selection.name[SanteDB.locale.getLocale()])
+                retVal += selection.name[SanteDB.locale.getLocale()];
             else if (selection.name != null)
                 retVal += selection.name;
             else if (selection.userName)
@@ -237,7 +241,7 @@ angular.module('santedb-lib')
                         },
                         dataAdapter: $.fn.select2.amd.require('select2/data/extended-ajax'),
                         ajax: {
-                            url: ((modelType == "SecurityUser" || modelType == "SecurityRole" || modelType == "SecurityPolicy") ? "/ami/" : "/hdsi/") + modelType,
+                            url: SanteDB.resources[modelType.toCamelCase()].getUrl(), //((modelType == "SecurityUser" || modelType == "SecurityRole" || modelType == "SecurityPolicy") ? "/ami/" : "/hdsi/") + modelType,
                             dataType: 'json',
                             delay: 500,
                             method: "GET",
@@ -552,24 +556,33 @@ angular.module('santedb-lib')
                             query["_count"] = data.length;
                             query["_offset"] = data.start;
 
-                            SanteDB.resources[attrs.type.toCamelCase()].findAsync(query)
-                                .then(function (res) {
+                            if(!query._noexec)
+                                SanteDB.resources[attrs.type.toCamelCase()].findAsync(query)
+                                    .then(function (res) {
 
-                                    res.item = res.item || [];
-                                    callback({
-                                        data: res.item.map(function (item) {
-                                            if (scope.propertyPath)
-                                                return item[scope.propertyPath];
-                                            else
-                                                return item;
-                                        }),
-                                        recordsTotal: res.totalResults || res.size || 0,
-                                        recordsFiltered: res.totalResults || res.size || 0,
-                                        iTotalRecords: res.totalResults || res.size || 0,
-                                        iTotalDisplayRecords: res.totalResults  || res.size  || 0
+                                        res.item = res.item || [];
+                                        callback({
+                                            data: res.item.map(function (item) {
+                                                if (scope.propertyPath)
+                                                    return item[scope.propertyPath];
+                                                else
+                                                    return item;
+                                            }),
+                                            recordsTotal: res.totalResults || res.size || 0,
+                                            recordsFiltered: res.totalResults || res.size || 0,
+                                            iTotalRecords: res.totalResults || res.size || 0,
+                                            iTotalDisplayRecords: res.totalResults  || res.size  || 0
+                                        });
+                                    })
+                                    .catch(function (err) { $rootScope.errorHandler(err) });
+                            else 
+                                    callback({ 
+                                        data: [],
+                                        recordsTotal: 0,
+                                        recordsFiltered: 0,
+                                        iTotalRecords: 0,
+                                        iTotalDisplayRecords: 0
                                     });
-                                })
-                                .catch(function (err) { $rootScope.errorHandler(err) });
                         },
                         createdRow: function (r, d, i) {
                             $compile(angular.element(r).contents())(scope);
@@ -1077,5 +1090,72 @@ angular.module('santedb-lib')
 
             }
         }
-    }]);
+    }])
+    /**
+    * @summary Cocnept input drop down
+    * @memberof Angular
+    */
+   .directive('conceptSelect', ['$rootScope', function ($rootScope) {
+
+        var loaded = {};
+
+       return {
+           restrict: 'E',
+           replace: true,
+           require: 'ngModel',
+           templateUrl:  './org.santedb.uicore/directives/conceptSelect.html',
+           scope: {
+               conceptSet: '=',
+               conceptModel: '='
+           },
+           controller: ['$scope', '$rootScope', function ($scope, $rootScope) {
+           }],
+           link: function (scope, element, attrs, ngModel) {
+
+            
+                // Load concept set
+                async function loadConceptSet(setName) {
+                    try {
+                        if(!loaded[setName]) 
+                        {
+                            loaded[setName] = { callme : [] };
+                            scope.setValues = (await SanteDB.resources.concept.findAsync({ "conceptSet.mnemonic" : setName })).item;
+                            loaded[setName].callme.forEach((r) => r(scope.setValues));
+                            loaded[setName]= scope.setValues;
+                            scope.$apply();
+                        }
+                        else {
+                            if(Array.isArray(loaded[setName])) // loaded already
+                                scope.setValues = loaded[setName];
+                            else // still loading
+                                loaded[setName].callme.push((r)=>scope.setValues = r); 
+                        }
+                        
+                    }
+                    catch(e) {
+                        console.error(e);
+                    }
+                }
+
+                loadConceptSet(scope.conceptSet);
+
+                // Element has changed
+                element.on('change', function (e) {
+                    var val = $(element).val();
+                    scope.$apply(() => ngModel.$setViewValue(scope.setValues.find(o=>o.id == val)));
+                });
+                ngModel.$render = function () {
+                    if(ngModel.$viewValue) {
+                        var value = ngModel.$viewValue.id;
+                        $(element).val(value);
+                    }
+                };
+
+                // HACK: Screw Select2 , it is so random
+                //if(ngModel.$viewValue)
+                //    scope.setValue(element, modelType, ngModel.$viewValue);
+
+           }
+       }
+   }]);
 ;

@@ -480,6 +480,8 @@
     <string key="ui.model.securityDevice.lastAuthenticationTime">Last Authentication</string>
     <string key="ui.model.securityDevice.invalidAuth">Invalid Authentications</string>
     <string key="ui.model.securityDevice.lockout">Lockout</string>
+    <string key="ui.model.entityIdentifier.authority">Assigned By</string>
+    <string key="ui.model.entityIdentifier.value">ID Number</string>
 
     <string key="ui.model.securityDevice.secret">Device Secret</string>
     <string key="ui.model.deviceEntity.manufacturerModelName">Model Name</string>
@@ -500,11 +502,26 @@
     <string key="ui.model.applicationEntity.vendorName">Vendor</string>
     <string key="ui.model.applicationEntity.versionName">Version</string>
 
+    <string key="ui.model.entityName.given">Given</string>
+    <string key="ui.model.entityName.family">Family</string>
+    <string key="ui.model.entityName.use">Type</string>
+    <string key="ui.model.entityAddress.use">Type</string>
+    <string key="ui.model.entityTelecom.use">Use</string>
+    <string key="ui.model.entityRelationship.type">Type</string>
+    <string key="ui.model.entityRelationship.target">With</string>
     <string key="ui.model.assigningAuthority.oid">Universal ID</string>
     <string key="ui.model.assigningAuthority.domainName">Namespace ID</string>
     <string key="ui.model.assigningAuthority.name">Name</string>
     <string key="ui.model.assigningAuthority.isUnique">Unique</string>
     <string key="ui.model.assigningAuthority.updatedBy">Last Update</string>
+    <string key="ui.model.assigningAuthority.id">UUID</string>
+    <string key="ui.model.assigningAuthority.createdBy">Created By</string>
+    <string key="ui.model.assigningAuthority.updatedBy">Updated By</string>
+    <string key="ui.model.assigningAuthority.obsoletedBy">Deleted By</string>
+    <string key="ui.model.assigningAuthority.assigningApplication">Assigning App</string>
+    <string key="ui.model.assigningAuthority.scope">Scope</string>
+    <string key="ui.model.assigningAuthority.url">URL</string>
+    <string key="ui.model.assigningAuthority.validation">Validation Regex</string>
     <string key="ui.model.version.sequence">Sequence</string>
     <string key="ui.model.version.createdBy">Created</string>
     <string key="ui.model.version.replaces">Replaces Version</string>
@@ -512,11 +529,26 @@
     <string key="ui.model.version.initial">Initial Version</string>
 
     <string key="ui.model.patient.name">Name</string>
+    <string key="ui.model.patient.names">Names</string>
+    <string key="ui.model.patient.addresses">Addresses</string>
+    <string key="ui.model.patient.address">Address</string>
     <string key="ui.model.patient.dateOfBirth">DOB</string>
     <string key="ui.model.patient.genderConcept">Gender</string>
     <string key="ui.model.patient.identifier">Identifier(s)</string>
     <string key="ui.model.patient.creationTime">Timestamp</string>
-
+    <string key="ui.model.patient.telecom"><![CDATA[E-Mail/Telephone]]></string>
+    <string key="ui.model.patient.telecoms"><![CDATA[E-Mail &amp; Telephone]]></string>
+    <string key="ui.model.patient.relationship">Relationships</string>
+    <string key="ui.model.patient.deceased">DECEASED</string>
+    <string key="ui.model.patient.multipleBirth">MULTI-BIRTH</string>
+    <string key="ui.model.patient.birthplace">Birthplace</string>
+    <string key="ui.model.patient.multipleBirthOrder">Birth Order</string>
+    <string key="ui.model.patient.multipleBirthOrder.0">Unknown (of a multiple-birth)</string>
+    <string key="ui.model.patient.multipleBirthOrder.1">1st of multiple-birth</string>
+    <string key="ui.model.patient.multipleBirthOrder.2">2nd of multiple-birth</string>
+    <string key="ui.model.patient.multipleBirthOrder.3">3rd of multiple-birth</string>
+    <string key="ui.model.patient.multipleBirthOrder.4">4th of multiple-birth</string>
+    <string key="ui.model.patient.multipleBirthOrder.5">5th of multiple-birth</string>
     <string key="ui.model.place.name">Name</string>
     <string key="ui.model.place.classConcept">Classification</string>
     <string key="ui.model.place.typeConcept">Type</string>
@@ -552,6 +584,11 @@
     <!-- Default applications -->
     <string key="org.santedb.debug">SanteDB SDK</string>
     <string key="org.santedb.administration">SanteDB Admin Console</string>
+
+    <!-- Widgets -->
+    <string key="org.santedb.widget.patient.demographics">Demographics</string>
+    <string key="org.santedb.widget.patient.base">Basic Information</string>
+    <string key="org.santedb.widget.patient.identity">Identity</string>
   </strings>
 
 </AppletManifest>

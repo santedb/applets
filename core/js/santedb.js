@@ -110,6 +110,15 @@ if (!SanteDBWrapper)
         function APIWrapper(_config) {
 
             /**
+             * @method
+             * @summary Gets the base url
+             * @memberof SanteDBWrapper.APIWrapper
+             */
+            this.getUrl = function() {
+                return _config.base ;
+            };
+
+            /**
                 * @method
                 * @summary Reconfigures this instance of the API wrapper
                 * @memberof SanteDBWrapper.APIWrapper
@@ -499,6 +508,15 @@ if (!SanteDBWrapper)
             * @param {APIWrapper} _config.api The API to use for this resource
             */
         function ResourceWrapper(_config) {
+
+            /**
+             * @method
+             * @summary Gets the URL to this resource base
+             * @memberof SanteDBWrapper.ResourceWrapper
+             */
+            this.getUrl = function() {
+                return `${_config.api.getUrl()}${_config.resource}`;
+            };
 
             /**
                 * @method
@@ -1419,7 +1437,7 @@ if (!SanteDBWrapper)
             assigningAuthority: new ResourceWrapper({
                 accept: _viewModelJsonMime,
                 resource: "AssigningAuthority",
-                api: _hdsi
+                api: _ami
             }),
             /**
                 * @property {SanteDB.ResourceWrapper} 

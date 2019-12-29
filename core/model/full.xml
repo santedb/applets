@@ -37,7 +37,7 @@
     <property name="relationshipType" all="true" behavior="always"/>
     <property name="holderModel" behavior="never"/>
     <property name="sourceModel" behavior="never"/>
-    <property name="relationshipTypeModel" behavior="never"/>
+    <property name="relationshipTypeModel" behavior="always" ref="Concept"/>
     <property name="key" all="true"/>
     <property name="quantity" all="true"/>
   </type>
@@ -155,6 +155,7 @@
       <property name="DedicatedServiceDeliveryLocation">
         <property name="id"/>
         <property name="relationshipType"/>
+        <property name="relationshipTypeModel" ref="Concept" behavior="always"/>
         <property name="source"/>
         <property name="target"/>
         <property name="targetModel" behavior="always">
@@ -166,12 +167,27 @@
       <property name="ServiceDeliveryLocation">
         <property name="id"/>
         <property name="relationshipType"/>
+        <property name="relationshipTypeModel" ref="Concept" behavior="always"/>
         <property name="source"/>
         <property name="target"/>
         <property name="targetModel" behavior="always">
           <property name="id"/>
           <property name="name" behavior="always" ref="EntityName"/>
           <property name="identifier" behavior="always" ref="EntityIdentifier"/>
+        </property>
+      </property>
+      <property name="Birthplace" all="true">
+        <property name="id"/>
+        <property name="relationshipType"/>
+        <property name="relationshipTypeModel" ref="Concept" behavior="always"/>
+        <property name="source"/>
+        <property name="target"/>
+        <property name="targetModel" behavior="always" all="false">
+          <property name="id"/>
+          <property name="classConcept"/>
+          <property name="name" behavior="always" ref="EntityName"/>
+          <property name="identifier" behavior="always" ref="EntityIdentifier"/>
+          <property name="address" behavior="always" ref="EntityAddress"/>
         </property>
       </property>
       <property name="*" ref="EntityRelationship"/>

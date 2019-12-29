@@ -75,6 +75,9 @@
                     </li>
                 </ul>
                 <ul class="navbar-nav ml-auto">
+                    <li ng-if="$root.system.config.sync.mode != 'sync'">
+                        <span class="nav-link m-0 p-1 alert alert-primary"><i class="fas fa-server"></i> {{ 'ui.directConnect' | i18n }}</span>
+                    </li>
                     <li ng-if="'{{ $env_type }}' == 'debug'">
                         <span class="nav-link m-0 p-1 alert alert-info"><i class="fas fa-bug"></i> {{ 'ui.debug' | i18n }}</span>
                     </li>

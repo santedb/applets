@@ -128,20 +128,26 @@ SanteDBWrapper.prototype.display = {
      * @param {SanteDBModel.Concept} concept The concept to be rendered
      */
     renderConcept: function (concept) {
+        var retVal = "";
         if (!concept)
-            return "";
+            retVal =  "";
         else if (typeof (concept) === "String")
-            return concept;
+            retVal =  concept;
         else if (concept.name && concept.name[SanteDB.locale.getLanguage()])
-            return concept.name[SanteDB.locale.getLanguage()];
+            retVal =  concept.name[SanteDB.locale.getLanguage()];
         else if (concept.name)
-            return concept.name[Object.keys(concept.name)[0]];
+            retVal =  concept.name[Object.keys(concept.name)[0]];
         else if (concept.mnemonic)
-            return concept.mnemonic;
+            retVal =  concept.mnemonic;
         else if (concept[SanteDB.locale.getLanguage()])
-            return concept[SanteDB.locale.getLanguage()];
+            retVal =  concept[SanteDB.locale.getLanguage()];
         else
-            return concept[Object.keys(modelValue)[0]];
+            retVal =  concept[Object.keys(concept)[0]];
+
+        if(Array.isArray(retVal))
+            return retVal[0];
+        else 
+            return retVal;
     },
     /**
      * @method
@@ -152,6 +158,9 @@ SanteDBWrapper.prototype.display = {
      * @param {string} type The type of name to render (Legal, Official Record, etc.)
      */
     renderEntityName: function (name, type) {
+
+        if(!name)
+            return "";
         // Get the type of name to render
         if (type) {
             name = name[type];

@@ -138,14 +138,16 @@ angular.module('santedb-lib')
      * @param {string} display The age to display (let this choose)
      */
     .filter('age', function () {
-        return function (date, display) {
-            var diff = moment().diff(date, 'days');
+        return function (date, display, other) {
+
+            var source = other ? moment(other) : moment();
+            var diff = source.diff(date, 'days');
             if(display == 'D' || diff < 45)
                 return diff + ' d/o';
-            diff = moment().diff(date, 'months');
+            diff = source.diff(date, 'months');
             if(display == 'M' || diff < 18)
                 return diff + ' m/o';
-            return moment().diff(date, 'years') + ' y/o';
+            return source.diff(date, 'years') + ' y/o';
         }
     })
     /**

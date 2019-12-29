@@ -1,0 +1,73 @@
+<div xmls="http://www.w3.org/1999/xhtml" xmlns:sdb="http://santedb.org/applet" class="container-fluid"
+    oc-lazy-load="{ name: 'PatientDemographicsWidgetController', files: ['/org.santedb.uicore/controllers/widgets/patientWidget.js'] }">
+    <sdb:widget order="0" name="org.santedb.widget.patient.base" altViews="Edit" headerClass="alert-info" size="Medium"
+        type="Panel" context="org.santedb.patient.demographics">
+        <sdb:icon>fas fa-user-edit</sdb:icon>
+        <sdb:description lang="en">Patient Demographics Widget Tab</sdb:description>
+    </sdb:widget>
+    <div class="row" ng-if="!scopedObject">
+        <div class="col">
+            <p class="m-auto"><i class="fas fa-circle-notch fa-spin"></i> {{ 'ui.wait' | i18n }}</p>
+        </div>
+    </div>
+    <div ng-if="scopedObject" ng-controller="PatientDemographicsWidgetController">
+        <div ng-if="panel.view != 'Edit'">
+            <div class="row">
+                <label class="col-md-3 control-label">{{ 'ui.model.patient.name' | i18n }}</label>
+                <div class="col-md-9">
+                    {{ scopedObject.name | name }}
+                </div>
+                <label class="col-md-3 control-label">{{ 'ui.model.patient.dateOfBirth' | i18n }}</label>
+                <div class="col-md-9">
+                    {{ scopedObject.dateOfBirth | extDate: scopedObject.dateOfBirthPrecision }}
+                    <span ng-if="!scopedObject.deceasedDate"> ( {{ scopedObject.dateOfBirth | age }} )</span>
+                </div>
+                <label class="col-md-3 control-label">{{ 'ui.model.patient.genderConcept' | i18n }}</label>
+                <div class="col-md-9">
+                    <i class="fas" ng-class="{ 'fa-male' : scopedObject.genderConceptModel.mnemonic == 'Male' , 'fa-female' :  scopedObject.genderConceptModel.mnemonic == 'Female' }"></i>
+                            {{ scopedObject.genderConceptModel | concept }}
+                </div>
+                <label class="col-md-3 control-label">{{ 'ui.model.patient.address' | i18n }}</label>
+                <div class="col-md-9">
+                    <span ng-if="scopedObject.address">
+                        {{ scopedObject.address | address }}
+                        </span>
+                        <span ng-if="!scopedObject.address">
+                            {{ 'ui.unknown' | i18n }}
+                        </span>
+                </div>
+                <label class="col-md-3 control-label">{{ 'ui.model.patient.telecom' | i18n }}</label>
+                <div class="col-md-9" ng-repeat="(k,tel) in scopedObject.telecom track by $index" ng-class="{ 'offset-md-3': $index > 0 }">
+                    <a href="{{tel.value}}" target="_blank">{{tel.value}} <span class="badge badge-pill badge-info">{{ tel.useModel | concept }}</span></a>
+                </div>
+            </div>
+
+            <div ng-if="scopedObject.relationship.Birthplace.targetModel" class="row">
+                <label class="col-md-3 control-label">{{ 'ui.model.patient.birthplace' | i18n }}</label>
+                <div class="col-md-9">
+                    <i class="fas" ng-class="{ 'fa-hospital-alt' : scopedObject.relationship.Birthplace.targetModel.classConcept == 'ff34dfa7-c6d3-4f8b-bc9f-14bcdc13ba6c' , 'fa-map-marked' : scopedObject.relationship.Birthplace.targetModel.classConcept != 'ff34dfa7-c6d3-4f8b-bc9f-14bcdc13ba6c'}"></i>
+                    {{ scopedObject.relationship.Birthplace.targetModel.name | name }} <br/>
+                    <small> ({{ scopedObject.relationship.Birthplace.targetModel.address | address }})</small>
+                </div>
+            </div>
+            <div ng-if="scopedObject.deceasedDate" class="row">
+                <label class="col-md-3 control-label">{{ 'ui.model.patient.deceased' | i18n }}</label>
+                <div class="col-md-9">
+                    {{ scopedObject.deceasedDate | extDate: scopedObject.deceasedDatePrecision }}
+                    ( {{ scopedObject.dateOfBirth | age: 'y':scopedObject.deceasedDate }} )
+                </div>
+            </div>
+            <div ng-if="scopedObject.multipleBirthOrder" class="row">
+                <label class="col-md-3 control-label">{{ 'ui.model.patient.multipleBirthOrder' | i18n }}</label>
+                <div class="col-md-9">
+                    {{ 'ui.model.patient.multipleBirthOrder.' + scopedObject.multipleBirthOrder | i18n }}
+                </div>
+            </div>
+
+        </div>
+        <form ng-submit="updatePatient(scopedObject)" name="editPatientForm" novalidate="novalidate"
+            ng-if="panel.view == 'Edit'">
+            TODO: EDITING
+        </form>
+    </div>
+</div>

@@ -55,6 +55,7 @@
     <property name="source" behavior="never"/>
     <property name="use" />
     <property name="id"  />
+    <property name="useModel" ref="Concept"/>
     <property name="component" all="true" behavior="always">
       <property name="*" all="true"/>
     </property>

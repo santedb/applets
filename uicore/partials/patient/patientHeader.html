@@ -1,8 +1,8 @@
 <div xmlns="http://www.w3.org/1999/xhtml">
-    
+
     <div class="card shadow">
         <div class="card-body" ng-if="!patient">
-                <i class="fas fa-circle-notch fa-spin"></i> {{ 'ui.wait' | i18n }}</div>
+            <i class="fas fa-circle-notch fa-spin"></i> {{ 'ui.wait' | i18n }}</div>
         <div class="card-body" ng-if="patient">
             <div class="row">
                 <div class="col-4">
@@ -11,17 +11,25 @@
                     </div>
                 </div>
                 <div class="col-8">
-                    <div class="d-flex flex-wrap justify-content-end" >
+                    <div class="d-flex flex-wrap justify-content-end">
                         <div class="p-2 flex-grow-1" ng-if="$root.system.config.application.setting['aa.preferred']">
-                            <h5 class="m-0 p-0"><i class="fas fa-id-card"></i> {{ patient.identifier[$root.system.config.application.setting['aa.preferred']].value }} <span
-                                class="badge badge-primary">{{ patient.identifier[$root.system.config.application.setting['aa.preferred']].authority.name }}</span></h5>
+                            <h5 class="m-0 p-0"><i class="fas fa-id-card"></i>
+                                {{ patient.identifier[$root.system.config.application.setting['aa.preferred']].value }}
+                                <span
+                                    class="badge badge-primary">{{ patient.identifier[$root.system.config.application.setting['aa.preferred']].authority.name }}</span>
+                            </h5>
                         </div>
                         <div class="p-2"><i class="fas"
                                 ng-class="{ 'fa-male' : patient.genderConceptModel.mnemonic == 'Male' , 'fa-female' :  patient.genderConceptModel.mnemonic == 'Female' }"></i>
                             {{ patient.genderConceptModel | concept }}</div>
+                        <div class="p-2" ng-if="patient.multipleBirthOrder">
+                            <span class="alert alert-info"><i class="fas fa-restroom"></i>
+                                {{ 'ui.model.patient.multipleBirth' | i18n }}</span>
+                        </div>
                         <div class="p-2"><i class="fas fa-birthday-cake"></i>
-                            {{ patient.dateOfBirth | extDate: patient.dateOfBirthPrecision }} (
-                            {{ patient.dateOfBirth | age: 'y' }} )</div>
+                            {{ patient.dateOfBirth | extDate: patient.dateOfBirthPrecision }} ( <span
+                                class="alert alert-dark" ng-if="patient.deceasedDate">{{ 'ui.model.patient.deceased' | i18n }}</span>
+                            {{ patient.dateOfBirth | age: 'y':patient.deceasedDate }} )</div>
                         <div class="p-2">
                             <button type="button" class="btn btn-link collapse-indicator" data-toggle="collapse"
                                 data-target="#additionalDemographics"><i class="fa fa-chevron-right"></i></button>
@@ -36,7 +44,8 @@
                     </div>
                     <div class="col-8">
                         <div class="d-flex flex-wrap justify-content-end">
-                            <div class="p-2" ng-if="domain != $root.system.config.application.setting['aa.preferred']" ng-repeat="(domain, id) in patient.identifier track by $index">
+                            <div class="p-2" ng-if="domain != $root.system.config.application.setting['aa.preferred']"
+                                ng-repeat="(domain, id) in patient.identifier track by $index">
                                 <i class="far fa-id-card"></i> {{ id.value }} <span
                                     class="badge badge-info">{{ id.authority.name }}</span>
                             </div>

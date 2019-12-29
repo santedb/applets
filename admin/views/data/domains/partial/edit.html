@@ -1,0 +1,196 @@
+<div xmlns="http://www.w3.org/1999/xhtml" class="container-fluid">
+    <form class="form" ng-submit="saveDomain(targetForm)" name="targetForm" novalidate="novalidate">
+        <div class="row" ng-if="!authority">
+            <div class="col">
+                <p class="m-auto"><i class="fas fa-circle-notch fa-spin"></i> {{ 'ui.wait' | i18n }}</p>
+            </div>
+        </div>
+        <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="mb-0">
+                        <button type="button" class="collapse-indicator btn btn-link p-0" data-toggle="collapse"
+                            data-target="#coreIdentityProperties" aria-expanded="true">
+                            <i class="fa fa-id-card-alt"></i> {{ 'ui.admin.domain.edit.core.title' | i18n }}
+                            <i class="fa fa-chevron-right"></i>
+                        </button>
+                    </h5>
+                </div>
+                <div class="collapse show" id="coreIdentityProperties">
+                    <div class="card-body container-fluid">
+                        <div class="form-group row">
+                            <label class="control-label col-sm-12 col-md-2"
+                                for="sid">{{ 'ui.model.assigningAuthority.id' | i18n }}</label>
+                            <div class="col-sm-12 col-md-10 input-group">
+                                <input name="sid" readonly="readonly" type="text" class="form-control"
+                                    ng-model="authority.id" />
+                                <input-copy-button class="btn btn-outline-secondary" source="authority.id" />
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="control-label col-sm-12 col-md-2 required"
+                                for="domainName">{{ 'ui.model.assigningAuthority.domainName' | i18n }}</label>
+                            <div class="col-sm-12 col-md-10 input-group">
+                                <input name="domainName" type="text" class="form-control"
+                                    ng-model="authority.domainName" pattern="^[A-Za-z_\-0-9]{3,}$"
+                                    required="required" /></div>
+                            <div class="col-sm-12 col-md-10 offset-md-2">
+                                <div ng-show="targetForm.domainName.$error['duplicate']" class="alert-danger">
+                                    <i class="fa fa-exclamation-triangle"></i>
+                                    {{ 'ui.error.duplicate' | i18n }}
+                                </div>
+                                <div ng-show="targetForm.domainName.$error['required'] &amp;&amp; targetForm.$submitted"
+                                    class="alert-danger">
+                                    <i class="fa fa-exclamation-triangle"></i> {{ 'ui.error.required' | i18n }}
+                                </div>
+                                <div ng-show="targetForm.domainName.$error['pattern'] &amp;&amp; targetForm.domainName.$touched"
+                                    class="alert-danger">
+                                    <i class="fa fa-exclamation-triangle"></i> {{ 'ui.error.pattern' | i18n }}
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="control-label col-sm-12 col-md-2 required"
+                                for="oid">{{ 'ui.model.assigningAuthority.oid' | i18n }}</label>
+                            <div class="col-sm-12 col-md-10 input-group">
+                                <input name="oid" type="text" class="form-control" ng-model="authority.oid"
+                                    pattern="^[0-9]*?[0-9\.]*$" required="required" /> </div>
+                            <div class="col-sm-12 col-md-10 offset-md-2">
+                                <div ng-show="targetForm.oid.$error['duplicate']" class="alert-danger">
+                                    <i class="fa fa-exclamation-triangle"></i>
+                                    {{ 'ui.error.duplicate' | i18n }}
+                                </div>
+                                <div ng-show="targetForm.oid.$error['required'] &amp;&amp; targetForm.$submitted"
+                                    class="alert-danger">
+                                    <i class="fa fa-exclamation-triangle"></i> {{ 'ui.error.required' | i18n }}
+                                </div>
+                                <div ng-show="targetForm.oid.$error['pattern'] &amp;&amp; targetForm.oid.$touched"
+                                    class="alert-danger">
+                                    <i class="fa fa-exclamation-triangle"></i> {{ 'ui.error.pattern' | i18n }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="control-label col-sm-12 col-md-2 required"
+                                for="url">{{ 'ui.model.assigningAuthority.url' | i18n }}</label>
+                            <div class="col-sm-12 col-md-10 input-group">
+                                <input name="url" type="url" class="form-control" ng-model="authority.url" /> </div>
+                            <div class="col-sm-12 col-md-10 offset-md-2">
+                                <div ng-show="targetForm.url.$error['duplicate']" class="alert-danger">
+                                    <i class="fa fa-exclamation-triangle"></i>
+                                    {{ 'ui.error.duplicate' | i18n }}
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="control-label col-sm-12 col-md-2 required"
+                                for="name">{{ 'ui.model.assigningAuthority.name' | i18n }}</label>
+                            <div class="col-sm-12 col-md-10 input-group">
+                                <input name="name" type="text" class="form-control" ng-model="authority.name"
+                                    maxlength="64" required="required" /> </div>
+                            <div class="col-sm-12 col-md-10 offset-md-2">
+                                <div ng-show="targetForm.name.$error['required'] &amp;&amp; targetForm.$submitted"
+                                    class="alert-danger">
+                                    <i class="fa fa-exclamation-triangle"></i> {{ 'ui.error.required' | i18n }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="control-label col-sm-12 col-md-2"
+                                for="validation">{{ 'ui.model.assigningAuthority.validation' | i18n }}</label>
+                            <div class="col-sm-12 col-md-10 input-group">
+                                <input name="validation" type="text" class="form-control"
+                                    ng-model="authority.validation" maxlength="256" /> </div>
+
+                        </div>
+                        <div class="form-group row">
+                            <label class="control-label text-left col-sm-12 col-md-10 offset-md-2">
+                                <input type="checkbox" ng-model="authority.isUnique" />
+                                {{ 'ui.model.assigningAuthority.isUnique' | i18n }}
+                            </label>
+                        </div>
+                        <div class="form-group row" ng-if="authority.createdBy">
+                            <label
+                                class="col-sm-12 col-md-2 control-label">{{ 'ui.model.assigningAuthority.createdBy' | i18n }}</label>
+                            <div class="col-md-10 col-sm-12">
+                                <provenance provenance-id="authority.createdBy"
+                                    provenance-time="authority.creationTime"></provenance>
+                                {{ authority.creationTime | extDate }}
+                            </div>
+                        </div>
+                        <div class="form-group row" ng-if="authority.updatedBy">
+                            <label
+                                class="col-sm-12 col-md-2 control-label">{{ 'ui.model.assigningAuthority.updatedBy' | i18n }}</label>
+                            <div class="col-md-10 col-sm-12">
+                                <provenance provenance-id="authority.updatedBy" provenance-time="authority.updatedTime">
+                                </provenance>
+                                {{ authority.updatedTime | extDate }}
+                            </div>
+                        </div>
+                        <div class="form-group row" ng-if="authority.obsoletedBy">
+                            <label
+                                class="col-sm-12 col-md-2 control-label">{{ 'ui.model.assigningAuthority.obsoletedBy' | i18n }}</label>
+                            <div class="col-md-10 col-sm-12">
+                                <provenance provenance-id="authority.obsoletedBy"
+                                    provenance-time="authority.obsoletionTime"></provenance>
+                                {{ authority.obsoletionTime | extDate }} <button id="reactivateAuthorityButton"
+                                    ng-click="reactivateAuthority()" type="button" class="btn btn-success"><i
+                                        class="fas fa-trash-restore"></i>
+                                    {{ 'ui.action.undelete' | i18n }}</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="mb-0">
+                        <button type="button" class="collapse-indicator btn btn-link p-0" data-toggle="collapse"
+                            data-target="#extendedProperties" aria-expanded="true">
+                            <i class="fa fa-shield-alt"></i> {{ 'ui.admin.domain.edit.scope.title' | i18n }}
+                            <i class="fa fa-chevron-right"></i>
+                        </button>
+                    </h5>
+                </div>
+                <div class="collapse show" id="extendedProperties">
+                    <div class="card-body container-fluid">
+                        <div class="form-group row">
+                            <label
+                                class="control-label col-sm-12 col-md-2">{{ 'ui.model.assigningAuthority.assigningApplication' | i18n }}</label>
+                            <div class="col-md-10 col-sm-12">
+                                <entity-search type="'SecurityApplication'"
+                                    ng-model="authority.assigningApplication" selector="'entity'"
+                                    search-field="'name'"></entity-search>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label
+                                class="control-label col-sm-12 col-md-2">{{ 'ui.model.assigningAuthority.scope' | i18n }}</label>
+                            <div class="col-md-10 col-sm-12">
+                                <entity-search multiple="multiple" type="'Concept'" ng-model="authority.scope"
+                                    search-field="'name.value'"
+                                    filter="{ 'conceptSet' : [ '62C5FDE0-A3AA-45DF-94E9-242F4451644A', '4E6DA567-0094-4F23-8555-11DA499593AF'] }">
+                                </entity-search>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-12">
+            <div class="btn-group float-right">
+                <button type="submit" id="saveAuthorityButton" class="btn btn-primary"><i class="fa fa-check"></i>
+                    {{ 'ui.action.save' | i18n }}</button>
+            </div>
+        </div>
+
+        </div>
+
+    </form>
+</div>

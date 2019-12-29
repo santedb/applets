@@ -1,0 +1,27 @@
+<div xmlns="http://www.w3.org/1999/xhtml" class="container-fluid">
+    <div class="row">
+        <div class="mt-2" ng-repeat="panel in widgets" ng-class="{ 'col-12' : panel.size == 'Large', 'col-md-12 col-lg-6' : panel.size == 'Medium', 'col-md-6 col-lg-3': panel.size == 'Small' }">
+            <div class="card">
+                <div class="card-header" ng-class="panel.headerClass">
+                    <h5 class="float-left mb-0">
+                        <i ng-class="panel.icon"></i> {{ panel.name | i18n }}
+                    </h5>
+                    <div class="btn-group float-right" ng-if="panel.altViews">
+                        <button class="btn btn-danger" ng-if="panel.view" ng-click="panel.view = null">
+                            <i class="fa fa-times"></i>
+                        </button>
+                        <button class="btn" ng-click="panel.view = 'Edit'" ng-if="panel.altViews == 'Edit'"  ng-class="{ 'active btn-success' : panel.view == 'Edit', 'btn-info' : panel.view != 'Edit' }">
+                            <i class="fas" ng-class="{ 'fa-check' : panel.view == 'Edit', 'fa-pencil-alt' : panel.view != 'Edit' }"></i>
+                        </button>
+                        <button class="btn btn-dark" ng-click="panel.view = 'Setting'" ng-if="panel.altViews == 'Setting'" ng-class="{ 'active' : panel.view == 'Setting' }">
+                            <i class="fa fa-cog"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <ng-include src="'/app/Widgets/' + panel.name"></ng-include>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

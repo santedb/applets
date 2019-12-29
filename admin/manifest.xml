@@ -109,7 +109,7 @@
     </menuItem>
   </menuItem>
   <menuItem context="org.santedb.admin" launch="santedb-admin.concept.index" asset="/org.santedb.admin/views/concept/index.html">
-    <icon>fas fa-stethoscope</icon>
+    <icon>fas fa-book-medical</icon>
     <text lang="en">Concept Dictionary</text>
     <menuItem context="org.santedb.admin" launch="santedb-admin.concept.refTerms.index" asset="/org.santedb.admin/views/concept/refterms/index.html">
       <icon>fas fa-code</icon>
@@ -120,7 +120,7 @@
       <text lang="en">Concept Sets</text>
     </menuItem>
     <menuItem context="org.santedb.admin" launch="santedb-admin.concept.concepts.index" asset="/org.santedb.admin/views/concept/concepts/index.html">
-      <icon>fas fa-th-list</icon>
+      <icon>fas fa-stethoscope</icon>
       <text lang="en">Concepts</text>
     </menuItem>
   </menuItem>
@@ -130,6 +130,7 @@
   </viewModel>
 
   <strings lang="en">
+    <string key="ui.directConnect">Direct Connect to Server</string>
     <string key="ui.admin.brand.title"><![CDATA[<img src="/org.santedb.core/img/icon.png" height="24px"/> SanteDB Admin]]></string>
     <string key="ui.admin.tickleError">Error fetching application alerts</string>
     <string key="ui.admin.mailError">Error retrieving mail</string>
@@ -288,7 +289,7 @@
     <string key="ui.admin.data.dashboard.index">SanteDB Reference Data</string>
     <string key="ui.admin.data.domains.title">Identity Domains</string>
     <string key="ui.admin.data.domains.count">Authority Management</string>
-    <string key="ui.admin.data.domains.create">Create ID Domain</string>
+    <string key="ui.admin.data.domains.scope">Create ID Domain</string>
     <string key="ui.admin.data.places.title">Places</string>
     <string key="ui.admin.data.places.count">Geographics Management</string>
     <string key="ui.admin.data.places.create">Create Place</string>
@@ -299,6 +300,11 @@
     <string key="ui.admin.data.materials.count">Materials Management</string>
     <string key="ui.admin.data.materials.create">Create Material</string>
 
+    <!-- Edit Identity Domain -->
+    <string key="ui.admin.domain.edit.core.title">Identity Domain Properties</string>
+    <string key="ui.admin.domain.edit.scope.title"><![CDATA[Authority &amp; Scope]]></string>
+
+    <!-- Job Screen Page -->
     <string key="ui.admin.job.neverRun">Never Run</string>
     <string key="ui.admin.job.runJob.confirm">Are you sure you want to manually run this job?</string>
     <string key="ui.admin.job.cancelJob.confirm">Are you sure you want cancel this running job? </string>
