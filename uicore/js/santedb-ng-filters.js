@@ -42,13 +42,7 @@ angular.module('santedb-lib')
      */
     .filter('identifier', function () {
         return function (modelValue, domain) {
-            if (modelValue === undefined)
-                return "";
-            if (domain && modelValue[domain])
-                return modelValue[domain].value;
-            else
-                for (var k in modelValue)
-                    return modelValue[k].value;
+            SanteDB.display.renderIdentifier(modelValue, domain);
         };
     })
     /**

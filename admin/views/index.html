@@ -28,7 +28,7 @@
         <sdb:view>
             <sdb:controller>AdminLayoutController</sdb:controller>
         </sdb:view>
-        <sdb:title lang="en">SanteDB Administration Panel</sdb:title>
+        <sdb:title lang="en">Administration Panel</sdb:title>
     </sdb:state>
     <div class="fixed-nav sticky-footer bg-dark">
         <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top" id="mainNav">
@@ -75,7 +75,7 @@
                     </li>
                 </ul>
                 <ul class="navbar-nav ml-auto">
-                    <li ng-if="$root.system.config.sync.mode != 'sync'">
+                    <li ng-if="$root.system.config.sync.mode != 'Sync'">
                         <span class="nav-link m-0 p-1 alert alert-primary"><i class="fas fa-server"></i> {{ 'ui.directConnect' | i18n }}</span>
                     </li>
                     <li ng-if="'{{ $env_type }}' == 'debug'">
@@ -174,17 +174,17 @@
                         <li class="nav-item indicator-container" ng-if="$root.system.config.sync.mode == 'Sync'">
                                 <a ui-sref="santedb-admin.sync" class="nav-link mr-lg-2" ng-disabled="!$root.system.online">
                                     <i class="fa fa-fw fa-sync-alt"></i>
-                                    <span class="d-lg-none">{{ 'ui.sync' | i18n }}
-                                        <span class="badge badge-pill badge-success" ng-if="deadletterQueue.length == 0">
+                                    <span class="d-lg-none">{{ 'ui.sync' | i18n }} 
+                                        <span class="badge badge-pill badge-success" ng-show="queue.dead == 0">
                                             <i class="fas fa-check-circle"></i> {{ 'ui.sync.clear' | i18n }}
                                         </span>
-                                        <span class="badge badge-pill badge-danger" ng-if="deadletterQueue.length > 0">
-                                                <i class="fas fa-exclamation-circle"></i> {{ deadletterQueue.length }} {{ 'ui.sync.conflict' | i18n }}
+                                        <span class="badge badge-pill badge-danger" ng-show="queue.dead > 0">
+                                                <i class="fas fa-exclamation-circle"></i> {{ deadletterQueue }} {{ 'ui.sync.conflict' | i18n }}
                                         </span>
                                     </span>
                                     <span class="indicator d-none d-lg-block"
-                                        ng-class="{ 'text-danger' : deadletterQueue.length > 0, 'text-success' : deadletterQueue.length == 0 }">
-                                        <i class="fa fa-fw" ng-class="{ 'fa-exclamation-circle' : deadletterQueue.length > 0, 'fa-check-circle' : deadletterQueue.length == 0 }"></i>
+                                        ng-class="{ 'text-danger' : queue.dead > 0, 'text-success' : queue.dead == 0 }">
+                                        <i class="fa fa-fw" ng-class="{ 'fa-exclamation-circle' : queue.dead > 0, 'fa-check-circle' : queue.dead == 0 }"></i>
                                     </span>
                                 </a>
                             </li>

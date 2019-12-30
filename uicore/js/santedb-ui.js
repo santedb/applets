@@ -30,23 +30,23 @@ SanteDBWrapper.prototype.display = {
      * @param {boolean} state True if the object is loading, false if not
      * @param {boolean} onlyGlyph True if only a wait glyph should be shown
      */
-    buttonWait: function(target, state, onlyGlyph) {
+    buttonWait: function (target, state, onlyGlyph) {
         var btn = $(target);
-        if(btn) {
-            if(state)  {
+        if (btn) {
+            if (state) {
                 btn.attr('disabled', 'disabled');
-                if(!___originalButtonTexts[target])
+                if (!___originalButtonTexts[target])
                     ___originalButtonTexts[target] = btn.html();
-                if(!onlyGlyph)
+                if (!onlyGlyph)
                     btn.html(`<i class="fas fa-circle-notch fa-spin"></i> ${SanteDB.locale.getString("ui.wait")}`);
-                else 
+                else
                     btn.html('<i class="fas fa-circle-notch fa-spin"></i>');
             }
             else {
                 btn.removeAttr('disabled');
 
                 btn.html(___originalButtonTexts[target]);
-                delete(___originalButtonTexts[target]);
+                delete (___originalButtonTexts[target]);
             }
         }
     },
@@ -57,68 +57,68 @@ SanteDBWrapper.prototype.display = {
      * @param {Date} date The date to be rendered
      * @param {String} precision The precision of the date
      */
-    renderDate : function(date, precision) {
+    renderDate: function (date, precision) {
         var dateFormat;
 
-            if(!SanteDB.locale.dateFormats) {
-                SanteDB.resources.locale.findAsync().then(function (locale) {
-                    var localeAsset = locale[SanteDB.locale.getLocale()];
-                    if(localeAsset)
-                        localeAsset.forEach(function (l) {
-                            $.getScript(l);
-                        });
-                }).catch(function (e) {
-                   console.error(e);
-                });
-                SanteDB
-            }
-                
-            switch (precision) {
-                case 1:   // Year     "Y"
+        if (!SanteDB.locale.dateFormats) {
+            SanteDB.resources.locale.findAsync().then(function (locale) {
+                var localeAsset = locale[SanteDB.locale.getLocale()];
+                if (localeAsset)
+                    localeAsset.forEach(function (l) {
+                        $.getScript(l);
+                    });
+            }).catch(function (e) {
+                console.error(e);
+            });
+            SanteDB
+        }
+
+        switch (precision) {
+            case 1:   // Year     "Y"
+            case 'Y':
+                dateFormat = SanteDB.locale.dateFormats.year;
+                break;
+            case 2:   // Month    "m"
+            case 'm':
+                dateFormat = SanteDB.locale.dateFormats.month;
+                break;
+            case 3:   // Day      "D"
+            case 'D':
+                dateFormat = SanteDB.locale.dateFormats.day;
+                break;
+            case 4:   // Hour     "H"
+            case 'H':
+                dateFormat = SanteDB.locale.dateFormats.hour;
+                break;
+            case 5:   // Minute   "M"
+            case 'M':
+                dateFormat = SanteDB.locale.dateFormats.minute;
+                break;
+            case 6:   // Second   "S"
+            case 'S':
+            case 0:   // Full     "F"
+            case 'F':
+            default:
+                dateFormat = SanteDB.locale.dateFormats.second;
+                break;
+        }
+
+        if (date) {
+            // Non timed
+            switch (dateFormat) {
+                case 1:   // Year, Month, Day always expressed in UTC for Javascript will take the original server value and adjust.
                 case 'Y':
-                    dateFormat = SanteDB.locale.dateFormats.year;
-                    break;
-                case 2:   // Month    "m"
+                case 2:
                 case 'm':
-                    dateFormat = SanteDB.locale.dateFormats.month;
-                    break;
-                case 3:   // Day      "D"
+                case 3:
                 case 'D':
-                    dateFormat = SanteDB.locale.dateFormats.day;
-                    break;
-                case 4:   // Hour     "H"
-                case 'H':
-                    dateFormat = SanteDB.locale.dateFormats.hour;
-                    break;
-                case 5:   // Minute   "M"
-                case 'M':
-                    dateFormat = SanteDB.locale.dateFormats.minute;
-                    break;
-                case 6:   // Second   "S"
-                case 'S':
-                case 0:   // Full     "F"
-                case 'F':
+                    return moment(date).utc().format(dateFormat);
                 default:
-                    dateFormat = SanteDB.locale.dateFormats.second;
-                    break;
+                    return moment(date).format(dateFormat);
             }
+        }
 
-            if (date) {
-                // Non timed
-                switch (dateFormat) {
-                    case 1:   // Year, Month, Day always expressed in UTC for Javascript will take the original server value and adjust.
-                    case 'Y':
-                    case 2:
-                    case 'm':
-                    case 3:
-                    case 'D':
-                        return moment(date).utc().format(dateFormat);
-                    default:
-                        return moment(date).format(dateFormat);
-                }
-            }
-
-            return null;
+        return null;
     },
     /**
      * @method
@@ -130,24 +130,40 @@ SanteDBWrapper.prototype.display = {
     renderConcept: function (concept) {
         var retVal = "";
         if (!concept)
-            retVal =  "";
+            retVal = "";
         else if (typeof (concept) === "String")
-            retVal =  concept;
+            retVal = concept;
         else if (concept.name && concept.name[SanteDB.locale.getLanguage()])
-            retVal =  concept.name[SanteDB.locale.getLanguage()];
+            retVal = concept.name[SanteDB.locale.getLanguage()];
         else if (concept.name)
-            retVal =  concept.name[Object.keys(concept.name)[0]];
+            retVal = concept.name[Object.keys(concept.name)[0]];
         else if (concept.mnemonic)
-            retVal =  concept.mnemonic;
+            retVal = concept.mnemonic;
         else if (concept[SanteDB.locale.getLanguage()])
-            retVal =  concept[SanteDB.locale.getLanguage()];
+            retVal = concept[SanteDB.locale.getLanguage()];
         else
-            retVal =  concept[Object.keys(concept)[0]];
+            retVal = concept[Object.keys(concept)[0]];
 
-        if(Array.isArray(retVal))
+        if (Array.isArray(retVal))
             return retVal[0];
-        else 
+        else
             return retVal;
+    },
+    /**
+     * @method
+     * @member SanteDBWrapper.display
+     * @summary Renders an entity or act identifier
+     * @param {EntityIdentifier} id The identifier to be rendered
+     * @param {String} domain The domain to render
+     */
+    renderIdentifier: function (id, domain) {
+        if (id === undefined)
+            return "";
+        if (domain && id[domain])
+            return id[domain].value;
+        else
+            for (var k in id)
+                return id[k].value;
     },
     /**
      * @method
@@ -159,7 +175,7 @@ SanteDBWrapper.prototype.display = {
      */
     renderEntityName: function (name, type) {
 
-        if(!name)
+        if (!name)
             return "";
         // Get the type of name to render
         if (type) {
@@ -237,7 +253,7 @@ SanteDBWrapper.prototype.display = {
         // Render address
         if (!address)
             return "";
-        else if(address.component){
+        else if (address.component) {
             var addrStr = "";
             if (address.component.AdditionalLocator)
                 addrStr += address.component.AdditionalLocator + ", ";

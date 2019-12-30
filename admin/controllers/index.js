@@ -116,9 +116,9 @@ angular.module('santedb').controller('AdminLayoutController', ["$scope", "$rootS
     // Check for conflict status
     var checkConflicts = function() {
         if($rootScope.system && $rootScope.system.config && $rootScope.system.config.sync && $rootScope.system.config.sync.mode == 'Sync')
-            SanteDB.resources.queue.getAsync("dead")
+            SanteDB.resources.queue.findAsync()
                 .then(function(queue) {
-                    $scope.deadletterQueue = queue;
+                    $scope.queue = queue;
                     $scope.$apply();
                 })
                 .catch(function(e) {
@@ -132,9 +132,18 @@ angular.module('santedb').controller('AdminLayoutController', ["$scope", "$rootS
     checkConflicts();
 
     // Mailbox
-    $interval(function() {
+    var refreshInterval = $interval(function() {
         checkTickles();
         checkMail();
         checkConflicts();
     } , 60000);
+
+    $scope.$on('$destroy',function(){
+        if(refreshInterval)
+            $interval.cancel(refreshInterval);   
+    });
+
+    // Is there no route? We should show the dashboard
+    if($state.$current == "santedb-admin") 
+        $state.transitionTo("santedb-admin.dashboard");
 }]);

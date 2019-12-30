@@ -69,7 +69,26 @@ angular.module('santedb-lib')
                 // Fetch the widgets which are valid in this context
                 async function getWidgets(context) {
                     try {
-                        $scope.widgets = await SanteDB.application.getWidgetsAsync(context, "Panel");
+                        var widgets = await SanteDB.application.getWidgetsAsync(context, "Panel");
+
+                        // Small are combined 2 per group
+                        var cGroup = null;
+                        $scope.widgetGroups = [];
+                        widgets.forEach(function(w) {
+
+                            if(w.size == "Small") {  // combine
+                                if(cGroup == null) {
+                                    cGroup = { size: "Small", widgets: [] };
+                                    $scope.widgetGroups.push(cGroup);
+                                }
+                                cGroup.widgets.push(w);
+                                if(cGroup.widgets.length >= w.maxStack)
+                                    cGroup = null;
+                            }
+                            else 
+                                $scope.widgetGroups.push({ size: w.size, widgets: [w]});
+                        });
+
                         $scope.$apply();
                     }
                     catch(e){

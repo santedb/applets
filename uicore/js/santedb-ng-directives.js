@@ -390,6 +390,7 @@ angular.module('santedb-lib')
                 defaultFilter: "<",
                 canFilter: "<",
                 canSize: "<",
+                noButtons: "<",
                 buttonBar: "<"
             },
             restrict: 'E',
@@ -462,70 +463,77 @@ angular.module('santedb-lib')
                     }
 
                     // Buttons
-                    var buttons = (scope.actions || []).map(function (b) {
-                        return {
-                            text: `<i class="${b.icon}"></i> ` + SanteDB.locale.getString('ui.action.' + b.name),
-                            className: `btn ${b.className || 'btn-default'}`,
-                            action: function (e, dt, node, config) {
-                                $state.transitionTo(b.sref);
-                            }
-                        }
-                    });
-
-                    // Add refresh button
-                    buttons.push(
-                       'reload'
-                    );
-
-                    // Add a show obsolete button
-                    if(scope.defaultQuery && scope.defaultQuery.obsoletionTime)
-                        buttons.push({
-                            text: "<i class='fas fa-trash'></i> " + SanteDB.locale.getString("ui.action.showDeleted"),
-                            className: "btn btn-light",
-                            action: function (e, dt, node, config) {
-                                
-                                var btn = $("button.btn-light:has(i.fa-trash)", element);
-                                if(btn.hasClass("active")) { // active to inactive
-                                    scope.defaultQuery.obsoletionTime = 'null';
-                                    $("button.btn-light:has(i.fa-trash)", element).removeClass("active");
-                                }
-                                else {
-                                    scope.defaultQuery.obsoletionTime = '!null';
-                                    $("button.btn-light:has(i.fa-trash)", element).addClass("active");
-                                }
-                                
-                                dt.ajax.reload();
-                                
-                            }
-                        });
-                    else if(scope.defaultQuery && scope.defaultQuery.statusConcept)
-                        buttons.push({
-                            text: "<i class='fas fa-trash'></i> " + SanteDB.locale.getString("ui.action.showDeleted"),
-                            className: "btn btn-light",
-                            action: function (e, dt, node, config) {
-                                if (!scope.defaultQuery.statusConcept || scope.defaultQuery.statusConcept == StatusKeys.Active) {
-                                    scope.defaultQuery.statusConcept = '!' + StatusKeys.Active;
-                                    $("button.btn-light:has(i.fa-trash)", element).addClass("active");
-                                }
-                                else {
-                                    scope.defaultQuery.statusConcept = StatusKeys.Active;
-                                    $("button.btn-light:has(i.fa-trash)", element).removeClass("active");
-                                }
-                                dt.ajax.reload();
-                            }
-                        });
-
-                    // Button bar requires something
+                    var buttons = [];
+                    
                     if(scope.buttonBar) 
                         buttons = [ 'copy' ];
+                    else if(scope.noButtons)
+                        buttons = [];
+                    else {
+                        buttons = (scope.actions || []).map(function (b) {
+                            return {
+                                text: `<i class="${b.icon}"></i> ` + SanteDB.locale.getString('ui.action.' + b.name),
+                                className: `btn ${b.className || 'btn-default'}`,
+                                action: function (e, dt, node, config) {
+                                    $state.transitionTo(b.sref);
+                                }
+                            }
+                        });
 
+                        // Add refresh button
+                        buttons.push(
+                        'reload'
+                        );
 
+                        // Add a show obsolete button
+                        if(scope.defaultQuery && scope.defaultQuery.obsoletionTime)
+                            buttons.push({
+                                text: "<i class='fas fa-trash'></i> " + SanteDB.locale.getString("ui.action.showDeleted"),
+                                className: "btn btn-light",
+                                action: function (e, dt, node, config) {
+                                    
+                                    var btn = $("button.btn-light:has(i.fa-trash)", element);
+                                    if(btn.hasClass("active")) { // active to inactive
+                                        scope.defaultQuery.obsoletionTime = 'null';
+                                        $("button.btn-light:has(i.fa-trash)", element).removeClass("active");
+                                    }
+                                    else {
+                                        scope.defaultQuery.obsoletionTime = '!null';
+                                        $("button.btn-light:has(i.fa-trash)", element).addClass("active");
+                                    }
+                                    
+                                    dt.ajax.reload();
+                                    
+                                }
+                            });
+                        else if(scope.defaultQuery && scope.defaultQuery.statusConcept)
+                            buttons.push({
+                                text: "<i class='fas fa-trash'></i> " + SanteDB.locale.getString("ui.action.showDeleted"),
+                                className: "btn btn-light",
+                                action: function (e, dt, node, config) {
+                                    if (!scope.defaultQuery.statusConcept || scope.defaultQuery.statusConcept == StatusKeys.Active) {
+                                        scope.defaultQuery.statusConcept = '!' + StatusKeys.Active;
+                                        $("button.btn-light:has(i.fa-trash)", element).addClass("active");
+                                    }
+                                    else {
+                                        scope.defaultQuery.statusConcept = StatusKeys.Active;
+                                        $("button.btn-light:has(i.fa-trash)", element).removeClass("active");
+                                    }
+                                    dt.ajax.reload();
+                                }
+                            });
+                    }
+                    
+                    // Default is true
+                    if(scope.canFilter === undefined)
+                        scope.canFilter = true;
+                    
                     dt = $("table", element).DataTable({
                         lengthChange: scope.canSize,
                         processing: true,
                         buttons: buttons,
                         serverSide: true,
-                        searching: scope.canSearch,
+                        searching: scope.canFilter,
                         "oSearch": scope.defaultFilter ? {"sSearch": scope.defaultFilter} : undefined,
                         ajax: function (data, callback, settings) {
 

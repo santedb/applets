@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!--
+ - Portions Copyright 2015-2019 Mohawk College of Applied Arts and Technology
+ - Portions Copyright 2019-2019 SanteSuite Contributors (See NOTICE)
+ - 
+ - 
+ - Licensed under the Apache License, Version 2.0 (the "License"); you 
+ - may not use this file except in compliance with the License. You may 
+ - obtain a copy of the License at 
+ - 
+ - http://www.apache.org/licenses/LICENSE-2.0 
+ - 
+ - Unless required by applicable law or agreed to in writing, software
+ - distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+ - WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the 
+ - License for the specific language governing permissions and limitations under 
+ - the License.
+ - 
+ - User: Justin Fyfe
+ - Date: 2019-12-16
+ -->
+<BiQueryDefinition xmlns="http://santedb.org/bi" id="org.santedb.bi.core.query.auditObject" label="ui.santedb.bi.core.query.auditDate">
+  <meta status="active">
+    <authors>
+      <add>Justin Fyfe (Fyfe Software Inc.) &lt;justin@fyfesoftware.ca></add>
+    </authors>
+  </meta>
+  <dataSources>
+    <add ref="#org.santedb.bi.dataSource.audit"/>
+  </dataSources>
+  <parameters>
+    <add ref="#org.santedb.bi.core.parameter.common.date.from" name="from-date" type="date"/>
+    <add ref="#org.santedb.bi.core.parameter.common.date.to" name="to-date" type="date"/>
+    <add name="object-id" label="ui.bi.core.audit.object" type="string" required="true" />
+  </parameters>
+  <definitions>
+    <add>
+      <providers>
+        <invariant>npgsql</invariant>
+        <invariant>fbsql</invariant>
+      </providers>
+      <![CDATA[
+        SELECT 
+          AUD_TBL.ID AS ID,
+          AUD_ACT_TBL.USR_NAME AS USER_NAME,
+          AP AS ACCESS_POINT, 
+          LCYCL_CS AS LIFECYCLE_CODE,
+          OUTC_CS AS OUTCOME_CODE,
+          ACT_CS AS ACTION_CODE, 
+          TYP_CS AS TYPE_CODE, 
+          EVT_UTC AS EVENT_TIME, 
+          MNEMONIC AS CLASSIFICATION 
+        FROM 
+            AUD_OBJ_TBL 
+            INNER JOIN AUD_TBL  ON (AUD_ID = AUD_TBL.ID)
+            INNER JOIN AUD_ACT_ASSOC_TBL ON (AUD_ACT_ASSOC_TBL.AUD_ID = AUD_TBL.ID AND IS_RQO)
+            INNER JOIN AUD_ACT_TBL ON (AUD_ACT_ASSOC_TBL.ACT_ID = AUD_ACT_TBL.ID)
+            INNER JOIN AUD_CD_TBL AS CLS_CD ON (CLS_CD.ID = CLS_CD_ID)
+        WHERE
+            AUD_TBL.EVT_UTC BETWEEN COALESCE(${from-date}, '0001-01-01')::DATE AND COALESCE(${to-date}::DATE, CURRENT_TIMESTAMP)
+            AND OBJ_ID = CAST(${object-id} AS VARCHAR)
+          
+      ]]>
+    </add>
+    <add>
+        <providers>
+            <invariant>sqlite</invariant>
+        </providers>
+        <![CDATA[
+        SELECT 
+            AUDIT.ID AS ID,
+            AUDIT_ACTOR.USER_NAME AS USER_NAME,
+            AUDIT_ACTOR_ASSOC.AP AS ACCESS_POINT,
+            AUDIT_OBJECT.LIFECYCLE AS LIFECYCLE_CODE,
+            AUDIT.OUTCOME AS OUTCOME_CODE,
+            AUDIT.ACTION AS ACTION_CODE,
+            AUDIT.TYPE AS TYPE_CODE,
+            AUDIT.EVENTTIME AS EVENT_TIME,
+            AUDIT_CODE.CODE AS CLASSIFICATION
+        FROM 
+            AUDIT_OBJECT 
+            INNER JOIN AUDIT ON (AUDIT_OBJECT.AUDIT_ID = AUDIT.ID)
+            INNER JOIN AUDIT_ACTOR_ASSOC ON (AUDIT_ACTOR_ASSOC.AUDIT_ID = AUDIT.ID)
+            INNER JOIN AUDIT_ACTOR ON (AUDIT_ACTOR.ID = AUDIT_ACTOR_ASSOC.ACTOR_ID)
+            INNER JOIN AUDIT_CODE ON (AUDIT.CLASS = AUDIT_CODE.ID)
+        WHERE
+          ((eventTime - 621355968000000000) /  10000000) BETWEEN COALESCE(${from-date}, 0) AND COALESCE(${to-date}, 0xffffffffffff)
+          AND audit_object.obj_id = ${object-id}
+        ]]>
+    </add>
+  </definitions>
+</BiQueryDefinition>

@@ -536,8 +536,8 @@
     <string key="ui.model.patient.genderConcept">Gender</string>
     <string key="ui.model.patient.identifier">Identifier(s)</string>
     <string key="ui.model.patient.creationTime">Timestamp</string>
-    <string key="ui.model.patient.telecom"><![CDATA[E-Mail/Telephone]]></string>
-    <string key="ui.model.patient.telecoms"><![CDATA[E-Mail &amp; Telephone]]></string>
+    <string key="ui.model.patient.telecom">Contact</string>
+    <string key="ui.model.patient.telecoms">Contacts</string>
     <string key="ui.model.patient.relationship">Relationships</string>
     <string key="ui.model.patient.deceased">DECEASED</string>
     <string key="ui.model.patient.multipleBirth">MULTI-BIRTH</string>

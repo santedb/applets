@@ -275,6 +275,7 @@ var santedbApp = angular.module('santedb', ['ngSanitize', 'ui.router', 'oc.lazyL
                         $rootScope.session = null;
                         $templateCache.removeAll();
                         $state.reload();
+                        delete($rootScope.session);
                         toastr.clear();
                     }).catch($rootScope.errorHandler);
                 else if (!_extendToast) {

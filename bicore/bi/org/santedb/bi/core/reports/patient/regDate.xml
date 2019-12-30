@@ -69,7 +69,7 @@
         <!-- Shows line chart with each audit event type -->
         <bi:chart source="by-date" type="bar" legend="true">
           <bi:title>Registrations By Date</bi:title>
-          <bi:labels data="created_date" format="yyyy-MM"/>
+          <bi:labels format="yyyy-MM">created_date</bi:labels>
           <bi:dataset label="Female">Female</bi:dataset>
           <bi:dataset label="Male">Male</bi:dataset>
         </bi:chart>

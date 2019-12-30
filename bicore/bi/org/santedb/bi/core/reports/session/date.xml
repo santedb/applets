@@ -113,7 +113,7 @@
          <!-- Shows line -->
             <bi:chart source="main-date" type="bar">
               <bi:title>Sessions By Date - Line</bi:title>
-              <bi:labels data="ses_date" format="yyyy-MM-dd"/>
+              <bi:labels data="ses_date" format="yyyy-MM-dd">ses_date</bi:labels>
               <bi:dataset label="# Sessions">n_sessions</bi:dataset>
             </bi:chart>
       </div>
@@ -123,7 +123,7 @@
          <!-- Shows line -->
             <bi:chart source="main-date" type="radar">
               <bi:title>Sessions By Weekday</bi:title>
-              <bi:labels data="ses_date" format="ddd"/>
+              <bi:labels data="ses_date" format="ddd">ses_date</bi:labels>
               <bi:dataset label="# Sessions">n_sessions</bi:dataset>
             </bi:chart>
       </div>

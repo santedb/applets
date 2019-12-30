@@ -31,7 +31,14 @@
     <string key="ui.bi.common.tabular">Tabular</string>
     <string key="ui.bi.common.chart">Chart</string>
     <string key="ui.bi.common.parameters">Filter</string>
-    
+    <string key="ui.bi.common.view.week">Weekday</string>
+    <string key="ui.bi.common.view.date">Date</string>
+    <string key="ui.bi.common.view.time">Time</string>
+    <string key="ui.bi.common.view.action">Activity</string>
+    <string key="ui.bi.common.view.outcome">Outcome</string>
+    <string key="ui.bi.common.view.user">User</string>
+
+    <string key="ui.bi.core.report.audit.objectAccess">Object Access</string>
     <!-- Common Parameter Labels -->
     <string key="ui.bi.core.user.class">User Class</string>
     <string key="ui.bi.core.date.from">From</string>
@@ -43,5 +50,8 @@
     <string key="ui.bi.core.label.total">Total</string>
     <!-- Default BI Core Reports--> 
     <string key="ui.bi.core.report.session.date">System Sessions</string>
+
+
+
   </strings>
 </AppletManifest>

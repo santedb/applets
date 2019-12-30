@@ -1,0 +1,52 @@
+<?xml version="1.0"?>
+<!--
+ - Portions Copyright 2015-2019 Mohawk College of Applied Arts and Technology
+ - Portions Copyright 2019-2019 SanteSuite Contributors (See NOTICE)
+ - 
+ - 
+ - Licensed under the Apache License, Version 2.0 (the "License"); you 
+ - may not use this file except in compliance with the License. You may 
+ - obtain a copy of the License at 
+ - 
+ - http://www.apache.org/licenses/LICENSE-2.0 
+ - 
+ - Unless required by applicable law or agreed to in writing, software
+ - distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+ - WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the 
+ - License for the specific language governing permissions and limitations under 
+ - the License.
+ - 
+ - User: Justin Fyfe
+ - Date: 2019-12-16
+ -->
+<BiViewDefinition xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="by-date" id="org.santedb.bi.core.view.audit.object" xmlns="http://santedb.org/bi">
+  <meta status="active">
+    <authors>
+      <add>Justin Fyfe (Fyfe Software Inc.) &lt;justin@fyfesoftware.ca&gt;</add>
+    </authors>
+    
+  </meta>
+  <query ref="#org.santedb.bi.core.query.auditObject">
+  </query>
+  <aggregations>
+    <add>
+      <providers>
+        <invariant>npgsql</invariant>
+        <invariant>fbsql</invariant>
+        <invariant>sqlite</invariant>
+      </providers>
+      <grouping>
+        <column name="event_time">event_time</column>
+        <column name="outcome">case when outcome_code = 1 then 'Success' when outcome_code = 2 or outcome_code= 4 then 'Minor Fail' else 'Serious Fail' end</column>
+        <column name="user_name">user_name</column>
+        <column name="action">case when action_code = 1 then 'Create' when action_code = 2 then 'Read' when action_code = '4' then 'Update' when action_code = 8 then 'Delete' when action_code = 16 then 'Execute' end</column>
+        <column name="type">classification</column>
+      </grouping>
+      <select>
+        <column name="id" fn="count-distinct">id</column>
+      </select>
+    </add>
+    
+  </aggregations>
+  
+</BiViewDefinition>

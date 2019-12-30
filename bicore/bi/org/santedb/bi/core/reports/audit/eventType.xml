@@ -40,7 +40,7 @@
          <!-- Shows line chart with each audit event type -->
             <bi:chart source="main-date" type="pie">
               <bi:title>Event Types</bi:title>
-              <bi:labels data="type"/>
+              <bi:labels>type</bi:labels>
               <bi:dataset label="# Audits" >id</bi:dataset>
             </bi:chart>
       </div>

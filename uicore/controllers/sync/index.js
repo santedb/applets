@@ -65,7 +65,12 @@ angular.module("santedb").controller("SyncController", ['$scope', '$rootScope', 
 
     // Refresh queues on 30s intervals
     refreshQueues().then(() => $scope.$apply());
-    $interval(refreshQueues, 10000);
+    var refreshPromise = $interval(refreshQueues, 10000);
+
+    $scope.$on('$destroy',function(){
+        if(refreshPromise)
+            $interval.cancel(refreshPromise);   
+    });
 
     $("#queueModal").on("hidden.bs.modal", function() {
         $scope.currentQueue = null;

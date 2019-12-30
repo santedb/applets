@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!--
+ - Portions Copyright 2015-2019 Mohawk College of Applied Arts and Technology
+ - Portions Copyright 2019-2019 SanteSuite Contributors (See NOTICE)
+ - 
+ - 
+ - Licensed under the Apache License, Version 2.0 (the "License"); you 
+ - may not use this file except in compliance with the License. You may 
+ - obtain a copy of the License at 
+ - 
+ - http://www.apache.org/licenses/LICENSE-2.0 
+ - 
+ - Unless required by applicable law or agreed to in writing, software
+ - distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+ - WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the 
+ - License for the specific language governing permissions and limitations under 
+ - the License.
+ - 
+ - User: Justin Fyfe
+ - Date: 2019-12-16
+ -->
+<BiReportDefinition xmlns="http://santedb.org/bi" id="org.santedb.bi.core.reports.audit.object" label="ui.bi.core.report.audit.objectAccess">
+  <meta>
+    <authors>
+      <add>Justin Fyfe (Fyfe Software Inc.) &lt;justin@fyfesoftware.ca></add>
+    </authors>
+    <annotation>
+      <div xmlns="http://www.w3.org/1999/xhtml">
+        <p>A simple report showing the rendering of audit by object access</p>
+      </div>
+    </annotation>
+
+  </meta>
+  <dataSources>
+    <view ref="org.santedb.bi.core.view.audit.object" name="main-object"/>
+  </dataSources>
+  <views>
+    <add id="org.santedb.bi.core.reports.audit.object.outcome" label="ui.bi.common.view.user" name="user">
+      <div xmlns="http://www.w3.org/1999/xhtml" xmlns:bi="http://santedb.org/bi/view">
+         <!-- Shows line chart with each audit event type -->
+            <bi:chart source="main-object" type="pie">
+              <bi:title>Accessed By</bi:title>
+              <bi:labels>user_name</bi:labels>
+              <bi:dataset label="# Audits" >id</bi:dataset>
+            </bi:chart>
+      </div>
+    </add>
+    <add id="org.santedb.bi.core.reports.audit.object.action" label="ui.bi.common.view.action" name="action">
+      <div xmlns="http://www.w3.org/1999/xhtml" xmlns:bi="http://santedb.org/bi/view">
+         <!-- Shows line chart with each audit event type -->
+            <bi:chart source="main-object" type="pie">
+              <bi:title>Actions</bi:title>
+              <bi:labels data="action">action</bi:labels>
+              <bi:dataset label="# Audits" >id</bi:dataset>
+            </bi:chart>
+      </div>
+    </add>
+    <add id="org.santedb.bi.core.reports.audit.object.outcome" label="ui.bi.common.view.outcome" name="outcome">
+      <div xmlns="http://www.w3.org/1999/xhtml" xmlns:bi="http://santedb.org/bi/view">
+         <!-- Shows line chart with each audit event type -->
+            <bi:chart source="main-object" type="pie">
+              <bi:title>Action Outcome</bi:title>
+              <bi:labels data="outcome">outcome</bi:labels>
+              <bi:dataset label="# Audits" >id</bi:dataset>
+            </bi:chart>
+      </div>
+    </add>
+    <add id="org.santedb.bi.core.reports.audit.object.time" label="ui.bi.common.view.date" name="time">
+      <div xmlns="http://www.w3.org/1999/xhtml" xmlns:bi="http://santedb.org/bi/view">
+         <!-- Shows line chart with each audit event type -->
+            <bi:chart source="main-object" type="line">
+              <bi:title>Access Over Time</bi:title>
+              <bi:labels data="event_time" format="yyyy-MM-dd">event_time</bi:labels>
+              <bi:dataset label="# Audits" >id</bi:dataset>
+            </bi:chart>
+      </div>
+    </add>
+    <add id="org.santedb.bi.core.reports.audit.object.time" label="ui.bi.common.view.time" name="dayTime">
+      <div xmlns="http://www.w3.org/1999/xhtml" xmlns:bi="http://santedb.org/bi/view">
+         <!-- Shows line chart with each audit event type -->
+            <bi:chart source="main-object" type="line">
+              <bi:title>Access Time of Day</bi:title>
+              <bi:labels data="event_time" format="HH:00">event_time</bi:labels>
+              <bi:dataset label="# Audits" >id</bi:dataset>
+            </bi:chart>
+      </div>
+    </add>
+    <add id="org.santedb.bi.core.reports.audit.object.dayOfWeek" label="ui.bi.common.view.week" name="weekDay">
+      <div xmlns="http://www.w3.org/1999/xhtml" xmlns:bi="http://santedb.org/bi/view">
+         <!-- Shows line chart with each audit event type -->
+            <bi:chart source="main-object" type="radar">
+              <bi:title>Weekday</bi:title>
+              <bi:labels data="event_time" format="ddd">event_time</bi:labels>
+              <bi:dataset label="# Audits" >id</bi:dataset>
+            </bi:chart>
+      </div>
+    </add>
+  </views>
+</BiReportDefinition>

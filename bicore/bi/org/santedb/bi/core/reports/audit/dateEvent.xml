@@ -40,7 +40,7 @@
          <!-- Shows line chart with each audit event type -->
             <bi:chart source="main-date" type="line">
               <bi:title>Audits By Date</bi:title>
-              <bi:labels data="evt_utc" format="yyyy-MM-dd"/>
+              <bi:labels format="yyyy-MM-dd">evt_utc</bi:labels>
               <bi:dataset label="# Audits">id</bi:dataset>
             </bi:chart>
       </div>
@@ -50,7 +50,7 @@
          <!-- Shows line chart with each audit event type -->
             <bi:chart source="main-date" type="line">
               <bi:title>Audits By Hour</bi:title>
-              <bi:labels data="evt_utc" format="HH:00"/>
+              <bi:labels format="HH:00">evt_utc</bi:labels>
               <bi:dataset label="# Audits">id</bi:dataset>
             </bi:chart>
       </div>
@@ -60,7 +60,7 @@
         <!-- Shows line chart with each audit event type -->
         <bi:chart source="main-date" type="radar">
           <bi:title>Audits By Day</bi:title>
-          <bi:labels data="evt_utc" format="ddd"/>
+          <bi:labels format="ddd">evt_utc</bi:labels>
           <bi:dataset label="# Audits">id</bi:dataset>
         </bi:chart>
       </div>
