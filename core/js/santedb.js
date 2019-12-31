@@ -325,7 +325,7 @@ if (!SanteDBWrapper)
                                 error = e.responseJSON;
                             else if(e.responseText)
                                 try { error = JSON.parse(e.responseText); }
-                                catch {};
+                                catch(e) {};
                                 
                             if (reject) {
                                 if (error && error.error !== undefined) // oauth2
@@ -992,7 +992,7 @@ if (!SanteDBWrapper)
                 var retVal = new Exception();
                 try {
                     // Server Exceptions
-                    var exceptionRegex = /--SERVER\sFAULT--(.*?)--END SERVER FAULT--/gs;
+                    var exceptionRegex = /--SERVER\sFAULT--(.*?)--END SERVER FAULT--/g;
                     var result = exceptionRegex.exec(exceptionString);
                     
                     if(result) {

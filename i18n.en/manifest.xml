@@ -383,6 +383,8 @@
     <string key="ui.config.security.password.sha1">SHA1 Password Hashin</string>
     <string key="ui.config.security.password.plain">Plaintext (not recommended)</string>
     <string key="ui.config.security.audit.label">AR Store</string>
+    <string key="ui.config.security.facility.title">Assigned Facility</string>
+    <string key="ui.config.security.facility.help">Select one or more facilities which this gateway services</string>
     <string key="ui.config.security.audit.help">Use this setting to configure how long audits are retained on this device. Depending on internet availability and legal/policy requirements this setting may need to be changed.</string>
     <string key="ui.config.security.audit.none">Do not store security audits locally (not recommended)</string>
     <string key="ui.config.security.audit.48hr">Retain for 48 hrs</string>

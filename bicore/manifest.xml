@@ -19,12 +19,11 @@
  - Date: 2019-11-13
  -->
 <AppletManifest xmlns="http://santedb.org/applet">
-  <info id="org.santedb.bicore" version="1.82.0.0">
+  <info id="org.santedb.bicore" version="1.100.0.0">
     <icon>/org.santedb.core/img/icon.png</icon>
     <name lang="en">SanteDB Core BI Definitions</name>
     <author>Fyfe Software Inc.</author>
-    <dependency id="org.santedb.core" />
-    <dependency id="org.santedb.uicore" />
+
   </info>
 
   <strings lang="en">

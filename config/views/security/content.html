@@ -49,9 +49,22 @@
     </div>
     <div class="form-group row">
         <label class="offset-md-2 col-md-10  col-xs-12">
-            <input type="checkbox" ng-model="config.security.onlySubscribedAuth" ng-disabled="!config.sync.subscribe"/>
+            <input type="checkbox" ng-model="config.security.restrictLogin" ng-disabled="!config.sync.subscribe"/>
             {{ 'ui.config.security.onlySubscribed' | i18n }}
         </label>
+    </div>
+    <div class="form-group row">
+        <label class="control-label col-md-2 col-xs-12" for="auditRetention">{{ 'ui.config.security.facility.title' | i18n }}</label>
+        <div class="col-md-10 col-xs-12">
+            <entity-search ng-disabled="!config.sync.subscribe" type="'Place'"
+                                    filter="{ obsoletionTime: 'null', classConcept: EntityClassKeys.ServiceDeliveryLocation }"
+                                    class="form-control"
+                                    ng-model="config.security.facility"
+                                    multiple="multiple" />
+                                    <div class="form-text text-muted">
+                                        {{ 'ui.config.security.facility.help' | i18n }}
+                                    </div>
+        </div>
     </div>
     <div class="form-group row">
         <label class="offset-md-2 col-md-10 col-xs-12">
