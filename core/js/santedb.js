@@ -27,7 +27,9 @@ var ExecutionEnvironment = {
     Unknown: 0,
     Server: 1,
     Mobile: 2,
-    UserInterface: 3
+    Other: 3,
+    Test: 4,
+    Gateway: 5
 };
 
 if (!SanteDBWrapper)
@@ -358,14 +360,15 @@ if (!SanteDBWrapper)
                 */
             this.deleteAsync = function (configuration) {
                 return new Promise(function (fulfill, reject) {
+                    var hdr = configuration.headers || {};
+                    hdr["X-Delete-Mode"] = configuration.mode || "OBSOLETE";
                     $.ajax({
                         method: 'DELETE',
                         url: _config.base + configuration.resource + (configuration.id ? (_config.idByQuery ? "?_id=" + configuration.id : "/" + configuration.id) : ""),
                         data: configuration.contentType == 'application/json' && configuration.data ? JSON.stringify(_reorderProperties(configuration.data)) : configuration.data,
-                        headers: { "X-Delete-Mode": configuration.mode || "OBSOLETE" },
+                        headers: hdr,
                         dataType: configuration.dataType ||'json',
                         contentType: configuration.contentType || 'application/json',
-                        headers: configuration.headers,
                         async: !configuration.sync,
                         success: function (xhr, status, response) {
                             try {
@@ -992,7 +995,7 @@ if (!SanteDBWrapper)
                 var retVal = new Exception();
                 try {
                     // Server Exceptions
-                    var exceptionRegex = /--SERVER\sFAULT--(.*?)--END SERVER FAULT--/g;
+                    var exceptionRegex = new RegExp("/--SERVER\sFAULT--(.*?)--END SERVER FAULT--/gs");
                     var result = exceptionRegex.exec(exceptionString);
                     
                     if(result) {

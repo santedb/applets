@@ -152,7 +152,7 @@ angular.module('santedb-lib')
         return {
             scope: {
                 id: "<",
-                parameters: "<",
+                parameters: "=",
                 view: "<"
             },
             restrict: "E",
@@ -195,10 +195,12 @@ angular.module('santedb-lib')
                     }
                 }
 
+                
                 scope.renderReport(null, null);
-                scope.$watch("id", function(n, o) {
-                    if(n && (o != n || !hasRendered)) {
-                        
+                scope.$watch((s) => {
+                    return JSON.stringify(s.parameters);
+                }, function(n, o) {
+                    if(n && (o != n)) {
                         scope.renderReport(n, o);
                     }
                 });

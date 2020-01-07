@@ -18,10 +18,10 @@
  - Date: 2018-7-23
  -->
 <AppletManifest xmlns="http://santedb.org/applet">
-  <info id="org.santedb.i18n.en" version="1.100.0.0">
+  <info id="org.santedb.i18n.en" version="1.115.0.0">
     <icon>/org.santedb.core/img/i18n.png</icon>
     <name lang="en">English Applet Support</name>
-    <author>Mohawk College of Applied Arts and Technology - mHealth &amp; eHealth Development &amp; Innovation Centre</author>
+    <author>SanteSuite Community Partners (see: santesuite.org)</author>
   </info>
   <locales>
     <locale code="en">
@@ -170,6 +170,7 @@
     <string key="ui.state.readonly">Readonly</string>
     <string key="ui.state.offline">Offline</string>
     <string key="ui.state.online">Online</string>
+    <string key="ui.state.degraded">Central Unavailable</string>
 
     <!-- Priority -->
     <string key="ui.priority.info">Info</string>
@@ -383,6 +384,8 @@
     <string key="ui.config.security.password.sha1">SHA1 Password Hashin</string>
     <string key="ui.config.security.password.plain">Plaintext (not recommended)</string>
     <string key="ui.config.security.audit.label">AR Store</string>
+    <string key="ui.config.security.owner.title">Maintainer</string>
+    <string key="ui.config.security.owner.help">Select one or more users that will be using this tablet. These people may be contacted from time to time to perform maintenance.</string>
     <string key="ui.config.security.facility.title">Assigned Facility</string>
     <string key="ui.config.security.facility.help">Select one or more facilities which this gateway services</string>
     <string key="ui.config.security.audit.help">Use this setting to configure how long audits are retained on this device. Depending on internet availability and legal/policy requirements this setting may need to be changed.</string>
@@ -392,7 +395,7 @@
     <string key="ui.config.security.audit.month">Retain for 1 month</string>
     <string key="ui.config.security.audit.yr">Retain for 1 year</string>
     <string key="ui.config.security.audit.7yr">Retain for 7 years</string>
-    <string key="ui.config.security.onlySubscribed">Only allow users from subscribed facilities to login</string>
+    <string key="ui.config.security.onlySubscribed">Only allow users from assigned facility to login</string>
     <string key="ui.config.security.localAuth">Allow users to login when the central authentication server is unavailable</string>
     <string key="ui.config.network.title">Network</string>
     <string key="ui.config.network.description">SanteDB can optimize the bandwidth that this device will use when communicating with the central instance, which can be set here. You can also setup any proxy information required for your local network</string>
@@ -489,6 +492,7 @@
     <string key="ui.model.deviceEntity.manufacturerModelName">Model Name</string>
     <string key="ui.model.deviceEntity.operatingSystemName">Operating System</string>
     <string key="ui.model.deviceEntity.relationship.DedicatedServiceDeliveryLocation">Designated Facility</string>
+    <string key="ui.model.deviceEntity.relationship.AssignedEntity">Designated Person</string>
 
     <string key="ui.model.securityApplication.id">Security ID</string>
     <string key="ui.model.securityApplication.name">Name</string>

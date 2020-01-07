@@ -158,15 +158,18 @@
                             <a class="nav-link mr-lg-2">
                                 <i class="fa fa-fw fa-wifi"></i>
                                 <span class="d-lg-none">{{ 'ui.state' | i18n }}
-                                    <span class="badge badge-pill badge-success" ng-if="$root.system.online">
+                                    <span class="badge badge-pill badge-success" ng-if="$root.system.online &amp;&amp; $root.system.serviceState.hdsi &amp;&amp; $root.system.serviceState.ami">
                                         {{ 'ui.state.online' | i18n }}
                                     </span>
+                                    <span class="badge badge-pill badge-warning" ng-if="!$root.system.serviceState.hdsi || !$root.system.serviceState.ami">
+                                        {{ 'ui.state.degraded' | i18n }}
+                                    </span>
                                     <span class="badge badge-pill badge-danger" ng-if="!$root.system.online">
-                                        {{ 'ui.state.online' | i18n }}
+                                        {{ 'ui.state.offline' | i18n }}
                                     </span>
                                 </span>
                                 <span class="indicator d-none d-lg-block"
-                                    ng-class="{ 'text-success' : $root.system.online , 'text-danger' : !$root.system.online }">
+                                    ng-class="{ 'text-success' : $root.system.online &amp;&amp; $root.system.serviceState.hdsi &amp;&amp; $root.system.serviceState.ami, 'text-warning': $root.system.online &amp;&amp; (!$root.system.serviceState.hdsi || !$root.system.serviceState.ami) , 'text-danger' : !$root.system.online }">
                                     <i class="fa fa-fw fa-circle"></i>
                                 </span>
                             </a>

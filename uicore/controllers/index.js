@@ -70,13 +70,6 @@ var santedbApp = angular.module('santedb', ['ngSanitize', 'ui.router', 'oc.lazyL
 
     }]).controller("RootIndexController", ["$scope", function ($scope) {
 
-        try {
-            eval('async () => {}');
-        } catch (e) {
-            if (e instanceof SyntaxError)
-                $scope.asyncUnavailable = true;
-        }
-        
     }])
     .run(['$rootScope', '$state', '$templateCache', '$transitions', '$ocLazyLoad', '$interval', function ($rootScope, $state, $templateCache, $transitions, $ocLazyLoad, $interval) {
 
@@ -253,7 +246,11 @@ var santedbApp = angular.module('santedb', ['ngSanitize', 'ui.router', 'oc.lazyL
         $interval(function () {
             $rootScope.system = $rootScope.system || {};
             $rootScope.system.online = SanteDB.application.getOnlineState();
-
+            $rootScope.system.serviceState = {
+                network: SanteDB.application.getOnlineState(),
+                ami:  SanteDB.application.isAdminAvailable(),
+                hdsi:  SanteDB.application.isClinicalAvailable()
+            };
             // Page information
             $rootScope.page = {
                 currentTime: new Date(),
@@ -311,5 +308,3 @@ var santedbApp = angular.module('santedb', ['ngSanitize', 'ui.router', 'oc.lazyL
         });
 
     }]);
-
-    

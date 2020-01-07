@@ -20,10 +20,10 @@
  - Date: 2019-8-8
  -->
 <AppletManifest xmlns="http://santedb.org/applet">
-  <info id="org.santedb.admin" version="1.100.0.0">
+  <info id="org.santedb.admin" version="1.115.0.0">
     <icon>/org.santedb.admin/img/icon.png</icon>
     <name lang="en">SanteDB Administrative Panel</name>
-    <author>SanteSuite Contributors</author>
+    <author>SanteSuite Community Partners (see: santesuite.org)</author>
   </info>
 
   <errors>

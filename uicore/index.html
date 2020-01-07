@@ -112,7 +112,7 @@
                     <p class="mb-0">{{ 'error.noScript.text' | i18n }} </p>
                 </div>
     </noscript>
-    <div class="alert alert-warning" ng-if="asyncUnavailable" style="z-index: 10000">
+    <div class="alert alert-warning d-none" id="noArrowFunc"  style="z-index: 10000">
         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
             <span aria-hidden="true"><i class="fas fa-times fa-fw"></i></span>
         </button>
@@ -123,6 +123,18 @@
 
         <p class="mb-0">{{ 'error.invalidBrowser.text' | i18n }} </p>
     </div>
+    <script type="text/javascript" nonce="{{ $csp_nonce }}">
+    //<![CDATA[    
+        try {
+            eval('async () => { }');
+        }
+        catch(e) {
+            if(e instanceof SyntaxError) {
+                $("#noArrowFunc").removeClass("d-none");
+            }
+        }
+            //]]>
+    </script>
 </body>
 
 </html>

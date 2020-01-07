@@ -49,7 +49,7 @@ angular.module('santedb').controller('InitialSettingsController', ['$scope', '$r
     }
 
     // Process configuration
-    function _processConfiguration(config) {
+    function _processConfiguration(config, sessionInfo) {
         $scope.config = config;
 
         $("#configurationStages li.nav-item").children("a").on('shown.bs.tab', function (e) {
@@ -68,7 +68,11 @@ angular.module('santedb').controller('InitialSettingsController', ['$scope', '$r
             $scope.config.subscription = $scope.config.subscription || {};
             $scope.config.subscription.mode = $scope.config.subscription.mode || "Subscription";
             $scope.config.log.mode = $scope.config.log.writers[0].filter || "Warning";
+            if(sessionInfo && sessionInfo.entity)
+                $scope.config.security.owner = [ sessionInfo.entity.id ];
             $scope.config.sync._resource = {};
+
+           
             $scope.config.data = {
                 provider: "sqlite",
                 options: {}
@@ -96,6 +100,8 @@ angular.module('santedb').controller('InitialSettingsController', ['$scope', '$r
                             $scope.config.sync._resource[defn.name] = { selected: true };
                         });
                     });
+
+                   
                     try {
                         $scope.$apply();
                     }
@@ -116,6 +122,7 @@ angular.module('santedb').controller('InitialSettingsController', ['$scope', '$r
                         $scope.reference.dataProviders = d;
                         if ($scope.config.data.provider)
                             $scope.reference.providerData = $scope.reference.dataProviders.find(function (o) { return o.invariant == $scope.config.data.provider });
+                        
                     }).catch($rootScope.errorHandler);
 
                 }).catch($rootScope.errorHandler);
@@ -130,9 +137,10 @@ angular.module('santedb').controller('InitialSettingsController', ['$scope', '$r
     }
 
     // Get configuration from the server
-    function _getConfiguration() {
+    function _getConfiguration(sessionInfo) {
         SanteDB.configuration.getAsync().then(function (config) {
-            _processConfiguration(config);
+            _processConfiguration(config, sessionInfo);
+            
         }).catch($rootScope.errorHandler);
     }
 
@@ -308,14 +316,14 @@ angular.module('santedb').controller('InitialSettingsController', ['$scope', '$r
             return;
         else {
             // logic to join the realm
-            var joinRealmFn = function (override) {
+            var joinRealmFn = function (sessionInfo, override) {
 
                 SanteDB.display.buttonWait("#joinRealmButton", true);
                 SanteDB.configuration.joinRealmAsync($scope.config.security, override === true)
                     .then(function (config) {
                         SanteDB.display.buttonWait("#joinRealmButton", false);
                         alert(SanteDB.locale.getString("ui.config.realm.success"));
-                        _processConfiguration(config);
+                        _processConfiguration(config, sessionInfo);
 
                         //SanteDB.authentication.setElevator(null);
                         $scope.next();
@@ -325,7 +333,7 @@ angular.module('santedb').controller('InitialSettingsController', ['$scope', '$r
                         SanteDB.display.buttonWait("#joinRealmButton", false);
                         if (e.$type == "DuplicateNameException" && !override) {
                             if (confirm(SanteDB.locale.getString("ui.config.realm.error.duplicate")))
-                                joinRealmFn(true);
+                                joinRealmFn(sessionInfo, true);
                             else
                                 $rootScope.errorHandler(e);
 

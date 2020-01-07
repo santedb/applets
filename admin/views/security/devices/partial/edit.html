@@ -193,13 +193,25 @@
                                 </div>
                         </div>
                         <div class="form-group row">
-                            <label for="familyName"
+                            <label for="facility"
                                 class="col-xs-12 col-md-2 control-label">{{ 'ui.model.deviceEntity.relationship.DedicatedServiceDeliveryLocation' | i18n }}</label>
                             <div class="col-xs-12 col-md-10">
-                                <entity-search type="'Place'"
+                                <entity-search type="'Place'" name="facility"
                                     filter="{ obsoletionTime: 'null', classConcept: EntityClassKeys.ServiceDeliveryLocation }"
                                     class="form-control"
                                     ng-model="target.entity.relationship.DedicatedServiceDeliveryLocation"
+                                    value-property="'target'" />
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="assignedEntity" 
+                                class="col-xs-12 col-md-2 control-label">{{ 'ui.model.deviceEntity.relationship.AssignedEntity' | i18n }}</label>
+                            <div class="col-xs-12 col-md-10">
+                                <entity-search type="'UserEntity'"
+                                    filter="{ obsoletionTime: 'null' }"
+                                    class="form-control"
+                                    name="assignedEntity"
+                                    ng-model="target.entity.relationship.AssignedEntity"
                                     value-property="'target'" />
                             </div>
                         </div>
@@ -214,5 +226,4 @@
                 {{ 'ui.action.save' | i18n }}</button>
         </div>
     </form>
-    <!-- #include virtual="/org.santedb.uicore/views/dialogs/password.partial.html" -->
 </div>
