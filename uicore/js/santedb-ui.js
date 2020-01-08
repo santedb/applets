@@ -131,7 +131,7 @@ SanteDBWrapper.prototype.display = {
         var retVal = "";
         if (!concept)
             retVal = "";
-        else if (typeof (concept) === "String")
+        else if (typeof (concept) === "string")
             retVal = concept;
         else if (concept.name && concept.name[SanteDB.locale.getLanguage()])
             retVal = concept.name[SanteDB.locale.getLanguage()];

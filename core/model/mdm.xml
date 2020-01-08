@@ -1,0 +1,125 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<!--
+ - Copyright 2015-2019 Mohawk College of Applied Arts and Technology
+ -
+ - 
+ - Licensed under the Apache License, Version 2.0 (the "License"); you 
+ - may not use this file except in compliance with the License. You may 
+ - obtain a copy of the License at 
+ - 
+ - http://www.apache.org/licenses/LICENSE-2.0 
+ - 
+ - Unless required by applicable law or agreed to in writing, software
+ - distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+ - WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the 
+ - License for the specific language governing permissions and limitations under 
+ - the License.
+ - 
+ - User: Justin Fyfe
+ - Date: 2019-8-8
+ -->
+<ViewModel xmlns="http://santedb.org/model/view">
+  <include>base</include>
+
+  <type type="ActProtocol" all="false">
+    <property name="protocol" behavior="always"/>
+    <property name="protocolModel" behavior="never"/>
+  </type>
+
+  <type type="EntityRelationship" all="false">
+    <property name="source" all="true"/>
+    <property name="target" all="true"/>
+    <property name="relationshipType" all="true"/>
+    <property name="key" all="true"/>
+    <property name="quantity" all="true"/>
+    <property name="holderModel" behavior="never"/>
+    <property name="sourceModel" behavior="never"/>
+    <property name="relationshipTypeModel" behavior="always"/>
+  </type>
+  <type type="ActRelationship" all="false">
+    <property name="source" all="true"/>
+    <property name="target" all="true"/>
+    <property name="relationshipType" all="true"/>
+    <property name="key" all="true"/>
+    <property name="quantity" all="true"/>
+    <property name="holderModel" behavior="never"/>
+    <property name="sourceModel" behavior="never"/>
+    <property name="relationshipTypeModel" behavior="never"/>
+  </type>
+  <type type="ActParticipation" all="false">
+    <property name="source" all="true"/>
+    <property name="target" all="true"/>
+    <property name="participationRole" all="true"/>
+    <property name="key" all="true"/>
+    <property name="quantity" all="true"/>
+  </type>
+
+
+  <!-- Entity Information -->
+  <type type="Entity" all="true">
+
+    <property name="createdBy" />
+    <property name="createdByModel" behavior="always" />
+    <property name="creationTime" />
+    <property name="creationTimeModel" behavior="never"/>
+    <property name="version" behavior="never"/>
+
+    <property name="classConceptModel" behavior="never"/>
+    <property name="previousVersionModel" behavior="never"/>
+    <property name="determinerConceptModel" behavior="never"/>
+    <property name="typeConceptModel" behavior="always" ref="Concept"/>
+    <property name="statusConceptModel" behavior="never"/>
+    <property name="name" all="true" ref="EntityName" behavior="always"/>
+    <property name="relationship" all="true" ref="EntityRelationship" behavior="always"/>
+    <property name="participation" all="true" behavior="always">
+      <property name="*" all="true">
+        <property name="actModel" all="true"/>
+        <property name="participationRoleModel" behavior="never"/>
+      </property>
+    </property>
+  </type>
+
+
+  <type type="Patient" all="true">
+    <property name="templateModel" behavior="always" all="false">
+      <property name="mnemonic"/>
+    </property>
+    <property name="createdBy" />
+    <property name="createdByModel" behavior="always" />
+    <property name="creationTime" />
+    <property name="creationTimeModel" behavior="never"/>
+    <property name="version" behavior="always"/>
+    <property name="name" all="true" ref="EntityName" behavior="always"/>
+    <property name="address" all="true" ref="EntityAddress" behavior="always"/>
+    <property name="identifier" all="true" behavior="always">
+      <property name="*" all="true" behavior="always" />
+    </property>
+    <property name="telecom" all="true" behavior="always"/>
+
+    <property name="classConceptModel" behavior="never"/>
+    <property name="classConcept" behavior="never"/>
+    <property name="determinerConceptModel" behavior="never"/>
+    <property name="determinerConcept" behavior="never"/>
+    <property name="genderConceptModel" all="false" ref="Concept" behavior="always"/>
+    <property name="relationship" all="true" behavior="always">
+      <property name="Mother" all="false">
+        <property name="id" all="true"/>
+        <property name="relationshipType" all="true"/>
+        <property name="target" all="true"/>
+        <property name="targetModel" all="true" behavior="always" ref="Person"/>
+      </property>
+      <property name="*" all="false">
+        <property name="id" all="true"/>
+        <property name="relationshipType" all="true"/>
+        <property name="targetModel" all="false" behavior="always">
+          <property name="name" behavior="always"/>
+        </property>
+        <property name="holderModel" behavior="never"/>
+        <property name="sourceModel" behavior="never"/>
+        <property name="relationshipTypeModel" behavior="never"/>
+      </property>
+    </property>
+    <property name="participation" all="false" behavior="never"/>
+  </type>
+
+</ViewModel>

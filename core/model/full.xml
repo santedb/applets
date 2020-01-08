@@ -129,7 +129,7 @@
     <property name="address" all="true" ref="EntityAddress" behavior="always"/>
     <property name="telecom" all="true" behavior="always"/>
     <property name="classConceptModel" behavior="never"/>
-    <property name="classConcept" behavior="never"/>
+    <property name="classConcept" behavior="always"/>
     <property name="determinerConceptModel" behavior="never"/>
     <property name="determinerConcept" behavior="never"/>
     <property name="tag" all="true" behavior="always"/>
@@ -140,6 +140,19 @@
     </property>
     <property name="relationship" all="true" behavior="always">
       <property name="Mother" all="false">
+        <property name="id"/>
+        <property name="relationshipType"/>
+        <property name="source"/>
+        <property name="target"/>
+        <property name="targetModel" behavior="always">
+          <property name="id"/>
+          <property name="name" behavior="always" ref="EntityName"/>
+          <property name="identifier" behavior="always" ref="EntityIdentifier"/>
+          <property name="telecom" behavior="always" ref="EntityTelecom"/>
+          <property name="address" behavior="always" ref="EntityAddress"/>
+        </property>
+      </property>
+       <property name="Father" all="false">
         <property name="id"/>
         <property name="relationshipType"/>
         <property name="source"/>
@@ -190,7 +203,7 @@
           <property name="address" behavior="always" ref="EntityAddress"/>
         </property>
       </property>
-      <property name="*" ref="EntityRelationship"/>
+      <property name="*" ref="EntityRelationship" all="true"/>
     </property>
     <property name="participation" all="false">
       <property name="*" all="true">

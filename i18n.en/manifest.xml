@@ -231,6 +231,7 @@
     <string key="ui.action.edit">Edit</string>
     <string key="ui.action.override">Override</string>
     <string key="ui.action.run">Run</string>
+    <string key="ui.action.merge">Merge</string>
 
     <string key="ui.action.finish">Finish</string>
     <string key="ui.action.add">Add</string>
@@ -249,6 +250,8 @@
     <string key="ui.action.reactivate">Re-Activate</string>
     <string key="ui.action.logout">Logout</string>
     <string key="ui.action.close">Close</string>
+    <string key="ui.action.findDuplicates">Find Duplicates</string>
+    <string key="ui.action.detach">Detach</string>
     <string key="ui.pref.nevershow">Never show this message again</string>
 
     <!-- Common Operators -->
@@ -595,6 +598,17 @@
     <string key="org.santedb.widget.patient.demographics">Demographics</string>
     <string key="org.santedb.widget.patient.base">Basic Information</string>
     <string key="org.santedb.widget.patient.identity">Identity</string>
+
+    <!-- Master Data Management -->
+    <string key="org.santedb.widget.patient.mdm">Master Data Management</string>
+    <string key="org.santedb.widget.mdm.locals">Local Records</string>
+    <string key="org.santedb.widget.mdm.duplicates">Probable Local Records</string>
+    <string key="ui.santedb.widget.mdm.duplicates.recordInfo">Local Record</string>
+    <string key="ui.santedb.widget.mdm.duplicates.createdBy">Source System</string>
+    <string key="ui.mdm.type.L">LOCAL RECORD</string>
+    <string key="ui.mdm.type.M">MASTER RECORD</string>
+    <string key="ui.mdm.type.T">RECORD OF TRUTH</string>
+    <string key="org.santedb.widget.mdm.recordOfTruth">Record of Truth</string>
   </strings>
 
 </AppletManifest>

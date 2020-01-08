@@ -38,5 +38,7 @@
   <viewModel key="dropdown">
     <definition>/org.santedb.core/model/dropdown.xml</definition>
   </viewModel>
-
+  <viewModel key="mdm">
+    <definition>/org.santedb.core/model/mdm.xml</definition>
+  </viewModel>
 </AppletManifest>

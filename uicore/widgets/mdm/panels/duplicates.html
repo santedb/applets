@@ -1,0 +1,21 @@
+<div xmlns="http://www.w3.org/1999/xhtml" xmlns:sdb="http://santedb.org/applet" ng-controller="MasterDataManagementController">
+    <sdb:widget order="200" name="org.santedb.widget.mdm.duplicates" headerClass="alert-info" size="Medium"
+        type="Panel" context="org.santedb.mdm">
+        <sdb:icon>fas fa-clone</sdb:icon>
+        <sdb:description lang="en">MDM Candidate Locals</sdb:description>
+    </sdb:widget>
+
+    <entity-table 
+        id="DuplicateEntityTable"
+        type="Entity"
+        watch="'scopedObject.id'" 
+        search-field="name.component.value" 
+        default-query="{ 'relationship[MDM-Duplicate].target' : scopedObject.id, _viewModel: 'mdm', _noexec: scopedObject.id == undefined }"
+        render="{ recordInfo: 'renderEntityInfo', createdBy: 'renderCreatedBy' }"
+        i18n-prefix="'ui.santedb.widget.mdm.duplicates.'"
+        actions="[ { name: 'findDuplicates', action: adhocFind, demand: '1.3.6.1.4.1.33349.3.1.5.9.2.6.3', className: 'btn-info', icon: 'fas fa-search-plus' } ]"
+        item-actions="[ { name: 'view', sref: '.', demand: '1.3.6.1.4.1.33349.3.1.5.9.2.6.3', className: 'btn-info', icon: 'fa fa-ellipsis-v' }, { name: 'merge', action: 'merge', demand: '1.3.6.1.4.1.33349.3.1.5.9.2.6.3', className: 'btn-success', icon: 'fa fa-code-branch' }, { name: 'ignore', action: 'ignore', demand: '1.3.6.1.4.1.33349.3.1.5.9.6.3', className: 'btn-danger', icon: 'fa fa-times' } ]"
+        properties="[ 'recordInfo', 'createdBy' ]"/>
+
+    
+</div>

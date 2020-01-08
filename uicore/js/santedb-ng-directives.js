@@ -375,7 +375,7 @@ angular.module('santedb-lib')
      * @summary Directive for rendering a table of entities
      */
     .directive('entityTable', ['$timeout', '$compile', '$rootScope', '$state', function ($timeout, $compile, $rootScope, $state) {
-        var dt = null;
+        
         return {
             scope: {
                 properties: "<",
@@ -528,7 +528,7 @@ angular.module('santedb-lib')
                     if(scope.canFilter === undefined)
                         scope.canFilter = true;
                     
-                    dt = $("table", element).DataTable({
+                    var dt = $("table", element).DataTable({
                         lengthChange: scope.canSize,
                         processing: true,
                         buttons: buttons,
@@ -538,7 +538,6 @@ angular.module('santedb-lib')
                         ajax: function (data, callback, settings) {
 
                             var query = angular.copy(scope.defaultQuery) || {};
-
                             if(data.search.value) {
                                 if (data.search.value.length > 0)
                                     query[attrs.searchField] = `~${data.search.value}`;
@@ -583,14 +582,15 @@ angular.module('santedb-lib')
                                         });
                                     })
                                     .catch(function (err) { $rootScope.errorHandler(err) });
-                            else 
-                                    callback({ 
-                                        data: [],
-                                        recordsTotal: 0,
-                                        recordsFiltered: 0,
-                                        iTotalRecords: 0,
-                                        iTotalDisplayRecords: 0
-                                    });
+                            else {
+                                callback({ 
+                                    data: [],
+                                    recordsTotal: 0,
+                                    recordsFiltered: 0,
+                                    iTotalRecords: 0,
+                                    iTotalDisplayRecords: 0
+                                });
+                            }
                         },
                         createdRow: function (r, d, i) {
                             $compile(angular.element(r).contents())(scope);
@@ -599,18 +599,18 @@ angular.module('santedb-lib')
                         columns: columns
                     });
 
-                    var bindButtons = function () {
+                    var bindButtons = function (element, buttonBar) {
                         dt.buttons().container().appendTo($('.dataTables_wrapper .col-md-6:eq(0)', element));
                         if (dt.buttons().container().length == 0) {
-                            $timeout(bindButtons, 100);
-                        } else if(scope.buttonBar) {
-                            $(scope.buttonBar).appendTo($('.col-md-6:eq(0)', dt.table().container()));
+                            $timeout(() => bindButtons(element, buttonBar), 1000);
+                        } else if(buttonBar) {
+                            $(buttonBar).appendTo($('.col-md-6:eq(0)', dt.table().container()));
                         }
                     };
 
                     // Add watch to scope query
-                    scope.$watch((s)=>JSON.stringify(s.defaultQuery), function(n,o) { if(n && n != o) dt.ajax.reload(); });
-                    bindButtons();
+                    scope.$watch((s)=>JSON.stringify(s.defaultQuery), function(n,o) { if(n && n != o) dt.ajax.reload() });
+                    bindButtons(element, scope.buttonBar);
                 });
             }
         };
