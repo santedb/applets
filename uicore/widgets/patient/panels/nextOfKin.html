@@ -14,7 +14,7 @@
     <div ng-if="scopedObject" ng-controller="PatientDemographicsWidgetController">
         <div ng-if="panel.view != 'Edit'">
             <table class="table table-striped">
-                <tr ng-repeat="rel in scopedObject.relationshipModel" ng-if="rel.relatedPersonModel.$type == 'Person' || rel.relatedPersonModel.$type == 'Patient'">
+                <tr ng-repeat="rel in scopedObject.relationshipModel" ng-if="rel.relationshipType != '97730a52-7e30-4dcd-94cd-fd532d111578' &amp;&amp; (rel.relatedPersonModel.$type == 'Person' || rel.relatedPersonModel.$type == 'Patient')">
                     <td><span ng-if="rel.inverse">{{ 'ui.model.entity.relationship.isA' | i18n }}</span><span ng-if="!rel.inverse">{{ 'ui.model.entity.relationship.hasA' | i18n }}</span></td>
                     <td>{{ rel.relationshipTypeModel | concept }}</td>
                     <td>{{ rel.relatedPersonModel.name | name }}</td>

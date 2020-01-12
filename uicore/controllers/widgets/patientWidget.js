@@ -4,6 +4,8 @@ angular.module('santedb').controller('PatientDemographicsWidgetController', ['$s
   
     $scope.$watch("scopedObject", function(n, o) {
         if(n && n != null) {
+
+            n.identifierModel = Object.keys(n.identifier).map((k)=> n.identifier[k]).flat();
             n.relationshipModel = Object.keys(n.relationship).map((k) => n.relationship[k] ).flat();
             n.relationshipModel.forEach(async function(rel) {
                 if(rel.source && rel.source != n.id || rel.holder && !rel.holder == n.id) {
