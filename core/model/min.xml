@@ -425,4 +425,26 @@
     </property>
   </type>
 
+  <!-- Entity Information -->
+  <type type="UserEntity" all="true">
+
+    <property name="createdBy" />
+    <property name="creationTime" />
+    <property name="creationTimeModel" behavior="never"/>
+    <property name="version" behavior="never"/>
+
+    <property name="classConceptModel" behavior="never"/>
+    <property name="previousVersionModel" behavior="never"/>
+    <property name="determinerConceptModel" behavior="never"/>
+    <property name="typeConceptModel" behavior="always" ref="Concept"/>
+    <property name="statusConceptModel" behavior="never"/>
+    <property name="name" all="true" ref="EntityName" behavior="always"/>
+    <property name="relationship" all="true" ref="EntityRelationship" behavior="always"/>
+    <property name="participation" all="true" behavior="always">
+      <property name="*" all="true">
+        <property name="actModel" all="true"/>
+        <property name="participationRoleModel" behavior="never"/>
+      </property>
+    </property>
+  </type>
 </ViewModel>

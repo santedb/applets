@@ -198,9 +198,10 @@ angular.module('santedb-lib')
                 
                 scope.renderReport(null, null);
                 scope.$watch((s) => {
-                    return JSON.stringify(s.parameters);
+                    return !s.parameters ? "" : JSON.stringify(s.parameters);
                 }, function(n, o) {
                     if(n && (o != n)) {
+                        scope.isRendering = false;
                         scope.renderReport(n, o);
                     }
                 });

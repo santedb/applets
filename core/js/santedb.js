@@ -2120,7 +2120,8 @@ if (!SanteDBWrapper)
                                 "X-SanteDB-TfaSecret": tfaSecret,
                                 "X-SanteDBClient-UserAccessControl": uacPrompt,
                                 "X-SanteDBClient-Claim":
-                                    `${btoa(`http://santedb.org/claims/override=${uacPrompt && (purposeOfUse || false)}`)},${btoa(`urn:oasis:names:tc:xacml:2.0:action:purpose=${purposeOfUse || null}`)}`
+                                    btoa("http://santedb.org/claims/override=" + (uacPrompt && (purposeOfUse || false))) + "," + 
+                                    btoa("urn:oasis:names:tc:xacml:2.0:action:purpose=" + purposeOfUse)
                             },
                             contentType: 'application/x-www-form-urlencoded'
                         })
@@ -2167,7 +2168,8 @@ if (!SanteDBWrapper)
                                 "X-SanteDB-TfaSecret": tfaSecret,
                                 "X-SanteDBClient-Sessionless": uacPrompt,
                                 "X-SanteDBClient-Claim":
-                                    `${btoa(`http://santedb.org/claims/override=${uacPrompt && (purposeOfUse || false)}`)},${btoa(`urn:oasis:names:tc:xacml:2.0:action:purpose=${purposeOfUse || null}`)}`
+                                    btoa("http://santedb.org/claims/override=" + (uacPrompt && (purposeOfUse || false))) + "," + 
+                                    btoa("urn:oasis:names:tc:xacml:2.0:action:purpose=" + purposeOfUse)
                             },
                             contentType: 'application/x-www-form-urlencoded'
                         })

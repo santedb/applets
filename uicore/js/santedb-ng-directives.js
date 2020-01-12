@@ -268,8 +268,7 @@ angular.module('santedb-lib')
 
                                         var text = "";
                                         if (displayString) {
-                                            scope = o;
-                                            text = scope.$eval(displayString);
+                                            text = scope.$eval(displayString, { scope: o });
                                         }
                                         else if (o.name !== undefined) {
                                             text = renderObject(o);
@@ -284,12 +283,7 @@ angular.module('santedb-lib')
                                     for (var itm in data) {
                                         // parent obj
                                         try {
-                                            var scope = scope.$eval('data[itm].' + groupString);
-                                            var groupDisplay = "";
-                                            if (groupDisplayString != null)
-                                                groupDisplay = scope.$eval(groupDisplayString);
-                                            else
-                                                groupDisplay = scope;
+                                            var groupDisplay = scope.$eval('scope.' + groupString, { scope: data[itm] });
 
                                             var gidx = $.grep(retVal.results, function (e) { return e.text == groupDisplay });
                                             if (gidx.length == 0)
@@ -405,6 +399,8 @@ angular.module('santedb-lib')
 
                 var lastQuery = "";
                 var queryId = null;
+                var isSearching = false; // true if a search is being performed
+                var returnTimer = null;
 
                 $timeout(function () {
 
@@ -537,6 +533,7 @@ angular.module('santedb-lib')
                         "oSearch": scope.defaultFilter ? {"sSearch": scope.defaultFilter} : undefined,
                         ajax: function (data, callback, settings) {
 
+                            
                             var query = angular.copy(scope.defaultQuery) || {};
                             if(data.search.value) {
                                 if (data.search.value.length > 0)
@@ -563,25 +560,41 @@ angular.module('santedb-lib')
                             query["_count"] = data.length;
                             query["_offset"] = data.start;
 
-                            if(!query._noexec)
-                                SanteDB.resources[attrs.type.toCamelCase()].findAsync(query)
-                                    .then(function (res) {
+                            if(!query._noexec) {
+                                
+                                // Set a timeout for 1s and then re-check 
+                                if(isSearching)
+                                {
+                                    if(!returnTimer)
+                                        returnTimer = setTimeout(() => dt.ajax.reload(), 1000);
+                                }
+                                else {
+                                    if(returnTimer) clearTimeout(returnTimer); // cancel the previous timer
+                                    isSearching = true;
+                                    SanteDB.resources[attrs.type.toCamelCase()].findAsync(query)
+                                        .then(function (res) {
 
-                                        res.item = res.item || [];
-                                        callback({
-                                            data: res.item.map(function (item) {
-                                                if (scope.propertyPath)
-                                                    return item[scope.propertyPath];
-                                                else
-                                                    return item;
-                                            }),
-                                            recordsTotal: res.totalResults || res.size || 0,
-                                            recordsFiltered: res.totalResults || res.size || 0,
-                                            iTotalRecords: res.totalResults || res.size || 0,
-                                            iTotalDisplayRecords: res.totalResults  || res.size  || 0
+                                            res.item = res.item || [];
+                                            callback({
+                                                data: res.item.map(function (item) {
+                                                    if (scope.propertyPath)
+                                                        return item[scope.propertyPath];
+                                                    else
+                                                        return item;
+                                                }),
+                                                recordsTotal: res.totalResults || res.size || 0,
+                                                recordsFiltered: res.totalResults || res.size || 0,
+                                                iTotalRecords: res.totalResults || res.size || 0,
+                                                iTotalDisplayRecords: res.totalResults  || res.size  || 0
+                                            });
+                                            isSearching = false;
+                                        })
+                                        .catch(function (err) { 
+                                            isSearching = false;
+                                            $rootScope.errorHandler(err);
                                         });
-                                    })
-                                    .catch(function (err) { $rootScope.errorHandler(err) });
+                                }
+                            }
                             else {
                                 callback({ 
                                     data: [],
@@ -853,7 +866,7 @@ angular.module('santedb-lib')
                     SanteDB.resources[tName].getAsync({
                         id: id,
                         version: version
-                    }, "_min")
+                    }, "min")
                         .then(function(d) {
                             $scope.history.push(d);
                             var prev = $scope.history[$scope.history.length - 2];

@@ -1,0 +1,96 @@
+<div xmlns="http://www.w3.org/1999/xhtml">
+    <form ng-submit="savePlace(targetForm)" name="targetForm" novalidate="novalidate">
+        <div class="accordion" id="placeAccordion">
+            <div class="card">
+                <div class="card-header">
+                    <h2 class="mb-0">
+                        <button type="button" class="collapse-indicator btn btn-link p-0" data-toggle="collapse"
+                            data-target="#corePlaceProps" aria-expanded="true">
+                            <i class="fa"
+                                ng-class="{ 'fa-hospital' : target.classConcept == EntityClassKeys.ServiceDeliveryLocation, 'fa-map' : target.classConcept != EntityClassKeys.ServiceDeliveryLocation }"></i>
+                            {{ 'ui.admin.places.edit.core.title' | i18n }}
+                            <i class="fa fa-chevron-right"></i>
+                        </button>
+                    </h2>
+                </div>
+                <div class="collapse show" id="corePlaceProps">
+                    <div class="card-body container-fluid">
+                        <div class="form-group row">
+                            <label class="col-sm-12 col-md-2 control-label"
+                                for="sid">{{ 'ui.model.place.id' | i18n }}</label>
+                            <div class="col-sm-12 col-md-10 input-group">
+                                <input name="sid" readonly="readonly" type="text" class="form-control"
+                                    ng-model="target.id" />
+                                <input-copy-button class="btn btn-outline-secondary" source="target.id" />
+                            </div>
+                        </div>
+                        <div class="form-group row" ng-if="target.classConcept != 'ff34dfa7-c6d3-4f8b-bc9f-14bcdc13ba6c'">
+                            <label class="col-sm-12 col-md-2 control-label">
+                                {{ 'ui.model.place.classConcept' | i18n }}
+                            </label>
+                            <div class="col-sm-12 col-md-10">
+                                <concept-select class="form-control" required="required" concept-set="'PlaceClass'" ng-model="target.classConceptModel"/>
+                            </div>
+                        </div>
+                        <div class="form-group row" ng-if="target.classConcept == 'ff34dfa7-c6d3-4f8b-bc9f-14bcdc13ba6c'">
+                            <label class="col-sm-12 col-md-2 control-label">
+                                {{ 'ui.model.place.typeConcept' | i18n }}
+                            </label>
+                            <div class="col-sm-12 col-md-10">
+                                <concept-select class="form-control" required="required" concept-set="'PlaceTypeConcept'" ng-model="target.typeConceptModel"/>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-sm-12 col-md-2 control-label"
+                                for="name">{{ 'ui.model.place.name' | i18n }}</label>
+                            <div class="col-sm-12 col-md-10 input-group">
+                                <div class="container-fluid m-0 p-0">
+                                    <div class="row" ng-repeat="name in target.name.other track by $index">
+                                        <div class="col-4">
+                                            <concept-select class="form-control" ng-required="$index > 0"
+                                                concept-set="'NameUse'" ng-model="name.useModel" />
+                                        </div>
+                                        <div class="col-8">
+                                            <div class="input-group"><input
+                                                class="form-control" ng-model="name.component.other.value" required="required"
+                                                type="text" />
+                                            <div class="input-group-append" ng-if="$index > 0">
+                                                <button class="btn btn-danger"
+                                                ng-click="target.name.other.splice($index,1)"><i
+                                                    class="fas fa-times"></i> <span
+                                                    class="d-sm-none d-md-inline"> {{ 'ui.action.remove' | i18n }}</span></button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col"><button class="float-right btn btn-success"
+                                                ng-click="target.name.other.push({})"><i class="fas fa-plus"></i> <span
+                                                    class="d-sm-none d-md-inline"> {{ 'ui.action.add' | i18n }}</span></button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-sm-12 col-md-2 control-label"
+                                for="name">{{ 'ui.model.place.relationship.Parent' | i18n }}</label>
+                            <div class="col-sm-12 col-md-10 input-group">
+                                <entity-search type="'Place'"
+                                    group-by="'address.Direct.component.State'" 
+                                    ng-model="target.relationship.Parent.target"
+                                    search-field="'name.component.value'"
+                                    filter="{ 'classConcept': target.classConcept == 'ff34dfa7-c6d3-4f8b-bc9f-14bcdc13ba6c' ? EntityClassKeys.ServiceDeliveryLocation : '!ff34dfa7-c6d3-4f8b-bc9f-14bcdc13ba6c', 'statusConcept': 'c8064cbd-fa06-4530-b430-1a52f1530c27' }"
+                                ></entity-search>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="btn-group float-right">
+            <button type="submit" id="saveUserButton" class="btn btn-primary"><i class="fa fa-check"></i>
+                {{ 'ui.action.save' | i18n }}</button>
+        </div>
+    </form>
+</div>

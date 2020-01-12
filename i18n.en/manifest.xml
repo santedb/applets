@@ -18,7 +18,7 @@
  - Date: 2018-7-23
  -->
 <AppletManifest xmlns="http://santedb.org/applet">
-  <info id="org.santedb.i18n.en" version="1.115.0.0">
+  <info id="org.santedb.i18n.en" version="1.116.0.0">
     <icon>/org.santedb.core/img/i18n.png</icon>
     <name lang="en">English Applet Support</name>
     <author>SanteSuite Community Partners (see: santesuite.org)</author>
@@ -531,12 +531,14 @@
     <string key="ui.model.assigningAuthority.scope">Scope</string>
     <string key="ui.model.assigningAuthority.url">URL</string>
     <string key="ui.model.assigningAuthority.validation">Validation Regex</string>
+    <string key="ui.model.assigningAuthority.policy">Disclosure Policy</string>
     <string key="ui.model.version.sequence">Sequence</string>
     <string key="ui.model.version.createdBy">Created</string>
     <string key="ui.model.version.replaces">Replaces Version</string>
     <string key="ui.model.version.changed">Changed Properties</string>
     <string key="ui.model.version.initial">Initial Version</string>
-
+    <string key="ui.model.entity.relationship.hasA">HAS A</string>
+    <string key="ui.model.entity.relationship.isA">IS A</string>
     <string key="ui.model.patient.name">Name</string>
     <string key="ui.model.patient.names">Names</string>
     <string key="ui.model.patient.addresses">Addresses</string>
@@ -608,6 +610,7 @@
     <string key="ui.mdm.type.L">LOCAL RECORD</string>
     <string key="ui.mdm.type.M">MASTER RECORD</string>
     <string key="ui.mdm.type.T">RECORD OF TRUTH</string>
+    <string key="ui.mdm.edit.master">This is a MASTER record. Editing it will result in the creation a Record Of Truth</string>
     <string key="org.santedb.widget.mdm.recordOfTruth">Record of Truth</string>
   </strings>
 

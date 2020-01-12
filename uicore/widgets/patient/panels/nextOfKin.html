@@ -1,0 +1,35 @@
+<div xmlns="http://www.w3.org/1999/xhtml" xmlns:sdb="http://santedb.org/applet" class="container-fluid"
+    oc-lazy-load="{ name: 'PatientDemographicsWidgetController', files: ['/org.santedb.uicore/controllers/widgets/patientWidget.js'] }">
+    <sdb:widget order="15" name="org.santedb.widget.patient.nok" altViews="Edit" headerClass="bl-light" size="Medium" type="Panel"
+        context="org.santedb.patient.demographics">
+        <sdb:icon>fas fa-users</sdb:icon>
+        <sdb:description lang="en">Patient Family Members</sdb:description>
+    </sdb:widget>
+
+    <div class="row" ng-if="!scopedObject">
+        <div class="col">
+            <p class="m-auto"><i class="fas fa-circle-notch fa-spin"></i> {{ 'ui.wait' | i18n }}</p>
+        </div>
+    </div>
+    <div ng-if="scopedObject" ng-controller="PatientDemographicsWidgetController">
+        <div ng-if="panel.view != 'Edit'">
+            <table class="table table-striped">
+                <tr ng-repeat="rel in scopedObject.relationshipModel" ng-if="rel.relatedPersonModel.$type == 'Person' || rel.relatedPersonModel.$type == 'Patient'">
+                    <td><span ng-if="rel.inverse">{{ 'ui.model.entity.relationship.isA' | i18n }}</span><span ng-if="!rel.inverse">{{ 'ui.model.entity.relationship.hasA' | i18n }}</span></td>
+                    <td>{{ rel.relationshipTypeModel | concept }}</td>
+                    <td>{{ rel.relatedPersonModel.name | name }}</td>
+                    <td>
+                        <div class="btn-group">
+                            <a ng-if="rel.relatedPersonModel.$type == 'Patient'" class="btn btn-info" ui-sref="{id: rel.relatedPersonModel.id}"><i class="fas fa-eye"></i> {{ 'ui.action.view' | i18n }}</a>
+                            <button ng-if="rel.relatedPersonModel.$type == 'Person'" class="btn btn-success" ui-sref="{id: rel.relatedPersonModel.id}"><i class="fas fa-arrow-up"></i> {{ 'ui.action.upgrade' | i18n }}</button>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <form ng-submit="updatePatient(scopedObject)" name="editPatientForm" novalidate="novalidate"
+            ng-if="panel.view == 'Edit'">
+Edit
+        </form>
+    </div>
+</div>
