@@ -20,7 +20,7 @@
  - Date: 2019-8-8
  -->
 <AppletManifest xmlns="http://santedb.org/applet">
-  <info id="org.santedb.admin" version="1.116.0.0">
+  <info id="org.santedb.admin" version="1.117.0.0">
     <icon>/org.santedb.admin/img/icon.png</icon>
     <name lang="en">SanteDB Administrative Panel</name>
     <author>SanteSuite Community Partners (see: santesuite.org)</author>
@@ -32,11 +32,11 @@
 
  
 
-  <menuItem context="org.santedb.admin" launch="santedb-admin.dashboard"  asset="/org.santedb.admin/views/dashboard.html">
+  <menuItem context="org.santedb.admin" launch="santedb-admin.dashboard"  asset="/org.santedb.admin/views/dashboard.html" order="-100">
     <icon>fas fa-tachometer-alt</icon>
     <text lang="en">Dashboard</text>
   </menuItem>
-  <menuItem context="org.santedb.admin">
+  <menuItem context="org.santedb.admin" order="-50">
     <icon>fas fa-tools</icon>
     <text lang="en">System</text>
     <menuItem launch="santedb-admin.system.applets.index" asset="/org.santedb.admin/views/system/applets/index.html" context="org.santedb.admin">
@@ -56,7 +56,7 @@
       <text lang="en">Server Status</text>
     </menuItem>
   </menuItem>
-  <menuItem context="org.santedb.admin" launch="santedb-admin.security.index" asset="/org.santedb.admin/views/security/index.html">
+  <menuItem context="org.santedb.admin" launch="santedb-admin.security.index" asset="/org.santedb.admin/views/security/index.html" order="-25">
     <icon>fas fa-shield-alt</icon>
     <text lang="en">Security</text>
     <menuItem launch="santedb-admin.security.users.index" asset="/org.santedb.admin/views/security/users/index.html" context="org.santedb.admin">
@@ -88,7 +88,7 @@
       <text lang="en">Audit Repository</text>
     </menuItem>
   </menuItem>
-  <menuItem context="org.santedb.admin" launch="santedb-admin.data.index" asset="/org.santedb.admin/views/data/index.html">
+  <menuItem context="org.santedb.admin" launch="santedb-admin.data.index" asset="/org.santedb.admin/views/data/index.html" order="0">
     <icon>fas fa-database</icon>
     <text lang="en">Reference Data</text>
     <menuItem context="org.santedb.admin" launch="santedb-admin.data.domain.index" asset="/org.santedb.admin/views/data/domains/index.html">
