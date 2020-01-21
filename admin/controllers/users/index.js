@@ -122,7 +122,7 @@ angular.module('santedb').controller('UserIndexController', ["$scope", "$rootSco
                     $scope.password.passwordOnly = true;
 
                     $scope.$apply();
-                    $("#passwordModal").modal({ backdrop: 'static' });
+                    $("#passwordModal").modal();
 
                     // User has pressed save or cancelled
                     $("#passwordModal").on('hidden.bs.modal', function () {
