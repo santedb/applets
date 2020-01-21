@@ -1,3 +1,4 @@
+/// <reference path="../../../core/js/santedb.js"/>
 angular.module('santedb').controller('MasterDataManagementController', ['$scope', '$rootScope', function ($scope, $rootScope) {
     
 
@@ -45,5 +46,69 @@ angular.module('santedb').controller('MasterDataManagementController', ['$scope'
     // Render entity information
     $scope.renderCreatedBy = function(entity) {
         return `<provenance provenance-id="'${entity.createdBy}'"  provenance-time="'${entity.creationTime}'"></provenance>`;
+    }
+
+    /**
+     * Ignore the specified local record
+     */
+    $scope.ignore = async function(entity, index) {
+
+        console.info(entity);
+        if(confirm(SanteDB.locale.getString("ui.mdm.action.ignore.confirm"))) {
+            
+            try {
+                $("#action_grp_" + index + " a i.fa-times").removeClass("fa-times").addClass("fa-circle-notch fa-spin");
+                // find the relationship between this entity and the other entity
+                var entityRels = await SanteDB.resources.entityRelationship.findAsync({ source: entity, target: $scope.scopedObject.id, relationshipType: "56cfb115-8207-4f89-b52e-d20dbad8f8cc", _count: 1 });
+                if(entityRels.count == 0)
+                    throw new Exception("KeyNotFoundException", "Could not find relationship between this entity and master entity.");
+                var rel = entityRels.item[0];
+
+                // Delete this relationship
+                await SanteDB.resources.entityRelationship.deleteAsync(rel.id);
+
+                // Perminently ignore this 
+                if(confirm(SanteDB.locale.getString("ui.mdm.action.permIgnore")))
+                {
+                    var currentTag = $scope.scopedObject.tag['mdm.ignore'];
+                    var patchOps = [];
+                    if(currentTag) {
+                        currentTag += ";" + entity;
+                        patchOps.push(new PatchOperation({
+                            op: PatchOperationType.Remove,
+                            path: "tag",
+                            value: new EntityTag({ "key": "mdm.ignore" })
+                        }));
+                    }
+                    else
+                        currentTag = entity;
+
+                    patchOps.push(new PatchOperation({
+                            op: PatchOperationType.Add,
+                            path: "tag",
+                            value: new EntityTag({
+                                key: "mdm.ignore",
+                                value: currentTag
+                            })
+                        }));
+
+                    var patch = new Patch({
+                        appliesTo: {
+                            type: $scope.scopedObject.$type,
+                            id: $scope.scopedObject.id
+                        },
+                        change: patchOps
+                    });
+                    await SanteDB.resources.entity.patchAsync($scope.scopedObject.id, $scope.scopedObject.etag || $scope.scopedObject.version, patch);
+                }
+            }
+            catch(e) {
+                $rootScope.errorHandler(e);
+            }
+            finally {
+                $("#DuplicateEntityTable table").DataTable().draw();
+            }
+        }
+
     }
 }]);

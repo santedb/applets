@@ -611,6 +611,9 @@
     <string key="ui.mdm.type.M">MASTER RECORD</string>
     <string key="ui.mdm.type.T">RECORD OF TRUTH</string>
     <string key="ui.mdm.edit.master">This is a MASTER record. Editing it will result in the creation a Record Of Truth</string>
+    <string key="ui.mdm.action.ignore.confirm">Are you sure you want to mark this record as a non-match?</string>
+    <string key="ui.mdm.action.merge.confirm">Are you sure you want to integrate/merge this local record with the current master record?</string>
+    <string key="ui.mdm.action.detach.confirm">Are you sure you want to detach (unmerge) this local record from the current master record?</string>
     <string key="org.santedb.widget.mdm.recordOfTruth">Record of Truth</string>
   </strings>
 
