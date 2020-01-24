@@ -12,16 +12,21 @@ angular.module('santedb').controller('MasterDataManagementController', ['$scope'
         }
 
         retVal += "<span class='badge badge-secondary'>";
-        if(entity.identifier.MM_NHID)
-            retVal += `<i class="fas fa-id-card"></i> ${SanteDB.display.renderIdentifier(entity.identifier, 'MM_NHID')}`;
+
+        var preferredDomain = $rootScope.system.config.application.setting['aa.preferred'];
+        if(preferredDomain && entity.identifier[preferredDomain])
+            retVal += `<i class="fas fa-id-card"></i> ${SanteDB.display.renderIdentifier(entity.identifier, preferredDomain)}`;
         else {
-            var key = Object.keys(entity.name)[0];
+            var key = Object.keys(entity.identifier)[0];
             retVal += `<i class="far fa-id-card"></i> ${SanteDB.display.renderIdentifier(entity.identifier, key)}`;
         }
-        retVal += `</span><br/><i class='fas fa-birthday-cake'></i> ${SanteDB.display.renderDate(entity.dateOfBirth, entity.dateOfBirthPrecision)} `;
+        
+        retVal += "</span>";
+        if(entity.dateOfBirth)
+            retVal += `<br/><i class='fas fa-birthday-cake'></i> ${SanteDB.display.renderDate(entity.dateOfBirth, entity.dateOfBirthPrecision)} `;
 
         // Deceased?
-        if(retVal.deceasedDate)
+        if(entity.deceasedDate)
             retVal += `<span class='badge badge-dark'>${SanteDB.locale.getString("ui.model.patient.deceased")}</span>`;
 
         // Gender
@@ -36,10 +41,19 @@ angular.module('santedb').controller('MasterDataManagementController', ['$scope'
                 retVal += `<i class='fas fa-restroom' title="${SanteDB.display.renderConcept(entity.genderConceptModel)}"></i> ${SanteDB.display.renderConcept(entity.genderConceptModel)}`;
                 break;
         }
-        if(entity.address) {
-
+        
+        switch(entity.tag["mdm.type"])
+        {
+            case "L":
+                retVal += "<span class='badge badge-info'>LOCAL</span>";
+                break;
+            case "S":
+                retVal += "<span class='badge badge-light'>SYSTEM</span>";
+                break;
+            case "T":
+                retVal += "<span class='badge badge-warning'>ROT</span>";
+                break;
         }
-
         return retVal;
     }
   
