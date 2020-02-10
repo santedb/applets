@@ -995,7 +995,7 @@ if (!SanteDBWrapper)
                 var retVal = new Exception();
                 try {
                     // Server Exceptions
-                    var exceptionRegex = new RegExp("/--SERVER\sFAULT--(.*?)--END SERVER FAULT--/gs");
+                    var exceptionRegex = new RegExp("--SERVER\\sFAULT--(.*?)--END SERVER FAULT--","gs");
                     var result = exceptionRegex.exec(exceptionString);
                     
                     if(result) {
