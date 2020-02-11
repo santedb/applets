@@ -21,13 +21,13 @@
                     <td>
                         <div class="btn-group">
                             <a ng-if="rel.relatedPersonModel.$type == 'Patient'" class="btn btn-info" ui-sref="{id: rel.relatedPersonModel.id}"><i class="fas fa-eye"></i> {{ 'ui.action.view' | i18n }}</a>
-                            <button ng-if="rel.relatedPersonModel.$type == 'Person'" class="btn btn-success" ui-sref="{id: rel.relatedPersonModel.id}"><i class="fas fa-arrow-up"></i> {{ 'ui.action.upgrade' | i18n }}</button>
+                            <button ng-if="rel.relatedPersonModel.$type == 'Person'" class="btn btn-success" ui-sref="{id: rel.relatedPersonModel.id}"><i class="fas fa-arrow-up"></i> {{ 'ui.action.convertTo' | i18n }} Patient</button>
                         </div>
                     </td>
                 </tr>
             </table>
         </div>
-        <form ng-submit="updatePatient(scopedObject)" name="editPatientForm" novalidate="novalidate"
+        <form ng-submit="updatePatient(panel.editForm)" name="panel.editForm" novalidate="novalidate"
             ng-if="panel.view == 'Edit'">
 Edit
         </form>

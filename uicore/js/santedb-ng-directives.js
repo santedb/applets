@@ -43,7 +43,15 @@ angular.module('santedb-lib')
      */
     .directive('entitySearch', function ($timeout) {
 
-        var renderObject = function (selection) {
+        function extractProperty(object, path) {
+            var r = object;
+            path.split(/[\.\[\]]/).forEach((p) => {
+                try { if("" != p) r = r[p] || r['$other'][p]; }
+                catch (e) { r['$other'][p]; }
+            });
+            return r;
+        }
+        function renderObject(selection) {
 
             if (selection.text)
                 return selection.text;
@@ -176,7 +184,7 @@ angular.module('santedb-lib')
 
                                             // Matching item
                                             if (res.item.length == 1)
-                                                if ($(selectControl).find(`option[value=${v}]`).length == 0) {
+                                                if ($(selectControl).find(`option[value='${v}']`).length == 0) {
                                                     var obj = res.item[0];
                                                     if ($scope.selector)
                                                         obj = obj[$scope.selector] || obj;
@@ -191,7 +199,7 @@ angular.module('santedb-lib')
                                         .then(function (res) {
                                             $(selectControl).find("option[value='loading']").remove();
 
-                                            if ($(selectControl).find(`option[value=${v}]`).length == 0) {
+                                            if ($(selectControl).find(`option[value='${v}']`).length == 0) {
                                                 var obj = res;
                                                 if ($scope.selector)
                                                     obj = obj[$scope.selector] || obj;
@@ -257,46 +265,71 @@ angular.module('santedb-lib')
                             },
                             processResults: function (data, params) {
                                 //params.page = params.page || 0;
+
                                 var data = data.$type == "Bundle" ? data.item : data.item || data;
                                 var retVal = { results: [] };
 
-                                if (groupString == null && data !== undefined) {
-                                    retVal.results = retVal.results.concat($.map(data, function (o) {
+                                try {
+                                    if(!data || data.length == 0) return [];
+                                    if (groupString == null && data !== undefined) {
+                                        retVal.results = retVal.results.concat($.map(data, function (o) {
 
-                                        if (selector && o[selector])
-                                            o = o[selector];
+                                            if (selector && o[selector])
+                                                o = o[selector];
 
-                                        var text = "";
-                                        if (displayString) {
-                                            text = scope.$eval(displayString, { scope: o });
-                                        }
-                                        else if (o.name !== undefined) {
-                                            text = renderObject(o);
-                                        }
-                                        o.text = o.text || text;
-                                        o.id = o[resultProperty] || o.id;
-                                        return o;
-                                    }));
-                                }
-                                else {
-                                    // Get the group string
-                                    for (var itm in data) {
-                                        // parent obj
-                                        try {
-                                            var groupDisplay = scope.$eval('scope.' + groupString, { scope: data[itm] });
+                                            var text = "";
+                                            if (displayString) {
+                                                text = scope.$eval(displayString, { scope: o });
+                                            }
+                                            else if (o.name !== undefined) {
+                                                text = renderObject(o);
+                                            }
+                                            o.text = o.text || text;
+                                            o.id = extractProperty(o, resultProperty) || o.id;
+                                            return o;
+                                        }));
+                                    }
+                                    else {
+                                        // Get the group string
+                                        var objs = data.map(function (o) {
 
-                                            var gidx = $.grep(retVal.results, function (e) { return e.text == groupDisplay });
-                                            if (gidx.length == 0)
-                                                retVal.results.push({ "text": groupDisplay, "children": [data[itm]] });
-                                            else
-                                                gidx[0].children.push(data[itm]);
-                                        }
-                                        catch (e) {
-                                            retVal.results.push(data[itm]);
+                                            if (selector && o[selector])
+                                                o = o[selector];
+
+                                            var text = "";
+                                            if (displayString) {
+                                                text = scope.$eval(displayString, { scope: o });
+                                            }
+                                            else if (o.name !== undefined) {
+                                                text = renderObject(o);
+                                            }
+                                            o.text = o.text || text;
+                                            o.id = extractProperty(o, resultProperty) || o.id;
+                                            return o;
+                                        });
+
+                                        for (var itm in objs) {
+                                            // parent obj
+                                            try {
+                                                var groupDisplay = scope.$eval('scope.' + groupString, { scope: data[itm] });
+
+                                                var gidx = $.grep(retVal.results, function (e) { return e.text == groupDisplay });
+                                                if (gidx.length == 0)
+                                                    retVal.results.push({ "text": groupDisplay, "children": [data[itm]] });
+                                                else
+                                                    gidx[0].children.push(data[itm]);
+                                            }
+                                            catch (e) {
+                                                retVal.results.push(data[itm]);
+                                            }
                                         }
                                     }
+                                    return retVal;
                                 }
-                                return retVal;
+                                catch(e) {
+                                    console.error(e);
+                                    return [];
+                                }
                             },
                             cache: true
                         },

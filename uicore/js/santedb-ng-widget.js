@@ -66,6 +66,24 @@ angular.module('santedb-lib')
         controller: ['$scope', '$rootScope',
             function ($scope, $rootScope) {
 
+                $scope.submitEditForm = async function(panel){
+
+                    if(panel.view == 'Edit') {
+                        if(panel.editForm) {
+                            setTimeout(function() {
+                                panel.editForm.$$element.submit();
+                                panel.view = null;
+                                try { $scope.$apply(); }
+                                catch(e) {}
+                            }, 50);
+                        }
+                        else 
+                            panel.view = null;
+                    }
+                    else 
+                        panel.view = 'Edit';
+                }
+
                 // Fetch the widgets which are valid in this context
                 async function getWidgets(context) {
                     try {
@@ -101,6 +119,7 @@ angular.module('santedb-lib')
             }
         ],
         link: function (scope, element, attrs) {
+        
         }
     };
 });

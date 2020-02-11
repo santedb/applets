@@ -101,3 +101,16 @@ div.pseudo-input {
     border-radius: .25rem;
     transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
 }
+
+fieldset, legend { 
+    border: solid #ced4da 1px;
+    display: block;
+    line-height: 1.5;
+    font-size: 1rem;
+    color: #495057;
+    background-clip: padding-box;
+    background-color: #fff;
+    border-radius: .25rem;
+    transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+    padding: 0px 10px;
+}
