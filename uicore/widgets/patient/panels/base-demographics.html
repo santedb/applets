@@ -71,7 +71,6 @@
             <div class="alert alert-warning" ng-if="scopedObject.tag['mdm.type'] == 'L'"><i class="fas fa-exclamation-triangle"></i> {{ 'ui.mdm.edit.local' | i18n }}</div>
             
             <fieldset class="mb-3" ng-repeat="(n, name) in editObject.name">
-                
                 <legend>{{ 'ui.model.patient.name' | i18n }} ({{ name.useModel | concept }})</legend>
                 <div class="form-group row">
                     <label class="col-sm-12 col-md-3 control-label required">{{ 'ui.model.patient.name.use' | i18n }}</label>
@@ -82,7 +81,7 @@
                 <div class="form-group row" ng-if="!$root.system.config.application.setting['forbid.patient.name.prefix']">
                     <label class="col-sm-12 col-md-3 control-label">{{ 'ui.model.patient.name.component.prefix' | i18n }}</label>
                     <div class="col-sm-12 col-md-9">
-                        <concept-select class="form-control" concept-set="'NamePrefix'" ng-model="name.component.Prefix"/>
+                        <concept-select class="form-control" concept-set="'NamePrefix'" ng-model="name.component.Prefix" key="'mnemonic'"/>
                     </div>
                 </div>
                 <div class="form-group row" ng-if="!$root.system.config.application.setting['forbid.patient.name.given']">
@@ -102,7 +101,7 @@
                 <div class="form-group row" ng-if="!$root.system.config.application.setting['forbid.patient.name.suffix']">
                     <label class="col-sm-12 col-md-3 control-label">{{ 'ui.model.patient.name.component.suffix' | i18n }}</label>
                     <div class="col-sm-12 col-md-9">
-                        <concept-select class="form-control" concept-set="'NameSuffix'" ng-model="name.component.Prefix"/>
+                        <concept-select class="form-control" concept-set="'NameSuffix'" ng-model="name.component.Suffix" key="'mnemonic'"/>
                     </div>
                 </div>
             </fieldset>

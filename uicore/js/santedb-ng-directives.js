@@ -1160,7 +1160,8 @@ angular.module('santedb-lib')
            templateUrl:  './org.santedb.uicore/directives/conceptSelect.html',
            scope: {
                conceptSet: '=',
-               conceptModel: '='
+               conceptModel: '=',
+               key: "<"
            },
            controller: ['$scope', '$rootScope', function ($scope, $rootScope) {
            }],
@@ -1196,13 +1197,22 @@ angular.module('santedb-lib')
                 // Element has changed
                 element.on('change', function (e) {
                     var val = $(element).val();
-                    scope.$apply(() => ngModel.$setViewValue(scope.setValues.find(o=>o.id == val)));
+
+                    if(scope.key)
+                        scope.$apply(() => ngModel.$setViewValue(scope.setValues.find(o=>o.id == val)[scope.key]));
+                    else 
+                        scope.$apply(() => ngModel.$setViewValue(scope.setValues.find(o=>o.id == val)));
                 });
                 ngModel.$render = function () {
                     if(ngModel.$viewValue) {
+                        // is there a key? 
                         var value = ngModel.$viewValue.id;
+                        if(scope.key) 
+                            value = ngModel.$viewValue[scope.key];
                         $(element).val(value);
                     }
+                    else 
+                        $(element).val(null);
                 };
 
                 // HACK: Screw Select2 , it is so random
