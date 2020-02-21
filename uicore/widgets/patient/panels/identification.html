@@ -1,7 +1,7 @@
 <div xmlns="http://www.w3.org/1999/xhtml" xmlns:sdb="http://santedb.org/applet" class="container-fluid"
     oc-lazy-load="{ name: 'PatientDemographicsWidgetController', files: ['/org.santedb.uicore/controllers/widgets/patientWidget.js'] }">
-    <sdb:widget order="10" name="org.santedb.widget.patient.identity" altViews="Edit" headerClass="alert-info" size="Medium" type="Panel"
-        context="org.santedb.patient.demographics">
+    <sdb:widget order="10" name="org.santedb.widget.patient.identity" altViews="Edit" headerClass="alert-info"
+        size="Medium" type="Panel" context="org.santedb.patient.demographics">
         <sdb:icon>fas fa-id-card</sdb:icon>
         <sdb:description lang="en">Patient Identity</sdb:description>
     </sdb:widget>
@@ -33,7 +33,35 @@
         </div>
         <form ng-submit="updatePatient(panel.editForm)" class="form" name="panel.editForm" novalidate="novalidate"
             ng-if="panel.view == 'Edit'">
+            <div class="alert alert-success"
+                ng-if="scopedObject.tag['mdm.type'] != 'L' &amp;&amp; scopedObject.tag['$generated'] == 'true'"><i
+                    class="fas fa-gavel"></i> {{ 'ui.mdm.edit.master' | i18n }}</div>
+            <div class="alert alert-warning" ng-if="scopedObject.tag['mdm.type'] == 'L'"><i
+                    class="fas fa-exclamation-triangle"></i> {{ 'ui.mdm.edit.local' | i18n }}</div>
 
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>{{ 'ui.model.entityIdentifier.authority' | i18n }}</th>
+                        <th>{{ 'ui.model.entityIdentifier.value' | i18n }}</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="v in editObject.identifierModel">
+                        <td>
+                            <authority-select 
+                                    ng-model="v.authority" 
+                                    identity-scope='"bacd9c6f-3fa9-481e-9636-37457962804d"'
+                                    class="form-control"></authority-select>
+                        </td>
+                        <td>
+                            <input type="text" ng-pattern="v.authority.validation" name="value_{{$index}}" required="required" ng-model="v.value" class="form-control" />
+                            <div class="alert-danger" ng-if="panel.editForm['value_' + $index].$invalid"><i class="fas fa-exclamation-triangle"></i> {{ 'ui.error.pattern' | i18n }}</div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
         </form>
     </div>
 </div>

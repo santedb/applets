@@ -61,13 +61,14 @@
     </property>
   </type>
   <type type="EntityIdentifier" all="false">
-    <property name="source" behavior="never"/>
+    <property name="source" behavior="always"/>
     <property name="id"/>
     <property name="value"/>
     <property name="authority" all="false" behavior="always">
       <property name="name"/>
       <property name="domainName"/>
       <property name="oid"/>
+      <property name="scope" behavior="always"/>
     </property>
   </type>
   <type type="Bundle" all="true">

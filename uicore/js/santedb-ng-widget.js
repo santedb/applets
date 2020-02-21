@@ -72,7 +72,8 @@ angular.module('santedb-lib')
                         if(panel.editForm) {
                             setTimeout(function() {
                                 panel.editForm.$$element.submit();
-                                panel.view = null;
+                                if(panel.editForm.$valid)
+                                    panel.view = null;
                                 try { $scope.$apply(); }
                                 catch(e) {}
                             }, 50);

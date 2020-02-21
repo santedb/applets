@@ -136,8 +136,9 @@
     <property name="genderConceptModel" behavior="always" ref="Concept"/>
     <property name="extension" all="true" behavior="always"/>
     <property name="identifier" all="true" behavior="always">
-      <property name="*" all="true" behavior="always" />
+      <property name="*" ref="EntityIdentifier" />
     </property>
+
     <property name="relationship" all="true" behavior="always">
       <property name="Mother" all="false">
         <property name="id"/>

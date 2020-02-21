@@ -541,6 +541,8 @@
     <string key="ui.model.version.initial">Initial Version</string>
     <string key="ui.model.entity.relationship.hasA">HAS A</string>
     <string key="ui.model.entity.relationship.isA">IS A</string>
+    <string key="ui.model.patient.birth">Birth</string>
+    <string key="ui.model.patient.death">Death</string>
     <string key="ui.model.patient.name">Name</string>
     <string key="ui.model.patient.name.use">Use</string>
     <string key="ui.model.patient.name.component.prefix">Prefix</string>
@@ -567,8 +569,11 @@
     <string key="ui.model.patient.telecoms">Contacts</string>
     <string key="ui.model.patient.relationship">Relationships</string>
     <string key="ui.model.patient.deceased">DECEASED</string>
-    <string key="ui.model.patient.multipleBirth">MULTI-BIRTH</string>
+    <string key="ui.model.patient.multipleBirth">MULTIPLE BIRTH</string>
     <string key="ui.model.patient.birthplace">Birthplace</string>
+    <string key="ui.model.patient.register">Registered At</string>
+    <string key="ui.model.patient.dedicatedServiceDeliveryLocation">Facilities</string>
+    <string key="ui.model.patient.placeOfDeath">Place of Death</string>
     <string key="ui.model.patient.multipleBirthOrder">Birth Order</string>
     <string key="ui.model.patient.multipleBirthOrder.0">Unknown (of a multiple-birth)</string>
     <string key="ui.model.patient.multipleBirthOrder.1">1st of multiple-birth</string>
@@ -627,7 +632,7 @@
     <string key="ui.mdm.type.L">LOCAL RECORD</string>
     <string key="ui.mdm.type.M">MASTER RECORD</string>
     <string key="ui.mdm.type.T">RECORD OF TRUTH</string>
-    <string key="ui.mdm.edit.master">This is a MASTER record. Editing it will result in the creation a new LOCAL record for the administrative panel</string>
+    <string key="ui.mdm.edit.master">This is a MASTER record. Editing it will result in the creation a new LOCAL record for the administrative panel.</string>
     <string key="ui.mdm.edit.local">This is a LOCAL record. Editing it may result in data mis-match between the system which supplied the data and the server</string>
     <string key="ui.mdm.action.ignore.confirm">Are you sure you want to mark this record as a non-match?</string>
     <string key="ui.mdm.action.merge.confirm">Are you sure you want to integrate/merge this local record with the current master record?</string>
