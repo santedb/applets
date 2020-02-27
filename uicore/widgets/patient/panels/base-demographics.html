@@ -81,11 +81,11 @@
         <form ng-submit="updatePatient(panel.editForm)" name="panel.editForm" method="dialog" novalidate="novalidate"
             ng-if="panel.view == 'Edit'">
             <div class="alert alert-success"
-                ng-if="scopedObject.tag['mdm.type'] != 'L' &amp;&amp; scopedObject.tag['$generated'] == 'true'">
+                ng-if="scopedObject.tag['$mdm.type'] != 'L' &amp;&amp; scopedObject.tag['$generated'] == 'true'">
                 <span ng-if="scopedObject.id != editObject.id"><i class="fas fa-gavel"></i> {{ 'ui.mdm.edit.recordOfTruth' | i18n }}</span>
                 <span ng-if="scopedObject.id == editObject.id"><i class="fas fa-gavel"></i> {{ 'ui.mdm.edit.master' | i18n }}</span>
             </div>
-            <div class="alert alert-warning" ng-if="scopedObject.tag['mdm.type'] == 'L'"><i
+            <div class="alert alert-warning" ng-if="scopedObject.tag['$mdm.type'] == 'L'"><i
                     class="fas fa-exclamation-triangle"></i> {{ 'ui.mdm.edit.local' | i18n }}</div>
 
             <ul class="nav nav-tabs" role="tablist" id="demographicEditTabs">
@@ -287,7 +287,6 @@
                             <div class="alert alert-danger" ng-if="panel.editForm['address' + n + 'use'].$invalid">{{ 'ui.error.required' | i18n }}</div>
 
                         </div>
-
                         <div ng-if="$root.system.config.application.setting['input.address'] == 'select'">
                             <div class="form-group row">
                                 <label

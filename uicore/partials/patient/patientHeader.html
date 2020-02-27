@@ -3,7 +3,7 @@
     <div class="card shadow">
         <div class="card-body" ng-if="!patient">
             <i class="fas fa-circle-notch fa-spin"></i> {{ 'ui.wait' | i18n }}</div>
-        <div class="card-body" ng-if="patient" ng-class="{ 'alert-success': patient.tag['mdm.type'] == 'T', 'alert-light' : patient.tag['mdm.type'] == 'L'  }">
+        <div class="card-body" ng-if="patient" ng-class="{ 'alert-success': patient.tag['$mdm.type'] == 'T', 'alert-light' : patient.tag['$mdm.type'] == 'L'  }">
             <div class="row">
                 <div class="col-4">
                     <div class="p-2 flex-grow-1">
@@ -12,10 +12,10 @@
                 </div>
                 <div class="col-8">
                     <div class="d-flex flex-wrap justify-content-end">
-                        <div class="p-2" ng-if="patient.tag['mdm.type']">
+                        <div class="p-2" ng-if="patient.tag['$mdm.type']">
 
                             <span class="alert alert-secondary" ><i class="fas fa-database"></i>
-                                {{ 'ui.mdm.type.' + patient.tag['mdm.type'] | i18n }}</span>
+                                {{ 'ui.mdm.type.' + patient.tag['$mdm.type'] | i18n }}</span>
                                 
                         </div>
                         <div class="p-2 flex-grow-1" ng-if="$root.system.config.application.setting['aa.preferred']">

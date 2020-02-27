@@ -34,9 +34,9 @@
         <form ng-submit="updatePatient(panel.editForm)" class="form" name="panel.editForm" novalidate="novalidate"
             ng-if="panel.view == 'Edit'">
             <div class="alert alert-success"
-                ng-if="scopedObject.tag['mdm.type'] != 'L' &amp;&amp; scopedObject.tag['$generated'] == 'true'"><i
+                ng-if="scopedObject.tag['$mdm.type'] != 'L' &amp;&amp; scopedObject.tag['$generated'] == 'true'"><i
                     class="fas fa-gavel"></i> {{ 'ui.mdm.edit.master' | i18n }}</div>
-            <div class="alert alert-warning" ng-if="scopedObject.tag['mdm.type'] == 'L'"><i
+            <div class="alert alert-warning" ng-if="scopedObject.tag['$mdm.type'] == 'L'"><i
                     class="fas fa-exclamation-triangle"></i> {{ 'ui.mdm.edit.local' | i18n }}</div>
 
             <table class="table table-striped">

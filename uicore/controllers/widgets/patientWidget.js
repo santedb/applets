@@ -14,6 +14,8 @@ angular.module('santedb').controller('PatientDemographicsWidgetController', ['$s
                 try {
                     var addr = $scope.editObject.address[k];
                     addr.use = addr.useModel.id;
+                    addr.component = addr.component || {};
+                    delete(addr.useModel);
                     if (addr.targetId) {
                         var addrComponents = (await SanteDB.resources.place.getAsync(addr.targetId)).address.Direct.component;
                         addr.component.Country = addrComponents.Country;
@@ -33,7 +35,9 @@ angular.module('santedb').controller('PatientDemographicsWidgetController', ['$s
         // Now post the changed update object 
         try {
             $scope.scopedObject = await SanteDB.resources.patient.updateAsync($scope.editObject.id, $scope.editObject);
+            $scope.scopedObject = await SanteDB.resources.patient.getAsync($scope.editObject.id); // re-fetch the patient
             toastr.success(SanteDB.locale.getString("ui.model.patient.saveSuccess"));
+            form.$valid = true;
         }
         catch(e) 
         {
@@ -48,7 +52,7 @@ angular.module('santedb').controller('PatientDemographicsWidgetController', ['$s
 
             delete ($scope.editObject); // Delete the current edit object
 
-            if (n.tag && n.tag['mdm.type'] == 'M') // Attempt to find a ROT
+            if (n.tag && n.tag['$mdm.type'] == 'M') // Attempt to find a ROT
             {
                 var recordOfTruth = await SanteDB.resources.patient.findAsync({
                     "relationship[MDM-RecordOfTruth].source": n.id,
@@ -108,6 +112,16 @@ angular.module('santedb').controller('PatientDemographicsWidgetController', ['$s
                     }
                 });
                 await Promise.all(promises);
+            }
+            else if(!$scope.editObject.address) {
+                $scope.editObject.address = {
+                    "HomeAddress" : {
+                        "useModel": {
+                            "id" :AddressUseKeys.HomeAddress,
+                            "mnemonic":"HomeAddress"
+                        }
+                    }
+                }
             }
         }
     });
