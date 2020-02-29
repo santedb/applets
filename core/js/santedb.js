@@ -1002,9 +1002,9 @@ if (!SanteDBWrapper)
                         return JSON.parse(result[1]);
                     }
                     else {
-                        exceptionRegex = /\[(\w*?Exception)\:(.*?)\]/g;
+                        exceptionRegex = new RegExp("(\\w*?Exception)\\:(.*)", "gs");
                         var result = exceptionRegex.exec(exceptionString);
-                        
+                        return new Exception(result[1], result[2]);
                     }
                 }
                 catch(e) {

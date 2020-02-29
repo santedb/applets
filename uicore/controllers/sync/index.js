@@ -90,10 +90,11 @@ angular.module("santedb").controller("SyncController", ['$scope', '$rootScope', 
     }
 
     // View object
-    $scope.viewObject = async function(id) {
+    $scope.viewObject = async function(id, tag) {
         try {
             $("#currentItemModal").modal({ 'backdrop' : 'static' });
             $scope.currentObject = await SanteDB.resources.queue.getAsync(`${$scope.currentQueue.name}/${id}`);
+            $scope.currentObject.tag = tag; 
             $scope.$apply();
         }
         catch(e) {

@@ -203,7 +203,7 @@
                                                 </span>
                                             </td>
                                             <td ng-if="currentQueue.name == 'dead'">
-                                                {{ q.tag | exceptionData }}
+                                                {{ q.tag | exceptionType }}
                                             </td>
                                             
                                             <td>
@@ -211,7 +211,7 @@
                                             </td>
                                             <td>
                                                 <div class="btn-group" ng-if="currentQueue.name == 'dead'">
-                                                    <button class="btn btn-primary" ng-click="viewObject(q.id)"
+                                                    <button class="btn btn-primary" ng-click="viewObject(q.id, q.tag)"
                                                         title="{{ 'ui.action.view' | i18n }}"><i
                                                             class="fas fa-file"></i></button>
                                                     <button class="btn btn-warning" ng-click="resubmitObject(q.id)"
@@ -297,8 +297,14 @@
                             <div class="col" ng-if="currentObject.$type != 'Patch'">
                                 <div class="container-fluid">
                                     <div class="row">
-                                        <div class="col-6" ng-repeat="(k,v) in currentObject" ng-if="v">
+                                        <div class="col-6" ng-repeat="(k,v) in currentObject" ng-if="v &amp;&amp; k != 'tag'">
                                             <strong>{{ k }} :</strong> {{ v | rawValueSummary }}
+                                        </div>
+                                    </div>
+                                    <div class="row" ng-if="currentObject.tag">
+                                        <div class="col-12">
+                                            <strong>{{ 'ui.error' | i18n }}</strong>
+                                            <pre>{{ currentObject.tag | exceptionDetail}}</pre>
                                         </div>
                                     </div>
                                 </div>

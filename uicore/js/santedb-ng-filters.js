@@ -184,7 +184,25 @@ angular.module('santedb-lib')
      * @memberof Angular
      * @summary Renders exception data
      */
-    .filter('exceptionData', function () {
+    .filter('exceptionType', function () {
+        return function (v) {
+            
+            var rawValue = atob(v);
+            // Is there a server exception?
+            var parseResult = SanteDB.application.parseException(rawValue);
+
+            if(parseResult.rules && parseResult.rules.length > 0)
+                return parseResult.rules[0].text;
+            else 
+                return parseResult.$type;
+        }
+    })
+    /**
+     * @method exception
+     * @memberof Angular
+     * @summary Renders exception details
+     */
+    .filter('exceptionDetail', function () {
         return function (v) {
             
             var rawValue = atob(v);
