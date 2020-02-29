@@ -42,18 +42,7 @@ angular.module('santedb').controller('MasterDataManagementController', ['$scope'
                 break;
         }
         
-        switch(entity.tag["mdm.type"])
-        {
-            case "L":
-                retVal += "<span class='badge badge-info'>LOCAL</span>";
-                break;
-            case "S":
-                retVal += "<span class='badge badge-light'>SYSTEM</span>";
-                break;
-            case "T":
-                retVal += "<span class='badge badge-warning'>ROT</span>";
-                break;
-        }
+        
         return retVal;
     }
   
