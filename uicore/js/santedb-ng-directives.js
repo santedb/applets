@@ -142,7 +142,7 @@ angular.module('santedb-lib')
                 searchField: '<',
                 defaultResults: '<',
                 groupBy: '<',
-                filter: '<',
+                filter: '=',
                 groupDisplay: '<',
                 key: '<',
                 selector: '<',
@@ -227,6 +227,10 @@ angular.module('santedb-lib')
 
                     $(element).find('option[value="? undefined:undefined ?"]').remove();
                     
+                    scope.$watch('filter', function(n, o) {
+                        if(n != o && n)
+                            filter = n;
+                    });
                     // Bind select 2 search
                     $(element).select2({
                         language: {

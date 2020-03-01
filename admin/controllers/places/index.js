@@ -29,6 +29,14 @@ angular.module('santedb').controller('PlaceIndexController', ["$scope", "$rootSc
     }
 
     /**
+     * @summary Render the type concept
+     */
+    $scope.renderTypeConcept = function(place) {
+        if(place.typeConceptModel)
+            return SanteDB.display.renderConcept(place.typeConceptModel);
+    }
+
+    /**
      * @summary Render type of place
      */
     $scope.renderTypeConcept = function(place) {
@@ -44,8 +52,11 @@ angular.module('santedb').controller('PlaceIndexController', ["$scope", "$rootSc
             return SanteDB.display.renderConcept(place.classConceptModel);
     }
 
+    /**
+     * @summary Render entity name
+     */
     $scope.renderName = function(place) {
-        return SanteDB.display.renderEntityName(place.name);
+        return SanteDB.display.renderEntityName(place.name, 'OfficialRecord');
     }
 
     $scope.renderAddress = function(place) {
