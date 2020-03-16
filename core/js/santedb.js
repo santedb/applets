@@ -50,20 +50,20 @@ if (!SanteDBWrapper)
          * @param {any} object The object whose properites should be reordered
          * @returns {any} The appropriately ordered object
          */
-        var _reorderProperties = function(object) {
+        var _reorderProperties = function (object) {
 
             // Object has $type and $type is not the first property
-            if(object.$type) {
+            if (object.$type) {
                 var retVal = { $type: object.$type };
-                Object.keys(object).filter(function(d) { return d != "$type" })
-                    .forEach(function(k) { 
-                        retVal[k] = object[k]; 
-                        if(!retVal[k]) ;
-                        else if(retVal[k].$type) // reorder k
+                Object.keys(object).filter(function (d) { return d != "$type" })
+                    .forEach(function (k) {
+                        retVal[k] = object[k];
+                        if (!retVal[k]);
+                        else if (retVal[k].$type) // reorder k
                             retVal[k] = _reorderProperties(retVal[k]);
-                        else if(Array.isArray(retVal[k]))
-                            for(var i in retVal[k])
-                                if(retVal[k][i].$type)
+                        else if (Array.isArray(retVal[k]))
+                            for (var i in retVal[k])
+                                if (retVal[k][i].$type)
                                     retVal[k][i] = _reorderProperties(retVal[k][i]);
                     })
                 return retVal;
@@ -116,8 +116,8 @@ if (!SanteDBWrapper)
              * @summary Gets the base url
              * @memberof SanteDBWrapper.APIWrapper
              */
-            this.getUrl = function() {
-                return _config.base ;
+            this.getUrl = function () {
+                return _config.base;
             };
 
             /**
@@ -156,7 +156,7 @@ if (!SanteDBWrapper)
                         async: !configuration.sync,
                         success: function (xhr, status, response) {
                             try {
-                                if(xhr && response.getResponseHeader("etag"))
+                                if (xhr && response.getResponseHeader("etag"))
                                     xhr.etag = response.getResponseHeader("etag");
                                 if (fulfill) fulfill(xhr, configuration.state);
                             }
@@ -203,13 +203,13 @@ if (!SanteDBWrapper)
                         method: 'PUT',
                         url: _config.base + configuration.resource + (_config.idByQuery ? "?_id=" + configuration.id : "/" + configuration.id),
                         data: configuration.contentType.indexOf('application/json') == 0 ? JSON.stringify(_reorderProperties(configuration.data)) : configuration.data,
-                        dataType: configuration.dataType ||'json',
+                        dataType: configuration.dataType || 'json',
                         contentType: configuration.contentType || 'application/json',
                         headers: configuration.headers,
                         async: !configuration.sync,
                         success: function (xhr, status, response) {
                             try {
-                                if(xhr && response.getResponseHeader("etag"))
+                                if (xhr && response.getResponseHeader("etag"))
                                     xhr.etag = response.getResponseHeader("etag");
                                 if (fulfill) fulfill(xhr, configuration.state);
                             }
@@ -251,13 +251,13 @@ if (!SanteDBWrapper)
                 * @param {string} configuration.contentType Identifies the content type of the data
                 * @returns {Promise} The promise for the operation
                 */
-               this.patchAsync = function (configuration) {
+            this.patchAsync = function (configuration) {
                 return new Promise(function (fulfill, reject) {
                     $.ajax({
                         method: 'PATCH',
                         url: _config.base + configuration.resource + (_config.idByQuery ? "?_id=" + configuration.id : "/" + configuration.id),
                         data: configuration.contentType.indexOf('application/json') == 0 ? JSON.stringify(_reorderProperties(configuration.data)) : configuration.data,
-                        dataType: configuration.dataType ||'json',
+                        dataType: configuration.dataType || 'json',
                         contentType: configuration.contentType || 'application/json',
                         headers: configuration.headers,
                         async: !configuration.sync,
@@ -306,12 +306,12 @@ if (!SanteDBWrapper)
                         method: 'GET',
                         url: _config.base + configuration.resource,
                         data: configuration.query,
-                        dataType: configuration.dataType ||'json',
+                        dataType: configuration.dataType || 'json',
                         headers: configuration.headers,
                         async: !configuration.sync,
                         success: function (xhr, status, response) {
                             try {
-                                if(xhr && response.getResponseHeader("etag"))
+                                if (xhr && response.getResponseHeader("etag"))
                                     xhr.etag = response.getResponseHeader("etag");
                                 if (fulfill) fulfill(xhr, configuration.state);
                             }
@@ -323,12 +323,12 @@ if (!SanteDBWrapper)
                             if (_globalErrorHandler(e, data, setting))
                                 return;
                             var error = {};
-                            if(e.responseJSON)
+                            if (e.responseJSON)
                                 error = e.responseJSON;
-                            else if(e.responseText)
+                            else if (e.responseText)
                                 try { error = JSON.parse(e.responseText); }
-                                catch(e) {};
-                                
+                                catch (e) { };
+
                             if (reject) {
                                 if (error && error.error !== undefined) // oauth2
                                     reject(new Exception(error.type, error.error, error.error_description, error.caused_by), configuration.state);
@@ -367,12 +367,12 @@ if (!SanteDBWrapper)
                         url: _config.base + configuration.resource + (configuration.id ? (_config.idByQuery ? "?_id=" + configuration.id : "/" + configuration.id) : ""),
                         data: configuration.contentType == 'application/json' && configuration.data ? JSON.stringify(_reorderProperties(configuration.data)) : configuration.data,
                         headers: hdr,
-                        dataType: configuration.dataType ||'json',
+                        dataType: configuration.dataType || 'json',
                         contentType: configuration.contentType || 'application/json',
                         async: !configuration.sync,
                         success: function (xhr, status, response) {
                             try {
-                                if(xhr && response.getResponseHeader("etag"))
+                                if (xhr && response.getResponseHeader("etag"))
                                     xhr.etag = response.getResponseHeader("etag");
                                 if (fulfill) fulfill(xhr, configuration.state);
                             }
@@ -422,7 +422,7 @@ if (!SanteDBWrapper)
                         async: !configuration.sync,
                         success: function (xhr, status, response) {
                             try {
-                                if(xhr && response.getResponseHeader("etag"))
+                                if (xhr && response.getResponseHeader("etag"))
                                     xhr.etag = response.getResponseHeader("etag");
                                 if (fulfill) fulfill(xhr, configuration.state);
                             }
@@ -472,7 +472,7 @@ if (!SanteDBWrapper)
                         async: !configuration.sync,
                         success: function (xhr, status, response) {
                             try {
-                                if(xhr)
+                                if (xhr)
                                     xhr.etag = response.getResponseHeader("etag");
                                 if (fulfill) fulfill(xhr, configuration.state);
                             }
@@ -517,7 +517,7 @@ if (!SanteDBWrapper)
              * @summary Gets the URL to this resource base
              * @memberof SanteDBWrapper.ResourceWrapper
              */
-            this.getUrl = function() {
+            this.getUrl = function () {
                 return `${_config.api.getUrl()}${_config.resource}`;
             };
 
@@ -539,7 +539,7 @@ if (!SanteDBWrapper)
                     else
                         url = `${_config.resource}/${id}`;
 
-                    if(id.version)
+                    if (id.version)
                         url += `/history/${id.version}`;
                 }
                 else
@@ -549,7 +549,7 @@ if (!SanteDBWrapper)
                     Accept: _config.accept
                 };
 
-                if(viewModel) 
+                if (viewModel)
                     headers["X-SanteDB-ViewModel"] = viewModel;
                 else if (_config.viewModel)
                     headers["X-SanteDB-ViewModel"] = _config.viewModel;
@@ -632,13 +632,13 @@ if (!SanteDBWrapper)
 
                 var resource = _config.resource;
                 // Does the resource have an ID? If so then do CreateOrUpdate
-                if(data.id)
+                if (data.id)
                     resource += "/" + data.id;
-                    
-                if(data.createdBy)
-                    delete(data.createdBy);
-                if(data.creationTime)
-                    delete(data.creationTime);
+
+                if (data.createdBy)
+                    delete (data.createdBy);
+                if (data.creationTime)
+                    delete (data.creationTime);
 
                 // Perform post
                 return _config.api.postAsync({
@@ -664,8 +664,8 @@ if (!SanteDBWrapper)
                 if (patch.$type !== "Patch")
                     throw new Exception("ArgumentException", "error.invalidType", `Invalid type, resource wrapper expects ${_config.resource} however ${data.$type} specified`);
 
-                var headers  = {};
-                if(etag)
+                var headers = {};
+                if (etag)
                     headers['If-Match'] = etag;
 
                 // Send PUT
@@ -695,10 +695,10 @@ if (!SanteDBWrapper)
                 else if (data.id && data.id !== id)
                     throw new Exception("ArgumentException", "error.invalidValue", `Identifier mismatch, PUT identifier  ${id} doesn't match ${data.id}`);
 
-                if(data.updatedBy)
-                    delete(data.updatedBy);
-                if(data.updatedTime)
-                    delete(data.updatedTime);
+                if (data.updatedBy)
+                    delete (data.updatedBy);
+                if (data.updatedTime)
+                    delete (data.updatedTime);
 
                 var headers = {
                     Accept: _config.accept
@@ -851,19 +851,19 @@ if (!SanteDBWrapper)
              * @param {any} query The query you want to execute
              * @returns {Promise} A promise for when the request completes
              */
-            this.findAssociatedAsync = function(id, property, query, state) {
+            this.findAssociatedAsync = function (id, property, query, state) {
 
-                if(!id)
+                if (!id)
                     throw new Exception("ArgumentNullException", "Missing scoping identifier");
-                else if(!property)
+                else if (!property)
                     throw new Exception("ArgumentNullException", "Missing scoping property");
 
                 var headers = {
                     Accept: _config.accept
                 };
-                if(_config.viewModel)
+                if (_config.viewModel)
                     headers["X-SanteDB-ViewModel"] = _config.viewModel;
-                
+
                 // Prepare query
                 var url = null;
                 if (id.id)
@@ -889,11 +889,11 @@ if (!SanteDBWrapper)
              * @param {any} state A stateful object for callback correlation
              * @returns {Promise} A promise which is fulfilled when the request is complete
              */
-            this.addAssociatedAsync = function(id, property, data, state) {
+            this.addAssociatedAsync = function (id, property, data, state) {
 
-                if(!id)
+                if (!id)
                     throw new Exception("ArgumentNullException", "Missing scoping identifier");
-                else if(!property)
+                else if (!property)
                     throw new Exception("ArgumentNullException", "Missing scoping property");
 
                 var headers = {
@@ -928,34 +928,34 @@ if (!SanteDBWrapper)
              * @param {any} state A state for correlating multiple requests
              * @returns {Promise} A promise which is fulfilled when the request comletes
              */
-            this.removeAssociatedAsync = function(id, property, associatedId, state) {
-                if(!id)
-                throw new Exception("ArgumentNullException", "Missing scoping identifier");
-            else if(!property)
-                throw new Exception("ArgumentNullException", "Missing scoping property");
-            else if (!associatedId)
-                throw new Exception("ArgumentNullException", "Missing associated object id");
+            this.removeAssociatedAsync = function (id, property, associatedId, state) {
+                if (!id)
+                    throw new Exception("ArgumentNullException", "Missing scoping identifier");
+                else if (!property)
+                    throw new Exception("ArgumentNullException", "Missing scoping property");
+                else if (!associatedId)
+                    throw new Exception("ArgumentNullException", "Missing associated object id");
 
-            var headers = {
-                Accept: _config.accept
-            };
-            if (_config.viewModel)
-                headers["X-SanteDB-ViewModel"] = _config.viewModel;
+                var headers = {
+                    Accept: _config.accept
+                };
+                if (_config.viewModel)
+                    headers["X-SanteDB-ViewModel"] = _config.viewModel;
 
-            // Prepare path
-            var url = null;
-            if (id.id)
-                url = `${_config.resource}/${id.id}/${property}`;
-            else
-                url = `${_config.resource}/${id}/${property}`;
+                // Prepare path
+                var url = null;
+                if (id.id)
+                    url = `${_config.resource}/${id.id}/${property}`;
+                else
+                    url = `${_config.resource}/${id}/${property}`;
 
-            return _config.api.deleteAsync({
-                headers: headers,
-                id: associatedId,
-                state: state,
-                resource: url,
-                contentType: _config.accept
-            });   
+                return _config.api.deleteAsync({
+                    headers: headers,
+                    id: associatedId,
+                    state: state,
+                    resource: url,
+                    contentType: _config.accept
+                });
             }
         };
 
@@ -991,14 +991,14 @@ if (!SanteDBWrapper)
              * @summary Parses an exception string into a local object
              * @param {string} exceptionString The exception string to be parsed
              */
-            parseException: function(exceptionString) {
+            parseException: function (exceptionString) {
                 var retVal = new Exception();
                 try {
                     // Server Exceptions
-                    var exceptionRegex = new RegExp("--SERVER\\sFAULT--(.*?)--END SERVER FAULT--","gs");
+                    var exceptionRegex = new RegExp("--SERVER\\sFAULT--(.*?)--END SERVER FAULT--", "gs");
                     var result = exceptionRegex.exec(exceptionString);
-                    
-                    if(result) {
+
+                    if (result) {
                         return JSON.parse(result[1]);
                     }
                     else {
@@ -1007,7 +1007,7 @@ if (!SanteDBWrapper)
                         return new Exception(result[1], result[2]);
                     }
                 }
-                catch(e) {
+                catch (e) {
                     return new Exception("JavaScript", e);
                 }
             },
@@ -1018,8 +1018,8 @@ if (!SanteDBWrapper)
              * @param {string} assetPath The path within that asset to the content
              * @returns {Promise} A promise representing the fetch operation
              */
-            getAppletAssetAsync: function(appletId, assetPath, state) {
-                return new Promise(function(fulfill, reject) {
+            getAppletAssetAsync: function (appletId, assetPath, state) {
+                return new Promise(function (fulfill, reject) {
                     $.ajax({
                         method: 'GET',
                         url: `/${appletId}/${assetPath}`,
@@ -1045,11 +1045,11 @@ if (!SanteDBWrapper)
              * @param {*} password The password
              * @returns {number} The strength of the password between 0 and 5
              */
-            calculatePasswordStrength: function(password) {
+            calculatePasswordStrength: function (password) {
                 var strength = 0;
                 if (password.length >= 6) {
                     strength++;
-                    if(password.length > 10)
+                    if (password.length > 10)
                         strength++;
                     if (/(?=.*[a-z])(?=.*[A-Z])/.test(password))
                         strength++;
@@ -1222,21 +1222,21 @@ if (!SanteDBWrapper)
              * @memberof SanteDBWrapper.app
              * @returns {string} A new random password
              */
-            generatePassword: function() {
-                var specChars = [ '@','_','-','~','!','#','$'];
-                var secret = SanteDB.application.newGuid().replace(/-/g, function() {
+            generatePassword: function () {
+                var specChars = ['@', '_', '-', '~', '!', '#', '$'];
+                var secret = SanteDB.application.newGuid().replace(/-/g, function () {
                     return specChars[Math.trunc(Math.random() * specChars.length)];
                 });
-        
+
                 var repl = "";
-                for(var i = 0; i < secret.length; i++)
-                    if(secret[i] >= 'a' && secret[i] <= 'f')
+                for (var i = 0; i < secret.length; i++)
+                    if (secret[i] >= 'a' && secret[i] <= 'f')
                         repl += String.fromCharCode(97 + Math.trunc(Math.random() * 24));
-                    else if(i % 2 == 1)
+                    else if (i % 2 == 1)
                         repl += String.fromCharCode(65 + Math.trunc(Math.random() * 24));
                     else
                         repl += secret[i];
-                
+
                 return repl;
             },
             /**
@@ -1260,7 +1260,7 @@ if (!SanteDBWrapper)
             getAppInfoAsync: function (settings) {
                 return _ami.getAsync({
                     resource: "Sherlock",
-                    query: { _includeUpdates: (settings || {}).updates, _upstream: (settings || {}).remote  }
+                    query: { _includeUpdates: (settings || {}).updates, _upstream: (settings || {}).remote }
                 });
             },
             /**
@@ -1662,11 +1662,11 @@ if (!SanteDBWrapper)
                 resource: "SecurityRole",
                 api: _ami
             }),
-             /**
-             * @property {SanteDB.ResourceWrapper}
-             * @memberOf SanteDBWrapper.resources
-             * @summary Wrapper for session information
-             */
+            /**
+            * @property {SanteDB.ResourceWrapper}
+            * @memberOf SanteDBWrapper.resources
+            * @summary Wrapper for session information
+            */
             sessionInfo: new ResourceWrapper({
                 accept: _viewModelJsonMime,
                 resource: "SessionInfo",
@@ -1748,7 +1748,7 @@ if (!SanteDBWrapper)
              * @memberOf SanteDBWrapper.resources
              * @summary Wrapper for subscription definition API
              */
-            subscriptionDefinition : new ResourceWrapper({
+            subscriptionDefinition: new ResourceWrapper({
                 resource: "SubscriptionDefinition",
                 accept: "application/json",
                 api: _ami
@@ -1758,7 +1758,7 @@ if (!SanteDBWrapper)
              * @memberOf SanteDBWrapper.resources
              * @summary Wrapper for subscription definition API
              */
-            jobInfo : new ResourceWrapper({
+            jobInfo: new ResourceWrapper({
                 resource: "JobInfo",
                 accept: "application/json",
                 api: _ami
@@ -2083,6 +2083,47 @@ if (!SanteDBWrapper)
                 });
             },
             /**
+            * @method 
+            * @memberof SanteDBWrapper.authentication
+            * @summary Performs an extended login for the purpose of password reset (using a challenge and response)
+            * @param {string} userName The name of the user which is logging in
+            * @param {string} challenge The selected user challenge which is being answered
+            * @param {string} response The user's response to the challenge offerred
+            * @param {string} tfaSecret The two-factor secret if provided
+            * @returns {Promise} A promise representing the login request
+            * @description This type of grant is an extension of the oauth grants. The resulting session is only valid for changing the user's own password. No other functions will work with this token
+            */
+            challengeLoginAsync: function (userName, challenge, response, tfaSecret) {
+                return new Promise(function (fulfill, reject) {
+                    try {
+                        _auth.postAsync({
+                            resource: "oauth2_token",
+                            data: {
+                                username: userName,
+                                challenge: challenge,
+                                response: response,
+                                grant_type: 'x_challenge',
+                                scope: '*'
+                            },
+                            headers: {
+                                "X-SanteDB-TfaSecret": tfaSecret
+                            },
+                            contentType: 'application/x-www-form-urlencoded'
+                        })
+                            .then(function (d) {
+                                fulfill(d);
+                            })
+                            .catch(reject);
+                    }
+                    catch (e) {
+                        var ex = e.responseJSON || e;
+                        if (!ex.$type)
+                            ex = new Exception("Exception", "error.general", e);
+                        if (reject) reject(ex);
+                    }
+                });
+            },
+            /**
                 * @method 
                 * @memberof SanteDBWrapper.authentication
                 * @summary Performs a OAUTH password login
@@ -2103,22 +2144,22 @@ if (!SanteDBWrapper)
                                 username: userName,
                                 password: password,
                                 grant_type: 'password',
-                                scope: (scope || ["*"]).join(",")
+                                scope: (scope || ["*"]).join(" ")
                             },
                             headers: {
                                 "X-SanteDB-TfaSecret": tfaSecret,
                                 "X-SanteDBClient-Claim":
-                                    btoa("PolicyOverride=" + (uacPrompt && (purposeOfUse || false)) + ";" + 
-                                    "urn:oasis:names:tc:xacml:2.0:action:purpose=" + purposeOfUse)
+                                    btoa("PolicyOverride=" + (uacPrompt && (purposeOfUse || false)) + ";" +
+                                        "urn:oasis:names:tc:xacml:2.0:action:purpose=" + purposeOfUse)
                             },
                             contentType: 'application/x-www-form-urlencoded'
                         })
                             .then(function (d) {
                                 if (!uacPrompt) {
                                     _oauthSession = d;
-                                    if(d.access_token) window.sessionStorage.setItem('token', d.access_token || d.token);
-                                    if(d.refresh_token) window.sessionStorage.setItem('refresh_token', d.refresh_token);
-                                _authentication.getSessionInfoAsync().then(fulfill).catch(reject);
+                                    if (d.access_token) window.sessionStorage.setItem('token', d.access_token || d.token);
+                                    if (d.refresh_token) window.sessionStorage.setItem('refresh_token', d.refresh_token);
+                                    _authentication.getSessionInfoAsync().then(fulfill).catch(reject);
                                 }
                                 else if (fulfill) fulfill(d);
                             })
@@ -2153,22 +2194,22 @@ if (!SanteDBWrapper)
                                 username: userName,
                                 pin: pin,
                                 grant_type: 'pin',
-                                scope: (scope || ["*"]).join(",")
+                                scope: (scope || ["*"]).join(" ")
                             },
                             headers: {
                                 "X-SanteDB-TfaSecret": tfaSecret,
                                 "X-SanteDBClient-Claim":
-                                btoa("PolicyOverride=" + (uacPrompt && (purposeOfUse || false)) + ";" + 
-                                "urn:oasis:names:tc:xacml:2.0:action:purpose=" + purposeOfUse)
+                                    btoa("PolicyOverride=" + (uacPrompt && (purposeOfUse || false)) + ";" +
+                                        "urn:oasis:names:tc:xacml:2.0:action:purpose=" + purposeOfUse)
                             },
                             contentType: 'application/x-www-form-urlencoded'
                         })
                             .then(function (d) {
                                 if (!uacPrompt) {
                                     _oauthSession = d;
-                                    if(d.access_token) window.sessionStorage.setItem('token', d.access_token || d.token);
-                                    if(d.refresh_token) window.sessionStorage.setItem('refresh_token', d.refresh_token);
-                                _authentication.getSessionInfoAsync().then(fulfill).catch(reject);
+                                    if (d.access_token) window.sessionStorage.setItem('token', d.access_token || d.token);
+                                    if (d.refresh_token) window.sessionStorage.setItem('refresh_token', d.refresh_token);
+                                    _authentication.getSessionInfoAsync().then(fulfill).catch(reject);
                                 }
                                 else if (fulfill) fulfill(d);
                             })
@@ -2204,9 +2245,9 @@ if (!SanteDBWrapper)
                             .then(function (d) {
                                 if (!noSession) {
                                     _oauthSession = d;
-                                    if(d.access_token) window.sessionStorage.setItem('token', d.access_token || d.token);
-                                    if(d.refresh_token) window.sessionStorage.setItem('refresh_token', d.refresh_token);
-                                _authentication.getSessionInfoAsync().then(fulfill).catch(reject);
+                                    if (d.access_token) window.sessionStorage.setItem('token', d.access_token || d.token);
+                                    if (d.refresh_token) window.sessionStorage.setItem('refresh_token', d.refresh_token);
+                                    _authentication.getSessionInfoAsync().then(fulfill).catch(reject);
                                 }
                                 else if (fulfill) fulfill(d);
                             })
@@ -2244,9 +2285,9 @@ if (!SanteDBWrapper)
                             .then(function (d) {
                                 if (!noSession) {
                                     _oauthSession = d;
-                                    if(d.access_token) window.sessionStorage.setItem('token', d.access_token || d.token);
-                                    if(d.refresh_token) window.sessionStorage.setItem('refresh_token', d.refresh_token);
-                                _authentication.getSessionInfoAsync().then(fulfill).catch(reject);
+                                    if (d.access_token) window.sessionStorage.setItem('token', d.access_token || d.token);
+                                    if (d.refresh_token) window.sessionStorage.setItem('refresh_token', d.refresh_token);
+                                    _authentication.getSessionInfoAsync().then(fulfill).catch(reject);
                                 }
                                 else if (fulfill) fulfill(d);
                             })
@@ -2285,8 +2326,8 @@ if (!SanteDBWrapper)
                                     if (!noSession) {
                                         _oauthSession = d;
 
-                                        if(d.access_token) window.sessionStorage.setItem('token', d.access_token || d.token);
-                                        if(d.refresh_token) window.sessionStorage.setItem('refresh_token', d.refresh_token);
+                                        if (d.access_token) window.sessionStorage.setItem('token', d.access_token || d.token);
+                                        if (d.refresh_token) window.sessionStorage.setItem('refresh_token', d.refresh_token);
                                         _authentication.getSessionInfoAsync().then(fulfill).catch(reject);
                                     }
                                     else if (fulfill) fulfill(d);
@@ -2367,7 +2408,7 @@ if (!SanteDBWrapper)
             /**
              * @summary Default date formats
              */
-            dateFormats : {
+            dateFormats: {
                 year: 'YYYY',
                 month: 'YYYY-MM',
                 day: 'YYYY-MM-DD',
