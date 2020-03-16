@@ -25,13 +25,15 @@
         <sdb:url>/login?returnState</sdb:url>
         <sdb:view>
         </sdb:view>
-    </sdb:state>
+    </sdb:state><s></s>
     <div class="logo-centered"></div>
     <form class="form" ng-submit="doLogin(loginForm)" name="loginForm">
         <!-- #include virtual="/org.santedb.uicore/partials/security/login.html" -->
         <div class="btn-group float-right">
-        <button type="submit" id="loginButton" class="btn btn-lg btn-primary">
-            <i class="fa fa-check"></i> {{ 'ui.action.login' | i18n }}</button>
+            <button ng-disabled="!$root.system.serviceState.ami" type="button" ng-click="resetPassword" class="btn btn-lg btn-info">
+                <i class="fa fa-asterisk"></i> {{ 'ui.action.passwordReset' | i18n }}</button>  
+            <button type="submit" id="loginButton" class="btn btn-lg btn-primary">
+                <i class="fa fa-check"></i> {{ 'ui.action.login' | i18n }}</button>
         </div>
     </form>
 

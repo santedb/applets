@@ -3,16 +3,17 @@ angular.module('santedb').controller('PatientDemographicsWidgetController', ['$s
 
     $scope.updatePatient = async function (form) {
 
+        var submissionObject = angular.copy($scope.editObject);
         // TODO: Update the address to the targetAddressId if it is present in the address.
         if (form.$invalid) {
             return false;
         }
 
         // Update target identifiers with the original
-        if ($scope.editObject.address)  {
-            var promises = Object.keys($scope.editObject.address).map(async function (k) {
+        if (submissionObject.address)  {
+            var promises = Object.keys(submissionObject.address).map(async function (k) {
                 try {
-                    var addr = $scope.editObject.address[k];
+                    var addr = submissionObject.address[k];
                     addr.use = addr.useModel.id;
                     addr.component = addr.component || {};
                     delete(addr.useModel);
@@ -34,8 +35,8 @@ angular.module('santedb').controller('PatientDemographicsWidgetController', ['$s
         
         // Now post the changed update object 
         try {
-            $scope.scopedObject = await SanteDB.resources.patient.updateAsync($scope.editObject.id, $scope.editObject);
-            $scope.scopedObject = await SanteDB.resources.patient.getAsync($scope.editObject.id); // re-fetch the patient
+            $scope.scopedObject = await SanteDB.resources.patient.updateAsync(submissionObject.id, submissionObject);
+            $scope.scopedObject = await SanteDB.resources.patient.getAsync(submissionObject.id); // re-fetch the patient
             toastr.success(SanteDB.locale.getString("ui.model.patient.saveSuccess"));
             form.$valid = true;
         }

@@ -1998,6 +1998,7 @@ if (!SanteDBWrapper)
         };
 
         // Session and auth data
+        var _oauthSession = null;
         var _session = null;
         var _elevator = null;
         var _authentication = {
@@ -2019,18 +2020,6 @@ if (!SanteDBWrapper)
              */
             setElevator: function (elevator) {
                 _elevator = elevator;
-            },
-            /**
-                * @method
-                * @memberof SanteDBWrapper.authentication
-                * @returns {any} The oauth session response with an access token, etc.
-                * @summary Gets the current session 
-                */
-            getSession: function () {
-                return _session ? {
-                    access_token: _session.access_token,
-                    expires_in: _session.expires_in
-                } : null;
             },
             /**
                 * @method
@@ -2109,7 +2098,7 @@ if (!SanteDBWrapper)
                 return new Promise(function (fulfill, reject) {
                     try {
                         _auth.postAsync({
-                            resource: "session",
+                            resource: "oauth2_token",
                             data: {
                                 username: userName,
                                 password: password,
@@ -2118,18 +2107,20 @@ if (!SanteDBWrapper)
                             },
                             headers: {
                                 "X-SanteDB-TfaSecret": tfaSecret,
-                                "X-SanteDBClient-UserAccessControl": uacPrompt,
                                 "X-SanteDBClient-Claim":
-                                    btoa("http://santedb.org/claims/override=" + (uacPrompt && (purposeOfUse || false))) + "," + 
-                                    btoa("urn:oasis:names:tc:xacml:2.0:action:purpose=" + purposeOfUse)
+                                    btoa("PolicyOverride=" + (uacPrompt && (purposeOfUse || false)) + ";" + 
+                                    "urn:oasis:names:tc:xacml:2.0:action:purpose=" + purposeOfUse)
                             },
                             contentType: 'application/x-www-form-urlencoded'
                         })
                             .then(function (d) {
                                 if (!uacPrompt) {
-                                    _session = d;
+                                    _oauthSession = d;
+                                    if(d.access_token) window.sessionStorage.setItem('token', d.access_token || d.token);
+                                    if(d.refresh_token) window.sessionStorage.setItem('refresh_token', d.refresh_token);
+                                _authentication.getSessionInfoAsync().then(fulfill).catch(reject);
                                 }
-                                if (fulfill) fulfill(d);
+                                else if (fulfill) fulfill(d);
                             })
                             .catch(reject);
                     }
@@ -2157,7 +2148,7 @@ if (!SanteDBWrapper)
                 return new Promise(function (fulfill, reject) {
                     try {
                         _auth.postAsync({
-                            resource: "session",
+                            resource: "oauth2_token",
                             data: {
                                 username: userName,
                                 pin: pin,
@@ -2166,18 +2157,20 @@ if (!SanteDBWrapper)
                             },
                             headers: {
                                 "X-SanteDB-TfaSecret": tfaSecret,
-                                "X-SanteDBClient-Sessionless": uacPrompt,
                                 "X-SanteDBClient-Claim":
-                                    btoa("http://santedb.org/claims/override=" + (uacPrompt && (purposeOfUse || false))) + "," + 
-                                    btoa("urn:oasis:names:tc:xacml:2.0:action:purpose=" + purposeOfUse)
+                                btoa("PolicyOverride=" + (uacPrompt && (purposeOfUse || false)) + ";" + 
+                                "urn:oasis:names:tc:xacml:2.0:action:purpose=" + purposeOfUse)
                             },
                             contentType: 'application/x-www-form-urlencoded'
                         })
                             .then(function (d) {
                                 if (!uacPrompt) {
-                                    _session = d;
+                                    _oauthSession = d;
+                                    if(d.access_token) window.sessionStorage.setItem('token', d.access_token || d.token);
+                                    if(d.refresh_token) window.sessionStorage.setItem('refresh_token', d.refresh_token);
+                                _authentication.getSessionInfoAsync().then(fulfill).catch(reject);
                                 }
-                                if (fulfill) fulfill(d);
+                                else if (fulfill) fulfill(d);
                             })
                             .catch(reject);
                     }
@@ -2201,7 +2194,7 @@ if (!SanteDBWrapper)
                 return new Promise(function (fulfill, reject) {
                     try {
                         _auth.postAsync({
-                            resource: "session",
+                            resource: "oauth2_token",
                             data: {
                                 grant_type: 'client_credentials',
                                 scope: "*"
@@ -2210,9 +2203,12 @@ if (!SanteDBWrapper)
                         })
                             .then(function (d) {
                                 if (!noSession) {
-                                    _session = d;
+                                    _oauthSession = d;
+                                    if(d.access_token) window.sessionStorage.setItem('token', d.access_token || d.token);
+                                    if(d.refresh_token) window.sessionStorage.setItem('refresh_token', d.refresh_token);
+                                _authentication.getSessionInfoAsync().then(fulfill).catch(reject);
                                 }
-                                if (fulfill) fulfill(d);
+                                else if (fulfill) fulfill(d);
                             })
                             .catch(reject);
                     }
@@ -2236,7 +2232,7 @@ if (!SanteDBWrapper)
                 return new Promise(function (fulfill, reject) {
                     try {
                         _auth.postAsync({
-                            resource: "session",
+                            resource: "oauth2_token",
                             data: {
                                 grant_type: 'authorization_code',
                                 code: code,
@@ -2247,9 +2243,12 @@ if (!SanteDBWrapper)
                         })
                             .then(function (d) {
                                 if (!noSession) {
-                                    _session = d;
+                                    _oauthSession = d;
+                                    if(d.access_token) window.sessionStorage.setItem('token', d.access_token || d.token);
+                                    if(d.refresh_token) window.sessionStorage.setItem('refresh_token', d.refresh_token);
+                                _authentication.getSessionInfoAsync().then(fulfill).catch(reject);
                                 }
-                                if (fulfill) fulfill(d);
+                                else if (fulfill) fulfill(d);
                             })
                             .catch(reject);
                     }
@@ -2271,22 +2270,26 @@ if (!SanteDBWrapper)
                 return new Promise(function (fullfill, reject) {
                     try {
 
-                        if (_session) {
+                        var refreshToken = window.sessionStorage.getItem("refresh_token");
+                        if (refreshToken) {
                             _auth.postAsync({
-                                resource: "session",
+                                resource: "oauth2_token",
                                 data: {
                                     grant_type: 'refresh_token',
-                                    refresh_token: _session.refresh_token,
+                                    refresh_token: refreshToken,
                                     scope: "*"
                                 },
                                 contentType: 'application/x-www-form-urlencoded'
                             })
                                 .then(function (d) {
                                     if (!noSession) {
-                                        _session = d;
+                                        _oauthSession = d;
+
+                                        if(d.access_token) window.sessionStorage.setItem('token', d.access_token || d.token);
+                                        if(d.refresh_token) window.sessionStorage.setItem('refresh_token', d.refresh_token);
                                         _authentication.getSessionInfoAsync().then(fulfill).catch(reject);
                                     }
-                                    if (fulfill) fulfill(d);
+                                    else if (fulfill) fulfill(d);
                                 })
                                 .catch(reject);
                         }
@@ -2336,16 +2339,14 @@ if (!SanteDBWrapper)
                 */
             logoutAsync: function () {
                 return new Promise(function (fulfill, reject) {
-                    if (!_session) {
-                        if (reject) reject(new Exception("SecurityException", "error.security", "Cannot logout of non-existant session"));
-                    }
                     try {
                         _auth.deleteAsync({
                             resource: "session"
                         })
                             .then(function (d) {
-                                _session = null;
+                                _oauthSession = _session = null;
                                 window.sessionStorage.removeItem('token');
+                                window.sessionStorage.removeItem('refresh_token');
                                 if (fulfill) fulfill(d);
                             })
                             .catch(reject);

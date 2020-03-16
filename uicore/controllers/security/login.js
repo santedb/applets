@@ -40,7 +40,6 @@ angular.module("santedb").controller("LoginController", ['$scope', '$rootScope',
 
                             if (!$scope.login.noSession) {
                                 $templateCache.removeAll();
-                                window.sessionStorage.setItem('token', d.access_token || d.token);
                                 $rootScope.session = d;
                             }
 
@@ -73,7 +72,6 @@ angular.module("santedb").controller("LoginController", ['$scope', '$rootScope',
 
                             if (!$scope.login.noSession) {
                                 $templateCache.removeAll();
-                                window.sessionStorage.setItem('token', d.access_token || d.token);
                                 $rootScope.session = d;
                             }
 

@@ -172,6 +172,7 @@ var santedbApp = angular.module('santedb', ['ngSanitize', 'ui.router', 'oc.lazyL
             delete($rootScope._transition);
 
         });
+
         // Get session
         SanteDB.authentication.getSessionInfoAsync().then(function (s) {
             $rootScope.session = s;
@@ -184,7 +185,6 @@ var santedbApp = angular.module('santedb', ['ngSanitize', 'ui.router', 'oc.lazyL
 
             // User preferences
             if (s) {
-                window.sessionStorage.setItem('token', s.access_token || s.token);
                 SanteDB.configuration.getUserPreferencesAsync().then(function (prefs) {
                     $rootScope.session.prefs = {};
                     prefs.application.setting.forEach(function (e) {
@@ -268,7 +268,6 @@ var santedbApp = angular.module('santedb', ['ngSanitize', 'ui.router', 'oc.lazyL
 
                 if (expiresIn < 0) // already expired
                     SanteDB.authentication.logoutAsync().then(function () {
-                        window.sessionStorage.removeItem('token');
                         $rootScope.session = null;
                         $templateCache.removeAll();
                         $state.reload();
@@ -280,7 +279,7 @@ var santedbApp = angular.module('santedb', ['ngSanitize', 'ui.router', 'oc.lazyL
                         closeButton: false,
                         preventDuplicates: true,
                         onclick: function () {
-                            SanteDB.authentication.refreshLoginAsync().then(function (s) { window.sessionStorage.setItem('token', s.access_token || s.token); $rootScope.session = s; _extendToast = null; toastr.clear(); }).catch($rootScope.errorHandler);
+                            SanteDB.authentication.refreshLoginAsync().then(function (s) { $rootScope.session = s; _extendToast = null; toastr.clear(); }).catch($rootScope.errorHandler);
                         },
                         positionClass: "toast-bottom-center",
                         showDuration: "0",

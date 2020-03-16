@@ -43,7 +43,6 @@ angular.module('santedb-lib')
                     $injector.get('$state').transitionTo('login', {
                         returnState: oldState == "login" ? null : (oldState || $rootScope._transition)
                     });
-                    window.sessionStorage.removeItem('token');// obvi this token doesn't work
                     return $q.reject(response);;
                 }
                 return $q.reject(response);

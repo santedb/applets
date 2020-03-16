@@ -219,6 +219,7 @@
     <string key="ui.action.save">Save</string>
     <string key="ui.action.search">Search</string>
     <string key="ui.action.login">Login</string>
+    <string key="ui.action.passwordReset">Forgot Password</string>
     <string key="ui.action.ignore">Ignore</string>
     <string key="ui.action.next">Next</string>
     <string key="ui.action.prev">Back</string>
