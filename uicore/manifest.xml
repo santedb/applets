@@ -31,4 +31,11 @@
       <add name="oauth2.login" value="/org.santedb.uicore/oauth/"/>
     </appSettings>
   </configuration>
+
+  <asset name="js/santedb-ng-directives.js" mimeType="text/javascript">
+    <virtual>
+      <include>js/ng/directives/.*\.js</include>
+    </virtual>
+  </asset>
+  
 </AppletManifest>

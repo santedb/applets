@@ -1,0 +1,386 @@
+/*
+ * Copyright 2015-2019 Mohawk College of Applied Arts and Technology
+ * 
+ * 
+ * Licensed under the Apache License, Version 2.0 (the "License"); you 
+ * may not use this file except in compliance with the License. You may 
+ * obtain a copy of the License at 
+ * 
+ * http://www.apache.org/licenses/LICENSE-2.0 
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+ * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the 
+ * License for the specific language governing permissions and limitations under 
+ * the License.
+ * 
+ * User: Justin Fyfe
+ * Date: 2019-8-8
+ */
+
+/// <reference path="../../santedb-ui.js"/>
+/// <reference path="../../../../core/js/santedb.js"/>
+
+angular.module('santedb-lib')
+    /**
+     * @method entitySearch
+     * @memberof Angular
+     * @summary Binds a select2 search box to the specified select input searching for the specified entities
+     * @description This class is the basis for all drop-down searches in disconnected client. It is used whenever you would like to have a search inline in a form and displayed nicely
+     * @param {string} value The type of object to be searched
+     * @param {string} filter The additional criteria by which results should be filtered
+     * @param {string} data-searchField The field which should be searched on. The default is name.component.value
+     * @param {string} data-default The function which returns a list of objects which represent the default values in the search
+     * @param {string} data-groupBy The property which sets the grouping for the results in the drop-down display
+     * @param {string} data-groupDisplay The property on the group property which is to be displayed
+     * @param {string} data-resultField The field on the result objects which contains the result
+     * @example
+     * <entity-search type="'Place'" 
+                    class="form-control" 
+                    name="subscribeFacility" 
+                    ng-model="config.subscription.facility" 
+                    filter='{ "statusConcept.mnemonic" : "ACTIVE" }'/>
+     */
+    .directive('entitySearch', function ($timeout) {
+
+        function extractProperty(object, path) {
+            var r = object;
+            path.split(/[\.\[\]]/).forEach((p) => {
+                try { if("" != p) r = r[p] || r['$other'][p]; }
+                catch (e) { r['$other'][p]; }
+            });
+            return r;
+        }
+        function renderObject(selection) {
+
+            if (selection.text)
+                return selection.text;
+
+            var retVal = "";
+            switch (selection.$type) {
+                case "UserEntity":
+                case "Provider":
+                case "Patient":
+                    retVal += "<i class='fa fa-user'></i> ";
+                    break;
+                case "Material":
+                case "ManufacturedMaterial":
+                    retVal += "<i class='fa fa-flask'></i> ";
+                    break;
+                case "Place":
+                    retVal += "<i class='fa fa-map-pin'></i> ";
+                    break;
+                case "Organization":
+                    retVal += "<i class='fa fa-building'></i> ";
+                    break;
+                case "Entity":
+                    retVal += "<i class='fa fa-share-alt'></i> ";
+                    break;
+                case "AssigningAuthority":
+                    retVal += "<i class='fa fa-id-card'></i> ";
+                    break;
+                case "SecurityRole":
+                case "SecurityRoleInfo":
+                case "SanteDB.Core.Model.AMI.Auth.SecurityRoleInfo, SanteDB.Core.Model.AMI":
+                    retVal += "<i class='fa fa-users'></i>";
+                    break;
+                case "SecurityUser":
+                case "SecurityUserInfo":
+                case "SanteDB.Core.Model.AMI.Auth.SecurityUserInfo, SanteDB.Core.Model.AMI":
+                    retVal += "<i class='fa fa-user'></i>";
+                    break;
+                case "Concept":
+                    retVal += "<i class='fa fa-book-medical'></i>";
+                    break;
+                case "SecurityPolicy":
+                case "SecurityPolicyInstance":
+                    retVal += "<i class='fa fa-certificate'></i>";
+                    break;
+                default:
+                    retVal += "<i class='fa fa-box'></i> ";
+                    break;
+            }
+            retVal += "&nbsp;";
+
+            if (selection.typeConceptModel) {
+                retVal += `<span class="badge badge-info">${SanteDB.display.renderConcept(selection.typeConceptModel)}</span> `;
+            }
+
+            if (selection.name != null && selection.name.OfficialRecord != null)
+                retVal += SanteDB.display.renderEntityName(selection.name.OfficialRecord);
+            else if (selection.name != null && selection.name.Assigned != null)
+                retVal += SanteDB.display.renderEntityName(selection.name.Assigned);
+            else if (selection.name != null && selection.name.$other != null)
+                retVal += SanteDB.display.renderEntityName(selection.name.$other);
+            else if(selection.name != null && selection.name[SanteDB.locale.getLocale()])
+                retVal += selection.name[SanteDB.locale.getLocale()];
+            else if (selection.name != null)
+                retVal += selection.name;
+            else if (selection.userName)
+                retVal += selection.userName;
+            else if (selection.entity)
+                retVal += (selection.entity.name || selection.entity.userName);
+            else if (selection.element !== undefined)
+                retVal += selection.element.innerText.trim();
+            else if (selection.text)
+                retVal += selection.text;
+            if (selection.address)
+                retVal += " - <small>(<i class='fa fa-map-marker'></i> " + SanteDB.display.renderEntityAddress(selection.address) + ")</small>";
+            else if (selection.oid)
+                retVal += " - <small>(<i class='fa fa-cogs'></i> " + selection.oid + ")</small>";
+
+            if(selection.classConceptModel)
+                retVal += ` <span class='badge badge-info'>${SanteDB.display.renderConcept(selection.classConceptModel)}</span>`;
+            return retVal;
+        }
+
+        return {
+            scope: {
+                defaultResults: '=',
+                type: '<',
+                display: '<',
+                searchField: '<',
+                defaultResults: '<',
+                groupBy: '<',
+                filter: '=',
+                groupDisplay: '<',
+                key: '<',
+                selector: '<',
+                valueProperty: '<'
+            },
+            restrict: 'E',
+            require: 'ngModel',
+            replace: true,
+            transclude: true,
+            templateUrl: './org.santedb.uicore/directives/entitySearch.html',
+            controller: ['$scope', '$rootScope',
+                function ($scope, $rootScope) {
+
+                    $scope.setValue = (selectControl, resource, value) => {
+                        if (!value || Array.isArray(value) && value.length == 0) {
+                            $(selectControl).find('option').remove();
+                            $(selectControl).trigger('change.select2');
+                        }
+                        else {
+                            var api = SanteDB.resources[resource.toCamelCase()];
+
+                            if (!Array.isArray(value))
+                                value = [value];
+
+                            $(selectControl).find('option[value="? undefined:undefined ?"]').remove();
+                            $(selectControl).find("option[value='loading']").remove();
+                            $(selectControl)[0].add(new Option(`<i class='fa fa-circle-notch fa-spin'></i> ${SanteDB.locale.getString("ui.wait")}`, "loading", true, true));
+
+                            value.forEach(function (v) {
+
+                                // Key selector is ID
+                                if ($scope.key && $scope.key != "id") {
+                                    var query = {};
+                                    query[$scope.key] = v;
+                                    query._viewModel = "dropdown";
+                                    api.findAsync(query)
+                                        .then(function (res) {
+                                            $(selectControl).find("option[value='loading']").remove();
+
+                                            // Matching item
+                                            if (res.item.length == 1)
+                                                if ($(selectControl).find(`option[value='${v}']`).length == 0) {
+                                                    var obj = res.item[0];
+                                                    if ($scope.selector)
+                                                        obj = obj[$scope.selector] || obj;
+                                                    $(selectControl)[0].add(new Option(renderObject(res.item[0]), v, false, true));
+                                                    $(selectControl).trigger('change.select2');
+                                                }
+
+                                        });
+                                }
+                                else // Lookup by ID
+                                    api.getAsync({ id: v, viewModel: "dropdown" })
+                                        .then(function (res) {
+                                            $(selectControl).find("option[value='loading']").remove();
+
+                                            if ($(selectControl).find(`option[value='${v}']`).length == 0) {
+                                                var obj = res;
+                                                if ($scope.selector)
+                                                    obj = obj[$scope.selector] || obj;
+                                                $(selectControl)[0].add(new Option(renderObject(obj), v, false, true));
+                                                $(selectControl).trigger('change.select2');
+                                            }
+                                        });
+                            });
+                        }
+                    }
+                }
+            ],
+            link: function (scope, element, attrs, ngModel) {
+                $timeout(function () {
+                    var modelType = scope.type;
+                    var filter = scope.filter || {};
+                    var displayString = scope.display;
+                    var searchProperty = scope.searchField || "name.component.value";
+                    var defaultResults = scope.defaultResults;
+                    var groupString = scope.groupBy;
+                    var groupDisplayString = scope.groupDisplay;
+                    var resultProperty = scope.key || "id";
+                    var selector = scope.selector;
+                    var valueProperty = scope.valueProperty;
+
+                    $(element).find('option[value="? undefined:undefined ?"]').remove();
+                    
+                    scope.$watch('filter', function(n, o) {
+                        if(n != o && n)
+                            filter = n;
+                    });
+                    // Bind select 2 search
+                    $(element).select2({
+                        language: {
+                            searching: function () { return `<i class="fa fa-circle-notch fa-spin"></i> ${SanteDB.locale.getString("ui.search")}`; }
+                        },
+                        defaultResults: function () {
+                            var s = scope;
+                            if (defaultResults) {
+                                try {
+                                    return scope.$eval(defaultResults);
+                                } catch (e) {
+
+                                }
+                            }
+                            else {
+                                return $.map($('option', element[0]), function (o) {
+                                    return { "id": o.value, "text": o.innerText };
+                                });
+                            }
+                        },
+                        dataAdapter: $.fn.select2.amd.require('select2/data/extended-ajax'),
+                        ajax: {
+                            url: SanteDB.resources[modelType.toCamelCase()].getUrl(), //((modelType == "SecurityUser" || modelType == "SecurityRole" || modelType == "SecurityPolicy") ? "/ami/" : "/hdsi/") + modelType,
+                            dataType: 'json',
+                            delay: 500,
+                            method: "GET",
+                            headers: {
+                                "Accept": "application/json+sdb-viewmodel"
+                            },
+                            data: function (params) {
+                                filter[searchProperty] = "~" + params.term;
+                                filter["_count"] = 20;
+                                filter["_offset"] = 0;
+                                filter["_viewModel"] = "dropdown";
+                                return filter;
+                            },
+                            processResults: function (data, params) {
+                                //params.page = params.page || 0;
+
+                                var data = data.$type == "Bundle" ? data.item : data.item || data;
+                                var retVal = { results: [] };
+
+                                try {
+                                    if(!data || data.length == 0) return [];
+                                    if (groupString == null && data !== undefined) {
+                                        retVal.results = retVal.results.concat($.map(data, function (o) {
+
+                                            if (selector && o[selector])
+                                                o = o[selector];
+
+                                            var text = "";
+                                            if (displayString) {
+                                                text = scope.$eval(displayString, { scope: o });
+                                            }
+                                            else if (o.name !== undefined) {
+                                                text = renderObject(o);
+                                            }
+                                            o.text = o.text || text;
+                                            o.id = extractProperty(o, resultProperty) || o.id;
+                                            return o;
+                                        }));
+                                    }
+                                    else {
+                                        // Get the group string
+                                        var objs = data.map(function (o) {
+
+                                            if (selector && o[selector])
+                                                o = o[selector];
+
+                                            var text = "";
+                                            if (displayString) {
+                                                text = scope.$eval(displayString, { scope: o });
+                                            }
+                                            else if (o.name !== undefined) {
+                                                text = renderObject(o);
+                                            }
+                                            o.text = o.text || text;
+                                            o.id = extractProperty(o, resultProperty) || o.id;
+                                            return o;
+                                        });
+
+                                        for (var itm in objs) {
+                                            // parent obj
+                                            try {
+                                                var groupDisplay = scope.$eval('scope.' + groupString, { scope: data[itm] });
+
+                                                var gidx = $.grep(retVal.results, function (e) { return e.text == groupDisplay });
+                                                if (gidx.length == 0)
+                                                    retVal.results.push({ "text": groupDisplay, "children": [data[itm]] });
+                                                else
+                                                    gidx[0].children.push(data[itm]);
+                                            }
+                                            catch (e) {
+                                                retVal.results.push(data[itm]);
+                                            }
+                                        }
+                                    }
+                                    return retVal;
+                                }
+                                catch(e) {
+                                    console.error(e);
+                                    return [];
+                                }
+                            },
+                            cache: true
+                        },
+                        escapeMarkup: function (markup) { return markup; }, // Format normally
+                        minimumInputLength: 2,
+                        templateSelection: renderObject,
+                        keepSearchResults: true,
+                        templateResult: renderObject
+                    });
+
+                    // On change
+                    element.on('change', function (e) {
+                        var val = $(element).select2("val");
+                        //e.currentTarget.options.selectedIndex = e.currentTarget.options.length - 1;
+                        if (valueProperty) {
+                            var modelVal = {};
+                            if (Array.isArray(val))
+                                modelVal = val.map(function (v) {
+                                    var retVal = {};
+                                    retVal[valueProperty] = v;
+                                    return retVal;
+                                });
+
+                            else
+                                modelVal[valueProperty] = val;
+                            scope.$apply(() => ngModel.$setViewValue(modelVal));
+
+                        }
+                        else
+                            scope.$apply(() => ngModel.$setViewValue(val));
+                    });
+                    ngModel.$render = function () {
+                        if (valueProperty) {
+                            if (Array.isArray(ngModel.$viewValue))
+                                scope.setValue(element, modelType, ngModel.$viewValue.map(function (e) { return e[valueProperty]; }));
+                            else
+                                scope.setValue(element, modelType, ngModel.$viewValue[valueProperty]);
+                        }
+                        else
+                            scope.setValue(element, modelType, ngModel.$viewValue);
+                    };
+
+                    // HACK: Screw Select2 , it is so random
+                    if(ngModel.$viewValue)
+                        scope.setValue(element, modelType, ngModel.$viewValue);
+
+                });
+            }
+        };
+    });
