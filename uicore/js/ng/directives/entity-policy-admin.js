@@ -47,7 +47,7 @@ angular.module('santedb-lib')
                                 var resource = SanteDB.resources[$scope.securable.$type.toCamelCase()];
                                 if (resource == null)
                                     return;
-                                resource.removeAssociatedAsync($scope.securable.id, "policy", pol.item[0].id)
+                                resource.removeAssociatedAsync($scope.securable.id, "policy", pol.resource[0].id)
                                     .then(function (d) {
                                         SanteDB.display.buttonWait("#delPolicy" + index, false);
                                         $scope.refresh();
@@ -71,7 +71,7 @@ angular.module('santedb-lib')
                     SanteDB.display.buttonWait("#grant" + index, true);
                     SanteDB.resources.securityPolicy.findAsync({ oid: oid, _count: 1 })
                         .then(function (res) {
-                            pol = res.item[0];
+                            pol = res.resource[0];
                             pol.grant = grant;
                             pol.$type = 'SecurityPolicyInfo';
 
@@ -193,7 +193,7 @@ angular.module('santedb-lib')
                         SanteDB.resources[scope.securable.$type.toCamelCase()].findAssociatedAsync(scope.securable.id, 'policy', query)
                             .then(function (res) {
                                 callback({
-                                    data: res.item.map(function (item) {
+                                    data: res.resource.map(function (item) {
                                         return item;
                                     }),
                                     recordsTotal: undefined,

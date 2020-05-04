@@ -78,7 +78,7 @@
             </div>
 
         </div>
-        <form ng-submit="updatePatient(panel.editForm)" name="panel.editForm" method="dialog" novalidate="novalidate"
+        <form ng-submit="update(panel.editForm)" name="panel.editForm" method="dialog" novalidate="novalidate"
             ng-if="panel.view == 'Edit'">
             <div class="alert alert-success"
                 ng-if="scopedObject.tag['$mdm.type'] != 'L' &amp;&amp; scopedObject.tag['$generated'] == 'true'">

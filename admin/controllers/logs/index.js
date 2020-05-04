@@ -88,7 +88,7 @@ angular.module('santedb').controller('LogIndexController', ["$scope", "$rootScop
             SanteDB.application.getLogInfoAsync(null, query)
                 .then(function (res) {
                     callback({
-                        data: res.item.map(function (item) {
+                        data: res.resource.map(function (item) {
                             return item;
                         }),
                         recordsTotal: undefined,

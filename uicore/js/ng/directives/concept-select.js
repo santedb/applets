@@ -51,7 +51,7 @@ angular.module('santedb-lib')
                         if(!loaded[setName]) 
                         {
                             loaded[setName] = { callme : [] };
-                            scope.setValues = (await SanteDB.resources.concept.findAsync({ "conceptSet.mnemonic" : setName })).item;
+                            scope.setValues = (await SanteDB.resources.concept.findAsync({ "conceptSet.mnemonic" : setName })).resource;
                             loaded[setName].callme.forEach((r) => r(scope.setValues));
                             loaded[setName]= scope.setValues;
                             scope.$apply();

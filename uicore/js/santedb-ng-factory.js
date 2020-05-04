@@ -40,9 +40,10 @@ angular.module('santedb-lib')
             responseError: function (response) {
                 if (response.status === 401) {
                     var oldState = $injector.get('$state').$current.name;
+                    window.sessionStorage.removeItem("token");
                     $injector.get('$state').transitionTo('login', {
                         returnState: oldState == "login" ? null : (oldState || $rootScope._transition)
-                    });
+                    }); 
                     return $q.reject(response);;
                 }
                 return $q.reject(response);

@@ -50,15 +50,15 @@ angular.module('santedb').controller('EditUserController', ["$scope", "$rootScop
                 $scope.isLoading = !$scope.target;
                 $scope.target = $scope.target || {};
 
-                if (u.item && u.item.length > 0) {
-                    $scope.target.entity = u.item[0];
+                if (u.resource && u.resource.length > 0) {
+                    $scope.target.entity = u.resource[0];
                     
                     // Load inverse relationships
-                    if(u.item[0].relationship && !u.item[0].relationship.Employee)
-                        SanteDB.resources.entityRelationship.findAsync({ target: u.item[0].id, relationshipType: EntityRelationshipTypeKeys.Employee, _viewModel: "relationship_full" })
+                    if(u.resource[0].relationship && !u.resource[0].relationship.Employee)
+                        SanteDB.resources.entityRelationship.findAsync({ target: u.resource[0].id, relationshipType: EntityRelationshipTypeKeys.Employee, _viewModel: "relationship_full" })
                             .then(function(er) {
-                                if(er.item)
-                                    er.item.forEach(function(eri) { 
+                                if(er.resource)
+                                    er.resource.forEach(function(eri) { 
                                         $scope.target.entity.relationship[eri.relationshipTypeModel.mnemonic] = $scope.target.entity.relationship[eri.relationshipTypeModel.mnemonic] || [];
                                         $scope.target.entity.relationship[eri.relationshipTypeModel.mnemonic].push(eri);
 
@@ -299,6 +299,7 @@ angular.module('santedb').controller('EditUserController', ["$scope", "$rootScop
                 $scope.target.entity.relationship.Employee.holder = $scope.target.entity.id;
 
         }
+
         // Show wait state
         SanteDB.display.buttonWait("#saveUserButton", true);
 

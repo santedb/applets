@@ -42,8 +42,8 @@ angular.module('santedb').controller('EditApplicationController', ["$scope", "$r
                 $scope.isLoading = !$scope.target;
                 $scope.target = $scope.target || {};
 
-                if (u.item && u.item.length > 0) {
-                    $scope.target.entity = u.item[0];
+                if (u.resource && u.resource.length > 0) {
+                    $scope.target.entity = u.resource[0];
                 }
                 else 
                     $scope.target.entity = new ApplicationEntity();

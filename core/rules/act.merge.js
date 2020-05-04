@@ -38,7 +38,7 @@ function __ActMergeFunction(act) {
     }).then(function (data) {
         if (data.totalResults === 0) return; // no replacements
 
-        act.participation.RecordTarget.player = data.item[0].source; // Replace the target player
+        act.participation.RecordTarget.player = data.resource[0].source; // Replace the target player
 
         }).catch(function (e) { console.error("Error fetching entity relationships from data store"); });
 

@@ -2305,10 +2305,11 @@ if (!SanteDBWrapper)
                 * @method
                 * @memberof SanteDBWrapper.authentication
                 * @summary Performs a refresh token grant
+                * @param {boolean} noSession True if no session should be setup
                 * @returns {Promise} A promise representing the session refresh request
                 */
             refreshLoginAsync: function () {
-                return new Promise(function (fullfill, reject) {
+                return new Promise(function (fulfill, reject, noSession) {
                     try {
 
                         var refreshToken = window.sessionStorage.getItem("refresh_token");
@@ -2325,7 +2326,7 @@ if (!SanteDBWrapper)
                                 .then(function (d) {
                                     if (!noSession) {
                                         _oauthSession = d;
-
+                                        _session = null;
                                         if (d.access_token) window.sessionStorage.setItem('token', d.access_token || d.token);
                                         if (d.refresh_token) window.sessionStorage.setItem('refresh_token', d.refresh_token);
                                         _authentication.getSessionInfoAsync().then(fulfill).catch(reject);

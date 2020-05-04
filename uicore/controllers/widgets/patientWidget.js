@@ -1,7 +1,7 @@
 /// <reference path="../../../core/js/santedb.js"/>
 angular.module('santedb').controller('PatientDemographicsWidgetController', ['$scope', '$rootScope', function ($scope, $rootScope) {
 
-    $scope.updatePatient = async function (form) {
+    $scope.update = async function (form) {
 
         var submissionObject = angular.copy($scope.editObject);
         // TODO: Update the address to the targetAddressId if it is present in the address.
@@ -60,10 +60,10 @@ angular.module('santedb').controller('PatientDemographicsWidgetController', ['$s
                     "_count": 1
                 });
 
-                if (recordOfTruth.total == 0 || !recordOfTruth.item)
+                if (recordOfTruth.total == 0 || !recordOfTruth.resource)
                     $scope.editObject = angular.copy(n);
                 else 
-                    $scope.editObject = recordOfTruth.item[0];
+                    $scope.editObject = recordOfTruth.resource[0];
                 
             }
             else
@@ -108,8 +108,8 @@ angular.module('santedb').controller('PatientDemographicsWidgetController', ['$s
 
                     // Now query 
                     var results = await SanteDB.resources.place.findAsync(query);
-                    if (results.total == 1 || results.item.length == 1) {
-                        addr.targetId = results.item[0].id;
+                    if (results.total == 1 || results.resource.length == 1) {
+                        addr.targetId = results.resource[0].id;
                     }
                 });
                 await Promise.all(promises);

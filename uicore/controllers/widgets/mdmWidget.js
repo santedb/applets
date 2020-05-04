@@ -65,7 +65,7 @@ angular.module('santedb').controller('MasterDataManagementController', ['$scope'
                 var entityRels = await SanteDB.resources.entityRelationship.findAsync({ source: entity, target: $scope.scopedObject.id, relationshipType: "56cfb115-8207-4f89-b52e-d20dbad8f8cc", _count: 1 });
                 if(entityRels.count == 0)
                     throw new Exception("KeyNotFoundException", "Could not find relationship between this entity and master entity.");
-                var rel = entityRels.item[0];
+                var rel = entityRels.resource[0];
 
                 // Delete this relationship
                 await SanteDB.resources.entityRelationship.deleteAsync(rel.id);

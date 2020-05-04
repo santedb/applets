@@ -77,7 +77,7 @@ angular.module('santedb').controller('AdminLayoutController', ["$scope", "$rootS
 
         SanteDB.resources.mail.findAsync({ flags: 0 })
             .then(function(d) {
-                $scope.mailbox = d.item;
+                $scope.mailbox = d.resource;
                 $scope.$apply();
             })
             .catch(function(e) { 

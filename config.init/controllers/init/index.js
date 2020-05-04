@@ -94,7 +94,7 @@ angular.module('santedb').controller('InitialSettingsController', ['$scope', '$r
                 // Get subscription reference
                 SanteDB.resources.subscriptionDefinition.findAsync({ _upstream: true }).then(function (d) {
                     $scope.reference.subscriptions = [];
-                    d.item.forEach(function (itm) {
+                    d.resource.forEach(function (itm) {
                         itm.definitions.forEach(function (defn) {
                             $scope.reference.subscriptions.push(defn);
                             $scope.config.sync._resource[defn.name] = { selected: true };

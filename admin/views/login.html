@@ -31,14 +31,14 @@
     <form class="form" ng-submit="doLogin(loginForm)" name="loginForm">
         <!-- #include virtual="/org.santedb.uicore/partials/security/login.html" -->
         <div class="btn-group float-right">
-            <button type="button" data-toggle="modal" data-target="#forgotPasswordModal" class="btn btn-lg btn-info">
-                <i class="fa fa-asterisk"></i> {{ 'ui.action.passwordReset' | i18n }}</button>
+            <!-- <button type="button" data-toggle="modal" data-target="#forgotPasswordModal" class="btn btn-lg btn-info">
+                <i class="fa fa-asterisk"></i> {{ 'ui.action.passwordReset' | i18n }}</button> -->
             <button type="submit" id="loginButton" class="btn btn-lg btn-primary">
                 <i class="fa fa-check"></i> {{ 'ui.action.login' | i18n }}</button>
         </div>
     </form>
 
     <!-- Forgot Password -->
-    <!-- #include virtual="/org.santedb.uicore/partials/security/forgotPassword.html" -->
+    <!-- include virtual="/org.santedb.uicore/partials/security/forgotPassword.html" -->
     
 </div>

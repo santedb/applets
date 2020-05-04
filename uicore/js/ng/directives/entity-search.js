@@ -183,12 +183,12 @@ angular.module('santedb-lib')
                                             $(selectControl).find("option[value='loading']").remove();
 
                                             // Matching item
-                                            if (res.item.length == 1)
+                                            if (res.resource.length == 1)
                                                 if ($(selectControl).find(`option[value='${v}']`).length == 0) {
-                                                    var obj = res.item[0];
+                                                    var obj = res.resource[0];
                                                     if ($scope.selector)
                                                         obj = obj[$scope.selector] || obj;
-                                                    $(selectControl)[0].add(new Option(renderObject(res.item[0]), v, false, true));
+                                                    $(selectControl)[0].add(new Option(renderObject(res.resource[0]), v, false, true));
                                                     $(selectControl).trigger('change.select2');
                                                 }
 
@@ -270,7 +270,7 @@ angular.module('santedb-lib')
                             processResults: function (data, params) {
                                 //params.page = params.page || 0;
 
-                                var data = data.$type == "Bundle" ? data.item : data.item || data;
+                                var data = data.$type == "Bundle" ? data.resource : data.resource || data;
                                 var retVal = { results: [] };
 
                                 try {

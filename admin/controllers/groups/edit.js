@@ -208,7 +208,7 @@ angular.module('santedb').controller('EditGroupController', ["$scope", "$rootSco
                     SanteDB.resources.securityUser.findAsync(query)
                         .then(function (res) {
                             callback({
-                                data: res.item.map(function (item) { return item.entity; }),
+                                data: res.resource.map(function (item) { return item.entity; }),
                                 recordsTotal: undefined,
                                 recordsFiltered: res.totalResults || res.size
                             });

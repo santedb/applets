@@ -50,7 +50,7 @@ angular.module('santedb-lib')
                        if(!loaded[scope]) 
                        {
                            loaded[identityScope] = { callme : [] };
-                           scope.setValues = (await SanteDB.resources.assigningAuthority.findAsync({ "scope" : identityScope })).item;
+                           scope.setValues = (await SanteDB.resources.assigningAuthority.findAsync({ "scope" : identityScope })).resource;
                            loaded[identityScope].callme.forEach((r) => r(scope.setValues));
                            loaded[identityScope]= scope.setValues;
                            scope.$apply();

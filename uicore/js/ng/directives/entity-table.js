@@ -231,9 +231,9 @@ angular.module('santedb-lib')
                                     SanteDB.resources[attrs.type.toCamelCase()].findAsync(query)
                                         .then(function (res) {
 
-                                            res.item = res.item || [];
+                                            res.resource = res.resource || [];
                                             callback({
-                                                data: res.item.map(function (item) {
+                                                data: res.resource.map(function (item) {
                                                     if (scope.propertyPath)
                                                         return item[scope.propertyPath];
                                                     else

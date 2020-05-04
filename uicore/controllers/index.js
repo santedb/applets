@@ -166,6 +166,7 @@ var santedbApp = angular.module('santedb', ['ngSanitize', 'ui.router', 'oc.lazyL
             delete($rootScope._transition);
         });
         $transitions.onError({}, function (transition) {
+
             $(".modal").modal('hide');
             $('.popover').popover('hide');
             $("#pageTransitioner").hide();
@@ -289,13 +290,13 @@ var santedbApp = angular.module('santedb', ['ngSanitize', 'ui.router', 'oc.lazyL
                     });
                 }
                 else {
-                    $($rootScope.extendToast).children('.toast-message').html(messageStr);
+                    $(_extendToast).children('.toast-message').html(messageStr);
                 }
             }
             else
                 toastr.clear();
 
-        }, 10000);
+        }, 2000);
 
         // Set locale for sleect2
         $.fn.select2.defaults.set('language', SanteDB.locale.getLocale());
