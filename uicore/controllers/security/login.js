@@ -57,7 +57,14 @@ angular.module("santedb").controller("LoginController", ['$scope', '$rootScope',
                             e.userMessage = e.data[0].error_description;
                         }
                         else 
-                            e.userMessage = e.message;
+                            switch(e.message) {
+                                case "invalid_grant":
+                                    e.userMessage = 'err.login.invalidUserPassword';
+                                    break;
+                                default: 
+                                    e.userMessage = e.message;
+                                    break;
+                            }
                         $rootScope.errorHandler(e);
                         SanteDB.display.buttonWait("#loginButton", false);
                     });

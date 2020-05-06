@@ -151,7 +151,7 @@
     <string key="error.type.SecurityException">Security Exception</string>
     <string key="error.noScript.title">Enable JavaScript</string>
     <string key="error.noScript.text">SanteDB requires the use of JavaScript to function. It appears that your browser does not support JavaScript or has JavaScript disabled. Please check your security settings and refresh the page</string>
-
+    <string key="error.login.invalidPassword">Invalid username or password</string>
     <string key="error.invalidBrowser.title">Invalid Browser</string>
     <string key="error.invalidBrowser.text">SanteDB won't work on this browser. Supported browsers including: &lt;ul>&lt;li>Google Chrome&lt;/li>&lt;li>Mozilla Firefox&lt;/li>&lt;li>Microsoft Edge&lt;/li>&lt;li>Android 5.0 or higher&lt;/li>&lt;/ul></string>
     <!-- Common States -->
