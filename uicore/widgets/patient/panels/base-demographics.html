@@ -80,10 +80,12 @@
         </div>
         <form ng-submit="update(panel.editForm)" name="panel.editForm" method="dialog" novalidate="novalidate"
             ng-if="panel.view == 'Edit'">
-            <div class="alert alert-success"
-                ng-if="scopedObject.tag['$mdm.type'] != 'L' &amp;&amp; scopedObject.tag['$generated'] == 'true'">
+            <div class="alert alert-success" ng-if="scopedObject.tag['$mdm.type'] != 'L' &amp;&amp; scopedObject.tag['$generated'] == 'true'">
                 <span ng-if="scopedObject.id != editObject.id"><i class="fas fa-gavel"></i> {{ 'ui.mdm.edit.recordOfTruth' | i18n }}</span>
                 <span ng-if="scopedObject.id == editObject.id"><i class="fas fa-gavel"></i> {{ 'ui.mdm.edit.master' | i18n }}</span>
+            </div>
+            <div class="alert alert-warning" ng-if="!scopedObject.tag['$generated'] &amp;&amp; scopedObject.determinerConcept != '6b1d6764-12be-42dc-a5dc-52fc275c4935'">
+                <i class="fas fa-exclamation-circle"></i> {{ 'ui.mdm.edit.local' | i18n }}
             </div>
             <div class="alert alert-warning" ng-if="scopedObject.tag['$mdm.type'] == 'L'"><i
                     class="fas fa-exclamation-triangle"></i> {{ 'ui.mdm.edit.local' | i18n }}</div>
@@ -107,6 +109,11 @@
                         <i class="text-danger fas fa-exclamation-circle" ng-if="panel.editForm.$error.required[0].$name.indexOf('address') == 0"></i></a>
                 </li>
                 <li class="active nav-item" role="presentation">
+                    <a class="nav-link" href="javascript:" data-target="#demoTelecom" data-toggle="tab">
+                        <i class="fa fa-phone"></i> {{ 'ui.model.patient.telecom' | i18n }}
+                        </a>
+                </li>
+                <li class="active nav-item" role="presentation">
                     <a class="nav-link" href="javascript:" data-target="#demoDeath" data-toggle="tab">
                         {{ 'ui.model.patient.death' | i18n }}
                         <i class="text-danger fas fa-exclamation-circle" ng-if="panel.editForm.$error.required[0].$name.indexOf('death') == 0"></i></a>
@@ -114,62 +121,10 @@
             </ul>
             <div class="tab-content">
                 <div role="tabpanel" class="tab-pane" id="demoName">
-                    <fieldset class="m-2"  ng-repeat="(n, name) in editObject.name">
-                        <legend>{{ name.useModel | concept }}</legend>
-                        <div class="form-group row">
-                            <label
-                                class="col-sm-12 col-md-3 control-label required">{{ 'ui.model.patient.name.use' | i18n }}</label>
-                            <div class="col-sm-12 col-md-9">
-                                <concept-select class="form-control" required="required" name="name{{n}}use" concept-set="'NameUse'"
-                                    ng-model="name.useModel" />
-                                <div class="alert alert-danger" ng-if="panel.editForm['name' + n + 'use'].$invalid">{{ 'ui.error.required' | i18n }}</div>
-                            </div>
-                        </div>
-                        <div class="form-group row"
-                            ng-if="!$root.system.config.application.setting['forbid.patient.name.prefix']">
-                            <label
-                                class="col-sm-12 col-md-3 control-label">{{ 'ui.model.patient.name.component.prefix' | i18n }}</label>
-                            <div class="col-sm-12 col-md-9">
-                                <concept-select class="form-control" concept-set="'NamePrefix'"
-                                    ng-model="name.component.Prefix" key="'mnemonic'" />
-                            </div>
-                        </div>
-                        <div class="form-group row"
-                            ng-if="!$root.system.config.application.setting['forbid.patient.name.given']">
-                            <label
-                                class="col-sm-12 col-md-3 control-label required">{{ 'ui.model.patient.name.component.given' | i18n }}</label>
-                            <div class="col-sm-12 col-md-9"
-                                ng-switch="$root.system.config.application.setting['input.name']">
-                                <tag-input ng-switch-default=""  name="name{{n}}given" class="form-control" ng-model="name.component.Given"
-                                    required="required" />
-                                <input ng-switch-when="simple" name="name{{n}}given" type="text" class="form-control"
-                                    ng-model="name.component.Given" required="required" />
-                                <div class="alert alert-danger" ng-if="panel.editForm['name' + n + 'given'].$invalid">{{ 'ui.error.required' | i18n }}</div>
-                            </div>
-                        </div>
-                        <div class="form-group row"
-                            ng-if="!$root.system.config.application.setting['forbid.patient.name.family']">
-                            <label
-                                class="col-sm-12 col-md-3 control-label required">{{ 'ui.model.patient.name.component.family' | i18n }}</label>
-                            <div class="col-sm-12 col-md-9"
-                                ng-switch="$root.system.config.application.setting['input.name']">
-                                <tag-input ng-switch-default="" name="name{{n}}family" class="form-control" ng-model="name.component.Family"
-                                    required="required" />
-                                <input ng-switch-when="simple" name="name{{n}}family" type="text" class="form-control"
-                                    ng-model="name.component.Family" required="required" />
-                                    <div class="alert alert-danger" ng-if="panel.editForm['name' + n + 'family'].$invalid">{{ 'ui.error.required' | i18n }}</div>
-                                </div>
-                        </div>
-                        <div class="form-group row"
-                            ng-if="!$root.system.config.application.setting['forbid.patient.name.suffix']">
-                            <label
-                                class="col-sm-12 col-md-3 control-label">{{ 'ui.model.patient.name.component.suffix' | i18n }}</label>
-                            <div class="col-sm-12 col-md-9">
-                                <concept-select class="form-control" concept-set="'NameSuffix'"
-                                    ng-model="name.component.Suffix" key="'mnemonic'" />
-                            </div>
-                        </div>
-                    </fieldset>
+                    <name-edit name="editObject.name" />
+                </div>
+                <div role="tabpanel" class="tab-pane" id="demoTelecom">
+                    <telecom-edit telecom="editObject.telecom" />
                 </div>
                 <div role="tabpanel" class="tab-pane fade show active" id="demoBirth">
                     <div class="p-2">
@@ -274,90 +229,7 @@
                     </div>
                 </div>
                 <div role="tabpanel" class="tab-pane fade" id="demoAddress">
-                    <fieldset ng-repeat="(n, addr) in editObject.address" class="m-2">
-                        <legend>{{ addr.useModel | concept }}</legend>
-                    <div class="p-2">
-                        <div class="form-group row">
-                            <label
-                                class="col-sm-12 col-md-3 control-label required">{{ 'ui.model.patient.address.use' | i18n }}</label>
-                            <div class="col-sm-12 col-md-9">
-                                <concept-select class="form-control" required="required" name="address{{n}}use" concept-set="'AddressUse'"
-                                    ng-model="addr.useModel" />
-                            </div>
-                            <div class="alert alert-danger" ng-if="panel.editForm['address' + n + 'use'].$invalid">{{ 'ui.error.required' | i18n }}</div>
-
-                        </div>
-                        <div ng-if="$root.system.config.application.setting['input.address'] == 'select'">
-                            <div class="form-group row">
-                                <label
-                                    class="col-sm-12 col-md-3 control-label">{{ 'ui.model.patient.address.component.city' | i18n }}</label>
-                                <div class="col-sm-12 col-md-9">
-                                    <entity-search type="'Place'" group-by="'address.Direct.component.County'"
-                                        ng-model="addr.targetId" search-field="'name.component.value'"
-                                        filter="{ 'classConcept': '79dd4f75-68e8-4722-a7f5-8bc2e08f5cd6', 'statusConcept': 'c8064cbd-fa06-4530-b430-1a52f1530c27' }" />
-                                </div>
-                            </div>
-                        </div>
-                        <div ng-if="$root.system.config.application.setting['input.address'] != 'select'">
-                            <div class="form-group row"
-                                ng-if="!$root.system.config.application.setting['forbid.patient.address.state']">
-                                <label
-                                    class="col-sm-12 col-md-3 control-label">{{ 'ui.model.patient.address.component.state' | i18n }}</label>
-                                <div class="col-sm-12 col-md-9"
-                                    ng-switch="$root.system.config.application.setting['input.address']">
-                                    <div ng-switch-when="structured">
-                                        <entity-search type="'Place'" group-by="'address.Direct.component.Country'"
-                                            ng-model="addr.component.State" search-field="'name.component.value'"
-                                            key="'name[OfficialRecord].component.value'"
-                                            filter="{ 'classConcept': '8cf4b0b0-84e5-4122-85fe-6afa8240c218', 'statusConcept': 'c8064cbd-fa06-4530-b430-1a52f1530c27' }" />
-                                    </div>
-                                    <input ng-switch-default="" type="text" class="form-control"
-                                        ng-model="addr.component.State" required="required" />
-                                </div>
-                            </div>
-                            <div class="form-group row"
-                                ng-if="!$root.system.config.application.setting['forbid.patient.address.county']">
-                                <label
-                                    class="col-sm-12 col-md-3 control-label">{{ 'ui.model.patient.address.component.county' | i18n }}</label>
-                                <div class="col-sm-12 col-md-9"
-                                    ng-switch="$root.system.config.application.setting['input.address']">
-                                    <div ng-switch-when="structured">
-                                        <entity-search type="'Place'" group-by="'address.Direct.component.State'"
-                                            ng-model="addr.component.County" search-field="'name.component.value'"
-                                            key="'name[OfficialRecord].component.value'"
-                                            filter="{ 'classConcept': 'd9489d56-ddac-4596-b5c6-8f41d73d8dc5', 'address[Direct].component[State].value': addr.component.State, 'statusConcept': 'c8064cbd-fa06-4530-b430-1a52f1530c27' }" />
-                                    </div>
-                                    <input ng-switch-default="" type="text" class="form-control"
-                                        ng-model="addr.component.County" />
-                                </div>
-                            </div>
-                            <div class="form-group row"
-                                ng-if="!$root.system.config.application.setting['forbid.patient.address.city']">
-                                <label
-                                    class="col-sm-12 col-md-3 control-label">{{ 'ui.model.patient.address.component.city' | i18n }}</label>
-                                <div class="col-sm-12 col-md-9">
-                                    <input type="text" class="form-control" ng-model="addr.component.City" />
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-group row"
-                            ng-if="!$root.system.config.application.setting['forbid.patient.address.street']">
-                            <label
-                                class="col-sm-12 col-md-3 control-label">{{ 'ui.model.patient.address.component.street' | i18n }}</label>
-                            <div class="col-sm-12 col-md-9">
-                                <input type="text" class="form-control" ng-model="addr.component.StreetAddressLine" />
-                            </div>
-                        </div>
-                        <div class="form-group row"
-                            ng-if="!$root.system.config.application.setting['forbid.patient.address.postalcode']">
-                            <label
-                                class="col-sm-12 col-md-3 control-label">{{ 'ui.model.patient.address.component.postalcode' | i18n }}</label>
-                            <div class="col-sm-12 col-md-9">
-                                <input type="text" class="form-control" ng-model="addr.component.PostalCode" />
-                            </div>
-                        </div>
-                    </div>
-                    </fieldset>
+                    <address-edit address="editObject.address" />
                 </div>
             </div>
 

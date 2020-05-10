@@ -59,7 +59,7 @@ angular.module("santedb").controller("LoginController", ['$scope', '$rootScope',
                         else 
                             switch(e.message) {
                                 case "invalid_grant":
-                                    e.userMessage = 'err.login.invalidUserPassword';
+                                    e.userMessage = 'error.login.invalidPassword';
                                     break;
                                 default: 
                                     e.userMessage = e.message;

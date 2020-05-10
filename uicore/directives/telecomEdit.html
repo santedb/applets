@@ -1,0 +1,24 @@
+<div xmlns="http://www.w3.org/1999/xhtml" class="m-2">
+    <div class="container-fluid">
+        <div class="row" ng-repeat="(t, tel) in telecom">
+            <label class="col-md-3 control-label">{{ 'ui.model.entity.telecom.' + t | i18n }}</label>
+            <!-- TODO: Clean this up -->
+            <div class="col-md-9 input-group">
+                <div class="input-group-prepend">
+                    <div class="btn-group btn-group-toggle">
+                        <button type="button" class="btn btn-light" ng-class="{ 'active' : tel.type == 'c1c0a4e9-4238-4044-b89b-9c9798995b93' }"
+                            ng-click="tel.type = 'c1c0a4e9-4238-4044-b89b-9c9798995b93'">
+                            <i class="fas fa-envelope"></i>
+                        </button>
+                        <button type="button" class="btn btn-light" ng-class="{ 'active' : tel.type == 'c1c0a4e9-4238-4044-b89b-9c9798995b99' }"
+                            ng-click="tel.type = 'c1c0a4e9-4238-4044-b89b-9c9798995b99'">
+                            <i class="fas fa-phone"></i>
+                        </button>
+
+                    </div>
+                </div>
+                <input type="{{ tel.type == 'c1c0a4e9-4238-4044-b89b-9c9798995b93' ? 'email' : 'tel'}}" class="form-control" ng-model="tel.editValue"/>
+            </div>
+        </div>
+    </div>
+</div>

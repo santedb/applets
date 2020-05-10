@@ -46,8 +46,8 @@ angular.module('santedb-lib')
         function extractProperty(object, path) {
             var r = object;
             path.split(/[\.\[\]]/).forEach((p) => {
-                try { if("" != p) r = r[p] || r['$other'][p]; }
-                catch (e) { r['$other'][p]; }
+                try { if ("" != p) r = r[p] || r['$other'][p]; }
+                catch (e) { if(r['$other']) r['$other'][p]; }
             });
             return r;
         }
@@ -112,7 +112,7 @@ angular.module('santedb-lib')
                 retVal += SanteDB.display.renderEntityName(selection.name.Assigned);
             else if (selection.name != null && selection.name.$other != null)
                 retVal += SanteDB.display.renderEntityName(selection.name.$other);
-            else if(selection.name != null && selection.name[SanteDB.locale.getLocale()])
+            else if (selection.name != null && selection.name[SanteDB.locale.getLocale()])
                 retVal += selection.name[SanteDB.locale.getLocale()];
             else if (selection.name != null)
                 retVal += selection.name;
@@ -129,7 +129,7 @@ angular.module('santedb-lib')
             else if (selection.oid)
                 retVal += " - <small>(<i class='fa fa-cogs'></i> " + selection.oid + ")</small>";
 
-            if(selection.classConceptModel)
+            if (selection.classConceptModel)
                 retVal += ` <span class='badge badge-info'>${SanteDB.display.renderConcept(selection.classConceptModel)}</span>`;
             return retVal;
         }
@@ -167,46 +167,51 @@ angular.module('santedb-lib')
                             if (!Array.isArray(value))
                                 value = [value];
 
-                            $(selectControl).find('option[value="? undefined:undefined ?"]').remove();
-                            $(selectControl).find("option[value='loading']").remove();
+                            $(selectControl).find('option').each((idx, ele) => {
+                                var val = $(ele).val();
+                                if(val == 'loading' || 
+                                    /\?.*\?/i.test(val))
+                                    $(ele).remove();
+                            });
                             $(selectControl)[0].add(new Option(`<i class='fa fa-circle-notch fa-spin'></i> ${SanteDB.locale.getString("ui.wait")}`, "loading", true, true));
 
-                            value.forEach(function (v) {
+                            value.forEach(async function (v) {
 
-                                // Key selector is ID
-                                if ($scope.key && $scope.key != "id") {
-                                    var query = {};
-                                    query[$scope.key] = v;
-                                    query._viewModel = "dropdown";
-                                    api.findAsync(query)
-                                        .then(function (res) {
-                                            $(selectControl).find("option[value='loading']").remove();
-
-                                            // Matching item
-                                            if (res.resource.length == 1)
-                                                if ($(selectControl).find(`option[value='${v}']`).length == 0) {
-                                                    var obj = res.resource[0];
-                                                    if ($scope.selector)
-                                                        obj = obj[$scope.selector] || obj;
-                                                    $(selectControl)[0].add(new Option(renderObject(res.resource[0]), v, false, true));
-                                                    $(selectControl).trigger('change.select2');
-                                                }
-
-                                        });
+                                if($scope.valueProperty && v[$scope.valueProperty])
+                                    v = v[$scope.valueProperty];
+                                    
+                                try {
+                                    if ($scope.key && $scope.key != "id") {
+                                        var query = {};
+                                        query[$scope.key] = v;
+                                        query._viewModel = "dropdown";
+                                        var res = await api.findAsync(query);
+                                        // Matching item
+                                        if (res.resource.length == 1 && $(selectControl).find(`option[value='${v}']`).length == 0) {
+                                            var obj = res.resource[0];
+                                            if ($scope.selector)
+                                                obj = obj[$scope.selector] || obj;
+                                            $(selectControl)[0].add(new Option(renderObject(res.resource[0]), v, false, true));
+                                        }
+                                    }
+                                    else {
+                                        var res = await api.getAsync({ id: v, viewModel: "dropdown" });
+                                        if ($(selectControl).find(`option[value='${v}']`).length == 0) {
+                                            var obj = res;
+                                            if ($scope.selector)
+                                                obj = obj[$scope.selector] || obj;
+                                            $(selectControl)[0].add(new Option(renderObject(obj), v, false, true));
+                                        }
+                                    }
                                 }
-                                else // Lookup by ID
-                                    api.getAsync({ id: v, viewModel: "dropdown" })
-                                        .then(function (res) {
-                                            $(selectControl).find("option[value='loading']").remove();
+                                catch (e) {
+                                    console.warn(`Could not fetch object ${e}`);
+                                }
+                                finally {
+                                    $(selectControl).find("option[value='loading']").remove();
+                                    $(selectControl).trigger('change.select2');
+                                }
 
-                                            if ($(selectControl).find(`option[value='${v}']`).length == 0) {
-                                                var obj = res;
-                                                if ($scope.selector)
-                                                    obj = obj[$scope.selector] || obj;
-                                                $(selectControl)[0].add(new Option(renderObject(obj), v, false, true));
-                                                $(selectControl).trigger('change.select2');
-                                            }
-                                        });
                             });
                         }
                     }
@@ -226,9 +231,9 @@ angular.module('santedb-lib')
                     var valueProperty = scope.valueProperty;
 
                     $(element).find('option[value="? undefined:undefined ?"]').remove();
-                    
-                    scope.$watch('filter', function(n, o) {
-                        if(n != o && n)
+
+                    scope.$watch('filter', function (n, o) {
+                        if (n != o && n)
                             filter = n;
                     });
                     // Bind select 2 search
@@ -274,7 +279,7 @@ angular.module('santedb-lib')
                                 var retVal = { results: [] };
 
                                 try {
-                                    if(!data || data.length == 0) return [];
+                                    if (!data || data.length == 0) return [];
                                     if (groupString == null && data !== undefined) {
                                         retVal.results = retVal.results.concat($.map(data, function (o) {
 
@@ -317,11 +322,15 @@ angular.module('santedb-lib')
                                             try {
                                                 var groupDisplay = scope.$eval('scope.' + groupString, { scope: data[itm] });
 
-                                                var gidx = $.grep(retVal.results, function (e) { return e.text == groupDisplay });
-                                                if (gidx.length == 0)
-                                                    retVal.results.push({ "text": groupDisplay, "children": [data[itm]] });
-                                                else
-                                                    gidx[0].children.push(data[itm]);
+                                                if(!groupDisplay)
+                                                    retVal.results.push(data[itm]);   
+                                                else {
+                                                    var gidx = $.grep(retVal.results, function (e) { return e.text == groupDisplay });
+                                                    if (gidx.length == 0)
+                                                        retVal.results.push({ "text": groupDisplay, "children": [data[itm]] });
+                                                    else
+                                                        gidx[0].children.push(data[itm]);
+                                                }
                                             }
                                             catch (e) {
                                                 retVal.results.push(data[itm]);
@@ -330,7 +339,7 @@ angular.module('santedb-lib')
                                     }
                                     return retVal;
                                 }
-                                catch(e) {
+                                catch (e) {
                                     console.error(e);
                                     return [];
                                 }
@@ -347,6 +356,11 @@ angular.module('santedb-lib')
                     // On change
                     element.on('change', function (e) {
                         var val = $(element).select2("val");
+
+                        // Remove loading indicator
+                        if(Array.isArray(val))
+                            val = val.filter(o=>o != "loading");
+                            
                         //e.currentTarget.options.selectedIndex = e.currentTarget.options.length - 1;
                         if (valueProperty) {
                             var modelVal = {};
@@ -356,7 +370,6 @@ angular.module('santedb-lib')
                                     retVal[valueProperty] = v;
                                     return retVal;
                                 });
-
                             else
                                 modelVal[valueProperty] = val;
                             scope.$apply(() => ngModel.$setViewValue(modelVal));
@@ -377,7 +390,7 @@ angular.module('santedb-lib')
                     };
 
                     // HACK: Screw Select2 , it is so random
-                    if(ngModel.$viewValue)
+                    if (ngModel.$viewValue)
                         scope.setValue(element, modelType, ngModel.$viewValue);
 
                 });

@@ -23,6 +23,17 @@ angular.module("santedb").controller("PasswordController", ['$scope', '$rootScop
 
 
     /**
+     * Clear any server side errors
+     */
+    $scope.clearServerErrors = function(inputControl) {
+
+        if(inputControl.$error)
+            Object.keys(inputControl.$error).forEach((k)=> {
+                if(k.startsWith("err.")) delete(inputControl.$error[k]);
+            });
+    }
+    
+    /**
      * @summary Perform the password reset function
      */
     $scope.doReset = function (form) {
@@ -43,7 +54,7 @@ angular.module("santedb").controller("PasswordController", ['$scope', '$rootScop
                     if(e.$type == "DetectedIssueException") {// Error with password
                         form.newPassword.$error = {};
                         e.rules.filter(function(d) { return d.priority == "Error"; }).forEach(function(d) {
-                            form.newPassword.$error[d.text] = true;
+                            form.newPassword.$error[d.id] = true;
                         });
                         $scope.$apply();
                     }
@@ -64,8 +75,14 @@ angular.module("santedb").controller("PasswordController", ['$scope', '$rootScop
                     SanteDB.display.buttonWait("#passwordButton", false);
                     if(e.data && e.data.length > 0 && e.data[0].error_description) 
                         e.userMessage = e.data[0].error_description;
-                    else 
-                        e.userMessage = e.message;
+                    else switch(e.message) {
+                        case "invalid_grant":
+                            e.userMessage = 'error.login.invalidPassword';
+                            break;
+                        default: 
+                            e.userMessage = e.message;
+                            break;
+                    }
                     $rootScope.errorHandler(e);
                 });
         }

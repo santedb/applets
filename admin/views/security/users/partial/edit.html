@@ -15,22 +15,22 @@
                     <div class="card-body container-fluid">
                         <div class="form-group row">
                             <label class="col-sm-12 col-md-2 control-label"
-                                for="sid">{{ 'ui.model.securityUser.id' | i18n }}</label>
+                                for="sid">{{ 'ui.model.entity.id' | i18n }}</label>
                             <div class="col-sm-12 col-md-10 input-group">
                                 <input name="sid" readonly="readonly" type="text" class="form-control"
-                                    ng-model="target.securityUser.id" />
-                                <input-copy-button class="btn btn-outline-secondary" source="target.securityUser.id" />
+                                    ng-model="target.entity.id" />
+                                <input-copy-button class="btn btn-outline-secondary" source="target.entity.id" />
                             </div>
                         </div>
                         <div class="form-group row">
                             <label class="col-sm-12 col-md-2 control-label"
-                                for="username">{{ 'ui.model.securityUser.userName' | i18n }}</label>
+                                for="username">{{ 'ui.model.entity.userName' | i18n }}</label>
                             <div class="col-sm-12 col-md-10 input-group">
-                                <input name="username" ng-readonly="target.securityUser.id" type="text"
+                                <input name="username" ng-readonly="target.entity.id" type="text"
                                     class="form-control" pattern="^[A-Za-z0-9_\.\@]{3,}" minlength="3" maxlength="32"
-                                    required="required" ng-model="target.securityUser.userName" />
+                                    required="required" ng-model="target.entity.userName" />
                                 <input-copy-button id="usernameCopyButton" class="btn btn-outline-secondary"
-                                    source="target.securityUser.userName" />
+                                    source="target.entity.userName" />
                             </div>
                             <div class="col-sm-12 col-md-10 offset-md-2">
                                 <div ng-show="targetForm.username.$error['duplicate']" class="alert-danger">
@@ -47,28 +47,28 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="form-group row" ng-if="target.securityUser.createdBy">
+                        <div class="form-group row" ng-if="target.entity.createdBy">
                             <label
-                                class="col-sm-12 col-md-2 control-label">{{ 'ui.model.securityUser.createdBy' | i18n }}</label>
+                                class="col-sm-12 col-md-2 control-label">{{ 'ui.model.entity.createdBy' | i18n }}</label>
                             <div class="col-md-10 col-sm-12">
-                                    <provenance provenance-id="target.securityUser.createdBy" provenance-time="target.securityUser.creationTime"></provenance>
-                                {{ target.securityUser.creationTime | extDate }}
+                                    <provenance provenance-id="target.entity.createdBy" provenance-time="target.entity.creationTime"></provenance>
+                                {{ target.entity.creationTime | extDate }}
                             </div>
                         </div>
-                        <div class="form-group row" ng-if="target.securityUser.updatedBy">
+                        <div class="form-group row" ng-if="target.entity.updatedBy">
                             <label
-                                class="col-sm-12 col-md-2 control-label">{{ 'ui.model.securityUser.updatedBy' | i18n }}</label>
+                                class="col-sm-12 col-md-2 control-label">{{ 'ui.model.entity.updatedBy' | i18n }}</label>
                             <div class="col-md-10 col-sm-12">
-                                    <provenance provenance-id="target.securityUser.updatedBy" provenance-time="target.securityUser.updatedTime"></provenance>
-                                {{ target.securityUser.updatedTime | extDate }}
+                                    <provenance provenance-id="target.entity.updatedBy" provenance-time="target.entity.updatedTime"></provenance>
+                                {{ target.entity.updatedTime | extDate }}
                             </div>
                         </div>
-                        <div class="form-group row" ng-if="target.securityUser.obsoletedBy">
+                        <div class="form-group row" ng-if="target.entity.obsoletedBy">
                             <label
-                                class="col-sm-12 col-md-2 control-label">{{ 'ui.model.securityUser.obsoletedBy' | i18n }}</label>
+                                class="col-sm-12 col-md-2 control-label">{{ 'ui.model.entity.obsoletedBy' | i18n }}</label>
                             <div class="col-md-10 col-sm-12">
-                                    <provenance provenance-id="target.securityUser.obsoletedBy" provenance-time="target.securityUser.obsoletionTime"></provenance>
-                                {{ target.securityUser.obsoletionTime | extDate }} <button id="reactivateUserButton"
+                                    <provenance provenance-id="target.entity.obsoletedBy" provenance-time="target.entity.obsoletionTime"></provenance>
+                                {{ target.entity.obsoletionTime | extDate }} <button id="reactivateUserButton"
                                     ng-click="reactivateUser()" type="button" class="btn btn-success"><i
                                         class="fas fa-trash-restore"></i>
                                     {{ 'ui.action.undelete' | i18n }}</button>
@@ -91,27 +91,27 @@
                     <div class="card-body container-fluid">
                         <div class="form-group row">
                             <label
-                                class="col-xs-12 col-md-2 control-label">{{ 'ui.model.securityUser.lastLoginTime' | i18n }}</label>
-                            <div class="col-xs-12 col-md-10" ng-if="target.securityUser.lastLoginTime">
-                                {{ target.securityUser.lastLoginTime | extDate: 'F' }}</div>
-                            <div class="col-xs-12 col-md-10" ng-if="!target.securityUser.lastLoginTime">
+                                class="col-xs-12 col-md-2 control-label">{{ 'ui.model.entity.lastLoginTime' | i18n }}</label>
+                            <div class="col-xs-12 col-md-10" ng-if="target.entity.lastLoginTime">
+                                {{ target.entity.lastLoginTime | extDate: 'F' }}</div>
+                            <div class="col-xs-12 col-md-10" ng-if="!target.entity.lastLoginTime">
                                 {{ 'ui.admin.users.edit.security.neverLoggedIn' | i18n }}</div>
                         </div>
-                        <div class="form-group row" ng-if="target.securityUser.id">
+                        <div class="form-group row" ng-if="target.entity.id">
                             <label
-                                class="col-xs-12 col-md-2 control-label">{{ 'ui.model.securityUser.invalidLoginAttempts' | i18n }}</label>
+                                class="col-xs-12 col-md-2 control-label">{{ 'ui.model.entity.invalidLoginAttempts' | i18n }}</label>
                             <div class="col-xs-12 col-md-10">
-                                {{ target.securityUser.invalidLoginAttempts }}
+                                {{ target.entity.invalidLoginAttempts }}
                                 <button ng-click="resetInvalidLogins()" id="resetInvalidLoginsButton" type="button"
                                     class="btn btn-info">
                                     <i class="fas fa-undo"></i> {{ 'ui.action.reset' | i18n }}
                                 </button>
                             </div>
                         </div>
-                        <div class="form-group row" ng-if="target.securityUser.lockout > $root.page.currentTime">
-                           <label for="lockout" class="col-xs-12 col-md-2 control-label">{{ 'ui.model.securityUser.lockout' | i18n }}</label>
+                        <div class="form-group row" ng-if="target.entity.lockout > $root.page.currentTime">
+                           <label for="lockout" class="col-xs-12 col-md-2 control-label">{{ 'ui.model.entity.lockout' | i18n }}</label>
                            <div class="col-xs-12 col-md-10">
-                               {{ target.securityUser.lockout | extDate: 'F' }}
+                               {{ target.entity.lockout | extDate: 'F' }}
                                <button ng-click="unlock()" id="unlockButton" class="btn btn-info"
                                     type="button">
                                     <i class="fa fa-lock-open"></i> {{ 'ui.action.unlock' | i18n }}
@@ -131,9 +131,9 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="form-group row" ng-if="target.securityUser.id">
+                        <div class="form-group row" ng-if="target.entity.id">
                             <label
-                                class="col-xs-12 col-md-2 control-label">{{ 'ui.model.securityUser.password' | i18n }}</label>
+                                class="col-xs-12 col-md-2 control-label">{{ 'ui.model.entity.password' | i18n }}</label>
                             <div class="col-xs-12 col-md-2">
                                 <button ng-click="resetPassword()" id="resetPasswordButton" class="btn btn-info"
                                     type="button">
@@ -141,32 +141,32 @@
                                 </button>
                             </div>
                         </div>
-                        <div class="form-group row" ng-if="!target.securityUser.id">
+                        <div class="form-group row" ng-if="!target.entity.id">
                             <label for="newPassword"
                                 class="col-xs-12 col-md-2 control-label">{{ 'ui.password.new.label' | i18n }}</label>
                             <div class="col-xs-12 col-md-10">
-                                <input type="password" name="newPassword" ng-model="target.securityUser.password"
+                                <input type="password" name="newPassword" ng-model="target.entity.password"
                                     class="form-control" required="required"
                                     pattern="[A-Za-z0-9@!#\$\%\^\&amp;\*\(\)\~\`\,\.\?\/\;\'\[\]\{\}\s_]+"
                                     ng-class="{'is-invalid': targetForm.newPassword.$invalid &amp;&amp; targetForm.$submitted}"
-                                    ng-change="targetForm.newPassword.$error['err.password'] ? targetForm.newPassword.$error['err.password']=false : null" />
+                                    ng-change="targetForm.newPassword.$error['err.password.complexity'] ? targetForm.newPassword.$error['err.password.complexity']=false : null" />
                                 <div ng-show="targetForm.newPassword.$error['required'] &amp;&amp; targetForm.$submitted"
                                     class="alert-danger">
                                     <i class="fa fa-exclamation-triangle"></i> {{ 'ui.error.required' | i18n }}
                                 </div>
-                                <div ng-show="targetForm.newPassword.$error['err.password'] &amp;&amp; targetForm.$submitted"
+                                <div ng-show="targetForm.newPassword.$error['err.password.complexity'] &amp;&amp; targetForm.$submitted"
                                     class="alert-danger">
-                                    <i class="fa fa-exclamation-triangle"></i> {{ 'ui.password.complexity' | i18n }}
+                                    <i class="fa fa-exclamation-triangle"></i> {{ 'ui.password.error.complexity' | i18n }}
                                 </div>
                             </div>
                         </div>
-                        <div class="form-group row" ng-if="!target.securityUser.id">
+                        <div class="form-group row" ng-if="!target.entity.id">
                             <label for="confirmPassword"
                                 class="col-xs-12 col-md-2 control-label">{{ 'ui.password.confirm.label' | i18n }}</label>
                             <div class="col-xs-12 col-md-10">
                                 <input type="password" name="confirmPassword"
-                                    ng-model="target.securityUser.confirmPassword" class="form-control"
-                                    required="required" ng-pattern="target.securityUser.password"
+                                    ng-model="target.entity.confirmPassword" class="form-control"
+                                    required="required" ng-pattern="target.entity.password"
                                     ng-class="{'is-invalid': targetForm.confirmPassword.$invalid &amp;&amp; targetForm.$submitted}" />
                                 <div ng-show="targetForm.confirmPassword.$error['required'] &amp;&amp; targetForm.$submitted"
                                     class="alert-danger">
@@ -195,29 +195,29 @@
                         </button>
                     </h2>
                 </div>
-                <div class="collapse" ng-class="{ 'show' : !target.securityUser.id }" id="demographicProps">
+                <div class="collapse" ng-class="{ 'show' : !target.entity.id }" id="demographicProps">
                     <div class="card-body container-fluid">
                         <div class="form-group row">
                             <label for="email"
-                                class="col-xs-12 col-md-2 control-label">{{ 'ui.model.securityUser.email' | i18n }}</label>
+                                class="col-xs-12 col-md-2 control-label">{{ 'ui.model.entity.email' | i18n }}</label>
                             <div class="col-xs-12 col-md-10">
                                 <input name="email" type="email" class="form-control"
-                                    ng-model="target.securityUser.email" />
+                                    ng-model="target.entity.email" />
                             </div>
                         </div>
                         <div class="form-group row">
                             <label for="phoneNumber"
-                                class="col-xs-12 col-md-2 control-label">{{ 'ui.model.securityUser.phoneNumber' | i18n }}</label>
+                                class="col-xs-12 col-md-2 control-label">{{ 'ui.model.entity.phoneNumber' | i18n }}</label>
                             <div class="col-xs-12 col-md-10">
                                 <input name="phoneNumber" type="tel" class="form-control"
-                                    ng-model="target.securityUser.phoneNumber" />
+                                    ng-model="target.entity.phoneNumber" />
                             </div>
                         </div>
                         <div class="form-group row">
                             <label for="givenName"
                                 class="col-xs-12 col-md-2 control-label">{{ 'ui.model.userEntity.givenName' | i18n }}</label>
                             <div class="col-xs-12 col-md-10">
-                                <tag-input name="givenName" ng-model="target.entity.name.OfficialRecord.component.Given"
+                                <tag-input name="givenName" ng-model="target.userEntity.name.OfficialRecord.component.Given"
                                     required="required" class="form-control" />
                                     <div ng-show="targetForm.givenName.$error['required'] &amp;&amp; targetForm.$submitted"
                                     class="alert-danger">
@@ -229,7 +229,7 @@
                             <label for="familyName"
                                 class="col-xs-12 col-md-2 control-label">{{ 'ui.model.userEntity.familyName' | i18n }}</label>
                             <div class="col-xs-12 col-md-10">
-                                <tag-input name="familyName" ng-model="target.entity.name.OfficialRecord.component.Family"
+                                <tag-input name="familyName" ng-model="target.userEntity.name.OfficialRecord.component.Family"
                                     class="form-control" />
                             </div>
                         </div>
@@ -253,7 +253,7 @@
                                 <entity-search type="'Place'"
                                     filter="{ obsoletionTime: 'null', classConcept: EntityClassKeys.ServiceDeliveryLocation }"
                                     class="form-control"
-                                    ng-model="target.entity.relationship.DedicatedServiceDeliveryLocation"
+                                    ng-model="target.userEntity.relationship.DedicatedServiceDeliveryLocation"
                                     value-property="'target'"
                                     multiple="multiple" />
                             </div>
@@ -263,8 +263,8 @@
                                 class="col-xs-12 col-md-2 control-label">{{ 'ui.model.userEntity.relationship.Employee' | i18n }}</label>
                             <div class="col-xs-12 col-md-10">
                                 <entity-search type="'Organization'" filter="{ obsoletionTime: 'null' }"
-                                    class="form-control" ng-model="target.entity.relationship.Employee"
-                                    value-property="'holder'"
+                                    class="form-control" ng-model="target.userEntity.relationship.Employee"
+                                    value-property="'target'"
                                     multiple="multiple" />
                             </div>
                         </div>
@@ -272,7 +272,7 @@
                 </div>
 
             </div>
-            <div class="card" ng-if="target.securityUser.id">
+            <div class="card" ng-if="target.entity.id">
                 <div class="card-header">
                     <h2 class="mb-0">
                         <button type="button" class="collapse-indicator btn btn-link p-0" data-toggle="collapse"

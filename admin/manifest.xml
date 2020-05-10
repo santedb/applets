@@ -308,5 +308,12 @@
     <string key="ui.admin.job.neverRun">Never Run</string>
     <string key="ui.admin.job.runJob.confirm">Are you sure you want to manually run this job?</string>
     <string key="ui.admin.job.cancelJob.confirm">Are you sure you want cancel this running job? </string>
+
+    <!-- Security Widgets -->
+    <string key="org.santedb.widget.admin.tab.user.profile">User Profile</string>
+    <string key="org.santedb.widget.admin.tab.user.security">Security</string>
+    <string key="org.santedb.widget.admin.panel.user.core">Core Properties</string>
+    <string key="org.santedb.widget.admin.panel.user.security">Security Properties</string>
+    
   </strings>
 </AppletManifest>

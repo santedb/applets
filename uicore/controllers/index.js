@@ -25,7 +25,7 @@
  */
 var santedbApp = angular.module('santedb', ['ngSanitize', 'ui.router', 'oc.lazyLoad', 'santedb-lib'])
     .config(['$compileProvider', '$stateProvider', '$urlRouterProvider', '$httpProvider', function ($compileProvider, $stateProvider, $urlRouterProvider, $httpProvider) {
-        $compileProvider.aHrefSanitizationWhitelist(/^\s*(http|https|tel):/);
+        $compileProvider.aHrefSanitizationWhitelist(/^\s*(http|https|tel|mailto):/);
         $compileProvider.imgSrcSanitizationWhitelist(/^\s*(http|https):/);
 
         $httpProvider.interceptors.push('AuthInterceptor');
@@ -102,51 +102,68 @@ var santedbApp = angular.module('santedb', ['ngSanitize', 'ui.router', 'oc.lazyL
         // Extend toast information
         var _extendToast = null;
 
-        // Localization
-        SanteDB.resources.locale.findAsync().then(function (locale) {
-            var localeAsset = locale[SanteDB.locale.getLocale()];
+        var initialize = async function() {
             $rootScope.system = $rootScope.system || {};
-            $rootScope.system.locale = SanteDB.locale.getLocale();
-            $rootScope.system.locales = Object.keys(locale);
 
-            // Watch for user request to change default language in browser
-            $rootScope.$watch("system.locale", function(n,o) { 
-                if(n && n != o) {
-                    SanteDB.locale.setLocale(n);
-                    $templateCache.removeAll();
-                    $state.reload();
-                }
-             });
+            // Get locales
+            try {
+                var localeData = await SanteDB.resources.locale.findAsync();
+                var localeAsset = localeData[SanteDB.locale.getLocale()];
+                $rootScope.system.locale = SanteDB.locale.getLocale();
+                $rootScope.system.locales = Object.keys(localeData);
 
-            if(localeAsset)
-                localeAsset.forEach(function (l) {
-                    $.getScript(l);
-                });
-        }).catch(function (e) {
-            $rootScope.errorHandler(e);
+                if(localeAsset)
+                    localeAsset.forEach(function (l) {
+                        $.getScript(l);
+                    });
+            }
+            catch(e) {
+                $rootScope.errorHandler(e);
+            }
+
+            // Get configuration
+            try {
+                var configuration = await SanteDB.configuration.getAsync();
+                $rootScope.system = $rootScope.system || {};
+                $rootScope.system.config = configuration;
+                $rootScope.system.version = SanteDB.application.getVersion();
+    
+                // Make app settings easier to handle
+                var appSettings = {};
+                configuration.application.setting.forEach((k)=>appSettings[k.key] = k.value);
+                $rootScope.system.config.application.setting = appSettings;
+    
+                // Is there a branding environment variable
+                if (!$rootScope.system.config.isConfigured && $state.$current.name != 'santedb-config.initial')
+                    $state.transitionTo('santedb-config.initial');
+    
+            }
+            catch(e) {
+                $rootScope.errorHandler(e);
+            }
+        };
+
+        initialize().then(function() {
+            try {
+            $rootScope.$apply();
+            } 
+            catch(e) {
+                console.error(e);
+            }
         });
+
+        // Watch for user request to change default language in browser
+        $rootScope.$watch("system.locale", function(n,o) { 
+            if(n && n != o) {
+                SanteDB.locale.setLocale(n);
+                $templateCache.removeAll();
+                $state.reload();
+            }
+         });
 
         if (window.location.hash == "")
             window.location.hash = "#!/";
-
-        // Get configuration
-        SanteDB.configuration.getAsync().then(function (d) {
-            $rootScope.system = $rootScope.system || {};
-            $rootScope.system.config = d;
-            $rootScope.system.version = SanteDB.application.getVersion();
-
-            // Make app settings easier to handle
-            var appSettings = {};
-            d.application.setting.forEach((k)=>appSettings[k.key] = k.value);
-            $rootScope.system.config.application.setting = appSettings;
-
-            // Is there a branding environment variable
-            if (!$rootScope.system.config.isConfigured && $state.$current.name != 'santedb-config.initial')
-                $state.transitionTo('santedb-config.initial');
-
-            $rootScope.$apply();
-        }).catch(function (e) { $rootScope.errorHandler(e); });
-
+       
         // Transitions
         $transitions.onBefore({}, function (transition) {
             console.info(`Transitioned to ${transition._targetState._definition.self.name}`);

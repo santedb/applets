@@ -7,15 +7,20 @@
             <div class="row">
                 <div class="col-4">
                     <div class="p-2 flex-grow-1">
-                        <h5 class="m-0">{{ patient.name | name }} ({{ patient.name | nameType}})</h5>
+                        <h5 class="m-0">{{ patient.name | name }}</h5>
                     </div>
                 </div>
                 <div class="col-8">
                     <div class="d-flex flex-wrap justify-content-end">
                         <div class="p-2" ng-if="patient.tag['$mdm.type']">
 
-                            <span class="alert alert-secondary" ><i class="fas fa-database"></i>
-                                {{ 'ui.mdm.type.' + patient.tag['$mdm.type'] | i18n }}</span>
+                            <span class="alert alert-secondary" >
+                                <i class="fas fa-database"></i>
+                                {{ 'ui.mdm.type.' + patient.tag['$mdm.type'] | i18n }}
+                            </span>
+                            <span title="{{ 'ui.mdm.isTrue' | i18n }}" class="alert alert-success" ng-if="patient.determinerConcept == '6b1d6764-12be-42dc-a5dc-52fc275c4935'">
+                                <i class="fas fa-gavel"></i>
+                            </span>
                                 
                         </div>
                         <div class="p-2 flex-grow-1" ng-if="$root.system.config.application.setting['aa.preferred']">

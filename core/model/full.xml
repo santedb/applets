@@ -33,6 +33,7 @@
   <type type="EntityRelationship" all="false">
     <property name="source" all="true"/>
     <property name="target" all="true"/>
+    <property name="holder" all="true"/>
     <property name="targetModel" all="true" behavior="always" ref="Entity"/>
     <property name="relationshipType" all="true" behavior="always"/>
     <property name="holderModel" behavior="never"/>
@@ -114,7 +115,6 @@
     <property name="classConceptModel" behavior="never"/>
     <property name="classConcept" behavior="never"/>
     <property name="determinerConceptModel" behavior="never"/>
-    <property name="determinerConcept" behavior="never"/>
   </type>
 
   <type type="Patient" all="true">
@@ -131,7 +131,6 @@
     <property name="classConceptModel" behavior="never"/>
     <property name="classConcept" behavior="always"/>
     <property name="determinerConceptModel" behavior="never"/>
-    <property name="determinerConcept" behavior="never"/>
     <property name="tag" all="true" behavior="always"/>
     <property name="genderConceptModel" behavior="always" ref="Concept"/>
     <property name="extension" all="true" behavior="always"/>
@@ -223,7 +222,6 @@
     <property name="classConceptModel" behavior="never"/>
     <property name="classConcept" behavior="never"/>
     <property name="determinerConceptModel" behavior="never"/>
-    <property name="determinerConcept" behavior="never"/>
     <property name="statusConceptModel" behavior="never"/>
     <property name="name" all="true" ref="EntityName" behavior="always"/>
     <property name="identifier" all="true" ref="EntityIdentifier" behavior="always"/>
@@ -254,7 +252,6 @@
     <property name="classConceptModel" behavior="never"/>
     <property name="classConcept" behavior="never"/>
     <property name="determinerConceptModel" behavior="never"/>
-    <property name="determinerConcept" behavior="never"/>
     <property name="statusConceptModel" behavior="never"/>
     <property name="formConceptModel" behavior="always" ref="Concept"/>
     <property name="typeConceptModel" behavior="always" ref="Concept"/>
@@ -278,7 +275,6 @@
     <property name="classConceptModel" behavior="always" ref="Concept"/>
     <property name="classConcept" behavior="never"/>
     <property name="determinerConceptModel" behavior="never"/>
-    <property name="determinerConcept" behavior="never"/>
     <property name="typeConceptModel" all="true" behavior="always" ref="Concept"/>
     <property name="extension" all="true" behavior="always"/>
     <property name="relationship" all="false" behavior="always">

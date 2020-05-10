@@ -95,7 +95,6 @@
     <property name="classConceptModel" behavior="never"/>
     <property name="classConcept" behavior="never"/>
     <property name="determinerConceptModel" behavior="never"/>
-    <property name="determinerConcept" behavior="never"/>
   </type>
   
   <type type="Patient" all="true">
@@ -116,7 +115,6 @@
     <property name="classConceptModel" behavior="never"/>
     <property name="classConcept" behavior="never"/>
     <property name="determinerConceptModel" behavior="never"/>
-    <property name="determinerConcept" behavior="never"/>
     <property name="genderConceptModel" all="false" ref="Concept" behavior="always"/>
     <property name="relationship" all="true" behavior="always">
       <property name="Mother" all="false">
@@ -154,7 +152,6 @@
     <property name="classConceptModel" behavior="never"/>
     <property name="classConcept" behavior="never"/>
     <property name="determinerConceptModel" behavior="never"/>
-    <property name="determinerConcept" behavior="never"/>
     <property name="statusConceptModel" behavior="never"/>
     <property name="typeConceptModel" behavior="always"/>
     <property name="relationship" all="true">
@@ -193,7 +190,6 @@
     <property name="classConceptModel" behavior="never"/>
     <property name="classConcept" behavior="never"/>
     <property name="determinerConceptModel" behavior="never"/>
-    <property name="determinerConcept" behavior="never"/>
     <property name="statusConceptModel" behavior="never"/>
     <property name="typeConceptModel" behavior="always"/>
     <property name="relationship" all="true" behavior="always">
@@ -242,7 +238,6 @@
     <property name="classConceptModel" behavior="never"/>
     <property name="classConcept" />
     <property name="determinerConceptModel" behavior="never"/>
-    <property name="determinerConcept" behavior="never"/>
     <property name="typeConceptModel" behavior="always">
       <property name="mnemonic"/>
       <property name="name" behavior="always" ref="ConceptName"/>

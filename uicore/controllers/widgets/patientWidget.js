@@ -11,6 +11,7 @@ angular.module('santedb').controller('PatientDemographicsWidgetController', ['$s
 
         // Update target identifiers with the original
         if (submissionObject.address)  {
+            addressList = [];
             var promises = Object.keys(submissionObject.address).map(async function (k) {
                 try {
                     var addr = submissionObject.address[k];
@@ -26,17 +27,34 @@ angular.module('santedb').controller('PatientDemographicsWidgetController', ['$s
                         addr.component.Precinct = addrComponents.Precinct;
                         addr.component.City = addrComponents.City;
                     }
+                    addressList.push(addr);
                 }
                 catch(e) {
                 }
             });
             await Promise.all(promises);
+            submissionObject.address = { "$other": addressList };
+        }
+        if(submissionObject.name)
+        {
+            var nameList = [];
+            Object.keys(submissionObject.name).forEach(function(k) { 
+                var name = submissionObject.name[k];
+                name.use = name.useModel.id; 
+                delete(name.useModel);
+                nameList.push(name);
+            });
+            submissionObject.name = { "$other" : nameList };
         }
         
         // Now post the changed update object 
         try {
+            if(submissionObject.tag && submissionObject.tag["$generated"]) {
+                submissionObject.tag["$mdm.type"] = "T"; // Set a ROT tag
+                submissionObject.determinerConcept = '6b1d6764-12be-42dc-a5dc-52fc275c4935'; // set update as a ROT
+            }
             $scope.scopedObject = await SanteDB.resources.patient.updateAsync(submissionObject.id, submissionObject);
-            $scope.scopedObject = await SanteDB.resources.patient.getAsync(submissionObject.id); // re-fetch the patient
+            $scope.scopedObject = await SanteDB.resources.patient.getAsync(submissionObject.id, "full"); // re-fetch the patient
             toastr.success(SanteDB.locale.getString("ui.model.patient.saveSuccess"));
             form.$valid = true;
         }
@@ -52,19 +70,23 @@ angular.module('santedb').controller('PatientDemographicsWidgetController', ['$s
         if (n && n != null) {
 
             delete ($scope.editObject); // Delete the current edit object
-
             if (n.tag && n.tag['$mdm.type'] == 'M') // Attempt to find a ROT
             {
-                var recordOfTruth = await SanteDB.resources.patient.findAsync({
-                    "relationship[MDM-RecordOfTruth].source": n.id,
-                    "_count": 1
-                });
+                if(n.relationship["MDM-RecordOfTruth"] && 
+                    n.relationship["MDM-RecordOfTruth"].target) {
+                    $scope.editObject = await SanteDB.resources.entity.getAsync(n.relationship["MDM-RecordOfTruth"].target, "full"); //angular.copy(n.relationship["MDM-RecordOfTruth"].targetModel);
+                }
+                else {
+                    var recordOfTruth = await SanteDB.resources.patient.findAsync({
+                        "relationship[MDM-RecordOfTruth].source": n.id,
+                        "_count": 1
+                    });
 
-                if (recordOfTruth.total == 0 || !recordOfTruth.resource)
-                    $scope.editObject = angular.copy(n);
-                else 
-                    $scope.editObject = recordOfTruth.resource[0];
-                
+                    if (recordOfTruth.total == 0 || !recordOfTruth.resource)
+                        $scope.editObject = angular.copy(n);
+                    else 
+                        $scope.editObject = recordOfTruth.resource[0];
+                }
             }
             else
                 $scope.editObject = angular.copy(n);

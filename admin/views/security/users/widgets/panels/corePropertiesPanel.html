@@ -1,0 +1,91 @@
+<div xmlns="http://www.w3.org/1999/xhtml" xmlns:sdb="http://santedb.org/applet" oc-lazy-load="{ name: 'SecurityUserWidgetController', files: ['/org.santedb.admin/controllers/widgets/securityUserWidget.js'] }">
+    
+    <sdb:widget order="15" name="org.santedb.widget.admin.panel.user.core" alt-views="Create" headerClass="bl-light"
+        size="Large" type="Panel" context="org.santedb.securityUser.admin.security">
+        <sdb:icon>fas fa-user</sdb:icon>
+        <sdb:description lang="en">Core Properties</sdb:description>
+    </sdb:widget>
+    <div class="row" ng-if="!scopedObject">
+        <div class="col">
+            <p class="m-auto"><i class="fas fa-circle-notch fa-spin"></i> {{ 'ui.wait' | i18n }}</p>
+        </div>
+    </div>
+    <div ng-if="scopedObject" ng-controller="SecurityUserWidgetController">
+    <div ng-if="panel.view != 'Create'">
+        <div class="row">
+            <label class="col-sm-12 col-md-2 control-label" for="sid">{{ 'ui.model.securityUser.id' | i18n }}</label>
+            <div class="col-sm-12 col-md-9">
+                {{ scopedObject.entity.id }}
+            </div>
+            <label class="col-sm-12 col-md-2 control-label"
+                for="username">{{ 'ui.model.securityUser.userName' | i18n }}</label>
+            <div class="col-sm-12 col-md-9">
+                {{ scopedObject.entity.userName }}
+            </div>
+            
+        </div>
+    </div>
+    <div ng-if="panel.view == 'Create'">
+        <div class="form-group row">
+            <label class="col-sm-12 col-md-2 control-label" for="sid">{{ 'ui.model.securityUser.id' | i18n }}</label>
+            <div class="col-sm-12 col-md-10 input-group">
+                <input name="sid" readonly="readonly" type="text" class="form-control"
+                    ng-model="scopedObject.entity.id" />
+                <input-copy-button class="btn btn-outline-secondary" source="scopedObject.entity.id" />
+            </div>
+        </div>
+        <div class="form-group row">
+            <label class="col-sm-12 col-md-2 control-label"
+                for="username">{{ 'ui.model.securityUser.userName' | i18n }}</label>
+            <div class="col-sm-12 col-md-10 input-group">
+                <input name="username" ng-readonly="scopedObject.entity.id" type="text" class="form-control"
+                    pattern="^[A-Za-z0-9_\.\@]{3,}" minlength="3" maxlength="32" required="required"
+                    ng-model="scopedObject.entity.userName" />
+                <input-copy-button id="usernameCopyButton" class="btn btn-outline-secondary"
+                    source="scopedObject.entity.userName" />
+            </div>
+            <div class="col-sm-12 col-md-10 offset-md-2">
+                <div ng-show="targetForm.username.$error['duplicate']" class="alert-danger">
+                    <i class="fa fa-exclamation-triangle"></i>
+                    {{ 'ui.error.duplicate' | i18n }}
+                </div>
+                <div ng-show="targetForm.username.$error['required'] &amp;&amp; targetForm.$submitted"
+                    class="alert-danger">
+                    <i class="fa fa-exclamation-triangle"></i> {{ 'ui.error.required' | i18n }}
+                </div>
+                <div ng-show="targetForm.username.$error['pattern'] &amp;&amp; targetForm.$submitted"
+                    class="alert-danger">
+                    <i class="fa fa-exclamation-triangle"></i> {{ 'ui.error.pattern' | i18n }}
+                </div>
+            </div>
+        </div>
+    </div>
+        <div class="form-group row" ng-if="scopedObject.entity.createdBy">
+            <label class="col-sm-12 col-md-2 control-label">{{ 'ui.model.securityUser.createdBy' | i18n }}</label>
+            <div class="col-md-10 col-sm-12">
+                <provenance provenance-id="scopedObject.entity.createdBy"
+                    provenance-time="scopedObject.entity.creationTime"></provenance>
+                {{ scopedObject.entity.creationTime | extDate }}
+            </div>
+        </div>
+        <div class="form-group row" ng-if="scopedObject.entity.updatedBy">
+            <label class="col-sm-12 col-md-2 control-label">{{ 'ui.model.securityUser.updatedBy' | i18n }}</label>
+            <div class="col-md-10 col-sm-12">
+                <provenance provenance-id="scopedObject.entity.updatedBy"
+                    provenance-time="scopedObject.entity.updatedTime"></provenance>
+                {{ scopedObject.entity.updatedTime | extDate }}
+            </div>
+        </div>
+        <div class="form-group row" ng-if="scopedObject.entity.obsoletedBy">
+            <label class="col-sm-12 col-md-2 control-label">{{ 'ui.model.securityUser.obsoletedBy' | i18n }}</label>
+            <div class="col-md-10 col-sm-12">
+                <provenance provenance-id="scopedObject.entity.obsoletedBy"
+                    provenance-time="scopedObject.entity.obsoletionTime"></provenance>
+                {{ scopedObject.entity.obsoletionTime | extDate }} <button id="reactivateUserButton"
+                    ng-click="reactivateUser(scopedObject.entity)" type="button" class="btn btn-success"><i
+                        class="fas fa-trash-restore"></i>
+                    {{ 'ui.action.undelete' | i18n }}</button>
+            </div>
+        </div>
+        </div>
+</div>

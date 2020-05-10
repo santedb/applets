@@ -173,7 +173,7 @@ if (!SanteDBWrapper)
                                 if (error && error.error !== undefined) // oauth2
                                     reject(new Exception(error.type, error.error, error.error_description, error.caused_by), configuration.state);
                                 else if (error && (error.$type === "Exception" || error.$type))
-                                    reject(new Exception(error.$type, error.message, error.detail, error.cause, error.stack, error.policy, error.rules, error.data), configuration.state);
+                                    reject(new Exception(error.$type, error.message, error.detail, error.cause, error.stack, error.policyId, error.policyOutcome, error.rules, error.data), configuration.state);
                                 else
                                     reject(new Exception("HttpException", "error.http." + e.status, e, null), configuration.state);
                             }
@@ -226,7 +226,7 @@ if (!SanteDBWrapper)
                                 if (error && error.error !== undefined) // oauth2
                                     reject(new Exception(error.type, error.error, error.error_description, error.caused_by), configuration.state);
                                 else if (error && (error.$type === "Exception" || error.$type))
-                                    reject(new Exception(error.$type, error.message, error.detail, error.cause, error.stack, error.policy, error.rules), configuration.state);
+                                    reject(new Exception(error.$type, error.message, error.detail, error.cause, error.stack, error.policyId, error.policyOutcome, error.rules), configuration.state);
                                 else
                                     reject(new Exception("HttpException", "error.http." + e.status, e, null), configuration.state);
                             }
@@ -278,7 +278,7 @@ if (!SanteDBWrapper)
                                 if (error && error.error !== undefined) // oauth2
                                     reject(new Exception(error.type, error.error, error.error_description, error.caused_by), configuration.state);
                                 else if (error && (error.$type === "Exception" || error.$type))
-                                    reject(new Exception(error.$type, error.message, error.detail, error.cause, error.stack, error.policy, error.rules), configuration.state);
+                                    reject(new Exception(error.$type, error.message, error.detail, error.cause, error.stack, error.policyId, error.policyOutcome, error.rules), configuration.state);
                                 else
                                     reject(new Exception("HttpException", "error.http." + e.status, e, null), configuration.state);
                             }
@@ -333,7 +333,7 @@ if (!SanteDBWrapper)
                                 if (error && error.error !== undefined) // oauth2
                                     reject(new Exception(error.type, error.error, error.error_description, error.caused_by), configuration.state);
                                 else if (error && (error.$type === "Exception" || error.$type))
-                                    reject(new Exception(error.$type, error.message, error.detail, error.cause, error.stack, error.policy, error.rules), configuration.state);
+                                    reject(new Exception(error.$type, error.message, error.detail, error.cause, error.stack, error.policyId, error.policyOutcome, error.rules), configuration.state);
                                 else
                                     reject(new Exception("HttpException", "error.http." + e.status, e, null), configuration.state);
                             }
@@ -389,7 +389,7 @@ if (!SanteDBWrapper)
                                 if (error && error.error !== undefined) // oauth2
                                     reject(new Exception(error.type, error.error, error.error_description, error.caused_by), configuration.state);
                                 else if (error && (error.$type === "Exception" || error.$type))
-                                    reject(new Exception(error.$type, error.message, error.detail, error.cause, error.stack, error.policy, error.rules), configuration.state);
+                                    reject(new Exception(error.$type, error.message, error.detail, error.cause, error.stack, error.policyId, error.policyOutcome, error.rules), configuration.state);
                                 else
                                     reject(new Exception("HttpException", "error.http." + e.status, e, null), configuration.state);
                             }
@@ -439,7 +439,7 @@ if (!SanteDBWrapper)
                                 if (error && error.error !== undefined) // oauth2
                                     reject(new Exception(error.type, error.error, error.error_description, error.caused_by), configuration.state);
                                 else if (error && (error.$type === "Exception" || error.$type))
-                                    reject(new Exception(error.$type, error.message, error.detail, error.cause, error.stack, error.policy, error.rules), configuration.state);
+                                    reject(new Exception(error.$type, error.message, error.detail, error.cause, error.stack, error.policyId, error.policyOutcome, error.rules), configuration.state);
                                 else
                                     reject(new Exception("HttpException", "error.http." + e.status, e, null), configuration.state);
                             }
@@ -489,7 +489,7 @@ if (!SanteDBWrapper)
                                 if (error && error.error !== undefined) // oauth2
                                     reject(new Exception(error.type, error.error, error.error_description, error.caused_by), configuration.state);
                                 else if (error && (error.$type === "Exception" || error.$type))
-                                    reject(new Exception(error.$type, error.message, error.detail, error.cause, error.stack, error.policy, error.rules), configuration.state);
+                                    reject(new Exception(error.$type, error.message, error.detail, error.cause, error.stack, error.policyId, error.policyOutcome, error.rules), configuration.state);
                                 else
                                     reject(new Exception("HttpException", "error.http." + e.status, e, null), configuration.state);
                             }
@@ -2010,6 +2010,40 @@ if (!SanteDBWrapper)
              * SID for ANONYMOUS user
              */
             ANONYMOUS_USER: "c96859f0-043c-4480-8dab-f69d6e86696c",
+            /** 
+             * Policy decision structure
+             */
+            PolicyDecision : {
+                Deny : 0,
+                Elevate : 1,
+                Grant : 2
+            },
+            /**
+             * @method
+             * @memberof SanteDBWrapper.authentication
+             * @summary Demand permission for the specified policy
+             * @param {string} policy The policy which is being demanded
+             * @returns {Promise} A promise representing the fulfillment or rejection of the demand
+             */
+            demandAsync: function(policy) {
+                return new Promise(function(fulfill, reject) {
+                    try {
+                        _auth.getAsync({
+                            resource: `pdp/${policy}`
+                        })
+                        .then(function() { fulfill(_authentication.PolicyDecision.Grant); }) // fulfillment for the PDP means grant success
+                        .catch(function(e) {
+                            if(e.policyOutcome)
+                                fulfill(_authentication.PolicyDecision[e.policyOutcome]);
+                            else 
+                                reject(e);
+                        });
+                    }
+                    catch(e) {
+                        reject(e);
+                    }
+                });
+            },
             /**
              * @method 
              * @summary Sets the elevator function
@@ -2025,11 +2059,12 @@ if (!SanteDBWrapper)
                 * @method
                 * @memberof SanteDBWrapper.authentication
                 * @returns {Promise} A promise representing the fulfillment or rejection of the get request
+                * @param {boolean} forceServer When true (or supplied) instructs the function to force a server fetch of the session
                 * @summary Gets the extended session information
                 */
-            getSessionInfoAsync: function () {
+            getSessionInfoAsync: function (forceServer) {
                 return new Promise(function (fulfill, reject) {
-                    if (_session)
+                    if (_session && !forceServer)
                         fulfill(_session);
                     else
                         try {

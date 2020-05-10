@@ -22,6 +22,7 @@ angular.module('santedb').controller('MasterDataManagementController', ['$scope'
         }
         
         retVal += "</span>";
+
         if(entity.dateOfBirth)
             retVal += `<br/><i class='fas fa-birthday-cake'></i> ${SanteDB.display.renderDate(entity.dateOfBirth, entity.dateOfBirthPrecision)} `;
 
@@ -42,7 +43,10 @@ angular.module('santedb').controller('MasterDataManagementController', ['$scope'
                 break;
         }
         
-        
+        if($scope.scopedObject.relationship["MDM-RecordOfTruth"] &&
+            $scope.scopedObject.relationship["MDM-RecordOfTruth"].target == entity.id) {
+                retVal += `<span class='badge badge-success'><i class='fas fa-gavel'></i> ${SanteDB.locale.getString("ui.mdm.type.T")} </span>`
+            }
         return retVal;
     }
   

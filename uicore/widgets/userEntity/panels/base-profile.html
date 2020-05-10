@@ -1,0 +1,164 @@
+<div xmlns="http://www.w3.org/1999/xhtml" xmlns:sdb="http://santedb.org/applet"
+    oc-lazy-load="{ name: 'CoreUserWidgetController', files: ['/org.santedb.uicore/controllers/widgets/userEntityWidget.js'] }">
+    <sdb:widget order="15" name="org.santedb.widget.userEntity.profile" altViews="Edit" headerClass="bl-danger"
+        size="Medium" type="Panel" context="org.santedb.userEntity.profile">
+        <sdb:icon>fas fa-id-card</sdb:icon>
+        <sdb:description lang="en">Basic Profile</sdb:description>
+    </sdb:widget>
+    <div class="row" ng-if="!scopedObject">
+        <div class="col">
+            <p class="m-auto"><i class="fas fa-circle-notch fa-spin"></i> {{ 'ui.wait' | i18n }}</p>
+        </div>
+    </div>
+    <div ng-if="scopedObject" ng-controller="CoreUserWidgetController">
+        <div ng-if="panel.view != 'Edit'">
+            <div class="row">
+                <label class="col-md-3 control-label">{{ 'ui.model.entity.name' | i18n }}</label>
+                <div class="col-md-9">
+                    {{ scopedObject.name | name }}
+                </div>
+                <label class="col-md-3 control-label">{{ 'ui.model.entity.dateOfBirth' | i18n }}</label>
+                <div class="col-md-9">
+                    {{ scopedObject.dateOfBirth | extDate: scopedObject.dateOfBirthPrecision }}
+                </div>
+                <label class="col-md-3 control-label">{{ 'ui.model.entity.address' | i18n }}</label>
+                <div class="col-md-9">
+                    <span ng-if="scopedObject.address">
+                        {{ scopedObject.address | address }}
+                    </span>
+                    <span ng-if="!scopedObject.address">
+                        {{ 'ui.unknown' | i18n }}
+                    </span>
+                </div>
+                <label class="col-md-3 control-label" ng-if="scopedObject.telecom">{{ 'ui.model.entity.telecom' | i18n }}</label>
+                <div class="col-md-9" ng-repeat="(k,tel) in scopedObject.telecom track by $index"
+                    ng-class="{ 'offset-md-3': $index > 0 }">
+                    <a href="{{tel.value}}" target="_blank">{{tel.value}} <span
+                            class="badge badge-pill badge-info">{{ tel.useModel | concept }}</span></a>
+                </div>
+                <label class="col-md-3 control-label"  ng-if="scopedObject.language">{{ 'ui.model.entity.language' | i18n }}</label>
+                <div class="col-md-9" ng-repeat="lang in scopedObject.language track by $index"
+                    ng-class="{ 'offset-md-3': $index > 0 }">
+                    {{ 'ui.locale.' + lang.languageCode | i18n }} <span
+                            class="badge badge-pill badge-info" ng-if="lang.isPreferred"><i class="fas fa-check"></i> {{ 'ui.model.entity.language.preferred' | i18n }}</span>
+                </div>
+                <label class="col-md-3 control-label">{{ 'ui.model.entity.relationship.Employer' | i18n }}</label>
+                <div class="col-md-9">
+                    <span ng-if="scopedObject.relationship.Employee">{{ scopedObject.relationship.Employee.targetModel.name | name }}</span>
+                    <span ng-if="!scopedObject.relationship.Employee">
+                        {{ 'ui.unknown' | i18n }}
+                    </span>
+                </div>
+                <label class="col-md-3 control-label">{{ 'ui.model.entity.relationship.DedicatedServiceDeliveryLocation' | i18n }}</label>
+                <div class="col-md-9">
+                    <span ng-if="scopedObject.relationship.DedicatedServiceDeliveryLocation">{{ scopedObject.relationship.DedicatedServiceDeliveryLocation.targetModel.name | name }}</span>
+                    <span ng-if="!scopedObject.relationship.DedicatedServiceDeliveryLocation">
+                        {{ 'ui.unknown' | i18n }}
+                    </span>
+                </div>
+
+            </div>
+        </div>
+        <form ng-submit="update(panel.editForm)" name="panel.editForm" method="dialog" novalidate="novalidate"
+            ng-if="panel.view == 'Edit'">
+            <ul class="nav nav-tabs" role="tablist" id="demographicEditTabs">
+                <li class="active nav-item active" role="presentation">
+                    <a class="nav-link" href="javascript:" data-target="#demoName" data-toggle="tab">
+                        <i class="fa fa-user"></i> {{ 'ui.model.entity.name' | i18n }}
+                        <i class="text-danger fas fa-exclamation-circle"
+                            ng-if="panel.editForm.$error.required[0].$name.indexOf('name') == 0"></i>
+                    </a>
+                </li>
+                <li class="active nav-item" role="presentation">
+                    <a class="nav-link" href="javascript:" data-target="#demoAddress" data-toggle="tab">
+                        <i class="fa fa-map-marked"></i> {{ 'ui.model.entity.address' | i18n }}
+                        <i class="text-danger fas fa-exclamation-circle"
+                            ng-if="panel.editForm.$error.required[0].$name.indexOf('address') == 0"></i></a>
+                </li>
+                <li class="active nav-item" role="presentation">
+                    <a class="nav-link" href="javascript:" data-target="#demoContact" data-toggle="tab">
+                        <i class="fa fa-phone"></i> {{ 'ui.model.entity.telecom' | i18n }}
+                       </a>
+                </li>
+                <li class="active nav-item" role="presentation">
+                    <a class="nav-link" href="javascript:" data-target="#demoDetail" data-toggle="tab">
+                        <i class="fa fa-id-card"></i> {{ 'ui.model.entity.demographics' | i18n }}
+                    </a>
+                </li>
+            </ul>
+            <div class="tab-content">
+                <div role="tabpanel" class="tab-pane active" id="demoName">
+                    <name-edit name="editObject.name" />
+                </div>
+                <div role="tabpanel" class="tab-pane fade" id="demoAddress">
+                    <address-edit address="editObject.address" />
+                </div>
+                <div role="tabpanel" class="tab-pane fade" id="demoContact">
+                    <telecom-edit telecom="editObject.telecom" />
+                </div>
+                <div role="tabpanel" class="tab-pane fade" id="demoDetail">
+                    <div class="p-2">
+                        <div class="form-group row">
+                            <label
+                                class="col-sm-12 col-md-3 control-label required">{{ 'ui.model.entity.dateOfBirth' | i18n }}</label>
+                            <div class="col-sm-12 col-md-9">
+                                <div class="input-group">
+                                    <input class="form-control" type="date" ng-model="editObject.dateOfBirth"
+                                         />
+                                    <div class="input-group-append">
+                                        <div class="input-group-text">
+                                            <label>
+                                                <input type="checkbox" ng-model="editObject.dateOfBirthPrecision"
+                                                    ng-true-value="4" ng-false-value="10" />
+                                                {{ 'ui.model.entity.dateOfBirth.approx' | i18n }}
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                    </div>
+                    <div class="form-group row">
+                        <label for="familyName"
+                            class="col-xs-12 col-md-3 control-label">{{ 'ui.model.userEntity.language' | i18n }}</label>
+                        <div class="col-xs-12 col-md-9">
+                            <select 
+                                class="form-control"
+                                ng-model="editObject.preferredLanguage.languageCode">
+                                <option ng-repeat="lang in $root.system.locales" value="{{lang}}">{{ 'ui.locale.' + lang | i18n }}</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="facility"
+                            class="col-sm-12 col-md-3 control-label">
+                            {{ 'ui.model.userEntity.relationship.DedicatedServiceDeliveryLocation' | i18n }}
+                        </label>
+                        <div class="col-xs-12 col-md-9">
+                            <entity-search type="'Place'"
+                                filter="{ obsoletionTime: 'null', classConcept: 'ff34dfa7-c6d3-4f8b-bc9f-14bcdc13ba6c' }"
+                                class="form-control"
+                                ng-model="editObject.relationship.DedicatedServiceDeliveryLocation"
+                                value-property="'target'"
+                                name="facility"
+                                multiple="multiple"
+                                demand="1.3.6.1.4.1.33349.3.1.5.9.2.0.8" />
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="familyName"
+                            class="col-sm-12 col-md-3 control-label">{{ 'ui.model.userEntity.relationship.Employee' | i18n }}</label>
+                        <div class="col-xs-12 col-md-9">
+                            <entity-search type="'Organization'" filter="{ obsoletionTime: 'null' }"
+                                class="form-control" ng-model="editObject.relationship.Employee"
+                                value-property="'target'"
+                                multiple="multiple"
+                                demand="1.3.6.1.4.1.33349.3.1.5.9.2.0.8" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

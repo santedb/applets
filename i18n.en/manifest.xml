@@ -64,6 +64,8 @@
   <strings lang="en">
 
     <string key="ui.debug">DEBUG COMPILE - NOT FOR PRODUCTION USE</string>
+    <string key="ui.unknown">N/A</string>
+    <string key="ui.confirmed">Confirmed</string>
     <string key="ui.locale">Language</string>
     <string key="ui.locale.en">English</string>
     <string key="ui.locale.en-au">English (Australia)</string>
@@ -120,7 +122,8 @@
     <string key="ui.password.strength.label">Strength</string>
     <string key="ui.password.error.mismatch">Passwords must match</string>
     <string key="ui.password.notification.success">Password changes saved!</string>
-
+    <string key="ui.password.error.complexity">Password does not meet complexity requirements</string>
+    <string key="ui.password.error.history">Password must be different from existing password</string>
     <!-- Common Errors -->
     <string key="ui.error.title">System Error</string>
     <string key="ui.error.description">Additional details follow:</string>
@@ -446,15 +449,18 @@
     <string key="ui.model.securityUser.id">Security ID</string>
     <string key="ui.model.securityUser.userName">Username</string>
     <string key="ui.model.securityUser.createdBy">Created By</string>
-    <string key="ui.model.securityUser.updatedBy">Last Updated By</string>
+    <string key="ui.model.securityUser.updatedBy">Updated By</string>
     <string key="ui.model.securityUser.obsoletedBy">Deleted By</string>
     <string key="ui.model.securityUser.lastLoginTime">Last Login</string>
     <string key="ui.model.securityUser.invalidLoginAttempts">Invalid Logins</string>
     <string key="ui.model.securityUser.title">User</string>
     <string key="ui.model.securityUser.password">Password</string>
     <string key="ui.model.securityRole.title">Role</string>
-    <string key="ui.model.securityUser.email">E-Mail Address</string>
-    <string key="ui.model.securityUser.phoneNumber">Phone Number</string>
+    <string key="ui.model.securityUser.email">Security E-Mail</string>
+    <string key="ui.model.securityUser.phoneNumber">Security Phone</string>
+    <string key="ui.model.securityUser.twoFactorEnabled">TFA Enabled</string>
+    <string key="ui.model.securityUser.twoFactorEnabled.true">Enabled</string>
+    <string key="ui.model.securityUser.twoFactorEnabled.false">Disabled</string>
     <string key="ui.model.userEntity.givenName">Given Name</string>
     <string key="ui.model.userEntity.familyName">Family Name</string>
     <string key="ui.model.userEntity.language">Preferred Language</string>
@@ -462,6 +468,7 @@
     <string key="ui.model.userEntity.relationship.Employee">Employer</string>
     <string key="ui.model.securityUser.lockout">Locked Until</string>
     <string key="ui.model.securityRole.id">Security ID</string>
+    <string key="ui.model.securityUser.passwordExpiry">Expires on</string>
     <string key="ui.model.securityRole.name">Name</string>
     <string key="ui.model.securityRole.createdBy">Created By</string>
     <string key="ui.model.securityRole.updatedBy">Updated By</string>
@@ -542,6 +549,38 @@
     <string key="ui.model.version.initial">Initial Version</string>
     <string key="ui.model.entity.relationship.hasA">HAS A</string>
     <string key="ui.model.entity.relationship.isA">IS A</string>
+    <string key="ui.model.entity.address">Address</string>
+    <string key="ui.model.entity.address.title">Address Registration</string>
+    <string key="ui.model.entity.address.use">Address Type</string>
+    <string key="ui.model.entity.address.component.state">State/Province</string>
+    <string key="ui.model.entity.address.component.county">County/District</string>
+    <string key="ui.model.entity.address.component.city">City</string>
+    <string key="ui.model.entity.address.component.street">Street</string>
+    <string key="ui.model.entity.address.component.postalcode">Postal/ZIP</string>
+    <string key="ui.model.entity.address.component.country">Country</string>
+    <string key="ui.model.entity.name">Name</string>
+    <string key="ui.model.entity.name.title">Name Registration</string>
+    <string key="ui.model.entity.name.use">Name Type</string>
+    <string key="ui.model.entity.name.component.prefix">Prefix</string>
+    <string key="ui.model.entity.name.component.given">Given</string>
+    <string key="ui.model.entity.name.component.family">Family</string>
+    <string key="ui.model.entity.name.component.suffix">Suffix</string>
+    <string key="ui.model.entity.telecom">Contact Info</string>
+    <string key="ui.model.entity.genderConcept">Gender</string>
+    <string key="ui.model.entity.demographics">Additional Info</string>
+    <string key="ui.model.entity.dateOfBirth">Birthdate</string>
+    <string key="ui.model.entity.dateOfBirth.approx">Approximate</string>
+    <string key="ui.model.entity.language">Language(s)</string>
+    <string key="ui.model.entity.language.preferred">Preferred</string>
+    <string key="ui.model.entity.relationship.Employer">Employer</string>
+    <string key="ui.model.entity.relationship.DedicatedServiceDeliveryLocation">Facilities</string>
+    <string key="ui.model.entity.telecom.AnsweringService">Answering Service</string>
+    <string key="ui.model.entity.telecom.EmergencyContact">Emergency</string>
+    <string key="ui.model.entity.telecom.MobileContact">Mobile</string>
+    <string key="ui.model.entity.telecom.Pager">Pager</string>
+    <string key="ui.model.entity.telecom.Public">Home/Public</string>
+    <string key="ui.model.entity.telecom.TemporaryAddress">Temporary</string>
+    <string key="ui.model.entity.telecom.WorkPlace">Work</string>
     <string key="ui.model.patient.birth">Birth</string>
     <string key="ui.model.patient.death">Death</string>
     <string key="ui.model.patient.name">Name</string>
@@ -629,16 +668,28 @@
     <string key="org.santedb.widget.mdm.locals">Local Records</string>
     <string key="org.santedb.widget.mdm.duplicates">Probable Local Records</string>
     <string key="ui.santedb.widget.mdm.duplicates.recordInfo">Local Record</string>
-    <string key="ui.santedb.widget.mdm.duplicates.createdBy">Source System</string>
+    <string key="ui.santedb.widget.mdm.duplicates.createdBy">Source</string>
     <string key="ui.mdm.type.L">LOCAL RECORD</string>
     <string key="ui.mdm.type.M">MASTER RECORD</string>
     <string key="ui.mdm.type.T">RECORD OF TRUTH</string>
-    <string key="ui.mdm.edit.master">This is a MASTER record. Editing it will result in the creation a new LOCAL record for the administrative panel.</string>
+    <string key="ui.mdm.isTrue">This MASTER is based on the RECORD OF TRUTH meaning it has been validated by an authorized device</string>
+    <string key="ui.mdm.edit.master">This is a MASTER record. Editing it will result in the creation a new LOCAL record for the administrative panel which will be.</string>
+    <string key="ui.mdm.edit.recordOfTruth">You are editing a RECORD OF TRUTH, this record should contain the "official" data for this object.</string>
     <string key="ui.mdm.edit.local">This is a LOCAL record. Editing it may result in data mis-match between the system which supplied the data and the server</string>
     <string key="ui.mdm.action.ignore.confirm">Are you sure you want to mark this record as a non-match?</string>
     <string key="ui.mdm.action.merge.confirm">Are you sure you want to integrate/merge this local record with the current master record?</string>
     <string key="ui.mdm.action.detach.confirm">Are you sure you want to detach (unmerge) this local record from the current master record?</string>
+
+    <!-- Widgets -->
     <string key="org.santedb.widget.mdm.recordOfTruth">Record of Truth</string>
+    <string key="org.santedb.widget.mdm.candidate">Candidate Records</string>
+    <string key="org.santedb.widget.userEntity.profile">Profile</string>
+    <string key="org.santedb.widget.user.profile">My Profile</string>
+    <string key="org.santedb.widget.userEntity.security">Security Controls</string>
+
+    <!-- Session controls -->
+    <string key="ui.session.aboutToExpire">Your session will expire in</string>
+    <string key="ui.session.action.extend">Click/tap this message to extend your session</string>
   </strings>
 
 </AppletManifest>

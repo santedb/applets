@@ -99,7 +99,6 @@
     <property name="classConceptModel" behavior="never"/>
     <property name="classConcept" behavior="never"/>
     <property name="determinerConceptModel" behavior="never"/>
-    <property name="determinerConcept" behavior="never"/>
     <property name="genderConceptModel" all="false" ref="Concept" behavior="always"/>
     <property name="relationship" all="true" behavior="always">
       <property name="Mother" all="false">
