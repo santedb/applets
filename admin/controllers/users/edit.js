@@ -76,8 +76,8 @@ angular.module('santedb')
         else  // New user
         {
             $scope.target = {
-                securityUser: new SecurityUser(),
-                entity: new UserEntity({
+                entity: new SecurityUser(),
+                userEntity: new UserEntity({
                     language: [
                         {
                             "languageCode": SanteDB.locale.getLanguage(),
@@ -141,21 +141,7 @@ angular.module('santedb')
                 "languageCode": $scope.target.preferredLanguage
             };
 
-            if ($scope.target.userEntity.relationship) {
-                if (Array.isArray($scope.target.userEntity.relationship.DedicatedServiceDeliveryLocation))
-                    $scope.target.userEntity.relationship.DedicatedServiceDeliveryLocation = $scope.target.userEntity.relationship.DedicatedServiceDeliveryLocation.map(function (d) {
-                        return { source: $scope.target.userEntity.id, target: d.target };
-                    });
-
-                if (Array.isArray($scope.target.userEntity.relationship.Employee))
-                    $scope.target.userEntity.relationship.Employee = $scope.target.userEntity.relationship.Employee.map(function (d) {
-                        return { target: $scope.target.userEntity.id, holder: d.holder };
-                    });
-                else if ($scope.target.userEntity.relationship.Employee)
-                    $scope.target.userEntity.relationship.Employee.holder = $scope.target.userEntity.id;
-
-            }
-
+            
             // Show wait state
             SanteDB.display.buttonWait("#saveUserButton", true);
 
@@ -184,22 +170,7 @@ angular.module('santedb')
                     $rootScope.errorHandler(e);
             };
 
-            // user is already registered we are updating them 
-            if ($scope.target.entity.id) {
-                // Register the user first
-                SanteDB.resources.securityUser.updateAsync($scope.target.entity.id, {
-                    $type: "SecurityUserInfo",
-                    role: $scope.target.role,
-                    entity: $scope.target.entity
-                }).then(function (u) {
-                    $scope.target.userEntity.securityUser = u.entity.id;
-                    SanteDB.resources.userEntity.insertAsync($scope.target.userEntity)
-                        .then(successFn)
-                        .catch(errorFn)
-                })
-                    .catch(errorFn);
-            }
-            else {
+            
                 // Register the user first
                 SanteDB.resources.securityUser.insertAsync({
                     $type: "SecurityUserInfo",
@@ -212,7 +183,6 @@ angular.module('santedb')
                         .catch(errorFn)
                 })
                     .catch(errorFn);
-            }
         }
 
         /**

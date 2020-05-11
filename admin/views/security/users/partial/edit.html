@@ -15,16 +15,7 @@
                     <div class="card-body container-fluid">
                         <div class="form-group row">
                             <label class="col-sm-12 col-md-2 control-label"
-                                for="sid">{{ 'ui.model.entity.id' | i18n }}</label>
-                            <div class="col-sm-12 col-md-10 input-group">
-                                <input name="sid" readonly="readonly" type="text" class="form-control"
-                                    ng-model="target.entity.id" />
-                                <input-copy-button class="btn btn-outline-secondary" source="target.entity.id" />
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label class="col-sm-12 col-md-2 control-label"
-                                for="username">{{ 'ui.model.entity.userName' | i18n }}</label>
+                                for="username">{{ 'ui.model.securityUser.userName' | i18n }}</label>
                             <div class="col-sm-12 col-md-10 input-group">
                                 <input name="username" ng-readonly="target.entity.id" type="text"
                                     class="form-control" pattern="^[A-Za-z0-9_\.\@]{3,}" minlength="3" maxlength="32"
@@ -47,33 +38,6 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="form-group row" ng-if="target.entity.createdBy">
-                            <label
-                                class="col-sm-12 col-md-2 control-label">{{ 'ui.model.entity.createdBy' | i18n }}</label>
-                            <div class="col-md-10 col-sm-12">
-                                    <provenance provenance-id="target.entity.createdBy" provenance-time="target.entity.creationTime"></provenance>
-                                {{ target.entity.creationTime | extDate }}
-                            </div>
-                        </div>
-                        <div class="form-group row" ng-if="target.entity.updatedBy">
-                            <label
-                                class="col-sm-12 col-md-2 control-label">{{ 'ui.model.entity.updatedBy' | i18n }}</label>
-                            <div class="col-md-10 col-sm-12">
-                                    <provenance provenance-id="target.entity.updatedBy" provenance-time="target.entity.updatedTime"></provenance>
-                                {{ target.entity.updatedTime | extDate }}
-                            </div>
-                        </div>
-                        <div class="form-group row" ng-if="target.entity.obsoletedBy">
-                            <label
-                                class="col-sm-12 col-md-2 control-label">{{ 'ui.model.entity.obsoletedBy' | i18n }}</label>
-                            <div class="col-md-10 col-sm-12">
-                                    <provenance provenance-id="target.entity.obsoletedBy" provenance-time="target.entity.obsoletionTime"></provenance>
-                                {{ target.entity.obsoletionTime | extDate }} <button id="reactivateUserButton"
-                                    ng-click="reactivateUser()" type="button" class="btn btn-success"><i
-                                        class="fas fa-trash-restore"></i>
-                                    {{ 'ui.action.undelete' | i18n }}</button>
-                            </div>
-                        </div>
                     </div>
                 </div>
             </div>
@@ -90,35 +54,6 @@
                 <div class="collapse show" id="securityProps">
                     <div class="card-body container-fluid">
                         <div class="form-group row">
-                            <label
-                                class="col-xs-12 col-md-2 control-label">{{ 'ui.model.entity.lastLoginTime' | i18n }}</label>
-                            <div class="col-xs-12 col-md-10" ng-if="target.entity.lastLoginTime">
-                                {{ target.entity.lastLoginTime | extDate: 'F' }}</div>
-                            <div class="col-xs-12 col-md-10" ng-if="!target.entity.lastLoginTime">
-                                {{ 'ui.admin.users.edit.security.neverLoggedIn' | i18n }}</div>
-                        </div>
-                        <div class="form-group row" ng-if="target.entity.id">
-                            <label
-                                class="col-xs-12 col-md-2 control-label">{{ 'ui.model.entity.invalidLoginAttempts' | i18n }}</label>
-                            <div class="col-xs-12 col-md-10">
-                                {{ target.entity.invalidLoginAttempts }}
-                                <button ng-click="resetInvalidLogins()" id="resetInvalidLoginsButton" type="button"
-                                    class="btn btn-info">
-                                    <i class="fas fa-undo"></i> {{ 'ui.action.reset' | i18n }}
-                                </button>
-                            </div>
-                        </div>
-                        <div class="form-group row" ng-if="target.entity.lockout > $root.page.currentTime">
-                           <label for="lockout" class="col-xs-12 col-md-2 control-label">{{ 'ui.model.entity.lockout' | i18n }}</label>
-                           <div class="col-xs-12 col-md-10">
-                               {{ target.entity.lockout | extDate: 'F' }}
-                               <button ng-click="unlock()" id="unlockButton" class="btn btn-info"
-                                    type="button">
-                                    <i class="fa fa-lock-open"></i> {{ 'ui.action.unlock' | i18n }}
-                                </button>
-                           </div>
-                        </div>
-                        <div class="form-group row">
                             <label for="roles"
                                 class="col-xs-12 col-md-2 control-label">{{ 'ui.model.securityRole.title' | i18n }}</label>
                             <div class="col-xs-12 col-md-10">
@@ -129,16 +64,6 @@
                                     class="alert-danger">
                                     <i class="fa fa-exclamation-triangle"></i> {{ 'ui.error.required' | i18n }}
                                 </div>
-                            </div>
-                        </div>
-                        <div class="form-group row" ng-if="target.entity.id">
-                            <label
-                                class="col-xs-12 col-md-2 control-label">{{ 'ui.model.entity.password' | i18n }}</label>
-                            <div class="col-xs-12 col-md-2">
-                                <button ng-click="resetPassword()" id="resetPasswordButton" class="btn btn-info"
-                                    type="button">
-                                    <i class="fa fa-asterisk"></i> {{ 'ui.action.resetPassword' | i18n }}
-                                </button>
                             </div>
                         </div>
                         <div class="form-group row" ng-if="!target.entity.id">
@@ -189,17 +114,17 @@
                 <div class="card-header">
                     <h2 class="mb-0">
                         <button type="button" class="collapse-indicator btn btn-link p-0" data-toggle="collapse"
-                            data-target="#demographicProps">
+                            data-target="#demographicProps" aria-expanded="true">
                             <i class="fa fa-id-badge"></i> {{ 'ui.admin.users.edit.demographics.title' | i18n }}
                             <i class="fa fa-chevron-right"></i>
                         </button>
                     </h2>
                 </div>
-                <div class="collapse" ng-class="{ 'show' : !target.entity.id }" id="demographicProps">
+                <div class="collapse show" id="demographicProps">
                     <div class="card-body container-fluid">
                         <div class="form-group row">
                             <label for="email"
-                                class="col-xs-12 col-md-2 control-label">{{ 'ui.model.entity.email' | i18n }}</label>
+                                class="col-xs-12 col-md-2 control-label">{{ 'ui.model.securityUser.email' | i18n }}</label>
                             <div class="col-xs-12 col-md-10">
                                 <input name="email" type="email" class="form-control"
                                     ng-model="target.entity.email" />
@@ -207,7 +132,7 @@
                         </div>
                         <div class="form-group row">
                             <label for="phoneNumber"
-                                class="col-xs-12 col-md-2 control-label">{{ 'ui.model.entity.phoneNumber' | i18n }}</label>
+                                class="col-xs-12 col-md-2 control-label">{{ 'ui.model.securityUser.phoneNumber' | i18n }}</label>
                             <div class="col-xs-12 col-md-10">
                                 <input name="phoneNumber" type="tel" class="form-control"
                                     ng-model="target.entity.phoneNumber" />
@@ -240,7 +165,7 @@
                                 <select 
                                     class="form-control"
                                     ng-model="target.preferredLanguage">
-                                    <option ng-repeat="lang in refLangs" value="{{lang}}">{{ 'ui.locale.' + lang | i18n }}</option>
+                                    <option ng-repeat="lang in $root.system.locales" value="{{lang}}">{{ 'ui.locale.' + lang | i18n }}</option>
                                 </select>
                             </div>
                         </div>

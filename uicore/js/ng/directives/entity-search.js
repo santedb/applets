@@ -136,7 +136,6 @@ angular.module('santedb-lib')
 
         return {
             scope: {
-                defaultResults: '=',
                 type: '<',
                 display: '<',
                 searchField: '<',
@@ -179,7 +178,7 @@ angular.module('santedb-lib')
 
                                 if($scope.valueProperty && v[$scope.valueProperty])
                                     v = v[$scope.valueProperty];
-                                    
+
                                 try {
                                     if ($scope.key && $scope.key != "id") {
                                         var query = {};
@@ -241,21 +240,6 @@ angular.module('santedb-lib')
                         language: {
                             searching: function () { return `<i class="fa fa-circle-notch fa-spin"></i> ${SanteDB.locale.getString("ui.search")}`; }
                         },
-                        defaultResults: function () {
-                            var s = scope;
-                            if (defaultResults) {
-                                try {
-                                    return scope.$eval(defaultResults);
-                                } catch (e) {
-
-                                }
-                            }
-                            else {
-                                return $.map($('option', element[0]), function (o) {
-                                    return { "id": o.value, "text": o.innerText };
-                                });
-                            }
-                        },
                         dataAdapter: $.fn.select2.amd.require('select2/data/extended-ajax'),
                         ajax: {
                             url: SanteDB.resources[modelType.toCamelCase()].getUrl(), //((modelType == "SecurityUser" || modelType == "SecurityRole" || modelType == "SecurityPolicy") ? "/ami/" : "/hdsi/") + modelType,
@@ -266,7 +250,9 @@ angular.module('santedb-lib')
                                 "Accept": "application/json+sdb-viewmodel"
                             },
                             data: function (params) {
-                                filter[searchProperty] = "~" + params.term;
+
+                                if(params.term)
+                                    filter[searchProperty] = "~" + params.term;
                                 filter["_count"] = 20;
                                 filter["_offset"] = 0;
                                 filter["_viewModel"] = "dropdown";
@@ -276,7 +262,7 @@ angular.module('santedb-lib')
                                 //params.page = params.page || 0;
 
                                 var data = data.$type == "Bundle" ? data.resource : data.resource || data;
-                                var retVal = { results: [] };
+                                var retVal = { results: [], pagination: { more: data.totalResults > data.count} };
 
                                 try {
                                     if (!data || data.length == 0) return [];
@@ -337,6 +323,7 @@ angular.module('santedb-lib')
                                             }
                                         }
                                     }
+
                                     return retVal;
                                 }
                                 catch (e) {
@@ -347,7 +334,6 @@ angular.module('santedb-lib')
                             cache: true
                         },
                         escapeMarkup: function (markup) { return markup; }, // Format normally
-                        minimumInputLength: 2,
                         templateSelection: renderObject,
                         keepSearchResults: true,
                         templateResult: renderObject
