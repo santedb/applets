@@ -1,44 +1,302 @@
-/*
- * Copyright 2015-2019 Mohawk College of Applied Arts and Technology
- * 
- * 
- * Licensed under the Apache License, Version 2.0 (the "License"); you 
- * may not use this file except in compliance with the License. You may 
- * obtain a copy of the License at 
- * 
- * http://www.apache.org/licenses/LICENSE-2.0 
- * 
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
- * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the 
- * License for the specific language governing permissions and limitations under 
- * the License.
- * 
- * User: Justin Fyfe
- * Date: 2019-8-8
- */
-
-// SanteDB.Core.Model.NonVersionedEntityData, SanteDB.Core.Model, Version=1.1.0.35405, Culture=neutral, PublicKeyToken=null
-if(!NonVersionedEntityData)
+// SanteDB.Core.Auditing.AuditableObject, SanteDB.Core.Model, Version=2.0.0.0, Culture=neutral, PublicKeyToken=null
+//if(!AuditableObject)
 /**
  * @class
  * @constructor
- * @memberof SanteDBModel
  * @public
- * @summary             Updateable entity data which is not versioned            
- * @property {Date} updatedTime            Gets or sets the creation time in XML format            
- * @property {Date} modifiedOn            Gets the time this item was modified            
- * @property {string} updatedBy            Gets or sets the created by identifier            
+ * @summary             Identifies an object that adds context to the audit            
+ * @property {AuditCode} customCode            Custom id type code            
+ * @property {AuditableObjectIdType} idType            Identifies the type of identifier supplied            (see: {@link AuditableObjectIdType} for values)
+ * @property {AuditableObjectLifecycle} lifecycle            Identifies where in the lifecycle of the object this object is currently within            (see: {@link AuditableObjectLifecycle} for values)
+ * @property {string} name            Data associated with the object            
+ * @property {ObjectDataExtension} dictionary            Additional object data            
+ * @property {string} id            Identifies the object in the event            
+ * @property {string} queryData            Data associated with the object            
+ * @property {AuditableObjectRole} role            Identifies the role type of the object            (see: {@link AuditableObjectRole} for values)
+ * @property {AuditableObjectType} type            Identifies the type of object being expressed            (see: {@link AuditableObjectType} for values)
+ * @param {AuditableObject} copyData Copy constructor (if present)
+ */
+function AuditableObject (copyData) { 
+	this.$type = 'AuditableObject';
+	if(copyData) {
+	/** @type {AuditableObjectType} */
+	this.type = copyData.type;
+	/** @type {AuditableObjectRole} */
+	this.role = copyData.role;
+	/** @type {string} */
+	this.queryData = copyData.queryData;
+	/** @type {string} */
+	this.id = copyData.id;
+	/** @type {ObjectDataExtension} */
+	this.dictionary = copyData.dictionary;
+	/** @type {string} */
+	this.name = copyData.name;
+	/** @type {AuditableObjectLifecycle} */
+	this.lifecycle = copyData.lifecycle;
+	/** @type {AuditableObjectIdType} */
+	this.idType = copyData.idType;
+	/** @type {AuditCode} */
+	this.customCode = copyData.customCode;
+	}
+}  // AuditableObject 
+// SanteDB.Core.Auditing.AuditActorData, SanteDB.Core.Model, Version=2.0.0.0, Culture=neutral, PublicKeyToken=null
+//if(!AuditActorData)
+/**
+ * @class
+ * @constructor
+ * @public
+ * @summary             Data related to actors that participate in the event            
+ * @property {AuditCode} role            Identifies the role(s) that the actor has played            
+ * @property {string} altUid            Alternative user identifier            
+ * @property {string} apId            Identifies the network access point from which the user accessed the system            
+ * @property {NetworkAccessPointType} apType            Identifies the type of network access point            (see: {@link NetworkAccessPointType} for values)
+ * @property {string} uid            The unique identifier for the user in the system            
+ * @property {boolean} isReq            True if the user is the primary requestor            
+ * @property {string} uname            The name of the user in the system            
+ * @param {AuditActorData} copyData Copy constructor (if present)
+ */
+function AuditActorData (copyData) { 
+	this.$type = 'AuditActorData';
+	if(copyData) {
+	/** @type {string} */
+	this.uname = copyData.uname;
+	/** @type {boolean} */
+	this.isReq = copyData.isReq;
+	/** @type {string} */
+	this.uid = copyData.uid;
+	/** @type {NetworkAccessPointType} */
+	this.apType = copyData.apType;
+	/** @type {string} */
+	this.apId = copyData.apId;
+	/** @type {string} */
+	this.altUid = copyData.altUid;
+	/** @type {AuditCode} */
+	this.role = copyData.role;
+	}
+}  // AuditActorData 
+// SanteDB.Core.Auditing.AuditCode, SanteDB.Core.Model, Version=2.0.0.0, Culture=neutral, PublicKeyToken=null
+//if(!AuditCode)
+/**
+ * @class
+ * @constructor
+ * @public
+ * @summary             Represents an audit code.            
+ * @property {string} code            Gets or sets the code of the code value.            
+ * @property {string} system            Gets or sets the system in which the code value is drawn.            
+ * @property {string} systemName            Gets or sets the human readable name of the code system.            
+ * @property {string} systemVersion            Gets or sets the version of the code system.            
+ * @property {string} display            Gets or sets the display name.            
+ * @param {AuditCode} copyData Copy constructor (if present)
+ */
+function AuditCode (copyData) { 
+	this.$type = 'AuditCode';
+	if(copyData) {
+	/** @type {string} */
+	this.display = copyData.display;
+	/** @type {string} */
+	this.systemVersion = copyData.systemVersion;
+	/** @type {string} */
+	this.systemName = copyData.systemName;
+	/** @type {string} */
+	this.system = copyData.system;
+	/** @type {string} */
+	this.code = copyData.code;
+	}
+}  // AuditCode 
+// SanteDB.Core.Auditing.AuditData, SanteDB.Core.Model, Version=2.0.0.0, Culture=neutral, PublicKeyToken=null
+//if(!AuditData)
+/**
+ * @class
+ * @constructor
+ * @public
+ * @extends IdentifiedData
+ * @summary             Specific information related to an audit            
+ * @property {ActionType} action            Identifies the action code            (see: {@link ActionType} for values)
+ * @property {AuditActorData} actor            Represents the actors within the audit event            
+ * @property {AuditableObject} object            Represents other objects of interest            
+ * @property {EventIdentifierType} event            Identifies the event            (see: {@link EventIdentifierType} for values)
+ * @property {AuditCode} type            Identifies the type of event            
+ * @property {OutcomeIndicator} outcome            Identifies the outcome of the event            (see: {@link OutcomeIndicator} for values)
+ * @property {Date} timestamp            Event timestamp            
+ * @property {object} meta            Metadata about the audit             
+ * @property {AuditMetadata} meta.classifier  where classifier is from {@link AuditMetadata} key
+ * @property {Date} modifiedOn            Represents the modified on            
+ * @property {string} id            Gets or sets the primary identifying UUID of this object            
+ * @property {string} $type            Gets the type registration of this object            
+ * @param {AuditData} copyData Copy constructor (if present)
+ */
+function AuditData (copyData) { 
+	this.$type = 'AuditData';
+	if(copyData) {
+	/** @type {string} */
+	this.id = copyData.id;
+	/** @type {Date} */
+	this.modifiedOn = copyData.modifiedOn;
+	/** @type {object} */
+	this.meta = copyData.meta;
+	/** @type {Date} */
+	this.timestamp = copyData.timestamp;
+	/** @type {OutcomeIndicator} */
+	this.outcome = copyData.outcome;
+	/** @type {AuditCode} */
+	this.type = copyData.type;
+	/** @type {EventIdentifierType} */
+	this.event = copyData.event;
+	/** @type {AuditableObject} */
+	this.object = copyData.object;
+	/** @type {AuditActorData} */
+	this.actor = copyData.actor;
+	/** @type {ActionType} */
+	this.action = copyData.action;
+	}
+}  // AuditData 
+// SanteDB.Core.Auditing.AuditMetadata, SanteDB.Core.Model, Version=2.0.0.0, Culture=neutral, PublicKeyToken=null
+//if(!AuditMetadata)
+/**
+ * @class
+ * @constructor
+ * @public
+ * @summary             Represents audit metadata such as submission time, submission sequence, etc.            
+ * @property {AuditMetadataKey} key            Gets or sets the metadata key            (see: {@link AuditMetadataKey} for values)
+ * @property {string} value            Gets or sets the process name            
+ * @param {AuditMetadata} copyData Copy constructor (if present)
+ */
+function AuditMetadata (copyData) { 
+	this.$type = 'AuditMetadata';
+	if(copyData) {
+	/** @type {string} */
+	this.value = copyData.value;
+	/** @type {AuditMetadataKey} */
+	this.key = copyData.key;
+	}
+}  // AuditMetadata 
+// SanteDB.Core.Model.Association`1, SanteDB.Core.Model, Version=2.0.0.0, Culture=neutral, PublicKeyToken=null
+//if(!Association)
+/**
+ * @class
+ * @constructor
+ * @public
+ * @abstract
+ * @extends IdentifiedData
+ * @summary             Represents a base class for association between two objects            
+ * @description 
+ * @property {Date} modifiedOn            Get the modification date            
+ * @property {string} source            Gets or sets the source entity's key (where the relationship is FROM)            
+ * @property {IdentifiedData} sourceModel [Delay loaded from source],             The entity that this relationship targets            
+ * @property {string} id            Gets or sets the primary identifying UUID of this object            
+ * @property {string} $type            Gets the type registration of this object            
+ * @param {Association} copyData Copy constructor (if present)
+ */
+function Association (copyData) { 
+	this.$type = 'Association';
+	if(copyData) {
+	/** @type {string} */
+	this.id = copyData.id;
+	/** @type {IdentifiedData} */
+	this.sourceModel = copyData.sourceModel;
+	/** @type {string} */
+	this.source = copyData.source;
+	/** @type {Date} */
+	this.modifiedOn = copyData.modifiedOn;
+	}
+}  // Association 
+// SanteDB.Core.Model.BaseEntityData, SanteDB.Core.Model, Version=2.0.0.0, Culture=neutral, PublicKeyToken=null
+//if(!BaseEntityData)
+/**
+ * @class
+ * @constructor
+ * @public
+ * @abstract
+ * @extends IdentifiedData
+ * @summary             Represents the root of all model classes in the SanteDB Core            
+ * @description 
+ *             This abstract class is used to encapsulate the key properties of base data elements in the SanteDB
+ *             model, namely it keeps track of which entities created and obsoleted a particular resource and when those
+ *             events occurred.
+ *             
  * @property {Date} creationTimeModel [Delay loaded from creationTime],             Gets or sets the time at which the data was created            
- * @property {Date} creationTime            Gets or sets the creation time in XML format            
+ * @property {Date} creationTime            Gets or sets the creation time as an ISO date format            
  * @property {Date} obsoletionTimeModel [Delay loaded from obsoletionTime],             Gets or sets the time when the data is or will become invalid            
- * @property {Date} obsoletionTime            Gets or sets the creation time in XML format            
- * @property {SecurityUser} createdByModel [Delay loaded from createdBy],             Gets or sets the user that created this base data            
- * @property {SecurityUser} obsoletedByModel [Delay loaded from obsoletedBy],             Gets or sets the user that obsoleted this base data            
- * @property {string} createdBy            Gets or sets the identifier of the user which created the data            
- * @property {string} obsoletedBy            Gets or sets the identifier of the user which obsoleted the data            
- * @property {string} id            The internal primary key value of the entity            
- * @property {string} $type            Gets the type            
+ * @property {Date} obsoletionTime            Gets or sets the time that the data is no longer valid (was deleted/obsoleted) in ISO format            
+ * @property {SecurityProvenance} createdByModel [Delay loaded from createdBy],             Gets or sets the user that created this base data            
+ * @property {Date} modifiedOn            Gets the time that the object was last modified (from base data, default to CreationTime)            
+ * @property {SecurityProvenance} obsoletedByModel [Delay loaded from obsoletedBy],             Gets or sets the user that obsoleted this base data            
+ * @property {string} createdBy            Gets or sets the security provenance object which represents the creation of this object            
+ * @property {string} obsoletedBy            Gets or sets the security provenance object which represents the obsoletion of this data            
+ * @property {string} id            Gets or sets the primary identifying UUID of this object            
+ * @property {string} $type            Gets the type registration of this object            
+ * @param {BaseEntityData} copyData Copy constructor (if present)
+ */
+function BaseEntityData (copyData) { 
+	this.$type = 'BaseEntityData';
+	if(copyData) {
+	/** @type {string} */
+	this.id = copyData.id;
+	/** @type {string} */
+	this.obsoletedBy = copyData.obsoletedBy;
+	/** @type {string} */
+	this.createdBy = copyData.createdBy;
+	/** @type {SecurityProvenance} */
+	this.obsoletedByModel = copyData.obsoletedByModel;
+	/** @type {Date} */
+	this.modifiedOn = copyData.modifiedOn;
+	/** @type {SecurityProvenance} */
+	this.createdByModel = copyData.createdByModel;
+	/** @type {Date} */
+	this.obsoletionTime = copyData.obsoletionTime;
+	/** @type {Date} */
+	this.obsoletionTimeModel = copyData.obsoletionTimeModel;
+	/** @type {Date} */
+	this.creationTime = copyData.creationTime;
+	/** @type {Date} */
+	this.creationTimeModel = copyData.creationTimeModel;
+	}
+}  // BaseEntityData 
+// SanteDB.Core.Model.IdentifiedData, SanteDB.Core.Model, Version=2.0.0.0, Culture=neutral, PublicKeyToken=null
+//if(!IdentifiedData)
+/**
+ * @class
+ * @constructor
+ * @public
+ * @abstract
+ * @summary             Represents data that is identified by a key            
+ * @property {string} id            Gets or sets the primary identifying UUID of this object            
+ * @property {string} $type            Gets the type registration of this object            
+ * @property {Date} modifiedOn            Gets or sets date/time that this object was last created or modified            
+ * @param {IdentifiedData} copyData Copy constructor (if present)
+ */
+function IdentifiedData (copyData) { 
+	this.$type = 'IdentifiedData';
+	if(copyData) {
+	/** @type {Date} */
+	this.modifiedOn = copyData.modifiedOn;
+	/** @type {string} */
+	this.id = copyData.id;
+	}
+}  // IdentifiedData 
+// SanteDB.Core.Model.NonVersionedEntityData, SanteDB.Core.Model, Version=2.0.0.0, Culture=neutral, PublicKeyToken=null
+//if(!NonVersionedEntityData)
+/**
+ * @class
+ * @constructor
+ * @public
+ * @extends BaseEntityData
+ * @summary             Updateable entity data which is not versioned            
+ * @description Non versioned data in SanteDB means that data can be updated (modified) in the underlying data store and changes are not tracked.
+ * @property {Date} updatedTime            Gets or sets the time that this object was last modified in ISO format            
+ * @property {Date} modifiedOn            Gets the time this item was modified            
+ * @property {SecurityProvenance} updatedByModel [Delay loaded from updatedBy],             Gets or sets the user that updated this base data            
+ * @property {string} updatedBy            Gets or sets the provenance identifier associated with the last update of this object            
+ * @property {Date} creationTimeModel [Delay loaded from creationTime],             Gets or sets the time at which the data was created            
+ * @property {Date} creationTime            Gets or sets the creation time as an ISO date format            
+ * @property {Date} obsoletionTimeModel [Delay loaded from obsoletionTime],             Gets or sets the time when the data is or will become invalid            
+ * @property {Date} obsoletionTime            Gets or sets the time that the data is no longer valid (was deleted/obsoleted) in ISO format            
+ * @property {SecurityProvenance} createdByModel [Delay loaded from createdBy],             Gets or sets the user that created this base data            
+ * @property {SecurityProvenance} obsoletedByModel [Delay loaded from obsoletedBy],             Gets or sets the user that obsoleted this base data            
+ * @property {string} createdBy            Gets or sets the security provenance object which represents the creation of this object            
+ * @property {string} obsoletedBy            Gets or sets the security provenance object which represents the obsoletion of this data            
+ * @property {string} id            Gets or sets the primary identifying UUID of this object            
+ * @property {string} $type            Gets the type registration of this object            
  * @param {NonVersionedEntityData} copyData Copy constructor (if present)
  */
 function NonVersionedEntityData (copyData) { 
@@ -50,9 +308,9 @@ function NonVersionedEntityData (copyData) {
 	this.obsoletedBy = copyData.obsoletedBy;
 	/** @type {string} */
 	this.createdBy = copyData.createdBy;
-	/** @type {SecurityUser} */
+	/** @type {SecurityProvenance} */
 	this.obsoletedByModel = copyData.obsoletedByModel;
-	/** @type {SecurityUser} */
+	/** @type {SecurityProvenance} */
 	this.createdByModel = copyData.createdByModel;
 	/** @type {Date} */
 	this.obsoletionTime = copyData.obsoletionTime;
@@ -64,18 +322,114 @@ function NonVersionedEntityData (copyData) {
 	this.creationTimeModel = copyData.creationTimeModel;
 	/** @type {string} */
 	this.updatedBy = copyData.updatedBy;
+	/** @type {SecurityProvenance} */
+	this.updatedByModel = copyData.updatedByModel;
 	/** @type {Date} */
 	this.modifiedOn = copyData.modifiedOn;
 	/** @type {Date} */
 	this.updatedTime = copyData.updatedTime;
 	}
 }  // NonVersionedEntityData 
-// SanteDB.Core.Model.Warehouse.DatamartDefinition, SanteDB.Core.Model, Version=1.1.0.35405, Culture=neutral, PublicKeyToken=null
-if(!DatamartDefinition)
+// SanteDB.Core.Model.VersionedAssociation`1, SanteDB.Core.Model, Version=2.0.0.0, Culture=neutral, PublicKeyToken=null
+//if(!VersionedAssociation)
 /**
  * @class
  * @constructor
- * @memberof SanteDBModel
+ * @public
+ * @abstract
+ * @extends Association
+ * @summary             Represents a relational class which is bound on a version boundary            
+ * @description This association is used to link two complex objects to one another when the version 
+ *             of the source object at time of assoication carries meaning.
+ * @property {number} effectiveVersionSequence            Gets or sets the version sequence of the source object when this assoication became active            
+ * @property {number} obsoleteVersionSequence            Gets or sets the sequence identifier of the source when this association is no longer active            
+ * @property {Date} modifiedOn
+ * @property {string} source
+ * @property {VersionedEntityData} sourceModel [Delay loaded from source], 
+ * @property {string} id            Gets or sets the primary identifying UUID of this object            
+ * @property {string} $type            Gets the type registration of this object            
+ * @param {VersionedAssociation} copyData Copy constructor (if present)
+ */
+function VersionedAssociation (copyData) { 
+	this.$type = 'VersionedAssociation';
+	if(copyData) {
+	/** @type {string} */
+	this.id = copyData.id;
+	/** @type {VersionedEntityData} */
+	this.sourceModel = copyData.sourceModel;
+	/** @type {string} */
+	this.source = copyData.source;
+	/** @type {Date} */
+	this.modifiedOn = copyData.modifiedOn;
+	/** @type {number} */
+	this.obsoleteVersionSequence = copyData.obsoleteVersionSequence;
+	/** @type {number} */
+	this.effectiveVersionSequence = copyData.effectiveVersionSequence;
+	}
+}  // VersionedAssociation 
+// SanteDB.Core.Model.VersionedEntityData`1, SanteDB.Core.Model, Version=2.0.0.0, Culture=neutral, PublicKeyToken=null
+//if(!VersionedEntityData)
+/**
+ * @class
+ * @constructor
+ * @public
+ * @abstract
+ * @extends BaseEntityData
+ * @summary             Represents versioned based data            
+ * @description In SanteDB, certain objects are not actually updated or deleted, rather they are subsequent versions
+ *             of the data appended to the previous. This class represents the base class of all objects which are versioned objects
+ * @property {string} previousVersion            Gets or sets the UUID of the previous version of this record            
+ * @property {string} version            Gets or sets the UUID of the current version of this object            
+ * @property {number} sequence            The sequence number of the version (for ordering)            
+ * @property {Date} creationTimeModel [Delay loaded from creationTime],             Gets or sets the time at which the data was created            
+ * @property {Date} creationTime            Gets or sets the creation time as an ISO date format            
+ * @property {Date} obsoletionTimeModel [Delay loaded from obsoletionTime],             Gets or sets the time when the data is or will become invalid            
+ * @property {Date} obsoletionTime            Gets or sets the time that the data is no longer valid (was deleted/obsoleted) in ISO format            
+ * @property {SecurityProvenance} createdByModel [Delay loaded from createdBy],             Gets or sets the user that created this base data            
+ * @property {Date} modifiedOn            Gets the time that the object was last modified (from base data, default to CreationTime)            
+ * @property {SecurityProvenance} obsoletedByModel [Delay loaded from obsoletedBy],             Gets or sets the user that obsoleted this base data            
+ * @property {string} createdBy            Gets or sets the security provenance object which represents the creation of this object            
+ * @property {string} obsoletedBy            Gets or sets the security provenance object which represents the obsoletion of this data            
+ * @property {string} id            Gets or sets the primary identifying UUID of this object            
+ * @property {string} $type            Gets the type registration of this object            
+ * @param {VersionedEntityData} copyData Copy constructor (if present)
+ */
+function VersionedEntityData (copyData) { 
+	this.$type = 'VersionedEntityData';
+	if(copyData) {
+	/** @type {string} */
+	this.id = copyData.id;
+	/** @type {string} */
+	this.obsoletedBy = copyData.obsoletedBy;
+	/** @type {string} */
+	this.createdBy = copyData.createdBy;
+	/** @type {SecurityProvenance} */
+	this.obsoletedByModel = copyData.obsoletedByModel;
+	/** @type {Date} */
+	this.modifiedOn = copyData.modifiedOn;
+	/** @type {SecurityProvenance} */
+	this.createdByModel = copyData.createdByModel;
+	/** @type {Date} */
+	this.obsoletionTime = copyData.obsoletionTime;
+	/** @type {Date} */
+	this.obsoletionTimeModel = copyData.obsoletionTimeModel;
+	/** @type {Date} */
+	this.creationTime = copyData.creationTime;
+	/** @type {Date} */
+	this.creationTimeModel = copyData.creationTimeModel;
+	/** @type {number} */
+	this.sequence = copyData.sequence;
+	/** @type {string} */
+	this.version = copyData.version;
+	/** @type {string} */
+	this.previousVersion = copyData.previousVersion;
+	}
+}  // VersionedEntityData 
+// SanteDB.Core.Model.Warehouse.DatamartDefinition, SanteDB.Core.Model, Version=2.0.0.0, Culture=neutral, PublicKeyToken=null
+//if(!DatamartDefinition)
+/**
+ * @class
+ * @constructor
  * @public
  * @summary             Represents a datamart definition which contains the definition of fields for a datamart            
  * @property {string} id            Gets or sets the identifier of the data mart            
@@ -97,12 +451,11 @@ function DatamartDefinition (copyData) {
 	this.id = copyData.id;
 	}
 }  // DatamartDefinition 
-// SanteDB.Core.Model.Warehouse.DatamartSchema, SanteDB.Core.Model, Version=1.1.0.35405, Culture=neutral, PublicKeyToken=null
-if(!DatamartSchema)
+// SanteDB.Core.Model.Warehouse.DatamartSchema, SanteDB.Core.Model, Version=2.0.0.0, Culture=neutral, PublicKeyToken=null
+//if(!DatamartSchema)
 /**
  * @class
  * @constructor
- * @memberof SanteDBModel
  * @public
  * @summary             Represents a datamart schema which gives hints to the properties to be stored from             a dynamic object            
  * @property {string} id            Gets or sets the unique identifier for the schema itself            
@@ -124,12 +477,11 @@ function DatamartSchema (copyData) {
 	this.id = copyData.id;
 	}
 }  // DatamartSchema 
-// SanteDB.Core.Model.Warehouse.DatamartSchemaProperty, SanteDB.Core.Model, Version=1.1.0.35405, Culture=neutral, PublicKeyToken=null
-if(!DatamartSchemaProperty)
+// SanteDB.Core.Model.Warehouse.DatamartSchemaProperty, SanteDB.Core.Model, Version=2.0.0.0, Culture=neutral, PublicKeyToken=null
+//if(!DatamartSchemaProperty)
 /**
  * @class
  * @constructor
- * @memberof SanteDBModel
  * @public
  * @summary             Represents a single property on the data mart schema            
  * @property {string} id            Gets or sets the identifier of the warehouse property            
@@ -154,12 +506,11 @@ function DatamartSchemaProperty (copyData) {
 	this.id = copyData.id;
 	}
 }  // DatamartSchemaProperty 
-// SanteDB.Core.Model.Warehouse.DatamartStoredQuery, SanteDB.Core.Model, Version=1.1.0.35405, Culture=neutral, PublicKeyToken=null
-if(!DatamartStoredQuery)
+// SanteDB.Core.Model.Warehouse.DatamartStoredQuery, SanteDB.Core.Model, Version=2.0.0.0, Culture=neutral, PublicKeyToken=null
+//if(!DatamartStoredQuery)
 /**
  * @class
  * @constructor
- * @memberof SanteDBModel
  * @public
  * @summary             Represents a stored query creation statement            
  * @property {string} connection            Attachments            
@@ -184,12 +535,11 @@ function DatamartStoredQuery (copyData) {
 	this.connection = copyData.connection;
 	}
 }  // DatamartStoredQuery 
-// SanteDB.Core.Model.Warehouse.DatamartStoredQueryDefinition, SanteDB.Core.Model, Version=1.1.0.35405, Culture=neutral, PublicKeyToken=null
-if(!DatamartStoredQueryDefinition)
+// SanteDB.Core.Model.Warehouse.DatamartStoredQueryDefinition, SanteDB.Core.Model, Version=2.0.0.0, Culture=neutral, PublicKeyToken=null
+//if(!DatamartStoredQueryDefinition)
 /**
  * @class
  * @constructor
- * @memberof SanteDBModel
  * @public
  * @summary             Represents the SQL for an actual query            
  * @property {string} provider            Provider identifier            
@@ -205,12 +555,11 @@ function DatamartStoredQueryDefinition (copyData) {
 	this.provider = copyData.provider;
 	}
 }  // DatamartStoredQueryDefinition 
-// SanteDB.Core.Model.Warehouse.DataWarehouseObjectPropertyValue, SanteDB.Core.Model, Version=1.1.0.35405, Culture=neutral, PublicKeyToken=null
-if(!DataWarehouseObjectPropertyValue)
+// SanteDB.Core.Model.Warehouse.DataWarehouseObjectPropertyValue, SanteDB.Core.Model, Version=2.0.0.0, Culture=neutral, PublicKeyToken=null
+//if(!DataWarehouseObjectPropertyValue)
 /**
  * @class
  * @constructor
- * @memberof SanteDBModel
  * @public
  * @summary             Warehouse object property value            
  * @param {DataWarehouseObjectPropertyValue} copyData Copy constructor (if present)
@@ -220,12 +569,11 @@ function DataWarehouseObjectPropertyValue (copyData) {
 	if(copyData) {
 	}
 }  // DataWarehouseObjectPropertyValue 
-// SanteDB.Core.Model.Warehouse.DataWarehouseObject, SanteDB.Core.Model, Version=1.1.0.35405, Culture=neutral, PublicKeyToken=null
-if(!DataWarehouseObject)
+// SanteDB.Core.Model.Warehouse.DataWarehouseObject, SanteDB.Core.Model, Version=2.0.0.0, Culture=neutral, PublicKeyToken=null
+//if(!DataWarehouseObject)
 /**
  * @class
  * @constructor
- * @memberof SanteDBModel
  * @public
  * @summary             Data warehousing object wrapper             
  * @property {DataWarehouseObjectPropertyValue} p            Gets or sets the properties            
@@ -238,30 +586,97 @@ function DataWarehouseObject (copyData) {
 	this.p = copyData.p;
 	}
 }  // DataWarehouseObject 
-// SanteDB.Core.Model.Security.SecurityApplication, SanteDB.Core.Model, Version=1.1.0.35405, Culture=neutral, PublicKeyToken=null
-if(!SecurityApplication)
+// SanteDB.Core.Model.Subscription.SubscriptionClientDefinition, SanteDB.Core.Model, Version=2.0.0.0, Culture=neutral, PublicKeyToken=null
+//if(!SubscriptionClientDefinition)
 /**
  * @class
  * @constructor
- * @memberof SanteDBModel
  * @public
- * @extends SecurityEntity
+ * @summary             Represents client side definition            
+ * @property {string} resource            Gets or sets the resource type reference            
+ * @property {string} name            Gets or sets the name of the subscription            
+ * @property {SubscriptionModeType} mode            Gets or sets the mode of the subscription            (see: {@link SubscriptionModeType} for values)
+ * @property {SubscriptionTriggerType} trigger            Gets or sets the trigger            (see: {@link SubscriptionTriggerType} for values)
+ * @property {boolean} ignoreModifiedOn            Gets or sets the ignore modified on (prevents If-Modified-Since from being used)            
+ * @property {string} guards            Gets or sets the guards which indicate when this subscription can be activated            
+ * @property {string} filters            Gets or sets the filters            
+ * @param {SubscriptionClientDefinition} copyData Copy constructor (if present)
+ */
+function SubscriptionClientDefinition (copyData) { 
+	this.$type = 'SubscriptionClientDefinition';
+	if(copyData) {
+	/** @type {string} */
+	this.filters = copyData.filters;
+	/** @type {string} */
+	this.guards = copyData.guards;
+	/** @type {boolean} */
+	this.ignoreModifiedOn = copyData.ignoreModifiedOn;
+	/** @type {SubscriptionTriggerType} */
+	this.trigger = copyData.trigger;
+	/** @type {SubscriptionModeType} */
+	this.mode = copyData.mode;
+	/** @type {string} */
+	this.name = copyData.name;
+	/** @type {string} */
+	this.resource = copyData.resource;
+	}
+}  // SubscriptionClientDefinition 
+// SanteDB.Core.Model.Subscription.SubscriptionDefinition, SanteDB.Core.Model, Version=2.0.0.0, Culture=neutral, PublicKeyToken=null
+//if(!SubscriptionDefinition)
+/**
+ * @class
+ * @constructor
+ * @public
+ * @extends IdentifiedData
+ * @summary             Class which is used to define a subscription type which clients can consume            
+ * @property {string} uuid            Gets or sets the uuid            
+ * @property {Date} modifiedOn            Gets the time that this was modified            
+ * @property {SubscriptionClientDefinition} definitions            Gets or sets the client side definitions            
+ * @property {string} id            Gets or sets the primary identifying UUID of this object            
+ * @property {string} $type            Gets the type registration of this object            
+ * @param {SubscriptionDefinition} copyData Copy constructor (if present)
+ */
+function SubscriptionDefinition (copyData) { 
+	this.$type = 'SubscriptionDefinition';
+	if(copyData) {
+	/** @type {string} */
+	this.id = copyData.id;
+	/** @type {SubscriptionClientDefinition} */
+	this.definitions = copyData.definitions;
+	/** @type {Date} */
+	this.modifiedOn = copyData.modifiedOn;
+	/** @type {string} */
+	this.uuid = copyData.uuid;
+	}
+}  // SubscriptionDefinition 
+// SanteDB.Core.Model.Security.SecurityApplication, SanteDB.Core.Model, Version=2.0.0.0, Culture=neutral, PublicKeyToken=null
+//if(!SecurityApplication)
+/**
+ * @class
+ * @constructor
+ * @public
  * @summary             Represents a security application            
  * @property {string} applicationSecret            Gets or sets the application secret used for authenticating the application            
  * @property {string} name            Gets or sets the name of the security device/user/role/device.            
- * @property {Date} updatedTime            Gets or sets the creation time in XML format            
+ * @property {string} lockout            Gets or sets the lockout time as XML date            
+ * @property {Date} lockoutModel [Delay loaded from lockout],             Gets or sets the lockout            
+ * @property {number} invalidAuth            Gets or sets the number of invalid authentication attempts            
+ * @property {string} lastAuthenticationTime            Gets the last authenticated time            
+ * @property {Date} lastAuthenticationTimeModel [Delay loaded from lastAuthenticationTime],             Gets or sets the last authentication time as a DTO            
+ * @property {Date} updatedTime            Gets or sets the time that this object was last modified in ISO format            
  * @property {Date} modifiedOn            Gets the time this item was modified            
- * @property {string} updatedBy            Gets or sets the created by identifier            
+ * @property {SecurityProvenance} updatedByModel [Delay loaded from updatedBy],             Gets or sets the user that updated this base data            
+ * @property {string} updatedBy            Gets or sets the provenance identifier associated with the last update of this object            
  * @property {Date} creationTimeModel [Delay loaded from creationTime],             Gets or sets the time at which the data was created            
- * @property {Date} creationTime            Gets or sets the creation time in XML format            
+ * @property {Date} creationTime            Gets or sets the creation time as an ISO date format            
  * @property {Date} obsoletionTimeModel [Delay loaded from obsoletionTime],             Gets or sets the time when the data is or will become invalid            
- * @property {Date} obsoletionTime            Gets or sets the creation time in XML format            
- * @property {SecurityUser} createdByModel [Delay loaded from createdBy],             Gets or sets the user that created this base data            
- * @property {SecurityUser} obsoletedByModel [Delay loaded from obsoletedBy],             Gets or sets the user that obsoleted this base data            
- * @property {string} createdBy            Gets or sets the identifier of the user which created the data            
- * @property {string} obsoletedBy            Gets or sets the identifier of the user which obsoleted the data            
- * @property {string} id            The internal primary key value of the entity            
- * @property {string} $type            Gets the type            
+ * @property {Date} obsoletionTime            Gets or sets the time that the data is no longer valid (was deleted/obsoleted) in ISO format            
+ * @property {SecurityProvenance} createdByModel [Delay loaded from createdBy],             Gets or sets the user that created this base data            
+ * @property {SecurityProvenance} obsoletedByModel [Delay loaded from obsoletedBy],             Gets or sets the user that obsoleted this base data            
+ * @property {string} createdBy            Gets or sets the security provenance object which represents the creation of this object            
+ * @property {string} obsoletedBy            Gets or sets the security provenance object which represents the obsoletion of this data            
+ * @property {string} id            Gets or sets the primary identifying UUID of this object            
+ * @property {string} $type            Gets the type registration of this object            
  * @param {SecurityApplication} copyData Copy constructor (if present)
  */
 function SecurityApplication (copyData) { 
@@ -273,9 +688,9 @@ function SecurityApplication (copyData) {
 	this.obsoletedBy = copyData.obsoletedBy;
 	/** @type {string} */
 	this.createdBy = copyData.createdBy;
-	/** @type {SecurityUser} */
+	/** @type {SecurityProvenance} */
 	this.obsoletedByModel = copyData.obsoletedByModel;
-	/** @type {SecurityUser} */
+	/** @type {SecurityProvenance} */
 	this.createdByModel = copyData.createdByModel;
 	/** @type {Date} */
 	this.obsoletionTime = copyData.obsoletionTime;
@@ -287,40 +702,113 @@ function SecurityApplication (copyData) {
 	this.creationTimeModel = copyData.creationTimeModel;
 	/** @type {string} */
 	this.updatedBy = copyData.updatedBy;
+	/** @type {SecurityProvenance} */
+	this.updatedByModel = copyData.updatedByModel;
 	/** @type {Date} */
 	this.modifiedOn = copyData.modifiedOn;
 	/** @type {Date} */
 	this.updatedTime = copyData.updatedTime;
+	/** @type {Date} */
+	this.lastAuthenticationTimeModel = copyData.lastAuthenticationTimeModel;
+	/** @type {string} */
+	this.lastAuthenticationTime = copyData.lastAuthenticationTime;
+	/** @type {number} */
+	this.invalidAuth = copyData.invalidAuth;
+	/** @type {Date} */
+	this.lockoutModel = copyData.lockoutModel;
+	/** @type {string} */
+	this.lockout = copyData.lockout;
 	/** @type {string} */
 	this.name = copyData.name;
 	/** @type {string} */
 	this.applicationSecret = copyData.applicationSecret;
 	}
 }  // SecurityApplication 
-// SanteDB.Core.Model.Security.SecurityDevice, SanteDB.Core.Model, Version=1.1.0.35405, Culture=neutral, PublicKeyToken=null
-if(!SecurityDevice)
+// SanteDB.Core.Model.Security.SecurityChallenge, SanteDB.Core.Model, Version=2.0.0.0, Culture=neutral, PublicKeyToken=null
+//if(!SecurityChallenge)
 /**
  * @class
  * @constructor
- * @memberof SanteDBModel
  * @public
- * @extends SecurityEntity
+ * @summary             Represents a security challenge            
+ * @property {string} text            The text for the security challenge            
+ * @property {Date} updatedTime            Gets or sets the time that this object was last modified in ISO format            
+ * @property {Date} modifiedOn            Gets the time this item was modified            
+ * @property {SecurityProvenance} updatedByModel [Delay loaded from updatedBy],             Gets or sets the user that updated this base data            
+ * @property {string} updatedBy            Gets or sets the provenance identifier associated with the last update of this object            
+ * @property {Date} creationTimeModel [Delay loaded from creationTime],             Gets or sets the time at which the data was created            
+ * @property {Date} creationTime            Gets or sets the creation time as an ISO date format            
+ * @property {Date} obsoletionTimeModel [Delay loaded from obsoletionTime],             Gets or sets the time when the data is or will become invalid            
+ * @property {Date} obsoletionTime            Gets or sets the time that the data is no longer valid (was deleted/obsoleted) in ISO format            
+ * @property {SecurityProvenance} createdByModel [Delay loaded from createdBy],             Gets or sets the user that created this base data            
+ * @property {SecurityProvenance} obsoletedByModel [Delay loaded from obsoletedBy],             Gets or sets the user that obsoleted this base data            
+ * @property {string} createdBy            Gets or sets the security provenance object which represents the creation of this object            
+ * @property {string} obsoletedBy            Gets or sets the security provenance object which represents the obsoletion of this data            
+ * @property {string} id            Gets or sets the primary identifying UUID of this object            
+ * @property {string} $type            Gets the type registration of this object            
+ * @param {SecurityChallenge} copyData Copy constructor (if present)
+ */
+function SecurityChallenge (copyData) { 
+	this.$type = 'SecurityChallenge';
+	if(copyData) {
+	/** @type {string} */
+	this.id = copyData.id;
+	/** @type {string} */
+	this.obsoletedBy = copyData.obsoletedBy;
+	/** @type {string} */
+	this.createdBy = copyData.createdBy;
+	/** @type {SecurityProvenance} */
+	this.obsoletedByModel = copyData.obsoletedByModel;
+	/** @type {SecurityProvenance} */
+	this.createdByModel = copyData.createdByModel;
+	/** @type {Date} */
+	this.obsoletionTime = copyData.obsoletionTime;
+	/** @type {Date} */
+	this.obsoletionTimeModel = copyData.obsoletionTimeModel;
+	/** @type {Date} */
+	this.creationTime = copyData.creationTime;
+	/** @type {Date} */
+	this.creationTimeModel = copyData.creationTimeModel;
+	/** @type {string} */
+	this.updatedBy = copyData.updatedBy;
+	/** @type {SecurityProvenance} */
+	this.updatedByModel = copyData.updatedByModel;
+	/** @type {Date} */
+	this.modifiedOn = copyData.modifiedOn;
+	/** @type {Date} */
+	this.updatedTime = copyData.updatedTime;
+	/** @type {string} */
+	this.text = copyData.text;
+	}
+}  // SecurityChallenge 
+// SanteDB.Core.Model.Security.SecurityDevice, SanteDB.Core.Model, Version=2.0.0.0, Culture=neutral, PublicKeyToken=null
+//if(!SecurityDevice)
+/**
+ * @class
+ * @constructor
+ * @public
  * @summary             Represents a security device            
  * @property {string} deviceSecret            Gets or sets the device secret            
  * @property {string} name            Gets or sets the name of the security device/user/role/devie            
- * @property {Date} updatedTime            Gets or sets the creation time in XML format            
+ * @property {string} lockout            Gets or sets the lockout time as XML date            
+ * @property {Date} lockoutModel [Delay loaded from lockout],             Gets or sets the lockout            
+ * @property {number} invalidAuth            Gets or sets the number of invalid authentication attempts            
+ * @property {string} lastAuthenticationTime            Gets the last authenticated time            
+ * @property {Date} lastAuthenticationTimeModel [Delay loaded from lastAuthenticationTime],             Gets or sets the last authentication time as a DTO            
+ * @property {Date} updatedTime            Gets or sets the time that this object was last modified in ISO format            
  * @property {Date} modifiedOn            Gets the time this item was modified            
- * @property {string} updatedBy            Gets or sets the created by identifier            
+ * @property {SecurityProvenance} updatedByModel [Delay loaded from updatedBy],             Gets or sets the user that updated this base data            
+ * @property {string} updatedBy            Gets or sets the provenance identifier associated with the last update of this object            
  * @property {Date} creationTimeModel [Delay loaded from creationTime],             Gets or sets the time at which the data was created            
- * @property {Date} creationTime            Gets or sets the creation time in XML format            
+ * @property {Date} creationTime            Gets or sets the creation time as an ISO date format            
  * @property {Date} obsoletionTimeModel [Delay loaded from obsoletionTime],             Gets or sets the time when the data is or will become invalid            
- * @property {Date} obsoletionTime            Gets or sets the creation time in XML format            
- * @property {SecurityUser} createdByModel [Delay loaded from createdBy],             Gets or sets the user that created this base data            
- * @property {SecurityUser} obsoletedByModel [Delay loaded from obsoletedBy],             Gets or sets the user that obsoleted this base data            
- * @property {string} createdBy            Gets or sets the identifier of the user which created the data            
- * @property {string} obsoletedBy            Gets or sets the identifier of the user which obsoleted the data            
- * @property {string} id            The internal primary key value of the entity            
- * @property {string} $type            Gets the type            
+ * @property {Date} obsoletionTime            Gets or sets the time that the data is no longer valid (was deleted/obsoleted) in ISO format            
+ * @property {SecurityProvenance} createdByModel [Delay loaded from createdBy],             Gets or sets the user that created this base data            
+ * @property {SecurityProvenance} obsoletedByModel [Delay loaded from obsoletedBy],             Gets or sets the user that obsoleted this base data            
+ * @property {string} createdBy            Gets or sets the security provenance object which represents the creation of this object            
+ * @property {string} obsoletedBy            Gets or sets the security provenance object which represents the obsoletion of this data            
+ * @property {string} id            Gets or sets the primary identifying UUID of this object            
+ * @property {string} $type            Gets the type registration of this object            
  * @param {SecurityDevice} copyData Copy constructor (if present)
  */
 function SecurityDevice (copyData) { 
@@ -332,9 +820,9 @@ function SecurityDevice (copyData) {
 	this.obsoletedBy = copyData.obsoletedBy;
 	/** @type {string} */
 	this.createdBy = copyData.createdBy;
-	/** @type {SecurityUser} */
+	/** @type {SecurityProvenance} */
 	this.obsoletedByModel = copyData.obsoletedByModel;
-	/** @type {SecurityUser} */
+	/** @type {SecurityProvenance} */
 	this.createdByModel = copyData.createdByModel;
 	/** @type {Date} */
 	this.obsoletionTime = copyData.obsoletionTime;
@@ -346,38 +834,49 @@ function SecurityDevice (copyData) {
 	this.creationTimeModel = copyData.creationTimeModel;
 	/** @type {string} */
 	this.updatedBy = copyData.updatedBy;
+	/** @type {SecurityProvenance} */
+	this.updatedByModel = copyData.updatedByModel;
 	/** @type {Date} */
 	this.modifiedOn = copyData.modifiedOn;
 	/** @type {Date} */
 	this.updatedTime = copyData.updatedTime;
+	/** @type {Date} */
+	this.lastAuthenticationTimeModel = copyData.lastAuthenticationTimeModel;
+	/** @type {string} */
+	this.lastAuthenticationTime = copyData.lastAuthenticationTime;
+	/** @type {number} */
+	this.invalidAuth = copyData.invalidAuth;
+	/** @type {Date} */
+	this.lockoutModel = copyData.lockoutModel;
+	/** @type {string} */
+	this.lockout = copyData.lockout;
 	/** @type {string} */
 	this.name = copyData.name;
 	/** @type {string} */
 	this.deviceSecret = copyData.deviceSecret;
 	}
 }  // SecurityDevice 
-// SanteDB.Core.Model.Security.SecurityEntity, SanteDB.Core.Model, Version=1.1.0.35405, Culture=neutral, PublicKeyToken=null
-if(!SecurityEntity)
+// SanteDB.Core.Model.Security.SecurityEntity, SanteDB.Core.Model, Version=2.0.0.0, Culture=neutral, PublicKeyToken=null
+//if(!SecurityEntity)
 /**
  * @class
  * @constructor
- * @memberof SanteDBModel
  * @public
- * @extends NonVersionedEntityData
  * @summary             Security Entity base class            
- * @property {Date} updatedTime            Gets or sets the creation time in XML format            
+ * @property {Date} updatedTime            Gets or sets the time that this object was last modified in ISO format            
  * @property {Date} modifiedOn            Gets the time this item was modified            
- * @property {string} updatedBy            Gets or sets the created by identifier            
+ * @property {SecurityProvenance} updatedByModel [Delay loaded from updatedBy],             Gets or sets the user that updated this base data            
+ * @property {string} updatedBy            Gets or sets the provenance identifier associated with the last update of this object            
  * @property {Date} creationTimeModel [Delay loaded from creationTime],             Gets or sets the time at which the data was created            
- * @property {Date} creationTime            Gets or sets the creation time in XML format            
+ * @property {Date} creationTime            Gets or sets the creation time as an ISO date format            
  * @property {Date} obsoletionTimeModel [Delay loaded from obsoletionTime],             Gets or sets the time when the data is or will become invalid            
- * @property {Date} obsoletionTime            Gets or sets the creation time in XML format            
- * @property {SecurityUser} createdByModel [Delay loaded from createdBy],             Gets or sets the user that created this base data            
- * @property {SecurityUser} obsoletedByModel [Delay loaded from obsoletedBy],             Gets or sets the user that obsoleted this base data            
- * @property {string} createdBy            Gets or sets the identifier of the user which created the data            
- * @property {string} obsoletedBy            Gets or sets the identifier of the user which obsoleted the data            
- * @property {string} id            The internal primary key value of the entity            
- * @property {string} $type            Gets the type            
+ * @property {Date} obsoletionTime            Gets or sets the time that the data is no longer valid (was deleted/obsoleted) in ISO format            
+ * @property {SecurityProvenance} createdByModel [Delay loaded from createdBy],             Gets or sets the user that created this base data            
+ * @property {SecurityProvenance} obsoletedByModel [Delay loaded from obsoletedBy],             Gets or sets the user that obsoleted this base data            
+ * @property {string} createdBy            Gets or sets the security provenance object which represents the creation of this object            
+ * @property {string} obsoletedBy            Gets or sets the security provenance object which represents the obsoletion of this data            
+ * @property {string} id            Gets or sets the primary identifying UUID of this object            
+ * @property {string} $type            Gets the type registration of this object            
  * @param {SecurityEntity} copyData Copy constructor (if present)
  */
 function SecurityEntity (copyData) { 
@@ -389,9 +888,9 @@ function SecurityEntity (copyData) {
 	this.obsoletedBy = copyData.obsoletedBy;
 	/** @type {string} */
 	this.createdBy = copyData.createdBy;
-	/** @type {SecurityUser} */
+	/** @type {SecurityProvenance} */
 	this.obsoletedByModel = copyData.obsoletedByModel;
-	/** @type {SecurityUser} */
+	/** @type {SecurityProvenance} */
 	this.createdByModel = copyData.createdByModel;
 	/** @type {Date} */
 	this.obsoletionTime = copyData.obsoletionTime;
@@ -403,19 +902,21 @@ function SecurityEntity (copyData) {
 	this.creationTimeModel = copyData.creationTimeModel;
 	/** @type {string} */
 	this.updatedBy = copyData.updatedBy;
+	/** @type {SecurityProvenance} */
+	this.updatedByModel = copyData.updatedByModel;
 	/** @type {Date} */
 	this.modifiedOn = copyData.modifiedOn;
 	/** @type {Date} */
 	this.updatedTime = copyData.updatedTime;
 	}
 }  // SecurityEntity 
-// SanteDB.Core.Model.Security.SecurityPolicy, SanteDB.Core.Model, Version=1.1.0.35405, Culture=neutral, PublicKeyToken=null
-if(!SecurityPolicy)
+// SanteDB.Core.Model.Security.SecurityPolicy, SanteDB.Core.Model, Version=2.0.0.0, Culture=neutral, PublicKeyToken=null
+//if(!SecurityPolicy)
 /**
  * @class
  * @constructor
- * @memberof SanteDBModel
  * @public
+ * @extends BaseEntityData
  * @summary             Represents a simply security policy            
  * @property {string} handler            Gets or sets the handler which may handle this policy            
  * @property {string} name            Gets or sets the name of the policy            
@@ -423,16 +924,16 @@ if(!SecurityPolicy)
  * @property {boolean} isPublic            Whether the property is public            
  * @property {boolean} canOverride            Whether the policy can be elevated over            
  * @property {Date} creationTimeModel [Delay loaded from creationTime],             Gets or sets the time at which the data was created            
- * @property {Date} creationTime            Gets or sets the creation time in XML format            
+ * @property {Date} creationTime            Gets or sets the creation time as an ISO date format            
  * @property {Date} obsoletionTimeModel [Delay loaded from obsoletionTime],             Gets or sets the time when the data is or will become invalid            
- * @property {Date} obsoletionTime            Gets or sets the creation time in XML format            
- * @property {SecurityUser} createdByModel [Delay loaded from createdBy],             Gets or sets the user that created this base data            
+ * @property {Date} obsoletionTime            Gets or sets the time that the data is no longer valid (was deleted/obsoleted) in ISO format            
+ * @property {SecurityProvenance} createdByModel [Delay loaded from createdBy],             Gets or sets the user that created this base data            
  * @property {Date} modifiedOn            Gets the time that the object was last modified (from base data, default to CreationTime)            
- * @property {SecurityUser} obsoletedByModel [Delay loaded from obsoletedBy],             Gets or sets the user that obsoleted this base data            
- * @property {string} createdBy            Gets or sets the identifier of the user which created the data            
- * @property {string} obsoletedBy            Gets or sets the identifier of the user which obsoleted the data            
- * @property {string} id            The internal primary key value of the entity            
- * @property {string} $type            Gets the type            
+ * @property {SecurityProvenance} obsoletedByModel [Delay loaded from obsoletedBy],             Gets or sets the user that obsoleted this base data            
+ * @property {string} createdBy            Gets or sets the security provenance object which represents the creation of this object            
+ * @property {string} obsoletedBy            Gets or sets the security provenance object which represents the obsoletion of this data            
+ * @property {string} id            Gets or sets the primary identifying UUID of this object            
+ * @property {string} $type            Gets the type registration of this object            
  * @param {SecurityPolicy} copyData Copy constructor (if present)
  */
 function SecurityPolicy (copyData) { 
@@ -444,11 +945,11 @@ function SecurityPolicy (copyData) {
 	this.obsoletedBy = copyData.obsoletedBy;
 	/** @type {string} */
 	this.createdBy = copyData.createdBy;
-	/** @type {SecurityUser} */
+	/** @type {SecurityProvenance} */
 	this.obsoletedByModel = copyData.obsoletedByModel;
 	/** @type {Date} */
 	this.modifiedOn = copyData.modifiedOn;
-	/** @type {SecurityUser} */
+	/** @type {SecurityProvenance} */
 	this.createdByModel = copyData.createdByModel;
 	/** @type {Date} */
 	this.obsoletionTime = copyData.obsoletionTime;
@@ -470,19 +971,22 @@ function SecurityPolicy (copyData) {
 	this.handler = copyData.handler;
 	}
 }  // SecurityPolicy 
-// SanteDB.Core.Model.Security.SecurityPolicyInstance, SanteDB.Core.Model, Version=1.1.0.35405, Culture=neutral, PublicKeyToken=null
-if(!SecurityPolicyInstance)
+// SanteDB.Core.Model.Security.SecurityPolicyInstance, SanteDB.Core.Model, Version=2.0.0.0, Culture=neutral, PublicKeyToken=null
+//if(!SecurityPolicyInstance)
 /**
  * @class
  * @constructor
- * @memberof SanteDBModel
  * @public
+ * @extends Association
  * @summary             Represents a security policy instance            
+ * @property {string} policy            Gets or sets the policy key            
+ * @property {string} policyModel [Delay loaded from policy],             The policy            
+ * @property {PolicyGrantType} grant            Gets or sets whether the policy is a Deny            (see: {@link PolicyGrantType} for values)
  * @property {Date} modifiedOn
  * @property {string} source
  * @property {SecurityEntity} sourceModel [Delay loaded from source], 
- * @property {string} id            The internal primary key value of the entity            
- * @property {string} $type            Gets the type            
+ * @property {string} id            Gets or sets the primary identifying UUID of this object            
+ * @property {string} $type            Gets the type registration of this object            
  * @param {SecurityPolicyInstance} copyData Copy constructor (if present)
  */
 function SecurityPolicyInstance (copyData) { 
@@ -496,32 +1000,92 @@ function SecurityPolicyInstance (copyData) {
 	this.source = copyData.source;
 	/** @type {Date} */
 	this.modifiedOn = copyData.modifiedOn;
+	/** @type {PolicyGrantType} */
+	this.grant = copyData.grant;
+	/** @type {string} */
+	this.policyModel = copyData.policyModel;
+	/** @type {string} */
+	this.policy = copyData.policy;
 	}
 }  // SecurityPolicyInstance 
-// SanteDB.Core.Model.Security.SecurityRole, SanteDB.Core.Model, Version=1.1.0.35405, Culture=neutral, PublicKeyToken=null
-if(!SecurityRole)
+// SanteDB.Core.Model.Security.SecurityProvenance, SanteDB.Core.Model, Version=2.0.0.0, Culture=neutral, PublicKeyToken=null
+//if(!SecurityProvenance)
 /**
  * @class
  * @constructor
- * @memberof SanteDBModel
  * @public
- * @extends SecurityEntity
+ * @extends IdentifiedData
+ * @summary             Represents security provenance information            
+ * @property {Date} modifiedOn            Gets the time that the provenance was modified / created            
+ * @property {Date} creationTimeModel [Delay loaded from creationTime],             Gets or sets the time at which the data was created            
+ * @property {Date} creationTime            Gets or sets the creation time in XML format            
+ * @property {string} application            Gets or sets the application key            
+ * @property {string} user            Gets or sets the user key            
+ * @property {string} device            Gets or sets the device key             
+ * @property {string} session            Gets or sets the session            
+ * @property {string} extern            Gets or sets the external security object reference            
+ * @property {string} externClass            Gets the type of object that the external key references            
+ * @property {SecurityDevice} deviceModel [Delay loaded from device],             Gets the security user for the provenance if applicable            
+ * @property {SecurityUser} userModel [Delay loaded from user],             Gets the security user for the provenance if applicable            
+ * @property {SecurityApplication} applicationModel [Delay loaded from application],             Gets the security application for the provenance if applicable            
+ * @property {string} id            Gets or sets the primary identifying UUID of this object            
+ * @property {string} $type            Gets the type registration of this object            
+ * @param {SecurityProvenance} copyData Copy constructor (if present)
+ */
+function SecurityProvenance (copyData) { 
+	this.$type = 'SecurityProvenance';
+	if(copyData) {
+	/** @type {string} */
+	this.id = copyData.id;
+	/** @type {SecurityApplication} */
+	this.applicationModel = copyData.applicationModel;
+	/** @type {SecurityUser} */
+	this.userModel = copyData.userModel;
+	/** @type {SecurityDevice} */
+	this.deviceModel = copyData.deviceModel;
+	/** @type {string} */
+	this.externClass = copyData.externClass;
+	/** @type {string} */
+	this.extern = copyData.extern;
+	/** @type {string} */
+	this.session = copyData.session;
+	/** @type {string} */
+	this.device = copyData.device;
+	/** @type {string} */
+	this.user = copyData.user;
+	/** @type {string} */
+	this.application = copyData.application;
+	/** @type {Date} */
+	this.creationTime = copyData.creationTime;
+	/** @type {Date} */
+	this.creationTimeModel = copyData.creationTimeModel;
+	/** @type {Date} */
+	this.modifiedOn = copyData.modifiedOn;
+	}
+}  // SecurityProvenance 
+// SanteDB.Core.Model.Security.SecurityRole, SanteDB.Core.Model, Version=2.0.0.0, Culture=neutral, PublicKeyToken=null
+//if(!SecurityRole)
+/**
+ * @class
+ * @constructor
+ * @public
  * @summary             Security role            
  * @property {string} name            Gets or sets the name of the security role            
  * @property {string} description            Description of the role            
- * @property {Date} updatedTime            Gets or sets the creation time in XML format            
+ * @property {Date} updatedTime            Gets or sets the time that this object was last modified in ISO format            
  * @property {Date} modifiedOn            Gets the time this item was modified            
- * @property {string} updatedBy            Gets or sets the created by identifier            
+ * @property {SecurityProvenance} updatedByModel [Delay loaded from updatedBy],             Gets or sets the user that updated this base data            
+ * @property {string} updatedBy            Gets or sets the provenance identifier associated with the last update of this object            
  * @property {Date} creationTimeModel [Delay loaded from creationTime],             Gets or sets the time at which the data was created            
- * @property {Date} creationTime            Gets or sets the creation time in XML format            
+ * @property {Date} creationTime            Gets or sets the creation time as an ISO date format            
  * @property {Date} obsoletionTimeModel [Delay loaded from obsoletionTime],             Gets or sets the time when the data is or will become invalid            
- * @property {Date} obsoletionTime            Gets or sets the creation time in XML format            
- * @property {SecurityUser} createdByModel [Delay loaded from createdBy],             Gets or sets the user that created this base data            
- * @property {SecurityUser} obsoletedByModel [Delay loaded from obsoletedBy],             Gets or sets the user that obsoleted this base data            
- * @property {string} createdBy            Gets or sets the identifier of the user which created the data            
- * @property {string} obsoletedBy            Gets or sets the identifier of the user which obsoleted the data            
- * @property {string} id            The internal primary key value of the entity            
- * @property {string} $type            Gets the type            
+ * @property {Date} obsoletionTime            Gets or sets the time that the data is no longer valid (was deleted/obsoleted) in ISO format            
+ * @property {SecurityProvenance} createdByModel [Delay loaded from createdBy],             Gets or sets the user that created this base data            
+ * @property {SecurityProvenance} obsoletedByModel [Delay loaded from obsoletedBy],             Gets or sets the user that obsoleted this base data            
+ * @property {string} createdBy            Gets or sets the security provenance object which represents the creation of this object            
+ * @property {string} obsoletedBy            Gets or sets the security provenance object which represents the obsoletion of this data            
+ * @property {string} id            Gets or sets the primary identifying UUID of this object            
+ * @property {string} $type            Gets the type registration of this object            
  * @param {SecurityRole} copyData Copy constructor (if present)
  */
 function SecurityRole (copyData) { 
@@ -533,9 +1097,9 @@ function SecurityRole (copyData) {
 	this.obsoletedBy = copyData.obsoletedBy;
 	/** @type {string} */
 	this.createdBy = copyData.createdBy;
-	/** @type {SecurityUser} */
+	/** @type {SecurityProvenance} */
 	this.obsoletedByModel = copyData.obsoletedByModel;
-	/** @type {SecurityUser} */
+	/** @type {SecurityProvenance} */
 	this.createdByModel = copyData.createdByModel;
 	/** @type {Date} */
 	this.obsoletionTime = copyData.obsoletionTime;
@@ -547,6 +1111,8 @@ function SecurityRole (copyData) {
 	this.creationTimeModel = copyData.creationTimeModel;
 	/** @type {string} */
 	this.updatedBy = copyData.updatedBy;
+	/** @type {SecurityProvenance} */
+	this.updatedByModel = copyData.updatedByModel;
 	/** @type {Date} */
 	this.modifiedOn = copyData.modifiedOn;
 	/** @type {Date} */
@@ -557,41 +1123,45 @@ function SecurityRole (copyData) {
 	this.name = copyData.name;
 	}
 }  // SecurityRole 
-// SanteDB.Core.Model.Security.SecurityUser, SanteDB.Core.Model, Version=1.1.0.35405, Culture=neutral, PublicKeyToken=null
-if(!SecurityUser)
+// SanteDB.Core.Model.Security.SecurityUser, SanteDB.Core.Model, Version=2.0.0.0, Culture=neutral, PublicKeyToken=null
+//if(!SecurityUser)
 /**
  * @class
  * @constructor
- * @memberof SanteDBModel
  * @public
- * @extends SecurityEntity
  * @summary             Security user represents a user for the purpose of security             
  * @property {string} email            Gets or sets the email address of the user            
  * @property {boolean} emailConfirmed            Gets or sets whether the email address is confirmed            
  * @property {number} invalidLoginAttempts            Gets or sets the number of invalid login attempts by the user            
+ * @property {Date} lockoutModel [Delay loaded from lockout],             Gets or sets whether the account is locked out            
  * @property {string} lockout            Gets or sets the creation time in XML format            
  * @property {string} password            Gets or sets whether the password hash is enabled            
  * @property {string} securityStamp            Gets or sets whether the security has is enabled            
  * @property {boolean} twoFactorEnabled            Gets or sets whether two factor authentication is required            
  * @property {string} userName            Gets or sets the logical user name ofthe user            
  * @property {Array<byte>} photo            Gets or sets the binary representation of the user's photo            
+ * @property {Date} lastLoginTimeModel [Delay loaded from lastLoginTime],             The last login time            
  * @property {Date} lastLoginTime            Gets or sets the creation time in XML format            
+ * @property {Date} passwordExpiryModel [Delay loaded from passwordExpiry],             The last login time            
+ * @property {string} passwordExpiry            Gets or sets the creation time in XML format            
  * @property {string} phoneNumber            Gets or sets the patient's phone number            
  * @property {boolean} phoneNumberConfirmed            Gets or sets whether the phone number was confirmed            
+ * @property {string} twoFactorMechanism            Gets or sets the preferred tfa mechanism            
  * @property {string} userClass            Gets or sets the user class key            (see: {@link UserClassKeys} for values)
- * @property {Date} updatedTime            Gets or sets the creation time in XML format            
+ * @property {Date} updatedTime            Gets or sets the time that this object was last modified in ISO format            
  * @property {Date} modifiedOn            Gets the time this item was modified            
- * @property {string} updatedBy            Gets or sets the created by identifier            
+ * @property {SecurityProvenance} updatedByModel [Delay loaded from updatedBy],             Gets or sets the user that updated this base data            
+ * @property {string} updatedBy            Gets or sets the provenance identifier associated with the last update of this object            
  * @property {Date} creationTimeModel [Delay loaded from creationTime],             Gets or sets the time at which the data was created            
- * @property {Date} creationTime            Gets or sets the creation time in XML format            
+ * @property {Date} creationTime            Gets or sets the creation time as an ISO date format            
  * @property {Date} obsoletionTimeModel [Delay loaded from obsoletionTime],             Gets or sets the time when the data is or will become invalid            
- * @property {Date} obsoletionTime            Gets or sets the creation time in XML format            
- * @property {SecurityUser} createdByModel [Delay loaded from createdBy],             Gets or sets the user that created this base data            
- * @property {SecurityUser} obsoletedByModel [Delay loaded from obsoletedBy],             Gets or sets the user that obsoleted this base data            
- * @property {string} createdBy            Gets or sets the identifier of the user which created the data            
- * @property {string} obsoletedBy            Gets or sets the identifier of the user which obsoleted the data            
- * @property {string} id            The internal primary key value of the entity            
- * @property {string} $type            Gets the type            
+ * @property {Date} obsoletionTime            Gets or sets the time that the data is no longer valid (was deleted/obsoleted) in ISO format            
+ * @property {SecurityProvenance} createdByModel [Delay loaded from createdBy],             Gets or sets the user that created this base data            
+ * @property {SecurityProvenance} obsoletedByModel [Delay loaded from obsoletedBy],             Gets or sets the user that obsoleted this base data            
+ * @property {string} createdBy            Gets or sets the security provenance object which represents the creation of this object            
+ * @property {string} obsoletedBy            Gets or sets the security provenance object which represents the obsoletion of this data            
+ * @property {string} id            Gets or sets the primary identifying UUID of this object            
+ * @property {string} $type            Gets the type registration of this object            
  * @param {SecurityUser} copyData Copy constructor (if present)
  */
 function SecurityUser (copyData) { 
@@ -603,9 +1173,9 @@ function SecurityUser (copyData) {
 	this.obsoletedBy = copyData.obsoletedBy;
 	/** @type {string} */
 	this.createdBy = copyData.createdBy;
-	/** @type {SecurityUser} */
+	/** @type {SecurityProvenance} */
 	this.obsoletedByModel = copyData.obsoletedByModel;
-	/** @type {SecurityUser} */
+	/** @type {SecurityProvenance} */
 	this.createdByModel = copyData.createdByModel;
 	/** @type {Date} */
 	this.obsoletionTime = copyData.obsoletionTime;
@@ -617,18 +1187,28 @@ function SecurityUser (copyData) {
 	this.creationTimeModel = copyData.creationTimeModel;
 	/** @type {string} */
 	this.updatedBy = copyData.updatedBy;
+	/** @type {SecurityProvenance} */
+	this.updatedByModel = copyData.updatedByModel;
 	/** @type {Date} */
 	this.modifiedOn = copyData.modifiedOn;
 	/** @type {Date} */
 	this.updatedTime = copyData.updatedTime;
 	/** @type {string} */
 	this.userClass = copyData.userClass;
+	/** @type {string} */
+	this.twoFactorMechanism = copyData.twoFactorMechanism;
 	/** @type {boolean} */
 	this.phoneNumberConfirmed = copyData.phoneNumberConfirmed;
 	/** @type {string} */
 	this.phoneNumber = copyData.phoneNumber;
+	/** @type {string} */
+	this.passwordExpiry = copyData.passwordExpiry;
+	/** @type {Date} */
+	this.passwordExpiryModel = copyData.passwordExpiryModel;
 	/** @type {Date} */
 	this.lastLoginTime = copyData.lastLoginTime;
+	/** @type {Date} */
+	this.lastLoginTimeModel = copyData.lastLoginTimeModel;
 	/** @type {Array<byte>} */
 	this.photo = copyData.photo;
 	/** @type {string} */
@@ -641,6 +1221,8 @@ function SecurityUser (copyData) {
 	this.password = copyData.password;
 	/** @type {string} */
 	this.lockout = copyData.lockout;
+	/** @type {Date} */
+	this.lockoutModel = copyData.lockoutModel;
 	/** @type {number} */
 	this.invalidLoginAttempts = copyData.invalidLoginAttempts;
 	/** @type {boolean} */
@@ -649,20 +1231,28 @@ function SecurityUser (copyData) {
 	this.email = copyData.email;
 	}
 }  // SecurityUser 
-// SanteDB.Core.Model.Roles.Patient, SanteDB.Core.Model, Version=1.1.0.35405, Culture=neutral, PublicKeyToken=null
-if(!Patient)
+// SanteDB.Core.Model.Roles.Patient, SanteDB.Core.Model, Version=2.0.0.0, Culture=neutral, PublicKeyToken=null
+//if(!Patient)
 /**
  * @class
  * @constructor
- * @memberof SanteDBModel
  * @public
- * @extends Person
  * @summary             Represents an entity which is a patient            
  * @property {Date} deceasedDate            Deceased date XML            
  * @property {DatePrecision} deceasedDatePrecision            Gets or sets the precision of the date of deceased            (see: {@link DatePrecision} for values)
  * @property {number} multipleBirthOrder            Gets or sets the multiple birth order of the patient             
  * @property {string} genderConcept            Gets or sets the gender concept key            
  * @property {Concept} genderConceptModel [Delay loaded from genderConcept],             Gets or sets the gender concept            
+ * @property {string} maritalStatus            Gets or sets the key of the marital status concept            
+ * @property {string} educationLevel            Gets or sets the key of the education level            
+ * @property {string} livingArrangement            Gets or sets the living arrangement            
+ * @property {string} religion            Gets or sets the religious affiliation            
+ * @property {Concept} maritalStatusModel [Delay loaded from maritalStatus],             Gets or sets the marital status code            
+ * @property {Concept} educationLevelModel [Delay loaded from educationLevel],             Gets or sets the education level of the person            
+ * @property {Concept} livingArrangementModel [Delay loaded from livingArrangement],             Gets or sets the living arrangements            
+ * @property {Concept} religionModel [Delay loaded from religion],             Gets or sets the religious affiliation            
+ * @property {string} ethnicity            Gets or sets the ethnicity codes            
+ * @property {Concept} ethnicityModel [Delay loaded from ethnicity],             Gets the ethic group concepts            
  * @property {DatePrecision} dateOfBirthPrecision            Gets or sets the precision ofthe date of birth            (see: {@link DatePrecision} for values)
  * @property {string} dateOfBirth            Gets the date of birth as XML            
  * @property {PersonLanguageCommunication} language            Gets the person's languages of communication            
@@ -771,43 +1361,42 @@ if(!Patient)
  * @property {ActParticipation} participation.Witness             The player entity represents a legal witness to the act occurring.            
  * @property {ActParticipation} participation.$other Unclassified
  * @property {object} relationship            Gets a list of all associated entities for this entity            
- * @property {EntityRelationship} relationship.Access             The access            
- * @property {EntityRelationship} relationship.ActiveMoiety             The active moiety            
- * @property {EntityRelationship} relationship.AdministerableMaterial             The administerable material            
- * @property {EntityRelationship} relationship.AdoptedChild             The adopted child            
- * @property {EntityRelationship} relationship.AdoptedDaughter             The adopted daughter            
- * @property {EntityRelationship} relationship.AdoptedSon             The adopted son            
- * @property {EntityRelationship} relationship.Affiliate             The affiliate            
- * @property {EntityRelationship} relationship.Agent             The agent            
- * @property {EntityRelationship} relationship.Aliquot             The aliquot            
- * @property {EntityRelationship} relationship.Assigned             The assigned            
- * @property {EntityRelationship} relationship.AssignedEntity             The assigned entity            
- * @property {EntityRelationship} relationship.Aunt             The aunt            
- * @property {EntityRelationship} relationship.Birthplace             The birthplace            
- * @property {EntityRelationship} relationship.Brother             The brother            
- * @property {EntityRelationship} relationship.Brotherinlaw             The brotherinlaw            
- * @property {EntityRelationship} relationship.Caregiver             The caregiver            
- * @property {EntityRelationship} relationship.CaseSubject             The case subject            
- * @property {EntityRelationship} relationship.Child             The child            
+ * @property {EntityRelationship} relationship.Access             The source entity gives access to the target entity            
+ * @property {EntityRelationship} relationship.ActiveMoiety             Active ingredient, where not the ingredient substance (player), but itaTMs active moiety is the "basis of strength"            
+ * @property {EntityRelationship} relationship.AdministerableMaterial             The source represents a meterial that is an administerable form of the target            
+ * @property {EntityRelationship} relationship.AdoptedChild             The source is an adopted child of the target            
+ * @property {EntityRelationship} relationship.AdoptedDaughter             The source is an adopted daughter of the target            
+ * @property {EntityRelationship} relationship.AdoptedSon             The source is an adopted son of the target            
+ * @property {EntityRelationship} relationship.Affiliate             The target has a business/professional relationship with the source.            
+ * @property {EntityRelationship} relationship.Agent             The target is an agent or authorized to act on behalf of the source            
+ * @property {EntityRelationship} relationship.Aliquot             The target is a portion of the original source            
+ * @property {EntityRelationship} relationship.AssignedEntity             The target is an entity acting under the employ of the source entity            
+ * @property {EntityRelationship} relationship.Aunt             The target is the aunt of the source            
+ * @property {EntityRelationship} relationship.Birthplace             The target is the birthplace of the source            
+ * @property {EntityRelationship} relationship.Brother             The target is the brother of the source            
+ * @property {EntityRelationship} relationship.Brotherinlaw             The target is the brotherinlaw of the source            
+ * @property {EntityRelationship} relationship.Caregiver             The target is the caregiver of the source            
+ * @property {EntityRelationship} relationship.CaseSubject             The the target represents a case subject of the source entity (such as a study)            
+ * @property {EntityRelationship} relationship.Child             The the target is a child of the child source            
  * @property {EntityRelationship} relationship.ChildInlaw             The child inlaw            
- * @property {EntityRelationship} relationship.Citizen             The citizen            
- * @property {EntityRelationship} relationship.Claimant             The claimant            
+ * @property {EntityRelationship} relationship.Citizen             The target is a citizen of the source            
+ * @property {EntityRelationship} relationship.Claimant             The target is a claimant  or is making a claim in a policy (source)            
  * @property {EntityRelationship} relationship.ClinicalResearchInvestigator             The clinical research investigator            
  * @property {EntityRelationship} relationship.ClinicalResearchSponsor             The clinical research sponsor            
  * @property {EntityRelationship} relationship.CommissioningParty             The commissioning party            
- * @property {EntityRelationship} relationship.Contact             The contact            
+ * @property {EntityRelationship} relationship.Contact             The target represents a contact of the source            
  * @property {EntityRelationship} relationship.Cousin             The cousin            
- * @property {EntityRelationship} relationship.CoverageSponsor             The coverage sponsor            
- * @property {EntityRelationship} relationship.CoveredParty             The covered party            
+ * @property {EntityRelationship} relationship.CoverageSponsor             The target represents a coverage sponsor of the source            
+ * @property {EntityRelationship} relationship.CoveredParty             The target is a covered party of a source (insurance policy)            
  * @property {EntityRelationship} relationship.Daughter             The daughter            
  * @property {EntityRelationship} relationship.DaughterInlaw             The daughter inlaw            
- * @property {EntityRelationship} relationship.DedicatedServiceDeliveryLocation             The dedicated service delivery location            
- * @property {EntityRelationship} relationship.Dependent             The dependent            
- * @property {EntityRelationship} relationship.DistributedMaterial             The distributed material            
+ * @property {EntityRelationship} relationship.DedicatedServiceDeliveryLocation             The target is the dedicated service delivery location for the source            
+ * @property {EntityRelationship} relationship.Dependent             The target is a dependent of the source            
+ * @property {EntityRelationship} relationship.DistributedMaterial             The target is a distributed or shippable material of the source            
  * @property {EntityRelationship} relationship.DomesticPartner             The domestic partner            
- * @property {EntityRelationship} relationship.EmergencyContact             The emergency contact            
- * @property {EntityRelationship} relationship.Employee             The employee            
- * @property {EntityRelationship} relationship.ExposedEntity             The exposed entity            
+ * @property {EntityRelationship} relationship.EmergencyContact             The target is an emergency contact for the source            
+ * @property {EntityRelationship} relationship.Employee             The the target is an employee of the source            
+ * @property {EntityRelationship} relationship.ExposedEntity             The target represents a substance which is exposed when the source is exposed            
  * @property {EntityRelationship} relationship.FamilyMember             The family member            
  * @property {EntityRelationship} relationship.Father             The father            
  * @property {EntityRelationship} relationship.Fatherinlaw             The fatherinlaw            
@@ -825,23 +1414,23 @@ if(!Patient)
  * @property {EntityRelationship} relationship.GreatGrandparent             The great grandparent            
  * @property {EntityRelationship} relationship.Guarantor             The guarantor            
  * @property {EntityRelationship} relationship.GUARD             The guard            
- * @property {EntityRelationship} relationship.Guardian             The guardian            
+ * @property {EntityRelationship} relationship.Guardian             The target is a guardian of the source            
  * @property {EntityRelationship} relationship.Halfbrother             The halfbrother            
  * @property {EntityRelationship} relationship.Halfsibling             The halfsibling            
  * @property {EntityRelationship} relationship.Halfsister             The halfsister            
- * @property {EntityRelationship} relationship.HealthcareProvider             The healthcare provider            
- * @property {EntityRelationship} relationship.HealthChart             The health chart            
- * @property {EntityRelationship} relationship.HeldEntity             The held entity            
+ * @property {EntityRelationship} relationship.HealthcareProvider             The target is a healthcare provider for the source            
+ * @property {EntityRelationship} relationship.HealthChart             The target represents a health chart belonging to the source            
+ * @property {EntityRelationship} relationship.HeldEntity             The source holds the specified quantity of the target entity (the target entity is held by the source)            
  * @property {EntityRelationship} relationship.Husband             The husband            
- * @property {EntityRelationship} relationship.IdentifiedEntity             The identified entity            
- * @property {EntityRelationship} relationship.IncidentalServiceDeliveryLocation             The incidental service delivery location            
- * @property {EntityRelationship} relationship.Individual             The individual            
+ * @property {EntityRelationship} relationship.IdentifiedEntity             The target represents an entity for purposes of identification of the source            
+ * @property {EntityRelationship} relationship.IncidentalServiceDeliveryLocation             The target represents an incidental service delivery location related to the source entity            
+ * @property {EntityRelationship} relationship.Individual             The target represents an individual instance of the source            
  * @property {EntityRelationship} relationship.InvestigationSubject             The investigation subject            
- * @property {EntityRelationship} relationship.InvoicePayor             The invoice payor            
+ * @property {EntityRelationship} relationship.InvoicePayor             The target is the payor of an invoice for the source            
  * @property {EntityRelationship} relationship.Isolate             The isolate            
- * @property {EntityRelationship} relationship.LicensedEntity             The licensed entity            
- * @property {EntityRelationship} relationship.MaintainedEntity             The maintained entity            
- * @property {EntityRelationship} relationship.ManufacturedProduct             The manufactured product            
+ * @property {EntityRelationship} relationship.LicensedEntity             The target represents an entity licensed to perform or use the source            
+ * @property {EntityRelationship} relationship.MaintainedEntity             The target entity is maintained by the source entity            
+ * @property {EntityRelationship} relationship.ManufacturedProduct             The target entity is a product which is manufactured by the source            
  * @property {EntityRelationship} relationship.MaternalAunt             The maternal aunt            
  * @property {EntityRelationship} relationship.MaternalCousin             The maternal cousin            
  * @property {EntityRelationship} relationship.MaternalGrandfather             The maternal grandfather            
@@ -852,28 +1441,28 @@ if(!Patient)
  * @property {EntityRelationship} relationship.MaternalGreatgrandparent             The maternal greatgrandparent            
  * @property {EntityRelationship} relationship.MaternalUncle             The maternal uncle            
  * @property {EntityRelationship} relationship.MilitaryPerson             The military person            
- * @property {EntityRelationship} relationship.Mother             The mother            
+ * @property {EntityRelationship} relationship.Mother             The target is the mother of the source            
  * @property {EntityRelationship} relationship.Motherinlaw             The motherinlaw            
- * @property {EntityRelationship} relationship.NamedInsured             The named insured            
+ * @property {EntityRelationship} relationship.NamedInsured             The target is a named insured person on the source policy            
  * @property {EntityRelationship} relationship.NaturalBrother             The natural brother            
  * @property {EntityRelationship} relationship.NaturalChild             The natural child            
  * @property {EntityRelationship} relationship.NaturalDaughter             The natural daughter            
  * @property {EntityRelationship} relationship.NaturalFather             The natural father            
- * @property {EntityRelationship} relationship.NaturalFatherOfFetus             The natural father of fetus            
+ * @property {EntityRelationship} relationship.NaturalFatherOfFetus             The target is the natural father of fetus of the identified fetus (source) or pregnant entity (source)            
  * @property {EntityRelationship} relationship.NaturalMother             The natural mother            
  * @property {EntityRelationship} relationship.NaturalParent             The natural parent            
  * @property {EntityRelationship} relationship.NaturalSibling             The natural sibling            
  * @property {EntityRelationship} relationship.NaturalSister             The natural sister            
  * @property {EntityRelationship} relationship.NaturalSon             The natural son            
  * @property {EntityRelationship} relationship.Nephew             The nephew            
- * @property {EntityRelationship} relationship.NextOfKin             The next of kin            
+ * @property {EntityRelationship} relationship.NextOfKin             The target is the next of kin for the source            
  * @property {EntityRelationship} relationship.Niece             The niece            
  * @property {EntityRelationship} relationship.NieceNephew             The niece nephew            
- * @property {EntityRelationship} relationship.NotaryPublic             The notary public            
- * @property {EntityRelationship} relationship.OwnedEntity             The owned entity            
- * @property {EntityRelationship} relationship.Parent             The parent            
+ * @property {EntityRelationship} relationship.NotaryPublic             The target is a notary public acting within the source entity             
+ * @property {EntityRelationship} relationship.OwnedEntity             The target entity is owned by the source entity            
+ * @property {EntityRelationship} relationship.Parent             The target entity is the parent of the source entity            
  * @property {EntityRelationship} relationship.ParentInlaw             The parent inlaw            
- * @property {EntityRelationship} relationship.Part             The part            
+ * @property {EntityRelationship} relationship.Part             The target entity is a part of the source entity (source is comprised of parts)            
  * @property {EntityRelationship} relationship.PaternalAunt             The paternal aunt            
  * @property {EntityRelationship} relationship.PaternalCousin             The paternal cousin            
  * @property {EntityRelationship} relationship.PaternalGrandfather             The paternal grandfather            
@@ -883,27 +1472,27 @@ if(!Patient)
  * @property {EntityRelationship} relationship.PaternalGreatgrandmother             The paternal greatgrandmother            
  * @property {EntityRelationship} relationship.PaternalGreatgrandparent             The paternal greatgrandparent            
  * @property {EntityRelationship} relationship.PaternalUncle             The paternal uncle            
- * @property {EntityRelationship} relationship.Patient             The patient            
- * @property {EntityRelationship} relationship.Payee             The payee            
- * @property {EntityRelationship} relationship.PersonalRelationship             The personal relationship            
- * @property {EntityRelationship} relationship.PlaceOfDeath             The place of death            
- * @property {EntityRelationship} relationship.PolicyHolder             The policy holder            
- * @property {EntityRelationship} relationship.ProgramEligible             The program eligible            
- * @property {EntityRelationship} relationship.QualifiedEntity             The qualified entity            
- * @property {EntityRelationship} relationship.RegulatedProduct             The regulated product            
- * @property {EntityRelationship} relationship.ResearchSubject             The research subject            
- * @property {EntityRelationship} relationship.RetailedMaterial             The retailed material            
+ * @property {EntityRelationship} relationship.Patient             The target is a patient of the source entity            
+ * @property {EntityRelationship} relationship.Payee             The targert is a payee of the source entity            
+ * @property {EntityRelationship} relationship.PersonalRelationship             The target possesses a personal relationship with the source entity            
+ * @property {EntityRelationship} relationship.PlaceOfDeath             The target entity represents the place of death of the source entity            
+ * @property {EntityRelationship} relationship.PolicyHolder             The target entity represents the policy holder of the source policy            
+ * @property {EntityRelationship} relationship.ProgramEligible             The target is an entity which is eligible for funding or participation within a program            
+ * @property {EntityRelationship} relationship.QualifiedEntity             The target represents a qualified version of the source entity            
+ * @property {EntityRelationship} relationship.RegulatedProduct             The target represents a regulated version of the source product or represents a product which is regulated within the source jurisdiction            
+ * @property {EntityRelationship} relationship.ResearchSubject             The target represents a research subject of the source study            
+ * @property {EntityRelationship} relationship.RetailedMaterial             The target represents a material which is a retailed version of the source or is sold at the particular source            
  * @property {EntityRelationship} relationship.Roomate             The roomate            
- * @property {EntityRelationship} relationship.ServiceDeliveryLocation             The service delivery location            
+ * @property {EntityRelationship} relationship.ServiceDeliveryLocation             The target represents a service delivery location for the source entity            
  * @property {EntityRelationship} relationship.Sibling             The sibling            
  * @property {EntityRelationship} relationship.SiblingInlaw             The sibling inlaw            
  * @property {EntityRelationship} relationship.SignificantOther             The significant other            
- * @property {EntityRelationship} relationship.SigningAuthorityOrOfficer             The signing authority or officer            
+ * @property {EntityRelationship} relationship.SigningAuthorityOrOfficer             The target has signing authority or is an officer of the source            
  * @property {EntityRelationship} relationship.Sister             The sister            
  * @property {EntityRelationship} relationship.Sisterinlaw             The sisterinlaw            
  * @property {EntityRelationship} relationship.Son             The son            
  * @property {EntityRelationship} relationship.SonInlaw             The son inlaw            
- * @property {EntityRelationship} relationship.Specimen             The specimen            
+ * @property {EntityRelationship} relationship.Specimen             The target represents a specimen collected from the source            
  * @property {EntityRelationship} relationship.Spouse             The spouse            
  * @property {EntityRelationship} relationship.Stepbrother             The stepbrother            
  * @property {EntityRelationship} relationship.StepChild             The step child            
@@ -915,17 +1504,18 @@ if(!Patient)
  * @property {EntityRelationship} relationship.Stepsister             The stepsister            
  * @property {EntityRelationship} relationship.Stepson             The stepson            
  * @property {EntityRelationship} relationship.Student             The student            
- * @property {EntityRelationship} relationship.Subscriber             The subscriber            
- * @property {EntityRelationship} relationship.TerritoryOfAuthority             The territory of authority            
- * @property {EntityRelationship} relationship.TherapeuticAgent             The therapeutic agent            
+ * @property {EntityRelationship} relationship.Subscriber             The target is a subscriber of the source, meaning the target should receive updates whenever the source changes             
+ * @property {EntityRelationship} relationship.TerritoryOfAuthority             The target represents another territory where the source has authority            
+ * @property {EntityRelationship} relationship.TherapeuticAgent             The target represents the theraputic agent of the source            
  * @property {EntityRelationship} relationship.Uncle             The uncle            
  * @property {EntityRelationship} relationship.Underwriter             The underwriter            
- * @property {EntityRelationship} relationship.UsedEntity             The used entity            
- * @property {EntityRelationship} relationship.WarrantedProduct             The warranted product            
+ * @property {EntityRelationship} relationship.UsedEntity             The target represents an entity that is consumed whenever the source is consumed            
+ * @property {EntityRelationship} relationship.WarrantedProduct             The target represents a product which is warranted by the source            
  * @property {EntityRelationship} relationship.Wife             The wife            
- * @property {EntityRelationship} relationship.Replaces             The replaces            
+ * @property {EntityRelationship} relationship.Replaces             The source replaces the target (note: this is one relationship where the role relationship is reveresed)             
  * @property {EntityRelationship} relationship.Instance             The target entity represents an instance of the scoper entity            
  * @property {EntityRelationship} relationship.LocatedEntity             Relates the target entity to a source location            
+ * @property {EntityRelationship} relationship.Duplicate             Duplicate entity            
  * @property {EntityRelationship} relationship.$other Unclassified
  * @property {Concept} statusConceptModel [Delay loaded from statusConcept],             Status concept id            
  * @property {string} statusConcept            Status concept id            (see: {@link StatusKeys} for values)
@@ -944,20 +1534,21 @@ if(!Patient)
  * @property {TemplateDefinition} templateModel [Delay loaded from template],             Gets or sets the template definition            
  * @property {Concept} typeConceptModel [Delay loaded from typeConcept],             Type concept identifier            
  * @property {string} typeConcept            Type concept identifier            
+ * @property {SecurityPolicyInstance} policy            Gets or sets the security policy instances associated with the entity            
  * @property {string} previousVersion
  * @property {string} version
  * @property {number} sequence
  * @property {Date} creationTimeModel [Delay loaded from creationTime],             Gets or sets the time at which the data was created            
- * @property {Date} creationTime            Gets or sets the creation time in XML format            
+ * @property {Date} creationTime            Gets or sets the creation time as an ISO date format            
  * @property {Date} obsoletionTimeModel [Delay loaded from obsoletionTime],             Gets or sets the time when the data is or will become invalid            
- * @property {Date} obsoletionTime            Gets or sets the creation time in XML format            
- * @property {SecurityUser} createdByModel [Delay loaded from createdBy],             Gets or sets the user that created this base data            
+ * @property {Date} obsoletionTime            Gets or sets the time that the data is no longer valid (was deleted/obsoleted) in ISO format            
+ * @property {SecurityProvenance} createdByModel [Delay loaded from createdBy],             Gets or sets the user that created this base data            
  * @property {Date} modifiedOn            Gets the time that the object was last modified (from base data, default to CreationTime)            
- * @property {SecurityUser} obsoletedByModel [Delay loaded from obsoletedBy],             Gets or sets the user that obsoleted this base data            
- * @property {string} createdBy            Gets or sets the identifier of the user which created the data            
- * @property {string} obsoletedBy            Gets or sets the identifier of the user which obsoleted the data            
- * @property {string} id            The internal primary key value of the entity            
- * @property {string} $type            Gets the type            
+ * @property {SecurityProvenance} obsoletedByModel [Delay loaded from obsoletedBy],             Gets or sets the user that obsoleted this base data            
+ * @property {string} createdBy            Gets or sets the security provenance object which represents the creation of this object            
+ * @property {string} obsoletedBy            Gets or sets the security provenance object which represents the obsoletion of this data            
+ * @property {string} id            Gets or sets the primary identifying UUID of this object            
+ * @property {string} $type            Gets the type registration of this object            
  * @param {Patient} copyData Copy constructor (if present)
  */
 function Patient (copyData) { 
@@ -969,11 +1560,11 @@ function Patient (copyData) {
 	this.obsoletedBy = copyData.obsoletedBy;
 	/** @type {string} */
 	this.createdBy = copyData.createdBy;
-	/** @type {SecurityUser} */
+	/** @type {SecurityProvenance} */
 	this.obsoletedByModel = copyData.obsoletedByModel;
 	/** @type {Date} */
 	this.modifiedOn = copyData.modifiedOn;
-	/** @type {SecurityUser} */
+	/** @type {SecurityProvenance} */
 	this.createdByModel = copyData.createdByModel;
 	/** @type {Date} */
 	this.obsoletionTime = copyData.obsoletionTime;
@@ -989,6 +1580,8 @@ function Patient (copyData) {
 	this.version = copyData.version;
 	/** @type {string} */
 	this.previousVersion = copyData.previousVersion;
+	/** @type {SecurityPolicyInstance} */
+	this.policy = copyData.policy;
 	/** @type {string} */
 	this.typeConcept = copyData.typeConcept;
 	/** @type {Concept} */
@@ -1038,6 +1631,26 @@ function Patient (copyData) {
 	/** @type {DatePrecision} */
 	this.dateOfBirthPrecision = copyData.dateOfBirthPrecision;
 	/** @type {Concept} */
+	this.ethnicityModel = copyData.ethnicityModel;
+	/** @type {string} */
+	this.ethnicity = copyData.ethnicity;
+	/** @type {Concept} */
+	this.religionModel = copyData.religionModel;
+	/** @type {Concept} */
+	this.livingArrangementModel = copyData.livingArrangementModel;
+	/** @type {Concept} */
+	this.educationLevelModel = copyData.educationLevelModel;
+	/** @type {Concept} */
+	this.maritalStatusModel = copyData.maritalStatusModel;
+	/** @type {string} */
+	this.religion = copyData.religion;
+	/** @type {string} */
+	this.livingArrangement = copyData.livingArrangement;
+	/** @type {string} */
+	this.educationLevel = copyData.educationLevel;
+	/** @type {string} */
+	this.maritalStatus = copyData.maritalStatus;
+	/** @type {Concept} */
 	this.genderConceptModel = copyData.genderConceptModel;
 	/** @type {string} */
 	this.genderConcept = copyData.genderConcept;
@@ -1049,14 +1662,12 @@ function Patient (copyData) {
 	this.deceasedDate = copyData.deceasedDate;
 	}
 }  // Patient 
-// SanteDB.Core.Model.Roles.Provider, SanteDB.Core.Model, Version=1.1.0.35405, Culture=neutral, PublicKeyToken=null
-if(!Provider)
+// SanteDB.Core.Model.Roles.Provider, SanteDB.Core.Model, Version=2.0.0.0, Culture=neutral, PublicKeyToken=null
+//if(!Provider)
 /**
  * @class
  * @constructor
- * @memberof SanteDBModel
  * @public
- * @extends Person
  * @summary             Represents a provider role of a person            
  * @property {string} providerSpecialty            Gets or sets the provider specialty key            
  * @property {Concept} providerSpecialtyModel [Delay loaded from providerSpecialty],             Gets or sets the provider specialty            
@@ -1168,43 +1779,42 @@ if(!Provider)
  * @property {ActParticipation} participation.Witness             The player entity represents a legal witness to the act occurring.            
  * @property {ActParticipation} participation.$other Unclassified
  * @property {object} relationship            Gets a list of all associated entities for this entity            
- * @property {EntityRelationship} relationship.Access             The access            
- * @property {EntityRelationship} relationship.ActiveMoiety             The active moiety            
- * @property {EntityRelationship} relationship.AdministerableMaterial             The administerable material            
- * @property {EntityRelationship} relationship.AdoptedChild             The adopted child            
- * @property {EntityRelationship} relationship.AdoptedDaughter             The adopted daughter            
- * @property {EntityRelationship} relationship.AdoptedSon             The adopted son            
- * @property {EntityRelationship} relationship.Affiliate             The affiliate            
- * @property {EntityRelationship} relationship.Agent             The agent            
- * @property {EntityRelationship} relationship.Aliquot             The aliquot            
- * @property {EntityRelationship} relationship.Assigned             The assigned            
- * @property {EntityRelationship} relationship.AssignedEntity             The assigned entity            
- * @property {EntityRelationship} relationship.Aunt             The aunt            
- * @property {EntityRelationship} relationship.Birthplace             The birthplace            
- * @property {EntityRelationship} relationship.Brother             The brother            
- * @property {EntityRelationship} relationship.Brotherinlaw             The brotherinlaw            
- * @property {EntityRelationship} relationship.Caregiver             The caregiver            
- * @property {EntityRelationship} relationship.CaseSubject             The case subject            
- * @property {EntityRelationship} relationship.Child             The child            
+ * @property {EntityRelationship} relationship.Access             The source entity gives access to the target entity            
+ * @property {EntityRelationship} relationship.ActiveMoiety             Active ingredient, where not the ingredient substance (player), but itaTMs active moiety is the "basis of strength"            
+ * @property {EntityRelationship} relationship.AdministerableMaterial             The source represents a meterial that is an administerable form of the target            
+ * @property {EntityRelationship} relationship.AdoptedChild             The source is an adopted child of the target            
+ * @property {EntityRelationship} relationship.AdoptedDaughter             The source is an adopted daughter of the target            
+ * @property {EntityRelationship} relationship.AdoptedSon             The source is an adopted son of the target            
+ * @property {EntityRelationship} relationship.Affiliate             The target has a business/professional relationship with the source.            
+ * @property {EntityRelationship} relationship.Agent             The target is an agent or authorized to act on behalf of the source            
+ * @property {EntityRelationship} relationship.Aliquot             The target is a portion of the original source            
+ * @property {EntityRelationship} relationship.AssignedEntity             The target is an entity acting under the employ of the source entity            
+ * @property {EntityRelationship} relationship.Aunt             The target is the aunt of the source            
+ * @property {EntityRelationship} relationship.Birthplace             The target is the birthplace of the source            
+ * @property {EntityRelationship} relationship.Brother             The target is the brother of the source            
+ * @property {EntityRelationship} relationship.Brotherinlaw             The target is the brotherinlaw of the source            
+ * @property {EntityRelationship} relationship.Caregiver             The target is the caregiver of the source            
+ * @property {EntityRelationship} relationship.CaseSubject             The the target represents a case subject of the source entity (such as a study)            
+ * @property {EntityRelationship} relationship.Child             The the target is a child of the child source            
  * @property {EntityRelationship} relationship.ChildInlaw             The child inlaw            
- * @property {EntityRelationship} relationship.Citizen             The citizen            
- * @property {EntityRelationship} relationship.Claimant             The claimant            
+ * @property {EntityRelationship} relationship.Citizen             The target is a citizen of the source            
+ * @property {EntityRelationship} relationship.Claimant             The target is a claimant  or is making a claim in a policy (source)            
  * @property {EntityRelationship} relationship.ClinicalResearchInvestigator             The clinical research investigator            
  * @property {EntityRelationship} relationship.ClinicalResearchSponsor             The clinical research sponsor            
  * @property {EntityRelationship} relationship.CommissioningParty             The commissioning party            
- * @property {EntityRelationship} relationship.Contact             The contact            
+ * @property {EntityRelationship} relationship.Contact             The target represents a contact of the source            
  * @property {EntityRelationship} relationship.Cousin             The cousin            
- * @property {EntityRelationship} relationship.CoverageSponsor             The coverage sponsor            
- * @property {EntityRelationship} relationship.CoveredParty             The covered party            
+ * @property {EntityRelationship} relationship.CoverageSponsor             The target represents a coverage sponsor of the source            
+ * @property {EntityRelationship} relationship.CoveredParty             The target is a covered party of a source (insurance policy)            
  * @property {EntityRelationship} relationship.Daughter             The daughter            
  * @property {EntityRelationship} relationship.DaughterInlaw             The daughter inlaw            
- * @property {EntityRelationship} relationship.DedicatedServiceDeliveryLocation             The dedicated service delivery location            
- * @property {EntityRelationship} relationship.Dependent             The dependent            
- * @property {EntityRelationship} relationship.DistributedMaterial             The distributed material            
+ * @property {EntityRelationship} relationship.DedicatedServiceDeliveryLocation             The target is the dedicated service delivery location for the source            
+ * @property {EntityRelationship} relationship.Dependent             The target is a dependent of the source            
+ * @property {EntityRelationship} relationship.DistributedMaterial             The target is a distributed or shippable material of the source            
  * @property {EntityRelationship} relationship.DomesticPartner             The domestic partner            
- * @property {EntityRelationship} relationship.EmergencyContact             The emergency contact            
- * @property {EntityRelationship} relationship.Employee             The employee            
- * @property {EntityRelationship} relationship.ExposedEntity             The exposed entity            
+ * @property {EntityRelationship} relationship.EmergencyContact             The target is an emergency contact for the source            
+ * @property {EntityRelationship} relationship.Employee             The the target is an employee of the source            
+ * @property {EntityRelationship} relationship.ExposedEntity             The target represents a substance which is exposed when the source is exposed            
  * @property {EntityRelationship} relationship.FamilyMember             The family member            
  * @property {EntityRelationship} relationship.Father             The father            
  * @property {EntityRelationship} relationship.Fatherinlaw             The fatherinlaw            
@@ -1222,23 +1832,23 @@ if(!Provider)
  * @property {EntityRelationship} relationship.GreatGrandparent             The great grandparent            
  * @property {EntityRelationship} relationship.Guarantor             The guarantor            
  * @property {EntityRelationship} relationship.GUARD             The guard            
- * @property {EntityRelationship} relationship.Guardian             The guardian            
+ * @property {EntityRelationship} relationship.Guardian             The target is a guardian of the source            
  * @property {EntityRelationship} relationship.Halfbrother             The halfbrother            
  * @property {EntityRelationship} relationship.Halfsibling             The halfsibling            
  * @property {EntityRelationship} relationship.Halfsister             The halfsister            
- * @property {EntityRelationship} relationship.HealthcareProvider             The healthcare provider            
- * @property {EntityRelationship} relationship.HealthChart             The health chart            
- * @property {EntityRelationship} relationship.HeldEntity             The held entity            
+ * @property {EntityRelationship} relationship.HealthcareProvider             The target is a healthcare provider for the source            
+ * @property {EntityRelationship} relationship.HealthChart             The target represents a health chart belonging to the source            
+ * @property {EntityRelationship} relationship.HeldEntity             The source holds the specified quantity of the target entity (the target entity is held by the source)            
  * @property {EntityRelationship} relationship.Husband             The husband            
- * @property {EntityRelationship} relationship.IdentifiedEntity             The identified entity            
- * @property {EntityRelationship} relationship.IncidentalServiceDeliveryLocation             The incidental service delivery location            
- * @property {EntityRelationship} relationship.Individual             The individual            
+ * @property {EntityRelationship} relationship.IdentifiedEntity             The target represents an entity for purposes of identification of the source            
+ * @property {EntityRelationship} relationship.IncidentalServiceDeliveryLocation             The target represents an incidental service delivery location related to the source entity            
+ * @property {EntityRelationship} relationship.Individual             The target represents an individual instance of the source            
  * @property {EntityRelationship} relationship.InvestigationSubject             The investigation subject            
- * @property {EntityRelationship} relationship.InvoicePayor             The invoice payor            
+ * @property {EntityRelationship} relationship.InvoicePayor             The target is the payor of an invoice for the source            
  * @property {EntityRelationship} relationship.Isolate             The isolate            
- * @property {EntityRelationship} relationship.LicensedEntity             The licensed entity            
- * @property {EntityRelationship} relationship.MaintainedEntity             The maintained entity            
- * @property {EntityRelationship} relationship.ManufacturedProduct             The manufactured product            
+ * @property {EntityRelationship} relationship.LicensedEntity             The target represents an entity licensed to perform or use the source            
+ * @property {EntityRelationship} relationship.MaintainedEntity             The target entity is maintained by the source entity            
+ * @property {EntityRelationship} relationship.ManufacturedProduct             The target entity is a product which is manufactured by the source            
  * @property {EntityRelationship} relationship.MaternalAunt             The maternal aunt            
  * @property {EntityRelationship} relationship.MaternalCousin             The maternal cousin            
  * @property {EntityRelationship} relationship.MaternalGrandfather             The maternal grandfather            
@@ -1249,28 +1859,28 @@ if(!Provider)
  * @property {EntityRelationship} relationship.MaternalGreatgrandparent             The maternal greatgrandparent            
  * @property {EntityRelationship} relationship.MaternalUncle             The maternal uncle            
  * @property {EntityRelationship} relationship.MilitaryPerson             The military person            
- * @property {EntityRelationship} relationship.Mother             The mother            
+ * @property {EntityRelationship} relationship.Mother             The target is the mother of the source            
  * @property {EntityRelationship} relationship.Motherinlaw             The motherinlaw            
- * @property {EntityRelationship} relationship.NamedInsured             The named insured            
+ * @property {EntityRelationship} relationship.NamedInsured             The target is a named insured person on the source policy            
  * @property {EntityRelationship} relationship.NaturalBrother             The natural brother            
  * @property {EntityRelationship} relationship.NaturalChild             The natural child            
  * @property {EntityRelationship} relationship.NaturalDaughter             The natural daughter            
  * @property {EntityRelationship} relationship.NaturalFather             The natural father            
- * @property {EntityRelationship} relationship.NaturalFatherOfFetus             The natural father of fetus            
+ * @property {EntityRelationship} relationship.NaturalFatherOfFetus             The target is the natural father of fetus of the identified fetus (source) or pregnant entity (source)            
  * @property {EntityRelationship} relationship.NaturalMother             The natural mother            
  * @property {EntityRelationship} relationship.NaturalParent             The natural parent            
  * @property {EntityRelationship} relationship.NaturalSibling             The natural sibling            
  * @property {EntityRelationship} relationship.NaturalSister             The natural sister            
  * @property {EntityRelationship} relationship.NaturalSon             The natural son            
  * @property {EntityRelationship} relationship.Nephew             The nephew            
- * @property {EntityRelationship} relationship.NextOfKin             The next of kin            
+ * @property {EntityRelationship} relationship.NextOfKin             The target is the next of kin for the source            
  * @property {EntityRelationship} relationship.Niece             The niece            
  * @property {EntityRelationship} relationship.NieceNephew             The niece nephew            
- * @property {EntityRelationship} relationship.NotaryPublic             The notary public            
- * @property {EntityRelationship} relationship.OwnedEntity             The owned entity            
- * @property {EntityRelationship} relationship.Parent             The parent            
+ * @property {EntityRelationship} relationship.NotaryPublic             The target is a notary public acting within the source entity             
+ * @property {EntityRelationship} relationship.OwnedEntity             The target entity is owned by the source entity            
+ * @property {EntityRelationship} relationship.Parent             The target entity is the parent of the source entity            
  * @property {EntityRelationship} relationship.ParentInlaw             The parent inlaw            
- * @property {EntityRelationship} relationship.Part             The part            
+ * @property {EntityRelationship} relationship.Part             The target entity is a part of the source entity (source is comprised of parts)            
  * @property {EntityRelationship} relationship.PaternalAunt             The paternal aunt            
  * @property {EntityRelationship} relationship.PaternalCousin             The paternal cousin            
  * @property {EntityRelationship} relationship.PaternalGrandfather             The paternal grandfather            
@@ -1280,27 +1890,27 @@ if(!Provider)
  * @property {EntityRelationship} relationship.PaternalGreatgrandmother             The paternal greatgrandmother            
  * @property {EntityRelationship} relationship.PaternalGreatgrandparent             The paternal greatgrandparent            
  * @property {EntityRelationship} relationship.PaternalUncle             The paternal uncle            
- * @property {EntityRelationship} relationship.Patient             The patient            
- * @property {EntityRelationship} relationship.Payee             The payee            
- * @property {EntityRelationship} relationship.PersonalRelationship             The personal relationship            
- * @property {EntityRelationship} relationship.PlaceOfDeath             The place of death            
- * @property {EntityRelationship} relationship.PolicyHolder             The policy holder            
- * @property {EntityRelationship} relationship.ProgramEligible             The program eligible            
- * @property {EntityRelationship} relationship.QualifiedEntity             The qualified entity            
- * @property {EntityRelationship} relationship.RegulatedProduct             The regulated product            
- * @property {EntityRelationship} relationship.ResearchSubject             The research subject            
- * @property {EntityRelationship} relationship.RetailedMaterial             The retailed material            
+ * @property {EntityRelationship} relationship.Patient             The target is a patient of the source entity            
+ * @property {EntityRelationship} relationship.Payee             The targert is a payee of the source entity            
+ * @property {EntityRelationship} relationship.PersonalRelationship             The target possesses a personal relationship with the source entity            
+ * @property {EntityRelationship} relationship.PlaceOfDeath             The target entity represents the place of death of the source entity            
+ * @property {EntityRelationship} relationship.PolicyHolder             The target entity represents the policy holder of the source policy            
+ * @property {EntityRelationship} relationship.ProgramEligible             The target is an entity which is eligible for funding or participation within a program            
+ * @property {EntityRelationship} relationship.QualifiedEntity             The target represents a qualified version of the source entity            
+ * @property {EntityRelationship} relationship.RegulatedProduct             The target represents a regulated version of the source product or represents a product which is regulated within the source jurisdiction            
+ * @property {EntityRelationship} relationship.ResearchSubject             The target represents a research subject of the source study            
+ * @property {EntityRelationship} relationship.RetailedMaterial             The target represents a material which is a retailed version of the source or is sold at the particular source            
  * @property {EntityRelationship} relationship.Roomate             The roomate            
- * @property {EntityRelationship} relationship.ServiceDeliveryLocation             The service delivery location            
+ * @property {EntityRelationship} relationship.ServiceDeliveryLocation             The target represents a service delivery location for the source entity            
  * @property {EntityRelationship} relationship.Sibling             The sibling            
  * @property {EntityRelationship} relationship.SiblingInlaw             The sibling inlaw            
  * @property {EntityRelationship} relationship.SignificantOther             The significant other            
- * @property {EntityRelationship} relationship.SigningAuthorityOrOfficer             The signing authority or officer            
+ * @property {EntityRelationship} relationship.SigningAuthorityOrOfficer             The target has signing authority or is an officer of the source            
  * @property {EntityRelationship} relationship.Sister             The sister            
  * @property {EntityRelationship} relationship.Sisterinlaw             The sisterinlaw            
  * @property {EntityRelationship} relationship.Son             The son            
  * @property {EntityRelationship} relationship.SonInlaw             The son inlaw            
- * @property {EntityRelationship} relationship.Specimen             The specimen            
+ * @property {EntityRelationship} relationship.Specimen             The target represents a specimen collected from the source            
  * @property {EntityRelationship} relationship.Spouse             The spouse            
  * @property {EntityRelationship} relationship.Stepbrother             The stepbrother            
  * @property {EntityRelationship} relationship.StepChild             The step child            
@@ -1312,17 +1922,18 @@ if(!Provider)
  * @property {EntityRelationship} relationship.Stepsister             The stepsister            
  * @property {EntityRelationship} relationship.Stepson             The stepson            
  * @property {EntityRelationship} relationship.Student             The student            
- * @property {EntityRelationship} relationship.Subscriber             The subscriber            
- * @property {EntityRelationship} relationship.TerritoryOfAuthority             The territory of authority            
- * @property {EntityRelationship} relationship.TherapeuticAgent             The therapeutic agent            
+ * @property {EntityRelationship} relationship.Subscriber             The target is a subscriber of the source, meaning the target should receive updates whenever the source changes             
+ * @property {EntityRelationship} relationship.TerritoryOfAuthority             The target represents another territory where the source has authority            
+ * @property {EntityRelationship} relationship.TherapeuticAgent             The target represents the theraputic agent of the source            
  * @property {EntityRelationship} relationship.Uncle             The uncle            
  * @property {EntityRelationship} relationship.Underwriter             The underwriter            
- * @property {EntityRelationship} relationship.UsedEntity             The used entity            
- * @property {EntityRelationship} relationship.WarrantedProduct             The warranted product            
+ * @property {EntityRelationship} relationship.UsedEntity             The target represents an entity that is consumed whenever the source is consumed            
+ * @property {EntityRelationship} relationship.WarrantedProduct             The target represents a product which is warranted by the source            
  * @property {EntityRelationship} relationship.Wife             The wife            
- * @property {EntityRelationship} relationship.Replaces             The replaces            
+ * @property {EntityRelationship} relationship.Replaces             The source replaces the target (note: this is one relationship where the role relationship is reveresed)             
  * @property {EntityRelationship} relationship.Instance             The target entity represents an instance of the scoper entity            
  * @property {EntityRelationship} relationship.LocatedEntity             Relates the target entity to a source location            
+ * @property {EntityRelationship} relationship.Duplicate             Duplicate entity            
  * @property {EntityRelationship} relationship.$other Unclassified
  * @property {Concept} statusConceptModel [Delay loaded from statusConcept],             Status concept id            
  * @property {string} statusConcept            Status concept id            (see: {@link StatusKeys} for values)
@@ -1341,20 +1952,21 @@ if(!Provider)
  * @property {TemplateDefinition} templateModel [Delay loaded from template],             Gets or sets the template definition            
  * @property {Concept} typeConceptModel [Delay loaded from typeConcept],             Type concept identifier            
  * @property {string} typeConcept            Type concept identifier            
+ * @property {SecurityPolicyInstance} policy            Gets or sets the security policy instances associated with the entity            
  * @property {string} previousVersion
  * @property {string} version
  * @property {number} sequence
  * @property {Date} creationTimeModel [Delay loaded from creationTime],             Gets or sets the time at which the data was created            
- * @property {Date} creationTime            Gets or sets the creation time in XML format            
+ * @property {Date} creationTime            Gets or sets the creation time as an ISO date format            
  * @property {Date} obsoletionTimeModel [Delay loaded from obsoletionTime],             Gets or sets the time when the data is or will become invalid            
- * @property {Date} obsoletionTime            Gets or sets the creation time in XML format            
- * @property {SecurityUser} createdByModel [Delay loaded from createdBy],             Gets or sets the user that created this base data            
+ * @property {Date} obsoletionTime            Gets or sets the time that the data is no longer valid (was deleted/obsoleted) in ISO format            
+ * @property {SecurityProvenance} createdByModel [Delay loaded from createdBy],             Gets or sets the user that created this base data            
  * @property {Date} modifiedOn            Gets the time that the object was last modified (from base data, default to CreationTime)            
- * @property {SecurityUser} obsoletedByModel [Delay loaded from obsoletedBy],             Gets or sets the user that obsoleted this base data            
- * @property {string} createdBy            Gets or sets the identifier of the user which created the data            
- * @property {string} obsoletedBy            Gets or sets the identifier of the user which obsoleted the data            
- * @property {string} id            The internal primary key value of the entity            
- * @property {string} $type            Gets the type            
+ * @property {SecurityProvenance} obsoletedByModel [Delay loaded from obsoletedBy],             Gets or sets the user that obsoleted this base data            
+ * @property {string} createdBy            Gets or sets the security provenance object which represents the creation of this object            
+ * @property {string} obsoletedBy            Gets or sets the security provenance object which represents the obsoletion of this data            
+ * @property {string} id            Gets or sets the primary identifying UUID of this object            
+ * @property {string} $type            Gets the type registration of this object            
  * @param {Provider} copyData Copy constructor (if present)
  */
 function Provider (copyData) { 
@@ -1366,11 +1978,11 @@ function Provider (copyData) {
 	this.obsoletedBy = copyData.obsoletedBy;
 	/** @type {string} */
 	this.createdBy = copyData.createdBy;
-	/** @type {SecurityUser} */
+	/** @type {SecurityProvenance} */
 	this.obsoletedByModel = copyData.obsoletedByModel;
 	/** @type {Date} */
 	this.modifiedOn = copyData.modifiedOn;
-	/** @type {SecurityUser} */
+	/** @type {SecurityProvenance} */
 	this.createdByModel = copyData.createdByModel;
 	/** @type {Date} */
 	this.obsoletionTime = copyData.obsoletionTime;
@@ -1386,6 +1998,8 @@ function Provider (copyData) {
 	this.version = copyData.version;
 	/** @type {string} */
 	this.previousVersion = copyData.previousVersion;
+	/** @type {SecurityPolicyInstance} */
+	this.policy = copyData.policy;
 	/** @type {string} */
 	this.typeConcept = copyData.typeConcept;
 	/** @type {Concept} */
@@ -1440,28 +2054,28 @@ function Provider (copyData) {
 	this.providerSpecialty = copyData.providerSpecialty;
 	}
 }  // Provider 
-// SanteDB.Core.Model.Patch.Patch, SanteDB.Core.Model, Version=1.1.0.35405, Culture=neutral, PublicKeyToken=null
-if(!Patch)
+// SanteDB.Core.Model.Patch.Patch, SanteDB.Core.Model, Version=2.0.0.0, Culture=neutral, PublicKeyToken=null
+//if(!Patch)
 /**
  * @class
  * @constructor
- * @memberof SanteDBModel
  * @public
+ * @extends BaseEntityData
  * @summary             Represents a series of patch instructions             
  * @property {string} version            Gets or sets the version of the patch file            
  * @property {PatchTarget} appliesTo            Application version            
  * @property {PatchOperation} change            A list of patch operations to be applied to the object            
  * @property {Date} creationTimeModel [Delay loaded from creationTime],             Gets or sets the time at which the data was created            
- * @property {Date} creationTime            Gets or sets the creation time in XML format            
+ * @property {Date} creationTime            Gets or sets the creation time as an ISO date format            
  * @property {Date} obsoletionTimeModel [Delay loaded from obsoletionTime],             Gets or sets the time when the data is or will become invalid            
- * @property {Date} obsoletionTime            Gets or sets the creation time in XML format            
- * @property {SecurityUser} createdByModel [Delay loaded from createdBy],             Gets or sets the user that created this base data            
+ * @property {Date} obsoletionTime            Gets or sets the time that the data is no longer valid (was deleted/obsoleted) in ISO format            
+ * @property {SecurityProvenance} createdByModel [Delay loaded from createdBy],             Gets or sets the user that created this base data            
  * @property {Date} modifiedOn            Gets the time that the object was last modified (from base data, default to CreationTime)            
- * @property {SecurityUser} obsoletedByModel [Delay loaded from obsoletedBy],             Gets or sets the user that obsoleted this base data            
- * @property {string} createdBy            Gets or sets the identifier of the user which created the data            
- * @property {string} obsoletedBy            Gets or sets the identifier of the user which obsoleted the data            
- * @property {string} id            The internal primary key value of the entity            
- * @property {string} $type            Gets the type            
+ * @property {SecurityProvenance} obsoletedByModel [Delay loaded from obsoletedBy],             Gets or sets the user that obsoleted this base data            
+ * @property {string} createdBy            Gets or sets the security provenance object which represents the creation of this object            
+ * @property {string} obsoletedBy            Gets or sets the security provenance object which represents the obsoletion of this data            
+ * @property {string} id            Gets or sets the primary identifying UUID of this object            
+ * @property {string} $type            Gets the type registration of this object            
  * @param {Patch} copyData Copy constructor (if present)
  */
 function Patch (copyData) { 
@@ -1473,11 +2087,11 @@ function Patch (copyData) {
 	this.obsoletedBy = copyData.obsoletedBy;
 	/** @type {string} */
 	this.createdBy = copyData.createdBy;
-	/** @type {SecurityUser} */
+	/** @type {SecurityProvenance} */
 	this.obsoletedByModel = copyData.obsoletedByModel;
 	/** @type {Date} */
 	this.modifiedOn = copyData.modifiedOn;
-	/** @type {SecurityUser} */
+	/** @type {SecurityProvenance} */
 	this.createdByModel = copyData.createdByModel;
 	/** @type {Date} */
 	this.obsoletionTime = copyData.obsoletionTime;
@@ -1495,12 +2109,11 @@ function Patch (copyData) {
 	this.version = copyData.version;
 	}
 }  // Patch 
-// SanteDB.Core.Model.Patch.PatchOperation, SanteDB.Core.Model, Version=1.1.0.35405, Culture=neutral, PublicKeyToken=null
-if(!PatchOperation)
+// SanteDB.Core.Model.Patch.PatchOperation, SanteDB.Core.Model, Version=2.0.0.0, Culture=neutral, PublicKeyToken=null
+//if(!PatchOperation)
 /**
  * @class
  * @constructor
- * @memberof SanteDBModel
  * @public
  * @summary             Represents a single patch operation            
  * @property {PatchOperationType} op            Gets or sets the operation type            (see: {@link PatchOperationType} for values)
@@ -1519,12 +2132,11 @@ function PatchOperation (copyData) {
 	this.op = copyData.op;
 	}
 }  // PatchOperation 
-// SanteDB.Core.Model.Patch.PatchTarget, SanteDB.Core.Model, Version=1.1.0.35405, Culture=neutral, PublicKeyToken=null
-if(!PatchTarget)
+// SanteDB.Core.Model.Patch.PatchTarget, SanteDB.Core.Model, Version=2.0.0.0, Culture=neutral, PublicKeyToken=null
+//if(!PatchTarget)
 /**
  * @class
  * @constructor
- * @memberof SanteDBModel
  * @public
  * @summary             Represents a target of a patch            
  * @property {string} type            Identifies the target type            
@@ -1546,14 +2158,404 @@ function PatchTarget (copyData) {
 	this.type = copyData.type;
 	}
 }  // PatchTarget 
-// SanteDB.Core.Model.Entities.Container, SanteDB.Core.Model, Version=1.1.0.35405, Culture=neutral, PublicKeyToken=null
-if(!Container)
+// SanteDB.Core.Model.Entities.ApplicationEntity, SanteDB.Core.Model, Version=2.0.0.0, Culture=neutral, PublicKeyToken=null
+//if(!ApplicationEntity)
 /**
  * @class
  * @constructor
- * @memberof SanteDBModel
  * @public
- * @extends ManufacturedMaterial
+ * @summary             An associative entity which links a SecurityApplication to an Entity            
+ * @property {SecurityApplication} securityApplicationModel [Delay loaded from securityApplication],             Gets or sets the security application            
+ * @property {string} securityApplication            Gets or sets the security application            
+ * @property {string} softwareName            Gets or sets the name of the software            
+ * @property {string} vendorName            Gets or sets the vendoer name of the software            
+ * @property {string} versionName            Gets or sets the version of the software            
+ * @property {object} address            Gets a list of all addresses associated with the entity            
+ * @property {EntityAddress} address.Alphabetic             Represents an alphabetic address used for matching             
+ * @property {EntityAddress} address.BadAddress             Represents a bad address, i.e. an address which is old or invalid.            
+ * @property {EntityAddress} address.Direct             Represents a workplace address that reaches the person directly without intermediaries.            
+ * @property {EntityAddress} address.HomeAddress             The home address            
+ * @property {EntityAddress} address.Ideographic             Represents an address expressed in an ideographic manner (example: Kanji)            
+ * @property {EntityAddress} address.Phonetic             Represents an address expressed as a phonetic spelling of an ideographic address            
+ * @property {EntityAddress} address.PhysicalVisit             The address is a physical place where visits should occur            
+ * @property {EntityAddress} address.PostalAddress             The address is a postal address used for the delivery of mail and materials            
+ * @property {EntityAddress} address.PrimaryHome             Represents a primary address to reach a contact after business hours.            
+ * @property {EntityAddress} address.Public             Represents an address that is a standard address that may be subject to a switchboard or operator prior to reaching the intended entity.            
+ * @property {EntityAddress} address.Soundex             Represents an address used for soundex matching purposes.            
+ * @property {EntityAddress} address.Syllabic             Represents a syllabic address.            
+ * @property {EntityAddress} address.TemporaryAddress             Represents a temporary address that may be good for visiting or mailing.            
+ * @property {EntityAddress} address.VacationHome             Represents a vacation home to reach a person while on vacation.            
+ * @property {EntityAddress} address.WorkPlace             Represents an office address, should be used for business communications            
+ * @property {EntityAddress} address.$other Unclassified
+ * @property {Concept} classConceptModel [Delay loaded from classConcept],             Class concept datal load property            
+ * @property {string} classConcept            Class concept            (see: {@link EntityClassKeys} for values)
+ * @property {Act} creationActModel [Delay loaded from creationAct],             Creation act reference            
+ * @property {string} creationAct            Creation act reference            
+ * @property {Concept} determinerConceptModel [Delay loaded from determinerConcept],             Determiner concept            
+ * @property {string} determinerConcept            Determiner concept            (see: {@link DeterminerKeys} for values)
+ * @property {object} extension            Gets a list of all extensions associated with the entity            
+ * @property {string} extension.classifier  where classifier is from {@link Extension} extensionType
+ * @property {object} identifier            Gets the identifiers associated with this entity            
+ * @property {EntityIdentifier} identifier.classifier  where classifier is from {@link IdentifierBase} authority
+ * @property {object} name            Gets a list of all names associated with the entity            
+ * @property {EntityName} name.Alphabetic             The name used is an alphabetic representation of the name (ex: romaji in Japanese)            
+ * @property {EntityName} name.Anonymous             The name is an anonymous name for the object (not the real name but a name used for care delivery)            
+ * @property {EntityName} name.Artist             The name represents an artist name or stage name            
+ * @property {EntityName} name.Assigned             The name represents an assigned name (given or bestowed by an authority)            
+ * @property {EntityName} name.Ideographic             THe name represents an ideographic representation of the name            
+ * @property {EntityName} name.Indigenous             The name is an indigenous name or tribal name for the patient            
+ * @property {EntityName} name.Legal             The name represents the current legal name of an object (such as a corporate name)            
+ * @property {EntityName} name.License             The name represents a name as displayed on a license or known to a license authority            
+ * @property {EntityName} name.MaidenName             THe name is a maiden name (name of a patient before marriage)            
+ * @property {EntityName} name.OfficialRecord             The name as it appears on an official record            
+ * @property {EntityName} name.Phonetic             The name represents a phonetic representation of a name such as a SOUNDEX code            
+ * @property {EntityName} name.Pseudonym             The name is a pseudonym for the object or an synonym name            
+ * @property {EntityName} name.Religious             The name is to be used for religious purposes (such as baptismal name)            
+ * @property {EntityName} name.Search             The name is to be used in the performing of matches only            
+ * @property {EntityName} name.Soundex             The name represents the computed soundex code of a name            
+ * @property {EntityName} name.Syllabic             The name represents a syllabic name.            
+ * @property {EntityName} name.$other Unclassified
+ * @property {string} note            Gets a list of all notes associated with the entity            
+ * @property {object} participation            Gets the acts in which this entity participates            
+ * @property {ActParticipation} participation.Admitter             The player entity was the person who was responsible for admitting the patient into a facility or care scenario.            
+ * @property {ActParticipation} participation.Attender             The player entity represents the attending physician for the patient            
+ * @property {ActParticipation} participation.Authenticator             The player entity represents an entity which authenticates the provision of care            
+ * @property {ActParticipation} participation.Authororiginator             The player entity is responsible for the creation of data described in the act            
+ * @property {ActParticipation} participation.Baby             The player is a resultant person in that it was the baby             
+ * @property {ActParticipation} participation.Beneficiary             The player is a beneficiary of the act such a receiver of a financial instrument, or other good            
+ * @property {ActParticipation} participation.CallbackContact             The player entity represents something that should be contacted upon completion of the act            
+ * @property {ActParticipation} participation.CausativeAgent             The player entity is an agent which caused the act to occur            
+ * @property {ActParticipation} participation.Consultant             The player entity is acting as a consult to the carrying out of the act            
+ * @property {ActParticipation} participation.Consumable             The player entity was or is to be consumed during the process of carrying out the act.            
+ * @property {ActParticipation} participation.CoverageTarget             The player entity represents the target coverage entity of the act            
+ * @property {ActParticipation} participation.Custodian             The player entity is the data custodian of the act (is responsible for storing and securing the act)            
+ * @property {ActParticipation} participation.DataEnterer             The player entity represents the person or device which phisically entered the data at the terminal            
+ * @property {ActParticipation} participation.Destination             The player etity represents the ultimate destination of the goods/materials/services described in the act            
+ * @property {ActParticipation} participation.Device             The player entity represents the device on which the act or data from the act was acquired or recorded            
+ * @property {ActParticipation} participation.DirectTarget             The player entity represents the directed target of care provided in the act            
+ * @property {ActParticipation} participation.Discharger             The player entity represents the person who is responsible for the discharging of the patient from an encounter            
+ * @property {ActParticipation} participation.Distributor             The player entity is the source distribution point for the financial or material instruments contained in the message            
+ * @property {ActParticipation} participation.Donor             The player entity represents the donor of tissue or materials used in the act            
+ * @property {ActParticipation} participation.EntryLocation             The location where the act was entered.            
+ * @property {ActParticipation} participation.Escort             The player entity was responsible for escorting the patient during the course of the act            
+ * @property {ActParticipation} participation.Exposure             The player entity something to which the patient was exposed            
+ * @property {ActParticipation} participation.ExposureAgent             The player entity represents the agent (material) to which the patient was exposed            
+ * @property {ActParticipation} participation.ExposureSource             The player entity describes the source of the material to which the patient was exposed            
+ * @property {ActParticipation} participation.ExposureTarget             The player entity describes the target to which the agent was exposed            
+ * @property {ActParticipation} participation.GuarantorParty             The player represents a party which is used as a financial guarantor for payment in the carrying out of the act            
+ * @property {ActParticipation} participation.Holder             The player is responsible for holding the act            
+ * @property {ActParticipation} participation.IndirectTarget             The entity not directly present in the act but which will be the focust of th act.            
+ * @property {ActParticipation} participation.Informant             The player was a person or device which informed data presented in the act. (Example: A mother telling a nurse that their child had a reaction)            
+ * @property {ActParticipation} participation.InformationRecipient             The player entity represents something that should be cc'ed on the act            
+ * @property {ActParticipation} participation.LegalAuthenticator             The player entity is responsible for legally authenticating the content of the act            
+ * @property {ActParticipation} participation.Location             The location where the service was performed.            
+ * @property {ActParticipation} participation.NonreuseableDevice             The player represents a consumable that can no longer be used            
+ * @property {ActParticipation} participation.Origin             The player represents the origin of the act            
+ * @property {ActParticipation} participation.Participation             The player entity participates in the act in no particular classification            
+ * @property {ActParticipation} participation.Performer             The player entity is responsible for performing the clinical steps documented in the act            
+ * @property {ActParticipation} participation.PrimaryInformationRecipient             The player entity represents a high priority contact which should be informed or cc'ed on the act            
+ * @property {ActParticipation} participation.PrimaryPerformer             The player entity was the primary performer of the act. This is used in procedures where more than one performer is present            
+ * @property {ActParticipation} participation.Product             The player represents a product that is not necessarily consumed but informs the act            
+ * @property {ActParticipation} participation.Receiver             The player represents the entity which is the intended receiver of the act            
+ * @property {ActParticipation} participation.RecordTarget             The player represents the entity to which the act is recorded against            
+ * @property {ActParticipation} participation.ReferredBy             The player represents the entity which referred the act or caused the act to be undertaken            
+ * @property {ActParticipation} participation.ReferredTo             The player entity represents the entity which was referred to            
+ * @property {ActParticipation} participation.Referrer             The player entity represents the person who was originally the referrer.            
+ * @property {ActParticipation} participation.Remote             The player entity represents a remote portion of the act            
+ * @property {ActParticipation} participation.ResponsibleParty             The player entity is ultimately responsible for the carrying out of the act            
+ * @property {ActParticipation} participation.ReusableDevice             The player entity represents a device which can be reused in future acts            
+ * @property {ActParticipation} participation.SecondaryPerformer             The secondary performing person (support clinician).            
+ * @property {ActParticipation} participation.Specimen             The player entity represents a specimen collected for the purpose of testing and diagnosis            
+ * @property {ActParticipation} participation.Subject             The player entity is the subject of an act, but not necessarily the record target (meaning the act is about a particular entity but not to be attached to their record)            
+ * @property {ActParticipation} participation.Tracker             The player entity is responsible for tracking the progress of the act            
+ * @property {ActParticipation} participation.Transcriber             The person who transcribed data from the original act.            
+ * @property {ActParticipation} participation.UgentNotificationContact             The player entity represents a contact entity in case of an emergency occurs during the act.            
+ * @property {ActParticipation} participation.Verifier             The player entity was responsible for verifying the accuracy of the data in the act            
+ * @property {ActParticipation} participation.Via             The player entity represents an entity where the act occurred "via" this entity (i.e. in transport)            
+ * @property {ActParticipation} participation.Witness             The player entity represents a legal witness to the act occurring.            
+ * @property {ActParticipation} participation.$other Unclassified
+ * @property {object} relationship            Gets a list of all associated entities for this entity            
+ * @property {EntityRelationship} relationship.Access             The source entity gives access to the target entity            
+ * @property {EntityRelationship} relationship.ActiveMoiety             Active ingredient, where not the ingredient substance (player), but itaTMs active moiety is the "basis of strength"            
+ * @property {EntityRelationship} relationship.AdministerableMaterial             The source represents a meterial that is an administerable form of the target            
+ * @property {EntityRelationship} relationship.AdoptedChild             The source is an adopted child of the target            
+ * @property {EntityRelationship} relationship.AdoptedDaughter             The source is an adopted daughter of the target            
+ * @property {EntityRelationship} relationship.AdoptedSon             The source is an adopted son of the target            
+ * @property {EntityRelationship} relationship.Affiliate             The target has a business/professional relationship with the source.            
+ * @property {EntityRelationship} relationship.Agent             The target is an agent or authorized to act on behalf of the source            
+ * @property {EntityRelationship} relationship.Aliquot             The target is a portion of the original source            
+ * @property {EntityRelationship} relationship.AssignedEntity             The target is an entity acting under the employ of the source entity            
+ * @property {EntityRelationship} relationship.Aunt             The target is the aunt of the source            
+ * @property {EntityRelationship} relationship.Birthplace             The target is the birthplace of the source            
+ * @property {EntityRelationship} relationship.Brother             The target is the brother of the source            
+ * @property {EntityRelationship} relationship.Brotherinlaw             The target is the brotherinlaw of the source            
+ * @property {EntityRelationship} relationship.Caregiver             The target is the caregiver of the source            
+ * @property {EntityRelationship} relationship.CaseSubject             The the target represents a case subject of the source entity (such as a study)            
+ * @property {EntityRelationship} relationship.Child             The the target is a child of the child source            
+ * @property {EntityRelationship} relationship.ChildInlaw             The child inlaw            
+ * @property {EntityRelationship} relationship.Citizen             The target is a citizen of the source            
+ * @property {EntityRelationship} relationship.Claimant             The target is a claimant  or is making a claim in a policy (source)            
+ * @property {EntityRelationship} relationship.ClinicalResearchInvestigator             The clinical research investigator            
+ * @property {EntityRelationship} relationship.ClinicalResearchSponsor             The clinical research sponsor            
+ * @property {EntityRelationship} relationship.CommissioningParty             The commissioning party            
+ * @property {EntityRelationship} relationship.Contact             The target represents a contact of the source            
+ * @property {EntityRelationship} relationship.Cousin             The cousin            
+ * @property {EntityRelationship} relationship.CoverageSponsor             The target represents a coverage sponsor of the source            
+ * @property {EntityRelationship} relationship.CoveredParty             The target is a covered party of a source (insurance policy)            
+ * @property {EntityRelationship} relationship.Daughter             The daughter            
+ * @property {EntityRelationship} relationship.DaughterInlaw             The daughter inlaw            
+ * @property {EntityRelationship} relationship.DedicatedServiceDeliveryLocation             The target is the dedicated service delivery location for the source            
+ * @property {EntityRelationship} relationship.Dependent             The target is a dependent of the source            
+ * @property {EntityRelationship} relationship.DistributedMaterial             The target is a distributed or shippable material of the source            
+ * @property {EntityRelationship} relationship.DomesticPartner             The domestic partner            
+ * @property {EntityRelationship} relationship.EmergencyContact             The target is an emergency contact for the source            
+ * @property {EntityRelationship} relationship.Employee             The the target is an employee of the source            
+ * @property {EntityRelationship} relationship.ExposedEntity             The target represents a substance which is exposed when the source is exposed            
+ * @property {EntityRelationship} relationship.FamilyMember             The family member            
+ * @property {EntityRelationship} relationship.Father             The father            
+ * @property {EntityRelationship} relationship.Fatherinlaw             The fatherinlaw            
+ * @property {EntityRelationship} relationship.FosterChild             The foster child            
+ * @property {EntityRelationship} relationship.FosterDaughter             The foster daughter            
+ * @property {EntityRelationship} relationship.FosterSon             The foster son            
+ * @property {EntityRelationship} relationship.Grandchild             The grandchild            
+ * @property {EntityRelationship} relationship.Granddaughter             The granddaughter            
+ * @property {EntityRelationship} relationship.Grandfather             The grandfather            
+ * @property {EntityRelationship} relationship.Grandmother             The grandmother            
+ * @property {EntityRelationship} relationship.Grandparent             The grandparent            
+ * @property {EntityRelationship} relationship.Grandson             The grandson            
+ * @property {EntityRelationship} relationship.GreatGrandfather             The great grandfather            
+ * @property {EntityRelationship} relationship.GreatGrandmother             The great grandmother            
+ * @property {EntityRelationship} relationship.GreatGrandparent             The great grandparent            
+ * @property {EntityRelationship} relationship.Guarantor             The guarantor            
+ * @property {EntityRelationship} relationship.GUARD             The guard            
+ * @property {EntityRelationship} relationship.Guardian             The target is a guardian of the source            
+ * @property {EntityRelationship} relationship.Halfbrother             The halfbrother            
+ * @property {EntityRelationship} relationship.Halfsibling             The halfsibling            
+ * @property {EntityRelationship} relationship.Halfsister             The halfsister            
+ * @property {EntityRelationship} relationship.HealthcareProvider             The target is a healthcare provider for the source            
+ * @property {EntityRelationship} relationship.HealthChart             The target represents a health chart belonging to the source            
+ * @property {EntityRelationship} relationship.HeldEntity             The source holds the specified quantity of the target entity (the target entity is held by the source)            
+ * @property {EntityRelationship} relationship.Husband             The husband            
+ * @property {EntityRelationship} relationship.IdentifiedEntity             The target represents an entity for purposes of identification of the source            
+ * @property {EntityRelationship} relationship.IncidentalServiceDeliveryLocation             The target represents an incidental service delivery location related to the source entity            
+ * @property {EntityRelationship} relationship.Individual             The target represents an individual instance of the source            
+ * @property {EntityRelationship} relationship.InvestigationSubject             The investigation subject            
+ * @property {EntityRelationship} relationship.InvoicePayor             The target is the payor of an invoice for the source            
+ * @property {EntityRelationship} relationship.Isolate             The isolate            
+ * @property {EntityRelationship} relationship.LicensedEntity             The target represents an entity licensed to perform or use the source            
+ * @property {EntityRelationship} relationship.MaintainedEntity             The target entity is maintained by the source entity            
+ * @property {EntityRelationship} relationship.ManufacturedProduct             The target entity is a product which is manufactured by the source            
+ * @property {EntityRelationship} relationship.MaternalAunt             The maternal aunt            
+ * @property {EntityRelationship} relationship.MaternalCousin             The maternal cousin            
+ * @property {EntityRelationship} relationship.MaternalGrandfather             The maternal grandfather            
+ * @property {EntityRelationship} relationship.MaternalGrandmother             The maternal grandmother            
+ * @property {EntityRelationship} relationship.MaternalGrandparent             The maternal grandparent            
+ * @property {EntityRelationship} relationship.MaternalGreatgrandfather             The maternal greatgrandfather            
+ * @property {EntityRelationship} relationship.MaternalGreatgrandmother             The maternal greatgrandmother            
+ * @property {EntityRelationship} relationship.MaternalGreatgrandparent             The maternal greatgrandparent            
+ * @property {EntityRelationship} relationship.MaternalUncle             The maternal uncle            
+ * @property {EntityRelationship} relationship.MilitaryPerson             The military person            
+ * @property {EntityRelationship} relationship.Mother             The target is the mother of the source            
+ * @property {EntityRelationship} relationship.Motherinlaw             The motherinlaw            
+ * @property {EntityRelationship} relationship.NamedInsured             The target is a named insured person on the source policy            
+ * @property {EntityRelationship} relationship.NaturalBrother             The natural brother            
+ * @property {EntityRelationship} relationship.NaturalChild             The natural child            
+ * @property {EntityRelationship} relationship.NaturalDaughter             The natural daughter            
+ * @property {EntityRelationship} relationship.NaturalFather             The natural father            
+ * @property {EntityRelationship} relationship.NaturalFatherOfFetus             The target is the natural father of fetus of the identified fetus (source) or pregnant entity (source)            
+ * @property {EntityRelationship} relationship.NaturalMother             The natural mother            
+ * @property {EntityRelationship} relationship.NaturalParent             The natural parent            
+ * @property {EntityRelationship} relationship.NaturalSibling             The natural sibling            
+ * @property {EntityRelationship} relationship.NaturalSister             The natural sister            
+ * @property {EntityRelationship} relationship.NaturalSon             The natural son            
+ * @property {EntityRelationship} relationship.Nephew             The nephew            
+ * @property {EntityRelationship} relationship.NextOfKin             The target is the next of kin for the source            
+ * @property {EntityRelationship} relationship.Niece             The niece            
+ * @property {EntityRelationship} relationship.NieceNephew             The niece nephew            
+ * @property {EntityRelationship} relationship.NotaryPublic             The target is a notary public acting within the source entity             
+ * @property {EntityRelationship} relationship.OwnedEntity             The target entity is owned by the source entity            
+ * @property {EntityRelationship} relationship.Parent             The target entity is the parent of the source entity            
+ * @property {EntityRelationship} relationship.ParentInlaw             The parent inlaw            
+ * @property {EntityRelationship} relationship.Part             The target entity is a part of the source entity (source is comprised of parts)            
+ * @property {EntityRelationship} relationship.PaternalAunt             The paternal aunt            
+ * @property {EntityRelationship} relationship.PaternalCousin             The paternal cousin            
+ * @property {EntityRelationship} relationship.PaternalGrandfather             The paternal grandfather            
+ * @property {EntityRelationship} relationship.PaternalGrandmother             The paternal grandmother            
+ * @property {EntityRelationship} relationship.PaternalGrandparent             The paternal grandparent            
+ * @property {EntityRelationship} relationship.PaternalGreatgrandfather             The paternal greatgrandfather            
+ * @property {EntityRelationship} relationship.PaternalGreatgrandmother             The paternal greatgrandmother            
+ * @property {EntityRelationship} relationship.PaternalGreatgrandparent             The paternal greatgrandparent            
+ * @property {EntityRelationship} relationship.PaternalUncle             The paternal uncle            
+ * @property {EntityRelationship} relationship.Patient             The target is a patient of the source entity            
+ * @property {EntityRelationship} relationship.Payee             The targert is a payee of the source entity            
+ * @property {EntityRelationship} relationship.PersonalRelationship             The target possesses a personal relationship with the source entity            
+ * @property {EntityRelationship} relationship.PlaceOfDeath             The target entity represents the place of death of the source entity            
+ * @property {EntityRelationship} relationship.PolicyHolder             The target entity represents the policy holder of the source policy            
+ * @property {EntityRelationship} relationship.ProgramEligible             The target is an entity which is eligible for funding or participation within a program            
+ * @property {EntityRelationship} relationship.QualifiedEntity             The target represents a qualified version of the source entity            
+ * @property {EntityRelationship} relationship.RegulatedProduct             The target represents a regulated version of the source product or represents a product which is regulated within the source jurisdiction            
+ * @property {EntityRelationship} relationship.ResearchSubject             The target represents a research subject of the source study            
+ * @property {EntityRelationship} relationship.RetailedMaterial             The target represents a material which is a retailed version of the source or is sold at the particular source            
+ * @property {EntityRelationship} relationship.Roomate             The roomate            
+ * @property {EntityRelationship} relationship.ServiceDeliveryLocation             The target represents a service delivery location for the source entity            
+ * @property {EntityRelationship} relationship.Sibling             The sibling            
+ * @property {EntityRelationship} relationship.SiblingInlaw             The sibling inlaw            
+ * @property {EntityRelationship} relationship.SignificantOther             The significant other            
+ * @property {EntityRelationship} relationship.SigningAuthorityOrOfficer             The target has signing authority or is an officer of the source            
+ * @property {EntityRelationship} relationship.Sister             The sister            
+ * @property {EntityRelationship} relationship.Sisterinlaw             The sisterinlaw            
+ * @property {EntityRelationship} relationship.Son             The son            
+ * @property {EntityRelationship} relationship.SonInlaw             The son inlaw            
+ * @property {EntityRelationship} relationship.Specimen             The target represents a specimen collected from the source            
+ * @property {EntityRelationship} relationship.Spouse             The spouse            
+ * @property {EntityRelationship} relationship.Stepbrother             The stepbrother            
+ * @property {EntityRelationship} relationship.StepChild             The step child            
+ * @property {EntityRelationship} relationship.Stepdaughter             The stepdaughter            
+ * @property {EntityRelationship} relationship.Stepfather             The stepfather            
+ * @property {EntityRelationship} relationship.Stepmother             The stepmother            
+ * @property {EntityRelationship} relationship.StepParent             The step parent            
+ * @property {EntityRelationship} relationship.StepSibling             The step sibling            
+ * @property {EntityRelationship} relationship.Stepsister             The stepsister            
+ * @property {EntityRelationship} relationship.Stepson             The stepson            
+ * @property {EntityRelationship} relationship.Student             The student            
+ * @property {EntityRelationship} relationship.Subscriber             The target is a subscriber of the source, meaning the target should receive updates whenever the source changes             
+ * @property {EntityRelationship} relationship.TerritoryOfAuthority             The target represents another territory where the source has authority            
+ * @property {EntityRelationship} relationship.TherapeuticAgent             The target represents the theraputic agent of the source            
+ * @property {EntityRelationship} relationship.Uncle             The uncle            
+ * @property {EntityRelationship} relationship.Underwriter             The underwriter            
+ * @property {EntityRelationship} relationship.UsedEntity             The target represents an entity that is consumed whenever the source is consumed            
+ * @property {EntityRelationship} relationship.WarrantedProduct             The target represents a product which is warranted by the source            
+ * @property {EntityRelationship} relationship.Wife             The wife            
+ * @property {EntityRelationship} relationship.Replaces             The source replaces the target (note: this is one relationship where the role relationship is reveresed)             
+ * @property {EntityRelationship} relationship.Instance             The target entity represents an instance of the scoper entity            
+ * @property {EntityRelationship} relationship.LocatedEntity             Relates the target entity to a source location            
+ * @property {EntityRelationship} relationship.Duplicate             Duplicate entity            
+ * @property {EntityRelationship} relationship.$other Unclassified
+ * @property {Concept} statusConceptModel [Delay loaded from statusConcept],             Status concept id            
+ * @property {string} statusConcept            Status concept id            (see: {@link StatusKeys} for values)
+ * @property {object} tag            Gets a list of all tags associated with the entity            
+ * @property {string} tag.classifier  where classifier is from {@link Tag} key
+ * @property {object} telecom            Gets a list of all telecommunications addresses associated with the entity            
+ * @property {EntityTelecomAddress} telecom.AnsweringService             answering service            
+ * @property {EntityTelecomAddress} telecom.EmergencyContact             Emergency contact            
+ * @property {EntityTelecomAddress} telecom.MobileContact             Mobile phone contact            
+ * @property {EntityTelecomAddress} telecom.Pager             pager            
+ * @property {EntityTelecomAddress} telecom.Public             public (800 number example) contact            
+ * @property {EntityTelecomAddress} telecom.TemporaryAddress             temporary contact            
+ * @property {EntityTelecomAddress} telecom.WorkPlace             For use in the workplace            
+ * @property {EntityTelecomAddress} telecom.$other Unclassified
+ * @property {string} template            Gets the template key            
+ * @property {TemplateDefinition} templateModel [Delay loaded from template],             Gets or sets the template definition            
+ * @property {Concept} typeConceptModel [Delay loaded from typeConcept],             Type concept identifier            
+ * @property {string} typeConcept            Type concept identifier            
+ * @property {SecurityPolicyInstance} policy            Gets or sets the security policy instances associated with the entity            
+ * @property {string} previousVersion
+ * @property {string} version
+ * @property {number} sequence
+ * @property {Date} creationTimeModel [Delay loaded from creationTime],             Gets or sets the time at which the data was created            
+ * @property {Date} creationTime            Gets or sets the creation time as an ISO date format            
+ * @property {Date} obsoletionTimeModel [Delay loaded from obsoletionTime],             Gets or sets the time when the data is or will become invalid            
+ * @property {Date} obsoletionTime            Gets or sets the time that the data is no longer valid (was deleted/obsoleted) in ISO format            
+ * @property {SecurityProvenance} createdByModel [Delay loaded from createdBy],             Gets or sets the user that created this base data            
+ * @property {Date} modifiedOn            Gets the time that the object was last modified (from base data, default to CreationTime)            
+ * @property {SecurityProvenance} obsoletedByModel [Delay loaded from obsoletedBy],             Gets or sets the user that obsoleted this base data            
+ * @property {string} createdBy            Gets or sets the security provenance object which represents the creation of this object            
+ * @property {string} obsoletedBy            Gets or sets the security provenance object which represents the obsoletion of this data            
+ * @property {string} id            Gets or sets the primary identifying UUID of this object            
+ * @property {string} $type            Gets the type registration of this object            
+ * @param {ApplicationEntity} copyData Copy constructor (if present)
+ */
+function ApplicationEntity (copyData) { 
+	this.$type = 'ApplicationEntity';
+	if(copyData) {
+	/** @type {string} */
+	this.id = copyData.id;
+	/** @type {string} */
+	this.obsoletedBy = copyData.obsoletedBy;
+	/** @type {string} */
+	this.createdBy = copyData.createdBy;
+	/** @type {SecurityProvenance} */
+	this.obsoletedByModel = copyData.obsoletedByModel;
+	/** @type {Date} */
+	this.modifiedOn = copyData.modifiedOn;
+	/** @type {SecurityProvenance} */
+	this.createdByModel = copyData.createdByModel;
+	/** @type {Date} */
+	this.obsoletionTime = copyData.obsoletionTime;
+	/** @type {Date} */
+	this.obsoletionTimeModel = copyData.obsoletionTimeModel;
+	/** @type {Date} */
+	this.creationTime = copyData.creationTime;
+	/** @type {Date} */
+	this.creationTimeModel = copyData.creationTimeModel;
+	/** @type {number} */
+	this.sequence = copyData.sequence;
+	/** @type {string} */
+	this.version = copyData.version;
+	/** @type {string} */
+	this.previousVersion = copyData.previousVersion;
+	/** @type {SecurityPolicyInstance} */
+	this.policy = copyData.policy;
+	/** @type {string} */
+	this.typeConcept = copyData.typeConcept;
+	/** @type {Concept} */
+	this.typeConceptModel = copyData.typeConceptModel;
+	/** @type {TemplateDefinition} */
+	this.templateModel = copyData.templateModel;
+	/** @type {string} */
+	this.template = copyData.template;
+	/** @type {object} */
+	this.telecom = copyData.telecom;
+	/** @type {object} */
+	this.tag = copyData.tag;
+	/** @type {string} */
+	this.statusConcept = copyData.statusConcept;
+	/** @type {Concept} */
+	this.statusConceptModel = copyData.statusConceptModel;
+	/** @type {object} */
+	this.relationship = copyData.relationship;
+	/** @type {object} */
+	this.participation = copyData.participation;
+	/** @type {string} */
+	this.note = copyData.note;
+	/** @type {object} */
+	this.name = copyData.name;
+	/** @type {object} */
+	this.identifier = copyData.identifier;
+	/** @type {object} */
+	this.extension = copyData.extension;
+	/** @type {string} */
+	this.determinerConcept = copyData.determinerConcept;
+	/** @type {Concept} */
+	this.determinerConceptModel = copyData.determinerConceptModel;
+	/** @type {string} */
+	this.creationAct = copyData.creationAct;
+	/** @type {Act} */
+	this.creationActModel = copyData.creationActModel;
+	/** @type {string} */
+	this.classConcept = copyData.classConcept;
+	/** @type {Concept} */
+	this.classConceptModel = copyData.classConceptModel;
+	/** @type {object} */
+	this.address = copyData.address;
+	/** @type {string} */
+	this.versionName = copyData.versionName;
+	/** @type {string} */
+	this.vendorName = copyData.vendorName;
+	/** @type {string} */
+	this.softwareName = copyData.softwareName;
+	/** @type {string} */
+	this.securityApplication = copyData.securityApplication;
+	/** @type {SecurityApplication} */
+	this.securityApplicationModel = copyData.securityApplicationModel;
+	}
+}  // ApplicationEntity 
+// SanteDB.Core.Model.Entities.Container, SanteDB.Core.Model, Version=2.0.0.0, Culture=neutral, PublicKeyToken=null
+//if(!Container)
+/**
+ * @class
+ * @constructor
+ * @public
  * @summary             Represents a container.            
  * @property {number} barrierDeltaQuantity            Gets or sets the barrier delta quantity. The distance from the Point of Reference to the separator material (barrier) within a container.            
  * @property {number} bottomDeltaQuantity            Gets or sets the bottom delta quantity. The distance from the Point of Reference to the outside bottom of the container.            
@@ -1677,43 +2679,42 @@ if(!Container)
  * @property {ActParticipation} participation.Witness             The player entity represents a legal witness to the act occurring.            
  * @property {ActParticipation} participation.$other Unclassified
  * @property {object} relationship            Gets a list of all associated entities for this entity            
- * @property {EntityRelationship} relationship.Access             The access            
- * @property {EntityRelationship} relationship.ActiveMoiety             The active moiety            
- * @property {EntityRelationship} relationship.AdministerableMaterial             The administerable material            
- * @property {EntityRelationship} relationship.AdoptedChild             The adopted child            
- * @property {EntityRelationship} relationship.AdoptedDaughter             The adopted daughter            
- * @property {EntityRelationship} relationship.AdoptedSon             The adopted son            
- * @property {EntityRelationship} relationship.Affiliate             The affiliate            
- * @property {EntityRelationship} relationship.Agent             The agent            
- * @property {EntityRelationship} relationship.Aliquot             The aliquot            
- * @property {EntityRelationship} relationship.Assigned             The assigned            
- * @property {EntityRelationship} relationship.AssignedEntity             The assigned entity            
- * @property {EntityRelationship} relationship.Aunt             The aunt            
- * @property {EntityRelationship} relationship.Birthplace             The birthplace            
- * @property {EntityRelationship} relationship.Brother             The brother            
- * @property {EntityRelationship} relationship.Brotherinlaw             The brotherinlaw            
- * @property {EntityRelationship} relationship.Caregiver             The caregiver            
- * @property {EntityRelationship} relationship.CaseSubject             The case subject            
- * @property {EntityRelationship} relationship.Child             The child            
+ * @property {EntityRelationship} relationship.Access             The source entity gives access to the target entity            
+ * @property {EntityRelationship} relationship.ActiveMoiety             Active ingredient, where not the ingredient substance (player), but itaTMs active moiety is the "basis of strength"            
+ * @property {EntityRelationship} relationship.AdministerableMaterial             The source represents a meterial that is an administerable form of the target            
+ * @property {EntityRelationship} relationship.AdoptedChild             The source is an adopted child of the target            
+ * @property {EntityRelationship} relationship.AdoptedDaughter             The source is an adopted daughter of the target            
+ * @property {EntityRelationship} relationship.AdoptedSon             The source is an adopted son of the target            
+ * @property {EntityRelationship} relationship.Affiliate             The target has a business/professional relationship with the source.            
+ * @property {EntityRelationship} relationship.Agent             The target is an agent or authorized to act on behalf of the source            
+ * @property {EntityRelationship} relationship.Aliquot             The target is a portion of the original source            
+ * @property {EntityRelationship} relationship.AssignedEntity             The target is an entity acting under the employ of the source entity            
+ * @property {EntityRelationship} relationship.Aunt             The target is the aunt of the source            
+ * @property {EntityRelationship} relationship.Birthplace             The target is the birthplace of the source            
+ * @property {EntityRelationship} relationship.Brother             The target is the brother of the source            
+ * @property {EntityRelationship} relationship.Brotherinlaw             The target is the brotherinlaw of the source            
+ * @property {EntityRelationship} relationship.Caregiver             The target is the caregiver of the source            
+ * @property {EntityRelationship} relationship.CaseSubject             The the target represents a case subject of the source entity (such as a study)            
+ * @property {EntityRelationship} relationship.Child             The the target is a child of the child source            
  * @property {EntityRelationship} relationship.ChildInlaw             The child inlaw            
- * @property {EntityRelationship} relationship.Citizen             The citizen            
- * @property {EntityRelationship} relationship.Claimant             The claimant            
+ * @property {EntityRelationship} relationship.Citizen             The target is a citizen of the source            
+ * @property {EntityRelationship} relationship.Claimant             The target is a claimant  or is making a claim in a policy (source)            
  * @property {EntityRelationship} relationship.ClinicalResearchInvestigator             The clinical research investigator            
  * @property {EntityRelationship} relationship.ClinicalResearchSponsor             The clinical research sponsor            
  * @property {EntityRelationship} relationship.CommissioningParty             The commissioning party            
- * @property {EntityRelationship} relationship.Contact             The contact            
+ * @property {EntityRelationship} relationship.Contact             The target represents a contact of the source            
  * @property {EntityRelationship} relationship.Cousin             The cousin            
- * @property {EntityRelationship} relationship.CoverageSponsor             The coverage sponsor            
- * @property {EntityRelationship} relationship.CoveredParty             The covered party            
+ * @property {EntityRelationship} relationship.CoverageSponsor             The target represents a coverage sponsor of the source            
+ * @property {EntityRelationship} relationship.CoveredParty             The target is a covered party of a source (insurance policy)            
  * @property {EntityRelationship} relationship.Daughter             The daughter            
  * @property {EntityRelationship} relationship.DaughterInlaw             The daughter inlaw            
- * @property {EntityRelationship} relationship.DedicatedServiceDeliveryLocation             The dedicated service delivery location            
- * @property {EntityRelationship} relationship.Dependent             The dependent            
- * @property {EntityRelationship} relationship.DistributedMaterial             The distributed material            
+ * @property {EntityRelationship} relationship.DedicatedServiceDeliveryLocation             The target is the dedicated service delivery location for the source            
+ * @property {EntityRelationship} relationship.Dependent             The target is a dependent of the source            
+ * @property {EntityRelationship} relationship.DistributedMaterial             The target is a distributed or shippable material of the source            
  * @property {EntityRelationship} relationship.DomesticPartner             The domestic partner            
- * @property {EntityRelationship} relationship.EmergencyContact             The emergency contact            
- * @property {EntityRelationship} relationship.Employee             The employee            
- * @property {EntityRelationship} relationship.ExposedEntity             The exposed entity            
+ * @property {EntityRelationship} relationship.EmergencyContact             The target is an emergency contact for the source            
+ * @property {EntityRelationship} relationship.Employee             The the target is an employee of the source            
+ * @property {EntityRelationship} relationship.ExposedEntity             The target represents a substance which is exposed when the source is exposed            
  * @property {EntityRelationship} relationship.FamilyMember             The family member            
  * @property {EntityRelationship} relationship.Father             The father            
  * @property {EntityRelationship} relationship.Fatherinlaw             The fatherinlaw            
@@ -1731,23 +2732,23 @@ if(!Container)
  * @property {EntityRelationship} relationship.GreatGrandparent             The great grandparent            
  * @property {EntityRelationship} relationship.Guarantor             The guarantor            
  * @property {EntityRelationship} relationship.GUARD             The guard            
- * @property {EntityRelationship} relationship.Guardian             The guardian            
+ * @property {EntityRelationship} relationship.Guardian             The target is a guardian of the source            
  * @property {EntityRelationship} relationship.Halfbrother             The halfbrother            
  * @property {EntityRelationship} relationship.Halfsibling             The halfsibling            
  * @property {EntityRelationship} relationship.Halfsister             The halfsister            
- * @property {EntityRelationship} relationship.HealthcareProvider             The healthcare provider            
- * @property {EntityRelationship} relationship.HealthChart             The health chart            
- * @property {EntityRelationship} relationship.HeldEntity             The held entity            
+ * @property {EntityRelationship} relationship.HealthcareProvider             The target is a healthcare provider for the source            
+ * @property {EntityRelationship} relationship.HealthChart             The target represents a health chart belonging to the source            
+ * @property {EntityRelationship} relationship.HeldEntity             The source holds the specified quantity of the target entity (the target entity is held by the source)            
  * @property {EntityRelationship} relationship.Husband             The husband            
- * @property {EntityRelationship} relationship.IdentifiedEntity             The identified entity            
- * @property {EntityRelationship} relationship.IncidentalServiceDeliveryLocation             The incidental service delivery location            
- * @property {EntityRelationship} relationship.Individual             The individual            
+ * @property {EntityRelationship} relationship.IdentifiedEntity             The target represents an entity for purposes of identification of the source            
+ * @property {EntityRelationship} relationship.IncidentalServiceDeliveryLocation             The target represents an incidental service delivery location related to the source entity            
+ * @property {EntityRelationship} relationship.Individual             The target represents an individual instance of the source            
  * @property {EntityRelationship} relationship.InvestigationSubject             The investigation subject            
- * @property {EntityRelationship} relationship.InvoicePayor             The invoice payor            
+ * @property {EntityRelationship} relationship.InvoicePayor             The target is the payor of an invoice for the source            
  * @property {EntityRelationship} relationship.Isolate             The isolate            
- * @property {EntityRelationship} relationship.LicensedEntity             The licensed entity            
- * @property {EntityRelationship} relationship.MaintainedEntity             The maintained entity            
- * @property {EntityRelationship} relationship.ManufacturedProduct             The manufactured product            
+ * @property {EntityRelationship} relationship.LicensedEntity             The target represents an entity licensed to perform or use the source            
+ * @property {EntityRelationship} relationship.MaintainedEntity             The target entity is maintained by the source entity            
+ * @property {EntityRelationship} relationship.ManufacturedProduct             The target entity is a product which is manufactured by the source            
  * @property {EntityRelationship} relationship.MaternalAunt             The maternal aunt            
  * @property {EntityRelationship} relationship.MaternalCousin             The maternal cousin            
  * @property {EntityRelationship} relationship.MaternalGrandfather             The maternal grandfather            
@@ -1758,28 +2759,28 @@ if(!Container)
  * @property {EntityRelationship} relationship.MaternalGreatgrandparent             The maternal greatgrandparent            
  * @property {EntityRelationship} relationship.MaternalUncle             The maternal uncle            
  * @property {EntityRelationship} relationship.MilitaryPerson             The military person            
- * @property {EntityRelationship} relationship.Mother             The mother            
+ * @property {EntityRelationship} relationship.Mother             The target is the mother of the source            
  * @property {EntityRelationship} relationship.Motherinlaw             The motherinlaw            
- * @property {EntityRelationship} relationship.NamedInsured             The named insured            
+ * @property {EntityRelationship} relationship.NamedInsured             The target is a named insured person on the source policy            
  * @property {EntityRelationship} relationship.NaturalBrother             The natural brother            
  * @property {EntityRelationship} relationship.NaturalChild             The natural child            
  * @property {EntityRelationship} relationship.NaturalDaughter             The natural daughter            
  * @property {EntityRelationship} relationship.NaturalFather             The natural father            
- * @property {EntityRelationship} relationship.NaturalFatherOfFetus             The natural father of fetus            
+ * @property {EntityRelationship} relationship.NaturalFatherOfFetus             The target is the natural father of fetus of the identified fetus (source) or pregnant entity (source)            
  * @property {EntityRelationship} relationship.NaturalMother             The natural mother            
  * @property {EntityRelationship} relationship.NaturalParent             The natural parent            
  * @property {EntityRelationship} relationship.NaturalSibling             The natural sibling            
  * @property {EntityRelationship} relationship.NaturalSister             The natural sister            
  * @property {EntityRelationship} relationship.NaturalSon             The natural son            
  * @property {EntityRelationship} relationship.Nephew             The nephew            
- * @property {EntityRelationship} relationship.NextOfKin             The next of kin            
+ * @property {EntityRelationship} relationship.NextOfKin             The target is the next of kin for the source            
  * @property {EntityRelationship} relationship.Niece             The niece            
  * @property {EntityRelationship} relationship.NieceNephew             The niece nephew            
- * @property {EntityRelationship} relationship.NotaryPublic             The notary public            
- * @property {EntityRelationship} relationship.OwnedEntity             The owned entity            
- * @property {EntityRelationship} relationship.Parent             The parent            
+ * @property {EntityRelationship} relationship.NotaryPublic             The target is a notary public acting within the source entity             
+ * @property {EntityRelationship} relationship.OwnedEntity             The target entity is owned by the source entity            
+ * @property {EntityRelationship} relationship.Parent             The target entity is the parent of the source entity            
  * @property {EntityRelationship} relationship.ParentInlaw             The parent inlaw            
- * @property {EntityRelationship} relationship.Part             The part            
+ * @property {EntityRelationship} relationship.Part             The target entity is a part of the source entity (source is comprised of parts)            
  * @property {EntityRelationship} relationship.PaternalAunt             The paternal aunt            
  * @property {EntityRelationship} relationship.PaternalCousin             The paternal cousin            
  * @property {EntityRelationship} relationship.PaternalGrandfather             The paternal grandfather            
@@ -1789,27 +2790,27 @@ if(!Container)
  * @property {EntityRelationship} relationship.PaternalGreatgrandmother             The paternal greatgrandmother            
  * @property {EntityRelationship} relationship.PaternalGreatgrandparent             The paternal greatgrandparent            
  * @property {EntityRelationship} relationship.PaternalUncle             The paternal uncle            
- * @property {EntityRelationship} relationship.Patient             The patient            
- * @property {EntityRelationship} relationship.Payee             The payee            
- * @property {EntityRelationship} relationship.PersonalRelationship             The personal relationship            
- * @property {EntityRelationship} relationship.PlaceOfDeath             The place of death            
- * @property {EntityRelationship} relationship.PolicyHolder             The policy holder            
- * @property {EntityRelationship} relationship.ProgramEligible             The program eligible            
- * @property {EntityRelationship} relationship.QualifiedEntity             The qualified entity            
- * @property {EntityRelationship} relationship.RegulatedProduct             The regulated product            
- * @property {EntityRelationship} relationship.ResearchSubject             The research subject            
- * @property {EntityRelationship} relationship.RetailedMaterial             The retailed material            
+ * @property {EntityRelationship} relationship.Patient             The target is a patient of the source entity            
+ * @property {EntityRelationship} relationship.Payee             The targert is a payee of the source entity            
+ * @property {EntityRelationship} relationship.PersonalRelationship             The target possesses a personal relationship with the source entity            
+ * @property {EntityRelationship} relationship.PlaceOfDeath             The target entity represents the place of death of the source entity            
+ * @property {EntityRelationship} relationship.PolicyHolder             The target entity represents the policy holder of the source policy            
+ * @property {EntityRelationship} relationship.ProgramEligible             The target is an entity which is eligible for funding or participation within a program            
+ * @property {EntityRelationship} relationship.QualifiedEntity             The target represents a qualified version of the source entity            
+ * @property {EntityRelationship} relationship.RegulatedProduct             The target represents a regulated version of the source product or represents a product which is regulated within the source jurisdiction            
+ * @property {EntityRelationship} relationship.ResearchSubject             The target represents a research subject of the source study            
+ * @property {EntityRelationship} relationship.RetailedMaterial             The target represents a material which is a retailed version of the source or is sold at the particular source            
  * @property {EntityRelationship} relationship.Roomate             The roomate            
- * @property {EntityRelationship} relationship.ServiceDeliveryLocation             The service delivery location            
+ * @property {EntityRelationship} relationship.ServiceDeliveryLocation             The target represents a service delivery location for the source entity            
  * @property {EntityRelationship} relationship.Sibling             The sibling            
  * @property {EntityRelationship} relationship.SiblingInlaw             The sibling inlaw            
  * @property {EntityRelationship} relationship.SignificantOther             The significant other            
- * @property {EntityRelationship} relationship.SigningAuthorityOrOfficer             The signing authority or officer            
+ * @property {EntityRelationship} relationship.SigningAuthorityOrOfficer             The target has signing authority or is an officer of the source            
  * @property {EntityRelationship} relationship.Sister             The sister            
  * @property {EntityRelationship} relationship.Sisterinlaw             The sisterinlaw            
  * @property {EntityRelationship} relationship.Son             The son            
  * @property {EntityRelationship} relationship.SonInlaw             The son inlaw            
- * @property {EntityRelationship} relationship.Specimen             The specimen            
+ * @property {EntityRelationship} relationship.Specimen             The target represents a specimen collected from the source            
  * @property {EntityRelationship} relationship.Spouse             The spouse            
  * @property {EntityRelationship} relationship.Stepbrother             The stepbrother            
  * @property {EntityRelationship} relationship.StepChild             The step child            
@@ -1821,17 +2822,18 @@ if(!Container)
  * @property {EntityRelationship} relationship.Stepsister             The stepsister            
  * @property {EntityRelationship} relationship.Stepson             The stepson            
  * @property {EntityRelationship} relationship.Student             The student            
- * @property {EntityRelationship} relationship.Subscriber             The subscriber            
- * @property {EntityRelationship} relationship.TerritoryOfAuthority             The territory of authority            
- * @property {EntityRelationship} relationship.TherapeuticAgent             The therapeutic agent            
+ * @property {EntityRelationship} relationship.Subscriber             The target is a subscriber of the source, meaning the target should receive updates whenever the source changes             
+ * @property {EntityRelationship} relationship.TerritoryOfAuthority             The target represents another territory where the source has authority            
+ * @property {EntityRelationship} relationship.TherapeuticAgent             The target represents the theraputic agent of the source            
  * @property {EntityRelationship} relationship.Uncle             The uncle            
  * @property {EntityRelationship} relationship.Underwriter             The underwriter            
- * @property {EntityRelationship} relationship.UsedEntity             The used entity            
- * @property {EntityRelationship} relationship.WarrantedProduct             The warranted product            
+ * @property {EntityRelationship} relationship.UsedEntity             The target represents an entity that is consumed whenever the source is consumed            
+ * @property {EntityRelationship} relationship.WarrantedProduct             The target represents a product which is warranted by the source            
  * @property {EntityRelationship} relationship.Wife             The wife            
- * @property {EntityRelationship} relationship.Replaces             The replaces            
+ * @property {EntityRelationship} relationship.Replaces             The source replaces the target (note: this is one relationship where the role relationship is reveresed)             
  * @property {EntityRelationship} relationship.Instance             The target entity represents an instance of the scoper entity            
  * @property {EntityRelationship} relationship.LocatedEntity             Relates the target entity to a source location            
+ * @property {EntityRelationship} relationship.Duplicate             Duplicate entity            
  * @property {EntityRelationship} relationship.$other Unclassified
  * @property {Concept} statusConceptModel [Delay loaded from statusConcept],             Status concept id            
  * @property {string} statusConcept            Status concept id            (see: {@link StatusKeys} for values)
@@ -1850,20 +2852,21 @@ if(!Container)
  * @property {TemplateDefinition} templateModel [Delay loaded from template],             Gets or sets the template definition            
  * @property {Concept} typeConceptModel [Delay loaded from typeConcept],             Type concept identifier            
  * @property {string} typeConcept            Type concept identifier            
+ * @property {SecurityPolicyInstance} policy            Gets or sets the security policy instances associated with the entity            
  * @property {string} previousVersion
  * @property {string} version
  * @property {number} sequence
  * @property {Date} creationTimeModel [Delay loaded from creationTime],             Gets or sets the time at which the data was created            
- * @property {Date} creationTime            Gets or sets the creation time in XML format            
+ * @property {Date} creationTime            Gets or sets the creation time as an ISO date format            
  * @property {Date} obsoletionTimeModel [Delay loaded from obsoletionTime],             Gets or sets the time when the data is or will become invalid            
- * @property {Date} obsoletionTime            Gets or sets the creation time in XML format            
- * @property {SecurityUser} createdByModel [Delay loaded from createdBy],             Gets or sets the user that created this base data            
+ * @property {Date} obsoletionTime            Gets or sets the time that the data is no longer valid (was deleted/obsoleted) in ISO format            
+ * @property {SecurityProvenance} createdByModel [Delay loaded from createdBy],             Gets or sets the user that created this base data            
  * @property {Date} modifiedOn            Gets the time that the object was last modified (from base data, default to CreationTime)            
- * @property {SecurityUser} obsoletedByModel [Delay loaded from obsoletedBy],             Gets or sets the user that obsoleted this base data            
- * @property {string} createdBy            Gets or sets the identifier of the user which created the data            
- * @property {string} obsoletedBy            Gets or sets the identifier of the user which obsoleted the data            
- * @property {string} id            The internal primary key value of the entity            
- * @property {string} $type            Gets the type            
+ * @property {SecurityProvenance} obsoletedByModel [Delay loaded from obsoletedBy],             Gets or sets the user that obsoleted this base data            
+ * @property {string} createdBy            Gets or sets the security provenance object which represents the creation of this object            
+ * @property {string} obsoletedBy            Gets or sets the security provenance object which represents the obsoletion of this data            
+ * @property {string} id            Gets or sets the primary identifying UUID of this object            
+ * @property {string} $type            Gets the type registration of this object            
  * @param {Container} copyData Copy constructor (if present)
  */
 function Container (copyData) { 
@@ -1875,11 +2878,11 @@ function Container (copyData) {
 	this.obsoletedBy = copyData.obsoletedBy;
 	/** @type {string} */
 	this.createdBy = copyData.createdBy;
-	/** @type {SecurityUser} */
+	/** @type {SecurityProvenance} */
 	this.obsoletedByModel = copyData.obsoletedByModel;
 	/** @type {Date} */
 	this.modifiedOn = copyData.modifiedOn;
-	/** @type {SecurityUser} */
+	/** @type {SecurityProvenance} */
 	this.createdByModel = copyData.createdByModel;
 	/** @type {Date} */
 	this.obsoletionTime = copyData.obsoletionTime;
@@ -1895,6 +2898,8 @@ function Container (copyData) {
 	this.version = copyData.version;
 	/** @type {string} */
 	this.previousVersion = copyData.previousVersion;
+	/** @type {SecurityPolicyInstance} */
+	this.policy = copyData.policy;
 	/** @type {string} */
 	this.typeConcept = copyData.typeConcept;
 	/** @type {Concept} */
@@ -1973,801 +2978,18 @@ function Container (copyData) {
 	this.barrierDeltaQuantity = copyData.barrierDeltaQuantity;
 	}
 }  // Container 
-// SanteDB.Core.Model.Entities.UserEntity, SanteDB.Core.Model, Version=1.1.0.35405, Culture=neutral, PublicKeyToken=null
-if(!UserEntity)
+// SanteDB.Core.Model.Entities.DeviceEntity, SanteDB.Core.Model, Version=2.0.0.0, Culture=neutral, PublicKeyToken=null
+//if(!DeviceEntity)
 /**
  * @class
  * @constructor
- * @memberof SanteDBModel
  * @public
- * @extends Person
- * @summary             Represents a user entity            
- * @property {SecurityUser} securityUserModel [Delay loaded from securityUser],             Gets or sets the security user key            
- * @property {string} securityUser            Gets or sets the security user key            
- * @property {DatePrecision} dateOfBirthPrecision            Gets or sets the precision ofthe date of birth            (see: {@link DatePrecision} for values)
- * @property {string} dateOfBirth            Gets the date of birth as XML            
- * @property {PersonLanguageCommunication} language            Gets the person's languages of communication            
- * @property {object} address            Gets a list of all addresses associated with the entity            
- * @property {EntityAddress} address.Alphabetic             Represents an alphabetic address used for matching             
- * @property {EntityAddress} address.BadAddress             Represents a bad address, i.e. an address which is old or invalid.            
- * @property {EntityAddress} address.Direct             Represents a workplace address that reaches the person directly without intermediaries.            
- * @property {EntityAddress} address.HomeAddress             The home address            
- * @property {EntityAddress} address.Ideographic             Represents an address expressed in an ideographic manner (example: Kanji)            
- * @property {EntityAddress} address.Phonetic             Represents an address expressed as a phonetic spelling of an ideographic address            
- * @property {EntityAddress} address.PhysicalVisit             The address is a physical place where visits should occur            
- * @property {EntityAddress} address.PostalAddress             The address is a postal address used for the delivery of mail and materials            
- * @property {EntityAddress} address.PrimaryHome             Represents a primary address to reach a contact after business hours.            
- * @property {EntityAddress} address.Public             Represents an address that is a standard address that may be subject to a switchboard or operator prior to reaching the intended entity.            
- * @property {EntityAddress} address.Soundex             Represents an address used for soundex matching purposes.            
- * @property {EntityAddress} address.Syllabic             Represents a syllabic address.            
- * @property {EntityAddress} address.TemporaryAddress             Represents a temporary address that may be good for visiting or mailing.            
- * @property {EntityAddress} address.VacationHome             Represents a vacation home to reach a person while on vacation.            
- * @property {EntityAddress} address.WorkPlace             Represents an office address, should be used for business communications            
- * @property {EntityAddress} address.$other Unclassified
- * @property {Concept} classConceptModel [Delay loaded from classConcept],             Class concept datal load property            
- * @property {string} classConcept            Class concept            (see: {@link EntityClassKeys} for values)
- * @property {Act} creationActModel [Delay loaded from creationAct],             Creation act reference            
- * @property {string} creationAct            Creation act reference            
- * @property {Concept} determinerConceptModel [Delay loaded from determinerConcept],             Determiner concept            
- * @property {string} determinerConcept            Determiner concept            (see: {@link DeterminerKeys} for values)
- * @property {object} extension            Gets a list of all extensions associated with the entity            
- * @property {string} extension.classifier  where classifier is from {@link Extension} extensionType
- * @property {object} identifier            Gets the identifiers associated with this entity            
- * @property {EntityIdentifier} identifier.classifier  where classifier is from {@link IdentifierBase} authority
- * @property {object} name            Gets a list of all names associated with the entity            
- * @property {EntityName} name.Alphabetic             The name used is an alphabetic representation of the name (ex: romaji in Japanese)            
- * @property {EntityName} name.Anonymous             The name is an anonymous name for the object (not the real name but a name used for care delivery)            
- * @property {EntityName} name.Artist             The name represents an artist name or stage name            
- * @property {EntityName} name.Assigned             The name represents an assigned name (given or bestowed by an authority)            
- * @property {EntityName} name.Ideographic             THe name represents an ideographic representation of the name            
- * @property {EntityName} name.Indigenous             The name is an indigenous name or tribal name for the patient            
- * @property {EntityName} name.Legal             The name represents the current legal name of an object (such as a corporate name)            
- * @property {EntityName} name.License             The name represents a name as displayed on a license or known to a license authority            
- * @property {EntityName} name.MaidenName             THe name is a maiden name (name of a patient before marriage)            
- * @property {EntityName} name.OfficialRecord             The name as it appears on an official record            
- * @property {EntityName} name.Phonetic             The name represents a phonetic representation of a name such as a SOUNDEX code            
- * @property {EntityName} name.Pseudonym             The name is a pseudonym for the object or an synonym name            
- * @property {EntityName} name.Religious             The name is to be used for religious purposes (such as baptismal name)            
- * @property {EntityName} name.Search             The name is to be used in the performing of matches only            
- * @property {EntityName} name.Soundex             The name represents the computed soundex code of a name            
- * @property {EntityName} name.Syllabic             The name represents a syllabic name.            
- * @property {EntityName} name.$other Unclassified
- * @property {string} note            Gets a list of all notes associated with the entity            
- * @property {object} participation            Gets the acts in which this entity participates            
- * @property {ActParticipation} participation.Admitter             The player entity was the person who was responsible for admitting the patient into a facility or care scenario.            
- * @property {ActParticipation} participation.Attender             The player entity represents the attending physician for the patient            
- * @property {ActParticipation} participation.Authenticator             The player entity represents an entity which authenticates the provision of care            
- * @property {ActParticipation} participation.Authororiginator             The player entity is responsible for the creation of data described in the act            
- * @property {ActParticipation} participation.Baby             The player is a resultant person in that it was the baby             
- * @property {ActParticipation} participation.Beneficiary             The player is a beneficiary of the act such a receiver of a financial instrument, or other good            
- * @property {ActParticipation} participation.CallbackContact             The player entity represents something that should be contacted upon completion of the act            
- * @property {ActParticipation} participation.CausativeAgent             The player entity is an agent which caused the act to occur            
- * @property {ActParticipation} participation.Consultant             The player entity is acting as a consult to the carrying out of the act            
- * @property {ActParticipation} participation.Consumable             The player entity was or is to be consumed during the process of carrying out the act.            
- * @property {ActParticipation} participation.CoverageTarget             The player entity represents the target coverage entity of the act            
- * @property {ActParticipation} participation.Custodian             The player entity is the data custodian of the act (is responsible for storing and securing the act)            
- * @property {ActParticipation} participation.DataEnterer             The player entity represents the person or device which phisically entered the data at the terminal            
- * @property {ActParticipation} participation.Destination             The player etity represents the ultimate destination of the goods/materials/services described in the act            
- * @property {ActParticipation} participation.Device             The player entity represents the device on which the act or data from the act was acquired or recorded            
- * @property {ActParticipation} participation.DirectTarget             The player entity represents the directed target of care provided in the act            
- * @property {ActParticipation} participation.Discharger             The player entity represents the person who is responsible for the discharging of the patient from an encounter            
- * @property {ActParticipation} participation.Distributor             The player entity is the source distribution point for the financial or material instruments contained in the message            
- * @property {ActParticipation} participation.Donor             The player entity represents the donor of tissue or materials used in the act            
- * @property {ActParticipation} participation.EntryLocation             The location where the act was entered.            
- * @property {ActParticipation} participation.Escort             The player entity was responsible for escorting the patient during the course of the act            
- * @property {ActParticipation} participation.Exposure             The player entity something to which the patient was exposed            
- * @property {ActParticipation} participation.ExposureAgent             The player entity represents the agent (material) to which the patient was exposed            
- * @property {ActParticipation} participation.ExposureSource             The player entity describes the source of the material to which the patient was exposed            
- * @property {ActParticipation} participation.ExposureTarget             The player entity describes the target to which the agent was exposed            
- * @property {ActParticipation} participation.GuarantorParty             The player represents a party which is used as a financial guarantor for payment in the carrying out of the act            
- * @property {ActParticipation} participation.Holder             The player is responsible for holding the act            
- * @property {ActParticipation} participation.IndirectTarget             The entity not directly present in the act but which will be the focust of th act.            
- * @property {ActParticipation} participation.Informant             The player was a person or device which informed data presented in the act. (Example: A mother telling a nurse that their child had a reaction)            
- * @property {ActParticipation} participation.InformationRecipient             The player entity represents something that should be cc'ed on the act            
- * @property {ActParticipation} participation.LegalAuthenticator             The player entity is responsible for legally authenticating the content of the act            
- * @property {ActParticipation} participation.Location             The location where the service was performed.            
- * @property {ActParticipation} participation.NonreuseableDevice             The player represents a consumable that can no longer be used            
- * @property {ActParticipation} participation.Origin             The player represents the origin of the act            
- * @property {ActParticipation} participation.Participation             The player entity participates in the act in no particular classification            
- * @property {ActParticipation} participation.Performer             The player entity is responsible for performing the clinical steps documented in the act            
- * @property {ActParticipation} participation.PrimaryInformationRecipient             The player entity represents a high priority contact which should be informed or cc'ed on the act            
- * @property {ActParticipation} participation.PrimaryPerformer             The player entity was the primary performer of the act. This is used in procedures where more than one performer is present            
- * @property {ActParticipation} participation.Product             The player represents a product that is not necessarily consumed but informs the act            
- * @property {ActParticipation} participation.Receiver             The player represents the entity which is the intended receiver of the act            
- * @property {ActParticipation} participation.RecordTarget             The player represents the entity to which the act is recorded against            
- * @property {ActParticipation} participation.ReferredBy             The player represents the entity which referred the act or caused the act to be undertaken            
- * @property {ActParticipation} participation.ReferredTo             The player entity represents the entity which was referred to            
- * @property {ActParticipation} participation.Referrer             The player entity represents the person who was originally the referrer.            
- * @property {ActParticipation} participation.Remote             The player entity represents a remote portion of the act            
- * @property {ActParticipation} participation.ResponsibleParty             The player entity is ultimately responsible for the carrying out of the act            
- * @property {ActParticipation} participation.ReusableDevice             The player entity represents a device which can be reused in future acts            
- * @property {ActParticipation} participation.SecondaryPerformer             The secondary performing person (support clinician).            
- * @property {ActParticipation} participation.Specimen             The player entity represents a specimen collected for the purpose of testing and diagnosis            
- * @property {ActParticipation} participation.Subject             The player entity is the subject of an act, but not necessarily the record target (meaning the act is about a particular entity but not to be attached to their record)            
- * @property {ActParticipation} participation.Tracker             The player entity is responsible for tracking the progress of the act            
- * @property {ActParticipation} participation.Transcriber             The person who transcribed data from the original act.            
- * @property {ActParticipation} participation.UgentNotificationContact             The player entity represents a contact entity in case of an emergency occurs during the act.            
- * @property {ActParticipation} participation.Verifier             The player entity was responsible for verifying the accuracy of the data in the act            
- * @property {ActParticipation} participation.Via             The player entity represents an entity where the act occurred "via" this entity (i.e. in transport)            
- * @property {ActParticipation} participation.Witness             The player entity represents a legal witness to the act occurring.            
- * @property {ActParticipation} participation.$other Unclassified
- * @property {object} relationship            Gets a list of all associated entities for this entity            
- * @property {EntityRelationship} relationship.Access             The access            
- * @property {EntityRelationship} relationship.ActiveMoiety             The active moiety            
- * @property {EntityRelationship} relationship.AdministerableMaterial             The administerable material            
- * @property {EntityRelationship} relationship.AdoptedChild             The adopted child            
- * @property {EntityRelationship} relationship.AdoptedDaughter             The adopted daughter            
- * @property {EntityRelationship} relationship.AdoptedSon             The adopted son            
- * @property {EntityRelationship} relationship.Affiliate             The affiliate            
- * @property {EntityRelationship} relationship.Agent             The agent            
- * @property {EntityRelationship} relationship.Aliquot             The aliquot            
- * @property {EntityRelationship} relationship.Assigned             The assigned            
- * @property {EntityRelationship} relationship.AssignedEntity             The assigned entity            
- * @property {EntityRelationship} relationship.Aunt             The aunt            
- * @property {EntityRelationship} relationship.Birthplace             The birthplace            
- * @property {EntityRelationship} relationship.Brother             The brother            
- * @property {EntityRelationship} relationship.Brotherinlaw             The brotherinlaw            
- * @property {EntityRelationship} relationship.Caregiver             The caregiver            
- * @property {EntityRelationship} relationship.CaseSubject             The case subject            
- * @property {EntityRelationship} relationship.Child             The child            
- * @property {EntityRelationship} relationship.ChildInlaw             The child inlaw            
- * @property {EntityRelationship} relationship.Citizen             The citizen            
- * @property {EntityRelationship} relationship.Claimant             The claimant            
- * @property {EntityRelationship} relationship.ClinicalResearchInvestigator             The clinical research investigator            
- * @property {EntityRelationship} relationship.ClinicalResearchSponsor             The clinical research sponsor            
- * @property {EntityRelationship} relationship.CommissioningParty             The commissioning party            
- * @property {EntityRelationship} relationship.Contact             The contact            
- * @property {EntityRelationship} relationship.Cousin             The cousin            
- * @property {EntityRelationship} relationship.CoverageSponsor             The coverage sponsor            
- * @property {EntityRelationship} relationship.CoveredParty             The covered party            
- * @property {EntityRelationship} relationship.Daughter             The daughter            
- * @property {EntityRelationship} relationship.DaughterInlaw             The daughter inlaw            
- * @property {EntityRelationship} relationship.DedicatedServiceDeliveryLocation             The dedicated service delivery location            
- * @property {EntityRelationship} relationship.Dependent             The dependent            
- * @property {EntityRelationship} relationship.DistributedMaterial             The distributed material            
- * @property {EntityRelationship} relationship.DomesticPartner             The domestic partner            
- * @property {EntityRelationship} relationship.EmergencyContact             The emergency contact            
- * @property {EntityRelationship} relationship.Employee             The employee            
- * @property {EntityRelationship} relationship.ExposedEntity             The exposed entity            
- * @property {EntityRelationship} relationship.FamilyMember             The family member            
- * @property {EntityRelationship} relationship.Father             The father            
- * @property {EntityRelationship} relationship.Fatherinlaw             The fatherinlaw            
- * @property {EntityRelationship} relationship.FosterChild             The foster child            
- * @property {EntityRelationship} relationship.FosterDaughter             The foster daughter            
- * @property {EntityRelationship} relationship.FosterSon             The foster son            
- * @property {EntityRelationship} relationship.Grandchild             The grandchild            
- * @property {EntityRelationship} relationship.Granddaughter             The granddaughter            
- * @property {EntityRelationship} relationship.Grandfather             The grandfather            
- * @property {EntityRelationship} relationship.Grandmother             The grandmother            
- * @property {EntityRelationship} relationship.Grandparent             The grandparent            
- * @property {EntityRelationship} relationship.Grandson             The grandson            
- * @property {EntityRelationship} relationship.GreatGrandfather             The great grandfather            
- * @property {EntityRelationship} relationship.GreatGrandmother             The great grandmother            
- * @property {EntityRelationship} relationship.GreatGrandparent             The great grandparent            
- * @property {EntityRelationship} relationship.Guarantor             The guarantor            
- * @property {EntityRelationship} relationship.GUARD             The guard            
- * @property {EntityRelationship} relationship.Guardian             The guardian            
- * @property {EntityRelationship} relationship.Halfbrother             The halfbrother            
- * @property {EntityRelationship} relationship.Halfsibling             The halfsibling            
- * @property {EntityRelationship} relationship.Halfsister             The halfsister            
- * @property {EntityRelationship} relationship.HealthcareProvider             The healthcare provider            
- * @property {EntityRelationship} relationship.HealthChart             The health chart            
- * @property {EntityRelationship} relationship.HeldEntity             The held entity            
- * @property {EntityRelationship} relationship.Husband             The husband            
- * @property {EntityRelationship} relationship.IdentifiedEntity             The identified entity            
- * @property {EntityRelationship} relationship.IncidentalServiceDeliveryLocation             The incidental service delivery location            
- * @property {EntityRelationship} relationship.Individual             The individual            
- * @property {EntityRelationship} relationship.InvestigationSubject             The investigation subject            
- * @property {EntityRelationship} relationship.InvoicePayor             The invoice payor            
- * @property {EntityRelationship} relationship.Isolate             The isolate            
- * @property {EntityRelationship} relationship.LicensedEntity             The licensed entity            
- * @property {EntityRelationship} relationship.MaintainedEntity             The maintained entity            
- * @property {EntityRelationship} relationship.ManufacturedProduct             The manufactured product            
- * @property {EntityRelationship} relationship.MaternalAunt             The maternal aunt            
- * @property {EntityRelationship} relationship.MaternalCousin             The maternal cousin            
- * @property {EntityRelationship} relationship.MaternalGrandfather             The maternal grandfather            
- * @property {EntityRelationship} relationship.MaternalGrandmother             The maternal grandmother            
- * @property {EntityRelationship} relationship.MaternalGrandparent             The maternal grandparent            
- * @property {EntityRelationship} relationship.MaternalGreatgrandfather             The maternal greatgrandfather            
- * @property {EntityRelationship} relationship.MaternalGreatgrandmother             The maternal greatgrandmother            
- * @property {EntityRelationship} relationship.MaternalGreatgrandparent             The maternal greatgrandparent            
- * @property {EntityRelationship} relationship.MaternalUncle             The maternal uncle            
- * @property {EntityRelationship} relationship.MilitaryPerson             The military person            
- * @property {EntityRelationship} relationship.Mother             The mother            
- * @property {EntityRelationship} relationship.Motherinlaw             The motherinlaw            
- * @property {EntityRelationship} relationship.NamedInsured             The named insured            
- * @property {EntityRelationship} relationship.NaturalBrother             The natural brother            
- * @property {EntityRelationship} relationship.NaturalChild             The natural child            
- * @property {EntityRelationship} relationship.NaturalDaughter             The natural daughter            
- * @property {EntityRelationship} relationship.NaturalFather             The natural father            
- * @property {EntityRelationship} relationship.NaturalFatherOfFetus             The natural father of fetus            
- * @property {EntityRelationship} relationship.NaturalMother             The natural mother            
- * @property {EntityRelationship} relationship.NaturalParent             The natural parent            
- * @property {EntityRelationship} relationship.NaturalSibling             The natural sibling            
- * @property {EntityRelationship} relationship.NaturalSister             The natural sister            
- * @property {EntityRelationship} relationship.NaturalSon             The natural son            
- * @property {EntityRelationship} relationship.Nephew             The nephew            
- * @property {EntityRelationship} relationship.NextOfKin             The next of kin            
- * @property {EntityRelationship} relationship.Niece             The niece            
- * @property {EntityRelationship} relationship.NieceNephew             The niece nephew            
- * @property {EntityRelationship} relationship.NotaryPublic             The notary public            
- * @property {EntityRelationship} relationship.OwnedEntity             The owned entity            
- * @property {EntityRelationship} relationship.Parent             The parent            
- * @property {EntityRelationship} relationship.ParentInlaw             The parent inlaw            
- * @property {EntityRelationship} relationship.Part             The part            
- * @property {EntityRelationship} relationship.PaternalAunt             The paternal aunt            
- * @property {EntityRelationship} relationship.PaternalCousin             The paternal cousin            
- * @property {EntityRelationship} relationship.PaternalGrandfather             The paternal grandfather            
- * @property {EntityRelationship} relationship.PaternalGrandmother             The paternal grandmother            
- * @property {EntityRelationship} relationship.PaternalGrandparent             The paternal grandparent            
- * @property {EntityRelationship} relationship.PaternalGreatgrandfather             The paternal greatgrandfather            
- * @property {EntityRelationship} relationship.PaternalGreatgrandmother             The paternal greatgrandmother            
- * @property {EntityRelationship} relationship.PaternalGreatgrandparent             The paternal greatgrandparent            
- * @property {EntityRelationship} relationship.PaternalUncle             The paternal uncle            
- * @property {EntityRelationship} relationship.Patient             The patient            
- * @property {EntityRelationship} relationship.Payee             The payee            
- * @property {EntityRelationship} relationship.PersonalRelationship             The personal relationship            
- * @property {EntityRelationship} relationship.PlaceOfDeath             The place of death            
- * @property {EntityRelationship} relationship.PolicyHolder             The policy holder            
- * @property {EntityRelationship} relationship.ProgramEligible             The program eligible            
- * @property {EntityRelationship} relationship.QualifiedEntity             The qualified entity            
- * @property {EntityRelationship} relationship.RegulatedProduct             The regulated product            
- * @property {EntityRelationship} relationship.ResearchSubject             The research subject            
- * @property {EntityRelationship} relationship.RetailedMaterial             The retailed material            
- * @property {EntityRelationship} relationship.Roomate             The roomate            
- * @property {EntityRelationship} relationship.ServiceDeliveryLocation             The service delivery location            
- * @property {EntityRelationship} relationship.Sibling             The sibling            
- * @property {EntityRelationship} relationship.SiblingInlaw             The sibling inlaw            
- * @property {EntityRelationship} relationship.SignificantOther             The significant other            
- * @property {EntityRelationship} relationship.SigningAuthorityOrOfficer             The signing authority or officer            
- * @property {EntityRelationship} relationship.Sister             The sister            
- * @property {EntityRelationship} relationship.Sisterinlaw             The sisterinlaw            
- * @property {EntityRelationship} relationship.Son             The son            
- * @property {EntityRelationship} relationship.SonInlaw             The son inlaw            
- * @property {EntityRelationship} relationship.Specimen             The specimen            
- * @property {EntityRelationship} relationship.Spouse             The spouse            
- * @property {EntityRelationship} relationship.Stepbrother             The stepbrother            
- * @property {EntityRelationship} relationship.StepChild             The step child            
- * @property {EntityRelationship} relationship.Stepdaughter             The stepdaughter            
- * @property {EntityRelationship} relationship.Stepfather             The stepfather            
- * @property {EntityRelationship} relationship.Stepmother             The stepmother            
- * @property {EntityRelationship} relationship.StepParent             The step parent            
- * @property {EntityRelationship} relationship.StepSibling             The step sibling            
- * @property {EntityRelationship} relationship.Stepsister             The stepsister            
- * @property {EntityRelationship} relationship.Stepson             The stepson            
- * @property {EntityRelationship} relationship.Student             The student            
- * @property {EntityRelationship} relationship.Subscriber             The subscriber            
- * @property {EntityRelationship} relationship.TerritoryOfAuthority             The territory of authority            
- * @property {EntityRelationship} relationship.TherapeuticAgent             The therapeutic agent            
- * @property {EntityRelationship} relationship.Uncle             The uncle            
- * @property {EntityRelationship} relationship.Underwriter             The underwriter            
- * @property {EntityRelationship} relationship.UsedEntity             The used entity            
- * @property {EntityRelationship} relationship.WarrantedProduct             The warranted product            
- * @property {EntityRelationship} relationship.Wife             The wife            
- * @property {EntityRelationship} relationship.Replaces             The replaces            
- * @property {EntityRelationship} relationship.Instance             The target entity represents an instance of the scoper entity            
- * @property {EntityRelationship} relationship.LocatedEntity             Relates the target entity to a source location            
- * @property {EntityRelationship} relationship.$other Unclassified
- * @property {Concept} statusConceptModel [Delay loaded from statusConcept],             Status concept id            
- * @property {string} statusConcept            Status concept id            (see: {@link StatusKeys} for values)
- * @property {object} tag            Gets a list of all tags associated with the entity            
- * @property {string} tag.classifier  where classifier is from {@link Tag} key
- * @property {object} telecom            Gets a list of all telecommunications addresses associated with the entity            
- * @property {EntityTelecomAddress} telecom.AnsweringService             answering service            
- * @property {EntityTelecomAddress} telecom.EmergencyContact             Emergency contact            
- * @property {EntityTelecomAddress} telecom.MobileContact             Mobile phone contact            
- * @property {EntityTelecomAddress} telecom.Pager             pager            
- * @property {EntityTelecomAddress} telecom.Public             public (800 number example) contact            
- * @property {EntityTelecomAddress} telecom.TemporaryAddress             temporary contact            
- * @property {EntityTelecomAddress} telecom.WorkPlace             For use in the workplace            
- * @property {EntityTelecomAddress} telecom.$other Unclassified
- * @property {string} template            Gets the template key            
- * @property {TemplateDefinition} templateModel [Delay loaded from template],             Gets or sets the template definition            
- * @property {Concept} typeConceptModel [Delay loaded from typeConcept],             Type concept identifier            
- * @property {string} typeConcept            Type concept identifier            
- * @property {string} previousVersion
- * @property {string} version
- * @property {number} sequence
- * @property {Date} creationTimeModel [Delay loaded from creationTime],             Gets or sets the time at which the data was created            
- * @property {Date} creationTime            Gets or sets the creation time in XML format            
- * @property {Date} obsoletionTimeModel [Delay loaded from obsoletionTime],             Gets or sets the time when the data is or will become invalid            
- * @property {Date} obsoletionTime            Gets or sets the creation time in XML format            
- * @property {SecurityUser} createdByModel [Delay loaded from createdBy],             Gets or sets the user that created this base data            
- * @property {Date} modifiedOn            Gets the time that the object was last modified (from base data, default to CreationTime)            
- * @property {SecurityUser} obsoletedByModel [Delay loaded from obsoletedBy],             Gets or sets the user that obsoleted this base data            
- * @property {string} createdBy            Gets or sets the identifier of the user which created the data            
- * @property {string} obsoletedBy            Gets or sets the identifier of the user which obsoleted the data            
- * @property {string} id            The internal primary key value of the entity            
- * @property {string} $type            Gets the type            
- * @param {UserEntity} copyData Copy constructor (if present)
- */
-function UserEntity (copyData) { 
-	this.$type = 'UserEntity';
-	if(copyData) {
-	/** @type {string} */
-	this.id = copyData.id;
-	/** @type {string} */
-	this.obsoletedBy = copyData.obsoletedBy;
-	/** @type {string} */
-	this.createdBy = copyData.createdBy;
-	/** @type {SecurityUser} */
-	this.obsoletedByModel = copyData.obsoletedByModel;
-	/** @type {Date} */
-	this.modifiedOn = copyData.modifiedOn;
-	/** @type {SecurityUser} */
-	this.createdByModel = copyData.createdByModel;
-	/** @type {Date} */
-	this.obsoletionTime = copyData.obsoletionTime;
-	/** @type {Date} */
-	this.obsoletionTimeModel = copyData.obsoletionTimeModel;
-	/** @type {Date} */
-	this.creationTime = copyData.creationTime;
-	/** @type {Date} */
-	this.creationTimeModel = copyData.creationTimeModel;
-	/** @type {number} */
-	this.sequence = copyData.sequence;
-	/** @type {string} */
-	this.version = copyData.version;
-	/** @type {string} */
-	this.previousVersion = copyData.previousVersion;
-	/** @type {string} */
-	this.typeConcept = copyData.typeConcept;
-	/** @type {Concept} */
-	this.typeConceptModel = copyData.typeConceptModel;
-	/** @type {TemplateDefinition} */
-	this.templateModel = copyData.templateModel;
-	/** @type {string} */
-	this.template = copyData.template;
-	/** @type {object} */
-	this.telecom = copyData.telecom;
-	/** @type {object} */
-	this.tag = copyData.tag;
-	/** @type {string} */
-	this.statusConcept = copyData.statusConcept;
-	/** @type {Concept} */
-	this.statusConceptModel = copyData.statusConceptModel;
-	/** @type {object} */
-	this.relationship = copyData.relationship;
-	/** @type {object} */
-	this.participation = copyData.participation;
-	/** @type {string} */
-	this.note = copyData.note;
-	/** @type {object} */
-	this.name = copyData.name;
-	/** @type {object} */
-	this.identifier = copyData.identifier;
-	/** @type {object} */
-	this.extension = copyData.extension;
-	/** @type {string} */
-	this.determinerConcept = copyData.determinerConcept;
-	/** @type {Concept} */
-	this.determinerConceptModel = copyData.determinerConceptModel;
-	/** @type {string} */
-	this.creationAct = copyData.creationAct;
-	/** @type {Act} */
-	this.creationActModel = copyData.creationActModel;
-	/** @type {string} */
-	this.classConcept = copyData.classConcept;
-	/** @type {Concept} */
-	this.classConceptModel = copyData.classConceptModel;
-	/** @type {object} */
-	this.address = copyData.address;
-	/** @type {PersonLanguageCommunication} */
-	this.language = copyData.language;
-	/** @type {string} */
-	this.dateOfBirth = copyData.dateOfBirth;
-	/** @type {DatePrecision} */
-	this.dateOfBirthPrecision = copyData.dateOfBirthPrecision;
-	/** @type {string} */
-	this.securityUser = copyData.securityUser;
-	/** @type {SecurityUser} */
-	this.securityUserModel = copyData.securityUserModel;
-	}
-}  // UserEntity 
-// SanteDB.Core.Model.Entities.ApplicationEntity, SanteDB.Core.Model, Version=1.1.0.35405, Culture=neutral, PublicKeyToken=null
-if(!ApplicationEntity)
-/**
- * @class
- * @constructor
- * @memberof SanteDBModel
- * @public
- * @extends Entity
- * @summary             An associative entity which links a SecurityApplication to an Entity            
- * @property {SecurityApplication} securityApplicationModel [Delay loaded from securityApplication],             Gets or sets the security application            
- * @property {string} securityApplication            Gets or sets the security application            
- * @property {string} softwareName            Gets or sets the name of the software            
- * @property {string} vendorName            Gets or sets the vendoer name of the software            
- * @property {string} versionName            Gets or sets the version of the software            
- * @property {object} address            Gets a list of all addresses associated with the entity            
- * @property {EntityAddress} address.Alphabetic             Represents an alphabetic address used for matching             
- * @property {EntityAddress} address.BadAddress             Represents a bad address, i.e. an address which is old or invalid.            
- * @property {EntityAddress} address.Direct             Represents a workplace address that reaches the person directly without intermediaries.            
- * @property {EntityAddress} address.HomeAddress             The home address            
- * @property {EntityAddress} address.Ideographic             Represents an address expressed in an ideographic manner (example: Kanji)            
- * @property {EntityAddress} address.Phonetic             Represents an address expressed as a phonetic spelling of an ideographic address            
- * @property {EntityAddress} address.PhysicalVisit             The address is a physical place where visits should occur            
- * @property {EntityAddress} address.PostalAddress             The address is a postal address used for the delivery of mail and materials            
- * @property {EntityAddress} address.PrimaryHome             Represents a primary address to reach a contact after business hours.            
- * @property {EntityAddress} address.Public             Represents an address that is a standard address that may be subject to a switchboard or operator prior to reaching the intended entity.            
- * @property {EntityAddress} address.Soundex             Represents an address used for soundex matching purposes.            
- * @property {EntityAddress} address.Syllabic             Represents a syllabic address.            
- * @property {EntityAddress} address.TemporaryAddress             Represents a temporary address that may be good for visiting or mailing.            
- * @property {EntityAddress} address.VacationHome             Represents a vacation home to reach a person while on vacation.            
- * @property {EntityAddress} address.WorkPlace             Represents an office address, should be used for business communications            
- * @property {EntityAddress} address.$other Unclassified
- * @property {Concept} classConceptModel [Delay loaded from classConcept],             Class concept datal load property            
- * @property {string} classConcept            Class concept            (see: {@link EntityClassKeys} for values)
- * @property {Act} creationActModel [Delay loaded from creationAct],             Creation act reference            
- * @property {string} creationAct            Creation act reference            
- * @property {Concept} determinerConceptModel [Delay loaded from determinerConcept],             Determiner concept            
- * @property {string} determinerConcept            Determiner concept            (see: {@link DeterminerKeys} for values)
- * @property {object} extension            Gets a list of all extensions associated with the entity            
- * @property {string} extension.classifier  where classifier is from {@link Extension} extensionType
- * @property {object} identifier            Gets the identifiers associated with this entity            
- * @property {EntityIdentifier} identifier.classifier  where classifier is from {@link IdentifierBase} authority
- * @property {object} name            Gets a list of all names associated with the entity            
- * @property {EntityName} name.Alphabetic             The name used is an alphabetic representation of the name (ex: romaji in Japanese)            
- * @property {EntityName} name.Anonymous             The name is an anonymous name for the object (not the real name but a name used for care delivery)            
- * @property {EntityName} name.Artist             The name represents an artist name or stage name            
- * @property {EntityName} name.Assigned             The name represents an assigned name (given or bestowed by an authority)            
- * @property {EntityName} name.Ideographic             THe name represents an ideographic representation of the name            
- * @property {EntityName} name.Indigenous             The name is an indigenous name or tribal name for the patient            
- * @property {EntityName} name.Legal             The name represents the current legal name of an object (such as a corporate name)            
- * @property {EntityName} name.License             The name represents a name as displayed on a license or known to a license authority            
- * @property {EntityName} name.MaidenName             THe name is a maiden name (name of a patient before marriage)            
- * @property {EntityName} name.OfficialRecord             The name as it appears on an official record            
- * @property {EntityName} name.Phonetic             The name represents a phonetic representation of a name such as a SOUNDEX code            
- * @property {EntityName} name.Pseudonym             The name is a pseudonym for the object or an synonym name            
- * @property {EntityName} name.Religious             The name is to be used for religious purposes (such as baptismal name)            
- * @property {EntityName} name.Search             The name is to be used in the performing of matches only            
- * @property {EntityName} name.Soundex             The name represents the computed soundex code of a name            
- * @property {EntityName} name.Syllabic             The name represents a syllabic name.            
- * @property {EntityName} name.$other Unclassified
- * @property {string} note            Gets a list of all notes associated with the entity            
- * @property {object} participation            Gets the acts in which this entity participates            
- * @property {ActParticipation} participation.Admitter             The player entity was the person who was responsible for admitting the patient into a facility or care scenario.            
- * @property {ActParticipation} participation.Attender             The player entity represents the attending physician for the patient            
- * @property {ActParticipation} participation.Authenticator             The player entity represents an entity which authenticates the provision of care            
- * @property {ActParticipation} participation.Authororiginator             The player entity is responsible for the creation of data described in the act            
- * @property {ActParticipation} participation.Baby             The player is a resultant person in that it was the baby             
- * @property {ActParticipation} participation.Beneficiary             The player is a beneficiary of the act such a receiver of a financial instrument, or other good            
- * @property {ActParticipation} participation.CallbackContact             The player entity represents something that should be contacted upon completion of the act            
- * @property {ActParticipation} participation.CausativeAgent             The player entity is an agent which caused the act to occur            
- * @property {ActParticipation} participation.Consultant             The player entity is acting as a consult to the carrying out of the act            
- * @property {ActParticipation} participation.Consumable             The player entity was or is to be consumed during the process of carrying out the act.            
- * @property {ActParticipation} participation.CoverageTarget             The player entity represents the target coverage entity of the act            
- * @property {ActParticipation} participation.Custodian             The player entity is the data custodian of the act (is responsible for storing and securing the act)            
- * @property {ActParticipation} participation.DataEnterer             The player entity represents the person or device which phisically entered the data at the terminal            
- * @property {ActParticipation} participation.Destination             The player etity represents the ultimate destination of the goods/materials/services described in the act            
- * @property {ActParticipation} participation.Device             The player entity represents the device on which the act or data from the act was acquired or recorded            
- * @property {ActParticipation} participation.DirectTarget             The player entity represents the directed target of care provided in the act            
- * @property {ActParticipation} participation.Discharger             The player entity represents the person who is responsible for the discharging of the patient from an encounter            
- * @property {ActParticipation} participation.Distributor             The player entity is the source distribution point for the financial or material instruments contained in the message            
- * @property {ActParticipation} participation.Donor             The player entity represents the donor of tissue or materials used in the act            
- * @property {ActParticipation} participation.EntryLocation             The location where the act was entered.            
- * @property {ActParticipation} participation.Escort             The player entity was responsible for escorting the patient during the course of the act            
- * @property {ActParticipation} participation.Exposure             The player entity something to which the patient was exposed            
- * @property {ActParticipation} participation.ExposureAgent             The player entity represents the agent (material) to which the patient was exposed            
- * @property {ActParticipation} participation.ExposureSource             The player entity describes the source of the material to which the patient was exposed            
- * @property {ActParticipation} participation.ExposureTarget             The player entity describes the target to which the agent was exposed            
- * @property {ActParticipation} participation.GuarantorParty             The player represents a party which is used as a financial guarantor for payment in the carrying out of the act            
- * @property {ActParticipation} participation.Holder             The player is responsible for holding the act            
- * @property {ActParticipation} participation.IndirectTarget             The entity not directly present in the act but which will be the focust of th act.            
- * @property {ActParticipation} participation.Informant             The player was a person or device which informed data presented in the act. (Example: A mother telling a nurse that their child had a reaction)            
- * @property {ActParticipation} participation.InformationRecipient             The player entity represents something that should be cc'ed on the act            
- * @property {ActParticipation} participation.LegalAuthenticator             The player entity is responsible for legally authenticating the content of the act            
- * @property {ActParticipation} participation.Location             The location where the service was performed.            
- * @property {ActParticipation} participation.NonreuseableDevice             The player represents a consumable that can no longer be used            
- * @property {ActParticipation} participation.Origin             The player represents the origin of the act            
- * @property {ActParticipation} participation.Participation             The player entity participates in the act in no particular classification            
- * @property {ActParticipation} participation.Performer             The player entity is responsible for performing the clinical steps documented in the act            
- * @property {ActParticipation} participation.PrimaryInformationRecipient             The player entity represents a high priority contact which should be informed or cc'ed on the act            
- * @property {ActParticipation} participation.PrimaryPerformer             The player entity was the primary performer of the act. This is used in procedures where more than one performer is present            
- * @property {ActParticipation} participation.Product             The player represents a product that is not necessarily consumed but informs the act            
- * @property {ActParticipation} participation.Receiver             The player represents the entity which is the intended receiver of the act            
- * @property {ActParticipation} participation.RecordTarget             The player represents the entity to which the act is recorded against            
- * @property {ActParticipation} participation.ReferredBy             The player represents the entity which referred the act or caused the act to be undertaken            
- * @property {ActParticipation} participation.ReferredTo             The player entity represents the entity which was referred to            
- * @property {ActParticipation} participation.Referrer             The player entity represents the person who was originally the referrer.            
- * @property {ActParticipation} participation.Remote             The player entity represents a remote portion of the act            
- * @property {ActParticipation} participation.ResponsibleParty             The player entity is ultimately responsible for the carrying out of the act            
- * @property {ActParticipation} participation.ReusableDevice             The player entity represents a device which can be reused in future acts            
- * @property {ActParticipation} participation.SecondaryPerformer             The secondary performing person (support clinician).            
- * @property {ActParticipation} participation.Specimen             The player entity represents a specimen collected for the purpose of testing and diagnosis            
- * @property {ActParticipation} participation.Subject             The player entity is the subject of an act, but not necessarily the record target (meaning the act is about a particular entity but not to be attached to their record)            
- * @property {ActParticipation} participation.Tracker             The player entity is responsible for tracking the progress of the act            
- * @property {ActParticipation} participation.Transcriber             The person who transcribed data from the original act.            
- * @property {ActParticipation} participation.UgentNotificationContact             The player entity represents a contact entity in case of an emergency occurs during the act.            
- * @property {ActParticipation} participation.Verifier             The player entity was responsible for verifying the accuracy of the data in the act            
- * @property {ActParticipation} participation.Via             The player entity represents an entity where the act occurred "via" this entity (i.e. in transport)            
- * @property {ActParticipation} participation.Witness             The player entity represents a legal witness to the act occurring.            
- * @property {ActParticipation} participation.$other Unclassified
- * @property {object} relationship            Gets a list of all associated entities for this entity            
- * @property {EntityRelationship} relationship.Access             The access            
- * @property {EntityRelationship} relationship.ActiveMoiety             The active moiety            
- * @property {EntityRelationship} relationship.AdministerableMaterial             The administerable material            
- * @property {EntityRelationship} relationship.AdoptedChild             The adopted child            
- * @property {EntityRelationship} relationship.AdoptedDaughter             The adopted daughter            
- * @property {EntityRelationship} relationship.AdoptedSon             The adopted son            
- * @property {EntityRelationship} relationship.Affiliate             The affiliate            
- * @property {EntityRelationship} relationship.Agent             The agent            
- * @property {EntityRelationship} relationship.Aliquot             The aliquot            
- * @property {EntityRelationship} relationship.Assigned             The assigned            
- * @property {EntityRelationship} relationship.AssignedEntity             The assigned entity            
- * @property {EntityRelationship} relationship.Aunt             The aunt            
- * @property {EntityRelationship} relationship.Birthplace             The birthplace            
- * @property {EntityRelationship} relationship.Brother             The brother            
- * @property {EntityRelationship} relationship.Brotherinlaw             The brotherinlaw            
- * @property {EntityRelationship} relationship.Caregiver             The caregiver            
- * @property {EntityRelationship} relationship.CaseSubject             The case subject            
- * @property {EntityRelationship} relationship.Child             The child            
- * @property {EntityRelationship} relationship.ChildInlaw             The child inlaw            
- * @property {EntityRelationship} relationship.Citizen             The citizen            
- * @property {EntityRelationship} relationship.Claimant             The claimant            
- * @property {EntityRelationship} relationship.ClinicalResearchInvestigator             The clinical research investigator            
- * @property {EntityRelationship} relationship.ClinicalResearchSponsor             The clinical research sponsor            
- * @property {EntityRelationship} relationship.CommissioningParty             The commissioning party            
- * @property {EntityRelationship} relationship.Contact             The contact            
- * @property {EntityRelationship} relationship.Cousin             The cousin            
- * @property {EntityRelationship} relationship.CoverageSponsor             The coverage sponsor            
- * @property {EntityRelationship} relationship.CoveredParty             The covered party            
- * @property {EntityRelationship} relationship.Daughter             The daughter            
- * @property {EntityRelationship} relationship.DaughterInlaw             The daughter inlaw            
- * @property {EntityRelationship} relationship.DedicatedServiceDeliveryLocation             The dedicated service delivery location            
- * @property {EntityRelationship} relationship.Dependent             The dependent            
- * @property {EntityRelationship} relationship.DistributedMaterial             The distributed material            
- * @property {EntityRelationship} relationship.DomesticPartner             The domestic partner            
- * @property {EntityRelationship} relationship.EmergencyContact             The emergency contact            
- * @property {EntityRelationship} relationship.Employee             The employee            
- * @property {EntityRelationship} relationship.ExposedEntity             The exposed entity            
- * @property {EntityRelationship} relationship.FamilyMember             The family member            
- * @property {EntityRelationship} relationship.Father             The father            
- * @property {EntityRelationship} relationship.Fatherinlaw             The fatherinlaw            
- * @property {EntityRelationship} relationship.FosterChild             The foster child            
- * @property {EntityRelationship} relationship.FosterDaughter             The foster daughter            
- * @property {EntityRelationship} relationship.FosterSon             The foster son            
- * @property {EntityRelationship} relationship.Grandchild             The grandchild            
- * @property {EntityRelationship} relationship.Granddaughter             The granddaughter            
- * @property {EntityRelationship} relationship.Grandfather             The grandfather            
- * @property {EntityRelationship} relationship.Grandmother             The grandmother            
- * @property {EntityRelationship} relationship.Grandparent             The grandparent            
- * @property {EntityRelationship} relationship.Grandson             The grandson            
- * @property {EntityRelationship} relationship.GreatGrandfather             The great grandfather            
- * @property {EntityRelationship} relationship.GreatGrandmother             The great grandmother            
- * @property {EntityRelationship} relationship.GreatGrandparent             The great grandparent            
- * @property {EntityRelationship} relationship.Guarantor             The guarantor            
- * @property {EntityRelationship} relationship.GUARD             The guard            
- * @property {EntityRelationship} relationship.Guardian             The guardian            
- * @property {EntityRelationship} relationship.Halfbrother             The halfbrother            
- * @property {EntityRelationship} relationship.Halfsibling             The halfsibling            
- * @property {EntityRelationship} relationship.Halfsister             The halfsister            
- * @property {EntityRelationship} relationship.HealthcareProvider             The healthcare provider            
- * @property {EntityRelationship} relationship.HealthChart             The health chart            
- * @property {EntityRelationship} relationship.HeldEntity             The held entity            
- * @property {EntityRelationship} relationship.Husband             The husband            
- * @property {EntityRelationship} relationship.IdentifiedEntity             The identified entity            
- * @property {EntityRelationship} relationship.IncidentalServiceDeliveryLocation             The incidental service delivery location            
- * @property {EntityRelationship} relationship.Individual             The individual            
- * @property {EntityRelationship} relationship.InvestigationSubject             The investigation subject            
- * @property {EntityRelationship} relationship.InvoicePayor             The invoice payor            
- * @property {EntityRelationship} relationship.Isolate             The isolate            
- * @property {EntityRelationship} relationship.LicensedEntity             The licensed entity            
- * @property {EntityRelationship} relationship.MaintainedEntity             The maintained entity            
- * @property {EntityRelationship} relationship.ManufacturedProduct             The manufactured product            
- * @property {EntityRelationship} relationship.MaternalAunt             The maternal aunt            
- * @property {EntityRelationship} relationship.MaternalCousin             The maternal cousin            
- * @property {EntityRelationship} relationship.MaternalGrandfather             The maternal grandfather            
- * @property {EntityRelationship} relationship.MaternalGrandmother             The maternal grandmother            
- * @property {EntityRelationship} relationship.MaternalGrandparent             The maternal grandparent            
- * @property {EntityRelationship} relationship.MaternalGreatgrandfather             The maternal greatgrandfather            
- * @property {EntityRelationship} relationship.MaternalGreatgrandmother             The maternal greatgrandmother            
- * @property {EntityRelationship} relationship.MaternalGreatgrandparent             The maternal greatgrandparent            
- * @property {EntityRelationship} relationship.MaternalUncle             The maternal uncle            
- * @property {EntityRelationship} relationship.MilitaryPerson             The military person            
- * @property {EntityRelationship} relationship.Mother             The mother            
- * @property {EntityRelationship} relationship.Motherinlaw             The motherinlaw            
- * @property {EntityRelationship} relationship.NamedInsured             The named insured            
- * @property {EntityRelationship} relationship.NaturalBrother             The natural brother            
- * @property {EntityRelationship} relationship.NaturalChild             The natural child            
- * @property {EntityRelationship} relationship.NaturalDaughter             The natural daughter            
- * @property {EntityRelationship} relationship.NaturalFather             The natural father            
- * @property {EntityRelationship} relationship.NaturalFatherOfFetus             The natural father of fetus            
- * @property {EntityRelationship} relationship.NaturalMother             The natural mother            
- * @property {EntityRelationship} relationship.NaturalParent             The natural parent            
- * @property {EntityRelationship} relationship.NaturalSibling             The natural sibling            
- * @property {EntityRelationship} relationship.NaturalSister             The natural sister            
- * @property {EntityRelationship} relationship.NaturalSon             The natural son            
- * @property {EntityRelationship} relationship.Nephew             The nephew            
- * @property {EntityRelationship} relationship.NextOfKin             The next of kin            
- * @property {EntityRelationship} relationship.Niece             The niece            
- * @property {EntityRelationship} relationship.NieceNephew             The niece nephew            
- * @property {EntityRelationship} relationship.NotaryPublic             The notary public            
- * @property {EntityRelationship} relationship.OwnedEntity             The owned entity            
- * @property {EntityRelationship} relationship.Parent             The parent            
- * @property {EntityRelationship} relationship.ParentInlaw             The parent inlaw            
- * @property {EntityRelationship} relationship.Part             The part            
- * @property {EntityRelationship} relationship.PaternalAunt             The paternal aunt            
- * @property {EntityRelationship} relationship.PaternalCousin             The paternal cousin            
- * @property {EntityRelationship} relationship.PaternalGrandfather             The paternal grandfather            
- * @property {EntityRelationship} relationship.PaternalGrandmother             The paternal grandmother            
- * @property {EntityRelationship} relationship.PaternalGrandparent             The paternal grandparent            
- * @property {EntityRelationship} relationship.PaternalGreatgrandfather             The paternal greatgrandfather            
- * @property {EntityRelationship} relationship.PaternalGreatgrandmother             The paternal greatgrandmother            
- * @property {EntityRelationship} relationship.PaternalGreatgrandparent             The paternal greatgrandparent            
- * @property {EntityRelationship} relationship.PaternalUncle             The paternal uncle            
- * @property {EntityRelationship} relationship.Patient             The patient            
- * @property {EntityRelationship} relationship.Payee             The payee            
- * @property {EntityRelationship} relationship.PersonalRelationship             The personal relationship            
- * @property {EntityRelationship} relationship.PlaceOfDeath             The place of death            
- * @property {EntityRelationship} relationship.PolicyHolder             The policy holder            
- * @property {EntityRelationship} relationship.ProgramEligible             The program eligible            
- * @property {EntityRelationship} relationship.QualifiedEntity             The qualified entity            
- * @property {EntityRelationship} relationship.RegulatedProduct             The regulated product            
- * @property {EntityRelationship} relationship.ResearchSubject             The research subject            
- * @property {EntityRelationship} relationship.RetailedMaterial             The retailed material            
- * @property {EntityRelationship} relationship.Roomate             The roomate            
- * @property {EntityRelationship} relationship.ServiceDeliveryLocation             The service delivery location            
- * @property {EntityRelationship} relationship.Sibling             The sibling            
- * @property {EntityRelationship} relationship.SiblingInlaw             The sibling inlaw            
- * @property {EntityRelationship} relationship.SignificantOther             The significant other            
- * @property {EntityRelationship} relationship.SigningAuthorityOrOfficer             The signing authority or officer            
- * @property {EntityRelationship} relationship.Sister             The sister            
- * @property {EntityRelationship} relationship.Sisterinlaw             The sisterinlaw            
- * @property {EntityRelationship} relationship.Son             The son            
- * @property {EntityRelationship} relationship.SonInlaw             The son inlaw            
- * @property {EntityRelationship} relationship.Specimen             The specimen            
- * @property {EntityRelationship} relationship.Spouse             The spouse            
- * @property {EntityRelationship} relationship.Stepbrother             The stepbrother            
- * @property {EntityRelationship} relationship.StepChild             The step child            
- * @property {EntityRelationship} relationship.Stepdaughter             The stepdaughter            
- * @property {EntityRelationship} relationship.Stepfather             The stepfather            
- * @property {EntityRelationship} relationship.Stepmother             The stepmother            
- * @property {EntityRelationship} relationship.StepParent             The step parent            
- * @property {EntityRelationship} relationship.StepSibling             The step sibling            
- * @property {EntityRelationship} relationship.Stepsister             The stepsister            
- * @property {EntityRelationship} relationship.Stepson             The stepson            
- * @property {EntityRelationship} relationship.Student             The student            
- * @property {EntityRelationship} relationship.Subscriber             The subscriber            
- * @property {EntityRelationship} relationship.TerritoryOfAuthority             The territory of authority            
- * @property {EntityRelationship} relationship.TherapeuticAgent             The therapeutic agent            
- * @property {EntityRelationship} relationship.Uncle             The uncle            
- * @property {EntityRelationship} relationship.Underwriter             The underwriter            
- * @property {EntityRelationship} relationship.UsedEntity             The used entity            
- * @property {EntityRelationship} relationship.WarrantedProduct             The warranted product            
- * @property {EntityRelationship} relationship.Wife             The wife            
- * @property {EntityRelationship} relationship.Replaces             The replaces            
- * @property {EntityRelationship} relationship.Instance             The target entity represents an instance of the scoper entity            
- * @property {EntityRelationship} relationship.LocatedEntity             Relates the target entity to a source location            
- * @property {EntityRelationship} relationship.$other Unclassified
- * @property {Concept} statusConceptModel [Delay loaded from statusConcept],             Status concept id            
- * @property {string} statusConcept            Status concept id            (see: {@link StatusKeys} for values)
- * @property {object} tag            Gets a list of all tags associated with the entity            
- * @property {string} tag.classifier  where classifier is from {@link Tag} key
- * @property {object} telecom            Gets a list of all telecommunications addresses associated with the entity            
- * @property {EntityTelecomAddress} telecom.AnsweringService             answering service            
- * @property {EntityTelecomAddress} telecom.EmergencyContact             Emergency contact            
- * @property {EntityTelecomAddress} telecom.MobileContact             Mobile phone contact            
- * @property {EntityTelecomAddress} telecom.Pager             pager            
- * @property {EntityTelecomAddress} telecom.Public             public (800 number example) contact            
- * @property {EntityTelecomAddress} telecom.TemporaryAddress             temporary contact            
- * @property {EntityTelecomAddress} telecom.WorkPlace             For use in the workplace            
- * @property {EntityTelecomAddress} telecom.$other Unclassified
- * @property {string} template            Gets the template key            
- * @property {TemplateDefinition} templateModel [Delay loaded from template],             Gets or sets the template definition            
- * @property {Concept} typeConceptModel [Delay loaded from typeConcept],             Type concept identifier            
- * @property {string} typeConcept            Type concept identifier            
- * @property {string} previousVersion
- * @property {string} version
- * @property {number} sequence
- * @property {Date} creationTimeModel [Delay loaded from creationTime],             Gets or sets the time at which the data was created            
- * @property {Date} creationTime            Gets or sets the creation time in XML format            
- * @property {Date} obsoletionTimeModel [Delay loaded from obsoletionTime],             Gets or sets the time when the data is or will become invalid            
- * @property {Date} obsoletionTime            Gets or sets the creation time in XML format            
- * @property {SecurityUser} createdByModel [Delay loaded from createdBy],             Gets or sets the user that created this base data            
- * @property {Date} modifiedOn            Gets the time that the object was last modified (from base data, default to CreationTime)            
- * @property {SecurityUser} obsoletedByModel [Delay loaded from obsoletedBy],             Gets or sets the user that obsoleted this base data            
- * @property {string} createdBy            Gets or sets the identifier of the user which created the data            
- * @property {string} obsoletedBy            Gets or sets the identifier of the user which obsoleted the data            
- * @property {string} id            The internal primary key value of the entity            
- * @property {string} $type            Gets the type            
- * @param {ApplicationEntity} copyData Copy constructor (if present)
- */
-function ApplicationEntity (copyData) { 
-	this.$type = 'ApplicationEntity';
-	if(copyData) {
-	/** @type {string} */
-	this.id = copyData.id;
-	/** @type {string} */
-	this.obsoletedBy = copyData.obsoletedBy;
-	/** @type {string} */
-	this.createdBy = copyData.createdBy;
-	/** @type {SecurityUser} */
-	this.obsoletedByModel = copyData.obsoletedByModel;
-	/** @type {Date} */
-	this.modifiedOn = copyData.modifiedOn;
-	/** @type {SecurityUser} */
-	this.createdByModel = copyData.createdByModel;
-	/** @type {Date} */
-	this.obsoletionTime = copyData.obsoletionTime;
-	/** @type {Date} */
-	this.obsoletionTimeModel = copyData.obsoletionTimeModel;
-	/** @type {Date} */
-	this.creationTime = copyData.creationTime;
-	/** @type {Date} */
-	this.creationTimeModel = copyData.creationTimeModel;
-	/** @type {number} */
-	this.sequence = copyData.sequence;
-	/** @type {string} */
-	this.version = copyData.version;
-	/** @type {string} */
-	this.previousVersion = copyData.previousVersion;
-	/** @type {string} */
-	this.typeConcept = copyData.typeConcept;
-	/** @type {Concept} */
-	this.typeConceptModel = copyData.typeConceptModel;
-	/** @type {TemplateDefinition} */
-	this.templateModel = copyData.templateModel;
-	/** @type {string} */
-	this.template = copyData.template;
-	/** @type {object} */
-	this.telecom = copyData.telecom;
-	/** @type {object} */
-	this.tag = copyData.tag;
-	/** @type {string} */
-	this.statusConcept = copyData.statusConcept;
-	/** @type {Concept} */
-	this.statusConceptModel = copyData.statusConceptModel;
-	/** @type {object} */
-	this.relationship = copyData.relationship;
-	/** @type {object} */
-	this.participation = copyData.participation;
-	/** @type {string} */
-	this.note = copyData.note;
-	/** @type {object} */
-	this.name = copyData.name;
-	/** @type {object} */
-	this.identifier = copyData.identifier;
-	/** @type {object} */
-	this.extension = copyData.extension;
-	/** @type {string} */
-	this.determinerConcept = copyData.determinerConcept;
-	/** @type {Concept} */
-	this.determinerConceptModel = copyData.determinerConceptModel;
-	/** @type {string} */
-	this.creationAct = copyData.creationAct;
-	/** @type {Act} */
-	this.creationActModel = copyData.creationActModel;
-	/** @type {string} */
-	this.classConcept = copyData.classConcept;
-	/** @type {Concept} */
-	this.classConceptModel = copyData.classConceptModel;
-	/** @type {object} */
-	this.address = copyData.address;
-	/** @type {string} */
-	this.versionName = copyData.versionName;
-	/** @type {string} */
-	this.vendorName = copyData.vendorName;
-	/** @type {string} */
-	this.softwareName = copyData.softwareName;
-	/** @type {string} */
-	this.securityApplication = copyData.securityApplication;
-	/** @type {SecurityApplication} */
-	this.securityApplicationModel = copyData.securityApplicationModel;
-	}
-}  // ApplicationEntity 
-// SanteDB.Core.Model.Entities.DeviceEntity, SanteDB.Core.Model, Version=1.1.0.35405, Culture=neutral, PublicKeyToken=null
-if(!DeviceEntity)
-/**
- * @class
- * @constructor
- * @memberof SanteDBModel
- * @public
- * @extends Entity
  * @summary             Represents a device entity            
  * @property {string} manufacturerModelName            Gets or sets the manufacturer model name            
  * @property {string} operatingSystemName            Gets or sets the operating system name            
  * @property {SecurityDevice} securityDeviceModel [Delay loaded from securityDevice],             Gets or sets the security device            
  * @property {string} securityDevice            Gets or sets the security device key            
+ * @property {GeoTag} geo            Gets or sets the geo tag            
  * @property {object} address            Gets a list of all addresses associated with the entity            
  * @property {EntityAddress} address.Alphabetic             Represents an alphabetic address used for matching             
  * @property {EntityAddress} address.BadAddress             Represents a bad address, i.e. an address which is old or invalid.            
@@ -2873,43 +3095,42 @@ if(!DeviceEntity)
  * @property {ActParticipation} participation.Witness             The player entity represents a legal witness to the act occurring.            
  * @property {ActParticipation} participation.$other Unclassified
  * @property {object} relationship            Gets a list of all associated entities for this entity            
- * @property {EntityRelationship} relationship.Access             The access            
- * @property {EntityRelationship} relationship.ActiveMoiety             The active moiety            
- * @property {EntityRelationship} relationship.AdministerableMaterial             The administerable material            
- * @property {EntityRelationship} relationship.AdoptedChild             The adopted child            
- * @property {EntityRelationship} relationship.AdoptedDaughter             The adopted daughter            
- * @property {EntityRelationship} relationship.AdoptedSon             The adopted son            
- * @property {EntityRelationship} relationship.Affiliate             The affiliate            
- * @property {EntityRelationship} relationship.Agent             The agent            
- * @property {EntityRelationship} relationship.Aliquot             The aliquot            
- * @property {EntityRelationship} relationship.Assigned             The assigned            
- * @property {EntityRelationship} relationship.AssignedEntity             The assigned entity            
- * @property {EntityRelationship} relationship.Aunt             The aunt            
- * @property {EntityRelationship} relationship.Birthplace             The birthplace            
- * @property {EntityRelationship} relationship.Brother             The brother            
- * @property {EntityRelationship} relationship.Brotherinlaw             The brotherinlaw            
- * @property {EntityRelationship} relationship.Caregiver             The caregiver            
- * @property {EntityRelationship} relationship.CaseSubject             The case subject            
- * @property {EntityRelationship} relationship.Child             The child            
+ * @property {EntityRelationship} relationship.Access             The source entity gives access to the target entity            
+ * @property {EntityRelationship} relationship.ActiveMoiety             Active ingredient, where not the ingredient substance (player), but itaTMs active moiety is the "basis of strength"            
+ * @property {EntityRelationship} relationship.AdministerableMaterial             The source represents a meterial that is an administerable form of the target            
+ * @property {EntityRelationship} relationship.AdoptedChild             The source is an adopted child of the target            
+ * @property {EntityRelationship} relationship.AdoptedDaughter             The source is an adopted daughter of the target            
+ * @property {EntityRelationship} relationship.AdoptedSon             The source is an adopted son of the target            
+ * @property {EntityRelationship} relationship.Affiliate             The target has a business/professional relationship with the source.            
+ * @property {EntityRelationship} relationship.Agent             The target is an agent or authorized to act on behalf of the source            
+ * @property {EntityRelationship} relationship.Aliquot             The target is a portion of the original source            
+ * @property {EntityRelationship} relationship.AssignedEntity             The target is an entity acting under the employ of the source entity            
+ * @property {EntityRelationship} relationship.Aunt             The target is the aunt of the source            
+ * @property {EntityRelationship} relationship.Birthplace             The target is the birthplace of the source            
+ * @property {EntityRelationship} relationship.Brother             The target is the brother of the source            
+ * @property {EntityRelationship} relationship.Brotherinlaw             The target is the brotherinlaw of the source            
+ * @property {EntityRelationship} relationship.Caregiver             The target is the caregiver of the source            
+ * @property {EntityRelationship} relationship.CaseSubject             The the target represents a case subject of the source entity (such as a study)            
+ * @property {EntityRelationship} relationship.Child             The the target is a child of the child source            
  * @property {EntityRelationship} relationship.ChildInlaw             The child inlaw            
- * @property {EntityRelationship} relationship.Citizen             The citizen            
- * @property {EntityRelationship} relationship.Claimant             The claimant            
+ * @property {EntityRelationship} relationship.Citizen             The target is a citizen of the source            
+ * @property {EntityRelationship} relationship.Claimant             The target is a claimant  or is making a claim in a policy (source)            
  * @property {EntityRelationship} relationship.ClinicalResearchInvestigator             The clinical research investigator            
  * @property {EntityRelationship} relationship.ClinicalResearchSponsor             The clinical research sponsor            
  * @property {EntityRelationship} relationship.CommissioningParty             The commissioning party            
- * @property {EntityRelationship} relationship.Contact             The contact            
+ * @property {EntityRelationship} relationship.Contact             The target represents a contact of the source            
  * @property {EntityRelationship} relationship.Cousin             The cousin            
- * @property {EntityRelationship} relationship.CoverageSponsor             The coverage sponsor            
- * @property {EntityRelationship} relationship.CoveredParty             The covered party            
+ * @property {EntityRelationship} relationship.CoverageSponsor             The target represents a coverage sponsor of the source            
+ * @property {EntityRelationship} relationship.CoveredParty             The target is a covered party of a source (insurance policy)            
  * @property {EntityRelationship} relationship.Daughter             The daughter            
  * @property {EntityRelationship} relationship.DaughterInlaw             The daughter inlaw            
- * @property {EntityRelationship} relationship.DedicatedServiceDeliveryLocation             The dedicated service delivery location            
- * @property {EntityRelationship} relationship.Dependent             The dependent            
- * @property {EntityRelationship} relationship.DistributedMaterial             The distributed material            
+ * @property {EntityRelationship} relationship.DedicatedServiceDeliveryLocation             The target is the dedicated service delivery location for the source            
+ * @property {EntityRelationship} relationship.Dependent             The target is a dependent of the source            
+ * @property {EntityRelationship} relationship.DistributedMaterial             The target is a distributed or shippable material of the source            
  * @property {EntityRelationship} relationship.DomesticPartner             The domestic partner            
- * @property {EntityRelationship} relationship.EmergencyContact             The emergency contact            
- * @property {EntityRelationship} relationship.Employee             The employee            
- * @property {EntityRelationship} relationship.ExposedEntity             The exposed entity            
+ * @property {EntityRelationship} relationship.EmergencyContact             The target is an emergency contact for the source            
+ * @property {EntityRelationship} relationship.Employee             The the target is an employee of the source            
+ * @property {EntityRelationship} relationship.ExposedEntity             The target represents a substance which is exposed when the source is exposed            
  * @property {EntityRelationship} relationship.FamilyMember             The family member            
  * @property {EntityRelationship} relationship.Father             The father            
  * @property {EntityRelationship} relationship.Fatherinlaw             The fatherinlaw            
@@ -2927,23 +3148,23 @@ if(!DeviceEntity)
  * @property {EntityRelationship} relationship.GreatGrandparent             The great grandparent            
  * @property {EntityRelationship} relationship.Guarantor             The guarantor            
  * @property {EntityRelationship} relationship.GUARD             The guard            
- * @property {EntityRelationship} relationship.Guardian             The guardian            
+ * @property {EntityRelationship} relationship.Guardian             The target is a guardian of the source            
  * @property {EntityRelationship} relationship.Halfbrother             The halfbrother            
  * @property {EntityRelationship} relationship.Halfsibling             The halfsibling            
  * @property {EntityRelationship} relationship.Halfsister             The halfsister            
- * @property {EntityRelationship} relationship.HealthcareProvider             The healthcare provider            
- * @property {EntityRelationship} relationship.HealthChart             The health chart            
- * @property {EntityRelationship} relationship.HeldEntity             The held entity            
+ * @property {EntityRelationship} relationship.HealthcareProvider             The target is a healthcare provider for the source            
+ * @property {EntityRelationship} relationship.HealthChart             The target represents a health chart belonging to the source            
+ * @property {EntityRelationship} relationship.HeldEntity             The source holds the specified quantity of the target entity (the target entity is held by the source)            
  * @property {EntityRelationship} relationship.Husband             The husband            
- * @property {EntityRelationship} relationship.IdentifiedEntity             The identified entity            
- * @property {EntityRelationship} relationship.IncidentalServiceDeliveryLocation             The incidental service delivery location            
- * @property {EntityRelationship} relationship.Individual             The individual            
+ * @property {EntityRelationship} relationship.IdentifiedEntity             The target represents an entity for purposes of identification of the source            
+ * @property {EntityRelationship} relationship.IncidentalServiceDeliveryLocation             The target represents an incidental service delivery location related to the source entity            
+ * @property {EntityRelationship} relationship.Individual             The target represents an individual instance of the source            
  * @property {EntityRelationship} relationship.InvestigationSubject             The investigation subject            
- * @property {EntityRelationship} relationship.InvoicePayor             The invoice payor            
+ * @property {EntityRelationship} relationship.InvoicePayor             The target is the payor of an invoice for the source            
  * @property {EntityRelationship} relationship.Isolate             The isolate            
- * @property {EntityRelationship} relationship.LicensedEntity             The licensed entity            
- * @property {EntityRelationship} relationship.MaintainedEntity             The maintained entity            
- * @property {EntityRelationship} relationship.ManufacturedProduct             The manufactured product            
+ * @property {EntityRelationship} relationship.LicensedEntity             The target represents an entity licensed to perform or use the source            
+ * @property {EntityRelationship} relationship.MaintainedEntity             The target entity is maintained by the source entity            
+ * @property {EntityRelationship} relationship.ManufacturedProduct             The target entity is a product which is manufactured by the source            
  * @property {EntityRelationship} relationship.MaternalAunt             The maternal aunt            
  * @property {EntityRelationship} relationship.MaternalCousin             The maternal cousin            
  * @property {EntityRelationship} relationship.MaternalGrandfather             The maternal grandfather            
@@ -2954,28 +3175,28 @@ if(!DeviceEntity)
  * @property {EntityRelationship} relationship.MaternalGreatgrandparent             The maternal greatgrandparent            
  * @property {EntityRelationship} relationship.MaternalUncle             The maternal uncle            
  * @property {EntityRelationship} relationship.MilitaryPerson             The military person            
- * @property {EntityRelationship} relationship.Mother             The mother            
+ * @property {EntityRelationship} relationship.Mother             The target is the mother of the source            
  * @property {EntityRelationship} relationship.Motherinlaw             The motherinlaw            
- * @property {EntityRelationship} relationship.NamedInsured             The named insured            
+ * @property {EntityRelationship} relationship.NamedInsured             The target is a named insured person on the source policy            
  * @property {EntityRelationship} relationship.NaturalBrother             The natural brother            
  * @property {EntityRelationship} relationship.NaturalChild             The natural child            
  * @property {EntityRelationship} relationship.NaturalDaughter             The natural daughter            
  * @property {EntityRelationship} relationship.NaturalFather             The natural father            
- * @property {EntityRelationship} relationship.NaturalFatherOfFetus             The natural father of fetus            
+ * @property {EntityRelationship} relationship.NaturalFatherOfFetus             The target is the natural father of fetus of the identified fetus (source) or pregnant entity (source)            
  * @property {EntityRelationship} relationship.NaturalMother             The natural mother            
  * @property {EntityRelationship} relationship.NaturalParent             The natural parent            
  * @property {EntityRelationship} relationship.NaturalSibling             The natural sibling            
  * @property {EntityRelationship} relationship.NaturalSister             The natural sister            
  * @property {EntityRelationship} relationship.NaturalSon             The natural son            
  * @property {EntityRelationship} relationship.Nephew             The nephew            
- * @property {EntityRelationship} relationship.NextOfKin             The next of kin            
+ * @property {EntityRelationship} relationship.NextOfKin             The target is the next of kin for the source            
  * @property {EntityRelationship} relationship.Niece             The niece            
  * @property {EntityRelationship} relationship.NieceNephew             The niece nephew            
- * @property {EntityRelationship} relationship.NotaryPublic             The notary public            
- * @property {EntityRelationship} relationship.OwnedEntity             The owned entity            
- * @property {EntityRelationship} relationship.Parent             The parent            
+ * @property {EntityRelationship} relationship.NotaryPublic             The target is a notary public acting within the source entity             
+ * @property {EntityRelationship} relationship.OwnedEntity             The target entity is owned by the source entity            
+ * @property {EntityRelationship} relationship.Parent             The target entity is the parent of the source entity            
  * @property {EntityRelationship} relationship.ParentInlaw             The parent inlaw            
- * @property {EntityRelationship} relationship.Part             The part            
+ * @property {EntityRelationship} relationship.Part             The target entity is a part of the source entity (source is comprised of parts)            
  * @property {EntityRelationship} relationship.PaternalAunt             The paternal aunt            
  * @property {EntityRelationship} relationship.PaternalCousin             The paternal cousin            
  * @property {EntityRelationship} relationship.PaternalGrandfather             The paternal grandfather            
@@ -2985,27 +3206,27 @@ if(!DeviceEntity)
  * @property {EntityRelationship} relationship.PaternalGreatgrandmother             The paternal greatgrandmother            
  * @property {EntityRelationship} relationship.PaternalGreatgrandparent             The paternal greatgrandparent            
  * @property {EntityRelationship} relationship.PaternalUncle             The paternal uncle            
- * @property {EntityRelationship} relationship.Patient             The patient            
- * @property {EntityRelationship} relationship.Payee             The payee            
- * @property {EntityRelationship} relationship.PersonalRelationship             The personal relationship            
- * @property {EntityRelationship} relationship.PlaceOfDeath             The place of death            
- * @property {EntityRelationship} relationship.PolicyHolder             The policy holder            
- * @property {EntityRelationship} relationship.ProgramEligible             The program eligible            
- * @property {EntityRelationship} relationship.QualifiedEntity             The qualified entity            
- * @property {EntityRelationship} relationship.RegulatedProduct             The regulated product            
- * @property {EntityRelationship} relationship.ResearchSubject             The research subject            
- * @property {EntityRelationship} relationship.RetailedMaterial             The retailed material            
+ * @property {EntityRelationship} relationship.Patient             The target is a patient of the source entity            
+ * @property {EntityRelationship} relationship.Payee             The targert is a payee of the source entity            
+ * @property {EntityRelationship} relationship.PersonalRelationship             The target possesses a personal relationship with the source entity            
+ * @property {EntityRelationship} relationship.PlaceOfDeath             The target entity represents the place of death of the source entity            
+ * @property {EntityRelationship} relationship.PolicyHolder             The target entity represents the policy holder of the source policy            
+ * @property {EntityRelationship} relationship.ProgramEligible             The target is an entity which is eligible for funding or participation within a program            
+ * @property {EntityRelationship} relationship.QualifiedEntity             The target represents a qualified version of the source entity            
+ * @property {EntityRelationship} relationship.RegulatedProduct             The target represents a regulated version of the source product or represents a product which is regulated within the source jurisdiction            
+ * @property {EntityRelationship} relationship.ResearchSubject             The target represents a research subject of the source study            
+ * @property {EntityRelationship} relationship.RetailedMaterial             The target represents a material which is a retailed version of the source or is sold at the particular source            
  * @property {EntityRelationship} relationship.Roomate             The roomate            
- * @property {EntityRelationship} relationship.ServiceDeliveryLocation             The service delivery location            
+ * @property {EntityRelationship} relationship.ServiceDeliveryLocation             The target represents a service delivery location for the source entity            
  * @property {EntityRelationship} relationship.Sibling             The sibling            
  * @property {EntityRelationship} relationship.SiblingInlaw             The sibling inlaw            
  * @property {EntityRelationship} relationship.SignificantOther             The significant other            
- * @property {EntityRelationship} relationship.SigningAuthorityOrOfficer             The signing authority or officer            
+ * @property {EntityRelationship} relationship.SigningAuthorityOrOfficer             The target has signing authority or is an officer of the source            
  * @property {EntityRelationship} relationship.Sister             The sister            
  * @property {EntityRelationship} relationship.Sisterinlaw             The sisterinlaw            
  * @property {EntityRelationship} relationship.Son             The son            
  * @property {EntityRelationship} relationship.SonInlaw             The son inlaw            
- * @property {EntityRelationship} relationship.Specimen             The specimen            
+ * @property {EntityRelationship} relationship.Specimen             The target represents a specimen collected from the source            
  * @property {EntityRelationship} relationship.Spouse             The spouse            
  * @property {EntityRelationship} relationship.Stepbrother             The stepbrother            
  * @property {EntityRelationship} relationship.StepChild             The step child            
@@ -3017,17 +3238,18 @@ if(!DeviceEntity)
  * @property {EntityRelationship} relationship.Stepsister             The stepsister            
  * @property {EntityRelationship} relationship.Stepson             The stepson            
  * @property {EntityRelationship} relationship.Student             The student            
- * @property {EntityRelationship} relationship.Subscriber             The subscriber            
- * @property {EntityRelationship} relationship.TerritoryOfAuthority             The territory of authority            
- * @property {EntityRelationship} relationship.TherapeuticAgent             The therapeutic agent            
+ * @property {EntityRelationship} relationship.Subscriber             The target is a subscriber of the source, meaning the target should receive updates whenever the source changes             
+ * @property {EntityRelationship} relationship.TerritoryOfAuthority             The target represents another territory where the source has authority            
+ * @property {EntityRelationship} relationship.TherapeuticAgent             The target represents the theraputic agent of the source            
  * @property {EntityRelationship} relationship.Uncle             The uncle            
  * @property {EntityRelationship} relationship.Underwriter             The underwriter            
- * @property {EntityRelationship} relationship.UsedEntity             The used entity            
- * @property {EntityRelationship} relationship.WarrantedProduct             The warranted product            
+ * @property {EntityRelationship} relationship.UsedEntity             The target represents an entity that is consumed whenever the source is consumed            
+ * @property {EntityRelationship} relationship.WarrantedProduct             The target represents a product which is warranted by the source            
  * @property {EntityRelationship} relationship.Wife             The wife            
- * @property {EntityRelationship} relationship.Replaces             The replaces            
+ * @property {EntityRelationship} relationship.Replaces             The source replaces the target (note: this is one relationship where the role relationship is reveresed)             
  * @property {EntityRelationship} relationship.Instance             The target entity represents an instance of the scoper entity            
  * @property {EntityRelationship} relationship.LocatedEntity             Relates the target entity to a source location            
+ * @property {EntityRelationship} relationship.Duplicate             Duplicate entity            
  * @property {EntityRelationship} relationship.$other Unclassified
  * @property {Concept} statusConceptModel [Delay loaded from statusConcept],             Status concept id            
  * @property {string} statusConcept            Status concept id            (see: {@link StatusKeys} for values)
@@ -3046,20 +3268,21 @@ if(!DeviceEntity)
  * @property {TemplateDefinition} templateModel [Delay loaded from template],             Gets or sets the template definition            
  * @property {Concept} typeConceptModel [Delay loaded from typeConcept],             Type concept identifier            
  * @property {string} typeConcept            Type concept identifier            
+ * @property {SecurityPolicyInstance} policy            Gets or sets the security policy instances associated with the entity            
  * @property {string} previousVersion
  * @property {string} version
  * @property {number} sequence
  * @property {Date} creationTimeModel [Delay loaded from creationTime],             Gets or sets the time at which the data was created            
- * @property {Date} creationTime            Gets or sets the creation time in XML format            
+ * @property {Date} creationTime            Gets or sets the creation time as an ISO date format            
  * @property {Date} obsoletionTimeModel [Delay loaded from obsoletionTime],             Gets or sets the time when the data is or will become invalid            
- * @property {Date} obsoletionTime            Gets or sets the creation time in XML format            
- * @property {SecurityUser} createdByModel [Delay loaded from createdBy],             Gets or sets the user that created this base data            
+ * @property {Date} obsoletionTime            Gets or sets the time that the data is no longer valid (was deleted/obsoleted) in ISO format            
+ * @property {SecurityProvenance} createdByModel [Delay loaded from createdBy],             Gets or sets the user that created this base data            
  * @property {Date} modifiedOn            Gets the time that the object was last modified (from base data, default to CreationTime)            
- * @property {SecurityUser} obsoletedByModel [Delay loaded from obsoletedBy],             Gets or sets the user that obsoleted this base data            
- * @property {string} createdBy            Gets or sets the identifier of the user which created the data            
- * @property {string} obsoletedBy            Gets or sets the identifier of the user which obsoleted the data            
- * @property {string} id            The internal primary key value of the entity            
- * @property {string} $type            Gets the type            
+ * @property {SecurityProvenance} obsoletedByModel [Delay loaded from obsoletedBy],             Gets or sets the user that obsoleted this base data            
+ * @property {string} createdBy            Gets or sets the security provenance object which represents the creation of this object            
+ * @property {string} obsoletedBy            Gets or sets the security provenance object which represents the obsoletion of this data            
+ * @property {string} id            Gets or sets the primary identifying UUID of this object            
+ * @property {string} $type            Gets the type registration of this object            
  * @param {DeviceEntity} copyData Copy constructor (if present)
  */
 function DeviceEntity (copyData) { 
@@ -3071,11 +3294,11 @@ function DeviceEntity (copyData) {
 	this.obsoletedBy = copyData.obsoletedBy;
 	/** @type {string} */
 	this.createdBy = copyData.createdBy;
-	/** @type {SecurityUser} */
+	/** @type {SecurityProvenance} */
 	this.obsoletedByModel = copyData.obsoletedByModel;
 	/** @type {Date} */
 	this.modifiedOn = copyData.modifiedOn;
-	/** @type {SecurityUser} */
+	/** @type {SecurityProvenance} */
 	this.createdByModel = copyData.createdByModel;
 	/** @type {Date} */
 	this.obsoletionTime = copyData.obsoletionTime;
@@ -3091,6 +3314,8 @@ function DeviceEntity (copyData) {
 	this.version = copyData.version;
 	/** @type {string} */
 	this.previousVersion = copyData.previousVersion;
+	/** @type {SecurityPolicyInstance} */
+	this.policy = copyData.policy;
 	/** @type {string} */
 	this.typeConcept = copyData.typeConcept;
 	/** @type {Concept} */
@@ -3133,6 +3358,8 @@ function DeviceEntity (copyData) {
 	this.classConceptModel = copyData.classConceptModel;
 	/** @type {object} */
 	this.address = copyData.address;
+	/** @type {GeoTag} */
+	this.geo = copyData.geo;
 	/** @type {string} */
 	this.securityDevice = copyData.securityDevice;
 	/** @type {SecurityDevice} */
@@ -3143,14 +3370,17 @@ function DeviceEntity (copyData) {
 	this.manufacturerModelName = copyData.manufacturerModelName;
 	}
 }  // DeviceEntity 
-// SanteDB.Core.Model.Entities.Entity, SanteDB.Core.Model, Version=1.1.0.35405, Culture=neutral, PublicKeyToken=null
-if(!Entity)
+// SanteDB.Core.Model.Entities.Entity, SanteDB.Core.Model, Version=2.0.0.0, Culture=neutral, PublicKeyToken=null
+//if(!Entity)
 /**
  * @class
  * @constructor
- * @memberof SanteDBModel
  * @public
- * @summary             Represents the base of all entities            
+ * @extends VersionedEntityData
+ * @summary             Represents the base class of all entities (persons, places, things) in SanteDB            
+ * @description 
+ *             In SanteDB, an entity represents a physical object which can be acted upon or can participate in an act. 
+ *             
  * @property {object} address            Gets a list of all addresses associated with the entity            
  * @property {EntityAddress} address.Alphabetic             Represents an alphabetic address used for matching             
  * @property {EntityAddress} address.BadAddress             Represents a bad address, i.e. an address which is old or invalid.            
@@ -3256,43 +3486,42 @@ if(!Entity)
  * @property {ActParticipation} participation.Witness             The player entity represents a legal witness to the act occurring.            
  * @property {ActParticipation} participation.$other Unclassified
  * @property {object} relationship            Gets a list of all associated entities for this entity            
- * @property {EntityRelationship} relationship.Access             The access            
- * @property {EntityRelationship} relationship.ActiveMoiety             The active moiety            
- * @property {EntityRelationship} relationship.AdministerableMaterial             The administerable material            
- * @property {EntityRelationship} relationship.AdoptedChild             The adopted child            
- * @property {EntityRelationship} relationship.AdoptedDaughter             The adopted daughter            
- * @property {EntityRelationship} relationship.AdoptedSon             The adopted son            
- * @property {EntityRelationship} relationship.Affiliate             The affiliate            
- * @property {EntityRelationship} relationship.Agent             The agent            
- * @property {EntityRelationship} relationship.Aliquot             The aliquot            
- * @property {EntityRelationship} relationship.Assigned             The assigned            
- * @property {EntityRelationship} relationship.AssignedEntity             The assigned entity            
- * @property {EntityRelationship} relationship.Aunt             The aunt            
- * @property {EntityRelationship} relationship.Birthplace             The birthplace            
- * @property {EntityRelationship} relationship.Brother             The brother            
- * @property {EntityRelationship} relationship.Brotherinlaw             The brotherinlaw            
- * @property {EntityRelationship} relationship.Caregiver             The caregiver            
- * @property {EntityRelationship} relationship.CaseSubject             The case subject            
- * @property {EntityRelationship} relationship.Child             The child            
+ * @property {EntityRelationship} relationship.Access             The source entity gives access to the target entity            
+ * @property {EntityRelationship} relationship.ActiveMoiety             Active ingredient, where not the ingredient substance (player), but itaTMs active moiety is the "basis of strength"            
+ * @property {EntityRelationship} relationship.AdministerableMaterial             The source represents a meterial that is an administerable form of the target            
+ * @property {EntityRelationship} relationship.AdoptedChild             The source is an adopted child of the target            
+ * @property {EntityRelationship} relationship.AdoptedDaughter             The source is an adopted daughter of the target            
+ * @property {EntityRelationship} relationship.AdoptedSon             The source is an adopted son of the target            
+ * @property {EntityRelationship} relationship.Affiliate             The target has a business/professional relationship with the source.            
+ * @property {EntityRelationship} relationship.Agent             The target is an agent or authorized to act on behalf of the source            
+ * @property {EntityRelationship} relationship.Aliquot             The target is a portion of the original source            
+ * @property {EntityRelationship} relationship.AssignedEntity             The target is an entity acting under the employ of the source entity            
+ * @property {EntityRelationship} relationship.Aunt             The target is the aunt of the source            
+ * @property {EntityRelationship} relationship.Birthplace             The target is the birthplace of the source            
+ * @property {EntityRelationship} relationship.Brother             The target is the brother of the source            
+ * @property {EntityRelationship} relationship.Brotherinlaw             The target is the brotherinlaw of the source            
+ * @property {EntityRelationship} relationship.Caregiver             The target is the caregiver of the source            
+ * @property {EntityRelationship} relationship.CaseSubject             The the target represents a case subject of the source entity (such as a study)            
+ * @property {EntityRelationship} relationship.Child             The the target is a child of the child source            
  * @property {EntityRelationship} relationship.ChildInlaw             The child inlaw            
- * @property {EntityRelationship} relationship.Citizen             The citizen            
- * @property {EntityRelationship} relationship.Claimant             The claimant            
+ * @property {EntityRelationship} relationship.Citizen             The target is a citizen of the source            
+ * @property {EntityRelationship} relationship.Claimant             The target is a claimant  or is making a claim in a policy (source)            
  * @property {EntityRelationship} relationship.ClinicalResearchInvestigator             The clinical research investigator            
  * @property {EntityRelationship} relationship.ClinicalResearchSponsor             The clinical research sponsor            
  * @property {EntityRelationship} relationship.CommissioningParty             The commissioning party            
- * @property {EntityRelationship} relationship.Contact             The contact            
+ * @property {EntityRelationship} relationship.Contact             The target represents a contact of the source            
  * @property {EntityRelationship} relationship.Cousin             The cousin            
- * @property {EntityRelationship} relationship.CoverageSponsor             The coverage sponsor            
- * @property {EntityRelationship} relationship.CoveredParty             The covered party            
+ * @property {EntityRelationship} relationship.CoverageSponsor             The target represents a coverage sponsor of the source            
+ * @property {EntityRelationship} relationship.CoveredParty             The target is a covered party of a source (insurance policy)            
  * @property {EntityRelationship} relationship.Daughter             The daughter            
  * @property {EntityRelationship} relationship.DaughterInlaw             The daughter inlaw            
- * @property {EntityRelationship} relationship.DedicatedServiceDeliveryLocation             The dedicated service delivery location            
- * @property {EntityRelationship} relationship.Dependent             The dependent            
- * @property {EntityRelationship} relationship.DistributedMaterial             The distributed material            
+ * @property {EntityRelationship} relationship.DedicatedServiceDeliveryLocation             The target is the dedicated service delivery location for the source            
+ * @property {EntityRelationship} relationship.Dependent             The target is a dependent of the source            
+ * @property {EntityRelationship} relationship.DistributedMaterial             The target is a distributed or shippable material of the source            
  * @property {EntityRelationship} relationship.DomesticPartner             The domestic partner            
- * @property {EntityRelationship} relationship.EmergencyContact             The emergency contact            
- * @property {EntityRelationship} relationship.Employee             The employee            
- * @property {EntityRelationship} relationship.ExposedEntity             The exposed entity            
+ * @property {EntityRelationship} relationship.EmergencyContact             The target is an emergency contact for the source            
+ * @property {EntityRelationship} relationship.Employee             The the target is an employee of the source            
+ * @property {EntityRelationship} relationship.ExposedEntity             The target represents a substance which is exposed when the source is exposed            
  * @property {EntityRelationship} relationship.FamilyMember             The family member            
  * @property {EntityRelationship} relationship.Father             The father            
  * @property {EntityRelationship} relationship.Fatherinlaw             The fatherinlaw            
@@ -3310,23 +3539,23 @@ if(!Entity)
  * @property {EntityRelationship} relationship.GreatGrandparent             The great grandparent            
  * @property {EntityRelationship} relationship.Guarantor             The guarantor            
  * @property {EntityRelationship} relationship.GUARD             The guard            
- * @property {EntityRelationship} relationship.Guardian             The guardian            
+ * @property {EntityRelationship} relationship.Guardian             The target is a guardian of the source            
  * @property {EntityRelationship} relationship.Halfbrother             The halfbrother            
  * @property {EntityRelationship} relationship.Halfsibling             The halfsibling            
  * @property {EntityRelationship} relationship.Halfsister             The halfsister            
- * @property {EntityRelationship} relationship.HealthcareProvider             The healthcare provider            
- * @property {EntityRelationship} relationship.HealthChart             The health chart            
- * @property {EntityRelationship} relationship.HeldEntity             The held entity            
+ * @property {EntityRelationship} relationship.HealthcareProvider             The target is a healthcare provider for the source            
+ * @property {EntityRelationship} relationship.HealthChart             The target represents a health chart belonging to the source            
+ * @property {EntityRelationship} relationship.HeldEntity             The source holds the specified quantity of the target entity (the target entity is held by the source)            
  * @property {EntityRelationship} relationship.Husband             The husband            
- * @property {EntityRelationship} relationship.IdentifiedEntity             The identified entity            
- * @property {EntityRelationship} relationship.IncidentalServiceDeliveryLocation             The incidental service delivery location            
- * @property {EntityRelationship} relationship.Individual             The individual            
+ * @property {EntityRelationship} relationship.IdentifiedEntity             The target represents an entity for purposes of identification of the source            
+ * @property {EntityRelationship} relationship.IncidentalServiceDeliveryLocation             The target represents an incidental service delivery location related to the source entity            
+ * @property {EntityRelationship} relationship.Individual             The target represents an individual instance of the source            
  * @property {EntityRelationship} relationship.InvestigationSubject             The investigation subject            
- * @property {EntityRelationship} relationship.InvoicePayor             The invoice payor            
+ * @property {EntityRelationship} relationship.InvoicePayor             The target is the payor of an invoice for the source            
  * @property {EntityRelationship} relationship.Isolate             The isolate            
- * @property {EntityRelationship} relationship.LicensedEntity             The licensed entity            
- * @property {EntityRelationship} relationship.MaintainedEntity             The maintained entity            
- * @property {EntityRelationship} relationship.ManufacturedProduct             The manufactured product            
+ * @property {EntityRelationship} relationship.LicensedEntity             The target represents an entity licensed to perform or use the source            
+ * @property {EntityRelationship} relationship.MaintainedEntity             The target entity is maintained by the source entity            
+ * @property {EntityRelationship} relationship.ManufacturedProduct             The target entity is a product which is manufactured by the source            
  * @property {EntityRelationship} relationship.MaternalAunt             The maternal aunt            
  * @property {EntityRelationship} relationship.MaternalCousin             The maternal cousin            
  * @property {EntityRelationship} relationship.MaternalGrandfather             The maternal grandfather            
@@ -3337,28 +3566,28 @@ if(!Entity)
  * @property {EntityRelationship} relationship.MaternalGreatgrandparent             The maternal greatgrandparent            
  * @property {EntityRelationship} relationship.MaternalUncle             The maternal uncle            
  * @property {EntityRelationship} relationship.MilitaryPerson             The military person            
- * @property {EntityRelationship} relationship.Mother             The mother            
+ * @property {EntityRelationship} relationship.Mother             The target is the mother of the source            
  * @property {EntityRelationship} relationship.Motherinlaw             The motherinlaw            
- * @property {EntityRelationship} relationship.NamedInsured             The named insured            
+ * @property {EntityRelationship} relationship.NamedInsured             The target is a named insured person on the source policy            
  * @property {EntityRelationship} relationship.NaturalBrother             The natural brother            
  * @property {EntityRelationship} relationship.NaturalChild             The natural child            
  * @property {EntityRelationship} relationship.NaturalDaughter             The natural daughter            
  * @property {EntityRelationship} relationship.NaturalFather             The natural father            
- * @property {EntityRelationship} relationship.NaturalFatherOfFetus             The natural father of fetus            
+ * @property {EntityRelationship} relationship.NaturalFatherOfFetus             The target is the natural father of fetus of the identified fetus (source) or pregnant entity (source)            
  * @property {EntityRelationship} relationship.NaturalMother             The natural mother            
  * @property {EntityRelationship} relationship.NaturalParent             The natural parent            
  * @property {EntityRelationship} relationship.NaturalSibling             The natural sibling            
  * @property {EntityRelationship} relationship.NaturalSister             The natural sister            
  * @property {EntityRelationship} relationship.NaturalSon             The natural son            
  * @property {EntityRelationship} relationship.Nephew             The nephew            
- * @property {EntityRelationship} relationship.NextOfKin             The next of kin            
+ * @property {EntityRelationship} relationship.NextOfKin             The target is the next of kin for the source            
  * @property {EntityRelationship} relationship.Niece             The niece            
  * @property {EntityRelationship} relationship.NieceNephew             The niece nephew            
- * @property {EntityRelationship} relationship.NotaryPublic             The notary public            
- * @property {EntityRelationship} relationship.OwnedEntity             The owned entity            
- * @property {EntityRelationship} relationship.Parent             The parent            
+ * @property {EntityRelationship} relationship.NotaryPublic             The target is a notary public acting within the source entity             
+ * @property {EntityRelationship} relationship.OwnedEntity             The target entity is owned by the source entity            
+ * @property {EntityRelationship} relationship.Parent             The target entity is the parent of the source entity            
  * @property {EntityRelationship} relationship.ParentInlaw             The parent inlaw            
- * @property {EntityRelationship} relationship.Part             The part            
+ * @property {EntityRelationship} relationship.Part             The target entity is a part of the source entity (source is comprised of parts)            
  * @property {EntityRelationship} relationship.PaternalAunt             The paternal aunt            
  * @property {EntityRelationship} relationship.PaternalCousin             The paternal cousin            
  * @property {EntityRelationship} relationship.PaternalGrandfather             The paternal grandfather            
@@ -3368,27 +3597,27 @@ if(!Entity)
  * @property {EntityRelationship} relationship.PaternalGreatgrandmother             The paternal greatgrandmother            
  * @property {EntityRelationship} relationship.PaternalGreatgrandparent             The paternal greatgrandparent            
  * @property {EntityRelationship} relationship.PaternalUncle             The paternal uncle            
- * @property {EntityRelationship} relationship.Patient             The patient            
- * @property {EntityRelationship} relationship.Payee             The payee            
- * @property {EntityRelationship} relationship.PersonalRelationship             The personal relationship            
- * @property {EntityRelationship} relationship.PlaceOfDeath             The place of death            
- * @property {EntityRelationship} relationship.PolicyHolder             The policy holder            
- * @property {EntityRelationship} relationship.ProgramEligible             The program eligible            
- * @property {EntityRelationship} relationship.QualifiedEntity             The qualified entity            
- * @property {EntityRelationship} relationship.RegulatedProduct             The regulated product            
- * @property {EntityRelationship} relationship.ResearchSubject             The research subject            
- * @property {EntityRelationship} relationship.RetailedMaterial             The retailed material            
+ * @property {EntityRelationship} relationship.Patient             The target is a patient of the source entity            
+ * @property {EntityRelationship} relationship.Payee             The targert is a payee of the source entity            
+ * @property {EntityRelationship} relationship.PersonalRelationship             The target possesses a personal relationship with the source entity            
+ * @property {EntityRelationship} relationship.PlaceOfDeath             The target entity represents the place of death of the source entity            
+ * @property {EntityRelationship} relationship.PolicyHolder             The target entity represents the policy holder of the source policy            
+ * @property {EntityRelationship} relationship.ProgramEligible             The target is an entity which is eligible for funding or participation within a program            
+ * @property {EntityRelationship} relationship.QualifiedEntity             The target represents a qualified version of the source entity            
+ * @property {EntityRelationship} relationship.RegulatedProduct             The target represents a regulated version of the source product or represents a product which is regulated within the source jurisdiction            
+ * @property {EntityRelationship} relationship.ResearchSubject             The target represents a research subject of the source study            
+ * @property {EntityRelationship} relationship.RetailedMaterial             The target represents a material which is a retailed version of the source or is sold at the particular source            
  * @property {EntityRelationship} relationship.Roomate             The roomate            
- * @property {EntityRelationship} relationship.ServiceDeliveryLocation             The service delivery location            
+ * @property {EntityRelationship} relationship.ServiceDeliveryLocation             The target represents a service delivery location for the source entity            
  * @property {EntityRelationship} relationship.Sibling             The sibling            
  * @property {EntityRelationship} relationship.SiblingInlaw             The sibling inlaw            
  * @property {EntityRelationship} relationship.SignificantOther             The significant other            
- * @property {EntityRelationship} relationship.SigningAuthorityOrOfficer             The signing authority or officer            
+ * @property {EntityRelationship} relationship.SigningAuthorityOrOfficer             The target has signing authority or is an officer of the source            
  * @property {EntityRelationship} relationship.Sister             The sister            
  * @property {EntityRelationship} relationship.Sisterinlaw             The sisterinlaw            
  * @property {EntityRelationship} relationship.Son             The son            
  * @property {EntityRelationship} relationship.SonInlaw             The son inlaw            
- * @property {EntityRelationship} relationship.Specimen             The specimen            
+ * @property {EntityRelationship} relationship.Specimen             The target represents a specimen collected from the source            
  * @property {EntityRelationship} relationship.Spouse             The spouse            
  * @property {EntityRelationship} relationship.Stepbrother             The stepbrother            
  * @property {EntityRelationship} relationship.StepChild             The step child            
@@ -3400,17 +3629,18 @@ if(!Entity)
  * @property {EntityRelationship} relationship.Stepsister             The stepsister            
  * @property {EntityRelationship} relationship.Stepson             The stepson            
  * @property {EntityRelationship} relationship.Student             The student            
- * @property {EntityRelationship} relationship.Subscriber             The subscriber            
- * @property {EntityRelationship} relationship.TerritoryOfAuthority             The territory of authority            
- * @property {EntityRelationship} relationship.TherapeuticAgent             The therapeutic agent            
+ * @property {EntityRelationship} relationship.Subscriber             The target is a subscriber of the source, meaning the target should receive updates whenever the source changes             
+ * @property {EntityRelationship} relationship.TerritoryOfAuthority             The target represents another territory where the source has authority            
+ * @property {EntityRelationship} relationship.TherapeuticAgent             The target represents the theraputic agent of the source            
  * @property {EntityRelationship} relationship.Uncle             The uncle            
  * @property {EntityRelationship} relationship.Underwriter             The underwriter            
- * @property {EntityRelationship} relationship.UsedEntity             The used entity            
- * @property {EntityRelationship} relationship.WarrantedProduct             The warranted product            
+ * @property {EntityRelationship} relationship.UsedEntity             The target represents an entity that is consumed whenever the source is consumed            
+ * @property {EntityRelationship} relationship.WarrantedProduct             The target represents a product which is warranted by the source            
  * @property {EntityRelationship} relationship.Wife             The wife            
- * @property {EntityRelationship} relationship.Replaces             The replaces            
+ * @property {EntityRelationship} relationship.Replaces             The source replaces the target (note: this is one relationship where the role relationship is reveresed)             
  * @property {EntityRelationship} relationship.Instance             The target entity represents an instance of the scoper entity            
  * @property {EntityRelationship} relationship.LocatedEntity             Relates the target entity to a source location            
+ * @property {EntityRelationship} relationship.Duplicate             Duplicate entity            
  * @property {EntityRelationship} relationship.$other Unclassified
  * @property {Concept} statusConceptModel [Delay loaded from statusConcept],             Status concept id            
  * @property {string} statusConcept            Status concept id            (see: {@link StatusKeys} for values)
@@ -3429,20 +3659,21 @@ if(!Entity)
  * @property {TemplateDefinition} templateModel [Delay loaded from template],             Gets or sets the template definition            
  * @property {Concept} typeConceptModel [Delay loaded from typeConcept],             Type concept identifier            
  * @property {string} typeConcept            Type concept identifier            
+ * @property {SecurityPolicyInstance} policy            Gets or sets the security policy instances associated with the entity            
  * @property {string} previousVersion
  * @property {string} version
  * @property {number} sequence
  * @property {Date} creationTimeModel [Delay loaded from creationTime],             Gets or sets the time at which the data was created            
- * @property {Date} creationTime            Gets or sets the creation time in XML format            
+ * @property {Date} creationTime            Gets or sets the creation time as an ISO date format            
  * @property {Date} obsoletionTimeModel [Delay loaded from obsoletionTime],             Gets or sets the time when the data is or will become invalid            
- * @property {Date} obsoletionTime            Gets or sets the creation time in XML format            
- * @property {SecurityUser} createdByModel [Delay loaded from createdBy],             Gets or sets the user that created this base data            
+ * @property {Date} obsoletionTime            Gets or sets the time that the data is no longer valid (was deleted/obsoleted) in ISO format            
+ * @property {SecurityProvenance} createdByModel [Delay loaded from createdBy],             Gets or sets the user that created this base data            
  * @property {Date} modifiedOn            Gets the time that the object was last modified (from base data, default to CreationTime)            
- * @property {SecurityUser} obsoletedByModel [Delay loaded from obsoletedBy],             Gets or sets the user that obsoleted this base data            
- * @property {string} createdBy            Gets or sets the identifier of the user which created the data            
- * @property {string} obsoletedBy            Gets or sets the identifier of the user which obsoleted the data            
- * @property {string} id            The internal primary key value of the entity            
- * @property {string} $type            Gets the type            
+ * @property {SecurityProvenance} obsoletedByModel [Delay loaded from obsoletedBy],             Gets or sets the user that obsoleted this base data            
+ * @property {string} createdBy            Gets or sets the security provenance object which represents the creation of this object            
+ * @property {string} obsoletedBy            Gets or sets the security provenance object which represents the obsoletion of this data            
+ * @property {string} id            Gets or sets the primary identifying UUID of this object            
+ * @property {string} $type            Gets the type registration of this object            
  * @param {Entity} copyData Copy constructor (if present)
  */
 function Entity (copyData) { 
@@ -3454,11 +3685,11 @@ function Entity (copyData) {
 	this.obsoletedBy = copyData.obsoletedBy;
 	/** @type {string} */
 	this.createdBy = copyData.createdBy;
-	/** @type {SecurityUser} */
+	/** @type {SecurityProvenance} */
 	this.obsoletedByModel = copyData.obsoletedByModel;
 	/** @type {Date} */
 	this.modifiedOn = copyData.modifiedOn;
-	/** @type {SecurityUser} */
+	/** @type {SecurityProvenance} */
 	this.createdByModel = copyData.createdByModel;
 	/** @type {Date} */
 	this.obsoletionTime = copyData.obsoletionTime;
@@ -3474,6 +3705,8 @@ function Entity (copyData) {
 	this.version = copyData.version;
 	/** @type {string} */
 	this.previousVersion = copyData.previousVersion;
+	/** @type {SecurityPolicyInstance} */
+	this.policy = copyData.policy;
 	/** @type {string} */
 	this.typeConcept = copyData.typeConcept;
 	/** @type {Concept} */
@@ -3518,13 +3751,13 @@ function Entity (copyData) {
 	this.address = copyData.address;
 	}
 }  // Entity 
-// SanteDB.Core.Model.Entities.EntityAddress, SanteDB.Core.Model, Version=1.1.0.35405, Culture=neutral, PublicKeyToken=null
-if(!EntityAddress)
+// SanteDB.Core.Model.Entities.EntityAddress, SanteDB.Core.Model, Version=2.0.0.0, Culture=neutral, PublicKeyToken=null
+//if(!EntityAddress)
 /**
  * @class
  * @constructor
- * @memberof SanteDBModel
  * @public
+ * @extends VersionedAssociation
  * @summary             Entity address            
  * @property {Concept} useModel [Delay loaded from use],             Gets or sets the address use            
  * @property {string} use            Gets or sets the address use key            (see: {@link AddressUseKeys} for values)
@@ -3563,8 +3796,8 @@ if(!EntityAddress)
  * @property {Date} modifiedOn
  * @property {string} source
  * @property {Entity} sourceModel [Delay loaded from source], 
- * @property {string} id            The internal primary key value of the entity            
- * @property {string} $type            Gets the type            
+ * @property {string} id            Gets or sets the primary identifying UUID of this object            
+ * @property {string} $type            Gets the type registration of this object            
  * @param {EntityAddress} copyData Copy constructor (if present)
  */
 function EntityAddress (copyData) { 
@@ -3590,13 +3823,13 @@ function EntityAddress (copyData) {
 	this.useModel = copyData.useModel;
 	}
 }  // EntityAddress 
-// SanteDB.Core.Model.Entities.EntityAddressComponent, SanteDB.Core.Model, Version=1.1.0.35405, Culture=neutral, PublicKeyToken=null
-if(!AddressComponent)
+// SanteDB.Core.Model.Entities.EntityAddressComponent, SanteDB.Core.Model, Version=2.0.0.0, Culture=neutral, PublicKeyToken=null
+//if(!AddressComponent)
 /**
  * @class
  * @constructor
- * @memberof SanteDBModel
  * @public
+ * @extends GenericComponentValues
  * @summary             A single address component            
  * @property {string} type            Gets or sets the component type key            (see: {@link AddressComponentKeys} for values)
  * @property {Concept} typeModel [Delay loaded from type], 
@@ -3604,8 +3837,8 @@ if(!AddressComponent)
  * @property {Date} modifiedOn
  * @property {string} source
  * @property {EntityAddress} sourceModel [Delay loaded from source], 
- * @property {string} id            The internal primary key value of the entity            
- * @property {string} $type            Gets the type            
+ * @property {string} id            Gets or sets the primary identifying UUID of this object            
+ * @property {string} $type            Gets the type registration of this object            
  * @param {AddressComponent} copyData Copy constructor (if present)
  */
 function AddressComponent (copyData) { 
@@ -3627,15 +3860,15 @@ function AddressComponent (copyData) {
 	this.type = copyData.type;
 	}
 }  // AddressComponent 
-// SanteDB.Core.Model.Entities.EntityName, SanteDB.Core.Model, Version=1.1.0.35405, Culture=neutral, PublicKeyToken=null
-if(!EntityName)
+// SanteDB.Core.Model.Entities.EntityName, SanteDB.Core.Model, Version=2.0.0.0, Culture=neutral, PublicKeyToken=null
+//if(!EntityName)
 /**
  * @class
  * @constructor
- * @memberof SanteDBModel
  * @public
+ * @extends VersionedAssociation
  * @summary             Represents a name for an entity            
- * @property {object} component
+ * @property {object} component            Gets or sets the individual component types            
  * @property {string} component.Delimiter             The name component represents a delimeter in a name such as hyphen or space            
  * @property {string} component.Family             The name component represents the surname            
  * @property {string} component.Given             The name component represents the given name            
@@ -3650,8 +3883,8 @@ if(!EntityName)
  * @property {Date} modifiedOn
  * @property {string} source
  * @property {Entity} sourceModel [Delay loaded from source], 
- * @property {string} id            The internal primary key value of the entity            
- * @property {string} $type            Gets the type            
+ * @property {string} id            Gets or sets the primary identifying UUID of this object            
+ * @property {string} $type            Gets the type registration of this object            
  * @param {EntityName} copyData Copy constructor (if present)
  */
 function EntityName (copyData) { 
@@ -3677,13 +3910,13 @@ function EntityName (copyData) {
 	this.component = copyData.component;
 	}
 }  // EntityName 
-// SanteDB.Core.Model.Entities.EntityNameComponent, SanteDB.Core.Model, Version=1.1.0.35405, Culture=neutral, PublicKeyToken=null
-if(!EntityNameComponent)
+// SanteDB.Core.Model.Entities.EntityNameComponent, SanteDB.Core.Model, Version=2.0.0.0, Culture=neutral, PublicKeyToken=null
+//if(!EntityNameComponent)
 /**
  * @class
  * @constructor
- * @memberof SanteDBModel
  * @public
+ * @extends GenericComponentValues
  * @summary             Represents a name component which is bound to a name            
  * @property {string} type            Gets or sets the component type key            (see: {@link NameComponentKeys} for values)
  * @property {PhoneticAlgorithm} phoneticAlgorithmModel [Delay loaded from phoneticAlgorithm],             Gets or sets the phonetic algorithm            
@@ -3694,8 +3927,8 @@ if(!EntityNameComponent)
  * @property {Date} modifiedOn
  * @property {string} source
  * @property {EntityName} sourceModel [Delay loaded from source], 
- * @property {string} id            The internal primary key value of the entity            
- * @property {string} $type            Gets the type            
+ * @property {string} id            Gets or sets the primary identifying UUID of this object            
+ * @property {string} $type            Gets the type registration of this object            
  * @param {EntityNameComponent} copyData Copy constructor (if present)
  */
 function EntityNameComponent (copyData) { 
@@ -3723,13 +3956,13 @@ function EntityNameComponent (copyData) {
 	this.type = copyData.type;
 	}
 }  // EntityNameComponent 
-// SanteDB.Core.Model.Entities.EntityRelationship, SanteDB.Core.Model, Version=1.1.0.35405, Culture=neutral, PublicKeyToken=null
-if(!EntityRelationship)
+// SanteDB.Core.Model.Entities.EntityRelationship, SanteDB.Core.Model, Version=2.0.0.0, Culture=neutral, PublicKeyToken=null
+//if(!EntityRelationship)
 /**
  * @class
  * @constructor
- * @memberof SanteDBModel
  * @public
+ * @extends VersionedAssociation
  * @summary             Represents an association between two entities            
  * @property {Entity} holderModel [Delay loaded from holder],             The entity that this relationship targets            
  * @property {string} holder            The entity that this relationship targets            
@@ -3744,8 +3977,8 @@ if(!EntityRelationship)
  * @property {Date} modifiedOn
  * @property {string} source
  * @property {Entity} sourceModel [Delay loaded from source], 
- * @property {string} id            The internal primary key value of the entity            
- * @property {string} $type            Gets the type            
+ * @property {string} id            Gets or sets the primary identifying UUID of this object            
+ * @property {string} $type            Gets the type registration of this object            
  * @param {EntityRelationship} copyData Copy constructor (if present)
  */
 function EntityRelationship (copyData) { 
@@ -3781,24 +4014,26 @@ function EntityRelationship (copyData) {
 	this.holderModel = copyData.holderModel;
 	}
 }  // EntityRelationship 
-// SanteDB.Core.Model.Entities.EntityTelecomAddress, SanteDB.Core.Model, Version=1.1.0.35405, Culture=neutral, PublicKeyToken=null
-if(!EntityTelecomAddress)
+// SanteDB.Core.Model.Entities.EntityTelecomAddress, SanteDB.Core.Model, Version=2.0.0.0, Culture=neutral, PublicKeyToken=null
+//if(!EntityTelecomAddress)
 /**
  * @class
  * @constructor
- * @memberof SanteDBModel
  * @public
+ * @extends VersionedAssociation
  * @summary             Represents an entity telecom address            
  * @property {Concept} useModel [Delay loaded from use],             Gets or sets the name use            
  * @property {string} use            Gets or sets the name use key            (see: {@link TelecomAddressUseKeys} for values)
+ * @property {Concept} typeModel [Delay loaded from type],             Gets or sets the name use            
+ * @property {string} type            Gets or sets the name use key            (see: {@link TelecomAddressTypeKeys} for values)
  * @property {string} value            Gets or sets the value of the telecom address            
  * @property {number} effectiveVersionSequence
  * @property {number} obsoleteVersionSequence
  * @property {Date} modifiedOn
  * @property {string} source
  * @property {Entity} sourceModel [Delay loaded from source], 
- * @property {string} id            The internal primary key value of the entity            
- * @property {string} $type            Gets the type            
+ * @property {string} id            Gets or sets the primary identifying UUID of this object            
+ * @property {string} $type            Gets the type registration of this object            
  * @param {EntityTelecomAddress} copyData Copy constructor (if present)
  */
 function EntityTelecomAddress (copyData) { 
@@ -3819,20 +4054,64 @@ function EntityTelecomAddress (copyData) {
 	/** @type {string} */
 	this.value = copyData.value;
 	/** @type {string} */
+	this.type = copyData.type;
+	/** @type {Concept} */
+	this.typeModel = copyData.typeModel;
+	/** @type {string} */
 	this.use = copyData.use;
 	/** @type {Concept} */
 	this.useModel = copyData.useModel;
 	}
 }  // EntityTelecomAddress 
-// SanteDB.Core.Model.Entities.ManufacturedMaterial, SanteDB.Core.Model, Version=1.1.0.35405, Culture=neutral, PublicKeyToken=null
-if(!ManufacturedMaterial)
+// SanteDB.Core.Model.Entities.GenericComponentValues`1, SanteDB.Core.Model, Version=2.0.0.0, Culture=neutral, PublicKeyToken=null
+//if(!GenericComponentValues)
 /**
  * @class
  * @constructor
- * @memberof SanteDBModel
  * @public
- * @extends Material
- * @summary             Manufactured material            
+ * @abstract
+ * @extends Association
+ * @summary             A generic class representing components of a larger item (i.e. address, name, etc);            
+ * @property {Concept} typeModel [Delay loaded from type],             Gets or sets the type of address component            
+ * @property {string} type            Component type key            
+ * @property {string} value            Gets or sets the value of the name component            
+ * @property {Date} modifiedOn
+ * @property {string} source
+ * @property {IdentifiedData} sourceModel [Delay loaded from source], 
+ * @property {string} id            Gets or sets the primary identifying UUID of this object            
+ * @property {string} $type            Gets the type registration of this object            
+ * @param {GenericComponentValues} copyData Copy constructor (if present)
+ */
+function GenericComponentValues (copyData) { 
+	this.$type = 'GenericComponentValues';
+	if(copyData) {
+	/** @type {string} */
+	this.id = copyData.id;
+	/** @type {IdentifiedData} */
+	this.sourceModel = copyData.sourceModel;
+	/** @type {string} */
+	this.source = copyData.source;
+	/** @type {Date} */
+	this.modifiedOn = copyData.modifiedOn;
+	/** @type {string} */
+	this.value = copyData.value;
+	/** @type {string} */
+	this.type = copyData.type;
+	/** @type {Concept} */
+	this.typeModel = copyData.typeModel;
+	}
+}  // GenericComponentValues 
+// SanteDB.Core.Model.Entities.ManufacturedMaterial, SanteDB.Core.Model, Version=2.0.0.0, Culture=neutral, PublicKeyToken=null
+//if(!ManufacturedMaterial)
+/**
+ * @class
+ * @constructor
+ * @public
+ * @summary             Represents a material which is manufactured by a particular organization or company.            
+ * @description 
+ *             A manufactured material represents an instance of a material which was or can be manufactured by 
+ *             an organization and tracked as stock.
+ *             
  * @property {string} lotNumber            Gets or sets the lot number of the manufactured material            
  * @property {Date} expiryDate            Gets or sets the expiry date of the material            
  * @property {Concept} formConceptModel [Delay loaded from formConcept],             Gets or sets the concept which dictates the form of the material (solid, liquid, capsule, injection, etc.)            
@@ -3946,43 +4225,42 @@ if(!ManufacturedMaterial)
  * @property {ActParticipation} participation.Witness             The player entity represents a legal witness to the act occurring.            
  * @property {ActParticipation} participation.$other Unclassified
  * @property {object} relationship            Gets a list of all associated entities for this entity            
- * @property {EntityRelationship} relationship.Access             The access            
- * @property {EntityRelationship} relationship.ActiveMoiety             The active moiety            
- * @property {EntityRelationship} relationship.AdministerableMaterial             The administerable material            
- * @property {EntityRelationship} relationship.AdoptedChild             The adopted child            
- * @property {EntityRelationship} relationship.AdoptedDaughter             The adopted daughter            
- * @property {EntityRelationship} relationship.AdoptedSon             The adopted son            
- * @property {EntityRelationship} relationship.Affiliate             The affiliate            
- * @property {EntityRelationship} relationship.Agent             The agent            
- * @property {EntityRelationship} relationship.Aliquot             The aliquot            
- * @property {EntityRelationship} relationship.Assigned             The assigned            
- * @property {EntityRelationship} relationship.AssignedEntity             The assigned entity            
- * @property {EntityRelationship} relationship.Aunt             The aunt            
- * @property {EntityRelationship} relationship.Birthplace             The birthplace            
- * @property {EntityRelationship} relationship.Brother             The brother            
- * @property {EntityRelationship} relationship.Brotherinlaw             The brotherinlaw            
- * @property {EntityRelationship} relationship.Caregiver             The caregiver            
- * @property {EntityRelationship} relationship.CaseSubject             The case subject            
- * @property {EntityRelationship} relationship.Child             The child            
+ * @property {EntityRelationship} relationship.Access             The source entity gives access to the target entity            
+ * @property {EntityRelationship} relationship.ActiveMoiety             Active ingredient, where not the ingredient substance (player), but itaTMs active moiety is the "basis of strength"            
+ * @property {EntityRelationship} relationship.AdministerableMaterial             The source represents a meterial that is an administerable form of the target            
+ * @property {EntityRelationship} relationship.AdoptedChild             The source is an adopted child of the target            
+ * @property {EntityRelationship} relationship.AdoptedDaughter             The source is an adopted daughter of the target            
+ * @property {EntityRelationship} relationship.AdoptedSon             The source is an adopted son of the target            
+ * @property {EntityRelationship} relationship.Affiliate             The target has a business/professional relationship with the source.            
+ * @property {EntityRelationship} relationship.Agent             The target is an agent or authorized to act on behalf of the source            
+ * @property {EntityRelationship} relationship.Aliquot             The target is a portion of the original source            
+ * @property {EntityRelationship} relationship.AssignedEntity             The target is an entity acting under the employ of the source entity            
+ * @property {EntityRelationship} relationship.Aunt             The target is the aunt of the source            
+ * @property {EntityRelationship} relationship.Birthplace             The target is the birthplace of the source            
+ * @property {EntityRelationship} relationship.Brother             The target is the brother of the source            
+ * @property {EntityRelationship} relationship.Brotherinlaw             The target is the brotherinlaw of the source            
+ * @property {EntityRelationship} relationship.Caregiver             The target is the caregiver of the source            
+ * @property {EntityRelationship} relationship.CaseSubject             The the target represents a case subject of the source entity (such as a study)            
+ * @property {EntityRelationship} relationship.Child             The the target is a child of the child source            
  * @property {EntityRelationship} relationship.ChildInlaw             The child inlaw            
- * @property {EntityRelationship} relationship.Citizen             The citizen            
- * @property {EntityRelationship} relationship.Claimant             The claimant            
+ * @property {EntityRelationship} relationship.Citizen             The target is a citizen of the source            
+ * @property {EntityRelationship} relationship.Claimant             The target is a claimant  or is making a claim in a policy (source)            
  * @property {EntityRelationship} relationship.ClinicalResearchInvestigator             The clinical research investigator            
  * @property {EntityRelationship} relationship.ClinicalResearchSponsor             The clinical research sponsor            
  * @property {EntityRelationship} relationship.CommissioningParty             The commissioning party            
- * @property {EntityRelationship} relationship.Contact             The contact            
+ * @property {EntityRelationship} relationship.Contact             The target represents a contact of the source            
  * @property {EntityRelationship} relationship.Cousin             The cousin            
- * @property {EntityRelationship} relationship.CoverageSponsor             The coverage sponsor            
- * @property {EntityRelationship} relationship.CoveredParty             The covered party            
+ * @property {EntityRelationship} relationship.CoverageSponsor             The target represents a coverage sponsor of the source            
+ * @property {EntityRelationship} relationship.CoveredParty             The target is a covered party of a source (insurance policy)            
  * @property {EntityRelationship} relationship.Daughter             The daughter            
  * @property {EntityRelationship} relationship.DaughterInlaw             The daughter inlaw            
- * @property {EntityRelationship} relationship.DedicatedServiceDeliveryLocation             The dedicated service delivery location            
- * @property {EntityRelationship} relationship.Dependent             The dependent            
- * @property {EntityRelationship} relationship.DistributedMaterial             The distributed material            
+ * @property {EntityRelationship} relationship.DedicatedServiceDeliveryLocation             The target is the dedicated service delivery location for the source            
+ * @property {EntityRelationship} relationship.Dependent             The target is a dependent of the source            
+ * @property {EntityRelationship} relationship.DistributedMaterial             The target is a distributed or shippable material of the source            
  * @property {EntityRelationship} relationship.DomesticPartner             The domestic partner            
- * @property {EntityRelationship} relationship.EmergencyContact             The emergency contact            
- * @property {EntityRelationship} relationship.Employee             The employee            
- * @property {EntityRelationship} relationship.ExposedEntity             The exposed entity            
+ * @property {EntityRelationship} relationship.EmergencyContact             The target is an emergency contact for the source            
+ * @property {EntityRelationship} relationship.Employee             The the target is an employee of the source            
+ * @property {EntityRelationship} relationship.ExposedEntity             The target represents a substance which is exposed when the source is exposed            
  * @property {EntityRelationship} relationship.FamilyMember             The family member            
  * @property {EntityRelationship} relationship.Father             The father            
  * @property {EntityRelationship} relationship.Fatherinlaw             The fatherinlaw            
@@ -4000,23 +4278,23 @@ if(!ManufacturedMaterial)
  * @property {EntityRelationship} relationship.GreatGrandparent             The great grandparent            
  * @property {EntityRelationship} relationship.Guarantor             The guarantor            
  * @property {EntityRelationship} relationship.GUARD             The guard            
- * @property {EntityRelationship} relationship.Guardian             The guardian            
+ * @property {EntityRelationship} relationship.Guardian             The target is a guardian of the source            
  * @property {EntityRelationship} relationship.Halfbrother             The halfbrother            
  * @property {EntityRelationship} relationship.Halfsibling             The halfsibling            
  * @property {EntityRelationship} relationship.Halfsister             The halfsister            
- * @property {EntityRelationship} relationship.HealthcareProvider             The healthcare provider            
- * @property {EntityRelationship} relationship.HealthChart             The health chart            
- * @property {EntityRelationship} relationship.HeldEntity             The held entity            
+ * @property {EntityRelationship} relationship.HealthcareProvider             The target is a healthcare provider for the source            
+ * @property {EntityRelationship} relationship.HealthChart             The target represents a health chart belonging to the source            
+ * @property {EntityRelationship} relationship.HeldEntity             The source holds the specified quantity of the target entity (the target entity is held by the source)            
  * @property {EntityRelationship} relationship.Husband             The husband            
- * @property {EntityRelationship} relationship.IdentifiedEntity             The identified entity            
- * @property {EntityRelationship} relationship.IncidentalServiceDeliveryLocation             The incidental service delivery location            
- * @property {EntityRelationship} relationship.Individual             The individual            
+ * @property {EntityRelationship} relationship.IdentifiedEntity             The target represents an entity for purposes of identification of the source            
+ * @property {EntityRelationship} relationship.IncidentalServiceDeliveryLocation             The target represents an incidental service delivery location related to the source entity            
+ * @property {EntityRelationship} relationship.Individual             The target represents an individual instance of the source            
  * @property {EntityRelationship} relationship.InvestigationSubject             The investigation subject            
- * @property {EntityRelationship} relationship.InvoicePayor             The invoice payor            
+ * @property {EntityRelationship} relationship.InvoicePayor             The target is the payor of an invoice for the source            
  * @property {EntityRelationship} relationship.Isolate             The isolate            
- * @property {EntityRelationship} relationship.LicensedEntity             The licensed entity            
- * @property {EntityRelationship} relationship.MaintainedEntity             The maintained entity            
- * @property {EntityRelationship} relationship.ManufacturedProduct             The manufactured product            
+ * @property {EntityRelationship} relationship.LicensedEntity             The target represents an entity licensed to perform or use the source            
+ * @property {EntityRelationship} relationship.MaintainedEntity             The target entity is maintained by the source entity            
+ * @property {EntityRelationship} relationship.ManufacturedProduct             The target entity is a product which is manufactured by the source            
  * @property {EntityRelationship} relationship.MaternalAunt             The maternal aunt            
  * @property {EntityRelationship} relationship.MaternalCousin             The maternal cousin            
  * @property {EntityRelationship} relationship.MaternalGrandfather             The maternal grandfather            
@@ -4027,28 +4305,28 @@ if(!ManufacturedMaterial)
  * @property {EntityRelationship} relationship.MaternalGreatgrandparent             The maternal greatgrandparent            
  * @property {EntityRelationship} relationship.MaternalUncle             The maternal uncle            
  * @property {EntityRelationship} relationship.MilitaryPerson             The military person            
- * @property {EntityRelationship} relationship.Mother             The mother            
+ * @property {EntityRelationship} relationship.Mother             The target is the mother of the source            
  * @property {EntityRelationship} relationship.Motherinlaw             The motherinlaw            
- * @property {EntityRelationship} relationship.NamedInsured             The named insured            
+ * @property {EntityRelationship} relationship.NamedInsured             The target is a named insured person on the source policy            
  * @property {EntityRelationship} relationship.NaturalBrother             The natural brother            
  * @property {EntityRelationship} relationship.NaturalChild             The natural child            
  * @property {EntityRelationship} relationship.NaturalDaughter             The natural daughter            
  * @property {EntityRelationship} relationship.NaturalFather             The natural father            
- * @property {EntityRelationship} relationship.NaturalFatherOfFetus             The natural father of fetus            
+ * @property {EntityRelationship} relationship.NaturalFatherOfFetus             The target is the natural father of fetus of the identified fetus (source) or pregnant entity (source)            
  * @property {EntityRelationship} relationship.NaturalMother             The natural mother            
  * @property {EntityRelationship} relationship.NaturalParent             The natural parent            
  * @property {EntityRelationship} relationship.NaturalSibling             The natural sibling            
  * @property {EntityRelationship} relationship.NaturalSister             The natural sister            
  * @property {EntityRelationship} relationship.NaturalSon             The natural son            
  * @property {EntityRelationship} relationship.Nephew             The nephew            
- * @property {EntityRelationship} relationship.NextOfKin             The next of kin            
+ * @property {EntityRelationship} relationship.NextOfKin             The target is the next of kin for the source            
  * @property {EntityRelationship} relationship.Niece             The niece            
  * @property {EntityRelationship} relationship.NieceNephew             The niece nephew            
- * @property {EntityRelationship} relationship.NotaryPublic             The notary public            
- * @property {EntityRelationship} relationship.OwnedEntity             The owned entity            
- * @property {EntityRelationship} relationship.Parent             The parent            
+ * @property {EntityRelationship} relationship.NotaryPublic             The target is a notary public acting within the source entity             
+ * @property {EntityRelationship} relationship.OwnedEntity             The target entity is owned by the source entity            
+ * @property {EntityRelationship} relationship.Parent             The target entity is the parent of the source entity            
  * @property {EntityRelationship} relationship.ParentInlaw             The parent inlaw            
- * @property {EntityRelationship} relationship.Part             The part            
+ * @property {EntityRelationship} relationship.Part             The target entity is a part of the source entity (source is comprised of parts)            
  * @property {EntityRelationship} relationship.PaternalAunt             The paternal aunt            
  * @property {EntityRelationship} relationship.PaternalCousin             The paternal cousin            
  * @property {EntityRelationship} relationship.PaternalGrandfather             The paternal grandfather            
@@ -4058,27 +4336,27 @@ if(!ManufacturedMaterial)
  * @property {EntityRelationship} relationship.PaternalGreatgrandmother             The paternal greatgrandmother            
  * @property {EntityRelationship} relationship.PaternalGreatgrandparent             The paternal greatgrandparent            
  * @property {EntityRelationship} relationship.PaternalUncle             The paternal uncle            
- * @property {EntityRelationship} relationship.Patient             The patient            
- * @property {EntityRelationship} relationship.Payee             The payee            
- * @property {EntityRelationship} relationship.PersonalRelationship             The personal relationship            
- * @property {EntityRelationship} relationship.PlaceOfDeath             The place of death            
- * @property {EntityRelationship} relationship.PolicyHolder             The policy holder            
- * @property {EntityRelationship} relationship.ProgramEligible             The program eligible            
- * @property {EntityRelationship} relationship.QualifiedEntity             The qualified entity            
- * @property {EntityRelationship} relationship.RegulatedProduct             The regulated product            
- * @property {EntityRelationship} relationship.ResearchSubject             The research subject            
- * @property {EntityRelationship} relationship.RetailedMaterial             The retailed material            
+ * @property {EntityRelationship} relationship.Patient             The target is a patient of the source entity            
+ * @property {EntityRelationship} relationship.Payee             The targert is a payee of the source entity            
+ * @property {EntityRelationship} relationship.PersonalRelationship             The target possesses a personal relationship with the source entity            
+ * @property {EntityRelationship} relationship.PlaceOfDeath             The target entity represents the place of death of the source entity            
+ * @property {EntityRelationship} relationship.PolicyHolder             The target entity represents the policy holder of the source policy            
+ * @property {EntityRelationship} relationship.ProgramEligible             The target is an entity which is eligible for funding or participation within a program            
+ * @property {EntityRelationship} relationship.QualifiedEntity             The target represents a qualified version of the source entity            
+ * @property {EntityRelationship} relationship.RegulatedProduct             The target represents a regulated version of the source product or represents a product which is regulated within the source jurisdiction            
+ * @property {EntityRelationship} relationship.ResearchSubject             The target represents a research subject of the source study            
+ * @property {EntityRelationship} relationship.RetailedMaterial             The target represents a material which is a retailed version of the source or is sold at the particular source            
  * @property {EntityRelationship} relationship.Roomate             The roomate            
- * @property {EntityRelationship} relationship.ServiceDeliveryLocation             The service delivery location            
+ * @property {EntityRelationship} relationship.ServiceDeliveryLocation             The target represents a service delivery location for the source entity            
  * @property {EntityRelationship} relationship.Sibling             The sibling            
  * @property {EntityRelationship} relationship.SiblingInlaw             The sibling inlaw            
  * @property {EntityRelationship} relationship.SignificantOther             The significant other            
- * @property {EntityRelationship} relationship.SigningAuthorityOrOfficer             The signing authority or officer            
+ * @property {EntityRelationship} relationship.SigningAuthorityOrOfficer             The target has signing authority or is an officer of the source            
  * @property {EntityRelationship} relationship.Sister             The sister            
  * @property {EntityRelationship} relationship.Sisterinlaw             The sisterinlaw            
  * @property {EntityRelationship} relationship.Son             The son            
  * @property {EntityRelationship} relationship.SonInlaw             The son inlaw            
- * @property {EntityRelationship} relationship.Specimen             The specimen            
+ * @property {EntityRelationship} relationship.Specimen             The target represents a specimen collected from the source            
  * @property {EntityRelationship} relationship.Spouse             The spouse            
  * @property {EntityRelationship} relationship.Stepbrother             The stepbrother            
  * @property {EntityRelationship} relationship.StepChild             The step child            
@@ -4090,17 +4368,18 @@ if(!ManufacturedMaterial)
  * @property {EntityRelationship} relationship.Stepsister             The stepsister            
  * @property {EntityRelationship} relationship.Stepson             The stepson            
  * @property {EntityRelationship} relationship.Student             The student            
- * @property {EntityRelationship} relationship.Subscriber             The subscriber            
- * @property {EntityRelationship} relationship.TerritoryOfAuthority             The territory of authority            
- * @property {EntityRelationship} relationship.TherapeuticAgent             The therapeutic agent            
+ * @property {EntityRelationship} relationship.Subscriber             The target is a subscriber of the source, meaning the target should receive updates whenever the source changes             
+ * @property {EntityRelationship} relationship.TerritoryOfAuthority             The target represents another territory where the source has authority            
+ * @property {EntityRelationship} relationship.TherapeuticAgent             The target represents the theraputic agent of the source            
  * @property {EntityRelationship} relationship.Uncle             The uncle            
  * @property {EntityRelationship} relationship.Underwriter             The underwriter            
- * @property {EntityRelationship} relationship.UsedEntity             The used entity            
- * @property {EntityRelationship} relationship.WarrantedProduct             The warranted product            
+ * @property {EntityRelationship} relationship.UsedEntity             The target represents an entity that is consumed whenever the source is consumed            
+ * @property {EntityRelationship} relationship.WarrantedProduct             The target represents a product which is warranted by the source            
  * @property {EntityRelationship} relationship.Wife             The wife            
- * @property {EntityRelationship} relationship.Replaces             The replaces            
+ * @property {EntityRelationship} relationship.Replaces             The source replaces the target (note: this is one relationship where the role relationship is reveresed)             
  * @property {EntityRelationship} relationship.Instance             The target entity represents an instance of the scoper entity            
  * @property {EntityRelationship} relationship.LocatedEntity             Relates the target entity to a source location            
+ * @property {EntityRelationship} relationship.Duplicate             Duplicate entity            
  * @property {EntityRelationship} relationship.$other Unclassified
  * @property {Concept} statusConceptModel [Delay loaded from statusConcept],             Status concept id            
  * @property {string} statusConcept            Status concept id            (see: {@link StatusKeys} for values)
@@ -4119,20 +4398,21 @@ if(!ManufacturedMaterial)
  * @property {TemplateDefinition} templateModel [Delay loaded from template],             Gets or sets the template definition            
  * @property {Concept} typeConceptModel [Delay loaded from typeConcept],             Type concept identifier            
  * @property {string} typeConcept            Type concept identifier            
+ * @property {SecurityPolicyInstance} policy            Gets or sets the security policy instances associated with the entity            
  * @property {string} previousVersion
  * @property {string} version
  * @property {number} sequence
  * @property {Date} creationTimeModel [Delay loaded from creationTime],             Gets or sets the time at which the data was created            
- * @property {Date} creationTime            Gets or sets the creation time in XML format            
+ * @property {Date} creationTime            Gets or sets the creation time as an ISO date format            
  * @property {Date} obsoletionTimeModel [Delay loaded from obsoletionTime],             Gets or sets the time when the data is or will become invalid            
- * @property {Date} obsoletionTime            Gets or sets the creation time in XML format            
- * @property {SecurityUser} createdByModel [Delay loaded from createdBy],             Gets or sets the user that created this base data            
+ * @property {Date} obsoletionTime            Gets or sets the time that the data is no longer valid (was deleted/obsoleted) in ISO format            
+ * @property {SecurityProvenance} createdByModel [Delay loaded from createdBy],             Gets or sets the user that created this base data            
  * @property {Date} modifiedOn            Gets the time that the object was last modified (from base data, default to CreationTime)            
- * @property {SecurityUser} obsoletedByModel [Delay loaded from obsoletedBy],             Gets or sets the user that obsoleted this base data            
- * @property {string} createdBy            Gets or sets the identifier of the user which created the data            
- * @property {string} obsoletedBy            Gets or sets the identifier of the user which obsoleted the data            
- * @property {string} id            The internal primary key value of the entity            
- * @property {string} $type            Gets the type            
+ * @property {SecurityProvenance} obsoletedByModel [Delay loaded from obsoletedBy],             Gets or sets the user that obsoleted this base data            
+ * @property {string} createdBy            Gets or sets the security provenance object which represents the creation of this object            
+ * @property {string} obsoletedBy            Gets or sets the security provenance object which represents the obsoletion of this data            
+ * @property {string} id            Gets or sets the primary identifying UUID of this object            
+ * @property {string} $type            Gets the type registration of this object            
  * @param {ManufacturedMaterial} copyData Copy constructor (if present)
  */
 function ManufacturedMaterial (copyData) { 
@@ -4144,11 +4424,11 @@ function ManufacturedMaterial (copyData) {
 	this.obsoletedBy = copyData.obsoletedBy;
 	/** @type {string} */
 	this.createdBy = copyData.createdBy;
-	/** @type {SecurityUser} */
+	/** @type {SecurityProvenance} */
 	this.obsoletedByModel = copyData.obsoletedByModel;
 	/** @type {Date} */
 	this.modifiedOn = copyData.modifiedOn;
-	/** @type {SecurityUser} */
+	/** @type {SecurityProvenance} */
 	this.createdByModel = copyData.createdByModel;
 	/** @type {Date} */
 	this.obsoletionTime = copyData.obsoletionTime;
@@ -4164,6 +4444,8 @@ function ManufacturedMaterial (copyData) {
 	this.version = copyData.version;
 	/** @type {string} */
 	this.previousVersion = copyData.previousVersion;
+	/** @type {SecurityPolicyInstance} */
+	this.policy = copyData.policy;
 	/** @type {string} */
 	this.typeConcept = copyData.typeConcept;
 	/** @type {Concept} */
@@ -4224,15 +4506,14 @@ function ManufacturedMaterial (copyData) {
 	this.lotNumber = copyData.lotNumber;
 	}
 }  // ManufacturedMaterial 
-// SanteDB.Core.Model.Entities.Material, SanteDB.Core.Model, Version=1.1.0.35405, Culture=neutral, PublicKeyToken=null
-if(!Material)
+// SanteDB.Core.Model.Entities.Material, SanteDB.Core.Model, Version=2.0.0.0, Culture=neutral, PublicKeyToken=null
+//if(!Material)
 /**
  * @class
  * @constructor
- * @memberof SanteDBModel
  * @public
- * @extends Entity
- * @summary             Represents a material            
+ * @summary             Represents a material which describes a type of material (i.e. scapel, antigen, etc.) and serves as a base class for manufactured materials            
+ * @description In SanteDB, a Material represents the base class for kinds and instances of materials which may or may not be manufactured by a manufacturer
  * @property {Date} expiryDate            Gets or sets the expiry date of the material            
  * @property {Concept} formConceptModel [Delay loaded from formConcept],             Gets or sets the concept which dictates the form of the material (solid, liquid, capsule, injection, etc.)            
  * @property {string} formConcept            Gets or sets the form concept's key            
@@ -4345,43 +4626,42 @@ if(!Material)
  * @property {ActParticipation} participation.Witness             The player entity represents a legal witness to the act occurring.            
  * @property {ActParticipation} participation.$other Unclassified
  * @property {object} relationship            Gets a list of all associated entities for this entity            
- * @property {EntityRelationship} relationship.Access             The access            
- * @property {EntityRelationship} relationship.ActiveMoiety             The active moiety            
- * @property {EntityRelationship} relationship.AdministerableMaterial             The administerable material            
- * @property {EntityRelationship} relationship.AdoptedChild             The adopted child            
- * @property {EntityRelationship} relationship.AdoptedDaughter             The adopted daughter            
- * @property {EntityRelationship} relationship.AdoptedSon             The adopted son            
- * @property {EntityRelationship} relationship.Affiliate             The affiliate            
- * @property {EntityRelationship} relationship.Agent             The agent            
- * @property {EntityRelationship} relationship.Aliquot             The aliquot            
- * @property {EntityRelationship} relationship.Assigned             The assigned            
- * @property {EntityRelationship} relationship.AssignedEntity             The assigned entity            
- * @property {EntityRelationship} relationship.Aunt             The aunt            
- * @property {EntityRelationship} relationship.Birthplace             The birthplace            
- * @property {EntityRelationship} relationship.Brother             The brother            
- * @property {EntityRelationship} relationship.Brotherinlaw             The brotherinlaw            
- * @property {EntityRelationship} relationship.Caregiver             The caregiver            
- * @property {EntityRelationship} relationship.CaseSubject             The case subject            
- * @property {EntityRelationship} relationship.Child             The child            
+ * @property {EntityRelationship} relationship.Access             The source entity gives access to the target entity            
+ * @property {EntityRelationship} relationship.ActiveMoiety             Active ingredient, where not the ingredient substance (player), but itaTMs active moiety is the "basis of strength"            
+ * @property {EntityRelationship} relationship.AdministerableMaterial             The source represents a meterial that is an administerable form of the target            
+ * @property {EntityRelationship} relationship.AdoptedChild             The source is an adopted child of the target            
+ * @property {EntityRelationship} relationship.AdoptedDaughter             The source is an adopted daughter of the target            
+ * @property {EntityRelationship} relationship.AdoptedSon             The source is an adopted son of the target            
+ * @property {EntityRelationship} relationship.Affiliate             The target has a business/professional relationship with the source.            
+ * @property {EntityRelationship} relationship.Agent             The target is an agent or authorized to act on behalf of the source            
+ * @property {EntityRelationship} relationship.Aliquot             The target is a portion of the original source            
+ * @property {EntityRelationship} relationship.AssignedEntity             The target is an entity acting under the employ of the source entity            
+ * @property {EntityRelationship} relationship.Aunt             The target is the aunt of the source            
+ * @property {EntityRelationship} relationship.Birthplace             The target is the birthplace of the source            
+ * @property {EntityRelationship} relationship.Brother             The target is the brother of the source            
+ * @property {EntityRelationship} relationship.Brotherinlaw             The target is the brotherinlaw of the source            
+ * @property {EntityRelationship} relationship.Caregiver             The target is the caregiver of the source            
+ * @property {EntityRelationship} relationship.CaseSubject             The the target represents a case subject of the source entity (such as a study)            
+ * @property {EntityRelationship} relationship.Child             The the target is a child of the child source            
  * @property {EntityRelationship} relationship.ChildInlaw             The child inlaw            
- * @property {EntityRelationship} relationship.Citizen             The citizen            
- * @property {EntityRelationship} relationship.Claimant             The claimant            
+ * @property {EntityRelationship} relationship.Citizen             The target is a citizen of the source            
+ * @property {EntityRelationship} relationship.Claimant             The target is a claimant  or is making a claim in a policy (source)            
  * @property {EntityRelationship} relationship.ClinicalResearchInvestigator             The clinical research investigator            
  * @property {EntityRelationship} relationship.ClinicalResearchSponsor             The clinical research sponsor            
  * @property {EntityRelationship} relationship.CommissioningParty             The commissioning party            
- * @property {EntityRelationship} relationship.Contact             The contact            
+ * @property {EntityRelationship} relationship.Contact             The target represents a contact of the source            
  * @property {EntityRelationship} relationship.Cousin             The cousin            
- * @property {EntityRelationship} relationship.CoverageSponsor             The coverage sponsor            
- * @property {EntityRelationship} relationship.CoveredParty             The covered party            
+ * @property {EntityRelationship} relationship.CoverageSponsor             The target represents a coverage sponsor of the source            
+ * @property {EntityRelationship} relationship.CoveredParty             The target is a covered party of a source (insurance policy)            
  * @property {EntityRelationship} relationship.Daughter             The daughter            
  * @property {EntityRelationship} relationship.DaughterInlaw             The daughter inlaw            
- * @property {EntityRelationship} relationship.DedicatedServiceDeliveryLocation             The dedicated service delivery location            
- * @property {EntityRelationship} relationship.Dependent             The dependent            
- * @property {EntityRelationship} relationship.DistributedMaterial             The distributed material            
+ * @property {EntityRelationship} relationship.DedicatedServiceDeliveryLocation             The target is the dedicated service delivery location for the source            
+ * @property {EntityRelationship} relationship.Dependent             The target is a dependent of the source            
+ * @property {EntityRelationship} relationship.DistributedMaterial             The target is a distributed or shippable material of the source            
  * @property {EntityRelationship} relationship.DomesticPartner             The domestic partner            
- * @property {EntityRelationship} relationship.EmergencyContact             The emergency contact            
- * @property {EntityRelationship} relationship.Employee             The employee            
- * @property {EntityRelationship} relationship.ExposedEntity             The exposed entity            
+ * @property {EntityRelationship} relationship.EmergencyContact             The target is an emergency contact for the source            
+ * @property {EntityRelationship} relationship.Employee             The the target is an employee of the source            
+ * @property {EntityRelationship} relationship.ExposedEntity             The target represents a substance which is exposed when the source is exposed            
  * @property {EntityRelationship} relationship.FamilyMember             The family member            
  * @property {EntityRelationship} relationship.Father             The father            
  * @property {EntityRelationship} relationship.Fatherinlaw             The fatherinlaw            
@@ -4399,23 +4679,23 @@ if(!Material)
  * @property {EntityRelationship} relationship.GreatGrandparent             The great grandparent            
  * @property {EntityRelationship} relationship.Guarantor             The guarantor            
  * @property {EntityRelationship} relationship.GUARD             The guard            
- * @property {EntityRelationship} relationship.Guardian             The guardian            
+ * @property {EntityRelationship} relationship.Guardian             The target is a guardian of the source            
  * @property {EntityRelationship} relationship.Halfbrother             The halfbrother            
  * @property {EntityRelationship} relationship.Halfsibling             The halfsibling            
  * @property {EntityRelationship} relationship.Halfsister             The halfsister            
- * @property {EntityRelationship} relationship.HealthcareProvider             The healthcare provider            
- * @property {EntityRelationship} relationship.HealthChart             The health chart            
- * @property {EntityRelationship} relationship.HeldEntity             The held entity            
+ * @property {EntityRelationship} relationship.HealthcareProvider             The target is a healthcare provider for the source            
+ * @property {EntityRelationship} relationship.HealthChart             The target represents a health chart belonging to the source            
+ * @property {EntityRelationship} relationship.HeldEntity             The source holds the specified quantity of the target entity (the target entity is held by the source)            
  * @property {EntityRelationship} relationship.Husband             The husband            
- * @property {EntityRelationship} relationship.IdentifiedEntity             The identified entity            
- * @property {EntityRelationship} relationship.IncidentalServiceDeliveryLocation             The incidental service delivery location            
- * @property {EntityRelationship} relationship.Individual             The individual            
+ * @property {EntityRelationship} relationship.IdentifiedEntity             The target represents an entity for purposes of identification of the source            
+ * @property {EntityRelationship} relationship.IncidentalServiceDeliveryLocation             The target represents an incidental service delivery location related to the source entity            
+ * @property {EntityRelationship} relationship.Individual             The target represents an individual instance of the source            
  * @property {EntityRelationship} relationship.InvestigationSubject             The investigation subject            
- * @property {EntityRelationship} relationship.InvoicePayor             The invoice payor            
+ * @property {EntityRelationship} relationship.InvoicePayor             The target is the payor of an invoice for the source            
  * @property {EntityRelationship} relationship.Isolate             The isolate            
- * @property {EntityRelationship} relationship.LicensedEntity             The licensed entity            
- * @property {EntityRelationship} relationship.MaintainedEntity             The maintained entity            
- * @property {EntityRelationship} relationship.ManufacturedProduct             The manufactured product            
+ * @property {EntityRelationship} relationship.LicensedEntity             The target represents an entity licensed to perform or use the source            
+ * @property {EntityRelationship} relationship.MaintainedEntity             The target entity is maintained by the source entity            
+ * @property {EntityRelationship} relationship.ManufacturedProduct             The target entity is a product which is manufactured by the source            
  * @property {EntityRelationship} relationship.MaternalAunt             The maternal aunt            
  * @property {EntityRelationship} relationship.MaternalCousin             The maternal cousin            
  * @property {EntityRelationship} relationship.MaternalGrandfather             The maternal grandfather            
@@ -4426,28 +4706,28 @@ if(!Material)
  * @property {EntityRelationship} relationship.MaternalGreatgrandparent             The maternal greatgrandparent            
  * @property {EntityRelationship} relationship.MaternalUncle             The maternal uncle            
  * @property {EntityRelationship} relationship.MilitaryPerson             The military person            
- * @property {EntityRelationship} relationship.Mother             The mother            
+ * @property {EntityRelationship} relationship.Mother             The target is the mother of the source            
  * @property {EntityRelationship} relationship.Motherinlaw             The motherinlaw            
- * @property {EntityRelationship} relationship.NamedInsured             The named insured            
+ * @property {EntityRelationship} relationship.NamedInsured             The target is a named insured person on the source policy            
  * @property {EntityRelationship} relationship.NaturalBrother             The natural brother            
  * @property {EntityRelationship} relationship.NaturalChild             The natural child            
  * @property {EntityRelationship} relationship.NaturalDaughter             The natural daughter            
  * @property {EntityRelationship} relationship.NaturalFather             The natural father            
- * @property {EntityRelationship} relationship.NaturalFatherOfFetus             The natural father of fetus            
+ * @property {EntityRelationship} relationship.NaturalFatherOfFetus             The target is the natural father of fetus of the identified fetus (source) or pregnant entity (source)            
  * @property {EntityRelationship} relationship.NaturalMother             The natural mother            
  * @property {EntityRelationship} relationship.NaturalParent             The natural parent            
  * @property {EntityRelationship} relationship.NaturalSibling             The natural sibling            
  * @property {EntityRelationship} relationship.NaturalSister             The natural sister            
  * @property {EntityRelationship} relationship.NaturalSon             The natural son            
  * @property {EntityRelationship} relationship.Nephew             The nephew            
- * @property {EntityRelationship} relationship.NextOfKin             The next of kin            
+ * @property {EntityRelationship} relationship.NextOfKin             The target is the next of kin for the source            
  * @property {EntityRelationship} relationship.Niece             The niece            
  * @property {EntityRelationship} relationship.NieceNephew             The niece nephew            
- * @property {EntityRelationship} relationship.NotaryPublic             The notary public            
- * @property {EntityRelationship} relationship.OwnedEntity             The owned entity            
- * @property {EntityRelationship} relationship.Parent             The parent            
+ * @property {EntityRelationship} relationship.NotaryPublic             The target is a notary public acting within the source entity             
+ * @property {EntityRelationship} relationship.OwnedEntity             The target entity is owned by the source entity            
+ * @property {EntityRelationship} relationship.Parent             The target entity is the parent of the source entity            
  * @property {EntityRelationship} relationship.ParentInlaw             The parent inlaw            
- * @property {EntityRelationship} relationship.Part             The part            
+ * @property {EntityRelationship} relationship.Part             The target entity is a part of the source entity (source is comprised of parts)            
  * @property {EntityRelationship} relationship.PaternalAunt             The paternal aunt            
  * @property {EntityRelationship} relationship.PaternalCousin             The paternal cousin            
  * @property {EntityRelationship} relationship.PaternalGrandfather             The paternal grandfather            
@@ -4457,27 +4737,27 @@ if(!Material)
  * @property {EntityRelationship} relationship.PaternalGreatgrandmother             The paternal greatgrandmother            
  * @property {EntityRelationship} relationship.PaternalGreatgrandparent             The paternal greatgrandparent            
  * @property {EntityRelationship} relationship.PaternalUncle             The paternal uncle            
- * @property {EntityRelationship} relationship.Patient             The patient            
- * @property {EntityRelationship} relationship.Payee             The payee            
- * @property {EntityRelationship} relationship.PersonalRelationship             The personal relationship            
- * @property {EntityRelationship} relationship.PlaceOfDeath             The place of death            
- * @property {EntityRelationship} relationship.PolicyHolder             The policy holder            
- * @property {EntityRelationship} relationship.ProgramEligible             The program eligible            
- * @property {EntityRelationship} relationship.QualifiedEntity             The qualified entity            
- * @property {EntityRelationship} relationship.RegulatedProduct             The regulated product            
- * @property {EntityRelationship} relationship.ResearchSubject             The research subject            
- * @property {EntityRelationship} relationship.RetailedMaterial             The retailed material            
+ * @property {EntityRelationship} relationship.Patient             The target is a patient of the source entity            
+ * @property {EntityRelationship} relationship.Payee             The targert is a payee of the source entity            
+ * @property {EntityRelationship} relationship.PersonalRelationship             The target possesses a personal relationship with the source entity            
+ * @property {EntityRelationship} relationship.PlaceOfDeath             The target entity represents the place of death of the source entity            
+ * @property {EntityRelationship} relationship.PolicyHolder             The target entity represents the policy holder of the source policy            
+ * @property {EntityRelationship} relationship.ProgramEligible             The target is an entity which is eligible for funding or participation within a program            
+ * @property {EntityRelationship} relationship.QualifiedEntity             The target represents a qualified version of the source entity            
+ * @property {EntityRelationship} relationship.RegulatedProduct             The target represents a regulated version of the source product or represents a product which is regulated within the source jurisdiction            
+ * @property {EntityRelationship} relationship.ResearchSubject             The target represents a research subject of the source study            
+ * @property {EntityRelationship} relationship.RetailedMaterial             The target represents a material which is a retailed version of the source or is sold at the particular source            
  * @property {EntityRelationship} relationship.Roomate             The roomate            
- * @property {EntityRelationship} relationship.ServiceDeliveryLocation             The service delivery location            
+ * @property {EntityRelationship} relationship.ServiceDeliveryLocation             The target represents a service delivery location for the source entity            
  * @property {EntityRelationship} relationship.Sibling             The sibling            
  * @property {EntityRelationship} relationship.SiblingInlaw             The sibling inlaw            
  * @property {EntityRelationship} relationship.SignificantOther             The significant other            
- * @property {EntityRelationship} relationship.SigningAuthorityOrOfficer             The signing authority or officer            
+ * @property {EntityRelationship} relationship.SigningAuthorityOrOfficer             The target has signing authority or is an officer of the source            
  * @property {EntityRelationship} relationship.Sister             The sister            
  * @property {EntityRelationship} relationship.Sisterinlaw             The sisterinlaw            
  * @property {EntityRelationship} relationship.Son             The son            
  * @property {EntityRelationship} relationship.SonInlaw             The son inlaw            
- * @property {EntityRelationship} relationship.Specimen             The specimen            
+ * @property {EntityRelationship} relationship.Specimen             The target represents a specimen collected from the source            
  * @property {EntityRelationship} relationship.Spouse             The spouse            
  * @property {EntityRelationship} relationship.Stepbrother             The stepbrother            
  * @property {EntityRelationship} relationship.StepChild             The step child            
@@ -4489,17 +4769,18 @@ if(!Material)
  * @property {EntityRelationship} relationship.Stepsister             The stepsister            
  * @property {EntityRelationship} relationship.Stepson             The stepson            
  * @property {EntityRelationship} relationship.Student             The student            
- * @property {EntityRelationship} relationship.Subscriber             The subscriber            
- * @property {EntityRelationship} relationship.TerritoryOfAuthority             The territory of authority            
- * @property {EntityRelationship} relationship.TherapeuticAgent             The therapeutic agent            
+ * @property {EntityRelationship} relationship.Subscriber             The target is a subscriber of the source, meaning the target should receive updates whenever the source changes             
+ * @property {EntityRelationship} relationship.TerritoryOfAuthority             The target represents another territory where the source has authority            
+ * @property {EntityRelationship} relationship.TherapeuticAgent             The target represents the theraputic agent of the source            
  * @property {EntityRelationship} relationship.Uncle             The uncle            
  * @property {EntityRelationship} relationship.Underwriter             The underwriter            
- * @property {EntityRelationship} relationship.UsedEntity             The used entity            
- * @property {EntityRelationship} relationship.WarrantedProduct             The warranted product            
+ * @property {EntityRelationship} relationship.UsedEntity             The target represents an entity that is consumed whenever the source is consumed            
+ * @property {EntityRelationship} relationship.WarrantedProduct             The target represents a product which is warranted by the source            
  * @property {EntityRelationship} relationship.Wife             The wife            
- * @property {EntityRelationship} relationship.Replaces             The replaces            
+ * @property {EntityRelationship} relationship.Replaces             The source replaces the target (note: this is one relationship where the role relationship is reveresed)             
  * @property {EntityRelationship} relationship.Instance             The target entity represents an instance of the scoper entity            
  * @property {EntityRelationship} relationship.LocatedEntity             Relates the target entity to a source location            
+ * @property {EntityRelationship} relationship.Duplicate             Duplicate entity            
  * @property {EntityRelationship} relationship.$other Unclassified
  * @property {Concept} statusConceptModel [Delay loaded from statusConcept],             Status concept id            
  * @property {string} statusConcept            Status concept id            (see: {@link StatusKeys} for values)
@@ -4518,20 +4799,21 @@ if(!Material)
  * @property {TemplateDefinition} templateModel [Delay loaded from template],             Gets or sets the template definition            
  * @property {Concept} typeConceptModel [Delay loaded from typeConcept],             Type concept identifier            
  * @property {string} typeConcept            Type concept identifier            
+ * @property {SecurityPolicyInstance} policy            Gets or sets the security policy instances associated with the entity            
  * @property {string} previousVersion
  * @property {string} version
  * @property {number} sequence
  * @property {Date} creationTimeModel [Delay loaded from creationTime],             Gets or sets the time at which the data was created            
- * @property {Date} creationTime            Gets or sets the creation time in XML format            
+ * @property {Date} creationTime            Gets or sets the creation time as an ISO date format            
  * @property {Date} obsoletionTimeModel [Delay loaded from obsoletionTime],             Gets or sets the time when the data is or will become invalid            
- * @property {Date} obsoletionTime            Gets or sets the creation time in XML format            
- * @property {SecurityUser} createdByModel [Delay loaded from createdBy],             Gets or sets the user that created this base data            
+ * @property {Date} obsoletionTime            Gets or sets the time that the data is no longer valid (was deleted/obsoleted) in ISO format            
+ * @property {SecurityProvenance} createdByModel [Delay loaded from createdBy],             Gets or sets the user that created this base data            
  * @property {Date} modifiedOn            Gets the time that the object was last modified (from base data, default to CreationTime)            
- * @property {SecurityUser} obsoletedByModel [Delay loaded from obsoletedBy],             Gets or sets the user that obsoleted this base data            
- * @property {string} createdBy            Gets or sets the identifier of the user which created the data            
- * @property {string} obsoletedBy            Gets or sets the identifier of the user which obsoleted the data            
- * @property {string} id            The internal primary key value of the entity            
- * @property {string} $type            Gets the type            
+ * @property {SecurityProvenance} obsoletedByModel [Delay loaded from obsoletedBy],             Gets or sets the user that obsoleted this base data            
+ * @property {string} createdBy            Gets or sets the security provenance object which represents the creation of this object            
+ * @property {string} obsoletedBy            Gets or sets the security provenance object which represents the obsoletion of this data            
+ * @property {string} id            Gets or sets the primary identifying UUID of this object            
+ * @property {string} $type            Gets the type registration of this object            
  * @param {Material} copyData Copy constructor (if present)
  */
 function Material (copyData) { 
@@ -4543,11 +4825,11 @@ function Material (copyData) {
 	this.obsoletedBy = copyData.obsoletedBy;
 	/** @type {string} */
 	this.createdBy = copyData.createdBy;
-	/** @type {SecurityUser} */
+	/** @type {SecurityProvenance} */
 	this.obsoletedByModel = copyData.obsoletedByModel;
 	/** @type {Date} */
 	this.modifiedOn = copyData.modifiedOn;
-	/** @type {SecurityUser} */
+	/** @type {SecurityProvenance} */
 	this.createdByModel = copyData.createdByModel;
 	/** @type {Date} */
 	this.obsoletionTime = copyData.obsoletionTime;
@@ -4563,6 +4845,8 @@ function Material (copyData) {
 	this.version = copyData.version;
 	/** @type {string} */
 	this.previousVersion = copyData.previousVersion;
+	/** @type {SecurityPolicyInstance} */
+	this.policy = copyData.policy;
 	/** @type {string} */
 	this.typeConcept = copyData.typeConcept;
 	/** @type {Concept} */
@@ -4621,14 +4905,12 @@ function Material (copyData) {
 	this.expiryDate = copyData.expiryDate;
 	}
 }  // Material 
-// SanteDB.Core.Model.Entities.Organization, SanteDB.Core.Model, Version=1.1.0.35405, Culture=neutral, PublicKeyToken=null
-if(!Organization)
+// SanteDB.Core.Model.Entities.Organization, SanteDB.Core.Model, Version=2.0.0.0, Culture=neutral, PublicKeyToken=null
+//if(!Organization)
 /**
  * @class
  * @constructor
- * @memberof SanteDBModel
  * @public
- * @extends Entity
  * @summary             Organization entity            
  * @property {Concept} industryConceptModel [Delay loaded from industryConcept],             Gets or sets the industry concept key            
  * @property {string} industryConcept            Gets or sets the concept key which classifies the industry in which the organization operates            
@@ -4737,43 +5019,42 @@ if(!Organization)
  * @property {ActParticipation} participation.Witness             The player entity represents a legal witness to the act occurring.            
  * @property {ActParticipation} participation.$other Unclassified
  * @property {object} relationship            Gets a list of all associated entities for this entity            
- * @property {EntityRelationship} relationship.Access             The access            
- * @property {EntityRelationship} relationship.ActiveMoiety             The active moiety            
- * @property {EntityRelationship} relationship.AdministerableMaterial             The administerable material            
- * @property {EntityRelationship} relationship.AdoptedChild             The adopted child            
- * @property {EntityRelationship} relationship.AdoptedDaughter             The adopted daughter            
- * @property {EntityRelationship} relationship.AdoptedSon             The adopted son            
- * @property {EntityRelationship} relationship.Affiliate             The affiliate            
- * @property {EntityRelationship} relationship.Agent             The agent            
- * @property {EntityRelationship} relationship.Aliquot             The aliquot            
- * @property {EntityRelationship} relationship.Assigned             The assigned            
- * @property {EntityRelationship} relationship.AssignedEntity             The assigned entity            
- * @property {EntityRelationship} relationship.Aunt             The aunt            
- * @property {EntityRelationship} relationship.Birthplace             The birthplace            
- * @property {EntityRelationship} relationship.Brother             The brother            
- * @property {EntityRelationship} relationship.Brotherinlaw             The brotherinlaw            
- * @property {EntityRelationship} relationship.Caregiver             The caregiver            
- * @property {EntityRelationship} relationship.CaseSubject             The case subject            
- * @property {EntityRelationship} relationship.Child             The child            
+ * @property {EntityRelationship} relationship.Access             The source entity gives access to the target entity            
+ * @property {EntityRelationship} relationship.ActiveMoiety             Active ingredient, where not the ingredient substance (player), but itaTMs active moiety is the "basis of strength"            
+ * @property {EntityRelationship} relationship.AdministerableMaterial             The source represents a meterial that is an administerable form of the target            
+ * @property {EntityRelationship} relationship.AdoptedChild             The source is an adopted child of the target            
+ * @property {EntityRelationship} relationship.AdoptedDaughter             The source is an adopted daughter of the target            
+ * @property {EntityRelationship} relationship.AdoptedSon             The source is an adopted son of the target            
+ * @property {EntityRelationship} relationship.Affiliate             The target has a business/professional relationship with the source.            
+ * @property {EntityRelationship} relationship.Agent             The target is an agent or authorized to act on behalf of the source            
+ * @property {EntityRelationship} relationship.Aliquot             The target is a portion of the original source            
+ * @property {EntityRelationship} relationship.AssignedEntity             The target is an entity acting under the employ of the source entity            
+ * @property {EntityRelationship} relationship.Aunt             The target is the aunt of the source            
+ * @property {EntityRelationship} relationship.Birthplace             The target is the birthplace of the source            
+ * @property {EntityRelationship} relationship.Brother             The target is the brother of the source            
+ * @property {EntityRelationship} relationship.Brotherinlaw             The target is the brotherinlaw of the source            
+ * @property {EntityRelationship} relationship.Caregiver             The target is the caregiver of the source            
+ * @property {EntityRelationship} relationship.CaseSubject             The the target represents a case subject of the source entity (such as a study)            
+ * @property {EntityRelationship} relationship.Child             The the target is a child of the child source            
  * @property {EntityRelationship} relationship.ChildInlaw             The child inlaw            
- * @property {EntityRelationship} relationship.Citizen             The citizen            
- * @property {EntityRelationship} relationship.Claimant             The claimant            
+ * @property {EntityRelationship} relationship.Citizen             The target is a citizen of the source            
+ * @property {EntityRelationship} relationship.Claimant             The target is a claimant  or is making a claim in a policy (source)            
  * @property {EntityRelationship} relationship.ClinicalResearchInvestigator             The clinical research investigator            
  * @property {EntityRelationship} relationship.ClinicalResearchSponsor             The clinical research sponsor            
  * @property {EntityRelationship} relationship.CommissioningParty             The commissioning party            
- * @property {EntityRelationship} relationship.Contact             The contact            
+ * @property {EntityRelationship} relationship.Contact             The target represents a contact of the source            
  * @property {EntityRelationship} relationship.Cousin             The cousin            
- * @property {EntityRelationship} relationship.CoverageSponsor             The coverage sponsor            
- * @property {EntityRelationship} relationship.CoveredParty             The covered party            
+ * @property {EntityRelationship} relationship.CoverageSponsor             The target represents a coverage sponsor of the source            
+ * @property {EntityRelationship} relationship.CoveredParty             The target is a covered party of a source (insurance policy)            
  * @property {EntityRelationship} relationship.Daughter             The daughter            
  * @property {EntityRelationship} relationship.DaughterInlaw             The daughter inlaw            
- * @property {EntityRelationship} relationship.DedicatedServiceDeliveryLocation             The dedicated service delivery location            
- * @property {EntityRelationship} relationship.Dependent             The dependent            
- * @property {EntityRelationship} relationship.DistributedMaterial             The distributed material            
+ * @property {EntityRelationship} relationship.DedicatedServiceDeliveryLocation             The target is the dedicated service delivery location for the source            
+ * @property {EntityRelationship} relationship.Dependent             The target is a dependent of the source            
+ * @property {EntityRelationship} relationship.DistributedMaterial             The target is a distributed or shippable material of the source            
  * @property {EntityRelationship} relationship.DomesticPartner             The domestic partner            
- * @property {EntityRelationship} relationship.EmergencyContact             The emergency contact            
- * @property {EntityRelationship} relationship.Employee             The employee            
- * @property {EntityRelationship} relationship.ExposedEntity             The exposed entity            
+ * @property {EntityRelationship} relationship.EmergencyContact             The target is an emergency contact for the source            
+ * @property {EntityRelationship} relationship.Employee             The the target is an employee of the source            
+ * @property {EntityRelationship} relationship.ExposedEntity             The target represents a substance which is exposed when the source is exposed            
  * @property {EntityRelationship} relationship.FamilyMember             The family member            
  * @property {EntityRelationship} relationship.Father             The father            
  * @property {EntityRelationship} relationship.Fatherinlaw             The fatherinlaw            
@@ -4791,23 +5072,23 @@ if(!Organization)
  * @property {EntityRelationship} relationship.GreatGrandparent             The great grandparent            
  * @property {EntityRelationship} relationship.Guarantor             The guarantor            
  * @property {EntityRelationship} relationship.GUARD             The guard            
- * @property {EntityRelationship} relationship.Guardian             The guardian            
+ * @property {EntityRelationship} relationship.Guardian             The target is a guardian of the source            
  * @property {EntityRelationship} relationship.Halfbrother             The halfbrother            
  * @property {EntityRelationship} relationship.Halfsibling             The halfsibling            
  * @property {EntityRelationship} relationship.Halfsister             The halfsister            
- * @property {EntityRelationship} relationship.HealthcareProvider             The healthcare provider            
- * @property {EntityRelationship} relationship.HealthChart             The health chart            
- * @property {EntityRelationship} relationship.HeldEntity             The held entity            
+ * @property {EntityRelationship} relationship.HealthcareProvider             The target is a healthcare provider for the source            
+ * @property {EntityRelationship} relationship.HealthChart             The target represents a health chart belonging to the source            
+ * @property {EntityRelationship} relationship.HeldEntity             The source holds the specified quantity of the target entity (the target entity is held by the source)            
  * @property {EntityRelationship} relationship.Husband             The husband            
- * @property {EntityRelationship} relationship.IdentifiedEntity             The identified entity            
- * @property {EntityRelationship} relationship.IncidentalServiceDeliveryLocation             The incidental service delivery location            
- * @property {EntityRelationship} relationship.Individual             The individual            
+ * @property {EntityRelationship} relationship.IdentifiedEntity             The target represents an entity for purposes of identification of the source            
+ * @property {EntityRelationship} relationship.IncidentalServiceDeliveryLocation             The target represents an incidental service delivery location related to the source entity            
+ * @property {EntityRelationship} relationship.Individual             The target represents an individual instance of the source            
  * @property {EntityRelationship} relationship.InvestigationSubject             The investigation subject            
- * @property {EntityRelationship} relationship.InvoicePayor             The invoice payor            
+ * @property {EntityRelationship} relationship.InvoicePayor             The target is the payor of an invoice for the source            
  * @property {EntityRelationship} relationship.Isolate             The isolate            
- * @property {EntityRelationship} relationship.LicensedEntity             The licensed entity            
- * @property {EntityRelationship} relationship.MaintainedEntity             The maintained entity            
- * @property {EntityRelationship} relationship.ManufacturedProduct             The manufactured product            
+ * @property {EntityRelationship} relationship.LicensedEntity             The target represents an entity licensed to perform or use the source            
+ * @property {EntityRelationship} relationship.MaintainedEntity             The target entity is maintained by the source entity            
+ * @property {EntityRelationship} relationship.ManufacturedProduct             The target entity is a product which is manufactured by the source            
  * @property {EntityRelationship} relationship.MaternalAunt             The maternal aunt            
  * @property {EntityRelationship} relationship.MaternalCousin             The maternal cousin            
  * @property {EntityRelationship} relationship.MaternalGrandfather             The maternal grandfather            
@@ -4818,28 +5099,28 @@ if(!Organization)
  * @property {EntityRelationship} relationship.MaternalGreatgrandparent             The maternal greatgrandparent            
  * @property {EntityRelationship} relationship.MaternalUncle             The maternal uncle            
  * @property {EntityRelationship} relationship.MilitaryPerson             The military person            
- * @property {EntityRelationship} relationship.Mother             The mother            
+ * @property {EntityRelationship} relationship.Mother             The target is the mother of the source            
  * @property {EntityRelationship} relationship.Motherinlaw             The motherinlaw            
- * @property {EntityRelationship} relationship.NamedInsured             The named insured            
+ * @property {EntityRelationship} relationship.NamedInsured             The target is a named insured person on the source policy            
  * @property {EntityRelationship} relationship.NaturalBrother             The natural brother            
  * @property {EntityRelationship} relationship.NaturalChild             The natural child            
  * @property {EntityRelationship} relationship.NaturalDaughter             The natural daughter            
  * @property {EntityRelationship} relationship.NaturalFather             The natural father            
- * @property {EntityRelationship} relationship.NaturalFatherOfFetus             The natural father of fetus            
+ * @property {EntityRelationship} relationship.NaturalFatherOfFetus             The target is the natural father of fetus of the identified fetus (source) or pregnant entity (source)            
  * @property {EntityRelationship} relationship.NaturalMother             The natural mother            
  * @property {EntityRelationship} relationship.NaturalParent             The natural parent            
  * @property {EntityRelationship} relationship.NaturalSibling             The natural sibling            
  * @property {EntityRelationship} relationship.NaturalSister             The natural sister            
  * @property {EntityRelationship} relationship.NaturalSon             The natural son            
  * @property {EntityRelationship} relationship.Nephew             The nephew            
- * @property {EntityRelationship} relationship.NextOfKin             The next of kin            
+ * @property {EntityRelationship} relationship.NextOfKin             The target is the next of kin for the source            
  * @property {EntityRelationship} relationship.Niece             The niece            
  * @property {EntityRelationship} relationship.NieceNephew             The niece nephew            
- * @property {EntityRelationship} relationship.NotaryPublic             The notary public            
- * @property {EntityRelationship} relationship.OwnedEntity             The owned entity            
- * @property {EntityRelationship} relationship.Parent             The parent            
+ * @property {EntityRelationship} relationship.NotaryPublic             The target is a notary public acting within the source entity             
+ * @property {EntityRelationship} relationship.OwnedEntity             The target entity is owned by the source entity            
+ * @property {EntityRelationship} relationship.Parent             The target entity is the parent of the source entity            
  * @property {EntityRelationship} relationship.ParentInlaw             The parent inlaw            
- * @property {EntityRelationship} relationship.Part             The part            
+ * @property {EntityRelationship} relationship.Part             The target entity is a part of the source entity (source is comprised of parts)            
  * @property {EntityRelationship} relationship.PaternalAunt             The paternal aunt            
  * @property {EntityRelationship} relationship.PaternalCousin             The paternal cousin            
  * @property {EntityRelationship} relationship.PaternalGrandfather             The paternal grandfather            
@@ -4849,27 +5130,27 @@ if(!Organization)
  * @property {EntityRelationship} relationship.PaternalGreatgrandmother             The paternal greatgrandmother            
  * @property {EntityRelationship} relationship.PaternalGreatgrandparent             The paternal greatgrandparent            
  * @property {EntityRelationship} relationship.PaternalUncle             The paternal uncle            
- * @property {EntityRelationship} relationship.Patient             The patient            
- * @property {EntityRelationship} relationship.Payee             The payee            
- * @property {EntityRelationship} relationship.PersonalRelationship             The personal relationship            
- * @property {EntityRelationship} relationship.PlaceOfDeath             The place of death            
- * @property {EntityRelationship} relationship.PolicyHolder             The policy holder            
- * @property {EntityRelationship} relationship.ProgramEligible             The program eligible            
- * @property {EntityRelationship} relationship.QualifiedEntity             The qualified entity            
- * @property {EntityRelationship} relationship.RegulatedProduct             The regulated product            
- * @property {EntityRelationship} relationship.ResearchSubject             The research subject            
- * @property {EntityRelationship} relationship.RetailedMaterial             The retailed material            
+ * @property {EntityRelationship} relationship.Patient             The target is a patient of the source entity            
+ * @property {EntityRelationship} relationship.Payee             The targert is a payee of the source entity            
+ * @property {EntityRelationship} relationship.PersonalRelationship             The target possesses a personal relationship with the source entity            
+ * @property {EntityRelationship} relationship.PlaceOfDeath             The target entity represents the place of death of the source entity            
+ * @property {EntityRelationship} relationship.PolicyHolder             The target entity represents the policy holder of the source policy            
+ * @property {EntityRelationship} relationship.ProgramEligible             The target is an entity which is eligible for funding or participation within a program            
+ * @property {EntityRelationship} relationship.QualifiedEntity             The target represents a qualified version of the source entity            
+ * @property {EntityRelationship} relationship.RegulatedProduct             The target represents a regulated version of the source product or represents a product which is regulated within the source jurisdiction            
+ * @property {EntityRelationship} relationship.ResearchSubject             The target represents a research subject of the source study            
+ * @property {EntityRelationship} relationship.RetailedMaterial             The target represents a material which is a retailed version of the source or is sold at the particular source            
  * @property {EntityRelationship} relationship.Roomate             The roomate            
- * @property {EntityRelationship} relationship.ServiceDeliveryLocation             The service delivery location            
+ * @property {EntityRelationship} relationship.ServiceDeliveryLocation             The target represents a service delivery location for the source entity            
  * @property {EntityRelationship} relationship.Sibling             The sibling            
  * @property {EntityRelationship} relationship.SiblingInlaw             The sibling inlaw            
  * @property {EntityRelationship} relationship.SignificantOther             The significant other            
- * @property {EntityRelationship} relationship.SigningAuthorityOrOfficer             The signing authority or officer            
+ * @property {EntityRelationship} relationship.SigningAuthorityOrOfficer             The target has signing authority or is an officer of the source            
  * @property {EntityRelationship} relationship.Sister             The sister            
  * @property {EntityRelationship} relationship.Sisterinlaw             The sisterinlaw            
  * @property {EntityRelationship} relationship.Son             The son            
  * @property {EntityRelationship} relationship.SonInlaw             The son inlaw            
- * @property {EntityRelationship} relationship.Specimen             The specimen            
+ * @property {EntityRelationship} relationship.Specimen             The target represents a specimen collected from the source            
  * @property {EntityRelationship} relationship.Spouse             The spouse            
  * @property {EntityRelationship} relationship.Stepbrother             The stepbrother            
  * @property {EntityRelationship} relationship.StepChild             The step child            
@@ -4881,17 +5162,18 @@ if(!Organization)
  * @property {EntityRelationship} relationship.Stepsister             The stepsister            
  * @property {EntityRelationship} relationship.Stepson             The stepson            
  * @property {EntityRelationship} relationship.Student             The student            
- * @property {EntityRelationship} relationship.Subscriber             The subscriber            
- * @property {EntityRelationship} relationship.TerritoryOfAuthority             The territory of authority            
- * @property {EntityRelationship} relationship.TherapeuticAgent             The therapeutic agent            
+ * @property {EntityRelationship} relationship.Subscriber             The target is a subscriber of the source, meaning the target should receive updates whenever the source changes             
+ * @property {EntityRelationship} relationship.TerritoryOfAuthority             The target represents another territory where the source has authority            
+ * @property {EntityRelationship} relationship.TherapeuticAgent             The target represents the theraputic agent of the source            
  * @property {EntityRelationship} relationship.Uncle             The uncle            
  * @property {EntityRelationship} relationship.Underwriter             The underwriter            
- * @property {EntityRelationship} relationship.UsedEntity             The used entity            
- * @property {EntityRelationship} relationship.WarrantedProduct             The warranted product            
+ * @property {EntityRelationship} relationship.UsedEntity             The target represents an entity that is consumed whenever the source is consumed            
+ * @property {EntityRelationship} relationship.WarrantedProduct             The target represents a product which is warranted by the source            
  * @property {EntityRelationship} relationship.Wife             The wife            
- * @property {EntityRelationship} relationship.Replaces             The replaces            
+ * @property {EntityRelationship} relationship.Replaces             The source replaces the target (note: this is one relationship where the role relationship is reveresed)             
  * @property {EntityRelationship} relationship.Instance             The target entity represents an instance of the scoper entity            
  * @property {EntityRelationship} relationship.LocatedEntity             Relates the target entity to a source location            
+ * @property {EntityRelationship} relationship.Duplicate             Duplicate entity            
  * @property {EntityRelationship} relationship.$other Unclassified
  * @property {Concept} statusConceptModel [Delay loaded from statusConcept],             Status concept id            
  * @property {string} statusConcept            Status concept id            (see: {@link StatusKeys} for values)
@@ -4910,20 +5192,21 @@ if(!Organization)
  * @property {TemplateDefinition} templateModel [Delay loaded from template],             Gets or sets the template definition            
  * @property {Concept} typeConceptModel [Delay loaded from typeConcept],             Type concept identifier            
  * @property {string} typeConcept            Type concept identifier            
+ * @property {SecurityPolicyInstance} policy            Gets or sets the security policy instances associated with the entity            
  * @property {string} previousVersion
  * @property {string} version
  * @property {number} sequence
  * @property {Date} creationTimeModel [Delay loaded from creationTime],             Gets or sets the time at which the data was created            
- * @property {Date} creationTime            Gets or sets the creation time in XML format            
+ * @property {Date} creationTime            Gets or sets the creation time as an ISO date format            
  * @property {Date} obsoletionTimeModel [Delay loaded from obsoletionTime],             Gets or sets the time when the data is or will become invalid            
- * @property {Date} obsoletionTime            Gets or sets the creation time in XML format            
- * @property {SecurityUser} createdByModel [Delay loaded from createdBy],             Gets or sets the user that created this base data            
+ * @property {Date} obsoletionTime            Gets or sets the time that the data is no longer valid (was deleted/obsoleted) in ISO format            
+ * @property {SecurityProvenance} createdByModel [Delay loaded from createdBy],             Gets or sets the user that created this base data            
  * @property {Date} modifiedOn            Gets the time that the object was last modified (from base data, default to CreationTime)            
- * @property {SecurityUser} obsoletedByModel [Delay loaded from obsoletedBy],             Gets or sets the user that obsoleted this base data            
- * @property {string} createdBy            Gets or sets the identifier of the user which created the data            
- * @property {string} obsoletedBy            Gets or sets the identifier of the user which obsoleted the data            
- * @property {string} id            The internal primary key value of the entity            
- * @property {string} $type            Gets the type            
+ * @property {SecurityProvenance} obsoletedByModel [Delay loaded from obsoletedBy],             Gets or sets the user that obsoleted this base data            
+ * @property {string} createdBy            Gets or sets the security provenance object which represents the creation of this object            
+ * @property {string} obsoletedBy            Gets or sets the security provenance object which represents the obsoletion of this data            
+ * @property {string} id            Gets or sets the primary identifying UUID of this object            
+ * @property {string} $type            Gets the type registration of this object            
  * @param {Organization} copyData Copy constructor (if present)
  */
 function Organization (copyData) { 
@@ -4935,11 +5218,11 @@ function Organization (copyData) {
 	this.obsoletedBy = copyData.obsoletedBy;
 	/** @type {string} */
 	this.createdBy = copyData.createdBy;
-	/** @type {SecurityUser} */
+	/** @type {SecurityProvenance} */
 	this.obsoletedByModel = copyData.obsoletedByModel;
 	/** @type {Date} */
 	this.modifiedOn = copyData.modifiedOn;
-	/** @type {SecurityUser} */
+	/** @type {SecurityProvenance} */
 	this.createdByModel = copyData.createdByModel;
 	/** @type {Date} */
 	this.obsoletionTime = copyData.obsoletionTime;
@@ -4955,6 +5238,8 @@ function Organization (copyData) {
 	this.version = copyData.version;
 	/** @type {string} */
 	this.previousVersion = copyData.previousVersion;
+	/** @type {SecurityPolicyInstance} */
+	this.policy = copyData.policy;
 	/** @type {string} */
 	this.typeConcept = copyData.typeConcept;
 	/** @type {Concept} */
@@ -5003,14 +5288,12 @@ function Organization (copyData) {
 	this.industryConceptModel = copyData.industryConceptModel;
 	}
 }  // Organization 
-// SanteDB.Core.Model.Entities.Person, SanteDB.Core.Model, Version=1.1.0.35405, Culture=neutral, PublicKeyToken=null
-if(!Person)
+// SanteDB.Core.Model.Entities.Person, SanteDB.Core.Model, Version=2.0.0.0, Culture=neutral, PublicKeyToken=null
+//if(!Person)
 /**
  * @class
  * @constructor
- * @memberof SanteDBModel
  * @public
- * @extends Entity
  * @summary             Represents an entity which is a person            
  * @property {DatePrecision} dateOfBirthPrecision            Gets or sets the precision ofthe date of birth            (see: {@link DatePrecision} for values)
  * @property {string} dateOfBirth            Gets the date of birth as XML            
@@ -5120,43 +5403,42 @@ if(!Person)
  * @property {ActParticipation} participation.Witness             The player entity represents a legal witness to the act occurring.            
  * @property {ActParticipation} participation.$other Unclassified
  * @property {object} relationship            Gets a list of all associated entities for this entity            
- * @property {EntityRelationship} relationship.Access             The access            
- * @property {EntityRelationship} relationship.ActiveMoiety             The active moiety            
- * @property {EntityRelationship} relationship.AdministerableMaterial             The administerable material            
- * @property {EntityRelationship} relationship.AdoptedChild             The adopted child            
- * @property {EntityRelationship} relationship.AdoptedDaughter             The adopted daughter            
- * @property {EntityRelationship} relationship.AdoptedSon             The adopted son            
- * @property {EntityRelationship} relationship.Affiliate             The affiliate            
- * @property {EntityRelationship} relationship.Agent             The agent            
- * @property {EntityRelationship} relationship.Aliquot             The aliquot            
- * @property {EntityRelationship} relationship.Assigned             The assigned            
- * @property {EntityRelationship} relationship.AssignedEntity             The assigned entity            
- * @property {EntityRelationship} relationship.Aunt             The aunt            
- * @property {EntityRelationship} relationship.Birthplace             The birthplace            
- * @property {EntityRelationship} relationship.Brother             The brother            
- * @property {EntityRelationship} relationship.Brotherinlaw             The brotherinlaw            
- * @property {EntityRelationship} relationship.Caregiver             The caregiver            
- * @property {EntityRelationship} relationship.CaseSubject             The case subject            
- * @property {EntityRelationship} relationship.Child             The child            
+ * @property {EntityRelationship} relationship.Access             The source entity gives access to the target entity            
+ * @property {EntityRelationship} relationship.ActiveMoiety             Active ingredient, where not the ingredient substance (player), but itaTMs active moiety is the "basis of strength"            
+ * @property {EntityRelationship} relationship.AdministerableMaterial             The source represents a meterial that is an administerable form of the target            
+ * @property {EntityRelationship} relationship.AdoptedChild             The source is an adopted child of the target            
+ * @property {EntityRelationship} relationship.AdoptedDaughter             The source is an adopted daughter of the target            
+ * @property {EntityRelationship} relationship.AdoptedSon             The source is an adopted son of the target            
+ * @property {EntityRelationship} relationship.Affiliate             The target has a business/professional relationship with the source.            
+ * @property {EntityRelationship} relationship.Agent             The target is an agent or authorized to act on behalf of the source            
+ * @property {EntityRelationship} relationship.Aliquot             The target is a portion of the original source            
+ * @property {EntityRelationship} relationship.AssignedEntity             The target is an entity acting under the employ of the source entity            
+ * @property {EntityRelationship} relationship.Aunt             The target is the aunt of the source            
+ * @property {EntityRelationship} relationship.Birthplace             The target is the birthplace of the source            
+ * @property {EntityRelationship} relationship.Brother             The target is the brother of the source            
+ * @property {EntityRelationship} relationship.Brotherinlaw             The target is the brotherinlaw of the source            
+ * @property {EntityRelationship} relationship.Caregiver             The target is the caregiver of the source            
+ * @property {EntityRelationship} relationship.CaseSubject             The the target represents a case subject of the source entity (such as a study)            
+ * @property {EntityRelationship} relationship.Child             The the target is a child of the child source            
  * @property {EntityRelationship} relationship.ChildInlaw             The child inlaw            
- * @property {EntityRelationship} relationship.Citizen             The citizen            
- * @property {EntityRelationship} relationship.Claimant             The claimant            
+ * @property {EntityRelationship} relationship.Citizen             The target is a citizen of the source            
+ * @property {EntityRelationship} relationship.Claimant             The target is a claimant  or is making a claim in a policy (source)            
  * @property {EntityRelationship} relationship.ClinicalResearchInvestigator             The clinical research investigator            
  * @property {EntityRelationship} relationship.ClinicalResearchSponsor             The clinical research sponsor            
  * @property {EntityRelationship} relationship.CommissioningParty             The commissioning party            
- * @property {EntityRelationship} relationship.Contact             The contact            
+ * @property {EntityRelationship} relationship.Contact             The target represents a contact of the source            
  * @property {EntityRelationship} relationship.Cousin             The cousin            
- * @property {EntityRelationship} relationship.CoverageSponsor             The coverage sponsor            
- * @property {EntityRelationship} relationship.CoveredParty             The covered party            
+ * @property {EntityRelationship} relationship.CoverageSponsor             The target represents a coverage sponsor of the source            
+ * @property {EntityRelationship} relationship.CoveredParty             The target is a covered party of a source (insurance policy)            
  * @property {EntityRelationship} relationship.Daughter             The daughter            
  * @property {EntityRelationship} relationship.DaughterInlaw             The daughter inlaw            
- * @property {EntityRelationship} relationship.DedicatedServiceDeliveryLocation             The dedicated service delivery location            
- * @property {EntityRelationship} relationship.Dependent             The dependent            
- * @property {EntityRelationship} relationship.DistributedMaterial             The distributed material            
+ * @property {EntityRelationship} relationship.DedicatedServiceDeliveryLocation             The target is the dedicated service delivery location for the source            
+ * @property {EntityRelationship} relationship.Dependent             The target is a dependent of the source            
+ * @property {EntityRelationship} relationship.DistributedMaterial             The target is a distributed or shippable material of the source            
  * @property {EntityRelationship} relationship.DomesticPartner             The domestic partner            
- * @property {EntityRelationship} relationship.EmergencyContact             The emergency contact            
- * @property {EntityRelationship} relationship.Employee             The employee            
- * @property {EntityRelationship} relationship.ExposedEntity             The exposed entity            
+ * @property {EntityRelationship} relationship.EmergencyContact             The target is an emergency contact for the source            
+ * @property {EntityRelationship} relationship.Employee             The the target is an employee of the source            
+ * @property {EntityRelationship} relationship.ExposedEntity             The target represents a substance which is exposed when the source is exposed            
  * @property {EntityRelationship} relationship.FamilyMember             The family member            
  * @property {EntityRelationship} relationship.Father             The father            
  * @property {EntityRelationship} relationship.Fatherinlaw             The fatherinlaw            
@@ -5174,23 +5456,23 @@ if(!Person)
  * @property {EntityRelationship} relationship.GreatGrandparent             The great grandparent            
  * @property {EntityRelationship} relationship.Guarantor             The guarantor            
  * @property {EntityRelationship} relationship.GUARD             The guard            
- * @property {EntityRelationship} relationship.Guardian             The guardian            
+ * @property {EntityRelationship} relationship.Guardian             The target is a guardian of the source            
  * @property {EntityRelationship} relationship.Halfbrother             The halfbrother            
  * @property {EntityRelationship} relationship.Halfsibling             The halfsibling            
  * @property {EntityRelationship} relationship.Halfsister             The halfsister            
- * @property {EntityRelationship} relationship.HealthcareProvider             The healthcare provider            
- * @property {EntityRelationship} relationship.HealthChart             The health chart            
- * @property {EntityRelationship} relationship.HeldEntity             The held entity            
+ * @property {EntityRelationship} relationship.HealthcareProvider             The target is a healthcare provider for the source            
+ * @property {EntityRelationship} relationship.HealthChart             The target represents a health chart belonging to the source            
+ * @property {EntityRelationship} relationship.HeldEntity             The source holds the specified quantity of the target entity (the target entity is held by the source)            
  * @property {EntityRelationship} relationship.Husband             The husband            
- * @property {EntityRelationship} relationship.IdentifiedEntity             The identified entity            
- * @property {EntityRelationship} relationship.IncidentalServiceDeliveryLocation             The incidental service delivery location            
- * @property {EntityRelationship} relationship.Individual             The individual            
+ * @property {EntityRelationship} relationship.IdentifiedEntity             The target represents an entity for purposes of identification of the source            
+ * @property {EntityRelationship} relationship.IncidentalServiceDeliveryLocation             The target represents an incidental service delivery location related to the source entity            
+ * @property {EntityRelationship} relationship.Individual             The target represents an individual instance of the source            
  * @property {EntityRelationship} relationship.InvestigationSubject             The investigation subject            
- * @property {EntityRelationship} relationship.InvoicePayor             The invoice payor            
+ * @property {EntityRelationship} relationship.InvoicePayor             The target is the payor of an invoice for the source            
  * @property {EntityRelationship} relationship.Isolate             The isolate            
- * @property {EntityRelationship} relationship.LicensedEntity             The licensed entity            
- * @property {EntityRelationship} relationship.MaintainedEntity             The maintained entity            
- * @property {EntityRelationship} relationship.ManufacturedProduct             The manufactured product            
+ * @property {EntityRelationship} relationship.LicensedEntity             The target represents an entity licensed to perform or use the source            
+ * @property {EntityRelationship} relationship.MaintainedEntity             The target entity is maintained by the source entity            
+ * @property {EntityRelationship} relationship.ManufacturedProduct             The target entity is a product which is manufactured by the source            
  * @property {EntityRelationship} relationship.MaternalAunt             The maternal aunt            
  * @property {EntityRelationship} relationship.MaternalCousin             The maternal cousin            
  * @property {EntityRelationship} relationship.MaternalGrandfather             The maternal grandfather            
@@ -5201,28 +5483,28 @@ if(!Person)
  * @property {EntityRelationship} relationship.MaternalGreatgrandparent             The maternal greatgrandparent            
  * @property {EntityRelationship} relationship.MaternalUncle             The maternal uncle            
  * @property {EntityRelationship} relationship.MilitaryPerson             The military person            
- * @property {EntityRelationship} relationship.Mother             The mother            
+ * @property {EntityRelationship} relationship.Mother             The target is the mother of the source            
  * @property {EntityRelationship} relationship.Motherinlaw             The motherinlaw            
- * @property {EntityRelationship} relationship.NamedInsured             The named insured            
+ * @property {EntityRelationship} relationship.NamedInsured             The target is a named insured person on the source policy            
  * @property {EntityRelationship} relationship.NaturalBrother             The natural brother            
  * @property {EntityRelationship} relationship.NaturalChild             The natural child            
  * @property {EntityRelationship} relationship.NaturalDaughter             The natural daughter            
  * @property {EntityRelationship} relationship.NaturalFather             The natural father            
- * @property {EntityRelationship} relationship.NaturalFatherOfFetus             The natural father of fetus            
+ * @property {EntityRelationship} relationship.NaturalFatherOfFetus             The target is the natural father of fetus of the identified fetus (source) or pregnant entity (source)            
  * @property {EntityRelationship} relationship.NaturalMother             The natural mother            
  * @property {EntityRelationship} relationship.NaturalParent             The natural parent            
  * @property {EntityRelationship} relationship.NaturalSibling             The natural sibling            
  * @property {EntityRelationship} relationship.NaturalSister             The natural sister            
  * @property {EntityRelationship} relationship.NaturalSon             The natural son            
  * @property {EntityRelationship} relationship.Nephew             The nephew            
- * @property {EntityRelationship} relationship.NextOfKin             The next of kin            
+ * @property {EntityRelationship} relationship.NextOfKin             The target is the next of kin for the source            
  * @property {EntityRelationship} relationship.Niece             The niece            
  * @property {EntityRelationship} relationship.NieceNephew             The niece nephew            
- * @property {EntityRelationship} relationship.NotaryPublic             The notary public            
- * @property {EntityRelationship} relationship.OwnedEntity             The owned entity            
- * @property {EntityRelationship} relationship.Parent             The parent            
+ * @property {EntityRelationship} relationship.NotaryPublic             The target is a notary public acting within the source entity             
+ * @property {EntityRelationship} relationship.OwnedEntity             The target entity is owned by the source entity            
+ * @property {EntityRelationship} relationship.Parent             The target entity is the parent of the source entity            
  * @property {EntityRelationship} relationship.ParentInlaw             The parent inlaw            
- * @property {EntityRelationship} relationship.Part             The part            
+ * @property {EntityRelationship} relationship.Part             The target entity is a part of the source entity (source is comprised of parts)            
  * @property {EntityRelationship} relationship.PaternalAunt             The paternal aunt            
  * @property {EntityRelationship} relationship.PaternalCousin             The paternal cousin            
  * @property {EntityRelationship} relationship.PaternalGrandfather             The paternal grandfather            
@@ -5232,27 +5514,27 @@ if(!Person)
  * @property {EntityRelationship} relationship.PaternalGreatgrandmother             The paternal greatgrandmother            
  * @property {EntityRelationship} relationship.PaternalGreatgrandparent             The paternal greatgrandparent            
  * @property {EntityRelationship} relationship.PaternalUncle             The paternal uncle            
- * @property {EntityRelationship} relationship.Patient             The patient            
- * @property {EntityRelationship} relationship.Payee             The payee            
- * @property {EntityRelationship} relationship.PersonalRelationship             The personal relationship            
- * @property {EntityRelationship} relationship.PlaceOfDeath             The place of death            
- * @property {EntityRelationship} relationship.PolicyHolder             The policy holder            
- * @property {EntityRelationship} relationship.ProgramEligible             The program eligible            
- * @property {EntityRelationship} relationship.QualifiedEntity             The qualified entity            
- * @property {EntityRelationship} relationship.RegulatedProduct             The regulated product            
- * @property {EntityRelationship} relationship.ResearchSubject             The research subject            
- * @property {EntityRelationship} relationship.RetailedMaterial             The retailed material            
+ * @property {EntityRelationship} relationship.Patient             The target is a patient of the source entity            
+ * @property {EntityRelationship} relationship.Payee             The targert is a payee of the source entity            
+ * @property {EntityRelationship} relationship.PersonalRelationship             The target possesses a personal relationship with the source entity            
+ * @property {EntityRelationship} relationship.PlaceOfDeath             The target entity represents the place of death of the source entity            
+ * @property {EntityRelationship} relationship.PolicyHolder             The target entity represents the policy holder of the source policy            
+ * @property {EntityRelationship} relationship.ProgramEligible             The target is an entity which is eligible for funding or participation within a program            
+ * @property {EntityRelationship} relationship.QualifiedEntity             The target represents a qualified version of the source entity            
+ * @property {EntityRelationship} relationship.RegulatedProduct             The target represents a regulated version of the source product or represents a product which is regulated within the source jurisdiction            
+ * @property {EntityRelationship} relationship.ResearchSubject             The target represents a research subject of the source study            
+ * @property {EntityRelationship} relationship.RetailedMaterial             The target represents a material which is a retailed version of the source or is sold at the particular source            
  * @property {EntityRelationship} relationship.Roomate             The roomate            
- * @property {EntityRelationship} relationship.ServiceDeliveryLocation             The service delivery location            
+ * @property {EntityRelationship} relationship.ServiceDeliveryLocation             The target represents a service delivery location for the source entity            
  * @property {EntityRelationship} relationship.Sibling             The sibling            
  * @property {EntityRelationship} relationship.SiblingInlaw             The sibling inlaw            
  * @property {EntityRelationship} relationship.SignificantOther             The significant other            
- * @property {EntityRelationship} relationship.SigningAuthorityOrOfficer             The signing authority or officer            
+ * @property {EntityRelationship} relationship.SigningAuthorityOrOfficer             The target has signing authority or is an officer of the source            
  * @property {EntityRelationship} relationship.Sister             The sister            
  * @property {EntityRelationship} relationship.Sisterinlaw             The sisterinlaw            
  * @property {EntityRelationship} relationship.Son             The son            
  * @property {EntityRelationship} relationship.SonInlaw             The son inlaw            
- * @property {EntityRelationship} relationship.Specimen             The specimen            
+ * @property {EntityRelationship} relationship.Specimen             The target represents a specimen collected from the source            
  * @property {EntityRelationship} relationship.Spouse             The spouse            
  * @property {EntityRelationship} relationship.Stepbrother             The stepbrother            
  * @property {EntityRelationship} relationship.StepChild             The step child            
@@ -5264,17 +5546,18 @@ if(!Person)
  * @property {EntityRelationship} relationship.Stepsister             The stepsister            
  * @property {EntityRelationship} relationship.Stepson             The stepson            
  * @property {EntityRelationship} relationship.Student             The student            
- * @property {EntityRelationship} relationship.Subscriber             The subscriber            
- * @property {EntityRelationship} relationship.TerritoryOfAuthority             The territory of authority            
- * @property {EntityRelationship} relationship.TherapeuticAgent             The therapeutic agent            
+ * @property {EntityRelationship} relationship.Subscriber             The target is a subscriber of the source, meaning the target should receive updates whenever the source changes             
+ * @property {EntityRelationship} relationship.TerritoryOfAuthority             The target represents another territory where the source has authority            
+ * @property {EntityRelationship} relationship.TherapeuticAgent             The target represents the theraputic agent of the source            
  * @property {EntityRelationship} relationship.Uncle             The uncle            
  * @property {EntityRelationship} relationship.Underwriter             The underwriter            
- * @property {EntityRelationship} relationship.UsedEntity             The used entity            
- * @property {EntityRelationship} relationship.WarrantedProduct             The warranted product            
+ * @property {EntityRelationship} relationship.UsedEntity             The target represents an entity that is consumed whenever the source is consumed            
+ * @property {EntityRelationship} relationship.WarrantedProduct             The target represents a product which is warranted by the source            
  * @property {EntityRelationship} relationship.Wife             The wife            
- * @property {EntityRelationship} relationship.Replaces             The replaces            
+ * @property {EntityRelationship} relationship.Replaces             The source replaces the target (note: this is one relationship where the role relationship is reveresed)             
  * @property {EntityRelationship} relationship.Instance             The target entity represents an instance of the scoper entity            
  * @property {EntityRelationship} relationship.LocatedEntity             Relates the target entity to a source location            
+ * @property {EntityRelationship} relationship.Duplicate             Duplicate entity            
  * @property {EntityRelationship} relationship.$other Unclassified
  * @property {Concept} statusConceptModel [Delay loaded from statusConcept],             Status concept id            
  * @property {string} statusConcept            Status concept id            (see: {@link StatusKeys} for values)
@@ -5293,20 +5576,21 @@ if(!Person)
  * @property {TemplateDefinition} templateModel [Delay loaded from template],             Gets or sets the template definition            
  * @property {Concept} typeConceptModel [Delay loaded from typeConcept],             Type concept identifier            
  * @property {string} typeConcept            Type concept identifier            
+ * @property {SecurityPolicyInstance} policy            Gets or sets the security policy instances associated with the entity            
  * @property {string} previousVersion
  * @property {string} version
  * @property {number} sequence
  * @property {Date} creationTimeModel [Delay loaded from creationTime],             Gets or sets the time at which the data was created            
- * @property {Date} creationTime            Gets or sets the creation time in XML format            
+ * @property {Date} creationTime            Gets or sets the creation time as an ISO date format            
  * @property {Date} obsoletionTimeModel [Delay loaded from obsoletionTime],             Gets or sets the time when the data is or will become invalid            
- * @property {Date} obsoletionTime            Gets or sets the creation time in XML format            
- * @property {SecurityUser} createdByModel [Delay loaded from createdBy],             Gets or sets the user that created this base data            
+ * @property {Date} obsoletionTime            Gets or sets the time that the data is no longer valid (was deleted/obsoleted) in ISO format            
+ * @property {SecurityProvenance} createdByModel [Delay loaded from createdBy],             Gets or sets the user that created this base data            
  * @property {Date} modifiedOn            Gets the time that the object was last modified (from base data, default to CreationTime)            
- * @property {SecurityUser} obsoletedByModel [Delay loaded from obsoletedBy],             Gets or sets the user that obsoleted this base data            
- * @property {string} createdBy            Gets or sets the identifier of the user which created the data            
- * @property {string} obsoletedBy            Gets or sets the identifier of the user which obsoleted the data            
- * @property {string} id            The internal primary key value of the entity            
- * @property {string} $type            Gets the type            
+ * @property {SecurityProvenance} obsoletedByModel [Delay loaded from obsoletedBy],             Gets or sets the user that obsoleted this base data            
+ * @property {string} createdBy            Gets or sets the security provenance object which represents the creation of this object            
+ * @property {string} obsoletedBy            Gets or sets the security provenance object which represents the obsoletion of this data            
+ * @property {string} id            Gets or sets the primary identifying UUID of this object            
+ * @property {string} $type            Gets the type registration of this object            
  * @param {Person} copyData Copy constructor (if present)
  */
 function Person (copyData) { 
@@ -5318,11 +5602,11 @@ function Person (copyData) {
 	this.obsoletedBy = copyData.obsoletedBy;
 	/** @type {string} */
 	this.createdBy = copyData.createdBy;
-	/** @type {SecurityUser} */
+	/** @type {SecurityProvenance} */
 	this.obsoletedByModel = copyData.obsoletedByModel;
 	/** @type {Date} */
 	this.modifiedOn = copyData.modifiedOn;
-	/** @type {SecurityUser} */
+	/** @type {SecurityProvenance} */
 	this.createdByModel = copyData.createdByModel;
 	/** @type {Date} */
 	this.obsoletionTime = copyData.obsoletionTime;
@@ -5338,6 +5622,8 @@ function Person (copyData) {
 	this.version = copyData.version;
 	/** @type {string} */
 	this.previousVersion = copyData.previousVersion;
+	/** @type {SecurityPolicyInstance} */
+	this.policy = copyData.policy;
 	/** @type {string} */
 	this.typeConcept = copyData.typeConcept;
 	/** @type {Concept} */
@@ -5388,13 +5674,13 @@ function Person (copyData) {
 	this.dateOfBirthPrecision = copyData.dateOfBirthPrecision;
 	}
 }  // Person 
-// SanteDB.Core.Model.Entities.PersonLanguageCommunication, SanteDB.Core.Model, Version=1.1.0.35405, Culture=neutral, PublicKeyToken=null
-if(!PersonLanguageCommunication)
+// SanteDB.Core.Model.Entities.PersonLanguageCommunication, SanteDB.Core.Model, Version=2.0.0.0, Culture=neutral, PublicKeyToken=null
+//if(!PersonLanguageCommunication)
 /**
  * @class
  * @constructor
- * @memberof SanteDBModel
  * @public
+ * @extends VersionedAssociation
  * @summary             Represents a single preferred communication method for the entity            
  * @property {boolean} isPreferred            Gets or set the user's preference indicator            
  * @property {string} languageCode            Gets or sets the language code            
@@ -5403,8 +5689,8 @@ if(!PersonLanguageCommunication)
  * @property {Date} modifiedOn
  * @property {string} source
  * @property {Entity} sourceModel [Delay loaded from source], 
- * @property {string} id            The internal primary key value of the entity            
- * @property {string} $type            Gets the type            
+ * @property {string} id            Gets or sets the primary identifying UUID of this object            
+ * @property {string} $type            Gets the type registration of this object            
  * @param {PersonLanguageCommunication} copyData Copy constructor (if present)
  */
 function PersonLanguageCommunication (copyData) { 
@@ -5428,19 +5714,16 @@ function PersonLanguageCommunication (copyData) {
 	this.isPreferred = copyData.isPreferred;
 	}
 }  // PersonLanguageCommunication 
-// SanteDB.Core.Model.Entities.Place, SanteDB.Core.Model, Version=1.1.0.35405, Culture=neutral, PublicKeyToken=null
-if(!Place)
+// SanteDB.Core.Model.Entities.Place, SanteDB.Core.Model, Version=2.0.0.0, Culture=neutral, PublicKeyToken=null
+//if(!Place)
 /**
  * @class
  * @constructor
- * @memberof SanteDBModel
  * @public
- * @extends Entity
  * @summary             An entity which is a place where healthcare services are delivered            
  * @property {string} classConcept            Gets or sets the class concept key            (see: {@link EntityClassKeys} for values)
  * @property {boolean} isMobile            True if location is mobile            
- * @property {Double} lat            Gets or sets the latitude            
- * @property {Double} lng            Gets or sets the longitude            
+ * @property {GeoTag} geo            Gets the geographic tag            
  * @property {PlaceService} service            Gets the services            
  * @property {object} address            Gets a list of all addresses associated with the entity            
  * @property {EntityAddress} address.Alphabetic             Represents an alphabetic address used for matching             
@@ -5546,43 +5829,42 @@ if(!Place)
  * @property {ActParticipation} participation.Witness             The player entity represents a legal witness to the act occurring.            
  * @property {ActParticipation} participation.$other Unclassified
  * @property {object} relationship            Gets a list of all associated entities for this entity            
- * @property {EntityRelationship} relationship.Access             The access            
- * @property {EntityRelationship} relationship.ActiveMoiety             The active moiety            
- * @property {EntityRelationship} relationship.AdministerableMaterial             The administerable material            
- * @property {EntityRelationship} relationship.AdoptedChild             The adopted child            
- * @property {EntityRelationship} relationship.AdoptedDaughter             The adopted daughter            
- * @property {EntityRelationship} relationship.AdoptedSon             The adopted son            
- * @property {EntityRelationship} relationship.Affiliate             The affiliate            
- * @property {EntityRelationship} relationship.Agent             The agent            
- * @property {EntityRelationship} relationship.Aliquot             The aliquot            
- * @property {EntityRelationship} relationship.Assigned             The assigned            
- * @property {EntityRelationship} relationship.AssignedEntity             The assigned entity            
- * @property {EntityRelationship} relationship.Aunt             The aunt            
- * @property {EntityRelationship} relationship.Birthplace             The birthplace            
- * @property {EntityRelationship} relationship.Brother             The brother            
- * @property {EntityRelationship} relationship.Brotherinlaw             The brotherinlaw            
- * @property {EntityRelationship} relationship.Caregiver             The caregiver            
- * @property {EntityRelationship} relationship.CaseSubject             The case subject            
- * @property {EntityRelationship} relationship.Child             The child            
+ * @property {EntityRelationship} relationship.Access             The source entity gives access to the target entity            
+ * @property {EntityRelationship} relationship.ActiveMoiety             Active ingredient, where not the ingredient substance (player), but itaTMs active moiety is the "basis of strength"            
+ * @property {EntityRelationship} relationship.AdministerableMaterial             The source represents a meterial that is an administerable form of the target            
+ * @property {EntityRelationship} relationship.AdoptedChild             The source is an adopted child of the target            
+ * @property {EntityRelationship} relationship.AdoptedDaughter             The source is an adopted daughter of the target            
+ * @property {EntityRelationship} relationship.AdoptedSon             The source is an adopted son of the target            
+ * @property {EntityRelationship} relationship.Affiliate             The target has a business/professional relationship with the source.            
+ * @property {EntityRelationship} relationship.Agent             The target is an agent or authorized to act on behalf of the source            
+ * @property {EntityRelationship} relationship.Aliquot             The target is a portion of the original source            
+ * @property {EntityRelationship} relationship.AssignedEntity             The target is an entity acting under the employ of the source entity            
+ * @property {EntityRelationship} relationship.Aunt             The target is the aunt of the source            
+ * @property {EntityRelationship} relationship.Birthplace             The target is the birthplace of the source            
+ * @property {EntityRelationship} relationship.Brother             The target is the brother of the source            
+ * @property {EntityRelationship} relationship.Brotherinlaw             The target is the brotherinlaw of the source            
+ * @property {EntityRelationship} relationship.Caregiver             The target is the caregiver of the source            
+ * @property {EntityRelationship} relationship.CaseSubject             The the target represents a case subject of the source entity (such as a study)            
+ * @property {EntityRelationship} relationship.Child             The the target is a child of the child source            
  * @property {EntityRelationship} relationship.ChildInlaw             The child inlaw            
- * @property {EntityRelationship} relationship.Citizen             The citizen            
- * @property {EntityRelationship} relationship.Claimant             The claimant            
+ * @property {EntityRelationship} relationship.Citizen             The target is a citizen of the source            
+ * @property {EntityRelationship} relationship.Claimant             The target is a claimant  or is making a claim in a policy (source)            
  * @property {EntityRelationship} relationship.ClinicalResearchInvestigator             The clinical research investigator            
  * @property {EntityRelationship} relationship.ClinicalResearchSponsor             The clinical research sponsor            
  * @property {EntityRelationship} relationship.CommissioningParty             The commissioning party            
- * @property {EntityRelationship} relationship.Contact             The contact            
+ * @property {EntityRelationship} relationship.Contact             The target represents a contact of the source            
  * @property {EntityRelationship} relationship.Cousin             The cousin            
- * @property {EntityRelationship} relationship.CoverageSponsor             The coverage sponsor            
- * @property {EntityRelationship} relationship.CoveredParty             The covered party            
+ * @property {EntityRelationship} relationship.CoverageSponsor             The target represents a coverage sponsor of the source            
+ * @property {EntityRelationship} relationship.CoveredParty             The target is a covered party of a source (insurance policy)            
  * @property {EntityRelationship} relationship.Daughter             The daughter            
  * @property {EntityRelationship} relationship.DaughterInlaw             The daughter inlaw            
- * @property {EntityRelationship} relationship.DedicatedServiceDeliveryLocation             The dedicated service delivery location            
- * @property {EntityRelationship} relationship.Dependent             The dependent            
- * @property {EntityRelationship} relationship.DistributedMaterial             The distributed material            
+ * @property {EntityRelationship} relationship.DedicatedServiceDeliveryLocation             The target is the dedicated service delivery location for the source            
+ * @property {EntityRelationship} relationship.Dependent             The target is a dependent of the source            
+ * @property {EntityRelationship} relationship.DistributedMaterial             The target is a distributed or shippable material of the source            
  * @property {EntityRelationship} relationship.DomesticPartner             The domestic partner            
- * @property {EntityRelationship} relationship.EmergencyContact             The emergency contact            
- * @property {EntityRelationship} relationship.Employee             The employee            
- * @property {EntityRelationship} relationship.ExposedEntity             The exposed entity            
+ * @property {EntityRelationship} relationship.EmergencyContact             The target is an emergency contact for the source            
+ * @property {EntityRelationship} relationship.Employee             The the target is an employee of the source            
+ * @property {EntityRelationship} relationship.ExposedEntity             The target represents a substance which is exposed when the source is exposed            
  * @property {EntityRelationship} relationship.FamilyMember             The family member            
  * @property {EntityRelationship} relationship.Father             The father            
  * @property {EntityRelationship} relationship.Fatherinlaw             The fatherinlaw            
@@ -5600,23 +5882,23 @@ if(!Place)
  * @property {EntityRelationship} relationship.GreatGrandparent             The great grandparent            
  * @property {EntityRelationship} relationship.Guarantor             The guarantor            
  * @property {EntityRelationship} relationship.GUARD             The guard            
- * @property {EntityRelationship} relationship.Guardian             The guardian            
+ * @property {EntityRelationship} relationship.Guardian             The target is a guardian of the source            
  * @property {EntityRelationship} relationship.Halfbrother             The halfbrother            
  * @property {EntityRelationship} relationship.Halfsibling             The halfsibling            
  * @property {EntityRelationship} relationship.Halfsister             The halfsister            
- * @property {EntityRelationship} relationship.HealthcareProvider             The healthcare provider            
- * @property {EntityRelationship} relationship.HealthChart             The health chart            
- * @property {EntityRelationship} relationship.HeldEntity             The held entity            
+ * @property {EntityRelationship} relationship.HealthcareProvider             The target is a healthcare provider for the source            
+ * @property {EntityRelationship} relationship.HealthChart             The target represents a health chart belonging to the source            
+ * @property {EntityRelationship} relationship.HeldEntity             The source holds the specified quantity of the target entity (the target entity is held by the source)            
  * @property {EntityRelationship} relationship.Husband             The husband            
- * @property {EntityRelationship} relationship.IdentifiedEntity             The identified entity            
- * @property {EntityRelationship} relationship.IncidentalServiceDeliveryLocation             The incidental service delivery location            
- * @property {EntityRelationship} relationship.Individual             The individual            
+ * @property {EntityRelationship} relationship.IdentifiedEntity             The target represents an entity for purposes of identification of the source            
+ * @property {EntityRelationship} relationship.IncidentalServiceDeliveryLocation             The target represents an incidental service delivery location related to the source entity            
+ * @property {EntityRelationship} relationship.Individual             The target represents an individual instance of the source            
  * @property {EntityRelationship} relationship.InvestigationSubject             The investigation subject            
- * @property {EntityRelationship} relationship.InvoicePayor             The invoice payor            
+ * @property {EntityRelationship} relationship.InvoicePayor             The target is the payor of an invoice for the source            
  * @property {EntityRelationship} relationship.Isolate             The isolate            
- * @property {EntityRelationship} relationship.LicensedEntity             The licensed entity            
- * @property {EntityRelationship} relationship.MaintainedEntity             The maintained entity            
- * @property {EntityRelationship} relationship.ManufacturedProduct             The manufactured product            
+ * @property {EntityRelationship} relationship.LicensedEntity             The target represents an entity licensed to perform or use the source            
+ * @property {EntityRelationship} relationship.MaintainedEntity             The target entity is maintained by the source entity            
+ * @property {EntityRelationship} relationship.ManufacturedProduct             The target entity is a product which is manufactured by the source            
  * @property {EntityRelationship} relationship.MaternalAunt             The maternal aunt            
  * @property {EntityRelationship} relationship.MaternalCousin             The maternal cousin            
  * @property {EntityRelationship} relationship.MaternalGrandfather             The maternal grandfather            
@@ -5627,28 +5909,28 @@ if(!Place)
  * @property {EntityRelationship} relationship.MaternalGreatgrandparent             The maternal greatgrandparent            
  * @property {EntityRelationship} relationship.MaternalUncle             The maternal uncle            
  * @property {EntityRelationship} relationship.MilitaryPerson             The military person            
- * @property {EntityRelationship} relationship.Mother             The mother            
+ * @property {EntityRelationship} relationship.Mother             The target is the mother of the source            
  * @property {EntityRelationship} relationship.Motherinlaw             The motherinlaw            
- * @property {EntityRelationship} relationship.NamedInsured             The named insured            
+ * @property {EntityRelationship} relationship.NamedInsured             The target is a named insured person on the source policy            
  * @property {EntityRelationship} relationship.NaturalBrother             The natural brother            
  * @property {EntityRelationship} relationship.NaturalChild             The natural child            
  * @property {EntityRelationship} relationship.NaturalDaughter             The natural daughter            
  * @property {EntityRelationship} relationship.NaturalFather             The natural father            
- * @property {EntityRelationship} relationship.NaturalFatherOfFetus             The natural father of fetus            
+ * @property {EntityRelationship} relationship.NaturalFatherOfFetus             The target is the natural father of fetus of the identified fetus (source) or pregnant entity (source)            
  * @property {EntityRelationship} relationship.NaturalMother             The natural mother            
  * @property {EntityRelationship} relationship.NaturalParent             The natural parent            
  * @property {EntityRelationship} relationship.NaturalSibling             The natural sibling            
  * @property {EntityRelationship} relationship.NaturalSister             The natural sister            
  * @property {EntityRelationship} relationship.NaturalSon             The natural son            
  * @property {EntityRelationship} relationship.Nephew             The nephew            
- * @property {EntityRelationship} relationship.NextOfKin             The next of kin            
+ * @property {EntityRelationship} relationship.NextOfKin             The target is the next of kin for the source            
  * @property {EntityRelationship} relationship.Niece             The niece            
  * @property {EntityRelationship} relationship.NieceNephew             The niece nephew            
- * @property {EntityRelationship} relationship.NotaryPublic             The notary public            
- * @property {EntityRelationship} relationship.OwnedEntity             The owned entity            
- * @property {EntityRelationship} relationship.Parent             The parent            
+ * @property {EntityRelationship} relationship.NotaryPublic             The target is a notary public acting within the source entity             
+ * @property {EntityRelationship} relationship.OwnedEntity             The target entity is owned by the source entity            
+ * @property {EntityRelationship} relationship.Parent             The target entity is the parent of the source entity            
  * @property {EntityRelationship} relationship.ParentInlaw             The parent inlaw            
- * @property {EntityRelationship} relationship.Part             The part            
+ * @property {EntityRelationship} relationship.Part             The target entity is a part of the source entity (source is comprised of parts)            
  * @property {EntityRelationship} relationship.PaternalAunt             The paternal aunt            
  * @property {EntityRelationship} relationship.PaternalCousin             The paternal cousin            
  * @property {EntityRelationship} relationship.PaternalGrandfather             The paternal grandfather            
@@ -5658,27 +5940,27 @@ if(!Place)
  * @property {EntityRelationship} relationship.PaternalGreatgrandmother             The paternal greatgrandmother            
  * @property {EntityRelationship} relationship.PaternalGreatgrandparent             The paternal greatgrandparent            
  * @property {EntityRelationship} relationship.PaternalUncle             The paternal uncle            
- * @property {EntityRelationship} relationship.Patient             The patient            
- * @property {EntityRelationship} relationship.Payee             The payee            
- * @property {EntityRelationship} relationship.PersonalRelationship             The personal relationship            
- * @property {EntityRelationship} relationship.PlaceOfDeath             The place of death            
- * @property {EntityRelationship} relationship.PolicyHolder             The policy holder            
- * @property {EntityRelationship} relationship.ProgramEligible             The program eligible            
- * @property {EntityRelationship} relationship.QualifiedEntity             The qualified entity            
- * @property {EntityRelationship} relationship.RegulatedProduct             The regulated product            
- * @property {EntityRelationship} relationship.ResearchSubject             The research subject            
- * @property {EntityRelationship} relationship.RetailedMaterial             The retailed material            
+ * @property {EntityRelationship} relationship.Patient             The target is a patient of the source entity            
+ * @property {EntityRelationship} relationship.Payee             The targert is a payee of the source entity            
+ * @property {EntityRelationship} relationship.PersonalRelationship             The target possesses a personal relationship with the source entity            
+ * @property {EntityRelationship} relationship.PlaceOfDeath             The target entity represents the place of death of the source entity            
+ * @property {EntityRelationship} relationship.PolicyHolder             The target entity represents the policy holder of the source policy            
+ * @property {EntityRelationship} relationship.ProgramEligible             The target is an entity which is eligible for funding or participation within a program            
+ * @property {EntityRelationship} relationship.QualifiedEntity             The target represents a qualified version of the source entity            
+ * @property {EntityRelationship} relationship.RegulatedProduct             The target represents a regulated version of the source product or represents a product which is regulated within the source jurisdiction            
+ * @property {EntityRelationship} relationship.ResearchSubject             The target represents a research subject of the source study            
+ * @property {EntityRelationship} relationship.RetailedMaterial             The target represents a material which is a retailed version of the source or is sold at the particular source            
  * @property {EntityRelationship} relationship.Roomate             The roomate            
- * @property {EntityRelationship} relationship.ServiceDeliveryLocation             The service delivery location            
+ * @property {EntityRelationship} relationship.ServiceDeliveryLocation             The target represents a service delivery location for the source entity            
  * @property {EntityRelationship} relationship.Sibling             The sibling            
  * @property {EntityRelationship} relationship.SiblingInlaw             The sibling inlaw            
  * @property {EntityRelationship} relationship.SignificantOther             The significant other            
- * @property {EntityRelationship} relationship.SigningAuthorityOrOfficer             The signing authority or officer            
+ * @property {EntityRelationship} relationship.SigningAuthorityOrOfficer             The target has signing authority or is an officer of the source            
  * @property {EntityRelationship} relationship.Sister             The sister            
  * @property {EntityRelationship} relationship.Sisterinlaw             The sisterinlaw            
  * @property {EntityRelationship} relationship.Son             The son            
  * @property {EntityRelationship} relationship.SonInlaw             The son inlaw            
- * @property {EntityRelationship} relationship.Specimen             The specimen            
+ * @property {EntityRelationship} relationship.Specimen             The target represents a specimen collected from the source            
  * @property {EntityRelationship} relationship.Spouse             The spouse            
  * @property {EntityRelationship} relationship.Stepbrother             The stepbrother            
  * @property {EntityRelationship} relationship.StepChild             The step child            
@@ -5690,17 +5972,18 @@ if(!Place)
  * @property {EntityRelationship} relationship.Stepsister             The stepsister            
  * @property {EntityRelationship} relationship.Stepson             The stepson            
  * @property {EntityRelationship} relationship.Student             The student            
- * @property {EntityRelationship} relationship.Subscriber             The subscriber            
- * @property {EntityRelationship} relationship.TerritoryOfAuthority             The territory of authority            
- * @property {EntityRelationship} relationship.TherapeuticAgent             The therapeutic agent            
+ * @property {EntityRelationship} relationship.Subscriber             The target is a subscriber of the source, meaning the target should receive updates whenever the source changes             
+ * @property {EntityRelationship} relationship.TerritoryOfAuthority             The target represents another territory where the source has authority            
+ * @property {EntityRelationship} relationship.TherapeuticAgent             The target represents the theraputic agent of the source            
  * @property {EntityRelationship} relationship.Uncle             The uncle            
  * @property {EntityRelationship} relationship.Underwriter             The underwriter            
- * @property {EntityRelationship} relationship.UsedEntity             The used entity            
- * @property {EntityRelationship} relationship.WarrantedProduct             The warranted product            
+ * @property {EntityRelationship} relationship.UsedEntity             The target represents an entity that is consumed whenever the source is consumed            
+ * @property {EntityRelationship} relationship.WarrantedProduct             The target represents a product which is warranted by the source            
  * @property {EntityRelationship} relationship.Wife             The wife            
- * @property {EntityRelationship} relationship.Replaces             The replaces            
+ * @property {EntityRelationship} relationship.Replaces             The source replaces the target (note: this is one relationship where the role relationship is reveresed)             
  * @property {EntityRelationship} relationship.Instance             The target entity represents an instance of the scoper entity            
  * @property {EntityRelationship} relationship.LocatedEntity             Relates the target entity to a source location            
+ * @property {EntityRelationship} relationship.Duplicate             Duplicate entity            
  * @property {EntityRelationship} relationship.$other Unclassified
  * @property {Concept} statusConceptModel [Delay loaded from statusConcept],             Status concept id            
  * @property {string} statusConcept            Status concept id            (see: {@link StatusKeys} for values)
@@ -5719,20 +6002,21 @@ if(!Place)
  * @property {TemplateDefinition} templateModel [Delay loaded from template],             Gets or sets the template definition            
  * @property {Concept} typeConceptModel [Delay loaded from typeConcept],             Type concept identifier            
  * @property {string} typeConcept            Type concept identifier            
+ * @property {SecurityPolicyInstance} policy            Gets or sets the security policy instances associated with the entity            
  * @property {string} previousVersion
  * @property {string} version
  * @property {number} sequence
  * @property {Date} creationTimeModel [Delay loaded from creationTime],             Gets or sets the time at which the data was created            
- * @property {Date} creationTime            Gets or sets the creation time in XML format            
+ * @property {Date} creationTime            Gets or sets the creation time as an ISO date format            
  * @property {Date} obsoletionTimeModel [Delay loaded from obsoletionTime],             Gets or sets the time when the data is or will become invalid            
- * @property {Date} obsoletionTime            Gets or sets the creation time in XML format            
- * @property {SecurityUser} createdByModel [Delay loaded from createdBy],             Gets or sets the user that created this base data            
+ * @property {Date} obsoletionTime            Gets or sets the time that the data is no longer valid (was deleted/obsoleted) in ISO format            
+ * @property {SecurityProvenance} createdByModel [Delay loaded from createdBy],             Gets or sets the user that created this base data            
  * @property {Date} modifiedOn            Gets the time that the object was last modified (from base data, default to CreationTime)            
- * @property {SecurityUser} obsoletedByModel [Delay loaded from obsoletedBy],             Gets or sets the user that obsoleted this base data            
- * @property {string} createdBy            Gets or sets the identifier of the user which created the data            
- * @property {string} obsoletedBy            Gets or sets the identifier of the user which obsoleted the data            
- * @property {string} id            The internal primary key value of the entity            
- * @property {string} $type            Gets the type            
+ * @property {SecurityProvenance} obsoletedByModel [Delay loaded from obsoletedBy],             Gets or sets the user that obsoleted this base data            
+ * @property {string} createdBy            Gets or sets the security provenance object which represents the creation of this object            
+ * @property {string} obsoletedBy            Gets or sets the security provenance object which represents the obsoletion of this data            
+ * @property {string} id            Gets or sets the primary identifying UUID of this object            
+ * @property {string} $type            Gets the type registration of this object            
  * @param {Place} copyData Copy constructor (if present)
  */
 function Place (copyData) { 
@@ -5744,11 +6028,11 @@ function Place (copyData) {
 	this.obsoletedBy = copyData.obsoletedBy;
 	/** @type {string} */
 	this.createdBy = copyData.createdBy;
-	/** @type {SecurityUser} */
+	/** @type {SecurityProvenance} */
 	this.obsoletedByModel = copyData.obsoletedByModel;
 	/** @type {Date} */
 	this.modifiedOn = copyData.modifiedOn;
-	/** @type {SecurityUser} */
+	/** @type {SecurityProvenance} */
 	this.createdByModel = copyData.createdByModel;
 	/** @type {Date} */
 	this.obsoletionTime = copyData.obsoletionTime;
@@ -5764,6 +6048,8 @@ function Place (copyData) {
 	this.version = copyData.version;
 	/** @type {string} */
 	this.previousVersion = copyData.previousVersion;
+	/** @type {SecurityPolicyInstance} */
+	this.policy = copyData.policy;
 	/** @type {string} */
 	this.typeConcept = copyData.typeConcept;
 	/** @type {Concept} */
@@ -5806,23 +6092,21 @@ function Place (copyData) {
 	this.address = copyData.address;
 	/** @type {PlaceService} */
 	this.service = copyData.service;
-	/** @type {Double} */
-	this.lng = copyData.lng;
-	/** @type {Double} */
-	this.lat = copyData.lat;
+	/** @type {GeoTag} */
+	this.geo = copyData.geo;
 	/** @type {boolean} */
 	this.isMobile = copyData.isMobile;
 	/** @type {string} */
 	this.classConcept = copyData.classConcept;
 	}
 }  // Place 
-// SanteDB.Core.Model.Entities.PlaceService, SanteDB.Core.Model, Version=1.1.0.35405, Culture=neutral, PublicKeyToken=null
-if(!PlaceService)
+// SanteDB.Core.Model.Entities.PlaceService, SanteDB.Core.Model, Version=2.0.0.0, Culture=neutral, PublicKeyToken=null
+//if(!PlaceService)
 /**
  * @class
  * @constructor
- * @memberof SanteDBModel
  * @public
+ * @extends VersionedAssociation
  * @summary             Represents a service for a place            
  * @property {Concept} serviceConceptModel [Delay loaded from serviceConcept],             Gets or sets the service concept            
  * @property {string} serviceConcept            Gets or sets the service concept key            
@@ -5832,8 +6116,8 @@ if(!PlaceService)
  * @property {Date} modifiedOn
  * @property {string} source
  * @property {Entity} sourceModel [Delay loaded from source], 
- * @property {string} id            The internal primary key value of the entity            
- * @property {string} $type            Gets the type            
+ * @property {string} id            Gets or sets the primary identifying UUID of this object            
+ * @property {string} $type            Gets the type registration of this object            
  * @param {PlaceService} copyData Copy constructor (if present)
  */
 function PlaceService (copyData) { 
@@ -5859,12 +6143,403 @@ function PlaceService (copyData) {
 	this.serviceConceptModel = copyData.serviceConceptModel;
 	}
 }  // PlaceService 
-// SanteDB.Core.Model.DataTypes.AssigningAuthority, SanteDB.Core.Model, Version=1.1.0.35405, Culture=neutral, PublicKeyToken=null
-if(!AssigningAuthority)
+// SanteDB.Core.Model.Entities.UserEntity, SanteDB.Core.Model, Version=2.0.0.0, Culture=neutral, PublicKeyToken=null
+//if(!UserEntity)
 /**
  * @class
  * @constructor
- * @memberof SanteDBModel
+ * @public
+ * @summary             Represents a user entity            
+ * @property {SecurityUser} securityUserModel [Delay loaded from securityUser],             Gets or sets the security user key            
+ * @property {string} securityUser            Gets or sets the security user key            
+ * @property {DatePrecision} dateOfBirthPrecision            Gets or sets the precision ofthe date of birth            (see: {@link DatePrecision} for values)
+ * @property {string} dateOfBirth            Gets the date of birth as XML            
+ * @property {PersonLanguageCommunication} language            Gets the person's languages of communication            
+ * @property {object} address            Gets a list of all addresses associated with the entity            
+ * @property {EntityAddress} address.Alphabetic             Represents an alphabetic address used for matching             
+ * @property {EntityAddress} address.BadAddress             Represents a bad address, i.e. an address which is old or invalid.            
+ * @property {EntityAddress} address.Direct             Represents a workplace address that reaches the person directly without intermediaries.            
+ * @property {EntityAddress} address.HomeAddress             The home address            
+ * @property {EntityAddress} address.Ideographic             Represents an address expressed in an ideographic manner (example: Kanji)            
+ * @property {EntityAddress} address.Phonetic             Represents an address expressed as a phonetic spelling of an ideographic address            
+ * @property {EntityAddress} address.PhysicalVisit             The address is a physical place where visits should occur            
+ * @property {EntityAddress} address.PostalAddress             The address is a postal address used for the delivery of mail and materials            
+ * @property {EntityAddress} address.PrimaryHome             Represents a primary address to reach a contact after business hours.            
+ * @property {EntityAddress} address.Public             Represents an address that is a standard address that may be subject to a switchboard or operator prior to reaching the intended entity.            
+ * @property {EntityAddress} address.Soundex             Represents an address used for soundex matching purposes.            
+ * @property {EntityAddress} address.Syllabic             Represents a syllabic address.            
+ * @property {EntityAddress} address.TemporaryAddress             Represents a temporary address that may be good for visiting or mailing.            
+ * @property {EntityAddress} address.VacationHome             Represents a vacation home to reach a person while on vacation.            
+ * @property {EntityAddress} address.WorkPlace             Represents an office address, should be used for business communications            
+ * @property {EntityAddress} address.$other Unclassified
+ * @property {Concept} classConceptModel [Delay loaded from classConcept],             Class concept datal load property            
+ * @property {string} classConcept            Class concept            (see: {@link EntityClassKeys} for values)
+ * @property {Act} creationActModel [Delay loaded from creationAct],             Creation act reference            
+ * @property {string} creationAct            Creation act reference            
+ * @property {Concept} determinerConceptModel [Delay loaded from determinerConcept],             Determiner concept            
+ * @property {string} determinerConcept            Determiner concept            (see: {@link DeterminerKeys} for values)
+ * @property {object} extension            Gets a list of all extensions associated with the entity            
+ * @property {string} extension.classifier  where classifier is from {@link Extension} extensionType
+ * @property {object} identifier            Gets the identifiers associated with this entity            
+ * @property {EntityIdentifier} identifier.classifier  where classifier is from {@link IdentifierBase} authority
+ * @property {object} name            Gets a list of all names associated with the entity            
+ * @property {EntityName} name.Alphabetic             The name used is an alphabetic representation of the name (ex: romaji in Japanese)            
+ * @property {EntityName} name.Anonymous             The name is an anonymous name for the object (not the real name but a name used for care delivery)            
+ * @property {EntityName} name.Artist             The name represents an artist name or stage name            
+ * @property {EntityName} name.Assigned             The name represents an assigned name (given or bestowed by an authority)            
+ * @property {EntityName} name.Ideographic             THe name represents an ideographic representation of the name            
+ * @property {EntityName} name.Indigenous             The name is an indigenous name or tribal name for the patient            
+ * @property {EntityName} name.Legal             The name represents the current legal name of an object (such as a corporate name)            
+ * @property {EntityName} name.License             The name represents a name as displayed on a license or known to a license authority            
+ * @property {EntityName} name.MaidenName             THe name is a maiden name (name of a patient before marriage)            
+ * @property {EntityName} name.OfficialRecord             The name as it appears on an official record            
+ * @property {EntityName} name.Phonetic             The name represents a phonetic representation of a name such as a SOUNDEX code            
+ * @property {EntityName} name.Pseudonym             The name is a pseudonym for the object or an synonym name            
+ * @property {EntityName} name.Religious             The name is to be used for religious purposes (such as baptismal name)            
+ * @property {EntityName} name.Search             The name is to be used in the performing of matches only            
+ * @property {EntityName} name.Soundex             The name represents the computed soundex code of a name            
+ * @property {EntityName} name.Syllabic             The name represents a syllabic name.            
+ * @property {EntityName} name.$other Unclassified
+ * @property {string} note            Gets a list of all notes associated with the entity            
+ * @property {object} participation            Gets the acts in which this entity participates            
+ * @property {ActParticipation} participation.Admitter             The player entity was the person who was responsible for admitting the patient into a facility or care scenario.            
+ * @property {ActParticipation} participation.Attender             The player entity represents the attending physician for the patient            
+ * @property {ActParticipation} participation.Authenticator             The player entity represents an entity which authenticates the provision of care            
+ * @property {ActParticipation} participation.Authororiginator             The player entity is responsible for the creation of data described in the act            
+ * @property {ActParticipation} participation.Baby             The player is a resultant person in that it was the baby             
+ * @property {ActParticipation} participation.Beneficiary             The player is a beneficiary of the act such a receiver of a financial instrument, or other good            
+ * @property {ActParticipation} participation.CallbackContact             The player entity represents something that should be contacted upon completion of the act            
+ * @property {ActParticipation} participation.CausativeAgent             The player entity is an agent which caused the act to occur            
+ * @property {ActParticipation} participation.Consultant             The player entity is acting as a consult to the carrying out of the act            
+ * @property {ActParticipation} participation.Consumable             The player entity was or is to be consumed during the process of carrying out the act.            
+ * @property {ActParticipation} participation.CoverageTarget             The player entity represents the target coverage entity of the act            
+ * @property {ActParticipation} participation.Custodian             The player entity is the data custodian of the act (is responsible for storing and securing the act)            
+ * @property {ActParticipation} participation.DataEnterer             The player entity represents the person or device which phisically entered the data at the terminal            
+ * @property {ActParticipation} participation.Destination             The player etity represents the ultimate destination of the goods/materials/services described in the act            
+ * @property {ActParticipation} participation.Device             The player entity represents the device on which the act or data from the act was acquired or recorded            
+ * @property {ActParticipation} participation.DirectTarget             The player entity represents the directed target of care provided in the act            
+ * @property {ActParticipation} participation.Discharger             The player entity represents the person who is responsible for the discharging of the patient from an encounter            
+ * @property {ActParticipation} participation.Distributor             The player entity is the source distribution point for the financial or material instruments contained in the message            
+ * @property {ActParticipation} participation.Donor             The player entity represents the donor of tissue or materials used in the act            
+ * @property {ActParticipation} participation.EntryLocation             The location where the act was entered.            
+ * @property {ActParticipation} participation.Escort             The player entity was responsible for escorting the patient during the course of the act            
+ * @property {ActParticipation} participation.Exposure             The player entity something to which the patient was exposed            
+ * @property {ActParticipation} participation.ExposureAgent             The player entity represents the agent (material) to which the patient was exposed            
+ * @property {ActParticipation} participation.ExposureSource             The player entity describes the source of the material to which the patient was exposed            
+ * @property {ActParticipation} participation.ExposureTarget             The player entity describes the target to which the agent was exposed            
+ * @property {ActParticipation} participation.GuarantorParty             The player represents a party which is used as a financial guarantor for payment in the carrying out of the act            
+ * @property {ActParticipation} participation.Holder             The player is responsible for holding the act            
+ * @property {ActParticipation} participation.IndirectTarget             The entity not directly present in the act but which will be the focust of th act.            
+ * @property {ActParticipation} participation.Informant             The player was a person or device which informed data presented in the act. (Example: A mother telling a nurse that their child had a reaction)            
+ * @property {ActParticipation} participation.InformationRecipient             The player entity represents something that should be cc'ed on the act            
+ * @property {ActParticipation} participation.LegalAuthenticator             The player entity is responsible for legally authenticating the content of the act            
+ * @property {ActParticipation} participation.Location             The location where the service was performed.            
+ * @property {ActParticipation} participation.NonreuseableDevice             The player represents a consumable that can no longer be used            
+ * @property {ActParticipation} participation.Origin             The player represents the origin of the act            
+ * @property {ActParticipation} participation.Participation             The player entity participates in the act in no particular classification            
+ * @property {ActParticipation} participation.Performer             The player entity is responsible for performing the clinical steps documented in the act            
+ * @property {ActParticipation} participation.PrimaryInformationRecipient             The player entity represents a high priority contact which should be informed or cc'ed on the act            
+ * @property {ActParticipation} participation.PrimaryPerformer             The player entity was the primary performer of the act. This is used in procedures where more than one performer is present            
+ * @property {ActParticipation} participation.Product             The player represents a product that is not necessarily consumed but informs the act            
+ * @property {ActParticipation} participation.Receiver             The player represents the entity which is the intended receiver of the act            
+ * @property {ActParticipation} participation.RecordTarget             The player represents the entity to which the act is recorded against            
+ * @property {ActParticipation} participation.ReferredBy             The player represents the entity which referred the act or caused the act to be undertaken            
+ * @property {ActParticipation} participation.ReferredTo             The player entity represents the entity which was referred to            
+ * @property {ActParticipation} participation.Referrer             The player entity represents the person who was originally the referrer.            
+ * @property {ActParticipation} participation.Remote             The player entity represents a remote portion of the act            
+ * @property {ActParticipation} participation.ResponsibleParty             The player entity is ultimately responsible for the carrying out of the act            
+ * @property {ActParticipation} participation.ReusableDevice             The player entity represents a device which can be reused in future acts            
+ * @property {ActParticipation} participation.SecondaryPerformer             The secondary performing person (support clinician).            
+ * @property {ActParticipation} participation.Specimen             The player entity represents a specimen collected for the purpose of testing and diagnosis            
+ * @property {ActParticipation} participation.Subject             The player entity is the subject of an act, but not necessarily the record target (meaning the act is about a particular entity but not to be attached to their record)            
+ * @property {ActParticipation} participation.Tracker             The player entity is responsible for tracking the progress of the act            
+ * @property {ActParticipation} participation.Transcriber             The person who transcribed data from the original act.            
+ * @property {ActParticipation} participation.UgentNotificationContact             The player entity represents a contact entity in case of an emergency occurs during the act.            
+ * @property {ActParticipation} participation.Verifier             The player entity was responsible for verifying the accuracy of the data in the act            
+ * @property {ActParticipation} participation.Via             The player entity represents an entity where the act occurred "via" this entity (i.e. in transport)            
+ * @property {ActParticipation} participation.Witness             The player entity represents a legal witness to the act occurring.            
+ * @property {ActParticipation} participation.$other Unclassified
+ * @property {object} relationship            Gets a list of all associated entities for this entity            
+ * @property {EntityRelationship} relationship.Access             The source entity gives access to the target entity            
+ * @property {EntityRelationship} relationship.ActiveMoiety             Active ingredient, where not the ingredient substance (player), but itaTMs active moiety is the "basis of strength"            
+ * @property {EntityRelationship} relationship.AdministerableMaterial             The source represents a meterial that is an administerable form of the target            
+ * @property {EntityRelationship} relationship.AdoptedChild             The source is an adopted child of the target            
+ * @property {EntityRelationship} relationship.AdoptedDaughter             The source is an adopted daughter of the target            
+ * @property {EntityRelationship} relationship.AdoptedSon             The source is an adopted son of the target            
+ * @property {EntityRelationship} relationship.Affiliate             The target has a business/professional relationship with the source.            
+ * @property {EntityRelationship} relationship.Agent             The target is an agent or authorized to act on behalf of the source            
+ * @property {EntityRelationship} relationship.Aliquot             The target is a portion of the original source            
+ * @property {EntityRelationship} relationship.AssignedEntity             The target is an entity acting under the employ of the source entity            
+ * @property {EntityRelationship} relationship.Aunt             The target is the aunt of the source            
+ * @property {EntityRelationship} relationship.Birthplace             The target is the birthplace of the source            
+ * @property {EntityRelationship} relationship.Brother             The target is the brother of the source            
+ * @property {EntityRelationship} relationship.Brotherinlaw             The target is the brotherinlaw of the source            
+ * @property {EntityRelationship} relationship.Caregiver             The target is the caregiver of the source            
+ * @property {EntityRelationship} relationship.CaseSubject             The the target represents a case subject of the source entity (such as a study)            
+ * @property {EntityRelationship} relationship.Child             The the target is a child of the child source            
+ * @property {EntityRelationship} relationship.ChildInlaw             The child inlaw            
+ * @property {EntityRelationship} relationship.Citizen             The target is a citizen of the source            
+ * @property {EntityRelationship} relationship.Claimant             The target is a claimant  or is making a claim in a policy (source)            
+ * @property {EntityRelationship} relationship.ClinicalResearchInvestigator             The clinical research investigator            
+ * @property {EntityRelationship} relationship.ClinicalResearchSponsor             The clinical research sponsor            
+ * @property {EntityRelationship} relationship.CommissioningParty             The commissioning party            
+ * @property {EntityRelationship} relationship.Contact             The target represents a contact of the source            
+ * @property {EntityRelationship} relationship.Cousin             The cousin            
+ * @property {EntityRelationship} relationship.CoverageSponsor             The target represents a coverage sponsor of the source            
+ * @property {EntityRelationship} relationship.CoveredParty             The target is a covered party of a source (insurance policy)            
+ * @property {EntityRelationship} relationship.Daughter             The daughter            
+ * @property {EntityRelationship} relationship.DaughterInlaw             The daughter inlaw            
+ * @property {EntityRelationship} relationship.DedicatedServiceDeliveryLocation             The target is the dedicated service delivery location for the source            
+ * @property {EntityRelationship} relationship.Dependent             The target is a dependent of the source            
+ * @property {EntityRelationship} relationship.DistributedMaterial             The target is a distributed or shippable material of the source            
+ * @property {EntityRelationship} relationship.DomesticPartner             The domestic partner            
+ * @property {EntityRelationship} relationship.EmergencyContact             The target is an emergency contact for the source            
+ * @property {EntityRelationship} relationship.Employee             The the target is an employee of the source            
+ * @property {EntityRelationship} relationship.ExposedEntity             The target represents a substance which is exposed when the source is exposed            
+ * @property {EntityRelationship} relationship.FamilyMember             The family member            
+ * @property {EntityRelationship} relationship.Father             The father            
+ * @property {EntityRelationship} relationship.Fatherinlaw             The fatherinlaw            
+ * @property {EntityRelationship} relationship.FosterChild             The foster child            
+ * @property {EntityRelationship} relationship.FosterDaughter             The foster daughter            
+ * @property {EntityRelationship} relationship.FosterSon             The foster son            
+ * @property {EntityRelationship} relationship.Grandchild             The grandchild            
+ * @property {EntityRelationship} relationship.Granddaughter             The granddaughter            
+ * @property {EntityRelationship} relationship.Grandfather             The grandfather            
+ * @property {EntityRelationship} relationship.Grandmother             The grandmother            
+ * @property {EntityRelationship} relationship.Grandparent             The grandparent            
+ * @property {EntityRelationship} relationship.Grandson             The grandson            
+ * @property {EntityRelationship} relationship.GreatGrandfather             The great grandfather            
+ * @property {EntityRelationship} relationship.GreatGrandmother             The great grandmother            
+ * @property {EntityRelationship} relationship.GreatGrandparent             The great grandparent            
+ * @property {EntityRelationship} relationship.Guarantor             The guarantor            
+ * @property {EntityRelationship} relationship.GUARD             The guard            
+ * @property {EntityRelationship} relationship.Guardian             The target is a guardian of the source            
+ * @property {EntityRelationship} relationship.Halfbrother             The halfbrother            
+ * @property {EntityRelationship} relationship.Halfsibling             The halfsibling            
+ * @property {EntityRelationship} relationship.Halfsister             The halfsister            
+ * @property {EntityRelationship} relationship.HealthcareProvider             The target is a healthcare provider for the source            
+ * @property {EntityRelationship} relationship.HealthChart             The target represents a health chart belonging to the source            
+ * @property {EntityRelationship} relationship.HeldEntity             The source holds the specified quantity of the target entity (the target entity is held by the source)            
+ * @property {EntityRelationship} relationship.Husband             The husband            
+ * @property {EntityRelationship} relationship.IdentifiedEntity             The target represents an entity for purposes of identification of the source            
+ * @property {EntityRelationship} relationship.IncidentalServiceDeliveryLocation             The target represents an incidental service delivery location related to the source entity            
+ * @property {EntityRelationship} relationship.Individual             The target represents an individual instance of the source            
+ * @property {EntityRelationship} relationship.InvestigationSubject             The investigation subject            
+ * @property {EntityRelationship} relationship.InvoicePayor             The target is the payor of an invoice for the source            
+ * @property {EntityRelationship} relationship.Isolate             The isolate            
+ * @property {EntityRelationship} relationship.LicensedEntity             The target represents an entity licensed to perform or use the source            
+ * @property {EntityRelationship} relationship.MaintainedEntity             The target entity is maintained by the source entity            
+ * @property {EntityRelationship} relationship.ManufacturedProduct             The target entity is a product which is manufactured by the source            
+ * @property {EntityRelationship} relationship.MaternalAunt             The maternal aunt            
+ * @property {EntityRelationship} relationship.MaternalCousin             The maternal cousin            
+ * @property {EntityRelationship} relationship.MaternalGrandfather             The maternal grandfather            
+ * @property {EntityRelationship} relationship.MaternalGrandmother             The maternal grandmother            
+ * @property {EntityRelationship} relationship.MaternalGrandparent             The maternal grandparent            
+ * @property {EntityRelationship} relationship.MaternalGreatgrandfather             The maternal greatgrandfather            
+ * @property {EntityRelationship} relationship.MaternalGreatgrandmother             The maternal greatgrandmother            
+ * @property {EntityRelationship} relationship.MaternalGreatgrandparent             The maternal greatgrandparent            
+ * @property {EntityRelationship} relationship.MaternalUncle             The maternal uncle            
+ * @property {EntityRelationship} relationship.MilitaryPerson             The military person            
+ * @property {EntityRelationship} relationship.Mother             The target is the mother of the source            
+ * @property {EntityRelationship} relationship.Motherinlaw             The motherinlaw            
+ * @property {EntityRelationship} relationship.NamedInsured             The target is a named insured person on the source policy            
+ * @property {EntityRelationship} relationship.NaturalBrother             The natural brother            
+ * @property {EntityRelationship} relationship.NaturalChild             The natural child            
+ * @property {EntityRelationship} relationship.NaturalDaughter             The natural daughter            
+ * @property {EntityRelationship} relationship.NaturalFather             The natural father            
+ * @property {EntityRelationship} relationship.NaturalFatherOfFetus             The target is the natural father of fetus of the identified fetus (source) or pregnant entity (source)            
+ * @property {EntityRelationship} relationship.NaturalMother             The natural mother            
+ * @property {EntityRelationship} relationship.NaturalParent             The natural parent            
+ * @property {EntityRelationship} relationship.NaturalSibling             The natural sibling            
+ * @property {EntityRelationship} relationship.NaturalSister             The natural sister            
+ * @property {EntityRelationship} relationship.NaturalSon             The natural son            
+ * @property {EntityRelationship} relationship.Nephew             The nephew            
+ * @property {EntityRelationship} relationship.NextOfKin             The target is the next of kin for the source            
+ * @property {EntityRelationship} relationship.Niece             The niece            
+ * @property {EntityRelationship} relationship.NieceNephew             The niece nephew            
+ * @property {EntityRelationship} relationship.NotaryPublic             The target is a notary public acting within the source entity             
+ * @property {EntityRelationship} relationship.OwnedEntity             The target entity is owned by the source entity            
+ * @property {EntityRelationship} relationship.Parent             The target entity is the parent of the source entity            
+ * @property {EntityRelationship} relationship.ParentInlaw             The parent inlaw            
+ * @property {EntityRelationship} relationship.Part             The target entity is a part of the source entity (source is comprised of parts)            
+ * @property {EntityRelationship} relationship.PaternalAunt             The paternal aunt            
+ * @property {EntityRelationship} relationship.PaternalCousin             The paternal cousin            
+ * @property {EntityRelationship} relationship.PaternalGrandfather             The paternal grandfather            
+ * @property {EntityRelationship} relationship.PaternalGrandmother             The paternal grandmother            
+ * @property {EntityRelationship} relationship.PaternalGrandparent             The paternal grandparent            
+ * @property {EntityRelationship} relationship.PaternalGreatgrandfather             The paternal greatgrandfather            
+ * @property {EntityRelationship} relationship.PaternalGreatgrandmother             The paternal greatgrandmother            
+ * @property {EntityRelationship} relationship.PaternalGreatgrandparent             The paternal greatgrandparent            
+ * @property {EntityRelationship} relationship.PaternalUncle             The paternal uncle            
+ * @property {EntityRelationship} relationship.Patient             The target is a patient of the source entity            
+ * @property {EntityRelationship} relationship.Payee             The targert is a payee of the source entity            
+ * @property {EntityRelationship} relationship.PersonalRelationship             The target possesses a personal relationship with the source entity            
+ * @property {EntityRelationship} relationship.PlaceOfDeath             The target entity represents the place of death of the source entity            
+ * @property {EntityRelationship} relationship.PolicyHolder             The target entity represents the policy holder of the source policy            
+ * @property {EntityRelationship} relationship.ProgramEligible             The target is an entity which is eligible for funding or participation within a program            
+ * @property {EntityRelationship} relationship.QualifiedEntity             The target represents a qualified version of the source entity            
+ * @property {EntityRelationship} relationship.RegulatedProduct             The target represents a regulated version of the source product or represents a product which is regulated within the source jurisdiction            
+ * @property {EntityRelationship} relationship.ResearchSubject             The target represents a research subject of the source study            
+ * @property {EntityRelationship} relationship.RetailedMaterial             The target represents a material which is a retailed version of the source or is sold at the particular source            
+ * @property {EntityRelationship} relationship.Roomate             The roomate            
+ * @property {EntityRelationship} relationship.ServiceDeliveryLocation             The target represents a service delivery location for the source entity            
+ * @property {EntityRelationship} relationship.Sibling             The sibling            
+ * @property {EntityRelationship} relationship.SiblingInlaw             The sibling inlaw            
+ * @property {EntityRelationship} relationship.SignificantOther             The significant other            
+ * @property {EntityRelationship} relationship.SigningAuthorityOrOfficer             The target has signing authority or is an officer of the source            
+ * @property {EntityRelationship} relationship.Sister             The sister            
+ * @property {EntityRelationship} relationship.Sisterinlaw             The sisterinlaw            
+ * @property {EntityRelationship} relationship.Son             The son            
+ * @property {EntityRelationship} relationship.SonInlaw             The son inlaw            
+ * @property {EntityRelationship} relationship.Specimen             The target represents a specimen collected from the source            
+ * @property {EntityRelationship} relationship.Spouse             The spouse            
+ * @property {EntityRelationship} relationship.Stepbrother             The stepbrother            
+ * @property {EntityRelationship} relationship.StepChild             The step child            
+ * @property {EntityRelationship} relationship.Stepdaughter             The stepdaughter            
+ * @property {EntityRelationship} relationship.Stepfather             The stepfather            
+ * @property {EntityRelationship} relationship.Stepmother             The stepmother            
+ * @property {EntityRelationship} relationship.StepParent             The step parent            
+ * @property {EntityRelationship} relationship.StepSibling             The step sibling            
+ * @property {EntityRelationship} relationship.Stepsister             The stepsister            
+ * @property {EntityRelationship} relationship.Stepson             The stepson            
+ * @property {EntityRelationship} relationship.Student             The student            
+ * @property {EntityRelationship} relationship.Subscriber             The target is a subscriber of the source, meaning the target should receive updates whenever the source changes             
+ * @property {EntityRelationship} relationship.TerritoryOfAuthority             The target represents another territory where the source has authority            
+ * @property {EntityRelationship} relationship.TherapeuticAgent             The target represents the theraputic agent of the source            
+ * @property {EntityRelationship} relationship.Uncle             The uncle            
+ * @property {EntityRelationship} relationship.Underwriter             The underwriter            
+ * @property {EntityRelationship} relationship.UsedEntity             The target represents an entity that is consumed whenever the source is consumed            
+ * @property {EntityRelationship} relationship.WarrantedProduct             The target represents a product which is warranted by the source            
+ * @property {EntityRelationship} relationship.Wife             The wife            
+ * @property {EntityRelationship} relationship.Replaces             The source replaces the target (note: this is one relationship where the role relationship is reveresed)             
+ * @property {EntityRelationship} relationship.Instance             The target entity represents an instance of the scoper entity            
+ * @property {EntityRelationship} relationship.LocatedEntity             Relates the target entity to a source location            
+ * @property {EntityRelationship} relationship.Duplicate             Duplicate entity            
+ * @property {EntityRelationship} relationship.$other Unclassified
+ * @property {Concept} statusConceptModel [Delay loaded from statusConcept],             Status concept id            
+ * @property {string} statusConcept            Status concept id            (see: {@link StatusKeys} for values)
+ * @property {object} tag            Gets a list of all tags associated with the entity            
+ * @property {string} tag.classifier  where classifier is from {@link Tag} key
+ * @property {object} telecom            Gets a list of all telecommunications addresses associated with the entity            
+ * @property {EntityTelecomAddress} telecom.AnsweringService             answering service            
+ * @property {EntityTelecomAddress} telecom.EmergencyContact             Emergency contact            
+ * @property {EntityTelecomAddress} telecom.MobileContact             Mobile phone contact            
+ * @property {EntityTelecomAddress} telecom.Pager             pager            
+ * @property {EntityTelecomAddress} telecom.Public             public (800 number example) contact            
+ * @property {EntityTelecomAddress} telecom.TemporaryAddress             temporary contact            
+ * @property {EntityTelecomAddress} telecom.WorkPlace             For use in the workplace            
+ * @property {EntityTelecomAddress} telecom.$other Unclassified
+ * @property {string} template            Gets the template key            
+ * @property {TemplateDefinition} templateModel [Delay loaded from template],             Gets or sets the template definition            
+ * @property {Concept} typeConceptModel [Delay loaded from typeConcept],             Type concept identifier            
+ * @property {string} typeConcept            Type concept identifier            
+ * @property {SecurityPolicyInstance} policy            Gets or sets the security policy instances associated with the entity            
+ * @property {string} previousVersion
+ * @property {string} version
+ * @property {number} sequence
+ * @property {Date} creationTimeModel [Delay loaded from creationTime],             Gets or sets the time at which the data was created            
+ * @property {Date} creationTime            Gets or sets the creation time as an ISO date format            
+ * @property {Date} obsoletionTimeModel [Delay loaded from obsoletionTime],             Gets or sets the time when the data is or will become invalid            
+ * @property {Date} obsoletionTime            Gets or sets the time that the data is no longer valid (was deleted/obsoleted) in ISO format            
+ * @property {SecurityProvenance} createdByModel [Delay loaded from createdBy],             Gets or sets the user that created this base data            
+ * @property {Date} modifiedOn            Gets the time that the object was last modified (from base data, default to CreationTime)            
+ * @property {SecurityProvenance} obsoletedByModel [Delay loaded from obsoletedBy],             Gets or sets the user that obsoleted this base data            
+ * @property {string} createdBy            Gets or sets the security provenance object which represents the creation of this object            
+ * @property {string} obsoletedBy            Gets or sets the security provenance object which represents the obsoletion of this data            
+ * @property {string} id            Gets or sets the primary identifying UUID of this object            
+ * @property {string} $type            Gets the type registration of this object            
+ * @param {UserEntity} copyData Copy constructor (if present)
+ */
+function UserEntity (copyData) { 
+	this.$type = 'UserEntity';
+	if(copyData) {
+	/** @type {string} */
+	this.id = copyData.id;
+	/** @type {string} */
+	this.obsoletedBy = copyData.obsoletedBy;
+	/** @type {string} */
+	this.createdBy = copyData.createdBy;
+	/** @type {SecurityProvenance} */
+	this.obsoletedByModel = copyData.obsoletedByModel;
+	/** @type {Date} */
+	this.modifiedOn = copyData.modifiedOn;
+	/** @type {SecurityProvenance} */
+	this.createdByModel = copyData.createdByModel;
+	/** @type {Date} */
+	this.obsoletionTime = copyData.obsoletionTime;
+	/** @type {Date} */
+	this.obsoletionTimeModel = copyData.obsoletionTimeModel;
+	/** @type {Date} */
+	this.creationTime = copyData.creationTime;
+	/** @type {Date} */
+	this.creationTimeModel = copyData.creationTimeModel;
+	/** @type {number} */
+	this.sequence = copyData.sequence;
+	/** @type {string} */
+	this.version = copyData.version;
+	/** @type {string} */
+	this.previousVersion = copyData.previousVersion;
+	/** @type {SecurityPolicyInstance} */
+	this.policy = copyData.policy;
+	/** @type {string} */
+	this.typeConcept = copyData.typeConcept;
+	/** @type {Concept} */
+	this.typeConceptModel = copyData.typeConceptModel;
+	/** @type {TemplateDefinition} */
+	this.templateModel = copyData.templateModel;
+	/** @type {string} */
+	this.template = copyData.template;
+	/** @type {object} */
+	this.telecom = copyData.telecom;
+	/** @type {object} */
+	this.tag = copyData.tag;
+	/** @type {string} */
+	this.statusConcept = copyData.statusConcept;
+	/** @type {Concept} */
+	this.statusConceptModel = copyData.statusConceptModel;
+	/** @type {object} */
+	this.relationship = copyData.relationship;
+	/** @type {object} */
+	this.participation = copyData.participation;
+	/** @type {string} */
+	this.note = copyData.note;
+	/** @type {object} */
+	this.name = copyData.name;
+	/** @type {object} */
+	this.identifier = copyData.identifier;
+	/** @type {object} */
+	this.extension = copyData.extension;
+	/** @type {string} */
+	this.determinerConcept = copyData.determinerConcept;
+	/** @type {Concept} */
+	this.determinerConceptModel = copyData.determinerConceptModel;
+	/** @type {string} */
+	this.creationAct = copyData.creationAct;
+	/** @type {Act} */
+	this.creationActModel = copyData.creationActModel;
+	/** @type {string} */
+	this.classConcept = copyData.classConcept;
+	/** @type {Concept} */
+	this.classConceptModel = copyData.classConceptModel;
+	/** @type {object} */
+	this.address = copyData.address;
+	/** @type {PersonLanguageCommunication} */
+	this.language = copyData.language;
+	/** @type {string} */
+	this.dateOfBirth = copyData.dateOfBirth;
+	/** @type {DatePrecision} */
+	this.dateOfBirthPrecision = copyData.dateOfBirthPrecision;
+	/** @type {string} */
+	this.securityUser = copyData.securityUser;
+	/** @type {SecurityUser} */
+	this.securityUserModel = copyData.securityUserModel;
+	}
+}  // UserEntity 
+// SanteDB.Core.Model.DataTypes.AssigningAuthority, SanteDB.Core.Model, Version=2.0.0.0, Culture=neutral, PublicKeyToken=null
+//if(!AssigningAuthority)
+/**
+ * @class
+ * @constructor
  * @public
  * @summary             Represents a model class which is an assigning authority            
  * @property {string} name            Gets or sets the name of the assigning authority            
@@ -5873,22 +6548,28 @@ if(!AssigningAuthority)
  * @property {string} oid            Gets or sets the oid of the assigning authority            
  * @property {string} url            The URL of the assigning authority            
  * @property {string} scope            Represents scopes to which the authority is bound            
- * @property {string} assigningDevice            Assigning device identifier            
+ * @property {string} assigningApplication            Assigning device identifier            
+ * @property {string} policyModel [Delay loaded from policy],             Gets or sets the policy             
+ * @property {string} policy            Gets or sets the policy key associated with this assigning authority for disclosure            
  * @property {string} validation            Gets or sets the validation regex            
  * @property {boolean} isUnique            True if the assigning authority values should be unique            
+ * @property {SecurityApplication} assigningApplicationModel [Delay loaded from assigningApplication],             Gets or sets the assigning device            
  * @property {object} scopeModel [Delay loaded from scope],             Gets concept sets to which this concept is a member            
  * @property {Concept} scope.classifier  where classifier is from {@link Concept} mnemonic
+ * @property {Date} updatedTime            Gets or sets the time that this object was last modified in ISO format            
+ * @property {Date} modifiedOn            Gets the time this item was modified            
+ * @property {SecurityProvenance} updatedByModel [Delay loaded from updatedBy],             Gets or sets the user that updated this base data            
+ * @property {string} updatedBy            Gets or sets the provenance identifier associated with the last update of this object            
  * @property {Date} creationTimeModel [Delay loaded from creationTime],             Gets or sets the time at which the data was created            
- * @property {Date} creationTime            Gets or sets the creation time in XML format            
+ * @property {Date} creationTime            Gets or sets the creation time as an ISO date format            
  * @property {Date} obsoletionTimeModel [Delay loaded from obsoletionTime],             Gets or sets the time when the data is or will become invalid            
- * @property {Date} obsoletionTime            Gets or sets the creation time in XML format            
- * @property {SecurityUser} createdByModel [Delay loaded from createdBy],             Gets or sets the user that created this base data            
- * @property {Date} modifiedOn            Gets the time that the object was last modified (from base data, default to CreationTime)            
- * @property {SecurityUser} obsoletedByModel [Delay loaded from obsoletedBy],             Gets or sets the user that obsoleted this base data            
- * @property {string} createdBy            Gets or sets the identifier of the user which created the data            
- * @property {string} obsoletedBy            Gets or sets the identifier of the user which obsoleted the data            
- * @property {string} id            The internal primary key value of the entity            
- * @property {string} $type            Gets the type            
+ * @property {Date} obsoletionTime            Gets or sets the time that the data is no longer valid (was deleted/obsoleted) in ISO format            
+ * @property {SecurityProvenance} createdByModel [Delay loaded from createdBy],             Gets or sets the user that created this base data            
+ * @property {SecurityProvenance} obsoletedByModel [Delay loaded from obsoletedBy],             Gets or sets the user that obsoleted this base data            
+ * @property {string} createdBy            Gets or sets the security provenance object which represents the creation of this object            
+ * @property {string} obsoletedBy            Gets or sets the security provenance object which represents the obsoletion of this data            
+ * @property {string} id            Gets or sets the primary identifying UUID of this object            
+ * @property {string} $type            Gets the type registration of this object            
  * @param {AssigningAuthority} copyData Copy constructor (if present)
  */
 function AssigningAuthority (copyData) { 
@@ -5900,11 +6581,9 @@ function AssigningAuthority (copyData) {
 	this.obsoletedBy = copyData.obsoletedBy;
 	/** @type {string} */
 	this.createdBy = copyData.createdBy;
-	/** @type {SecurityUser} */
+	/** @type {SecurityProvenance} */
 	this.obsoletedByModel = copyData.obsoletedByModel;
-	/** @type {Date} */
-	this.modifiedOn = copyData.modifiedOn;
-	/** @type {SecurityUser} */
+	/** @type {SecurityProvenance} */
 	this.createdByModel = copyData.createdByModel;
 	/** @type {Date} */
 	this.obsoletionTime = copyData.obsoletionTime;
@@ -5914,14 +6593,28 @@ function AssigningAuthority (copyData) {
 	this.creationTime = copyData.creationTime;
 	/** @type {Date} */
 	this.creationTimeModel = copyData.creationTimeModel;
+	/** @type {string} */
+	this.updatedBy = copyData.updatedBy;
+	/** @type {SecurityProvenance} */
+	this.updatedByModel = copyData.updatedByModel;
+	/** @type {Date} */
+	this.modifiedOn = copyData.modifiedOn;
+	/** @type {Date} */
+	this.updatedTime = copyData.updatedTime;
 	/** @type {object} */
 	this.scopeModel = copyData.scopeModel;
+	/** @type {SecurityApplication} */
+	this.assigningApplicationModel = copyData.assigningApplicationModel;
 	/** @type {boolean} */
 	this.isUnique = copyData.isUnique;
 	/** @type {string} */
 	this.validation = copyData.validation;
 	/** @type {string} */
-	this.assigningDevice = copyData.assigningDevice;
+	this.policy = copyData.policy;
+	/** @type {string} */
+	this.policyModel = copyData.policyModel;
+	/** @type {string} */
+	this.assigningApplication = copyData.assigningApplication;
 	/** @type {string} */
 	this.scope = copyData.scope;
 	/** @type {string} */
@@ -5936,14 +6629,12 @@ function AssigningAuthority (copyData) {
 	this.name = copyData.name;
 	}
 }  // AssigningAuthority 
-// SanteDB.Core.Model.DataTypes.CodeSystem, SanteDB.Core.Model, Version=1.1.0.35405, Culture=neutral, PublicKeyToken=null
-if(!CodeSystem)
+// SanteDB.Core.Model.DataTypes.CodeSystem, SanteDB.Core.Model, Version=2.0.0.0, Culture=neutral, PublicKeyToken=null
+//if(!CodeSystem)
 /**
  * @class
  * @constructor
- * @memberof SanteDBModel
  * @public
- * @extends NonVersionedEntityData
  * @summary             Represents a code system which is a collection of reference terms            
  * @property {string} name            Gets or sets the name of the code system            
  * @property {string} oid            Gets or sets the Oid of the code system            
@@ -5952,19 +6643,20 @@ if(!CodeSystem)
  * @property {string} url            Gets or sets the URL of the code system            
  * @property {string} version            Gets or sets the version text of the code system            
  * @property {string} description            Gets or sets the human description            
- * @property {Date} updatedTime            Gets or sets the creation time in XML format            
+ * @property {Date} updatedTime            Gets or sets the time that this object was last modified in ISO format            
  * @property {Date} modifiedOn            Gets the time this item was modified            
- * @property {string} updatedBy            Gets or sets the created by identifier            
+ * @property {SecurityProvenance} updatedByModel [Delay loaded from updatedBy],             Gets or sets the user that updated this base data            
+ * @property {string} updatedBy            Gets or sets the provenance identifier associated with the last update of this object            
  * @property {Date} creationTimeModel [Delay loaded from creationTime],             Gets or sets the time at which the data was created            
- * @property {Date} creationTime            Gets or sets the creation time in XML format            
+ * @property {Date} creationTime            Gets or sets the creation time as an ISO date format            
  * @property {Date} obsoletionTimeModel [Delay loaded from obsoletionTime],             Gets or sets the time when the data is or will become invalid            
- * @property {Date} obsoletionTime            Gets or sets the creation time in XML format            
- * @property {SecurityUser} createdByModel [Delay loaded from createdBy],             Gets or sets the user that created this base data            
- * @property {SecurityUser} obsoletedByModel [Delay loaded from obsoletedBy],             Gets or sets the user that obsoleted this base data            
- * @property {string} createdBy            Gets or sets the identifier of the user which created the data            
- * @property {string} obsoletedBy            Gets or sets the identifier of the user which obsoleted the data            
- * @property {string} id            The internal primary key value of the entity            
- * @property {string} $type            Gets the type            
+ * @property {Date} obsoletionTime            Gets or sets the time that the data is no longer valid (was deleted/obsoleted) in ISO format            
+ * @property {SecurityProvenance} createdByModel [Delay loaded from createdBy],             Gets or sets the user that created this base data            
+ * @property {SecurityProvenance} obsoletedByModel [Delay loaded from obsoletedBy],             Gets or sets the user that obsoleted this base data            
+ * @property {string} createdBy            Gets or sets the security provenance object which represents the creation of this object            
+ * @property {string} obsoletedBy            Gets or sets the security provenance object which represents the obsoletion of this data            
+ * @property {string} id            Gets or sets the primary identifying UUID of this object            
+ * @property {string} $type            Gets the type registration of this object            
  * @param {CodeSystem} copyData Copy constructor (if present)
  */
 function CodeSystem (copyData) { 
@@ -5976,9 +6668,9 @@ function CodeSystem (copyData) {
 	this.obsoletedBy = copyData.obsoletedBy;
 	/** @type {string} */
 	this.createdBy = copyData.createdBy;
-	/** @type {SecurityUser} */
+	/** @type {SecurityProvenance} */
 	this.obsoletedByModel = copyData.obsoletedByModel;
-	/** @type {SecurityUser} */
+	/** @type {SecurityProvenance} */
 	this.createdByModel = copyData.createdByModel;
 	/** @type {Date} */
 	this.obsoletionTime = copyData.obsoletionTime;
@@ -5990,6 +6682,8 @@ function CodeSystem (copyData) {
 	this.creationTimeModel = copyData.creationTimeModel;
 	/** @type {string} */
 	this.updatedBy = copyData.updatedBy;
+	/** @type {SecurityProvenance} */
+	this.updatedByModel = copyData.updatedByModel;
 	/** @type {Date} */
 	this.modifiedOn = copyData.modifiedOn;
 	/** @type {Date} */
@@ -6010,13 +6704,13 @@ function CodeSystem (copyData) {
 	this.name = copyData.name;
 	}
 }  // CodeSystem 
-// SanteDB.Core.Model.DataTypes.Concept, SanteDB.Core.Model, Version=1.1.0.35405, Culture=neutral, PublicKeyToken=null
-if(!Concept)
+// SanteDB.Core.Model.DataTypes.Concept, SanteDB.Core.Model, Version=2.0.0.0, Culture=neutral, PublicKeyToken=null
+//if(!Concept)
 /**
  * @class
  * @constructor
- * @memberof SanteDBModel
  * @public
+ * @extends VersionedEntityData
  * @summary             A class representing a generic concept used in the SanteDB datamodel            
  * @property {boolean} isReadonly            Gets or sets an indicator which dictates whether the concept is a system concept            
  * @property {string} mnemonic            Gets or sets the unchanging mnemonic for the concept            
@@ -6041,16 +6735,16 @@ if(!Concept)
  * @property {string} version
  * @property {number} sequence
  * @property {Date} creationTimeModel [Delay loaded from creationTime],             Gets or sets the time at which the data was created            
- * @property {Date} creationTime            Gets or sets the creation time in XML format            
+ * @property {Date} creationTime            Gets or sets the creation time as an ISO date format            
  * @property {Date} obsoletionTimeModel [Delay loaded from obsoletionTime],             Gets or sets the time when the data is or will become invalid            
- * @property {Date} obsoletionTime            Gets or sets the creation time in XML format            
- * @property {SecurityUser} createdByModel [Delay loaded from createdBy],             Gets or sets the user that created this base data            
+ * @property {Date} obsoletionTime            Gets or sets the time that the data is no longer valid (was deleted/obsoleted) in ISO format            
+ * @property {SecurityProvenance} createdByModel [Delay loaded from createdBy],             Gets or sets the user that created this base data            
  * @property {Date} modifiedOn            Gets the time that the object was last modified (from base data, default to CreationTime)            
- * @property {SecurityUser} obsoletedByModel [Delay loaded from obsoletedBy],             Gets or sets the user that obsoleted this base data            
- * @property {string} createdBy            Gets or sets the identifier of the user which created the data            
- * @property {string} obsoletedBy            Gets or sets the identifier of the user which obsoleted the data            
- * @property {string} id            The internal primary key value of the entity            
- * @property {string} $type            Gets the type            
+ * @property {SecurityProvenance} obsoletedByModel [Delay loaded from obsoletedBy],             Gets or sets the user that obsoleted this base data            
+ * @property {string} createdBy            Gets or sets the security provenance object which represents the creation of this object            
+ * @property {string} obsoletedBy            Gets or sets the security provenance object which represents the obsoletion of this data            
+ * @property {string} id            Gets or sets the primary identifying UUID of this object            
+ * @property {string} $type            Gets the type registration of this object            
  * @param {Concept} copyData Copy constructor (if present)
  */
 function Concept (copyData) { 
@@ -6062,11 +6756,11 @@ function Concept (copyData) {
 	this.obsoletedBy = copyData.obsoletedBy;
 	/** @type {string} */
 	this.createdBy = copyData.createdBy;
-	/** @type {SecurityUser} */
+	/** @type {SecurityProvenance} */
 	this.obsoletedByModel = copyData.obsoletedByModel;
 	/** @type {Date} */
 	this.modifiedOn = copyData.modifiedOn;
-	/** @type {SecurityUser} */
+	/** @type {SecurityProvenance} */
 	this.createdByModel = copyData.createdByModel;
 	/** @type {Date} */
 	this.obsoletionTime = copyData.obsoletionTime;
@@ -6106,30 +6800,29 @@ function Concept (copyData) {
 	this.isReadonly = copyData.isReadonly;
 	}
 }  // Concept 
-// SanteDB.Core.Model.DataTypes.ConceptClass, SanteDB.Core.Model, Version=1.1.0.35405, Culture=neutral, PublicKeyToken=null
-if(!ConceptClass)
+// SanteDB.Core.Model.DataTypes.ConceptClass, SanteDB.Core.Model, Version=2.0.0.0, Culture=neutral, PublicKeyToken=null
+//if(!ConceptClass)
 /**
  * @class
  * @constructor
- * @memberof SanteDBModel
  * @public
- * @extends NonVersionedEntityData
  * @summary             Identifies a classification for a concept            
  * @property {string} name            Gets or sets the name of the concept class            
  * @property {string} mnemonic            Gets or sets the mnemonic            
- * @property {Date} updatedTime            Gets or sets the creation time in XML format            
+ * @property {Date} updatedTime            Gets or sets the time that this object was last modified in ISO format            
  * @property {Date} modifiedOn            Gets the time this item was modified            
- * @property {string} updatedBy            Gets or sets the created by identifier            
+ * @property {SecurityProvenance} updatedByModel [Delay loaded from updatedBy],             Gets or sets the user that updated this base data            
+ * @property {string} updatedBy            Gets or sets the provenance identifier associated with the last update of this object            
  * @property {Date} creationTimeModel [Delay loaded from creationTime],             Gets or sets the time at which the data was created            
- * @property {Date} creationTime            Gets or sets the creation time in XML format            
+ * @property {Date} creationTime            Gets or sets the creation time as an ISO date format            
  * @property {Date} obsoletionTimeModel [Delay loaded from obsoletionTime],             Gets or sets the time when the data is or will become invalid            
- * @property {Date} obsoletionTime            Gets or sets the creation time in XML format            
- * @property {SecurityUser} createdByModel [Delay loaded from createdBy],             Gets or sets the user that created this base data            
- * @property {SecurityUser} obsoletedByModel [Delay loaded from obsoletedBy],             Gets or sets the user that obsoleted this base data            
- * @property {string} createdBy            Gets or sets the identifier of the user which created the data            
- * @property {string} obsoletedBy            Gets or sets the identifier of the user which obsoleted the data            
- * @property {string} id            The internal primary key value of the entity            
- * @property {string} $type            Gets the type            
+ * @property {Date} obsoletionTime            Gets or sets the time that the data is no longer valid (was deleted/obsoleted) in ISO format            
+ * @property {SecurityProvenance} createdByModel [Delay loaded from createdBy],             Gets or sets the user that created this base data            
+ * @property {SecurityProvenance} obsoletedByModel [Delay loaded from obsoletedBy],             Gets or sets the user that obsoleted this base data            
+ * @property {string} createdBy            Gets or sets the security provenance object which represents the creation of this object            
+ * @property {string} obsoletedBy            Gets or sets the security provenance object which represents the obsoletion of this data            
+ * @property {string} id            Gets or sets the primary identifying UUID of this object            
+ * @property {string} $type            Gets the type registration of this object            
  * @param {ConceptClass} copyData Copy constructor (if present)
  */
 function ConceptClass (copyData) { 
@@ -6141,9 +6834,9 @@ function ConceptClass (copyData) {
 	this.obsoletedBy = copyData.obsoletedBy;
 	/** @type {string} */
 	this.createdBy = copyData.createdBy;
-	/** @type {SecurityUser} */
+	/** @type {SecurityProvenance} */
 	this.obsoletedByModel = copyData.obsoletedByModel;
-	/** @type {SecurityUser} */
+	/** @type {SecurityProvenance} */
 	this.createdByModel = copyData.createdByModel;
 	/** @type {Date} */
 	this.obsoletionTime = copyData.obsoletionTime;
@@ -6155,6 +6848,8 @@ function ConceptClass (copyData) {
 	this.creationTimeModel = copyData.creationTimeModel;
 	/** @type {string} */
 	this.updatedBy = copyData.updatedBy;
+	/** @type {SecurityProvenance} */
+	this.updatedByModel = copyData.updatedByModel;
 	/** @type {Date} */
 	this.modifiedOn = copyData.modifiedOn;
 	/** @type {Date} */
@@ -6165,13 +6860,13 @@ function ConceptClass (copyData) {
 	this.name = copyData.name;
 	}
 }  // ConceptClass 
-// SanteDB.Core.Model.DataTypes.ConceptName, SanteDB.Core.Model, Version=1.1.0.35405, Culture=neutral, PublicKeyToken=null
-if(!ConceptName)
+// SanteDB.Core.Model.DataTypes.ConceptName, SanteDB.Core.Model, Version=2.0.0.0, Culture=neutral, PublicKeyToken=null
+//if(!ConceptName)
 /**
  * @class
  * @constructor
- * @memberof SanteDBModel
  * @public
+ * @extends VersionedAssociation
  * @summary             Represents a name (human name) that a concept may have            
  * @property {string} language            Gets or sets the language code of the object            
  * @property {string} value            Gets or sets the name of the reference term            
@@ -6183,8 +6878,8 @@ if(!ConceptName)
  * @property {Date} modifiedOn
  * @property {string} source
  * @property {Concept} sourceModel [Delay loaded from source], 
- * @property {string} id            The internal primary key value of the entity            
- * @property {string} $type            Gets the type            
+ * @property {string} id            Gets or sets the primary identifying UUID of this object            
+ * @property {string} $type            Gets the type registration of this object            
  * @param {ConceptName} copyData Copy constructor (if present)
  */
 function ConceptName (copyData) { 
@@ -6214,13 +6909,13 @@ function ConceptName (copyData) {
 	this.language = copyData.language;
 	}
 }  // ConceptName 
-// SanteDB.Core.Model.DataTypes.ConceptReferenceTerm, SanteDB.Core.Model, Version=1.1.0.35405, Culture=neutral, PublicKeyToken=null
-if(!ConceptReferenceTerm)
+// SanteDB.Core.Model.DataTypes.ConceptReferenceTerm, SanteDB.Core.Model, Version=2.0.0.0, Culture=neutral, PublicKeyToken=null
+//if(!ConceptReferenceTerm)
 /**
  * @class
  * @constructor
- * @memberof SanteDBModel
  * @public
+ * @extends VersionedAssociation
  * @summary             Represents a reference term relationship between a concept and reference term            
  * @property {string} term            Gets or sets the reference term identifier            
  * @property {ReferenceTerm} termModel [Delay loaded from term],             Gets or set the reference term            
@@ -6231,8 +6926,8 @@ if(!ConceptReferenceTerm)
  * @property {Date} modifiedOn
  * @property {string} source
  * @property {Concept} sourceModel [Delay loaded from source], 
- * @property {string} id            The internal primary key value of the entity            
- * @property {string} $type            Gets the type            
+ * @property {string} id            Gets or sets the primary identifying UUID of this object            
+ * @property {string} $type            Gets the type registration of this object            
  * @param {ConceptReferenceTerm} copyData Copy constructor (if present)
  */
 function ConceptReferenceTerm (copyData) { 
@@ -6260,13 +6955,13 @@ function ConceptReferenceTerm (copyData) {
 	this.term = copyData.term;
 	}
 }  // ConceptReferenceTerm 
-// SanteDB.Core.Model.DataTypes.ConceptRelationship, SanteDB.Core.Model, Version=1.1.0.35405, Culture=neutral, PublicKeyToken=null
-if(!ConceptRelationship)
+// SanteDB.Core.Model.DataTypes.ConceptRelationship, SanteDB.Core.Model, Version=2.0.0.0, Culture=neutral, PublicKeyToken=null
+//if(!ConceptRelationship)
 /**
  * @class
  * @constructor
- * @memberof SanteDBModel
  * @public
+ * @extends VersionedAssociation
  * @summary             Represents a relationship between two concepts            
  * @property {string} targetConcept            Gets or sets the target concept identifier            
  * @property {Concept} targetConceptModel [Delay loaded from targetConcept],             Gets or sets the target concept            
@@ -6277,8 +6972,8 @@ if(!ConceptRelationship)
  * @property {Date} modifiedOn
  * @property {string} source
  * @property {Concept} sourceModel [Delay loaded from source], 
- * @property {string} id            The internal primary key value of the entity            
- * @property {string} $type            Gets the type            
+ * @property {string} id            Gets or sets the primary identifying UUID of this object            
+ * @property {string} $type            Gets the type registration of this object            
  * @param {ConceptRelationship} copyData Copy constructor (if present)
  */
 function ConceptRelationship (copyData) { 
@@ -6306,30 +7001,29 @@ function ConceptRelationship (copyData) {
 	this.targetConcept = copyData.targetConcept;
 	}
 }  // ConceptRelationship 
-// SanteDB.Core.Model.DataTypes.ConceptRelationshipType, SanteDB.Core.Model, Version=1.1.0.35405, Culture=neutral, PublicKeyToken=null
-if(!ConceptRelationshipType)
+// SanteDB.Core.Model.DataTypes.ConceptRelationshipType, SanteDB.Core.Model, Version=2.0.0.0, Culture=neutral, PublicKeyToken=null
+//if(!ConceptRelationshipType)
 /**
  * @class
  * @constructor
- * @memberof SanteDBModel
  * @public
- * @extends NonVersionedEntityData
  * @summary             Concept relationship type            
  * @property {string} name            Gets or sets the name of the relationship            
  * @property {string} mnemonic            The invariant of the relationship type            
- * @property {Date} updatedTime            Gets or sets the creation time in XML format            
+ * @property {Date} updatedTime            Gets or sets the time that this object was last modified in ISO format            
  * @property {Date} modifiedOn            Gets the time this item was modified            
- * @property {string} updatedBy            Gets or sets the created by identifier            
+ * @property {SecurityProvenance} updatedByModel [Delay loaded from updatedBy],             Gets or sets the user that updated this base data            
+ * @property {string} updatedBy            Gets or sets the provenance identifier associated with the last update of this object            
  * @property {Date} creationTimeModel [Delay loaded from creationTime],             Gets or sets the time at which the data was created            
- * @property {Date} creationTime            Gets or sets the creation time in XML format            
+ * @property {Date} creationTime            Gets or sets the creation time as an ISO date format            
  * @property {Date} obsoletionTimeModel [Delay loaded from obsoletionTime],             Gets or sets the time when the data is or will become invalid            
- * @property {Date} obsoletionTime            Gets or sets the creation time in XML format            
- * @property {SecurityUser} createdByModel [Delay loaded from createdBy],             Gets or sets the user that created this base data            
- * @property {SecurityUser} obsoletedByModel [Delay loaded from obsoletedBy],             Gets or sets the user that obsoleted this base data            
- * @property {string} createdBy            Gets or sets the identifier of the user which created the data            
- * @property {string} obsoletedBy            Gets or sets the identifier of the user which obsoleted the data            
- * @property {string} id            The internal primary key value of the entity            
- * @property {string} $type            Gets the type            
+ * @property {Date} obsoletionTime            Gets or sets the time that the data is no longer valid (was deleted/obsoleted) in ISO format            
+ * @property {SecurityProvenance} createdByModel [Delay loaded from createdBy],             Gets or sets the user that created this base data            
+ * @property {SecurityProvenance} obsoletedByModel [Delay loaded from obsoletedBy],             Gets or sets the user that obsoleted this base data            
+ * @property {string} createdBy            Gets or sets the security provenance object which represents the creation of this object            
+ * @property {string} obsoletedBy            Gets or sets the security provenance object which represents the obsoletion of this data            
+ * @property {string} id            Gets or sets the primary identifying UUID of this object            
+ * @property {string} $type            Gets the type registration of this object            
  * @param {ConceptRelationshipType} copyData Copy constructor (if present)
  */
 function ConceptRelationshipType (copyData) { 
@@ -6341,9 +7035,9 @@ function ConceptRelationshipType (copyData) {
 	this.obsoletedBy = copyData.obsoletedBy;
 	/** @type {string} */
 	this.createdBy = copyData.createdBy;
-	/** @type {SecurityUser} */
+	/** @type {SecurityProvenance} */
 	this.obsoletedByModel = copyData.obsoletedByModel;
-	/** @type {SecurityUser} */
+	/** @type {SecurityProvenance} */
 	this.createdByModel = copyData.createdByModel;
 	/** @type {Date} */
 	this.obsoletionTime = copyData.obsoletionTime;
@@ -6355,6 +7049,8 @@ function ConceptRelationshipType (copyData) {
 	this.creationTimeModel = copyData.creationTimeModel;
 	/** @type {string} */
 	this.updatedBy = copyData.updatedBy;
+	/** @type {SecurityProvenance} */
+	this.updatedByModel = copyData.updatedByModel;
 	/** @type {Date} */
 	this.modifiedOn = copyData.modifiedOn;
 	/** @type {Date} */
@@ -6365,33 +7061,32 @@ function ConceptRelationshipType (copyData) {
 	this.name = copyData.name;
 	}
 }  // ConceptRelationshipType 
-// SanteDB.Core.Model.DataTypes.ConceptSet, SanteDB.Core.Model, Version=1.1.0.35405, Culture=neutral, PublicKeyToken=null
-if(!ConceptSet)
+// SanteDB.Core.Model.DataTypes.ConceptSet, SanteDB.Core.Model, Version=2.0.0.0, Culture=neutral, PublicKeyToken=null
+//if(!ConceptSet)
 /**
  * @class
  * @constructor
- * @memberof SanteDBModel
  * @public
- * @extends NonVersionedEntityData
  * @summary             Represents set of concepts            
  * @property {string} name            Gets or sets the name of the concept set            
  * @property {string} mnemonic            Gets or sets the mnemonic for the concept set (used for convenient lookup)            
  * @property {string} oid            Gets or sets the oid of the concept set            
  * @property {string} url            Gets or sets the url of the concept set            
  * @property {string} concept            Concepts as identifiers for XML purposes only            
- * @property {Date} updatedTime            Gets or sets the creation time in XML format            
+ * @property {Date} updatedTime            Gets or sets the time that this object was last modified in ISO format            
  * @property {Date} modifiedOn            Gets the time this item was modified            
- * @property {string} updatedBy            Gets or sets the created by identifier            
+ * @property {SecurityProvenance} updatedByModel [Delay loaded from updatedBy],             Gets or sets the user that updated this base data            
+ * @property {string} updatedBy            Gets or sets the provenance identifier associated with the last update of this object            
  * @property {Date} creationTimeModel [Delay loaded from creationTime],             Gets or sets the time at which the data was created            
- * @property {Date} creationTime            Gets or sets the creation time in XML format            
+ * @property {Date} creationTime            Gets or sets the creation time as an ISO date format            
  * @property {Date} obsoletionTimeModel [Delay loaded from obsoletionTime],             Gets or sets the time when the data is or will become invalid            
- * @property {Date} obsoletionTime            Gets or sets the creation time in XML format            
- * @property {SecurityUser} createdByModel [Delay loaded from createdBy],             Gets or sets the user that created this base data            
- * @property {SecurityUser} obsoletedByModel [Delay loaded from obsoletedBy],             Gets or sets the user that obsoleted this base data            
- * @property {string} createdBy            Gets or sets the identifier of the user which created the data            
- * @property {string} obsoletedBy            Gets or sets the identifier of the user which obsoleted the data            
- * @property {string} id            The internal primary key value of the entity            
- * @property {string} $type            Gets the type            
+ * @property {Date} obsoletionTime            Gets or sets the time that the data is no longer valid (was deleted/obsoleted) in ISO format            
+ * @property {SecurityProvenance} createdByModel [Delay loaded from createdBy],             Gets or sets the user that created this base data            
+ * @property {SecurityProvenance} obsoletedByModel [Delay loaded from obsoletedBy],             Gets or sets the user that obsoleted this base data            
+ * @property {string} createdBy            Gets or sets the security provenance object which represents the creation of this object            
+ * @property {string} obsoletedBy            Gets or sets the security provenance object which represents the obsoletion of this data            
+ * @property {string} id            Gets or sets the primary identifying UUID of this object            
+ * @property {string} $type            Gets the type registration of this object            
  * @param {ConceptSet} copyData Copy constructor (if present)
  */
 function ConceptSet (copyData) { 
@@ -6403,9 +7098,9 @@ function ConceptSet (copyData) {
 	this.obsoletedBy = copyData.obsoletedBy;
 	/** @type {string} */
 	this.createdBy = copyData.createdBy;
-	/** @type {SecurityUser} */
+	/** @type {SecurityProvenance} */
 	this.obsoletedByModel = copyData.obsoletedByModel;
-	/** @type {SecurityUser} */
+	/** @type {SecurityProvenance} */
 	this.createdByModel = copyData.createdByModel;
 	/** @type {Date} */
 	this.obsoletionTime = copyData.obsoletionTime;
@@ -6417,6 +7112,8 @@ function ConceptSet (copyData) {
 	this.creationTimeModel = copyData.creationTimeModel;
 	/** @type {string} */
 	this.updatedBy = copyData.updatedBy;
+	/** @type {SecurityProvenance} */
+	this.updatedByModel = copyData.updatedByModel;
 	/** @type {Date} */
 	this.modifiedOn = copyData.modifiedOn;
 	/** @type {Date} */
@@ -6433,13 +7130,60 @@ function ConceptSet (copyData) {
 	this.name = copyData.name;
 	}
 }  // ConceptSet 
-// SanteDB.Core.Model.DataTypes.EntityExtension, SanteDB.Core.Model, Version=1.1.0.35405, Culture=neutral, PublicKeyToken=null
-if(!EntityExtension)
+// SanteDB.Core.Model.DataTypes.Extension`1, SanteDB.Core.Model, Version=2.0.0.0, Culture=neutral, PublicKeyToken=null
+//if(!Extension)
 /**
  * @class
  * @constructor
- * @memberof SanteDBModel
  * @public
+ * @abstract
+ * @extends VersionedAssociation
+ * @summary             Represents a base entity extension            
+ * @property {Array<byte>} value            Gets or sets the value of the extension            
+ * @property {string} valueModel [Delay loaded from value],             Value as string of bytes            
+ * @property {ExtensionType} extensionTypeModel [Delay loaded from extensionType],             Gets or sets the extension type            
+ * @property {string} extensionType            Gets or sets the extension type key            
+ * @property {number} effectiveVersionSequence
+ * @property {number} obsoleteVersionSequence
+ * @property {Date} modifiedOn
+ * @property {string} source
+ * @property {VersionedEntityData} sourceModel [Delay loaded from source], 
+ * @property {string} id            Gets or sets the primary identifying UUID of this object            
+ * @property {string} $type            Gets the type registration of this object            
+ * @param {Extension} copyData Copy constructor (if present)
+ */
+function Extension (copyData) { 
+	this.$type = 'Extension';
+	if(copyData) {
+	/** @type {string} */
+	this.id = copyData.id;
+	/** @type {VersionedEntityData} */
+	this.sourceModel = copyData.sourceModel;
+	/** @type {string} */
+	this.source = copyData.source;
+	/** @type {Date} */
+	this.modifiedOn = copyData.modifiedOn;
+	/** @type {number} */
+	this.obsoleteVersionSequence = copyData.obsoleteVersionSequence;
+	/** @type {number} */
+	this.effectiveVersionSequence = copyData.effectiveVersionSequence;
+	/** @type {string} */
+	this.extensionType = copyData.extensionType;
+	/** @type {ExtensionType} */
+	this.extensionTypeModel = copyData.extensionTypeModel;
+	/** @type {string} */
+	this.valueModel = copyData.valueModel;
+	/** @type {Array<byte>} */
+	this.value = copyData.value;
+	}
+}  // Extension 
+// SanteDB.Core.Model.DataTypes.EntityExtension, SanteDB.Core.Model, Version=2.0.0.0, Culture=neutral, PublicKeyToken=null
+//if(!EntityExtension)
+/**
+ * @class
+ * @constructor
+ * @public
+ * @extends Extension
  * @summary             Extension bound to entity            
  * @property {Array<byte>} value
  * @property {string} valueModel [Delay loaded from value], 
@@ -6450,8 +7194,8 @@ if(!EntityExtension)
  * @property {Date} modifiedOn
  * @property {string} source
  * @property {Entity} sourceModel [Delay loaded from source], 
- * @property {string} id            The internal primary key value of the entity            
- * @property {string} $type            Gets the type            
+ * @property {string} id            Gets or sets the primary identifying UUID of this object            
+ * @property {string} $type            Gets the type registration of this object            
  * @param {EntityExtension} copyData Copy constructor (if present)
  */
 function EntityExtension (copyData) { 
@@ -6479,13 +7223,13 @@ function EntityExtension (copyData) {
 	this.value = copyData.value;
 	}
 }  // EntityExtension 
-// SanteDB.Core.Model.DataTypes.ActExtension, SanteDB.Core.Model, Version=1.1.0.35405, Culture=neutral, PublicKeyToken=null
-if(!ActExtension)
+// SanteDB.Core.Model.DataTypes.ActExtension, SanteDB.Core.Model, Version=2.0.0.0, Culture=neutral, PublicKeyToken=null
+//if(!ActExtension)
 /**
  * @class
  * @constructor
- * @memberof SanteDBModel
  * @public
+ * @extends Extension
  * @summary             Act extension            
  * @property {Array<byte>} value
  * @property {string} valueModel [Delay loaded from value], 
@@ -6496,8 +7240,8 @@ if(!ActExtension)
  * @property {Date} modifiedOn
  * @property {string} source
  * @property {Act} sourceModel [Delay loaded from source], 
- * @property {string} id            The internal primary key value of the entity            
- * @property {string} $type            Gets the type            
+ * @property {string} id            Gets or sets the primary identifying UUID of this object            
+ * @property {string} $type            Gets the type registration of this object            
  * @param {ActExtension} copyData Copy constructor (if present)
  */
 function ActExtension (copyData) { 
@@ -6525,30 +7269,29 @@ function ActExtension (copyData) {
 	this.value = copyData.value;
 	}
 }  // ActExtension 
-// SanteDB.Core.Model.DataTypes.ExtensionType, SanteDB.Core.Model, Version=1.1.0.35405, Culture=neutral, PublicKeyToken=null
-if(!ExtensionType)
+// SanteDB.Core.Model.DataTypes.ExtensionType, SanteDB.Core.Model, Version=2.0.0.0, Culture=neutral, PublicKeyToken=null
+//if(!ExtensionType)
 /**
  * @class
  * @constructor
- * @memberof SanteDBModel
  * @public
- * @extends NonVersionedEntityData
  * @summary             Instructions on how an extensionshould be handled            
  * @property {string} handlerClass            Gets or sets the description            
  * @property {string} name            Gets or sets the description            
- * @property {Date} updatedTime            Gets or sets the creation time in XML format            
+ * @property {Date} updatedTime            Gets or sets the time that this object was last modified in ISO format            
  * @property {Date} modifiedOn            Gets the time this item was modified            
- * @property {string} updatedBy            Gets or sets the created by identifier            
+ * @property {SecurityProvenance} updatedByModel [Delay loaded from updatedBy],             Gets or sets the user that updated this base data            
+ * @property {string} updatedBy            Gets or sets the provenance identifier associated with the last update of this object            
  * @property {Date} creationTimeModel [Delay loaded from creationTime],             Gets or sets the time at which the data was created            
- * @property {Date} creationTime            Gets or sets the creation time in XML format            
+ * @property {Date} creationTime            Gets or sets the creation time as an ISO date format            
  * @property {Date} obsoletionTimeModel [Delay loaded from obsoletionTime],             Gets or sets the time when the data is or will become invalid            
- * @property {Date} obsoletionTime            Gets or sets the creation time in XML format            
- * @property {SecurityUser} createdByModel [Delay loaded from createdBy],             Gets or sets the user that created this base data            
- * @property {SecurityUser} obsoletedByModel [Delay loaded from obsoletedBy],             Gets or sets the user that obsoleted this base data            
- * @property {string} createdBy            Gets or sets the identifier of the user which created the data            
- * @property {string} obsoletedBy            Gets or sets the identifier of the user which obsoleted the data            
- * @property {string} id            The internal primary key value of the entity            
- * @property {string} $type            Gets the type            
+ * @property {Date} obsoletionTime            Gets or sets the time that the data is no longer valid (was deleted/obsoleted) in ISO format            
+ * @property {SecurityProvenance} createdByModel [Delay loaded from createdBy],             Gets or sets the user that created this base data            
+ * @property {SecurityProvenance} obsoletedByModel [Delay loaded from obsoletedBy],             Gets or sets the user that obsoleted this base data            
+ * @property {string} createdBy            Gets or sets the security provenance object which represents the creation of this object            
+ * @property {string} obsoletedBy            Gets or sets the security provenance object which represents the obsoletion of this data            
+ * @property {string} id            Gets or sets the primary identifying UUID of this object            
+ * @property {string} $type            Gets the type registration of this object            
  * @param {ExtensionType} copyData Copy constructor (if present)
  */
 function ExtensionType (copyData) { 
@@ -6560,9 +7303,9 @@ function ExtensionType (copyData) {
 	this.obsoletedBy = copyData.obsoletedBy;
 	/** @type {string} */
 	this.createdBy = copyData.createdBy;
-	/** @type {SecurityUser} */
+	/** @type {SecurityProvenance} */
 	this.obsoletedByModel = copyData.obsoletedByModel;
-	/** @type {SecurityUser} */
+	/** @type {SecurityProvenance} */
 	this.createdByModel = copyData.createdByModel;
 	/** @type {Date} */
 	this.obsoletionTime = copyData.obsoletionTime;
@@ -6574,6 +7317,8 @@ function ExtensionType (copyData) {
 	this.creationTimeModel = copyData.creationTimeModel;
 	/** @type {string} */
 	this.updatedBy = copyData.updatedBy;
+	/** @type {SecurityProvenance} */
+	this.updatedByModel = copyData.updatedByModel;
 	/** @type {Date} */
 	this.modifiedOn = copyData.modifiedOn;
 	/** @type {Date} */
@@ -6584,13 +7329,44 @@ function ExtensionType (copyData) {
 	this.handlerClass = copyData.handlerClass;
 	}
 }  // ExtensionType 
-// SanteDB.Core.Model.DataTypes.EntityIdentifier, SanteDB.Core.Model, Version=1.1.0.35405, Culture=neutral, PublicKeyToken=null
-if(!EntityIdentifier)
+// SanteDB.Core.Model.DataTypes.GeoTag, SanteDB.Core.Model, Version=2.0.0.0, Culture=neutral, PublicKeyToken=null
+//if(!GeoTag)
 /**
  * @class
  * @constructor
- * @memberof SanteDBModel
  * @public
+ * @extends IdentifiedData
+ * @summary             Represents a simple geographic tagging attribute            
+ * @property {Date} modifiedOn            Gets the default modified on            
+ * @property {Double} lat            Gets the latitude            
+ * @property {Double} lng            Gets or sets the longitude of the object            
+ * @property {boolean} precise            Gets or sets the accuracy of the geo-tag            
+ * @property {string} id            Gets or sets the primary identifying UUID of this object            
+ * @property {string} $type            Gets the type registration of this object            
+ * @param {GeoTag} copyData Copy constructor (if present)
+ */
+function GeoTag (copyData) { 
+	this.$type = 'GeoTag';
+	if(copyData) {
+	/** @type {string} */
+	this.id = copyData.id;
+	/** @type {boolean} */
+	this.precise = copyData.precise;
+	/** @type {Double} */
+	this.lng = copyData.lng;
+	/** @type {Double} */
+	this.lat = copyData.lat;
+	/** @type {Date} */
+	this.modifiedOn = copyData.modifiedOn;
+	}
+}  // GeoTag 
+// SanteDB.Core.Model.DataTypes.EntityIdentifier, SanteDB.Core.Model, Version=2.0.0.0, Culture=neutral, PublicKeyToken=null
+//if(!EntityIdentifier)
+/**
+ * @class
+ * @constructor
+ * @public
+ * @extends IdentifierBase
  * @summary             Entity identifiers            
  * @property {string} value
  * @property {IdentifierType} type
@@ -6600,8 +7376,8 @@ if(!EntityIdentifier)
  * @property {Date} modifiedOn
  * @property {string} source
  * @property {Entity} sourceModel [Delay loaded from source], 
- * @property {string} id            The internal primary key value of the entity            
- * @property {string} $type            Gets the type            
+ * @property {string} id            Gets or sets the primary identifying UUID of this object            
+ * @property {string} $type            Gets the type registration of this object            
  * @param {EntityIdentifier} copyData Copy constructor (if present)
  */
 function EntityIdentifier (copyData) { 
@@ -6627,13 +7403,13 @@ function EntityIdentifier (copyData) {
 	this.value = copyData.value;
 	}
 }  // EntityIdentifier 
-// SanteDB.Core.Model.DataTypes.ActIdentifier, SanteDB.Core.Model, Version=1.1.0.35405, Culture=neutral, PublicKeyToken=null
-if(!ActIdentifier)
+// SanteDB.Core.Model.DataTypes.ActIdentifier, SanteDB.Core.Model, Version=2.0.0.0, Culture=neutral, PublicKeyToken=null
+//if(!ActIdentifier)
 /**
  * @class
  * @constructor
- * @memberof SanteDBModel
  * @public
+ * @extends IdentifierBase
  * @summary             Act identifier            
  * @property {string} value
  * @property {IdentifierType} type
@@ -6643,8 +7419,8 @@ if(!ActIdentifier)
  * @property {Date} modifiedOn
  * @property {string} source
  * @property {Act} sourceModel [Delay loaded from source], 
- * @property {string} id            The internal primary key value of the entity            
- * @property {string} $type            Gets the type            
+ * @property {string} id            Gets or sets the primary identifying UUID of this object            
+ * @property {string} $type            Gets the type registration of this object            
  * @param {ActIdentifier} copyData Copy constructor (if present)
  */
 function ActIdentifier (copyData) { 
@@ -6670,29 +7446,73 @@ function ActIdentifier (copyData) {
 	this.value = copyData.value;
 	}
 }  // ActIdentifier 
-// SanteDB.Core.Model.DataTypes.IdentifierType, SanteDB.Core.Model, Version=1.1.0.35405, Culture=neutral, PublicKeyToken=null
-if(!IdentifierType)
+// SanteDB.Core.Model.DataTypes.IdentifierBase`1, SanteDB.Core.Model, Version=2.0.0.0, Culture=neutral, PublicKeyToken=null
+//if(!IdentifierBase)
 /**
  * @class
  * @constructor
- * @memberof SanteDBModel
  * @public
+ * @abstract
+ * @extends VersionedAssociation
+ * @summary             Represents an external assigned identifier            
+ * @property {string} value            Gets or sets the value of the identifier            
+ * @property {IdentifierType} type            Gets or sets the identifier type            
+ * @property {AssigningAuthority} authority            Gets or sets a minimal assigning authority from XML data            
+ * @property {number} effectiveVersionSequence
+ * @property {number} obsoleteVersionSequence
+ * @property {Date} modifiedOn
+ * @property {string} source
+ * @property {VersionedEntityData} sourceModel [Delay loaded from source], 
+ * @property {string} id            Gets or sets the primary identifying UUID of this object            
+ * @property {string} $type            Gets the type registration of this object            
+ * @param {IdentifierBase} copyData Copy constructor (if present)
+ */
+function IdentifierBase (copyData) { 
+	this.$type = 'IdentifierBase';
+	if(copyData) {
+	/** @type {string} */
+	this.id = copyData.id;
+	/** @type {VersionedEntityData} */
+	this.sourceModel = copyData.sourceModel;
+	/** @type {string} */
+	this.source = copyData.source;
+	/** @type {Date} */
+	this.modifiedOn = copyData.modifiedOn;
+	/** @type {number} */
+	this.obsoleteVersionSequence = copyData.obsoleteVersionSequence;
+	/** @type {number} */
+	this.effectiveVersionSequence = copyData.effectiveVersionSequence;
+	/** @type {AssigningAuthority} */
+	this.authority = copyData.authority;
+	/** @type {IdentifierType} */
+	this.type = copyData.type;
+	/** @type {string} */
+	this.value = copyData.value;
+	}
+}  // IdentifierBase 
+// SanteDB.Core.Model.DataTypes.IdentifierType, SanteDB.Core.Model, Version=2.0.0.0, Culture=neutral, PublicKeyToken=null
+//if(!IdentifierType)
+/**
+ * @class
+ * @constructor
+ * @public
+ * @extends BaseEntityData
  * @summary             Represents a basic information class which classifies the use of an identifier            
  * @property {string} scopeConcept            Gets or sets the id of the scope concept            
  * @property {string} typeConcept            Gets or sets the concept which identifies the type            
  * @property {Concept} typeConceptModel [Delay loaded from typeConcept],             Type concept            
  * @property {Concept} scopeConceptModel [Delay loaded from scopeConcept],             Gets the scope of the identifier            
  * @property {Date} creationTimeModel [Delay loaded from creationTime],             Gets or sets the time at which the data was created            
- * @property {Date} creationTime            Gets or sets the creation time in XML format            
+ * @property {Date} creationTime            Gets or sets the creation time as an ISO date format            
  * @property {Date} obsoletionTimeModel [Delay loaded from obsoletionTime],             Gets or sets the time when the data is or will become invalid            
- * @property {Date} obsoletionTime            Gets or sets the creation time in XML format            
- * @property {SecurityUser} createdByModel [Delay loaded from createdBy],             Gets or sets the user that created this base data            
+ * @property {Date} obsoletionTime            Gets or sets the time that the data is no longer valid (was deleted/obsoleted) in ISO format            
+ * @property {SecurityProvenance} createdByModel [Delay loaded from createdBy],             Gets or sets the user that created this base data            
  * @property {Date} modifiedOn            Gets the time that the object was last modified (from base data, default to CreationTime)            
- * @property {SecurityUser} obsoletedByModel [Delay loaded from obsoletedBy],             Gets or sets the user that obsoleted this base data            
- * @property {string} createdBy            Gets or sets the identifier of the user which created the data            
- * @property {string} obsoletedBy            Gets or sets the identifier of the user which obsoleted the data            
- * @property {string} id            The internal primary key value of the entity            
- * @property {string} $type            Gets the type            
+ * @property {SecurityProvenance} obsoletedByModel [Delay loaded from obsoletedBy],             Gets or sets the user that obsoleted this base data            
+ * @property {string} createdBy            Gets or sets the security provenance object which represents the creation of this object            
+ * @property {string} obsoletedBy            Gets or sets the security provenance object which represents the obsoletion of this data            
+ * @property {string} id            Gets or sets the primary identifying UUID of this object            
+ * @property {string} $type            Gets the type registration of this object            
  * @param {IdentifierType} copyData Copy constructor (if present)
  */
 function IdentifierType (copyData) { 
@@ -6704,11 +7524,11 @@ function IdentifierType (copyData) {
 	this.obsoletedBy = copyData.obsoletedBy;
 	/** @type {string} */
 	this.createdBy = copyData.createdBy;
-	/** @type {SecurityUser} */
+	/** @type {SecurityProvenance} */
 	this.obsoletedByModel = copyData.obsoletedByModel;
 	/** @type {Date} */
 	this.modifiedOn = copyData.modifiedOn;
-	/** @type {SecurityUser} */
+	/** @type {SecurityProvenance} */
 	this.createdByModel = copyData.createdByModel;
 	/** @type {Date} */
 	this.obsoletionTime = copyData.obsoletionTime;
@@ -6728,13 +7548,57 @@ function IdentifierType (copyData) {
 	this.scopeConcept = copyData.scopeConcept;
 	}
 }  // IdentifierType 
-// SanteDB.Core.Model.DataTypes.EntityNote, SanteDB.Core.Model, Version=1.1.0.35405, Culture=neutral, PublicKeyToken=null
-if(!EntityNote)
+// SanteDB.Core.Model.DataTypes.Note`1, SanteDB.Core.Model, Version=2.0.0.0, Culture=neutral, PublicKeyToken=null
+//if(!Note)
 /**
  * @class
  * @constructor
- * @memberof SanteDBModel
  * @public
+ * @abstract
+ * @extends VersionedAssociation
+ * @summary             Generic note class            
+ * @property {string} text            Gets or sets the note text            
+ * @property {string} author            Gets or sets the author key            
+ * @property {Entity} authorModel [Delay loaded from author],             Gets or sets the author entity            
+ * @property {number} effectiveVersionSequence
+ * @property {number} obsoleteVersionSequence
+ * @property {Date} modifiedOn
+ * @property {string} source
+ * @property {VersionedEntityData} sourceModel [Delay loaded from source], 
+ * @property {string} id            Gets or sets the primary identifying UUID of this object            
+ * @property {string} $type            Gets the type registration of this object            
+ * @param {Note} copyData Copy constructor (if present)
+ */
+function Note (copyData) { 
+	this.$type = 'Note';
+	if(copyData) {
+	/** @type {string} */
+	this.id = copyData.id;
+	/** @type {VersionedEntityData} */
+	this.sourceModel = copyData.sourceModel;
+	/** @type {string} */
+	this.source = copyData.source;
+	/** @type {Date} */
+	this.modifiedOn = copyData.modifiedOn;
+	/** @type {number} */
+	this.obsoleteVersionSequence = copyData.obsoleteVersionSequence;
+	/** @type {number} */
+	this.effectiveVersionSequence = copyData.effectiveVersionSequence;
+	/** @type {Entity} */
+	this.authorModel = copyData.authorModel;
+	/** @type {string} */
+	this.author = copyData.author;
+	/** @type {string} */
+	this.text = copyData.text;
+	}
+}  // Note 
+// SanteDB.Core.Model.DataTypes.EntityNote, SanteDB.Core.Model, Version=2.0.0.0, Culture=neutral, PublicKeyToken=null
+//if(!EntityNote)
+/**
+ * @class
+ * @constructor
+ * @public
+ * @extends Note
  * @summary             Represents a note attached to an entity            
  * @property {string} text
  * @property {string} author
@@ -6744,8 +7608,8 @@ if(!EntityNote)
  * @property {Date} modifiedOn
  * @property {string} source
  * @property {Entity} sourceModel [Delay loaded from source], 
- * @property {string} id            The internal primary key value of the entity            
- * @property {string} $type            Gets the type            
+ * @property {string} id            Gets or sets the primary identifying UUID of this object            
+ * @property {string} $type            Gets the type registration of this object            
  * @param {EntityNote} copyData Copy constructor (if present)
  */
 function EntityNote (copyData) { 
@@ -6771,13 +7635,13 @@ function EntityNote (copyData) {
 	this.text = copyData.text;
 	}
 }  // EntityNote 
-// SanteDB.Core.Model.DataTypes.ActNote, SanteDB.Core.Model, Version=1.1.0.35405, Culture=neutral, PublicKeyToken=null
-if(!ActNote)
+// SanteDB.Core.Model.DataTypes.ActNote, SanteDB.Core.Model, Version=2.0.0.0, Culture=neutral, PublicKeyToken=null
+//if(!ActNote)
 /**
  * @class
  * @constructor
- * @memberof SanteDBModel
  * @public
+ * @extends Note
  * @summary             Represents a note attached to an entity            
  * @property {string} text
  * @property {string} author
@@ -6787,8 +7651,8 @@ if(!ActNote)
  * @property {Date} modifiedOn
  * @property {string} source
  * @property {Act} sourceModel [Delay loaded from source], 
- * @property {string} id            The internal primary key value of the entity            
- * @property {string} $type            Gets the type            
+ * @property {string} id            Gets or sets the primary identifying UUID of this object            
+ * @property {string} $type            Gets the type registration of this object            
  * @param {ActNote} copyData Copy constructor (if present)
  */
 function ActNote (copyData) { 
@@ -6814,30 +7678,29 @@ function ActNote (copyData) {
 	this.text = copyData.text;
 	}
 }  // ActNote 
-// SanteDB.Core.Model.DataTypes.PhoneticAlgorithm, SanteDB.Core.Model, Version=1.1.0.35405, Culture=neutral, PublicKeyToken=null
-if(!PhoneticAlgorithm)
+// SanteDB.Core.Model.DataTypes.PhoneticAlgorithm, SanteDB.Core.Model, Version=2.0.0.0, Culture=neutral, PublicKeyToken=null
+//if(!PhoneticAlgorithm)
 /**
  * @class
  * @constructor
- * @memberof SanteDBModel
  * @public
- * @extends NonVersionedEntityData
  * @summary             Represents a phonetic algorithm record in the model            
  * @property {string} name            Gets the name of the phonetic algorithm            
  * @property {string} handler            Gets the handler (or generator) for the phonetic algorithm            
- * @property {Date} updatedTime            Gets or sets the creation time in XML format            
+ * @property {Date} updatedTime            Gets or sets the time that this object was last modified in ISO format            
  * @property {Date} modifiedOn            Gets the time this item was modified            
- * @property {string} updatedBy            Gets or sets the created by identifier            
+ * @property {SecurityProvenance} updatedByModel [Delay loaded from updatedBy],             Gets or sets the user that updated this base data            
+ * @property {string} updatedBy            Gets or sets the provenance identifier associated with the last update of this object            
  * @property {Date} creationTimeModel [Delay loaded from creationTime],             Gets or sets the time at which the data was created            
- * @property {Date} creationTime            Gets or sets the creation time in XML format            
+ * @property {Date} creationTime            Gets or sets the creation time as an ISO date format            
  * @property {Date} obsoletionTimeModel [Delay loaded from obsoletionTime],             Gets or sets the time when the data is or will become invalid            
- * @property {Date} obsoletionTime            Gets or sets the creation time in XML format            
- * @property {SecurityUser} createdByModel [Delay loaded from createdBy],             Gets or sets the user that created this base data            
- * @property {SecurityUser} obsoletedByModel [Delay loaded from obsoletedBy],             Gets or sets the user that obsoleted this base data            
- * @property {string} createdBy            Gets or sets the identifier of the user which created the data            
- * @property {string} obsoletedBy            Gets or sets the identifier of the user which obsoleted the data            
- * @property {string} id            The internal primary key value of the entity            
- * @property {string} $type            Gets the type            
+ * @property {Date} obsoletionTime            Gets or sets the time that the data is no longer valid (was deleted/obsoleted) in ISO format            
+ * @property {SecurityProvenance} createdByModel [Delay loaded from createdBy],             Gets or sets the user that created this base data            
+ * @property {SecurityProvenance} obsoletedByModel [Delay loaded from obsoletedBy],             Gets or sets the user that obsoleted this base data            
+ * @property {string} createdBy            Gets or sets the security provenance object which represents the creation of this object            
+ * @property {string} obsoletedBy            Gets or sets the security provenance object which represents the obsoletion of this data            
+ * @property {string} id            Gets or sets the primary identifying UUID of this object            
+ * @property {string} $type            Gets the type registration of this object            
  * @param {PhoneticAlgorithm} copyData Copy constructor (if present)
  */
 function PhoneticAlgorithm (copyData) { 
@@ -6849,9 +7712,9 @@ function PhoneticAlgorithm (copyData) {
 	this.obsoletedBy = copyData.obsoletedBy;
 	/** @type {string} */
 	this.createdBy = copyData.createdBy;
-	/** @type {SecurityUser} */
+	/** @type {SecurityProvenance} */
 	this.obsoletedByModel = copyData.obsoletedByModel;
-	/** @type {SecurityUser} */
+	/** @type {SecurityProvenance} */
 	this.createdByModel = copyData.createdByModel;
 	/** @type {Date} */
 	this.obsoletionTime = copyData.obsoletionTime;
@@ -6863,6 +7726,8 @@ function PhoneticAlgorithm (copyData) {
 	this.creationTimeModel = copyData.creationTimeModel;
 	/** @type {string} */
 	this.updatedBy = copyData.updatedBy;
+	/** @type {SecurityProvenance} */
+	this.updatedByModel = copyData.updatedByModel;
 	/** @type {Date} */
 	this.modifiedOn = copyData.modifiedOn;
 	/** @type {Date} */
@@ -6873,33 +7738,32 @@ function PhoneticAlgorithm (copyData) {
 	this.name = copyData.name;
 	}
 }  // PhoneticAlgorithm 
-// SanteDB.Core.Model.DataTypes.ReferenceTerm, SanteDB.Core.Model, Version=1.1.0.35405, Culture=neutral, PublicKeyToken=null
-if(!ReferenceTerm)
+// SanteDB.Core.Model.DataTypes.ReferenceTerm, SanteDB.Core.Model, Version=2.0.0.0, Culture=neutral, PublicKeyToken=null
+//if(!ReferenceTerm)
 /**
  * @class
  * @constructor
- * @memberof SanteDBModel
  * @public
- * @extends NonVersionedEntityData
  * @summary             Represents a basic reference term            
  * @property {string} mnemonic            Gets or sets the mnemonic for the reference term            
  * @property {CodeSystem} codeSystemModel [Delay loaded from codeSystem],             Gets or sets the code system             
  * @property {string} codeSystem            Gets or sets the code system identifier            (see: {@link CodeSystemKeys} for values)
  * @property {object} name            Gets display names associated with the reference term            
  * @property {string} name.classifier  where classifier is from {@link ReferenceTermName} language
- * @property {Date} updatedTime            Gets or sets the creation time in XML format            
+ * @property {Date} updatedTime            Gets or sets the time that this object was last modified in ISO format            
  * @property {Date} modifiedOn            Gets the time this item was modified            
- * @property {string} updatedBy            Gets or sets the created by identifier            
+ * @property {SecurityProvenance} updatedByModel [Delay loaded from updatedBy],             Gets or sets the user that updated this base data            
+ * @property {string} updatedBy            Gets or sets the provenance identifier associated with the last update of this object            
  * @property {Date} creationTimeModel [Delay loaded from creationTime],             Gets or sets the time at which the data was created            
- * @property {Date} creationTime            Gets or sets the creation time in XML format            
+ * @property {Date} creationTime            Gets or sets the creation time as an ISO date format            
  * @property {Date} obsoletionTimeModel [Delay loaded from obsoletionTime],             Gets or sets the time when the data is or will become invalid            
- * @property {Date} obsoletionTime            Gets or sets the creation time in XML format            
- * @property {SecurityUser} createdByModel [Delay loaded from createdBy],             Gets or sets the user that created this base data            
- * @property {SecurityUser} obsoletedByModel [Delay loaded from obsoletedBy],             Gets or sets the user that obsoleted this base data            
- * @property {string} createdBy            Gets or sets the identifier of the user which created the data            
- * @property {string} obsoletedBy            Gets or sets the identifier of the user which obsoleted the data            
- * @property {string} id            The internal primary key value of the entity            
- * @property {string} $type            Gets the type            
+ * @property {Date} obsoletionTime            Gets or sets the time that the data is no longer valid (was deleted/obsoleted) in ISO format            
+ * @property {SecurityProvenance} createdByModel [Delay loaded from createdBy],             Gets or sets the user that created this base data            
+ * @property {SecurityProvenance} obsoletedByModel [Delay loaded from obsoletedBy],             Gets or sets the user that obsoleted this base data            
+ * @property {string} createdBy            Gets or sets the security provenance object which represents the creation of this object            
+ * @property {string} obsoletedBy            Gets or sets the security provenance object which represents the obsoletion of this data            
+ * @property {string} id            Gets or sets the primary identifying UUID of this object            
+ * @property {string} $type            Gets the type registration of this object            
  * @param {ReferenceTerm} copyData Copy constructor (if present)
  */
 function ReferenceTerm (copyData) { 
@@ -6911,9 +7775,9 @@ function ReferenceTerm (copyData) {
 	this.obsoletedBy = copyData.obsoletedBy;
 	/** @type {string} */
 	this.createdBy = copyData.createdBy;
-	/** @type {SecurityUser} */
+	/** @type {SecurityProvenance} */
 	this.obsoletedByModel = copyData.obsoletedByModel;
-	/** @type {SecurityUser} */
+	/** @type {SecurityProvenance} */
 	this.createdByModel = copyData.createdByModel;
 	/** @type {Date} */
 	this.obsoletionTime = copyData.obsoletionTime;
@@ -6925,6 +7789,8 @@ function ReferenceTerm (copyData) {
 	this.creationTimeModel = copyData.creationTimeModel;
 	/** @type {string} */
 	this.updatedBy = copyData.updatedBy;
+	/** @type {SecurityProvenance} */
+	this.updatedByModel = copyData.updatedByModel;
 	/** @type {Date} */
 	this.modifiedOn = copyData.modifiedOn;
 	/** @type {Date} */
@@ -6939,13 +7805,13 @@ function ReferenceTerm (copyData) {
 	this.mnemonic = copyData.mnemonic;
 	}
 }  // ReferenceTerm 
-// SanteDB.Core.Model.DataTypes.ReferenceTermName, SanteDB.Core.Model, Version=1.1.0.35405, Culture=neutral, PublicKeyToken=null
-if(!ReferenceTermName)
+// SanteDB.Core.Model.DataTypes.ReferenceTermName, SanteDB.Core.Model, Version=2.0.0.0, Culture=neutral, PublicKeyToken=null
+//if(!ReferenceTermName)
 /**
  * @class
  * @constructor
- * @memberof SanteDBModel
  * @public
+ * @extends BaseEntityData
  * @summary             Display name of a code system or reference term            
  * @property {string} language            Gets or sets the language code of the object            
  * @property {string} value            Gets or sets the name of the reference term            
@@ -6954,16 +7820,16 @@ if(!ReferenceTermName)
  * @property {PhoneticAlgorithm} phoneticAlgorithmModel [Delay loaded from phoneticAlgorithm],             Gets or sets the phonetic algorithm            
  * @property {string} source            Gets the source entity key            
  * @property {Date} creationTimeModel [Delay loaded from creationTime],             Gets or sets the time at which the data was created            
- * @property {Date} creationTime            Gets or sets the creation time in XML format            
+ * @property {Date} creationTime            Gets or sets the creation time as an ISO date format            
  * @property {Date} obsoletionTimeModel [Delay loaded from obsoletionTime],             Gets or sets the time when the data is or will become invalid            
- * @property {Date} obsoletionTime            Gets or sets the creation time in XML format            
- * @property {SecurityUser} createdByModel [Delay loaded from createdBy],             Gets or sets the user that created this base data            
+ * @property {Date} obsoletionTime            Gets or sets the time that the data is no longer valid (was deleted/obsoleted) in ISO format            
+ * @property {SecurityProvenance} createdByModel [Delay loaded from createdBy],             Gets or sets the user that created this base data            
  * @property {Date} modifiedOn            Gets the time that the object was last modified (from base data, default to CreationTime)            
- * @property {SecurityUser} obsoletedByModel [Delay loaded from obsoletedBy],             Gets or sets the user that obsoleted this base data            
- * @property {string} createdBy            Gets or sets the identifier of the user which created the data            
- * @property {string} obsoletedBy            Gets or sets the identifier of the user which obsoleted the data            
- * @property {string} id            The internal primary key value of the entity            
- * @property {string} $type            Gets the type            
+ * @property {SecurityProvenance} obsoletedByModel [Delay loaded from obsoletedBy],             Gets or sets the user that obsoleted this base data            
+ * @property {string} createdBy            Gets or sets the security provenance object which represents the creation of this object            
+ * @property {string} obsoletedBy            Gets or sets the security provenance object which represents the obsoletion of this data            
+ * @property {string} id            Gets or sets the primary identifying UUID of this object            
+ * @property {string} $type            Gets the type registration of this object            
  * @param {ReferenceTermName} copyData Copy constructor (if present)
  */
 function ReferenceTermName (copyData) { 
@@ -6975,11 +7841,11 @@ function ReferenceTermName (copyData) {
 	this.obsoletedBy = copyData.obsoletedBy;
 	/** @type {string} */
 	this.createdBy = copyData.createdBy;
-	/** @type {SecurityUser} */
+	/** @type {SecurityProvenance} */
 	this.obsoletedByModel = copyData.obsoletedByModel;
 	/** @type {Date} */
 	this.modifiedOn = copyData.modifiedOn;
-	/** @type {SecurityUser} */
+	/** @type {SecurityProvenance} */
 	this.createdByModel = copyData.createdByModel;
 	/** @type {Date} */
 	this.obsoletionTime = copyData.obsoletionTime;
@@ -7003,29 +7869,88 @@ function ReferenceTermName (copyData) {
 	this.language = copyData.language;
 	}
 }  // ReferenceTermName 
-// SanteDB.Core.Model.DataTypes.EntityTag, SanteDB.Core.Model, Version=1.1.0.35405, Culture=neutral, PublicKeyToken=null
-if(!EntityTag)
+// SanteDB.Core.Model.DataTypes.Tag`1, SanteDB.Core.Model, Version=2.0.0.0, Culture=neutral, PublicKeyToken=null
+//if(!Tag)
 /**
  * @class
  * @constructor
- * @memberof SanteDBModel
  * @public
+ * @abstract
+ * @extends BaseEntityData
+ * @summary             Represents the base class for tags            
+ * @property {string} key            Gets or sets the key of the tag            
+ * @property {string} value            Gets or sets the value of the tag            
+ * @property {string} source            Gets or sets the source entity's key (where the relationship is FROM)            
+ * @property {IdentifiedData} sourceModel [Delay loaded from source],             The entity that this relationship targets            
+ * @property {Date} creationTimeModel [Delay loaded from creationTime],             Gets or sets the time at which the data was created            
+ * @property {Date} creationTime            Gets or sets the creation time as an ISO date format            
+ * @property {Date} obsoletionTimeModel [Delay loaded from obsoletionTime],             Gets or sets the time when the data is or will become invalid            
+ * @property {Date} obsoletionTime            Gets or sets the time that the data is no longer valid (was deleted/obsoleted) in ISO format            
+ * @property {SecurityProvenance} createdByModel [Delay loaded from createdBy],             Gets or sets the user that created this base data            
+ * @property {Date} modifiedOn            Gets the time that the object was last modified (from base data, default to CreationTime)            
+ * @property {SecurityProvenance} obsoletedByModel [Delay loaded from obsoletedBy],             Gets or sets the user that obsoleted this base data            
+ * @property {string} createdBy            Gets or sets the security provenance object which represents the creation of this object            
+ * @property {string} obsoletedBy            Gets or sets the security provenance object which represents the obsoletion of this data            
+ * @property {string} id            Gets or sets the primary identifying UUID of this object            
+ * @property {string} $type            Gets the type registration of this object            
+ * @param {Tag} copyData Copy constructor (if present)
+ */
+function Tag (copyData) { 
+	this.$type = 'Tag';
+	if(copyData) {
+	/** @type {string} */
+	this.id = copyData.id;
+	/** @type {string} */
+	this.obsoletedBy = copyData.obsoletedBy;
+	/** @type {string} */
+	this.createdBy = copyData.createdBy;
+	/** @type {SecurityProvenance} */
+	this.obsoletedByModel = copyData.obsoletedByModel;
+	/** @type {Date} */
+	this.modifiedOn = copyData.modifiedOn;
+	/** @type {SecurityProvenance} */
+	this.createdByModel = copyData.createdByModel;
+	/** @type {Date} */
+	this.obsoletionTime = copyData.obsoletionTime;
+	/** @type {Date} */
+	this.obsoletionTimeModel = copyData.obsoletionTimeModel;
+	/** @type {Date} */
+	this.creationTime = copyData.creationTime;
+	/** @type {Date} */
+	this.creationTimeModel = copyData.creationTimeModel;
+	/** @type {IdentifiedData} */
+	this.sourceModel = copyData.sourceModel;
+	/** @type {string} */
+	this.source = copyData.source;
+	/** @type {string} */
+	this.value = copyData.value;
+	/** @type {string} */
+	this.key = copyData.key;
+	}
+}  // Tag 
+// SanteDB.Core.Model.DataTypes.EntityTag, SanteDB.Core.Model, Version=2.0.0.0, Culture=neutral, PublicKeyToken=null
+//if(!EntityTag)
+/**
+ * @class
+ * @constructor
+ * @public
+ * @extends Tag
  * @summary             Represents a tag associated with an entity            
  * @property {string} key
  * @property {string} value
  * @property {string} source
  * @property {Entity} sourceModel [Delay loaded from source], 
  * @property {Date} creationTimeModel [Delay loaded from creationTime],             Gets or sets the time at which the data was created            
- * @property {Date} creationTime            Gets or sets the creation time in XML format            
+ * @property {Date} creationTime            Gets or sets the creation time as an ISO date format            
  * @property {Date} obsoletionTimeModel [Delay loaded from obsoletionTime],             Gets or sets the time when the data is or will become invalid            
- * @property {Date} obsoletionTime            Gets or sets the creation time in XML format            
- * @property {SecurityUser} createdByModel [Delay loaded from createdBy],             Gets or sets the user that created this base data            
+ * @property {Date} obsoletionTime            Gets or sets the time that the data is no longer valid (was deleted/obsoleted) in ISO format            
+ * @property {SecurityProvenance} createdByModel [Delay loaded from createdBy],             Gets or sets the user that created this base data            
  * @property {Date} modifiedOn            Gets the time that the object was last modified (from base data, default to CreationTime)            
- * @property {SecurityUser} obsoletedByModel [Delay loaded from obsoletedBy],             Gets or sets the user that obsoleted this base data            
- * @property {string} createdBy            Gets or sets the identifier of the user which created the data            
- * @property {string} obsoletedBy            Gets or sets the identifier of the user which obsoleted the data            
- * @property {string} id            The internal primary key value of the entity            
- * @property {string} $type            Gets the type            
+ * @property {SecurityProvenance} obsoletedByModel [Delay loaded from obsoletedBy],             Gets or sets the user that obsoleted this base data            
+ * @property {string} createdBy            Gets or sets the security provenance object which represents the creation of this object            
+ * @property {string} obsoletedBy            Gets or sets the security provenance object which represents the obsoletion of this data            
+ * @property {string} id            Gets or sets the primary identifying UUID of this object            
+ * @property {string} $type            Gets the type registration of this object            
  * @param {EntityTag} copyData Copy constructor (if present)
  */
 function EntityTag (copyData) { 
@@ -7037,11 +7962,11 @@ function EntityTag (copyData) {
 	this.obsoletedBy = copyData.obsoletedBy;
 	/** @type {string} */
 	this.createdBy = copyData.createdBy;
-	/** @type {SecurityUser} */
+	/** @type {SecurityProvenance} */
 	this.obsoletedByModel = copyData.obsoletedByModel;
 	/** @type {Date} */
 	this.modifiedOn = copyData.modifiedOn;
-	/** @type {SecurityUser} */
+	/** @type {SecurityProvenance} */
 	this.createdByModel = copyData.createdByModel;
 	/** @type {Date} */
 	this.obsoletionTime = copyData.obsoletionTime;
@@ -7061,29 +7986,29 @@ function EntityTag (copyData) {
 	this.key = copyData.key;
 	}
 }  // EntityTag 
-// SanteDB.Core.Model.DataTypes.ActTag, SanteDB.Core.Model, Version=1.1.0.35405, Culture=neutral, PublicKeyToken=null
-if(!ActTag)
+// SanteDB.Core.Model.DataTypes.ActTag, SanteDB.Core.Model, Version=2.0.0.0, Culture=neutral, PublicKeyToken=null
+//if(!ActTag)
 /**
  * @class
  * @constructor
- * @memberof SanteDBModel
  * @public
+ * @extends Tag
  * @summary             Represents a tag on an act            
  * @property {string} key
  * @property {string} value
  * @property {string} source
  * @property {Act} sourceModel [Delay loaded from source], 
  * @property {Date} creationTimeModel [Delay loaded from creationTime],             Gets or sets the time at which the data was created            
- * @property {Date} creationTime            Gets or sets the creation time in XML format            
+ * @property {Date} creationTime            Gets or sets the creation time as an ISO date format            
  * @property {Date} obsoletionTimeModel [Delay loaded from obsoletionTime],             Gets or sets the time when the data is or will become invalid            
- * @property {Date} obsoletionTime            Gets or sets the creation time in XML format            
- * @property {SecurityUser} createdByModel [Delay loaded from createdBy],             Gets or sets the user that created this base data            
+ * @property {Date} obsoletionTime            Gets or sets the time that the data is no longer valid (was deleted/obsoleted) in ISO format            
+ * @property {SecurityProvenance} createdByModel [Delay loaded from createdBy],             Gets or sets the user that created this base data            
  * @property {Date} modifiedOn            Gets the time that the object was last modified (from base data, default to CreationTime)            
- * @property {SecurityUser} obsoletedByModel [Delay loaded from obsoletedBy],             Gets or sets the user that obsoleted this base data            
- * @property {string} createdBy            Gets or sets the identifier of the user which created the data            
- * @property {string} obsoletedBy            Gets or sets the identifier of the user which obsoleted the data            
- * @property {string} id            The internal primary key value of the entity            
- * @property {string} $type            Gets the type            
+ * @property {SecurityProvenance} obsoletedByModel [Delay loaded from obsoletedBy],             Gets or sets the user that obsoleted this base data            
+ * @property {string} createdBy            Gets or sets the security provenance object which represents the creation of this object            
+ * @property {string} obsoletedBy            Gets or sets the security provenance object which represents the obsoletion of this data            
+ * @property {string} id            Gets or sets the primary identifying UUID of this object            
+ * @property {string} $type            Gets the type registration of this object            
  * @param {ActTag} copyData Copy constructor (if present)
  */
 function ActTag (copyData) { 
@@ -7095,11 +8020,11 @@ function ActTag (copyData) {
 	this.obsoletedBy = copyData.obsoletedBy;
 	/** @type {string} */
 	this.createdBy = copyData.createdBy;
-	/** @type {SecurityUser} */
+	/** @type {SecurityProvenance} */
 	this.obsoletedByModel = copyData.obsoletedByModel;
 	/** @type {Date} */
 	this.modifiedOn = copyData.modifiedOn;
-	/** @type {SecurityUser} */
+	/** @type {SecurityProvenance} */
 	this.createdByModel = copyData.createdByModel;
 	/** @type {Date} */
 	this.obsoletionTime = copyData.obsoletionTime;
@@ -7119,32 +8044,31 @@ function ActTag (copyData) {
 	this.key = copyData.key;
 	}
 }  // ActTag 
-// SanteDB.Core.Model.DataTypes.TemplateDefinition, SanteDB.Core.Model, Version=1.1.0.35405, Culture=neutral, PublicKeyToken=null
-if(!TemplateDefinition)
+// SanteDB.Core.Model.DataTypes.TemplateDefinition, SanteDB.Core.Model, Version=2.0.0.0, Culture=neutral, PublicKeyToken=null
+//if(!TemplateDefinition)
 /**
  * @class
  * @constructor
- * @memberof SanteDBModel
  * @public
- * @extends NonVersionedEntityData
  * @summary             Represents a template definition            
  * @property {string} mnemonic            Gets or sets the mnemonic            
  * @property {string} name            Gets or set the name             
  * @property {string} oid            Gets or sets the oid of the concept set            
  * @property {string} description            Gets or sets the description            
- * @property {Date} updatedTime            Gets or sets the creation time in XML format            
+ * @property {Date} updatedTime            Gets or sets the time that this object was last modified in ISO format            
  * @property {Date} modifiedOn            Gets the time this item was modified            
- * @property {string} updatedBy            Gets or sets the created by identifier            
+ * @property {SecurityProvenance} updatedByModel [Delay loaded from updatedBy],             Gets or sets the user that updated this base data            
+ * @property {string} updatedBy            Gets or sets the provenance identifier associated with the last update of this object            
  * @property {Date} creationTimeModel [Delay loaded from creationTime],             Gets or sets the time at which the data was created            
- * @property {Date} creationTime            Gets or sets the creation time in XML format            
+ * @property {Date} creationTime            Gets or sets the creation time as an ISO date format            
  * @property {Date} obsoletionTimeModel [Delay loaded from obsoletionTime],             Gets or sets the time when the data is or will become invalid            
- * @property {Date} obsoletionTime            Gets or sets the creation time in XML format            
- * @property {SecurityUser} createdByModel [Delay loaded from createdBy],             Gets or sets the user that created this base data            
- * @property {SecurityUser} obsoletedByModel [Delay loaded from obsoletedBy],             Gets or sets the user that obsoleted this base data            
- * @property {string} createdBy            Gets or sets the identifier of the user which created the data            
- * @property {string} obsoletedBy            Gets or sets the identifier of the user which obsoleted the data            
- * @property {string} id            The internal primary key value of the entity            
- * @property {string} $type            Gets the type            
+ * @property {Date} obsoletionTime            Gets or sets the time that the data is no longer valid (was deleted/obsoleted) in ISO format            
+ * @property {SecurityProvenance} createdByModel [Delay loaded from createdBy],             Gets or sets the user that created this base data            
+ * @property {SecurityProvenance} obsoletedByModel [Delay loaded from obsoletedBy],             Gets or sets the user that obsoleted this base data            
+ * @property {string} createdBy            Gets or sets the security provenance object which represents the creation of this object            
+ * @property {string} obsoletedBy            Gets or sets the security provenance object which represents the obsoletion of this data            
+ * @property {string} id            Gets or sets the primary identifying UUID of this object            
+ * @property {string} $type            Gets the type registration of this object            
  * @param {TemplateDefinition} copyData Copy constructor (if present)
  */
 function TemplateDefinition (copyData) { 
@@ -7156,9 +8080,9 @@ function TemplateDefinition (copyData) {
 	this.obsoletedBy = copyData.obsoletedBy;
 	/** @type {string} */
 	this.createdBy = copyData.createdBy;
-	/** @type {SecurityUser} */
+	/** @type {SecurityProvenance} */
 	this.obsoletedByModel = copyData.obsoletedByModel;
-	/** @type {SecurityUser} */
+	/** @type {SecurityProvenance} */
 	this.createdByModel = copyData.createdByModel;
 	/** @type {Date} */
 	this.obsoletionTime = copyData.obsoletionTime;
@@ -7170,6 +8094,8 @@ function TemplateDefinition (copyData) {
 	this.creationTimeModel = copyData.creationTimeModel;
 	/** @type {string} */
 	this.updatedBy = copyData.updatedBy;
+	/** @type {SecurityProvenance} */
+	this.updatedByModel = copyData.updatedByModel;
 	/** @type {Date} */
 	this.modifiedOn = copyData.modifiedOn;
 	/** @type {Date} */
@@ -7184,23 +8110,23 @@ function TemplateDefinition (copyData) {
 	this.mnemonic = copyData.mnemonic;
 	}
 }  // TemplateDefinition 
-// SanteDB.Core.Model.Collection.Bundle, SanteDB.Core.Model, Version=1.1.0.35405, Culture=neutral, PublicKeyToken=null
-if(!Bundle)
+// SanteDB.Core.Model.Collection.Bundle, SanteDB.Core.Model, Version=2.0.0.0, Culture=neutral, PublicKeyToken=null
+//if(!Bundle)
 /**
  * @class
  * @constructor
- * @memberof SanteDBModel
  * @public
+ * @extends IdentifiedData
  * @summary             Represents a collection of model items             
  * @property {Date} modifiedOn            Gets the time the bundle was modified            
- * @property {IdentifiedData} item            Gets or sets items in the bundle            
+ * @property {IdentifiedData} resource            Gets or sets items in the bundle            
  * @property {string} entry            Entry into the bundle            
  * @property {number} offset            Gets or sets the count in this bundle            
  * @property {number} count            Gets or sets the count in this bundle            
  * @property {number} totalResults            Gets or sets the total results            
- * @property {string} result            Gets or sets the keys of objects that aren't really in the bundle but are expansion items            
- * @property {string} id            The internal primary key value of the entity            
- * @property {string} $type            Gets the type            
+ * @property {string} ref            Gets or sets the keys of objects that aren't really in the bundle but are expansion items            
+ * @property {string} id            Gets or sets the primary identifying UUID of this object            
+ * @property {string} $type            Gets the type registration of this object            
  * @param {Bundle} copyData Copy constructor (if present)
  */
 function Bundle (copyData) { 
@@ -7209,7 +8135,7 @@ function Bundle (copyData) {
 	/** @type {string} */
 	this.id = copyData.id;
 	/** @type {string} */
-	this.result = copyData.result;
+	this.ref = copyData.ref;
 	/** @type {number} */
 	this.totalResults = copyData.totalResults;
 	/** @type {number} */
@@ -7224,33 +8150,25 @@ function Bundle (copyData) {
 	this.modifiedOn = copyData.modifiedOn;
 	}
 }  // Bundle 
-// SanteDB.Core.Model.Acts.Act, SanteDB.Core.Model, Version=1.1.0.35405, Culture=neutral, PublicKeyToken=null
-if(!Act)
+// SanteDB.Core.Model.Acts.Account, SanteDB.Core.Model, Version=2.0.0.0, Culture=neutral, PublicKeyToken=null
+//if(!Account)
 /**
  * @class
  * @constructor
- * @memberof SanteDBModel
  * @public
- * @summary             Represents the base class for an act            
- * @description 
- *             An Act, in the context of the reference information model (RIM) represents something that is done to a patient. More precisely, an Act
- *             is anything that occurs involving entities in which the entity's state is changed or is documented.
- *             
- *             Examples of Acts Include:
- *              - The administration of a substance to a patient - The observing of a value for the patient - An encounter or visit that occurs where the patient receives one or more services - Any other action such as supply request, or problem recordation
- *             The property which classifies what specific type of action an act represents is its , which dictates
- *             what type an act is. Class concept keys can be found in here .
- *             
- *             This structure is used to represent events, proposals, and requests. That is to say, the Act structure can represent the request to 
- *             do an act, the intent to perform an act, or the actual act being performed itself. This classification of mode happens based on the 
- *              mood concept. Mood concept keys can be found on the  structure.
- *             
+ * @summary             Represents an Account            
+ * @description An account represents a simple structure for tracking balance and one or more invoice entries
+ * @property {number} balance            Gets or sets the balance of this account            
+ * @property {string} currency            Gets or sets the currency concept UUID for this account            
+ * @property {Concept} currencyModel [Delay loaded from currency],             Gets or sets the currency            
+ * @property {number} minBalance            Gets or sets the minimum balance of this account            
+ * @property {number} maxBalance            Gets or sets the maximum balance of this account            
  * @property {boolean} isNegated            Gets or sets an indicator which identifies whether the act actually occurred, or            specifically did not occur            
- * @property {string} template            Gets the template key            
+ * @property {string} template            Gets the template UUID upon which this act is based            
  * @property {TemplateDefinition} templateModel [Delay loaded from template],             Gets or sets the template definition            
- * @property {Date} actTime            Gets or sets the creation time in XML format            
- * @property {Date} startTime            Gets or sets the creation time in XML format            
- * @property {Date} stopTime            Gets or sets the creation time in XML format            
+ * @property {Date} actTime            Gets or sets the moment in time that this act occurred in ISO format            
+ * @property {Date} startTime            Gets or sets the time when the act should or did start ocurring in ISO format            
+ * @property {Date} stopTime            Gets or sets the time when the act should or did stop ocurring in ISO format            
  * @property {string} classConcept            Gets or sets the key of the concept which classifies the act.            (see: {@link ActClassKeys} for values)
  * @property {string} moodConcept            Gets or sets the key of the concept which specifies the mood of the act.            (see: {@link ActMoodKeys} for values)
  * @property {string} reasonConcept            Gets or sets the key of the concept which defines the reason why the act is or didn't occur            (see: {@link ActReasonKeys} for values)
@@ -7287,6 +8205,7 @@ if(!Act)
  * @property {ActRelationship} relationship.Replaces             The source act replaces the target act            
  * @property {ActRelationship} relationship.StartsAfterStartOf             Indicates that the source act starts after the start of another act            
  * @property {ActRelationship} relationship.Transforms             Indicates that the source act transforms the target act            
+ * @property {ActRelationship} relationship.Duplicate             Duplicate entity            
  * @property {ActRelationship} relationship.$other Unclassified
  * @property {SecurityPolicyInstance} policy            Gets or sets the security policy instances associated with the act            
  * @property {object} extension            Gets a list of all extensions associated with the act            
@@ -7353,24 +8272,25 @@ if(!Act)
  * @property {ActParticipation} participation.Via             The player entity represents an entity where the act occurred "via" this entity (i.e. in transport)            
  * @property {ActParticipation} participation.Witness             The player entity represents a legal witness to the act occurring.            
  * @property {ActParticipation} participation.$other Unclassified
+ * @property {GeoTag} geo            Gets or sets the geo-tag            
  * @property {string} previousVersion
  * @property {string} version
  * @property {number} sequence
  * @property {Date} creationTimeModel [Delay loaded from creationTime],             Gets or sets the time at which the data was created            
- * @property {Date} creationTime            Gets or sets the creation time in XML format            
+ * @property {Date} creationTime            Gets or sets the creation time as an ISO date format            
  * @property {Date} obsoletionTimeModel [Delay loaded from obsoletionTime],             Gets or sets the time when the data is or will become invalid            
- * @property {Date} obsoletionTime            Gets or sets the creation time in XML format            
- * @property {SecurityUser} createdByModel [Delay loaded from createdBy],             Gets or sets the user that created this base data            
+ * @property {Date} obsoletionTime            Gets or sets the time that the data is no longer valid (was deleted/obsoleted) in ISO format            
+ * @property {SecurityProvenance} createdByModel [Delay loaded from createdBy],             Gets or sets the user that created this base data            
  * @property {Date} modifiedOn            Gets the time that the object was last modified (from base data, default to CreationTime)            
- * @property {SecurityUser} obsoletedByModel [Delay loaded from obsoletedBy],             Gets or sets the user that obsoleted this base data            
- * @property {string} createdBy            Gets or sets the identifier of the user which created the data            
- * @property {string} obsoletedBy            Gets or sets the identifier of the user which obsoleted the data            
- * @property {string} id            The internal primary key value of the entity            
- * @property {string} $type            Gets the type            
- * @param {Act} copyData Copy constructor (if present)
+ * @property {SecurityProvenance} obsoletedByModel [Delay loaded from obsoletedBy],             Gets or sets the user that obsoleted this base data            
+ * @property {string} createdBy            Gets or sets the security provenance object which represents the creation of this object            
+ * @property {string} obsoletedBy            Gets or sets the security provenance object which represents the obsoletion of this data            
+ * @property {string} id            Gets or sets the primary identifying UUID of this object            
+ * @property {string} $type            Gets the type registration of this object            
+ * @param {Account} copyData Copy constructor (if present)
  */
-function Act (copyData) { 
-	this.$type = 'Act';
+function Account (copyData) { 
+	this.$type = 'Account';
 	if(copyData) {
 	/** @type {string} */
 	this.id = copyData.id;
@@ -7378,11 +8298,11 @@ function Act (copyData) {
 	this.obsoletedBy = copyData.obsoletedBy;
 	/** @type {string} */
 	this.createdBy = copyData.createdBy;
-	/** @type {SecurityUser} */
+	/** @type {SecurityProvenance} */
 	this.obsoletedByModel = copyData.obsoletedByModel;
 	/** @type {Date} */
 	this.modifiedOn = copyData.modifiedOn;
-	/** @type {SecurityUser} */
+	/** @type {SecurityProvenance} */
 	this.createdByModel = copyData.createdByModel;
 	/** @type {Date} */
 	this.obsoletionTime = copyData.obsoletionTime;
@@ -7398,6 +8318,246 @@ function Act (copyData) {
 	this.version = copyData.version;
 	/** @type {string} */
 	this.previousVersion = copyData.previousVersion;
+	/** @type {GeoTag} */
+	this.geo = copyData.geo;
+	/** @type {object} */
+	this.participation = copyData.participation;
+	/** @type {ActProtocol} */
+	this.protocol = copyData.protocol;
+	/** @type {object} */
+	this.tag = copyData.tag;
+	/** @type {string} */
+	this.note = copyData.note;
+	/** @type {object} */
+	this.extension = copyData.extension;
+	/** @type {SecurityPolicyInstance} */
+	this.policy = copyData.policy;
+	/** @type {object} */
+	this.relationship = copyData.relationship;
+	/** @type {object} */
+	this.identifier = copyData.identifier;
+	/** @type {Concept} */
+	this.typeConceptModel = copyData.typeConceptModel;
+	/** @type {Concept} */
+	this.statusConceptModel = copyData.statusConceptModel;
+	/** @type {Concept} */
+	this.reasonConceptModel = copyData.reasonConceptModel;
+	/** @type {Concept} */
+	this.moodConceptModel = copyData.moodConceptModel;
+	/** @type {Concept} */
+	this.classConceptModel = copyData.classConceptModel;
+	/** @type {string} */
+	this.typeConcept = copyData.typeConcept;
+	/** @type {string} */
+	this.statusConcept = copyData.statusConcept;
+	/** @type {string} */
+	this.reasonConcept = copyData.reasonConcept;
+	/** @type {string} */
+	this.moodConcept = copyData.moodConcept;
+	/** @type {string} */
+	this.classConcept = copyData.classConcept;
+	/** @type {Date} */
+	this.stopTime = copyData.stopTime;
+	/** @type {Date} */
+	this.startTime = copyData.startTime;
+	/** @type {Date} */
+	this.actTime = copyData.actTime;
+	/** @type {TemplateDefinition} */
+	this.templateModel = copyData.templateModel;
+	/** @type {string} */
+	this.template = copyData.template;
+	/** @type {boolean} */
+	this.isNegated = copyData.isNegated;
+	/** @type {number} */
+	this.maxBalance = copyData.maxBalance;
+	/** @type {number} */
+	this.minBalance = copyData.minBalance;
+	/** @type {Concept} */
+	this.currencyModel = copyData.currencyModel;
+	/** @type {string} */
+	this.currency = copyData.currency;
+	/** @type {number} */
+	this.balance = copyData.balance;
+	}
+}  // Account 
+// SanteDB.Core.Model.Acts.Act, SanteDB.Core.Model, Version=2.0.0.0, Culture=neutral, PublicKeyToken=null
+//if(!Act)
+/**
+ * @class
+ * @constructor
+ * @public
+ * @extends VersionedEntityData
+ * @summary             Represents the base class for an act (something which is done or actioned on)            
+ * @description 
+ *             An Act, in the context of the reference information model (RIM) represents something that is done to a patient. More precisely, an Act
+ *             is anything that occurs involving entities in which the entity's state is changed or is documented.
+ *             
+ *             Examples of Acts Include:
+ *              - The administration of a substance to a patient - The observing of a value for the patient - An encounter or visit that occurs where the patient receives one or more services - Any other action such as supply request, or problem recordation
+ *             The property which classifies what specific type of action an act represents is its , which dictates
+ *             what type an act is. Class concept keys can be found in here .
+ *             
+ *             This structure is used to represent events, proposals, and requests. That is to say, the Act structure can represent the request to 
+ *             do an act, the intent to perform an act, or the actual act being performed itself. This classification of mode happens based on the 
+ *              mood concept. Mood concept keys can be found on the  structure.
+ *             
+ * @property {boolean} isNegated            Gets or sets an indicator which identifies whether the act actually occurred, or            specifically did not occur            
+ * @property {string} template            Gets the template UUID upon which this act is based            
+ * @property {TemplateDefinition} templateModel [Delay loaded from template],             Gets or sets the template definition            
+ * @property {Date} actTime            Gets or sets the moment in time that this act occurred in ISO format            
+ * @property {Date} startTime            Gets or sets the time when the act should or did start ocurring in ISO format            
+ * @property {Date} stopTime            Gets or sets the time when the act should or did stop ocurring in ISO format            
+ * @property {string} classConcept            Gets or sets the key of the concept which classifies the act.            (see: {@link ActClassKeys} for values)
+ * @property {string} moodConcept            Gets or sets the key of the concept which specifies the mood of the act.            (see: {@link ActMoodKeys} for values)
+ * @property {string} reasonConcept            Gets or sets the key of the concept which defines the reason why the act is or didn't occur            (see: {@link ActReasonKeys} for values)
+ * @property {string} statusConcept            Gets or sets the key of the concept which describes the current status of the act            (see: {@link StatusKeys} for values)
+ * @property {string} typeConcept            Gets or sets the key of the conccept which further classifies the type of act occurring            
+ * @property {Concept} classConceptModel [Delay loaded from classConcept],             Gets or sets the concept which classifies the type of act            
+ * @property {Concept} moodConceptModel [Delay loaded from moodConcept],             Gets or sets the concept which specifies the mood of the act            
+ * @property {Concept} reasonConceptModel [Delay loaded from reasonConcept],             Gets or sets the concept which indicates the reason of the act            
+ * @property {Concept} statusConceptModel [Delay loaded from statusConcept],             Gets or sets the current status concept of the act            
+ * @property {Concept} typeConceptModel [Delay loaded from typeConcept],             Type concept identifier            
+ * @property {object} identifier            Gets or sets the identifiers by which this act is known as in other systems            
+ * @property {ActIdentifier} identifier.classifier  where classifier is from {@link IdentifierBase} authority
+ * @property {object} relationship            Gets a list of all associated acts for this act            
+ * @property {ActRelationship} relationship.Appends             Indicates that the source act appends information contained in the target act            
+ * @property {ActRelationship} relationship.Arrival             Links the transortation act from another act            
+ * @property {ActRelationship} relationship.Departure             Links a transporation act from another act indicating departure of the subject            
+ * @property {ActRelationship} relationship.Documents             The source act documents the target act            
+ * @property {ActRelationship} relationship.EpisodeLink             Links two instances of the same act over time (example: chronic conditions)            
+ * @property {ActRelationship} relationship.Evaluates             Used to link a goal to an observation            
+ * @property {ActRelationship} relationship.Fulfills             Indicates that the source act fulfills the target act            
+ * @property {ActRelationship} relationship.HasAuthorization             Indicates that the target act authorizes the source act            
+ * @property {ActRelationship} relationship.HasComponent             Indicates that the target act is a component of the source act            
+ * @property {ActRelationship} relationship.HasControlVariable             Relationship from an act to one or more control variables (for example: device settings, or environment)            
+ * @property {ActRelationship} relationship.HasManifestation             The assertion that a new observation may be a manifestation of another            
+ * @property {ActRelationship} relationship.HasPrecondition             Indicates that the target act is a pre-condition of the source act            
+ * @property {ActRelationship} relationship.HasReason             Indicates a reasoning as to why the source act is occurring            
+ * @property {ActRelationship} relationship.HasReferenceValues             Indicates that the source act contains reference values from the target            
+ * @property {ActRelationship} relationship.HasSubject             Indicates the subject of a particular act (example: clinical act is a subject of a control act)            
+ * @property {ActRelationship} relationship.HasSupport             Indicates an existing act is suggesting evidence for a new observation.            
+ * @property {ActRelationship} relationship.IsCauseOf             Indicates that the source act is the cause of the target act            
+ * @property {ActRelationship} relationship.IsDerivedFrom             Indicates the source act is derived from information contained in the target act            
+ * @property {ActRelationship} relationship.IsExcerptOf             Indicates that the source act is an excerpt of the target act            
+ * @property {ActRelationship} relationship.RefersTo             Indicates that the source act refers to the target act            
+ * @property {ActRelationship} relationship.Replaces             The source act replaces the target act            
+ * @property {ActRelationship} relationship.StartsAfterStartOf             Indicates that the source act starts after the start of another act            
+ * @property {ActRelationship} relationship.Transforms             Indicates that the source act transforms the target act            
+ * @property {ActRelationship} relationship.Duplicate             Duplicate entity            
+ * @property {ActRelationship} relationship.$other Unclassified
+ * @property {SecurityPolicyInstance} policy            Gets or sets the security policy instances associated with the act            
+ * @property {object} extension            Gets a list of all extensions associated with the act            
+ * @property {string} extension.classifier  where classifier is from {@link Extension} extensionType
+ * @property {string} note            Gets a list of all notes associated with the act            
+ * @property {object} tag            Gets a list of all tags associated with the act            
+ * @property {string} tag.classifier  where classifier is from {@link Tag} key
+ * @property {ActProtocol} protocol            Identifies protocols attached to the act            
+ * @property {object} participation            Gets or sets the entities and participations they play in the act            
+ * @property {ActParticipation} participation.Admitter             The player entity was the person who was responsible for admitting the patient into a facility or care scenario.            
+ * @property {ActParticipation} participation.Attender             The player entity represents the attending physician for the patient            
+ * @property {ActParticipation} participation.Authenticator             The player entity represents an entity which authenticates the provision of care            
+ * @property {ActParticipation} participation.Authororiginator             The player entity is responsible for the creation of data described in the act            
+ * @property {ActParticipation} participation.Baby             The player is a resultant person in that it was the baby             
+ * @property {ActParticipation} participation.Beneficiary             The player is a beneficiary of the act such a receiver of a financial instrument, or other good            
+ * @property {ActParticipation} participation.CallbackContact             The player entity represents something that should be contacted upon completion of the act            
+ * @property {ActParticipation} participation.CausativeAgent             The player entity is an agent which caused the act to occur            
+ * @property {ActParticipation} participation.Consultant             The player entity is acting as a consult to the carrying out of the act            
+ * @property {ActParticipation} participation.Consumable             The player entity was or is to be consumed during the process of carrying out the act.            
+ * @property {ActParticipation} participation.CoverageTarget             The player entity represents the target coverage entity of the act            
+ * @property {ActParticipation} participation.Custodian             The player entity is the data custodian of the act (is responsible for storing and securing the act)            
+ * @property {ActParticipation} participation.DataEnterer             The player entity represents the person or device which phisically entered the data at the terminal            
+ * @property {ActParticipation} participation.Destination             The player etity represents the ultimate destination of the goods/materials/services described in the act            
+ * @property {ActParticipation} participation.Device             The player entity represents the device on which the act or data from the act was acquired or recorded            
+ * @property {ActParticipation} participation.DirectTarget             The player entity represents the directed target of care provided in the act            
+ * @property {ActParticipation} participation.Discharger             The player entity represents the person who is responsible for the discharging of the patient from an encounter            
+ * @property {ActParticipation} participation.Distributor             The player entity is the source distribution point for the financial or material instruments contained in the message            
+ * @property {ActParticipation} participation.Donor             The player entity represents the donor of tissue or materials used in the act            
+ * @property {ActParticipation} participation.EntryLocation             The location where the act was entered.            
+ * @property {ActParticipation} participation.Escort             The player entity was responsible for escorting the patient during the course of the act            
+ * @property {ActParticipation} participation.Exposure             The player entity something to which the patient was exposed            
+ * @property {ActParticipation} participation.ExposureAgent             The player entity represents the agent (material) to which the patient was exposed            
+ * @property {ActParticipation} participation.ExposureSource             The player entity describes the source of the material to which the patient was exposed            
+ * @property {ActParticipation} participation.ExposureTarget             The player entity describes the target to which the agent was exposed            
+ * @property {ActParticipation} participation.GuarantorParty             The player represents a party which is used as a financial guarantor for payment in the carrying out of the act            
+ * @property {ActParticipation} participation.Holder             The player is responsible for holding the act            
+ * @property {ActParticipation} participation.IndirectTarget             The entity not directly present in the act but which will be the focust of th act.            
+ * @property {ActParticipation} participation.Informant             The player was a person or device which informed data presented in the act. (Example: A mother telling a nurse that their child had a reaction)            
+ * @property {ActParticipation} participation.InformationRecipient             The player entity represents something that should be cc'ed on the act            
+ * @property {ActParticipation} participation.LegalAuthenticator             The player entity is responsible for legally authenticating the content of the act            
+ * @property {ActParticipation} participation.Location             The location where the service was performed.            
+ * @property {ActParticipation} participation.NonreuseableDevice             The player represents a consumable that can no longer be used            
+ * @property {ActParticipation} participation.Origin             The player represents the origin of the act            
+ * @property {ActParticipation} participation.Participation             The player entity participates in the act in no particular classification            
+ * @property {ActParticipation} participation.Performer             The player entity is responsible for performing the clinical steps documented in the act            
+ * @property {ActParticipation} participation.PrimaryInformationRecipient             The player entity represents a high priority contact which should be informed or cc'ed on the act            
+ * @property {ActParticipation} participation.PrimaryPerformer             The player entity was the primary performer of the act. This is used in procedures where more than one performer is present            
+ * @property {ActParticipation} participation.Product             The player represents a product that is not necessarily consumed but informs the act            
+ * @property {ActParticipation} participation.Receiver             The player represents the entity which is the intended receiver of the act            
+ * @property {ActParticipation} participation.RecordTarget             The player represents the entity to which the act is recorded against            
+ * @property {ActParticipation} participation.ReferredBy             The player represents the entity which referred the act or caused the act to be undertaken            
+ * @property {ActParticipation} participation.ReferredTo             The player entity represents the entity which was referred to            
+ * @property {ActParticipation} participation.Referrer             The player entity represents the person who was originally the referrer.            
+ * @property {ActParticipation} participation.Remote             The player entity represents a remote portion of the act            
+ * @property {ActParticipation} participation.ResponsibleParty             The player entity is ultimately responsible for the carrying out of the act            
+ * @property {ActParticipation} participation.ReusableDevice             The player entity represents a device which can be reused in future acts            
+ * @property {ActParticipation} participation.SecondaryPerformer             The secondary performing person (support clinician).            
+ * @property {ActParticipation} participation.Specimen             The player entity represents a specimen collected for the purpose of testing and diagnosis            
+ * @property {ActParticipation} participation.Subject             The player entity is the subject of an act, but not necessarily the record target (meaning the act is about a particular entity but not to be attached to their record)            
+ * @property {ActParticipation} participation.Tracker             The player entity is responsible for tracking the progress of the act            
+ * @property {ActParticipation} participation.Transcriber             The person who transcribed data from the original act.            
+ * @property {ActParticipation} participation.UgentNotificationContact             The player entity represents a contact entity in case of an emergency occurs during the act.            
+ * @property {ActParticipation} participation.Verifier             The player entity was responsible for verifying the accuracy of the data in the act            
+ * @property {ActParticipation} participation.Via             The player entity represents an entity where the act occurred "via" this entity (i.e. in transport)            
+ * @property {ActParticipation} participation.Witness             The player entity represents a legal witness to the act occurring.            
+ * @property {ActParticipation} participation.$other Unclassified
+ * @property {GeoTag} geo            Gets or sets the geo-tag            
+ * @property {string} previousVersion
+ * @property {string} version
+ * @property {number} sequence
+ * @property {Date} creationTimeModel [Delay loaded from creationTime],             Gets or sets the time at which the data was created            
+ * @property {Date} creationTime            Gets or sets the creation time as an ISO date format            
+ * @property {Date} obsoletionTimeModel [Delay loaded from obsoletionTime],             Gets or sets the time when the data is or will become invalid            
+ * @property {Date} obsoletionTime            Gets or sets the time that the data is no longer valid (was deleted/obsoleted) in ISO format            
+ * @property {SecurityProvenance} createdByModel [Delay loaded from createdBy],             Gets or sets the user that created this base data            
+ * @property {Date} modifiedOn            Gets the time that the object was last modified (from base data, default to CreationTime)            
+ * @property {SecurityProvenance} obsoletedByModel [Delay loaded from obsoletedBy],             Gets or sets the user that obsoleted this base data            
+ * @property {string} createdBy            Gets or sets the security provenance object which represents the creation of this object            
+ * @property {string} obsoletedBy            Gets or sets the security provenance object which represents the obsoletion of this data            
+ * @property {string} id            Gets or sets the primary identifying UUID of this object            
+ * @property {string} $type            Gets the type registration of this object            
+ * @param {Act} copyData Copy constructor (if present)
+ */
+function Act (copyData) { 
+	this.$type = 'Act';
+	if(copyData) {
+	/** @type {string} */
+	this.id = copyData.id;
+	/** @type {string} */
+	this.obsoletedBy = copyData.obsoletedBy;
+	/** @type {string} */
+	this.createdBy = copyData.createdBy;
+	/** @type {SecurityProvenance} */
+	this.obsoletedByModel = copyData.obsoletedByModel;
+	/** @type {Date} */
+	this.modifiedOn = copyData.modifiedOn;
+	/** @type {SecurityProvenance} */
+	this.createdByModel = copyData.createdByModel;
+	/** @type {Date} */
+	this.obsoletionTime = copyData.obsoletionTime;
+	/** @type {Date} */
+	this.obsoletionTimeModel = copyData.obsoletionTimeModel;
+	/** @type {Date} */
+	this.creationTime = copyData.creationTime;
+	/** @type {Date} */
+	this.creationTimeModel = copyData.creationTimeModel;
+	/** @type {number} */
+	this.sequence = copyData.sequence;
+	/** @type {string} */
+	this.version = copyData.version;
+	/** @type {string} */
+	this.previousVersion = copyData.previousVersion;
+	/** @type {GeoTag} */
+	this.geo = copyData.geo;
 	/** @type {object} */
 	this.participation = copyData.participation;
 	/** @type {ActProtocol} */
@@ -7448,13 +8608,13 @@ function Act (copyData) {
 	this.isNegated = copyData.isNegated;
 	}
 }  // Act 
-// SanteDB.Core.Model.Acts.ActParticipation, SanteDB.Core.Model, Version=1.1.0.35405, Culture=neutral, PublicKeyToken=null
-if(!ActParticipation)
+// SanteDB.Core.Model.Acts.ActParticipation, SanteDB.Core.Model, Version=2.0.0.0, Culture=neutral, PublicKeyToken=null
+//if(!ActParticipation)
 /**
  * @class
  * @constructor
- * @memberof SanteDBModel
  * @public
+ * @extends VersionedAssociation
  * @summary             Associates an entity which participates in an act            
  * @description 
  *             An act participation instance is used to link an  entity instance to an  act instance. It is said that the
@@ -7475,8 +8635,8 @@ if(!ActParticipation)
  * @property {Date} modifiedOn
  * @property {string} source
  * @property {Act} sourceModel [Delay loaded from source], 
- * @property {string} id            The internal primary key value of the entity            
- * @property {string} $type            Gets the type            
+ * @property {string} id            Gets or sets the primary identifying UUID of this object            
+ * @property {string} $type            Gets the type registration of this object            
  * @param {ActParticipation} copyData Copy constructor (if present)
  */
 function ActParticipation (copyData) { 
@@ -7510,13 +8670,13 @@ function ActParticipation (copyData) {
 	this.player = copyData.player;
 	}
 }  // ActParticipation 
-// SanteDB.Core.Model.Acts.ActProtocol, SanteDB.Core.Model, Version=1.1.0.35405, Culture=neutral, PublicKeyToken=null
-if(!ActProtocol)
+// SanteDB.Core.Model.Acts.ActProtocol, SanteDB.Core.Model, Version=2.0.0.0, Culture=neutral, PublicKeyToken=null
+//if(!ActProtocol)
 /**
  * @class
  * @constructor
- * @memberof SanteDBModel
  * @public
+ * @extends Association
  * @summary             Represents information related to the clinical protocol to which an act is a member of            
  * @description 
  *             The  class is used to link an act instance  with the clinical 
@@ -7529,8 +8689,8 @@ if(!ActProtocol)
  * @property {Date} modifiedOn
  * @property {string} source
  * @property {Act} sourceModel [Delay loaded from source], 
- * @property {string} id            The internal primary key value of the entity            
- * @property {string} $type            Gets the type            
+ * @property {string} id            Gets or sets the primary identifying UUID of this object            
+ * @property {string} $type            Gets the type registration of this object            
  * @param {ActProtocol} copyData Copy constructor (if present)
  */
 function ActProtocol (copyData) { 
@@ -7554,13 +8714,13 @@ function ActProtocol (copyData) {
 	this.protocol = copyData.protocol;
 	}
 }  // ActProtocol 
-// SanteDB.Core.Model.Acts.ActRelationship, SanteDB.Core.Model, Version=1.1.0.35405, Culture=neutral, PublicKeyToken=null
-if(!ActRelationship)
+// SanteDB.Core.Model.Acts.ActRelationship, SanteDB.Core.Model, Version=2.0.0.0, Culture=neutral, PublicKeyToken=null
+//if(!ActRelationship)
 /**
  * @class
  * @constructor
- * @memberof SanteDBModel
  * @public
+ * @extends VersionedAssociation
  * @summary             Used to link two or more acts together            
  * @description 
  *             An act relationship is used to link a source act with a target act  in a particular type of 
@@ -7576,8 +8736,8 @@ if(!ActRelationship)
  * @property {Date} modifiedOn
  * @property {string} source
  * @property {Act} sourceModel [Delay loaded from source], 
- * @property {string} id            The internal primary key value of the entity            
- * @property {string} $type            Gets the type            
+ * @property {string} id            Gets or sets the primary identifying UUID of this object            
+ * @property {string} $type            Gets the type registration of this object            
  * @param {ActRelationship} copyData Copy constructor (if present)
  */
 function ActRelationship (copyData) { 
@@ -7605,13 +8765,13 @@ function ActRelationship (copyData) {
 	this.target = copyData.target;
 	}
 }  // ActRelationship 
-// SanteDB.Core.Model.Acts.CarePlan, SanteDB.Core.Model, Version=1.1.0.35405, Culture=neutral, PublicKeyToken=null
-if(!CarePlan)
+// SanteDB.Core.Model.Acts.CarePlan, SanteDB.Core.Model, Version=2.0.0.0, Culture=neutral, PublicKeyToken=null
+//if(!CarePlan)
 /**
  * @class
  * @constructor
- * @memberof SanteDBModel
  * @public
+ * @extends BaseEntityData
  * @summary             Represents a care plan            
  * @description 
  *             The care plan object is used to represent a collection of clinical protocols which the care planning
@@ -7633,18 +8793,24 @@ if(!CarePlan)
  * @property {Act} act.SubstanceAdministration             The act represents that a substance (medication, or otherwise) was, should, or will be administered to the patient.            
  * @property {Act} act.Supply             The act represents a supply of some material or financial instrument between entities.            
  * @property {Act} act.Transport             The physical transporting of materials or people from one place to another.            
+ * @property {Act} act.Contract             Represents a contract            
+ * @property {Act} act.FinancialContract             Represents a financial contract            
+ * @property {Act} act.Account             Represents an account for tracking financial obligations            
+ * @property {Act} act.FinancialTransaction             Represents a single financial transaction            
+ * @property {Act} act.InvoiceElement             Represents a single invoice element            
+ * @property {Act} act.List             List            
  * @property {Act} act.$other Unclassified
  * @property {Date} creationTimeModel [Delay loaded from creationTime],             Gets or sets the time at which the data was created            
- * @property {Date} creationTime            Gets or sets the creation time in XML format            
+ * @property {Date} creationTime            Gets or sets the creation time as an ISO date format            
  * @property {Date} obsoletionTimeModel [Delay loaded from obsoletionTime],             Gets or sets the time when the data is or will become invalid            
- * @property {Date} obsoletionTime            Gets or sets the creation time in XML format            
- * @property {SecurityUser} createdByModel [Delay loaded from createdBy],             Gets or sets the user that created this base data            
+ * @property {Date} obsoletionTime            Gets or sets the time that the data is no longer valid (was deleted/obsoleted) in ISO format            
+ * @property {SecurityProvenance} createdByModel [Delay loaded from createdBy],             Gets or sets the user that created this base data            
  * @property {Date} modifiedOn            Gets the time that the object was last modified (from base data, default to CreationTime)            
- * @property {SecurityUser} obsoletedByModel [Delay loaded from obsoletedBy],             Gets or sets the user that obsoleted this base data            
- * @property {string} createdBy            Gets or sets the identifier of the user which created the data            
- * @property {string} obsoletedBy            Gets or sets the identifier of the user which obsoleted the data            
- * @property {string} id            The internal primary key value of the entity            
- * @property {string} $type            Gets the type            
+ * @property {SecurityProvenance} obsoletedByModel [Delay loaded from obsoletedBy],             Gets or sets the user that obsoleted this base data            
+ * @property {string} createdBy            Gets or sets the security provenance object which represents the creation of this object            
+ * @property {string} obsoletedBy            Gets or sets the security provenance object which represents the obsoletion of this data            
+ * @property {string} id            Gets or sets the primary identifying UUID of this object            
+ * @property {string} $type            Gets the type registration of this object            
  * @param {CarePlan} copyData Copy constructor (if present)
  */
 function CarePlan (copyData) { 
@@ -7656,11 +8822,11 @@ function CarePlan (copyData) {
 	this.obsoletedBy = copyData.obsoletedBy;
 	/** @type {string} */
 	this.createdBy = copyData.createdBy;
-	/** @type {SecurityUser} */
+	/** @type {SecurityProvenance} */
 	this.obsoletedByModel = copyData.obsoletedByModel;
 	/** @type {Date} */
 	this.modifiedOn = copyData.modifiedOn;
-	/** @type {SecurityUser} */
+	/** @type {SecurityProvenance} */
 	this.createdByModel = copyData.createdByModel;
 	/** @type {Date} */
 	this.obsoletionTime = copyData.obsoletionTime;
@@ -7676,21 +8842,19 @@ function CarePlan (copyData) {
 	this.target = copyData.target;
 	}
 }  // CarePlan 
-// SanteDB.Core.Model.Acts.ControlAct, SanteDB.Core.Model, Version=1.1.0.35405, Culture=neutral, PublicKeyToken=null
-if(!ControlAct)
+// SanteDB.Core.Model.Acts.ControlAct, SanteDB.Core.Model, Version=2.0.0.0, Culture=neutral, PublicKeyToken=null
+//if(!ControlAct)
 /**
  * @class
  * @constructor
- * @memberof SanteDBModel
  * @public
- * @extends Act
  * @summary             Represents an act which indicates why data was created/changed            
  * @property {boolean} isNegated            Gets or sets an indicator which identifies whether the act actually occurred, or            specifically did not occur            
- * @property {string} template            Gets the template key            
+ * @property {string} template            Gets the template UUID upon which this act is based            
  * @property {TemplateDefinition} templateModel [Delay loaded from template],             Gets or sets the template definition            
- * @property {Date} actTime            Gets or sets the creation time in XML format            
- * @property {Date} startTime            Gets or sets the creation time in XML format            
- * @property {Date} stopTime            Gets or sets the creation time in XML format            
+ * @property {Date} actTime            Gets or sets the moment in time that this act occurred in ISO format            
+ * @property {Date} startTime            Gets or sets the time when the act should or did start ocurring in ISO format            
+ * @property {Date} stopTime            Gets or sets the time when the act should or did stop ocurring in ISO format            
  * @property {string} classConcept            Gets or sets the key of the concept which classifies the act.            (see: {@link ActClassKeys} for values)
  * @property {string} moodConcept            Gets or sets the key of the concept which specifies the mood of the act.            (see: {@link ActMoodKeys} for values)
  * @property {string} reasonConcept            Gets or sets the key of the concept which defines the reason why the act is or didn't occur            (see: {@link ActReasonKeys} for values)
@@ -7727,6 +8891,7 @@ if(!ControlAct)
  * @property {ActRelationship} relationship.Replaces             The source act replaces the target act            
  * @property {ActRelationship} relationship.StartsAfterStartOf             Indicates that the source act starts after the start of another act            
  * @property {ActRelationship} relationship.Transforms             Indicates that the source act transforms the target act            
+ * @property {ActRelationship} relationship.Duplicate             Duplicate entity            
  * @property {ActRelationship} relationship.$other Unclassified
  * @property {SecurityPolicyInstance} policy            Gets or sets the security policy instances associated with the act            
  * @property {object} extension            Gets a list of all extensions associated with the act            
@@ -7793,20 +8958,21 @@ if(!ControlAct)
  * @property {ActParticipation} participation.Via             The player entity represents an entity where the act occurred "via" this entity (i.e. in transport)            
  * @property {ActParticipation} participation.Witness             The player entity represents a legal witness to the act occurring.            
  * @property {ActParticipation} participation.$other Unclassified
+ * @property {GeoTag} geo            Gets or sets the geo-tag            
  * @property {string} previousVersion
  * @property {string} version
  * @property {number} sequence
  * @property {Date} creationTimeModel [Delay loaded from creationTime],             Gets or sets the time at which the data was created            
- * @property {Date} creationTime            Gets or sets the creation time in XML format            
+ * @property {Date} creationTime            Gets or sets the creation time as an ISO date format            
  * @property {Date} obsoletionTimeModel [Delay loaded from obsoletionTime],             Gets or sets the time when the data is or will become invalid            
- * @property {Date} obsoletionTime            Gets or sets the creation time in XML format            
- * @property {SecurityUser} createdByModel [Delay loaded from createdBy],             Gets or sets the user that created this base data            
+ * @property {Date} obsoletionTime            Gets or sets the time that the data is no longer valid (was deleted/obsoleted) in ISO format            
+ * @property {SecurityProvenance} createdByModel [Delay loaded from createdBy],             Gets or sets the user that created this base data            
  * @property {Date} modifiedOn            Gets the time that the object was last modified (from base data, default to CreationTime)            
- * @property {SecurityUser} obsoletedByModel [Delay loaded from obsoletedBy],             Gets or sets the user that obsoleted this base data            
- * @property {string} createdBy            Gets or sets the identifier of the user which created the data            
- * @property {string} obsoletedBy            Gets or sets the identifier of the user which obsoleted the data            
- * @property {string} id            The internal primary key value of the entity            
- * @property {string} $type            Gets the type            
+ * @property {SecurityProvenance} obsoletedByModel [Delay loaded from obsoletedBy],             Gets or sets the user that obsoleted this base data            
+ * @property {string} createdBy            Gets or sets the security provenance object which represents the creation of this object            
+ * @property {string} obsoletedBy            Gets or sets the security provenance object which represents the obsoletion of this data            
+ * @property {string} id            Gets or sets the primary identifying UUID of this object            
+ * @property {string} $type            Gets the type registration of this object            
  * @param {ControlAct} copyData Copy constructor (if present)
  */
 function ControlAct (copyData) { 
@@ -7818,11 +8984,11 @@ function ControlAct (copyData) {
 	this.obsoletedBy = copyData.obsoletedBy;
 	/** @type {string} */
 	this.createdBy = copyData.createdBy;
-	/** @type {SecurityUser} */
+	/** @type {SecurityProvenance} */
 	this.obsoletedByModel = copyData.obsoletedByModel;
 	/** @type {Date} */
 	this.modifiedOn = copyData.modifiedOn;
-	/** @type {SecurityUser} */
+	/** @type {SecurityProvenance} */
 	this.createdByModel = copyData.createdByModel;
 	/** @type {Date} */
 	this.obsoletionTime = copyData.obsoletionTime;
@@ -7838,6 +9004,8 @@ function ControlAct (copyData) {
 	this.version = copyData.version;
 	/** @type {string} */
 	this.previousVersion = copyData.previousVersion;
+	/** @type {GeoTag} */
+	this.geo = copyData.geo;
 	/** @type {object} */
 	this.participation = copyData.participation;
 	/** @type {ActProtocol} */
@@ -7888,31 +9056,24 @@ function ControlAct (copyData) {
 	this.isNegated = copyData.isNegated;
 	}
 }  // ControlAct 
-// SanteDB.Core.Model.Acts.Observation, SanteDB.Core.Model, Version=1.1.0.35405, Culture=neutral, PublicKeyToken=null
-if(!Observation)
+// SanteDB.Core.Model.Acts.FinancialContract, SanteDB.Core.Model, Version=2.0.0.0, Culture=neutral, PublicKeyToken=null
+//if(!FinancialContract)
 /**
  * @class
  * @constructor
- * @memberof SanteDBModel
  * @public
- * @extends Act
- * @summary             Represents a act () which is an observation            
- * @description 
- *             The observation class itself is an abstract class which is generically used to represent something that is observed about a patient.
- *             
- *             It is not recommended to use this class directly, rather one of its sub classes based on the type of observation being made such as:
- *             Coded observation  for observations whose values are codified (example: blood type, presentation, etc.), Quantity observations  for observations whose values are quantified values (example: weight, height, etc.), Text observations  for observations whose values are textual in nature.
- *             No matter what type of value an observation carries (coded, quantity, text) it is always classified by the type concept .
- *             
- * @property {string} interpretationConcept            Gets or sets the interpretation concept            
- * @property {string} valueType            Value type            
- * @property {Concept} interpretationConceptModel [Delay loaded from interpretationConcept],             Gets or sets the concept which indicates the interpretation of the observtion            
+ * @summary             Represents a financial contract which is executed between two parties (examples: insurance)            
+ * @description A financial contract represents a contract between two parties whereby there is a financial 
+ *             motive involved. This can be a contract between an employer and an employee, two or more clinics,
+ *             or even an insurance policy
+ * @property {string} paymentTerms            Gets or sets the payment terms            
+ * @property {Concept} paymentTermsModel [Delay loaded from paymentTerms],             Gets or sets the payment terms            
  * @property {boolean} isNegated            Gets or sets an indicator which identifies whether the act actually occurred, or            specifically did not occur            
- * @property {string} template            Gets the template key            
+ * @property {string} template            Gets the template UUID upon which this act is based            
  * @property {TemplateDefinition} templateModel [Delay loaded from template],             Gets or sets the template definition            
- * @property {Date} actTime            Gets or sets the creation time in XML format            
- * @property {Date} startTime            Gets or sets the creation time in XML format            
- * @property {Date} stopTime            Gets or sets the creation time in XML format            
+ * @property {Date} actTime            Gets or sets the moment in time that this act occurred in ISO format            
+ * @property {Date} startTime            Gets or sets the time when the act should or did start ocurring in ISO format            
+ * @property {Date} stopTime            Gets or sets the time when the act should or did stop ocurring in ISO format            
  * @property {string} classConcept            Gets or sets the key of the concept which classifies the act.            (see: {@link ActClassKeys} for values)
  * @property {string} moodConcept            Gets or sets the key of the concept which specifies the mood of the act.            (see: {@link ActMoodKeys} for values)
  * @property {string} reasonConcept            Gets or sets the key of the concept which defines the reason why the act is or didn't occur            (see: {@link ActReasonKeys} for values)
@@ -7949,6 +9110,7 @@ if(!Observation)
  * @property {ActRelationship} relationship.Replaces             The source act replaces the target act            
  * @property {ActRelationship} relationship.StartsAfterStartOf             Indicates that the source act starts after the start of another act            
  * @property {ActRelationship} relationship.Transforms             Indicates that the source act transforms the target act            
+ * @property {ActRelationship} relationship.Duplicate             Duplicate entity            
  * @property {ActRelationship} relationship.$other Unclassified
  * @property {SecurityPolicyInstance} policy            Gets or sets the security policy instances associated with the act            
  * @property {object} extension            Gets a list of all extensions associated with the act            
@@ -8015,24 +9177,25 @@ if(!Observation)
  * @property {ActParticipation} participation.Via             The player entity represents an entity where the act occurred "via" this entity (i.e. in transport)            
  * @property {ActParticipation} participation.Witness             The player entity represents a legal witness to the act occurring.            
  * @property {ActParticipation} participation.$other Unclassified
+ * @property {GeoTag} geo            Gets or sets the geo-tag            
  * @property {string} previousVersion
  * @property {string} version
  * @property {number} sequence
  * @property {Date} creationTimeModel [Delay loaded from creationTime],             Gets or sets the time at which the data was created            
- * @property {Date} creationTime            Gets or sets the creation time in XML format            
+ * @property {Date} creationTime            Gets or sets the creation time as an ISO date format            
  * @property {Date} obsoletionTimeModel [Delay loaded from obsoletionTime],             Gets or sets the time when the data is or will become invalid            
- * @property {Date} obsoletionTime            Gets or sets the creation time in XML format            
- * @property {SecurityUser} createdByModel [Delay loaded from createdBy],             Gets or sets the user that created this base data            
+ * @property {Date} obsoletionTime            Gets or sets the time that the data is no longer valid (was deleted/obsoleted) in ISO format            
+ * @property {SecurityProvenance} createdByModel [Delay loaded from createdBy],             Gets or sets the user that created this base data            
  * @property {Date} modifiedOn            Gets the time that the object was last modified (from base data, default to CreationTime)            
- * @property {SecurityUser} obsoletedByModel [Delay loaded from obsoletedBy],             Gets or sets the user that obsoleted this base data            
- * @property {string} createdBy            Gets or sets the identifier of the user which created the data            
- * @property {string} obsoletedBy            Gets or sets the identifier of the user which obsoleted the data            
- * @property {string} id            The internal primary key value of the entity            
- * @property {string} $type            Gets the type            
- * @param {Observation} copyData Copy constructor (if present)
+ * @property {SecurityProvenance} obsoletedByModel [Delay loaded from obsoletedBy],             Gets or sets the user that obsoleted this base data            
+ * @property {string} createdBy            Gets or sets the security provenance object which represents the creation of this object            
+ * @property {string} obsoletedBy            Gets or sets the security provenance object which represents the obsoletion of this data            
+ * @property {string} id            Gets or sets the primary identifying UUID of this object            
+ * @property {string} $type            Gets the type registration of this object            
+ * @param {FinancialContract} copyData Copy constructor (if present)
  */
-function Observation (copyData) { 
-	this.$type = 'Observation';
+function FinancialContract (copyData) { 
+	this.$type = 'FinancialContract';
 	if(copyData) {
 	/** @type {string} */
 	this.id = copyData.id;
@@ -8040,11 +9203,11 @@ function Observation (copyData) {
 	this.obsoletedBy = copyData.obsoletedBy;
 	/** @type {string} */
 	this.createdBy = copyData.createdBy;
-	/** @type {SecurityUser} */
+	/** @type {SecurityProvenance} */
 	this.obsoletedByModel = copyData.obsoletedByModel;
 	/** @type {Date} */
 	this.modifiedOn = copyData.modifiedOn;
-	/** @type {SecurityUser} */
+	/** @type {SecurityProvenance} */
 	this.createdByModel = copyData.createdByModel;
 	/** @type {Date} */
 	this.obsoletionTime = copyData.obsoletionTime;
@@ -8060,6 +9223,705 @@ function Observation (copyData) {
 	this.version = copyData.version;
 	/** @type {string} */
 	this.previousVersion = copyData.previousVersion;
+	/** @type {GeoTag} */
+	this.geo = copyData.geo;
+	/** @type {object} */
+	this.participation = copyData.participation;
+	/** @type {ActProtocol} */
+	this.protocol = copyData.protocol;
+	/** @type {object} */
+	this.tag = copyData.tag;
+	/** @type {string} */
+	this.note = copyData.note;
+	/** @type {object} */
+	this.extension = copyData.extension;
+	/** @type {SecurityPolicyInstance} */
+	this.policy = copyData.policy;
+	/** @type {object} */
+	this.relationship = copyData.relationship;
+	/** @type {object} */
+	this.identifier = copyData.identifier;
+	/** @type {Concept} */
+	this.typeConceptModel = copyData.typeConceptModel;
+	/** @type {Concept} */
+	this.statusConceptModel = copyData.statusConceptModel;
+	/** @type {Concept} */
+	this.reasonConceptModel = copyData.reasonConceptModel;
+	/** @type {Concept} */
+	this.moodConceptModel = copyData.moodConceptModel;
+	/** @type {Concept} */
+	this.classConceptModel = copyData.classConceptModel;
+	/** @type {string} */
+	this.typeConcept = copyData.typeConcept;
+	/** @type {string} */
+	this.statusConcept = copyData.statusConcept;
+	/** @type {string} */
+	this.reasonConcept = copyData.reasonConcept;
+	/** @type {string} */
+	this.moodConcept = copyData.moodConcept;
+	/** @type {string} */
+	this.classConcept = copyData.classConcept;
+	/** @type {Date} */
+	this.stopTime = copyData.stopTime;
+	/** @type {Date} */
+	this.startTime = copyData.startTime;
+	/** @type {Date} */
+	this.actTime = copyData.actTime;
+	/** @type {TemplateDefinition} */
+	this.templateModel = copyData.templateModel;
+	/** @type {string} */
+	this.template = copyData.template;
+	/** @type {boolean} */
+	this.isNegated = copyData.isNegated;
+	/** @type {Concept} */
+	this.paymentTermsModel = copyData.paymentTermsModel;
+	/** @type {string} */
+	this.paymentTerms = copyData.paymentTerms;
+	}
+}  // FinancialContract 
+// SanteDB.Core.Model.Acts.FinancialTransaction, SanteDB.Core.Model, Version=2.0.0.0, Culture=neutral, PublicKeyToken=null
+//if(!FinancialTransaction)
+/**
+ * @class
+ * @constructor
+ * @public
+ * @summary             Represents an act whereby financial devices are exchanged between accounts            
+ * @property {number} amount            Gets or sets the amount of the financial transaction            
+ * @property {string} currency            Gets or sets the currency key            
+ * @property {Concept} currencyModel [Delay loaded from currency],             Gets or sets the currency             
+ * @property {Single} creditExchange            Gets or sets the crediting exchange rate            
+ * @property {Single} debitExchange            Gets or sets the debit exchange rate            
+ * @property {boolean} isNegated            Gets or sets an indicator which identifies whether the act actually occurred, or            specifically did not occur            
+ * @property {string} template            Gets the template UUID upon which this act is based            
+ * @property {TemplateDefinition} templateModel [Delay loaded from template],             Gets or sets the template definition            
+ * @property {Date} actTime            Gets or sets the moment in time that this act occurred in ISO format            
+ * @property {Date} startTime            Gets or sets the time when the act should or did start ocurring in ISO format            
+ * @property {Date} stopTime            Gets or sets the time when the act should or did stop ocurring in ISO format            
+ * @property {string} classConcept            Gets or sets the key of the concept which classifies the act.            (see: {@link ActClassKeys} for values)
+ * @property {string} moodConcept            Gets or sets the key of the concept which specifies the mood of the act.            (see: {@link ActMoodKeys} for values)
+ * @property {string} reasonConcept            Gets or sets the key of the concept which defines the reason why the act is or didn't occur            (see: {@link ActReasonKeys} for values)
+ * @property {string} statusConcept            Gets or sets the key of the concept which describes the current status of the act            (see: {@link StatusKeys} for values)
+ * @property {string} typeConcept            Gets or sets the key of the conccept which further classifies the type of act occurring            
+ * @property {Concept} classConceptModel [Delay loaded from classConcept],             Gets or sets the concept which classifies the type of act            
+ * @property {Concept} moodConceptModel [Delay loaded from moodConcept],             Gets or sets the concept which specifies the mood of the act            
+ * @property {Concept} reasonConceptModel [Delay loaded from reasonConcept],             Gets or sets the concept which indicates the reason of the act            
+ * @property {Concept} statusConceptModel [Delay loaded from statusConcept],             Gets or sets the current status concept of the act            
+ * @property {Concept} typeConceptModel [Delay loaded from typeConcept],             Type concept identifier            
+ * @property {object} identifier            Gets or sets the identifiers by which this act is known as in other systems            
+ * @property {ActIdentifier} identifier.classifier  where classifier is from {@link IdentifierBase} authority
+ * @property {object} relationship            Gets a list of all associated acts for this act            
+ * @property {ActRelationship} relationship.Appends             Indicates that the source act appends information contained in the target act            
+ * @property {ActRelationship} relationship.Arrival             Links the transortation act from another act            
+ * @property {ActRelationship} relationship.Departure             Links a transporation act from another act indicating departure of the subject            
+ * @property {ActRelationship} relationship.Documents             The source act documents the target act            
+ * @property {ActRelationship} relationship.EpisodeLink             Links two instances of the same act over time (example: chronic conditions)            
+ * @property {ActRelationship} relationship.Evaluates             Used to link a goal to an observation            
+ * @property {ActRelationship} relationship.Fulfills             Indicates that the source act fulfills the target act            
+ * @property {ActRelationship} relationship.HasAuthorization             Indicates that the target act authorizes the source act            
+ * @property {ActRelationship} relationship.HasComponent             Indicates that the target act is a component of the source act            
+ * @property {ActRelationship} relationship.HasControlVariable             Relationship from an act to one or more control variables (for example: device settings, or environment)            
+ * @property {ActRelationship} relationship.HasManifestation             The assertion that a new observation may be a manifestation of another            
+ * @property {ActRelationship} relationship.HasPrecondition             Indicates that the target act is a pre-condition of the source act            
+ * @property {ActRelationship} relationship.HasReason             Indicates a reasoning as to why the source act is occurring            
+ * @property {ActRelationship} relationship.HasReferenceValues             Indicates that the source act contains reference values from the target            
+ * @property {ActRelationship} relationship.HasSubject             Indicates the subject of a particular act (example: clinical act is a subject of a control act)            
+ * @property {ActRelationship} relationship.HasSupport             Indicates an existing act is suggesting evidence for a new observation.            
+ * @property {ActRelationship} relationship.IsCauseOf             Indicates that the source act is the cause of the target act            
+ * @property {ActRelationship} relationship.IsDerivedFrom             Indicates the source act is derived from information contained in the target act            
+ * @property {ActRelationship} relationship.IsExcerptOf             Indicates that the source act is an excerpt of the target act            
+ * @property {ActRelationship} relationship.RefersTo             Indicates that the source act refers to the target act            
+ * @property {ActRelationship} relationship.Replaces             The source act replaces the target act            
+ * @property {ActRelationship} relationship.StartsAfterStartOf             Indicates that the source act starts after the start of another act            
+ * @property {ActRelationship} relationship.Transforms             Indicates that the source act transforms the target act            
+ * @property {ActRelationship} relationship.Duplicate             Duplicate entity            
+ * @property {ActRelationship} relationship.$other Unclassified
+ * @property {SecurityPolicyInstance} policy            Gets or sets the security policy instances associated with the act            
+ * @property {object} extension            Gets a list of all extensions associated with the act            
+ * @property {string} extension.classifier  where classifier is from {@link Extension} extensionType
+ * @property {string} note            Gets a list of all notes associated with the act            
+ * @property {object} tag            Gets a list of all tags associated with the act            
+ * @property {string} tag.classifier  where classifier is from {@link Tag} key
+ * @property {ActProtocol} protocol            Identifies protocols attached to the act            
+ * @property {object} participation            Gets or sets the entities and participations they play in the act            
+ * @property {ActParticipation} participation.Admitter             The player entity was the person who was responsible for admitting the patient into a facility or care scenario.            
+ * @property {ActParticipation} participation.Attender             The player entity represents the attending physician for the patient            
+ * @property {ActParticipation} participation.Authenticator             The player entity represents an entity which authenticates the provision of care            
+ * @property {ActParticipation} participation.Authororiginator             The player entity is responsible for the creation of data described in the act            
+ * @property {ActParticipation} participation.Baby             The player is a resultant person in that it was the baby             
+ * @property {ActParticipation} participation.Beneficiary             The player is a beneficiary of the act such a receiver of a financial instrument, or other good            
+ * @property {ActParticipation} participation.CallbackContact             The player entity represents something that should be contacted upon completion of the act            
+ * @property {ActParticipation} participation.CausativeAgent             The player entity is an agent which caused the act to occur            
+ * @property {ActParticipation} participation.Consultant             The player entity is acting as a consult to the carrying out of the act            
+ * @property {ActParticipation} participation.Consumable             The player entity was or is to be consumed during the process of carrying out the act.            
+ * @property {ActParticipation} participation.CoverageTarget             The player entity represents the target coverage entity of the act            
+ * @property {ActParticipation} participation.Custodian             The player entity is the data custodian of the act (is responsible for storing and securing the act)            
+ * @property {ActParticipation} participation.DataEnterer             The player entity represents the person or device which phisically entered the data at the terminal            
+ * @property {ActParticipation} participation.Destination             The player etity represents the ultimate destination of the goods/materials/services described in the act            
+ * @property {ActParticipation} participation.Device             The player entity represents the device on which the act or data from the act was acquired or recorded            
+ * @property {ActParticipation} participation.DirectTarget             The player entity represents the directed target of care provided in the act            
+ * @property {ActParticipation} participation.Discharger             The player entity represents the person who is responsible for the discharging of the patient from an encounter            
+ * @property {ActParticipation} participation.Distributor             The player entity is the source distribution point for the financial or material instruments contained in the message            
+ * @property {ActParticipation} participation.Donor             The player entity represents the donor of tissue or materials used in the act            
+ * @property {ActParticipation} participation.EntryLocation             The location where the act was entered.            
+ * @property {ActParticipation} participation.Escort             The player entity was responsible for escorting the patient during the course of the act            
+ * @property {ActParticipation} participation.Exposure             The player entity something to which the patient was exposed            
+ * @property {ActParticipation} participation.ExposureAgent             The player entity represents the agent (material) to which the patient was exposed            
+ * @property {ActParticipation} participation.ExposureSource             The player entity describes the source of the material to which the patient was exposed            
+ * @property {ActParticipation} participation.ExposureTarget             The player entity describes the target to which the agent was exposed            
+ * @property {ActParticipation} participation.GuarantorParty             The player represents a party which is used as a financial guarantor for payment in the carrying out of the act            
+ * @property {ActParticipation} participation.Holder             The player is responsible for holding the act            
+ * @property {ActParticipation} participation.IndirectTarget             The entity not directly present in the act but which will be the focust of th act.            
+ * @property {ActParticipation} participation.Informant             The player was a person or device which informed data presented in the act. (Example: A mother telling a nurse that their child had a reaction)            
+ * @property {ActParticipation} participation.InformationRecipient             The player entity represents something that should be cc'ed on the act            
+ * @property {ActParticipation} participation.LegalAuthenticator             The player entity is responsible for legally authenticating the content of the act            
+ * @property {ActParticipation} participation.Location             The location where the service was performed.            
+ * @property {ActParticipation} participation.NonreuseableDevice             The player represents a consumable that can no longer be used            
+ * @property {ActParticipation} participation.Origin             The player represents the origin of the act            
+ * @property {ActParticipation} participation.Participation             The player entity participates in the act in no particular classification            
+ * @property {ActParticipation} participation.Performer             The player entity is responsible for performing the clinical steps documented in the act            
+ * @property {ActParticipation} participation.PrimaryInformationRecipient             The player entity represents a high priority contact which should be informed or cc'ed on the act            
+ * @property {ActParticipation} participation.PrimaryPerformer             The player entity was the primary performer of the act. This is used in procedures where more than one performer is present            
+ * @property {ActParticipation} participation.Product             The player represents a product that is not necessarily consumed but informs the act            
+ * @property {ActParticipation} participation.Receiver             The player represents the entity which is the intended receiver of the act            
+ * @property {ActParticipation} participation.RecordTarget             The player represents the entity to which the act is recorded against            
+ * @property {ActParticipation} participation.ReferredBy             The player represents the entity which referred the act or caused the act to be undertaken            
+ * @property {ActParticipation} participation.ReferredTo             The player entity represents the entity which was referred to            
+ * @property {ActParticipation} participation.Referrer             The player entity represents the person who was originally the referrer.            
+ * @property {ActParticipation} participation.Remote             The player entity represents a remote portion of the act            
+ * @property {ActParticipation} participation.ResponsibleParty             The player entity is ultimately responsible for the carrying out of the act            
+ * @property {ActParticipation} participation.ReusableDevice             The player entity represents a device which can be reused in future acts            
+ * @property {ActParticipation} participation.SecondaryPerformer             The secondary performing person (support clinician).            
+ * @property {ActParticipation} participation.Specimen             The player entity represents a specimen collected for the purpose of testing and diagnosis            
+ * @property {ActParticipation} participation.Subject             The player entity is the subject of an act, but not necessarily the record target (meaning the act is about a particular entity but not to be attached to their record)            
+ * @property {ActParticipation} participation.Tracker             The player entity is responsible for tracking the progress of the act            
+ * @property {ActParticipation} participation.Transcriber             The person who transcribed data from the original act.            
+ * @property {ActParticipation} participation.UgentNotificationContact             The player entity represents a contact entity in case of an emergency occurs during the act.            
+ * @property {ActParticipation} participation.Verifier             The player entity was responsible for verifying the accuracy of the data in the act            
+ * @property {ActParticipation} participation.Via             The player entity represents an entity where the act occurred "via" this entity (i.e. in transport)            
+ * @property {ActParticipation} participation.Witness             The player entity represents a legal witness to the act occurring.            
+ * @property {ActParticipation} participation.$other Unclassified
+ * @property {GeoTag} geo            Gets or sets the geo-tag            
+ * @property {string} previousVersion
+ * @property {string} version
+ * @property {number} sequence
+ * @property {Date} creationTimeModel [Delay loaded from creationTime],             Gets or sets the time at which the data was created            
+ * @property {Date} creationTime            Gets or sets the creation time as an ISO date format            
+ * @property {Date} obsoletionTimeModel [Delay loaded from obsoletionTime],             Gets or sets the time when the data is or will become invalid            
+ * @property {Date} obsoletionTime            Gets or sets the time that the data is no longer valid (was deleted/obsoleted) in ISO format            
+ * @property {SecurityProvenance} createdByModel [Delay loaded from createdBy],             Gets or sets the user that created this base data            
+ * @property {Date} modifiedOn            Gets the time that the object was last modified (from base data, default to CreationTime)            
+ * @property {SecurityProvenance} obsoletedByModel [Delay loaded from obsoletedBy],             Gets or sets the user that obsoleted this base data            
+ * @property {string} createdBy            Gets or sets the security provenance object which represents the creation of this object            
+ * @property {string} obsoletedBy            Gets or sets the security provenance object which represents the obsoletion of this data            
+ * @property {string} id            Gets or sets the primary identifying UUID of this object            
+ * @property {string} $type            Gets the type registration of this object            
+ * @param {FinancialTransaction} copyData Copy constructor (if present)
+ */
+function FinancialTransaction (copyData) { 
+	this.$type = 'FinancialTransaction';
+	if(copyData) {
+	/** @type {string} */
+	this.id = copyData.id;
+	/** @type {string} */
+	this.obsoletedBy = copyData.obsoletedBy;
+	/** @type {string} */
+	this.createdBy = copyData.createdBy;
+	/** @type {SecurityProvenance} */
+	this.obsoletedByModel = copyData.obsoletedByModel;
+	/** @type {Date} */
+	this.modifiedOn = copyData.modifiedOn;
+	/** @type {SecurityProvenance} */
+	this.createdByModel = copyData.createdByModel;
+	/** @type {Date} */
+	this.obsoletionTime = copyData.obsoletionTime;
+	/** @type {Date} */
+	this.obsoletionTimeModel = copyData.obsoletionTimeModel;
+	/** @type {Date} */
+	this.creationTime = copyData.creationTime;
+	/** @type {Date} */
+	this.creationTimeModel = copyData.creationTimeModel;
+	/** @type {number} */
+	this.sequence = copyData.sequence;
+	/** @type {string} */
+	this.version = copyData.version;
+	/** @type {string} */
+	this.previousVersion = copyData.previousVersion;
+	/** @type {GeoTag} */
+	this.geo = copyData.geo;
+	/** @type {object} */
+	this.participation = copyData.participation;
+	/** @type {ActProtocol} */
+	this.protocol = copyData.protocol;
+	/** @type {object} */
+	this.tag = copyData.tag;
+	/** @type {string} */
+	this.note = copyData.note;
+	/** @type {object} */
+	this.extension = copyData.extension;
+	/** @type {SecurityPolicyInstance} */
+	this.policy = copyData.policy;
+	/** @type {object} */
+	this.relationship = copyData.relationship;
+	/** @type {object} */
+	this.identifier = copyData.identifier;
+	/** @type {Concept} */
+	this.typeConceptModel = copyData.typeConceptModel;
+	/** @type {Concept} */
+	this.statusConceptModel = copyData.statusConceptModel;
+	/** @type {Concept} */
+	this.reasonConceptModel = copyData.reasonConceptModel;
+	/** @type {Concept} */
+	this.moodConceptModel = copyData.moodConceptModel;
+	/** @type {Concept} */
+	this.classConceptModel = copyData.classConceptModel;
+	/** @type {string} */
+	this.typeConcept = copyData.typeConcept;
+	/** @type {string} */
+	this.statusConcept = copyData.statusConcept;
+	/** @type {string} */
+	this.reasonConcept = copyData.reasonConcept;
+	/** @type {string} */
+	this.moodConcept = copyData.moodConcept;
+	/** @type {string} */
+	this.classConcept = copyData.classConcept;
+	/** @type {Date} */
+	this.stopTime = copyData.stopTime;
+	/** @type {Date} */
+	this.startTime = copyData.startTime;
+	/** @type {Date} */
+	this.actTime = copyData.actTime;
+	/** @type {TemplateDefinition} */
+	this.templateModel = copyData.templateModel;
+	/** @type {string} */
+	this.template = copyData.template;
+	/** @type {boolean} */
+	this.isNegated = copyData.isNegated;
+	/** @type {Single} */
+	this.debitExchange = copyData.debitExchange;
+	/** @type {Single} */
+	this.creditExchange = copyData.creditExchange;
+	/** @type {Concept} */
+	this.currencyModel = copyData.currencyModel;
+	/** @type {string} */
+	this.currency = copyData.currency;
+	/** @type {number} */
+	this.amount = copyData.amount;
+	}
+}  // FinancialTransaction 
+// SanteDB.Core.Model.Acts.InvoiceElement, SanteDB.Core.Model, Version=2.0.0.0, Culture=neutral, PublicKeyToken=null
+//if(!InvoiceElement)
+/**
+ * @class
+ * @constructor
+ * @public
+ * @summary             Represents an invoice element            
+ * @description An invoice element represents an act on a single financial transaction which records
+ *             the financial impact of a particular service.
+ * @property {string} modifier            Gets or sets the modifier            
+ * @property {Concept} modifierModel [Delay loaded from modifier],             Gets or sets the modifier            
+ * @property {number} unitQty            Gets or sets the number of units included in the price            
+ * @property {number} unitPrice            Gets or sets the price of each unit            
+ * @property {number} netPrice            Gets or sets the net amount            
+ * @property {string} currency            Gets or sets the currency of the invoice line item            
+ * @property {Concept} currencyModel [Delay loaded from currency],             Gets or sets the currency of this transaction            
+ * @property {Single} factor            When provided, can specify the factor to allow for different amounts to be charged based on insurance provider negotiations            
+ * @property {boolean} isNegated            Gets or sets an indicator which identifies whether the act actually occurred, or            specifically did not occur            
+ * @property {string} template            Gets the template UUID upon which this act is based            
+ * @property {TemplateDefinition} templateModel [Delay loaded from template],             Gets or sets the template definition            
+ * @property {Date} actTime            Gets or sets the moment in time that this act occurred in ISO format            
+ * @property {Date} startTime            Gets or sets the time when the act should or did start ocurring in ISO format            
+ * @property {Date} stopTime            Gets or sets the time when the act should or did stop ocurring in ISO format            
+ * @property {string} classConcept            Gets or sets the key of the concept which classifies the act.            (see: {@link ActClassKeys} for values)
+ * @property {string} moodConcept            Gets or sets the key of the concept which specifies the mood of the act.            (see: {@link ActMoodKeys} for values)
+ * @property {string} reasonConcept            Gets or sets the key of the concept which defines the reason why the act is or didn't occur            (see: {@link ActReasonKeys} for values)
+ * @property {string} statusConcept            Gets or sets the key of the concept which describes the current status of the act            (see: {@link StatusKeys} for values)
+ * @property {string} typeConcept            Gets or sets the key of the conccept which further classifies the type of act occurring            
+ * @property {Concept} classConceptModel [Delay loaded from classConcept],             Gets or sets the concept which classifies the type of act            
+ * @property {Concept} moodConceptModel [Delay loaded from moodConcept],             Gets or sets the concept which specifies the mood of the act            
+ * @property {Concept} reasonConceptModel [Delay loaded from reasonConcept],             Gets or sets the concept which indicates the reason of the act            
+ * @property {Concept} statusConceptModel [Delay loaded from statusConcept],             Gets or sets the current status concept of the act            
+ * @property {Concept} typeConceptModel [Delay loaded from typeConcept],             Type concept identifier            
+ * @property {object} identifier            Gets or sets the identifiers by which this act is known as in other systems            
+ * @property {ActIdentifier} identifier.classifier  where classifier is from {@link IdentifierBase} authority
+ * @property {object} relationship            Gets a list of all associated acts for this act            
+ * @property {ActRelationship} relationship.Appends             Indicates that the source act appends information contained in the target act            
+ * @property {ActRelationship} relationship.Arrival             Links the transortation act from another act            
+ * @property {ActRelationship} relationship.Departure             Links a transporation act from another act indicating departure of the subject            
+ * @property {ActRelationship} relationship.Documents             The source act documents the target act            
+ * @property {ActRelationship} relationship.EpisodeLink             Links two instances of the same act over time (example: chronic conditions)            
+ * @property {ActRelationship} relationship.Evaluates             Used to link a goal to an observation            
+ * @property {ActRelationship} relationship.Fulfills             Indicates that the source act fulfills the target act            
+ * @property {ActRelationship} relationship.HasAuthorization             Indicates that the target act authorizes the source act            
+ * @property {ActRelationship} relationship.HasComponent             Indicates that the target act is a component of the source act            
+ * @property {ActRelationship} relationship.HasControlVariable             Relationship from an act to one or more control variables (for example: device settings, or environment)            
+ * @property {ActRelationship} relationship.HasManifestation             The assertion that a new observation may be a manifestation of another            
+ * @property {ActRelationship} relationship.HasPrecondition             Indicates that the target act is a pre-condition of the source act            
+ * @property {ActRelationship} relationship.HasReason             Indicates a reasoning as to why the source act is occurring            
+ * @property {ActRelationship} relationship.HasReferenceValues             Indicates that the source act contains reference values from the target            
+ * @property {ActRelationship} relationship.HasSubject             Indicates the subject of a particular act (example: clinical act is a subject of a control act)            
+ * @property {ActRelationship} relationship.HasSupport             Indicates an existing act is suggesting evidence for a new observation.            
+ * @property {ActRelationship} relationship.IsCauseOf             Indicates that the source act is the cause of the target act            
+ * @property {ActRelationship} relationship.IsDerivedFrom             Indicates the source act is derived from information contained in the target act            
+ * @property {ActRelationship} relationship.IsExcerptOf             Indicates that the source act is an excerpt of the target act            
+ * @property {ActRelationship} relationship.RefersTo             Indicates that the source act refers to the target act            
+ * @property {ActRelationship} relationship.Replaces             The source act replaces the target act            
+ * @property {ActRelationship} relationship.StartsAfterStartOf             Indicates that the source act starts after the start of another act            
+ * @property {ActRelationship} relationship.Transforms             Indicates that the source act transforms the target act            
+ * @property {ActRelationship} relationship.Duplicate             Duplicate entity            
+ * @property {ActRelationship} relationship.$other Unclassified
+ * @property {SecurityPolicyInstance} policy            Gets or sets the security policy instances associated with the act            
+ * @property {object} extension            Gets a list of all extensions associated with the act            
+ * @property {string} extension.classifier  where classifier is from {@link Extension} extensionType
+ * @property {string} note            Gets a list of all notes associated with the act            
+ * @property {object} tag            Gets a list of all tags associated with the act            
+ * @property {string} tag.classifier  where classifier is from {@link Tag} key
+ * @property {ActProtocol} protocol            Identifies protocols attached to the act            
+ * @property {object} participation            Gets or sets the entities and participations they play in the act            
+ * @property {ActParticipation} participation.Admitter             The player entity was the person who was responsible for admitting the patient into a facility or care scenario.            
+ * @property {ActParticipation} participation.Attender             The player entity represents the attending physician for the patient            
+ * @property {ActParticipation} participation.Authenticator             The player entity represents an entity which authenticates the provision of care            
+ * @property {ActParticipation} participation.Authororiginator             The player entity is responsible for the creation of data described in the act            
+ * @property {ActParticipation} participation.Baby             The player is a resultant person in that it was the baby             
+ * @property {ActParticipation} participation.Beneficiary             The player is a beneficiary of the act such a receiver of a financial instrument, or other good            
+ * @property {ActParticipation} participation.CallbackContact             The player entity represents something that should be contacted upon completion of the act            
+ * @property {ActParticipation} participation.CausativeAgent             The player entity is an agent which caused the act to occur            
+ * @property {ActParticipation} participation.Consultant             The player entity is acting as a consult to the carrying out of the act            
+ * @property {ActParticipation} participation.Consumable             The player entity was or is to be consumed during the process of carrying out the act.            
+ * @property {ActParticipation} participation.CoverageTarget             The player entity represents the target coverage entity of the act            
+ * @property {ActParticipation} participation.Custodian             The player entity is the data custodian of the act (is responsible for storing and securing the act)            
+ * @property {ActParticipation} participation.DataEnterer             The player entity represents the person or device which phisically entered the data at the terminal            
+ * @property {ActParticipation} participation.Destination             The player etity represents the ultimate destination of the goods/materials/services described in the act            
+ * @property {ActParticipation} participation.Device             The player entity represents the device on which the act or data from the act was acquired or recorded            
+ * @property {ActParticipation} participation.DirectTarget             The player entity represents the directed target of care provided in the act            
+ * @property {ActParticipation} participation.Discharger             The player entity represents the person who is responsible for the discharging of the patient from an encounter            
+ * @property {ActParticipation} participation.Distributor             The player entity is the source distribution point for the financial or material instruments contained in the message            
+ * @property {ActParticipation} participation.Donor             The player entity represents the donor of tissue or materials used in the act            
+ * @property {ActParticipation} participation.EntryLocation             The location where the act was entered.            
+ * @property {ActParticipation} participation.Escort             The player entity was responsible for escorting the patient during the course of the act            
+ * @property {ActParticipation} participation.Exposure             The player entity something to which the patient was exposed            
+ * @property {ActParticipation} participation.ExposureAgent             The player entity represents the agent (material) to which the patient was exposed            
+ * @property {ActParticipation} participation.ExposureSource             The player entity describes the source of the material to which the patient was exposed            
+ * @property {ActParticipation} participation.ExposureTarget             The player entity describes the target to which the agent was exposed            
+ * @property {ActParticipation} participation.GuarantorParty             The player represents a party which is used as a financial guarantor for payment in the carrying out of the act            
+ * @property {ActParticipation} participation.Holder             The player is responsible for holding the act            
+ * @property {ActParticipation} participation.IndirectTarget             The entity not directly present in the act but which will be the focust of th act.            
+ * @property {ActParticipation} participation.Informant             The player was a person or device which informed data presented in the act. (Example: A mother telling a nurse that their child had a reaction)            
+ * @property {ActParticipation} participation.InformationRecipient             The player entity represents something that should be cc'ed on the act            
+ * @property {ActParticipation} participation.LegalAuthenticator             The player entity is responsible for legally authenticating the content of the act            
+ * @property {ActParticipation} participation.Location             The location where the service was performed.            
+ * @property {ActParticipation} participation.NonreuseableDevice             The player represents a consumable that can no longer be used            
+ * @property {ActParticipation} participation.Origin             The player represents the origin of the act            
+ * @property {ActParticipation} participation.Participation             The player entity participates in the act in no particular classification            
+ * @property {ActParticipation} participation.Performer             The player entity is responsible for performing the clinical steps documented in the act            
+ * @property {ActParticipation} participation.PrimaryInformationRecipient             The player entity represents a high priority contact which should be informed or cc'ed on the act            
+ * @property {ActParticipation} participation.PrimaryPerformer             The player entity was the primary performer of the act. This is used in procedures where more than one performer is present            
+ * @property {ActParticipation} participation.Product             The player represents a product that is not necessarily consumed but informs the act            
+ * @property {ActParticipation} participation.Receiver             The player represents the entity which is the intended receiver of the act            
+ * @property {ActParticipation} participation.RecordTarget             The player represents the entity to which the act is recorded against            
+ * @property {ActParticipation} participation.ReferredBy             The player represents the entity which referred the act or caused the act to be undertaken            
+ * @property {ActParticipation} participation.ReferredTo             The player entity represents the entity which was referred to            
+ * @property {ActParticipation} participation.Referrer             The player entity represents the person who was originally the referrer.            
+ * @property {ActParticipation} participation.Remote             The player entity represents a remote portion of the act            
+ * @property {ActParticipation} participation.ResponsibleParty             The player entity is ultimately responsible for the carrying out of the act            
+ * @property {ActParticipation} participation.ReusableDevice             The player entity represents a device which can be reused in future acts            
+ * @property {ActParticipation} participation.SecondaryPerformer             The secondary performing person (support clinician).            
+ * @property {ActParticipation} participation.Specimen             The player entity represents a specimen collected for the purpose of testing and diagnosis            
+ * @property {ActParticipation} participation.Subject             The player entity is the subject of an act, but not necessarily the record target (meaning the act is about a particular entity but not to be attached to their record)            
+ * @property {ActParticipation} participation.Tracker             The player entity is responsible for tracking the progress of the act            
+ * @property {ActParticipation} participation.Transcriber             The person who transcribed data from the original act.            
+ * @property {ActParticipation} participation.UgentNotificationContact             The player entity represents a contact entity in case of an emergency occurs during the act.            
+ * @property {ActParticipation} participation.Verifier             The player entity was responsible for verifying the accuracy of the data in the act            
+ * @property {ActParticipation} participation.Via             The player entity represents an entity where the act occurred "via" this entity (i.e. in transport)            
+ * @property {ActParticipation} participation.Witness             The player entity represents a legal witness to the act occurring.            
+ * @property {ActParticipation} participation.$other Unclassified
+ * @property {GeoTag} geo            Gets or sets the geo-tag            
+ * @property {string} previousVersion
+ * @property {string} version
+ * @property {number} sequence
+ * @property {Date} creationTimeModel [Delay loaded from creationTime],             Gets or sets the time at which the data was created            
+ * @property {Date} creationTime            Gets or sets the creation time as an ISO date format            
+ * @property {Date} obsoletionTimeModel [Delay loaded from obsoletionTime],             Gets or sets the time when the data is or will become invalid            
+ * @property {Date} obsoletionTime            Gets or sets the time that the data is no longer valid (was deleted/obsoleted) in ISO format            
+ * @property {SecurityProvenance} createdByModel [Delay loaded from createdBy],             Gets or sets the user that created this base data            
+ * @property {Date} modifiedOn            Gets the time that the object was last modified (from base data, default to CreationTime)            
+ * @property {SecurityProvenance} obsoletedByModel [Delay loaded from obsoletedBy],             Gets or sets the user that obsoleted this base data            
+ * @property {string} createdBy            Gets or sets the security provenance object which represents the creation of this object            
+ * @property {string} obsoletedBy            Gets or sets the security provenance object which represents the obsoletion of this data            
+ * @property {string} id            Gets or sets the primary identifying UUID of this object            
+ * @property {string} $type            Gets the type registration of this object            
+ * @param {InvoiceElement} copyData Copy constructor (if present)
+ */
+function InvoiceElement (copyData) { 
+	this.$type = 'InvoiceElement';
+	if(copyData) {
+	/** @type {string} */
+	this.id = copyData.id;
+	/** @type {string} */
+	this.obsoletedBy = copyData.obsoletedBy;
+	/** @type {string} */
+	this.createdBy = copyData.createdBy;
+	/** @type {SecurityProvenance} */
+	this.obsoletedByModel = copyData.obsoletedByModel;
+	/** @type {Date} */
+	this.modifiedOn = copyData.modifiedOn;
+	/** @type {SecurityProvenance} */
+	this.createdByModel = copyData.createdByModel;
+	/** @type {Date} */
+	this.obsoletionTime = copyData.obsoletionTime;
+	/** @type {Date} */
+	this.obsoletionTimeModel = copyData.obsoletionTimeModel;
+	/** @type {Date} */
+	this.creationTime = copyData.creationTime;
+	/** @type {Date} */
+	this.creationTimeModel = copyData.creationTimeModel;
+	/** @type {number} */
+	this.sequence = copyData.sequence;
+	/** @type {string} */
+	this.version = copyData.version;
+	/** @type {string} */
+	this.previousVersion = copyData.previousVersion;
+	/** @type {GeoTag} */
+	this.geo = copyData.geo;
+	/** @type {object} */
+	this.participation = copyData.participation;
+	/** @type {ActProtocol} */
+	this.protocol = copyData.protocol;
+	/** @type {object} */
+	this.tag = copyData.tag;
+	/** @type {string} */
+	this.note = copyData.note;
+	/** @type {object} */
+	this.extension = copyData.extension;
+	/** @type {SecurityPolicyInstance} */
+	this.policy = copyData.policy;
+	/** @type {object} */
+	this.relationship = copyData.relationship;
+	/** @type {object} */
+	this.identifier = copyData.identifier;
+	/** @type {Concept} */
+	this.typeConceptModel = copyData.typeConceptModel;
+	/** @type {Concept} */
+	this.statusConceptModel = copyData.statusConceptModel;
+	/** @type {Concept} */
+	this.reasonConceptModel = copyData.reasonConceptModel;
+	/** @type {Concept} */
+	this.moodConceptModel = copyData.moodConceptModel;
+	/** @type {Concept} */
+	this.classConceptModel = copyData.classConceptModel;
+	/** @type {string} */
+	this.typeConcept = copyData.typeConcept;
+	/** @type {string} */
+	this.statusConcept = copyData.statusConcept;
+	/** @type {string} */
+	this.reasonConcept = copyData.reasonConcept;
+	/** @type {string} */
+	this.moodConcept = copyData.moodConcept;
+	/** @type {string} */
+	this.classConcept = copyData.classConcept;
+	/** @type {Date} */
+	this.stopTime = copyData.stopTime;
+	/** @type {Date} */
+	this.startTime = copyData.startTime;
+	/** @type {Date} */
+	this.actTime = copyData.actTime;
+	/** @type {TemplateDefinition} */
+	this.templateModel = copyData.templateModel;
+	/** @type {string} */
+	this.template = copyData.template;
+	/** @type {boolean} */
+	this.isNegated = copyData.isNegated;
+	/** @type {Single} */
+	this.factor = copyData.factor;
+	/** @type {Concept} */
+	this.currencyModel = copyData.currencyModel;
+	/** @type {string} */
+	this.currency = copyData.currency;
+	/** @type {number} */
+	this.netPrice = copyData.netPrice;
+	/** @type {number} */
+	this.unitPrice = copyData.unitPrice;
+	/** @type {number} */
+	this.unitQty = copyData.unitQty;
+	/** @type {Concept} */
+	this.modifierModel = copyData.modifierModel;
+	/** @type {string} */
+	this.modifier = copyData.modifier;
+	}
+}  // InvoiceElement 
+// SanteDB.Core.Model.Acts.Observation, SanteDB.Core.Model, Version=2.0.0.0, Culture=neutral, PublicKeyToken=null
+//if(!Observation)
+/**
+ * @class
+ * @constructor
+ * @public
+ * @summary             Represents a act () which is an observation            
+ * @description 
+ *             The observation class itself is an abstract class which is generically used to represent something that is observed about a patient.
+ *             
+ *             It is not recommended to use this class directly, rather one of its sub classes based on the type of observation being made such as:
+ *             Coded observation  for observations whose values are codified (example: blood type, presentation, etc.), Quantity observations  for observations whose values are quantified values (example: weight, height, etc.), Text observations  for observations whose values are textual in nature.
+ *             No matter what type of value an observation carries (coded, quantity, text) it is always classified by the type concept .
+ *             
+ * @property {string} interpretationConcept            Gets or sets the interpretation concept            
+ * @property {string} valueType            Value type            
+ * @property {Concept} interpretationConceptModel [Delay loaded from interpretationConcept],             Gets or sets the concept which indicates the interpretation of the observtion            
+ * @property {boolean} isNegated            Gets or sets an indicator which identifies whether the act actually occurred, or            specifically did not occur            
+ * @property {string} template            Gets the template UUID upon which this act is based            
+ * @property {TemplateDefinition} templateModel [Delay loaded from template],             Gets or sets the template definition            
+ * @property {Date} actTime            Gets or sets the moment in time that this act occurred in ISO format            
+ * @property {Date} startTime            Gets or sets the time when the act should or did start ocurring in ISO format            
+ * @property {Date} stopTime            Gets or sets the time when the act should or did stop ocurring in ISO format            
+ * @property {string} classConcept            Gets or sets the key of the concept which classifies the act.            (see: {@link ActClassKeys} for values)
+ * @property {string} moodConcept            Gets or sets the key of the concept which specifies the mood of the act.            (see: {@link ActMoodKeys} for values)
+ * @property {string} reasonConcept            Gets or sets the key of the concept which defines the reason why the act is or didn't occur            (see: {@link ActReasonKeys} for values)
+ * @property {string} statusConcept            Gets or sets the key of the concept which describes the current status of the act            (see: {@link StatusKeys} for values)
+ * @property {string} typeConcept            Gets or sets the key of the conccept which further classifies the type of act occurring            
+ * @property {Concept} classConceptModel [Delay loaded from classConcept],             Gets or sets the concept which classifies the type of act            
+ * @property {Concept} moodConceptModel [Delay loaded from moodConcept],             Gets or sets the concept which specifies the mood of the act            
+ * @property {Concept} reasonConceptModel [Delay loaded from reasonConcept],             Gets or sets the concept which indicates the reason of the act            
+ * @property {Concept} statusConceptModel [Delay loaded from statusConcept],             Gets or sets the current status concept of the act            
+ * @property {Concept} typeConceptModel [Delay loaded from typeConcept],             Type concept identifier            
+ * @property {object} identifier            Gets or sets the identifiers by which this act is known as in other systems            
+ * @property {ActIdentifier} identifier.classifier  where classifier is from {@link IdentifierBase} authority
+ * @property {object} relationship            Gets a list of all associated acts for this act            
+ * @property {ActRelationship} relationship.Appends             Indicates that the source act appends information contained in the target act            
+ * @property {ActRelationship} relationship.Arrival             Links the transortation act from another act            
+ * @property {ActRelationship} relationship.Departure             Links a transporation act from another act indicating departure of the subject            
+ * @property {ActRelationship} relationship.Documents             The source act documents the target act            
+ * @property {ActRelationship} relationship.EpisodeLink             Links two instances of the same act over time (example: chronic conditions)            
+ * @property {ActRelationship} relationship.Evaluates             Used to link a goal to an observation            
+ * @property {ActRelationship} relationship.Fulfills             Indicates that the source act fulfills the target act            
+ * @property {ActRelationship} relationship.HasAuthorization             Indicates that the target act authorizes the source act            
+ * @property {ActRelationship} relationship.HasComponent             Indicates that the target act is a component of the source act            
+ * @property {ActRelationship} relationship.HasControlVariable             Relationship from an act to one or more control variables (for example: device settings, or environment)            
+ * @property {ActRelationship} relationship.HasManifestation             The assertion that a new observation may be a manifestation of another            
+ * @property {ActRelationship} relationship.HasPrecondition             Indicates that the target act is a pre-condition of the source act            
+ * @property {ActRelationship} relationship.HasReason             Indicates a reasoning as to why the source act is occurring            
+ * @property {ActRelationship} relationship.HasReferenceValues             Indicates that the source act contains reference values from the target            
+ * @property {ActRelationship} relationship.HasSubject             Indicates the subject of a particular act (example: clinical act is a subject of a control act)            
+ * @property {ActRelationship} relationship.HasSupport             Indicates an existing act is suggesting evidence for a new observation.            
+ * @property {ActRelationship} relationship.IsCauseOf             Indicates that the source act is the cause of the target act            
+ * @property {ActRelationship} relationship.IsDerivedFrom             Indicates the source act is derived from information contained in the target act            
+ * @property {ActRelationship} relationship.IsExcerptOf             Indicates that the source act is an excerpt of the target act            
+ * @property {ActRelationship} relationship.RefersTo             Indicates that the source act refers to the target act            
+ * @property {ActRelationship} relationship.Replaces             The source act replaces the target act            
+ * @property {ActRelationship} relationship.StartsAfterStartOf             Indicates that the source act starts after the start of another act            
+ * @property {ActRelationship} relationship.Transforms             Indicates that the source act transforms the target act            
+ * @property {ActRelationship} relationship.Duplicate             Duplicate entity            
+ * @property {ActRelationship} relationship.$other Unclassified
+ * @property {SecurityPolicyInstance} policy            Gets or sets the security policy instances associated with the act            
+ * @property {object} extension            Gets a list of all extensions associated with the act            
+ * @property {string} extension.classifier  where classifier is from {@link Extension} extensionType
+ * @property {string} note            Gets a list of all notes associated with the act            
+ * @property {object} tag            Gets a list of all tags associated with the act            
+ * @property {string} tag.classifier  where classifier is from {@link Tag} key
+ * @property {ActProtocol} protocol            Identifies protocols attached to the act            
+ * @property {object} participation            Gets or sets the entities and participations they play in the act            
+ * @property {ActParticipation} participation.Admitter             The player entity was the person who was responsible for admitting the patient into a facility or care scenario.            
+ * @property {ActParticipation} participation.Attender             The player entity represents the attending physician for the patient            
+ * @property {ActParticipation} participation.Authenticator             The player entity represents an entity which authenticates the provision of care            
+ * @property {ActParticipation} participation.Authororiginator             The player entity is responsible for the creation of data described in the act            
+ * @property {ActParticipation} participation.Baby             The player is a resultant person in that it was the baby             
+ * @property {ActParticipation} participation.Beneficiary             The player is a beneficiary of the act such a receiver of a financial instrument, or other good            
+ * @property {ActParticipation} participation.CallbackContact             The player entity represents something that should be contacted upon completion of the act            
+ * @property {ActParticipation} participation.CausativeAgent             The player entity is an agent which caused the act to occur            
+ * @property {ActParticipation} participation.Consultant             The player entity is acting as a consult to the carrying out of the act            
+ * @property {ActParticipation} participation.Consumable             The player entity was or is to be consumed during the process of carrying out the act.            
+ * @property {ActParticipation} participation.CoverageTarget             The player entity represents the target coverage entity of the act            
+ * @property {ActParticipation} participation.Custodian             The player entity is the data custodian of the act (is responsible for storing and securing the act)            
+ * @property {ActParticipation} participation.DataEnterer             The player entity represents the person or device which phisically entered the data at the terminal            
+ * @property {ActParticipation} participation.Destination             The player etity represents the ultimate destination of the goods/materials/services described in the act            
+ * @property {ActParticipation} participation.Device             The player entity represents the device on which the act or data from the act was acquired or recorded            
+ * @property {ActParticipation} participation.DirectTarget             The player entity represents the directed target of care provided in the act            
+ * @property {ActParticipation} participation.Discharger             The player entity represents the person who is responsible for the discharging of the patient from an encounter            
+ * @property {ActParticipation} participation.Distributor             The player entity is the source distribution point for the financial or material instruments contained in the message            
+ * @property {ActParticipation} participation.Donor             The player entity represents the donor of tissue or materials used in the act            
+ * @property {ActParticipation} participation.EntryLocation             The location where the act was entered.            
+ * @property {ActParticipation} participation.Escort             The player entity was responsible for escorting the patient during the course of the act            
+ * @property {ActParticipation} participation.Exposure             The player entity something to which the patient was exposed            
+ * @property {ActParticipation} participation.ExposureAgent             The player entity represents the agent (material) to which the patient was exposed            
+ * @property {ActParticipation} participation.ExposureSource             The player entity describes the source of the material to which the patient was exposed            
+ * @property {ActParticipation} participation.ExposureTarget             The player entity describes the target to which the agent was exposed            
+ * @property {ActParticipation} participation.GuarantorParty             The player represents a party which is used as a financial guarantor for payment in the carrying out of the act            
+ * @property {ActParticipation} participation.Holder             The player is responsible for holding the act            
+ * @property {ActParticipation} participation.IndirectTarget             The entity not directly present in the act but which will be the focust of th act.            
+ * @property {ActParticipation} participation.Informant             The player was a person or device which informed data presented in the act. (Example: A mother telling a nurse that their child had a reaction)            
+ * @property {ActParticipation} participation.InformationRecipient             The player entity represents something that should be cc'ed on the act            
+ * @property {ActParticipation} participation.LegalAuthenticator             The player entity is responsible for legally authenticating the content of the act            
+ * @property {ActParticipation} participation.Location             The location where the service was performed.            
+ * @property {ActParticipation} participation.NonreuseableDevice             The player represents a consumable that can no longer be used            
+ * @property {ActParticipation} participation.Origin             The player represents the origin of the act            
+ * @property {ActParticipation} participation.Participation             The player entity participates in the act in no particular classification            
+ * @property {ActParticipation} participation.Performer             The player entity is responsible for performing the clinical steps documented in the act            
+ * @property {ActParticipation} participation.PrimaryInformationRecipient             The player entity represents a high priority contact which should be informed or cc'ed on the act            
+ * @property {ActParticipation} participation.PrimaryPerformer             The player entity was the primary performer of the act. This is used in procedures where more than one performer is present            
+ * @property {ActParticipation} participation.Product             The player represents a product that is not necessarily consumed but informs the act            
+ * @property {ActParticipation} participation.Receiver             The player represents the entity which is the intended receiver of the act            
+ * @property {ActParticipation} participation.RecordTarget             The player represents the entity to which the act is recorded against            
+ * @property {ActParticipation} participation.ReferredBy             The player represents the entity which referred the act or caused the act to be undertaken            
+ * @property {ActParticipation} participation.ReferredTo             The player entity represents the entity which was referred to            
+ * @property {ActParticipation} participation.Referrer             The player entity represents the person who was originally the referrer.            
+ * @property {ActParticipation} participation.Remote             The player entity represents a remote portion of the act            
+ * @property {ActParticipation} participation.ResponsibleParty             The player entity is ultimately responsible for the carrying out of the act            
+ * @property {ActParticipation} participation.ReusableDevice             The player entity represents a device which can be reused in future acts            
+ * @property {ActParticipation} participation.SecondaryPerformer             The secondary performing person (support clinician).            
+ * @property {ActParticipation} participation.Specimen             The player entity represents a specimen collected for the purpose of testing and diagnosis            
+ * @property {ActParticipation} participation.Subject             The player entity is the subject of an act, but not necessarily the record target (meaning the act is about a particular entity but not to be attached to their record)            
+ * @property {ActParticipation} participation.Tracker             The player entity is responsible for tracking the progress of the act            
+ * @property {ActParticipation} participation.Transcriber             The person who transcribed data from the original act.            
+ * @property {ActParticipation} participation.UgentNotificationContact             The player entity represents a contact entity in case of an emergency occurs during the act.            
+ * @property {ActParticipation} participation.Verifier             The player entity was responsible for verifying the accuracy of the data in the act            
+ * @property {ActParticipation} participation.Via             The player entity represents an entity where the act occurred "via" this entity (i.e. in transport)            
+ * @property {ActParticipation} participation.Witness             The player entity represents a legal witness to the act occurring.            
+ * @property {ActParticipation} participation.$other Unclassified
+ * @property {GeoTag} geo            Gets or sets the geo-tag            
+ * @property {string} previousVersion
+ * @property {string} version
+ * @property {number} sequence
+ * @property {Date} creationTimeModel [Delay loaded from creationTime],             Gets or sets the time at which the data was created            
+ * @property {Date} creationTime            Gets or sets the creation time as an ISO date format            
+ * @property {Date} obsoletionTimeModel [Delay loaded from obsoletionTime],             Gets or sets the time when the data is or will become invalid            
+ * @property {Date} obsoletionTime            Gets or sets the time that the data is no longer valid (was deleted/obsoleted) in ISO format            
+ * @property {SecurityProvenance} createdByModel [Delay loaded from createdBy],             Gets or sets the user that created this base data            
+ * @property {Date} modifiedOn            Gets the time that the object was last modified (from base data, default to CreationTime)            
+ * @property {SecurityProvenance} obsoletedByModel [Delay loaded from obsoletedBy],             Gets or sets the user that obsoleted this base data            
+ * @property {string} createdBy            Gets or sets the security provenance object which represents the creation of this object            
+ * @property {string} obsoletedBy            Gets or sets the security provenance object which represents the obsoletion of this data            
+ * @property {string} id            Gets or sets the primary identifying UUID of this object            
+ * @property {string} $type            Gets the type registration of this object            
+ * @param {Observation} copyData Copy constructor (if present)
+ */
+function Observation (copyData) { 
+	this.$type = 'Observation';
+	if(copyData) {
+	/** @type {string} */
+	this.id = copyData.id;
+	/** @type {string} */
+	this.obsoletedBy = copyData.obsoletedBy;
+	/** @type {string} */
+	this.createdBy = copyData.createdBy;
+	/** @type {SecurityProvenance} */
+	this.obsoletedByModel = copyData.obsoletedByModel;
+	/** @type {Date} */
+	this.modifiedOn = copyData.modifiedOn;
+	/** @type {SecurityProvenance} */
+	this.createdByModel = copyData.createdByModel;
+	/** @type {Date} */
+	this.obsoletionTime = copyData.obsoletionTime;
+	/** @type {Date} */
+	this.obsoletionTimeModel = copyData.obsoletionTimeModel;
+	/** @type {Date} */
+	this.creationTime = copyData.creationTime;
+	/** @type {Date} */
+	this.creationTimeModel = copyData.creationTimeModel;
+	/** @type {number} */
+	this.sequence = copyData.sequence;
+	/** @type {string} */
+	this.version = copyData.version;
+	/** @type {string} */
+	this.previousVersion = copyData.previousVersion;
+	/** @type {GeoTag} */
+	this.geo = copyData.geo;
 	/** @type {object} */
 	this.participation = copyData.participation;
 	/** @type {ActProtocol} */
@@ -8116,14 +9978,12 @@ function Observation (copyData) {
 	this.interpretationConcept = copyData.interpretationConcept;
 	}
 }  // Observation 
-// SanteDB.Core.Model.Acts.QuantityObservation, SanteDB.Core.Model, Version=1.1.0.35405, Culture=neutral, PublicKeyToken=null
-if(!QuantityObservation)
+// SanteDB.Core.Model.Acts.QuantityObservation, SanteDB.Core.Model, Version=2.0.0.0, Culture=neutral, PublicKeyToken=null
+//if(!QuantityObservation)
 /**
  * @class
  * @constructor
- * @memberof SanteDBModel
  * @public
- * @extends Observation
  * @summary             Represents an observation that contains a quantity            
  * @description 
  *             The quantity observation class should be used whenever you wish to store an observation which carries a numerical value 
@@ -8136,11 +9996,11 @@ if(!QuantityObservation)
  * @property {string} interpretationConcept            Gets or sets the interpretation concept            
  * @property {Concept} interpretationConceptModel [Delay loaded from interpretationConcept],             Gets or sets the concept which indicates the interpretation of the observtion            
  * @property {boolean} isNegated            Gets or sets an indicator which identifies whether the act actually occurred, or            specifically did not occur            
- * @property {string} template            Gets the template key            
+ * @property {string} template            Gets the template UUID upon which this act is based            
  * @property {TemplateDefinition} templateModel [Delay loaded from template],             Gets or sets the template definition            
- * @property {Date} actTime            Gets or sets the creation time in XML format            
- * @property {Date} startTime            Gets or sets the creation time in XML format            
- * @property {Date} stopTime            Gets or sets the creation time in XML format            
+ * @property {Date} actTime            Gets or sets the moment in time that this act occurred in ISO format            
+ * @property {Date} startTime            Gets or sets the time when the act should or did start ocurring in ISO format            
+ * @property {Date} stopTime            Gets or sets the time when the act should or did stop ocurring in ISO format            
  * @property {string} classConcept            Gets or sets the key of the concept which classifies the act.            (see: {@link ActClassKeys} for values)
  * @property {string} moodConcept            Gets or sets the key of the concept which specifies the mood of the act.            (see: {@link ActMoodKeys} for values)
  * @property {string} reasonConcept            Gets or sets the key of the concept which defines the reason why the act is or didn't occur            (see: {@link ActReasonKeys} for values)
@@ -8177,6 +10037,7 @@ if(!QuantityObservation)
  * @property {ActRelationship} relationship.Replaces             The source act replaces the target act            
  * @property {ActRelationship} relationship.StartsAfterStartOf             Indicates that the source act starts after the start of another act            
  * @property {ActRelationship} relationship.Transforms             Indicates that the source act transforms the target act            
+ * @property {ActRelationship} relationship.Duplicate             Duplicate entity            
  * @property {ActRelationship} relationship.$other Unclassified
  * @property {SecurityPolicyInstance} policy            Gets or sets the security policy instances associated with the act            
  * @property {object} extension            Gets a list of all extensions associated with the act            
@@ -8243,20 +10104,21 @@ if(!QuantityObservation)
  * @property {ActParticipation} participation.Via             The player entity represents an entity where the act occurred "via" this entity (i.e. in transport)            
  * @property {ActParticipation} participation.Witness             The player entity represents a legal witness to the act occurring.            
  * @property {ActParticipation} participation.$other Unclassified
+ * @property {GeoTag} geo            Gets or sets the geo-tag            
  * @property {string} previousVersion
  * @property {string} version
  * @property {number} sequence
  * @property {Date} creationTimeModel [Delay loaded from creationTime],             Gets or sets the time at which the data was created            
- * @property {Date} creationTime            Gets or sets the creation time in XML format            
+ * @property {Date} creationTime            Gets or sets the creation time as an ISO date format            
  * @property {Date} obsoletionTimeModel [Delay loaded from obsoletionTime],             Gets or sets the time when the data is or will become invalid            
- * @property {Date} obsoletionTime            Gets or sets the creation time in XML format            
- * @property {SecurityUser} createdByModel [Delay loaded from createdBy],             Gets or sets the user that created this base data            
+ * @property {Date} obsoletionTime            Gets or sets the time that the data is no longer valid (was deleted/obsoleted) in ISO format            
+ * @property {SecurityProvenance} createdByModel [Delay loaded from createdBy],             Gets or sets the user that created this base data            
  * @property {Date} modifiedOn            Gets the time that the object was last modified (from base data, default to CreationTime)            
- * @property {SecurityUser} obsoletedByModel [Delay loaded from obsoletedBy],             Gets or sets the user that obsoleted this base data            
- * @property {string} createdBy            Gets or sets the identifier of the user which created the data            
- * @property {string} obsoletedBy            Gets or sets the identifier of the user which obsoleted the data            
- * @property {string} id            The internal primary key value of the entity            
- * @property {string} $type            Gets the type            
+ * @property {SecurityProvenance} obsoletedByModel [Delay loaded from obsoletedBy],             Gets or sets the user that obsoleted this base data            
+ * @property {string} createdBy            Gets or sets the security provenance object which represents the creation of this object            
+ * @property {string} obsoletedBy            Gets or sets the security provenance object which represents the obsoletion of this data            
+ * @property {string} id            Gets or sets the primary identifying UUID of this object            
+ * @property {string} $type            Gets the type registration of this object            
  * @param {QuantityObservation} copyData Copy constructor (if present)
  */
 function QuantityObservation (copyData) { 
@@ -8268,11 +10130,11 @@ function QuantityObservation (copyData) {
 	this.obsoletedBy = copyData.obsoletedBy;
 	/** @type {string} */
 	this.createdBy = copyData.createdBy;
-	/** @type {SecurityUser} */
+	/** @type {SecurityProvenance} */
 	this.obsoletedByModel = copyData.obsoletedByModel;
 	/** @type {Date} */
 	this.modifiedOn = copyData.modifiedOn;
-	/** @type {SecurityUser} */
+	/** @type {SecurityProvenance} */
 	this.createdByModel = copyData.createdByModel;
 	/** @type {Date} */
 	this.obsoletionTime = copyData.obsoletionTime;
@@ -8288,6 +10150,8 @@ function QuantityObservation (copyData) {
 	this.version = copyData.version;
 	/** @type {string} */
 	this.previousVersion = copyData.previousVersion;
+	/** @type {GeoTag} */
+	this.geo = copyData.geo;
 	/** @type {object} */
 	this.participation = copyData.participation;
 	/** @type {ActProtocol} */
@@ -8350,14 +10214,12 @@ function QuantityObservation (copyData) {
 	this.value = copyData.value;
 	}
 }  // QuantityObservation 
-// SanteDB.Core.Model.Acts.TextObservation, SanteDB.Core.Model, Version=1.1.0.35405, Culture=neutral, PublicKeyToken=null
-if(!TextObservation)
+// SanteDB.Core.Model.Acts.TextObservation, SanteDB.Core.Model, Version=2.0.0.0, Culture=neutral, PublicKeyToken=null
+//if(!TextObservation)
 /**
  * @class
  * @constructor
- * @memberof SanteDBModel
  * @public
- * @extends Observation
  * @summary             Represents an observation with a text value            
  * @description 
  *             The text observation type represents an observation made with a textual value. This is done whenever an observation type 
@@ -8369,11 +10231,11 @@ if(!TextObservation)
  * @property {string} interpretationConcept            Gets or sets the interpretation concept            
  * @property {Concept} interpretationConceptModel [Delay loaded from interpretationConcept],             Gets or sets the concept which indicates the interpretation of the observtion            
  * @property {boolean} isNegated            Gets or sets an indicator which identifies whether the act actually occurred, or            specifically did not occur            
- * @property {string} template            Gets the template key            
+ * @property {string} template            Gets the template UUID upon which this act is based            
  * @property {TemplateDefinition} templateModel [Delay loaded from template],             Gets or sets the template definition            
- * @property {Date} actTime            Gets or sets the creation time in XML format            
- * @property {Date} startTime            Gets or sets the creation time in XML format            
- * @property {Date} stopTime            Gets or sets the creation time in XML format            
+ * @property {Date} actTime            Gets or sets the moment in time that this act occurred in ISO format            
+ * @property {Date} startTime            Gets or sets the time when the act should or did start ocurring in ISO format            
+ * @property {Date} stopTime            Gets or sets the time when the act should or did stop ocurring in ISO format            
  * @property {string} classConcept            Gets or sets the key of the concept which classifies the act.            (see: {@link ActClassKeys} for values)
  * @property {string} moodConcept            Gets or sets the key of the concept which specifies the mood of the act.            (see: {@link ActMoodKeys} for values)
  * @property {string} reasonConcept            Gets or sets the key of the concept which defines the reason why the act is or didn't occur            (see: {@link ActReasonKeys} for values)
@@ -8410,6 +10272,7 @@ if(!TextObservation)
  * @property {ActRelationship} relationship.Replaces             The source act replaces the target act            
  * @property {ActRelationship} relationship.StartsAfterStartOf             Indicates that the source act starts after the start of another act            
  * @property {ActRelationship} relationship.Transforms             Indicates that the source act transforms the target act            
+ * @property {ActRelationship} relationship.Duplicate             Duplicate entity            
  * @property {ActRelationship} relationship.$other Unclassified
  * @property {SecurityPolicyInstance} policy            Gets or sets the security policy instances associated with the act            
  * @property {object} extension            Gets a list of all extensions associated with the act            
@@ -8476,20 +10339,21 @@ if(!TextObservation)
  * @property {ActParticipation} participation.Via             The player entity represents an entity where the act occurred "via" this entity (i.e. in transport)            
  * @property {ActParticipation} participation.Witness             The player entity represents a legal witness to the act occurring.            
  * @property {ActParticipation} participation.$other Unclassified
+ * @property {GeoTag} geo            Gets or sets the geo-tag            
  * @property {string} previousVersion
  * @property {string} version
  * @property {number} sequence
  * @property {Date} creationTimeModel [Delay loaded from creationTime],             Gets or sets the time at which the data was created            
- * @property {Date} creationTime            Gets or sets the creation time in XML format            
+ * @property {Date} creationTime            Gets or sets the creation time as an ISO date format            
  * @property {Date} obsoletionTimeModel [Delay loaded from obsoletionTime],             Gets or sets the time when the data is or will become invalid            
- * @property {Date} obsoletionTime            Gets or sets the creation time in XML format            
- * @property {SecurityUser} createdByModel [Delay loaded from createdBy],             Gets or sets the user that created this base data            
+ * @property {Date} obsoletionTime            Gets or sets the time that the data is no longer valid (was deleted/obsoleted) in ISO format            
+ * @property {SecurityProvenance} createdByModel [Delay loaded from createdBy],             Gets or sets the user that created this base data            
  * @property {Date} modifiedOn            Gets the time that the object was last modified (from base data, default to CreationTime)            
- * @property {SecurityUser} obsoletedByModel [Delay loaded from obsoletedBy],             Gets or sets the user that obsoleted this base data            
- * @property {string} createdBy            Gets or sets the identifier of the user which created the data            
- * @property {string} obsoletedBy            Gets or sets the identifier of the user which obsoleted the data            
- * @property {string} id            The internal primary key value of the entity            
- * @property {string} $type            Gets the type            
+ * @property {SecurityProvenance} obsoletedByModel [Delay loaded from obsoletedBy],             Gets or sets the user that obsoleted this base data            
+ * @property {string} createdBy            Gets or sets the security provenance object which represents the creation of this object            
+ * @property {string} obsoletedBy            Gets or sets the security provenance object which represents the obsoletion of this data            
+ * @property {string} id            Gets or sets the primary identifying UUID of this object            
+ * @property {string} $type            Gets the type registration of this object            
  * @param {TextObservation} copyData Copy constructor (if present)
  */
 function TextObservation (copyData) { 
@@ -8501,11 +10365,11 @@ function TextObservation (copyData) {
 	this.obsoletedBy = copyData.obsoletedBy;
 	/** @type {string} */
 	this.createdBy = copyData.createdBy;
-	/** @type {SecurityUser} */
+	/** @type {SecurityProvenance} */
 	this.obsoletedByModel = copyData.obsoletedByModel;
 	/** @type {Date} */
 	this.modifiedOn = copyData.modifiedOn;
-	/** @type {SecurityUser} */
+	/** @type {SecurityProvenance} */
 	this.createdByModel = copyData.createdByModel;
 	/** @type {Date} */
 	this.obsoletionTime = copyData.obsoletionTime;
@@ -8521,6 +10385,8 @@ function TextObservation (copyData) {
 	this.version = copyData.version;
 	/** @type {string} */
 	this.previousVersion = copyData.previousVersion;
+	/** @type {GeoTag} */
+	this.geo = copyData.geo;
 	/** @type {object} */
 	this.participation = copyData.participation;
 	/** @type {ActProtocol} */
@@ -8579,14 +10445,12 @@ function TextObservation (copyData) {
 	this.valueType = copyData.valueType;
 	}
 }  // TextObservation 
-// SanteDB.Core.Model.Acts.CodedObservation, SanteDB.Core.Model, Version=1.1.0.35405, Culture=neutral, PublicKeyToken=null
-if(!CodedObservation)
+// SanteDB.Core.Model.Acts.CodedObservation, SanteDB.Core.Model, Version=2.0.0.0, Culture=neutral, PublicKeyToken=null
+//if(!CodedObservation)
 /**
  * @class
  * @constructor
- * @memberof SanteDBModel
  * @public
- * @extends Observation
  * @summary             Represents an observation with a concept value            
  * @description 
  *             A coded observation represents an observation whose value is classified using a coded concept. For example: fetal presentation, 
@@ -8598,11 +10462,11 @@ if(!CodedObservation)
  * @property {string} interpretationConcept            Gets or sets the interpretation concept            
  * @property {Concept} interpretationConceptModel [Delay loaded from interpretationConcept],             Gets or sets the concept which indicates the interpretation of the observtion            
  * @property {boolean} isNegated            Gets or sets an indicator which identifies whether the act actually occurred, or            specifically did not occur            
- * @property {string} template            Gets the template key            
+ * @property {string} template            Gets the template UUID upon which this act is based            
  * @property {TemplateDefinition} templateModel [Delay loaded from template],             Gets or sets the template definition            
- * @property {Date} actTime            Gets or sets the creation time in XML format            
- * @property {Date} startTime            Gets or sets the creation time in XML format            
- * @property {Date} stopTime            Gets or sets the creation time in XML format            
+ * @property {Date} actTime            Gets or sets the moment in time that this act occurred in ISO format            
+ * @property {Date} startTime            Gets or sets the time when the act should or did start ocurring in ISO format            
+ * @property {Date} stopTime            Gets or sets the time when the act should or did stop ocurring in ISO format            
  * @property {string} classConcept            Gets or sets the key of the concept which classifies the act.            (see: {@link ActClassKeys} for values)
  * @property {string} moodConcept            Gets or sets the key of the concept which specifies the mood of the act.            (see: {@link ActMoodKeys} for values)
  * @property {string} reasonConcept            Gets or sets the key of the concept which defines the reason why the act is or didn't occur            (see: {@link ActReasonKeys} for values)
@@ -8639,6 +10503,7 @@ if(!CodedObservation)
  * @property {ActRelationship} relationship.Replaces             The source act replaces the target act            
  * @property {ActRelationship} relationship.StartsAfterStartOf             Indicates that the source act starts after the start of another act            
  * @property {ActRelationship} relationship.Transforms             Indicates that the source act transforms the target act            
+ * @property {ActRelationship} relationship.Duplicate             Duplicate entity            
  * @property {ActRelationship} relationship.$other Unclassified
  * @property {SecurityPolicyInstance} policy            Gets or sets the security policy instances associated with the act            
  * @property {object} extension            Gets a list of all extensions associated with the act            
@@ -8705,20 +10570,21 @@ if(!CodedObservation)
  * @property {ActParticipation} participation.Via             The player entity represents an entity where the act occurred "via" this entity (i.e. in transport)            
  * @property {ActParticipation} participation.Witness             The player entity represents a legal witness to the act occurring.            
  * @property {ActParticipation} participation.$other Unclassified
+ * @property {GeoTag} geo            Gets or sets the geo-tag            
  * @property {string} previousVersion
  * @property {string} version
  * @property {number} sequence
  * @property {Date} creationTimeModel [Delay loaded from creationTime],             Gets or sets the time at which the data was created            
- * @property {Date} creationTime            Gets or sets the creation time in XML format            
+ * @property {Date} creationTime            Gets or sets the creation time as an ISO date format            
  * @property {Date} obsoletionTimeModel [Delay loaded from obsoletionTime],             Gets or sets the time when the data is or will become invalid            
- * @property {Date} obsoletionTime            Gets or sets the creation time in XML format            
- * @property {SecurityUser} createdByModel [Delay loaded from createdBy],             Gets or sets the user that created this base data            
+ * @property {Date} obsoletionTime            Gets or sets the time that the data is no longer valid (was deleted/obsoleted) in ISO format            
+ * @property {SecurityProvenance} createdByModel [Delay loaded from createdBy],             Gets or sets the user that created this base data            
  * @property {Date} modifiedOn            Gets the time that the object was last modified (from base data, default to CreationTime)            
- * @property {SecurityUser} obsoletedByModel [Delay loaded from obsoletedBy],             Gets or sets the user that obsoleted this base data            
- * @property {string} createdBy            Gets or sets the identifier of the user which created the data            
- * @property {string} obsoletedBy            Gets or sets the identifier of the user which obsoleted the data            
- * @property {string} id            The internal primary key value of the entity            
- * @property {string} $type            Gets the type            
+ * @property {SecurityProvenance} obsoletedByModel [Delay loaded from obsoletedBy],             Gets or sets the user that obsoleted this base data            
+ * @property {string} createdBy            Gets or sets the security provenance object which represents the creation of this object            
+ * @property {string} obsoletedBy            Gets or sets the security provenance object which represents the obsoletion of this data            
+ * @property {string} id            Gets or sets the primary identifying UUID of this object            
+ * @property {string} $type            Gets the type registration of this object            
  * @param {CodedObservation} copyData Copy constructor (if present)
  */
 function CodedObservation (copyData) { 
@@ -8730,11 +10596,11 @@ function CodedObservation (copyData) {
 	this.obsoletedBy = copyData.obsoletedBy;
 	/** @type {string} */
 	this.createdBy = copyData.createdBy;
-	/** @type {SecurityUser} */
+	/** @type {SecurityProvenance} */
 	this.obsoletedByModel = copyData.obsoletedByModel;
 	/** @type {Date} */
 	this.modifiedOn = copyData.modifiedOn;
-	/** @type {SecurityUser} */
+	/** @type {SecurityProvenance} */
 	this.createdByModel = copyData.createdByModel;
 	/** @type {Date} */
 	this.obsoletionTime = copyData.obsoletionTime;
@@ -8750,6 +10616,8 @@ function CodedObservation (copyData) {
 	this.version = copyData.version;
 	/** @type {string} */
 	this.previousVersion = copyData.previousVersion;
+	/** @type {GeoTag} */
+	this.geo = copyData.geo;
 	/** @type {object} */
 	this.participation = copyData.participation;
 	/** @type {ActProtocol} */
@@ -8810,14 +10678,12 @@ function CodedObservation (copyData) {
 	this.valueType = copyData.valueType;
 	}
 }  // CodedObservation 
-// SanteDB.Core.Model.Acts.PatientEncounter, SanteDB.Core.Model, Version=1.1.0.35405, Culture=neutral, PublicKeyToken=null
-if(!PatientEncounter)
+// SanteDB.Core.Model.Acts.PatientEncounter, SanteDB.Core.Model, Version=2.0.0.0, Culture=neutral, PublicKeyToken=null
+//if(!PatientEncounter)
 /**
  * @class
  * @constructor
- * @memberof SanteDBModel
  * @public
- * @extends Act
  * @summary              Represents an encounter a patient has with the health system             
  * @description An encounter is a special type of act which represents an episode of care which a patient experiences with the health system. 
  *             An encounter is used to document things like hospital visits, inpatient care encounters, or any longer running series of actions which 
@@ -8825,11 +10691,11 @@ if(!PatientEncounter)
  * @property {string} dischargeDisposition            Gets or sets the key of discharge disposition            
  * @property {Concept} dischargeDispositionModel [Delay loaded from dischargeDisposition],             Gets or sets the discharge disposition (how the patient left the encounter            
  * @property {boolean} isNegated            Gets or sets an indicator which identifies whether the act actually occurred, or            specifically did not occur            
- * @property {string} template            Gets the template key            
+ * @property {string} template            Gets the template UUID upon which this act is based            
  * @property {TemplateDefinition} templateModel [Delay loaded from template],             Gets or sets the template definition            
- * @property {Date} actTime            Gets or sets the creation time in XML format            
- * @property {Date} startTime            Gets or sets the creation time in XML format            
- * @property {Date} stopTime            Gets or sets the creation time in XML format            
+ * @property {Date} actTime            Gets or sets the moment in time that this act occurred in ISO format            
+ * @property {Date} startTime            Gets or sets the time when the act should or did start ocurring in ISO format            
+ * @property {Date} stopTime            Gets or sets the time when the act should or did stop ocurring in ISO format            
  * @property {string} classConcept            Gets or sets the key of the concept which classifies the act.            (see: {@link ActClassKeys} for values)
  * @property {string} moodConcept            Gets or sets the key of the concept which specifies the mood of the act.            (see: {@link ActMoodKeys} for values)
  * @property {string} reasonConcept            Gets or sets the key of the concept which defines the reason why the act is or didn't occur            (see: {@link ActReasonKeys} for values)
@@ -8866,6 +10732,7 @@ if(!PatientEncounter)
  * @property {ActRelationship} relationship.Replaces             The source act replaces the target act            
  * @property {ActRelationship} relationship.StartsAfterStartOf             Indicates that the source act starts after the start of another act            
  * @property {ActRelationship} relationship.Transforms             Indicates that the source act transforms the target act            
+ * @property {ActRelationship} relationship.Duplicate             Duplicate entity            
  * @property {ActRelationship} relationship.$other Unclassified
  * @property {SecurityPolicyInstance} policy            Gets or sets the security policy instances associated with the act            
  * @property {object} extension            Gets a list of all extensions associated with the act            
@@ -8932,20 +10799,21 @@ if(!PatientEncounter)
  * @property {ActParticipation} participation.Via             The player entity represents an entity where the act occurred "via" this entity (i.e. in transport)            
  * @property {ActParticipation} participation.Witness             The player entity represents a legal witness to the act occurring.            
  * @property {ActParticipation} participation.$other Unclassified
+ * @property {GeoTag} geo            Gets or sets the geo-tag            
  * @property {string} previousVersion
  * @property {string} version
  * @property {number} sequence
  * @property {Date} creationTimeModel [Delay loaded from creationTime],             Gets or sets the time at which the data was created            
- * @property {Date} creationTime            Gets or sets the creation time in XML format            
+ * @property {Date} creationTime            Gets or sets the creation time as an ISO date format            
  * @property {Date} obsoletionTimeModel [Delay loaded from obsoletionTime],             Gets or sets the time when the data is or will become invalid            
- * @property {Date} obsoletionTime            Gets or sets the creation time in XML format            
- * @property {SecurityUser} createdByModel [Delay loaded from createdBy],             Gets or sets the user that created this base data            
+ * @property {Date} obsoletionTime            Gets or sets the time that the data is no longer valid (was deleted/obsoleted) in ISO format            
+ * @property {SecurityProvenance} createdByModel [Delay loaded from createdBy],             Gets or sets the user that created this base data            
  * @property {Date} modifiedOn            Gets the time that the object was last modified (from base data, default to CreationTime)            
- * @property {SecurityUser} obsoletedByModel [Delay loaded from obsoletedBy],             Gets or sets the user that obsoleted this base data            
- * @property {string} createdBy            Gets or sets the identifier of the user which created the data            
- * @property {string} obsoletedBy            Gets or sets the identifier of the user which obsoleted the data            
- * @property {string} id            The internal primary key value of the entity            
- * @property {string} $type            Gets the type            
+ * @property {SecurityProvenance} obsoletedByModel [Delay loaded from obsoletedBy],             Gets or sets the user that obsoleted this base data            
+ * @property {string} createdBy            Gets or sets the security provenance object which represents the creation of this object            
+ * @property {string} obsoletedBy            Gets or sets the security provenance object which represents the obsoletion of this data            
+ * @property {string} id            Gets or sets the primary identifying UUID of this object            
+ * @property {string} $type            Gets the type registration of this object            
  * @param {PatientEncounter} copyData Copy constructor (if present)
  */
 function PatientEncounter (copyData) { 
@@ -8957,11 +10825,11 @@ function PatientEncounter (copyData) {
 	this.obsoletedBy = copyData.obsoletedBy;
 	/** @type {string} */
 	this.createdBy = copyData.createdBy;
-	/** @type {SecurityUser} */
+	/** @type {SecurityProvenance} */
 	this.obsoletedByModel = copyData.obsoletedByModel;
 	/** @type {Date} */
 	this.modifiedOn = copyData.modifiedOn;
-	/** @type {SecurityUser} */
+	/** @type {SecurityProvenance} */
 	this.createdByModel = copyData.createdByModel;
 	/** @type {Date} */
 	this.obsoletionTime = copyData.obsoletionTime;
@@ -8977,6 +10845,8 @@ function PatientEncounter (copyData) {
 	this.version = copyData.version;
 	/** @type {string} */
 	this.previousVersion = copyData.previousVersion;
+	/** @type {GeoTag} */
+	this.geo = copyData.geo;
 	/** @type {object} */
 	this.participation = copyData.participation;
 	/** @type {ActProtocol} */
@@ -9031,14 +10901,12 @@ function PatientEncounter (copyData) {
 	this.dischargeDisposition = copyData.dischargeDisposition;
 	}
 }  // PatientEncounter 
-// SanteDB.Core.Model.Acts.Procedure, SanteDB.Core.Model, Version=1.1.0.35405, Culture=neutral, PublicKeyToken=null
-if(!Procedure)
+// SanteDB.Core.Model.Acts.Procedure, SanteDB.Core.Model, Version=2.0.0.0, Culture=neutral, PublicKeyToken=null
+//if(!Procedure)
 /**
  * @class
  * @constructor
- * @memberof SanteDBModel
  * @public
- * @extends Act
  * @summary             Represents a class which has an immediate and primary outcome and is an alteration             of the physical condition of the subject.            
  * @property {string} method            Gets or sets te method/technique used to perform the procedure            
  * @property {string} approachSite            Gets or sets the anatomical site or system through which the procedure was performed            
@@ -9047,11 +10915,11 @@ if(!Procedure)
  * @property {Concept} approachSiteModel [Delay loaded from approachSite],             Gets or sets the anatomical site or system which is the target of the procedure            
  * @property {Concept} targetSiteModel [Delay loaded from targetSite],             Gets or sets te method/technique used to perform the procedure            
  * @property {boolean} isNegated            Gets or sets an indicator which identifies whether the act actually occurred, or            specifically did not occur            
- * @property {string} template            Gets the template key            
+ * @property {string} template            Gets the template UUID upon which this act is based            
  * @property {TemplateDefinition} templateModel [Delay loaded from template],             Gets or sets the template definition            
- * @property {Date} actTime            Gets or sets the creation time in XML format            
- * @property {Date} startTime            Gets or sets the creation time in XML format            
- * @property {Date} stopTime            Gets or sets the creation time in XML format            
+ * @property {Date} actTime            Gets or sets the moment in time that this act occurred in ISO format            
+ * @property {Date} startTime            Gets or sets the time when the act should or did start ocurring in ISO format            
+ * @property {Date} stopTime            Gets or sets the time when the act should or did stop ocurring in ISO format            
  * @property {string} classConcept            Gets or sets the key of the concept which classifies the act.            (see: {@link ActClassKeys} for values)
  * @property {string} moodConcept            Gets or sets the key of the concept which specifies the mood of the act.            (see: {@link ActMoodKeys} for values)
  * @property {string} reasonConcept            Gets or sets the key of the concept which defines the reason why the act is or didn't occur            (see: {@link ActReasonKeys} for values)
@@ -9088,6 +10956,7 @@ if(!Procedure)
  * @property {ActRelationship} relationship.Replaces             The source act replaces the target act            
  * @property {ActRelationship} relationship.StartsAfterStartOf             Indicates that the source act starts after the start of another act            
  * @property {ActRelationship} relationship.Transforms             Indicates that the source act transforms the target act            
+ * @property {ActRelationship} relationship.Duplicate             Duplicate entity            
  * @property {ActRelationship} relationship.$other Unclassified
  * @property {SecurityPolicyInstance} policy            Gets or sets the security policy instances associated with the act            
  * @property {object} extension            Gets a list of all extensions associated with the act            
@@ -9154,20 +11023,21 @@ if(!Procedure)
  * @property {ActParticipation} participation.Via             The player entity represents an entity where the act occurred "via" this entity (i.e. in transport)            
  * @property {ActParticipation} participation.Witness             The player entity represents a legal witness to the act occurring.            
  * @property {ActParticipation} participation.$other Unclassified
+ * @property {GeoTag} geo            Gets or sets the geo-tag            
  * @property {string} previousVersion
  * @property {string} version
  * @property {number} sequence
  * @property {Date} creationTimeModel [Delay loaded from creationTime],             Gets or sets the time at which the data was created            
- * @property {Date} creationTime            Gets or sets the creation time in XML format            
+ * @property {Date} creationTime            Gets or sets the creation time as an ISO date format            
  * @property {Date} obsoletionTimeModel [Delay loaded from obsoletionTime],             Gets or sets the time when the data is or will become invalid            
- * @property {Date} obsoletionTime            Gets or sets the creation time in XML format            
- * @property {SecurityUser} createdByModel [Delay loaded from createdBy],             Gets or sets the user that created this base data            
+ * @property {Date} obsoletionTime            Gets or sets the time that the data is no longer valid (was deleted/obsoleted) in ISO format            
+ * @property {SecurityProvenance} createdByModel [Delay loaded from createdBy],             Gets or sets the user that created this base data            
  * @property {Date} modifiedOn            Gets the time that the object was last modified (from base data, default to CreationTime)            
- * @property {SecurityUser} obsoletedByModel [Delay loaded from obsoletedBy],             Gets or sets the user that obsoleted this base data            
- * @property {string} createdBy            Gets or sets the identifier of the user which created the data            
- * @property {string} obsoletedBy            Gets or sets the identifier of the user which obsoleted the data            
- * @property {string} id            The internal primary key value of the entity            
- * @property {string} $type            Gets the type            
+ * @property {SecurityProvenance} obsoletedByModel [Delay loaded from obsoletedBy],             Gets or sets the user that obsoleted this base data            
+ * @property {string} createdBy            Gets or sets the security provenance object which represents the creation of this object            
+ * @property {string} obsoletedBy            Gets or sets the security provenance object which represents the obsoletion of this data            
+ * @property {string} id            Gets or sets the primary identifying UUID of this object            
+ * @property {string} $type            Gets the type registration of this object            
  * @param {Procedure} copyData Copy constructor (if present)
  */
 function Procedure (copyData) { 
@@ -9179,11 +11049,11 @@ function Procedure (copyData) {
 	this.obsoletedBy = copyData.obsoletedBy;
 	/** @type {string} */
 	this.createdBy = copyData.createdBy;
-	/** @type {SecurityUser} */
+	/** @type {SecurityProvenance} */
 	this.obsoletedByModel = copyData.obsoletedByModel;
 	/** @type {Date} */
 	this.modifiedOn = copyData.modifiedOn;
-	/** @type {SecurityUser} */
+	/** @type {SecurityProvenance} */
 	this.createdByModel = copyData.createdByModel;
 	/** @type {Date} */
 	this.obsoletionTime = copyData.obsoletionTime;
@@ -9199,6 +11069,8 @@ function Procedure (copyData) {
 	this.version = copyData.version;
 	/** @type {string} */
 	this.previousVersion = copyData.previousVersion;
+	/** @type {GeoTag} */
+	this.geo = copyData.geo;
 	/** @type {object} */
 	this.participation = copyData.participation;
 	/** @type {ActProtocol} */
@@ -9261,13 +11133,13 @@ function Procedure (copyData) {
 	this.method = copyData.method;
 	}
 }  // Procedure 
-// SanteDB.Core.Model.Acts.Protocol, SanteDB.Core.Model, Version=1.1.0.35405, Culture=neutral, PublicKeyToken=null
-if(!Protocol)
+// SanteDB.Core.Model.Acts.Protocol, SanteDB.Core.Model, Version=2.0.0.0, Culture=neutral, PublicKeyToken=null
+//if(!Protocol)
 /**
  * @class
  * @constructor
- * @memberof SanteDBModel
  * @public
+ * @extends BaseEntityData
  * @summary             Represents the model of a clinical protocol            
  * @description The protocol type is used to store and retrieve the particular definition of a clinical protocol. In 
  *             SanteDB, a clinical protocol represents a series of steps that *should* be taken by a clinician when caring for 
@@ -9278,16 +11150,16 @@ if(!Protocol)
  * @property {string} handlerClass            Gets or sets the handler class AQN            
  * @property {string} oid            Gets or sets the OID            
  * @property {Date} creationTimeModel [Delay loaded from creationTime],             Gets or sets the time at which the data was created            
- * @property {Date} creationTime            Gets or sets the creation time in XML format            
+ * @property {Date} creationTime            Gets or sets the creation time as an ISO date format            
  * @property {Date} obsoletionTimeModel [Delay loaded from obsoletionTime],             Gets or sets the time when the data is or will become invalid            
- * @property {Date} obsoletionTime            Gets or sets the creation time in XML format            
- * @property {SecurityUser} createdByModel [Delay loaded from createdBy],             Gets or sets the user that created this base data            
+ * @property {Date} obsoletionTime            Gets or sets the time that the data is no longer valid (was deleted/obsoleted) in ISO format            
+ * @property {SecurityProvenance} createdByModel [Delay loaded from createdBy],             Gets or sets the user that created this base data            
  * @property {Date} modifiedOn            Gets the time that the object was last modified (from base data, default to CreationTime)            
- * @property {SecurityUser} obsoletedByModel [Delay loaded from obsoletedBy],             Gets or sets the user that obsoleted this base data            
- * @property {string} createdBy            Gets or sets the identifier of the user which created the data            
- * @property {string} obsoletedBy            Gets or sets the identifier of the user which obsoleted the data            
- * @property {string} id            The internal primary key value of the entity            
- * @property {string} $type            Gets the type            
+ * @property {SecurityProvenance} obsoletedByModel [Delay loaded from obsoletedBy],             Gets or sets the user that obsoleted this base data            
+ * @property {string} createdBy            Gets or sets the security provenance object which represents the creation of this object            
+ * @property {string} obsoletedBy            Gets or sets the security provenance object which represents the obsoletion of this data            
+ * @property {string} id            Gets or sets the primary identifying UUID of this object            
+ * @property {string} $type            Gets the type registration of this object            
  * @param {Protocol} copyData Copy constructor (if present)
  */
 function Protocol (copyData) { 
@@ -9299,11 +11171,11 @@ function Protocol (copyData) {
 	this.obsoletedBy = copyData.obsoletedBy;
 	/** @type {string} */
 	this.createdBy = copyData.createdBy;
-	/** @type {SecurityUser} */
+	/** @type {SecurityProvenance} */
 	this.obsoletedByModel = copyData.obsoletedByModel;
 	/** @type {Date} */
 	this.modifiedOn = copyData.modifiedOn;
-	/** @type {SecurityUser} */
+	/** @type {SecurityProvenance} */
 	this.createdByModel = copyData.createdByModel;
 	/** @type {Date} */
 	this.obsoletionTime = copyData.obsoletionTime;
@@ -9321,14 +11193,12 @@ function Protocol (copyData) {
 	this.name = copyData.name;
 	}
 }  // Protocol 
-// SanteDB.Core.Model.Acts.SubstanceAdministration, SanteDB.Core.Model, Version=1.1.0.35405, Culture=neutral, PublicKeyToken=null
-if(!SubstanceAdministration)
+// SanteDB.Core.Model.Acts.SubstanceAdministration, SanteDB.Core.Model, Version=2.0.0.0, Culture=neutral, PublicKeyToken=null
+//if(!SubstanceAdministration)
 /**
  * @class
  * @constructor
- * @memberof SanteDBModel
  * @public
- * @extends Act
  * @summary             Represents an act whereby a substance is administered to the patient            
  * @description The substance administration act is used whenever a clinician administers, plans to administer or should administer to a patient, a substance. 
  *             The substance that is administered is open but should be represented as either a Consumable (something that was consumed in the act of administration 
@@ -9346,11 +11216,11 @@ if(!SubstanceAdministration)
  * @property {string} site            Gets or sets the site            
  * @property {Concept} siteModel [Delay loaded from site],             Gets or sets a concept which indicates the site of administration            
  * @property {boolean} isNegated            Gets or sets an indicator which identifies whether the act actually occurred, or            specifically did not occur            
- * @property {string} template            Gets the template key            
+ * @property {string} template            Gets the template UUID upon which this act is based            
  * @property {TemplateDefinition} templateModel [Delay loaded from template],             Gets or sets the template definition            
- * @property {Date} actTime            Gets or sets the creation time in XML format            
- * @property {Date} startTime            Gets or sets the creation time in XML format            
- * @property {Date} stopTime            Gets or sets the creation time in XML format            
+ * @property {Date} actTime            Gets or sets the moment in time that this act occurred in ISO format            
+ * @property {Date} startTime            Gets or sets the time when the act should or did start ocurring in ISO format            
+ * @property {Date} stopTime            Gets or sets the time when the act should or did stop ocurring in ISO format            
  * @property {string} classConcept            Gets or sets the key of the concept which classifies the act.            (see: {@link ActClassKeys} for values)
  * @property {string} moodConcept            Gets or sets the key of the concept which specifies the mood of the act.            (see: {@link ActMoodKeys} for values)
  * @property {string} reasonConcept            Gets or sets the key of the concept which defines the reason why the act is or didn't occur            (see: {@link ActReasonKeys} for values)
@@ -9387,6 +11257,7 @@ if(!SubstanceAdministration)
  * @property {ActRelationship} relationship.Replaces             The source act replaces the target act            
  * @property {ActRelationship} relationship.StartsAfterStartOf             Indicates that the source act starts after the start of another act            
  * @property {ActRelationship} relationship.Transforms             Indicates that the source act transforms the target act            
+ * @property {ActRelationship} relationship.Duplicate             Duplicate entity            
  * @property {ActRelationship} relationship.$other Unclassified
  * @property {SecurityPolicyInstance} policy            Gets or sets the security policy instances associated with the act            
  * @property {object} extension            Gets a list of all extensions associated with the act            
@@ -9453,20 +11324,21 @@ if(!SubstanceAdministration)
  * @property {ActParticipation} participation.Via             The player entity represents an entity where the act occurred "via" this entity (i.e. in transport)            
  * @property {ActParticipation} participation.Witness             The player entity represents a legal witness to the act occurring.            
  * @property {ActParticipation} participation.$other Unclassified
+ * @property {GeoTag} geo            Gets or sets the geo-tag            
  * @property {string} previousVersion
  * @property {string} version
  * @property {number} sequence
  * @property {Date} creationTimeModel [Delay loaded from creationTime],             Gets or sets the time at which the data was created            
- * @property {Date} creationTime            Gets or sets the creation time in XML format            
+ * @property {Date} creationTime            Gets or sets the creation time as an ISO date format            
  * @property {Date} obsoletionTimeModel [Delay loaded from obsoletionTime],             Gets or sets the time when the data is or will become invalid            
- * @property {Date} obsoletionTime            Gets or sets the creation time in XML format            
- * @property {SecurityUser} createdByModel [Delay loaded from createdBy],             Gets or sets the user that created this base data            
+ * @property {Date} obsoletionTime            Gets or sets the time that the data is no longer valid (was deleted/obsoleted) in ISO format            
+ * @property {SecurityProvenance} createdByModel [Delay loaded from createdBy],             Gets or sets the user that created this base data            
  * @property {Date} modifiedOn            Gets the time that the object was last modified (from base data, default to CreationTime)            
- * @property {SecurityUser} obsoletedByModel [Delay loaded from obsoletedBy],             Gets or sets the user that obsoleted this base data            
- * @property {string} createdBy            Gets or sets the identifier of the user which created the data            
- * @property {string} obsoletedBy            Gets or sets the identifier of the user which obsoleted the data            
- * @property {string} id            The internal primary key value of the entity            
- * @property {string} $type            Gets the type            
+ * @property {SecurityProvenance} obsoletedByModel [Delay loaded from obsoletedBy],             Gets or sets the user that obsoleted this base data            
+ * @property {string} createdBy            Gets or sets the security provenance object which represents the creation of this object            
+ * @property {string} obsoletedBy            Gets or sets the security provenance object which represents the obsoletion of this data            
+ * @property {string} id            Gets or sets the primary identifying UUID of this object            
+ * @property {string} $type            Gets the type registration of this object            
  * @param {SubstanceAdministration} copyData Copy constructor (if present)
  */
 function SubstanceAdministration (copyData) { 
@@ -9478,11 +11350,11 @@ function SubstanceAdministration (copyData) {
 	this.obsoletedBy = copyData.obsoletedBy;
 	/** @type {string} */
 	this.createdBy = copyData.createdBy;
-	/** @type {SecurityUser} */
+	/** @type {SecurityProvenance} */
 	this.obsoletedByModel = copyData.obsoletedByModel;
 	/** @type {Date} */
 	this.modifiedOn = copyData.modifiedOn;
-	/** @type {SecurityUser} */
+	/** @type {SecurityProvenance} */
 	this.createdByModel = copyData.createdByModel;
 	/** @type {Date} */
 	this.obsoletionTime = copyData.obsoletionTime;
@@ -9498,6 +11370,8 @@ function SubstanceAdministration (copyData) {
 	this.version = copyData.version;
 	/** @type {string} */
 	this.previousVersion = copyData.previousVersion;
+	/** @type {GeoTag} */
+	this.geo = copyData.geo;
 	/** @type {object} */
 	this.participation = copyData.participation;
 	/** @type {ActProtocol} */
@@ -9564,16 +11438,525 @@ function SubstanceAdministration (copyData) {
 	this.route = copyData.route;
 	}
 }  // SubstanceAdministration 
-// SanteDB.Core.Model.Warehouse.SchemaPropertyType, SanteDB.Core.Model, Version=1.1.0.35405, Culture=neutral, PublicKeyToken=null
-if(!SchemaPropertyType)
+// SanteDB.Core.Auditing.AuditableObjectIdType, SanteDB.Core.Model, Version=2.0.0.0, Culture=neutral, PublicKeyToken=null
+// if(!AuditableObjectIdType)
 /**
  * @enum {string}
- * @memberof SanteDBModel
+ * @public
+ * @readonly
+ * @summary             Classifies the type of identifier that a auditable object may have            
+ */
+const AuditableObjectIdType = { 
+	/** 
+	 * 
+	 */
+	NotSpecified : 'NotSpecified',
+	/** 
+	 * 
+	 */
+	MedicalRecord : 'NotSpecified',
+	/** 
+	 * 
+	 */
+	PatientNumber : 'PatientNumber',
+	/** 
+	 * 
+	 */
+	EncounterNumber : 'EncounterNumber',
+	/** 
+	 * 
+	 */
+	EnrolleeNumber : 'EnrolleeNumber',
+	/** 
+	 * 
+	 */
+	SocialSecurityNumber : 'SocialSecurityNumber',
+	/** 
+	 * 
+	 */
+	AccountNumber : 'AccountNumber',
+	/** 
+	 * 
+	 */
+	GuarantorNumber : 'GuarantorNumber',
+	/** 
+	 * 
+	 */
+	ReportName : 'ReportName',
+	/** 
+	 * 
+	 */
+	ReportNumber : 'ReportNumber',
+	/** 
+	 * 
+	 */
+	SearchCritereon : 'SearchCritereon',
+	/** 
+	 * 
+	 */
+	UserIdentifier : 'UserIdentifier',
+	/** 
+	 * 
+	 */
+	Uri : 'Uri',
+	/** 
+	 *             Custom code            
+	 */
+	Custom : 'Custom',
+}  // AuditableObjectIdType 
+// SanteDB.Core.Auditing.AuditableObjectLifecycle, SanteDB.Core.Model, Version=2.0.0.0, Culture=neutral, PublicKeyToken=null
+// if(!AuditableObjectLifecycle)
+/**
+ * @enum {string}
+ * @public
+ * @readonly
+ * @summary             Auditable object lifecycle            
+ */
+const AuditableObjectLifecycle = { 
+	/** 
+	 *             Not set            
+	 */
+	NotSet : 'NotSet',
+	/** 
+	 *             An object was created            
+	 */
+	Creation : 'Creation',
+	/** 
+	 *             An object was imported from an external source            
+	 */
+	Import : 'Import',
+	/** 
+	 *             An object was amended (updated)            
+	 */
+	Amendment : 'Amendment',
+	/** 
+	 *             An object was verified            
+	 */
+	Verification : 'Verification',
+	/** 
+	 *             An object wsa transformed            
+	 */
+	Translation : 'Translation',
+	/** 
+	 *             An object was accessed            
+	 */
+	Access : 'Access',
+	/** 
+	 *             An object was de-identified            
+	 */
+	Deidentification : 'Deidentification',
+	/** 
+	 *             An object was aggregated with another group of objects            
+	 */
+	Aggregation : 'Aggregation',
+	/** 
+	 *             An object was reported on            
+	 */
+	Report : 'Report',
+	/** 
+	 *             An object was exported to another system            
+	 */
+	Export : 'Export',
+	/** 
+	 *             An object was disclosed to a user            
+	 */
+	Disclosure : 'Disclosure',
+	/** 
+	 *             The object was the receipt of a disclosure            
+	 */
+	ReceiptOfDisclosure : 'ReceiptOfDisclosure',
+	/** 
+	 *             The object was archived            
+	 */
+	Archiving : 'Archiving',
+	/** 
+	 *             The object was obsoleted (logically deleted)            
+	 */
+	LogicalDeletion : 'LogicalDeletion',
+	/** 
+	 *             The object was perminently deleted            
+	 */
+	PermanentErasure : 'PermanentErasure',
+}  // AuditableObjectLifecycle 
+// SanteDB.Core.Auditing.AuditableObjectRole, SanteDB.Core.Model, Version=2.0.0.0, Culture=neutral, PublicKeyToken=null
+// if(!AuditableObjectRole)
+/**
+ * @enum {string}
+ * @public
+ * @readonly
+ * @summary             Identifies roles of objects in the audit event            
+ */
+const AuditableObjectRole = { 
+	/** 
+	 * 
+	 */
+	Patient : 'Patient',
+	/** 
+	 * 
+	 */
+	Location : 'Location',
+	/** 
+	 * 
+	 */
+	Report : 'Report',
+	/** 
+	 * 
+	 */
+	Resource : 'Resource',
+	/** 
+	 * 
+	 */
+	MasterFile : 'MasterFile',
+	/** 
+	 * 
+	 */
+	User : 'User',
+	/** 
+	 * 
+	 */
+	List : 'List',
+	/** 
+	 * 
+	 */
+	Doctor : 'Doctor',
+	/** 
+	 * 
+	 */
+	Subscriber : 'Subscriber',
+	/** 
+	 * 
+	 */
+	Guarantor : 'Guarantor',
+	/** 
+	 * 
+	 */
+	SecurityUser : 'SecurityUser',
+	/** 
+	 * 
+	 */
+	SecurityGroup : 'SecurityGroup',
+	/** 
+	 * 
+	 */
+	SecurityResource : 'SecurityResource',
+	/** 
+	 * 
+	 */
+	SecurityGranularityDefinition : 'SecurityGranularityDefinition',
+	/** 
+	 * 
+	 */
+	Provider : 'Provider',
+	/** 
+	 * 
+	 */
+	DataDestination : 'DataDestination',
+	/** 
+	 * 
+	 */
+	DataRepository : 'DataRepository',
+	/** 
+	 * 
+	 */
+	Schedule : 'Schedule',
+	/** 
+	 * 
+	 */
+	Customer : 'Customer',
+	/** 
+	 * 
+	 */
+	Job : 'Job',
+	/** 
+	 * 
+	 */
+	JobStream : 'JobStream',
+	/** 
+	 * 
+	 */
+	Table : 'Table',
+	/** 
+	 * 
+	 */
+	RoutingCriteria : 'RoutingCriteria',
+	/** 
+	 * 
+	 */
+	Query : 'Query',
+}  // AuditableObjectRole 
+// SanteDB.Core.Auditing.AuditableObjectType, SanteDB.Core.Model, Version=2.0.0.0, Culture=neutral, PublicKeyToken=null
+// if(!AuditableObjectType)
+/**
+ * @enum {string}
+ * @public
+ * @readonly
+ * @summary             Identifies the type of auditable objects in the system            
+ */
+const AuditableObjectType = { 
+	/** 
+	 *             Not specified            
+	 */
+	NotSpecified : 'NotSpecified',
+	/** 
+	 *             Represents a person.            
+	 */
+	Person : 'Person',
+	/** 
+	 *             Represents a system object.            
+	 */
+	SystemObject : 'SystemObject',
+	/** 
+	 *             Represents an organization.            
+	 */
+	Organization : 'Organization',
+	/** 
+	 *             Represents an other object type.            
+	 */
+	Other : 'Other',
+}  // AuditableObjectType 
+// SanteDB.Core.Auditing.NetworkAccessPointType, SanteDB.Core.Model, Version=2.0.0.0, Culture=neutral, PublicKeyToken=null
+// if(!NetworkAccessPointType)
+/**
+ * @enum {string}
+ * @public
+ * @readonly
+ * @summary             Represents the type of network access point.            
+ */
+const NetworkAccessPointType = { 
+	/** 
+	 *             Represents an identifier which is a machine name.            
+	 */
+	MachineName : 'MachineName',
+	/** 
+	 *             Represents an identifier which is an IP address.            
+	 */
+	IPAddress : 'IPAddress',
+	/** 
+	 *             Represents an identifier which is a telephone number.            
+	 */
+	TelephoneNumber : 'TelephoneNumber',
+}  // NetworkAccessPointType 
+// SanteDB.Core.Auditing.ActionType, SanteDB.Core.Model, Version=2.0.0.0, Culture=neutral, PublicKeyToken=null
+// if(!ActionType)
+/**
+ * @enum {string}
+ * @public
+ * @readonly
+ * @summary             Represents types of actions            
+ */
+const ActionType = { 
+	/** 
+	 *             Data was created in the system            
+	 */
+	Create : 'Create',
+	/** 
+	 *             Data was viewed, printed, displayed, etc...            
+	 */
+	Read : 'Read',
+	/** 
+	 *             Data was revised in the system            
+	 */
+	Update : 'Update',
+	/** 
+	 *             Data was removed from the system            
+	 */
+	Delete : 'Delete',
+	/** 
+	 *             A system, or application function was performed            
+	 */
+	Execute : 'Execute',
+}  // ActionType 
+// SanteDB.Core.Auditing.EventIdentifierType, SanteDB.Core.Model, Version=2.0.0.0, Culture=neutral, PublicKeyToken=null
+// if(!EventIdentifierType)
+/**
+ * @enum {string}
+ * @public
+ * @readonly
+ * @summary             Represents an event identifier type.            
+ */
+const EventIdentifierType = { 
+	/** 
+	 *             Represents a provisioning event.            
+	 */
+	ProvisioningEvent : 'ProvisioningEvent',
+	/** 
+	 *             Represents a medication event.            
+	 */
+	MedicationEvent : 'MedicationEvent',
+	/** 
+	 *             Represents a resource assignment.            
+	 */
+	ResourceAssignment : 'ResourceAssignment',
+	/** 
+	 *             Represents a care episode.            
+	 */
+	CareEpisode : 'CareEpisode',
+	/** 
+	 *             Represents a care protocol.            
+	 */
+	CareProtocol : 'CareProtocol',
+	/** 
+	 *             Represents a procedure record.            
+	 */
+	ProcedureRecord : 'ProcedureRecord',
+	/** 
+	 *             Represents a query.            
+	 */
+	Query : 'Query',
+	/** 
+	 *             Represents a patient record.            
+	 */
+	PatientRecord : 'PatientRecord',
+	/** 
+	 *             Represents an order record.            
+	 */
+	OrderRecord : 'OrderRecord',
+	/** 
+	 *             Represents a network entry.            
+	 */
+	NetworkActivity : 'NetworkActivity',
+	/** 
+	 *             Represents an import.            
+	 */
+	Import : 'Import',
+	/** 
+	 *             Represents an export.            
+	 */
+	Export : 'Export',
+	/** 
+	 *             Represents application activity.            
+	 */
+	ApplicationActivity : 'ApplicationActivity',
+	/** 
+	 *             Represents a security alert.            
+	 */
+	SecurityAlert : 'SecurityAlert',
+	/** 
+	 *             Represents user authentication.            
+	 */
+	UserAuthentication : 'UserAuthentication',
+	/** 
+	 *             Represents that an emergency override started.            
+	 */
+	EmergencyOverrideStarted : 'EmergencyOverrideStarted',
+	/** 
+	 *             Represents the use of a restricted function.            
+	 */
+	UseOfRestrictedFunction : 'UseOfRestrictedFunction',
+	/** 
+	 *             Represents a login.            
+	 */
+	Login : 'Login',
+	/** 
+	 *             Represents a logout.            
+	 */
+	Logout : 'Logout',
+}  // EventIdentifierType 
+// SanteDB.Core.Auditing.OutcomeIndicator, SanteDB.Core.Model, Version=2.0.0.0, Culture=neutral, PublicKeyToken=null
+// if(!OutcomeIndicator)
+/**
+ * @enum {string}
+ * @public
+ * @readonly
+ * @summary             Represents potential outcomes.            
+ */
+const OutcomeIndicator = { 
+	/** 
+	 *             Successful operation.            
+	 */
+	Success : 'Success',
+	/** 
+	 *             Minor failure, action should be restarted.            
+	 */
+	MinorFail : 'MinorFail',
+	/** 
+	 *             Action was terminated.            
+	 */
+	SeriousFail : 'SeriousFail',
+	/** 
+	 *             Major failure, action is made unavailable.            
+	 */
+	EpicFail : 'EpicFail',
+}  // OutcomeIndicator 
+// SanteDB.Core.Auditing.AuditMetadataKey, SanteDB.Core.Model, Version=2.0.0.0, Culture=neutral, PublicKeyToken=null
+// if(!AuditMetadataKey)
+/**
+ * @enum {string}
+ * @public
+ * @readonly
+ * @summary             Represents metadata keys            
+ */
+const AuditMetadataKey = { 
+	/** 
+	 *             The metadata represents a patient identifier            
+	 */
+	PID : 'PID',
+	/** 
+	 *             The object is a process name            
+	 */
+	ProcessName : 'ProcessName',
+	/** 
+	 *             Identifies the remote host            
+	 */
+	RemoteHost : 'RemoteHost',
+	/** 
+	 *             Identifies the remote endpoint            
+	 */
+	RemoteEndpoint : 'RemoteEndpoint',
+	/** 
+	 *             Identifies the local endpoint            
+	 */
+	LocalEndpoint : 'LocalEndpoint',
+	/** 
+	 *             Identifies the time a batch was submitted            
+	 */
+	SubmissionTime : 'SubmissionTime',
+	/** 
+	 *             Identifies if an object was in original format            
+	 */
+	OriginalFormat : 'OriginalFormat',
+	/** 
+	 *             Identifies the status of the object            
+	 */
+	SubmissionStatus : 'SubmissionStatus',
+	/** 
+	 *             Identifies the priority of the object            
+	 */
+	Priority : 'Priority',
+	/** 
+	 *             Identifies the object classification            
+	 */
+	Classification : 'Classification',
+	/** 
+	 *             Identifies the object as a session identifier            
+	 */
+	SessionId : 'SessionId',
+	/** 
+	 *             Identifies the object as an enterprise site identifier            
+	 */
+	EnterpriseSiteID : 'EnterpriseSiteID',
+	/** 
+	 *             Identifies the object's metadata as the source            
+	 */
+	AuditSourceID : 'AuditSourceID',
+	/** 
+	 *             Identifies the source type            
+	 */
+	AuditSourceType : 'AuditSourceType',
+	/** 
+	 *             Allows the correlation of data between audits            
+	 */
+	CorrelationToken : 'CorrelationToken',
+}  // AuditMetadataKey 
+// SanteDB.Core.Model.Warehouse.SchemaPropertyType, SanteDB.Core.Model, Version=2.0.0.0, Culture=neutral, PublicKeyToken=null
+// if(!SchemaPropertyType)
+/**
+ * @enum {string}
  * @public
  * @readonly
  * @summary             Identifies the type which a schema property carries            
  */
-var SchemaPropertyType = { 
+const SchemaPropertyType = { 
 	/** 
 	 *             The object represents a string            
 	 */
@@ -9619,16 +12002,15 @@ var SchemaPropertyType = {
 	 */
 	TimeStamp : 'TimeStamp',
 }  // SchemaPropertyType 
-// SanteDB.Core.Model.Warehouse.SchemaPropertyAttributes, SanteDB.Core.Model, Version=1.1.0.35405, Culture=neutral, PublicKeyToken=null
-if(!SchemaPropertyAttributes)
+// SanteDB.Core.Model.Warehouse.SchemaPropertyAttributes, SanteDB.Core.Model, Version=2.0.0.0, Culture=neutral, PublicKeyToken=null
+// if(!SchemaPropertyAttributes)
 /**
  * @enum {string}
- * @memberof SanteDBModel
  * @public
  * @readonly
  * @summary             Identifies the type which a schema property carries            
  */
-var SchemaPropertyAttributes = { 
+const SchemaPropertyAttributes = { 
 	/** 
 	 *             No attributes            
 	 */
@@ -9646,16 +12028,105 @@ var SchemaPropertyAttributes = {
 	 */
 	Unique : 'Unique',
 }  // SchemaPropertyAttributes 
-// SanteDB.Core.Model.Constants.UserClassKeys, SanteDB.Core.Model, Version=1.1.0.35405, Culture=neutral, PublicKeyToken=null
-if(!UserClassKeys)
+// SanteDB.Core.Model.Subscription.SubscriptionModeType, SanteDB.Core.Model, Version=2.0.0.0, Culture=neutral, PublicKeyToken=null
+// if(!SubscriptionModeType)
 /**
  * @enum {string}
- * @memberof SanteDBModel
+ * @public
+ * @readonly
+ * @summary             The subscription modes in which a filter definition applies            
+ */
+const SubscriptionModeType = { 
+	/** 
+	 *             Only visible when subscription mode is selected            
+	 */
+	Subscription : 'Subscription',
+	/** 
+	 *             Only visible when all data (no specific item) is selected            
+	 */
+	All : 'All',
+	/** 
+	 *             Always visible            
+	 */
+	AllOrSubscription : 'AllOrSubscription',
+}  // SubscriptionModeType 
+// SanteDB.Core.Model.Subscription.SubscriptionTriggerType, SanteDB.Core.Model, Version=2.0.0.0, Culture=neutral, PublicKeyToken=null
+// if(!SubscriptionTriggerType)
+/**
+ * @enum {string}
+ * @public
+ * @readonly
+ * @summary             Represents synchronization pull triggers            
+ */
+const SubscriptionTriggerType = { 
+	/** 
+	 *             Never execute the trigger            
+	 */
+	Never : 'Never',
+	/** 
+	 *             Always execute the trigger            
+	 */
+	Always : 'Always',
+	/** 
+	 *             Only on start            
+	 */
+	OnStart : 'OnStart',
+	/** 
+	 *             Only on commit            
+	 */
+	OnCommit : 'OnCommit',
+	/** 
+	 *             Only on stop            
+	 */
+	OnStop : 'OnStop',
+	/** 
+	 *             Only on push of data            
+	 */
+	OnPush : 'OnPush',
+	/** 
+	 *             Only when the network changes            
+	 */
+	OnNetworkChange : 'OnNetworkChange',
+	/** 
+	 *             Periodically poll            
+	 */
+	PeriodicPoll : 'PeriodicPoll',
+	/** 
+	 *             Only when manually pulling            
+	 */
+	Manual : 'Manual',
+}  // SubscriptionTriggerType 
+// SanteDB.Core.Model.Security.PolicyGrantType, SanteDB.Core.Model, Version=2.0.0.0, Culture=neutral, PublicKeyToken=null
+// if(!PolicyGrantType)
+/**
+ * @enum {string}
+ * @public
+ * @readonly
+ * @summary             Policy grant type            
+ */
+const PolicyGrantType = { 
+	/** 
+	 *             Represents a policy grant type of deny.            
+	 */
+	Deny : 'Deny',
+	/** 
+	 *             Represnts a policy grant type of elevate.            
+	 */
+	Elevate : 'Elevate',
+	/** 
+	 *             Represents a policy grant type of grant.            
+	 */
+	Grant : 'Grant',
+}  // PolicyGrantType 
+// SanteDB.Core.Model.Constants.UserClassKeys, SanteDB.Core.Model, Version=2.0.0.0, Culture=neutral, PublicKeyToken=null
+// if(!UserClassKeys)
+/**
+ * @enum {string}
  * @public
  * @readonly
  * @summary             Represents user classification keys            
  */
-var UserClassKeys = { 
+const UserClassKeys = { 
 	/** 
 	 *             Represents a user which is an application            
 	 */
@@ -9669,16 +12140,15 @@ var UserClassKeys = {
 	 */
 	SystemUser : '9f71bb34-9691-440f-8249-9c831ea16d58',
 }  // UserClassKeys 
-// SanteDB.Core.Model.DataTypes.DatePrecision, SanteDB.Core.Model, Version=1.1.0.35405, Culture=neutral, PublicKeyToken=null
-if(!DatePrecision)
+// SanteDB.Core.Model.DataTypes.DatePrecision, SanteDB.Core.Model, Version=2.0.0.0, Culture=neutral, PublicKeyToken=null
+// if(!DatePrecision)
 /**
  * @enum {string}
- * @memberof SanteDBModel
  * @public
  * @readonly
  * @summary             Represents a date precision object            
  */
-var DatePrecision = { 
+const DatePrecision = { 
 	/** 
 	 *             Represents full date precision.            
 	 */
@@ -9708,16 +12178,15 @@ var DatePrecision = {
 	 */
 	Second : 'Second',
 }  // DatePrecision 
-// SanteDB.Core.Model.Constants.AddressUseKeys, SanteDB.Core.Model, Version=1.1.0.35405, Culture=neutral, PublicKeyToken=null
-if(!AddressUseKeys)
+// SanteDB.Core.Model.Constants.AddressUseKeys, SanteDB.Core.Model, Version=2.0.0.0, Culture=neutral, PublicKeyToken=null
+// if(!AddressUseKeys)
 /**
  * @enum {string}
- * @memberof SanteDBModel
  * @public
  * @readonly
  * @summary             Address use keys            
  */
-var AddressUseKeys = { 
+const AddressUseKeys = { 
 	/** 
 	 *             Represents an alphabetic address used for matching             
 	 */
@@ -9779,16 +12248,15 @@ var AddressUseKeys = {
 	 */
 	WorkPlace : 'eaa6f08e-bb8e-4457-9dc0-3a1555fadf5c',
 }  // AddressUseKeys 
-// SanteDB.Core.Model.Constants.EntityClassKeys, SanteDB.Core.Model, Version=1.1.0.35405, Culture=neutral, PublicKeyToken=null
-if(!EntityClassKeys)
+// SanteDB.Core.Model.Constants.EntityClassKeys, SanteDB.Core.Model, Version=2.0.0.0, Culture=neutral, PublicKeyToken=null
+// if(!EntityClassKeys)
 /**
  * @enum {string}
- * @memberof SanteDBModel
  * @public
  * @readonly
  * @summary             Entity class concept keys            
  */
-var EntityClassKeys = { 
+const EntityClassKeys = { 
 	/** 
 	 *             Animal            
 	 */
@@ -9870,16 +12338,15 @@ var EntityClassKeys = {
 	 */
 	State : '8cf4b0b0-84e5-4122-85fe-6afa8240c218',
 }  // EntityClassKeys 
-// SanteDB.Core.Model.Constants.DeterminerKeys, SanteDB.Core.Model, Version=1.1.0.35405, Culture=neutral, PublicKeyToken=null
-if(!DeterminerKeys)
+// SanteDB.Core.Model.Constants.DeterminerKeys, SanteDB.Core.Model, Version=2.0.0.0, Culture=neutral, PublicKeyToken=null
+// if(!DeterminerKeys)
 /**
  * @enum {string}
- * @memberof SanteDBModel
  * @public
  * @readonly
  * @summary             Determiner codes classify an entity into one of three categories.             
  */
-var DeterminerKeys = { 
+const DeterminerKeys = { 
 	/** 
 	 *             Indicates the entity is not a particular instance of a thing, rather a type of thing            
 	 */
@@ -9893,16 +12360,15 @@ var DeterminerKeys = {
 	 */
 	Specific : 'f29f08de-78a7-4a5e-aeaf-7b545ba19a09',
 }  // DeterminerKeys 
-// SanteDB.Core.Model.Constants.NameUseKeys, SanteDB.Core.Model, Version=1.1.0.35405, Culture=neutral, PublicKeyToken=null
-if(!NameUseKeys)
+// SanteDB.Core.Model.Constants.NameUseKeys, SanteDB.Core.Model, Version=2.0.0.0, Culture=neutral, PublicKeyToken=null
+// if(!NameUseKeys)
 /**
  * @enum {string}
- * @memberof SanteDBModel
  * @public
  * @readonly
  * @summary             Name use keys            
  */
-var NameUseKeys = { 
+const NameUseKeys = { 
 	/** 
 	 *             The name used is an alphabetic representation of the name (ex: romaji in Japanese)            
 	 */
@@ -9968,16 +12434,15 @@ var NameUseKeys = {
 	 */
 	Syllabic : 'b4ca3bf0-a7fc-44f3-87d5-e126beda93ff',
 }  // NameUseKeys 
-// SanteDB.Core.Model.Constants.ActParticipationKey, SanteDB.Core.Model, Version=1.1.0.35405, Culture=neutral, PublicKeyToken=null
-if(!ActParticipationKey)
+// SanteDB.Core.Model.Constants.ActParticipationKey, SanteDB.Core.Model, Version=2.0.0.0, Culture=neutral, PublicKeyToken=null
+// if(!ActParticipationKey)
 /**
  * @enum {string}
- * @memberof SanteDBModel
  * @public
  * @readonly
  * @summary             Represents the participation concepts which an entity can participate in an act            
  */
-var ActParticipationKey = { 
+const ActParticipationKey = { 
 	/** 
 	 *             The player entity was the person who was responsible for admitting the patient into a facility or care scenario.            
 	 */
@@ -10203,86 +12668,81 @@ var ActParticipationKey = {
 	 */
 	Witness : '0b82357f-5ae0-4543-ab8e-a33e9b315bab',
 }  // ActParticipationKey 
-// SanteDB.Core.Model.Constants.EntityRelationshipTypeKeys, SanteDB.Core.Model, Version=1.1.0.35405, Culture=neutral, PublicKeyToken=null
-if(!EntityRelationshipTypeKeys)
+// SanteDB.Core.Model.Constants.EntityRelationshipTypeKeys, SanteDB.Core.Model, Version=2.0.0.0, Culture=neutral, PublicKeyToken=null
+// if(!EntityRelationshipTypeKeys)
 /**
  * @enum {string}
- * @memberof SanteDBModel
  * @public
  * @readonly
  * @summary             Base entity relationship type keys            
  */
-var EntityRelationshipTypeKeys = { 
+const EntityRelationshipTypeKeys = { 
 	/** 
-	 *             The access            
+	 *             The source entity gives access to the target entity            
 	 */
 	Access : 'ddc1b705-c768-4c7a-8f69-76ad4b167b40',
 	/** 
-	 *             The active moiety            
+	 *             Active ingredient, where not the ingredient substance (player), but itaTMs active moiety is the "basis of strength"            
 	 */
 	ActiveMoiety : '212b1b6b-b074-4a75-862d-e4e194252044',
 	/** 
-	 *             The administerable material            
+	 *             The source represents a meterial that is an administerable form of the target            
 	 */
 	AdministerableMaterial : 'b52c7e95-88b8-4c4c-836a-934277afdb92',
 	/** 
-	 *             The adopted child            
+	 *             The source is an adopted child of the target            
 	 */
 	AdoptedChild : '8fa25b69-c9c2-4c40-84c1-0ea9641a12ec',
 	/** 
-	 *             The adopted daughter            
+	 *             The source is an adopted daughter of the target            
 	 */
 	AdoptedDaughter : '2b4b2ed8-f90c-4193-870a-f48bc39657c1',
 	/** 
-	 *             The adopted son            
+	 *             The source is an adopted son of the target            
 	 */
 	AdoptedSon : 'ce50ba92-cd21-43c4-8582-34e7fbb3170f',
 	/** 
-	 *             The affiliate            
+	 *             The target has a business/professional relationship with the source.            
 	 */
 	Affiliate : '8de7b5e7-c941-42bd-b735-52d750efc5e6',
 	/** 
-	 *             The agent            
+	 *             The target is an agent or authorized to act on behalf of the source            
 	 */
 	Agent : '867fd445-d490-4619-804e-75c04b8a0e57',
 	/** 
-	 *             The aliquot            
+	 *             The target is a portion of the original source            
 	 */
 	Aliquot : 'cff670e4-965e-4288-b966-47a44479d2ad',
 	/** 
-	 *             The assigned            
-	 */
-	Assigned : 'a87a6d21-2ca6-4aea-88f3-6135cceb58d1',
-	/** 
-	 *             The assigned entity            
+	 *             The target is an entity acting under the employ of the source entity            
 	 */
 	AssignedEntity : '77b7a04b-c065-4faf-8ec0-2cdad4ae372b',
 	/** 
-	 *             The aunt            
+	 *             The target is the aunt of the source            
 	 */
 	Aunt : '0ff2ab03-6e0a-40d1-8947-04c4937b4cc4',
 	/** 
-	 *             The birthplace            
+	 *             The target is the birthplace of the source            
 	 */
 	Birthplace : 'f3ef7e48-d8b7-4030-b431-aff7e0e1cb76',
 	/** 
-	 *             The brother            
+	 *             The target is the brother of the source            
 	 */
 	Brother : '24380d53-ea22-4820-9f06-8671f774f133',
 	/** 
-	 *             The brotherinlaw            
+	 *             The target is the brotherinlaw of the source            
 	 */
 	Brotherinlaw : '0a4c87e2-16c3-4361-be3c-dd765ee4bc7d',
 	/** 
-	 *             The caregiver            
+	 *             The target is the caregiver of the source            
 	 */
 	Caregiver : '31b0dfcb-d7ba-452a-98b9-45ebccd30732',
 	/** 
-	 *             The case subject            
+	 *             The the target represents a case subject of the source entity (such as a study)            
 	 */
 	CaseSubject : 'd7ad48c0-889d-41e2-99e9-be5e6c5327b2',
 	/** 
-	 *             The child            
+	 *             The the target is a child of the child source            
 	 */
 	Child : '739457d0-835a-4a9c-811c-42b5e92ed1ca',
 	/** 
@@ -10290,11 +12750,11 @@ var EntityRelationshipTypeKeys = {
 	 */
 	ChildInlaw : '8bf23192-de75-48eb-abee-81a9a15332f8',
 	/** 
-	 *             The citizen            
+	 *             The target is a citizen of the source            
 	 */
 	Citizen : '35b13152-e43c-4bcb-8649-a9e83bee33a2',
 	/** 
-	 *             The claimant            
+	 *             The target is a claimant  or is making a claim in a policy (source)            
 	 */
 	Claimant : '9d256279-f1ac-46b3-a974-dd13e2ad4f72',
 	/** 
@@ -10310,7 +12770,7 @@ var EntityRelationshipTypeKeys = {
 	 */
 	CommissioningParty : '33bd1401-dfdb-40e7-a914-0a695ad5186e',
 	/** 
-	 *             The contact            
+	 *             The target represents a contact of the source            
 	 */
 	Contact : 'b1d2148d-bb35-4337-8fe6-021f5a3ac8a3',
 	/** 
@@ -10318,11 +12778,11 @@ var EntityRelationshipTypeKeys = {
 	 */
 	Cousin : '1c0f931c-9c49-4a52-8fbf-5217c52ea778',
 	/** 
-	 *             The coverage sponsor            
+	 *             The target represents a coverage sponsor of the source            
 	 */
 	CoverageSponsor : '8ff9d9a5-a206-4566-82cd-67b770d7ce8a',
 	/** 
-	 *             The covered party            
+	 *             The target is a covered party of a source (insurance policy)            
 	 */
 	CoveredParty : 'd4844672-c0d7-434c-8377-6dd0655b0532',
 	/** 
@@ -10334,15 +12794,15 @@ var EntityRelationshipTypeKeys = {
 	 */
 	DaughterInlaw : '76fdf0e7-cfe0-47b4-9630-c645f254cdfd',
 	/** 
-	 *             The dedicated service delivery location            
+	 *             The target is the dedicated service delivery location for the source            
 	 */
 	DedicatedServiceDeliveryLocation : '455f1772-f580-47e8-86bd-b5ce25d351f9',
 	/** 
-	 *             The dependent            
+	 *             The target is a dependent of the source            
 	 */
 	Dependent : 'f28ed78f-85ab-47a1-ba08-b5051e62d6c3',
 	/** 
-	 *             The distributed material            
+	 *             The target is a distributed or shippable material of the source            
 	 */
 	DistributedMaterial : 'f5547ada-1eb9-40bb-b163-081567d869e7',
 	/** 
@@ -10350,15 +12810,15 @@ var EntityRelationshipTypeKeys = {
 	 */
 	DomesticPartner : '3db182e2-653b-4bfd-a300-32f23345d1c0',
 	/** 
-	 *             The emergency contact            
+	 *             The target is an emergency contact for the source            
 	 */
 	EmergencyContact : '25985f42-476a-4455-a977-4e97a554d710',
 	/** 
-	 *             The employee            
+	 *             The the target is an employee of the source            
 	 */
 	Employee : 'b43c9513-1c1c-4ed0-92db-55a904c122e6',
 	/** 
-	 *             The exposed entity            
+	 *             The target represents a substance which is exposed when the source is exposed            
 	 */
 	ExposedEntity : 'ab39087c-17d3-421a-a1e3-2de4e0ab9faf',
 	/** 
@@ -10430,7 +12890,7 @@ var EntityRelationshipTypeKeys = {
 	 */
 	GUARD : '845120de-e6f7-4cec-94aa-e6e943c91367',
 	/** 
-	 *             The guardian            
+	 *             The target is a guardian of the source            
 	 */
 	Guardian : '3b8e2334-4ccc-4f24-8aae-37341ea03d3e',
 	/** 
@@ -10446,15 +12906,15 @@ var EntityRelationshipTypeKeys = {
 	 */
 	Halfsister : 'ce42c680-a783-4cde-bcd1-e261d6fd68a0',
 	/** 
-	 *             The healthcare provider            
+	 *             The target is a healthcare provider for the source            
 	 */
 	HealthcareProvider : '6b04fed8-c164-469c-910b-f824c2bda4f0',
 	/** 
-	 *             The health chart            
+	 *             The target represents a health chart belonging to the source            
 	 */
 	HealthChart : '5b0f8c93-57c9-4dff-b59a-9564739ef445',
 	/** 
-	 *             The held entity            
+	 *             The source holds the specified quantity of the target entity (the target entity is held by the source)            
 	 */
 	HeldEntity : '9c02a621-8565-46b4-94ff-a2bd210989b1',
 	/** 
@@ -10462,15 +12922,15 @@ var EntityRelationshipTypeKeys = {
 	 */
 	Husband : '62aca44c-b57c-44fd-9703-fcdff97c04b6',
 	/** 
-	 *             The identified entity            
+	 *             The target represents an entity for purposes of identification of the source            
 	 */
 	IdentifiedEntity : 'c5c8b935-294f-4c90-9d81-cbf914bf5808',
 	/** 
-	 *             The incidental service delivery location            
+	 *             The target represents an incidental service delivery location related to the source entity            
 	 */
 	IncidentalServiceDeliveryLocation : '41baf7aa-5ffd-4421-831f-42d4ab3de38a',
 	/** 
-	 *             The individual            
+	 *             The target represents an individual instance of the source            
 	 */
 	Individual : '47049b0f-f189-4e19-9aa8-7c38adb2491a',
 	/** 
@@ -10478,7 +12938,7 @@ var EntityRelationshipTypeKeys = {
 	 */
 	InvestigationSubject : '0c522bd1-dfa2-43cb-a98e-f6ff137968ae',
 	/** 
-	 *             The invoice payor            
+	 *             The target is the payor of an invoice for the source            
 	 */
 	InvoicePayor : '07c922d2-12c9-415a-95d4-9b3fed4959d6',
 	/** 
@@ -10486,15 +12946,15 @@ var EntityRelationshipTypeKeys = {
 	 */
 	Isolate : '020c28a0-7c52-42f4-a046-db9e329d5a42',
 	/** 
-	 *             The licensed entity            
+	 *             The target represents an entity licensed to perform or use the source            
 	 */
 	LicensedEntity : 'b9fe057e-7f57-42eb-89d7-67c69646c0c4',
 	/** 
-	 *             The maintained entity            
+	 *             The target entity is maintained by the source entity            
 	 */
 	MaintainedEntity : '77b6d8cd-05a0-4b1f-9e14-b895203bf40c',
 	/** 
-	 *             The manufactured product            
+	 *             The target entity is a product which is manufactured by the source            
 	 */
 	ManufacturedProduct : '6780df3b-afbd-44a3-8627-cbb3dc2f02f6',
 	/** 
@@ -10538,7 +12998,7 @@ var EntityRelationshipTypeKeys = {
 	 */
 	MilitaryPerson : '1bcfb08d-c6fa-41dd-98bf-06336a33a3b7',
 	/** 
-	 *             The mother            
+	 *             The target is the mother of the source            
 	 */
 	Mother : '29ff64e5-b564-411a-92c7-6818c02a9e48',
 	/** 
@@ -10546,7 +13006,7 @@ var EntityRelationshipTypeKeys = {
 	 */
 	Motherinlaw : 'f941988a-1c55-4408-ab57-e9ed35b2a24d',
 	/** 
-	 *             The named insured            
+	 *             The target is a named insured person on the source policy            
 	 */
 	NamedInsured : '3d907f37-085c-4c26-b59b-62e40621dafd',
 	/** 
@@ -10566,7 +13026,7 @@ var EntityRelationshipTypeKeys = {
 	 */
 	NaturalFather : '233d890b-04ef-4365-99ad-26cb4e1f75f3',
 	/** 
-	 *             The natural father of fetus            
+	 *             The target is the natural father of fetus of the identified fetus (source) or pregnant entity (source)            
 	 */
 	NaturalFatherOfFetus : '8e88debc-d175-46f3-9b48-106f9c151cd2',
 	/** 
@@ -10594,7 +13054,7 @@ var EntityRelationshipTypeKeys = {
 	 */
 	Nephew : '5c5af1d2-0e6d-458f-9574-3ad61c393a90',
 	/** 
-	 *             The next of kin            
+	 *             The target is the next of kin for the source            
 	 */
 	NextOfKin : '1ee4e74f-542d-4544-96f6-266a6247f274',
 	/** 
@@ -10606,15 +13066,15 @@ var EntityRelationshipTypeKeys = {
 	 */
 	NieceNephew : 'a907e4d8-d823-478f-9c5a-6facae6b4b5b',
 	/** 
-	 *             The notary public            
+	 *             The target is a notary public acting within the source entity             
 	 */
 	NotaryPublic : 'f1ef6c46-05eb-4482-baeb-eaf0a8e5ffef',
 	/** 
-	 *             The owned entity            
+	 *             The target entity is owned by the source entity            
 	 */
 	OwnedEntity : '117da15c-0864-4f00-a987-9b9854cba44e',
 	/** 
-	 *             The parent            
+	 *             The target entity is the parent of the source entity            
 	 */
 	Parent : 'bfcbb345-86db-43ba-b47e-e7411276ac7c',
 	/** 
@@ -10622,7 +13082,7 @@ var EntityRelationshipTypeKeys = {
 	 */
 	ParentInlaw : '5e2b0afe-724e-41cd-9be2-9030646f2529',
 	/** 
-	 *             The part            
+	 *             The target entity is a part of the source entity (source is comprised of parts)            
 	 */
 	Part : 'b2feb552-8eaf-45fe-a397-f789d6f4728a',
 	/** 
@@ -10662,43 +13122,43 @@ var EntityRelationshipTypeKeys = {
 	 */
 	PaternalUncle : '853c85de-4817-4328-a121-6a3bdafbf82e',
 	/** 
-	 *             The patient            
+	 *             The target is a patient of the source entity            
 	 */
 	Patient : 'bacd9c6f-3fa9-481e-9636-37457962804d',
 	/** 
-	 *             The payee            
+	 *             The targert is a payee of the source entity            
 	 */
 	Payee : '734551e1-2960-4a68-93a2-b277db072a43',
 	/** 
-	 *             The personal relationship            
+	 *             The target possesses a personal relationship with the source entity            
 	 */
 	PersonalRelationship : 'abfd3fe8-9526-48fb-b366-35baca9bd170',
 	/** 
-	 *             The place of death            
+	 *             The target entity represents the place of death of the source entity            
 	 */
 	PlaceOfDeath : '9bbe0cfe-faab-4dc9-a28f-c001e3e95e6e',
 	/** 
-	 *             The policy holder            
+	 *             The target entity represents the policy holder of the source policy            
 	 */
 	PolicyHolder : 'cec017ef-4e49-41af-8596-abad1a91c9d0',
 	/** 
-	 *             The program eligible            
+	 *             The target is an entity which is eligible for funding or participation within a program            
 	 */
 	ProgramEligible : 'cbe2a00c-e1d5-44e9-aae3-d7d03e3c2efa',
 	/** 
-	 *             The qualified entity            
+	 *             The target represents a qualified version of the source entity            
 	 */
 	QualifiedEntity : '6521dd09-334b-4fbf-9c89-1ad5a804326c',
 	/** 
-	 *             The regulated product            
+	 *             The target represents a regulated version of the source product or represents a product which is regulated within the source jurisdiction            
 	 */
 	RegulatedProduct : '20e98d17-e24d-4c64-b09e-521a177ccd05',
 	/** 
-	 *             The research subject            
+	 *             The target represents a research subject of the source study            
 	 */
 	ResearchSubject : 'ef597ffe-d965-4398-b55a-650530ebb997',
 	/** 
-	 *             The retailed material            
+	 *             The target represents a material which is a retailed version of the source or is sold at the particular source            
 	 */
 	RetailedMaterial : '703df8f4-b124-44c5-9506-1ab74ddfd91d',
 	/** 
@@ -10706,7 +13166,7 @@ var EntityRelationshipTypeKeys = {
 	 */
 	Roomate : 'bbfac1ed-5464-4100-93c3-8685b052a2cf',
 	/** 
-	 *             The service delivery location            
+	 *             The target represents a service delivery location for the source entity            
 	 */
 	ServiceDeliveryLocation : 'ff34dfa7-c6d3-4f8b-bc9f-14bcdc13ba6c',
 	/** 
@@ -10722,7 +13182,7 @@ var EntityRelationshipTypeKeys = {
 	 */
 	SignificantOther : '2eab5298-bc83-492c-9004-ed3499246afe',
 	/** 
-	 *             The signing authority or officer            
+	 *             The target has signing authority or is an officer of the source            
 	 */
 	SigningAuthorityOrOfficer : '757f98df-14e0-446a-bd50-bb0affb34f09',
 	/** 
@@ -10742,7 +13202,7 @@ var EntityRelationshipTypeKeys = {
 	 */
 	SonInlaw : '34f7bc11-2288-471a-af38-553ae6b8410c',
 	/** 
-	 *             The specimen            
+	 *             The target represents a specimen collected from the source            
 	 */
 	Specimen : 'bce17b21-05b2-4f02-bf7a-c6d3561aa948',
 	/** 
@@ -10790,15 +13250,15 @@ var EntityRelationshipTypeKeys = {
 	 */
 	Student : '0c157566-d1e9-4976-8542-473caa9ba2a4',
 	/** 
-	 *             The subscriber            
+	 *             The target is a subscriber of the source, meaning the target should receive updates whenever the source changes             
 	 */
 	Subscriber : 'f31a2a5b-ce13-47e1-a0fb-d704f31547db',
 	/** 
-	 *             The territory of authority            
+	 *             The target represents another territory where the source has authority            
 	 */
 	TerritoryOfAuthority : 'c6b92576-1d62-4896-8799-6f931f8ab607',
 	/** 
-	 *             The therapeutic agent            
+	 *             The target represents the theraputic agent of the source            
 	 */
 	TherapeuticAgent : 'd6657fdb-4ef3-4131-af79-14e01a21faca',
 	/** 
@@ -10810,11 +13270,11 @@ var EntityRelationshipTypeKeys = {
 	 */
 	Underwriter : 'a8fcd83f-808b-494b-8a1c-ec2c6dbc3dfa',
 	/** 
-	 *             The used entity            
+	 *             The target represents an entity that is consumed whenever the source is consumed            
 	 */
 	UsedEntity : '08fff7d9-bac7-417b-b026-c9bee52f4a37',
 	/** 
-	 *             The warranted product            
+	 *             The target represents a product which is warranted by the source            
 	 */
 	WarrantedProduct : '639b4b8f-afd3-4963-9e79-ef0d3928796a',
 	/** 
@@ -10822,7 +13282,7 @@ var EntityRelationshipTypeKeys = {
 	 */
 	Wife : 'a3ff423e-81d5-4571-8edf-03c295189a23',
 	/** 
-	 *             The replaces            
+	 *             The source replaces the target (note: this is one relationship where the role relationship is reveresed)             
 	 */
 	Replaces : 'd1578637-e1cb-415e-b319-4011da033813',
 	/** 
@@ -10833,17 +13293,20 @@ var EntityRelationshipTypeKeys = {
 	 *             Relates the target entity to a source location            
 	 */
 	LocatedEntity : '4f6273d3-8223-4e18-8596-c718ad029deb',
+	/** 
+	 *             Duplicate entity            
+	 */
+	Duplicate : '2bbf068b-9121-4081-bf3c-ab62c01362ee',
 }  // EntityRelationshipTypeKeys 
-// SanteDB.Core.Model.Constants.StatusKeys, SanteDB.Core.Model, Version=1.1.0.35405, Culture=neutral, PublicKeyToken=null
-if(!StatusKeys)
+// SanteDB.Core.Model.Constants.StatusKeys, SanteDB.Core.Model, Version=2.0.0.0, Culture=neutral, PublicKeyToken=null
+// if(!StatusKeys)
 /**
  * @enum {string}
- * @memberof SanteDBModel
  * @public
  * @readonly
  * @summary             Status concepts represent the current status of entities, acts, and concepts.            
  */
-var StatusKeys = { 
+const StatusKeys = { 
 	/** 
 	 *             When an entity or act is active, it means the information or entity is currently correct and ongoing            
 	 */
@@ -10869,16 +13332,15 @@ var StatusKeys = {
 	 */
 	Obsolete : 'bdef5f90-5497-4f26-956c-8f818cce2bd2',
 }  // StatusKeys 
-// SanteDB.Core.Model.Constants.TelecomAddressUseKeys, SanteDB.Core.Model, Version=1.1.0.35405, Culture=neutral, PublicKeyToken=null
-if(!TelecomAddressUseKeys)
+// SanteDB.Core.Model.Constants.TelecomAddressUseKeys, SanteDB.Core.Model, Version=2.0.0.0, Culture=neutral, PublicKeyToken=null
+// if(!TelecomAddressUseKeys)
 /**
  * @enum {string}
- * @memberof SanteDBModel
  * @public
  * @readonly
  * @summary             Telecommunications address use keys            
  */
-var TelecomAddressUseKeys = { 
+const TelecomAddressUseKeys = { 
 	/** 
 	 *             answering service            
 	 */
@@ -10908,16 +13370,15 @@ var TelecomAddressUseKeys = {
 	 */
 	WorkPlace : 'eaa6f08e-bb8e-4457-9dc0-3a1555fadf5c',
 }  // TelecomAddressUseKeys 
-// SanteDB.Core.Model.Patch.PatchOperationType, SanteDB.Core.Model, Version=1.1.0.35405, Culture=neutral, PublicKeyToken=null
-if(!PatchOperationType)
+// SanteDB.Core.Model.Patch.PatchOperationType, SanteDB.Core.Model, Version=2.0.0.0, Culture=neutral, PublicKeyToken=null
+// if(!PatchOperationType)
 /**
  * @enum {string}
- * @memberof SanteDBModel
  * @public
  * @readonly
  * @summary             Represents a patch operation type            
  */
-var PatchOperationType = { 
+const PatchOperationType = { 
 	/** 
 	 *             Patch operation adds the specified value to the array            
 	 */
@@ -10935,16 +13396,15 @@ var PatchOperationType = {
 	 */
 	Test : 'Test',
 }  // PatchOperationType 
-// SanteDB.Core.Model.Constants.AddressComponentKeys, SanteDB.Core.Model, Version=1.1.0.35405, Culture=neutral, PublicKeyToken=null
-if(!AddressComponentKeys)
+// SanteDB.Core.Model.Constants.AddressComponentKeys, SanteDB.Core.Model, Version=2.0.0.0, Culture=neutral, PublicKeyToken=null
+// if(!AddressComponentKeys)
 /**
  * @enum {string}
- * @memberof SanteDBModel
  * @public
  * @readonly
  * @summary             Represents address component types            
  */
-var AddressComponentKeys = { 
+const AddressComponentKeys = { 
 	/** 
 	 *             An additional locator (example: Beside the red barn).            
 	 */
@@ -11058,16 +13518,15 @@ var AddressComponentKeys = {
 	 */
 	UnitIdentifier : '908c09df-81fe-45ac-9233-0881a278a401',
 }  // AddressComponentKeys 
-// SanteDB.Core.Model.Constants.NameComponentKeys, SanteDB.Core.Model, Version=1.1.0.35405, Culture=neutral, PublicKeyToken=null
-if(!NameComponentKeys)
+// SanteDB.Core.Model.Constants.NameComponentKeys, SanteDB.Core.Model, Version=2.0.0.0, Culture=neutral, PublicKeyToken=null
+// if(!NameComponentKeys)
 /**
  * @enum {string}
- * @memberof SanteDBModel
  * @public
  * @readonly
  * @summary             Name component type keys            
  */
-var NameComponentKeys = { 
+const NameComponentKeys = { 
 	/** 
 	 *             The name component represents a delimeter in a name such as hyphen or space            
 	 */
@@ -11093,16 +13552,15 @@ var NameComponentKeys = {
 	 */
 	Title : '4386d92a-d81b-4033-b968-01e57e20d5e0',
 }  // NameComponentKeys 
-// SanteDB.Core.Model.Constants.PhoneticAlgorithmKeys, SanteDB.Core.Model, Version=1.1.0.35405, Culture=neutral, PublicKeyToken=null
-if(!PhoneticAlgorithmKeys)
+// SanteDB.Core.Model.Constants.PhoneticAlgorithmKeys, SanteDB.Core.Model, Version=2.0.0.0, Culture=neutral, PublicKeyToken=null
+// if(!PhoneticAlgorithmKeys)
 /**
  * @enum {string}
- * @memberof SanteDBModel
  * @public
  * @readonly
  * @summary             Phonetic algorithm keys for built in phonetic algorithms in SanteDB            
  */
-var PhoneticAlgorithmKeys = { 
+const PhoneticAlgorithmKeys = { 
 	/** 
 	 *             Represents the metaphone phonetic algorithm            
 	 */
@@ -11116,16 +13574,49 @@ var PhoneticAlgorithmKeys = {
 	 */
 	Soundex : '3352a79a-d2e0-4e0c-9b48-6fd2a202c681',
 }  // PhoneticAlgorithmKeys 
-// SanteDB.Core.Model.Constants.ConceptRelationshipTypeKeys, SanteDB.Core.Model, Version=1.1.0.35405, Culture=neutral, PublicKeyToken=null
-if(!ConceptRelationshipTypeKeys)
+// SanteDB.Core.Model.Constants.TelecomAddressTypeKeys, SanteDB.Core.Model, Version=2.0.0.0, Culture=neutral, PublicKeyToken=null
+// if(!TelecomAddressTypeKeys)
 /**
  * @enum {string}
- * @memberof SanteDBModel
+ * @public
+ * @readonly
+ * @summary             Telecommunications address use keys            
+ */
+const TelecomAddressTypeKeys = { 
+	/** 
+	 *             pager            
+	 */
+	Pager : '788000b4-e37a-4055-a2aa-c650089ce3b1',
+	/** 
+	 *             Telephone (can receive voice calls)            
+	 */
+	Telephone : 'c1c0a4e9-4238-4044-b89b-9c9798995b99',
+	/** 
+	 *             Cellular phone (can receive MMS and SMS)            
+	 */
+	CellularPhone : 'c1c0a4e9-4238-4044-b89b-9c9798995b90',
+	/** 
+	 *             Modem (can be dialed into)            
+	 */
+	Modem : 'c1c0a4e9-4238-4044-b89b-9c9798995b91',
+	/** 
+	 *             Fax machine (can receive fax data)            
+	 */
+	FaxMachine : 'c1c0a4e9-4238-4044-b89b-9c9798995b92',
+	/** 
+	 *             Internet address (can receive SMTP e-mail)            
+	 */
+	Internet : 'c1c0a4e9-4238-4044-b89b-9c9798995b93',
+}  // TelecomAddressTypeKeys 
+// SanteDB.Core.Model.Constants.ConceptRelationshipTypeKeys, SanteDB.Core.Model, Version=2.0.0.0, Culture=neutral, PublicKeyToken=null
+// if(!ConceptRelationshipTypeKeys)
+/**
+ * @enum {string}
  * @public
  * @readonly
  * @summary             Reference type identifiers            
  */
-var ConceptRelationshipTypeKeys = { 
+const ConceptRelationshipTypeKeys = { 
 	/** 
 	 *             The source concept has the inverse meaning of the target concept            
 	 */
@@ -11143,16 +13634,15 @@ var ConceptRelationshipTypeKeys = {
 	 */
 	SameAs : '2c4dafc2-566a-41ae-9ebc-3097d7d22f4a',
 }  // ConceptRelationshipTypeKeys 
-// SanteDB.Core.Model.Constants.ConceptClassKeys, SanteDB.Core.Model, Version=1.1.0.35405, Culture=neutral, PublicKeyToken=null
-if(!ConceptClassKeys)
+// SanteDB.Core.Model.Constants.ConceptClassKeys, SanteDB.Core.Model, Version=2.0.0.0, Culture=neutral, PublicKeyToken=null
+// if(!ConceptClassKeys)
 /**
  * @enum {string}
- * @memberof SanteDBModel
  * @public
  * @readonly
  * @summary             Concept classification identifiers for built-in concept classes            
  */
-var ConceptClassKeys = { 
+const ConceptClassKeys = { 
 	/** 
 	 *             Classification codes            
 	 */
@@ -11205,17 +13695,20 @@ var ConceptClassKeys = {
 	 *             Unit of measure classification            
 	 */
 	UnitOfMeasure : '1ef69347-ef03-4ff7-b3c5-6334448845e6',
+	/** 
+	 *             Language codes            
+	 */
+	Language : 'ed032625-8139-4bdd-af25-c54a6960f87d',
 }  // ConceptClassKeys 
-// SanteDB.Core.Model.Constants.CodeSystemKeys, SanteDB.Core.Model, Version=1.1.0.35405, Culture=neutral, PublicKeyToken=null
-if(!CodeSystemKeys)
+// SanteDB.Core.Model.Constants.CodeSystemKeys, SanteDB.Core.Model, Version=2.0.0.0, Culture=neutral, PublicKeyToken=null
+// if(!CodeSystemKeys)
 /**
  * @enum {string}
- * @memberof SanteDBModel
  * @public
  * @readonly
  * @summary             Code system identifiers            
  */
-var CodeSystemKeys = { 
+const CodeSystemKeys = { 
 	/** 
 	 *             Commonn Vaccination Codes (CDC)            
 	 */
@@ -11265,16 +13758,15 @@ var CodeSystemKeys = {
 	 */
 	AdministrativeGender : '7a3a7139-b93e-4a99-bd54-749e30fe712a',
 }  // CodeSystemKeys 
-// SanteDB.Core.Model.Constants.ActClassKeys, SanteDB.Core.Model, Version=1.1.0.35405, Culture=neutral, PublicKeyToken=null
-if(!ActClassKeys)
+// SanteDB.Core.Model.Constants.ActClassKeys, SanteDB.Core.Model, Version=2.0.0.0, Culture=neutral, PublicKeyToken=null
+// if(!ActClassKeys)
 /**
  * @enum {string}
- * @memberof SanteDBModel
  * @public
  * @readonly
  * @summary             Represents a series of class keys for use on acts.            
  */
-var ActClassKeys = { 
+const ActClassKeys = { 
 	/** 
 	 *             The act represents generic account management such as adjudications, financial adjustments, stock counting, etc.            
 	 */
@@ -11331,17 +13823,40 @@ var ActClassKeys = {
 	 *             The physical transporting of materials or people from one place to another.            
 	 */
 	Transport : '61677f76-dc05-466d-91de-47efc8e7a3e6',
+	/** 
+	 *             Represents a contract            
+	 */
+	Contract : '5b947fcb-055a-4e7b-9571-3c2502d72ba6',
+	/** 
+	 *             Represents a financial contract            
+	 */
+	FinancialContract : 'ee5fabb7-f97c-417c-ad81-ac9d05b81c50',
+	/** 
+	 *             Represents an account for tracking financial obligations            
+	 */
+	Account : 'efd2d8dd-45d4-4746-bf1a-38e95a358c05',
+	/** 
+	 *             Represents a single financial transaction            
+	 */
+	FinancialTransaction : '6a37a91e-cc27-4e64-9b49-618a1f255904',
+	/** 
+	 *             Represents a single invoice element            
+	 */
+	InvoiceElement : '6755ee8b-48e6-4fd8-802f-59b89efa8966',
+	/** 
+	 *             List            
+	 */
+	List : 'b0323489-9a09-411a-bb55-ff283830ea1a',
 }  // ActClassKeys 
-// SanteDB.Core.Model.Constants.ActMoodKeys, SanteDB.Core.Model, Version=1.1.0.35405, Culture=neutral, PublicKeyToken=null
-if(!ActMoodKeys)
+// SanteDB.Core.Model.Constants.ActMoodKeys, SanteDB.Core.Model, Version=2.0.0.0, Culture=neutral, PublicKeyToken=null
+// if(!ActMoodKeys)
 /**
  * @enum {string}
- * @memberof SanteDBModel
  * @public
  * @readonly
  * @summary             Act Mood keys            
  */
-var ActMoodKeys = { 
+const ActMoodKeys = { 
 	/** 
 	 *             The ACT represents an appointment that was made to do something            
 	 */
@@ -11379,16 +13894,15 @@ var ActMoodKeys = {
 	 */
 	Request : 'e658ca72-3b6a-4099-ab6e-7cf6861a5b61',
 }  // ActMoodKeys 
-// SanteDB.Core.Model.Constants.ActReasonKeys, SanteDB.Core.Model, Version=1.1.0.35405, Culture=neutral, PublicKeyToken=null
-if(!ActReasonKeys)
+// SanteDB.Core.Model.Constants.ActReasonKeys, SanteDB.Core.Model, Version=2.0.0.0, Culture=neutral, PublicKeyToken=null
+// if(!ActReasonKeys)
 /**
  * @enum {string}
- * @memberof SanteDBModel
  * @public
  * @readonly
  * @summary             Represents act reasons (reasons for an act)            
  */
-var ActReasonKeys = { 
+const ActReasonKeys = { 
 	/** 
 	 *             The patient started too late for the therapy            
 	 */
@@ -11430,16 +13944,15 @@ var ActReasonKeys = {
 	 */
 	ColdStorageFailure : '06922eac-0cae-49af-a33c-fc7096349e4a',
 }  // ActReasonKeys 
-// SanteDB.Core.Model.Constants.ActRelationshipTypeKeys, SanteDB.Core.Model, Version=1.1.0.35405, Culture=neutral, PublicKeyToken=null
-if(!ActRelationshipTypeKeys)
+// SanteDB.Core.Model.Constants.ActRelationshipTypeKeys, SanteDB.Core.Model, Version=2.0.0.0, Culture=neutral, PublicKeyToken=null
+// if(!ActRelationshipTypeKeys)
 /**
  * @enum {string}
- * @memberof SanteDBModel
  * @public
  * @readonly
  * @summary             Act relationship types            
  */
-var ActRelationshipTypeKeys = { 
+const ActRelationshipTypeKeys = { 
 	/** 
 	 *             Indicates that the source act appends information contained in the target act            
 	 */
@@ -11532,17 +14045,20 @@ var ActRelationshipTypeKeys = {
 	 *             Indicates that the source act transforms the target act            
 	 */
 	Transforms : 'db2ae02a-ff12-4c1b-9c5b-ecdd41af8583',
+	/** 
+	 *             Duplicate entity            
+	 */
+	Duplicate : '2bbf068b-9121-4081-bf3c-ab62c01362ee',
 }  // ActRelationshipTypeKeys 
-// SanteDB.Core.Model.Constants.NullReasonKeys, SanteDB.Core.Model, Version=1.1.0.35405, Culture=neutral, PublicKeyToken=null
-if(!NullReasonKeys)
+// SanteDB.Core.Model.Constants.NullReasonKeys, SanteDB.Core.Model, Version=2.0.0.0, Culture=neutral, PublicKeyToken=null
+// if(!NullReasonKeys)
 /**
  * @enum {string}
- * @memberof SanteDBModel
  * @public
  * @readonly
  * @summary             In SanteDB, any concept can be replaced with a null reason. A null reason indicates why a particular field is not present rather than being null            
  */
-var NullReasonKeys = { 
+const NullReasonKeys = { 
 	/** 
 	 *             The reason that the requested value was not provided is that it is not available            
 	 */
@@ -11605,11 +14121,12 @@ var NullReasonKeys = {
 	Masked : '9b16bf12-073e-4ea4-b6c5-e1b93e8fd490',
 }  // NullReasonKeys 
 
-// Empty guid
-if(!EmptyGuid)
-    var EmptyGuid = "00000000-0000-0000-0000-000000000000";
 
-if(!Exception)
+// Empty guid
+//if(!EmptyGuid)
+    EmptyGuid = "00000000-0000-0000-0000-000000000000";
+
+//if(!Exception)
     /**
     * @class
     * @summary Represents a simple exception class

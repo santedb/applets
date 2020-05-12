@@ -19,122 +19,139 @@
  * User: Justin Fyfe
  * Date: 2019-12-10
  */
-if (!SanteDBBusinessIntelligence)
-    function SanteDBBusinessIntelligence() {
+//if (!SanteDBBusinessIntelligence)
 
-        // Private variables 
-        var _bis = new SanteDB.APIWrapper({
-            base: "/bis/",
-            idByQuery: false
-        });
+/**
+ * @class
+ * @public
+ * @constructor
+ * @summary Wrapper for the SanteDB BI interface. This interface is used to fetch and render business intelligence
+ *          reports from the SanteDB server. 
+ * @property {SanteDBBusinessIntelligence.ResourceApi} resources Provides base access to the resources in the BI engine
+ */
+function SanteDBBusinessIntelligence() {
 
-        // Extend the SanteDB core js
-        var _resources = {
-            /**
-             * @property {SanteDB.ResourceWrapper}
-             * @summary A resource wrapper for BI packages
-             * @memberof SanteDBWrapper.resources
-             */
-            package: new SanteDB.ResourceWrapper({
-                resource: "BiPackage",
-                api: _bis
-            }),
-            /**
-             * @property {SanteDB.ResourceWrapper}
-             * @summary A resource wrapper for BI data sources
-             * @memberof SanteDBWrapper.resources
-             */
-            dataSource: new SanteDB.ResourceWrapper({
-                resource: "BiDataSourceDefinition",
-                api: _bis
-            }),
-            /**
-             * @property {SanteDB.ResourceWrapper}
-             * @summary A resource wrapper for BI parameters
-             * @memberof SanteDBWrapper.resources
-             */
-            parameter: new SanteDB.ResourceWrapper({
-                resource: "BiParameterDefinition",
-                api: _bis
-            }),
-            /**
-             * @property {SanteDB.ResourceWrapper}
-             * @summary A resource wrapper for BI queries
-             * @memberof SanteDBWrapper.resources
-             */
-            query: new SanteDB.ResourceWrapper({
-                resource: "BiQueryDefinition",
-                api: _bis
-            }),
-            /**
-             * @property {SanteDB.ResourceWrapper}
-             * @summary A resource wrapper for BI reports
-             * @memberof SanteDBWrapper.resources
-             */
-            report: new SanteDB.ResourceWrapper({
-                resource: "BiReportDefinition",
-                api: _bis
-            }),
-            /**
-             * @property {SanteDB.ResourceWrapper}
-             * @summary A resource wrapper for BI views
-             * @memberof SanteDBWrapper.resources
-             */
-            view: new SanteDB.ResourceWrapper({
-                resource: "BiViewDefinition",
-                api: _bis
-            }),
-            /**
-            * @property {SanteDB.ResourceWrapper}
-            * @summary A resource wrapper for BI formats
-            * @memberof SanteDBWrapper.resources
-            */
-            format: new SanteDB.ResourceWrapper({
-                resource: "BiRenderFormatDefinition",
-                api: _bis
-            })
-        };
+    // Private variables 
+    var _bis = new APIWrapper({
+        base: "/bis/",
+        idByQuery: false
+    });
 
+    /**
+     * @constructor
+     * @memberof SanteDBBusinessIntelligence
+     * @class
+     * @summary Provides access to the SanteDB business intelligence resources.
+     * @property {ResourceWrapper} package Access to the BI Packages (collections of reports, queries, etc.)
+     * @property {ResourceWrapper} dataSource Access to the data source API 
+     * @property {ResourceWrapper} parameter Access to parameters for report and query definitions
+     * @property {ResourceWrapper} query Access to the defined stored queries
+     * @property {ResourceWrapper} report Access to reports API
+     * @property {ResourceWrapper} view Access to the stored data views on the BI Server
+     * @property {ResourceWrapper} format Access to report format definitions
+     */
+    function ResourceApi() {
         /**
-            * @property
-            * @memberof SanteDBWrapper
-            * @summary Provides access to resource handlers
-            */
-        this.resources = _resources;
-
-        
-        /**
-         * @method 
-         * @memberof SanteDBBusinessIntelligence
-         * @summary Renders a report on the server
-         * @param id {String} Identifier of the report to run
-         * @param view {String} The name of the view within the report to render
-         * @param format {String} The identifier of the format to render (HTML, RTF, etc.)
-         * @param parameters {Any} Parameter dictionary
-         * @returns {Promise} The promise for the report rendering operation
+         * @type {ResourceWrapper}
+         * @private
          */
-        this.renderReportAsync = function (id, view, format, parameters) {
+        this.package = new ResourceWrapper({
+            resource: "BiPackage",
+            api: _bis
+        });
+        /**
+         * @type {ResourceWrapper}
+         * @private
+         */
+        this.dataSource = new ResourceWrapper({
+            resource: "BiDataSourceDefinition",
+            api: _bis
+        });
+        /**
+         * @type {ResourceWrapper}
+         * @private
+         */
+        this.parameter = new ResourceWrapper({
+            resource: "BiParameterDefinition",
+            api: _bis
+        });
+        /**
+         * @type {ResourceWrapper}
+         * @private
+         */
+        this.query = new ResourceWrapper({
+            resource: "BiQueryDefinition",
+            api: _bis
+        });
+        /**
+         * @type {ResourceWrapper}
+         * @private
+         */
+        this.report = new ResourceWrapper({
+            resource: "BiReportDefinition",
+            api: _bis
+        });
+        /**
+         * @type {ResourceWrapper}
+         * @private
+         */
+        this.view = new ResourceWrapper({
+            resource: "BiViewDefinition",
+            api: _bis
+        });
+        /**
+        * @type {ResourceWrapper}
+         * @private
+        */
+        this.format = new ResourceWrapper({
+            resource: "BiRenderFormatDefinition",
+            api: _bis
+        });
+    };
 
-            if(!id || !view || !format) 
-                throw new Exception("ArgumentNullException", "error.bi.nullArgument");
-            
-            parameters["_view"] = view;
+    /**
+        * @property
+        * @memberof SanteDBWrapper
+        * @summary Provides access to resource handlers
+        */
+    this.resources = new ResourceApi();
 
-            for(var p in parameters) 
-            {
-                if(parameters[p] instanceof Date)
-                    parameters[p] = moment(parameters[p]).toISOString();
-            }
 
-            var url = `Report/${format}/${id}`;
-            return _bis.getAsync({
-                resource: url,
-                query: parameters,
-                dataType: "html"
-            });
+    /**
+     * @method renderReportAsync
+     * @memberof SanteDBBusinessIntelligence
+     * @summary Renders a report on the server
+     * @param id {String} Identifier of the report to run
+     * @param view {String} The name of the view within the report to render
+     * @param format {String} The identifier of the format to render (HTML, RTF, etc.)
+     * @param parameters {Any} Parameter dictionary
+     * @returns {Promise} The promise for the report rendering operation
+     */
+    this.renderReportAsync = function (id, view, format, parameters) {
+
+        if (!id || !view || !format)
+            throw new Exception("ArgumentNullException", "error.bi.nullArgument");
+
+        parameters["_view"] = view;
+
+        for (var p in parameters) {
+            if (parameters[p] instanceof Date)
+                parameters[p] = moment(parameters[p]).toISOString();
         }
+
+        var url = `Report/${format}/${id}`;
+        return _bis.getAsync({
+            resource: url,
+            query: parameters,
+            dataType: "html"
+        });
     }
+}
 
 // BI Functions
-if(!SanteDBBi)
-    var SanteDBBi = new SanteDBBusinessIntelligence();
+/**
+ * @type {SanteDBBusinessIntelligence}
+ * @global
+ */
+var SanteDBBi = new SanteDBBusinessIntelligence();
+

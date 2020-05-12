@@ -17,8 +17,8 @@
  * User: Justin Fyfe
  * Date: 2019-8-8
  */
-/// <reference path="../../../core/js/santedb.js"/>
 
+/// <reference path="../../../core/js/santedb.js"/>
 angular.module('santedb').controller('UserProfileController', ["$scope", "$rootScope", "$stateParams", function ($scope, $rootScope, $stateParams) {
 
     // Initialize the view
