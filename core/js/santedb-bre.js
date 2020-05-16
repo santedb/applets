@@ -100,6 +100,9 @@ if(!SanteDBBre)
             // Validators loaded
             var _validators = [];
 
+            // New Guid function for front end
+            this.NewGuid = SanteDB.application.newGuid;
+
             /**
              * @class
              * @constructor

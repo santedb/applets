@@ -181,8 +181,12 @@ SanteDBWrapper.prototype.display = {
         if (type) {
             name = name[type];
         }
-        else if (!name.component)
+        else if (!name.component) 
             name = name[Object.keys(name)[0]]
+
+        // Is the name actually an array? If so, take the first
+        if(Array.isArray(name))
+            name = name[0];
 
         // Render name
         if (!name)
@@ -249,6 +253,10 @@ SanteDBWrapper.prototype.display = {
             address = address[type];
         else if (!address.component)
             address = address[Object.keys(address)[0]]
+
+        // Is the address actually an array? If so, take the first
+        if(Array.isArray(address))
+            address = address[0];
 
         // Render address
         if (!address)

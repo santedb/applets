@@ -42,13 +42,13 @@
     <property name="application"/>
     <property name="user"/>
   </type>
-  <type type="EntityName" all="false">
+  <type type="EntityName" all="true">
     <property name="source" behavior="never"/>
     <property name="use" behavior="always" ref="Concept"/>
     <property name="useModel" ref="Concept"/>
     <property name="id"  />
     <property name="component" all="true" behavior="always" >
-      <property name="*" all="true"/>
+      <property name="*" all="true" behavior="always"/>
     </property>
   </type>
   <type type="EntityAddress" all="false">

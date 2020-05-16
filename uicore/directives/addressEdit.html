@@ -1,5 +1,5 @@
 <div xmlns="http://www.w3.org/1999/xhtml">
-    <fieldset ng-repeat="(n, addr) in address" class="m-2">
+    <fieldset ng-repeat="addr in addressEdit" class="m-2">
         <legend>{{ addr.useModel | concept }} {{ 'ui.model.entity.address.title' | i18n }}</legend>
         <div class="p-2">
             <div class="form-group row">
@@ -82,6 +82,17 @@
                     <input type="text" class="form-control" ng-model="addr.component.PostalCode" />
                 </div>
             </div>
+            <div class="form-group row" ng-if="addressEdit.length &gt; 1">
+                <div class="col">
+                <div class="btn-group float-right">
+                    <button type="button" ng-click="removeAddress($index)" class="btn btn-danger"><i class="fas fa-times"></i> {{ 'ui.action.remove' | i18n }}</button>
+                </div>
+            </div>
+            </div>
+
         </div>
     </fieldset>
+    <div class="btn-group float-right">
+        <button type="button" ng-click="addAddress()" class="btn btn-primary"><i class="fas fa-plus"></i> {{ 'ui.action.add' | i18n }}</button>
+    </div>
 </div>

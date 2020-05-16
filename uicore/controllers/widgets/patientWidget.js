@@ -10,46 +10,58 @@ angular.module('santedb').controller('PatientDemographicsWidgetController', ['$s
         }
 
         // Update target identifiers with the original
-        if (submissionObject.address)  {
-            addressList = [];
+        if (submissionObject.address) {
+            var addressList = [];
             var promises = Object.keys(submissionObject.address).map(async function (k) {
                 try {
                     var addr = submissionObject.address[k];
-                    addr.use = addr.useModel.id;
-                    addr.component = addr.component || {};
-                    delete(addr.useModel);
-                    if (addr.targetId) {
-                        var addrComponents = (await SanteDB.resources.place.getAsync(addr.targetId)).address.Direct.component;
-                        addr.component.Country = addrComponents.Country;
-                        addr.component.CensusTract = addrComponents.CensusTract;
-                        addr.component.County = addrComponents.County;
-                        addr.component.State = addrComponents.State;
-                        addr.component.Precinct = addrComponents.Precinct;
-                        addr.component.City = addrComponents.City;
-                    }
-                    addressList.push(addr);
+                    if(!Array.isArray(addr))
+                        addr = [addr];
+
+                    var intlPromises = addr.map(async function(addrItem){
+                        addrItem.use = addrItem.useModel.id;
+                        addrItem.component = addrItem.component || {};
+                        delete (addrItem.useModel);
+                        if (addrItem.targetId) {
+                            var addrComponents = (await SanteDB.resources.place.getAsync(addrItem.targetId)).address.Direct.component;
+                            addrItem.component.Country = addrComponents.Country;
+                            addrItem.component.CensusTract = addrComponents.CensusTract;
+                            addrItem.component.County = addrComponents.County;
+                            addrItem.component.State = addrComponents.State;
+                            addrItem.component.Precinct = addrComponents.Precinct;
+                            addrItem.component.City = addrComponents.City;
+                        }
+                        addressList.push(addrItem);
+                    });
+                    await Promise.all(intlPromises);
                 }
-                catch(e) {
+                catch (e) {
                 }
             });
             await Promise.all(promises);
             submissionObject.address = { "$other": addressList };
         }
-        if(submissionObject.name)
-        {
+        if (submissionObject.name) {
             var nameList = [];
-            Object.keys(submissionObject.name).forEach(function(k) { 
+            Object.keys(submissionObject.name).forEach(function (k) {
+
                 var name = submissionObject.name[k];
-                name.use = name.useModel.id; 
-                delete(name.useModel);
-                nameList.push(name);
+                if (!Array.isArray(name))
+                    name = [name];
+
+                name.forEach(function (nameItem) {
+                    nameItem.use = nameItem.useModel.id;
+                    delete (nameItem.useModel);
+                    nameList.push(nameItem);
+                })
+
             });
-            submissionObject.name = { "$other" : nameList };
+            submissionObject.name = { "$other": nameList };
         }
-        
+
         // Now post the changed update object 
         try {
-            if(submissionObject.tag && submissionObject.tag["$generated"]) {
+            if (submissionObject.tag && submissionObject.tag["$generated"]) {
                 submissionObject.tag["$mdm.type"] = "T"; // Set a ROT tag
                 submissionObject.determinerConcept = '6b1d6764-12be-42dc-a5dc-52fc275c4935'; // set update as a ROT
             }
@@ -58,8 +70,7 @@ angular.module('santedb').controller('PatientDemographicsWidgetController', ['$s
             toastr.success(SanteDB.locale.getString("ui.model.patient.saveSuccess"));
             form.$valid = true;
         }
-        catch(e) 
-        {
+        catch (e) {
             $rootScope.errorHandler(e);
             form.$valid = false;
         }
@@ -72,7 +83,7 @@ angular.module('santedb').controller('PatientDemographicsWidgetController', ['$s
             delete ($scope.editObject); // Delete the current edit object
             if (n.tag && n.tag['$mdm.type'] == 'M') // Attempt to find a ROT
             {
-                if(n.relationship["MDM-RecordOfTruth"] && 
+                if (n.relationship["MDM-RecordOfTruth"] &&
                     n.relationship["MDM-RecordOfTruth"].target) {
                     $scope.editObject = await SanteDB.resources.entity.getAsync(n.relationship["MDM-RecordOfTruth"].target, "full"); //angular.copy(n.relationship["MDM-RecordOfTruth"].targetModel);
                 }
@@ -84,14 +95,13 @@ angular.module('santedb').controller('PatientDemographicsWidgetController', ['$s
 
                     if (recordOfTruth.total == 0 || !recordOfTruth.resource)
                         $scope.editObject = angular.copy(n);
-                    else 
+                    else
                         $scope.editObject = recordOfTruth.resource[0];
                 }
             }
             else
                 $scope.editObject = angular.copy(n);
 
-            n.identifierModel = Object.keys(n.identifier).map((k) => n.identifier[k]).flat();
             if (n.relationship) {
                 n.relationshipModel = Object.keys(n.relationship).map((k) => n.relationship[k]).flat();
                 n.relationshipModel.forEach(async function (rel) {
@@ -136,12 +146,12 @@ angular.module('santedb').controller('PatientDemographicsWidgetController', ['$s
                 });
                 await Promise.all(promises);
             }
-            else if(!$scope.editObject.address) {
+            else if (!$scope.editObject.address) {
                 $scope.editObject.address = {
-                    "HomeAddress" : {
+                    "HomeAddress": {
                         "useModel": {
-                            "id" :AddressUseKeys.HomeAddress,
-                            "mnemonic":"HomeAddress"
+                            "id": AddressUseKeys.HomeAddress,
+                            "mnemonic": "HomeAddress"
                         }
                     }
                 }

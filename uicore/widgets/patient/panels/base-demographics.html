@@ -15,7 +15,9 @@
             <div class="row">
                 <label class="col-md-3 control-label">{{ 'ui.model.patient.name' | i18n }}</label>
                 <div class="col-md-9">
-                    {{ scopedObject.name | name }}
+                    <ul class="list-group">
+                        <li class="d-flex align-items-center" ng-repeat="(n, name) in scopedObject.name">{{ name | name }} <span class="badge badge-light">{{ name.useModel | concept }}</span></li>
+                    </ul>
                 </div>
                 <label class="col-md-3 control-label">{{ 'ui.model.patient.dateOfBirth' | i18n }}</label>
                 <div class="col-md-9">
@@ -30,12 +32,14 @@
                 </div>
                 <label class="col-md-3 control-label">{{ 'ui.model.patient.address' | i18n }}</label>
                 <div class="col-md-9">
-                    <span ng-if="scopedObject.address">
-                        {{ scopedObject.address | address }}
-                    </span>
-                    <span ng-if="!scopedObject.address">
+                    <div ng-if="scopedObject.address">
+                        <ul class="list-group">
+                            <li class="d-flex align-items-center" ng-repeat="(n, address) in scopedObject.address">{{ address | address }} <span class="badge badge-light">{{ address.useModel | concept }}</span></li>
+                        </ul>
+                    </div>
+                    <div ng-if="!scopedObject.address">
                         {{ 'ui.unknown' | i18n }}
-                    </span>
+                    </div>
                 </div>
                 <label class="col-md-3 control-label">{{ 'ui.model.patient.telecom' | i18n }}</label>
                 <div class="col-md-9" ng-repeat="(k,tel) in scopedObject.telecom track by $index"
@@ -80,7 +84,7 @@
         </div>
         <form ng-submit="update(panel.editForm)" name="panel.editForm" method="dialog" novalidate="novalidate"
             ng-if="panel.view == 'Edit'">
-            <div class="alert alert-success" ng-if="scopedObject.tag['$mdm.type'] != 'L' &amp;&amp; scopedObject.tag['$generated'] == 'true'">
+            <div class="alert" ng-class="{'alert-success' : scopedObject.id == editObject.id , 'alert-info': scopedObject.id != editObject.id }" ng-if="scopedObject.tag['$mdm.type'] != 'L' &amp;&amp; scopedObject.tag['$generated'] == 'true'">
                 <span ng-if="scopedObject.id != editObject.id"><i class="fas fa-gavel"></i> {{ 'ui.mdm.edit.recordOfTruth' | i18n }}</span>
                 <span ng-if="scopedObject.id == editObject.id"><i class="fas fa-gavel"></i> {{ 'ui.mdm.edit.master' | i18n }}</span>
             </div>

@@ -181,7 +181,7 @@ angular.module('santedb-lib')
 
                                 try {
                                     if ($scope.key && $scope.key != "id") {
-                                        var query = {};
+                                        var query = angular.copy($scope.filter || {});
                                         query[$scope.key] = v;
                                         query._viewModel = "dropdown";
                                         var res = await api.findAsync(query);

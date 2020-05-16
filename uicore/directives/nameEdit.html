@@ -1,6 +1,7 @@
 <div xmlns="http://www.w3.org/1999/xhtml">
-    <fieldset class="m-2" ng-repeat="(n, name) in name">
+    <fieldset class="m-2" ng-repeat="name in nameEdit">
         <legend>{{ name.useModel | concept }}  {{ 'ui.model.entity.name.title' | i18n }}</legend>
+        <div class="container-fluid">
         <div class="form-group row">
             <label class="col-sm-12 col-md-3 control-label required">{{ 'ui.model.entity.name.use' | i18n }}</label>
             <div class="col-sm-12 col-md-9">
@@ -51,5 +52,16 @@
                     key="'mnemonic'" />
             </div>
         </div>
+        <div class="form-group row" ng-if="nameEdit.length &gt; 1">
+            <div class="col">
+            <div class="btn-group float-right">
+                <button type="button" ng-click="removeName($index)" class="btn btn-danger"><i class="fas fa-times"></i> {{ 'ui.action.remove' | i18n }}</button>
+            </div>
+        </div>
+        </div>
+    </div>
     </fieldset>
+    <div class="btn-group float-right">
+        <button type="button" ng-click="addName()" class="btn btn-primary"><i class="fas fa-plus"></i> {{ 'ui.action.add' | i18n }}</button>
+    </div>
 </div>

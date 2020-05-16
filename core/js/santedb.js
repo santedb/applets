@@ -42,10 +42,11 @@ var ExecutionEnvironment = {
 */
 function APIWrapper(_config) {
 
+    
     /**
      * @method
      * @summary Gets the base url
-     * @memberof SanteDBWrapper.APIWrapper
+     * @memberof APIWrapper
      */
     this.getUrl = function () {
         return _config.base;
@@ -54,7 +55,7 @@ function APIWrapper(_config) {
     /**
         * @method
         * @summary Reconfigures this instance of the API wrapper
-        * @memberof SanteDBWrapper.APIWrapper
+        * @memberof APIWrapper
         * @param {any} config The configuration of the service
         * @param {string} config.base The base URL for the service
         * @param {boolean} config.idByQuery When true, indicates the wrapper wants to pass IDs by query
@@ -65,7 +66,7 @@ function APIWrapper(_config) {
 
     /**
         * @method postAsync
-        * @memberof SanteDBWrapper.APIWrapper
+        * @memberof APIWrapper
         * @summary Creates a new item on the instance
         * @param {any} configuration The configuration object
         * @param {string} configuration.resource The resource that is to be posted
@@ -80,7 +81,7 @@ function APIWrapper(_config) {
             $.ajax({
                 method: 'POST',
                 url: _config.base + configuration.resource,
-                data: configuration.contentType.indexOf('application/json') == 0 ? JSON.stringify(_reorderProperties(configuration.data)) : configuration.data,
+                data: configuration.contentType.indexOf('application/json') == 0 ? JSON.stringify(SanteDB._reorderProperties(configuration.data)) : configuration.data,
                 dataType: configuration.dataType || 'json',
                 contentType: configuration.contentType || 'application/json',
                 headers: configuration.headers,
@@ -96,7 +97,7 @@ function APIWrapper(_config) {
                     }
                 },
                 error: function (e, data, setting) {
-                    if (_globalErrorHandler(e, data, setting))
+                    if (SanteDB._globalErrorHandler(e, data, setting))
                         return;
                     var error = e.responseJSON;
 
@@ -117,7 +118,7 @@ function APIWrapper(_config) {
 
     /**
         * @method putAsync
-        * @memberof SanteDBWrapper.APIWrapper
+        * @memberof APIWrapper
         * @summary Updates an existing item on the instance
         * @param {any} configuration The configuration object
         * @param {string} configuration.resource The resource that is to be posted
@@ -133,7 +134,7 @@ function APIWrapper(_config) {
             $.ajax({
                 method: 'PUT',
                 url: _config.base + configuration.resource + (_config.idByQuery ? "?_id=" + configuration.id : "/" + configuration.id),
-                data: configuration.contentType.indexOf('application/json') == 0 ? JSON.stringify(_reorderProperties(configuration.data)) : configuration.data,
+                data: configuration.contentType.indexOf('application/json') == 0 ? JSON.stringify(SanteDB._reorderProperties(configuration.data)) : configuration.data,
                 dataType: configuration.dataType || 'json',
                 contentType: configuration.contentType || 'application/json',
                 headers: configuration.headers,
@@ -149,7 +150,7 @@ function APIWrapper(_config) {
                     }
                 },
                 error: function (e, data, setting) {
-                    if (_globalErrorHandler(e, data, setting))
+                    if (SanteDB._globalErrorHandler(e, data, setting))
                         return;
                     var error = e.responseJSON;
 
@@ -171,7 +172,7 @@ function APIWrapper(_config) {
 
     /**
         * @method patchAsync
-        * @memberof SanteDBWrapper.APIWrapper
+        * @memberof APIWrapper
         * @summary Patches an existing item on the instance
         * @param {any} configuration The configuration object
         * @param {string} configuration.resource The resource that is to be posted
@@ -187,7 +188,7 @@ function APIWrapper(_config) {
             $.ajax({
                 method: 'PATCH',
                 url: _config.base + configuration.resource + (_config.idByQuery ? "?_id=" + configuration.id : "/" + configuration.id),
-                data: configuration.contentType.indexOf('application/json') == 0 ? JSON.stringify(_reorderProperties(configuration.data)) : configuration.data,
+                data: configuration.contentType.indexOf('application/json') == 0 ? JSON.stringify(SanteDB._reorderProperties(configuration.data)) : configuration.data,
                 dataType: configuration.dataType || 'json',
                 contentType: configuration.contentType || 'application/json',
                 headers: configuration.headers,
@@ -201,7 +202,7 @@ function APIWrapper(_config) {
                     }
                 },
                 error: function (e, data, setting) {
-                    if (_globalErrorHandler(e, data, setting))
+                    if (SanteDB._globalErrorHandler(e, data, setting))
                         return;
                     var error = e.responseJSON;
 
@@ -222,7 +223,7 @@ function APIWrapper(_config) {
 
     /**
         * @method getAsync
-        * @memberof SanteDBWrapper.APIWrapper
+        * @memberof APIWrapper
         * @summary Performs a GET on an existing item on the instance
         * @param {any} configuration The configuration object
         * @param {string} configuration.resource The resource that is to be fetched
@@ -251,7 +252,7 @@ function APIWrapper(_config) {
                     }
                 },
                 error: function (e, data, setting) {
-                    if (_globalErrorHandler(e, data, setting))
+                    if (SanteDB._globalErrorHandler(e, data, setting))
                         return;
                     var error = {};
                     if (e.responseJSON)
@@ -277,7 +278,7 @@ function APIWrapper(_config) {
 
     /**
         * @method deleteAsync
-        * @memberof SanteDBWrapper.APIWrapper
+        * @memberof APIWrapper
         * @summary Performs a DELETE on an existing item on the instance
         * @param {any} configuration The configuration object
         * @param {string} configuration.resource The resource that is to be deleted
@@ -296,7 +297,7 @@ function APIWrapper(_config) {
             $.ajax({
                 method: 'DELETE',
                 url: _config.base + configuration.resource + (configuration.id ? (_config.idByQuery ? "?_id=" + configuration.id : "/" + configuration.id) : ""),
-                data: configuration.contentType == 'application/json' && configuration.data ? JSON.stringify(_reorderProperties(configuration.data)) : configuration.data,
+                data: configuration.contentType == 'application/json' && configuration.data ? JSON.stringify(SanteDB._reorderProperties(configuration.data)) : configuration.data,
                 headers: hdr,
                 dataType: configuration.dataType || 'json',
                 contentType: configuration.contentType || 'application/json',
@@ -312,7 +313,7 @@ function APIWrapper(_config) {
                     }
                 },
                 error: function (e, data, setting) {
-                    if (_globalErrorHandler(e, data, setting))
+                    if (SanteDB._globalErrorHandler(e, data, setting))
                         return;
                     var error = e.responseJSON;
 
@@ -333,7 +334,7 @@ function APIWrapper(_config) {
 
     /**
         * @method lockAsync
-        * @memberof SanteDBWrapper.APIWrapper
+        * @memberof APIWrapper
         * @summary Performs a LOCK on an existing item on the instance
         * @param {any} configuration The configuration object
         * @param {string} configuration.resource The resource that is to be locked
@@ -362,7 +363,7 @@ function APIWrapper(_config) {
                     }
                 },
                 error: function (e, data, setting) {
-                    if (_globalErrorHandler(e, data, setting))
+                    if (SanteDB._globalErrorHandler(e, data, setting))
                         return;
                     var error = e.responseJSON;
 
@@ -383,7 +384,7 @@ function APIWrapper(_config) {
 
     /**
         * @method unLockAsync
-        * @memberof SanteDBWrapper.APIWrapper
+        * @memberof APIWrapper
         * @summary Performs a UNLOCK on an existing item on the instance
         * @param {any} configuration The configuration object
         * @param {string} configuration.resource The resource that is to be locked
@@ -412,7 +413,7 @@ function APIWrapper(_config) {
                     }
                 },
                 error: function (e, data, setting) {
-                    if (_globalErrorHandler(e, data, setting))
+                    if (SanteDB._globalErrorHandler(e, data, setting))
                         return;
                     var error = e.responseJSON;
 
@@ -913,6 +914,36 @@ function SanteDBWrapper() {
 
     /**
      * @private
+     * @summary Global error handler
+     * @param {xhr} e The Errored request
+     * @param {*} data 
+     * @param {*} setting 
+     * @param {*} err 
+     */
+    var _globalErrorHandler = function (data, setting, err) {
+        if (data.status == 401 && data.getResponseHeader("WWW-Authenticate")) {
+            if (_session && _session.exp > Date.now // User has a session that is valid, but is still 401 hmm... elevation!!!
+                && _elevator
+                && !_elevator.getToken() ||
+                _session == null && _elevator) {
+
+                // Was the response a security policy exception where the back end is asking for elevation on the same user account?
+                if (data.responseJSON &&
+                    data.responseJSON.type == "SecurityPolicyException" &&
+                    data.responseJSON.message == "error.elevate")
+                    _elevator.elevate(angular.copy(_session));
+                else
+                    _elevator.elevate(null);
+                return true;
+            }
+        }
+        else
+            console.warn(new Exception("Exception", "error.general", err, null));
+        return false;
+    };
+
+    /**
+     * @private
      * @summary Re-orders the JSON object properties so that $type appears as the first property
      * @param {any} object The object whose properites should be reordered
      * @returns {any} The appropriately ordered object
@@ -938,35 +969,8 @@ function SanteDBWrapper() {
         return object;
     };
 
-    /**
-     * @private
-     * @summary Global error handler
-     * @param {xhr} e The Errored request
-     * @param {*} data 
-     * @param {*} setting 
-     * @param {*} err 
-     */
-    var _globalErrorHandler = function (data, setting, err) {
-        if (data.status == 401 && data.getResponseHeader("WWW-Authenticate")) {
-            if (_session && _session.exp > Date.now // User has a session that is valid, but is still 401 hmm... elevation!!!
-                && _elevator
-                && !_elevator.getToken() ||
-                _session == null && _elevator) {
-
-                // Was the response a security policy exception where the back end is asking for elevation on the same user account?
-                if (data.responseJSON &&
-                    data.responseJSON.type == "SecurityPolicyException" &&
-                    data.responseJSON.message == "error.elevate")
-                    _elevator.elevate(_session);
-                else
-                    _elevator.elevate(null);
-                return true;
-            }
-        }
-        else
-            console.warn(new Exception("Exception", "error.general", err, null));
-        return false;
-    };
+    this._reorderProperties = _reorderProperties;
+    this._globalErrorHandler = _globalErrorHandler;
 
     // hdsi internal
     var _hdsi = new APIWrapper({
@@ -996,6 +1000,31 @@ function SanteDBWrapper() {
      * @summary Common functions for accessing SanteDB application processes
      */
     function ApplicationApi() {
+
+        var idGenerators = {};
+
+        /**
+         * @method addIdentifierGenerator
+         * @summary Adds a new identifier generator 
+         * @memberof SanteDBWrapper.ApplicationApi
+         * @param {string} domain The domain which the generator will create identifiers for
+         * @param {function} generatorCallback A function for the generator which returns the new identifier and (optionally) takes the entity for which the identifier is being generated
+         */
+        this.addIdentifierGenerator = function(domain, generatorCallback) {
+            idGenerators[domain] = generatorCallback;
+        }
+
+        /**
+         * @method getIdentifierGenerator
+         * @summary Gets a generator if one is registered for the specified domain
+         * @memberof SanteDBWrapper.ApplicationApi
+         * @param {string} domain The domain to get the generator for
+         * @returns {function} The function which can be used to generate identifiers
+         */
+        this.getIdentifierGenerator = function(domain, generatorCallback) {
+            return idGenerators[domain];
+        }
+
         /**
          * @method parseException
          * @summary Parses an exception string into a local object
@@ -2164,7 +2193,7 @@ function SanteDBWrapper() {
          */
         this.setElevator = function (elevator) {
             _elevator = elevator;
-        }
+        }        
         /**
             * @method getSessionInfoAsync
             * @memberof SanteDBWrapper.AuthenticationApi
@@ -2175,7 +2204,7 @@ function SanteDBWrapper() {
         this.getSessionInfoAsync = function (forceServer) {
             return new Promise(function (fulfill, reject) {
                 if (_session && !forceServer)
-                    fulfill(_session);
+                    fulfill(angular.copy(_session));
                 else
                     try {
                         _auth.getAsync({
@@ -2771,7 +2800,7 @@ String.prototype.toCamelCase = function () {
  * Pad the specified string
  * @param {String} str The String
  */
-String.prototype.pad = function (len) {
-    var pad = "0".repeat(len);
+String.prototype.pad = function (char, len) {
+    var pad = char.repeat(len);
     return (pad + this).slice(-len);
 }

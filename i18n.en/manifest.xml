@@ -18,7 +18,7 @@
  - Date: 2018-7-23
  -->
 <AppletManifest xmlns="http://santedb.org/applet">
-  <info id="org.santedb.i18n.en" version="2.0.6.0">
+  <info id="org.santedb.i18n.en" version="2.0.10.0">
     <icon>/org.santedb.core/img/i18n.png</icon>
     <name lang="en">English Applet Support</name>
     <author>SanteSuite Community Partners (see: santesuite.org)</author>
@@ -581,6 +581,9 @@
     <string key="ui.model.entity.telecom.Public">Home/Public</string>
     <string key="ui.model.entity.telecom.TemporaryAddress">Temporary</string>
     <string key="ui.model.entity.telecom.WorkPlace">Work</string>
+    <string key="ui.model.entity.identifier.authority.remove.confirm">Are you sure you want to remove this identifier from this entity?</string>
+    <string key="ui.model.entity.identifier.authority.noAssign">No Authority</string>
+    <string key="ui.model.entity.identifier.authority.noAssign.help">The administrative portal has no authority to assign this identifier</string>
     <string key="ui.model.patient.birth">Birth</string>
     <string key="ui.model.patient.death">Death</string>
     <string key="ui.model.patient.name">Name</string>

@@ -66,6 +66,17 @@ angular.module('santedb-lib')
         controller: ['$scope', '$rootScope',
             function ($scope, $rootScope) {
 
+                $scope.setView = async function(panel, view) {
+                    $scope.original = angular.copy($scope.scopedObject);
+                    panel.view = view;
+                }
+
+                $scope.closeView = async function(panel) {
+                    if(panel.editForm.$pristine || confirm(SanteDB.locale.getString("ui.action.cancel.confirm")))
+                        $scope.scopedObject = $scope.original;
+                    delete(panel.view);
+                }
+
                 $scope.submitEditForm = async function(panel){
 
                     if(panel.view == 'Edit') {
