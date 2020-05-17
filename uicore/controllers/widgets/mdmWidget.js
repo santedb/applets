@@ -14,11 +14,13 @@ angular.module('santedb').controller('MasterDataManagementController', ['$scope'
         retVal += "<span class='badge badge-secondary'>";
 
         var preferredDomain = $rootScope.system.config.application.setting['aa.preferred'];
-        if(preferredDomain && entity.identifier[preferredDomain])
-            retVal += `<i class="fas fa-id-card"></i> ${SanteDB.display.renderIdentifier(entity.identifier, preferredDomain)}`;
-        else {
-            var key = Object.keys(entity.identifier)[0];
-            retVal += `<i class="far fa-id-card"></i> ${SanteDB.display.renderIdentifier(entity.identifier, key)}`;
+        if(entity.identifier) {
+            if(preferredDomain && entity.identifier[preferredDomain])
+                retVal += `<i class="fas fa-id-card"></i> ${SanteDB.display.renderIdentifier(entity.identifier, preferredDomain)}`;
+            else {
+                var key = Object.keys(entity.identifier)[0];
+                retVal += `<i class="far fa-id-card"></i> ${SanteDB.display.renderIdentifier(entity.identifier, key)}`;
+            }
         }
         
         retVal += "</span>";

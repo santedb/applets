@@ -87,7 +87,7 @@
     <property name="name" all="true" ref="EntityName" behavior="always"/>
     <property name="identifier" all="true" ref="EntityIdentifier" behavior="always"/>
     <property name="relationship" all="true" behavior="always">
-      <property name="*" ref="EntityRelationship"/>
+      <property name="*" ref="EntityRelationship" behavior="always"/>
     </property>
     <property name="participation" all="true">
       <property name="*" all="true">
@@ -102,7 +102,6 @@
     <property name="templateModel" behavior="always" all="false">
       <property name="mnemonic"/>
     </property>
-
     <property name="createdBy" behavior="never"/>
     <property name="creationTime" behavior="never"/>
     <property name="creationTimeModel" behavior="never"/>
@@ -111,10 +110,11 @@
     <property name="address" all="true" ref="EntityAddress" behavior="always"/>
     <property name="identifier" all="true" ref="EntityIdentifier" behavior="always"/>
     <property name="telecom" all="true" behavior="always"/>
-
     <property name="classConceptModel" behavior="never"/>
-    <property name="classConcept" behavior="never"/>
-    <property name="determinerConceptModel" behavior="never"/>
+    <property name="relationship" all="true" behavior="always">
+      <property name="*" ref="EntityRelationship" all="true"/>
+
+    </property>
   </type>
 
   <type type="Patient" all="true">
@@ -130,6 +130,7 @@
     <property name="telecom" all="true" behavior="always"/>
     <property name="classConceptModel" behavior="never"/>
     <property name="classConcept" behavior="always"/>
+    <property name="determinerConcept" behavior="always"/>
     <property name="determinerConceptModel" behavior="never"/>
     <property name="tag" all="true" behavior="always"/>
     <property name="genderConceptModel" behavior="always" ref="Concept"/>

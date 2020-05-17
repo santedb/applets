@@ -18,7 +18,7 @@
  - Date: 2018-7-23
  -->
 <AppletManifest xmlns="http://santedb.org/applet">
-  <info id="org.santedb.i18n.en" version="2.0.10.0">
+  <info id="org.santedb.i18n.en" version="2.0.11.0">
     <icon>/org.santedb.core/img/i18n.png</icon>
     <name lang="en">English Applet Support</name>
     <author>SanteSuite Community Partners (see: santesuite.org)</author>
@@ -246,6 +246,7 @@
     <string key="ui.action.unlock">Unlock</string>
     <string key="ui.action.showAll">Show All</string>
     <string key="ui.action.showDeleted">Show Deleted</string>
+    <string key="ui.action.clone">Clone</string>
     <string key="ui.wait">Please Wait...</string>
     <string key="ui.search">Searching</string>
     <string key="ui.action.reset">Reset</string>
@@ -549,6 +550,19 @@
     <string key="ui.model.version.initial">Initial Version</string>
     <string key="ui.model.entity.relationship.hasA">HAS A</string>
     <string key="ui.model.entity.relationship.isA">IS A</string>
+    <string key="ui.model.entity.relationship.Caregiver">Caregiver(s)</string>
+    <string key="ui.model.entity.relationship.Citizen">Citizenship(s)</string>
+    <string key="ui.model.entity.relationship.CoverageSponsor">Coverage/Sponsor</string>
+    <string key="ui.model.entity.relationship.DedicatedServiceDeliveryLocation">Primary Facility</string>
+    <string key="ui.model.entity.relationship.Employee">Employer</string>
+    <string key="ui.model.entity.relationship.Guarantor">Guarantor</string>
+    <string key="ui.model.entity.relationship.HealthcareProvider">Primary Provider</string>
+    <string key="ui.model.entity.relationship.IncidentalServiceDeliveryLocation">Other Facilities</string>
+    <string key="ui.model.entity.relationship.NaturalFatherOfFetus">Natural Father</string>
+    <string key="ui.model.entity.relationship.ServiceDeliveryLocation">Registered At</string>
+    <string key="ui.model.entity.relationship.SigningAuthorityOrOfficer">Power of Attorney</string>
+    <string key="ui.model.entity.relationship.structured">This entity is a proper record. To edit it, you'll need to visit the object's detail page</string>
+    <string key="ui.model.entity.relationship.Student">School</string>
     <string key="ui.model.entity.address">Address</string>
     <string key="ui.model.entity.address.title">Address Registration</string>
     <string key="ui.model.entity.address.use">Address Type</string>
@@ -572,6 +586,7 @@
     <string key="ui.model.entity.dateOfBirth.approx">Approximate</string>
     <string key="ui.model.entity.language">Language(s)</string>
     <string key="ui.model.entity.language.preferred">Preferred</string>
+    <string key="ui.model.entity.relationship.relationshipType">Relationship</string>
     <string key="ui.model.entity.relationship.Employer">Employer</string>
     <string key="ui.model.entity.relationship.DedicatedServiceDeliveryLocation">Facilities</string>
     <string key="ui.model.entity.telecom.AnsweringService">Answering Service</string>
@@ -584,6 +599,7 @@
     <string key="ui.model.entity.identifier.authority.remove.confirm">Are you sure you want to remove this identifier from this entity?</string>
     <string key="ui.model.entity.identifier.authority.noAssign">No Authority</string>
     <string key="ui.model.entity.identifier.authority.noAssign.help">The administrative portal has no authority to assign this identifier</string>
+    <string key="ui.model.patient.administrativeInfo">Extra</string>
     <string key="ui.model.patient.birth">Birth</string>
     <string key="ui.model.patient.death">Death</string>
     <string key="ui.model.patient.name">Name</string>
@@ -605,6 +621,7 @@
     <string key="ui.model.patient.address.component.postalcode">Zip/Postal Code</string>
     <string key="ui.model.patient.dateOfBirth">DOB</string>
     <string key="ui.model.patient.dateOfBirth.approx">Approx.</string>
+    <string key="ui.model.patient.dateOfBirth.required">A date of birth and gender are required for this operation to be completed</string>
     <string key="ui.model.patient.genderConcept">Gender</string>
     <string key="ui.model.patient.identifier">Identifier(s)</string>
     <string key="ui.model.patient.creationTime">Timestamp</string>
@@ -675,10 +692,16 @@
     <string key="ui.mdm.type.L">LOCAL RECORD</string>
     <string key="ui.mdm.type.M">MASTER RECORD</string>
     <string key="ui.mdm.type.T">RECORD OF TRUTH</string>
+    <string key="ui.mdm.action.openMaster">Go to MASTER</string>
+    <string key="ui.mdm.action.openRot">Go to RECORD OF TRUTH</string>
+    <string key="ui.mdm.view.local">You are viewing a LOCAL record. This record comes from a particular source system</string>
+    <string key="ui.mdm.view.master">You are looking at a MASTER record. This record is synthesized from multiple LOCAL records</string>
+    <string key="ui.mdm.view.masterAdjudicated">You are looking at a &lt;strong>MASTER&lt;/strong> record with a &lt;strong>RECORD OF TRUTH&lt;/strong> meaning this synthesized record has been validated</string>
     <string key="ui.mdm.isTrue">This MASTER is based on the RECORD OF TRUTH meaning it has been validated by an authorized device</string>
     <string key="ui.mdm.edit.master">This is a MASTER record. Editing it will result in the creation a new LOCAL record for the administrative panel which will be.</string>
     <string key="ui.mdm.edit.recordOfTruth">You are editing a RECORD OF TRUTH, this record should contain the "official" data for this object.</string>
     <string key="ui.mdm.edit.local">This is a LOCAL record. Editing it may result in data mis-match between the system which supplied the data and the server</string>
+    <string key="ui.mdm.edit.linkedEditWarning">This data may be linked to other entities which may not be subject to MDM rules. You should either clone it convert it.</string>
     <string key="ui.mdm.action.ignore.confirm">Are you sure you want to mark this record as a non-match?</string>
     <string key="ui.mdm.action.merge.confirm">Are you sure you want to integrate/merge this local record with the current master record?</string>
     <string key="ui.mdm.action.detach.confirm">Are you sure you want to detach (unmerge) this local record from the current master record?</string>

@@ -1,7 +1,7 @@
 <div xmlns="http://www.w3.org/1999/xhtml" xmlns:sdb="http://santedb.org/applet" class="container-fluid"
     oc-lazy-load="{ name: 'PatientDemographicsWidgetController', files: ['/org.santedb.uicore/controllers/widgets/patientWidget.js'] }">
-    <sdb:widget order="15" name="org.santedb.widget.patient.nok" altViews="Edit" headerClass="bl-light" size="Medium" type="Panel"
-        context="org.santedb.patient.demographics">
+    <sdb:widget order="15" name="org.santedb.widget.patient.nok" altViews="Edit" headerClass="bl-light" size="Medium"
+        type="Panel" context="org.santedb.patient.demographics">
         <sdb:icon>fas fa-users</sdb:icon>
         <sdb:description lang="en">Patient Family Members</sdb:description>
     </sdb:widget>
@@ -13,23 +13,229 @@
     </div>
     <div ng-if="scopedObject" ng-controller="PatientDemographicsWidgetController">
         <div ng-if="panel.view != 'Edit'">
-            <table class="table table-striped">
-                <tr ng-repeat="rel in scopedObject.relationshipModel" ng-if="rel.relationshipType != '97730a52-7e30-4dcd-94cd-fd532d111578' &amp;&amp; (rel.relatedPersonModel.$type == 'Person' || rel.relatedPersonModel.$type == 'Patient')">
-                    <td><span ng-if="rel.inverse">{{ 'ui.model.entity.relationship.isA' | i18n }}</span><span ng-if="!rel.inverse">{{ 'ui.model.entity.relationship.hasA' | i18n }}</span></td>
-                    <td>{{ rel.relationshipTypeModel | concept }}</td>
-                    <td>{{ rel.relatedPersonModel.name | name }}</td>
-                    <td>
-                        <div class="btn-group">
-                            <a ng-if="rel.relatedPersonModel.$type == 'Patient'" class="btn btn-info" ui-sref="{id: rel.relatedPersonModel.id}"><i class="fas fa-eye"></i> {{ 'ui.action.view' | i18n }}</a>
-                            <button ng-if="rel.relatedPersonModel.$type == 'Person'" class="btn btn-success" ui-sref="{id: rel.relatedPersonModel.id}"><i class="fas fa-arrow-up"></i> {{ 'ui.action.convertTo' | i18n }} Patient</button>
+            <div id="relationshipAccordion">
+                <div class="card" ng-repeat="relType in familyRelationTypes"
+                    ng-if="scopedObject.relationship[relType.mnemonic]">
+                    <div class="card-header p-1" id="relAccHdr{{relType.mnemonic}}">
+                        <h5 class="mb-0">
+                            <button class="btn btn-link collapse-indicator" type="button" data-toggle="collapse"
+                                data-target="#relAccBdy{{relType.mnemonic}}"
+                                aria-expanded="{{ $index == 0 ? 'true' : 'false'}}"
+                                aria-controls="relAccBdy{{relType.mnemonic}}">
+                                {{ relType | concept }}
+                                <i class="fa fa-chevron-right"></i>
+                            </button>
+                        </h5>
+                    </div>
+                    <div class="collapse" ng-class="{ 'show' : $index == 0 }" data-parent="#relationshipAccordion"
+                        id="relAccBdy{{relType.mnemonic}}">
+                        <div class="card-body">
+                            <div class="row">
+                                <label class="col-md-3 control-label">{{ 'ui.model.entity.name' | i18n }}</label>
+                                <div class="col-md-9">
+                                    <ul class="list-group">
+                                        <li class="d-flex align-items-center"
+                                            ng-repeat="(n, name) in scopedObject.relationship[relType.mnemonic].targetModel.name">
+                                            {{ name | name }} <span
+                                                class="badge badge-light">{{ name.useModel | concept }}</span></li>
+                                    </ul>
+                                </div>
+                                <label class="col-md-3 control-label">{{ 'ui.model.entity.dateOfBirth' | i18n }}</label>
+                                <div class="col-md-9"
+                                    ng-if="scopedObject.relationship[relType.mnemonic].targetModel.dateOfBirth">
+                                    {{ scopedObject.relationship[relType.mnemonic].targetModel.dateOfBirth | extDate: scopedObject.relationship[relType.mnemonic].targetModel.dateOfBirthPrecision }}
+                                    <span ng-if="!scopedObject.relationship[relType.mnemonic].targetModel.deceasedDate">
+                                        (
+                                        {{ scopedObject.relationship[relType.mnemonic].targetModel.dateOfBirth | age }}
+                                        )</span>
+                                </div>
+                                <div class="col-md-9"
+                                    ng-if="!scopedObject.relationship[relType.mnemonic].targetModel.dateOfBirth">
+                                    {{ 'ui.unknown' | i18n}}
+                                </div>
+                                <label
+                                    class="col-md-3 control-label">{{ 'ui.model.patient.genderConcept' | i18n }}</label>
+                                <div class="col-md-9"
+                                    ng-if="scopedObject.relationship[relType.mnemonic].targetModel.genderConceptModel">
+                                    <i class="fas"
+                                        ng-class="{ 'fa-male' : scopedObject.relationship[relType.mnemonic].targetModel.genderConceptModel.mnemonic == 'Male' , 'fa-female' :  scopedObject.relationship[relType.mnemonic].targetModel.genderConceptModel.mnemonic == 'Female' }"></i>
+                                    {{ scopedObject.relationship[relType.mnemonic].targetModel.genderConceptModel | concept }}
+                                </div>
+                                <div class="col-md-9"
+                                    ng-if="!scopedObject.relationship[relType.mnemonic].targetModel.genderConceptModel">
+                                    {{ 'ui.unknown' | i18n}}
+                                </div>
+                                <label class="col-md-3 control-label">{{ 'ui.model.entity.address' | i18n }}</label>
+                                <div class="col-md-9">
+                                    <div ng-if="scopedObject.relationship[relType.mnemonic].targetModel.address">
+                                        <ul class="list-group">
+                                            <li class="d-flex align-items-center"
+                                                ng-repeat="(n, address) in scopedObject.relationship[relType.mnemonic].targetModel.address">
+                                                {{ address | address }} <span
+                                                    class="badge badge-light">{{ address.useModel | concept }}</span>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <div ng-if="!scopedObject.relationship[relType.mnemonic].targetModel.address">
+                                        {{ 'ui.unknown' | i18n }}
+                                    </div>
+                                </div>
+                                <label class="col-md-3 control-label">{{ 'ui.model.entity.telecom' | i18n }}</label>
+                                <div class="col-md-9"
+                                    ng-repeat="(k,tel) in scopedObject.relationship[relType.mnemonic].targetModel.telecom track by $index"
+                                    ng-class="{ 'offset-md-3': $index > 0 }">
+                                    <a href="{{tel.value}}" target="_blank">{{tel.value}} <span
+                                            class="badge badge-pill badge-info">{{ tel.useModel | concept }}</span></a>
+                                </div>
+                            </div>
                         </div>
-                    </td>
-                </tr>
-            </table>
+                    </div>
+                </div>
+            </div>
         </div>
-        <form ng-submit="updatePatient(panel.editForm)" name="panel.editForm" novalidate="novalidate"
+        <form ng-submit="update(panel.editForm)" method="dialog" name="panel.editForm" novalidate="novalidate"
             ng-if="panel.view == 'Edit'">
-Edit
+
+            <!-- Warnings about MDM -->
+            <div class="alert"
+                ng-class="{'alert-info' : scopedObject.id != editObject.id , 'alert-success': scopedObject.id == editObject.id }"
+                ng-if="scopedObject.tag['$mdm.type'] != 'L' &amp;&amp; scopedObject.tag['$generated'] == 'true'">
+                <span ng-if="scopedObject.id != editObject.id"><i class="fas fa-gavel"></i>
+                    {{ 'ui.mdm.edit.recordOfTruth' | i18n }}</span>
+                <span ng-if="scopedObject.id == editObject.id"><i class="fas fa-gavel"></i>
+                    {{ 'ui.mdm.edit.master' | i18n }}</span>
+            </div>
+            <div class="alert alert-warning"
+                ng-if="!scopedObject.tag['$generated'] &amp;&amp; scopedObject.determinerConcept != '6b1d6764-12be-42dc-a5dc-52fc275c4935'">
+                <i class="fas fa-exclamation-circle"></i> {{ 'ui.mdm.edit.local' | i18n }}
+            </div>
+            <div class="alert alert-warning" ng-if="scopedObject.tag['$mdm.type'] == 'L'"><i
+                    class="fas fa-exclamation-triangle"></i> {{ 'ui.mdm.edit.local' | i18n }}</div>
+
+
+
+            <div class="card" ng-repeat="relType in familyRelationTypes"
+                ng-if="scopedObject.relationship[relType.mnemonic]">
+                <div class="card-header p-1" id="relAccHdr{{relType.mnemonic}}">
+                    <h5 class="mb-0">
+                        <button class="btn btn-link collapse-indicator" type="button" data-toggle="collapse"
+                            data-target="#relAccEditBdy{{relType.mnemonic}}" 
+                            aria-controls="relAccBdy{{relType.mnemonic}}"
+                            ng-click="editObject.relationship[relType.mnemonic].targetModel.$edited=true">
+                            {{ relType | concept }}
+                            <i class="fa fa-chevron-right"></i>
+                        </button>
+                    </h5>
+                </div>
+                <div class="collapse" id="relAccEditBdy{{relType.mnemonic}}">
+                    <div class="card-body">
+                        <!-- Give information related to the patient or person we're editing -->
+                        <div class="alert alert-info d-flex justify-content-between"
+                            ng-if="scopedObject.relationship[relType.mnemonic].targetModel.$type == 'Patient'">
+                            <span class="p-2">
+                                {{ 'ui.model.entity.relationship.structured' | i18n }}
+                            </span>
+                            <a ui-sref="{ id: scopedObject.relationship[relType.mnemonic].target }"><i class="fas fa-arrow-right"></i> {{ 'ui.action.view' | i18n }}</a>
+
+                        </div>
+                        <div ng-if="scopedObject.relationship[relType.mnemonic].targetModel.$type == 'Person'">
+                            <div class="alert alert-warning d-flex justify-content-between">
+                                <span class="p-2" ng-if="!scopedObject.relationship[relType.mnemonic].targetModel.$converting">
+                                    <i class="fas fa-exclamation-triangle"></i>
+                                    {{ 'ui.mdm.edit.linkedEditWarning' | i18n }}
+                                </span>
+                                <span class="p-2" ng-if="scopedObject.relationship[relType.mnemonic].targetModel.$converting">
+                                    <i class="fas fa-info-triangle"></i>
+                                    {{ 'ui.model.patient.dateOfBirth.required' | i18n }}
+                                </span>
+
+                                <button type="button" ng-disabled="scopedObject.relationship[relType.mnemonic].targetModel.$converting &amp;&amp; !scopedObject.relationship[relType.mnemonic].targetModel.dateOfBirth" class="btn btn-success" ng-click="convertToPatient(scopedObject.relationship[relType.mnemonic].targetModel)"><i class="fas fa-arrow-up"></i> {{ 'ui.action.convert' | i18n }}</button>
+                            </div>
+
+                            <ul class="nav nav-tabs" role="tablist" id="demographicEditTabs{{relType.mnemonic}}">
+                                <li class="nav-item" role="presentation" ng-if="editObject.relationship[relType.mnemonic].targetModel.$converting">
+                                    <a class="nav-link" href="javascript:" data-target="#demoBirth{{relType.mnemonic}}" data-toggle="tab">
+                                        <i class="fa fa-baby"></i> {{ 'ui.model.patient.birth' | i18n }}
+                                </a>
+                                </li>
+                                <li class="nav-item" role="presentation">
+                                    <a class="nav-link active" href="javascript:"
+                                        data-target="#demoName{{relType.mnemonic}}" data-toggle="tab">
+                                        <i class="fa fa-user"></i> {{ 'ui.model.entity.name' | i18n }}
+                                    </a>
+                                </li>
+                                <li class="nav-item" role="presentation">
+                                    <a class="nav-link" href="javascript:"
+                                        data-target="#demoAddress{{relType.mnemonic}}" data-toggle="tab">
+                                        <i class="fa fa-map-marked"></i> {{ 'ui.model.entity.address' | i18n }}
+                                    </a>
+                                </li>
+                                <li class="nav-item" role="presentation">
+                                    <a class="nav-link" href="javascript:"
+                                        data-target="#demoTelecom{{relType.mnemonic}}" data-toggle="tab">
+                                        <i class="fa fa-phone"></i> {{ 'ui.model.entity.telecom' | i18n }}
+                                    </a>
+                                </li>
+                                <li class="nav-item" role="presentation">
+                                    <a class="nav-link" href="javascript:" data-target="#demoAdmin{{relType.mnemonic}}" data-toggle="tab">
+                                        <i class="fas fa-infinity"></i> {{ 'ui.model.patient.administrativeInfo' | i18n }}
+                                    </a>
+                                </li>
+                            </ul>
+                            <div class="tab-content">
+                                <div role="tabpanel" class="tab-pane fade" id="demoBirth{{relType.mnemonic}}">
+                                    <div class="p-2">
+                                        <div class="form-group row">
+                                            <label
+                                                class="col-sm-12 col-md-3 control-label required">{{ 'ui.model.patient.dateOfBirth' | i18n }}</label>
+                                            <div class="col-sm-12 col-md-9">
+                                                <div class="input-group">
+                                                    <input class="form-control" max="{{ $root.page.maxEventTime | date: 'yyyy-MM-dd' }}"  type="date" ng-model="editObject.relationship[relType.mnemonic].targetModel.dateOfBirth"
+                                                        required="required" />
+                                                    <div class="input-group-append">
+                                                        <div class="input-group-text">
+                                                            <label>
+                                                                <input type="checkbox" ng-model="editObject.relationship[relType.mnemonic].targetModel.dateOfBirthPrecision"
+                                                                    ng-true-value="4" ng-false-value="10" />
+                                                                {{ 'ui.model.patient.dateOfBirth.approx' | i18n }}
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label
+                                                class="col-sm-12 col-md-3 control-label required">{{ 'ui.model.patient.genderConcept' | i18n }}</label>
+                                            <div class="col-sm-12 col-md-9">
+                                                <concept-select class="form-control" required="required"
+                                                    name="birthGender{{relType.mnemonic}}"
+                                                    concept-set="'AdministrativeGenderCode'" ng-model="editObject.relationship[relType.mnemonic].targetModel.genderConceptModel" />
+                                                    <div class="alert alert-danger" ng-if="panel.editForm['birthGender' + relType.mnemonic].$invalid">{{ 'ui.error.required' | i18n }}</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div role="tabpanel" class="tab-pane" id="demoAdmin{{relType.mnemonic}}">
+                                    <admin-relation-edit relationship="editObject.relationship[relType.mnemonic].targetModel.relationship" container-class="scopedObject.relationship[relType.mnemonic].targetModel.classConcept" />
+                                </div>
+                                <div role="tabpanel" class="tab-pane fade show active"
+                                    id="demoName{{relType.mnemonic}}">
+                                    <name-edit name="editObject.relationship[relType.mnemonic].targetModel.name" />
+                                </div>
+                                <div role="tabpanel" class="tab-pane fade" id="demoTelecom{{relType.mnemonic}}">
+                                    <telecom-edit
+                                        telecom="editObject.relationship[relType.mnemonic].targetModel.telecom" />
+                                </div>
+                                <div role="tabpanel" class="tab-pane fade" id="demoAddress{{relType.mnemonic}}">
+                                    <address-edit
+                                        address="editObject.relationship[relType.mnemonic].targetModel.address" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </form>
     </div>
 </div>

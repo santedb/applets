@@ -101,29 +101,37 @@
                     <i class="text-danger fas fa-exclamation-circle" ng-if="panel.editForm.$error.required[0].$name.indexOf('birth') == 0"></i>
                 </a>
                 </li>
-                <li class="active nav-item" role="presentation">
+                <li class="nav-item" role="presentation">
                     <a class="nav-link" href="javascript:" data-target="#demoName" data-toggle="tab">
                         <i class="fa fa-user"></i> {{ 'ui.model.patient.name' | i18n }}
                         <i class="text-danger fas fa-exclamation-circle" ng-if="panel.editForm.$error.required[0].$name.indexOf('name') == 0"></i>
                     </a>
                 </li>
-                <li class="active nav-item" role="presentation">
+                <li class="nav-item" role="presentation">
                     <a class="nav-link" href="javascript:" data-target="#demoAddress" data-toggle="tab">
                         <i class="fa fa-map-marked"></i> {{ 'ui.model.patient.address' | i18n }}
                         <i class="text-danger fas fa-exclamation-circle" ng-if="panel.editForm.$error.required[0].$name.indexOf('address') == 0"></i></a>
                 </li>
-                <li class="active nav-item" role="presentation">
+                <li class="nav-item" role="presentation">
                     <a class="nav-link" href="javascript:" data-target="#demoTelecom" data-toggle="tab">
                         <i class="fa fa-phone"></i> {{ 'ui.model.patient.telecom' | i18n }}
                         </a>
                 </li>
-                <li class="active nav-item" role="presentation">
+                <li class="nav-item" role="presentation">
                     <a class="nav-link" href="javascript:" data-target="#demoDeath" data-toggle="tab">
                         {{ 'ui.model.patient.death' | i18n }}
                         <i class="text-danger fas fa-exclamation-circle" ng-if="panel.editForm.$error.required[0].$name.indexOf('death') == 0"></i></a>
                 </li>
+                <li class="nav-item" role="presentation">
+                    <a class="nav-link" href="javascript:" data-target="#demoAdmin" data-toggle="tab">
+                        <i class="fas fa-infinity"></i> {{ 'ui.model.patient.administrativeInfo' | i18n }}
+                    </a>
+                </li>
             </ul>
             <div class="tab-content">
+                <div role="tabpanel" class="tab-pane" id="demoAdmin">
+                    <admin-relation-edit relationship="editObject.relationship" container-class="editObject.classConcept" />
+                </div>
                 <div role="tabpanel" class="tab-pane" id="demoName">
                     <name-edit name="editObject.name" />
                 </div>
@@ -137,7 +145,7 @@
                                 class="col-sm-12 col-md-3 control-label required">{{ 'ui.model.patient.dateOfBirth' | i18n }}</label>
                             <div class="col-sm-12 col-md-9">
                                 <div class="input-group">
-                                    <input class="form-control" type="date" ng-model="editObject.dateOfBirth"
+                                    <input  max="{{ $root.page.maxEventTime | date: 'yyyy-MM-dd' }}" class="form-control" type="date" ng-model="editObject.dateOfBirth"
                                         required="required" />
                                     <div class="input-group-append">
                                         <div class="input-group-text">

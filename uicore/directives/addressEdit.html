@@ -19,6 +19,7 @@
                     <div class="col-sm-12 col-md-9">
                         <entity-search type="'Place'" group-by="'address.Direct.component.County'"
                             ng-model="addr.targetId" search-field="'name.component.value'"
+                            ng-change="fillAddress(addr)"
                             filter="{ 'classConcept': '79dd4f75-68e8-4722-a7f5-8bc2e08f5cd6', 'statusConcept': 'c8064cbd-fa06-4530-b430-1a52f1530c27' }" />
                     </div>
                 </div>
@@ -92,7 +93,7 @@
 
         </div>
     </fieldset>
-    <div class="btn-group float-right">
+    <div class="btn-group float-right" ng-if="!noAdd">
         <button type="button" ng-click="addAddress()" class="btn btn-primary"><i class="fas fa-plus"></i> {{ 'ui.action.add' | i18n }}</button>
     </div>
 </div>

@@ -163,6 +163,10 @@ angular.module('santedb-lib')
             }],
             link: function (scope, element, attrs) {
 
+                // HACK: Parmaeters weren't passed so we shall construct them
+                if(!scope.parameters)
+                    scope.parameters = {};
+
                 var setReportContent = function (content, compile) {
                     $(element).html(content);
                     if (compile)

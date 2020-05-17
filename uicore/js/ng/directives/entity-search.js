@@ -145,7 +145,8 @@ angular.module('santedb-lib')
                 groupDisplay: '<',
                 key: '<',
                 selector: '<',
-                valueProperty: '<'
+                valueProperty: '<',
+                multiSelect: '<'
             },
             restrict: 'E',
             require: 'ngModel',

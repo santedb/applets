@@ -157,7 +157,8 @@ var santedbApp = angular.module('santedb', ['ngSanitize', 'ui.router', 'oc.lazyL
             if(n && n != o) {
                 SanteDB.locale.setLocale(n);
                 $templateCache.removeAll();
-                $state.reload();
+                if(o)
+                    $state.reload();
             }
          });
 

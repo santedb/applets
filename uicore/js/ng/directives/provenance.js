@@ -42,6 +42,9 @@ angular.module('santedb-lib')
             },
             link: function (scope, element, attrs) {
 
+                // correct time from string (sometimes this happens when using in a data table as the row is presented as a string)
+                if(Object.prototype.toString.call(scope.provenanceTime) == '[object String]' )
+                    scope.provenanceTime = new Date(scope.provenanceTime);
 
                 if (alreadyFetching.indexOf(scope.provenanceId) == -1) // Not yet fetching
                 {

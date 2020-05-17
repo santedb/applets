@@ -1,0 +1,24 @@
+<div xmlns="http://www.w3.org/1999/xhtml" class="container-fluid p-2">
+
+    <div class="form-group row" ng-repeat="(type, relReg) in adminRelationTypes" ng-if="relReg.applyTo.indexOf(containerClass) > -1">
+        <label class="control-label col-md-3 col-sm-12">{{ 'ui.model.entity.relationship.' + type | i18n }}</label>
+        <div class="col-md-9 col-sm-12">
+            <entity-search ng-if="!relReg.multiple" ng-model="relationship[type]"
+                type="relReg.entityType"
+                filter="relReg.filter"
+                search-field="'name.component.value'"
+                class="form-control"
+                value-property="'target'"
+                />
+            <entity-search ng-if="relReg.multiple" ng-model="relationship[type]"
+                type="relReg.entityType"
+                multiple="multiple"
+                filter="relReg.filter"
+                class="form-control"
+                search-field="'name.component.value'"
+                value-property="'target'"
+                />
+        </div>
+    </div>
+
+</div>

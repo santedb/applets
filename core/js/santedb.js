@@ -42,7 +42,7 @@ var ExecutionEnvironment = {
 */
 function APIWrapper(_config) {
 
-    
+
     /**
      * @method
      * @summary Gets the base url
@@ -1010,7 +1010,7 @@ function SanteDBWrapper() {
          * @param {string} domain The domain which the generator will create identifiers for
          * @param {function} generatorCallback A function for the generator which returns the new identifier and (optionally) takes the entity for which the identifier is being generated
          */
-        this.addIdentifierGenerator = function(domain, generatorCallback) {
+        this.addIdentifierGenerator = function (domain, generatorCallback) {
             idGenerators[domain] = generatorCallback;
         }
 
@@ -1021,7 +1021,7 @@ function SanteDBWrapper() {
          * @param {string} domain The domain to get the generator for
          * @returns {function} The function which can be used to generate identifiers
          */
-        this.getIdentifierGenerator = function(domain, generatorCallback) {
+        this.getIdentifierGenerator = function (domain, generatorCallback) {
             return idGenerators[domain];
         }
 
@@ -1669,6 +1669,28 @@ function SanteDBWrapper() {
             api: _hdsi
         });
         /**
+           * @private
+           * @type {ResourceWrapper}
+           * @memberof SanteDBWrapper.ResourceApi
+           * @summary Represents the UserEntity Resource
+           */
+        this.userEntity = new ResourceWrapper({
+            accept: _viewModelJsonMime,
+            resource: "UserEntity",
+            api: _hdsi
+        });
+        /**
+         * @private
+         * @type {ResourceWrapper}
+         * @memberof SanteDBWrapper.ResourceApi
+         * @summary Represents the Person Resource
+         */
+        this.person = new ResourceWrapper({
+            accept: _viewModelJsonMime,
+            resource: "Person",
+            api: _hdsi
+        });
+        /**
         * @private
             * @type {ResourceWrapper}
             * @memberof SanteDBWrapper.ResourceApi
@@ -2193,7 +2215,7 @@ function SanteDBWrapper() {
          */
         this.setElevator = function (elevator) {
             _elevator = elevator;
-        }        
+        }
         /**
             * @method getSessionInfoAsync
             * @memberof SanteDBWrapper.AuthenticationApi
@@ -2713,7 +2735,12 @@ function SanteDBWrapper() {
             * @type {APIWrapper}
             * @summary Represents a property which communicates with the AUTH service
             */
-        auth: _auth
+        auth: _auth,
+        /**
+            * @type {APIWrapper}
+            * @summary Represents a property which communicates with the application service
+         */
+        app: _app
     };
 
     /**

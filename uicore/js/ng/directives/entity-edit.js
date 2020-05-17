@@ -47,6 +47,17 @@ angular.module('santedb-lib')
                     $scope.addressEdit.push(new EntityAddress());
                 }
 
+                // Watch for structured addresses and populate the structured address' components
+                $scope.fillAddress = async function(addr) {
+                    var addrComponents = (await SanteDB.resources.place.getAsync(addr.targetId)).address.Direct.component;
+                    addr.component.Country = addrComponents.Country;
+                    addr.component.CensusTract = addrComponents.CensusTract;
+                    addr.component.County = addrComponents.County;
+                    addr.component.State = addrComponents.State;
+                    addr.component.Precinct = addrComponents.Precinct;
+                    addr.component.City = addrComponents.City;
+                    addr.component.AdditionalLocator = addrComponents.AdditionalLocator;
+                }
             }],
             link: function (scope, element, attrs) {
 
@@ -200,27 +211,27 @@ angular.module('santedb-lib')
             },
             controller: ['$scope', '$rootScope', function ($scope, $rootScope) {
 
-                $scope.removeIdentifier = function(domain) {
-                    if(confirm(SanteDB.locale.getString("ui.model.entity.identifier.authority.remove.confirm")))
-                        delete($scope.identifier[domain]);
+                $scope.removeIdentifier = function (domain) {
+                    if (confirm(SanteDB.locale.getString("ui.model.entity.identifier.authority.remove.confirm")))
+                        delete ($scope.identifier[domain]);
                 }
 
-                $scope.addIdentifier = function() {
-                    if($scope.editForm.$invalid || !$scope.authorities[$scope.newId.authority.domainName]) return;
+                $scope.addIdentifier = function () {
+                    if ($scope.editForm.$invalid || !$scope.authorities[$scope.newId.authority.domainName]) return;
 
                     $scope.newId.authority = $scope.authorities[$scope.newId.authority.domainName];
                     $scope.identifier[$scope.newId.authority.domainName] = $scope.newId;
-                    delete($scope.authorities[$scope.newId.authority.domainName]);
-                    delete($scope.newId);
+                    delete ($scope.authorities[$scope.newId.authority.domainName]);
+                    delete ($scope.newId);
                 }
 
-                $scope.generateId = function(idDomain) {
+                $scope.generateId = function (idDomain) {
                     var authority = idDomain.authority;
-                    if(!authority.generator)
+                    if (!authority.generator)
                         authority = $scope.authorities[idDomain.authority.domainName];
                     try {
                         idDomain.value = authority.generator();
-                    } catch(e) {
+                    } catch (e) {
                         $rootScope.errorHandler(e);
                     }
                 }
@@ -232,7 +243,7 @@ angular.module('santedb-lib')
 
                 scope.authorities = {};
 
-                Object.keys(scope.identifier).forEach(function(key) { scope.identifier[key].readonly = true; });
+                Object.keys(scope.identifier).forEach(function (key) { scope.identifier[key].readonly = true; });
                 // Get a list of identity domains available for our scope and emit them to the identifier array
                 SanteDB.resources.assigningAuthority.findAsync({ scope: scope.containerClass })
                     .then(function (bundle) {
@@ -242,9 +253,9 @@ angular.module('santedb-lib')
                                 authority.generator = SanteDB.application.getIdentifierGenerator(authority.domainName);
                                 if (scope.identifier[authority.domainName]) {
                                     scope.identifier[authority.domainName].authority = authority;
-                                    delete(scope.identifier[authority.domainName].readonly)
+                                    delete (scope.identifier[authority.domainName].readonly)
                                 }
-                                else if(!authority.assigningApplication || authority.assigningAuthority == $rootScope.session.claim.appid)
+                                else if (!authority.assigningApplication || authority.assigningAuthority == $rootScope.session.claim.appid)
                                     scope.authorities[authority.domainName] = authority;
 
 
@@ -259,3 +270,70 @@ angular.module('santedb-lib')
             }
         }
     }])
+    /**
+    * @summary Administrative relationship editing
+    * @memberof Angular
+    * @method adminRelationEdit
+    */
+    .directive('adminRelationEdit', ['$rootScope', function ($rootScope) {
+        return {
+            restrict: 'E',
+            replace: true,
+            templateUrl: './org.santedb.uicore/directives/adminRelationEdit.html',
+            scope: {
+                relationship: '=',
+                containerClass: '<'
+            },
+            controller: ['$scope', '$rootScope', function ($scope, $rootScope) {
+
+                $scope.adminRelationTypes = {
+                    Caregiver : {
+                        applyTo: [ EntityClassKeys.Patient, EntityClassKeys.Person ],
+                        entityType: "Organization",
+                        filter: { classConcept: [ EntityClassKeys.Organization ], statusConcept: StatusKeys.Active },
+                        multiple : true
+                    },
+                    Citizen: {
+                        applyTo: [ EntityClassKeys.Patient, EntityClassKeys.Person ],
+                        entityType: "Place",
+                        filter: { classConcept: [ EntityClassKeys.Country ], statusConcept: StatusKeys.Active },
+                        multiple : true
+                    },
+                    CoverageSponsor : {
+                        applyTo: [ EntityClassKeys.Patient ],
+                        entityType: "Organization",
+                        filter: { classConcept: [ EntityClassKeys.Organization ], statusConcept: StatusKeys.Active },
+                        multiple : true // TODO: Add insurance or sponsor
+                    },
+                    DedicatedServiceDeliveryLocation : {
+                        applyTo: [ EntityClassKeys.Patient ],
+                        entityType: "Place",
+                        filter: { classConcept: [ EntityClassKeys.ServiceDeliveryLocation ], statusConcept: StatusKeys.Active } 
+                    },
+                    Employee : {
+                        applyTo: [ EntityClassKeys.Patient, EntityClassKeys.Person ],
+                        entityType: "Organization",
+                        filter: { classConcept: [ EntityClassKeys.Organization ], statusConcept: StatusKeys.Active },
+                        multiple : true
+                    },
+                    HealthcareProvider : {
+                        applyTo: [ EntityClassKeys.Patient ],
+                        entityType: "Entity",
+                        filter: { classConcept: [ EntityClassKeys.Organization, EntityClassKeys.Provider ], "industryConcept.mnemonic": "Industry-HealthDelivery", statusConcept: StatusKeys.Active },
+                        multiple : true
+                    },
+                    Student : {
+                        applyTo: [ EntityClassKeys.Patient ],
+                        entityType: "Organization",
+                        filter: { statusConcept: StatusKeys.Active } // TODO: Filter on industry code
+                    }
+                }
+
+              
+            }],
+            link: function (scope, element, attrs) {
+
+
+            }
+        }
+    }]);
