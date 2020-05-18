@@ -309,11 +309,27 @@
     <string key="ui.admin.job.runJob.confirm">Are you sure you want to manually run this job?</string>
     <string key="ui.admin.job.cancelJob.confirm">Are you sure you want cancel this running job? </string>
 
+
     <!-- Security Widgets -->
     <string key="org.santedb.widget.admin.tab.user.profile">User Profile</string>
     <string key="org.santedb.widget.admin.tab.user.security">Security</string>
     <string key="org.santedb.widget.admin.panel.user.core">Core Properties</string>
     <string key="org.santedb.widget.admin.panel.user.security">Security Properties</string>
     
+    <!-- Mail -->
+    <string key="ui.mail.search">Search Messages</string>
+    <string key="ui.mail.from">From</string>
+    <string key="ui.mail.to">To</string>
+    <string key="ui.mail.time">Sent</string>
+    <string key="ui.mail.all">My Mailbox</string>
+    <string key="ui.mail.archive">Archive</string>
+    <string key="ui.mail.acknowledge">Acknowledge</string>
+    <string key="ui.mail.reply">Reply</string>
+    <string key="ui.mail.flags.System">System Alert</string>
+    <string key="ui.mail.flags.None">New Message</string>
+    <string key="ui.mail.flags.Acknowledged">Acknowledged</string>
+    <string key="ui.mail.flags.HighPriority">High Importance</string>
+    <string key="ui.mail.flags.Archived">Archived</string>
+    <string key="ui.mail.flags.Alert">Flagged Alert</string>
   </strings>
 </AppletManifest>

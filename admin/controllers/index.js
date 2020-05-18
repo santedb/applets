@@ -75,7 +75,7 @@ angular.module('santedb').controller('AdminLayoutController', ["$scope", "$rootS
     // Check for new mail
     var checkMail = function() {
 
-        SanteDB.resources.mail.findAsync({ flags: 0 })
+        SanteDB.resources.mail.findAsync({ flags: "!2", _count: 10 })
             .then(function(d) {
                 $scope.mailbox = d.resource;
                 $scope.$apply();
@@ -125,6 +125,17 @@ angular.module('santedb').controller('AdminLayoutController', ["$scope", "$rootS
                     toastr.warning(SanteDB.locale.getString("ui.admin.queueError"));
                     console.error(e);
                 });
+    }
+
+    // Clear all tickles
+    $scope.clearTickles = function() {
+        if($scope.tickles) {
+            $scope.tickles.forEach(function(t) {
+                SanteDB.resources.tickle.deleteAsync(t.id);
+            });
+            $scope.tickles = [];
+        
+        }
     }
 
     checkMail();

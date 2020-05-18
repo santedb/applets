@@ -1,0 +1,131 @@
+<div xmlns="http://www.w3.org/1999/xhtml" xmlns:sdb="http://santedb.org/applet">
+    <sdb:script static="false">~/controllers/users/mail.js</sdb:script>
+    <sdb:state name="santedb-admin.user.mail" abstract="false">
+        <sdb:demand>1.3.6.1.4.1.33349.3.1.5.9.2.1</sdb:demand>
+        <sdb:url>/mail/?id</sdb:url>
+        <sdb:view>
+            <sdb:controller>UserMailController</sdb:controller>
+            <sdb:title lang="en">My Mail</sdb:title>
+        </sdb:view>
+    </sdb:state>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-2 col-md-6 d-none d-lg-block p-0">
+                <div class="list-group">
+                    <button type="button" tabindex="0" ng-click="compose()" ng-class="{ 'active' : !filter }"
+                        class="list-group-item list-group-item-action">
+                        <i class="fas fa-pen"></i> {{ 'ui.mail.compose' | i18n }}
+                </button>
+                    <button type="button" tabindex="0" ng-click="setFilter( { flags : '!20' })" ng-class="{ 'active' : filter.flags == '!20' }"
+                        class="list-group-item list-group-item-action">
+                        <i class="fas fa-envelope"></i> {{ 'ui.mail.all' | i18n }}
+                    </button>
+                    <button type="button" tabindex="1" ng-click="setFilter( { flags : '0' })" ng-class="{ 'active' : filter.flags == '0' }"
+                        class="list-group-item list-group-item-action">
+                        <i class="fas fa-star"></i> {{ 'ui.mail.flags.None' | i18n }}
+                    </button>
+                    <button type="button" tabindex="2" ng-click="setFilter( { flags : '1' })" ng-class="{ 'active' : filter.flags == '1' }"
+                        class="list-group-item list-group-item-action">
+                        <i class="fas fa-flag"></i> {{ 'ui.mail.flags.Alert' | i18n }}
+                    </button>
+                    <button type="button" tabindex="3" ng-click="setFilter( { flags : '2' })" ng-class="{ 'active' : filter.flags == '2' }"
+                        class="list-group-item list-group-item-action">
+                        <i class="fas fa-eye"></i> {{ 'ui.mail.flags.Acknowledged' | i18n }}
+                    </button>
+                    <button type="button" tabindex="4" ng-click="setFilter( { flags : '4' })" ng-class="{ 'active' : filter.flags == '4' }"
+                        class="list-group-item list-group-item-action">
+                        <i class="fas fa-exclamation"></i> {{ 'ui.mail.flags.HighPriority' | i18n }}
+                    </button>
+                    <button type="button" tabindex="5" ng-click="setFilter( { flags : '8' })" ng-class="{ 'active' : filter.flags == '8' }"
+                        class="list-group-item list-group-item-action">
+                        <i class="fas fa-cog"></i> {{ 'ui.mail.flags.System' | i18n }}
+                    </button>
+                    <button type="button" tabindex="6" ng-click="setFilter({ flags : '20' })" ng-class="{ 'active' : filter.flags == '20' }"
+                        class="list-group-item list-group-item-action">
+                        <i class="fas fa-trash"></i> {{ 'ui.mail.flags.Archived' | i18n }}
+                    </button>
+                    <button type="button" tabindex="6" ng-click="setFilter( { from : $root.session.username })" ng-class="{ 'active' : filter.from }"
+                        class="list-group-item list-group-item-action">
+                        <i class="fas fa-arrow-up"></i> {{ 'ui.mail.sent' | i18n }}
+                    </button>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6 p-0" ng-if="filter">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col p-0 m-0">
+                            <input type="text" ng-model="filter._subject" class="form-control"
+                                placeholder="{{ 'ui.mail.search' | i18n }}" />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col" ng-if="mailbox.loading">
+                            <i class="fas fa-spin fa-circle-notch"></i> {{ 'ui.wait' | i18n }}
+                        </div>
+                        <div class="col p-0 m-0" ng-if="!mailbox.loading">
+                            <div class="list-group">
+                                <button type="button" class="list-group-item-action list-group-item" 
+                                    ng-repeat="msg in mailbox.resource"
+                                    ng-class="{ 'active' : msg.id == currentMessage.id }"
+                                    ng-click="selectMessage(msg.id)"
+                                    tabindex="{{$index}}">
+                                    <div class="d-flex justify-content-between">
+                                        <strong><i class="fas fa-user"></i> {{ msg.from }}</strong>
+                                        <span class="small"> <i
+                                                ng-class="{ 'fa-envelope' : msg.flags== 'None' , 'fa-exclamation' : msg.flags == 'HighPriority', 'fa-cog' : msg.flags == 'System', 'fa-flag': msg.flags == 'Alert' }"
+                                                class="fas"></i>
+                                            {{ msg.creationTime | extDate: 'M'}}</span>
+                                    </div>
+                                    <div class="dropdown-message small"><strong>{{ msg.subject }}</strong></div>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="border" ng-class="{ 'col-lg-7 col-md-6' : filter.flags, 'col-lg-10 col-md-12' : !filter }">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col" ng-if="currentMessage.loading">
+                            <i class="fas fa-spin fa-circle-notch"></i> {{ 'ui.wait' | i18n }}
+                        </div>
+                        <div class="col" ng-if="!currentMessage.loading">
+                            <h4>{{ currentMessage.subject }}</h4>
+                            <div class="d-flex justify-content-between">
+                                <span class="text-muted"><label>{{ 'ui.mail.from' | i18n }} : </label> <i
+                                        class="fas fa-user"></i> {{ currentMessage.from }} </span>
+                                <span class="text-muted">{{ 'ui.mail.time' | i18n }}
+                                    {{ currentMessage.creationTime | extDate }}</span>
+                            </div>
+                            <div class="d-flex justify-content-between">
+                                <span class="text-muted"><label>{{ 'ui.mail.to' | i18n }} : </label> <i
+                                        class="fas fa-users"></i> {{ currentMessage.to }} </span>
+                                <span class="text-muted">
+                                    <i ng-class="{ 'fa-envelope' : currentMessage.flags== 'None' , 'fa-exclamation' : currentMessage.flags == 'HighPriority', 'fa-cog' : currentMessage.flags == 'System', 'fa-flag': currentMessage.flags == 'Alert' }"
+                                        class="fas text-secondary"></i>
+                                    {{ 'ui.mail.flags.' + currentMessage.flags | i18n }}
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <hr/>
+                            <div ng-bind-html="currentMessage.body" ></div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <hr/>
+                            <div class="float-right btn-group">
+                                <button class="btn btn-danger" type="button" ng-click="setState(currentMessage.id, 20)" ng-disabled="currentMessage.to == $root.session.userName"><i class="fas fa-trash"></i> {{ 'ui.mail.archive' | i18n }}</button>
+                                <button class="btn btn-primary" type="button" ng-click="setState(currentMessage.id, 2)"  ng-disabled="currentMessage.to == $root.session.userName"><i class="fas fa-check"></i> {{ 'ui.mail.acknowledge' | i18n }}</button>
+                                <button class="btn btn-info" type="button" ng-click="compose({ subject: 'RE:' + currentMessage.subject })"><i class="fas fa-reply"></i> {{ 'ui.mail.reply' | i18n }}</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

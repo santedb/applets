@@ -94,26 +94,29 @@
                                 <i class="fa fa-fw fa-circle"></i>
                             </span>
                         </a>
-                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="messagesDropdown">
+                        <div class="dropdown-menu dropdown-menu-right dropdown-menu-lg" style="min-width:20rem" aria-labelledby="messagesDropdown">
                             <h6 class="dropdown-header">{{ 'ui.admin.mail.new' | i18n }}:</h6>
                             <div ng-repeat="msg in mailbox">
                                 <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" ui-sref="santedb-admin.user.mail.message(msg.id)">
-                                    <strong>{{ msg.from }}</strong>
+                                <a class="dropdown-item" ui-sref="santedb-admin.user.mail({ 'id':msg.id})">
+                                    <div class="d-flex justify-content-between">
+                                    <strong><i class="fas fa-user"></i> {{ msg.from }}</strong>
                                     <span
-                                        class="small float-right text-muted">{{ msg.creationTime | extDate: 'M'}}</span>
-                                    <div class="dropdown-message small">{{ msg.subject }} </div>
+                                        class="small float-right text-muted">                                    <i ng-class="{ 'fa-envelope' : msg.flags== 'None' , 'fa-exclamation' : msg.flags == 'HighPriority', 'fa-cog' : msg.flags == 'System', 'fa-flag': msg.flags == 'Alert' }" class="fas text-secondary"></i>
+                                        {{ msg.creationTime | extDate: 'M'}}</span>
+                                    </div>
+                                    <div class="dropdown-message small"><strong>{{ msg.subject }}</strong></div>
                                 </a>
                             </div>
                             <div ng-if="mailbox.length == 0">
                                 <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" ui-sref="santedb-admin.user.mail.message(msg.id)">
+                                <a class="dropdown-item" ui-sref="santedb-admin.user.mail">
                                     {{ 'ui.admin.mail.none' | i18n }}
                                 </a>
                             </div>
                             <div class="dropdown-divider"></div>
                             <a class="dropdown-item small"
-                                ui-sref="santedb-admin.user.mail.index">{{ 'ui.admin.mail.all' | i18n }}</a>
+                                ui-sref="santedb-admin.user.mail">{{ 'ui.admin.mail.all' | i18n }}</a>
                         </div>
                     </li>
                     <li class="nav-item dropdown ">
