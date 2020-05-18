@@ -75,7 +75,7 @@ angular.module('santedb').controller('AdminLayoutController', ["$scope", "$rootS
     // Check for new mail
     var checkMail = function() {
 
-        SanteDB.resources.mail.findAsync({ flags: "!2", _count: 10 })
+        SanteDB.resources.mail.findAsync({ flags: ["0", "1", "4", "8"], _count: 10, _orderBy: "creationTime:desc" })
             .then(function(d) {
                 $scope.mailbox = d.resource;
                 $scope.$apply();
