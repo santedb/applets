@@ -16,20 +16,9 @@ angular.module('santedb').controller('UserMailController', ["$scope", "$rootScop
 
     checkMail();
 
-    $scope.setFilter = function(filter)
-    {
-        $scope.filter = filter;
-        $scope.filter._count = 10;
-        $scope.filter._orderBy = "creationTime:desc";
-        $scope.mailbox = { loading: true };
-        checkMail();
-    };
-
-
-    // Check mail refresh results.
-    $scope.refreshResults = checkMail;
-
-    // Check the mail
+    /**
+     * @summary Mail check function
+     */
     async function checkMail() {
         try {
             if ($scope.filter._subject || $scope.filter.subject)
@@ -42,20 +31,19 @@ angular.module('santedb').controller('UserMailController', ["$scope", "$rootScop
         }
     }
 
-    var refreshInterval = $interval(() => checkMail(), 30000);
-
+    /**
+     * @summary Sets the selected message in the UI
+     * @param {string} id The identifier of the message to set
+     */
     async function selectMessage(id) {
         try {
-            
             // Try to get locally
             if ($scope.mailbox && $scope.mailbox.resource)
                 $scope.currentMessage = $scope.mailbox.resource.find(o => o.id == id);
             else 
                 $scope.currentMessage = await SanteDB.resources.mail.getAsync(id);
 
-            try {
-                $scope.$apply();
-            }
+            try { $scope.$apply(); }
             catch (e) { }
         }
         catch (e) {
@@ -63,15 +51,12 @@ angular.module('santedb').controller('UserMailController', ["$scope", "$rootScop
         }
     }
 
-    $scope.selectMessage = function(id) {
-        $scope.currentMessage = { loading: true };
-        selectMessage(id);
-    }
-
     /**
-     * Set the status of the message
+     * @summary Sets the state of a message
+     * @param {string} id The id of the messgae to set state for
+     * @param {numeric} state The state flag to set
      */
-    $scope.setState = async function(id, state) {
+    async function setState(id, state) {
         try {
             var current = await SanteDB.resources.mail.getAsync(id);
             current.flags = state;
@@ -83,7 +68,25 @@ angular.module('santedb').controller('UserMailController', ["$scope", "$rootScop
         }
     }
 
-    // Destry
+    // ANGULAR JS BINDINGS
+    var refreshInterval = $interval(() => checkMail(), 30000);
+    $scope.selectMessage = function(id) {
+        $scope.currentMessage = { loading: true };
+        selectMessage(id);
+    }
+    $scope.setState = setState;
+    $scope.refreshResults = checkMail;
+    $scope.setFilter = function(filter)
+    {
+        $scope.filter = filter;
+        $scope.filter._count = 10;
+        $scope.filter._orderBy = "creationTime:desc";
+        $scope.mailbox = { loading: true };
+        checkMail();
+    };
+
+
+    // Destroy interval
     $scope.$on('$destroy', function () {
         if (refreshInterval)
             $interval.cancel(refreshInterval);
