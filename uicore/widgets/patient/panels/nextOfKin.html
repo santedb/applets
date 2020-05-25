@@ -183,7 +183,7 @@
                                 </li>
                             </ul>
                             <div class="tab-content">
-                                <div role="tabpanel" class="tab-pane fade" id="demoBirth{{relType.mnemonic}}">
+                                <div role="tabpanel" class="tab-pane fade" id="demoBirth{{relType.mnemonic}}" ng-if="editObject.relationship[relType.mnemonic].targetModel.$converting">
                                     <div class="p-2">
                                         <div class="form-group row">
                                             <label
@@ -191,7 +191,7 @@
                                             <div class="col-sm-12 col-md-9">
                                                 <div class="input-group">
                                                     <input class="form-control" max="{{ $root.page.maxEventTime | date: 'yyyy-MM-dd' }}"  type="date" ng-model="editObject.relationship[relType.mnemonic].targetModel.dateOfBirth"
-                                                        required="required" />
+                                                        ng-required="required" />
                                                     <div class="input-group-append">
                                                         <div class="input-group-text">
                                                             <label>

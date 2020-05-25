@@ -79,7 +79,7 @@
                                         <span class="small"> <i
                                                 ng-class="{ 'fa-envelope' : msg.flags== 'None' , 'fa-exclamation' : msg.flags == 'HighPriority', 'fa-cog' : msg.flags == 'System', 'fa-flag': msg.flags == 'Alert', 'fa-trash': msg.flags == 'Archived' }"
                                                 class="fas"></i>
-                                            {{ msg.creationTime | extDate: 'M'}}</span>
+                                            {{ msg.time | extDate: 'M'}}</span>
                                     </div>
                                     <div class="dropdown-message small"><strong>{{ msg.subject }}</strong></div>
                                 </button>

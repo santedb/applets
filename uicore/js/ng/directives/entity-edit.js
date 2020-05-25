@@ -216,13 +216,15 @@ angular.module('santedb-lib')
                         delete ($scope.identifier[domain]);
                 }
 
-                $scope.addIdentifier = function () {
-                    if ($scope.editForm.$invalid || !$scope.authorities[$scope.newId.authority.domainName]) return;
+                $scope.addIdentifier = function (newId) {
+                    if ($scope.editForm.$invalid || !$scope.authorities[newId.authority.domainName]) return;
 
-                    $scope.newId.authority = $scope.authorities[$scope.newId.authority.domainName];
-                    $scope.identifier[$scope.newId.authority.domainName] = $scope.newId;
-                    delete ($scope.authorities[$scope.newId.authority.domainName]);
-                    delete ($scope.newId);
+                    newId.authority = $scope.authorities[newId.authority.domainName];
+                    $scope.identifier[newId.authority.domainName] = angular.copy(newId);
+                    delete ($scope.authorities[newId.authority.domainName]);
+                    delete(newId.authority);
+                    delete(newId.value);
+
                 }
 
                 $scope.generateId = function (idDomain) {

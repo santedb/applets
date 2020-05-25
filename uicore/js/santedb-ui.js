@@ -277,7 +277,8 @@ SanteDBWrapper.prototype.display = {
                 addrStr += address.component.State + ", ";
             if (address.component.Country != null)
                 addrStr += address.component.Country + ", ";
-
+            if(address.component.CensusTract != null)
+                addrStr += `(${address.component.CensusTract})  `;
             return addrStr.substring(0, addrStr.length - 2);
         }
 

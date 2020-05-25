@@ -18,7 +18,7 @@
  - Date: 2018-7-23
  -->
 <AppletManifest xmlns="http://santedb.org/applet">
-  <info id="org.santedb.i18n.en" version="2.0.11.0">
+  <info id="org.santedb.i18n.en" version="2.0.13.0">
     <icon>/org.santedb.core/img/i18n.png</icon>
     <name lang="en">English Applet Support</name>
     <author>SanteSuite Community Partners (see: santesuite.org)</author>
@@ -696,7 +696,7 @@
     <string key="ui.mdm.action.openRot">Go to RECORD OF TRUTH</string>
     <string key="ui.mdm.view.local">You are viewing a LOCAL record. This record comes from a particular source system</string>
     <string key="ui.mdm.view.master">You are looking at a MASTER record. This record is synthesized from multiple LOCAL records</string>
-    <string key="ui.mdm.view.masterAdjudicated">You are looking at a &lt;strong>MASTER&lt;/strong> record with a &lt;strong>RECORD OF TRUTH&lt;/strong> meaning this synthesized record has been validated</string>
+    <string key="ui.mdm.view.masterAdjudicated">You are looking at a &lt;strong>MASTER&lt;/strong> record with a &lt;strong>RECORD OF TRUTH&lt;/strong>. Use the MDM tab to pull data from locals into this record of truth</string>
     <string key="ui.mdm.isTrue">This MASTER is based on the RECORD OF TRUTH meaning it has been validated by an authorized device</string>
     <string key="ui.mdm.edit.master">This is a MASTER record. Editing it will result in the creation a new LOCAL record for the administrative panel which will be.</string>
     <string key="ui.mdm.edit.recordOfTruth">You are editing a RECORD OF TRUTH, this record should contain the "official" data for this object.</string>
