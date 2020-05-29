@@ -1,0 +1,10 @@
+<div xmlns="http://www.w3.org/1999/xhtml" xmlns:sdb="http://santedb.org/applet"
+    oc-lazy-load="{ name: 'DataQualityWidgetController', files: ['/org.santedb.uicore/controllers/widgets/dataQuality.js'] }">
+    <sdb:widget name="org.santedb.widget.patient.dataQuality" type="Tab" context="org.santedb.patient" order="100">
+        <sdb:icon>fas fa-tasks</sdb:icon>
+        <sdb:description lang="en">Patient Data Qaulity / Lineage Tab</sdb:description>
+        <sdb:guard>scopedObject.extension['http://santedb.org/extensions/core/detectedIssue'] &amp;&amp; scopedObject.extension['http://santedb.org/extensions/core/detectedIssue'] != '5B5D'</sdb:guard>
+    </sdb:widget>
+    <widget-panels context-name="'org.santedb.dq'" scoped-object="scopedObject"/>
+    
+</div>

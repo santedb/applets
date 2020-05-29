@@ -12,10 +12,10 @@
         <div class="row">
             <div class="col-lg-2 col-md-6 d-none d-lg-block p-0">
                 <div class="list-group">
-                    <button type="button" tabindex="0" ng-click="compose()" ng-class="{ 'active' : !filter }"
+                   <!-- <button type="button" tabindex="0" ng-click="compose()" ng-class="{ 'active' : !filter }"
                         class="list-group-item list-group-item-action">
                         <i class="fas fa-pen"></i> {{ 'ui.mail.compose' | i18n }}
-                </button>
+                </button>-->
                     <button type="button" tabindex="0" ng-click="setFilter( { flags : '!32' })" ng-class="{ 'active' : filter.flags == '!32' }"
                         class="list-group-item list-group-item-action">
                         <i class="fas fa-envelope"></i> {{ 'ui.mail.all' | i18n }}
@@ -44,10 +44,10 @@
                         class="list-group-item list-group-item-action">
                         <i class="fas fa-trash"></i> {{ 'ui.mail.flags.Archived' | i18n }}
                     </button>
-                    <button type="button" tabindex="6" ng-click="setFilter( { from : $root.session.username })" ng-class="{ 'active' : filter.from }"
+<!--                    <button type="button" tabindex="6" ng-click="setFilter( { from : $root.session.username })" ng-class="{ 'active' : filter.from }"
                         class="list-group-item list-group-item-action">
                         <i class="fas fa-arrow-up"></i> {{ 'ui.mail.sent' | i18n }}
-                    </button>
+                    </button>-->
                 </div>
             </div>
             <div class="col-lg-3 col-md-6 p-0" ng-if="filter">
@@ -89,7 +89,7 @@
                 </div>
             </div>
             <div class="border" ng-class="{ 'col-lg-7 col-md-6' : filter, 'col-lg-10 col-md-12' : !filter }">
-                <div class="container-fluid">
+                <div class="container-fluid" ng-if="currentMessage">
                     <div class="row">
                         <div class="col" ng-if="currentMessage.loading">
                             <i class="fas fa-spin fa-circle-notch"></i> {{ 'ui.wait' | i18n }}
@@ -123,9 +123,9 @@
                         <div class="col">
                             <hr/>
                             <div class="float-right btn-group">
-                                <button class="btn btn-danger" type="button" ng-click="setState(currentMessage.id, 32)" ng-disabled="currentMessage.to == $root.session.userName"><i class="fas fa-trash"></i> {{ 'ui.mail.archive' | i18n }}</button>
-                                <button class="btn btn-primary" type="button" ng-click="setState(currentMessage.id, 2)"  ng-disabled="currentMessage.to == $root.session.userName"><i class="fas fa-check"></i> {{ 'ui.mail.acknowledge' | i18n }}</button>
-                                <button class="btn btn-info" type="button" ng-click="compose({ subject: 'RE:' + currentMessage.subject })"><i class="fas fa-reply"></i> {{ 'ui.mail.reply' | i18n }}</button>
+                                <button class="btn btn-danger" type="button" ng-click="setState(currentMessage.id, 32)" ><i class="fas fa-trash"></i> {{ 'ui.mail.archive' | i18n }}</button>
+                                <button class="btn btn-primary" type="button" ng-click="setState(currentMessage.id, 2)"  ><i class="fas fa-check"></i> {{ 'ui.mail.acknowledge' | i18n }}</button>
+                               <!--<button class="btn btn-info" type="button" ng-click="compose({ subject: 'RE:' + currentMessage.subject })"><i class="fas fa-reply"></i> {{ 'ui.mail.reply' | i18n }}</button>-->
                             </div>
                         </div>
                     </div>

@@ -152,6 +152,9 @@ angular.module('santedb-lib')
     * @method telecomEdit
     */
     .directive('telecomEdit', ['$rootScope', function ($rootScope) {
+
+        var keys = Object.keys(TelecomAddressUseKeys);
+        keys.push("NullFlavor-NoInformation");
         return {
             restrict: 'E',
             replace: true,
@@ -168,7 +171,7 @@ angular.module('santedb-lib')
                 if (!scope.telecom)
                     scope.telecom = {};
 
-                Object.keys(TelecomAddressUseKeys).forEach((k) => {
+                keys.forEach((k) => {
                     if (!scope.telecom[k])
                         scope.telecom[k] = {};
                     if (!scope.telecom[k].type)

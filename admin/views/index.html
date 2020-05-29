@@ -124,9 +124,9 @@
                             aria-haspopup="true" aria-expanded="false">
                             <i class="fa fa-fw fa-bell"></i>
                             <span class="d-lg-none" ng-if="tickles.length > 0">{{ 'ui.admin.alerts' | i18n}}
-                                <span class="badge badge-pill badge-warning">{{ tickles.length }}</span>
+                                <span class="badge badge-pill" ng-class="{ 'badge-warning' : tickles.alert, 'badge-success' : !tickles.alert }">{{ tickles.length }}</span>
                             </span>
-                            <span class="indicator text-warning d-none d-lg-block" ng-if="tickles.length > 0">
+                            <span class="indicator d-none d-lg-block"  ng-class="{ 'text-warning' : tickles.alert, 'text-success' : !tickles.alert }" ng-if="tickles.length > 0">
                                 <i class="fa fa-fw fa-circle"></i>
                             </span>
                         </a>
@@ -135,12 +135,12 @@
                             <div ng-repeat="t in tickles">
                                 <div class="dropdown-divider"></div>
                                 <a class="dropdown-item" href="#">
-                                    <span ng-class="{'text-danger' : t.isError, ' text-success' : !t.isError }">
-                                        <strong ng-if="t.isError">
+                                    <span ng-class="{'text-danger' : t.type == 'Danger' , ' text-success' : t.type != 'Danger' }">
+                                        <strong ng-if="t.type == 'Danger'">
                                             <i class="fa fa-exclamation-triangle fa-fw"></i>
-                                            {{ 'ui.priority.danger' | i18n }}
+                                            {{ 'ui.priority.error' | i18n }}
                                         </strong>
-                                        <strong ng-if="!t.isError">
+                                        <strong ng-if="t.type != 'Danger'">
                                             <i class="fa fa-info-circle fa-fw"></i> {{ 'ui.priority.info' | i18n }}
                                         </strong>
                                     </span>

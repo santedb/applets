@@ -96,8 +96,13 @@ angular.module('santedb').controller('AdminLayoutController', ["$scope", "$rootS
                 // Any tickles that need toast?
                 d.forEach(function(t) {
 
-                    if(t.type & 4) {
-                        if(t.type & 2)
+                    if(t.type.indexOf("Danger") > -1)
+                        $scope.tickles.alert = true;
+                    else 
+                        $scope.tickles.alert = false;
+                        
+                    if(t.type.indexOf("Toast") > -1) {
+                        if(t.type.indexOf("Danger") > -1)
                             toastr.error(t.text, null, { preventDuplicates: true });
                         else 
                             toastr.info(t.text, null, { preventDuplicates: true });

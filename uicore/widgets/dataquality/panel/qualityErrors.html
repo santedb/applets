@@ -1,0 +1,42 @@
+<div xmlns="http://www.w3.org/1999/xhtml" xmlns:sdb="http://santedb.org/applet"
+    ng-controller="DataQualityWidgetController">
+    <sdb:widget order="200" name="org.santedb.widget.dq.validation" headerClass="alert-info" size="Large" type="Panel"
+        context="org.santedb.dq">
+        <sdb:icon>fas fa-info</sdb:icon>
+        <sdb:description lang="en">Data Quality Issues</sdb:description>
+    </sdb:widget>
+
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>{{ 'ui.dq.priority' | i18n }}</th>
+                <th>{{ 'ui.dq.type' | i18n }}</th>
+                <th>{{ 'ui.dq.id' | i18n }}</th>
+                <th>{{ 'ui.dq.text' | i18n }}</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr
+                ng-repeat="issue in ::scopedObject.dataQualityIssues">
+                <td>
+                    <span class="badge badge-pill"
+                        ng-class="{ 'badge-info' : issue.priority == 4, 'badge-warning' : issue.priority == 2, 'badge-danger' : issue.priority == 1 }">
+                        <i class="fas"
+                            ng-class="{ 'fa-info-circle' : issue.priority == 4, 'fa-exclamation-circle' : issue.priority == 2, 'fa-exclamation-triangle' : issue.priority == 1 }"></i>
+                        {{ 'ui.dq.priority.' + issue.priority | i18n }}
+                    </span>
+                </td>
+                <td>
+                    {{ issue.typeModel }}
+                </td>
+                <td>
+                    {{ issue.id | i18n }}
+                </td>
+                <td>
+                    {{ issue.text }}
+                </td>
+
+            </tr>
+        </tbody>
+    </table>
+</div>

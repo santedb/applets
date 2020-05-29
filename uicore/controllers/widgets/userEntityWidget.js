@@ -22,6 +22,52 @@ angular.module('santedb').controller('CoreUserWidgetController', ['$scope', '$ro
         }
     });
 
+    /** Correct entity information  */
+    async function correctEntityInformation(entity) {
+        // Update the address - Correcting any linked addresses to the strong addresses
+        // TODO: 
+        if (entity.address) {
+            var addressList = [];
+            var promises = Object.keys(entity.address).map(async function (k) {
+                try {
+                    var addr = entity.address[k];
+                    if (!Array.isArray(addr))
+                        addr = [addr];
+
+                    var intlPromises = addr.map(async function (addrItem) {
+                        addrItem.use = addrItem.useModel.id;
+                        addrItem.component = addrItem.component || {};
+                        delete (addrItem.useModel);
+                        addressList.push(addrItem);
+                    });
+                    await Promise.all(intlPromises);
+                }
+                catch (e) {
+                }
+            });
+            await Promise.all(promises);
+            entity.address = { "$other": addressList };
+        }
+        if (entity.name) {
+            var nameList = [];
+            Object.keys(entity.name).forEach(function (k) {
+
+                var name = entity.name[k];
+                if (!Array.isArray(name))
+                    name = [name];
+
+                name.forEach(function (nameItem) {
+                    nameItem.use = nameItem.useModel.id;
+                    delete (nameItem.useModel);
+                    nameList.push(nameItem);
+                })
+
+            });
+            entity.name = { "$other": nameList };
+        }
+
+    }
+
     /**
      * Updates the user entity
      */
@@ -29,47 +75,13 @@ angular.module('santedb').controller('CoreUserWidgetController', ['$scope', '$ro
 
         if(form.$invalid) return; // don't process invalid form
 
-        var submissionObject = angular.copy($scope.editObject);
-        // Update target identifiers with the original
-        if (submissionObject.address)  {
-            addressList = [];
-            var promises = Object.keys(submissionObject.address).map(async function (k) {
-                try {
-                    var addr = submissionObject.address[k];
-                    addr.use = addr.useModel.id;
-                    addr.component = addr.component || {};
-                    delete(addr.useModel);
-                    if (addr.targetId) {
-                        var addrComponents = (await SanteDB.resources.place.getAsync(addr.targetId)).address.Direct.component;
-                        addr.component.Country = addrComponents.Country;
-                        addr.component.CensusTract = addrComponents.CensusTract;
-                        addr.component.County = addrComponents.County;
-                        addr.component.State = addrComponents.State;
-                        addr.component.Precinct = addrComponents.Precinct;
-                        addr.component.City = addrComponents.City;
-                    }
-                    addressList.push(addr);
-                }
-                catch(e) {
-                }
-            });
-            await Promise.all(promises);
-            submissionObject.address = { "$other": addressList };
-        }
-        if(submissionObject.name)
-        {
-            var nameList = [];
-            Object.keys(submissionObject.name).forEach(function(k) { 
-                var name = submissionObject.name[k];
-                name.use = name.useModel.id; 
-                delete(name.useModel);
-                nameList.push(name);
-            });
-            submissionObject.name = { "$other" : nameList };
-        }
         
+       
         // Now post the changed update object 
         try {
+            var submissionObject = angular.copy($scope.editObject);
+            await correctEntityInformation(submissionObject);
+
             if(submissionObject.id) {
                 $scope.scopedObject = await SanteDB.resources.userEntity.updateAsync(submissionObject.id, submissionObject);
             }

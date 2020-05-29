@@ -39,7 +39,7 @@ angular.module('santedb-lib')
             controller: ['$scope', '$rootScope', function ($scope, $rootScope) {
 
                 $scope.deletePolicy = function (oid, index) {
-                    if (confirm(SanteDB.locale.getString("ui.confirm.delete"))) {
+                    if (confirm(SanteDB.locale.getString("ui.action.delete.confirm"))) {
                         SanteDB.display.buttonWait("#delPolicy" + index, true);
 
                         SanteDB.resources.securityPolicy.findAsync({ oid: oid, _count: 1})

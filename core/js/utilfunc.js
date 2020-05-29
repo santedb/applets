@@ -179,6 +179,16 @@ String.prototype.hexDecode = function () {
 }
 
 /** 
+ * @summary Decodes a hex string and parses it as JSON
+ * @method
+ */
+String.prototype.hexDecodeJson = function () {
+    return JSON.parse(this.replace(/([0-9A-Fa-f]{2})/g, function (i, a) {
+        return String.fromCharCode(parseInt(a, 16));
+    }));
+}
+
+/** 
  * @summary Encodes a hex string
  * @method
  */
@@ -213,3 +223,8 @@ if (!String.prototype.startsWith)
     String.prototype.startsWith = function (start) {
         return this.indexOf(start) == 0;
     };
+
+if(!Array.prototype.flat)
+    Array.prototype.flat = function() {
+        return this.reduce((acc, val) => acc.concat(val), []);
+    }

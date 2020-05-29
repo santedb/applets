@@ -68,7 +68,10 @@ angular.module('santedb-lib')
                     retVal += "<i class='fa fa-flask'></i> ";
                     break;
                 case "Place":
-                    retVal += "<i class='fa fa-map-pin'></i> ";
+                    if(selection.classConcept == EntityClassKeys.ServiceDeliveryLocation)
+                        retVal += "<i class='fa fa-hospital'></i> ";
+                    else
+                        retVal += "<i class='fa fa-map-pin'></i> ";
                     break;
                 case "Organization":
                     retVal += "<i class='fa fa-building'></i> ";
@@ -102,10 +105,7 @@ angular.module('santedb-lib')
             }
             retVal += "&nbsp;";
 
-            if (selection.typeConceptModel) {
-                retVal += `<span class="badge badge-info">${SanteDB.display.renderConcept(selection.typeConceptModel)}</span> `;
-            }
-
+           
             if (selection.name != null && selection.name.OfficialRecord != null)
                 retVal += SanteDB.display.renderEntityName(selection.name.OfficialRecord);
             else if (selection.name != null && selection.name.Assigned != null)
@@ -129,8 +129,12 @@ angular.module('santedb-lib')
             else if (selection.oid)
                 retVal += " - <small>(<i class='fa fa-cogs'></i> " + selection.oid + ")</small>";
 
-            if (selection.classConceptModel)
-                retVal += ` <span class='badge badge-info'>${SanteDB.display.renderConcept(selection.classConceptModel)}</span>`;
+            if (selection.classConceptModel && !selection.typeConceptModel)
+                retVal += ` <span class='badge badge-secondary'>${SanteDB.display.renderConcept(selection.classConceptModel)}</span>`;
+            else if (selection.typeConceptModel) {
+                retVal += `<span class="badge badge-secondary">${SanteDB.display.renderConcept(selection.typeConceptModel)}</span> `;
+            }
+    
             return retVal;
         }
 
@@ -262,8 +266,8 @@ angular.module('santedb-lib')
                             processResults: function (data, params) {
                                 //params.page = params.page || 0;
 
-                                var data = data.$type == "Bundle" ? data.resource : data.resource || data;
                                 var retVal = { results: [], pagination: { more: data.totalResults > data.count} };
+                                var data = data.$type == "Bundle" ? data.resource : data.resource || data;
 
                                 try {
                                     if (!data || data.length == 0) return [];
