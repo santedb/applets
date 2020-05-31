@@ -19,7 +19,7 @@
  - Date: 2019-8-8
  -->
 <AppletManifest xmlns="http://santedb.org/applet">
-  <info id="org.santedb.config.init" version="2.0.16.0">
+  <info id="org.santedb.config.init" version="2.0.18.0">
     <icon>/org.santedb.core/img/icon.png</icon>
     <name lang="en">SanteDB Initial Configuration Applet</name>
     <author>SanteSuite Community Partners (see: santesuite.org)</author>
