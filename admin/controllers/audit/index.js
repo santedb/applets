@@ -158,7 +158,7 @@ angular.module('santedb').controller('AuditIndexController', ["$scope", "$rootSc
                 break;
         }
 
-        return `<span class='badge ${color}'><i class='fas ${icon}'></i> ${audit.event}</span> ${audit.type.display}`
+        return `<span class='badge ${color}'><i class='fas ${icon}'></i> ${audit.event}</span> ${audit.type.display || audit.type.code}`
     }
 
     $scope.renderType = function (audit) {

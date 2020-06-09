@@ -13,7 +13,7 @@
                 </div>
                 <div class="col-8">
                     <div class="d-flex flex-wrap justify-content-end">
-                        <div class="p-2 flex-grow-1" ng-if="$root.system.config.application.setting['aa.preferred']">
+                        <div class="p-2 flex-grow-1" ng-if="$root.system.config.application.setting['aa.preferred'] &amp;&amp; patient.identifier[$root.system.config.application.setting['aa.preferred']]">
                             <h5 class="m-0 p-0"><i class="fas fa-id-card"></i>
                                 {{ patient.identifier[$root.system.config.application.setting['aa.preferred']].value }}
                                 <span
@@ -32,6 +32,7 @@
                                 class="alert alert-dark"
                                 ng-if="patient.deceasedDate">{{ 'ui.model.patient.deceased' | i18n }}</span>
                             {{ patient.dateOfBirth | age: 'y':patient.deceasedDate }} )</div>
+                        
                         <div class="p-2">
                             <button type="button" class="btn btn-link collapse-indicator" data-toggle="collapse"
                                 data-target="#additionalDemographics"><i class="fa fa-chevron-right"></i></button>

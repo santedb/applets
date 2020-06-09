@@ -18,7 +18,7 @@
  - Date: 2018-7-23
  -->
 <AppletManifest xmlns="http://santedb.org/applet">
-  <info id="org.santedb.i18n.en" version="2.0.18.0">
+  <info id="org.santedb.i18n.en" version="2.0.20.0">
     <icon>/org.santedb.core/img/i18n.png</icon>
     <name lang="en">English Applet Support</name>
     <author>SanteSuite Community Partners (see: santesuite.org)</author>
@@ -64,6 +64,7 @@
   <strings lang="en">
 
     <string key="ui.debug">DEBUG COMPILE - NOT FOR PRODUCTION USE</string>
+    <string key="ui.card">Card</string>
     <string key="ui.unknown">N/A</string>
     <string key="ui.confirmed">Confirmed</string>
     <string key="ui.locale">Language</string>
@@ -558,10 +559,12 @@
     <string key="ui.model.entity.relationship.CoverageSponsor">Coverage/Sponsor</string>
     <string key="ui.model.entity.relationship.DedicatedServiceDeliveryLocation">Primary Facility</string>
     <string key="ui.model.entity.relationship.Employee">Employer</string>
+    <string key="ui.model.entity.relationship.Location">Location</string>
     <string key="ui.model.entity.relationship.Guarantor">Guarantor</string>
     <string key="ui.model.entity.relationship.HealthcareProvider">Primary Provider</string>
     <string key="ui.model.entity.relationship.IncidentalServiceDeliveryLocation">Other Facilities</string>
     <string key="ui.model.entity.relationship.NaturalFatherOfFetus">Natural Father</string>
+    <string key="ui.model.entity.relationship.Father">Father</string>
     <string key="ui.model.entity.relationship.ServiceDeliveryLocation">Registered At</string>
     <string key="ui.model.entity.relationship.SigningAuthorityOrOfficer">Power of Attorney</string>
     <string key="ui.model.entity.relationship.structured">This entity is a proper record. To edit it, you'll need to visit the object's detail page</string>
@@ -718,7 +721,7 @@
     <string key="org.santedb.widget.userEntity.security">Security Controls</string>
     <string key="org.santedb.widget.patient.dataQuality">Data Quality</string>
     <string key="org.santedb.widget.dq.validation">Validation Issues</string>
-
+    <string key="org.santedb.widget.patient.card">ID Card</string>
     <!-- Data quality issues -->
     <string key="ui.dq.priority.1">Serious</string>
     <string key="ui.dq.priority.2">Warning</string>
