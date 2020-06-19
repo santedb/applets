@@ -223,7 +223,7 @@ angular.module('santedb-lib')
                     if ($scope.editForm.$invalid || !$scope.authorities[newId.authority.domainName]) return;
 
                     newId.authority = $scope.authorities[newId.authority.domainName];
-                    $scope.identifier[newId.authority.domainName] = angular.copy(newId);
+                    $scope.identifier[newId.authority.domainName] = [angular.copy(newId)];
                     delete ($scope.authorities[newId.authority.domainName]);
                     delete(newId.authority);
                     delete(newId.value);
@@ -248,7 +248,12 @@ angular.module('santedb-lib')
 
                 scope.authorities = {};
 
-                Object.keys(scope.identifier).forEach(function (key) { scope.identifier[key].readonly = true; });
+                Object.keys(scope.identifier).forEach(function (key) { 
+                    if(!Array.isArray(scope.identifier[key]))
+                        scope.identifier[key] = [scope.identifier[key]];
+                    
+                    scope.identifier[key].forEach(function(v) { v.readonly = true; }); 
+                });
                 // Get a list of identity domains available for our scope and emit them to the identifier array
                 SanteDB.resources.assigningAuthority.findAsync({ scope: scope.containerClass })
                     .then(function (bundle) {
@@ -257,7 +262,7 @@ angular.module('santedb-lib')
 
                                 authority.generator = SanteDB.application.getIdentifierGenerator(authority.domainName);
                                 if (scope.identifier[authority.domainName]) {
-                                    scope.identifier[authority.domainName].authority = authority;
+                                    scope.identifier[authority.domainName].forEach(v=>v.authority = authority);
                                     delete (scope.identifier[authority.domainName].readonly)
                                 }
                                 else if (!authority.assigningApplication || authority.assigningAuthority == $rootScope.session.claim.appid)

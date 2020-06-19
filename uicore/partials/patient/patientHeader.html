@@ -15,9 +15,9 @@
                     <div class="d-flex flex-wrap justify-content-end">
                         <div class="p-2 flex-grow-1" ng-if="$root.system.config.application.setting['aa.preferred'] &amp;&amp; patient.identifier[$root.system.config.application.setting['aa.preferred']]">
                             <h5 class="m-0 p-0"><i class="fas fa-id-card"></i>
-                                {{ patient.identifier[$root.system.config.application.setting['aa.preferred']].value }}
+                                {{ patient.identifier[$root.system.config.application.setting['aa.preferred']][0].value }}
                                 <span
-                                    class="badge badge-primary">{{ patient.identifier[$root.system.config.application.setting['aa.preferred']].authority.name }}</span>
+                                    class="badge badge-primary">{{ patient.identifier[$root.system.config.application.setting['aa.preferred']][0].authority.name }}</span>
                             </h5>
                         </div>
                         <div class="p-2"><i class="fas"

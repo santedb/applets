@@ -8,9 +8,10 @@
             </tr>
         </thead>
         <tbody>
-            <tr ng-repeat="(authority, idValue) in identifier">
-                <td>{{ idValue.authority.name }}</td>
+            <tr ng-repeat="(authority, idArr) in identifier">
+                <td>{{ idArr[0].authority.name }}</td>
                 <td>
+                    <div ng-repeat="idValue in idArr">
                     <input ng-pattern="idValue.authority.validation" 
                         ng-model="idValue.value"
                         class="form-control"
@@ -24,6 +25,7 @@
                     <div ng-show="editForm['id' + authority + 'input'].$error['required']" class="alert-danger">
                         <i class="fa fa-exclamation-triangle"></i>
                         {{ 'ui.error.required' | i18n }}
+                    </div>
                     </div>
                 </td>
                 <td class="btn-group">

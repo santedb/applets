@@ -20,12 +20,14 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr ng-repeat="(domain, identifier) in scopedObject.identifier">
+                    <tr ng-repeat="(domain, idArray) in scopedObject.identifier">
                         <td>
-                            <span class="badge badge-info"><i class="fas fa-book"></i> {{ identifier.authority.name }}</span>
+                            <span class="badge badge-info"><i class="fas fa-book"></i> {{ idArray[0].authority.name }}</span>
                         </td>
                         <td>
-                            {{ identifier.value }}
+                            <span ng-repeat="identifier in idArray">
+                            {{ identifier.value }}<br/>
+                            </span>
                         </td>
                     </tr>
                 </tbody>

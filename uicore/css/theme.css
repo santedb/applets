@@ -115,6 +115,9 @@ fieldset, legend {
     padding: 0px 10px;
 }
 
+.print-only { 
+    visibility: hidden;
+}
 
 @media print {
     body * {
@@ -124,8 +127,11 @@ fieldset, legend {
        visibility: visible;
     }
     .can-print div {
-       position: absolute;
+        position: fixed;
        left: 0;
        top: 0;
+    }
+    .print-only { 
+        visibility: visible;
     }
 }

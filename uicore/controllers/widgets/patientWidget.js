@@ -112,6 +112,13 @@ angular.module('santedb').controller('PatientDemographicsWidgetController', ['$s
             else
                 $scope.editObject = angular.copy(n);
 
+            // Correct identifiers to all be arrays
+            if(n.identifier)
+                Object.keys(n.identifier).forEach(function(key) {
+                    if(!Array.isArray(n.identifier[key]))
+                        n.identifier[key] = [n.identifier[key]];
+                });
+                
             // Attempt to load family relationship types
             if ($scope.panel.name == 'org.santedb.widget.patient.nok') // for NOK we want to load more data 
             {
