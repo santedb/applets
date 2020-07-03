@@ -132,6 +132,8 @@
                                 <tr>
                                     <th>{{ 'ui.admin.system.services.name' | i18n }}</th>
                                     <th>{{ 'ui.admin.system.services.state' | i18n }}</th>
+                                    <th>{{ 'ui.action' | i18n }}</th>
+
                                 </tr>
                             </thead>
                             <tbody>
@@ -147,6 +149,13 @@
                                                 class="fas fa-play"></i> {{ 'ui.state.running' | i18n }} </span></td>
                                     <td ng-if="!svc.active"><span class="badge badge-pill badge-danger"><i
                                                 class="fas fa-stop"></i> {{ 'ui.state.inactive' | i18n }} </span></td>
+                                    <td>
+                                        <div class="btn-group">
+                                            <button class="btn btn-primary" ng-disabled="svc.active" type="button" ng-click="enableService(svc.type)"><i class="fas fa-check"></i> {{ 'ui.action.enable' | i18n }}</button>
+                                            <button class="btn btn-danger" ng-disabled="!svc.active" type="button" ng-click="disableService(svc.type)"><i class="fas fa-times"></i> {{ 'ui.action.disable' | i18n }}</button>
+                                        </div>
+                                    </td>
+
                                 </tr>
                             </tbody>
                         </table>
@@ -278,6 +287,8 @@
                                                 class="fas fa-play"></i> {{ 'ui.state.running' | i18n }} </span></td>
                                     <td ng-if="!svc.active"><span class="badge badge-pill badge-danger"><i
                                                 class="fas fa-stop"></i> {{ 'ui.state.inactive' | i18n }} </span></td>
+                                   
+
                                 </tr>
                             </tbody>
                         </table>

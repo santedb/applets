@@ -47,4 +47,44 @@ angular.module('santedb').controller('SystemInfoController', ["$scope", "$rootSc
     });
 
 
+    $scope.enableService = async function(serviceId) {
+        if(confirm(SanteDB.locale.getString("ui.admin.system.confirm.enableService"))) {
+            try {
+                serviceId = serviceId.substr(0, serviceId.indexOf(','));
+                await SanteDB.api.app.postAsync({
+                    resource: `Configuration/Service/${serviceId}`,
+                    data: {},
+                    contentType: 'application/json'
+                });
+                $scope.info = await SanteDB.application.getAppInfoAsync({ updates: false });
+                alert(SanteDB.locale.getString('ui.admin.system.confirm.serviceChange'));
+                try {
+                    $scope.$apply();
+                } catch(e) {}
+            }
+            catch(e) {
+                $rootScope.errorHandler(e);
+            }
+        }
+    }
+
+    $scope.disableService = async function(serviceId) {
+        if(confirm(SanteDB.locale.getString("ui.admin.system.confirm.disableService"))) {
+            try {
+                serviceId = serviceId.substr(0, serviceId.indexOf(','));
+                await SanteDB.api.app.deleteAsync({
+                    resource: `Configuration/Service/${serviceId}`,
+                });
+
+                $scope.info = await SanteDB.application.getAppInfoAsync({ updates: false });
+                alert(SanteDB.locale.getString('ui.admin.system.confirm.serviceChange'));
+                try {
+                    $scope.$apply();
+                } catch(e) {}
+            }
+            catch(e) {
+                $rootScope.errorHandler(e);
+            }
+        }
+    }
 }]);

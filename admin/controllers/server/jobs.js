@@ -33,6 +33,8 @@ angular.module('santedb').controller('JobAdminController', ["$scope", "$rootScop
                 return `<span class="badge badge-danger badge-pill"><i class="fas fa-exlamation-triange"></i> ${SanteDB.locale.getString("ui.state.abort")}</span>`;
             case "Stopped":
                 return `<span class="badge badge-danger badge-pill"><i class="fas fa-exlamation-triange"></i> ${SanteDB.locale.getString("ui.state.stop")}</span>`;
+            default:
+                    return `<span class="badge badge-info badge-pill"><i class="fas fa-clock"></i> ${SanteDB.locale.getString("ui.state.notrun")}</span>`;
         }
     }
 
@@ -59,6 +61,8 @@ angular.module('santedb').controller('JobAdminController', ["$scope", "$rootScop
         {
             try {
                 await SanteDB.resources.jobInfo.updateAsync(id, { "$type" : "JobInfo" });
+                $("#jobsTable table").DataTable().ajax.reload();
+
             }   
             catch(e) {
                 $rootScope.errorHandler(e);

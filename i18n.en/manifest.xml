@@ -18,7 +18,7 @@
  - Date: 2018-7-23
  -->
 <AppletManifest xmlns="http://santedb.org/applet">
-  <info id="org.santedb.i18n.en" version="2.0.22.0">
+  <info id="org.santedb.i18n.en" version="2.0.25.0">
     <icon>/org.santedb.core/img/i18n.png</icon>
     <name lang="en">English Applet Support</name>
     <author>SanteSuite Community Partners (see: santesuite.org)</author>
@@ -163,6 +163,7 @@
     <string key="ui.state.active">Active</string>
     <string key="ui.state.inactive">Inactive</string>
     <string key="ui.state.new">New</string>
+    <string key="ui.state.notrun">Not Yet Run</string>
     <string key="ui.state.running">Running</string>
     <string key="ui.state.obsolete">Obsolete</string>
     <string key="ui.state.cancelled">Cancelled</string>
@@ -240,7 +241,8 @@
     <string key="ui.action.override">Override</string>
     <string key="ui.action.run">Run</string>
     <string key="ui.action.merge">Merge</string>
-
+    <string key="ui.action.enable">Enable</string>
+    <string key="ui.action.disable">Disable</string>
     <string key="ui.action.finish">Finish</string>
     <string key="ui.action.add">Add</string>
     <string key="ui.action.remove">Remove</string>
@@ -675,6 +677,16 @@
     <string key="ui.model.audit.outcome.error">Serious Fail</string>
     <string key="ui.model.audit.timestamp">Timestamp</string>
     <string key="ui.model.audit.actor">Actor</string>
+    <string key="ui.model.audit.action.create">Creation</string>
+    <string key="ui.model.audit.action.execute">Execute</string>
+    <string key="ui.model.audit.action.read">Read</string>
+    <string key="ui.model.audit.action.update">Update</string>
+    <string key="ui.model.audit.action.delete">Delete</string>
+    <string key="ui.model.audit.event.securityAlert">Security Alert</string>
+    <string key="ui.model.audit.event.userAuthentication">Authentication</string>
+    <string key="ui.model.audit.event.import">Import Data</string>
+    <string key="ui.model.audit.event.export">Export Data</string>
+    <string key="ui.model.audit.event.query">Query</string>
     <string key="ui.model.logFileInfo.name">Log File</string>
     <string key="ui.model.logFileInfo.modified">Last Modified</string>
     <string key="ui.model.logFileInfo.size">Size</string>

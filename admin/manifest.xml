@@ -20,7 +20,7 @@
  - Date: 2019-8-8
  -->
 <AppletManifest xmlns="http://santedb.org/applet">
-  <info id="org.santedb.admin" version="2.0.23.0">
+  <info id="org.santedb.admin" version="2.0.25.0">
     <icon>/org.santedb.admin/img/icon.png</icon>
     <name lang="en">SanteDB Administrative Panel</name>
     <author>SanteSuite Community Partners (see: santesuite.org)</author>
@@ -243,6 +243,9 @@
     <string key="ui.admin.system.logs.show">Show Logs From</string>
     <string key="ui.admin.system.logs.local">Local Service</string>
     <string key="ui.admin.system.logs.remote">Realm Service</string>
+    <string key="ui.admin.system.confirm.disableService">Are you sure you want to disable this service?</string>
+    <string key="ui.admin.system.confirm.enableService">Are you sure you want to enable this service?</string>
+    <string key="ui.admin.system.confirm.serviceChange">The specified service change has been made. You may need to restart the gateway for this change to take effect.</string>
     
     <!-- Mail  -->
     <string key="ui.admin.mail">Messages</string>
