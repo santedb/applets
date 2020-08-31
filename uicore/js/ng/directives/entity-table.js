@@ -272,10 +272,14 @@ angular.module('santedb-lib')
                     var bindButtons = function (element, buttonBar) {
                         dt.buttons().container().appendTo($('.dataTables_wrapper .col-md-6:eq(0)', element));
                         if (dt.buttons().container().length == 0) {
-                            $timeout(() => bindButtons(element, buttonBar), 1000);
+                            $timeout(() => bindButtons(element, buttonBar), 250);
                         } else if(buttonBar) {
                             $(buttonBar).appendTo($('.col-md-6:eq(0)', dt.table().container()));
                         }
+
+                        if(!scope.canFilter)
+                            $('.col-md-6:eq(0)', dt.table().container()).removeClass("col-md-6").addClass(".col-12");
+
                     };
 
                     // Add watch to scope query

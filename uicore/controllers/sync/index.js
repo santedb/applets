@@ -51,17 +51,21 @@ angular.module("santedb").controller("SyncController", ['$scope', '$rootScope', 
     }
 
     // Retry queue
-    $scope.retryAll = async function() {
+    async function retryAll() {
         await SanteDB.resources.queue.insertAsync({ $type: "Queue"});
         await refreshQueues();
     }
 
+    $scope.retryAll = retryAll;
+
     // Synchronize all now
-    $scope.syncNow = async function() {
+    async function syncNow() {
         SanteDB.display.buttonWait("#btnSync", true);
         await SanteDB.resources.sync.insertAsync({ $type: "Sync"});
         SanteDB.display.buttonWait("#btnSync", false);
     }
+
+    $scope.syncNow = syncNow;
 
     // Refresh queues on 30s intervals
     refreshQueues().then(() => $scope.$apply());
@@ -128,6 +132,32 @@ angular.module("santedb").controller("SyncController", ['$scope', '$rootScope', 
         }
         finally {
             $scope.openQueue("dead");
+        }
+    }
+
+    // Reset the sync log
+    $scope.resetSyncLog = async function(type) {
+        if(confirm(SanteDB.locale.getString("ui.sync.resetConfirm"))) {
+            try {
+                SanteDB.display.buttonWait("#syncCenterTable button", true);
+                SanteDB.display.buttonWait("#resetAllButton", true);
+                if(type === undefined) 
+                    await SanteDB.resources.queue.deleteAsync();
+                else {
+                    await SanteDB.resources.queue.deleteAsync(type);
+                }
+                
+                await getLog();
+            }
+            catch(e) {
+                $rootScope.errorHandler(e);
+            }
+            finally {
+                SanteDB.display.buttonWait("#syncCenterTable button", false);
+                SanteDB.display.buttonWait("#resetAllButton", false);
+                try { $scope.$apply(); }
+                catch(e) {}
+            }
         }
     }
 }]);

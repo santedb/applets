@@ -20,7 +20,7 @@
 <div xmlns="http://www.w3.org/1999/xhtml" xmlns:sdb="http://santedb.org/applet">
     <sdb:script static="false">~/controllers/sync/index.js</sdb:script>
 
-    <div ng-controller="SyncController" class="container-fluid">
+    <div ng-controller="SyncController" class="container-fluid" >
         <div class="row">
             <div class="col-md-6 col-lg-3">
                 <div class="card shadow">
@@ -113,25 +113,26 @@
                 </div>
             </div>
         </div>
-        <div class="row mt-2">
+        <div class="row mt-2" >
             <div class="col-12">
                 <h3>{{ 'ui.sync.log' | i18n }}</h3>
-                <table class="table table-striped">
+                <table class="table table-striped" id="syncCenterTable">
                     <thead>
                         <tr>
                             <th>{{ 'ui.sync.log.resource' | i18n }}</th>
                             <th>{{ 'ui.sync.log.etag' | i18n }}</th>
                             <th>{{ 'ui.sync.log.date' | i18n }}</th>
+                            <th></th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr ng-if="!syncLog">
-                            <td colspan="3" align="center">
+                            <td colspan="4" align="center">
                                 <i class="fas fa-circle-notch fa-spin"></i> {{ 'ui.wait' | i18n }}
                             </td>
                         </tr>
                         <tr ng-if="syncLog.length == 0">
-                            <td colspan="3" align="center">
+                            <td colspan="4" align="center">
                                 <i class="fas fa-info-circle"></i> {{ 'ui.sync.log.none' | i18n }}
                             </td>
                         </tr>
@@ -140,9 +141,19 @@
                                     <span>{{ ::(log.Filter || "ALL").substring(0, 100) }}</span></small></td>
                             <td>{{ log.LastETag }}</td>
                             <td>{{ log.LastSync | extDate: 'f' }}</td>
+                            <td> 
+                                <button type="button" demand="1.3.6.1.4.1.33349.3.1.5.9.2.10" ng-click="resetSyncLog(log.ResourceType, log.Filter)" class="btn btn-danger"><i class="fas fa-cloud-meatball"></i> {{ 'ui.action.reset' | i18n }}</button>
+                            </td>
                         </tr>
                     </tbody>
                 </table>
+            </div>
+        </div>
+        <div class="row mt-2">
+            <div class="col-12">
+                <div class="float-right btn-group">
+                    <button type="button" id="resetAllButton" demand="1.3.6.1.4.1.33349.3.1.5.9.2.10" ng-click="resetSyncLog()" class="btn btn-danger"><i class="fas fa-cloud-meatball"></i> {{ 'ui.action.resetAll' | i18n }}</button>
+                </div>
             </div>
         </div>
 

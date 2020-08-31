@@ -110,8 +110,8 @@ angular.module('santedb-lib')
                 retVal += SanteDB.display.renderEntityName(selection.name.OfficialRecord);
             else if (selection.name != null && selection.name.Assigned != null)
                 retVal += SanteDB.display.renderEntityName(selection.name.Assigned);
-            else if (selection.name != null && selection.name.$other != null)
-                retVal += SanteDB.display.renderEntityName(selection.name.$other);
+            else if (selection.name != null)
+                retVal += SanteDB.display.renderEntityName(selection.name);
             else if (selection.name != null && selection.name[SanteDB.locale.getLocale()])
                 retVal += selection.name[SanteDB.locale.getLocale()];
             else if (selection.name != null)

@@ -44,7 +44,7 @@
             <column name="gender">gender</column>
           </grouping>
           <select>
-            <column name="n_patients" fn="count-distinct">id</column>
+            <column name="n_patients" fn="count-distinct">master_id</column>
           </select>
         </add>
         <add>
@@ -56,7 +56,7 @@
             <column name="gender">gender</column>
           </grouping>
           <select>
-            <column name="n_patients" fn="count-distinct">id</column>
+            <column name="n_patients" fn="count-distinct">master_id</column>
           </select>
         </add>
       </aggregations>

@@ -1,25 +1,31 @@
 <div xmlns="http://www.w3.org/1999/xhtml">
 
+    <div scroll-sticky="true">
     <div class="card shadow">
         <div class="card-body" ng-if="!patient">
             <i class="fas fa-circle-notch fa-spin"></i> {{ 'ui.wait' | i18n }}</div>
-        <div class="card-body" ng-if="patient"
+        <div class="card-body container-fluid p-2" ng-if="patient"
             ng-class="{ 'alert-success': patient.tag['$mdm.type'] == 'T', 'alert-light' : patient.tag['$mdm.type'] == 'L'  }">
             <div class="row">
-                <div class="col-4">
+                <div class="col-6">
                     <div class="p-2 flex-grow-1">
                         <h5 class="m-0">{{ patient.name | name }}</h5>
                     </div>
                 </div>
-                <div class="col-8">
-                    <div class="d-flex flex-wrap justify-content-end">
-                        <div class="p-2 flex-grow-1" ng-if="$root.system.config.application.setting['aa.preferred'] &amp;&amp; patient.identifier[$root.system.config.application.setting['aa.preferred']]">
-                            <h5 class="m-0 p-0"><i class="fas fa-id-card"></i>
-                                {{ patient.identifier[$root.system.config.application.setting['aa.preferred']][0].value }}
+                <div class="col-6">
+                    <div class="p-2 flex-grow-1 float-right"
+                        ng-if="$root.system.config.application.setting['aa.preferred'] &amp;&amp; patient.identifier[$root.system.config.application.setting['aa.preferred']]">
+                        <h5 class="m-0 p-0"><i class="fas fa-id-card"></i>
+                            {{ patient.identifier[$root.system.config.application.setting['aa.preferred']][0].value }}
+                            <span class="d-none d-md-inline">
                                 <span
                                     class="badge badge-primary">{{ patient.identifier[$root.system.config.application.setting['aa.preferred']][0].authority.name }}</span>
-                            </h5>
-                        </div>
+                            </span>
+                        </h5>
+                    </div>
+                </div>
+                <div class="col-md-10 col-sm-12">
+                    <div class="d-flex flex-wrap justify-content-between">
                         <div class="p-2"><i class="fas"
                                 ng-class="{ 'fa-male' : patient.genderConceptModel.mnemonic == 'Male' , 'fa-female' :  patient.genderConceptModel.mnemonic == 'Female' }"></i>
                             {{ patient.genderConceptModel | concept }}</div>
@@ -32,11 +38,12 @@
                                 class="alert alert-dark"
                                 ng-if="patient.deceasedDate">{{ 'ui.model.patient.deceased' | i18n }}</span>
                             {{ patient.dateOfBirth | age: 'y':patient.deceasedDate }} )</div>
-                        
-                        <div class="p-2">
-                            <button type="button" class="btn btn-link collapse-indicator" data-toggle="collapse"
-                                data-target="#additionalDemographics"><i class="fa fa-chevron-right"></i></button>
-                        </div>
+                    </div>
+                </div>
+                <div class="col-md-2 d-none d-md-block">
+                    <div class="p-2 float-right">
+                        <button type="button" class="btn btn-link collapse-indicator" data-toggle="collapse"
+                            data-target="#additionalDemographics"><i class="fa fa-chevron-right"></i></button>
                     </div>
                 </div>
             </div>
@@ -59,11 +66,13 @@
             </div>
         </div>
         <div class="card-footer p-0">
-            <div class="m-0 alert alert-primary" ng-if="patient.tag['$mdm.type'] &amp;&amp; !patient.relationship['MDM-RecordOfTruth'].target">
+            <div class="m-0 alert alert-primary"
+                ng-if="patient.tag['$mdm.type'] &amp;&amp; !patient.relationship['MDM-RecordOfTruth'].target">
                 <i class="fas fa-coins"></i>
                 {{ 'ui.mdm.view.master' | i18n }}
             </div>
-            <div class="m-0 alert alert-success" ng-if="patient.tag['$mdm.type'] &amp;&amp; patient.relationship['MDM-RecordOfTruth'].target">
+            <div class="m-0 alert alert-success"
+                ng-if="patient.tag['$mdm.type'] &amp;&amp; patient.relationship['MDM-RecordOfTruth'].target">
                 <i class="fas fa-gavel"></i>
                 {{ 'ui.mdm.view.masterAdjudicated' | i18n }}
             </div>
@@ -80,5 +89,6 @@
             </div>
         </div>
 
+    </div>
     </div>
 </div>

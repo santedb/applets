@@ -53,12 +53,14 @@
           gndr.mnemonic as gender,
           ent_vrsn_tbl.crt_utc as created_time,
           mrtl.mnemonic as marital_status,
-          edu_lvl.mnemonic as edu_level
+          edu_lvl.mnemonic as edu_level,
+          master.trg_ent_id as master_id
         from 
           pat_tbl 
           inner join psn_tbl using (ent_vrsn_id) 
           inner join ent_vrsn_tbl using (ent_vrsn_id) 
           inner join cd_vrsn_tbl gndr on (gndr_cd_id = gndr.cd_id and gndr.obslt_utc is null)
+          left join ent_rel_tbl master on (src_ent_id = ent_id and rel_typ_cd_id = '97730a52-7e30-4dcd-94cd-fd532d111578' and obslt_vrsn_seq_id is null)
           left join cd_vrsn_tbl mrtl on (mrtl_sts_cd_id = mrtl.cd_id and mrtl.obslt_utc is null)
           left join cd_vrsn_tbl edu_lvl on (edu_lvl_cd_id = edu_lvl.cd_id and edu_lvl.obslt_utc is null)
         where 
@@ -80,7 +82,8 @@
         gender.mnemonic as gender,
         entity.creationTime as created_time,
         marital.mnemonic as marital_status,
-        education.mnemonic as edu_level
+        education.mnemonic as edu_level,
+        entity.uuid as master_id
       from 
         patient 
         inner join person on (patient.uuid = person.uuid) 

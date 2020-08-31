@@ -1403,10 +1403,15 @@ function SanteDBWrapper() {
          * @memberof SanteDBWrapper.ApplicationApi
          * @returns {string} The scanned barcode
          */
-        this.scanBarcode = function () {
+        this.scanBarcodeAsync = function () {
             try {
-                var value = __SanteDBAppService.ScanBarcode();
-                return value;
+                var value = __SanteDBAppService.BarcodeScan();
+                if(value instanceof Promise)
+                    return value;
+                else 
+                    return new Promise(function(resolve, error) {
+                        resolve(value);
+                    });
             }
             catch (e) {
                 console.error(e);
@@ -2334,6 +2339,14 @@ function SanteDBWrapper() {
         this.passwordLoginAsync = function (userName, password, tfaSecret, uacPrompt, purposeOfUse, scope) {
             return new Promise(function (fulfill, reject) {
                 try {
+                    var headers = {};
+                    if(tfaSecret)
+                        headers["X-SanteDB-TfaSecret"] = tfaSecret;
+                    if(uacPrompt && purposeOfUse)
+                        headers["X-SanteDBClient-Claim"] =
+                        btoa("PolicyOverride=" + (uacPrompt && (purposeOfUse || false)) + ";" +
+                            "urn:oasis:names:tc:xacml:2.0:action:purpose=" + purposeOfUse)
+
                     _auth.postAsync({
                         resource: "oauth2_token",
                         data: {
@@ -2342,12 +2355,7 @@ function SanteDBWrapper() {
                             grant_type: 'password',
                             scope: (scope || ["*"]).join(" ")
                         },
-                        headers: {
-                            "X-SanteDB-TfaSecret": tfaSecret,
-                            "X-SanteDBClient-Claim":
-                                btoa("PolicyOverride=" + (uacPrompt && (purposeOfUse || false)) + ";" +
-                                    "urn:oasis:names:tc:xacml:2.0:action:purpose=" + purposeOfUse)
-                        },
+                        headers:headers,
                         contentType: 'application/x-www-form-urlencoded'
                     })
                         .then(function (d) {

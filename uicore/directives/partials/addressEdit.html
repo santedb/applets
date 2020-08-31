@@ -1,0 +1,91 @@
+<div class="p-2" xmlns="http://www.w3.org/1999/xhtml">
+    <div class="form-group row" ng-if="!noType">
+        <label
+            class="col-sm-12 col-md-3 control-label required">{{ 'ui.model.entity.address.use' | i18n }}</label>
+        <div class="col-sm-12 col-md-9">
+            <concept-select class="form-control" required="required" name="address{{n}}use" concept-set="'AddressUse'"
+                ng-model="addr.useModel" />
+        </div>
+        <div class="alert alert-danger" ng-if="panel.editForm['address' + n + 'use'].$invalid">{{ 'ui.error.required' | i18n }}</div>
+
+    </div>
+    <div ng-if="$root.system.config.application.setting['input.address'] == 'select'">
+        <div class="form-group row">
+            <label
+                class="col-sm-12 col-md-3 control-label">{{ 'ui.model.entity.address.component.city' | i18n }}</label>
+            <div class="col-sm-12 col-md-9">
+                <entity-search type="'Place'" group-by="'address.Direct.component.County'"
+                    ng-model="addr.targetId" search-field="'name.component.value'"
+                    ng-change="fillAddress(addr)"
+                    filter="{ 'classConcept': '79dd4f75-68e8-4722-a7f5-8bc2e08f5cd6', 'statusConcept': 'c8064cbd-fa06-4530-b430-1a52f1530c27' }" />
+            </div>
+        </div>
+    </div>
+    <div ng-if="$root.system.config.application.setting['input.address'] != 'select'">
+        <div class="form-group row"
+            ng-if="!$root.system.config.application.setting['forbid.patient.address.state']">
+            <label
+                class="col-sm-12 col-md-3 control-label">{{ 'ui.model.entity.address.component.state' | i18n }}</label>
+            <div class="col-sm-12 col-md-9"
+                ng-switch="$root.system.config.application.setting['input.address']">
+                <div ng-switch-when="structured">
+                    <entity-search type="'Place'" group-by="'address.Direct.component.Country'"
+                        ng-model="addr.component.State" search-field="'name.component.value'"
+                        ng-change="addr.component.County = null"
+                        key="'name[OfficialRecord].component.value'"
+                        filter="{ 'classConcept': '8cf4b0b0-84e5-4122-85fe-6afa8240c218', 'statusConcept': 'c8064cbd-fa06-4530-b430-1a52f1530c27' }" />
+                </div>
+                <input ng-switch-default="" type="text" class="form-control"
+                    ng-model="addr.component.State" required="required" />
+            </div>
+        </div>
+        <div class="form-group row"
+            ng-if="!$root.system.config.application.setting['forbid.patient.address.county']">
+            <label
+                class="col-sm-12 col-md-3 control-label">{{ 'ui.model.entity.address.component.county' | i18n }}</label>
+            <div class="col-sm-12 col-md-9"
+                ng-switch="$root.system.config.application.setting['input.address']">
+                <div ng-switch-when="structured">
+                    <entity-search type="'Place'" group-by="'address.Direct.component.State'"
+                        ng-model="addr.component.County" search-field="'name.component.value'"
+                        key="'name[OfficialRecord].component.value'"
+                        filter="{ 'classConcept': 'd9489d56-ddac-4596-b5c6-8f41d73d8dc5', 'address[Direct].component[State].value': addr.component.State, 'statusConcept': 'c8064cbd-fa06-4530-b430-1a52f1530c27' }" />
+                </div>
+                <input ng-switch-default="" type="text" class="form-control"
+                    ng-model="addr.component.County" />
+            </div>
+        </div>
+        <div class="form-group row"
+            ng-if="!$root.system.config.application.setting['forbid.patient.address.city']">
+            <label
+                class="col-sm-12 col-md-3 control-label">{{ 'ui.model.entity.address.component.city' | i18n }}</label>
+            <div class="col-sm-12 col-md-9">
+                <input type="text" class="form-control" ng-model="addr.component.City" />
+            </div>
+        </div>
+    </div>
+    <div class="form-group row"
+        ng-if="!$root.system.config.application.setting['forbid.patient.address.street']">
+        <label
+            class="col-sm-12 col-md-3 control-label">{{ 'ui.model.entity.address.component.street' | i18n }}</label>
+        <div class="col-sm-12 col-md-9">
+            <input type="text" class="form-control" ng-model="addr.component.StreetAddressLine" />
+        </div>
+    </div>
+    <div class="form-group row"
+        ng-if="!$root.system.config.application.setting['forbid.patient.address.postalcode']">
+        <label
+            class="col-sm-12 col-md-3 control-label">{{ 'ui.model.entity.address.component.postalcode' | i18n }}</label>
+        <div class="col-sm-12 col-md-9">
+            <input type="text" class="form-control" ng-model="addr.component.PostalCode" />
+        </div>
+    </div>
+    <div class="form-group row" ng-if="addressEdit.length &gt; 1">
+        <div class="col">
+        <div class="btn-group float-right">
+            <button type="button" ng-click="removeAddress($index)" class="btn btn-danger"><i class="fas fa-times"></i> {{ 'ui.action.remove' | i18n }}</button>
+        </div>
+    </div>
+    </div>
+
+</div>

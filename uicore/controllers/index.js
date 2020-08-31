@@ -202,6 +202,10 @@ var santedbApp = angular.module('santedb', ['ngSanitize', 'ui.router', 'oc.lazyL
                     s.entity.telecom.MobilePhone = { value: "" };
             }
 
+            try {
+            $rootScope.$apply();
+            }
+            catch(e) {}
             // User preferences
             if (s) {
                 SanteDB.configuration.getUserPreferencesAsync().then(function (prefs) {
@@ -314,7 +318,7 @@ var santedbApp = angular.module('santedb', ['ngSanitize', 'ui.router', 'oc.lazyL
             else
                 toastr.clear();
 
-        }, 2000);
+        }, 30000);
 
         // Set locale for sleect2
         $.fn.select2.defaults.set('language', SanteDB.locale.getLocale());

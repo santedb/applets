@@ -283,4 +283,3 @@ SanteDBWrapper.prototype.display = {
 
     }
 };
-

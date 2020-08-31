@@ -4,12 +4,18 @@ label.control-label {
 }
 
 
-@media only screen and (min-width:768px) {
+@media only screen and (min-width:576px) {
     label.control-label {
         text-align: right
     }
 }
-
+@media only screen and (max-width:576px) {
+    label.control-label {
+        text-align: left;
+        padding: 2px;
+        margin: 0px;
+    }
+}
 
 
 label.control-label.required:after {
@@ -68,7 +74,6 @@ html, body {
 .select2-container .select2-selection--single, 
 .select2-container .select2-selection--multiple {
     line-height: 1.5;
-    height: calc(1.5em + .75rem + 2px);
 }
 
 .tokenfield {
@@ -134,4 +139,8 @@ fieldset, legend {
     .print-only { 
         visibility: visible;
     }
+}
+
+.scrollSticky-container {
+    transition: transform 0.2s;
 }

@@ -53,8 +53,13 @@ angular.module('santedb').controller('AdminLayoutController', ["$scope", "$rootS
     function loadMenus() {
         SanteDB.application.getMenusAsync("org.santedb.admin")
             .then(function (res) {
-                $scope.menuItems = res;
-                $scope.$applyAsync();
+                try {
+                    $scope.menuItems = res;
+                    $scope.$apply();
+                }
+                catch(e) {
+
+                }
             })
             .catch($rootScope.errorHandler);
     }
@@ -92,24 +97,24 @@ angular.module('santedb').controller('AdminLayoutController', ["$scope", "$rootS
             .then(function(d) {
                 $scope.tickles = d;
 
-
                 // Any tickles that need toast?
                 d.forEach(function(t) {
 
-                    if(t.type.indexOf("Danger") > -1)
+                    if(!t.type) return;
+
+                    if(t.type.indexOf && t.type.indexOf("Danger") > -1 || t.type & 2)
                         $scope.tickles.alert = true;
                     else 
                         $scope.tickles.alert = false;
                         
-                    if(t.type.indexOf("Toast") > -1) {
-                        if(t.type.indexOf("Danger") > -1)
+                    if(t.type.indexOf && t.type.indexOf("Toast") > -1 || t.type & 4) {
+                        if(t.type.indexOf && t.type.indexOf("Danger") > -1 || t.type & 2)
                             toastr.error(t.text, null, { preventDuplicates: true });
                         else 
                             toastr.info(t.text, null, { preventDuplicates: true });
                         
                         SanteDB.resources.tickle.deleteAsync(t.id);
                     }
-                    t.isError = (t.typ3 & 5);
                 });
                 $scope.$apply();
             })

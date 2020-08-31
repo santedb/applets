@@ -20,7 +20,7 @@
  - Date: 2019-8-8
  -->
 <AppletManifest xmlns="http://santedb.org/applet">
-  <info id="org.santedb.admin" version="2.0.26.1">
+  <info id="org.santedb.admin" version="2.0.30.0">
     <icon>/org.santedb.admin/img/icon.png</icon>
     <name lang="en">SanteDB Administrative Panel</name>
     <author>SanteSuite Community Partners (see: santesuite.org)</author>
@@ -319,20 +319,5 @@
     <string key="org.santedb.widget.admin.panel.user.core">Core Properties</string>
     <string key="org.santedb.widget.admin.panel.user.security">Security Properties</string>
     
-    <!-- Mail -->
-    <string key="ui.mail.search">Search Messages</string>
-    <string key="ui.mail.from">From</string>
-    <string key="ui.mail.to">To</string>
-    <string key="ui.mail.time">Sent</string>
-    <string key="ui.mail.all">My Mailbox</string>
-    <string key="ui.mail.archive">Archive</string>
-    <string key="ui.mail.acknowledge">Acknowledge</string>
-    <string key="ui.mail.reply">Reply</string>
-    <string key="ui.mail.flags.System">System Alert</string>
-    <string key="ui.mail.flags.None">New Message</string>
-    <string key="ui.mail.flags.Acknowledged">Acknowledged</string>
-    <string key="ui.mail.flags.HighPriority">High Importance</string>
-    <string key="ui.mail.flags.Archived">Archived</string>
-    <string key="ui.mail.flags.Alert">Flagged Alert</string>
   </strings>
 </AppletManifest>

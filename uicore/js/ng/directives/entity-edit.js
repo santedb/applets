@@ -34,7 +34,10 @@ angular.module('santedb-lib')
             replace: true,
             templateUrl: './org.santedb.uicore/directives/addressEdit.html',
             scope: {
-                address: '='
+                address: '=',
+                noAdd: '<',
+                noType: '<',
+                simpleEntry: '<'
             },
             controller: ['$scope', '$rootScope', function ($scope, $rootScope) {
 
@@ -102,7 +105,10 @@ angular.module('santedb-lib')
             templateUrl: './org.santedb.uicore/directives/nameEdit.html',
             scope: {
                 name: '=',
-                simpleName: '<'
+                simpleName: '<',
+                noAdd: '<',
+                noType: '<',
+                simpleEntry: '<'
             },
             controller: ['$scope', '$rootScope', function ($scope, $rootScope) {
 
