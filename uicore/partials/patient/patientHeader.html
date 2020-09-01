@@ -1,94 +1,107 @@
 <div xmlns="http://www.w3.org/1999/xhtml">
 
     <div scroll-sticky="true">
-    <div class="card shadow">
-        <div class="card-body" ng-if="!patient">
-            <i class="fas fa-circle-notch fa-spin"></i> {{ 'ui.wait' | i18n }}</div>
-        <div class="card-body container-fluid p-2" ng-if="patient"
-            ng-class="{ 'alert-success': patient.tag['$mdm.type'] == 'T', 'alert-light' : patient.tag['$mdm.type'] == 'L'  }">
-            <div class="row">
-                <div class="col-6">
-                    <div class="p-2 flex-grow-1">
-                        <h5 class="m-0">{{ patient.name | name }}</h5>
-                    </div>
-                </div>
-                <div class="col-6">
-                    <div class="p-2 flex-grow-1 float-right"
-                        ng-if="$root.system.config.application.setting['aa.preferred'] &amp;&amp; patient.identifier[$root.system.config.application.setting['aa.preferred']]">
-                        <h5 class="m-0 p-0"><i class="fas fa-id-card"></i>
-                            {{ patient.identifier[$root.system.config.application.setting['aa.preferred']][0].value }}
-                            <span class="d-none d-md-inline">
-                                <span
-                                    class="badge badge-primary">{{ patient.identifier[$root.system.config.application.setting['aa.preferred']][0].authority.name }}</span>
-                            </span>
-                        </h5>
-                    </div>
-                </div>
-                <div class="col-md-10 col-sm-12">
-                    <div class="d-flex flex-wrap justify-content-between">
-                        <div class="p-2"><i class="fas"
-                                ng-class="{ 'fa-male' : patient.genderConceptModel.mnemonic == 'Male' , 'fa-female' :  patient.genderConceptModel.mnemonic == 'Female' }"></i>
-                            {{ patient.genderConceptModel | concept }}</div>
-                        <div class="p-2" ng-if="patient.multipleBirthOrder">
-                            <span class="alert alert-info"><i class="fas fa-restroom"></i>
-                                {{ 'ui.model.patient.multipleBirth' | i18n }}</span>
-                        </div>
-                        <div class="p-2"><i class="fas fa-birthday-cake"></i>
-                            {{ patient.dateOfBirth | extDate: patient.dateOfBirthPrecision }} ( <span
-                                class="alert alert-dark"
-                                ng-if="patient.deceasedDate">{{ 'ui.model.patient.deceased' | i18n }}</span>
-                            {{ patient.dateOfBirth | age: 'y':patient.deceasedDate }} )</div>
-                    </div>
-                </div>
-                <div class="col-md-2 d-none d-md-block">
-                    <div class="p-2 float-right">
-                        <button type="button" class="btn btn-link collapse-indicator" data-toggle="collapse"
-                            data-target="#additionalDemographics"><i class="fa fa-chevron-right"></i></button>
-                    </div>
-                </div>
-            </div>
-            <div class="collapse" id="additionalDemographics">
+        <div class="card shadow">
+            <div class="card-body" ng-if="!patient">
+                <i class="fas fa-circle-notch fa-spin"></i> {{ 'ui.wait' | i18n }}</div>
+            <div class="card-body container-fluid p-2" ng-if="patient"
+                ng-class="{ 'alert-success': patient.tag['$mdm.type'] == 'T', 'alert-light' : patient.tag['$mdm.type'] == 'L'  }">
                 <div class="row">
-                    <div class="col-4">
-                        <div class="p-2 flex-grow-1"><i class="fas fa-home"></i> {{ patient.address | address }}</div>
+                    <div class="col-6">
+                        <div class="p-2 flex-grow-1">
+                            <h5 class="m-0">{{ patient.name | name }}</h5>
+                        </div>
                     </div>
-                    <div class="col-8">
-                        <div class="d-flex flex-wrap justify-content-end">
-                            <div class="p-2"
-                                ng-if="id.value &amp;&amp; domain != $root.system.config.application.setting['aa.preferred']"
-                                ng-repeat="(domain, id) in patient.identifier track by $index">
-                                <i class="far fa-id-card"></i> {{ id.value }} <span
-                                    class="badge badge-info">{{ id.authority.name }}</span>
+                    <div class="col-6">
+                        <div class="p-2 flex-grow-1 float-right"
+                            ng-if="$root.system.config.application.setting['aa.preferred'] &amp;&amp; patient.identifier[$root.system.config.application.setting['aa.preferred']]">
+                            <h5 class="m-0 p-0"><i class="fas fa-id-card"></i>
+                                {{ patient.identifier[$root.system.config.application.setting['aa.preferred']][0].value }}
+                                <span class="d-none d-md-inline">
+                                    <span
+                                        class="badge badge-primary">{{ patient.identifier[$root.system.config.application.setting['aa.preferred']][0].authority.name }}</span>
+                                </span>
+                            </h5>
+                        </div>
+                    </div>
+                    <div class="col-md-10 col-sm-12">
+                        <div class="d-flex flex-wrap justify-content-between">
+                            <div class="p-2"><i class="fas"
+                                    ng-class="{ 'fa-male' : patient.genderConceptModel.mnemonic == 'Male' , 'fa-female' :  patient.genderConceptModel.mnemonic == 'Female' }"></i>
+                                {{ patient.genderConceptModel | concept }}</div>
+                            <div class="p-2" ng-if="patient.multipleBirthOrder">
+                                <span class="alert alert-info"><i class="fas fa-restroom"></i>
+                                    {{ 'ui.model.patient.multipleBirth' | i18n }}</span>
+                            </div>
+                            <div class="p-2"><i class="fas fa-birthday-cake"></i>
+                                {{ patient.dateOfBirth | extDate: patient.dateOfBirthPrecision }} ( <span
+                                    class="alert alert-dark"
+                                    ng-if="patient.deceasedDate">{{ 'ui.model.patient.deceased' | i18n }}</span>
+                                {{ patient.dateOfBirth | age: 'y':patient.deceasedDate }} )</div>
+                        </div>
+                    </div>
+                    <div class="col-md-2 d-none d-md-block">
+                        <div class="p-2 float-right">
+                            <button type="button" class="btn btn-link collapse-indicator" data-toggle="collapse"
+                                data-target="#additionalDemographics"><i class="fa fa-chevron-right"></i></button>
+                        </div>
+                    </div>
+                </div>
+                <div class="collapse" id="additionalDemographics">
+                    <div class="row">
+                        <div class="col-4">
+                            <div class="p-2 flex-grow-1"><i class="fas fa-home"></i> {{ patient.address | address }}
+                            </div>
+                        </div>
+                        <div class="col-8">
+                            <div class="d-flex flex-wrap justify-content-end">
+                                <div class="p-2"
+                                    ng-if="id.value &amp;&amp; domain != $root.system.config.application.setting['aa.preferred']"
+                                    ng-repeat="(domain, id) in patient.identifier track by $index">
+                                    <i class="far fa-id-card"></i> {{ id.value }} <span
+                                        class="badge badge-info">{{ id.authority.name }}</span>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="card-footer p-0">
-            <div class="m-0 alert alert-primary"
-                ng-if="patient.tag['$mdm.type'] &amp;&amp; !patient.relationship['MDM-RecordOfTruth'].target">
-                <i class="fas fa-coins"></i>
-                {{ 'ui.mdm.view.master' | i18n }}
-            </div>
-            <div class="m-0 alert alert-success"
-                ng-if="patient.tag['$mdm.type'] &amp;&amp; patient.relationship['MDM-RecordOfTruth'].target">
-                <i class="fas fa-gavel"></i>
-                {{ 'ui.mdm.view.masterAdjudicated' | i18n }}
-            </div>
-            <div class="m-0 alert alert-info d-flex justify-content-between"
-                ng-if="!patient.tag['$mdm.type'] &amp;&amp; patient.relationship['MDM-Master'].target">
-                <span>
-                    <i class="fas fa-database"></i>
-                    {{ 'ui.mdm.view.local' | i18n }}
-                </span>
-                <a ui-sref='{ "id" : patient.relationship["MDM-Master"].target }' class="btn btn-sm btn-info">
+            <div class="card-footer p-0">
+                <div class="m-0 alert alert-warning" ng-if="patient._upstream">
+                    <span>
+                    <i class="fas fa-cloud"></i>
+                    {{ 'ui.view.upstream' | i18n }}
+                    </span>
+                    <a ui-sref='downloadRecord()' class="btn btn-sm btn-warning">
+                        <i class="fas fa-cloud-download-alt"></i>
+                        {{ 'ui.action.download' | i18n }}
+                    </a>
+                </div>
+                <div ng-if="!patient._upstream">
+                <div class="m-0 alert alert-primary"
+                    ng-if="patient.tag['$mdm.type'] &amp;&amp; !patient.relationship['MDM-RecordOfTruth'].target">
                     <i class="fas fa-coins"></i>
-                    {{ 'ui.mdm.action.openMaster' | i18n }}
-                </a>
+                    {{ 'ui.mdm.view.master' | i18n }}
+                </div>
+                <div class="m-0 alert alert-success"
+                    ng-if="patient.tag['$mdm.type'] &amp;&amp; patient.relationship['MDM-RecordOfTruth'].target">
+                    <i class="fas fa-gavel"></i>
+                    {{ 'ui.mdm.view.masterAdjudicated' | i18n }}
+                </div>
+                <div class="m-0 alert alert-info d-flex justify-content-between"
+                    ng-if="!patient.tag['$mdm.type'] &amp;&amp; patient.relationship['MDM-Master'].target">
+                    <span>
+                        <i class="fas fa-database"></i>
+                        {{ 'ui.mdm.view.local' | i18n }}
+                    </span>
+                    <a ui-sref='{ "id" : patient.relationship["MDM-Master"].target }' class="btn btn-sm btn-info">
+                        <i class="fas fa-coins"></i>
+                        {{ 'ui.mdm.action.openMaster' | i18n }}
+                    </a>
+                </div>
             </div>
-        </div>
+            </div>
 
-    </div>
+        </div>
     </div>
 </div>

@@ -4,13 +4,20 @@ label.control-label {
 }
 
 
+@media only screen and (max-width:576px) {
+    label.col-xs-12 {
+        text-align: left;
+        padding: 2px;
+        margin: 0px;
+    }
+}
 @media only screen and (min-width:576px) {
     label.control-label {
         text-align: right
     }
 }
-@media only screen and (max-width:576px) {
-    label.control-label {
+@media only screen and (max-width:768px) {
+    label.col-sm-12 {
         text-align: left;
         padding: 2px;
         margin: 0px;

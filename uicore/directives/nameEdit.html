@@ -3,7 +3,7 @@
         <legend>{{ name.useModel | concept }} {{ 'ui.model.entity.name.title' | i18n }}</legend>
         <!-- #include virtual="/org.santedb.uicore/directives/partials/nameEdit.html" -->
     </fieldset>
-    <div class="m-2" ng-if="simpleEntry &amp;&amp; $index == 0" ng-repeat="name in nameEdit">
+    <div ng-if="simpleEntry" ng-repeat="name in nameEdit">
         <!-- #include virtual="/org.santedb.uicore/directives/partials/nameEdit.html" -->
     </div>
     <div class="btn-group float-right" ng-if="!noAdd">

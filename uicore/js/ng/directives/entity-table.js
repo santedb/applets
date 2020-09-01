@@ -42,7 +42,8 @@ angular.module('santedb-lib')
                 canFilter: "<",
                 canSize: "<",
                 noButtons: "<",
-                buttonBar: "<"
+                buttonBar: "<",
+                itemClass: "<"
             },
             restrict: 'E',
             replace: true,
@@ -69,6 +70,7 @@ angular.module('santedb-lib')
                         return {
                             orderable: renderer == null || scope.sort && scope.sort[m] !== undefined,
                             data: m,
+                            class: scope.itemClass ? scope.itemClass[m] : null,
                             defaultContent: '',
                             render: renderer ?
                                 function (d, t, r) { 

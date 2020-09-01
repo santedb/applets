@@ -18,7 +18,7 @@
  - Date: 2018-7-23
  -->
 <AppletManifest xmlns="http://santedb.org/applet">
-  <info id="org.santedb.i18n.en" version="2.0.30.0">
+  <info id="org.santedb.i18n.en" version="2.0.32.0">
     <icon>/org.santedb.core/img/i18n.png</icon>
     <name lang="en">English Applet Support</name>
     <author>SanteSuite Community Partners (see: santesuite.org)</author>
@@ -225,6 +225,7 @@
     <string key="ui.action.cancel.confirm">Are you sure you want to cancel?</string>
     <string key="ui.action.save">Save</string>
     <string key="ui.action.search">Search</string>
+    <string key="ui.action.search.upstream">Search the central server</string>
     <string key="ui.action.login">Login</string>
     <string key="ui.action.passwordReset">Forgot Password</string>
     <string key="ui.action.ignore">Ignore</string>
@@ -232,6 +233,7 @@
     <string key="ui.action.prev">Back</string>
     <string key="ui.action.home">Go Home</string>
     <string key="ui.action.reload">Reload</string>
+    <string key="ui.action.download">Download</string>
     <string key="ui.action.create">Create</string>
     <string key="ui.action.delete">Delete</string>
     <string key="ui.action.delete.confirm">Are you sure you want to delete this object?</string>
@@ -456,6 +458,7 @@
     <string key="AUTH_INV">Invalid Username and/or Password. Please check the details you entered and try again</string>
 
     <!-- Model Descriptions -->
+    <string key="ui.view.upstream">This record is sourced from an external system. Actions for this record may be disabled until you download a local copy</string>
     <string key="ui.model.securityUser.id">Security ID</string>
     <string key="ui.model.securityUser.userName">Username</string>
     <string key="ui.model.securityUser.createdBy">Created By</string>

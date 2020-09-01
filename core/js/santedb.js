@@ -476,6 +476,9 @@ function ResourceWrapper(_config) {
         else
             url = _config.resource;
 
+        if(id && id._upstream)
+            url += "?_upstream=true";
+
         var headers = {
             Accept: _config.accept
         };

@@ -1,7 +1,9 @@
 <div xmlns="http://www.w3.org/1999/xhtml">
     <fieldset ng-repeat="addr in addressEdit" class="m-2" ng-if="!simpleEntry">
         <legend>{{ addr.useModel | concept }} {{ 'ui.model.entity.address.title' | i18n }}</legend>
-        <!-- #include virtual="/org.santedb.uicore/directives/partials/addressEdit.html" -->
+        <div class="container-fluid">
+            <!-- #include virtual="/org.santedb.uicore/directives/partials/addressEdit.html" -->
+        </div>
     </fieldset>
     <div ng-if="simpleEntry &amp;&amp; $index == 0" class="m-2" ng-repeat="addr in addressEdit">
         <!-- #include virtual="/org.santedb.uicore/directives/partials/addressEdit.html" -->

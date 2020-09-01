@@ -20,12 +20,13 @@ angular.module('santedb-lib')
     
                 function hideBarOnScroll() {
                     var ref;
-                    console.info($window.scrollY);
                     if ($window.scrollY >= etop) {
-                        $(element).css({ position: 'fixed', top: '4em', left: '0', width:'100%', "z-index":100 });
+                         
+                        
+                        $(element).css({ position: 'fixed', top: '4em', left: $('#menuAccordian').width(), width:`calc(100% - ${$('#menuAccordian').width()}px)`, "z-index":100 });
                         $(element).parent().css({ height: $(element).height() });
                     } else {
-                        $(element).css({ position: 'static' });
+                        $(element).css({ position: 'static', width: '100%' });
                     }
                     current = this.pageYOffset;
                     return scope.$apply();
