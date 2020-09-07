@@ -225,4 +225,6 @@ angular.module('santedb').controller('PatientDemographicsWidgetController', ['$s
             }
         }
     }
+
+
 }]);

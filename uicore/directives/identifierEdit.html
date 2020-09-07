@@ -1,69 +1,38 @@
-<div xmlns="http://www.w3.org/1999/xhtml" class="m-2">
-    <table class="table table-striped">
-        <thead>
-            <tr>
-                <th>{{ 'ui.model.entityIdentifier.authority' | i18n }}</th>
-                <th>{{ 'ui.model.entityIdentifier.value' | i18n }}</th>
-                <th></th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr ng-repeat="(authority, idArr) in identifier">
-                <td>{{ idArr[0].authority.name }}</td>
-                <td>
-                    <div ng-repeat="idValue in idArr">
-                    <input ng-pattern="idValue.authority.validation" 
-                        ng-model="idValue.value"
-                        class="form-control"
-                        name="id{{authority}}input"
-                        ng-readonly="idValue.authority.assigningApplication &amp;&amp; idValue.authority.assigningApplication != $root.session.claim.appid || idValue.readonly" 
-                        />
-                    <div ng-show="editForm['id' + authority + 'input'].$error['pattern']" class="alert-danger">
-                        <i class="fa fa-exclamation-triangle"></i>
-                        {{ 'ui.error.pattern' | i18n }}
-                    </div>
-                    <div ng-show="editForm['id' + authority + 'input'].$error['required']" class="alert-danger">
-                        <i class="fa fa-exclamation-triangle"></i>
-                        {{ 'ui.error.required' | i18n }}
+<div xmlns="http://www.w3.org/1999/xhtml">
+    <div class="form-group row" ng-if="!noDomain">
+        <label
+            class="col-sm-12 col-md-3 control-label required">{{ 'ui.model.entity.identifier.authority' | i18n }}</label>
+        <div class="col-sm-12 col-md-9">
+            <select class="form-control" ng-model="identifier.authority.domainName">
+                <option ng-repeat="(k, auth) in authorities" ng-selected="$index == 0" value="{{auth.domainName}}">
+                    {{ auth.name }}</option>
+            </select>
+        </div>
+    </div>
+    <div class="form-group row">
+        <label class="col-sm-12 col-md-3 control-label">
+            {{ authorities[identifier.authority.domainName].name }}
+        </label>
+        <div class="col-sm-12 col-md-9">
+            <div class="input-group">
+                <input ng-pattern="authorities[identifier.authority.domainName].validation" ng-model="identifier.value"
+                    class="form-control" name="identifier{{identifier.authority.domainName}}" ng-required="isRequired"
+                    ng-disabled="!identifier.authority.domainName" />
+                    <div class="input-group-append" ng-if="authorities[identifier.authority.domainName].generator">
+                        <div class="btn-group">
+                        <button ng-click="generateId()" class="btn btn-outline-secondary" type="button" ><i class="fas fa-robot"></i> {{ 'ui.action.generate' | i18n }}</button>
                     </div>
                     </div>
-                </td>
-                <td class="btn-group">
-                    <button ng-if="idValue.authority.generator" ng-click="generateId(idValue)"  class="fas fa-info" type="button" ><i class="fas fa-robot"></i></button>
-                    <button type="button" class="btn btn-danger" ng-click="removeIdentifier(authority)"><i class="fas fa-times"></i></button>
-                </td>
-            </tr>
-        </tbody>
-        <tfoot  ng-if="!noAdd">
-            <tr>
-                <td>
-                    <select class="form-control" ng-model="newId.authority.domainName">
-                        <option value="" selected="selected">---</option>
-                        <option ng-repeat="(k, auth) in authorities" value="{{auth.domainName}}">{{ auth.name }}</option>
-                    </select>
-                </td>
-                <td>
-                    <input ng-pattern="authorities[newId.authority.domainName].validation" 
-                        ng-model="newId.value"
-                        class="form-control"
-                        name="idNewinput"
-                        ng-required="newId.authority.domainName"
-                        ng-disabled="!newId.authority.domainName"
-                    />
-                    <div ng-show="editForm.idNewinput.$error['pattern']" class="alert-danger">
-                        <i class="fa fa-exclamation-triangle"></i>
-                        {{ 'ui.error.pattern' | i18n }}
-                    </div>
-                    <div ng-show="editForm.idNewinput.$error['required']" class="alert-danger">
-                        <i class="fa fa-exclamation-triangle"></i>
-                        {{ 'ui.error.required' | i18n }}
-                    </div>
-                </td>
-                <td class="btn-group">
-                    <button ng-if="authorities[newId.authority.domainName].generator" ng-click="generateId(newId)" class="fas fa-info" type="button" ><i class="fas fa-robot"></i></button>
-                    <button type="button" class="btn btn-success" ng-click="addIdentifier(newId)"><i class="fas fa-plus"></i></button>
-                </td>
-            </tr>
-        </tfoot>
-    </table>
+            </div>
+            <div ng-show="editForm.identifier{{identifier.authority.domainName}}.$error['pattern']" class="alert-danger">
+                <i class="fa fa-exclamation-triangle"></i>
+                {{ 'ui.error.pattern' | i18n }}
+            </div>
+            <div ng-show="editForm.identifier{{identifier.authority.domainName}}.$error['required']" class="alert-danger">
+                <i class="fa fa-exclamation-triangle"></i>
+                {{ 'ui.error.required' | i18n }}
+            </div>
+        </div>
+    </div>
+
 </div>

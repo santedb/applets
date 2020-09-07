@@ -57,7 +57,8 @@ angular.module('santedb-lib')
         scope: {
             contextName: '<',
             currentTab: '=',
-            scopedObject: '='
+            scopedObject: '=',
+            editForm: '='
         },
         restrict: 'E',
         replace: true,
@@ -117,6 +118,9 @@ angular.module('santedb-lib')
                             }
                             else 
                                 $scope.widgetGroups.push({ size: w.size, widgets: [w]});
+
+                            if($scope.editForm && !w.editForm)
+                                w.editForm = $scope.editForm;
                         });
 
                         $scope.$apply();

@@ -891,6 +891,46 @@ function ResourceWrapper(_config) {
             contentType: _config.accept
         });
     }
+
+    /**
+     * @method getAssociatedAsync
+     * @memberof ResourceWrapper
+     * @summary Retrieves an existing associated object from the specified scoper
+     * @param {string} id The identifier of the container object
+     * @param {string} property The property path from which the object is to be retrieved
+     * @param {string} associatedId The identifier of the sub-object to be retrieved
+     * @param {any} state A state for correlating multiple requests
+     * @returns {Promise} A promise which is fulfilled when the request comletes
+     */
+    this.getAssociatedAsync = function (id, property, associatedId, state) {
+        if (!id)
+            throw new Exception("ArgumentNullException", "Missing scoping identifier");
+        else if (!property)
+            throw new Exception("ArgumentNullException", "Missing scoping property");
+        else if (!associatedId)
+            throw new Exception("ArgumentNullException", "Missing associated object id");
+
+        var headers = {
+            Accept: _config.accept
+        };
+        if (_config.viewModel)
+            headers["X-SanteDB-ViewModel"] = _config.viewModel;
+
+        // Prepare path
+        var url = null;
+        if (id.id)
+            url = `${_config.resource}/${id.id}/${property}`;
+        else
+            url = `${_config.resource}/${id}/${property}`;
+
+        return _config.api.getAsync({
+            headers: headers,
+            id: associatedId,
+            state: state,
+            resource: url,
+            contentType: _config.accept
+        });
+    }
 };
 
 //if (!SanteDB) 
@@ -906,9 +946,9 @@ function ResourceWrapper(_config) {
  * @property {SanteDBWrapper.ConfigurationApi} configuration Functions for accessing application configuration
  * @property {SanteDBWrapper.AuthenticationApi} authentication Functions for authentication 
  * @property {SanteDBWrapper.LocalizationApi} localization Functions related to localization
-     * @property {*} api Provides direct access to API instances
-     * @property {SanteDBWrapper.APIWrapper} api.hdsi Reference to the configured Health Data Service Interface helper
-     * @property {SanteDBWrapper.APIWrapper} api.ami Reference to the configured Administration Management Interface helper
+    * @property {*} api Provides direct access to API instances
+    * @property {SanteDBWrapper.APIWrapper} api.hdsi Reference to the configured Health Data Service Interface helper
+    * @property {SanteDBWrapper.APIWrapper} api.ami Reference to the configured Administration Management Interface helper
  */
 function SanteDBWrapper() {
     "use strict";
@@ -1348,7 +1388,7 @@ function SanteDBWrapper() {
          * @param {string} templateId The id of the template for which HTML input should be gathered
          */
         this.resolveTemplateForm = function (templateId) {
-            return __SanteDBAppService.GetTemplateForm(templateId);
+            return _resources.template.getAssociatedAsync(templateId, "ui", "form.html");
         }
         /**
          * @summary Resolves the HTML view for the specified template
@@ -1358,16 +1398,27 @@ function SanteDBWrapper() {
          * @param {string} templateId The id of the template for which HTML view should be gathered
          */
         this.resolveTemplateView = function (templateId) {
-            return __SanteDBAppService.GetTemplateView(templateId);
+            return _resources.template.getAssociatedAsync(templateId, "ui", "view.html");
         }
         /**
          * @summary Get a list of all installed template definitions
-         * @method getTemplateDefinitions
+         * @method getTemplateDefinitionsAsync
          * @memberof SanteDBWrapper.ApplicationApi
+         * @param {any} query The filter to apply to templates
          * @returns {Array<string>} The list of template definitions
          */
-        this.getTemplateDefinitions = function () {
-            return JSON.parse(__SanteDBAppService.GetTemplates());
+        this.getTemplateDefinitionsAsync = function (query) {
+            return _resources.template.findAsync(query);
+        }
+                /**
+         * @summary Get a list of all installed template definitions
+         * @method getTemplateContentAsync
+         * @memberof SanteDBWrapper.ApplicationApi
+         * @param {any} templateId The ID of the template to fetch
+         * @returns {any} The templated object
+         */
+        this.getTemplateContentAsync = function (templateId) {
+            return _resources.template.getAsync(templateId, "full");
         }
         /**
          * @summary Get the version of the application host
@@ -1908,6 +1959,17 @@ function SanteDBWrapper() {
             accept: "application/json",
             api: _ami
         });
+         /**
+        * @private
+         * @type {ResourceWrapper}
+         * @memberOf SanteDBWrapper.resources
+         * @summary Wrapper for templates definition API
+         */
+        this.template = new ResourceWrapper({
+            resource: "Template",
+            accept: _viewModelJsonMime,
+            api: _app
+        });
     };
 
     // HACK: Wrapper pointer facility = place
@@ -1973,9 +2035,9 @@ function SanteDBWrapper() {
         this.getAppSetting = function (key) {
             try {
                 if (!_masterConfig) throw new Exception("Exception", "error.invalidOperation", "You need to call configuration.getAsync() before calling getAppSetting()");
-                var _setting = _masterConfig.application.setting.find((k) => k.key === key);
+                var _setting = _masterConfig.application.setting[key];
                 if (_setting)
-                    return _setting.value;
+                    return _setting;
                 else
                     return null;
             }

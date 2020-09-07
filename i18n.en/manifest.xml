@@ -230,7 +230,8 @@
     <string key="ui.action.passwordReset">Forgot Password</string>
     <string key="ui.action.ignore">Ignore</string>
     <string key="ui.action.next">Next</string>
-    <string key="ui.action.prev">Back</string>
+    <string key="ui.action.prev">Previous</string>
+    <string key="ui.action.back">Back</string>
     <string key="ui.action.home">Go Home</string>
     <string key="ui.action.reload">Reload</string>
     <string key="ui.action.download">Download</string>
@@ -650,7 +651,7 @@
     <string key="ui.model.patient.register">Registered At</string>
     <string key="ui.model.patient.dedicatedServiceDeliveryLocation">Facilities</string>
     <string key="ui.model.patient.placeOfDeath">Place of Death</string>
-    <string key="ui.model.patient.multipleBirthOrder">Birth Order</string>
+    <string key="ui.model.patient.multipleBirthOrder">Twin/Triplet/Etc.</string>
     <string key="ui.model.patient.multipleBirthOrder.0">Unknown (of a multiple-birth)</string>
     <string key="ui.model.patient.multipleBirthOrder.1">1st of multiple-birth</string>
     <string key="ui.model.patient.multipleBirthOrder.2">2nd of multiple-birth</string>

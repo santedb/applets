@@ -1,23 +1,27 @@
 <div xmlns="http://www.w3.org/1999/xhtml">
     <div class="form-group row" ng-if="!noType">
         <label
-            class="col-sm-12 col-md-3 control-label required">{{ 'ui.model.entity.address.use' | i18n }}</label>
+            class="col-sm-12 col-md-3 control-label" ng-class="{'required': isRequired}">{{ 'ui.model.entity.address.use' | i18n }}</label>
         <div class="col-sm-12 col-md-9">
-            <concept-select class="form-control" required="required" name="address{{n}}use" concept-set="'AddressUse'"
+            <concept-select class="form-control" ng-required="isRequired" name="address{{n}}use" concept-set="'AddressUse'"
                 ng-model="addr.useModel" />
         </div>
-        <div class="alert alert-danger" ng-if="panel.editForm['address' + n + 'use'].$invalid">{{ 'ui.error.required' | i18n }}</div>
+        <div class="text-danger" ng-if="ownerForm['address' + n + 'use'].$invalid"><i class="fas fa-exclamation-triangle"></i> {{ 'ui.error.required' | i18n }}</div>
 
     </div>
     <div ng-if="$root.system.config.application.setting['input.address'] == 'select'">
         <div class="form-group row">
             <label
-                class="col-sm-12 col-md-3 control-label">{{ 'ui.model.entity.address.component.city' | i18n }}</label>
+                class="col-sm-12 col-md-3 control-label" ng-class="{'required': isRequired}">{{ 'ui.model.entity.address.component.city' | i18n }}</label>
             <div class="col-sm-12 col-md-9">
-                <entity-search type="'Place'" group-by="'address.Direct.component.County'"
+                <entity-search ng-required="isRequired"  type="'Place'" group-by="'address.Direct.component.County'"
                     ng-model="addr.targetId" search-field="'name.component.value'"
                     ng-change="fillAddress(addr)"
+                    name="address{{n}}target"
                     filter="{ 'classConcept': '79dd4f75-68e8-4722-a7f5-8bc2e08f5cd6', 'statusConcept': 'c8064cbd-fa06-4530-b430-1a52f1530c27' }" />
+
+            <div class="text-danger" ng-if="ownerForm['address' + n + 'target'].$invalid"><i class="fas fa-exclamation-triangle"></i> {{ 'ui.error.required' | i18n }}</div>
+
             </div>
         </div>
     </div>
@@ -25,34 +29,41 @@
         <div class="form-group row"
             ng-if="!$root.system.config.application.setting['forbid.patient.address.state']">
             <label
-                class="col-sm-12 col-md-3 control-label">{{ 'ui.model.entity.address.component.state' | i18n }}</label>
+                class="col-sm-12 col-md-3 control-label" ng-class="{'required': isRequired}">{{ 'ui.model.entity.address.component.state' | i18n }}</label>
             <div class="col-sm-12 col-md-9"
                 ng-switch="$root.system.config.application.setting['input.address']">
                 <div ng-switch-when="structured">
-                    <entity-search type="'Place'" group-by="'address.Direct.component.Country'"
+                    <entity-search ng-required="isRequired" type="'Place'" group-by="'address.Direct.component.Country'"
                         ng-model="addr.component.State" search-field="'name.component.value'"
                         ng-change="addr.component.County = null"
+                        name="address{{n}}state"
                         key="'name[OfficialRecord].component.value'"
                         filter="{ 'classConcept': '8cf4b0b0-84e5-4122-85fe-6afa8240c218', 'statusConcept': 'c8064cbd-fa06-4530-b430-1a52f1530c27' }" />
                 </div>
-                <input ng-switch-default="" type="text" class="form-control"
+                <input name="address{{n}}state" ng-switch-default="" type="text" class="form-control"
                     ng-model="addr.component.State" required="required" />
+                <div class="text-danger" ng-if="ownerForm['address' + n + 'state'].$invalid"><i class="fas fa-exclamation-triangle"></i> {{ 'ui.error.required' | i18n }}</div>
+
             </div>
         </div>
         <div class="form-group row"
             ng-if="!$root.system.config.application.setting['forbid.patient.address.county']">
             <label
-                class="col-sm-12 col-md-3 control-label">{{ 'ui.model.entity.address.component.county' | i18n }}</label>
+                class="col-sm-12 col-md-3 control-label" ng-class="{'required': isRequired}">{{ 'ui.model.entity.address.component.county' | i18n }}</label>
             <div class="col-sm-12 col-md-9"
                 ng-switch="$root.system.config.application.setting['input.address']">
                 <div ng-switch-when="structured">
-                    <entity-search type="'Place'" group-by="'address.Direct.component.State'"
+                    <entity-search ng-required="isRequired" type="'Place'" group-by="'address.Direct.component.State'"
+                        name="address{{n}}county"
                         ng-model="addr.component.County" search-field="'name.component.value'"
                         key="'name[OfficialRecord].component.value'"
                         filter="{ 'classConcept': 'd9489d56-ddac-4596-b5c6-8f41d73d8dc5', 'address[Direct].component[State].value': addr.component.State, 'statusConcept': 'c8064cbd-fa06-4530-b430-1a52f1530c27' }" />
                 </div>
-                <input ng-switch-default="" type="text" class="form-control"
+                <input ng-switch-default=""
+                    name="address{{n}}county" type="text" class="form-control"
                     ng-model="addr.component.County" />
+                <div class="text-danger" ng-if="ownerForm['address' + n + 'county'].$invalid"><i class="fas fa-exclamation-triangle"></i> {{ 'ui.error.required' | i18n }}</div>
+
             </div>
         </div>
         <div class="form-group row"

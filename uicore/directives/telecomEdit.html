@@ -1,6 +1,5 @@
 <div xmlns="http://www.w3.org/1999/xhtml" class="m-2">
-    <div class="container-fluid">
-        <div class="row" ng-repeat="(t, tel) in telecom">
+        <div class="row" ng-repeat="(t, tel) in telecom" ng-if="!singleEdit || singleEdit == t">
             <label class="col-md-3 col-sm-12 control-label">{{ 'ui.model.entity.telecom.' + t | i18n }}</label>
             <!-- TODO: Clean this up -->
             <div class="col-md-9 col-sm-12 input-group">
@@ -20,5 +19,4 @@
                 <input type="{{ tel.type == 'c1c0a4e9-4238-4044-b89b-9c9798995b93' ? 'email' : 'tel'}}" class="form-control" ng-model="tel.editValue"/>
             </div>
         </div>
-    </div>
 </div>

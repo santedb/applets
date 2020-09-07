@@ -44,7 +44,7 @@
   </type>
   <type type="EntityName" all="true">
     <property name="source" behavior="never"/>
-    <property name="use" behavior="always" ref="Concept"/>
+    <property name="use" behavior="always"/>
     <property name="useModel" ref="Concept"/>
     <property name="id"  />
     <property name="component" all="true" behavior="always" >
@@ -76,7 +76,7 @@
   </type>
 
   <!-- Concepts -->
-  <type type="Concept" all="false">
+  <type type="Concept" all="true">
     <property name="name" behavior="always" all="true"/>
     <property name="mnemonic"/>
     <property name="id"/>

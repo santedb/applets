@@ -37,7 +37,10 @@ angular.module('santedb-lib')
                 address: '=',
                 noAdd: '<',
                 noType: '<',
-                simpleEntry: '<'
+                simpleEntry: '<',
+                isRequired: '<',
+                ownerForm: '<',
+                controlPrefix: '<'
             },
             controller: ['$scope', '$rootScope', function ($scope, $rootScope) {
 
@@ -64,6 +67,9 @@ angular.module('santedb-lib')
             }],
             link: function (scope, element, attrs) {
 
+                if(!scope.controlPrefix)
+                    scope.controlPrefix = '';
+
                 if (!scope.address)
                     SanteDB.resources.concept.getAsync(AddressUseKeys.HomeAddress)
                         .then(function (d) {
@@ -82,6 +88,14 @@ angular.module('santedb-lib')
                     var flatAddressList = [];
                     Object.keys(scope.address).forEach(function (key) {
                         var address = scope.address[key];
+
+                        if(!address.useModel || !address.useModel.id)
+                            SanteDB.resources.concept.findAsync({ mnemonic: key })
+                                .then(function(bundle) {
+                                    if(bundle.resource && bundle.resource.length > 0)
+                                    address.useModel = bundle.resource[0];
+                                });
+
                         if (Array.isArray(address))
                             address.forEach((n) => flatAddressList.push(n));
                         else
@@ -108,7 +122,10 @@ angular.module('santedb-lib')
                 simpleName: '<',
                 noAdd: '<',
                 noType: '<',
-                simpleEntry: '<'
+                simpleEntry: '<',
+                isRequired: '<',
+                ownerForm: '<',
+                controlPrefix: '<'
             },
             controller: ['$scope', '$rootScope', function ($scope, $rootScope) {
 
@@ -122,6 +139,11 @@ angular.module('santedb-lib')
 
             }],
             link: function (scope, element, attrs) {
+
+                // Scan and find the form to which this belongs
+                if(!scope.controlPrefix)
+                    scope.controlPrefix = '';
+
 
                 if (!scope.name)
                     SanteDB.resources.concept.getAsync(NameUseKeys.Legal)
@@ -141,6 +163,14 @@ angular.module('santedb-lib')
                     var flatNameList = [];
                     Object.keys(scope.name).forEach(function (key) {
                         var name = scope.name[key];
+
+                        if(!name.useModel || !name.useModel.id)
+                            SanteDB.resources.concept.findAsync({ mnemonic: key })
+                                .then(function(bundle) {
+                                    if(bundle.resource && bundle.resource.length > 0)
+                                        name.useModel = bundle.resource[0];
+                                });
+
                         if (Array.isArray(name))
                             name.forEach((n) => flatNameList.push(n));
                         else
@@ -166,7 +196,9 @@ angular.module('santedb-lib')
             replace: true,
             templateUrl: './org.santedb.uicore/directives/telecomEdit.html',
             scope: {
-                telecom: '='
+                telecom: '=',
+                singleEdit: '<',
+                ownerForm: '<'
             },
             controller: ['$scope', '$rootScope', function ($scope, $rootScope) {
 
@@ -208,14 +240,14 @@ angular.module('santedb-lib')
     * @memberof Angular
     * @method identifierEdit
     */
-    .directive('identifierEdit', ['$rootScope', function ($rootScope) {
+    .directive('identifierListEdit', ['$rootScope', function ($rootScope) {
         return {
             restrict: 'E',
             replace: true,
-            templateUrl: './org.santedb.uicore/directives/identifierEdit.html',
+            templateUrl: './org.santedb.uicore/directives/identifierListEdit.html',
             scope: {
                 identifier: '=',
-                editForm: '<',
+                ownerForm: '<',
                 containerClass: '<'
             },
             controller: ['$scope', '$rootScope', function ($scope, $rootScope) {
@@ -226,7 +258,7 @@ angular.module('santedb-lib')
                 }
 
                 $scope.addIdentifier = function (newId) {
-                    if ($scope.editForm.$invalid || !$scope.authorities[newId.authority.domainName]) return;
+                    if ($scope.ownerForm.$invalid || !$scope.authorities[newId.authority.domainName]) return;
 
                     newId.authority = $scope.authorities[newId.authority.domainName];
                     $scope.identifier[newId.authority.domainName] = [angular.copy(newId)];
@@ -251,7 +283,7 @@ angular.module('santedb-lib')
 
                 if (!scope.identifier)
                     scope.identifier = {};
-
+                    
                 scope.authorities = {};
 
                 Object.keys(scope.identifier).forEach(function (key) { 
@@ -286,6 +318,73 @@ angular.module('santedb-lib')
             }
         }
     }])
+    /**
+    * @summary Entity Identifier
+    * @memberof Angular
+    * @method identifierEdit
+    */
+   .directive('identifierEdit', ['$rootScope', function ($rootScope) {
+
+    var authorities;
+
+    return {
+        restrict: 'E',
+        replace: true,
+        templateUrl: './org.santedb.uicore/directives/identifierEdit.html',
+        scope: {
+            identifier: '=',
+            editForm: '<',
+            containerClass: '<',
+            noDomain: '<',
+            isRequired: '<'
+        },
+        controller: ['$scope', '$rootScope', function ($scope, $rootScope) {
+
+            $scope.generateId = function () {
+                var authority = $scope.identifier.authority;
+                if (!authority.generator)
+                    authority = $scope.authorities[authority.domainName];
+                try {
+                    $scope.identifier.value = authority.generator();
+                } catch (e) {
+                    $rootScope.errorHandler(e);
+                }
+            }
+
+        }],
+        link: function (scope, element, attrs) {
+
+            if(scope.editForm.$valid == undefined) {
+                var scanScope = scope;
+                while(!scanScope[scope.editForm] && scanScope.$parent)
+                    scanScope = scanScope.$parent;
+                scope.editForm = scanScope[scope.editForm];
+            }
+            
+            // Get a list of identity domains available for our scope and emit them to the identifier array
+            if(!authorities) {
+                authorities = {};
+                SanteDB.resources.assigningAuthority.findAsync({ scope: scope.containerClass })
+                    .then(function (bundle) {
+                        if (bundle.resource) {
+                            bundle.resource.forEach(function (authority) {
+                                authority.generator = SanteDB.application.getIdentifierGenerator(authority.domainName);
+                                if (!authority.assigningApplication || authority.assigningAuthority == $rootScope.session.claim.appid)
+                                    authorities[authority.domainName] = authority;
+                            });
+                        }
+                        scope.authorities = authorities;
+                        try { scope.$apply(); }
+                        catch (e) { }
+                    })
+                    .catch(function (e) { console.error(e); });
+            }
+            else {
+                scope.authorities = authorities;
+            }
+        }
+    }
+}])
     /**
     * @summary Administrative relationship editing
     * @memberof Angular
