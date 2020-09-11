@@ -13,7 +13,7 @@ angular.module('santedb').controller('MasterDataManagementController', ['$scope'
 
         retVal += "<span class='badge badge-secondary'>";
 
-        var preferredDomain = SanteDB.configuration.getAppSetting("aa.preferred");
+        var preferredDomain = $rootScope.system.config.application.setting['aa.preferred'];
         if(entity.identifier) {
             if(preferredDomain && entity.identifier[preferredDomain])
                 retVal += `<i class="fas fa-id-card"></i> ${SanteDB.display.renderIdentifier(entity.identifier, preferredDomain)}`;

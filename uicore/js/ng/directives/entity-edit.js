@@ -248,7 +248,7 @@ angular.module('santedb-lib')
             scope: {
                 identifier: '=',
                 ownerForm: '<',
-                containerClass: '<'
+                containerClass: '<',
             },
             controller: ['$scope', '$rootScope', function ($scope, $rootScope) {
 
@@ -333,7 +333,7 @@ angular.module('santedb-lib')
         templateUrl: './org.santedb.uicore/directives/identifierEdit.html',
         scope: {
             identifier: '=',
-            editForm: '<',
+            ownerForm: '<',
             containerClass: '<',
             noDomain: '<',
             isRequired: '<'
@@ -354,13 +354,7 @@ angular.module('santedb-lib')
         }],
         link: function (scope, element, attrs) {
 
-            if(scope.editForm.$valid == undefined) {
-                var scanScope = scope;
-                while(!scanScope[scope.editForm] && scanScope.$parent)
-                    scanScope = scanScope.$parent;
-                scope.editForm = scanScope[scope.editForm];
-            }
-            
+           
             // Get a list of identity domains available for our scope and emit them to the identifier array
             if(!authorities) {
                 authorities = {};

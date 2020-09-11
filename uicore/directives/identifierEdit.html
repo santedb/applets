@@ -24,11 +24,11 @@
                     </div>
                     </div>
             </div>
-            <div ng-show="editForm.identifier{{identifier.authority.domainName}}.$error['pattern']" class="alert-danger">
+            <div ng-show="ownerForm.identifier{{identifier.authority.domainName}}.$error['pattern']" class="text-danger">
                 <i class="fa fa-exclamation-triangle"></i>
                 {{ 'ui.error.pattern' | i18n }}
             </div>
-            <div ng-show="editForm.identifier{{identifier.authority.domainName}}.$error['required']" class="alert-danger">
+            <div ng-show="ownerForm.identifier{{identifier.authority.domainName}}.$error['required']" class="text-danger">
                 <i class="fa fa-exclamation-triangle"></i>
                 {{ 'ui.error.required' | i18n }}
             </div>

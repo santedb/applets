@@ -271,16 +271,19 @@ angular.module('santedb-lib')
                         columns: columns
                     });
 
+                    var buttonSelector = '.col-md-6:eq(0)';
                     var bindButtons = function (element, buttonBar) {
-                        dt.buttons().container().appendTo($('.dataTables_wrapper .col-md-6:eq(0)', element));
+                        dt.buttons().container().appendTo($(buttonSelector, dt.table().container()));
                         if (dt.buttons().container().length == 0) {
-                            $timeout(() => bindButtons(element, buttonBar), 250);
+                            $timeout(() => bindButtons(element, buttonBar), 100);
                         } else if(buttonBar) {
-                            $(buttonBar).appendTo($('.col-md-6:eq(0)', dt.table().container()));
+                            $(buttonBar).appendTo($(buttonSelector, dt.table().container()));
                         }
 
-                        if(!scope.canFilter)
-                            $('.col-md-6:eq(0)', dt.table().container()).removeClass("col-md-6").addClass(".col-12");
+                        if(!scope.canFilter)  {
+                            $(buttonSelector, dt.table().container()).removeClass("col-md-6").addClass("col-md-12");
+                            buttonSelector = '.col-md-12:eq(0)';
+                        }
 
                     };
 

@@ -18,7 +18,7 @@
  - Date: 2018-7-23
  -->
 <AppletManifest xmlns="http://santedb.org/applet">
-  <info id="org.santedb.i18n.en" version="2.0.32.0">
+  <info id="org.santedb.i18n.en" version="2.0.35.0">
     <icon>/org.santedb.core/img/i18n.png</icon>
     <name lang="en">English Applet Support</name>
     <author>SanteSuite Community Partners (see: santesuite.org)</author>
@@ -217,6 +217,7 @@
     <string key="ui.sync.log.none">Nothing Synchronized Yet</string>
     <string key="ui.sync.queue.error">Error</string>
     <string key="ui.sync.dead.ignoreConfirm">Are you sure you want to ignore this conflict? YOUR CHANGES WILL NOT BE SENT TO CENTRAL SERVER!</string>
+    <string key="ui.sync.resetConfirm">Are you sure you want to reset the synchronization log for this type?</string>
     <!-- Common Action buttons -->
     <string key="ui.action">Actions</string>
     <string key="ui.action.ok">Ok</string>
@@ -658,6 +659,7 @@
     <string key="ui.model.patient.multipleBirthOrder.3">3rd of multiple-birth</string>
     <string key="ui.model.patient.multipleBirthOrder.4">4th of multiple-birth</string>
     <string key="ui.model.patient.multipleBirthOrder.5">5th of multiple-birth</string>
+    <string key="ui.model.patient.summary">Patient Summary</string>
     <string key="ui.model.place.name">Name</string>
     <string key="ui.model.place.classConcept">Classification</string>
     <string key="ui.model.place.typeConcept">Type</string>

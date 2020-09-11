@@ -18,11 +18,11 @@
                         name="id{{authority}}input"
                         ng-readonly="idValue.authority.assigningApplication &amp;&amp; idValue.authority.assigningApplication != $root.session.claim.appid || idValue.readonly" 
                         />
-                    <div ng-show="editForm['id' + authority + 'input'].$error['pattern']" class="alert-danger">
+                    <div ng-show="ownerForm['id' + authority + 'input'].$error['pattern']" class="alert-danger">
                         <i class="fa fa-exclamation-triangle"></i>
                         {{ 'ui.error.pattern' | i18n }}
                     </div>
-                    <div ng-show="editForm['id' + authority + 'input'].$error['required']" class="alert-danger">
+                    <div ng-show="ownerForm['id' + authority + 'input'].$error['required']" class="alert-danger">
                         <i class="fa fa-exclamation-triangle"></i>
                         {{ 'ui.error.required' | i18n }}
                     </div>
@@ -50,11 +50,11 @@
                         ng-required="newId.authority.domainName"
                         ng-disabled="!newId.authority.domainName"
                     />
-                    <div ng-show="editForm.idNewinput.$error['pattern']" class="alert-danger">
+                    <div ng-show="ownerForm.idNewinput.$error['pattern']" class="alert-danger">
                         <i class="fa fa-exclamation-triangle"></i>
                         {{ 'ui.error.pattern' | i18n }}
                     </div>
-                    <div ng-show="editForm.idNewinput.$error['required']" class="alert-danger">
+                    <div ng-show="ownerForm.idNewinput.$error['required']" class="alert-danger">
                         <i class="fa fa-exclamation-triangle"></i>
                         {{ 'ui.error.required' | i18n }}
                     </div>
