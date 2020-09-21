@@ -21,7 +21,11 @@
 var ___originalButtonTexts = {};
 
 // Add render of concept name
-SanteDBWrapper.prototype.display = {
+SanteDBWrapper.prototype.display = new function () {
+
+    // State handlers
+    var __stateHandlers = {};
+
     /**
      * @method
      * @memberof SanteDBWrapper.display
@@ -30,7 +34,7 @@ SanteDBWrapper.prototype.display = {
      * @param {boolean} state True if the object is loading, false if not
      * @param {boolean} onlyGlyph True if only a wait glyph should be shown
      */
-    buttonWait: function (target, state, onlyGlyph) {
+    this.buttonWait = function (target, state, onlyGlyph) {
         var btn = $(target);
         if (btn) {
             if (state) {
@@ -49,7 +53,7 @@ SanteDBWrapper.prototype.display = {
                 delete (___originalButtonTexts[target]);
             }
         }
-    },
+    };
     /**
      * @method
      * @memberof SanteDBWrapper.display
@@ -57,7 +61,7 @@ SanteDBWrapper.prototype.display = {
      * @param {Date} date The date to be rendered
      * @param {String} precision The precision of the date
      */
-    renderDate: function (date, precision) {
+    this.renderDate = function (date, precision) {
         var dateFormat;
 
         if (!SanteDB.locale.dateFormats) {
@@ -119,7 +123,7 @@ SanteDBWrapper.prototype.display = {
         }
 
         return null;
-    },
+    };
     /**
      * @method
      * @memberof SanteDBWrapper.display
@@ -127,7 +131,7 @@ SanteDBWrapper.prototype.display = {
      * @returns The appropriate display name for the concept
      * @param {SanteDBModel.Concept} concept The concept to be rendered
      */
-    renderConcept: function (concept) {
+    this.renderConcept = function (concept) {
         var retVal = "";
         if (!concept)
             retVal = "";
@@ -148,7 +152,7 @@ SanteDBWrapper.prototype.display = {
             return retVal[0];
         else
             return retVal;
-    },
+    };
     /**
      * @method
      * @member SanteDBWrapper.display
@@ -156,7 +160,7 @@ SanteDBWrapper.prototype.display = {
      * @param {EntityIdentifier} id The identifier to be rendered
      * @param {String} domain The domain to render
      */
-    renderIdentifier: function (id, domain) {
+    this.renderIdentifier = function (id, domain) {
         if (id === undefined)
             return "";
         if (domain && id[domain])
@@ -164,7 +168,7 @@ SanteDBWrapper.prototype.display = {
         else
             for (var k in id)
                 return id[k].value;
-    },
+    };
     /**
      * @method
      * @memberof SanteDBWrapper.display
@@ -173,7 +177,7 @@ SanteDBWrapper.prototype.display = {
      * @param {SanteDBModel.EntityName} name The name of the entity to render
      * @param {string} type The type of name to render (Legal, Official Record, etc.)
      */
-    renderEntityName: function (name, type) {
+    this.renderEntityName = function (name, type) {
 
         if (!name)
             return "";
@@ -181,11 +185,11 @@ SanteDBWrapper.prototype.display = {
         if (type) {
             name = name[type];
         }
-        else if (!name.component) 
+        else if (!name.component)
             name = name[Object.keys(name)[0]]
 
         // Is the name actually an array? If so, take the first
-        if(Array.isArray(name))
+        if (Array.isArray(name))
             name = name[0];
 
         // Render name
@@ -239,47 +243,96 @@ SanteDBWrapper.prototype.display = {
             return nameStr;
         }
     },
+        /**
+         * @method
+         * @memberof SanteDBWrapper.display
+         * @summary Renders the specified entity address
+         * @returns The appropriate display address for the entity
+         * @param {SanteDBModel.EntityAddress} address The address of the entity to render
+         * @param {string} type The type of name to render (Legal, Official Record, etc.)
+         */
+        this.renderEntityAddress = function (address, type) {
+
+            if (type)
+                address = address[type];
+            else if (!address.component)
+                address = address[Object.keys(address)[0]]
+
+            // Is the address actually an array? If so, take the first
+            if (Array.isArray(address))
+                address = address[0];
+
+            // Render address
+            if (!address)
+                return "";
+            else if (address.component) {
+                var addrStr = "";
+                if (address.component.AdditionalLocator)
+                    addrStr += address.component.AdditionalLocator + ", ";
+                if (address.component.StreetAddressLine)
+                    addrStr += address.component.StreetAddressLine + ", ";
+                if (address.component.Precinct)
+                    addrStr += address.component.Precinct + ", ";
+                if (address.component.City)
+                    addrStr += address.component.City + ", ";
+                if (address.component.County != null)
+                    addrStr += address.component.County + ", ";
+                if (address.component.State != null)
+                    addrStr += address.component.State + ", ";
+                if (address.component.Country != null)
+                    addrStr += address.component.Country + ", ";
+
+                return addrStr.substring(0, addrStr.length - 2);
+            }
+        };
     /**
      * @method
-     * @memberof SanteDBWrapper.display
-     * @summary Renders the specified entity address
-     * @returns The appropriate display address for the entity
-     * @param {SanteDBModel.EntityAddress} address The address of the entity to render
-     * @param {string} type The type of name to render (Legal, Official Record, etc.)
+     * @summary Add a resource display handler
+     * @description These are used by common services to provide deep linking on system pages
+     * @param {string} resource The resource type that the display router can display
+     * @param {any} guard A guard expression for the display router to be fired
+     * @param {Function} resolveFn The function which resolves the state transition
      */
-    renderEntityAddress: function (address, type) {
+    this.registerResourceDisplayState = function (resourceType, guard, resolveFn) {
 
-        if (type)
-            address = address[type];
-        else if (!address.component)
-            address = address[Object.keys(address)[0]]
+        var typeHandlers = __stateHandlers[resourceType];
+        if (typeHandlers == null)
+            typeHandlers = __stateHandlers[resourceType] = [];
 
-        // Is the address actually an array? If so, take the first
-        if(Array.isArray(address))
-            address = address[0];
+        // Find an existing 
+        // TODO: Find a better way of comparing object for object
+        var existing = typeHandlers.filter(o => JSON.stringify(o.guard) == JSON.stringify(guard));
+        if (existing.length == 0)
+            typeHandlers.push({
+                guard: guard,
+                resolve: resolveFn
+            });
+        else
+            existing[0].resolve = resolveFn;
+    }
 
-        // Render address
-        if (!address)
-            return "";
-        else if (address.component) {
-            var addrStr = "";
-            if (address.component.AdditionalLocator)
-                addrStr += address.component.AdditionalLocator + ", ";
-            if (address.component.StreetAddressLine)
-                addrStr += address.component.StreetAddressLine + ", ";
-            if (address.component.Precinct)
-                addrStr += address.component.Precinct + ", ";
-            if (address.component.City)
-                addrStr += address.component.City + ", ";
-            if (address.component.County != null)
-                addrStr += address.component.County + ", ";
-            if (address.component.State != null)
-                addrStr += address.component.State + ", ";
-            if (address.component.Country != null)
-                addrStr += address.component.Country + ", ";
-            
-            return addrStr.substring(0, addrStr.length - 2);
-        }
+    /**
+     * @method
+     * @summary Gets the display state information which handles the specified resource
+     * @param {any} resourceInstance The resource instance for which the state is to be fetch
+     * @returns {*} The state information which can be passed to state.transitionTo()
+     */
+    this.getResourceDisplayState = function (resourceInstance) {
 
+        // Get the specified resource instance
+        var candidates = __stateHandlers[resourceInstance.$type];
+        if(!candidates)
+            return null; // No handler
+        
+        candidates = candidates.filter(function(state) {
+            if(state.guard)
+                return Object.keys(state.guard).reduce((res, current) => res && resourceInstance[current] == state.guard[current]) == true;
+            else
+                return true;
+        });
+
+        if(candidates.length > 0)
+            return candidates[0].resolve;
+        return null;
     }
 };

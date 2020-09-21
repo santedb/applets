@@ -336,7 +336,9 @@ angular.module('santedb-lib')
             ownerForm: '<',
             containerClass: '<',
             noDomain: '<',
-            isRequired: '<'
+            isRequired: '<', 
+            removeFn: '<',
+            addFn: '<'
         },
         controller: ['$scope', '$rootScope', function ($scope, $rootScope) {
 
@@ -351,9 +353,22 @@ angular.module('santedb-lib')
                 }
             }
 
+            $scope.scanId = async function() {
+                try {
+                    var data = await SanteDB.application.scanBarcodeAsync();
+                    $scope.identifier.value = data;
+                    try { $scope.$apply(); }
+                    catch(e) {}
+                }
+                catch(e) {
+                    $rootScope.errorHandler(e);
+                }
+            }
         }],
         link: function (scope, element, attrs) {
 
+            if(!scope.identifier)
+                scope.identifier = new EntityIdentifier();
            
             // Get a list of identity domains available for our scope and emit them to the identifier array
             if(!authorities) {

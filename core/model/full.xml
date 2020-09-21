@@ -142,32 +142,6 @@
     </property>
 
     <property name="relationship" all="true" behavior="always">
-      <property name="Mother" all="false">
-        <property name="id"/>
-        <property name="relationshipType"/>
-        <property name="source"/>
-        <property name="target"/>
-        <property name="targetModel" behavior="always">
-          <property name="id"/>
-          <property name="name" behavior="always" ref="EntityName"/>
-          <property name="identifier" behavior="always" ref="EntityIdentifier"/>
-          <property name="telecom" behavior="always" ref="EntityTelecom"/>
-          <property name="address" behavior="always" ref="EntityAddress"/>
-        </property>
-      </property>
-       <property name="Father" all="false">
-        <property name="id"/>
-        <property name="relationshipType"/>
-        <property name="source"/>
-        <property name="target"/>
-        <property name="targetModel" behavior="always">
-          <property name="id"/>
-          <property name="name" behavior="always" ref="EntityName"/>
-          <property name="identifier" behavior="always" ref="EntityIdentifier"/>
-          <property name="telecom" behavior="always" ref="EntityTelecom"/>
-          <property name="address" behavior="always" ref="EntityAddress"/>
-        </property>
-      </property>
       <property name="DedicatedServiceDeliveryLocation">
         <property name="id"/>
         <property name="relationshipType"/>

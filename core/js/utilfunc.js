@@ -228,3 +228,25 @@ if(!Array.prototype.flat)
     Array.prototype.flat = function() {
         return this.reduce((acc, val) => acc.concat(val), []);
     }
+
+
+/**
+ * Return the string as a camel case
+ * @param {String} str The String
+ */
+String.prototype.toCamelCase = function () {
+    return this
+        .replace(/\s(.)/g, function ($1) { return $1.toUpperCase(); })
+        .replace(/\s/g, '')
+        .replace(/^(.)/, function ($1) { return $1.toLowerCase(); });
+}
+
+
+/**
+ * Pad the specified string
+ * @param {String} str The String
+ */
+String.prototype.pad = function (char, len) {
+    var pad = char.repeat(len);
+    return (pad + this).slice(-len);
+}    

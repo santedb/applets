@@ -1,4 +1,4 @@
-<div xmlns="http://www.w3.org/1999/xhtml">
+<div xmlns="http://www.w3.org/1999/xhtml"> 
     <div class="form-group row" ng-if="!noDomain">
         <label
             class="col-sm-12 col-md-3 control-label required">{{ 'ui.model.entity.identifier.authority' | i18n }}</label>
@@ -10,25 +10,27 @@
         </div>
     </div>
     <div class="form-group row">
-        <label class="col-sm-12 col-md-3 control-label">
-            {{ authorities[identifier.authority.domainName].name }}
+        <label class="col-sm-12 col-md-3 control-label" ng-if="noDomain">
+            {{ authorities[identifier.authority.domainName].name || identifier.authority.name }}
         </label>
-        <div class="col-sm-12 col-md-9">
+        <div ng-class="{ 'col-sm-12 col-md-9' : noDomain , 'col-12' : !noDomain }">
             <div class="input-group">
                 <input ng-pattern="authorities[identifier.authority.domainName].validation" ng-model="identifier.value"
-                    class="form-control" name="identifier{{identifier.authority.domainName}}" ng-required="isRequired"
-                    ng-disabled="!identifier.authority.domainName" />
-                    <div class="input-group-append" ng-if="authorities[identifier.authority.domainName].generator">
-                        <div class="btn-group">
-                        <button ng-click="generateId()" class="btn btn-outline-secondary" type="button" ><i class="fas fa-robot"></i> {{ 'ui.action.generate' | i18n }}</button>
+                    class="form-control" name="identifier{{identifier.id}}" ng-required="isRequired"
+                    ng-disabled="!identifier.authority.domainName" ng-readonly="!authorities[identifier.authority.domainName]" />
+                    <div class="input-group-append">
+                        <div class="btn-group" ng-if="authorities[identifier.authority.domainName]">
+                        <button ng-click="generateId()" ng-if="authorities[identifier.authority.domainName].generator" class="btn btn-outline-secondary" type="button" ><i class="fas fa-robot"></i><span class="d-none d-sm-inline">{{ 'ui.action.generate' | i18n }}</span></button>
+                        <button ng-click="scanId()" class="btn btn-outline-info" type="button"><i class="fas fa-qrcode"></i><span class="d-none d-sm-inline">{{ 'ui.action.scan' | i18n }}</span></button>
+                        <button ng-click="removeFn(identifier.authority.domainName, identifier.value)" class="btn btn-outline-danger" type="button" ng-if="removeFn"><i class="fas fa-times"></i><span class="d-none d-sm-inline">{{ 'ui.action.remove' | i18n }}</span></button>
                     </div>
                     </div>
             </div>
-            <div ng-show="ownerForm.identifier{{identifier.authority.domainName}}.$error['pattern']" class="text-danger">
+            <div ng-show="ownerForm['identifier' + identifier.id].$error['pattern']" class="text-danger">
                 <i class="fa fa-exclamation-triangle"></i>
                 {{ 'ui.error.pattern' | i18n }}
             </div>
-            <div ng-show="ownerForm.identifier{{identifier.authority.domainName}}.$error['required']" class="text-danger">
+            <div ng-show="ownerForm['identifier' + identifier.id].$error['required']" class="text-danger">
                 <i class="fa fa-exclamation-triangle"></i>
                 {{ 'ui.error.required' | i18n }}
             </div>

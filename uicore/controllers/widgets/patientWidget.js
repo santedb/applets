@@ -86,6 +86,43 @@ angular.module('santedb').controller('PatientDemographicsWidgetController', ['$s
         }
     };
 
+    // Add identifier
+    $scope.addIdentifier = function(id) {
+        if(!$scope.panel.editForm.$valid) return;
+        else  {
+            var authority = id.authority.domainName;
+            var existing = $scope.editObject.identifier[authority];
+            if(!existing) // no identifiers in this domain
+                $scope.editObject.identifier[authority] = existing = [];
+            else if(!Array.isArray(existing)) // Has only one => turn into array
+                $scope.editObject.identifier[authority]  = existing = [existing];
+            id.id = SanteDB.application.newGuid();
+            existing.push(angular.copy(id));
+            delete(id.authority);
+            delete(id.value);
+            delete(id.id);
+        }
+    }
+
+    // Remove identifier
+    $scope.removeIdentifier = function(authority, id) {
+
+        if (confirm(SanteDB.locale.getString("ui.model.entity.identifier.authority.remove.confirm"))) {
+            var idList = $scope.editObject.identifier[authority];
+            if(!Array.isArray(idList))
+                idList = [idList];
+        
+                // Remove value from specified list
+            idList = idList.filter(o => o.value != id);
+
+            // Any items
+            if(idList.length == 0) 
+                delete($scope.editObject.identifier[authority]);
+            else 
+                $scope.editObject.identifier[authority] = idList;
+        }
+    }
+
     // Watch will look for scoped object to load and will set necessary shortcut objects for the view 
     $scope.$watch("scopedObject", async function (n, o) {
         if (n && n != null) {
@@ -113,11 +150,16 @@ angular.module('santedb').controller('PatientDemographicsWidgetController', ['$s
                 $scope.editObject = angular.copy(n);
 
             // Correct identifiers to all be arrays
-            if(n.identifier)
+            if(n.identifier) 
                 Object.keys(n.identifier).forEach(function(key) {
                     if(!Array.isArray(n.identifier[key]))
                         n.identifier[key] = [n.identifier[key]];
+
+                    n.identifier[key].forEach(function(id) {
+                        id._codeUrl = `/hdsi/Patient/${n.id}/_code/${id.authority.id}?_sessionId=${window.sessionStorage.getItem("token")}`;
+                    })
                 });
+
                 
             // Attempt to load family relationship types
             if ($scope.panel.name == 'org.santedb.widget.patient.nok') // for NOK we want to load more data 

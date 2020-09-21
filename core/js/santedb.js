@@ -169,6 +169,56 @@ function APIWrapper(_config) {
         });
     };
 
+    /**
+    * @method searchAsync
+    * @memberof APIWrapper
+    * @summary Performs an HTTP SEARCH operation with the payload being a long query string
+    * @param {any} configuration The configuration object
+    * @param {string} configuration.resource The resource that is to be searched
+    * @param {any} configuration.query The query to be posted 
+    * @param {any} configuration.state A piece of state data which is passed back to the caller for state tracking
+    * @param {boolean} configuration.sync When true, executes the request in synchronous mode
+    * @returns {Promise} The promise for the operation
+    */
+    this.searchAsync = function (configuration) {
+        return new Promise(function (fulfill, reject) {
+            $.ajax({
+                method: 'SEARCH',
+                url: _config.base + configuration.resource,
+                data: configuration.query,
+                dataType: 'json',
+                contentType: 'application/x-www-form-urlencoded',
+                headers: configuration.headers,
+                async: !configuration.sync,
+                success: function (xhr, status, response) {
+                    try {
+                        if (xhr && response.getResponseHeader("etag"))
+                            xhr.etag = response.getResponseHeader("etag");
+                        if (fulfill) fulfill(xhr, configuration.state);
+                    }
+                    catch (e) {
+                        if (reject) reject(e.responseJSON || e, configuration.state);
+                    }
+                },
+                error: function (e, data, setting) {
+                    if (SanteDB._globalErrorHandler(e, data, setting))
+                        return;
+                    var error = e.responseJSON;
+
+                    if (reject) {
+                        if (error && error.error !== undefined) // oauth2
+                            reject(new Exception(error.type, error.error, error.error_description, error.caused_by), configuration.state);
+                        else if (error && (error.$type === "Exception" || error.$type))
+                            reject(new Exception(error.$type, error.message, error.detail, error.cause, error.stack, error.policyId, error.policyOutcome, error.rules), configuration.state);
+                        else
+                            reject(new Exception("HttpException", "error.http." + e.status, e, null), configuration.state);
+                    }
+                    else
+                        console.error("UNHANDLED PROMISE REJECT: " + JSON.stringify(e));
+                }
+            });
+        });
+    };
 
     /**
         * @method patchAsync
@@ -476,7 +526,7 @@ function ResourceWrapper(_config) {
         else
             url = _config.resource;
 
-        if(id && id._upstream)
+        if (id && id._upstream)
             url += "?_upstream=true";
 
         var headers = {
@@ -955,6 +1005,11 @@ function SanteDBWrapper() {
 
     var _viewModelJsonMime = "application/json+sdb-viewModel";
 
+    // Get the version of this API Wrapper
+    this.getVersion = function() {
+        return "2.0.36.0";
+    }
+    
     /**
      * @private
      * @summary Global error handler
@@ -1410,13 +1465,13 @@ function SanteDBWrapper() {
         this.getTemplateDefinitionsAsync = function (query) {
             return _resources.template.findAsync(query);
         }
-                /**
-         * @summary Get a list of all installed template definitions
-         * @method getTemplateContentAsync
-         * @memberof SanteDBWrapper.ApplicationApi
-         * @param {any} templateId The ID of the template to fetch
-         * @returns {any} The templated object
-         */
+        /**
+ * @summary Get a list of all installed template definitions
+ * @method getTemplateContentAsync
+ * @memberof SanteDBWrapper.ApplicationApi
+ * @param {any} templateId The ID of the template to fetch
+ * @returns {any} The templated object
+ */
         this.getTemplateContentAsync = function (templateId) {
             return _resources.template.getAsync(templateId, "full");
         }
@@ -1460,10 +1515,10 @@ function SanteDBWrapper() {
         this.scanBarcodeAsync = function () {
             try {
                 var value = __SanteDBAppService.BarcodeScan();
-                if(value instanceof Promise)
+                if (value instanceof Promise)
                     return value;
-                else 
-                    return new Promise(function(resolve, error) {
+                else
+                    return new Promise(function (resolve, error) {
                         resolve(value);
                     });
             }
@@ -1472,6 +1527,30 @@ function SanteDBWrapper() {
                 throw new Exception("Exception", "error.general", e);
             }
         }
+
+        /**
+         * @method
+         * @memberof SanteDBWrapper.ApplicationApi
+         * @summary Perform a search operation on a signed codified search. 
+         * @description This search operation uses signed parameter information (acquired from barcode, message, etc.) to perform a retrieve operation if the signature has not been tampered.
+         * @param {*} jwsData The JSON Web Signature data to search
+         * @param {boolean} validateSignature True if the service should validate the data
+         * @param {boolean} upstream True if the search should be performed against the upstream server
+         */
+        this.ptrSearchAsync = function (jwsData, validateSignature, upstream) {
+            try {
+                var configuration = {
+                    resource: "_ptr",
+                    query: { code: jwsData, validate: validateSignature, _upstream: upstream }
+                };
+                return _hdsi.searchAsync(configuration);
+            }
+            catch (e) {
+                console.error(e);
+                throw new Exception("Exception", "error.codeSearch", e);
+            }
+        }
+
     }
 
     /**
@@ -1959,12 +2038,12 @@ function SanteDBWrapper() {
             accept: "application/json",
             api: _ami
         });
-         /**
-        * @private
-         * @type {ResourceWrapper}
-         * @memberOf SanteDBWrapper.resources
-         * @summary Wrapper for templates definition API
-         */
+        /**
+       * @private
+        * @type {ResourceWrapper}
+        * @memberOf SanteDBWrapper.resources
+        * @summary Wrapper for templates definition API
+        */
         this.template = new ResourceWrapper({
             resource: "Template",
             accept: _viewModelJsonMime,
@@ -2405,12 +2484,12 @@ function SanteDBWrapper() {
             return new Promise(function (fulfill, reject) {
                 try {
                     var headers = {};
-                    if(tfaSecret)
+                    if (tfaSecret)
                         headers["X-SanteDB-TfaSecret"] = tfaSecret;
-                    if(uacPrompt && purposeOfUse)
+                    if (uacPrompt && purposeOfUse)
                         headers["X-SanteDBClient-Claim"] =
-                        btoa("PolicyOverride=" + (uacPrompt && (purposeOfUse || false)) + ";" +
-                            "urn:oasis:names:tc:xacml:2.0:action:purpose=" + purposeOfUse)
+                            btoa("PolicyOverride=" + (uacPrompt && (purposeOfUse || false)) + ";" +
+                                "urn:oasis:names:tc:xacml:2.0:action:purpose=" + purposeOfUse)
 
                     _auth.postAsync({
                         resource: "oauth2_token",
@@ -2420,7 +2499,7 @@ function SanteDBWrapper() {
                             grant_type: 'password',
                             scope: (scope || ["*"]).join(" ")
                         },
-                        headers:headers,
+                        headers: headers,
                         contentType: 'application/x-www-form-urlencoded'
                     })
                         .then(function (d) {
@@ -2884,23 +2963,43 @@ function SanteDBWrapper() {
  */
 var SanteDB = new SanteDBWrapper();
 
-/**
- * Return the string as a camel case
- * @param {String} str The String
- */
-String.prototype.toCamelCase = function () {
-    return this
-        .replace(/\s(.)/g, function ($1) { return $1.toUpperCase(); })
-        .replace(/\s/g, '')
-        .replace(/^(.)/, function ($1) { return $1.toLowerCase(); });
-}
 
 
 /**
- * Pad the specified string
- * @param {String} str The String
+ * @summary Represents an elevator implementation that authenticates as the device principal
+ * @constructor
+ * @class
  */
-String.prototype.pad = function (char, len) {
-    var pad = char.repeat(len);
-    return (pad + this).slice(-len);
+function ApplicationPrincipalElevator() {
+
+    var _token = null;
+    var _consumed = false;
+    /**
+     * @method
+     * @returns {String} The current elevation token
+     * @summary Gets the elevation token
+     */
+    this.getToken = function() {
+        if(_consumed) return null;
+        else {
+            _consumed = true;
+            return _token;
+        }
+    }
+
+    /**
+     * @method
+     * @summary Shows the elevation dialog and then performs the continueWith
+     * @param {any} useSession The current session, passed when and if a pou is required and not a change of login
+     */
+    this.elevate = function(sessionToUse) {
+        if(!sessionToUse)
+            throw new Exception("SecurityException", "err.nosession");
+
+        // The application credential can only be used when we already have a session
+        return SanteDB.authentication.clientCredentialLoginAsync(true)
+            .then(function(session) { 
+                _token = session.access_token || session.token;
+            });
+    }
 }
