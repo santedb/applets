@@ -32,6 +32,42 @@ angular.module('santedb-lib')
             return SanteDB.locale.getString(value);
         }
     })
+     /**
+     * @method rightEllipsis
+     * @memberof Angular
+     * @summary Shows the rightmost n characters prefixing an elipsis 
+     * @param {number} nCharacters The number of characters to show
+     * @example
+     *      <div class="col-md-2">{{ identifier.authority.name | rightEllipsis: 20 }}</div>
+     */
+    .filter('rightEllipsis', function () {
+        return function (modelValue, nCharacters) {
+            nCharacters = nCharacters || 20;
+            if(modelValue.length < nCharacters)
+                return modelValue;
+            else {
+                return `...${modelValue.substring(modelValue.length - nCharacters)}`;
+            }
+        };
+    })
+     /**
+     * @method leftEllipsis
+     * @memberof Angular
+     * @summary Shows the leftmost n characters prefixing an elipsis 
+     * @param {number} nCharacters The number of characters to show
+     * @example
+     *      <div class="col-md-2">{{ identifier.authority.name | leftEllipsis: 20 }}</div>
+     */
+    .filter('leftEllipsis', function () {
+        return function (modelValue, nCharacters) {
+            nCharacters = nCharacters || 20;
+            if(modelValue.length < nCharacters)
+                return modelValue;
+            else {
+                return `${modelValue.substring(0, nCharacters)}...`;
+            }
+        };
+    })
     /**
      * @method identifier
      * @memberof Angular
@@ -155,7 +191,10 @@ angular.module('santedb-lib')
                 return '';
             else 
             {
-                aqm = aqm.substring(0, aqm.indexOf(',')); // Get full name
+                var aqmPattern = /^([A-Za-z0-9\.]*?),\s?([A-Za-z0-9\.]*?),\s?.*$/i;
+                var aqmMatch = aqmPattern.exec(aqm);
+                if(aqmMatch !== null)
+                    aqm = aqmMatch[0]; // Get full name
                 aqm = aqm.substring(aqm.lastIndexOf('.') + 1);
                 return aqm;                
             }
