@@ -18,7 +18,7 @@
  - Date: 2018-7-23
  -->
 <AppletManifest xmlns="http://santedb.org/applet">
-  <info id="org.santedb.i18n.en" version="2.0.39.0">
+  <info id="org.santedb.i18n.en" version="2.0.41.0">
     <icon>/org.santedb.core/img/i18n.png</icon>
     <name lang="en">English Applet Support</name>
     <author>SanteSuite Community Partners (see: santesuite.org)</author>
@@ -277,6 +277,7 @@
     <string key="ui.action.convertTo">Convert To</string>
     <string key="ui.action.new">New</string>
     <string key="ui.action.add">Add</string>
+    <string key="ui.action.resetPassword">Reset Pwd</string>
     <!-- Common Operators -->
     <string key="ui.operator.eq">Equals</string>
     <string key="ui.operator.ne">Not Equal</string>

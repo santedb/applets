@@ -181,6 +181,8 @@ SanteDBWrapper.prototype.display = new function () {
 
         if (!name)
             return "";
+        else if(typeof(name) === "string")
+            return name;
         // Get the type of name to render
         if (type) {
             name = name[type];

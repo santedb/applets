@@ -54,7 +54,7 @@ angular.module('santedb-lib')
                 }
 
                 // Watch for structured addresses and populate the structured address' components
-                $scope.fillAddress = async function(addr) {
+                $scope.fillAddress = async function (addr) {
                     var addrComponents = (await SanteDB.resources.place.getAsync(addr.targetId)).address.Direct.component;
                     addr.component.Country = addrComponents.Country;
                     addr.component.CensusTract = addrComponents.CensusTract;
@@ -67,7 +67,7 @@ angular.module('santedb-lib')
             }],
             link: function (scope, element, attrs) {
 
-                if(!scope.controlPrefix)
+                if (!scope.controlPrefix)
                     scope.controlPrefix = '';
 
                 if (!scope.address)
@@ -89,11 +89,11 @@ angular.module('santedb-lib')
                     Object.keys(scope.address).forEach(function (key) {
                         var address = scope.address[key];
 
-                        if(!address.useModel || !address.useModel.id)
+                        if (!address.useModel || !address.useModel.id)
                             SanteDB.resources.concept.findAsync({ mnemonic: key })
-                                .then(function(bundle) {
-                                    if(bundle.resource && bundle.resource.length > 0)
-                                    address.useModel = bundle.resource[0];
+                                .then(function (bundle) {
+                                    if (bundle.resource && bundle.resource.length > 0)
+                                        address.useModel = bundle.resource[0];
                                 });
 
                         if (Array.isArray(address))
@@ -141,33 +141,20 @@ angular.module('santedb-lib')
             link: function (scope, element, attrs) {
 
                 // Scan and find the form to which this belongs
-                if(!scope.controlPrefix)
+                if (!scope.controlPrefix)
                     scope.controlPrefix = '';
 
-
-                if (!scope.name)
-                    SanteDB.resources.concept.getAsync(NameUseKeys.Legal)
-                        .then(function (d) {
-                            scope.nameEdit = [{ useModel: d }];
-                            scope.name = {
-                                "$other": scope.nameEdit
-                            };
-                            try {
-                                scope.$apply();
-                            }
-                            catch (e) { }
-                        })
-                        .catch(function (e) { });
-                else  // Name exists so let's move everything over to $other
-                {
+                // Flatten name
+                var flattenName = function() {
+                    bound = true;
                     var flatNameList = [];
                     Object.keys(scope.name).forEach(function (key) {
                         var name = scope.name[key];
 
-                        if(!name.useModel || !name.useModel.id)
+                        if (!name.useModel || !name.useModel.id)
                             SanteDB.resources.concept.findAsync({ mnemonic: key })
-                                .then(function(bundle) {
-                                    if(bundle.resource && bundle.resource.length > 0)
+                                .then(function (bundle) {
+                                    if (bundle.resource && bundle.resource.length > 0)
                                         name.useModel = bundle.resource[0];
                                 });
 
@@ -179,6 +166,26 @@ angular.module('santedb-lib')
                     scope.name = { "$other": flatNameList };
                     scope.nameEdit = flatNameList;
                 }
+
+                if (!scope.name)
+                    SanteDB.resources.concept.getAsync(NameUseKeys.Legal)
+                        .then(function (d) {
+                            scope.nameEdit = [{ useModel: d }];
+                            scope.name = {
+                                "$other": scope.nameEdit
+                            };
+                        })
+                        .catch(function (e) { });
+                else  // Name exists so let's move everything over to $other
+                {
+                    flattenName();
+                }
+
+                scope.$watch("name", function (n, o) {
+                    if (n && !n.$other) {
+                        flattenName();
+                    }
+                })
             }
         }
     }])
@@ -263,8 +270,8 @@ angular.module('santedb-lib')
                     newId.authority = $scope.authorities[newId.authority.domainName];
                     $scope.identifier[newId.authority.domainName] = [angular.copy(newId)];
                     delete ($scope.authorities[newId.authority.domainName]);
-                    delete(newId.authority);
-                    delete(newId.value);
+                    delete (newId.authority);
+                    delete (newId.value);
 
                 }
 
@@ -283,14 +290,14 @@ angular.module('santedb-lib')
 
                 if (!scope.identifier)
                     scope.identifier = {};
-                    
+
                 scope.authorities = {};
 
-                Object.keys(scope.identifier).forEach(function (key) { 
-                    if(!Array.isArray(scope.identifier[key]))
+                Object.keys(scope.identifier).forEach(function (key) {
+                    if (!Array.isArray(scope.identifier[key]))
                         scope.identifier[key] = [scope.identifier[key]];
-                    
-                    scope.identifier[key].forEach(function(v) { v.readonly = true; }); 
+
+                    scope.identifier[key].forEach(function (v) { v.readonly = true; });
                 });
                 // Get a list of identity domains available for our scope and emit them to the identifier array
                 SanteDB.resources.assigningAuthority.findAsync({ scope: scope.containerClass })
@@ -300,7 +307,7 @@ angular.module('santedb-lib')
 
                                 authority.generator = SanteDB.application.getIdentifierGenerator(authority.domainName);
                                 if (scope.identifier[authority.domainName]) {
-                                    scope.identifier[authority.domainName].forEach(v=>v.authority = authority);
+                                    scope.identifier[authority.domainName].forEach(v => v.authority = authority);
                                     delete (scope.identifier[authority.domainName].readonly)
                                 }
                                 else if (!authority.assigningApplication || authority.assigningAuthority == $rootScope.session.claim.appid)
@@ -323,77 +330,77 @@ angular.module('santedb-lib')
     * @memberof Angular
     * @method identifierEdit
     */
-   .directive('identifierEdit', ['$rootScope', function ($rootScope) {
+    .directive('identifierEdit', ['$rootScope', function ($rootScope) {
 
-    var authorities;
+        var authorities;
 
-    return {
-        restrict: 'E',
-        replace: true,
-        templateUrl: './org.santedb.uicore/directives/identifierEdit.html',
-        scope: {
-            identifier: '=',
-            ownerForm: '<',
-            containerClass: '<',
-            noDomain: '<',
-            isRequired: '<', 
-            removeFn: '<',
-            addFn: '<'
-        },
-        controller: ['$scope', '$rootScope', function ($scope, $rootScope) {
+        return {
+            restrict: 'E',
+            replace: true,
+            templateUrl: './org.santedb.uicore/directives/identifierEdit.html',
+            scope: {
+                identifier: '=',
+                ownerForm: '<',
+                containerClass: '<',
+                noDomain: '<',
+                isRequired: '<',
+                removeFn: '<',
+                addFn: '<'
+            },
+            controller: ['$scope', '$rootScope', function ($scope, $rootScope) {
 
-            $scope.generateId = function () {
-                var authority = $scope.identifier.authority;
-                if (!authority.generator)
-                    authority = $scope.authorities[authority.domainName];
-                try {
-                    $scope.identifier.value = authority.generator();
-                } catch (e) {
-                    $rootScope.errorHandler(e);
+                $scope.generateId = function () {
+                    var authority = $scope.identifier.authority;
+                    if (!authority.generator)
+                        authority = $scope.authorities[authority.domainName];
+                    try {
+                        $scope.identifier.value = authority.generator();
+                    } catch (e) {
+                        $rootScope.errorHandler(e);
+                    }
                 }
-            }
 
-            $scope.scanId = async function() {
-                try {
-                    var data = await SanteDB.application.scanBarcodeAsync();
-                    $scope.identifier.value = data;
-                    try { $scope.$apply(); }
-                    catch(e) {}
-                }
-                catch(e) {
-                    $rootScope.errorHandler(e);
-                }
-            }
-        }],
-        link: function (scope, element, attrs) {
-
-            if(!scope.identifier)
-                scope.identifier = new EntityIdentifier();
-           
-            // Get a list of identity domains available for our scope and emit them to the identifier array
-            if(!authorities) {
-                authorities = {};
-                SanteDB.resources.assigningAuthority.findAsync({ scope: scope.containerClass })
-                    .then(function (bundle) {
-                        if (bundle.resource) {
-                            bundle.resource.forEach(function (authority) {
-                                authority.generator = SanteDB.application.getIdentifierGenerator(authority.domainName);
-                                if (!authority.assigningApplication || authority.assigningAuthority == $rootScope.session.claim.appid)
-                                    authorities[authority.domainName] = authority;
-                            });
-                        }
-                        scope.authorities = authorities;
-                        try { scope.$apply(); }
+                $scope.scanId = async function () {
+                    try {
+                        var data = await SanteDB.application.scanBarcodeAsync();
+                        $scope.identifier.value = data;
+                        try { $scope.$apply(); }
                         catch (e) { }
-                    })
-                    .catch(function (e) { console.error(e); });
-            }
-            else {
-                scope.authorities = authorities;
+                    }
+                    catch (e) {
+                        $rootScope.errorHandler(e);
+                    }
+                }
+            }],
+            link: function (scope, element, attrs) {
+
+                if (!scope.identifier)
+                    scope.identifier = new EntityIdentifier();
+
+                // Get a list of identity domains available for our scope and emit them to the identifier array
+                if (!authorities) {
+                    authorities = {};
+                    SanteDB.resources.assigningAuthority.findAsync({ scope: scope.containerClass })
+                        .then(function (bundle) {
+                            if (bundle.resource) {
+                                bundle.resource.forEach(function (authority) {
+                                    authority.generator = SanteDB.application.getIdentifierGenerator(authority.domainName);
+                                    if (!authority.assigningApplication || authority.assigningAuthority == $rootScope.session.claim.appid)
+                                        authorities[authority.domainName] = authority;
+                                });
+                            }
+                            scope.authorities = authorities;
+                            try { scope.$apply(); }
+                            catch (e) { }
+                        })
+                        .catch(function (e) { console.error(e); });
+                }
+                else {
+                    scope.authorities = authorities;
+                }
             }
         }
-    }
-}])
+    }])
     /**
     * @summary Administrative relationship editing
     * @memberof Angular
@@ -411,49 +418,49 @@ angular.module('santedb-lib')
             controller: ['$scope', '$rootScope', function ($scope, $rootScope) {
 
                 $scope.adminRelationTypes = {
-                    Caregiver : {
-                        applyTo: [ EntityClassKeys.Patient, EntityClassKeys.Person ],
+                    Caregiver: {
+                        applyTo: [EntityClassKeys.Patient, EntityClassKeys.Person],
                         entityType: "Organization",
-                        filter: { classConcept: [ EntityClassKeys.Organization ], statusConcept: StatusKeys.Active },
-                        multiple : true
+                        filter: { classConcept: [EntityClassKeys.Organization], statusConcept: StatusKeys.Active },
+                        multiple: true
                     },
                     Citizen: {
-                        applyTo: [ EntityClassKeys.Patient, EntityClassKeys.Person ],
+                        applyTo: [EntityClassKeys.Patient, EntityClassKeys.Person],
                         entityType: "Place",
-                        filter: { classConcept: [ EntityClassKeys.Country ], statusConcept: StatusKeys.Active },
-                        multiple : true
+                        filter: { classConcept: [EntityClassKeys.Country], statusConcept: StatusKeys.Active },
+                        multiple: true
                     },
-                    CoverageSponsor : {
-                        applyTo: [ EntityClassKeys.Patient ],
+                    CoverageSponsor: {
+                        applyTo: [EntityClassKeys.Patient],
                         entityType: "Organization",
-                        filter: { classConcept: [ EntityClassKeys.Organization ], statusConcept: StatusKeys.Active },
-                        multiple : true // TODO: Add insurance or sponsor
+                        filter: { classConcept: [EntityClassKeys.Organization], statusConcept: StatusKeys.Active },
+                        multiple: true // TODO: Add insurance or sponsor
                     },
-                    DedicatedServiceDeliveryLocation : {
-                        applyTo: [ EntityClassKeys.Patient ],
+                    DedicatedServiceDeliveryLocation: {
+                        applyTo: [EntityClassKeys.Patient],
                         entityType: "Place",
-                        filter: { classConcept: [ EntityClassKeys.ServiceDeliveryLocation ], statusConcept: StatusKeys.Active } 
+                        filter: { classConcept: [EntityClassKeys.ServiceDeliveryLocation], statusConcept: StatusKeys.Active }
                     },
-                    Employee : {
-                        applyTo: [ EntityClassKeys.Patient, EntityClassKeys.Person ],
+                    Employee: {
+                        applyTo: [EntityClassKeys.Patient, EntityClassKeys.Person],
                         entityType: "Organization",
-                        filter: { classConcept: [ EntityClassKeys.Organization ], statusConcept: StatusKeys.Active },
-                        multiple : true
+                        filter: { classConcept: [EntityClassKeys.Organization], statusConcept: StatusKeys.Active },
+                        multiple: true
                     },
-                    HealthcareProvider : {
-                        applyTo: [ EntityClassKeys.Patient ],
+                    HealthcareProvider: {
+                        applyTo: [EntityClassKeys.Patient],
                         entityType: "Entity",
-                        filter: { classConcept: [ EntityClassKeys.Organization, EntityClassKeys.Provider ], "industryConcept.mnemonic": "Industry-HealthDelivery", statusConcept: StatusKeys.Active },
-                        multiple : true
+                        filter: { classConcept: [EntityClassKeys.Organization, EntityClassKeys.Provider], "industryConcept.mnemonic": "Industry-HealthDelivery", statusConcept: StatusKeys.Active },
+                        multiple: true
                     },
-                    Student : {
-                        applyTo: [ EntityClassKeys.Patient ],
+                    Student: {
+                        applyTo: [EntityClassKeys.Patient],
                         entityType: "Organization",
                         filter: { statusConcept: StatusKeys.Active } // TODO: Filter on industry code
                     }
                 }
 
-              
+
             }],
             link: function (scope, element, attrs) {
 

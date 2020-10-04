@@ -100,6 +100,10 @@ angular.module('santedb-lib')
                                 var retVal = `<div class='btn-group' id='action_grp_${m.row}'>`;
                                 scope.itemActions.forEach(function (b) {
 
+                                    if(b.demand && $rootScope.session &&
+                                        $rootScope.session.scope.filter(o=>b.demand.indexOf(o) == 0).length == 0) // check policy
+                                        return;
+
                                     if (!b.when || scope.$eval(b.when, { r: r, cell: m, StatusKeys: StatusKeys})) {
                                         if (b.sref)
                                             retVal += `<a title="${SanteDB.locale.getString('ui.action.' + b.name)}" ui-sref="${b.sref}({ id: '${r.id}' })" class="btn ${(b.className || 'btn-default')}">`;
@@ -125,12 +129,17 @@ angular.module('santedb-lib')
                     else if(scope.noButtons)
                         buttons = [];
                     else {
-                        buttons = (scope.actions || []).map(function (b) {
+                        buttons = (scope.actions || [])
+                            .filter(b=> !b.demand || b.demand && $rootScope.session && $rootScope.session.scope.filter(o=>b.demand.indexOf(o) == 0).length > 0) // check policy
+                            .map(function (b) {
                             return {
                                 text: `<i class="${b.icon}"></i> ` + SanteDB.locale.getString('ui.action.' + b.name),
                                 className: `btn ${b.className || 'btn-default'}`,
                                 action: function (e, dt, node, config) {
-                                    $state.transitionTo(b.sref);
+                                    if(b.sref)
+                                        $state.transitionTo(b.sref);
+                                    else 
+                                        scope.$parent[b.action]();
                                 }
                             }
                         });
