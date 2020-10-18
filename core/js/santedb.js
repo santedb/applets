@@ -2937,9 +2937,10 @@ function SanteDBWrapper() {
     $.ajaxSetup({
         cache: false,
         beforeSend: function (data, settings) {
-            if (_elevator && _elevator.getToken()) {
+            var elevatorToken = _elevator ? _elevator.getToken() : null;
+            if (elevatorToken) {
                 data.setRequestHeader("Authorization", "BEARER " +
-                    _elevator.getToken());
+                elevatorToken);
             }
             else if (window.sessionStorage.getItem('token'))
                 data.setRequestHeader("Authorization", "BEARER " +
