@@ -230,7 +230,7 @@ angular.module('santedb').controller('EditDeviceController', ["$scope", "$rootSc
         var successFn = function(r) { 
             // Now save the user entity
 
-            toastr.success(SanteDB.locale.getString("ui.admin.devices.saveConfirm"));
+            toastr.success(SanteDB.locale.getString("ui.model.securityDevice.saveSuccess"));
             SanteDB.display.buttonWait("#saveDeviceButton", false);
             $scope.target.entity = r;
             $scope.$apply();

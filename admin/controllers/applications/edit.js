@@ -224,7 +224,7 @@ angular.module('santedb').controller('EditApplicationController', ["$scope", "$r
         var successFn = function(r) { 
             // Now save the user entity
 
-            toastr.success(SanteDB.locale.getString("ui.admin.applications.saveConfirm"));
+            toastr.success(SanteDB.locale.getString("ui.model.securityApplication.saveSuccess"));
             SanteDB.display.buttonWait("#saveApplicationButton", false);
             $scope.target.entity = r;
             $scope.$apply();

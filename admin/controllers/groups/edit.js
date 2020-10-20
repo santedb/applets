@@ -124,7 +124,7 @@ angular.module('santedb').controller('EditGroupController', ["$scope", "$rootSco
         // Success fn
         var successFn = function (r) {
             // Now save the user entity
-            toastr.success(SanteDB.locale.getString("ui.admin.groups.saveConfirm"));
+            toastr.success(SanteDB.locale.getString("ui.model.securityRole.saveSuccess"));
             SanteDB.display.buttonWait("#saveGroupButton", false);
             $state.transitionTo("santedb-admin.security.groups.edit", { "id": r.entity.id })
         };

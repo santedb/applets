@@ -672,6 +672,18 @@
     <string key="ui.model.place.updatedBy">Last Update</string>
     <string key="ui.model.place.statusConcept">Status</string>
 
+    <string key="ui.model.patient.saveSuccess">Patient updated successfully</string>
+    <string key="ui.model.person.saveSuccess">Related person updated successfully</string>
+    <string key="ui.model.place.saveSuccess">Place updated successfully</string>
+    <string key="ui.model.material.saveSuccess">Material updated successfully</string>
+    <string key="ui.model.userEntity.saveSuccess">User updated successfully</string>
+    <string key="ui.model.securityUser.saveSuccess">User updated successfully</string>
+    <string key="ui.model.securityRole.saveSuccess">Role updated successfully</string>
+    <string key="ui.model.assigningAuthority.saveSuccess">Identity domain updated successfully</string>
+    <string key="ui.model.securityPolicy.saveSuccess">Policy updated successfully</string>
+    <string key="ui.model.securityApplication.saveSuccess">Application updated successfully</string>
+    <string key="ui.model.securityDevice.saveSuccess">Device updated successfully</string>
+    <string key="ui.model.Patient._code.validation">Error validating code for Patient resource</string>
     <string key="ui.model.material.name">Name</string>
     <string key="ui.model.material.classConcept">Class</string>
     <string key="ui.model.material.typeConcept">Material Type</string>

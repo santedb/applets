@@ -116,12 +116,12 @@ angular.module('santedb').controller('IdentityDomainEditController', ["$scope", 
 
             if(!$scope.authority.id) {
                 $scope.authority = await SanteDB.resources.assigningAuthority.insertAsync($scope.authority);
-                toastr.success(SanteDB.locale.getString("ui.admin.domain.saveConfirm"));
+                toastr.success(SanteDB.locale.getString("ui.model.assigningAuthority.saveSuccess"));
                 $state.transitionTo('santedb-admin.data.domain.edit', {id: $scope.authority.id});
             }
             else {
                 $scope.authority = await SanteDB.resources.assigningAuthority.updateAsync($stateParams.id, $scope.authority);
-                toastr.success(SanteDB.locale.getString("ui.admin.domain.saveConfirm"));
+                toastr.success(SanteDB.locale.getString("ui.admin.assigningAuthority.saveSuccess"));
                 $state.transitionTo('santedb-admin.data.domain.index', {id: $scope.authority.id});
 
             }

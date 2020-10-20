@@ -154,7 +154,7 @@ angular.module('santedb').controller('SecurityUserWidgetController', ["$scope", 
             };
 
             var result = await SanteDB.resources.securityUser.updateAsync(securityUser.id, userSubmission);
-            toastr.success(SanteDB.locale.getString("ui.admin.users.saveConfirm"));
+            toastr.success(SanteDB.locale.getString("ui.model.securityUser.saveSuccess"));
         }
         catch(e) {
             $rootScope.errorHandler(e);

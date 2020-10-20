@@ -327,6 +327,60 @@ function APIWrapper(_config) {
     };
 
     /**
+        * @method copyAsync
+        * @memberof APIWrapper
+        * @summary Performs a COPY operation against the specified object
+        * @param {any} configuration The configuration object
+        * @param {string} configuration.resource The resource that is to be fetched
+        * @param {any} configuration.state A piece of state data which is passed back to the caller for state tracking
+        * @param {boolean} configuration.sync When true, executes the request in synchronous mode
+        * @param {any} configuration.id The id of the resource to copy to the server
+        * @returns {Promise} The promise for the operation
+        */
+    this.copyAsync = function (configuration) {
+        return new Promise(function (fulfill, reject) {
+            $.ajax({
+                method: 'COPY',
+                url: _config.base + configuration.resource + (configuration.id ? (_config.idByQuery ? "?_id=" + configuration.id : "/" + configuration.id) : ""),
+                dataType: configuration.dataType || 'json',
+                contentType: configuration.contentType || 'application/json',
+                async: !configuration.sync,
+                success: function (xhr, status, response) {
+                    try {
+                        if (xhr && response.getResponseHeader("etag"))
+                            xhr.etag = response.getResponseHeader("etag");
+                        if (fulfill) fulfill(xhr, configuration.state);
+                    }
+                    catch (e) {
+                        if (reject) reject(e.responseJSON || e, configuration.state);
+                    }
+                },
+                error: function (e, data, setting) {
+                    if (SanteDB._globalErrorHandler(e, data, setting))
+                        return;
+                    var error = {};
+                    if (e.responseJSON)
+                        error = e.responseJSON;
+                    else if (e.responseText)
+                        try { error = JSON.parse(e.responseText); }
+                        catch (e) { };
+
+                    if (reject) {
+                        if (error && error.error !== undefined) // oauth2
+                            reject(new Exception(error.type, error.error, error.error_description, error.caused_by), configuration.state);
+                        else if (error && (error.$type === "Exception" || error.$type))
+                            reject(new Exception(error.$type, error.message, error.detail, error.cause, error.stack, error.policyId, error.policyOutcome, error.rules), configuration.state);
+                        else
+                            reject(new Exception("HttpException", "error.http." + e.status, e, null), configuration.state);
+                    }
+                    else
+                        console.error("UNHANDLED PROMISE REJECT: " + JSON.stringify(e));
+                }
+            });
+        });
+    };
+
+    /**
         * @method deleteAsync
         * @memberof APIWrapper
         * @summary Performs a DELETE on an existing item on the instance
@@ -455,6 +509,56 @@ function APIWrapper(_config) {
                 success: function (xhr, status, response) {
                     try {
                         if (xhr)
+                            xhr.etag = response.getResponseHeader("etag");
+                        if (fulfill) fulfill(xhr, configuration.state);
+                    }
+                    catch (e) {
+                        if (reject) reject(e.responseJSON || e, configuration.state);
+                    }
+                },
+                error: function (e, data, setting) {
+                    if (SanteDB._globalErrorHandler(e, data, setting))
+                        return;
+                    var error = e.responseJSON;
+
+                    if (reject) {
+                        if (error && error.error !== undefined) // oauth2
+                            reject(new Exception(error.type, error.error, error.error_description, error.caused_by), configuration.state);
+                        else if (error && (error.$type === "Exception" || error.$type))
+                            reject(new Exception(error.$type, error.message, error.detail, error.cause, error.stack, error.policyId, error.policyOutcome, error.rules), configuration.state);
+                        else
+                            reject(new Exception("HttpException", "error.http." + e.status, e, null), configuration.state);
+                    }
+                    else
+                        console.error("UNHANDLED PROMISE REJECT: " + JSON.stringify(e));
+                }
+            });
+        });
+    };
+
+    /**
+        * @method touchAsync
+        * @memberof APIWrapper
+        * @summary Performs a TOUCH on an existing item on the instance
+        * @param {any} configuration The configuration object
+        * @param {string} configuration.resource The resource that is to be locked
+        * @param {any} configuration.state A piece of state data which is passed back to the caller for state tracking
+        * @param {boolean} configuration.sync When true, executes the request in synchronous mode
+        * @param {any} configuration.id The object that is to be locked on the server
+        * @param {any} configuration.data The additional data that should be sent for the delete command
+        * @param {string} configuration.contentType Identifies the content type of the data
+        * @returns {Promise} The promise for the operation
+        */
+    this.touchAsync = function (configuration) {
+        return new Promise(function (fulfill, reject) {
+            $.ajax({
+                method: 'TOUCH',
+                url: _config.base + configuration.resource + (configuration.id ? (_config.idByQuery ? "?_id=" + configuration.id : "/" + configuration.id) : ""),
+                headers: configuration.headers,
+                async: !configuration.sync,
+                success: function (xhr, status, response) {
+                    try {
+                        if (xhr && response.getResponseHeader("etag"))
                             xhr.etag = response.getResponseHeader("etag");
                         if (fulfill) fulfill(xhr, configuration.state);
                     }
@@ -775,6 +879,54 @@ function ResourceWrapper(_config) {
     };
 
     /**
+    * @method touchAsync
+    * @memberof ResourceWrapper
+    * @summary Performs a TOUCH operation on the specified resource (updating it's creation time)
+    * @param {string} id The unique identifier for the object on which the invokation is to be called
+    * @param {any} state A unique state object which is passed back to the caller
+    * @returns {Promise} The promise for the operation
+    */
+    this.touchAsync = function (id, state) {
+
+        var headers = {
+            Accept: _config.accept
+        };
+        if (_config.viewModel)
+            headers["X-SanteDB-ViewModel"] = _config.viewModel;
+
+        return _config.api.touchAsync({
+            headers: headers,
+            id: id,
+            state: state,
+            resource: _config.resource
+        });
+    };
+
+    /**
+   * @method copyAsync
+   * @memberof ResourceWrapper
+   * @summary Performs a COPY operation on the specified resource (creating a copy from remote)
+   * @param {string} id The unique identifier for the object on which the invokation is to be called
+   * @param {any} state A unique state object which is passed back to the caller
+   * @returns {Promise} The promise for the operation
+   */
+    this.copyAsync = function (id, state) {
+
+        var headers = {
+            Accept: _config.accept
+        };
+        if (_config.viewModel)
+            headers["X-SanteDB-ViewModel"] = _config.viewModel;
+
+        return _config.api.copyAsync({
+            headers: headers,
+            id: id,
+            state: state,
+            resource: _config.resource
+        });
+    };
+
+    /**
         * @method nullifyAsync
         * @memberof ResourceWrapper
         * @summary Performs a nullify on the specified object
@@ -1006,10 +1158,10 @@ function SanteDBWrapper() {
     var _viewModelJsonMime = "application/json+sdb-viewModel";
 
     // Get the version of this API Wrapper
-    this.getVersion = function() {
+    this.getVersion = function () {
         return "2.0.36.0";
     }
-    
+
     /**
      * @private
      * @summary Global error handler
@@ -1550,6 +1702,8 @@ function SanteDBWrapper() {
                 throw new Exception("Exception", "error.codeSearch", e);
             }
         }
+
+
 
     }
 
@@ -2940,7 +3094,7 @@ function SanteDBWrapper() {
             var elevatorToken = _elevator ? _elevator.getToken() : null;
             if (elevatorToken) {
                 data.setRequestHeader("Authorization", "BEARER " +
-                elevatorToken);
+                    elevatorToken);
             }
             else if (window.sessionStorage.getItem('token'))
                 data.setRequestHeader("Authorization", "BEARER " +
@@ -2980,8 +3134,8 @@ function ApplicationPrincipalElevator() {
      * @returns {String} The current elevation token
      * @summary Gets the elevation token
      */
-    this.getToken = function() {
-        if(_consumed) return null;
+    this.getToken = function () {
+        if (_consumed) return null;
         else {
             _consumed = true;
             return _token;
@@ -2993,13 +3147,13 @@ function ApplicationPrincipalElevator() {
      * @summary Shows the elevation dialog and then performs the continueWith
      * @param {any} useSession The current session, passed when and if a pou is required and not a change of login
      */
-    this.elevate = function(sessionToUse) {
-        if(!sessionToUse)
+    this.elevate = function (sessionToUse) {
+        if (!sessionToUse)
             throw new Exception("SecurityException", "err.nosession");
 
         // The application credential can only be used when we already have a session
         return SanteDB.authentication.clientCredentialLoginAsync(true)
-            .then(function(session) { 
+            .then(function (session) {
                 _token = session.access_token || session.token;
             });
     }

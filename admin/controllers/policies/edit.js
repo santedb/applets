@@ -104,7 +104,7 @@ angular.module('santedb').controller('EditPolicyController', ["$scope", "$rootSc
         // Success fn
         var successFn = function (r) {
             // Now save the user entity
-            toastr.success(SanteDB.locale.getString("ui.admin.policy.saveConfirm"));
+            toastr.success(SanteDB.locale.getString("ui.model.securityPolicy.saveSuccess"));
             SanteDB.display.buttonWait("#savePolicyButton", false);
             $state.transitionTo("santedb-admin.security.policies.index")
         };
