@@ -38,12 +38,16 @@ angular.module('santedb-lib')
            scope: {
                conceptSet: '=',
                conceptModel: '=',
+               addConcept: '=',
+               excludeConcepts: '=',
                key: "<"
            },
            controller: ['$scope', '$rootScope', function ($scope, $rootScope) {
            }],
            link: function (scope, element, attrs, ngModel) {
 
+            if(scope.excludeConcepts && !Array.isArray(scope.excludeConcepts))
+                scope.excludeConcepts = [scope.excludeConcepts];
             
                 // Load concept set
                 async function loadConceptSet(setName) {
@@ -54,6 +58,19 @@ angular.module('santedb-lib')
                             scope.setValues = (await SanteDB.resources.concept.findAsync({ "conceptSet.mnemonic" : setName })).resource;
                             loaded[setName].callme.forEach((r) => r(scope.setValues));
                             loaded[setName]= scope.setValues;
+
+                            // Now - is there an additional concept
+                            if(scope.addConcept) {
+
+                                if(!Array.isArray(scope.addConcept))
+                                    scope.addConcept = [scope.addConcept];
+
+                                await Promise.all(scope.addConcept.map(async function(o) {
+                                    if(typeof(o) === "string")
+                                        o = await SanteDB.resources.concept.getAsync(o);
+                                    loaded[setName].push(o);
+                                }));
+                            }
                             scope.$apply();
                         }
                         else {
@@ -83,18 +100,15 @@ angular.module('santedb-lib')
                 ngModel.$render = function () {
                     if(ngModel.$viewValue) {
                         // is there a key? 
-                        var value = ngModel.$viewValue.id;
+                        var valueKey = ngModel.$viewValue.id;
                         if(scope.key) 
-                            value = ngModel.$viewValue[scope.key];
-                        $(element).val(value);
+                            valueKey = ngModel.$viewValue[scope.key];
+                        $(element).val(valueKey);
                     }
                     else 
                         $(element).val(null);
                 };
 
-                // HACK: Screw Select2 , it is so random
-                //if(ngModel.$viewValue)
-                //    scope.setValue(element, modelType, ngModel.$viewValue);
 
            }
        }

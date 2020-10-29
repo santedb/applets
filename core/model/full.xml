@@ -305,9 +305,7 @@
     <property name="templateModel" behavior="always" all="false">
       <property name="mnemonic"/>
     </property>
-   
     <property name="valueModel" all="true" ref="Concept" behavior="always"/>
-  
     <property name="classConceptModel" behavior="never"/>
     <property name="previousVersion" behavior="never"/>
     <property name="previousVersionModel" behavior="never"/>
@@ -576,7 +574,8 @@
         <property name="target"/>
         <property name="source"/>
       </property>
-      <property name="*" behavior="never" all="false"/>
+      
+      <property name="*" ref="ActRelationship" all="false"/>
     </property>
     <property name="unitOfMeasureModel" behavior="always" ref="Concept"/>
     <property name="protocol" behavior="always"/>
@@ -631,7 +630,9 @@
     <property name="statusConceptModel" behavior="never"/>
     <property name="moodConceptModel" behavior="never"/>
     <property name="interpretationConceptModel" behavior="always" ref="Concept"/>
-    <property name="relationship" all="true" behavior="always" ref="ActRelationship"/>
+    <property name="relationship" all="true" behavior="always">
+      <property name="*" ref="ActRelationship" all="true"/>
+    </property>
     <property name="valueModel" all="true" ref="Concept" behavior="always"/>
     <property name="participation" all="true" behavior="always">
       <property name="Location" all="false">

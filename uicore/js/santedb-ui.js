@@ -74,7 +74,6 @@ SanteDBWrapper.prototype.display = new function () {
             }).catch(function (e) {
                 console.error(e);
             });
-            SanteDB
         }
 
         switch (precision) {
@@ -244,6 +243,8 @@ SanteDBWrapper.prototype.display = new function () {
             }
             return nameStr;
         }
+        else 
+            return name;
     },
         /**
          * @method
@@ -255,6 +256,8 @@ SanteDBWrapper.prototype.display = new function () {
          */
         this.renderEntityAddress = function (address, type) {
 
+            if(!address)
+                return "N/A";
             if (type)
                 address = address[type];
             else if (!address.component)

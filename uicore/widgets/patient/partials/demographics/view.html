@@ -1,80 +1,84 @@
-<div  xmlns="http://www.w3.org/1999/xhtml">
-<div class="row"> 
-    <label class="col-sm-3 col-xs-4 control-label">{{ 'ui.model.patient.name' | i18n }}</label>
-    <div class="col-sm-9 col-xs-8">
-        <ul class="list-group">
-            <li class="d-flex align-items-center" ng-repeat="(n, name) in scopedObject.name">
-                <span ng-if="!name.use" ng-repeat="r in name">
-                    {{ r | name }} <span class=" d-none d-sm-inline"><span class="badge badge-light">{{ r.useModel | concept }}</span></span>
-                </span>
-                <span ng-if="name.use">
-                    {{ name | name }} <span class=" d-none d-sm-inline"><span class="badge badge-light">{{ name.useModel | concept }}</span></span>
-                </span>
-
-            </li>
-        </ul>
-    </div>
-</div>
-<div class="row">
-    <label class="col-sm-3 col-xs-4 control-label">{{ 'ui.model.patient.dateOfBirth' | i18n }}</label>
-    <div class="col-sm-9 col-xs-8">
-        {{ scopedObject.dateOfBirth | extDate: scopedObject.dateOfBirthPrecision }}
-        <span ng-if="!scopedObject.deceasedDate"> ( {{ scopedObject.dateOfBirth | age }} )</span>
-    </div>
-    <label class="col-sm-3 col-xs-4 control-label">{{ 'ui.model.patient.genderConcept' | i18n }}</label>
-    <div class="col-sm-9 col-xs-8">
-        <i class="fas"
-            ng-class="{ 'fa-male' : scopedObject.genderConceptModel.mnemonic == 'Male' , 'fa-female' :  scopedObject.genderConceptModel.mnemonic == 'Female' }"></i>
-        {{ scopedObject.genderConceptModel | concept }}
-    </div>
-    <label class="col-sm-3 col-xs-12 control-label">{{ 'ui.model.patient.address' | i18n }}</label>
-    <div class="col-sm-9 col-xs-12">
-        <div ng-if="scopedObject.address">
+<div xmlns="http://www.w3.org/1999/xhtml">
+    <div class="row">
+        <label class="col-sm-3 col-xs-4 control-label">{{ 'ui.model.patient.name' | i18n }}</label>
+        <div class="col-sm-9 col-xs-8">
             <ul class="list-group">
-                <li class="d-flex align-items-center" ng-repeat="(n, address) in scopedObject.address">{{ address | address }} <span class=" d-none d-sm-inline"><span class="badge badge-light">{{ address.useModel | concept }}</span></span></li>
+                <li class="d-flex align-items-center" ng-repeat="(n, name) in scopedObject.name">
+                    <span ng-if="!name.use" ng-repeat="r in name">
+                        {{ r | name }} <span class=" d-none d-sm-inline"><span
+                                class="badge badge-light">{{ r.useModel | concept }}</span></span>
+                    </span>
+                    <span ng-if="name.use">
+                        {{ name | name }} <span class=" d-none d-sm-inline"><span
+                                class="badge badge-light">{{ name.useModel | concept }}</span></span>
+                    </span>
+
+                </li>
             </ul>
         </div>
-        <div ng-if="!scopedObject.address">
-            {{ 'ui.unknown' | i18n }}
+    </div>
+    <div class="row">
+        <label class="col-sm-3 col-xs-4 control-label">{{ 'ui.model.patient.dateOfBirth' | i18n }}</label>
+        <div class="col-sm-9 col-xs-8">
+            {{ scopedObject.dateOfBirth | extDate: scopedObject.dateOfBirthPrecision }}
+            <span ng-if="!scopedObject.deceasedDate"> ( {{ scopedObject.dateOfBirth | age }} )</span>
+        </div>
+        <label class="col-sm-3 col-xs-4 control-label">{{ 'ui.model.patient.genderConcept' | i18n }}</label>
+        <div class="col-sm-9 col-xs-8">
+            <i class="fas"
+                ng-class="{ 'fa-male' : scopedObject.genderConceptModel.mnemonic == 'Male' , 'fa-female' :  scopedObject.genderConceptModel.mnemonic == 'Female' }"></i>
+            {{ scopedObject.genderConceptModel | concept }}
+        </div>
+        <label class="col-sm-3 col-xs-12 control-label">{{ 'ui.model.patient.address' | i18n }}</label>
+        <div class="col-sm-9 col-xs-12">
+            <div ng-if="scopedObject.address">
+                <ul class="list-group">
+                    <li class="d-flex align-items-center" ng-repeat="(n, address) in scopedObject.address">
+                        {{ address | address }} <span class=" d-none d-sm-inline"><span
+                                class="badge badge-light">{{ address.useModel | concept }}</span></span></li>
+                </ul>
+            </div>
+            <div ng-if="!scopedObject.address">
+                {{ 'ui.unknown' | i18n }}
+            </div>
+        </div>
+        <label class="col-sm-3 col-xs-12 control-label">{{ 'ui.model.patient.telecom' | i18n }}</label>
+        <div class="col-sm-9 col-xs-12" ng-repeat="(k,tel) in scopedObject.telecom track by $index"
+            ng-class="{ 'offset-sm-3': $index > 0 }">
+            <a href="{{tel.value}}" target="_blank">{{tel.value}} <span
+                    class="badge badge-pill badge-info">{{ tel.useModel | concept }}</span></a>
         </div>
     </div>
-    <label class="col-sm-3 col-xs-12 control-label">{{ 'ui.model.patient.telecom' | i18n }}</label>
-    <div class="col-sm-9 col-xs-12" ng-repeat="(k,tel) in scopedObject.telecom track by $index"
-        ng-class="{ 'offset-sm-3': $index > 0 }">
-        <a href="{{tel.value}}" target="_blank">{{tel.value}} <span
-                class="badge badge-pill badge-info">{{ tel.useModel | concept }}</span></a>
-    </div>
-</div>
 
-<div ng-if="scopedObject.relationship.Birthplace.targetModel" class="row">
-    <label class="col-sm-3 col-xs-12 control-label">{{ 'ui.model.patient.birthplace' | i18n }}</label>
-    <div class="col-sm-9 col-xs-12">
-        <i class="fas"
-            ng-class="{ 'fa-hospital-alt' : scopedObject.relationship.Birthplace.targetModel.classConcept == 'ff34dfa7-c6d3-4f8b-bc9f-14bcdc13ba6c' , 'fa-map-marked' : scopedObject.relationship.Birthplace.targetModel.classConcept != 'ff34dfa7-c6d3-4f8b-bc9f-14bcdc13ba6c'}"></i>
-        {{ scopedObject.relationship.Birthplace.targetModel.name | name }} <br />
-        <small> ({{ scopedObject.relationship.Birthplace.targetModel.address | address }})</small>
+    <div ng-if="scopedObject.relationship.Birthplace.targetModel" class="row">
+        <label class="col-sm-3 col-xs-12 control-label">{{ 'ui.model.patient.birthplace' | i18n }}</label>
+        <div class="col-sm-9 col-xs-12">
+            <i class="fas"
+                ng-class="{ 'fa-hospital-alt' : scopedObject.relationship.Birthplace.targetModel.classConcept == 'ff34dfa7-c6d3-4f8b-bc9f-14bcdc13ba6c' , 'fa-map-marked' : scopedObject.relationship.Birthplace.targetModel.classConcept != 'ff34dfa7-c6d3-4f8b-bc9f-14bcdc13ba6c'}"></i>
+            {{ scopedObject.relationship.Birthplace.targetModel.name | name }} <br />
+            <small> ({{ scopedObject.relationship.Birthplace.targetModel.address | address }})</small>
+        </div>
     </div>
-</div>
-<div ng-if="scopedObject.deceasedDate" class="row">
-    <label class="col-sm-3 col-xs-12 control-label">{{ 'ui.model.patient.deceased' | i18n }}</label>
-    <div class="col-sm-9 col-xs-12">
-        {{ scopedObject.deceasedDate | extDate: scopedObject.deceasedDatePrecision }}
-        ( {{ scopedObject.dateOfBirth | age: 'y':scopedObject.deceasedDate }} )
+    <div ng-if="scopedObject.deceasedDate" class="row">
+        <label class="col-sm-3 col-xs-12 control-label">{{ 'ui.model.patient.deceased' | i18n }}</label>
+        <div class="col-sm-9 col-xs-12">
+            {{ scopedObject.deceasedDate | extDate: scopedObject.deceasedDatePrecision }}
+            ( {{ scopedObject.dateOfBirth | age: 'y':scopedObject.deceasedDate }} )
+        </div>
     </div>
-</div>
-<div ng-if="scopedObject.deceasedDate &amp;&amp; scopedObject.relationship.PlaceOfDeath.targetModel" class="row">
-    <label class="col-sm-3 col-xs-12 control-label">{{ 'ui.model.patient.birthplace' | i18n }}</label>
-    <div class="col-sm-9 col-xs-12">
-        <i class="fas"
-            ng-class="{ 'fa-hospital-alt' : scopedObject.relationship.PlaceOfDeath.targetModel.classConcept == 'ff34dfa7-c6d3-4f8b-bc9f-14bcdc13ba6c' , 'fa-map-marked' : scopedObject.relationship.PlaceOfDeath.targetModel.classConcept != 'ff34dfa7-c6d3-4f8b-bc9f-14bcdc13ba6c'}"></i>
-        {{ scopedObject.relationship.PlaceOfDeath.targetModel.name | name }} <br />
-        <small> ({{ scopedObject.relationship.PlaceOfDeath.targetModel.address | address }})</small>
+    <div ng-if="scopedObject.deceasedDate &amp;&amp; scopedObject.relationship.PlaceOfDeath.targetModel" class="row">
+        <label class="col-sm-3 col-xs-12 control-label">{{ 'ui.model.patient.placeOfDeath' | i18n }}</label>
+        <div class="col-sm-9 col-xs-12">
+            <i class="fas"
+                ng-class="{ 'fa-hospital-alt' : scopedObject.relationship.PlaceOfDeath.targetModel.classConcept == 'ff34dfa7-c6d3-4f8b-bc9f-14bcdc13ba6c' , 'fa-map-marked' : scopedObject.relationship.PlaceOfDeath.targetModel.classConcept != 'ff34dfa7-c6d3-4f8b-bc9f-14bcdc13ba6c'}"></i>
+            {{ scopedObject.relationship.PlaceOfDeath.targetModel.name | name }} <br />
+            <small> ({{ scopedObject.relationship.PlaceOfDeath.targetModel.address | address }})</small>
+        </div>
     </div>
-</div>
-<div ng-if="scopedObject.multipleBirthOrder" class="row">
-    <label class="col-sm-3 col-xs-12 control-label">{{ 'ui.model.patient.multipleBirthOrder' | i18n }}</label>
-    <div class="col-sm-9 col-xs-12 ">
-        {{ 'ui.model.patient.multipleBirthOrder.' + scopedObject.multipleBirthOrder | i18n }}
+    <div ng-if="scopedObject.multipleBirthOrder" class="row">
+        <label class="col-sm-3 col-xs-12 control-label">{{ 'ui.model.patient.multipleBirthOrder' | i18n }}</label>
+        <div class="col-sm-9 col-xs-12 ">
+            {{ 'ui.model.patient.multipleBirthOrder.' + scopedObject.multipleBirthOrder | i18n }}
+        </div>
     </div>
-</div>
 </div>

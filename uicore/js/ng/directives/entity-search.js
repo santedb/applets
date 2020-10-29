@@ -104,7 +104,6 @@ angular.module('santedb-lib')
                     break;
             }
             retVal += "&nbsp;";
-
            
             if (selection.name != null && selection.name.OfficialRecord != null)
                 retVal += SanteDB.display.renderEntityName(selection.name.OfficialRecord);
@@ -118,6 +117,8 @@ angular.module('santedb-lib')
                 retVal += selection.name;
             else if (selection.userName)
                 retVal += selection.userName;
+            else if(selection.mnemonic)
+                retVal += SanteDB.locale.getString(selection.mnemonic);
             else if (selection.entity)
                 retVal += (selection.entity.name || selection.entity.userName);
             else if (selection.element !== undefined)
@@ -259,7 +260,7 @@ angular.module('santedb-lib')
                                 if(params.term)
                                     filter[searchProperty] = "~" + params.term;
                                 filter["_count"] = 20;
-                                filter["_offset"] = 0;
+                                filter["_offset"] = params.page ? params.page * 20 : 0;
                                 filter["_viewModel"] = "dropdown";
                                 return filter;
                             },

@@ -30,7 +30,7 @@ angular.module('santedb').controller('MasterDataManagementController', ['$scope'
 
         // Deceased?
         if(entity.deceasedDate)
-            retVal += `<span class='badge badge-dark'>${SanteDB.locale.getString("ui.model.patient.deceased")}</span>`;
+            retVal += `<span class='badge badge-dark'>${SanteDB.locale.getString("ui.model.patient.deceasedIndicator")}</span>`;
 
         // Gender
         switch(entity.genderConceptModel.mnemonic) {

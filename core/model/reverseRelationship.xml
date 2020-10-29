@@ -1,0 +1,15 @@
+<ViewModel xmlns="http://santedb.org/model/view">
+  <include>full</include>
+
+  <type type="EntityRelationship" all="false">
+    <property name="source" all="true"/>
+    <property name="target" all="true"/>
+    <property name="holder" all="true"/>
+    <property name="targetModel" all="false" behavior="never"/>
+    <property name="relationshipType" all="true" behavior="always"/>
+    <property name="holderModel" behavior="always" all="true" ref="Entity"/>
+    <property name="relationshipTypeModel" behavior="always" all="true" ref="Concept"/>
+    <property name="key" all="true"/>
+    <property name="quantity" all="true"/>
+  </type>
+</ViewModel>

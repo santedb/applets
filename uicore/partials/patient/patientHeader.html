@@ -30,13 +30,13 @@
                                     ng-class="{ 'fa-male' : patient.genderConceptModel.mnemonic == 'Male' , 'fa-female' :  patient.genderConceptModel.mnemonic == 'Female' }"></i>
                                 {{ patient.genderConceptModel | concept }}</div>
                             <div class="p-2" ng-if="patient.multipleBirthOrder">
-                                <span class="alert alert-info"><i class="fas fa-restroom"></i>
+                                <span class="badge badge-info"><i class="fas fa-restroom"></i>
                                     {{ 'ui.model.patient.multipleBirth' | i18n }}</span>
                             </div>
                             <div class="p-2"><i class="fas fa-birthday-cake"></i>
                                 {{ patient.dateOfBirth | extDate: patient.dateOfBirthPrecision }} ( <span
-                                    class="alert alert-dark"
-                                    ng-if="patient.deceasedDate">{{ 'ui.model.patient.deceased' | i18n }}</span>
+                                    class="badge badge-dark"
+                                    ng-if="patient.deceasedDate">{{ 'ui.model.patient.deceasedIndicator' | i18n }}</span>
                                 {{ patient.dateOfBirth | age: 'y':patient.deceasedDate }} )</div>
                         </div>
                     </div>

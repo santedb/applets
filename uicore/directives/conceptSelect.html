@@ -1,3 +1,3 @@
 <select xmlns="http://www.w3.org/1999/xhtml">
-    <option ng-repeat="opt in setValues" value="{{opt.id}}">{{ opt | concept }}</option>
+    <option ng-repeat="opt in setValues" ng-if="!excludeConcepts || excludeConcepts.indexOf(opt.id) == -1" value="{{opt.id}}">{{ opt | concept }}</option>
 </select>

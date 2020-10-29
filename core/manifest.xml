@@ -41,4 +41,7 @@
   <viewModel key="mdm">
     <definition>/org.santedb.core/model/mdm.xml</definition>
   </viewModel>
+  <viewModel key="reverseRelationship">
+    <definition>/org.santedb.core/model/reverseRelationship.xml</definition>
+  </viewModel>
 </AppletManifest>

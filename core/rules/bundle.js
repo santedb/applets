@@ -21,16 +21,15 @@
 /** 
  * Bundle rules
  */
-SanteDBBre.AddBusinessRule("Bundle", "BeforeInsert", null,  function (bundle) {
+SanteDBBre.AddBusinessRule("org.santedb.bre.bundle", "Bundle", "BeforeInsert", null,  function (bundle) {
     if (bundle.$type !== 'Bundle') return bundle;
     return SanteDBBre.ExecuteBundleRules("BeforeInsert", bundle);
 });
 /** 
  * Bundle rules
  */
-SanteDBBre.AddBusinessRule("Bundle", "AfterInsert", null, function (bundle) {
+SanteDBBre.AddBusinessRule("org.santedb.bre.bundle", "Bundle", "AfterInsert", null, function (bundle) {
     if (bundle.$type !== 'Bundle') return bundle;
-
     return SanteDBBre.ExecuteBundleRules("AfterInsert", bundle);
 });
 

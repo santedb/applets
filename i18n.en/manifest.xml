@@ -546,6 +546,9 @@
     <string key="ui.model.entityAddress.use">Type</string>
     <string key="ui.model.entityTelecom.use">Use</string>
     <string key="ui.model.entityRelationship.type">Type</string>
+    <string key="ui.model.entityRelationship.prefix">Has a</string>
+    <string key="ui.model.entityRelationship.inverse.prefix">Is a</string>
+    <string key="ui.model.entityRelationship.inverse.suffix">Of</string>
     <string key="ui.model.entityRelationship.target">With</string>
     <string key="ui.model.assigningAuthority.oid">Universal ID</string>
     <string key="ui.model.assigningAuthority.domainName">Namespace ID</string>
@@ -579,6 +582,7 @@
     <string key="ui.model.entity.relationship.IncidentalServiceDeliveryLocation">Other Facilities</string>
     <string key="ui.model.entity.relationship.NaturalFatherOfFetus">Natural Father</string>
     <string key="ui.model.entity.relationship.Father">Father</string>
+    <string key="ui.model.entity.relationship.Mother">Mother</string>
     <string key="ui.model.entity.relationship.ServiceDeliveryLocation">Registered At</string>
     <string key="ui.model.entity.relationship.SigningAuthorityOrOfficer">Power of Attorney</string>
     <string key="ui.model.entity.relationship.structured">This entity is a proper record. To edit it, you'll need to visit the object's detail page</string>
@@ -651,7 +655,8 @@
     <string key="ui.model.patient.telecom">Contact</string>
     <string key="ui.model.patient.telecoms">Contacts</string>
     <string key="ui.model.patient.relationship">Relationships</string>
-    <string key="ui.model.patient.deceased">DECEASED</string>
+    <string key="ui.model.patient.deceasedIndicator">DECEASED</string>
+    <string key="ui.model.patient.deceased">Date of Death</string>
     <string key="ui.model.patient.multipleBirth">MULTIPLE BIRTH</string>
     <string key="ui.model.patient.birthplace">Birthplace</string>
     <string key="ui.model.patient.register">Registered At</string>
@@ -671,6 +676,7 @@
     <string key="ui.model.place.address">Address</string>
     <string key="ui.model.place.updatedBy">Last Update</string>
     <string key="ui.model.place.statusConcept">Status</string>
+
 
     <string key="ui.model.patient.saveSuccess">Patient updated successfully</string>
     <string key="ui.model.person.saveSuccess">Related person updated successfully</string>
@@ -695,6 +701,28 @@
     <string key="ui.model.job.tag">Version</string>
     <string key="ui.model.job.state">Current State</string>
     <string key="ui.model.job.lastRun">Last Run</string>
+
+    <string key="ui.model.act.template">Template</string>
+    <string key="ui.model.act.typeConcept">Type</string>
+    <string key="ui.model.act.actTime">Timestamp</string>
+    <string key="ui.model.act.startTime">Start Time</string>
+    <string key="ui.model.act.stopTime">Stop Time</string>
+    <string key="ui.model.act.participation.Location">Location(s)</string>
+    <string key="ui.model.act.participation.Authororiginator">Author / Reporter</string>
+    <string key="ui.model.act.participation.Performer">Performer(s)</string>
+    <string key="ui.model.act.participation.Attender">Attending Physician</string>
+
+
+    <!-- Help Text -->
+    <string key="ui.model.act.template.help">Identifies the type of event</string>
+    <string key="ui.model.act.typeConcept.help">Identifies the classification of the event</string>
+    <string key="ui.model.act.actTime.help">Identifies the time when this event occurred</string>
+    <string key="ui.model.act.participation.Location.help">Identifies the location where this event is being recorded/occurred</string>
+    <string key="ui.model.act.participation.Authororiginator.help">The person/people who were responsible for recording/reporting the event</string>
+    <string key="ui.model.act.participation.Baby.dateOfBirth.help">The date on which the newborn was born</string>
+    <string key="ui.model.act.participation.Baby.genderConcept.help">The established gender of the newborn</string>
+    <string key="ui.model.act.participation.Baby.multipleBirthIndicator.help">If this newborn was part of a multiple birth (twin, triplet, etc.)</string>
+    <string key="ui.model.act.participation.Baby.birthplace.help">The place (hospital, township, etc.) where the newborn was born</string>
     <!-- Audit Logs -->
     <string key="ui.model.audit.action">Action</string>
     <string key="ui.model.audit.event">Event</string>

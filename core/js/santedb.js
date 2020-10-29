@@ -611,10 +611,12 @@ function ResourceWrapper(_config) {
         * @memberof ResourceWrapper
         * @summary Retrieves a specific instance of the resource this wrapper wraps
         * @param {string} id The unique identifier of the resource to retrieve
+        * @param {string} viewModel A unique state object which is passed back to the caller
+        * @param {any} parms Extra parameters to pass to the get function
         * @param {any} state A unique state object which is passed back to the caller
         * @returns {Promise} The promise for the operation
         */
-    this.getAsync = function (id, viewModel, state) {
+    this.getAsync = function (id, viewModel, query, state) {
 
         // Prepare query
         var url = null;
@@ -647,7 +649,8 @@ function ResourceWrapper(_config) {
         return _config.api.getAsync({
             headers: headers,
             state: state,
-            resource: url
+            resource: url,
+            query: query
         });
     };
 
@@ -656,15 +659,19 @@ function ResourceWrapper(_config) {
         * @memberof ResourceWrapper
         * @summary Queries for instances of the resource this wrapper wraps
         * @param {any} query The HDSI query to filter on
+        * @param {any} viewModel The view model definition to use when loading
         * @param {any} state A unique state object which is passed back to the caller
         * @returns {Promise} The promise for the operation
         */
-    this.findAsync = function (query, state) {
+    this.findAsync = function (query, viewModel, state) {
 
         var headers = {
             Accept: _config.accept
         };
-        if (_config.viewModel)
+
+        if(viewModel)
+            headers["X-SanteDB-ViewModel"] = viewModel;
+        else if (_config.viewModel)
             headers["X-SanteDB-ViewModel"] = _config.viewModel;
 
         return _config.api.getAsync({
@@ -1254,6 +1261,59 @@ function SanteDBWrapper() {
         var idGenerators = {};
 
         /**
+         * @summary Fetches sub-templates 
+         * @param {*} collection The participation or relationship property to be fetched
+         * @param {*} parms The parameters to fill the template with
+         * @description In some templates, sub objects will have no $type, and just a reference to a template mnemonic
+         */
+        async function getSubTemplates(collection, parms) {
+            var promises = Object.keys(collection).map(function(key) {
+                try {
+                    var relationships = collection[key];
+
+                    if(!Array.isArray(relationships))
+                        collection[key] = relationships = [relationships];
+                    
+                    // Actually fill out model
+                    return relationships.map(async function(rel) {
+                        try {
+
+                            var targetProperty = rel.playerModel || rel.targetModel;
+
+                            if(targetProperty && !targetProperty.classConcept && targetProperty.templateModel)
+                            {
+                                var object = await _resources.template.getAsync(targetProperty.templateModel.mnemonic, "full", parms);
+
+                                if(object.relationship)
+                                    object.relationship = await getSubTemplates(object.relationship, parms);
+
+                                if(rel.playerModel)  {
+                                    rel.playerModel = object;
+                                    Object.keys(targetProperty).forEach(subKey => rel.playerModel[subKey] = rel.playerModel[subKey] ?? targetProperty[subKey]);
+                                }
+                                else  {
+                                    rel.targetModel = object;
+                                    Object.keys(targetProperty).forEach(subKey => rel.targetModel[subKey] = rel.targetModel[subKey] ?? targetProperty[subKey]);
+                                }
+                                
+                                return true;
+                            }
+                            return false;
+                        }
+                        catch(e) {
+                            console.error(`Error filling ${rel}`);
+                        }
+                    });
+                }
+                catch(e) {
+                    console.error(`Error filling ${key}`);
+                }
+            }).flat();
+            await Promise.all(promises);
+            return collection;
+        }
+
+        /**
          * @method addIdentifierGenerator
          * @summary Adds a new identifier generator 
          * @memberof SanteDBWrapper.ApplicationApi
@@ -1614,18 +1674,26 @@ function SanteDBWrapper() {
          * @param {any} query The filter to apply to templates
          * @returns {Array<string>} The list of template definitions
          */
-        this.getTemplateDefinitionsAsync = function (query) {
+        this.getTemplateDefinitionsAsync = async function (query) {
             return _resources.template.findAsync(query);
         }
         /**
- * @summary Get a list of all installed template definitions
- * @method getTemplateContentAsync
- * @memberof SanteDBWrapper.ApplicationApi
- * @param {any} templateId The ID of the template to fetch
- * @returns {any} The templated object
- */
-        this.getTemplateContentAsync = function (templateId) {
-            return _resources.template.getAsync(templateId, "full");
+         * @summary Get a list of all installed template definitions
+         * @method getTemplateContentAsync
+         * @memberof SanteDBWrapper.ApplicationApi
+         * @param {string} templateId The ID of the template to fetch
+         * @param {any} parms The parameters to pass to the template
+         * @returns {any} The templated object
+         */
+        this.getTemplateContentAsync = async function (templateId, parms) {
+            var template = await _resources.template.getAsync(templateId, "full", parms);
+            if(template.relationship) { // Find relationship templates
+                template.relationship = await getSubTemplates(template.relationship, parms);
+            }
+            if(template.participation) {
+                template.participation = await getSubTemplates(template.participation, parms);
+            }
+            return template;
         }
         /**
          * @summary Get the version of the application host

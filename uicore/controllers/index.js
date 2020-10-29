@@ -177,10 +177,15 @@ var santedbApp = angular.module('santedb', ['ngSanitize', 'ui.router', 'oc.lazyL
             if (transition._targetState._definition.self.name != transition._targetState._definition.self.name != $state.$current.name)
                 $("#pageTransitioner").show();
         });
-        $transitions.onSuccess({}, function () {
+        $transitions.onSuccess({}, function (transition) {
             $(".modal").modal('hide');
             $('.popover').popover('hide');
             $("#pageTransitioner").hide();
+            $('html,body').animate({
+                scrollTop: 0
+            },
+                'fast');
+
             delete($rootScope._transition);
         });
         $transitions.onError({}, function (transition) {
