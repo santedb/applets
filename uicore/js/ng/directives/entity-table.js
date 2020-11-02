@@ -159,11 +159,11 @@ angular.module('santedb-lib')
                                     var btn = $("button.btn-light:has(i.fa-trash)", element);
                                     if(btn.hasClass("active")) { // active to inactive
                                         scope.defaultQuery.obsoletionTime = 'null';
-                                        $("button.btn-light:has(i.fa-trash)", element).removeClass("active");
+                                        btn.removeClass("active");
                                     }
                                     else {
                                         scope.defaultQuery.obsoletionTime = '!null';
-                                        $("button.btn-light:has(i.fa-trash)", element).addClass("active");
+                                       btn.addClass("active");
                                     }
                                     
                                     dt.ajax.reload();
@@ -175,14 +175,17 @@ angular.module('santedb-lib')
                                 text: "<i class='fas fa-trash'></i> " + SanteDB.locale.getString("ui.action.showDeleted"),
                                 className: "btn btn-light",
                                 action: function (e, dt, node, config) {
-                                    if (!scope.defaultQuery.statusConcept || scope.defaultQuery.statusConcept == StatusKeys.Active) {
-                                        scope.defaultQuery.statusConcept = '!' + StatusKeys.Active;
-                                        $("button.btn-light:has(i.fa-trash)", element).addClass("active");
+                                    var btn = $("button.btn-light:has(i.fa-trash)", element);
+
+                                    if(btn.hasClass("active")) { // active to inactive
+                                        scope.defaultQuery.statusConcept = StatusKeys.Active;
+                                        btn.removeClass("active");
                                     }
                                     else {
-                                        scope.defaultQuery.statusConcept = StatusKeys.Active;
-                                        $("button.btn-light:has(i.fa-trash)", element).removeClass("active");
+                                        scope.defaultQuery.statusConcept = StatusKeys.Obsolete;
+                                        btn.addClass("active");
                                     }
+                                    
                                     dt.ajax.reload();
                                 }
                             });

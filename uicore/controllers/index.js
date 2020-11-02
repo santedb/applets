@@ -98,6 +98,7 @@ var santedbApp = angular.module('santedb', ['ngSanitize', 'ui.router', 'oc.lazyL
             $rootScope.windowSize = window.innerWidth;
             $rootScope.$apply();
         });
+        $rootScope.StatusKeys = StatusKeys;
         $rootScope.windowSize = window.innerWidth;
         // Extend toast information
         var _extendToast = null;

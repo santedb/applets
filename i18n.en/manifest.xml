@@ -18,7 +18,7 @@
  - Date: 2018-7-23
  -->
 <AppletManifest xmlns="http://santedb.org/applet">
-  <info id="org.santedb.i18n.en" version="2.0.43.0">
+  <info id="org.santedb.i18n.en" version="2.0.45.0">
     <icon>/org.santedb.core/img/i18n.png</icon>
     <name lang="en">English Applet Support</name>
     <author>SanteSuite Community Partners (see: santesuite.org)</author>
@@ -238,6 +238,8 @@
     <string key="ui.action.download">Download</string>
     <string key="ui.action.create">Create</string>
     <string key="ui.action.delete">Delete</string>
+    <string key="ui.action.nullify">Nullify</string>
+    <string key="ui.action.nullify.confirm">Are you sure you want to nullify this object? This cannot be undone!</string>
     <string key="ui.action.delete.confirm">Are you sure you want to delete this object?</string>
     <string key="ui.action.undelete">Un-Delete</string>
     <string key="ui.action.view">View</string>

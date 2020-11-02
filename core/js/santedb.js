@@ -3002,6 +3002,13 @@ function SanteDBWrapper() {
         };
 
         /**
+         * @summary Wraps native printing functionality for the host operating system
+         */
+        this.printView = function() {
+            __SanteDBAppService.Print();
+        }
+
+        /**
             * @summary Gets a string from the current user interface localization
             * @memberof SanteDBWrapper.LocalizationApi
             * @method getString
