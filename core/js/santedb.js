@@ -1549,6 +1549,7 @@ function SanteDBWrapper() {
          */
         this.submitBugReportAsync = function (bugReport) {
             return _ami.postAsync({
+                contentType: "application/json",
                 resource: "Sherlock",
                 data: bugReport
             });
