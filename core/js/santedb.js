@@ -669,7 +669,7 @@ function ResourceWrapper(_config) {
             Accept: _config.accept
         };
 
-        if(viewModel)
+        if (viewModel)
             headers["X-SanteDB-ViewModel"] = viewModel;
         else if (_config.viewModel)
             headers["X-SanteDB-ViewModel"] = _config.viewModel;
@@ -1267,45 +1267,44 @@ function SanteDBWrapper() {
          * @description In some templates, sub objects will have no $type, and just a reference to a template mnemonic
          */
         async function getSubTemplates(collection, parms) {
-            var promises = Object.keys(collection).map(function(key) {
+            var promises = Object.keys(collection).map(function (key) {
                 try {
                     var relationships = collection[key];
 
-                    if(!Array.isArray(relationships))
+                    if (!Array.isArray(relationships))
                         collection[key] = relationships = [relationships];
-                    
+
                     // Actually fill out model
-                    return relationships.map(async function(rel) {
+                    return relationships.map(async function (rel) {
                         try {
 
                             var targetProperty = rel.playerModel || rel.targetModel;
 
-                            if(targetProperty && !targetProperty.classConcept && targetProperty.templateModel)
-                            {
+                            if (targetProperty && !targetProperty.classConcept && targetProperty.templateModel) {
                                 var object = await _resources.template.getAsync(targetProperty.templateModel.mnemonic, "full", parms);
 
-                                if(object.relationship)
+                                if (object.relationship)
                                     object.relationship = await getSubTemplates(object.relationship, parms);
 
-                                if(rel.playerModel)  {
+                                if (rel.playerModel) {
                                     rel.playerModel = object;
                                     Object.keys(targetProperty).forEach(subKey => rel.playerModel[subKey] = rel.playerModel[subKey] ?? targetProperty[subKey]);
                                 }
-                                else  {
+                                else {
                                     rel.targetModel = object;
                                     Object.keys(targetProperty).forEach(subKey => rel.targetModel[subKey] = rel.targetModel[subKey] ?? targetProperty[subKey]);
                                 }
-                                
+
                                 return true;
                             }
                             return false;
                         }
-                        catch(e) {
+                        catch (e) {
                             console.error(`Error filling ${rel}`);
                         }
                     });
                 }
-                catch(e) {
+                catch (e) {
                     console.error(`Error filling ${key}`);
                 }
             }).flat();
@@ -1688,10 +1687,10 @@ function SanteDBWrapper() {
          */
         this.getTemplateContentAsync = async function (templateId, parms) {
             var template = await _resources.template.getAsync(templateId, "full", parms);
-            if(template.relationship) { // Find relationship templates
+            if (template.relationship) { // Find relationship templates
                 template.relationship = await getSubTemplates(template.relationship, parms);
             }
-            if(template.participation) {
+            if (template.participation) {
                 template.participation = await getSubTemplates(template.participation, parms);
             }
             return template;
@@ -2528,6 +2527,27 @@ function SanteDBWrapper() {
      * @summary Authentication API 
      */
     function AuthenticationApi() {
+
+        // Process oauth response session data
+        var _afterAuthenticate = function (oauthResponse, fulfill, reject) {
+            _oauthSession = oauthResponse;
+            if (oauthResponse.access_token) window.sessionStorage.setItem('token', oauthResponse.access_token || oauthResponse.token);
+            if (oauthResponse.refresh_token) window.sessionStorage.setItem('refresh_token', oauthResponse.refresh_token);
+            if(oauthResponse.id_token)
+                try {
+                    var tokenData = JSON.parse(atob(oauthResponse.id_token.split('.')[1]));
+                    // Set the locale
+                    if (tokenData.lang)
+                        __SanteDBAppService.SetLocale(tokenData.lang);
+                    else if(tokenData['http://santedb.org/claims/language'])
+                        __SanteDBAppService.SetLocale(tokenData['http://santedb.org/claims/language']);
+
+                }
+                catch (e) {
+                }
+            _authentication.getSessionInfoAsync().then(fulfill).catch(reject);
+        }
+
         /**
          * @summary SID for SYSTEM USER
          * @constant
@@ -2727,10 +2747,7 @@ function SanteDBWrapper() {
                     })
                         .then(function (d) {
                             if (!uacPrompt) {
-                                _oauthSession = d;
-                                if (d.access_token) window.sessionStorage.setItem('token', d.access_token || d.token);
-                                if (d.refresh_token) window.sessionStorage.setItem('refresh_token', d.refresh_token);
-                                _authentication.getSessionInfoAsync().then(fulfill).catch(reject);
+                                _afterAuthenticate(d, fulfill, reject);
                             }
                             else if (fulfill) fulfill(d);
                         })
@@ -2777,10 +2794,7 @@ function SanteDBWrapper() {
                     })
                         .then(function (d) {
                             if (!uacPrompt) {
-                                _oauthSession = d;
-                                if (d.access_token) window.sessionStorage.setItem('token', d.access_token || d.token);
-                                if (d.refresh_token) window.sessionStorage.setItem('refresh_token', d.refresh_token);
-                                _authentication.getSessionInfoAsync().then(fulfill).catch(reject);
+                                _afterAuthenticate(d, fulfill, reject);
                             }
                             else if (fulfill) fulfill(d);
                         })
@@ -2815,10 +2829,7 @@ function SanteDBWrapper() {
                     })
                         .then(function (d) {
                             if (!noSession) {
-                                _oauthSession = d;
-                                if (d.access_token) window.sessionStorage.setItem('token', d.access_token || d.token);
-                                if (d.refresh_token) window.sessionStorage.setItem('refresh_token', d.refresh_token);
-                                _authentication.getSessionInfoAsync().then(fulfill).catch(reject);
+                                _afterAuthenticate(d, fulfill, reject);
                             }
                             else if (fulfill) fulfill(d);
                         })
@@ -3005,7 +3016,7 @@ function SanteDBWrapper() {
         /**
          * @summary Wraps native printing functionality for the host operating system
          */
-        this.printView = function() {
+        this.printView = function () {
             __SanteDBAppService.Print();
         }
 
