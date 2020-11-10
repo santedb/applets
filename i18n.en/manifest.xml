@@ -18,7 +18,7 @@
  - Date: 2018-7-23
  -->
 <AppletManifest xmlns="http://santedb.org/applet">
-  <info id="org.santedb.i18n.en" version="2.0.45.0">
+  <info id="org.santedb.i18n.en" version="2.0.47.0">
     <icon>/org.santedb.core/img/i18n.png</icon>
     <name lang="en">English Applet Support</name>
     <author>SanteSuite Community Partners (see: santesuite.org)</author>
@@ -278,6 +278,7 @@
       <string key="ui.pref.nevershow">Never show this message again</string>
       <string key="ui.action.upgrade">Upgrade</string>
       <string key="ui.action.convert">Convert</string>
+      <string key="ui.action.print">Print</string>
       <string key="ui.action.convertTo">Convert To</string>
       <string key="ui.action.new">New</string>
       <string key="ui.action.add">Add</string>

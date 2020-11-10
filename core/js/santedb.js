@@ -1261,6 +1261,13 @@ function SanteDBWrapper() {
         var _idGenerators = {};
         var _resourceStates = {};
 
+         /**
+         * @summary Wraps native printing functionality for the host operating system
+         */
+        this.printView = function () {
+            __SanteDBAppService.Print();
+        }
+
         /**
          * @summary Fetches sub-templates 
          * @param {*} collection The participation or relationship property to be fetched
@@ -1289,11 +1296,11 @@ function SanteDBWrapper() {
 
                                 if (rel.playerModel) {
                                     rel.playerModel = object;
-                                    Object.keys(targetProperty).forEach(subKey => rel.playerModel[subKey] = rel.playerModel[subKey] ?? targetProperty[subKey]);
+                                    Object.keys(targetProperty).forEach(subKey => rel.playerModel[subKey] = rel.playerModel[subKey] || targetProperty[subKey]);
                                 }
                                 else {
                                     rel.targetModel = object;
-                                    Object.keys(targetProperty).forEach(subKey => rel.targetModel[subKey] = rel.targetModel[subKey] ?? targetProperty[subKey]);
+                                    Object.keys(targetProperty).forEach(subKey => rel.targetModel[subKey] = rel.targetModel[subKey] || targetProperty[subKey]);
                                 }
 
                                 return true;
@@ -3039,13 +3046,7 @@ function SanteDBWrapper() {
             second: 'YYYY-MM-DD HH:mm:ss'
         };
 
-        /**
-         * @summary Wraps native printing functionality for the host operating system
-         */
-        this.printView = function () {
-            __SanteDBAppService.Print();
-        }
-
+       
         /**
             * @summary Gets a string from the current user interface localization
             * @memberof SanteDBWrapper.LocalizationApi

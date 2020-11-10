@@ -34,6 +34,9 @@ angular.module('santedb-lib')
                 if (window.sessionStorage.getItem('token')) {
                     config.headers.Authorization = 'BEARER ' + window.sessionStorage.getItem('token');
                 }
+
+                if(window.sessionStorage.getItem('lang'))
+                    config.headers["Accept-Language"] = window.sessionStorage.getItem('lang');
                 return config;
             },
 

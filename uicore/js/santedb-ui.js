@@ -23,8 +23,16 @@ var ___originalButtonTexts = {};
 // Add render of concept name
 SanteDBWrapper.prototype.display = new function () {
 
-    // State handlers
-    var __stateHandlers = {};
+    var __preferredName = "OfficialRecord";
+    
+    /**
+     * @summary Sets the preferred name type for rendering names
+     * @param {string} nameType The name type preferred
+     */
+    this.setPreferredNameType = function(nameType) 
+    {
+        __preferredName = nameType;
+    }
 
     /**
      * @method
@@ -186,8 +194,11 @@ SanteDBWrapper.prototype.display = new function () {
         if (type) {
             name = name[type];
         }
-        else if (!name.component)
+        else if(name[__preferredName])
+            name = name[__preferredName];
+        else if (!name.component) {
             name = name[Object.keys(name)[0]]
+        }
 
         // Is the name actually an array? If so, take the first
         if (Array.isArray(name))
@@ -290,54 +301,5 @@ SanteDBWrapper.prototype.display = new function () {
                 return addrStr.substring(0, addrStr.length - 2);
             }
         };
-    /**
-     * @method
-     * @summary Add a resource display handler
-     * @description These are used by common services to provide deep linking on system pages
-     * @param {string} resource The resource type that the display router can display
-     * @param {any} guard A guard expression for the display router to be fired
-     * @param {Function} resolveFn The function which resolves the state transition
-     */
-    this.registerResourceDisplayState = function (resourceType, guard, resolveFn) {
 
-        var typeHandlers = __stateHandlers[resourceType];
-        if (typeHandlers == null)
-            typeHandlers = __stateHandlers[resourceType] = [];
-
-        // Find an existing 
-        // TODO: Find a better way of comparing object for object
-        var existing = typeHandlers.filter(o => JSON.stringify(o.guard) == JSON.stringify(guard));
-        if (existing.length == 0)
-            typeHandlers.push({
-                guard: guard,
-                resolve: resolveFn
-            });
-        else
-            existing[0].resolve = resolveFn;
-    }
-
-    /**
-     * @method
-     * @summary Gets the display state information which handles the specified resource
-     * @param {any} resourceInstance The resource instance for which the state is to be fetch
-     * @returns {*} The state information which can be passed to state.transitionTo()
-     */
-    this.getResourceDisplayState = function (resourceInstance) {
-
-        // Get the specified resource instance
-        var candidates = __stateHandlers[resourceInstance.$type];
-        if(!candidates)
-            return null; // No handler
-        
-        candidates = candidates.filter(function(state) {
-            if(state.guard)
-                return Object.keys(state.guard).reduce((res, current) => res && resourceInstance[current] == state.guard[current]) == true;
-            else
-                return true;
-        });
-
-        if(candidates.length > 0)
-            return candidates[0].resolve;
-        return null;
-    }
 };

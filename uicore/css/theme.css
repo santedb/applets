@@ -133,6 +133,7 @@ legend {
 }
 .print-only { 
     visibility: hidden;
+    display:none;
 }
 
 @media print {
@@ -143,12 +144,13 @@ legend {
        visibility: visible;
     }
     .can-print div {
-        position: fixed;
+       position: fixed;
        left: 0;
        top: 0;
     }
     .print-only { 
         visibility: visible;
+        display: block
     }
 }
 

@@ -6,3 +6,5 @@ SanteDB.locale.dateFormats = {
     minute: 'YYYY-MM-DD HH:mm',
     second: 'YYYY-MM-DD HH:mm:ss'
 }
+
+SanteDB.display.setPreferredNameType("OfficialRecord");

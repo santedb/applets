@@ -103,14 +103,11 @@ var santedbApp = angular.module('santedb', ['ngSanitize', 'ui.router', 'oc.lazyL
         // Extend toast information
         var _extendToast = null;
 
-        var initialize = async function() {
-            $rootScope.system = $rootScope.system || {};
-
+        var _setLocaleData = async function() {
             // Get locales
             try {
                 var localeData = await SanteDB.resources.locale.findAsync();
                 var localeAsset = localeData[SanteDB.locale.getLocale()];
-                $rootScope.system.locale = SanteDB.locale.getLocale();
                 $rootScope.system.locales = Object.keys(localeData);
 
                 if(localeAsset)
@@ -121,7 +118,13 @@ var santedbApp = angular.module('santedb', ['ngSanitize', 'ui.router', 'oc.lazyL
             catch(e) {
                 $rootScope.errorHandler(e);
             }
+        }
 
+        var initialize = async function() {
+            $rootScope.system = $rootScope.system || {};
+            $rootScope.system.locale = SanteDB.locale.getLocale();
+
+            _setLocaleData();
             // Get configuration
             try {
                 var configuration = await SanteDB.configuration.getAsync();
@@ -158,8 +161,16 @@ var santedbApp = angular.module('santedb', ['ngSanitize', 'ui.router', 'oc.lazyL
             if(n && n != o) {
                 SanteDB.locale.setLocale(n);
                 $templateCache.removeAll();
-                if(o)
-                    $state.reload();
+                
+                $state.reload();
+            }
+         });
+
+        // Watch for user request to change default language in browser
+        $rootScope.$watch(function(s) { return SanteDB.locale.getLocale(); }, function(n,o) { 
+            if(n && n != o) {
+                $templateCache.removeAll();
+                _setLocaleData();
             }
          });
 
