@@ -1258,7 +1258,8 @@ function SanteDBWrapper() {
      */
     function ApplicationApi() {
 
-        var idGenerators = {};
+        var _idGenerators = {};
+        var _resourceStates = {};
 
         /**
          * @summary Fetches sub-templates 
@@ -1313,6 +1314,32 @@ function SanteDBWrapper() {
         }
 
         /**
+         * @method addResourceViewer
+         * @summary Adds a new resource state to let other apps know where to go to view a resource
+         * @memberof SanteDBWrapper.ApplicationApi
+         * @param {string} resourceType The type of resource being viewed
+         * @param {function} redirectCallback A function that directs to the appropriate state. Shoudl return true
+         * @example
+         * SanteDB.app.addResourceViewer("Patient", function(parms) { $state.transitionTo("my-view.patient". parms); return true; });
+         */
+        this.addResourceViewer = function (resourceType, redirectCallback) {
+            if(!_resourceStates[resourceType])
+                _resourceStates[resourceType] = [];
+            _resourceStates[resourceType].push(redirectCallback);
+        }
+
+        /**
+         * @method getIdentifierGenerator
+         * @summary Gets a generator if one is registered for the specified domain
+         * @memberof SanteDBWrapper.ApplicationApi
+         * @param {string} resourceType The domain to get the generator for
+         */
+        this.getResourceViewer = function (resourceType) {
+            return _resourceStates[resourceType];
+        }
+
+
+        /**
          * @method addIdentifierGenerator
          * @summary Adds a new identifier generator 
          * @memberof SanteDBWrapper.ApplicationApi
@@ -1320,7 +1347,7 @@ function SanteDBWrapper() {
          * @param {function} generatorCallback A function for the generator which returns the new identifier and (optionally) takes the entity for which the identifier is being generated
          */
         this.addIdentifierGenerator = function (domain, generatorCallback) {
-            idGenerators[domain] = generatorCallback;
+            _idGenerators[domain] = generatorCallback;
         }
 
         /**
@@ -1328,10 +1355,9 @@ function SanteDBWrapper() {
          * @summary Gets a generator if one is registered for the specified domain
          * @memberof SanteDBWrapper.ApplicationApi
          * @param {string} domain The domain to get the generator for
-         * @returns {function} The function which can be used to generate identifiers
          */
-        this.getIdentifierGenerator = function (domain, generatorCallback) {
-            return idGenerators[domain];
+        this.getIdentifierGenerator = function (domain) {
+            return _idGenerators[domain];
         }
 
         /**

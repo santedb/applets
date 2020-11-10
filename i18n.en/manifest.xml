@@ -270,6 +270,7 @@
       <string key="ui.action.apply">Apply</string>
       <string key="ui.action.download">Download</string>
       <string key="ui.action.reactivate">Re-Activate</string>
+      <string key="ui.action.bug">Report Bug</string>
       <string key="ui.action.logout">Logout</string>
       <string key="ui.action.close">Close</string>
       <string key="ui.action.findDuplicates">Find Duplicates</string>

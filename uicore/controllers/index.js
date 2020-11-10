@@ -78,7 +78,7 @@ var santedbApp = angular.module('santedb', ['ngSanitize', 'ui.router', 'oc.lazyL
          * Register the reload button
          */
         $.fn.dataTable.ext.buttons.reload = {
-            text: '<i class="fa fa-sync"></i> ' + SanteDB.locale.getString("ui.action.reload"),
+            text: function() { return '<i class="fa fa-sync"></i> ' + SanteDB.locale.getString("ui.action.reload"); },
             className: 'btn btn-success',
             action: function (e, dt) {
                 dt.ajax.reload();
@@ -232,7 +232,6 @@ var santedbApp = angular.module('santedb', ['ngSanitize', 'ui.router', 'oc.lazyL
             console.error(e);
             var userMessageKey = `error.type.${e.$type}.userMessage`;
             var userMessage = SanteDB.locale.getString(userMessageKey);
-
             if(userMessage == userMessageKey) // no special user message - show default
             {
                 userMessageKey = e.message + '.text';
@@ -260,6 +259,13 @@ var santedbApp = angular.module('santedb', ['ngSanitize', 'ui.router', 'oc.lazyL
                     userMessage: userMessage,
                     type: e.$type
                 }
+
+            var bugCallList = SanteDB.application.getResourceViewer("DiagnosticReport");
+            if(bugCallList)
+                $rootScope.error.fileBug = function() {
+                    for(var i in bugCallList)
+                        if(bugCallList[i]()) return;
+                }
             $("#errorModal").modal({ backdrop: 'static' });
             $rootScope.$apply();
         }
@@ -272,7 +278,7 @@ var santedbApp = angular.module('santedb', ['ngSanitize', 'ui.router', 'oc.lazyL
         };
 
         // The online interval to check online state
-        $interval(function () {
+        var ivlFn = function () {
             $rootScope.system = $rootScope.system || {};
             $rootScope.system.online = SanteDB.application.getOnlineState();
             $rootScope.system.serviceState = {
@@ -286,7 +292,7 @@ var santedbApp = angular.module('santedb', ['ngSanitize', 'ui.router', 'oc.lazyL
                 maxEventTime: new Date().tomorrow().trunc().addSeconds(-1),
                 minEventType: new Date().yesterday()
             };
-
+            
             // Session for expiry?
             if ($rootScope.session && $rootScope.session.exp && ($rootScope.session.exp - Date.now() < 120000)) {
                 var expiresIn = Math.round(($rootScope.session.exp - Date.now()) / 1000);
@@ -324,8 +330,10 @@ var santedbApp = angular.module('santedb', ['ngSanitize', 'ui.router', 'oc.lazyL
             else
                 toastr.clear();
 
-        }, 30000);
+        };
+        $interval(ivlFn, 5000);
 
+        
         // Set locale for sleect2
         $.fn.select2.defaults.set('language', SanteDB.locale.getLocale());
 

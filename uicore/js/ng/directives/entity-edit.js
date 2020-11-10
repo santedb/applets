@@ -197,6 +197,19 @@ angular.module('santedb-lib')
     .directive('telecomEdit', ['$rootScope', function ($rootScope) {
 
         var keys = Object.keys(TelecomAddressUseKeys);
+        // are there settings which prevent a type of edit from ocurring
+        try {
+            keys = keys.filter(o => 
+                !($rootScope && 
+                $rootScope.system && 
+                $rootScope.system.config && 
+                $rootScope.system.config.application && 
+                $rootScope.system.config.application.setting && 
+                $rootScope.system.config.application.setting[`forbid.patient.telecom.${o}`]));
+        }
+        catch(e) {
+            console.warn(e);
+        }
         keys.push("NullFlavor-NoInformation");
         return {
             restrict: 'E',
