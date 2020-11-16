@@ -19,45 +19,60 @@
  -->
 <div xmlns="http://www.w3.org/1999/xhtml" class="container-fluid">
     <div class="row">
-        <div class="col-sm-12 text-center">
+        <div class="col-sm-12 text-center" ng-if="!login.scope">
             {{ login.welcomeMessage || 'ui.login.realm' | i18n }} : <strong>{{ $root.system.config.realmName }}</strong>
+        </div>
+        <div class="col-sm-12 alert-warning alert" ng-if="login.scope">
+            <i class="fas fa-shield-alt"></i> {{ 'ui.elevate' | i18n }}
+
         </div>
     </div>
     <div class="form-group row">
         <label for="loginUserName" class="col-sm-3 control-label">{{ 'ui.login.input.username' | i18n }}</label>
         <div class="col-sm-9">
-            <input type="text" required="required" id="authUserNameInput" autocapitalize="off" autocomplete="off" ng-model="login.userName" ng-readonly="login._lockUserName" name="loginUserName" class="form-control" />
+            <input type="text" required="required" id="authUserNameInput" autocapitalize="off" autocomplete="off"
+                ng-model="login.userName" ng-readonly="login._lockUserName" name="loginUserName" class="form-control" />
         </div>
     </div>
     <div class="form-group row" ng-if="login.grant_type == 'password'">
         <label for="loginPassword" class="col-sm-3 control-label">{{ 'ui.login.input.password' | i18n }}</label>
         <div class="col-sm-9">
-            <input type="password" id="{{scopeId}}authUserPasswordInput" ng-required="login.grant_type == 'password'" ng-model="login.password" name="loginPassword" class="form-control"
-            />
+            <input type="password" id="{{scopeId}}authUserPasswordInput" ng-required="login.grant_type == 'password'"
+                ng-model="login.password" name="loginPassword" class="form-control" />
         </div>
     </div>
     <div class="form-group row" ng-if="login.grant_type != 'password'">
         <label for="loginPin" class="col-sm-3 control-label">{{ 'ui.login.input.pin' | i18n }}</label>
         <div class="col-sm-9">
-            <input type="password" id="{{scopeId}}authUserPinInput" minlength="4" maxlength="8" pattern="[0-9]{4,8}" ng-required="login.grant_type != 'password'" inputmode="numeric" ng-model="login.pin"
-                name="loginPin" class="form-control" />
+            <input type="password" id="{{scopeId}}authUserPinInput" minlength="4" maxlength="8" pattern="[0-9]{4,8}"
+                ng-required="login.grant_type != 'password'" inputmode="numeric" ng-model="login.pin" name="loginPin"
+                class="form-control" />
         </div>
     </div>
     <div class="form-group row" ng-if="login.requirePou">
-            <label for="loginPou" class="col-sm-3 control-label">{{ 'ui.login.input.purpose' | i18n }}</label>
-            <div class="col-sm-9">
-                <select class="form-control" ng-required="login.requirePou">
-                </select>
-            </div>
+        <label for="loginPou" class="col-sm-3 control-label">{{ 'ui.login.input.purpose' | i18n }}</label>
+        <div class="col-sm-9">
+            <concept-select concept-set="'PurposeOfUse'" class="form-control" ng-model="login.purposeOfUse" ng-required="login.requirePou"/>
+        </div>
+    </div>
+    <div class="form-group row" ng-if="login.scope">
+        <div class="col">
+            {{ 'ui.elevate.scope' | i18n }}
+            <ul class="ml-5">
+                <li style="list-style-type: square;" ng-repeat="scope in login.scope">{{ scope | i18n }}</li>
+            </ul>
+        </div>
     </div>
     <div class="form-group row" ng-if="!login.forbidPin">
         <div class="btn-group btn-group-toggle mx-auto">
             <label class="btn btn-info" ng-class="{ 'active' : login.grant_type == 'password' }">
-                <input type="radio" name="loginMode" ng-model="login.grant_type" value="password" ng-checked="login.grant_type == 'password'"/>
+                <input type="radio" name="loginMode" ng-model="login.grant_type" value="password"
+                    ng-checked="login.grant_type == 'password'" />
                 <i class="fa fa-keyboard"></i>
             </label>
             <label class="btn btn-info" ng-class="{ 'active' : login.grant_type != 'password' }">
-                <input type="radio" name="loginMode" ng-model="login.grant_type" value="pin" ng-checked="login.grant_type != 'password'"/>
+                <input type="radio" name="loginMode" ng-model="login.grant_type" value="pin"
+                    ng-checked="login.grant_type != 'password'" />
                 <i class="fa fa-th"></i>
             </label>
         </div>
