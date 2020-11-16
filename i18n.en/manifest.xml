@@ -44,11 +44,6 @@
       <asset>/org.santedb.i18n.en/lib/select2/en.js</asset>
       <asset>/org.santedb.i18n.en/lib/santedb/en.js</asset>
     </locale>
-    <locale code="en-iso">
-      <asset>/org.santedb.i18n.en/lib/angular/en-iso.js</asset>
-      <asset>/org.santedb.i18n.en/lib/select2/en.js</asset>
-      <asset>/org.santedb.i18n.en/lib/santedb/en.js</asset>
-    </locale>
     <locale code="en-nz">
       <asset>/org.santedb.i18n.en/lib/angular/en-nz.js</asset>
       <asset>/org.santedb.i18n.en/lib/select2/en.js</asset>

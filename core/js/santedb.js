@@ -1345,6 +1345,20 @@ function SanteDBWrapper() {
             return _resourceStates[resourceType];
         }
 
+        /**
+         * @summary Call the resource viewers
+         * @param {*} resourceType The type of resource
+         * @param {*} parms The parameters to pass
+         */
+        this.callResourceViewer = function(resourceType, parms) {
+            var callList = _resourceStates[resourceType];
+            if(callList) 
+            {
+                for(var c in callList)
+                    if(callList[c](parms)) return true;
+            }
+            return false;
+        }
 
         /**
          * @method addIdentifierGenerator
