@@ -187,8 +187,7 @@ angular.module("santedb").controller("LoginController", ['$scope', '$rootScope',
         try {
             SanteDB.display.buttonWait("#submitButton", true);
             await SanteDB.authentication.setPasswordAsync($scope.reset.user.id, $scope.reset.username, $scope.reset.password.password);
-            toastr.success(SanteDB.locale.getString("ui.login.securityApplication.saveSuccess"));
-
+            toastr.success(SanteDB.locale.getString("ui.login.resetPassword.success"));
             $scope.cancelReset(form);
         }
         catch(e) {
