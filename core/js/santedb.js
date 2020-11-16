@@ -1179,16 +1179,16 @@ function SanteDBWrapper() {
      */
     var _globalErrorHandler = function (data, setting, err) {
         if (data.status == 401 && data.getResponseHeader("WWW-Authenticate")) {
-            if (_session && _session.exp > Date.now // User has a session that is valid, but is still 401 hmm... elevation!!!
+            if (_session && _session.exp > Date.now() // User has a session that is valid, but is still 401 hmm... elevation!!!
                 && _elevator
                 && !_elevator.getToken() ||
                 _session == null && _elevator) {
 
                 // Was the response a security policy exception where the back end is asking for elevation on the same user account?
                 if (data.responseJSON &&
-                    data.responseJSON.type == "SecurityPolicyException" &&
-                    data.responseJSON.message == "error.elevate")
-                    _elevator.elevate(angular.copy(_session));
+                    data.responseJSON.$type == "PolicyViolationException" &&
+                    data.getResponseHeader("WWW-Authenticate").indexOf("insufficient_scope") > -1)
+                    _elevator.elevate(angular.copy(_session), [ data.responseJSON.policyId  ]);
                 else
                     _elevator.elevate(null);
                 return true;
@@ -1856,7 +1856,6 @@ function SanteDBWrapper() {
      */
     function ResourceApi() {
         /**
-        * @private
         * @type {ResourceWrapper}
         * @memberof SanteDBWrapper.ResourceApi
         * @summary Represents a resource wrapper that persists bundles
@@ -1867,7 +1866,6 @@ function SanteDBWrapper() {
             api: _hdsi
         });
         /**
-        * @private
             * @type {ResourceWrapper}
             * @memberof SanteDBWrapper.ResourceApi
             * @summary Represents an resource wrapper that interoperates with the care planner
@@ -1878,7 +1876,6 @@ function SanteDBWrapper() {
             api: _hdsi
         });
         /**
-        * @private
             * @type {ResourceWrapper}
             * @memberof SanteDBWrapper.ResourceApi
             * @summary Represents the Patient Resource
@@ -1889,7 +1886,6 @@ function SanteDBWrapper() {
             api: _hdsi
         });
         /**
-        * @private
             * @type {ResourceWrapper}
             * @memberof SanteDBWrapper.ResourceApi
             * @summary Represents the SubstanceAdministration Resource
@@ -1900,7 +1896,6 @@ function SanteDBWrapper() {
             api: _hdsi
         });
         /**
-        * @private
             * @type {ResourceWrapper}
             * @memberof SanteDBWrapper.ResourceApi
             * @summary Represents the Act Resource
@@ -1911,7 +1906,6 @@ function SanteDBWrapper() {
             api: _hdsi
         });
         /**
-        * @private
             * @type {ResourceWrapper}
             * @summary Represents the entity resource
             * @memberof SanteDBWrapper.ResourceApi
@@ -1922,7 +1916,6 @@ function SanteDBWrapper() {
             api: _hdsi
         });
         /**
-        * @private
          * @type {ResourceWrapper}
          * @summary A resource wrapper for Assigning Authorities
          * @memberof SanteDBWrapper.ResourceApi
@@ -1933,7 +1926,6 @@ function SanteDBWrapper() {
             api: _ami
         });
         /**
-        * @private
             * @type {ResourceWrapper}
             * @summary Represents the entity relationship resource
             * @memberof SanteDBWrapper.ResourceApi
@@ -1944,7 +1936,6 @@ function SanteDBWrapper() {
             api: _hdsi
         });
         /**
-        * @private
             * @type {ResourceWrapper}
             * @memberof SanteDBWrapper.ResourceApi
             * @summary Represents the Observation Resource
@@ -1955,7 +1946,6 @@ function SanteDBWrapper() {
             api: _hdsi
         });
         /**
-        * @private
             * @type {ResourceWrapper}
             * @memberof SanteDBWrapper.ResourceApi
             * @summary Represents the Place Resource
@@ -1966,7 +1956,6 @@ function SanteDBWrapper() {
             api: _hdsi
         });
         /**
-        * @private
             * @type {ResourceWrapper}
             * @memberof SanteDBWrapper.ResourceApi
             * @summary Represents the Provider Resource
@@ -1977,7 +1966,6 @@ function SanteDBWrapper() {
             api: _hdsi
         });
         /**
-        * @private
             * @type {ResourceWrapper}
             * @memberof SanteDBWrapper.ResourceApi
             * @summary Represents the UserEntity Resource
@@ -1988,7 +1976,6 @@ function SanteDBWrapper() {
             api: _hdsi
         });
         /**
-        * @private
             * @type {ResourceWrapper}
             * @memberof SanteDBWrapper.ResourceApi
             * @summary Represents the Organization Resource
@@ -1999,7 +1986,6 @@ function SanteDBWrapper() {
             api: _hdsi
         });
         /**
-        * @private
             * @type {ResourceWrapper}
             * @memberof SanteDBWrapper.ResourceApi
             * @summary Represents the Material Resource
@@ -2010,7 +1996,6 @@ function SanteDBWrapper() {
             api: _hdsi
         });
         /**
-        * @private
             * @type {ResourceWrapper}
             * @memberof SanteDBWrapper.ResourceApi
             * @summary Represents the ManufacturedMaterial Resource
@@ -2021,7 +2006,6 @@ function SanteDBWrapper() {
             api: _hdsi
         });
         /**
-        * @private
             * @type {ResourceWrapper}
             * @memberof SanteDBWrapper.ResourceApi
             * @summary Represents the ManufacturedMaterial Resource
@@ -2032,7 +2016,6 @@ function SanteDBWrapper() {
             api: _hdsi
         });
         /**
-        * @private
             * @type {ResourceWrapper}
             * @memberof SanteDBWrapper.ResourceApi
             * @summary Represents the ConceptSet Resource
@@ -2043,7 +2026,6 @@ function SanteDBWrapper() {
             api: _hdsi
         });
         /**
-        * @private
             * @type {ResourceWrapper}
             * @memberof SanteDBWrapper.ResourceApi
             * @summary Represents the ReferenceTerm Resource
@@ -2054,7 +2036,6 @@ function SanteDBWrapper() {
             api: _hdsi
         });
         /**
-        * @private
             * @type {ResourceWrapper}
             * @memberof SanteDBWrapper.ResourceApi
             * @summary Represents the CodeSystem Resource
@@ -2065,7 +2046,6 @@ function SanteDBWrapper() {
             api: _hdsi
         });
         /**
-        * @private
             * @type {ResourceWrapper}
             * @memberof SanteDBWrapper.ResourceApi
             * @summary Represents the DeviceEntity Resource
@@ -2076,7 +2056,6 @@ function SanteDBWrapper() {
             api: _hdsi
         });
         /**
-           * @private
            * @type {ResourceWrapper}
            * @memberof SanteDBWrapper.ResourceApi
            * @summary Represents the UserEntity Resource
@@ -2087,7 +2066,6 @@ function SanteDBWrapper() {
             api: _hdsi
         });
         /**
-         * @private
          * @type {ResourceWrapper}
          * @memberof SanteDBWrapper.ResourceApi
          * @summary Represents the Person Resource
@@ -2098,7 +2076,6 @@ function SanteDBWrapper() {
             api: _hdsi
         });
         /**
-        * @private
             * @type {ResourceWrapper}
             * @memberof SanteDBWrapper.ResourceApi
             * @summary Represents the ApplicationEntity Resource
@@ -2109,7 +2086,6 @@ function SanteDBWrapper() {
             api: _hdsi
         });
         /**
-        * @private
             * @type {ResourceWrapper}
             * @memberof SanteDBWrapper.ResourceApi
             * @summary Gets the configuration resource
@@ -2120,7 +2096,6 @@ function SanteDBWrapper() {
             api: _app
         });
         /**
-        * @private
             * @type {ResourceWrapper}
             * @memberof SanteDBWrapper.ResourceApi
             * @summary Gets the queue control resource
@@ -2131,7 +2106,6 @@ function SanteDBWrapper() {
             api: _app
         });
         /**
-        * @private
             * @type {ResourceWrapper}
             * @memberof SanteDBWrapper.ResourceApi
             * @summary Resource wrapper which interacts with the administrative task scheduler
@@ -2142,7 +2116,6 @@ function SanteDBWrapper() {
             api: _ami
         });
         /**
-        * @private
             * @type {ResourceWrapper}
             * @memberof SanteDBWrapper.ResourceApi
             * @summary A resource wrapper for alerts which are messages between users
@@ -2153,7 +2126,6 @@ function SanteDBWrapper() {
             api: _ami
         });
         /**
-        * @private
             * @type {ResourceWrapper}
             * @memberof SanteDBWrapper.ResourceApi
             * @summary A wrapper which is used for fetching user notifications
@@ -2164,7 +2136,6 @@ function SanteDBWrapper() {
             api: _app
         });
         /**
-        * @private
             * @type {ResourceWrapper}
             * @memberof SanteDBWrapper.ResourceApi
             * @summary A wrapper for locale information which comes from the server
@@ -2175,7 +2146,6 @@ function SanteDBWrapper() {
             api: _app
         });
         /**
-        * @private
          * @type {ResourceWrapper}
          * @memberOf SanteDBWrapper.resources
          * @summary Wrapper for Security USers
@@ -2186,7 +2156,6 @@ function SanteDBWrapper() {
             api: _ami
         });
         /**
-        * @private
          * @type {ResourceWrapper}
          * @memberOf SanteDBWrapper.resources
          * @summary Wrapper for Security Roles
@@ -2197,7 +2166,6 @@ function SanteDBWrapper() {
             api: _ami
         });
         /**
-        * @private
         * @type {ResourceWrapper}
         * @memberOf SanteDBWrapper.resources
         * @summary Wrapper for session information
@@ -2208,7 +2176,6 @@ function SanteDBWrapper() {
             api: _ami
         });
         /**
-        * @private
          * @type {ResourceWrapper}
          * @memberOf SanteDBWrapper.resources
          * @summary Wrapper for Security Devices
@@ -2219,7 +2186,6 @@ function SanteDBWrapper() {
             api: _ami
         });
         /**
-        * @private
          * @type {ResourceWrapper}
          * @memberOf SanteDBWrapper.resources
          * @summary Wrapper for Security Applications
@@ -2230,7 +2196,6 @@ function SanteDBWrapper() {
             api: _ami
         });
         /**
-        * @private
          * @type {ResourceWrapper}
          * @memberOf SanteDBWrapper.resources
          * @summary Wrapper for Security Policies
@@ -2241,7 +2206,16 @@ function SanteDBWrapper() {
             api: _ami
         });
         /**
-        * @private
+         * @type {ResourceWrapper}
+         * @memberOf SanteDBWrapper.resources
+         * @summary Wrapper for Security Challenges
+         */
+        this.securityChallenge = new ResourceWrapper({
+            accept: _viewModelJsonMime,
+            resource: "SecurityChallenge",
+            api: _ami
+        });
+        /**
          * @type {ResourceWrapper}
          * @memberOf SanteDBWrapper.resources
          * @summary Wrapper for provenance
@@ -2253,7 +2227,6 @@ function SanteDBWrapper() {
             viewModel: 'base'
         });
         /**
-        * @private
          * @type {ResourceWrapper}
          * @memberOf SanteDBWrapper.resources
          * @summary Wrapper for audit API
@@ -2264,7 +2237,6 @@ function SanteDBWrapper() {
             api: _ami
         });
         /**
-        * @private
          * @type {ResourceWrapper}
          * @memberOf SanteDBWrapper.resources
          * @summary Wrapper for probe API
@@ -2275,7 +2247,6 @@ function SanteDBWrapper() {
             api: _ami
         });
         /**
-        * @private
          * @type {ResourceWrapper}
          * @memberOf SanteDBWrapper.resources
          * @summary Wrapper for sync log API
@@ -2286,7 +2257,6 @@ function SanteDBWrapper() {
             api: _app
         });
         /**
-        * @private
          * @type {ResourceWrapper}
          * @memberOf SanteDBWrapper.resources
          * @summary Wrapper for subscription definition API
@@ -2297,7 +2267,6 @@ function SanteDBWrapper() {
             api: _ami
         });
         /**
-        * @private
          * @type {ResourceWrapper}
          * @memberOf SanteDBWrapper.resources
          * @summary Wrapper for subscription definition API
@@ -2308,7 +2277,6 @@ function SanteDBWrapper() {
             api: _ami
         });
         /**
-       * @private
         * @type {ResourceWrapper}
         * @memberOf SanteDBWrapper.resources
         * @summary Wrapper for templates definition API
@@ -2731,6 +2699,10 @@ function SanteDBWrapper() {
         this.challengeLoginAsync = function (userName, challenge, response, tfaSecret) {
             return new Promise(function (fulfill, reject) {
                 try {
+                    var headers = {};
+                    if (tfaSecret)
+                        headers["X-SanteDB-TfaSecret"] = tfaSecret;
+
                     _auth.postAsync({
                         resource: "oauth2_token",
                         data: {
@@ -2740,9 +2712,7 @@ function SanteDBWrapper() {
                             grant_type: 'x_challenge',
                             scope: '*'
                         },
-                        headers: {
-                            "X-SanteDB-TfaSecret": tfaSecret
-                        },
+                        headers: headers,
                         contentType: 'application/x-www-form-urlencoded'
                     })
                         .then(function (d) {
@@ -2778,7 +2748,7 @@ function SanteDBWrapper() {
                         headers["X-SanteDB-TfaSecret"] = tfaSecret;
                     if (uacPrompt && purposeOfUse)
                         headers["X-SanteDBClient-Claim"] =
-                            btoa("PolicyOverride=" + (uacPrompt && (purposeOfUse || false)) + ";" +
+                            btoa("urn:santedb:org:override=true;" +
                                 "urn:oasis:names:tc:xacml:2.0:action:purpose=" + purposeOfUse)
 
                     _auth.postAsync({
@@ -2834,7 +2804,7 @@ function SanteDBWrapper() {
                         headers: {
                             "X-SanteDB-TfaSecret": tfaSecret,
                             "X-SanteDBClient-Claim":
-                                btoa("PolicyOverride=" + (uacPrompt && (purposeOfUse || false)) + ";" +
+                                btoa("urn:santedb:org:override=true;" +
                                     "urn:oasis:names:tc:xacml:2.0:action:purpose=" + purposeOfUse)
                         },
                         contentType: 'application/x-www-form-urlencoded'
@@ -2862,15 +2832,16 @@ function SanteDBWrapper() {
             * @description A client credentials login is a login principal which only has an application principal. This is useful for password resets, etc.
             * @returns {Promise} A promise representing the login request
             * @param {boolean} noSession When true, indicates that a session should not be replaced that the request is a one time use token
+            * @param {Array} scope The list of scopes for this session
             */
-        this.clientCredentialLoginAsync = function (noSession) {
+        this.clientCredentialLoginAsync = function (noSession, scope) {
             return new Promise(function (fulfill, reject) {
                 try {
                     _auth.postAsync({
                         resource: "oauth2_token",
                         data: {
                             grant_type: 'client_credentials',
-                            scope: "*"
+                            scope: (scope || ["*"]).join(" ")
                         },
                         contentType: 'application/x-www-form-urlencoded'
                     })
@@ -2986,7 +2957,7 @@ function SanteDBWrapper() {
             * @returns {Promise} The promise representing the fulfillment or rejection of the password change
             */
         this.setPasswordAsync = function (sid, userName, passwd) {
-            if (!_session || !_session)
+            if (!_session && !(_elevator && _elevator.getToken()))
                 throw new Exception("SecurityException", "error.security", "Can only set password with active session");
             return _ami.putAsync({
                 id: sid,
@@ -3178,7 +3149,6 @@ function SanteDBWrapper() {
     };
 
     /**
-     * @private
      * @memberof SanteDBWrapper
      * @summary Provide access to localization data
      * @type {LocalizationApi}
@@ -3187,12 +3157,10 @@ function SanteDBWrapper() {
     /**
         * @type {ResourceApi}
         * @memberof SanteDBWrapper
-        * @private
         * @summary Provides access to resource handlers
         */
     this.resources = _resources;
     /**
-     * @private
         * @summary Configuration routines for SanteDB
         * @memberof SanteDBWrapper
         * @type {ConfigurationApi}
@@ -3200,14 +3168,12 @@ function SanteDBWrapper() {
     this.configuration = new ConfigurationApi();
     /**
         * @summary Authentication functions for SanteDB
-        * @private
         * @memberof SanteDBWrapper
         * @type {AuthenticationApi}
         */
     this.authentication = _authentication;
 
     /**
-     * @private
      * @type {ApplicationApi}
      */
     this.application = new ApplicationApi();

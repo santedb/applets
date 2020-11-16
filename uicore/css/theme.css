@@ -157,3 +157,8 @@ legend {
 .scrollSticky-container {
     transition: transform 0.2s;
 }
+
+ul.bullet-list {
+    margin-left: 4rem;
+    list-style-type: disc;
+}

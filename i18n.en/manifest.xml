@@ -95,6 +95,18 @@
       <string key="ui.login.realm">Enter security details for realm</string>
       <string key="ui.login.title">Login To SanteDB</string>
       <string key="ui.login.message">Welcome to SanteDB</string>
+      <string key="ui.elevate">You are attempting to access a function with a heightened security risk. Please re-authenticate yourself.</string>
+      <string key="ui.elevate.scope">Policies requiring elevation:</string>
+      <string key="1.3.6.1.4.1.33349.3.1.5.9.2.600.1">Change Security Settings</string>
+      <string key="error.type.ResetPasswordException.userMessage"><![CDATA[Could not process your password reset request. Please ensure: <ul class='bullet-list'><li>Your user is registered with this service</li><li>You have setup password recovery options</li><li>If your account is not a local account, you are connected to the internet</li></ul>]]></string>
+      <string key="ui.login.resetPassword.title">Reset Password</string>
+      <string key="ui.login.resetPassword.username">Username</string>
+      <string key="ui.login.resetPassword.challenge">Security Question</string>
+      <string key="ui.login.resetPassword.introduction">This tool will help you reset your password. You will need to have setup a password recovery question in your user profile prior to using this tool</string>
+      <string key="ui.login.resetPassword.onlineRequired">You have entered a user which requires internet connectivity to reset their password. Please connect to the internet to complete your password reset</string>
+      <string key="ui.login.resetPassword.success">Password successfully changed. You can now login with your new password</string>
+      <string key="org.santedb.tfa.email">Send an E-Mail</string>
+      <string key="org.santedb.tfa.sms">Send an SMS message</string>
       <string key="ui.logout">Logout</string>
       <string key="ui.logout.confirm">Are you sure you want to end your session?</string>
       <!-- Password Translations -->
@@ -480,6 +492,7 @@
       <string key="ui.model.securityUser.twoFactorEnabled">TFA Enabled</string>
       <string key="ui.model.securityUser.twoFactorEnabled.true">Enabled</string>
       <string key="ui.model.securityUser.twoFactorEnabled.false">Disabled</string>
+      <string key="ui.model.securityUser.challenge">Password Recovery</string>
       <string key="ui.model.userEntity.givenName">Given Name</string>
       <string key="ui.model.userEntity.familyName">Family Name</string>
       <string key="ui.model.userEntity.language">Preferred Language</string>
@@ -817,6 +830,11 @@
       <string key="ui.mail.flags.HighPriority">High Importance</string>
       <string key="ui.mail.flags.Archived">Archived</string>
       <string key="ui.mail.flags.Alert">Flagged Alert</string>
+
+      <!-- Security Challenges -->
+      <string key="security.challenge.text1">Your favorite pet's name</string>
+      <string key="security.challenge.text2">Your oldest sibling's name</string>
+      <string key="security.challenge.text3">The city where you were born</string>
   </strings>
 
 </AppletManifest>

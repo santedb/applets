@@ -23,8 +23,9 @@
  * @constructor
  * @class
  * @param {function():void} continueWith The function to continue with when login is successful
+ * @param {string} purposeOfUse The purpose of use to assign
  */
-function SanteDBElevator(continueWith) {
+function SanteDBElevator(continueWith, purposeOfUse) {
 
     var _token = null;
     var _onCloseFunction = null;
@@ -61,14 +62,16 @@ function SanteDBElevator(continueWith) {
      * @summary Shows the elevation dialog and then performs the continueWith
      * @param {any} useSession The current session, passed when and if a pou is required and not a change of login
      */
-    this.elevate = function(sessionToUse) {
+    this.elevate = function(sessionToUse, scope) {
         angular.element("#loginModal").scope().login = {
             userName: sessionToUse ? sessionToUse.user.userName : null,
             enablePin: sessionToUse != null,
-            requirePou: sessionToUse != null,
+            requirePou: purposeOfUse || scope && scope.filter(o=>o.indexOf("1.3.6.1.4.1.33349.3.1.5.9.2.600") == 0).length == 0,
             _lockUserName: sessionToUse != null,
+            scope: scope,
+            purposeOfUse: purposeOfUse,
             noSession: true,
-            grant_type: sessionToUse ? "pin" : "password",
+            grant_type: "password",
             onLogin: function(s) {
                 _token = s.access_token || s.token;
                 continueWith(s);
