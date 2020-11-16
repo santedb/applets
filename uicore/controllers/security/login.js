@@ -128,6 +128,9 @@ angular.module("santedb").controller("LoginController", ['$scope', '$rootScope',
             var user = await SanteDB.resources.securityUser.findAsync({ userName: $scope.reset.username });
 
             if(!user.resource || user.resource.length == 0) 
+                user = await SanteDB.resources.securityUser.findAsync({ userName: $scope.reset.username, _upstream: true });
+
+            if(!user.resource || user.resource.length == 0) 
                 throw new Exception("ResetPasswordException", "ui.login.resetPassword.noUser");
             
             $scope.reset.user = user.resource[0].entity;
