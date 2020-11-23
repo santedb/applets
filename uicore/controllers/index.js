@@ -186,6 +186,9 @@ var santedbApp = angular.module('santedb', ['ngSanitize', 'ui.router', 'oc.lazyL
             $(".modal").modal('hide');
             $('.popover').popover('hide');
             
+            // Clear out elevator
+            SanteDB.authentication.setElevator(null);
+            
             if (transition._targetState._definition.self.name != transition._targetState._definition.self.name != $state.$current.name)
                 $("#pageTransitioner").show();
         });
@@ -198,6 +201,7 @@ var santedbApp = angular.module('santedb', ['ngSanitize', 'ui.router', 'oc.lazyL
             },
                 'fast');
 
+            $("#navbarResponsive").collapse('hide');
             delete($rootScope._transition);
         });
         $transitions.onError({}, function (transition) {

@@ -250,3 +250,26 @@ String.prototype.pad = function (char, len) {
     var pad = char.repeat(len);
     return (pad + this).slice(-len);
 }    
+
+/** 
+ * @summary Copy object data stripping out identifiers
+ * @param {string} fromObject The object to copy from
+ * @param {boolean} deepCopy True if sub-objects should be copied
+ * @returns {Object} The copied object
+ */
+function copyObject(fromObject, deepCopy) {
+
+    if(fromObject && typeof(fromObject) !== "string") {
+        var obj = angular.copy(fromObject);
+        delete(obj.id);
+        delete(obj.versionId);
+        
+        if(deepCopy)
+            Object.keys(obj).forEach(function(k) {
+                if(obj[k])
+                    obj[k] = copyObject(obj[k]);
+            });
+        return obj;
+    }
+    return obj;
+}

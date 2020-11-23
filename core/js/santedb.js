@@ -1188,7 +1188,7 @@ function SanteDBWrapper() {
                 if (data.responseJSON &&
                     data.responseJSON.$type == "PolicyViolationException" &&
                     data.getResponseHeader("WWW-Authenticate").indexOf("insufficient_scope") > -1)
-                    _elevator.elevate(angular.copy(_session), [ data.responseJSON.policyId  ]);
+                    _elevator.elevate(angular.copy(_session), [data.responseJSON.policyId]);
                 else
                     _elevator.elevate(null);
                 return true;
@@ -1261,9 +1261,9 @@ function SanteDBWrapper() {
         var _idGenerators = {};
         var _resourceStates = {};
 
-         /**
-         * @summary Wraps native printing functionality for the host operating system
-         */
+        /**
+        * @summary Wraps native printing functionality for the host operating system
+        */
         this.printView = function () {
             __SanteDBAppService.Print();
         }
@@ -1290,6 +1290,21 @@ function SanteDBWrapper() {
 
                             if (targetProperty && !targetProperty.classConcept && targetProperty.templateModel) {
                                 var object = await _resources.template.getAsync(targetProperty.templateModel.mnemonic, "full", parms);
+
+                                // Initialize the template 
+                                if (object.tag) {
+                                    Object.keys(object.tag).filter(o => o.indexOf("$copy") == 0).forEach(function (k) {
+                                        var target = k.substring(6);
+                                        var source = object.tag[k];
+
+                                        // Analyze
+                                        var scopedValue = object;
+                                        source.split('.').forEach(function (s) { if (scopedValue) scopedValue = scopedValue[s]; });
+
+                                        object[target] = copyObject(scopedValue, true);
+
+                                    })
+                                }
 
                                 if (object.relationship)
                                     object.relationship = await getSubTemplates(object.relationship, parms);
@@ -1330,7 +1345,7 @@ function SanteDBWrapper() {
          * SanteDB.app.addResourceViewer("Patient", function(parms) { $state.transitionTo("my-view.patient". parms); return true; });
          */
         this.addResourceViewer = function (resourceType, redirectCallback) {
-            if(!_resourceStates[resourceType])
+            if (!_resourceStates[resourceType])
                 _resourceStates[resourceType] = [];
             _resourceStates[resourceType].push(redirectCallback);
         }
@@ -1350,12 +1365,11 @@ function SanteDBWrapper() {
          * @param {*} resourceType The type of resource
          * @param {*} parms The parameters to pass
          */
-        this.callResourceViewer = function(resourceType, parms) {
+        this.callResourceViewer = function (resourceType, parms) {
             var callList = _resourceStates[resourceType];
-            if(callList) 
-            {
-                for(var c in callList)
-                    if(callList[c](parms)) return true;
+            if (callList) {
+                for (var c in callList)
+                    if (callList[c](parms)) return true;
             }
             return false;
         }
@@ -2548,13 +2562,13 @@ function SanteDBWrapper() {
             _oauthSession = oauthResponse;
             if (oauthResponse.access_token) window.sessionStorage.setItem('token', oauthResponse.access_token || oauthResponse.token);
             if (oauthResponse.refresh_token) window.sessionStorage.setItem('refresh_token', oauthResponse.refresh_token);
-            if(oauthResponse.id_token)
+            if (oauthResponse.id_token)
                 try {
                     var tokenData = JSON.parse(atob(oauthResponse.id_token.split('.')[1]));
                     // Set the locale
                     if (tokenData.lang)
                         __SanteDBAppService.SetLocale(tokenData.lang);
-                    else if(tokenData['http://santedb.org/claims/language'])
+                    else if (tokenData['http://santedb.org/claims/language'])
                         __SanteDBAppService.SetLocale(tokenData['http://santedb.org/claims/language']);
 
                 }
@@ -3031,7 +3045,7 @@ function SanteDBWrapper() {
             second: 'YYYY-MM-DD HH:mm:ss'
         };
 
-       
+
         /**
             * @summary Gets a string from the current user interface localization
             * @memberof SanteDBWrapper.LocalizationApi
@@ -3185,16 +3199,19 @@ function SanteDBWrapper() {
     $.ajaxSetup({
         cache: false,
         beforeSend: function (data, settings) {
-            var elevatorToken = _elevator ? _elevator.getToken() : null;
-            if (elevatorToken) {
-                data.setRequestHeader("Authorization", "BEARER " +
-                    elevatorToken);
+
+            if (!settings.noAuth) {
+                var elevatorToken = _elevator ? _elevator.getToken() : null;
+                if (elevatorToken) {
+                    data.setRequestHeader("Authorization", "BEARER " +
+                        elevatorToken);
+                }
+                else if (window.sessionStorage.getItem('token'))
+                    data.setRequestHeader("Authorization", "BEARER " +
+                        window.sessionStorage.getItem("token"));
+                if (!_magic)
+                    _magic = __SanteDBAppService.GetMagic();
             }
-            else if (window.sessionStorage.getItem('token'))
-                data.setRequestHeader("Authorization", "BEARER " +
-                    window.sessionStorage.getItem("token"));
-            if (!_magic)
-                _magic = __SanteDBAppService.GetMagic();
             data.setRequestHeader("X-SdbMagic", _magic);
         },
         converters: {
@@ -3219,7 +3236,7 @@ var SanteDB = new SanteDBWrapper();
  * @constructor
  * @class
  */
-function ApplicationPrincipalElevator() {
+function ApplicationPrincipalElevator(multiuse) {
 
     var _token = null;
     var _consumed = false;
@@ -3229,7 +3246,7 @@ function ApplicationPrincipalElevator() {
      * @summary Gets the elevation token
      */
     this.getToken = function () {
-        if (_consumed) return null;
+        if (!multiuse && _consumed) return null;
         else {
             _consumed = true;
             return _token;
