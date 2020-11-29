@@ -1260,6 +1260,8 @@ function SanteDBWrapper() {
 
         var _idGenerators = {};
         var _resourceStates = {};
+        var _idParsers = {};
+        var _idClassifiers = {};
 
         /**
         * @summary Wraps native printing functionality for the host operating system
@@ -1372,6 +1374,63 @@ function SanteDBWrapper() {
                     if (callList[c](parms)) return true;
             }
             return false;
+        }
+
+        /**
+         * @method addIdentifierClassifier
+         * @summary Adds a new classification map to the identifier 
+         * @param {string} domain The domain which is being classified
+         * @param {RegExp} regexClassification The classification regex
+         */
+        this.addIdentifierClassifier = function(domain, regexClassification) {
+            _idClassifiers[domain] = regexClassification;
+
+            if(!_idParsers[domain]) // We can implement a parser by returning the first capture group of the regex
+                _idParsers[domain] = function(value) {
+                    var matchData = regexClassification.exec(value);
+                    if(matchData)
+                    {
+                        if(matchData.length > 1)
+                            return matchData[1];
+                        return matchData[0];
+                    }
+                    return value;
+                }
+        }
+
+        /**
+         * @method classifyIdentifier
+         * @summary Attempts to guess the identifier domains to which an identifier belongs based on its format
+         * @description This method is useful when you're scanning an identifier and need to know which identity domain it may belong to
+         * @param {string} value The value of the identifier
+         * @returns {Array} An array of potential identity domains which the value could belong to
+         */
+        this.classifyIdentifier = function(value) {
+            return Object.keys(_idClassifiers).filter(o=>_idClassifiers[o].test(value));
+        }
+
+        /**
+         * @method addIdentifierParser
+         * @summary Adds a new identifier parser
+         * @param {string} domain The domain to which the parser belongs
+         * @param {function} parserCallback The callback function 
+         * @example
+         *  SanteDB.application.addIdentifierParser("DLN", function(dln, context) { 
+         *      return dln.subString(0, 10);
+         *  });
+         */
+        this.addIdentifierParser = function(domain, parserCallback) {
+            _idParsers[domain] = parserCallback;
+        }
+
+        /**
+         * @method getIdentifierParser
+         * @summary Retrieve identifier parser for the specified domain
+         * @param {string} domain The domain to which the parser belongs
+         * @returns {function} The parser function
+         */
+        this.getIdentifierParser = function(domain) {
+            return _idParsers[domain];
         }
 
         /**

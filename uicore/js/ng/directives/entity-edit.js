@@ -376,6 +376,11 @@ angular.module('santedb-lib')
                 $scope.scanId = async function () {
                     try {
                         var data = await SanteDB.application.scanBarcodeAsync();
+
+                        // Is there a parser?
+                        var parser = SanteDB.application.getIdentifierParser($scope.identifier.authority.domainName);
+                        if(parser)
+                            data = parser(data);
                         $scope.identifier.value = data;
                         try { $scope.$apply(); }
                         catch (e) { }
