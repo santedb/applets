@@ -18,7 +18,7 @@
  - Date: 2018-7-23
  -->
 <AppletManifest xmlns="http://santedb.org/applet">
-  <info id="org.santedb.i18n.en" version="2.0.56.0">
+  <info id="org.santedb.i18n.en" version="2.0.57.0">
     <icon>/org.santedb.core/img/i18n.png</icon>
     <name lang="en">English Applet Support</name>
     <author>SanteSuite Community Partners (see: santesuite.org)</author>
@@ -83,9 +83,9 @@
       <string key="ui.locale.sw-ke">Swahili (Kenya)</string>
       <string key="ui.locale.sw-tz">Swahili (Tanzania)</string>
       <string key="ui.locale.sw-ug">Swahili (Uganda)</string>
-
       <!-- Common Phrases -->
       <string key="ui.common.charsRemain">characters remain</string>
+      <string key="ui.search.onlineResult">Online Result</string>
       <!-- Login Translations -->
       <string key="ui.login.input.username">Username</string>
       <string key="ui.login.input.password">Password</string>

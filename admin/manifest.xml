@@ -20,7 +20,7 @@
  - Date: 2019-8-8
  -->
 <AppletManifest xmlns="http://santedb.org/applet">
-  <info id="org.santedb.admin" version="2.0.56.0">
+  <info id="org.santedb.admin" version="2.0.57.0">
     <icon>/org.santedb.admin/img/icon.png</icon>
     <name lang="en">SanteDB Administrative Panel</name>
     <author>SanteSuite Community Partners (see: santesuite.org)</author>
@@ -50,6 +50,10 @@
     <menuItem launch="santedb-admin.system.logs.index" asset="/org.santedb.admin/views/system/logs/index.html" context="org.santedb.admin">
       <icon>far fa-list-alt</icon>
       <text lang="en">Logs</text>
+    </menuItem>
+    <menuItem launch="santedb-admin.system.bug" asset="/org.santedb.admin/views/system/bug.html" context="org.santedb.admin">
+      <icon>fas fa-bug</icon>
+      <text lang="en">Submit Bug</text>
     </menuItem>
     <menuItem launch="santedb-admin.system.info" asset="/org.santedb.admin/views/system/server/index.html" context="org.santedb.admin">
       <icon>fas fa-info-circle</icon>
@@ -319,5 +323,17 @@
     <string key="org.santedb.widget.admin.panel.user.core">Core Properties</string>
     <string key="org.santedb.widget.admin.panel.user.security">Security Properties</string>
     
+    <!-- Bug Reporting -->
+    <string key="ui.admin.bug.user">Submitter</string>
+    <string key="ui.admin.bug.description">Description</string>
+    <string key="ui.admin.bug.description.help">Enter a brief description of the bug you've encountered.</string>
+    <string key="ui.admin.bug.reproduce">Steps to Reproduce</string>
+    <string key="ui.admin.bug.reproduce.help">Enter the discrete steps you took before the error appeared</string>
+    <string key="ui.admin.bug.attachments">Attachments</string>
+    <string key="ui.admin.bug.attach.log">Attach my log file (if you get an error un-check this)</string>
+    <string key="ui.admin.bug.attach.config">Attach my configuration file</string>
+    <string key="ui.admin.bug.attach.detail">Attach contents of last error message</string>
+    <string key="ui.admin.bug.requiredFieldMissing">Please fill out all fields with a * beside them</string>
+    <string key="ui.admin.bug.onlineOnly">You must be online to submit a bug</string>
   </strings>
 </AppletManifest>

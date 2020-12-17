@@ -66,7 +66,7 @@ function SanteDBElevator(continueWith, purposeOfUse) {
         angular.element("#loginModal").scope().login = {
             userName: sessionToUse ? sessionToUse.user.userName : null,
             enablePin: sessionToUse != null,
-            requirePou: purposeOfUse || scope && scope.filter(o=>o.indexOf("1.3.6.1.4.1.33349.3.1.5.9.2.600") == 0).length == 0,
+            requirePou: purposeOfUse === false ? false : purposeOfUse || scope && scope.filter(o=>o.indexOf("1.3.6.1.4.1.33349.3.1.5.9.2.600") == 0).length == 0,
             _lockUserName: sessionToUse != null,
             scope: scope,
             purposeOfUse: purposeOfUse,

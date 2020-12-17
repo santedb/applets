@@ -163,8 +163,13 @@ angular.module('santedb-lib')
                         else
                             flatNameList.push(name);
                     });
-                    scope.name = { "$other": flatNameList };
-                    scope.nameEdit = flatNameList;
+
+                    if(scope.simpleEntry)
+                        flatNameList = [ flatNameList[0] ] ; // simple entry, only edit first name
+
+                        scope.nameEdit = flatNameList;
+                        scope.name = { "$other": flatNameList };
+
                 }
 
                 if (!scope.name)

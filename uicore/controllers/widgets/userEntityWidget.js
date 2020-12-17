@@ -159,7 +159,7 @@ angular.module('santedb').controller('CoreUserWidgetController', ['$scope', '$ro
                     }
                 }
 
-                var pou = await SanteDB.resources.concept.getAsync("8b18c8ce-916a-11ea-bb37-0242ac130002")
+                var pou = await SanteDB.resources.concept.getAsync("8b18c8ce-916a-11ea-bb37-0242ac130002");
                 SanteDB.authentication.setElevator(new SanteDBElevator(setSecurityFn, pou));
                 await setSecurityFn();
             }
