@@ -23,7 +23,7 @@
             <label class="col-md-2 col-xs-12 control-label" for="deviceName" id="deviceNameLabel">{{ 'ui.config.realm.deviceName.label' | i18n }}</label>
             <div class="col-md-10 col-xs-12">
                 <input ng-model="config.security.deviceName" ng-required="true" placeholder="tabletid" ng-pattern="/^[A-Za-z][A-Za-z.0-9-_]+$/i"
-                    autocorrect="off" autocomplete="off" autocapitalize="off" spellcheck="false" class="form-control" type="text"
+                    autocorrect="off" autocomplete="__away" autocapitalize="off" spellcheck="false" class="form-control" type="text"
                     name="deviceName" id="deviceName" aria-describedby="deviceNameLabel" />
                 <div class="form-text text-muted">
                     {{ 'ui.config.realm.deviceName.help' | i18n }}
@@ -34,7 +34,7 @@
             <label class="col-md-2 col-xs-12 control-label" for="realmName" id="realmServerLabel">{{ 'ui.config.realm.name.label' | i18n }}</label>
             <div class="col-md-10 col-xs-12">
                 <input ng-model="config.security.domain" ng-required="true" placeholder="demo.openiz.org" ng-pattern="/^[A-Za-z0-9.-]*$/i"
-                    class="form-control" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" type="text"
+                    class="form-control" autocomplete="__away" autocorrect="off" autocapitalize="off" spellcheck="false" type="text"
                     name="realmServer" id="realmServer" aria-describedby="realmServerLabel" />
                 <div class="form-text text-muted">
                     {{ 'ui.config.realm.name.help' | i18n }}
@@ -74,7 +74,7 @@
         <div class="form-group row">
             <label class="col-md-2 col-xs-12 control-label" for="realmPort" id="realmPortLabel">{{ 'ui.config.realm.port.label' | i18n }}</label>
             <div class="col-md-10 col-xs-12">
-                <input ng-model="config.security.port" ng-required="true" class="form-control" autocomplete="off" autocorrect="off" autocapitalize="off"
+                <input ng-model="config.security.port" ng-required="true" class="form-control" autocomplete="__away" autocorrect="off" autocapitalize="off"
                     spellcheck="false" type="number" name="realmPort" id="realmPort" aria-describedby="realmPortLabel" min="1"
                     max="65535" />
                 <div class="form-text text-muted">

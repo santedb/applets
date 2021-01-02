@@ -337,6 +337,49 @@ async function searchByBarcode(qrCodeData, noValidate, upstream) {
     }
 }
 
+/**
+ * @summary Scrubs an object from Model 
+ * @param {*} source The object from which the Model properties should be scrubbed
+ * @returns {Array} The model objects which were scrubbed
+ */
+function scrubModelProperties(source) {
+
+    if (!Array.isArray(source))
+        source = [source];
+
+    source.forEach(function (object) {
+        Object.keys(object).forEach(function (key) {
+            var rawValue = object[key];
+
+            if (!Array.isArray(rawValue))
+                rawValue = [rawValue];
+
+            rawValue.forEach(function (value) {
+                if (value && key.endsWith("Model")) {
+
+
+                    // Get the key property
+                    var keyProperty = key.substring(0, key.length - 5);
+                    var keyValue = object[keyProperty];
+
+                    // Set the key property to the selected / item value if present
+                    if (value.id) {
+                        object[keyProperty] = value.id;
+                        // Remove the detail object
+                        delete (object[key]);
+                    }
+                }
+
+                // Scan down 
+                if (value && typeof (value) == "object" && !(value instanceof Date))
+                    scrubModelProperties(value);
+            });
+        });
+
+    });
+    return source;
+}
+
 // Correct information such as addresses and other information on the patient profile
 async function correctEntityInformation(entity) {
     // Update the address - Correcting any linked addresses to the strong addresses

@@ -40,7 +40,7 @@
                         key="'name[OfficialRecord].component.value'"
                         filter="{ 'classConcept': '8cf4b0b0-84e5-4122-85fe-6afa8240c218', 'statusConcept': 'c8064cbd-fa06-4530-b430-1a52f1530c27' }" />
                 </div>
-                <input name="{{controlPrefix}}address{{$index}}state" ng-switch-default="" type="text" class="form-control"
+                <input autocomplete="__away" name="{{controlPrefix}}address{{$index}}state" ng-switch-default="" type="text" class="form-control"
                     ng-model="addr.component.State" required="required" />
                 <div class="text-danger" ng-if="ownerForm[controlPrefix + 'address' + $index + 'state'].$invalid"><i class="fas fa-exclamation-triangle"></i> {{ 'ui.error.required' | i18n }}</div>
 
@@ -59,7 +59,7 @@
                         key="'name[OfficialRecord].component.value'"
                         filter="{ 'classConcept': 'd9489d56-ddac-4596-b5c6-8f41d73d8dc5', 'address[Direct].component[State].value': addr.component.State, 'statusConcept': 'c8064cbd-fa06-4530-b430-1a52f1530c27' }" />
                 </div>
-                <input ng-switch-default=""
+                <input ng-switch-default=""  autocomplete="__away"
                     name="{{controlPrefix}}address{{$index}}county" type="text" class="form-control"
                     ng-model="addr.component.County" />
                 <div class="text-danger" ng-if="ownerForm[controlPrefix + 'address' + $index + 'county'].$invalid"><i class="fas fa-exclamation-triangle"></i> {{ 'ui.error.required' | i18n }}</div>
@@ -71,7 +71,7 @@
             <label
                 class="col-sm-12 col-md-3 control-label">{{ 'ui.model.entity.address.component.city' | i18n }}</label>
             <div class="col-sm-12 col-md-9">
-                <input type="text" class="form-control" ng-model="addr.component.City" />
+                <input autocomplete="__away" type="text" class="form-control" ng-model="addr.component.City" />
             </div>
         </div>
     </div>
@@ -80,7 +80,7 @@
         <label
             class="col-sm-12 col-md-3 control-label">{{ 'ui.model.entity.address.component.street' | i18n }}</label>
         <div class="col-sm-12 col-md-9">
-            <input type="text" class="form-control" ng-model="addr.component.StreetAddressLine" />
+            <input autocomplete="__away" type="text" class="form-control" ng-model="addr.component.StreetAddressLine" />
         </div>
     </div>
     <div class="form-group row"
@@ -88,10 +88,10 @@
         <label
             class="col-sm-12 col-md-3 control-label">{{ 'ui.model.entity.address.component.postalcode' | i18n }}</label>
         <div class="col-sm-12 col-md-9">
-            <input type="text" class="form-control" ng-model="addr.component.PostalCode" />
+            <input autocomplete="__away" type="text" class="form-control" ng-model="addr.component.PostalCode" />
         </div>
     </div>
-    <div class="form-group row" ng-if="addressEdit.length &gt; 1">
+    <div class="form-group row" ng-if="$index &gt; 0">
         <div class="col">
         <div class="btn-group float-right">
             <button type="button" ng-click="removeAddress($index)" class="btn btn-danger"><i class="fas fa-times"></i> {{ 'ui.action.remove' | i18n }}</button>

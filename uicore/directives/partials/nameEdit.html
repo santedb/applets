@@ -23,7 +23,7 @@
         <div class="col-sm-12 col-md-9" ng-switch="$root.system.config.application.setting['input.name']">
             <tag-input ng-required="isRequired" ng-switch-default="" name="{{controlPrefix}}name{{$index }}given" class="form-control"
                 ng-model="name.component.Given" required="required" />
-            <input autocomplete="off"  ng-required="isRequired" ng-switch-when="simple" name="{{controlPrefix}}name{{$index }}given" type="text" class="form-control"
+            <input autocomplete="__away"  ng-required="isRequired" ng-switch-when="simple" name="{{controlPrefix}}name{{$index }}given" type="text" class="form-control"
                 ng-model="name.component.Given" required="required" />
             <div class="text-danger" ng-if="ownerForm[controlPrefix + 'name' + $index  + 'given'].$invalid">
                 <i class="fas fa-exclamation-triangle"></i> {{ 'ui.error.required' | i18n }}</div>
@@ -35,7 +35,7 @@
         <div class="col-sm-12 col-md-9" ng-switch="$root.system.config.application.setting['input.name']">
             <tag-input ng-required="isRequired" ng-switch-default="" name="{{controlPrefix}}name{{ $index }}family" class="form-control"
                 ng-model="name.component.Family" required="required" />
-            <input ng-required="isRequired" ng-switch-when="simple" name="{{controlPrefix}}name{{ $index }}family" type="text" class="form-control"
+            <input autocomplete="__away" ng-required="isRequired" ng-switch-when="simple" name="{{controlPrefix}}name{{ $index }}family" type="text" class="form-control"
                 ng-model="name.component.Family" required="required" />
             <div class="text-danger" ng-if="ownerForm[controlPrefix + 'name' + $index + 'family'].$invalid">
                 <i class="fas fa-exclamation-triangle"></i> {{ 'ui.error.required' | i18n }}</div>

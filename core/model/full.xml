@@ -110,6 +110,7 @@
     <property name="address" all="true" ref="EntityAddress" behavior="always"/>
     <property name="identifier" all="true" ref="EntityIdentifier" behavior="always"/>
     <property name="telecom" all="true" behavior="always"/>
+    <property name="occupationModel" all="true" behavior="always" ref="Concept"/>
     <property name="classConceptModel" behavior="never"/>
     <property name="relationship" all="true" behavior="always">
       <property name="*" ref="EntityRelationship" all="true"/>
@@ -125,6 +126,8 @@
     <property name="creationTime" behavior="always"/>
     <property name="creationTimeModel" behavior="never"/>
     <property name="version" behavior="always"/>
+    <property name="occupationModel" all="true" behavior="always" ref="Concept"/>
+
     <property name="name" all="true" ref="EntityName" behavior="always"/>
     <property name="address" all="true" behavior="always">
       <property name="*" ref="EntityAddress" behavior="always"/>

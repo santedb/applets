@@ -81,4 +81,32 @@
             {{ 'ui.model.patient.multipleBirthOrder.' + scopedObject.multipleBirthOrder | i18n }}
         </div>
     </div>
+
+    <div ng-if="scopedObject.vipStatusModel" class="row">
+        <label class="col-sm-3 col-xs-12 control-label">{{ 'ui.model.patient.vipStatus' | i18n }}</label>
+        <div class="col-sm-9 col-xs-12 ">
+            {{ scopedObject.vipStatusModel | concept }}
+        </div>
+    </div>
+    <div ng-if="scopedObject.occupationModel" class="row">
+        <label class="col-sm-3 col-xs-12 control-label">{{ 'ui.model.person.occupation' | i18n }}</label>
+        <div class="col-sm-9 col-xs-12 ">
+            {{ scopedObject.occupationModel | concept }}
+        </div>
+    </div>
+
+    <!-- Relationships -->
+    <div ng-repeat="(k,v) in scopedObject.relationship" ng-if="k == 'Citizen' || k == 'Employer' || k == 'Caregiver' || k == 'CoverageSponsor' || k == 'Student'" class="row">
+        <label class="col-sm-3 col-xs-12 control-label">{{ 'ui.model.entity.relationship.' + k | i18n }}</label>
+        <div ng-if="v.targetModel" class="col-sm-9 col-xs-12">
+            {{ v.targetModel.name | name }}
+        </div>
+        <div ng-if="v.length" class="col-sm-9 col-xs-12">
+            <ul>
+                <li ng-repeat="i in v track by $index">
+                    {{ i.targetModel.name | name }}
+                </li>
+            </ul>
+        </div>
+    </div>
 </div>
