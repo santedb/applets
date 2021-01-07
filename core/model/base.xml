@@ -77,7 +77,7 @@
 
   <!-- Concepts -->
   <type type="Concept" all="true">
-    <property name="name" behavior="always" all="true"/>
+    <property name="name" behavior="always" all="true" />
     <property name="mnemonic"/>
     <property name="id"/>
   </type>

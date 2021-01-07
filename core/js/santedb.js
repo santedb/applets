@@ -103,9 +103,9 @@ function APIWrapper(_config) {
 
                     if (reject) {
                         if (error && error.error !== undefined) // oauth2
-                            reject(new Exception(error.type, error.error, error.error_description, error.caused_by), configuration.state);
+                            reject(new Exception(error.type, error.error, error.error_description, error.caused_by, null, null, null, null, error), configuration.state);
                         else if (error && (error.$type === "Exception" || error.$type))
-                            reject(new Exception(error.$type, error.message, error.detail, error.cause, error.stack, error.policyId, error.policyOutcome, error.rules, error.data), configuration.state);
+                            reject(new Exception(error.$type, error.message, error.detail, error.cause, error.stack, error.policyId, error.policyOutcome, error.rules, error.data || error), configuration.state);
                         else
                             reject(new Exception("HttpException", "error.http." + e.status, e, null), configuration.state);
                     }
@@ -156,9 +156,9 @@ function APIWrapper(_config) {
 
                     if (reject) {
                         if (error && error.error !== undefined) // oauth2
-                            reject(new Exception(error.type, error.error, error.error_description, error.caused_by), configuration.state);
+                            reject(new Exception(error.type, error.error, error.error_description, error.caused_by, null, null, null, null, error), configuration.state);
                         else if (error && (error.$type === "Exception" || error.$type))
-                            reject(new Exception(error.$type, error.message, error.detail, error.cause, error.stack, error.policyId, error.policyOutcome, error.rules), configuration.state);
+                            reject(new Exception(error.$type, error.message, error.detail, error.cause, error.stack, error.policyId, error.policyOutcome, error.rules, error.data || error), configuration.state);
                         else
                             reject(new Exception("HttpException", "error.http." + e.status, e, null), configuration.state);
                     }
@@ -209,7 +209,7 @@ function APIWrapper(_config) {
                         if (error && error.error !== undefined) // oauth2
                             reject(new Exception(error.type, error.error, error.error_description, error.caused_by), configuration.state);
                         else if (error && (error.$type === "Exception" || error.$type))
-                            reject(new Exception(error.$type, error.message, error.detail, error.cause, error.stack, error.policyId, error.policyOutcome, error.rules), configuration.state);
+                            reject(new Exception(error.$type, error.message, error.detail, error.cause, error.stack, error.policyId, error.policyOutcome, error.rules, error.data || error), configuration.state);
                         else
                             reject(new Exception("HttpException", "error.http." + e.status, e, null), configuration.state);
                     }
@@ -260,7 +260,7 @@ function APIWrapper(_config) {
                         if (error && error.error !== undefined) // oauth2
                             reject(new Exception(error.type, error.error, error.error_description, error.caused_by), configuration.state);
                         else if (error && (error.$type === "Exception" || error.$type))
-                            reject(new Exception(error.$type, error.message, error.detail, error.cause, error.stack, error.policyId, error.policyOutcome, error.rules), configuration.state);
+                            reject(new Exception(error.$type, error.message, error.detail, error.cause, error.stack, error.policyId, error.policyOutcome, error.rules, error.data || error), configuration.state);
                         else
                             reject(new Exception("HttpException", "error.http." + e.status, e, null), configuration.state);
                     }
@@ -1263,6 +1263,10 @@ function SanteDBWrapper() {
         var _idParsers = {};
         var _idClassifiers = {};
 
+        
+        // JWS Pattern
+        var jwsDataPattern = /^(.*?)\.(.*?)\.(.*?)$/;
+
         /**
         * @summary Wraps native printing functionality for the host operating system
         */
@@ -1335,6 +1339,91 @@ function SanteDBWrapper() {
             }).flat();
             await Promise.all(promises);
             return collection;
+        }
+
+        /**
+         * @method scanIdentifierAsync
+         * @summary Scans a barcode using @see scanBarcodeAsync however interprets the identifier rather than returning the raw data
+         * @returns {string} The interpreted barcode identifier information
+         */
+        this.scanIdentifierAsync = async function() {
+            var data = await SanteDB.application.scanBarcodeAsync();
+
+            if(jwsDataPattern.test(data))
+            {
+                var match = jwsDataPattern.exec(data);
+                var idData = JSON.parse(atob(match[2]));
+                return idData.id[0].value;
+            }
+            else 
+            {
+                var idDomain = SanteDB.application.classifyIdentifier(data);
+                if(idDomain.length == 1)
+                {
+                    var parser = SanteDB.application.getIdentifierParser(idDomain[0]);
+                    if(parser) data = parser(data);
+                }
+                return data;
+            }
+        }
+
+        /**
+         * @method searchByBarcodeAsync
+         * @summary Performs a search using barcode data
+         * @memberof SanteDBWrapper.ApplicationApi
+         * @param {*} qrCodeData The QR Code data already scanned
+         * @param {*} noValidate True if the barcode should not be validated
+         * @param {*} upstream True if search upstream
+         */
+        this.searchByBarcodeAsync = async function(qrCodeData, noValidate, upstream) {
+            try {
+                if (!qrCodeData)
+                    qrCodeData = await SanteDB.application.scanBarcodeAsync();
+        
+                // QR Code is a signed code
+                if (jwsDataPattern.test(qrCodeData)) {
+                    var result = await SanteDB.application.ptrSearchAsync(qrCodeData, !noValidate, upstream || false);
+                    result.$novalidate = noValidate;
+                    result.$upstream = upstream;
+                    return result;
+                }
+                else {
+        
+                    var idDomain = SanteDB.application.classifyIdentifier(qrCodeData);
+                    if(idDomain.length == 1)
+                    {
+                        var parser = SanteDB.application.getIdentifierParser(idDomain[0]);
+                        if(parser) qrCodeData = parser(qrCodeData);
+                    }
+                    var result = await SanteDB.resources.entity.findAsync({ "identifier.value" : qrCodeData});
+                    result.$search = qrCodeData;
+                    return result;
+                }
+            }
+            catch (e) {
+                if(!e) // No error
+                    return null;
+                // Error was with validating the code
+                else if (e.rules && e.rules.length > 0 && e.rules.filter(o => o.id == "jws.verification" || o.id == "jws.app" || o.id == "jws.key").length == e.rules.length) {
+                    return await SanteDB.application.searchByBarcodeAsync(qrCodeData, true, upstream);
+                }
+                else if(!upstream && (e.$type == "KeyNotFoundException" || e.cause && e.cause.$type == "KeyNotFoundException")  && confirm(SanteDB.locale.getString("ui.emr.search.online"))) {
+                    // Ask the user if they want to search upstream, only if they are allowed
+                    var session = await SanteDB.authentication.getSessionInfoAsync();
+        
+                    if(session.method == "LOCAL") // Local session so elevate to use the principal elevator
+                    {
+                        var elevator = new ApplicationPrincipalElevator();
+                        await elevator.elevate(session);
+                        SanteDB.authentication.setElevator(elevator);
+                    }
+                    return await SanteDB.application.searchByBarcodeAsync(qrCodeData, true, true);
+                }
+                throw e;
+            }
+            finally {
+                SanteDB.authentication.setElevator(null);
+            }
         }
 
         /**
@@ -1575,12 +1664,11 @@ function SanteDBWrapper() {
         }
         /**
          * @summary Instructs the back end service to perform a system upgrade
-         * @param {string} appId The id of the applet which should be updated
          * @returns {Promise} A promise representing the fulfillment or rejection of update
          * @method doUpdateAsync
          * @memberof SanteDBWrapper.ApplicationApi
          */
-        this.doUpdateAsync = function (appId) {
+        this.doUpdateAsync = function () {
             return _app.postAsync({
                 resource: "/Update"
             });
@@ -1867,7 +1955,19 @@ function SanteDBWrapper() {
                 throw new Exception("Exception", "error.general", e);
             }
         }
-
+        /**
+         * @method
+         * @memberof SanteDBWrapper.ApplicationApi
+         * @summary Show a toast to the user
+         * @param {string} text The text of the toast
+         */
+        this.showToast = function(text) {
+            try {
+                __SanteDBAppService.ShowToast(text);
+            }
+            catch(e) {
+            }
+        }
         /**
          * @method
          * @memberof SanteDBWrapper.ApplicationApi

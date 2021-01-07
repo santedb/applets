@@ -270,10 +270,7 @@ var santedbApp = angular.module('santedb', ['ngSanitize', 'ui.router', 'oc.lazyL
                 }
             }
             else 
-                $rootScope.error = {
-                    userMessage: userMessage,
-                    type: e.$type
-                }
+                $rootScope.error = e;
 
             var bugCallList = SanteDB.application.getResourceViewer("DiagnosticReport");
             if(bugCallList)

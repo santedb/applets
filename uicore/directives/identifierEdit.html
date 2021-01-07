@@ -17,7 +17,8 @@
             <div class="input-group">
                 <input ng-pattern="authorities[identifier.authority.domainName].validation" ng-model="identifier.value"
                     class="form-control" name="identifier{{identifier.id}}" ng-required="isRequired"
-                    ng-disabled="!identifier.authority.domainName" ng-readonly="!authorities[identifier.authority.domainName]" />
+                    ng-disabled="!identifier.authority.domainName" ng-readonly="!authorities[identifier.authority.domainName]"
+                    placeholder="{{ authorities[identifier.authority.domainName].validationHint }}" />
                     <div class="input-group-append">
                         <div class="btn-group" ng-if="authorities[identifier.authority.domainName]">
                         <button ng-click="generateId()" ng-if="authorities[identifier.authority.domainName].generator" class="btn btn-outline-secondary" type="button" ><i class="fas fa-robot"></i><span class="d-none d-sm-inline">{{ 'ui.action.generate' | i18n }}</span></button>
@@ -26,7 +27,7 @@
                     </div>
                     </div>
             </div>
-            <div ng-show="ownerForm['identifier' + identifier.id].$error['pattern']" class="text-danger">
+            <div ng-if="ownerForm['identifier' + identifier.id].$error['pattern']" class="text-danger">
                 <i class="fa fa-exclamation-triangle"></i>
                 {{ 'ui.error.pattern' | i18n }}
             </div>

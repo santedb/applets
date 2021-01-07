@@ -397,8 +397,12 @@ angular.module('santedb-lib')
             }],
             link: function (scope, element, attrs) {
 
+                //var hintRegex = 
                 if (!scope.identifier)
                     scope.identifier = new EntityIdentifier();
+
+                if(!scope.identifier.id)
+                    scope.identifier.id = SanteDB.application.newGuid();
 
                 // Get a list of identity domains available for our scope and emit them to the identifier array
                 if (!authorities) {
@@ -408,8 +412,16 @@ angular.module('santedb-lib')
                             if (bundle.resource) {
                                 bundle.resource.forEach(function (authority) {
                                     authority.generator = SanteDB.application.getIdentifierGenerator(authority.domainName);
-                                    if (!authority.assigningApplication || authority.assigningAuthority == $rootScope.session.claim.appid)
+                                    if (!authority.assigningApplication || authority.assigningAuthority == $rootScope.session.claim.appid) {
                                         authorities[authority.domainName] = authority;
+
+                                        if(authority.validation) {
+                                            var rExp = new RandExp(new RegExp(authority.validation));
+                                            var hint = rExp.gen();
+                                            hint = hint.replace(/[A-Z]/g, 'A').replace(/[0-9]/g,'9').replace(/[a-z]/g,'a');
+                                            authorities[authority.domainName].validationHint = hint;
+                                        }
+                                    }
                                 });
                             }
                             scope.authorities = authorities;

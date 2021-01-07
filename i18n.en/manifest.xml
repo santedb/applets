@@ -18,7 +18,7 @@
  - Date: 2018-7-23
  -->
 <AppletManifest xmlns="http://santedb.org/applet">
-  <info id="org.santedb.i18n.en" version="2.0.59.0">
+  <info id="org.santedb.i18n.en" version="2.0.60.0">
     <icon>/org.santedb.core/img/i18n.png</icon>
     <name lang="en">English Applet Support</name>
     <author>SanteSuite Community Partners (see: santesuite.org)</author>
@@ -235,6 +235,8 @@
       <string key="ui.action.save">Save</string>
       <string key="ui.action.submit">Submit</string>
       <string key="ui.action.search">Search</string>
+      <string key="ui.action.search.advanced">Advanced Search</string>
+      <string key="ui.action.search.basic">Basic Search</string>
       <string key="ui.action.search.upstream">Search the central server</string>
       <string key="ui.action.login">Login</string>
       <string key="ui.action.passwordReset">Forgot Password</string>

@@ -275,68 +275,6 @@ function copyObject(fromObject, deepCopy) {
 }
 
 
-
-// JWS Pattern
-var jwsDataPattern = /^(.*?)\.(.*?)\.(.*?)$/;
-
-/**
- * @summary Performs a search
- * @param {string} qrCodeData Existing qrCode data
- * @param {boolean} noValidate True if no validation should be performed
- * @param {boolean} upstream Search upstream service
- * @returns {IdentifiedData} Either a bundle or the discrete resource (what the barcode points at)
- */
-async function searchByBarcode(qrCodeData, noValidate, upstream) {
-    try {
-        if (!qrCodeData)
-            qrCodeData = await SanteDB.application.scanBarcodeAsync();
-
-        // QR Code is a signed code
-        if (jwsDataPattern.test(qrCodeData)) {
-            var result = await SanteDB.application.ptrSearchAsync(qrCodeData, !noValidate, upstream || false);
-            result.$novalidate = noValidate;
-            result.$upstream = upstream;
-            return result;
-        }
-        else {
-
-            var idDomain = SanteDB.application.classifyIdentifier(qrCodeData);
-            if(idDomain.length == 1)
-            {
-                var parser = SanteDB.application.getIdentifierParser(idDomain[0]);
-                if(parser) qrCodeData = parser(qrCodeData);
-            }
-            var result = await SanteDB.resources.entity.findAsync({ "identifier.value" : qrCodeData});
-            result.$search = qrCodeData;
-            return result;
-        }
-    }
-    catch (e) {
-        if(!e) // No error
-            return null;
-        // Error was with validating the code
-        else if (e.rules && e.rules.length > 0 && e.rules.filter(o => o.id == "jws.verification" || o.id == "jws.app" || o.id == "jws.key").length == e.rules.length) {
-            return await searchByBarcode(qrCodeData, true, upstream);
-        }
-        else if(!upstream && (e.$type == "KeyNotFoundException" || e.cause && e.cause.$type == "KeyNotFoundException")  && confirm(SanteDB.locale.getString("ui.emr.search.online"))) {
-            // Ask the user if they want to search upstream, only if they are allowed
-            var session = await SanteDB.authentication.getSessionInfoAsync();
-
-            if(session.method == "LOCAL") // Local session so elevate to use the principal elevator
-            {
-                var elevator = new ApplicationPrincipalElevator();
-                await elevator.elevate(session);
-                SanteDB.authentication.setElevator(elevator);
-            }
-            return await searchByBarcode(qrCodeData, true, true);
-        }
-        throw e;
-    }
-    finally {
-        SanteDB.authentication.setElevator(null);
-    }
-}
-
 /**
  * @summary Scrubs an object from Model 
  * @param {*} source The object from which the Model properties should be scrubbed
