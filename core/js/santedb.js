@@ -81,7 +81,7 @@ function APIWrapper(_config) {
             $.ajax({
                 method: 'POST',
                 url: _config.base + configuration.resource,
-                data: configuration.contentType.indexOf('application/json') == 0 ? JSON.stringify(SanteDB._reorderProperties(configuration.data)) : configuration.data,
+                data: configuration.data && configuration.contentType.indexOf('application/json') == 0 ? JSON.stringify(SanteDB._reorderProperties(configuration.data)) : configuration.data,
                 dataType: configuration.dataType || 'json',
                 contentType: configuration.contentType || 'application/json',
                 headers: configuration.headers,
@@ -1670,7 +1670,8 @@ function SanteDBWrapper() {
          */
         this.doUpdateAsync = function () {
             return _app.postAsync({
-                resource: "/Update"
+                resource: "Update",
+                contentType: 'application/json'
             });
         }
         /**
@@ -3370,7 +3371,9 @@ function SanteDBWrapper() {
                         window.sessionStorage.getItem("token"));
                 if (!_magic)
                     _magic = __SanteDBAppService.GetMagic();
+                
             }
+            data.setRequestHeader("X-SdbLanguage", SanteDB.locale.getLocale()); // Set the UI locale
             data.setRequestHeader("X-SdbMagic", _magic);
         },
         converters: {

@@ -122,9 +122,9 @@ angular.module('santedb-lib')
             else if (selection.text)
                 retVal += selection.text;
             if (selection.address)
-                retVal += " - <small>(<i class='fa fa-map-marker'></i> " + SanteDB.display.renderEntityAddress(selection.address) + ")</small>";
+                retVal += "<small class='d-none d-sm-inline'> - (<i class='fa fa-map-marker'></i> " + SanteDB.display.renderEntityAddress(selection.address) + ")</small>";
             else if (selection.oid)
-                retVal += " - <small>(<i class='fa fa-cogs'></i> " + selection.oid + ")</small>";
+                retVal += "<small class='d-none d-sm-inline'> - (<i class='fa fa-cogs'></i> " + selection.oid + ")</small>";
 
             if (selection.classConceptModel && !selection.typeConceptModel)
                 retVal += ` <span class='badge badge-secondary'>${SanteDB.display.renderConcept(selection.classConceptModel)}</span>`;

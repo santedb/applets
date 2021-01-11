@@ -26,61 +26,65 @@ angular.module('santedb-lib')
     * @summary Cocnept input drop down
     * @memberof Angular
     */
-   .directive('conceptSelect', ['$rootScope', function ($rootScope) {
+    .directive('conceptSelect', ['$rootScope', '$timeout', function ($rootScope, $timeout) {
 
         var loaded = {};
 
-       return {
-           restrict: 'E',
-           replace: true,
-           require: 'ngModel',
-           templateUrl:  './org.santedb.uicore/directives/conceptSelect.html',
-           scope: {
-               conceptSet: '=',
-               addConcept: '=',
-               excludeConcepts: '=',
-               key: "<"
-           },
-           controller: ['$scope', '$rootScope', function ($scope, $rootScope) {
-           }],
-           link: function (scope, element, attrs, ngModel) {
+        return {
+            restrict: 'E',
+            replace: true,
+            require: 'ngModel',
+            templateUrl: './org.santedb.uicore/directives/conceptSelect.html',
+            scope: {
+                conceptSet: '=',
+                addConcept: '=',
+                excludeConcepts: '=',
+                key: "<"
+            },
+            controller: ['$scope', '$rootScope', function ($scope, $rootScope) {
+            }],
+            link: function (scope, element, attrs, ngModel) {
 
-            if(scope.excludeConcepts && !Array.isArray(scope.excludeConcepts))
-                scope.excludeConcepts = [scope.excludeConcepts];
-            
+                if (scope.excludeConcepts && !Array.isArray(scope.excludeConcepts))
+                    scope.excludeConcepts = [scope.excludeConcepts];
+
                 // Load concept set
                 async function loadConceptSet(setName) {
                     try {
-                        if(!loaded[setName]) 
-                        {
-                            loaded[setName] = { callme : [] };
-                            scope.setValues = (await SanteDB.resources.concept.findAsync({ "conceptSet.mnemonic" : setName })).resource;
-                            loaded[setName].callme.forEach((r) => r(scope.setValues));
-                            loaded[setName]= scope.setValues;
+                        if (!loaded[setName]) {
+                            loaded[setName] = { callme: [] };
+                            scope.setValues = (await SanteDB.resources.concept.findAsync({ "conceptSet.mnemonic": setName })).resource;
 
-                            // Now - is there an additional concept
-                            if(scope.addConcept) {
+                            if (scope.setValues.length == 0) // Retry 
+                                $timeout(loadConceptSet(), 500);
+                            else {
+                                loaded[setName].callme.forEach((r) => r(scope.setValues));
+                                loaded[setName] = scope.setValues;
 
-                                if(!Array.isArray(scope.addConcept))
-                                    scope.addConcept = [scope.addConcept];
+                                // Now - is there an additional concept
+                                if (scope.addConcept) {
 
-                                await Promise.all(scope.addConcept.map(async function(o) {
-                                    if(typeof(o) === "string")
-                                        o = await SanteDB.resources.concept.getAsync(o);
-                                    loaded[setName].push(o);
-                                }));
+                                    if (!Array.isArray(scope.addConcept))
+                                        scope.addConcept = [scope.addConcept];
+
+                                    await Promise.all(scope.addConcept.map(async function (o) {
+                                        if (typeof (o) === "string")
+                                            o = await SanteDB.resources.concept.getAsync(o);
+                                        loaded[setName].push(o);
+                                    }));
+                                }
+                                scope.$apply();
                             }
-                            scope.$apply();
                         }
                         else {
-                            if(Array.isArray(loaded[setName])) // loaded already
+                            if (Array.isArray(loaded[setName])) // loaded already
                                 scope.setValues = loaded[setName];
                             else // still loading
-                                loaded[setName].callme.push((r)=>scope.setValues = r); 
+                                loaded[setName].callme.push((r) => scope.setValues = r);
                         }
-                        
+
                     }
-                    catch(e) {
+                    catch (e) {
                         console.error(e);
                     }
                 }
@@ -91,24 +95,24 @@ angular.module('santedb-lib')
                 element.on('change', function (e) {
                     var val = $(element).val();
 
-                    if(scope.key)
-                        scope.$apply(() => ngModel.$setViewValue(scope.setValues.find(o=>o.id == val)[scope.key]));
-                    else 
-                        scope.$apply(() => ngModel.$setViewValue(scope.setValues.find(o=>o.id == val)));
+                    if (scope.key)
+                        scope.$apply(() => ngModel.$setViewValue(scope.setValues.find(o => o.id == val)[scope.key]));
+                    else
+                        scope.$apply(() => ngModel.$setViewValue(scope.setValues.find(o => o.id == val)));
                 });
                 ngModel.$render = function () {
-                    if(ngModel.$viewValue) {
+                    if (ngModel.$viewValue) {
                         // is there a key? 
                         var valueKey = ngModel.$viewValue.id;
-                        if(scope.key) 
+                        if (scope.key)
                             valueKey = ngModel.$viewValue[scope.key];
                         $(element).val(valueKey);
                     }
-                    else 
+                    else
                         $(element).val(null);
                 };
 
 
-           }
-       }
-   }]);
+            }
+        }
+    }]);
