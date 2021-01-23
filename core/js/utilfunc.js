@@ -331,8 +331,13 @@ async function correctEntityInformation(entity) {
                     addr = [addr];
 
                 var intlPromises = addr.map(async function (addrItem) {
-                    addrItem.use = addrItem.useModel.id;
+                    if(addrItem.useModel) // have to load use
+                        addrItem.use = addrItem.useModel.id;
+                    if(!addrItem.use) 
+                        addrItem.use = AddressUseKeys[k]
                     addrItem.component = addrItem.component || {};
+                    
+
                     delete (addrItem.useModel);
                     addressList.push(addrItem);
                 });
@@ -353,7 +358,11 @@ async function correctEntityInformation(entity) {
                 name = [name];
 
             name.forEach(function (nameItem) {
-                nameItem.use = nameItem.useModel.id;
+                if(nameItem.useModel) // have to load use
+                    nameItem.use = nameItem.useModel.id;
+                if(!nameItem.use) 
+                    nameItem.use = NameUseKeys[k]
+
                 delete (nameItem.useModel);
                 nameList.push(nameItem);
             })

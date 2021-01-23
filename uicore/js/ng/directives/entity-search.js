@@ -47,11 +47,11 @@ angular.module('santedb-lib')
             var r = object;
             path.split(/[\.\[\]]/).forEach((p) => {
                 try { if ("" != p) r = r[p] || r['$other'][p]; }
-                catch (e) { if(r['$other']) r['$other'][p]; }
+                catch (e) { if (r['$other']) r['$other'][p]; }
             });
             return r;
         }
-        function renderObject(selection) {
+        function renderObject(selection, minRender) {
 
             if (selection.text)
                 return selection.text;
@@ -68,7 +68,7 @@ angular.module('santedb-lib')
                     retVal += "<i class='fa fa-flask'></i> ";
                     break;
                 case "Place":
-                    if(selection.classConcept == EntityClassKeys.ServiceDeliveryLocation)
+                    if (selection.classConcept == EntityClassKeys.ServiceDeliveryLocation)
                         retVal += "<i class='fa fa-hospital'></i> ";
                     else
                         retVal += "<i class='fa fa-map-pin'></i> ";
@@ -103,8 +103,10 @@ angular.module('santedb-lib')
                     retVal += "<i class='fa fa-box'></i> ";
                     break;
             }
+
+
             retVal += "&nbsp;";
-           
+
             if (selection.name != null)
                 retVal += SanteDB.display.renderEntityName(selection.name);
             else if (selection.name != null && selection.name[SanteDB.locale.getLocale()])
@@ -113,7 +115,7 @@ angular.module('santedb-lib')
                 retVal += selection.name;
             else if (selection.userName)
                 retVal += selection.userName;
-            else if(selection.mnemonic)
+            else if (selection.mnemonic)
                 retVal += SanteDB.locale.getString(selection.mnemonic);
             else if (selection.entity)
                 retVal += (selection.entity.name || selection.entity.userName);
@@ -121,17 +123,20 @@ angular.module('santedb-lib')
                 retVal += selection.element.innerText.trim();
             else if (selection.text)
                 retVal += selection.text;
-            if (selection.address)
-                retVal += "<small class='d-none d-sm-inline'> - (<i class='fa fa-map-marker'></i> " + SanteDB.display.renderEntityAddress(selection.address) + ")</small>";
-            else if (selection.oid)
-                retVal += "<small class='d-none d-sm-inline'> - (<i class='fa fa-cogs'></i> " + selection.oid + ")</small>";
 
+            retVal += "&nbsp;";
+            if(!minRender) {
+                if (selection.address)
+                    retVal += "<small class='d-none d-sm-inline'> - (<i class='fa fa-map-marker'></i> " + SanteDB.display.renderEntityAddress(selection.address) + ")</small>";
+                else if (selection.oid)
+                    retVal += "<small class='d-none d-sm-inline'> - (<i class='fa fa-cogs'></i> " + selection.oid + ")</small>";
+            }
             if (selection.classConceptModel && !selection.typeConceptModel)
                 retVal += ` <span class='badge badge-secondary'>${SanteDB.display.renderConcept(selection.classConceptModel)}</span>`;
             else if (selection.typeConceptModel) {
                 retVal += `<span class="badge badge-secondary">${SanteDB.display.renderConcept(selection.typeConceptModel)}</span> `;
             }
-    
+
             return retVal;
         }
 
@@ -147,7 +152,11 @@ angular.module('santedb-lib')
                 key: '<',
                 selector: '<',
                 valueProperty: '<',
-                multiSelect: '<'
+                multiSelect: '<',
+                autoTabNext: '<',
+                copyNulls: '<',
+                minRender: '<',
+                changeClear: '<'
             },
             restrict: 'E',
             require: 'ngModel',
@@ -170,7 +179,7 @@ angular.module('santedb-lib')
 
                             $(selectControl).find('option').each((idx, ele) => {
                                 var val = $(ele).val();
-                                if(val == 'loading' || 
+                                if (val == 'loading' ||
                                     /\?.*\?/i.test(val))
                                     $(ele).remove();
                             });
@@ -178,7 +187,7 @@ angular.module('santedb-lib')
 
                             value.forEach(async function (v) {
 
-                                if($scope.valueProperty && v[$scope.valueProperty])
+                                if ($scope.valueProperty && v[$scope.valueProperty])
                                     v = v[$scope.valueProperty];
 
                                 try {
@@ -192,7 +201,7 @@ angular.module('santedb-lib')
                                             var obj = res.resource[0];
                                             if ($scope.selector)
                                                 obj = obj[$scope.selector] || obj;
-                                            $(selectControl)[0].add(new Option(renderObject(res.resource[0]), v, false, true));
+                                            $(selectControl)[0].add(new Option(renderObject(res.resource[0], $scope.minRender), v, false, true));
                                         }
                                     }
                                     else {
@@ -201,7 +210,7 @@ angular.module('santedb-lib')
                                             var obj = res;
                                             if ($scope.selector)
                                                 obj = obj[$scope.selector] || obj;
-                                            $(selectControl)[0].add(new Option(renderObject(obj), v, false, true));
+                                            $(selectControl)[0].add(new Option(renderObject(obj, $scope.minRender), v, false, true));
                                         }
                                     }
                                 }
@@ -238,12 +247,22 @@ angular.module('santedb-lib')
                             filter = n;
                     });
                     // Bind select 2 search
-                    $(element).select2({
+                    var select2 = $(element).select2({
                         language: {
                             searching: function () { return `<i class="fa fa-circle-notch fa-spin"></i> ${SanteDB.locale.getString("ui.search")}`; }
                         },
                         dataAdapter: $.fn.select2.amd.require('select2/data/extended-ajax'),
                         ajax: {
+                            tags: true,
+                            createTag: function (params) {
+                                var retVal = {
+                                  id: params.term,
+                                  text: params.term,
+                                  newOption: true
+                                };
+                                if(scope.key)
+                                    retVal[scope.key] = params.term;
+                              },
                             url: SanteDB.resources[modelType.toCamelCase()].getUrl(), //((modelType == "SecurityUser" || modelType == "SecurityRole" || modelType == "SecurityPolicy") ? "/ami/" : "/hdsi/") + modelType,
                             dataType: 'json',
                             delay: 500,
@@ -253,7 +272,7 @@ angular.module('santedb-lib')
                             },
                             data: function (params) {
 
-                                if(params.term)
+                                if (params.term)
                                     filter[searchProperty] = "~" + params.term;
                                 filter["_count"] = 20;
                                 filter["_offset"] = params.page ? params.page * 20 : 0;
@@ -263,7 +282,7 @@ angular.module('santedb-lib')
                             processResults: function (data, params) {
                                 //params.page = params.page || 0;
 
-                                var retVal = { results: [], pagination: { more: data.totalResults > data.count} };
+                                var retVal = { results: [], pagination: { more: data.totalResults > data.count } };
                                 var data = data.$type == "Bundle" ? data.resource : data.resource || data;
 
                                 try {
@@ -279,7 +298,7 @@ angular.module('santedb-lib')
                                                 text = scope.$eval(displayString, { scope: o });
                                             }
                                             else if (o.name !== undefined) {
-                                                text = renderObject(o);
+                                                text = renderObject(o, scope.minRender);
                                             }
                                             o.text = o.text || text;
                                             o.id = extractProperty(o, resultProperty) || o.id;
@@ -298,7 +317,7 @@ angular.module('santedb-lib')
                                                 text = scope.$eval(displayString, { scope: o });
                                             }
                                             else if (o.name !== undefined) {
-                                                text = renderObject(o);
+                                                text = renderObject(o, scope.minRender);
                                             }
                                             o.text = o.text || text;
                                             o.id = extractProperty(o, resultProperty) || o.id;
@@ -310,8 +329,8 @@ angular.module('santedb-lib')
                                             try {
                                                 var groupDisplay = scope.$eval('scope.' + groupString, { scope: data[itm] });
 
-                                                if(!groupDisplay)
-                                                    retVal.results.push(data[itm]);   
+                                                if (!groupDisplay)
+                                                    retVal.results.push(data[itm]);
                                                 else {
                                                     var gidx = $.grep(retVal.results, function (e) { return e.text == groupDisplay });
                                                     if (gidx.length == 0)
@@ -336,19 +355,51 @@ angular.module('santedb-lib')
                             cache: true
                         },
                         escapeMarkup: function (markup) { return markup; }, // Format normally
-                        templateSelection: renderObject,
+                        templateSelection: function(o) { return renderObject(o, scope.minRender); },
                         keepSearchResults: true,
-                        templateResult: renderObject
+                        templateResult: function(o) { return renderObject(o, scope.minRender); }
                     });
 
+                    // // on first focus (bubbles up to document), open the menu
+                    $(element).parent().on('focusin', '.select2-selection.select2-selection--single', function (e) {
+                        $(this).closest(".select2-container").siblings('select:enabled').select2('open');
+                    });
+                    
+                    //   // steal focus during close - only capture once and stop propogation
+                    if(scope.autoTabNext)
+                        $($(element).parent(), 'select.select2').on('select2:close', function (e) {
+                            $(element).trigger("focusout");
+
+                            // HACK: Focus the next form-control on close
+                            var controls = $('.form-control');
+                            var eindex = -1;
+                            controls.each(function(i, e) { if(e.name == element[0].name) eindex = i; });
+                            if(eindex > -1) {
+                                var nextControl = controls[eindex + 1].name;
+                                e.stopPropagation();
+                                $(`[name=${nextControl}]`).focus();
+                            }
+                        });
                     // On change
                     element.on('change', function (e) {
                         var val = $(element).select2("val");
 
                         // Remove loading indicator
-                        if(Array.isArray(val))
-                            val = val.filter(o=>o != "loading");
-                            
+                        if (Array.isArray(val))
+                            val = val.filter(o => o != "loading");
+
+                        // Is there a copy command
+                        if(scope.copyNulls && !Array.isArray(val)) {
+                            var data = $(element).select2("data")[0];
+
+                            var target = scope.copyNulls.to;
+                            var from = scope.copyNulls.from.split('.').reduce((p, c, i) => i == 1 ? data[p][c] : p[c]);
+                            scope.copyNulls.values.forEach(o=>target[o] = target[o] || from[o] );
+
+                        }
+                        if(scope.changeClear && val != ngModel.$viewValue) {
+                            scope.changeClear.values.forEach(o=>scope.changeClear.scope[o] = null);
+                        }
                         //e.currentTarget.options.selectedIndex = e.currentTarget.options.length - 1;
                         if (valueProperty) {
                             var modelVal = {};
@@ -361,7 +412,6 @@ angular.module('santedb-lib')
                             else
                                 modelVal[valueProperty] = val;
                             scope.$apply(() => ngModel.$setViewValue(modelVal));
-
                         }
                         else
                             scope.$apply(() => ngModel.$setViewValue(val));

@@ -1262,7 +1262,8 @@ function SanteDBWrapper() {
         var _resourceStates = {};
         var _idParsers = {};
         var _idClassifiers = {};
-
+        var _templateView  ={};
+        var _templateForm = {};
         
         // JWS Pattern
         var jwsDataPattern = /^(.*?)\.(.*?)\.(.*?)$/;
@@ -1927,15 +1928,6 @@ function SanteDBWrapper() {
             });
         }
         /**
-         * @summary Indicates whether the application host can scan barcodes
-         * @method canScanBarcode
-         * @memberof SanteDBWrapper.ApplicationApi
-         * @returns {boolean} True if the application supports a camera
-         */
-        this.canScanBarcode = function () {
-            return __SanteDBAppService.HasCamera();
-        }
-        /**
          * @summary Launches the camera on the device to take a picture of a barcode
          * @method scanBarcode
          * @memberof SanteDBWrapper.ApplicationApi
@@ -2517,7 +2509,7 @@ function SanteDBWrapper() {
 
         /**
             * @method getAppSetting
-         * @memberof SanteDBWrapper.ConfigurationApi
+            * @memberof SanteDBWrapper.ConfigurationApi
             * @summary Get the specified configuration key
             * @returns {string} The application key setting
             * @param {string} key The key of the setting to find
@@ -2540,8 +2532,28 @@ function SanteDBWrapper() {
         }
 
         /**
+         * @method getAppSettingAsync
+         * @summary Retrieve the specified application setting directly from the configuration API
+         * @param {string} key The key of the setting to retrieve
+         * @returns {String} The value of the setting
+         */
+        this.getAppSettingAsync = function(key) {
+            return _resources.configuration.getAssociatedAsync("global", "setting", key)[0];
+        }
+
+        /**
+         * @method getAppSettingAsync
+         * @summary Retrieve the specified application setting directly from the configuration API
+         * @param {string} key The key of the setting to retrieve
+         * @returns {String} The value of the setting
+         */
+        this.setAppSettingAsync = function(key, value) {
+            return _resources.configuration.addAssociatedAsync("global","setting", [{ key: key, value: value }]);
+        }
+
+        /**
             * @method  setAppSetting
-         * @memberof SanteDBWrapper.ConfigurationApi
+            * @memberof SanteDBWrapper.ConfigurationApi
             * @summary Sets the specified application setting
             * @param {string} key The key of the setting to set
             * @param {string} value The value of the application setting
@@ -2550,11 +2562,7 @@ function SanteDBWrapper() {
         this.setAppSetting = function (key, value) {
             try {
                 if (!_masterConfig) throw new Exception("Exception", "error.invalidOperation", "You need to call configuration.getAsync() before calling getAppSetting()");
-                var _setting = _masterConfig.application.setting.find((k) => k.key === key);
-                if (_setting)
-                    _setting.value = value;
-                else
-                    _masterConfig.application.setting.push({ key: key, value: value });
+                _masterConfig.application.setting[key] = value;
             }
             catch (e) {
                 if (!e.$type)
@@ -2670,18 +2678,16 @@ function SanteDBWrapper() {
             * @returns {Promise} A promise object indicating whether the save was successful
             */
         this.saveAsync = function (configuration) {
-            return _resources.configuration.insertAsync(configuration);
+            return _resources.configuration.insertAsync(configuration || _masterConfig);
         }
         /**
             * @method getUserPreferencesAsync
-         * @memberof SanteDBWrapper.ConfigurationApi
+            * @memberof SanteDBWrapper.ConfigurationApi
             * @summary Gets the user specific preferences
             * @returns {Promise} A promise representing the retrieval of the user settings
             */
-        this.getUserPreferencesAsync = function () {
-            return _app.getAsync({
-                resource: "Configuration/User"
-            });
+        this.getUserSettingsAsync = async function () {
+            return _resources.configuration.getAssociatedAsync("user", "settings", ".*");
         }
         /**
             * @method saveUserPreferencesAsync
@@ -2694,11 +2700,8 @@ function SanteDBWrapper() {
             *  { key: "color", value: "red" }
             * ]);
             */
-        this.saveUserPreferencesAsync = function (preferences) {
-            return _app.postAsync({
-                resource: "Configuration/User",
-                data: preferences
-            });
+        this.saveUserSettingsAsync = function (preferences) {
+            return _resources.configuration.addAssociatedAsync("user", "settings", preferences);
         }
     };
 

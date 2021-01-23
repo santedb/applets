@@ -53,7 +53,7 @@ angular.module('santedb-lib')
                     try {
                         if (!loaded[setName]) {
                             loaded[setName] = { callme: [] };
-                            scope.setValues = (await SanteDB.resources.concept.findAsync({ "conceptSet.mnemonic": setName })).resource;
+                            scope.setValues = (await SanteDB.resources.concept.findAsync({ "conceptSet.mnemonic": setName, "_orderBy":"mnemonic:asc" })).resource;
 
                             if (scope.setValues.length == 0) // Retry 
                                 $timeout(loadConceptSet(), 500);

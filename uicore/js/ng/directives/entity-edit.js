@@ -223,7 +223,8 @@ angular.module('santedb-lib')
             scope: {
                 telecom: '=',
                 singleEdit: '<',
-                ownerForm: '<'
+                ownerForm: '<',
+                noLabel: '<'
             },
             controller: ['$scope', '$rootScope', function ($scope, $rootScope) {
 
@@ -363,7 +364,9 @@ angular.module('santedb-lib')
                 noDomain: '<',
                 isRequired: '<',
                 removeFn: '<',
-                addFn: '<'
+                addFn: '<',
+                noScan: '<',
+                noLabel: '<'
             },
             controller: ['$scope', '$rootScope', function ($scope, $rootScope) {
 

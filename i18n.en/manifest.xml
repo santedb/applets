@@ -18,7 +18,7 @@
  - Date: 2018-7-23
  -->
 <AppletManifest xmlns="http://santedb.org/applet">
-  <info id="org.santedb.i18n.en" version="2.0.62.0">
+  <info id="org.santedb.i18n.en" version="2.0.71.0">
     <icon>/org.santedb.core/img/i18n.png</icon>
     <name lang="en">English Applet Support</name>
     <author>SanteSuite Community Partners (see: santesuite.org)</author>
@@ -265,6 +265,7 @@
       <string key="ui.action.finish">Finish</string>
       <string key="ui.action.add">Add</string>
       <string key="ui.action.register">Register</string>
+      <string key="ui.action.register.batch">Batch Registration</string>
       <string key="ui.action.remove">Remove</string>
       <string key="ui.action.selectAll">Select All</string>
       <string key="ui.action.selectNone">Select None</string>

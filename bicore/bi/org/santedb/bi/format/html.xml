@@ -19,7 +19,7 @@
  - User: Justin Fyfe
  - Date: 2019-11-23
  -->
-<BiRenderFormatDefinition xmlns="http://santedb.org/bi" id="org.santedb.bi.format.html" label="ui.fileFormat.html" contentType="text/html" extension="html" renderer="SanteDB.BI.Rendering.HtmlReportRenderer, SanteDB.BI, Version=1.80.0.0">
+<BiRenderFormatDefinition xmlns="http://santedb.org/bi" id="org.santedb.bi.format.html" label="ui.bi.fileFormat.html" contentType="text/html" extension="html" renderer="SanteDB.BI.Rendering.HtmlReportRenderer, SanteDB.BI, Version=1.80.0.0">
   <meta status="active">
     <authors>
       <add>Justin Fyfe (Fyfe Software Inc.) &lt;justin@fyfesoftware.ca></add>

@@ -1,0 +1,40 @@
+@media print {
+    @page letter { size: 8.5in 11in; orphans: 4; widows: 2; }
+    @page { size: landscape } 
+    
+    .pb-after { page-break-after: left; }
+    .pb-before { page-break-before: right; }
+
+    * { color: black; background:white }
+    
+    body { 
+        font-family: "Poppins", sans-serif;
+    }
+
+    table { 
+        border-spacing: 2px;
+        border-collapse: collapse;
+        table-layout: initial;
+        font-size: 80%
+
+    }
+
+    .pp-1 { padding: 1em }
+    .pp-2 { padding: 2em }
+    .text-right { text-align: right; }
+    .text-left { text-align: left; }
+    .text-center { text-align: center; }
+    
+    .pw-0 { width: 0pt; max-width: 0pt; min-width: 0pt }
+    .pw-5 { width: 40pt; max-width: 40pt; min-width: 40pt }
+    .pw-10 { width: 80pt; max-width: 80pt; min-width: 80pt }
+    .pw-15 { width: 120pt; max-width: 120pt; min-width: 120pt }
+    .pw-20 { width: 160pt; max-width: 160pt; min-width:160pt }
+    .pw-25 { width: 200pt; max-width: 200pt; min-width:200pt }
+    .pw-30 { width: 240pt; max-width: 240pt; min-width:240pt }
+    .pw-35 { width: 280pt; max-width: 280pt; min-width:280pt }
+    .pw-40 { width: 320pt; max-width: 320pt; min-width:320pt }
+    .pw-45 { width: 360pt; max-width: 360pt; min-width:360pt }
+    .pw-50 { width: 400pt; max-width: 400pt; min-width:400pt }
+}
+

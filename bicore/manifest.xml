@@ -19,7 +19,7 @@
  - Date: 2019-11-13
  -->
 <AppletManifest xmlns="http://santedb.org/applet">
-  <info id="org.santedb.bicore" version="2.0.62.0">
+  <info id="org.santedb.bicore" version="2.0.71">
     <icon>/org.santedb.core/img/icon.png</icon>
     <name lang="en">SanteDB Core BI Definitions</name>
     <author>SanteSuite Community Partners (see: santesuite.org)</author>
@@ -50,7 +50,10 @@
     <!-- Default BI Core Reports--> 
     <string key="ui.bi.core.report.session.date">System Sessions</string>
 
-
+    <string key="ui.bi.core.common.occupation">Occupation</string>
+    <string key="ui.bi.fileFormat.html">HTML Document (HTML)</string>
+    <string key="ui.bi.fileFormat.csv">Comma-Separated (CSV)</string>
+    <string key="ui.bi.fileFormat.xls">Excel 2003 XML (XLS)</string>
 
   </strings>
 </AppletManifest>

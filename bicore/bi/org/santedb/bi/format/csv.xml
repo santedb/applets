@@ -1,3 +1,4 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
 <!--
  - Portions Copyright 2015-2019 Mohawk College of Applied Arts and Technology
  - Portions Copyright 2019-2019 SanteSuite Contributors (See NOTICE)
@@ -16,16 +17,17 @@
  - the License.
  - 
  - User: Justin Fyfe
- - Date: 2019-8-8
+ - Date: 2019-11-23
  -->
-<AppletManifest xmlns="http://santedb.org/applet">
-  <info id="org.santedb.config.init" version="2.0.71.0">
-    <icon>/org.santedb.core/img/icon.png</icon>
-    <name lang="en">SanteDB Initial Configuration Applet</name>
-    <author>SanteSuite Community Partners (see: santesuite.org)</author>
-  </info>
-
-  <strings lang="en">
-    <string key="ui.title">SanteDB Initial Configuration</string>
-  </strings>
-</AppletManifest>
+<BiRenderFormatDefinition xmlns="http://santedb.org/bi" id="org.santedb.bi.format.csv" label="ui.bi.fileFormat.csv" contentType="text/csv" extension="csv" renderer="SanteDB.BI.Rendering.CsvReportRenderer, SanteDB.BI, Version=1.80.0.0">
+  <meta status="active">
+    <authors>
+      <add>Justin Fyfe (Fyfe Software Inc.) &lt;justin@fyfesoftware.ca></add>
+    </authors>
+    <annotation>
+      <div xmlns="http://www.w3.org/1999/xhtml">
+        <p>Renders a report in CSV format for display</p>
+      </div>
+    </annotation>
+  </meta>  
+</BiRenderFormatDefinition>

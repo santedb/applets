@@ -14,9 +14,16 @@
                     </div>
                 </div>
             </div>
-            <div class="tab-pane fade"
+            <div class="tab-pane fade report-view-container"
                 ng-repeat="viewDefinition in report.views" id="{{htmlId}}_{{viewDefinition.name}}">
-                <div>
+                <div class="report-view-area">
+                </div>
+                <div class="float-right btn-group dropup">
+                    <button type="button" class="btn btn-secondary dropdown-toggle" aria-haspopup="true" data-toggle="dropdown" id="btnDownloadReport_{{viewDefinition.name}}"><i class="fas fa-save"></i> {{ 'ui.action.download' | i18n }}</button>
+                    <button type="button" id="btnPrintReport_{{viewDefinition.name}}" ng-click="printReport(viewDefinition.name)" class="btn btn-primary"><i class="fas fa-print"></i> {{ 'ui.action.print' | i18n }}</button>
+                    <div class="dropdown-menu" aria-labelledby="btnDownloadReport_{{viewDefinition.name}}" style="z-index:100">
+                        <button class="dropdown-item" ng-repeat="fmt in formats" ng-click="downloadReport(viewDefinition.name, fmt.extension)">{{ fmt.label | i18n }}</button>
+                      </div>
                 </div>
             </div>
         </div>

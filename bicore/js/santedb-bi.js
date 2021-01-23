@@ -146,6 +146,32 @@ function SanteDBBusinessIntelligence() {
             dataType: "html"
         });
     }
+
+     /**
+     * @method renderReportAsync
+     * @memberof SanteDBBusinessIntelligence
+     * @summary Renders a query/view on the server
+     * @param id {String} Identifier of the report to run
+     * @param parameters {Any} Parameter dictionary
+     * @returns {Promise} The promise for the report rendering operation
+     */
+    this.executeQueryAsync = function (id, parameters) {
+
+        if (!id)
+            throw new Exception("ArgumentNullException", "error.bi.nullArgument");
+
+        for (var p in parameters) {
+            if (parameters[p] instanceof Date)
+                parameters[p] = moment(parameters[p]).toISOString();
+        }
+
+        var url = `Query/${id}`;
+        return _bis.getAsync({
+            resource: url,
+            query: parameters,
+            dataType: "json"
+        });
+    }
 }
 
 // BI Functions

@@ -1,8 +1,8 @@
-<div xmlns="http://www.w3.org/1999/xhtml" class="m-2">
-        <div class="row" ng-repeat="(t, tel) in telecom" ng-if="!singleEdit || singleEdit == t">
-            <label class="col-md-3 col-sm-12 control-label">{{ 'ui.model.entity.telecom.' + t | i18n }}</label>
+<div xmlns="http://www.w3.org/1999/xhtml">
+        <div ng-class="{ 'row' : !noLabel }" ng-repeat="(t, tel) in telecom" ng-if="!singleEdit || singleEdit == t">
+            <label ng-if="!noLabel" class="col-md-3 col-sm-12 control-label">{{ 'ui.model.entity.telecom.' + t | i18n }}</label>
             <!-- TODO: Clean this up -->
-            <div class="col-md-9 col-sm-12 input-group">
+            <div ng-class="{ 'col-md-9 col-sm-12' : !noLabel }" class="input-group">
                 <div class="input-group-prepend">
                     <div class="btn-group btn-group-toggle">
                         <button type="button" class="btn btn-light" ng-class="{ 'active' : tel.type == 'c1c0a4e9-4238-4044-b89b-9c9798995b93' }"

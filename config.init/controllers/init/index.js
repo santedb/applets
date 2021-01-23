@@ -146,7 +146,7 @@ angular.module('santedb').controller('InitialSettingsController', ['$scope', '$r
 
 
     // Get necessary information
-    SanteDB.authentication.setElevator(new SanteDBElevator(_getConfiguration));
+    SanteDB.authentication.setElevator(new SanteDBElevator(_getConfiguration, false));
     _getConfiguration();
 
     // Watch for change in data provider
@@ -343,7 +343,7 @@ angular.module('santedb').controller('InitialSettingsController', ['$scope', '$r
 
                     });
             };
-            var elevator = new SanteDBElevator(joinRealmFn);
+            var elevator = new SanteDBElevator(joinRealmFn, false);
             elevator.setCloseCallback(function() {
                 SanteDB.display.buttonWait("#joinRealmButton", false);
             });

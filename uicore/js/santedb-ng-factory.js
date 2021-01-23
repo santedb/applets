@@ -47,7 +47,12 @@ angular.module('santedb-lib')
                     $injector.get('$state').transitionTo('login'); 
                     return $q.reject(response);;
                 }
-                return $q.reject(response);
+                else if(response.status != 503) // Not ready - Resolve with not ready payload (HTML)
+				{
+					return $q.reject(response);
+				}
+				else 
+					return $q.resolve(response);
             }
         };
     }])
