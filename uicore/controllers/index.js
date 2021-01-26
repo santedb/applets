@@ -283,15 +283,21 @@ var santedbApp = angular.module('santedb', ['ngSanitize', 'ui.router', 'oc.lazyL
         $rootScope.page = {
             currentTime: new Date(),
             maxEventTime: new Date().tomorrow().trunc().addSeconds(-1),
-            minEventType: new Date().yesterday()
+            minEventTime: new Date().yesterday()
         };
 
         // The online interval to check online state
         var ivlFn = function () {
             $rootScope.system = $rootScope.system || {};
-            $rootScope.system.online = SanteDB.application.getOnlineState();
+
+            
+            if($rootScope.system && $rootScope.system.config && $rootScope.system.config.sync && $rootScope.system.config.sync.mode == 'sync')
+                $rootScope.system.online = SanteDB.application.getOnlineState();
+            else
+                $rootScope.system.online = true;
+                
             $rootScope.system.serviceState = {
-                network: SanteDB.application.getOnlineState(),
+                network: $rootScope.system.online,
                 ami:  SanteDB.application.isAdminAvailable(),
                 hdsi:  SanteDB.application.isClinicalAvailable()
             };
@@ -299,7 +305,7 @@ var santedbApp = angular.module('santedb', ['ngSanitize', 'ui.router', 'oc.lazyL
             $rootScope.page = {
                 currentTime: new Date(),
                 maxEventTime: new Date().tomorrow().trunc().addSeconds(-1),
-                minEventType: new Date().yesterday()
+                minEventTime: $rootScope.page.minEventTime || new Date().yesterday()
             };
             
             // Session for expiry?

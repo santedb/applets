@@ -18,7 +18,7 @@
  - Date: 2018-7-23
  -->
 <AppletManifest xmlns="http://santedb.org/applet">
-  <info id="org.santedb.i18n.en" version="2.0.71.0">
+  <info id="org.santedb.i18n.en" version="2.0.74.0">
     <icon>/org.santedb.core/img/i18n.png</icon>
     <name lang="en">English Applet Support</name>
     <author>SanteSuite Community Partners (see: santesuite.org)</author>
@@ -204,6 +204,8 @@
       <string key="ui.sync.dead.text">(to be resolved)</string>
       <string key="ui.sync.log">Synchronization Log</string>
       <string key="ui.sync.log.resource">Resource</string>
+      <string key="ui.sync.log.local"># Local</string>
+      <string key="ui.sync.log.remote"># Remote</string>
       <string key="ui.sync.log.etag">Last Version</string>
       <string key="ui.sync.log.date">Sync Timestamp</string>
       <string key="ui.sync.retry">Re-Queue Conflicted</string>

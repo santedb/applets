@@ -51,15 +51,22 @@
     </view>
   </dataSources>
   <views>
+    <add id="org.santedb.bi.core.reports.patient.gender.chart" label="ui.bi.common.pie" name="summary">
+      <div xmlns="http://www.w3.org/1999/xhtml" xmlns:bi="http://santedb.org/bi/view">
+        <h5 class="text-center">
+          <bi:aggregate source="by-gender" fn="sum">n_patients</bi:aggregate> Total Patients
+        </h5>
+      </div>
+    </add>
     <add id="org.santedb.bi.core.reports.patient.gender.chart" label="ui.bi.common.pie" name="chart">
       <div xmlns="http://www.w3.org/1999/xhtml" xmlns:bi="http://santedb.org/bi/view">
         <!-- Shows line chart with each audit event type -->
         <bi:chart source="by-gender" type="pie" legend="true">
-          <bi:title>Patient Population (Gender)</bi:title>
+          <bi:title>Gender Breakdown</bi:title>
           <bi:labels>gender</bi:labels>
           <bi:dataset label="# Patients" fn="sum">n_patients</bi:dataset>
         </bi:chart>
-      </div>
+        </div>
     </add>
   </views>
 </BiReportDefinition>

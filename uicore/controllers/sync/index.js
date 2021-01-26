@@ -44,6 +44,38 @@ angular.module("santedb").controller("SyncController", ['$scope', '$rootScope', 
     async function getLog() {
         try {
             $scope.syncLog = await SanteDB.resources.sync.findAsync();
+
+            $scope.syncLog.forEach(function(s) {
+                var resource = s.ResourceType.toCamelCase();
+                if(s.Filter)
+                    s.Filter = decodeURI(s.Filter);
+                var filter = remoteFilter = s.Filter;
+
+
+                if(!SanteDB.resources[resource])
+                    {
+                        s.local = "-";
+                        s.remote = "-";
+                        return;
+                    }
+
+                if(!remoteFilter)
+                    remoteFilter = "_upstream=true&_count=0";
+                else 
+                    remoteFilter += "&_upstream=true&_count=0";
+
+                if(!filter)
+                    filter = "_count=0";
+                else 
+                    filter += "&_count=0";
+
+                if(filter.indexOf("_subscription") > -1)
+                    s.local = "-";
+                else
+                    SanteDB.resources[resource].findAsync(filter, null, s).then(r=>s.local= r.totalResults !== undefined ? r.totalResults : r.size).catch(r=>s.local = '?');
+                SanteDB.resources[resource].findAsync(remoteFilter, null, s).then(r=>s.remote= r.totalResults !== undefined ? r.totalResults : r.size).catch(r=>s.remote = '?');
+            });
+
         }
         catch(e) {
             $rootScope.errorHandler(e);

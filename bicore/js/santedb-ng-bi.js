@@ -61,7 +61,7 @@ angular.module('santedb-lib')
                         // Now fetch
                         // TODO: Add parameters list here
                         // TODO: Add fetch here
-                        $scope.parameter.values.list = await SanteDBBi.executeQueryAsync($scope.parameter.id);
+                        $scope.parameter.values.list = await SanteDBBi.executeQueryAsync($scope.parameter.id, { _count: 1000 });
                     }
                     catch (e) {
 
@@ -98,19 +98,35 @@ angular.module('santedb-lib')
                     try {
                         SanteDB.display.buttonWait(`#btnPrintReport_${view}`, true);
                         var report = await SanteDBBi.renderReportAsync($scope.id, view, "html", $scope.parameters);
-                        var printWindow = window.open('', '_report');
-                        printWindow.document.write(`<html><head><title>${SanteDB.locale.getString($scope.report.label)}</title><link rel="stylesheet" type="text/css" href="/org.santedb.bicore/css/print.css" /></head><body>`);
-                        printWindow.document.write(report);
-                        printWindow.document.close();
-                        printWindow.focus();
 
-                        // HACK: Need a better way to wait for all data to complete
-                        $(printWindow.document).ready(function () {
-                            setTimeout(function () {
-                                printWindow.print();
-                                printWindow.close();
-                            }, 400);
-                        });
+                        var printFn = function(printWindow) {
+                            printWindow.document.write(`<html><head><title>${SanteDB.locale.getString($scope.report.label)}</title><link rel="stylesheet" type="text/css" href="/org.santedb.bicore/css/print.css" /></head><body>`);
+                            printWindow.document.write(report);
+                            printWindow.document.close();
+                            printWindow.focus();
+    
+                            // HACK: Need a better way to wait for all data to complete
+                            $(printWindow.document).ready(function () {
+                                setTimeout(function () {
+                                    printWindow.print();
+                                    printWindow.close();
+                                }, 400);
+    
+                            });
+                        };
+
+                        var win = window.open('', '_blank');
+
+                        if(win.document) {
+                            printFn(win);
+                        }
+                        else {
+                            setTimeout(function() {
+                                printFn(win);
+                            }, 1000);
+                        }
+
+
                     }
                     catch (e) {
                         $rootScope.errorHandler(e);

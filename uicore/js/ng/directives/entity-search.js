@@ -253,16 +253,7 @@ angular.module('santedb-lib')
                         },
                         dataAdapter: $.fn.select2.amd.require('select2/data/extended-ajax'),
                         ajax: {
-                            tags: true,
-                            createTag: function (params) {
-                                var retVal = {
-                                  id: params.term,
-                                  text: params.term,
-                                  newOption: true
-                                };
-                                if(scope.key)
-                                    retVal[scope.key] = params.term;
-                              },
+                           
                             url: SanteDB.resources[modelType.toCamelCase()].getUrl(), //((modelType == "SecurityUser" || modelType == "SecurityRole" || modelType == "SecurityPolicy") ? "/ami/" : "/hdsi/") + modelType,
                             dataType: 'json',
                             delay: 500,
@@ -397,7 +388,7 @@ angular.module('santedb-lib')
                             scope.copyNulls.values.forEach(o=>target[o] = target[o] || from[o] );
 
                         }
-                        if(scope.changeClear && val != ngModel.$viewValue) {
+                        if(scope.changeClear && val != ngModel.$viewValue && scope.changeClear.scope) {
                             scope.changeClear.values.forEach(o=>scope.changeClear.scope[o] = null);
                         }
                         //e.currentTarget.options.selectedIndex = e.currentTarget.options.length - 1;

@@ -42,15 +42,17 @@
         </providers>
         <![CDATA[
            select distinct
-            cd_id as id, val as value
+            cd_id as id, val as value, cd_vrsn_tbl.mnemonic
             from cd_set_mem_assoc_tbl 
               inner join cd_vrsn_tbl using (cd_id) 
               left join cd_name_tbl using (cd_id) 
             where 
               obslt_vrsn_seq_id is null 
+              and obslt_utc is null
               and sts_cd_id = 'c8064cbd-fa06-4530-b430-1a52f1530c27'
               and lang_cs = COALESCE(${Context_Language}, 'en')
-              and set_id = 'f76f4eac-487c-11eb-b378-0242ac130002'     
+              and set_id = 'f76f4eac-487c-11eb-b378-0242ac130002' 
+            order by  cd_vrsn_tbl.mnemonic    
             ]]>
       </add>
       <add>
@@ -66,6 +68,7 @@
             where 
               language = COALESCE(${Context.Language}, 'en')
               and concept_concept_set.concept_set_uuid = X'AC4E6FF77C48EB11B3780242AC130002'       
+            order by concept.mnemonic
             ]]>
       </add>
     </definitions>
