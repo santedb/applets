@@ -18,7 +18,7 @@
  - Date: 2018-7-23
  -->
 <AppletManifest xmlns="http://santedb.org/applet">
-  <info id="org.santedb.i18n.en" version="2.0.74.0">
+  <info id="org.santedb.i18n.en" version="2.0.76.0">
     <icon>/org.santedb.core/img/i18n.png</icon>
     <name lang="en">English Applet Support</name>
     <author>SanteSuite Community Partners (see: santesuite.org)</author>
@@ -151,6 +151,7 @@
       <string key="error.http.500">General Error</string>
       <string key="error.http.501">Method not implemented</string>
       <string key="error.http.502">Proxy Error</string>
+
       <string key="error.type.DetectedIssueException">Business Rules Violation</string>
       <string key="error.type.ResetPasswordException">Password Reset Failure</string>
       <string key="error.type.Exception">General Error</string>
@@ -160,6 +161,10 @@
       <string key="error.type.NotImplementedException.userMessage">The function you are trying to perform is not yet implemented</string>
       <string key="error.type.NotSupportedException">Not Supported</string>
       <string key="error.type.NotSupportedException.userMessage">The function you are trying to perform is not supported under your current configuration</string>
+      <string key="error.type.FileNotFoundException">Record Not Found</string>
+      <string key="error.type.FileNotFoundException.userMessage">The record you're attempting to load does not exist, or you may not have permission to view it</string>
+      <string key="error.type.KeyNotFoundException">Record Not Found</string>
+      <string key="error.type.KeyNotFoundException.userMessage">The record you're attempting to load does not exist, or you may not have permission to view it</string>
       <string key="error.type.SecurityException">Security Exception</string>
       <string key="error.noScript.title">Enable JavaScript</string>
       <string key="error.noScript.text">SanteDB requires the use of JavaScript to function. It appears that your browser does not support JavaScript or has JavaScript disabled. Please check your security settings and refresh the page</string>
@@ -248,6 +253,7 @@
       <string key="ui.action.back">Back</string>
       <string key="ui.action.home">Go Home</string>
       <string key="ui.action.reload">Reload</string>
+      <string key="ui.action.retry">Retry</string>
       <string key="ui.action.download">Download</string>
       <string key="ui.action.update">Update</string>
       <string key="ui.action.create">Create</string>

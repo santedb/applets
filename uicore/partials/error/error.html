@@ -1,0 +1,28 @@
+<div xmlns="http://www.w3.org/1999/xhtml">
+    <p ng-if="error.userMessage"> <span ng-bind-html="error.userMessage | i18n"></span> ({{ error.message }})</p>
+    <p ng-if="!error.userMessage">
+        {{ error.message | i18n }}. {{ 'ui.error.description' | i18n }}
+    </p>
+    <div ng-switch="ng-switch"  ng-if="!error.userMessage">
+        <div ng-case-when="error.message || error.details.responseJSON">
+            <div>
+                <span>
+                    <strong>
+                        <a data-toggle="collapse" class="collapse-indicator text-danger" data-target="#errorDetail" href="">
+                            <i class="fa fa-chevron-right"></i> {{ error.message  | i18n }}
+                        </a>
+                    </strong>
+                </span>
+                <pre class="collapse out" id="errorDetail">({{ error.type}}) : {{ error.details.responseText || error.details }}</pre>
+            </div>
+            <div ng-if="'{{ $env_type }}' == 'debug'" ng-repeat="cause in error.cause">
+                <a data-toggle="collapse" class="collapse-indicator" data-target="#causeDetail" href="">
+                    <i class="fa fa-chevron-right"></i> {{ 'ui.error.causedBy' | i18n }}
+                    <span class="text-danger">{{ cause.message  | i18n }}</span>
+                </a>
+                <pre class="collapse out" id="causeDetail">({{cause.type}}) : {{ cause.detail }}</pre>
+            </div>
+        </div>
+    </div>
+    <p  ng-if="!error.userMessage">{{ 'ui.error.contactSysAdmin' | i18n }}</p>
+</div>

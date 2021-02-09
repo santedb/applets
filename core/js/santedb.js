@@ -1213,7 +1213,7 @@ function SanteDBWrapper() {
             Object.keys(object).filter(function (d) { return d != "$type" })
                 .forEach(function (k) {
                     retVal[k] = object[k];
-                    if (!retVal[k]);
+                    if (!retVal[k] || k.startsWith("_"));
                     else if (retVal[k].$type) // reorder k
                         retVal[k] = _reorderProperties(retVal[k]);
                     else if (Array.isArray(retVal[k]))

@@ -241,34 +241,7 @@ var santedbApp = angular.module('santedb', ['ngSanitize', 'ui.router', 'oc.lazyL
          * @summary Global Error Handler
          */
         $rootScope.errorHandler = function (e) {
-            console.error(e);
-            var userMessageKey = `error.type.${e.$type}.userMessage`;
-            var userMessage = SanteDB.locale.getString(userMessageKey);
-            if(userMessage == userMessageKey) // no special user message - show default
-            {
-                userMessageKey = e.message + '.text';
-                userMessage = SanteDB.locale.getString(userMessageKey);
-                $rootScope.error = {
-                    userMessage: e.userMessage ? e.userMessage : userMessage != userMessageKey ? userMessage : null,
-                    details: e.detail || e,
-                    message: e.message || 'ui.error.title',
-                    type: e.$type,
-                    rules: e.rules,
-                    cause: []
-                };
-                var cause = e.cause;
-                while (cause) {
-                    $rootScope.error.cause.push({
-                        detail: cause.detail || cause,
-                        message: cause.message || 'ui.error.title',
-                        type: cause.$type
-                    });
-                    cause = cause.cause;
-                }
-            }
-            else 
-                $rootScope.error = e;
-
+            $rootScope.error = $rootScope.prepareErrorForDisplay(e);
             var bugCallList = SanteDB.application.getResourceViewer("DiagnosticReport");
             if(bugCallList)
                 $rootScope.error.fileBug = function() {
@@ -279,6 +252,38 @@ var santedbApp = angular.module('santedb', ['ngSanitize', 'ui.router', 'oc.lazyL
             $rootScope.$apply();
         }
 
+        $rootScope.prepareErrorForDisplay = function(e) {
+            var userMessageKey = `error.type.${e.$type}.userMessage`;
+            var userMessage = SanteDB.locale.getString(userMessageKey);
+            if(userMessage == userMessageKey) // no special user message - show default
+            {
+                userMessageKey = e.message + '.text';
+                userMessage = SanteDB.locale.getString(userMessageKey);
+                var retVal = {
+                    userMessage: e.userMessage ? e.userMessage : userMessage != userMessageKey ? userMessage : null,
+                    details: e.detail || e,
+                    message: e.message || 'ui.error.title',
+                    type: e.$type,
+                    rules: e.rules,
+                    cause: []
+                };
+                var cause = e.cause;
+                while (cause) {
+                    retVal.cause.push({
+                        detail: cause.detail || cause,
+                        message: cause.message || 'ui.error.title',
+                        type: cause.$type
+                    });
+                    cause = cause.cause;
+                }
+                return retVal;
+            }
+            else {
+                e.type = e.$type;
+                e.userMessage = userMessage;
+                return e;
+            }
+        }
         // Page information
         $rootScope.page = {
             currentTime: new Date(),
@@ -295,7 +300,7 @@ var santedbApp = angular.module('santedb', ['ngSanitize', 'ui.router', 'oc.lazyL
                 $rootScope.system.online = SanteDB.application.getOnlineState();
             else
                 $rootScope.system.online = true;
-                
+
             $rootScope.system.serviceState = {
                 network: $rootScope.system.online,
                 ami:  SanteDB.application.isAdminAvailable(),
@@ -346,7 +351,7 @@ var santedbApp = angular.module('santedb', ['ngSanitize', 'ui.router', 'oc.lazyL
                 toastr.clear();
 
         };
-        $interval(ivlFn, 5000);
+        $interval(ivlFn, 10000);
 
         
         // Set locale for sleect2

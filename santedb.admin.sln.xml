@@ -1,14 +1,14 @@
 <AppletManifest xmlns="http://santedb.org/applet">
-  <info id="santedb.admin.sln" version="2.0.74.0">
+  <info id="santedb.admin.sln" version="2.0.76.0">
     <icon>/org.santedb.core/img/icon.png</icon>
     <name lang="en">SanteDB Administration</name>
     <author>SanteSuite Contributors</author>
-    <dependency id="org.santedb.admin" version="2.0.74.0"/>
-    <dependency id="org.santedb.core" version="2.0.74.0"/>
-    <dependency id="org.santedb.uicore" version="2.0.74.0"/>
-    <dependency id="org.santedb.bicore" version="2.0.74.0"/>
-    <dependency id="org.santedb.config" version="2.0.74.0"/>
-    <dependency id="org.santedb.config.init" version="2.0.74.0"/>
-    <dependency id="org.santedb.i18n.en" version="2.0.74.0"/>
+    <dependency id="org.santedb.admin" version="2.0.76.0"/>
+    <dependency id="org.santedb.core" version="2.0.76.0"/>
+    <dependency id="org.santedb.uicore" version="2.0.76.0"/>
+    <dependency id="org.santedb.bicore" version="2.0.76.0"/>
+    <dependency id="org.santedb.config" version="2.0.76.0"/>
+    <dependency id="org.santedb.config.init" version="2.0.76.0"/>
+    <dependency id="org.santedb.i18n.en" version="2.0.76.0"/>
   </info>
 </AppletManifest>
