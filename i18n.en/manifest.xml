@@ -621,6 +621,7 @@
       <string key="ui.model.entity.address.component.county">County/District</string>
       <string key="ui.model.entity.address.component.city">City</string>
       <string key="ui.model.entity.address.component.street">Street</string>
+      <string key="ui.model.entity.address.component.precinct">Precinct/Borough</string>
       <string key="ui.model.entity.address.component.postalcode">Postal/ZIP</string>
       <string key="ui.model.entity.address.component.country">Country</string>
       <string key="ui.model.entity.name">Name</string>
@@ -686,6 +687,7 @@
       <string key="ui.model.patient.deceased">Date of Death</string>
       <string key="ui.model.patient.multipleBirth">MULTIPLE BIRTH</string>
       <string key="ui.model.patient.birthplace">Birthplace</string>
+      <string key="ui.model.patient.vipStatus">VIP Status</string>
       <string key="ui.model.patient.register">Registered At</string>
       <string key="ui.model.patient.dedicatedServiceDeliveryLocation">Facilities</string>
       <string key="ui.model.patient.placeOfDeath">Place of Death</string>
@@ -705,8 +707,6 @@
       <string key="ui.model.place.address">Address</string>
       <string key="ui.model.place.updatedBy">Last Update</string>
       <string key="ui.model.place.statusConcept">Status</string>
-
-
       <string key="ui.model.patient.saveSuccess">Patient updated successfully</string>
       <string key="ui.model.person.saveSuccess">Related person updated successfully</string>
       <string key="ui.model.place.saveSuccess">Place updated successfully</string>
