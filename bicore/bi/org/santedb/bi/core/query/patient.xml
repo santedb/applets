@@ -42,7 +42,7 @@
     <add>
       <providers>
         <invariant>npgsql</invariant>
-        <invariant>fbsql</invariant>
+        <invariant>FirebirdSQL</invariant>
       </providers>
       <![CDATA[
         select 

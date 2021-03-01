@@ -32,7 +32,7 @@
     <add>
       <providers>
         <invariant>npgsql</invariant>
-        <invariant>fbsql</invariant>
+        <invariant>FirebirdSQL</invariant>
         <invariant>sqlite</invariant>
       </providers>
       <grouping>
