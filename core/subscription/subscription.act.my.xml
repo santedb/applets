@@ -33,7 +33,7 @@
       ) I)
       ]]>
     </definition>
-    <definition invariant="fbsql">
+    <definition invariant="FirebirdSQL">
       <![CDATA[
       SELECT * FROM
         ACT_VRSN_TBL

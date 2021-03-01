@@ -32,7 +32,7 @@
     <add>
       <providers>
         <invariant>npgsql</invariant>
-        <invariant>fbsql</invariant>
+        <invariant>FirebirdSQL</invariant>
       </providers>
       <grouping>
         <column name="evt_utc">evt_utc</column>

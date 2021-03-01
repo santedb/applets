@@ -53,7 +53,7 @@
 	    )
       ]]>
     </definition>
-    <definition invariant="fbsql">
+    <definition invariant="FirebirdSQL">
       <![CDATA[
      SELECT * FROM 
 	    ENT_VRSN_TBL 

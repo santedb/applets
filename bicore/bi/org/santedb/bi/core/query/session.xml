@@ -67,7 +67,7 @@
     </add>
     <add>
       <providers>
-        <invariant>fbsql</invariant>
+        <invariant>FirebirdSQL</invariant>
       </providers>
       <![CDATA[
         select 
