@@ -1,6 +1,6 @@
 <div xmlns="http://www.w3.org/1999/xhtml" xmlns:sdb="http://santedb.org/applet">
     <sdb:script static="false">~/controllers/groups/edit.js</sdb:script>
-    <sdb:state name="santedb-admin.security.groups.edit" abstract="false">
+    <sdb:state name="santedb-admin.security.groups.editView" abstract="false">
         <sdb:demand>1.3.6.1.4.1.33349.3.1.5.9.2.0.4</sdb:demand>
         <sdb:url>/{id}</sdb:url>
         <sdb:view>
@@ -11,7 +11,7 @@
     <div ng-show="isLoading" class="mx-auto text-center">
         <i class="fa fa-circle-notch fa-spin"></i> {{ 'ui.wait' | i18n }}
     </div>
-
+    <!-- Header Thingy -->
     <div class="container-fluid">
         <div class="row">
             <div class="col">
@@ -22,7 +22,7 @@
                                 <div class="col-xs-12 col-sm-4">
                                     <h5 class="m-0 p-2">
                                         <i class="fas fa-user"></i>
-                                        {{target.securityRole.name}}
+                                        ({{target.securityRole.name}})
                                     </h5>
                                 </div>
                             </div>
@@ -33,7 +33,7 @@
         </div>
         <div class="row">
             <div class="col">
-                <widget-tabs context-name="'org.santedb.securityRole.admin'" scoped-object="target" />
+                <widget-tabs context-name="'org.santedb.securityUser.group'" scoped-object="target" />
             </div>
         </div>
     </div>    
