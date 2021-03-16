@@ -157,7 +157,6 @@ angular.module('santedb').controller('EditGroupController', ["$scope", "$rootSco
      * @summary Add the newUser object to the group
      */
     $scope.addUser = function () {
-        console.log(`Add user`)
         // Add new user
         $scope.newUser.exec = true;
         $scope.newUser.$type = 'SecurityUser';
@@ -177,7 +176,6 @@ angular.module('santedb').controller('EditGroupController', ["$scope", "$rootSco
      * @summary Remove the specified user
      */
     $scope.deleteUser = function (uid) {
-        console.log(`Delete User`)
         if (confirm(SanteDB.locale.getString("ui.admin.securityRole.removeUserConfirm"))) {
             SanteDB.resources.securityRole.removeAssociatedAsync($scope.target.securityRole.id, 'user', uid)
                 .then(function (d) {
@@ -191,12 +189,6 @@ angular.module('santedb').controller('EditGroupController', ["$scope", "$rootSco
     $scope.$watch('target.securityRole', function (n, o) {
 
         if (n) {
-
-            if (membersTable instanceof $.fn.dataTable.Api) {
-                console.log(`Init`)
-            } else {
-                console.log(`Init`)
-            }
             
             membersTable  = $("#groupMembershipTable").DataTable({
                 lengthChange: false,
