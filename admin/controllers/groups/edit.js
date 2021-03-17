@@ -35,7 +35,6 @@ angular.module('santedb').controller('EditGroupController', ["$scope", "$rootSco
                 $scope.target.policy = u.policy;
                 $scope.target.securityRole = u.entity;
                 $scope.target.securityRole.etag = u.etag;
-
                 $scope.$apply();
             })
             .catch($rootScope.errorHandler);
@@ -187,9 +186,7 @@ angular.module('santedb').controller('EditGroupController', ["$scope", "$rootSco
 
     // Now create datatables
     $scope.$watch('target.securityRole', function (n, o) {
-
         if (n) {
-            
             membersTable  = $("#groupMembershipTable").DataTable({
                 lengthChange: false,
                 processing: true,     
@@ -217,10 +214,7 @@ angular.module('santedb').controller('EditGroupController', ["$scope", "$rootSco
                                 recordsFiltered: res.totalResults || res.size
                             });
                         })
-                        .catch(function (err) { 
-                            console.log(`ERROR ERROR ERROR`)
-                            $rootScope.errorHandler(err) 
-                        });
+                        .catch(function (err) { $rootScope.errorHandler(err) });
                 },
                 createdRow: function (r, d, i) {
                     $compile(angular.element(r).contents())($scope);
