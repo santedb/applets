@@ -53,7 +53,7 @@
                 ng-class="{'required': isRequired &amp;&amp; $index == 0}">{{ 'ui.model.entity.address.component.county' | i18n }}</label>
             <div class="col-sm-12 col-md-9" ng-switch="$root.system.config.application.setting['input.address']">
                 <div ng-switch-when="structured">
-                    <entity-search ng-required="isRequired &amp;&amp; $index == 0" type="'Place'"
+                    <entity-search type="'Place'"
                         group-by="'address.Direct.component.State'" name="{{controlPrefix}}address{{$index}}county"
                         ng-model="addr.component.County" search-field="'name.component.value'"
                         key="'name[OfficialRecord].component.value'"
@@ -61,7 +61,7 @@
 
                         filter="{ 'classConcept': 'd9489d56-ddac-4596-b5c6-8f41d73d8dc5', 'address[Direct].component[State].value': addr.component.State, 'statusConcept': 'c8064cbd-fa06-4530-b430-1a52f1530c27' }" />
                 </div>
-                <input ng-switch-default="" autocomplete="__away" ng-required="isRequired  &amp;&amp; $index == 0"
+                <input ng-switch-default="" autocomplete="__away" 
                     name="{{controlPrefix}}address{{$index}}county" type="text" class="form-control"
                     ng-model="addr.component.County" />
                 <div class="text-danger" ng-if="ownerForm[controlPrefix + 'address' + $index + 'county'].$invalid"><i

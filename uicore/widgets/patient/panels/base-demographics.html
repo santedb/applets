@@ -67,8 +67,20 @@
                             <label class="col-sm-12 col-md-3 control-label required">{{ 'ui.model.person.occupation' |
                                 i18n }}</label>
                             <div class="col-sm-12 col-md-9">
-                                <concept-select required="required" ng-model="editObject.occupationModel"
+                                <concept-select ng-model="editObject.occupationModel"
                                     concept-set="'OccupationType'"
+                                    add-concept="['6052712a-340e-4480-ad6b-409ba320db4f','61d8f65c-747e-4a99-982f-a42ac5437473']"
+                                    class="form-control" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="p-2">
+                        <div class="form-group row">
+                            <label class="col-sm-12 col-md-3 control-label required">{{ 'ui.model.patient.vipStatus' |
+                                i18n }}</label>
+                            <div class="col-sm-12 col-md-9">
+                                <concept-select ng-model="editObject.vipStatusModel"
+                                    concept-set="'VeryImportantPersonCodes'"
                                     add-concept="['6052712a-340e-4480-ad6b-409ba320db4f','61d8f65c-747e-4a99-982f-a42ac5437473']"
                                     class="form-control" />
                             </div>
