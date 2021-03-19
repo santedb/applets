@@ -8,5 +8,60 @@
             <sdb:title lang="en">Create Group</sdb:title>
         </sdb:view>
     </sdb:state>
-    <!-- #include virtual="~/views/security/groups/partial/edit.html" -->
+    
+    <form ng-submit="saveGroup(createForm, target)" name="createForm" xmlns="http://www.w3.org/1999/xhtml">
+        <div class="card-body container-fluid">
+            <div class="form-group row">
+                <label class="col-sm-12 col-md-2 control-label"
+                    for="sid">{{ 'ui.model.securityRole.id' | i18n }}</label>
+                <div class="col-sm-12 col-md-10 input-group">
+                    <input name="sid" readonly="readonly" type="text" class="form-control"
+                        ng-model="target.securityRole.id" />
+                    <input-copy-button class="btn btn-outline-secondary" source="target.securityRole.id" />
+                </div>
+            </div>
+    
+            <div class="form-group row">
+                <label class="col-sm-12 col-md-2 control-label"
+                    for="rolename">{{ 'ui.model.securityRole.name' | i18n }}</label>
+                <div class="col-sm-12 col-md-10 input-group">
+                    <input name="rolename" ng-readonly="target.securityRole.id" type="text"
+                        class="form-control" pattern="^[A-Za-z0-9_\.\@]{3,}" minlength="3" maxlength="32"
+                        required="required" ng-model="target.securityRole.name" />
+                    <input-copy-button id="rolenameCopyButton" class="btn btn-outline-secondary"
+                        source="target.securityRole.name" />
+                </div>
+                <div class="col-sm-12 col-md-10 offset-md-2">
+                    <div ng-show="createForm.rolename.$error['duplicate']" class="alert-danger">
+                        <i class="fa fa-exclamation-triangle"></i>
+                        {{ 'ui.error.duplicate' | i18n }}
+                    </div>
+                    <div ng-show="createForm.rolename.$error['required'] &amp;&amp; createForm.$submitted"
+                        class="alert-danger">
+                        <i class="fa fa-exclamation-triangle"></i> {{ 'ui.error.required' | i18n }}
+                    </div>
+                    <div ng-show="createForm.rolename.$error['pattern'] &amp;&amp; createForm.$submitted"
+                        class="alert-danger">
+                        <i class="fa fa-exclamation-triangle"></i> {{ 'ui.error.pattern' | i18n }}
+                    </div>
+                </div>
+            </div>
+    
+            <div class="form-group row">
+                <label
+                    class="col-sm-12 col-md-2 control-label">{{ 'ui.model.securityRole.description' | i18n }}</label>
+                <div class="col-md-10 col-sm-12">
+                    <textarea ng-model="target.securityRole.description" maxlength="2048"
+                        class="form-control" rows="3"></textarea>
+                </div>
+                <div class="col-sm-12 text-right">
+                    {{ 2048 - target.securityRole.description.length}} {{ 'ui.common.charsRemain' | i18n }}
+                </div>
+            </div>
+        </div>
+        <div class="btn-group float-right">
+            <button type="submit" id="saveGroupButton" class="btn btn-primary"><i class="fa fa-check"></i>
+                {{ 'ui.action.save' | i18n }}</button>
+        </div>
+    </form>
 </div>
