@@ -57,9 +57,9 @@ angular.module('santedb').controller('EditGroupController', ["$scope", "$rootSco
                     .then(function (r) {
                         SanteDB.display.buttonWait("#roleNameCopyButton button", false, true);
                         if (r.size > 0) // Alert error for duplicate
-                            $scope.targetForm.rolename.$setValidity('duplicate', false);
+                            $scope.createForm.rolename.$setValidity('duplicate', false);
                         else
-                            $scope.targetForm.rolename.$setValidity('duplicate', true);
+                            $scope.createForm.rolename.$setValidity('duplicate', true);
 
                         try { $scope.$apply(); }
                         catch (e) { }
@@ -76,80 +76,93 @@ angular.module('santedb').controller('EditGroupController', ["$scope", "$rootSco
     /**
      * @summary Reactivate Inactive Group
      */
-    $scope.reactivateGroup = function () {
+    $scope.reactivateGroup = async function (group) {
         if (!confirm(SanteDB.locale.getString("ui.admin.group.reactivate.confirm")))
             return;
 
-        var patch = new Patch({
-            change: [
-                new PatchOperation({
-                    op: PatchOperationType.Remove,
-                    path: 'obsoletionTime',
-                    value: null
-                }),
-                new PatchOperation({
-                    op: PatchOperationType.Remove,
-                    path: 'obsoletedBy',
-                    value: null
-                })
-            ]
-        });
-
-        // Send the patch
-        SanteDB.display.buttonWait("#reactivateRoleButton", true);
-        SanteDB.resources.securityRole.patchAsync($stateParams.id, $scope.target.securityRole.etag, patch)
-            .then(function (r) {
-                $scope.target.securityRole.obsoletionTime = null;
-                $scope.target.securityRole.obsoletedBy = null;
-                SanteDB.display.buttonWait("#reactivateRoleButton", false);
-                $scope.$apply();
-            })
-            .catch(function (e) {
-                $rootScope.errorHandler(e);
-                SanteDB.display.buttonWait("#reactivateRoleButton", false);
+        try {
+            var patch = new Patch({
+                change: [
+                    new PatchOperation({
+                        op: PatchOperationType.Remove,
+                        path: 'obsoletionTime',
+                        value: null
+                    }),
+                    new PatchOperation({
+                        op: PatchOperationType.Remove,
+                        path: 'obsoletedBy',
+                        value: null
+                    })
+                ]
             });
+
+            // Send the patch
+            SanteDB.display.buttonWait("#reactivateRoleButton", true);
+            await SanteDB.resources.securityRole.patchAsync($stateParams.id, group.securityRole.etag, patch);
+            group.securityRole.obsoletionTime = null;
+            group.securityRole.obsoletedBy = null;
+            toastr.success(SanteDB.locale.getString("ui.admin.group.reactivate.success"));
+        }
+        catch (e) {
+            $rootScope.errorHandler(e);
+        }
+        finally {
+            SanteDB.display.buttonWait("#reactivateRoleButton", false);
+        }
 
     }
 
     /**
      * @summary Save the specified role
+     * @param {any} roleForm The form to use for validation
+     * @param {SecurityRole} group The group to save
      */
-    $scope.saveGroup = function (roleForm) {
+    $scope.saveGroup = async function (roleForm, group) {
 
         if (!roleForm.$valid) return;
 
         // Show wait state
         SanteDB.display.buttonWait("#saveGroupButton", true);
 
-        // Success fn
-        var successFn = function (r) {
-            // Now save the user entity
-            toastr.success(SanteDB.locale.getString("ui.model.securityRole.saveSuccess"));
-            SanteDB.display.buttonWait("#saveGroupButton", false);
-            $state.transitionTo("santedb-admin.security.groups.edit", { "id": r.entity.id })
-        };
-        var errorFn = function (e) {
-            SanteDB.display.buttonWait("#saveGroupButton", false);
-            $rootScope.errorHandler(e);
-        };
+        try {
 
-        // user is already registered we are updating them 
-        if ($scope.target.securityRole.id) {
-            // Register the user first
-            SanteDB.resources.securityRole.updateAsync($scope.target.securityRole.id, {
-                $type: "SecurityRoleInfo",
-                entity: $scope.target.securityRole
-            }).then(successFn)
-                .catch(errorFn);
+            // Is this an edit?
+            if (group.securityRole.id) {
+                // Just post the security role 
+                var patch = new Patch({
+                    appliesTo: {
+                        id: group.securityRole.id,
+                        etag: group.securityRole.tag
+                    },
+                    change: [
+                        new PatchOperation({
+                            op: PatchOperationType.Replace,
+                            path: "description",
+                            value: group.securityRole.description
+                        })
+                    ]
+                });
+                await SanteDB.resources.securityRole.patchAsync(group.securityRole.id, group.securityRole.etag, patch);
+                toastr.success(SanteDB.locale.getString("ui.model.securityRole.saveSuccess"));
+            }
+            else // this is a registration
+            {
+                // Insert the role
+                var role = await SanteDB.resources.securityRole.insertAsync({
+                    $type: "SecurityRoleInfo",
+                    entity: group.securityRole
+                });
+                toastr.success(SanteDB.locale.getString("ui.model.securityRole.saveSuccess"));
+                $state.transitionTo("santedb-admin.security.groups.edit", { "id": role.entity.id })
+            }
         }
-        else {
-            // Register the user first
-            SanteDB.resources.securityRole.insertAsync({
-                $type: "SecurityRoleInfo",
-                entity: $scope.target.securityRole
-            }).then(successFn)
-                .catch(errorFn);
+        catch (e) {
+            $rootScope.errorHandler(e);
         }
+        finally {
+            SanteDB.display.buttonWait("#saveGroupButton", false);
+        }
+
     }
 
     /**
@@ -187,9 +200,10 @@ angular.module('santedb').controller('EditGroupController', ["$scope", "$rootSco
     // Now create datatables
     $scope.$watch('target.securityRole', function (n, o) {
         if (n) {
-            membersTable  = $("#groupMembershipTable").DataTable({
+            membersTable = $("#groupMembershipTable").DataTable({
                 lengthChange: false,
                 processing: true,
+                retrieve: true,
                 buttons: [
                 ],
                 serverSide: true,

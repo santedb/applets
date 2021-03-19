@@ -320,9 +320,16 @@
     <!-- Security Widgets -->
     <string key="org.santedb.widget.admin.tab.user.profile">User Profile</string>
     <string key="org.santedb.widget.admin.tab.user.security">Security</string>
+    <string key="org.santedb.widget.admin.tab.group.profile">Group Profile</string>
     <string key="org.santedb.widget.admin.panel.user.core">Core Properties</string>
     <string key="org.santedb.widget.admin.panel.user.security">Security Properties</string>
-    
+    <string key="org.santedb.widget.admin.panel.group.core">Core Properties</string>
+    <string key="org.santedb.widget.admin.panel.group.policies">Assigned Policies</string>
+    <string key="org.santedb.widget.admin.panel.group.members">Members</string>
+
+    <!-- Test -->
+    <string key="org.santedb.widget.admin.tab.groups.test">Test</string>
+
     <!-- Bug Reporting -->
     <string key="ui.admin.bug.user">Submitter</string>
     <string key="ui.admin.bug.description">Description</string>
