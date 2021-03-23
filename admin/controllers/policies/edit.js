@@ -54,9 +54,9 @@ angular.module('santedb').controller('EditPolicyController', ["$scope", "$rootSc
                     .then(function (r) {
                         SanteDB.display.buttonWait("#policyNameCopyButton button", false, true);
                         if (r.size > 0) // Alert error for duplicate
-                            $scope.targetForm.policyname.$setValidity('duplicate', false);
+                            $scope.createForm.policyname.$setValidity('duplicate', false);
                         else
-                            $scope.targetForm.policyname.$setValidity('duplicate', true);
+                            $scope.createForm.policyname.$setValidity('duplicate', true);
 
                         try { $scope.$apply(); }
                         catch (e) { }
@@ -77,9 +77,9 @@ angular.module('santedb').controller('EditPolicyController', ["$scope", "$rootSc
                     .then(function (r) {
                         SanteDB.display.buttonWait("#policyOidCopyButton button", false, true);
                         if (r.size > 0) // Alert error for duplicate
-                            $scope.targetForm.policyoid.$setValidity('duplicate', false);
+                            $scope.createForm.policyoid.$setValidity('duplicate', false);
                         else
-                            $scope.targetForm.policyoid.$setValidity('duplicate', true);
+                            $scope.createForm.policyoid.$setValidity('duplicate', true);
 
                         try { $scope.$apply(); }
                         catch (e) { }
