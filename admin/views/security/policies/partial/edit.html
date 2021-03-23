@@ -1,5 +1,5 @@
 <div xmlns="http://www.w3.org/1999/xhtml">
-    <form ng-submit="savePolicy(targetForm)" name="targetForm" novalidate="novalidate">
+    <form ng-submit="savePolicy(targetForm, target)" name="targetForm" novalidate="novalidate">
         <div class="alert alert-warning" ng-show="!target.securityPolicy.id">
             <i class="fas fa-exclamation-triangle"></i> {{ 'ui.admin.policy.edit.readonly'  | i18n }}
         </div>

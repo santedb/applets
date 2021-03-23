@@ -94,35 +94,29 @@ angular.module('santedb').controller('EditPolicyController', ["$scope", "$rootSc
     /**
      * @summary Save the specified role
      */
-    $scope.savePolicy = function (policyForm) {
+    $scope.savePolicy = async function (policyForm, policy) {
 
         if (!policyForm.$valid) return;
 
         // Show wait state
         SanteDB.display.buttonWait("#savePolicyButton", true);
 
-        // Success fn
-        var successFn = function (r) {
-            // Now save the user entity
+        try {
+            if (policy.securityPolicy.id) {
+                await SanteDB.resources.securityPolicy.updateAsync(policy.securityPolicy.id, policy.securityPolicy);
+            }
+            else {
+                await SanteDB.resources.securityPolicy.insertAsync(policy.securityPolicy)
+            }
+        }
+        catch (e) {
+            SanteDB.display.buttonWait("#savePolicyButton", false);
+            $rootScope.errorHandler(e);
+        }
+        finally {
             toastr.success(SanteDB.locale.getString("ui.model.securityPolicy.saveSuccess"));
             SanteDB.display.buttonWait("#savePolicyButton", false);
             $state.transitionTo("santedb-admin.security.policies.index")
-        };
-        var errorFn = function (e) {
-            SanteDB.display.buttonWait("#savePolicyButton", false);
-            $rootScope.errorHandler(e);
-        };
-
-        // policy is already registered we are updating them 
-        if ($scope.target.securityPolicy.id) {
-            // Register the user first
-            SanteDB.resources.securityPolicy.updateAsync($scope.target.securityPolicy.id, $scope.target.securityPolicy).then(successFn)
-                .catch(errorFn);
-        }
-        else {
-            // Register the user first
-            SanteDB.resources.securityPolicy.insertAsync($scope.target.securityPolicy).then(successFn)
-                .catch(errorFn);
         }
     }
 
@@ -130,39 +124,38 @@ angular.module('santedb').controller('EditPolicyController', ["$scope", "$rootSc
     /**
      * @summary Reactivate Inactive User
      */
-    $scope.reactivatePolicy = function() {
+    $scope.reactivatePolicy = async function() {
         if(!confirm(SanteDB.locale.getString("ui.admin.policy.reactivate.confirm")))
             return;
         
-        var patch = new Patch({
-            change: [
-                new PatchOperation({
-                    op: PatchOperationType.Remove,
-                    path: 'obsoletionTime',
-                    value: null
-                }),
-                new PatchOperation({
-                    op: PatchOperationType.Remove,
-                    path: 'obsoletedBy',
-                    value: null
-                })
-            ]
-        });
-
-        // Send the patch
-        SanteDB.display.buttonWait("#reactivatePolicyButton", true);
-        SanteDB.resources.securityPolicy.patchAsync($stateParams.id, $scope.target.securityPolicy.etag, patch)
-            .then(function(r) {
-                $scope.target.securityPolicy.obsoletionTime = null;
-                $scope.target.securityPolicy.obsoletedBy = null;
-                SanteDB.display.buttonWait("#reactivatePolicyButton", false);
-                $scope.$apply();
-            })
-            .catch(function(e) { 
-                $rootScope.errorHandler(e); 
-                SanteDB.display.buttonWait("#reactivatePolicyButton", false);
+        try {
+            var patch = new Patch({
+                change: [
+                    new PatchOperation({
+                        op: PatchOperationType.Remove,
+                        path: 'obsoletionTime',
+                        value: null
+                    }),
+                    new PatchOperation({
+                        op: PatchOperationType.Remove,
+                        path: 'obsoletedBy',
+                        value: null
+                    })
+                ]
             });
 
+            SanteDB.display.buttonWait("#reactivatePolicyButton", true);
+            await SanteDB.resources.securityPolicy.patchAsync($stateParams.id, $scope.target.securityPolicy.etag, patch);
+            toastr.success(SanteDB.locale.getString("ui.admin.policy.reactivate.success"));
+        }
+        catch (e) {
+            $rootScope.errorHandler(e);
+            SanteDB.display.buttonWait("#reactivatePolicyButton", false);
+        }
+        finally {
+            SanteDB.display.buttonWait("#reactivatePolicyButton", false);
+            $scope.$apply();
+        }
     }
 
 }]);
