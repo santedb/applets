@@ -8,10 +8,29 @@
             <sdb:title lang="en">Edit Device</sdb:title>
         </sdb:view>
     </sdb:state>
-    <div ng-show="isLoading" class="mx-auto text-center">
-        <i class="fa fa-circle-notch fa-spin"></i> {{ 'ui.wait' | i18n }}
-    </div>
-    <div ng-show="!isLoading">
-        <!-- #include virtual="~/views/security/devices/partial/edit.html" -->
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col">
+                <div class="card shadow">
+                    <div class="card-body">
+                        <div class="container-fluid">
+                            <div class="row">
+                                <div class="col-xs-12 col-sm-4">
+                                    <h5 class="m-0 p-2">
+                                        <i class="fas fa-cog"></i>
+                                        {{target.securityDevice.name}}
+                                    </h5>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <widget-tabs context-name="'org.santedb.securityDevice.admin'" scoped-object="target" />
+            </div>
+        </div>
     </div>
 </div>

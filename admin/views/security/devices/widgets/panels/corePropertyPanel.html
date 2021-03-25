@@ -1,0 +1,74 @@
+<div xmlns="http://www.w3.org/1999/xhtml" xmlns:sdb="http://santedb.org/applet" 
+    oc-lazy-load="{ name: 'EditApplicationController', files: ['/org.santedb.admin/controllers/applications/edit.js'] }" >
+    <sdb:widget order="14" name="org.santedb.widget.admin.panel.device.core"  headerClass="bl-light"
+        size="Large" type="Panel" context="org.santedb.securityDevice.admin">
+        <sdb:icon>fas fa-window-maximize</sdb:icon>
+        <sdb:description lang="en">Core Properties</sdb:description>
+    </sdb:widget>
+    
+    <div class="collapse show" id="coreDeviceProps">
+        <div class="card-body container-fluid">
+            <div class="form-group row">
+                <label class="col-sm-12 col-md-2 control-label"
+                    for="sid">{{ 'ui.model.securityDevice.id' | i18n }}</label>
+                <div class="col-sm-12 col-md-10 input-group">
+                    <input name="sid" readonly="readonly" type="text" class="form-control"
+                        ng-model="target.securityDevice.id" />
+                    <input-copy-button class="btn btn-outline-secondary" source="target.securityDevice.id" />
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-12 col-md-2 control-label"
+                    for="devicename">{{ 'ui.model.securityDevice.name' | i18n }}</label>
+                <div class="col-sm-12 col-md-10 input-group">
+                    <input name="devicename" ng-readonly="target.securityDevice.id" type="text"
+                        class="form-control" pattern="^[A-Za-z0-9_\-\.\@\|]{3,}" minlength="3" maxlength="32"
+                        required="required" ng-model="target.securityDevice.name" />
+                    <input-copy-button id="devicenameCopyButton" class="btn btn-outline-secondary"
+                        source="target.securityDevice.name" />
+                </div>
+                <div class="col-sm-12 col-md-10 offset-md-2">
+                    <div ng-show="targetForm.devicename.$error['duplicate']" class="alert-danger">
+                        <i class="fa fa-exclamation-triangle"></i>
+                        {{ 'ui.error.duplicate' | i18n }}
+                    </div>
+                    <div ng-show="targetForm.devicename.$error['required'] &amp;&amp; targetForm.$submitted"
+                        class="alert-danger">
+                        <i class="fa fa-exclamation-triangle"></i> {{ 'ui.error.required' | i18n }}
+                    </div>
+                    <div ng-show="targetForm.devicename.$error['pattern'] &amp;&amp; targetForm.$submitted"
+                        class="alert-danger">
+                        <i class="fa fa-exclamation-triangle"></i> {{ 'ui.error.pattern' | i18n }}
+                    </div>
+                </div>
+            </div>
+            <div class="form-group row" ng-if="target.securityDevice.createdBy">
+                <label
+                    class="col-sm-12 col-md-2 control-label">{{ 'ui.model.securityDevice.createdBy' | i18n }}</label>
+                <div class="col-md-10 col-sm-12">
+                        <provenance provenance-id="target.securityDevice.createdBy" provenance-time="target.securityDevice.creationTime"></provenance>
+                    {{ target.securityDevice.creationTime | extDate }}
+                </div>
+            </div>
+            <div class="form-group row" ng-if="target.securityDevice.updatedBy">
+                <label
+                    class="col-sm-12 col-md-2 control-label">{{ 'ui.model.securityDevice.updatedBy' | i18n }}</label>
+                <div class="col-md-10 col-sm-12">
+                        <provenance provenance-id="target.securityDevice.updatedBy" provenance-time="target.securityDevice.updatedTime"></provenance>
+                    {{ target.securityDevice.updatedTime | extDate }}
+                </div>
+            </div>
+            <div class="form-group row" ng-if="target.securityDevice.obsoletedBy">
+                <label
+                    class="col-sm-12 col-md-2 control-label">{{ 'ui.model.securityDevice.obsoletedBy' | i18n }}</label>
+                <div class="col-md-10 col-sm-12">
+                        <provenance provenance-id="target.securityDevice.obsoletedBy" provenance-time="target.securityDevice.obsoletionTime"></provenance>
+                    {{ target.securityDevice.obsoletionTime | extDate }} <button id="reactivateDeviceButton"
+                        ng-click="reactivateDevice()" type="button" class="btn btn-success"><i
+                            class="fas fa-trash-restore"></i>
+                        {{ 'ui.action.undelete' | i18n }}</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

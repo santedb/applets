@@ -1,0 +1,59 @@
+<div xmlns="http://www.w3.org/1999/xhtml" xmlns:sdb="http://santedb.org/applet" 
+    oc-lazy-load="{ name: 'EditApplicationController', files: ['/org.santedb.admin/controllers/applications/edit.js'] }" >
+    <sdb:widget order="15" name="org.santedb.widget.admin.panel.device.security"  headerClass="bl-light"
+        size="Large" type="Panel" context="org.santedb.securityDevice.admin">
+        <sdb:icon>fas fa-window-maximize</sdb:icon>
+        <sdb:description lang="en">Security Properties</sdb:description>
+    </sdb:widget>
+
+        <div id="securityProps">
+            <div class="form-group row">
+                <label
+                    class="col-xs-12 col-md-2 control-label">{{ 'ui.model.securityDevice.lastAuthenticationTime' | i18n }}</label>
+                <div class="col-xs-12 col-md-10" ng-if="target.securityDevice.lastAuthenticationTime">
+                    {{ target.securityDevice.lastAuthenticationTime | extDate: 'F' }}</div>
+                <div class="col-xs-12 col-md-10" ng-if="!target.securityDevice.lastAuthenticationTime">
+                    {{ 'ui.admin.devices.edit.security.neverLoggedIn' | i18n }}</div>
+            </div>
+            <div class="form-group row" ng-if="target.securityDevice.id">
+                <label
+                    class="col-xs-12 col-md-2 control-label">{{ 'ui.model.securityDevice.invalidAuth' | i18n }}</label>
+                <div class="col-xs-12 col-md-10">
+                    {{ target.securityDevice.invalidAuth || 0    }}
+                    <button ng-click="resetInvalidLogins()" id="resetInvalidLoginsButton" type="button"
+                        class="btn btn-info">
+                        <i class="fas fa-undo"></i> {{ 'ui.action.reset' | i18n }}
+                    </button>
+                </div>
+            </div>
+            <div class="form-group row" ng-if="target.securityDevice.lockout > $root.page.currentTime">
+                <label for="lockout" class="col-xs-12 col-md-2 control-label">{{ 'ui.model.securityDevice.lockout' | i18n }}</label>
+                <div class="col-xs-12 col-md-10">
+                    {{ target.securityDevice.lockout | extDate: 'F' }}
+                    <button ng-click="unlock()" id="unlockButton" class="btn btn-info"
+                        type="button">
+                        <i class="fa fa-lock-open"></i> {{ 'ui.action.unlock' | i18n }}
+                    </button>
+                </div>
+            </div>
+            <div class="form-group row" ng-if="target.securityDevice.id">
+                <label
+                    class="col-xs-12 col-md-2 control-label">{{ 'ui.model.securityDevice.secret' | i18n }}</label>
+                <div class="col-sm-12 col-md-10 input-group" ng-if="target.securityDevice.deviceSecret">
+                        <input name="secret" ng-readonly="target.securityDevice.id" type="text"
+                            class="form-control" minlength="3" maxlength="64"
+                            readonly="readonly" ng-model="target.securityDevice.deviceSecret" />
+                        <input-copy-button id="devicesecretCopyButton" class="btn btn-outline-secondary"
+                            source="target.securityDevice.deviceSecret" />
+                    </div>
+                <div class="col-xs-12 col-md-2" ng-if="!target.securityDevice.deviceSecret">
+                    <button ng-click="resetSecret()" id="resetSecretButton" class="btn btn-info" 
+                        type="button">
+                        <i class="fa fa-asterisk"></i> {{ 'ui.action.reset' | i18n }}
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+</div>

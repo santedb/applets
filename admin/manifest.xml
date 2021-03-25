@@ -322,7 +322,8 @@
     <string key="org.santedb.widget.admin.tab.user.security">Security</string>
     <string key="org.santedb.widget.admin.tab.group.profile">Group Profile</string>
     <string key="org.santedb.widget.admin.tab.policy.core">Core Properties</string>
-    <string key="org.santedb.widget.admin.tab.applications.core">Core Application Properties</string>
+    <string key="org.santedb.widget.admin.tab.applications.core">Core Properties</string>
+    <string key="org.santedb.widget.admin.tab.device.core">Core Application Properties</string>
     <string key="org.santedb.widget.admin.panel.user.core">Core Properties</string>
     <string key="org.santedb.widget.admin.panel.user.security">Security Properties</string>
     <string key="org.santedb.widget.admin.panel.group.core">Core Properties</string>
@@ -332,6 +333,10 @@
     <string key="org.santedb.widget.admin.panel.applications.core">Core Application Properties</string>
     <string key="org.santedb.widget.admin.panel.applications.security">Security Properties</string>
     <string key="org.santedb.widget.admin.panel.applications.extended">Extended Properties</string>
+    <string key="org.santedb.widget.admin.panel.device.core">Core Properties</string>
+    <string key="org.santedb.widget.admin.panel.device.security">Security Properties</string>
+    <string key="org.santedb.widget.admin.panel.device.extended">Extended Properties</string>
+    <string key="org.santedb.widget.admin.panel.device.policies">Assigned Policies</string>
   
 
     <!-- Bug Reporting -->

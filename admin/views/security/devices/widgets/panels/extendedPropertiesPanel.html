@@ -1,0 +1,60 @@
+<div xmlns="http://www.w3.org/1999/xhtml" xmlns:sdb="http://santedb.org/applet" 
+    oc-lazy-load="{ name: 'EditApplicationController', files: ['/org.santedb.admin/controllers/applications/edit.js'] }" >
+    <sdb:widget order="16" name="org.santedb.widget.admin.panel.device.extended"  headerClass="bl-light"
+        size="Large" type="Panel" context="org.santedb.securityDevice.admin">
+        <sdb:icon>fas fa-window-maximize</sdb:icon>
+        <sdb:description lang="en">Extended Properties</sdb:description>
+    </sdb:widget>
+
+    <div ng-class="{ 'show' : !target.securityDevice.id }" id="demographicProps">
+        <div class="form-group row">
+            <label for="modelName"
+                class="col-xs-12 col-md-2 control-label">{{ 'ui.model.deviceEntity.manufacturerModelName' | i18n }}</label>
+            <div class="col-xs-12 col-md-10">
+                <input required="required" name="modelName" type="text" class="form-control" maxlength="128"
+                    ng-model="target.entity.manufacturerModelName" />
+            </div>
+            <div class="col-sm-12 col-md-10 offset-md-2"><div ng-show="targetForm.modelName.$error['required'] &amp;&amp; targetForm.$submitted"
+                    class="alert-danger">
+                    <i class="fa fa-exclamation-triangle"></i> {{ 'ui.error.required' | i18n }}
+                </div>
+                </div>
+        </div>
+        <div class="form-group row">
+            <label for="operatingSystemName"
+                class="col-xs-12 col-md-2 control-label">{{ 'ui.model.deviceEntity.operatingSystemName' | i18n }}</label>
+            <div class="col-xs-12 col-md-10">
+                <input required="required" name="operatingSystemName" type="tel" class="form-control"
+                    ng-model="target.entity.operatingSystemName" />
+            </div>
+            <div class="col-sm-12 col-md-10 offset-md-2"><div ng-show="targetForm.operatingSystemName.$error['required'] &amp;&amp; targetForm.$submitted"
+                    class="alert-danger">
+                    <i class="fa fa-exclamation-triangle"></i> {{ 'ui.error.required' | i18n }}
+                </div>
+                </div>
+        </div>
+        <div class="form-group row">
+            <label for="facility"
+                class="col-xs-12 col-md-2 control-label">{{ 'ui.model.deviceEntity.relationship.DedicatedServiceDeliveryLocation' | i18n }}</label>
+            <div class="col-xs-12 col-md-10">
+                <entity-search type="'Place'" name="facility"
+                    filter="{ obsoletionTime: 'null', classConcept: EntityClassKeys.ServiceDeliveryLocation }"
+                    class="form-control"
+                    ng-model="target.entity.relationship.DedicatedServiceDeliveryLocation"
+                    value-property="'target'" />
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="assignedEntity" 
+                class="col-xs-12 col-md-2 control-label">{{ 'ui.model.deviceEntity.relationship.AssignedEntity' | i18n }}</label>
+            <div class="col-xs-12 col-md-10">
+                <entity-search type="'UserEntity'"
+                    filter="{ obsoletionTime: 'null' }"
+                    class="form-control"
+                    name="assignedEntity"
+                    ng-model="target.entity.relationship.AssignedEntity"
+                    value-property="'target'" />
+            </div>
+        </div>
+    </div>
+</div>
