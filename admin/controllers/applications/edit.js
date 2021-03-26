@@ -88,127 +88,132 @@ angular.module('santedb').controller('EditApplicationController', ["$scope", "$r
     /**
      * @summary Reactivate Inactive device
      */
-    $scope.reactivateApplication = function() {
+    $scope.reactivateApplication = async function(application) {
         if(!confirm(SanteDB.locale.getString("ui.admin.applications.reactivate.confirm")))
             return;
-        
-        var patch = new Patch({
-            change: [
-                new PatchOperation({
-                    op: PatchOperationType.Remove,
-                    path: 'obsoletionTime',
-                    value: null
-                }),
-                new PatchOperation({
-                    op: PatchOperationType.Remove,
-                    path: 'obsoletedBy',
-                    value: null
-                })
-            ]
-        });
+
+        try {
+            var patch = new Patch({
+                change: [
+                    new PatchOperation({
+                        op: PatchOperationType.Remove,
+                        path: 'obsoletionTime',
+                        value: null
+                    }),
+                    new PatchOperation({
+                        op: PatchOperationType.Remove,
+                        path: 'obsoletedBy',
+                        value: null
+                    })
+                ]
+            });
 
         // Send the patch
         SanteDB.display.buttonWait("#reactivateApplicationButton", true);
-        SanteDB.resources.securityApplication.patchAsync($stateParams.id, $scope.target.securityApplication.etag, patch)
-            .then(function(r) {
-                $scope.target.securityApplication.obsoletionTime = null;
-                $scope.target.securityApplication.obsoletedBy = null;
-                SanteDB.display.buttonWait("#reactivateApplicationButton", false);
-                $scope.$apply();
-            })
-            .catch(function(e) { 
-                $rootScope.errorHandler(e); 
-                SanteDB.display.buttonWait("#reactivateApplicationButton", false);
-            });
-
+        await  SanteDB.resources.securityApplication.patchAsync($stateParams.id, application.securityApplication.etag, patch)
+        application.securityApplication.obsoletionTime = null;
+        application.securityApplication.obsoletedBy = null;
+        }
+        catch (e) {
+            $rootScope.errorHandler(e); 
+            SanteDB.display.buttonWait("#reactivateApplicationButton", false);
+        }
+        finally {
+            SanteDB.display.buttonWait("#reactivateApplicationButton", false);
+        }
     }
 
     /**
      * @summary Reset secret
      */
-    $scope.resetSecret = function() {
+    $scope.resetSecret = async function(application) {
         if($scope.target.securityApplication.id && !confirm(SanteDB.locale.getString("ui.admin.applications.secret.reset")))
             return;
 
-        // Generate UUID
-        var repl = SanteDB.application.generatePassword();
-        var patch = new Patch({
-            change: [
-                new PatchOperation({
-                    op: PatchOperationType.Replace,
-                    path: "applicationSecret",
-                    value: repl
-                })
-            ]
-        });
-
-        SanteDB.display.buttonWait("#resetSecretButton", true);
-        SanteDB.resources.securityApplication.patchAsync($stateParams.id, $scope.target.securityApplication.etag, patch)
-            .then(function(r) {
-                SanteDB.display.buttonWait("#resetSecretButton", false);
-                $scope.target.securityApplication.applicationSecret = repl;
-                $scope.$apply();
-            }).catch(function(e) {
-                SanteDB.display.buttonWait("#resetSecretButton", false);
-                $rootScope.errorHandler(e); 
+        try {
+            // Generate UUID
+            var repl = SanteDB.application.generatePassword();
+            var patch = new Patch({
+                change: [
+                    new PatchOperation({
+                        op: PatchOperationType.Replace,
+                        path: "applicationSecret",
+                        value: repl
+                    })
+                ]
             });
+
+            SanteDB.display.buttonWait("#resetSecretButton", true);
+            await SanteDB.resources.securityApplication.patchAsync($stateParams.id, application.securityApplication.etag, patch);
+            application.securityApplication.applicationSecret = repl;
+        }
+        catch(e) {
+            SanteDB.display.buttonWait("#resetSecretButton", false);
+            $rootScope.errorHandler(e); 
+        }
+        finally {
+            SanteDB.display.buttonWait("#resetSecretButton", false);
+        }
     }
 
     /**
      * @summary Reset invalid logins
      */
-    $scope.resetInvalidLogins = function() {
+    $scope.resetInvalidLogins = async function(application) {
         if(!confirm(SanteDB.locale.getString("ui.admin.devices.invalidLogin.reset")))
             return;
 
-        var patch = new Patch({
-            change: [
-                new PatchOperation({
-                    op: PatchOperationType.Replace,
-                    path: "invalidAuth",
-                    value: 0
-                })
-            ]
-        });
+        try {
+            var patch = new Patch({
+                change: [
+                    new PatchOperation({
+                        op: PatchOperationType.Replace,
+                        path: "invalidAuth",
+                        value: 0
+                    })
+                ]
+            });
 
-        SanteDB.display.buttonWait("#resetInvalidLoginButton", true);
-        SanteDB.resources.securityApplication.patchAsync($stateParams.id, $scope.target.securityApplication.etag, patch)
-            .then(function(r) {
-                SanteDB.display.buttonWait("#resetInvalidLoginButton", false);
-                $scope.target.securityApplication.invalidAuth = 0;
-                $scope.$apply();
-            })
-            .catch(function(e) {
-                $rootScope.errorHandler(e);
-                SanteDB.display.buttonWait("#resetInvalidLoginButton", false);
-            })
+            SanteDB.display.buttonWait("#resetInvalidLoginButton", true);
+            await SanteDB.resources.securityApplication.patchAsync($stateParams.id, application.securityApplication.etag, patch)
+            application.securityApplication.invalidAuth = 0;
+        }
+        catch (e) {
+            $rootScope.errorHandler(e);
+            SanteDB.display.buttonWait("#resetInvalidLoginButton", false);
+        }
+        finally {
+            SanteDB.display.buttonWait("#resetInvalidLoginButton", false);
+        }
     }
 
      /**
      * @summary Unlock user
      */
-    $scope.unlock = function() {
+    $scope.unlock = async function() {
         if(!confirm(SanteDB.locale.getString("ui.admin.applications.confirmUnlock")))
             return;
 
-        SanteDB.display.buttonWait("#unlockButton", true);
-        SanteDB.resources.securityApplication.unLockAsync($stateParams.id)
-            .then(function(r) {
-                SanteDB.display.buttonWait("#unlockButton", false);
-                $scope.target.securityApplication.lockout = null;
-                $scope.$apply();
-            })
-            .catch(function(e) {
-                $rootScope.errorHandler(e);
-                SanteDB.display.buttonWait("#unlockButton", false);
-            })
+        try {
+            SanteDB.display.buttonWait("#unlockButton", true);
+            await SanteDB.resources.securityApplication.unLockAsync($stateParams.id);
+            $scope.target.securityApplication.lockout = null;
+        }
+        catch (e) {
+            $rootScope.errorHandler(e);
+            SanteDB.display.buttonWait("#unlockButton", false);
+        }
+        finally {
+            SanteDB.display.buttonWait("#unlockButton", false);
+            $scope.apply;
+        }
     }
 
   
     /**
      * @summary Save the specified application 
      */
-    $scope.saveApplication = function(deviceForm) {
+    $scope.saveApplication = async function(deviceForm, application) {
 
         if(!deviceForm.$valid) return;
 
@@ -220,56 +225,68 @@ angular.module('santedb').controller('EditApplicationController', ["$scope", "$r
         // Show wait state
         SanteDB.display.buttonWait("#saveApplicationButton", true);
 
-        // Success fn
-        var successFn = function(r) { 
-            // Now save the user entity
+        try {
+            if(application.securityApplication.id) {
+                await  SanteDB.resources.securityApplication.updateAsync(application.securityApplication.id, {
+                    $type: "SecurityApplicationInfo",
+                    role: application.role,
+                    entity: application.securityApplication
+                })
+            }
+            else {
+                application.securityApplication.applicationSecret = SanteDB.application.generatePassword();
 
-            toastr.success(SanteDB.locale.getString("ui.model.securityApplication.saveSuccess"));
-            SanteDB.display.buttonWait("#saveApplicationButton", false);
-            $scope.target.entity = r;
-            $scope.$apply();
-            //$state.transitionTo("santedb-admin.security.devices.index");
-        };
-        var errorFn = function(e) {
+                await SanteDB.resources.securityApplication.insertAsync({
+                    $type: "SecurityApplicationInfo",
+                    role: application.role,
+                    entity: application.securityApplication
+                })
+            }
+        }
+        catch (e) {
             SanteDB.display.buttonWait("#saveApplicationButton", false);
             $rootScope.errorHandler(e);
-        };
+        }
+        finally {
+            toastr.success(SanteDB.locale.getString("ui.model.securityApplication.saveSuccess"));
+            SanteDB.display.buttonWait("#saveApplicationButton", false);
+            application.entity = r;
+        }
 
-        // user is already registered we are updating them 
-        if($scope.target.securityApplication.id)
-        {
-            // Register the user first
-            SanteDB.resources.securityApplication.updateAsync($scope.target.securityApplication.id, {
-                $type: "SecurityApplicationInfo",
-                role: $scope.target.role,
-                entity: $scope.target.securityApplication
-            }).then(function(u) {
-                $scope.target.entity.securityApplication = u.entity.id;
-                SanteDB.resources.applicationEntity.insertAsync($scope.target.entity)
-                    .then(successFn)
-                    .catch(errorFn)
-            })
-            .catch(errorFn);
-        }
-        else {
-            $scope.target.securityApplication.applicationSecret = SanteDB.application.generatePassword();
-            // Register the user first
-            SanteDB.resources.securityApplication.insertAsync({
-                $type: "SecurityApplicationInfo",
-                role: $scope.target.role,
-                entity: $scope.target.securityApplication
-            }).then(function(u) {
-                var scrt = $scope.target.securityApplication.applicationSecret;
-                $scope.target.entity.securityApplication = u.entity.id;
-                $scope.target.securityApplication = u.entity;
-                $scope.target.policy = u.policy || [];
-                $scope.target.securityApplication.etag = u.etag;
-                $scope.target.securityApplication.applicationSecret = scrt;
-                SanteDB.resources.applicationEntity.insertAsync($scope.target.entity)
-                    .then(successFn)
-                    .catch(errorFn)
-            })
-            .catch(errorFn);
-        }
+        // // user is already registered we are updating them 
+        // if($scope.target.securityApplication.id)
+        // {
+        //     // Register the user first
+        //     SanteDB.resources.securityApplication.updateAsync($scope.target.securityApplication.id, {
+        //         $type: "SecurityApplicationInfo",
+        //         role: $scope.target.role,
+        //         entity: $scope.target.securityApplication
+        //     }).then(function(u) {
+        //         $scope.target.entity.securityApplication = u.entity.id;
+        //         SanteDB.resources.applicationEntity.insertAsync($scope.target.entity)
+        //             .then(successFn)
+        //             .catch(errorFn)
+        //     })
+        // }
+        // else {
+        //     $scope.target.securityApplication.applicationSecret = SanteDB.application.generatePassword();
+        //     // Register the user first
+        //     SanteDB.resources.securityApplication.insertAsync({
+        //         $type: "SecurityApplicationInfo",
+        //         role: $scope.target.role,
+        //         entity: $scope.target.securityApplication
+        //     }).then(function(u) {
+        //         var scrt = $scope.target.securityApplication.applicationSecret;
+        //         $scope.target.entity.securityApplication = u.entity.id;
+        //         $scope.target.securityApplication = u.entity;
+        //         $scope.target.policy = u.policy || [];
+        //         $scope.target.securityApplication.etag = u.etag;
+        //         $scope.target.securityApplication.applicationSecret = scrt;
+        //         SanteDB.resources.applicationEntity.insertAsync($scope.target.entity)
+        //             .then(successFn)
+        //             .catch(errorFn)
+        //     })
+        //     .catch(errorFn);
+        // }
     }
 }]);

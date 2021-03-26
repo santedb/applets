@@ -6,68 +6,68 @@
         <sdb:description lang="en">Core Application Properties</sdb:description>
     </sdb:widget>
 
-    <div id="coreapplicationProps">
+    <div ng-controller="EditApplicationController" ng-if="scopedObject.securityApplication.id">
         <div class="form-group row">
             <label class="col-sm-12 col-md-2 control-label"
                 for="sid">{{ 'ui.model.securityApplication.id' | i18n }}</label>
             <div class="col-sm-12 col-md-10 input-group">
                 <input name="sid" readonly="readonly" type="text" class="form-control"
-                    ng-model="target.securityApplication.id" />
+                    ng-model="scopedObject.securityApplication.id" />
                 <input-copy-button class="btn btn-outline-secondary"
-                    source="target.securityApplication.id" />
+                    source="scopedObject.securityApplication.id" />
             </div>
         </div>
         <div class="form-group row">
             <label class="col-sm-12 col-md-2 control-label"
                 for="applicationname">{{ 'ui.model.securityApplication.name' | i18n }}</label>
             <div class="col-sm-12 col-md-10 input-group">
-                <input name="applicationname" ng-readonly="target.securityApplication.id" type="text"
+                <input name="applicationname" ng-readonly="scopedObject.securityApplication.id" type="text"
                     class="form-control" pattern="^[A-Za-z0-9_\-\.\@]{3,}" minlength="3" maxlength="64"
-                    required="required" ng-model="target.securityApplication.name" />
+                    required="required" ng-model="scopedObject.securityApplication.name" />
                 <input-copy-button id="applicationNameCopyButton" class="btn btn-outline-secondary"
-                    source="target.securityApplication.name" />
+                    source="scopedObject.securityApplication.name" />
             </div>
             <div class="col-sm-12 col-md-10 offset-md-2">
-                <div ng-show="targetForm.applicationname.$error['duplicate']" class="alert-danger">
+                <div ng-show="scopedObject.applicationname.$error['duplicate']" class="alert-danger">
                     <i class="fa fa-exclamation-triangle"></i>
                     {{ 'ui.error.duplicate' | i18n }}
                 </div>
-                <div ng-show="targetForm.applicationname.$error['required'] &amp;&amp; targetForm.$submitted"
+                <div ng-show="scopedObject.applicationname.$error['required'] &amp;&amp; scopedObject.$submitted"
                     class="alert-danger">
                     <i class="fa fa-exclamation-triangle"></i> {{ 'ui.error.required' | i18n }}
                 </div>
-                <div ng-show="targetForm.applicationname.$error['pattern'] &amp;&amp; targetForm.$submitted"
+                <div ng-show="scopedObject.applicationname.$error['pattern'] &amp;&amp; scopedObject.$submitted"
                     class="alert-danger">
                     <i class="fa fa-exclamation-triangle"></i> {{ 'ui.error.pattern' | i18n }}
                 </div>
             </div>
         </div>
-        <div class="form-group row" ng-if="target.securityApplication.createdBy">
+        <div class="form-group row" ng-if="scopedObject.securityApplication.createdBy">
             <label
                 class="col-sm-12 col-md-2 control-label">{{ 'ui.model.securityApplication.createdBy' | i18n }}</label>
             <div class="col-md-10 col-sm-12">
-                <provenance provenance-id="target.securityApplication.createdBy"
-                    provenance-time="target.securityApplication.creationTime"></provenance>
-                {{ target.securityApplication.creationTime | extDate }}
+                <provenance provenance-id="scopedObject.securityApplication.createdBy"
+                    provenance-time="scopedObject.securityApplication.creationTime"></provenance>
+                {{ scopedObject.securityApplication.creationTime | extDate }}
             </div>
         </div>
-        <div class="form-group row" ng-if="target.securityApplication.updatedBy">
+        <div class="form-group row" ng-if="scopedObject.securityApplication.updatedBy">
             <label
                 class="col-sm-12 col-md-2 control-label">{{ 'ui.model.securityApplication.updatedBy' | i18n }}</label>
             <div class="col-md-10 col-sm-12">
-                <provenance provenance-id="target.securityApplication.updatedBy"
-                    provenance-time="target.securityApplication.updatedTime"></provenance>
-                {{ target.securityApplication.updatedTime | extDate }}
+                <provenance provenance-id="scopedObject.securityApplication.updatedBy"
+                    provenance-time="scopedObject.securityApplication.updatedTime"></provenance>
+                {{ scopedObject.securityApplication.updatedTime | extDate }}
             </div>
         </div>
-        <div class="form-group row" ng-if="target.securityApplication.obsoletedBy">
+        <div class="form-group row" ng-if="scopedObject.securityApplication.obsoletedBy">
             <label
                 class="col-sm-12 col-md-2 control-label">{{ 'ui.model.securityApplication.obsoletedBy' | i18n }}</label>
             <div class="col-md-10 col-sm-12">
-                <provenance provenance-id="target.securityApplication.obsoletedBy"
-                    provenance-time="target.securityApplication.obsoletionTime"></provenance>
-                {{ target.securityApplication.obsoletionTime | extDate }} <button
-                    id="reactivateapplicationButton" ng-click="reactivateapplication()" type="button"
+                <provenance provenance-id="scopedObject.securityApplication.obsoletedBy"
+                    provenance-time="scopedObject.securityApplication.obsoletionTime"></provenance>
+                {{ scopedObject.securityApplication.obsoletionTime | extDate }} <button
+                    id="reactivateapplicationButton" ng-click="reactivateapplication(scopedObject)" type="button"
                     class="btn btn-success"><i class="fas fa-trash-restore"></i>
                     {{ 'ui.action.undelete' | i18n }}</button>
             </div>

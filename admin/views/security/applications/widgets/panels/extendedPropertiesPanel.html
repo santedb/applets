@@ -2,17 +2,17 @@
     oc-lazy-load="{ name: 'EditApplicationController', files: ['/org.santedb.admin/controllers/applications/edit.js'] }" >
     <sdb:widget order="16" name="org.santedb.widget.admin.panel.applications.extended"  headerClass="bl-light"
         size="Large" type="Panel" context="org.santedb.securityApplications.admin">
-        <sdb:icon>fas fa-window-maximize</sdb:icon>
+        <sdb:icon>fas fa-mobile</sdb:icon>
         <sdb:description lang="en">Extended Properties</sdb:description>
     </sdb:widget>
 
-    <div>
-        <div ng-class="{ 'show' : !target.securityApplication.id }" id="demographicProps">
+    <div ng-controller="EditApplicationController">
+        <div ng-if="scopedObject.securityApplication.id" id="demographicProps">
             <div class="form-group row">
                 <label class="col-md-2 col-sm-12 control-label"
                     for="softwareName">{{ 'ui.model.applicationEntity.softwareName' | i18n }}</label>
                 <div class="col-md-10 col-sm-12">
-                    <input type="text" maxlength="256" ng-model="target.entity.softwareName"
+                    <input type="text" maxlength="256" ng-model="scopedObject.entity.softwareName"
                         name="softwareName" class="form-control" />
                 </div>
             </div>
@@ -20,7 +20,7 @@
                 <label class="col-md-2 col-sm-12 control-label"
                     for="vendorName">{{ 'ui.model.applicationEntity.vendorName' | i18n }}</label>
                 <div class="col-md-10 col-sm-12">
-                    <input type="text" maxlength="256" ng-model="target.entity.vendorName" name="vendorName"
+                    <input type="text" maxlength="256" ng-model="scopedObject.entity.vendorName" name="vendorName"
                         class="form-control" />
                 </div>
             </div>
@@ -28,10 +28,14 @@
                 <label class="col-md-2 col-sm-12 control-label"
                     for="versionName">{{ 'ui.model.applicationEntity.versionName' | i18n }}</label>
                 <div class="col-md-10 col-sm-12">
-                    <input type="text" maxlength="256" ng-model="target.entity.versionName"
+                    <input type="text" maxlength="256" ng-model="scopedObject.entity.versionName"
                         name="versionName" class="form-control" />
                 </div>
             </div>
+        </div>
+        <div class="btn-group float-right">
+            <button type="button" ng-click="saveApplication(scopedObject)" id="saveApplicationButton" class="btn btn-primary"><i class="fa fa-check"></i>
+                {{ 'ui.action.save' | i18n }}</button>
         </div>
     </div>
 </div>

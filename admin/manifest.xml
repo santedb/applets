@@ -333,6 +333,7 @@
     <string key="org.santedb.widget.admin.panel.applications.core">Core Application Properties</string>
     <string key="org.santedb.widget.admin.panel.applications.security">Security Properties</string>
     <string key="org.santedb.widget.admin.panel.applications.extended">Extended Properties</string>
+    <string key="org.santedb.widget.admin.panel.applications.policies">Associated Policies</string>
     <string key="org.santedb.widget.admin.panel.device.core">Core Properties</string>
     <string key="org.santedb.widget.admin.panel.device.security">Security Properties</string>
     <string key="org.santedb.widget.admin.panel.device.extended">Extended Properties</string>
