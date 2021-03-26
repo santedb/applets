@@ -13,19 +13,19 @@
                     for="sid">{{ 'ui.model.securityDevice.id' | i18n }}</label>
                 <div class="col-sm-12 col-md-10 input-group">
                     <input name="sid" readonly="readonly" type="text" class="form-control"
-                        ng-model="target.securityDevice.id" />
-                    <input-copy-button class="btn btn-outline-secondary" source="target.securityDevice.id" />
+                        ng-model="scopedObject.securityDevice.id" />
+                    <input-copy-button class="btn btn-outline-secondary" source="scopedObject.securityDevice.id" />
                 </div>
             </div>
             <div class="form-group row">
                 <label class="col-sm-12 col-md-2 control-label"
                     for="devicename">{{ 'ui.model.securityDevice.name' | i18n }}</label>
                 <div class="col-sm-12 col-md-10 input-group">
-                    <input name="devicename" ng-readonly="target.securityDevice.id" type="text"
+                    <input name="devicename" ng-readonly="scopedObject.securityDevice.id" type="text"
                         class="form-control" pattern="^[A-Za-z0-9_\-\.\@\|]{3,}" minlength="3" maxlength="32"
-                        required="required" ng-model="target.securityDevice.name" />
+                        required="required" ng-model="scopedObject.securityDevice.name" />
                     <input-copy-button id="devicenameCopyButton" class="btn btn-outline-secondary"
-                        source="target.securityDevice.name" />
+                        source="scopedObject.securityDevice.name" />
                 </div>
                 <div class="col-sm-12 col-md-10 offset-md-2">
                     <div ng-show="targetForm.devicename.$error['duplicate']" class="alert-danger">
@@ -42,28 +42,28 @@
                     </div>
                 </div>
             </div>
-            <div class="form-group row" ng-if="target.securityDevice.createdBy">
+            <div class="form-group row" ng-if="scopedObject.securityDevice.createdBy">
                 <label
                     class="col-sm-12 col-md-2 control-label">{{ 'ui.model.securityDevice.createdBy' | i18n }}</label>
                 <div class="col-md-10 col-sm-12">
-                        <provenance provenance-id="target.securityDevice.createdBy" provenance-time="target.securityDevice.creationTime"></provenance>
-                    {{ target.securityDevice.creationTime | extDate }}
+                        <provenance provenance-id="scopedObject.securityDevice.createdBy" provenance-time="scopedObject.securityDevice.creationTime"></provenance>
+                    {{ scopedObject.securityDevice.creationTime | extDate }}
                 </div>
             </div>
-            <div class="form-group row" ng-if="target.securityDevice.updatedBy">
+            <div class="form-group row" ng-if="scopedObject.securityDevice.updatedBy">
                 <label
                     class="col-sm-12 col-md-2 control-label">{{ 'ui.model.securityDevice.updatedBy' | i18n }}</label>
                 <div class="col-md-10 col-sm-12">
-                        <provenance provenance-id="target.securityDevice.updatedBy" provenance-time="target.securityDevice.updatedTime"></provenance>
-                    {{ target.securityDevice.updatedTime | extDate }}
+                        <provenance provenance-id="scopedObject.securityDevice.updatedBy" provenance-time="scopedObject.securityDevice.updatedTime"></provenance>
+                    {{ scopedObject.securityDevice.updatedTime | extDate }}
                 </div>
             </div>
-            <div class="form-group row" ng-if="target.securityDevice.obsoletedBy">
+            <div class="form-group row" ng-if="scopedObject.securityDevice.obsoletedBy">
                 <label
                     class="col-sm-12 col-md-2 control-label">{{ 'ui.model.securityDevice.obsoletedBy' | i18n }}</label>
                 <div class="col-md-10 col-sm-12">
-                        <provenance provenance-id="target.securityDevice.obsoletedBy" provenance-time="target.securityDevice.obsoletionTime"></provenance>
-                    {{ target.securityDevice.obsoletionTime | extDate }} <button id="reactivateDeviceButton"
+                        <provenance provenance-id="scopedObject.securityDevice.obsoletedBy" provenance-time="scopedObject.securityDevice.obsoletionTime"></provenance>
+                    {{ scopedObject.securityDevice.obsoletionTime | extDate }} <button id="reactivateDeviceButton"
                         ng-click="reactivateDevice()" type="button" class="btn btn-success"><i
                             class="fas fa-trash-restore"></i>
                         {{ 'ui.action.undelete' | i18n }}</button>

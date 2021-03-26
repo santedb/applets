@@ -2,19 +2,19 @@
     oc-lazy-load="{ name: 'EditApplicationController', files: ['/org.santedb.admin/controllers/applications/edit.js'] }" >
     <sdb:widget order="16" name="org.santedb.widget.admin.panel.device.extended"  headerClass="bl-light"
         size="Large" type="Panel" context="org.santedb.securityDevice.admin">
-        <sdb:icon>fas fa-window-maximize</sdb:icon>
+        <sdb:icon>fas fa-fa-mobile</sdb:icon>
         <sdb:description lang="en">Extended Properties</sdb:description>
     </sdb:widget>
 
-    <div ng-class="{ 'show' : !target.securityDevice.id }" id="demographicProps">
+    <div ng-class="{ 'show' : !scopedObject.securityDevice.id }" id="demographicProps">
         <div class="form-group row">
             <label for="modelName"
                 class="col-xs-12 col-md-2 control-label">{{ 'ui.model.deviceEntity.manufacturerModelName' | i18n }}</label>
             <div class="col-xs-12 col-md-10">
                 <input required="required" name="modelName" type="text" class="form-control" maxlength="128"
-                    ng-model="target.entity.manufacturerModelName" />
+                    ng-model="scopedObject.entity.manufacturerModelName" />
             </div>
-            <div class="col-sm-12 col-md-10 offset-md-2"><div ng-show="targetForm.modelName.$error['required'] &amp;&amp; targetForm.$submitted"
+            <div class="col-sm-12 col-md-10 offset-md-2"><div ng-show="scopedObject.modelName.$error['required'] &amp;&amp; scopedObject.$submitted"
                     class="alert-danger">
                     <i class="fa fa-exclamation-triangle"></i> {{ 'ui.error.required' | i18n }}
                 </div>
@@ -40,8 +40,8 @@
                 <entity-search type="'Place'" name="facility"
                     filter="{ obsoletionTime: 'null', classConcept: EntityClassKeys.ServiceDeliveryLocation }"
                     class="form-control"
-                    ng-model="target.entity.relationship.DedicatedServiceDeliveryLocation"
-                    value-property="'target'" />
+                    ng-model="scopedObject.entity.relationship.DedicatedServiceDeliveryLocation"
+                    value-property="'scopedObject'" />
             </div>
         </div>
         <div class="form-group row">
@@ -52,8 +52,8 @@
                     filter="{ obsoletionTime: 'null' }"
                     class="form-control"
                     name="assignedEntity"
-                    ng-model="target.entity.relationship.AssignedEntity"
-                    value-property="'target'" />
+                    ng-model="scopedObject.entity.relationship.AssignedEntity"
+                    value-property="'scopedObject'" />
             </div>
         </div>
     </div>
