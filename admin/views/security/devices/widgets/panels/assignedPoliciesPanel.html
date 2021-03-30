@@ -6,7 +6,13 @@
         <sdb:description lang="en">Assigned Policies</sdb:description>
     </sdb:widget>
 
-    <div ng-show="scopedObject.securityDevice.id">
+    <div class="row" ng-if="!scopedObject">
+        <div class="col">
+            <p class="m-auto"><i class="fas fa-circle-notch fa-spin"></i> {{ 'ui.wait' | i18n }}</p>
+        </div>
+    </div>
+
+    <div ng-show="scopedObject.securityDevice.id" ng-controller="EditDeviceController">
         <div id="policyGroupProps">
             <div class="card-body container-fluid">
                 <entity-policy-admin securable="scopedObject.securityDevice" policy="scopedObject.policy"></entity-policy-admin>

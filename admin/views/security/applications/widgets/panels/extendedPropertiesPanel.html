@@ -6,7 +6,13 @@
         <sdb:description lang="en">Extended Properties</sdb:description>
     </sdb:widget>
 
-    <div ng-controller="EditApplicationController">
+    <div class="row" ng-if="!scopedObject">
+        <div class="col">
+            <p class="m-auto"><i class="fas fa-circle-notch fa-spin"></i> {{ 'ui.wait' | i18n }}</p>
+        </div>
+    </div>
+
+    <form ng-submit="saveApplication(targetForm, scopedObject)" name="targetForm" novalidate="novalidate" ng-controller="EditApplicationController">
         <div ng-if="scopedObject.securityApplication.id" id="demographicProps">
             <div class="form-group row">
                 <label class="col-md-2 col-sm-12 control-label"
@@ -34,8 +40,8 @@
             </div>
         </div>
         <div class="btn-group float-right">
-            <button type="button" ng-click="saveApplication(scopedObject)" id="saveApplicationButton" class="btn btn-primary"><i class="fa fa-check"></i>
+            <button type="submit" id="saveApplicationButton" class="btn btn-primary"><i class="fa fa-check"></i>
                 {{ 'ui.action.save' | i18n }}</button>
         </div>
-    </div>
+    </form>
 </div>

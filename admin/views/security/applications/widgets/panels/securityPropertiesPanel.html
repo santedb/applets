@@ -5,6 +5,12 @@
         <sdb:icon>fas fa-shield-alt</sdb:icon>
         <sdb:description lang="en">Security Properties</sdb:description>
     </sdb:widget>
+
+    <div class="row" ng-if="!scopedObject">
+        <div class="col">
+            <p class="m-auto"><i class="fas fa-circle-notch fa-spin"></i> {{ 'ui.wait' | i18n }}</p>
+        </div>
+    </div>
     
     <div id="securityProps" ng-if="scopedObject.securityApplication.id" ng-controller="EditApplicationController">
         <div class="form-group row">

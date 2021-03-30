@@ -6,6 +6,12 @@
         <sdb:description lang="en">Core Application Properties</sdb:description>
     </sdb:widget>
 
+    <div class="row" ng-if="!scopedObject">
+        <div class="col">
+            <p class="m-auto"><i class="fas fa-circle-notch fa-spin"></i> {{ 'ui.wait' | i18n }}</p>
+        </div>
+    </div>
+
     <div ng-controller="EditApplicationController" ng-if="scopedObject.securityApplication.id">
         <div class="form-group row">
             <label class="col-sm-12 col-md-2 control-label"

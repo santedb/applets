@@ -6,6 +6,12 @@
         <sdb:description lang="en">Associated Policies</sdb:description>
     </sdb:widget>
 
+    <div class="row" ng-if="!scopedObject">
+        <div class="col">
+            <p class="m-auto"><i class="fas fa-circle-notch fa-spin"></i> {{ 'ui.wait' | i18n }}</p>
+        </div>
+    </div>
+
     <div ng-show="scopedObject.securityApplication.id" ng-controller="EditApplicationController">
         <div class="collapse show" id="policyGroupProps">
             <div class="card-body container-fluid">

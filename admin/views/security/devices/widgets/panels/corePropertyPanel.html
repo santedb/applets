@@ -5,8 +5,14 @@
         <sdb:icon>fas fa-window-maximize</sdb:icon>
         <sdb:description lang="en">Core Properties</sdb:description>
     </sdb:widget>
+
+    <div class="row" ng-if="!scopedObject">
+        <div class="col">
+            <p class="m-auto"><i class="fas fa-circle-notch fa-spin"></i> {{ 'ui.wait' | i18n }}</p>
+        </div>
+    </div>
     
-    <div class="collapse show" id="coreDeviceProps">
+    <div class="collapse show" id="coreDeviceProps" ng-controller="EditDeviceController">
         <div class="card-body container-fluid">
             <div class="form-group row">
                 <label class="col-sm-12 col-md-2 control-label"

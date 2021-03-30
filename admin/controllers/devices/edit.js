@@ -208,74 +208,64 @@ angular.module('santedb').controller('EditDeviceController', ["$scope", "$rootSc
     /**
      * @summary Save the specified user 
      */
-    $scope.saveDevice = function(deviceForm) {
-
+    $scope.saveDevice = async function(deviceForm, device) {
+        
         if(!deviceForm.$valid) return;
 
-        // Correct arrays and assign id
-        if(!$scope.target.entity.id) {
-            $scope.target.entity.id = SanteDB.application.newGuid();
+        try {
+            // Correct arrays and assign id
+            if(!device.entity.id) {
+                device.entity.id = SanteDB.application.newGuid();
+            }
+    
+            if(device.entity.relationship && device.entity.relationship.DedicatedServiceDeliveryLocation)
+                    device.entity.relationship.DedicatedServiceDeliveryLocation = {
+                        source: device.entity.id,
+                        target: device.entity.relationship.DedicatedServiceDeliveryLocation.target
+                    } ;
+
+            // Show wait state
+            SanteDB.display.buttonWait("#saveDeviceButton", true);
+
+             // user is already registered we are updating them 
+            if(device.securityDevice.id)
+            {
+                // Register the user first
+                let res = await SanteDB.resources.securityDevice.updateAsync(device.securityDevice.id, {
+                    $type: "SecurityDeviceInfo",
+                    role: device.role,
+                    entity: device.securityDevice
+                })
+                device.entity.securityDevice = res.entity.id;
+                let r = await SanteDB.resources.deviceEntity.insertAsync(device.entity)
+                device.entity = r;
+            }
+            else {
+                device.securityDevice.deviceSecret = SanteDB.application.generatePassword();
+                // Register the user first
+                let res = await SanteDB.resources.securityDevice.insertAsync({
+                    $type: "SecurityDeviceInfo",
+                    role: device.role,
+                    entity: device.securityDevice
+                })
+                let scrt = device.securityDevice.deviceSecret;
+                device.entity.securityDevice = res.entity.id;
+                device.securityDevice = res.entity;
+                device.policy = u.policy || [];
+                device.securityDevice.etag = res.etag;
+                device.securityDevice.deviceSecret = scrt;
+                let r = await SanteDB.resources.deviceEntity.insertAsync(device.entity)
+                device.entity = r;
+            }
         }
-
-        if($scope.target.entity.relationship && $scope.target.entity.relationship.DedicatedServiceDeliveryLocation)
-                $scope.target.entity.relationship.DedicatedServiceDeliveryLocation = {
-                    source: $scope.target.entity.id,
-                    target: $scope.target.entity.relationship.DedicatedServiceDeliveryLocation.target
-                } ;
-        
-        // Show wait state
-        SanteDB.display.buttonWait("#saveDeviceButton", true);
-
-        // Success fn
-        var successFn = function(r) { 
-            // Now save the user entity
-
-            toastr.success(SanteDB.locale.getString("ui.model.securityDevice.saveSuccess"));
-            SanteDB.display.buttonWait("#saveDeviceButton", false);
-            $scope.target.entity = r;
-            $scope.$apply();
-            //$state.transitionTo("santedb-admin.security.devices.index");
-        };
-        var errorFn = function(e) {
+        catch (e) {
             SanteDB.display.buttonWait("#saveDeviceButton", false);
             $rootScope.errorHandler(e);
-        };
-
-        // user is already registered we are updating them 
-        if($scope.target.securityDevice.id)
-        {
-            // Register the user first
-            SanteDB.resources.securityDevice.updateAsync($scope.target.securityDevice.id, {
-                $type: "SecurityDeviceInfo",
-                role: $scope.target.role,
-                entity: $scope.target.securityDevice
-            }).then(function(u) {
-                $scope.target.entity.securityDevice = u.entity.id;
-                SanteDB.resources.deviceEntity.insertAsync($scope.target.entity)
-                    .then(successFn)
-                    .catch(errorFn)
-            })
-            .catch(errorFn);
         }
-        else {
-            $scope.target.securityDevice.deviceSecret = SanteDB.application.generatePassword();
-            // Register the user first
-            SanteDB.resources.securityDevice.insertAsync({
-                $type: "SecurityDeviceInfo",
-                role: $scope.target.role,
-                entity: $scope.target.securityDevice
-            }).then(function(u) {
-                var scrt = $scope.target.securityDevice.deviceSecret;
-                $scope.target.entity.securityDevice = u.entity.id;
-                $scope.target.securityDevice = u.entity;
-                $scope.target.policy = u.policy || [];
-                $scope.target.securityDevice.etag = u.etag;
-                $scope.target.securityDevice.deviceSecret = scrt;
-                SanteDB.resources.deviceEntity.insertAsync($scope.target.entity)
-                    .then(successFn)
-                    .catch(errorFn)
-            })
-            .catch(errorFn);
+        finally {
+            toastr.success(SanteDB.locale.getString("ui.model.securityDevice.saveSuccess"));
+            SanteDB.display.buttonWait("#saveDeviceButton", false);
+            $state.transitionTo("santedb-admin.security.devices.index");
         }
     }
 }]);

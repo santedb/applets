@@ -227,20 +227,32 @@ angular.module('santedb').controller('EditApplicationController', ["$scope", "$r
 
         try {
             if(application.securityApplication.id) {
-                await  SanteDB.resources.securityApplication.updateAsync(application.securityApplication.id, {
+                let u = await  SanteDB.resources.securityApplication.updateAsync(application.securityApplication.id, {
                     $type: "SecurityApplicationInfo",
                     role: application.role,
                     entity: application.securityApplication
                 })
+                $scope.target.entity.securityApplication = u.entity.id;
+                let r = await SanteDB.resources.applicationEntity.insertAsync($scope.target.entity);
+                $scope.target.entity = r;
             }
             else {
                 application.securityApplication.applicationSecret = SanteDB.application.generatePassword();
 
-                await SanteDB.resources.securityApplication.insertAsync({
+                let u = await SanteDB.resources.securityApplication.insertAsync({
                     $type: "SecurityApplicationInfo",
                     role: application.role,
                     entity: application.securityApplication
                 })
+
+                var scrt = $scope.target.securityApplication.applicationSecret;
+                $scope.target.entity.securityApplication = u.entity.id;
+                $scope.target.securityApplication = u.entity;
+                $scope.target.policy = u.policy || [];
+                $scope.target.securityApplication.etag = u.etag;
+                $scope.target.securityApplication.applicationSecret = scrt;
+                let r = await SanteDB.resources.applicationEntity.insertAsync($scope.target.entity)
+                $scope.target.entity = r;
             }
         }
         catch (e) {
@@ -249,44 +261,7 @@ angular.module('santedb').controller('EditApplicationController', ["$scope", "$r
         }
         finally {
             toastr.success(SanteDB.locale.getString("ui.model.securityApplication.saveSuccess"));
-            SanteDB.display.buttonWait("#saveApplicationButton", false);
-            application.entity = r;
+            SanteDB.display.buttonWait("#saveApplicationButton", false);            
         }
-
-        // // user is already registered we are updating them 
-        // if($scope.target.securityApplication.id)
-        // {
-        //     // Register the user first
-        //     SanteDB.resources.securityApplication.updateAsync($scope.target.securityApplication.id, {
-        //         $type: "SecurityApplicationInfo",
-        //         role: $scope.target.role,
-        //         entity: $scope.target.securityApplication
-        //     }).then(function(u) {
-        //         $scope.target.entity.securityApplication = u.entity.id;
-        //         SanteDB.resources.applicationEntity.insertAsync($scope.target.entity)
-        //             .then(successFn)
-        //             .catch(errorFn)
-        //     })
-        // }
-        // else {
-        //     $scope.target.securityApplication.applicationSecret = SanteDB.application.generatePassword();
-        //     // Register the user first
-        //     SanteDB.resources.securityApplication.insertAsync({
-        //         $type: "SecurityApplicationInfo",
-        //         role: $scope.target.role,
-        //         entity: $scope.target.securityApplication
-        //     }).then(function(u) {
-        //         var scrt = $scope.target.securityApplication.applicationSecret;
-        //         $scope.target.entity.securityApplication = u.entity.id;
-        //         $scope.target.securityApplication = u.entity;
-        //         $scope.target.policy = u.policy || [];
-        //         $scope.target.securityApplication.etag = u.etag;
-        //         $scope.target.securityApplication.applicationSecret = scrt;
-        //         SanteDB.resources.applicationEntity.insertAsync($scope.target.entity)
-        //             .then(successFn)
-        //             .catch(errorFn)
-        //     })
-        //     .catch(errorFn);
-        // }
     }
 }]);

@@ -8,5 +8,133 @@
             <sdb:title lang="en">Create Device</sdb:title>
         </sdb:view>
     </sdb:state>
-    <!-- #include virtual="~/views/security/devices/partial/edit.html" -->
+
+    <div xmlns="http://www.w3.org/1999/xhtml">
+        <form ng-submit="saveDevice(targetForm, scopedObject)" name="targetForm" novalidate="novalidate">
+            <div class="accordion" id="deviceAccordion">
+                <div class="card">
+                    <div class="card-header">
+                        <h2 class="mb-0">
+                            <button type="button" class="collapse-indicator btn btn-link p-0" data-toggle="collapse"
+                                data-target="#coreDeviceProps" aria-expanded="true">
+                                <i class="fa fa-tablet-alt"></i> {{ 'ui.admin.devices.edit.core.title' | i18n }}
+                                <i class="fa fa-chevron-right"></i>
+                            </button>
+                        </h2>
+                    </div>
+                    <div class="collapse show" id="coreDeviceProps">
+                        <div class="card-body container-fluid">
+                            <div class="form-group row">
+                                <label class="col-sm-12 col-md-2 control-label"
+                                    for="sid">{{ 'ui.model.securityDevice.id' | i18n }}</label>
+                                <div class="col-sm-12 col-md-10 input-group">
+                                    <input name="sid" readonly="readonly" type="text" class="form-control"
+                                        ng-model="scopedObject.securityDevice.id" />
+                                    <input-copy-button class="btn btn-outline-secondary" source="target.securityDevice.id" />
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-sm-12 col-md-2 control-label"
+                                    for="devicename">{{ 'ui.model.securityDevice.name' | i18n }}</label>
+                                <div class="col-sm-12 col-md-10 input-group">
+                                    <input name="devicename" ng-readonly="scopedObject.securityDevice.id" type="text"
+                                        class="form-control" pattern="^[A-Za-z0-9_\-\.\@\|]{3,}" minlength="3" maxlength="32"
+                                        required="required" ng-model="scopedObject.securityDevice.name" />
+                                    <input-copy-button id="devicenameCopyButton" class="btn btn-outline-secondary"
+                                        source="scopedObject.securityDevice.name" />
+                                </div>
+                                <div class="col-sm-12 col-md-10 offset-md-2">
+                                    <div ng-show="targetForm.devicename.$error['duplicate']" class="alert-danger">
+                                        <i class="fa fa-exclamation-triangle"></i>
+                                        {{ 'ui.error.duplicate' | i18n }}
+                                    </div>
+                                    <div ng-show="targetForm.devicename.$error['required'] &amp;&amp; targetForm.$submitted"
+                                        class="alert-danger">
+                                        <i class="fa fa-exclamation-triangle"></i> {{ 'ui.error.required' | i18n }}
+                                    </div>
+                                    <div ng-show="targetForm.devicename.$error['pattern'] &amp;&amp; targetForm.$submitted"
+                                        class="alert-danger">
+                                        <i class="fa fa-exclamation-triangle"></i> {{ 'ui.error.pattern' | i18n }}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!---->
+    
+                <div class="card">
+                    <div class="card-header">
+                        <h2 class="mb-0">
+                            <button type="button" class="collapse-indicator btn btn-link p-0" data-toggle="collapse"
+                                data-target="#demographicProps">
+                                <i class="fa fa-id-badge"></i> {{ 'ui.admin.devices.edit.demographics.title' | i18n }}
+                                <i class="fa fa-chevron-right"></i>
+                            </button>
+                        </h2>
+                    </div>
+                    <div class="collapse" ng-class="{ 'show' : !scopedObject.securityDevice.id }" id="demographicProps">
+                        <div class="card-body container-fluid">
+                            <div class="form-group row">
+                                <label for="modelName"
+                                    class="col-xs-12 col-md-2 control-label">{{ 'ui.model.deviceEntity.manufacturerModelName' | i18n }}</label>
+                                <div class="col-xs-12 col-md-10">
+                                    <input required="required" name="modelName" type="text" class="form-control" maxlength="128"
+                                        ng-model="scopedObject.entity.manufacturerModelName" />
+                                </div>
+                                <div class="col-sm-12 col-md-10 offset-md-2"><div ng-show="targetForm.modelName.$error['required'] &amp;&amp; targetForm.$submitted"
+                                        class="alert-danger">
+                                        <i class="fa fa-exclamation-triangle"></i> {{ 'ui.error.required' | i18n }}
+                                    </div>
+                                    </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="operatingSystemName"
+                                    class="col-xs-12 col-md-2 control-label">{{ 'ui.model.deviceEntity.operatingSystemName' | i18n }}</label>
+                                <div class="col-xs-12 col-md-10">
+                                    <input required="required" name="operatingSystemName" type="tel" class="form-control"
+                                        ng-model="scopedObject.entity.operatingSystemName" />
+                                </div>
+                                <div class="col-sm-12 col-md-10 offset-md-2"><div ng-show="targetForm.operatingSystemName.$error['required'] &amp;&amp; targetForm.$submitted"
+                                        class="alert-danger">
+                                        <i class="fa fa-exclamation-triangle"></i> {{ 'ui.error.required' | i18n }}
+                                    </div>
+                                    </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="facility"
+                                    class="col-xs-12 col-md-2 control-label">{{ 'ui.model.deviceEntity.relationship.DedicatedServiceDeliveryLocation' | i18n }}</label>
+                                <div class="col-xs-12 col-md-10">
+                                    <entity-search type="'Place'" name="facility"
+                                        filter="{ obsoletionTime: 'null', classConcept: EntityClassKeys.ServiceDeliveryLocation }"
+                                        class="form-control"
+                                        ng-model="scopedObject.entity.relationship.DedicatedServiceDeliveryLocation"
+                                        value-property="'scopedObject'" />
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="assignedEntity" 
+                                    class="col-xs-12 col-md-2 control-label">{{ 'ui.model.deviceEntity.relationship.AssignedEntity' | i18n }}</label>
+                                <div class="col-xs-12 col-md-10">
+                                    <entity-search type="'UserEntity'"
+                                        filter="{ obsoletionTime: 'null' }"
+                                        class="form-control"
+                                        name="assignedEntity"
+                                        ng-model="scopedObject.entity.relationship.AssignedEntity"
+                                        value-property="'scopedObject'" />
+                                </div>
+                            </div>
+                            
+                        </div>
+                    </div>
+    
+                </div>
+            </div>
+            <div class="btn-group float-right">
+                <button type="submit" id="saveDeviceButton" class="btn btn-primary"><i class="fa fa-check"></i>
+                    {{ 'ui.action.save' | i18n }}</button>
+            </div>
+        </form>
+    </div>
+    <!-- #include virtual="/org.santedb.uicore/views/dialogs/password.partial.html" -->
 </div>
