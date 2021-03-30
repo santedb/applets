@@ -108,13 +108,14 @@ angular.module('santedb').controller('EditPolicyController', ["$scope", "$rootSc
             else {
                 await SanteDB.resources.securityPolicy.insertAsync(policy.securityPolicy)
             }
+
+            toastr.success(SanteDB.locale.getString("ui.model.securityPolicy.saveSuccess"));
         }
         catch (e) {
             SanteDB.display.buttonWait("#savePolicyButton", false);
             $rootScope.errorHandler(e);
         }
         finally {
-            toastr.success(SanteDB.locale.getString("ui.model.securityPolicy.saveSuccess"));
             SanteDB.display.buttonWait("#savePolicyButton", false);
             $state.transitionTo("santedb-admin.security.policies.index")
         }

@@ -9,7 +9,7 @@
         </sdb:view>
     </sdb:state>
 
-    <form ng-submit="saveApplication(createForm, scopedObject)" name="createForm" novalidate="novalidate">
+    <form ng-submit="saveApplication(createForm, target)" name="createForm" novalidate="novalidate">
         <div class="accordion" id="applicationAccordion">
             <div class="card">
                 <div class="collapse show" id="coreapplicationProps">
@@ -64,45 +64,6 @@
                                 {{ target.securityApplication.lastAuthenticationTime | extDate: 'F' }}</div>
                             <div class="col-xs-12 col-md-10" ng-if="!target.securityApplication.lastAuthenticationTime">
                                 {{ 'ui.admin.applications.edit.security.neverLoggedIn' | i18n }}</div>
-                        </div>
-                        <div class="form-group row" ng-if="target.securityApplication.id">
-                            <label
-                                class="col-xs-12 col-md-2 control-label">{{ 'ui.model.securityApplication.invalidAuth' | i18n }}</label>
-                            <div class="col-xs-12 col-md-10">
-                                {{ target.securityApplication.invalidAuth || 0    }}
-                                <button ng-click="resetInvalidLogins()" id="resetInvalidLoginsButton" type="button"
-                                    class="btn btn-info">
-                                    <i class="fas fa-undo"></i> {{ 'ui.action.reset' | i18n }}
-                                </button>
-                            </div>
-                        </div>
-                        <div class="form-group row" ng-if="target.securityApplication.lockout > $root.page.currentTime">
-                            <label for="lockout"
-                                class="col-xs-12 col-md-2 control-label">{{ 'ui.model.securityApplication.lockout' | i18n }}</label>
-                            <div class="col-xs-12 col-md-10">
-                                {{ target.securityApplication.lockout | extDate: 'F' }}
-                                <button ng-click="unlock()" id="unlockButton" class="btn btn-info" type="button">
-                                    <i class="fa fa-lock-open"></i> {{ 'ui.action.unlock' | i18n }}
-                                </button>
-                            </div>
-                        </div>
-                        <div class="form-group row" ng-if="target.securityApplication.id">
-                            <label
-                                class="col-xs-12 col-md-2 control-label">{{ 'ui.model.securityApplication.secret' | i18n }}</label>
-                            <div class="col-sm-12 col-md-10 input-group"
-                                ng-if="target.securityApplication.applicationSecret">
-                                <input name="secret" ng-readonly="target.securityApplication.id" type="text"
-                                    class="form-control" minlength="3" maxlength="64" readonly="readonly"
-                                    ng-model="target.securityApplication.applicationSecret" />
-                                <input-copy-button id="applicationsecretCopyButton" class="btn btn-outline-secondary"
-                                    source="target.securityApplication.applicationSecret" />
-                            </div>
-                            <div class="col-xs-12 col-md-2" ng-if="!target.securityApplication.applicationSecret">
-                                <button ng-click="resetSecret()" id="resetSecretButton" class="btn btn-info"
-                                    type="button">
-                                    <i class="fa fa-asterisk"></i> {{ 'ui.action.reset' | i18n }}
-                                </button>
-                            </div>
                         </div>
                     </div>
                 </div>

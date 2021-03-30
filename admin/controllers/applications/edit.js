@@ -254,14 +254,15 @@ angular.module('santedb').controller('EditApplicationController', ["$scope", "$r
                 let r = await SanteDB.resources.applicationEntity.insertAsync($scope.target.entity)
                 $scope.target.entity = r;
             }
+            toastr.success(SanteDB.locale.getString("ui.model.securityApplication.saveSuccess"));
         }
         catch (e) {
             SanteDB.display.buttonWait("#saveApplicationButton", false);
             $rootScope.errorHandler(e);
         }
         finally {
-            toastr.success(SanteDB.locale.getString("ui.model.securityApplication.saveSuccess"));
-            SanteDB.display.buttonWait("#saveApplicationButton", false);            
+            SanteDB.display.buttonWait("#saveApplicationButton", false);
+            $state.transitionTo("santedb-admin.security.applications.index");          
         }
     }
 }]);

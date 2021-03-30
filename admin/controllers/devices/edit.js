@@ -257,13 +257,13 @@ angular.module('santedb').controller('EditDeviceController', ["$scope", "$rootSc
                 let r = await SanteDB.resources.deviceEntity.insertAsync(device.entity)
                 device.entity = r;
             }
+            toastr.success(SanteDB.locale.getString("ui.model.securityDevice.saveSuccess"));
         }
         catch (e) {
             SanteDB.display.buttonWait("#saveDeviceButton", false);
             $rootScope.errorHandler(e);
         }
         finally {
-            toastr.success(SanteDB.locale.getString("ui.model.securityDevice.saveSuccess"));
             SanteDB.display.buttonWait("#saveDeviceButton", false);
             $state.transitionTo("santedb-admin.security.devices.index");
         }
