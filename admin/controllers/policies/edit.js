@@ -155,7 +155,6 @@ angular.module('santedb').controller('EditPolicyController', ["$scope", "$rootSc
         }
         finally {
             SanteDB.display.buttonWait("#reactivatePolicyButton", false);
-            $scope.$apply();
         }
     }
 

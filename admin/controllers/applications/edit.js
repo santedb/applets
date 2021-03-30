@@ -205,7 +205,6 @@ angular.module('santedb').controller('EditApplicationController', ["$scope", "$r
         }
         finally {
             SanteDB.display.buttonWait("#unlockButton", false);
-            $scope.apply;
         }
     }
 
