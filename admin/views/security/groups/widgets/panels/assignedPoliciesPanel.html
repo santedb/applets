@@ -1,5 +1,5 @@
 <div xmlns="http://www.w3.org/1999/xhtml" xmlns:sdb="http://santedb.org/applet" 
-    oc-lazy-load="{ name: 'EditGroupController', files: ['/org.santedb.admin/controllers/groups/edit.js'] }" >
+     >
     <sdb:widget order="15" name="org.santedb.widget.admin.panel.group.policies" headerClass="bl-light"
         size="Large" type="Panel" context="org.santedb.securityRole.admin">
         <sdb:icon>fas fa-id-badge</sdb:icon>
@@ -12,7 +12,7 @@
         </div>
     </div>
 
-    <div ng-show="scopedObject.securityRole.id" ng-controller="EditGroupController">
+    <div ng-show="scopedObject.securityRole.id" >
         <entity-policy-admin securable="scopedObject.securityRole" policy="scopedObject.policy"></entity-policy-admin>
     </div>
 

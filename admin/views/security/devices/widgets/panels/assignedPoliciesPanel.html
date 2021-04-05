@@ -1,5 +1,5 @@
 <div xmlns="http://www.w3.org/1999/xhtml" xmlns:sdb="http://santedb.org/applet" 
-    oc-lazy-load="{ name: 'EditApplicationController', files: ['/org.santedb.admin/controllers/applications/edit.js'] }" >
+     >
     <sdb:widget order="16" name="org.santedb.widget.admin.panel.device.policies"  headerClass="bl-light"
         size="Large" type="Panel" context="org.santedb.securityDevice.admin">
         <sdb:icon>fas fa-certificate</sdb:icon>
@@ -12,7 +12,7 @@
         </div>
     </div>
 
-    <div ng-show="scopedObject.securityDevice.id" ng-controller="EditDeviceController">
+    <div ng-show="scopedObject.securityDevice.id">
         <div id="policyGroupProps">
             <div class="card-body container-fluid">
                 <entity-policy-admin securable="scopedObject.securityDevice" policy="scopedObject.policy"></entity-policy-admin>

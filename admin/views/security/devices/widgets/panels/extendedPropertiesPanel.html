@@ -1,7 +1,8 @@
 <div xmlns="http://www.w3.org/1999/xhtml" xmlns:sdb="http://santedb.org/applet" 
-    oc-lazy-load="{ name: 'EditApplicationController', files: ['/org.santedb.admin/controllers/applications/edit.js'] }" >
+    oc-lazy-load="{ name: 'EditDeviceCoreController', files: ['/org.santedb.admin/controllers/devices/widgets/core.js'] }" >
+    
     <sdb:widget order="16" name="org.santedb.widget.admin.panel.device.extended"  headerClass="bl-light"
-        size="Large" type="Panel" context="org.santedb.securityDevice.admin">
+        size="Large" type="Panel" context="org.santedb.securityDevice.admin" altViews="Edit">
         <sdb:icon>fas fa-fa-mobile</sdb:icon>
         <sdb:description lang="en">Extended Properties</sdb:description>
     </sdb:widget>
@@ -11,13 +12,14 @@
             <p class="m-auto"><i class="fas fa-circle-notch fa-spin"></i> {{ 'ui.wait' | i18n }}</p>
         </div>
     </div>
-    <form ng-submit="saveDevice(targetForm, scopedObject)" name="targetForm" novalidate="novalidate" ng-controller="EditDeviceController">
+    <div ng-controller="EditDeviceCoreController">
+    <form method="dialog" ng-submit="saveDevice(panel.editForm, scopedObject)" name="panel.editForm" novalidate="novalidate" >
         <div id="demographicProps">
             <div class="form-group row">
                 <label for="modelName"
                     class="col-xs-12 col-md-2 control-label">{{ 'ui.model.deviceEntity.manufacturerModelName' | i18n }}</label>
                 <div class="col-xs-12 col-md-10">
-                    <input required="required" name="modelName" type="text" class="form-control" maxlength="128"
+                    <input ng-disabled="panel.view != 'Edit'" autocomplete="_away" required="required" name="modelName" type="text" class="form-control" maxlength="128"
                         ng-model="scopedObject.entity.manufacturerModelName" />
                 </div>
                 <div class="col-sm-12 col-md-10 offset-md-2"><div ng-show="scopedObject.modelName.$error['required'] &amp;&amp; scopedObject.$submitted"
@@ -30,7 +32,7 @@
                 <label for="operatingSystemName"
                     class="col-xs-12 col-md-2 control-label">{{ 'ui.model.deviceEntity.operatingSystemName' | i18n }}</label>
                 <div class="col-xs-12 col-md-10">
-                    <input required="required" name="operatingSystemName" type="tel" class="form-control"
+                    <input ng-disabled="panel.view != 'Edit'" autocomplete="_away" required="required" name="operatingSystemName" type="tel" class="form-control"
                         ng-model="scopedObject.entity.operatingSystemName" />
                 </div>
                 <div class="col-sm-12 col-md-10 offset-md-2"><div ng-show="targetForm.operatingSystemName.$error['required'] &amp;&amp; targetForm.$submitted"
@@ -43,7 +45,7 @@
                 <label for="facility"
                     class="col-xs-12 col-md-2 control-label">{{ 'ui.model.deviceEntity.relationship.DedicatedServiceDeliveryLocation' | i18n }}</label>
                 <div class="col-xs-12 col-md-10">
-                    <entity-search type="'Place'" name="facility"
+                    <entity-search  ng-disabled="panel.view != 'Edit'" autocomplete="_away" type="'Place'" name="facility"
                         filter="{ obsoletionTime: 'null', classConcept: EntityClassKeys.ServiceDeliveryLocation }"
                         class="form-control"
                         ng-model="scopedObject.entity.relationship.DedicatedServiceDeliveryLocation"
@@ -54,7 +56,7 @@
                 <label for="assignedEntity" 
                     class="col-xs-12 col-md-2 control-label">{{ 'ui.model.deviceEntity.relationship.AssignedEntity' | i18n }}</label>
                 <div class="col-xs-12 col-md-10">
-                    <entity-search type="'UserEntity'"
+                    <entity-search  ng-disabled="panel.view != 'Edit'" autocomplete="_away" type="'UserEntity'"
                         filter="{ obsoletionTime: 'null' }"
                         class="form-control"
                         name="assignedEntity"
@@ -63,9 +65,6 @@
                 </div>
             </div>
         </div>
-        <div class="btn-group float-right">
-            <button type="submit" id="saveDeviceButton" class="btn btn-primary"><i class="fa fa-check"></i>
-                {{ 'ui.action.save' | i18n }}</button>
-        </div>
     </form>
+</div>
 </div>

@@ -1,16 +1,16 @@
 <div xmlns="http://www.w3.org/1999/xhtml" xmlns:sdb="http://santedb.org/applet">
-    <sdb:script static="false">~/controllers/devices/edit.js</sdb:script>
+    <sdb:script static="false">~/controllers/devices/create.js</sdb:script>
     <sdb:state name="santedb-admin.security.devices.create" abstract="false">
         <sdb:demand>1.3.6.1.4.1.33349.3.1.5.9.2.0.5</sdb:demand>
         <sdb:url>/</sdb:url>
         <sdb:view>
-            <sdb:controller>EditDeviceController</sdb:controller>
+            <sdb:controller>CreateDeviceController</sdb:controller>
             <sdb:title lang="en">Create Device</sdb:title>
         </sdb:view>
     </sdb:state>
 
     <div xmlns="http://www.w3.org/1999/xhtml">
-        <form ng-submit="saveDevice(targetForm, scopedObject)" name="targetForm" novalidate="novalidate">
+        <form ng-submit="saveDevice(targetForm)" name="targetForm" novalidate="novalidate">
             <div class="accordion" id="deviceAccordion">
                 <div class="card">
                     <div class="card-header">
@@ -29,7 +29,7 @@
                                     for="sid">{{ 'ui.model.securityDevice.id' | i18n }}</label>
                                 <div class="col-sm-12 col-md-10 input-group">
                                     <input name="sid" readonly="readonly" type="text" class="form-control"
-                                        ng-model="scopedObject.securityDevice.id" />
+                                        ng-model="target.securityDevice.id" />
                                     <input-copy-button class="btn btn-outline-secondary" source="target.securityDevice.id" />
                                 </div>
                             </div>
@@ -37,11 +37,11 @@
                                 <label class="col-sm-12 col-md-2 control-label"
                                     for="devicename">{{ 'ui.model.securityDevice.name' | i18n }}</label>
                                 <div class="col-sm-12 col-md-10 input-group">
-                                    <input name="devicename" ng-readonly="scopedObject.securityDevice.id" type="text"
+                                    <input name="devicename" ng-readonly="target.securityDevice.id" type="text"
                                         class="form-control" pattern="^[A-Za-z0-9_\-\.\@\|]{3,}" minlength="3" maxlength="32"
-                                        required="required" ng-model="scopedObject.securityDevice.name" />
+                                        required="required" ng-model="target.securityDevice.name" />
                                     <input-copy-button id="devicenameCopyButton" class="btn btn-outline-secondary"
-                                        source="scopedObject.securityDevice.name" />
+                                        source="target.securityDevice.name" />
                                 </div>
                                 <div class="col-sm-12 col-md-10 offset-md-2">
                                     <div ng-show="targetForm.devicename.$error['duplicate']" class="alert-danger">
@@ -73,14 +73,14 @@
                             </button>
                         </h2>
                     </div>
-                    <div class="collapse" ng-class="{ 'show' : !scopedObject.securityDevice.id }" id="demographicProps">
+                    <div class="collapse" ng-class="{ 'show' : !target.securityDevice.id }" id="demographicProps">
                         <div class="card-body container-fluid">
                             <div class="form-group row">
                                 <label for="modelName"
                                     class="col-xs-12 col-md-2 control-label">{{ 'ui.model.deviceEntity.manufacturerModelName' | i18n }}</label>
                                 <div class="col-xs-12 col-md-10">
                                     <input required="required" name="modelName" type="text" class="form-control" maxlength="128"
-                                        ng-model="scopedObject.entity.manufacturerModelName" />
+                                        ng-model="target.entity.manufacturerModelName" />
                                 </div>
                                 <div class="col-sm-12 col-md-10 offset-md-2"><div ng-show="targetForm.modelName.$error['required'] &amp;&amp; targetForm.$submitted"
                                         class="alert-danger">
@@ -93,7 +93,7 @@
                                     class="col-xs-12 col-md-2 control-label">{{ 'ui.model.deviceEntity.operatingSystemName' | i18n }}</label>
                                 <div class="col-xs-12 col-md-10">
                                     <input required="required" name="operatingSystemName" type="tel" class="form-control"
-                                        ng-model="scopedObject.entity.operatingSystemName" />
+                                        ng-model="target.entity.operatingSystemName" />
                                 </div>
                                 <div class="col-sm-12 col-md-10 offset-md-2"><div ng-show="targetForm.operatingSystemName.$error['required'] &amp;&amp; targetForm.$submitted"
                                         class="alert-danger">
@@ -108,8 +108,8 @@
                                     <entity-search type="'Place'" name="facility"
                                         filter="{ obsoletionTime: 'null', classConcept: EntityClassKeys.ServiceDeliveryLocation }"
                                         class="form-control"
-                                        ng-model="scopedObject.entity.relationship.DedicatedServiceDeliveryLocation"
-                                        value-property="'scopedObject'" />
+                                        ng-model="target.entity.relationship.DedicatedServiceDeliveryLocation"
+                                        value-property="'target'" />
                                 </div>
                             </div>
                             <div class="form-group row">
@@ -120,8 +120,8 @@
                                         filter="{ obsoletionTime: 'null' }"
                                         class="form-control"
                                         name="assignedEntity"
-                                        ng-model="scopedObject.entity.relationship.AssignedEntity"
-                                        value-property="'scopedObject'" />
+                                        ng-model="target.entity.relationship.AssignedEntity"
+                                        value-property="'target'" />
                                 </div>
                             </div>
                             

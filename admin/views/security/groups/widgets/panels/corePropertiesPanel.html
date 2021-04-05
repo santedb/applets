@@ -1,5 +1,5 @@
 <div xmlns="http://www.w3.org/1999/xhtml" xmlns:sdb="http://santedb.org/applet" 
-    oc-lazy-load="{ name: 'EditGroupController', files: ['/org.santedb.admin/controllers/groups/edit.js'] }" >
+    oc-lazy-load="{ name: 'EditGroupPropertiesController', files: ['/org.santedb.admin/controllers/groups/widgets/core.js'] }" >
     <sdb:widget order="14" name="org.santedb.widget.admin.panel.group.core" altViews="Edit"  headerClass="bl-light"
         size="Large" type="Panel" context="org.santedb.securityRole.admin">
         <sdb:icon>fas fa-user</sdb:icon>
@@ -12,8 +12,8 @@
         </div>
     </div>
 
-    <div ng-if="scopedObject" ng-controller="EditGroupController">
-        <form ng-submit="saveGroup(panel.editForm, scopedObject)" name="panel.editForm">
+    <div ng-if="scopedObject" ng-controller="EditGroupPropertiesController">
+        <form method="dialog" ng-submit="saveGroup(panel.editForm, scopedObject)" name="panel.editForm">
         <div class="card-body container-fluid">
             <div class="form-group row">
                 <label class="col-sm-12 col-md-2 control-label"
