@@ -1,0 +1,65 @@
+<div xmlns="http://www.w3.org/1999/xhtml" xmlns:sdb="http://santedb.org/applet" 
+    oc-lazy-load="{ name: 'ViewAuditController', files: ['/org.santedb.admin/controllers/audit/view.js'] }" >
+    <sdb:widget order="15" name="org.santedb.widget.admin.panel.audit.network" headerClass="bl-light"
+        size="Large" type="Panel" context="org.santedb.securityAudit.admin">
+        <sdb:icon>fas fa-id-badge</sdb:icon>
+        <sdb:description lang="en">Network</sdb:description>
+    </sdb:widget>
+
+    <div class="row" ng-if="!scopedObject">
+        <div class="col">
+            <p class="m-auto"><i class="fas fa-circle-notch fa-spin"></i> {{ 'ui.wait' | i18n }}</p>
+        </div>
+    </div>
+
+    <div ng-show="scopedObject" ng-controller="ViewAuditController">
+        <div class="card shadow">
+            <div class="card-header bg-light">
+                <button type="button" class="collapse-indicator btn btn-link p-0 p-0"
+                    data-toggle="collapse" data-target="#networkInfo" aria-expanded="true">
+                    <i class="fas fa-network-wired"></i>
+                    {{ 'ui.admin.audit.network' | i18n }}
+                    <i class="fa fa-chevron-right"></i>
+                </button>
+            </div>
+            <div class="collapse show" id="networkInfo" data-parent="#auditAccordion">
+                <div class="card-body">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-4">
+                                <i class="fas"
+                                    ng-class="{ 'fa-user' : audit.actorDisplay.source.isReq , 'fa-server' : !audit.actorDisplay.source.isReq }"></i>
+                                {{ audit.actorDisplay.source.uname }} <span
+                                    class="badge badge-info"><i
+                                        class="fas fa-network-wired"></i>{{ audit.actorDisplay.source.apId }}</span><br />
+                            </div>
+                            <div class="col-4"><span class="m-auto">
+                                    <i class="fas text-info"
+                                        ng-class="{ 'fa-long-arrow-alt-left' : audit.action == 'Read', 'fa-arrows-alt-h' : audit.action == 'Execute', 'fa-long-arrow-alt-right' :  audit.action != 'Read' &amp;&amp; audit.action != 'Execute' }"></i>
+                                    <span ng-bind-html="renderAction(audit)"></span>
+                                    <i class="fas text-info"
+                                        ng-class="{ 'fa-long-arrow-alt-left' : audit.action == 'Read', 'fa-arrows-alt-h' : audit.action == 'Execute', 'fa-long-arrow-alt-right' :  audit.action != 'Read' &amp;&amp; audit.action != 'Execute' }"></i></span>
+                            </div>
+                            <div class="col-4">
+                                <i class="fas"
+                                    ng-class="{ 'fa-user' : audit.actorDisplay.destination.isReq , 'fa-server' : !audit.actorDisplay.destination.isReq }"></i>
+                                {{ audit.actorDisplay.destination.uname }} <span
+                                    class="badge badge-info"><i
+                                        class="fas fa-network-wired"></i>{{ audit.actorDisplay.destination.apId }}</span><br />
+                            </div>
+                        </div>
+                        <div class="row" ng-if="audit.metaDisplay.LocalEndpoint">
+                            <label
+                                class="control-label col-2">{{ 'ui.admin.audit.network.url' | i18n }}</label>
+                            <div class="col-10"><a
+                                    href="{{audit.metaDisplay.LocalEndpoint}}"
+                                    target="_blank">{{audit.metaDisplay.LocalEndpoint}}</a>"
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
