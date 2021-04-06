@@ -119,20 +119,4 @@ angular.module('santedb').controller('ViewAuditController', ["$scope", "$rootSco
     $scope.renderType = function (audit) {
         return "todo";
     }
-
-    $scope.renderActor = function (audit) {
-        if (audit.actor && audit.actor.length) {
-            var retVal = "";
-
-            audit.actor.forEach(function (a) {
-                if (a.isReq)
-                    retVal += ` ; <i class="fas fa-user"></i> ${a.uname || a.apId} `;
-                else
-                    retVal += ` ; <i class="fas fa-circle"></i> ${a.uname || a.apId} `;
-            });
-
-            return retVal.substring(2);
-        }
-        return "N/A"
-    }
 }]);

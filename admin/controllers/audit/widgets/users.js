@@ -15,9 +15,14 @@
  * License for the specific language governing permissions and limitations under 
  * the License.
  */
-angular.module('santedb').controller('AuditEventInformationController', ["$scope", "$rootScope", "$state", "$templateCache", "$stateParams", "$compile", '$timeout', function ($scope, $rootScope, $state, $templateCache, $stateParams, $compile, $timeout) {
+angular.module('santedb').controller('AuditUserController', ["$scope", "$rootScope", "$state", "$templateCache", "$stateParams", "$compile", '$timeout', function ($scope, $rootScope, $state, $templateCache, $stateParams, $compile, $timeout) {
 
-    console.log(`AUDIT VIEW EVENT EVENT EVEN T and stuff`);
+    console.log(`USERS CONTROLLER`);
     console.log($stateParams);
+
+    // Transition
+    $scope.navigate = function (state, params) {
+        $scope.navPush = { state: state, params: params };
+    }
 
 }]);

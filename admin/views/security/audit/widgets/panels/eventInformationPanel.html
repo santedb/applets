@@ -21,38 +21,38 @@
                 <div class="row">
                     <label
                         class="control-label col-4">{{ 'ui.admin.audit.core.sid' | i18n }}</label>
-                    <div class="col-8">{{audit.id}}
+                    <div class="col-8">{{scopedObject.audit.id}}
                     </div>
                 </div>
                 <div class="row">
                     <label
                         class="control-label col-4">{{ 'ui.admin.audit.core.action' | i18n }}</label>
-                    <div class="col-8" ng-bind-html="renderAction(audit)">
+                    <div class="col-8" ng-bind-html="renderAction(scopedObject.audit)">
                     </div>
                 </div>
                 <div class="row">
                     <label
                         class="control-label col-4">{{ 'ui.admin.audit.core.event' | i18n }}</label>
-                    <div class="col-8" ng-bind-html="renderEvent(audit)">
+                    <div class="col-8" ng-bind-html="renderEvent(scopedObject.audit)">
                     </div>
                 </div>
                 <div class="row">
                     <label
                         class="control-label col-4">{{ 'ui.admin.audit.core.timestamp' | i18n }}</label>
-                    <div class="col-8" ng-bind-html="audit.timestamp | extDate">
+                    <div class="col-8" ng-bind-html="scopedObject.audit.timestamp | extDate">
                     </div>
                 </div>
                 <div class="row">
                     <label
                         class="control-label col-4">{{ 'ui.admin.audit.core.outcome' | i18n }}</label>
-                    <div class="col-8" ng-bind-html="renderOutcome(audit)">
+                    <div class="col-8" ng-bind-html="renderOutcome(scopedObject.audit)">
                     </div>
                 </div>
                 <div class="row">
                     <label
                         class="control-label col-4">{{ 'ui.admin.audit.core.process' | i18n }}</label>
-                    <div class="col-8">{{audit.metaDisplay.ProcessName}} <small
-                            class="badge badge-info">PID {{audit.metaDisplay.PID}}</small>
+                    <div class="col-8">{{scopedObject.audit.metaDisplay.ProcessName}} <small
+                            class="badge badge-info">PID {{scopedObject.audit.metaDisplay.PID}}</small>
                     </div>
                 </div>
                 <div class="row">
@@ -60,8 +60,8 @@
                         class="control-label col-4">{{ 'ui.admin.audit.core.source' | i18n }}</label>
                     <div class="col-8">
                         <i class="fas"
-                            ng-class="{ 'fa-laptop-medical' : audit.metaDisplay.AuditSourceType == 'EndUserInterface' , 'fa-server' :  audit.metaDisplay.AuditSourceType == 'ApplicationServerProcess'}"></i>
-                        {{audit.metaDisplay.AuditSourceType}}
+                            ng-class="{ 'fa-laptop-medical' : scopedObject.audit.metaDisplay.AuditSourceType == 'EndUserInterface' , 'fa-server' :  scopedObject.audit.metaDisplay.AuditSourceType == 'ApplicationServerProcess'}"></i>
+                        {{scopedObject.audit.metaDisplay.AuditSourceType}}
                     </div>
                 </div>
             </div>
