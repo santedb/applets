@@ -1,5 +1,5 @@
 <div xmlns="http://www.w3.org/1999/xhtml" xmlns:sdb="http://santedb.org/applet" 
-    oc-lazy-load="{ name: 'EditPolicyController', files: ['/org.santedb.admin/controllers/policies/edit.js'] }" >
+    oc-lazy-load="{ name: 'EditPolicyController', files: ['/org.santedb.admin/controllers/policies/widgets/corePolicies.js'] }" >
     <sdb:widget order="14" name="org.santedb.widget.admin.panel.policy.core"  headerClass="bl-light"
         size="Large" type="Panel" context="org.santedb.securityPolicy.admin">
         <sdb:icon>fas fa-certificate</sdb:icon>
@@ -12,7 +12,7 @@
         </div>
     </div>
 
-    <div ng-if="scopedObject" ng-controller="EditPolicyController">
+    <div ng-if="scopedObject" ng-controller="EditPolicyCoreController">
 
         <form ng-submit="savePolicy(targetForm, target)" name="targetForm" novalidate="novalidate">
             <div class="alert alert-warning" ng-show="!target.securityPolicy.id">
