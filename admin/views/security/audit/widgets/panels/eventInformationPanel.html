@@ -1,5 +1,5 @@
 <div xmlns="http://www.w3.org/1999/xhtml" xmlns:sdb="http://santedb.org/applet" 
-    oc-lazy-load="{ name: 'ViewAuditController', files: ['/org.santedb.admin/controllers/audit/widgets/auditEventInformation.js'] }" >
+    oc-lazy-load="{ name: 'ViewAuditController', files: ['/org.santedb.admin/controllers/audit/view.js'] }" >
     <sdb:widget order="15" name="org.santedb.widget.admin.panel.audit.eventInfo" headerClass="bl-light"
         size="Large" type="Panel" context="org.santedb.securityAudit.admin">
         <sdb:icon>fas fa-id-badge</sdb:icon>
@@ -12,7 +12,7 @@
         </div>
     </div>
 
-    <div ng-controller="AuditEventInformationController">
+    <div ng-controller="ViewAuditController">
         <div class="card-header bg-light">
             <i class="fas fa-database"></i> {{ 'ui.admin.audit.core' | i18n }}
         </div>

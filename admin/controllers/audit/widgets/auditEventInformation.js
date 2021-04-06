@@ -18,8 +18,6 @@
 angular.module('santedb').controller('AuditEventInformationController', ["$scope", "$rootScope", "$state", "$templateCache", "$stateParams", "$compile", '$timeout', function ($scope, $rootScope, $state, $templateCache, $stateParams, $compile, $timeout) {
 
     console.log(`AUDIT VIEW EVENT EVENT EVEN T and stuff`);
-    console.log($stateParams.id);
-    console.log(`22222222222222222222`)
-    console.log(id);
+    console.log($stateParams);
 
 }]);
