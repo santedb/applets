@@ -1,81 +1,64 @@
 <div xmlns="http://www.w3.org/1999/xhtml" xmlns:sdb="http://santedb.org/applet" 
     oc-lazy-load="{ name: 'ViewAuditController', files: ['/org.santedb.admin/controllers/audit/view.js'] }" >
     <sdb:widget order="16" name="org.santedb.widget.admin.panel.audit.dataAndObjects" headerClass="bl-light"
-        size="Large" type="Panel" context="org.santedb.securityUser.admin">
-        <sdb:icon>fas fa-id-badge</sdb:icon>
-        <sdb:description lang="en">Data & Objects</sdb:description>
+        size="Large" type="Panel" context="org.santedb.securityAudit.admin">
+        <sdb:icon>fas fa-cubes</sdb:icon>
+        <sdb:description lang="en">Event Information</sdb:description>
     </sdb:widget>
 
-    <div class="row" ng-if="!scopedObject">
+    <div class="row" ng-if="!scopedObject.audit">
         <div class="col">
             <p class="m-auto"><i class="fas fa-circle-notch fa-spin"></i> {{ 'ui.wait' | i18n }}</p>
         </div>
     </div>
 
-    <div ng-show="scopedObject" ng-controller="ViewAuditController">
-        <div class="card shadow">
-            <div class="card-header bg-light">
-                <button type="button" class="collapse-indicator btn btn-link p-0 p-0"
-                    data-toggle="collapse" data-target="#objectInfo"
-                    aria-expanded="false"><i class="fas fa-cubes"></i>
-                    {{ 'ui.admin.audit.objects' | i18n }}
+    <div ng-if="scopedObject.audit" ng-controller="ViewAuditController">
+        <div class="row"  ng-if="audit.query">
+            <label class="control-label col-4">{{ 'ui.admin.audit.query' | i18n }}</label>
+            <div class="col-8"><code style="word-wrap: break-word;" >{{ scopedObject.audit.query.queryData }}</code></div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <table class="table table-striped table-responsive" style="max-width:100%; overflow: auto">
+    
+                    <thead>
+                        <tr>
+                            <th>{{ 'ui.admin.audit.object.type' | i18n }}</th>
+                            <th>{{ 'ui.admin.audit.object.lifecycle' | i18n }}</th>
+                            <th>{{ 'ui.admin.audit.object.role' | i18n }}</th>
+                            <th>{{ 'ui.admin.audit.object.id' | i18n }}</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="o in scopedObject.audit.object track by $index" ng-if="o.role != 'Query' &amp;&amp; $index &lt; 15">
+                            <td title="{{o.type}}">
+                                <i class="fas"
+                                    ng-class="{ 'fa-user' : o.type == 'Person', 'fa-cog' : o.type == 'SystemObject', 'fa-building' : o.type == 'Organization', 'fa-question' : o.type == 'Other' }"></i>
+                            </td>
+                            <td title="{{o.lifecycle}}">
+                                <i class="fas"
+                                    ng-class="{ 'fa-plus' : o.lifecycle == 'Creation', 'fa-file-import' : o.lifecycle == 'Import', 'fa-pencil-alt' : o.lifecycle == 'Amendment','fa-random' : o.lifecycle == 'Translation', 'fa-search' : o.lifecycle == 'Access', 'fa-object-group' : o.lifecycle == 'Aggregation', 'fa-file-export' : o.lifecycle == 'Export', 'fa-comment-medical' : o.lifecycle == 'Disclosure', 'fa-file-archive' : o.lifecycle == 'Archiving', 'fa-trash' : o.lifecycle == 'PermanentErasure', 'fa-recycle' : o.lifecycle == 'LogicalDeletion' }"></i>
+                            </td>
+                            <td title="{{o.role}}">
+                                <i class="fas"
+                                ng-class="{ 'fa-user-nurse' : o.role == 'Provider', 'fa-user-md' : o.role == 'Doctor', 'fa-shield-alt' : o.role == 'SecurityResource', 'fa-user' : o.role == 'SecurityUser', 'fa-database': o.role == 'DataRepository', 'fa-table': o.role == 'Table', 'fa-search' : o.role == 'Query', 'fa-bed' : o.role == 'Patient', 'fa-building' : o.role == 'Location', 'fa-file' : o.role == 'Report', 'fa-files' : o.role == 'MasterFile' }"></i>
+                            </td>
+                            <td >
+                                <span ng-switch="o.idType">
+                                    <a ng-switch-when="Uri" href="{{o.id}}">{{ o.id }}</a>
+                                    <a ng-switch-when="UserIdentifier" ng-click="navigate('santedb-admin.security.users.edit', {id:o.id})">{{ o.id }}</a>
+                                    <a ng-switch-when="PatientNumber" ng-click="navigate('santedb-admin.mpi.patients.view', { id: o.id })">{{ o.id }}</a>
+                                    <span ng-switch-when="Custom">{{ o.id }}</span>
+                                    <span ng-switch-when="ReportNumber">{{ o.id }}</span>
 
-                    <i class="fa fa-chevron-right"></i>
-                </button>
-            </div>
-            <div class="collapse" id="objectInfo" data-parent="#auditAccordion">
-                <div class="card-body">
-                    <div class="container-fuild">
-                        <div class="row"  ng-if="audit.query">
-                            <label class="control-label col-4">{{ 'ui.admin.audit.query' | i18n }}</label>
-                            <div class="col-8"><code style="word-wrap: break-word;" >{{ audit.query.queryData }}</code></div>
-                        </div>
-                        <div class="row">
-                            <div class="col">
-                                <table class="table table-striped table-responsive" style="max-width:100%; overflow: auto">
-                    
-                                    <thead>
-                                        <tr>
-                                            <th>{{ 'ui.admin.audit.object.type' | i18n }}</th>
-                                            <th>{{ 'ui.admin.audit.object.lifecycle' | i18n }}</th>
-                                            <th>{{ 'ui.admin.audit.object.role' | i18n }}</th>
-                                            <th>{{ 'ui.admin.audit.object.id' | i18n }}</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr ng-repeat="o in audit.object track by $index" ng-if="o.role != 'Query' &amp;&amp; $index &lt; 15">
-                                            <td title="{{o.type}}">
-                                                <i class="fas"
-                                                    ng-class="{ 'fa-user' : o.type == 'Person', 'fa-cog' : o.type == 'SystemObject', 'fa-building' : o.type == 'Organization', 'fa-question' : o.type == 'Other' }"></i>
-                                            </td>
-                                            <td title="{{o.lifecycle}}">
-                                                <i class="fas"
-                                                    ng-class="{ 'fa-plus' : o.lifecycle == 'Creation', 'fa-file-import' : o.lifecycle == 'Import', 'fa-pencil-alt' : o.lifecycle == 'Amendment','fa-random' : o.lifecycle == 'Translation', 'fa-search' : o.lifecycle == 'Access', 'fa-object-group' : o.lifecycle == 'Aggregation', 'fa-file-export' : o.lifecycle == 'Export', 'fa-comment-medical' : o.lifecycle == 'Disclosure', 'fa-file-archive' : o.lifecycle == 'Archiving', 'fa-trash' : o.lifecycle == 'PermanentErasure', 'fa-recycle' : o.lifecycle == 'LogicalDeletion' }"></i>
-                                            </td>
-                                            <td title="{{o.role}}">
-                                                <i class="fas"
-                                                ng-class="{ 'fa-user-nurse' : o.role == 'Provider', 'fa-user-md' : o.role == 'Doctor', 'fa-shield-alt' : o.role == 'SecurityResource', 'fa-user' : o.role == 'SecurityUser', 'fa-database': o.role == 'DataRepository', 'fa-table': o.role == 'Table', 'fa-search' : o.role == 'Query', 'fa-bed' : o.role == 'Patient', 'fa-building' : o.role == 'Location', 'fa-file' : o.role == 'Report', 'fa-files' : o.role == 'MasterFile' }"></i>
-                                            </td>
-                                            <td >
-                                                <span ng-switch="o.idType">
-                                                    <a ng-switch-when="Uri" href="{{o.id}}">{{ o.id }}</a>
-                                                    <a ng-switch-when="UserIdentifier" ng-click="navigate('santedb-admin.security.users.edit', {id:o.id})">{{ o.id }}</a>
-                                                    <a ng-switch-when="PatientNumber" ng-click="navigate('santedb-admin.mpi.patients.view', { id: o.id })">{{ o.id }}</a>
-                                                    <span ng-switch-when="Custom">{{ o.id }}</span>
-                                                    <span ng-switch-when="ReportNumber">{{ o.id }}</span>
-
-                                                </span>
-                                            </td>
-                                        </tr>
-                                        <tr ng-if="audit.object.length > 15">
-                                            <td colspan="4">{{ audit.object.length - 15 }} {{ 'ui.audit.more' | i18n }}</td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                                </span>
+                            </td>
+                        </tr>
+                        <tr ng-if="scopedObject.audit.object.length > 15">
+                            <td colspan="4">{{ scopedObject.audit.object.length - 15 }} {{ 'ui.audit.more' | i18n }}</td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>

@@ -17,11 +17,9 @@
  */
 angular.module('santedb').controller('ViewAuditController', ["$scope", "$rootScope", "$state", "$templateCache", "$stateParams", "$compile", '$timeout', function ($scope, $rootScope, $state, $templateCache, $stateParams, $compile, $timeout) {
 
-    console.log(`In view.js for audit`)
     if ($stateParams.id) {
         SanteDB.resources.audit.getAsync($stateParams.id)
             .then ( r=> {
-                console.log(r);
                 $scope.isLoading = false;
                 $scope.target = $scope.target || {};
                 $scope.target.audit = r;
@@ -60,6 +58,27 @@ angular.module('santedb').controller('ViewAuditController', ["$scope", "$rootSco
     // Transition
     $scope.navigate = function (state, params) {
         $scope.navPush = { state: state, params: params };
+    }
+
+    // Render the action column
+    $scope.renderAction = function (audit) {
+
+        var retVal = "";
+        switch (audit.action) {
+            case "Read":
+                retVal = "<i class='fas fa-database text-success fa-fw'></i> ";
+                break;
+            case "Create":
+            case "Update":
+            case "Delete":
+                retVal = "<i class='fas fa-database text-danger fa-fw'></i> ";
+                break;
+            case "Execute":
+                retVal = "<i class='fas fa-play'></i> ";
+                break;
+        }
+        retVal += audit.action;
+        return retVal;
     }
 
     // Render the event column
@@ -116,7 +135,7 @@ angular.module('santedb').controller('ViewAuditController', ["$scope", "$rootSco
         return `<span class='badge ${color}'><i class='fas ${icon}'></i> ${audit.event}</span> ${audit.type.display || audit.type.code}`
     }
 
-    $scope.renderType = function (audit) {
+    $scope.renderType = function () {
         return "todo";
     }
 }]);
