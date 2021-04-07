@@ -1,5 +1,5 @@
 <div xmlns="http://www.w3.org/1999/xhtml" xmlns:sdb="http://santedb.org/applet" 
-    oc-lazy-load="{ name: 'ViewAuditController', files: ['/org.santedb.admin/controllers/audit/view.js'] }" >
+    oc-lazy-load="{ name: 'ViewAuditController', files: ['/org.santedb.admin/controllers/audit/widgets/data.js'] }" >
     <sdb:widget order="16" name="org.santedb.widget.admin.panel.audit.dataAndObjects" headerClass="bl-light"
         size="Large" type="Panel" context="org.santedb.securityAudit.admin">
         <sdb:icon>fas fa-cubes</sdb:icon>
@@ -12,15 +12,14 @@
         </div>
     </div>
 
-    <div ng-if="scopedObject.audit" ng-controller="ViewAuditController">
-        <div class="row"  ng-if="audit.query">
+    <div ng-if="scopedObject.audit" ng-controller="AuditDataController">
+        <div class="row"  ng-if="scopedObject.audit.object.role === 'Query'">
             <label class="control-label col-4">{{ 'ui.admin.audit.query' | i18n }}</label>
             <div class="col-8"><code style="word-wrap: break-word;" >{{ scopedObject.audit.query.queryData }}</code></div>
         </div>
         <div class="row">
             <div class="col">
-                <table class="table table-striped table-responsive" style="max-width:100%; overflow: auto">
-    
+                <table class="table table-striped">
                     <thead>
                         <tr>
                             <th>{{ 'ui.admin.audit.object.type' | i18n }}</th>

@@ -17,9 +17,6 @@
  */
 angular.module('santedb').controller('AuditUserController', ["$scope", "$rootScope", "$state", "$templateCache", "$stateParams", "$compile", '$timeout', function ($scope, $rootScope, $state, $templateCache, $stateParams, $compile, $timeout) {
 
-    console.log(`USERS CONTROLLER`);
-    console.log($stateParams);
-
     // Transition
     $scope.navigate = function (state, params) {
         $scope.navPush = { state: state, params: params };

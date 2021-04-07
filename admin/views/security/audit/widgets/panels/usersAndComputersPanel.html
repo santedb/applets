@@ -1,5 +1,5 @@
 <div xmlns="http://www.w3.org/1999/xhtml" xmlns:sdb="http://santedb.org/applet" 
-    oc-lazy-load="{ name: 'ViewAuditController', files: ['/org.santedb.admin/controllers/audit/view.js'] }" >
+    oc-lazy-load="{ name: 'ViewAuditController', files: ['/org.santedb.admin/controllers/audit/widgets/users.js'] }" >
     <sdb:widget order="15" name="org.santedb.widget.admin.panel.audit.usersAndComputers" headerClass="bl-light"
         size="Large" type="Panel" context="org.santedb.securityAudit.admin">
         <sdb:icon>fas fa-id-badge</sdb:icon>
@@ -12,7 +12,7 @@
         </div>
     </div>
 
-    <div ng-if="scopedObject" ng-controller="ViewAuditController">
+    <div ng-if="scopedObject" ng-controller="AuditUserController">
         <table class="table table-striped">
             <thead>
                 <tr>
