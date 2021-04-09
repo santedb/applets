@@ -1,5 +1,5 @@
 <div xmlns="http://www.w3.org/1999/xhtml" xmlns:sdb="http://santedb.org/applet" 
-    oc-lazy-load="{ name: 'EditApplicationController', files: ['/org.santedb.admin/controllers/applications/edit.js'] }" >
+    oc-lazy-load="{ name: 'EditApplicationController', files: ['/org.santedb.admin/controllers/applications/widgets/security.js'] }" >
     <sdb:widget order="15" name="org.santedb.widget.admin.panel.applications.security"  headerClass="bl-light"
         size="Large" type="Panel" context="org.santedb.securityApplications.admin">
         <sdb:icon>fas fa-shield-alt</sdb:icon>
@@ -12,7 +12,7 @@
         </div>
     </div>
     
-    <div id="securityProps" ng-if="scopedObject.securityApplication.id" ng-controller="EditApplicationController">
+    <div id="securityProps" ng-if="scopedObject.securityApplication.id" ng-controller="SecurityApplicationController">
         <div class="form-group row">
             <label
                 class="col-xs-12 col-md-2 control-label">{{ 'ui.model.securityApplication.lastAuthenticationTime' | i18n }}</label>

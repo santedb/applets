@@ -12,7 +12,7 @@
         </div>
     </div>
 
-    <div ng-show="scopedObject.securityApplication.id" ng-controller="EditApplicationController">
+    <div ng-if="scopedObject.securityApplication.id" ng-controller="EditApplicationController">
         <div class="collapse show" id="policyGroupProps">
             <div class="card-body container-fluid">
                 <entity-policy-admin securable="scopedObject.securityApplication" policy="scopedObject.policy">

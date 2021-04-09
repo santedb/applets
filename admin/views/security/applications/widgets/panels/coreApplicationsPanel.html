@@ -1,5 +1,5 @@
 <div xmlns="http://www.w3.org/1999/xhtml" xmlns:sdb="http://santedb.org/applet" 
-    oc-lazy-load="{ name: 'EditApplicationController', files: ['/org.santedb.admin/controllers/applications/edit.js'] }" >
+    oc-lazy-load="{ name: 'EditApplicationController', files: ['/org.santedb.admin/controllers/applications/widgets/core.js'] }" >
     <sdb:widget order="14" name="org.santedb.widget.admin.panel.applications.core"  headerClass="bl-light"
         size="Large" type="Panel" context="org.santedb.securityApplications.admin">
         <sdb:icon>fas fa-window-maximize</sdb:icon>
@@ -12,7 +12,7 @@
         </div>
     </div>
 
-    <div ng-controller="EditApplicationController" ng-if="scopedObject.securityApplication.id">
+    <div ng-controller="CoreApplicationController" ng-if="scopedObject.securityApplication.id">
         <div class="form-group row">
             <label class="col-sm-12 col-md-2 control-label"
                 for="sid">{{ 'ui.model.securityApplication.id' | i18n }}</label>
