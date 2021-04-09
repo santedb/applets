@@ -19,7 +19,7 @@ angular.module('santedb').controller('AuditDataController', ["$scope", "$rootSco
 
     // Transition
     $scope.navigate = function (state, params) {
-        $scope.navPush = { state: state, params: params };
+        $state.transitionTo(state, {params})
     }
 
 }]);

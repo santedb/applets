@@ -26,9 +26,9 @@
                 <tr ng-repeat="a in scopedObject.audit.actor">
                     <td>
                         <button class="btn btn-link p-0" ng-if="a.isReq"
-                            ng-click="navigate('santedb-admin.security.users.index',{ q: a.uname })">{{ a.uname }}</button>
+                            ng-click="$parent.navigate('santedb-admin.security.users.index',{ q: a.uname })">{{ a.uname }}</button>
                         <button class="btn btn-link p-0" ng-if="!a.isReq"
-                            ng-click="navigate('santedb-admin.security.devices.index',{ q: a.uname })">{{ a.uname }}</button>
+                            ng-click="$parent.navigate('santedb-admin.security.devices.index',{ q: a.uname })">{{ a.uname }}</button>
                     </td>
                     <td>
                         {{a.apId}}
