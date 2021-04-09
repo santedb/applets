@@ -15,7 +15,7 @@
  * License for the specific language governing permissions and limitations under 
  * the License.
  */
-angular.module('santedb').controller('ExtendedApplicationController', ["$scope", "$rootScope", "$state", "$templateCache", "$stateParams", function ($scope, $rootScope, $state, $templateCache, $stateParams) {
+angular.module('santedb').controller('EditApplicationExtendedController', ["$scope", "$rootScope", "$state", "$templateCache", "$stateParams", function ($scope, $rootScope, $state, $templateCache, $stateParams) {
 
     $scope.EntityClassKeys = EntityClassKeys;
   
