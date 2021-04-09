@@ -45,8 +45,8 @@
                             <td >
                                 <span ng-switch="o.idType">
                                     <a ng-switch-when="Uri" href="{{o.id}}">{{ o.id }}</a>
-                                    <a ng-switch-when="UserIdentifier" ng-click="navigate('santedb-admin.security.users.edit', {id:o.id})">{{ o.id }}</a>
-                                    <a ng-switch-when="PatientNumber" ng-click="navigate('santedb-admin.mpi.patients.view', { id: o.id })">{{ o.id }}</a>
+                                    <a ng-switch-when="UserIdentifier" ng-click="$parent.navigate('santedb-admin.security.users.edit', {id:o.id})">{{ o.id }}</a>
+                                    <a ng-switch-when="PatientNumber" ng-click="$parent.navigate('santedb-admin.mpi.patients.view', { id: o.id })">{{ o.id }}</a>
                                     <span ng-switch-when="Custom">{{ o.id }}</span>
                                     <span ng-switch-when="ReportNumber">{{ o.id }}</span>
 
