@@ -12,7 +12,7 @@
             <p class="m-auto"><i class="fas fa-circle-notch fa-spin"></i> {{ 'ui.wait' | i18n }}</p>
         </div>
     </div>
-    <div ng-controller="EditDeviceCoreController">
+    <div ng-controller="EditDeviceCoreController" ng-if="scopedObject">
     <form method="dialog" ng-submit="saveDevice(panel.editForm, scopedObject)" name="panel.editForm" novalidate="novalidate" >
         <div id="demographicProps">
             <div class="form-group row">
