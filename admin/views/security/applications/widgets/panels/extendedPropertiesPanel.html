@@ -1,5 +1,5 @@
 <div xmlns="http://www.w3.org/1999/xhtml" xmlns:sdb="http://santedb.org/applet" 
-    oc-lazy-load="{ name: 'EditApplicationController', files: ['/org.santedb.admin/controllers/applications/edit.js'] }" >
+    oc-lazy-load="{ name: 'EditApplicationController', files: ['/org.santedb.admin/controllers/applications/widgets/extended.js'] }" >
     <sdb:widget order="16" name="org.santedb.widget.admin.panel.applications.extended"  headerClass="bl-light"
         size="Large" type="Panel" context="org.santedb.securityApplications.admin">
         <sdb:icon>fas fa-mobile</sdb:icon>
@@ -12,7 +12,7 @@
         </div>
     </div>
 
-    <form ng-submit="saveApplication(targetForm, scopedObject)" name="targetForm" novalidate="novalidate" ng-controller="EditApplicationController">
+    <form ng-submit="saveApplication(targetForm, scopedObject)" name="targetForm" novalidate="novalidate" ng-controller="ExtendedApplicationController">
         <div ng-if="scopedObject.securityApplication.id" id="demographicProps">
             <div class="form-group row">
                 <label class="col-md-2 col-sm-12 control-label"
