@@ -19,50 +19,37 @@ angular.module('santedb').controller('EditApplicationExtendedController', ["$sco
 
     $scope.EntityClassKeys = EntityClassKeys;
   
+   
     /**
      * @summary Save the specified application 
      */
-    $scope.saveApplication = async function(deviceForm, application) {
-        if(!deviceForm.$valid) return;
+    $scope.saveApplication = async function (deviceForm) {
+
+        if (!deviceForm.$valid) return;
 
         // Correct arrays and assign id
-        if(!application.entity.id) {
-            application.entity.id = SanteDB.application.newGuid();
+        if (!$scope.scopedObject.entity.id) {
+            $scope.scopedObject.entity.id = SanteDB.application.newGuid();
         }
 
         // Show wait state
         SanteDB.display.buttonWait("#saveApplicationButton", true);
 
         try {
-            if(application.securityApplication.id) {
-                let u = await  SanteDB.resources.securityApplication.updateAsync(application.securityApplication.id, {
-                    $type: "SecurityApplicationInfo",
-                    role: application.role,
-                    entity: application.securityApplication
-                })
-                application.entity.securityApplication = u.entity.id;
-                let r = await SanteDB.resources.applicationEntity.insertAsync(application.entity);
-                application.entity = r;
-            }
-            else {
-                application.securityApplication.applicationSecret = SanteDB.application.generatePassword();
+            let u = await SanteDB.resources.securityApplication.updateAsync($scope.scopedObject.securityApplication.id, {
+                $type: "SecurityApplicationInfo",
+                role: $scope.scopedObject.role,
+                entity: $scope.scopedObject.securityApplication
+            })
+            $scope.scopedObject.entity.securityApplication = u.entity.id;
+            let r = await SanteDB.resources.applicationEntity.insertAsync($scope.scopedObject.entity);
+            $scope.scopedObject.entity = r;
 
-                let u = await SanteDB.resources.securityApplication.insertAsync({
-                    $type: "SecurityApplicationInfo",
-                    role: application.role,
-                    entity: application.securityApplication
-                })
-
-                var scrt = application.target.securityApplication.applicationSecret;
-                $scope.target.entity.securityApplication = u.entity.id;
-                $scope.target.securityApplication = u.entity;
-                $scope.target.policy = u.policy || [];
-                $scope.target.securityApplication.etag = u.etag;
-                $scope.target.securityApplication.applicationSecret = scrt;
-                let r = await SanteDB.resources.applicationEntity.insertAsync($scope.target.entity)
-                $scope.target.entity = r;
-            }
             toastr.success(SanteDB.locale.getString("ui.model.securityApplication.saveSuccess"));
+            try {
+                $scope.$apply();
+            }
+            catch(e) {}
         }
         catch (e) {
             SanteDB.display.buttonWait("#saveApplicationButton", false);
@@ -70,7 +57,6 @@ angular.module('santedb').controller('EditApplicationExtendedController', ["$sco
         }
         finally {
             SanteDB.display.buttonWait("#saveApplicationButton", false);
-            $state.transitionTo("santedb-admin.security.applications.index");          
         }
     }
 }]);

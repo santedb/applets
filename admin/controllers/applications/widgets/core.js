@@ -40,11 +40,15 @@ angular.module('santedb').controller('EditApplicationCoreController', ["$scope",
                 ]
             });
 
-        // Send the patch
-        SanteDB.display.buttonWait("#reactivateApplicationButton", true);
-        await  SanteDB.resources.securityApplication.patchAsync($stateParams.id, application.securityApplication.etag, patch)
-        application.securityApplication.obsoletionTime = null;
-        application.securityApplication.obsoletedBy = null;
+            // Send the patch
+            SanteDB.display.buttonWait("#reactivateApplicationButton", true);
+            await  SanteDB.resources.securityApplication.patchAsync($stateParams.id, application.securityApplication.etag, patch)
+            application.securityApplication.obsoletionTime = null;
+            application.securityApplication.obsoletedBy = null;
+            try {
+                $scope.$apply();
+            }
+            catch(e) {}
         }
         catch (e) {
             $rootScope.errorHandler(e); 

@@ -59,7 +59,11 @@ angular.module('santedb').controller('EditApplicationSecurityController', ["$sco
         try {
             SanteDB.display.buttonWait("#unlockButton", true);
             await SanteDB.resources.securityApplication.unLockAsync($stateParams.id);
-            $scope.target.securityApplication.lockout = null;
+            $scope.scopedObject.securityApplication.lockout = null;
+
+            try {
+                $scope.$apply();
+            } catch(e) {}
         }
         catch (e) {
             $rootScope.errorHandler(e);
@@ -93,6 +97,10 @@ angular.module('santedb').controller('EditApplicationSecurityController', ["$sco
                 SanteDB.display.buttonWait("#resetSecretButton", true);
                 await SanteDB.resources.securityApplication.patchAsync($stateParams.id, application.securityApplication.etag, patch);
                 application.securityApplication.applicationSecret = repl;
+
+                try {
+                    $scope.$apply();
+                } catch(e) {}
             }
             catch(e) {
                 SanteDB.display.buttonWait("#resetSecretButton", false);

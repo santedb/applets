@@ -209,6 +209,11 @@
     <string key="ui.admin.applications.edit.demographics.title">Extended Properties</string>
     <string key="ui.admin.applications.edit.security.neverLoggedIn">Never Authenticated</string>
 
+    <!-- Provenance Strings -->
+    <string key="ui.admin.provenance.info">Primary Identity</string>
+    <string key="ui.admin.provenance.creationTime">Established</string>
+    <string key="ui.admin.provenance.type">Principal Type</string>
+    <string key="ui.admin.provenance.type">Type</string>
     <!-- Security Dashboard -->
     <string key="ui.admin.security.dashboard.index">SanteDB Security Center</string>
     <string key="ui.admin.security.users.title">Users</string>
