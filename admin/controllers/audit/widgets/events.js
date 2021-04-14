@@ -1,4 +1,4 @@
-/// <reference path="../../../core/js/santedb.js"/>
+/// <reference path="../../../../core/js/santedb.js"/>
 /*
  * Portions Copyright 2015-2019 Mohawk College of Applied Arts and Technology
  * Portions Copyright 2019-2019 SanteSuite Contributors (See NOTICE)
@@ -14,15 +14,8 @@
  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the 
  * License for the specific language governing permissions and limitations under 
  * the License.
- * 
- * User: Justin Fyfe
- * Date: 2019-12-16
  */
-angular.module('santedb').controller('AuditIndexController', ["$scope", "$rootScope", "$state", "$templateCache", "$stateParams", function ($scope, $rootScope, $state, $templateCache, $stateParams) {
-
-    $scope.currentFilter = {
-       
-    };
+angular.module('santedb').controller('AuditEventInformationController', ["$scope", "$rootScope", "$state", "$templateCache", "$stateParams", "$compile", '$timeout', function ($scope, $rootScope, $state, $templateCache, $stateParams, $compile, $timeout) {
 
     // Render the outcome
     $scope.renderOutcome = function (audit) {
@@ -40,40 +33,9 @@ angular.module('santedb').controller('AuditIndexController', ["$scope", "$rootSc
         }
     };
 
-    // Render the timestamp
-    $scope.renderTimestamp = function (audit) {
-        return moment(audit.timestamp).format('YYYY-MM-DD HH:mm:ss Z');
-    }
-
-    // Render the action column
-    $scope.renderAction = function (audit) {
-
-        var retVal = "";
-        switch (audit.action) {
-            case "Read":
-                retVal = "<i class='fas fa-database text-success fa-fw'></i> ";
-                break;
-            case "Create":
-            case "Update":
-            case "Delete":
-                retVal = "<i class='fas fa-database text-danger fa-fw'></i> ";
-                break;
-            case "Execute":
-                retVal = "<i class='fas fa-play'></i> ";
-                break;
-        }
-        retVal += audit.action;
-        return retVal;
-    }
-
-    // Transition
-    $scope.navigate = function (state, params) {
-        $scope.navPush = { state: state, params: params };
-    }
-
     // Render the event column
     $scope.renderEvent = function (audit) {
-
+        
         var icon = "fa-circle";
         var color = "badge-dark";
 
@@ -125,23 +87,25 @@ angular.module('santedb').controller('AuditIndexController', ["$scope", "$rootSc
         return `<span class='badge ${color}'><i class='fas ${icon}'></i> ${audit.event}</span> ${audit.type.display || audit.type.code}`
     }
 
-    $scope.renderType = function (audit) {
-        return "todo";
-    }
+     // Render the action column
+     $scope.renderAction = function (audit) {
 
-    $scope.renderActor = function (audit) {
-        if (audit.actor && audit.actor.length) {
-            var retVal = "";
-
-            audit.actor.forEach(function (a) {
-                if (a.isReq)
-                    retVal += ` ; <i class="fas fa-user"></i> ${a.uname || a.apId} `;
-                else
-                    retVal += ` ; <i class="fas fa-circle"></i> ${a.uname || a.apId} `;
-            });
-
-            return retVal.substring(2);
+        var retVal = "";
+        switch (audit.action) {
+            case "Read":
+                retVal = "<i class='fas fa-database text-success fa-fw'></i> ";
+                break;
+            case "Create":
+            case "Update":
+            case "Delete":
+                retVal = "<i class='fas fa-database text-danger fa-fw'></i> ";
+                break;
+            case "Execute":
+                retVal = "<i class='fas fa-play'></i> ";
+                break;
         }
-        return "N/A"
+        retVal += audit.action;
+        return retVal;
     }
+
 }]);

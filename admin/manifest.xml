@@ -326,6 +326,7 @@
     <string key="org.santedb.widget.admin.tab.user.profile">User Profile</string>
     <string key="org.santedb.widget.admin.tab.user.security">Security</string>
     <string key="org.santedb.widget.admin.tab.group.profile">Group Profile</string>
+    <string key="org.santedb.widget.admin.tab.audit.events">Audit Event Details</string>
     <string key="org.santedb.widget.admin.tab.policy.core">Core Properties</string>
     <string key="org.santedb.widget.admin.tab.applications.core">Core Properties</string>
     <string key="org.santedb.widget.admin.tab.device.core">Core Application Properties</string>
@@ -334,6 +335,11 @@
     <string key="org.santedb.widget.admin.panel.group.core">Core Properties</string>
     <string key="org.santedb.widget.admin.panel.group.policies">Assigned Policies</string>
     <string key="org.santedb.widget.admin.panel.group.members">Members</string>
+    <string key="org.santedb.widget.admin.panel.audit.eventInfo">Event Information</string>
+    <string key="org.santedb.widget.admin.panel.audit.network">Network</string>
+    <string key="org.santedb.widget.admin.panel.audit.usersAndComputers">Users and Computers</string>
+    <string key="org.santedb.widget.admin.panel.audit.dataAndObjects">Data and Objects</string>
+
     <string key="org.santedb.widget.admin.panel.policy.core">Core Properties</string>
     <string key="org.santedb.widget.admin.panel.applications.core">Core Application Properties</string>
     <string key="org.santedb.widget.admin.panel.applications.security">Security Properties</string>
