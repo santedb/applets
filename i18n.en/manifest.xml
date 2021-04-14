@@ -491,6 +491,9 @@
 
       <!-- Model Descriptions -->
       <string key="ui.view.upstream">This record is sourced from an external system. Actions for this record may be disabled until you download a local copy</string>
+      <string key="ui.model.securityProvenance.type.device">Device Principal</string>
+      <string key="ui.model.securityProvenance.type.user">User Principal</string>
+      <string key="ui.model.securityProvenance.type.application">Application Principal</string>
       <string key="ui.model.securityUser.id">Security ID</string>
       <string key="ui.model.securityUser.userName">Username</string>
       <string key="ui.model.securityUser.createdBy">Created By</string>

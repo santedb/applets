@@ -209,6 +209,11 @@
     <string key="ui.admin.applications.edit.demographics.title">Extended Properties</string>
     <string key="ui.admin.applications.edit.security.neverLoggedIn">Never Authenticated</string>
 
+    <!-- Provenance Strings -->
+    <string key="ui.admin.provenance.info">Primary Identity</string>
+    <string key="ui.admin.provenance.creationTime">Established</string>
+    <string key="ui.admin.provenance.type">Principal Type</string>
+    <string key="ui.admin.provenance.type">Type</string>
     <!-- Security Dashboard -->
     <string key="ui.admin.security.dashboard.index">SanteDB Security Center</string>
     <string key="ui.admin.security.users.title">Users</string>
@@ -322,6 +327,9 @@
     <string key="org.santedb.widget.admin.tab.user.security">Security</string>
     <string key="org.santedb.widget.admin.tab.group.profile">Group Profile</string>
     <string key="org.santedb.widget.admin.tab.audit.events">Audit Event Details</string>
+    <string key="org.santedb.widget.admin.tab.policy.core">Core Properties</string>
+    <string key="org.santedb.widget.admin.tab.applications.core">Core Properties</string>
+    <string key="org.santedb.widget.admin.tab.device.core">Core Application Properties</string>
     <string key="org.santedb.widget.admin.panel.user.core">Core Properties</string>
     <string key="org.santedb.widget.admin.panel.user.security">Security Properties</string>
     <string key="org.santedb.widget.admin.panel.group.core">Core Properties</string>
@@ -332,8 +340,16 @@
     <string key="org.santedb.widget.admin.panel.audit.usersAndComputers">Users and Computers</string>
     <string key="org.santedb.widget.admin.panel.audit.dataAndObjects">Data and Objects</string>
 
-    <!-- Test -->
-    <string key="org.santedb.widget.admin.tab.groups.test">Test</string>
+    <string key="org.santedb.widget.admin.panel.policy.core">Core Properties</string>
+    <string key="org.santedb.widget.admin.panel.applications.core">Core Application Properties</string>
+    <string key="org.santedb.widget.admin.panel.applications.security">Security Properties</string>
+    <string key="org.santedb.widget.admin.panel.applications.extended">Extended Properties</string>
+    <string key="org.santedb.widget.admin.panel.applications.policies">Associated Policies</string>
+    <string key="org.santedb.widget.admin.panel.device.core">Core Properties</string>
+    <string key="org.santedb.widget.admin.panel.device.security">Security Properties</string>
+    <string key="org.santedb.widget.admin.panel.device.extended">Extended Properties</string>
+    <string key="org.santedb.widget.admin.panel.device.policies">Assigned Policies</string>
+  
 
     <!-- Bug Reporting -->
     <string key="ui.admin.bug.user">Submitter</string>

@@ -1,0 +1,137 @@
+<div xmlns="http://www.w3.org/1999/xhtml" xmlns:sdb="http://santedb.org/applet" 
+    oc-lazy-load="{ name: 'EditPolicyController', files: ['/org.santedb.admin/controllers/policies/widgets/core.js'] }" >
+    <sdb:widget order="14" name="org.santedb.widget.admin.panel.policy.core"  headerClass="bl-light"
+        size="Large" type="Panel" context="org.santedb.securityPolicy.admin">
+        <sdb:icon>fas fa-certificate</sdb:icon>
+        <sdb:description lang="en">Core Policies</sdb:description>
+    </sdb:widget>
+
+    <div class="row" ng-if="!scopedObject">
+        <div class="col">
+            <p class="m-auto"><i class="fas fa-circle-notch fa-spin"></i> {{ 'ui.wait' | i18n }}</p>
+        </div>
+    </div>
+
+    <div ng-if="scopedObject" ng-controller="EditPolicyCoreController">
+
+        <form ng-submit="savePolicy(targetForm, scopedObject)" name="targetForm" novalidate="novalidate">
+            <div class="alert alert-warning" ng-show="!scopedObject.securityPolicy.id">
+                <i class="fas fa-exclamation-triangle"></i> {{ 'ui.admin.policy.edit.readonly'  | i18n }}
+            </div>
+            <div class="card-body container-fluid">
+                <div class="form-group row">
+                    <label class="col-sm-12 col-md-2 control-label"
+                        for="sid">{{ 'ui.model.securityPolicy.id' | i18n }}</label>
+                    <div class="col-sm-12 col-md-10 input-group">
+                        <input name="sid" readonly="readonly" type="text" class="form-control"
+                            ng-model="scopedObject.securityPolicy.id" />
+                        <input-copy-button class="btn btn-outline-secondary" source="scopedObject.securityPolicy.id" />
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-12 col-md-2 control-label"
+                        for="policyoid">{{ 'ui.model.securityPolicy.oid' | i18n }}</label>
+                    <div class="col-sm-12 col-md-10 input-group">
+                        <input name="policyoid" type="text" class="form-control"
+                            pattern="^(\d+?\.){1,}\d+$" minlength="6" maxlength="32" required="required" ng-readonly="scopedObject.securityPolicy.id"
+                            ng-model="scopedObject.securityPolicy.oid" />
+                        <input-copy-button id="policyoidCopyButton" class="btn btn-outline-secondary"
+                            source="scopedObject.securityPolicy.oid" />
+                    </div>
+                    <div class="col-sm-12 col-md-10 offset-md-2">
+                        <div ng-show="targetForm.policyoid.$error['duplicate']" class="alert-danger">
+                            <i class="fa fa-exclamation-triangle"></i>
+                            {{ 'ui.error.duplicate' | i18n }}
+                        </div>
+                        <div ng-show="targetForm.policyoid.$error['required'] &amp;&amp; targetForm.$submitted"
+                            class="alert-danger">
+                            <i class="fa fa-exclamation-triangle"></i> {{ 'ui.error.required' | i18n }}
+                        </div>
+                        <div ng-show="targetForm.policyoid.$error['pattern'] &amp;&amp; targetForm.$submitted"
+                            class="alert-danger">
+                            <i class="fa fa-exclamation-triangle"></i> {{ 'ui.error.pattern' | i18n }}
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-12 col-md-2 control-label"
+                        for="policyname">{{ 'ui.model.securityPolicy.name' | i18n }}</label>
+                    <div class="col-sm-12 col-md-10 input-group">
+                        <input name="policyname" type="text" class="form-control" ng-readonly="scopedObject.securityPolicy.id"
+                            minlength="3" maxlength="32" required="required"
+                            ng-model="scopedObject.securityPolicy.name" />
+                        <input-copy-button id="policynameCopyButton" class="btn btn-outline-secondary"
+                            source="scopedObject.securityPolicy.name" />
+                    </div>
+                    <div class="col-sm-12 col-md-10 offset-md-2">
+                        <div ng-show="targetForm.policyname.$error['duplicate']" class="alert-danger">
+                            <i class="fa fa-exclamation-triangle"></i>
+                            {{ 'ui.error.duplicate' | i18n }}
+                        </div>
+                        <div ng-show="targetForm.policyname.$error['required'] &amp;&amp; targetForm.$submitted"
+                            class="alert-danger">
+                            <i class="fa fa-exclamation-triangle"></i> {{ 'ui.error.required' | i18n }}
+                        </div>
+                        <div ng-show="targetForm.policyname.$error['pattern'] &amp;&amp; targetForm.$submitted"
+                            class="alert-danger">
+                            <i class="fa fa-exclamation-triangle"></i> {{ 'ui.error.pattern' | i18n }}
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-12 col-md-2 control-label"
+                        for="policyhandler">{{ 'ui.model.securityPolicy.handler' | i18n }}</label>
+                    <div class="col-sm-12 col-md-10">
+                        <input name="policyhandler" type="text" class="form-control"
+                            pattern="^(\w+?\.){1,}\w+$" minlength="1" maxlength="256" ng-readonly="scopedObject.securityPolicy.id"
+                            ng-model="scopedObject.securityPolicy.handler" />
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-sm-12 offset-md-2 col-md-10">
+                        <label>
+                            <input type="checkbox" ng-model="scopedObject.securityPolicy.canOverride" ng-readonly="scopedObject.securityPolicy.id" ng-disabled="scopedObject.securityPolicy.id" />
+                            {{ 'ui.model.securityPolicy.canOverride' | i18n }}
+                        </label>
+                    </div>
+                </div>
+                <div class="form-group row" ng-if="scopedObject.securityPolicy.createdBy">
+                    <label
+                        class="col-sm-12 col-md-2 control-label">{{ 'ui.model.securityPolicy.createdBy' | i18n }}</label>
+                    <div class="col-md-10 col-sm-12">
+                        <provenance provenance-id="scopedObject.securityPolicy.createdBy"
+                            provenance-time="scopedObject.securityPolicy.creationTime"></provenance>
+                        {{ scopedObject.securityPolicy.creationTime | extDate }}
+                    </div>
+                </div>
+                <div class="form-group row" ng-if="scopedObject.securityPolicy.updatedBy">
+                    <label
+                        class="col-sm-12 col-md-2 control-label">{{ 'ui.model.securityPolicy.updatedBy' | i18n }}</label>
+                    <div class="col-md-10 col-sm-12">
+                        <provenance provenance-id="scopedObject.securityPolicy.updatedBy"
+                            provenance-time="scopedObject.securityPolicy.updatedTime"></provenance>
+                        {{ scopedObject.securityPolicy.updatedTime | extDate }}
+                    </div>
+                </div>
+                <div class="form-group row" ng-if="scopedObject.securityPolicy.obsoletedBy">
+                    <label
+                        class="col-sm-12 col-md-2 control-label">{{ 'ui.model.securityPolicy.obsoletedBy' | i18n }}</label>
+                    <div class="col-md-10 col-sm-12">
+                        <provenance provenance-id="scopedObject.securityPolicy.obsoletedBy"
+                            provenance-time="scopedObject.securityPolicy.obsoletionTime"></provenance>
+
+                        {{ scopedObject.securityPolicy.obsoletionTime | extDate }} <button id="reactivatePolicyButton"
+                            ng-click="reactivatePolicy()" type="button" class="btn btn-success"><i
+                                class="fas fa-trash-restore"></i>
+                            {{ 'ui.action.undelete' | i18n }}</button>
+                    </div>
+                </div>
+            </div>
+            <div class="btn-group float-right" ng-if="!scopedObject.securityPolicy.id">
+                    <button type="submit" id="savePolicyButton" class="btn btn-primary"><i class="fa fa-check"></i>
+                        {{ 'ui.action.save' | i18n }}</button>
+                </div>
+        </form>
+
+    </div>
+</div>
