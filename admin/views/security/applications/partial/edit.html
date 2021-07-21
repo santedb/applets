@@ -25,7 +25,8 @@
                         </div>
                         <div class="form-group row">
                             <label class="col-sm-12 col-md-2 control-label"
-                                for="applicationname">{{ 'ui.model.securityApplication.name' | i18n }}</label>
+                                for="applicationname">{{ 'ui.model.securityApplication.name' | i18n }}
+                            </label>
                             <div class="col-sm-12 col-md-10 input-group">
                                 <input name="applicationname" ng-readonly="target.securityApplication.id" type="text"
                                     class="form-control" pattern="^[A-Za-z0-9_\-\.\@]{3,}" minlength="3" maxlength="64"
@@ -177,9 +178,18 @@
                                 for="softwareName">{{ 'ui.model.applicationEntity.softwareName' | i18n }}</label>
                             <div class="col-md-10 col-sm-12">
                                 <input type="text" maxlength="256" ng-model="target.entity.softwareName"
-                                    name="softwareName" class="form-control" />
+                                    name="softwareName" required="required" class="form-control" />
+                            </div>
+                            <div class="col-sm-12 col-md-10 offset-md-2">
+                                
+                                <div ng-show="targetForm.softwareName.$error['required'] &amp;&amp; targetForm.$submitted"
+                                    class="alert-danger">
+                                    <i class="fa fa-exclamation-triangle"></i> {{ 'ui.error.required' | i18n }}
+                                </div>
+                                
                             </div>
                         </div>
+                        
                         <div class="form-group row">
                             <label class="col-md-2 col-sm-12 control-label"
                                 for="vendorName">{{ 'ui.model.applicationEntity.vendorName' | i18n }}</label>
