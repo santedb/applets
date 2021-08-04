@@ -171,10 +171,10 @@ SanteDBWrapper.prototype.display = new function () {
         if (id === undefined)
             return "";
         if (domain && id[domain])
-            return id[domain].value;
+            return id[domain][0].value;
         else
             for (var k in id)
-                return id[k].value;
+                return id[k][0].value;
     };
     /**
      * @method

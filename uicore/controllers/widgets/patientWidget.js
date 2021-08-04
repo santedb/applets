@@ -63,7 +63,7 @@ angular.module('santedb').controller('PatientDemographicsWidgetController', ['$s
                 submissionObject.determinerConcept = '6b1d6764-12be-42dc-a5dc-52fc275c4935'; // set update as a ROT
             }
             else // Not a MDM so just update the determiner to be specific
-                patient.determinerConcept = DeterminerKeys.Specific;
+            submissionObject.determinerConcept = DeterminerKeys.Specific;
 
             // Bundle to be submitted
             var bundle = new Bundle({ resource: [ submissionObject ]});

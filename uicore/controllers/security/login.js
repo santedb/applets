@@ -100,7 +100,7 @@ angular.module("santedb").controller("LoginController", ['$scope', '$rootScope',
     async function establishClientSession() {
         // Set the elevator to the application elevator
 
-        var session = await SanteDB.authentication.clientCredentialLoginAsync(true, ["1.3.6.1.4.1.33349.3.1.5.9.2.1.0.1"]);
+        var session = await SanteDB.authentication.clientCredentialLoginAsync(true, ["1.3.6.1.4.1.33349.3.1.5.9.2.1.38"]);
         var elevator = {
             getToken: function () { return session.access_token; },
             elevate: function () { }
