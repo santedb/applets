@@ -46,7 +46,7 @@ angular.module('santedb').controller('MasterDataManagementController', ['$scope'
         }
         
         if($scope.scopedObject.relationship["MDM-RecordOfTruth"] &&
-            $scope.scopedObject.relationship["MDM-RecordOfTruth"].target == entity.id) {
+            $scope.scopedObject.relationship["MDM-RecordOfTruth"][0].target == entity.id) {
                 retVal += `<span class='badge badge-success'><i class='fas fa-gavel'></i> ${SanteDB.locale.getString("ui.mdm.type.T")} </span>`
             }
         return retVal;

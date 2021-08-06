@@ -20,7 +20,7 @@
  - Date: 2019-8-8
  -->
 <AppletManifest xmlns="http://santedb.org/applet">
-  <info id="org.santedb.admin" version="2.1.0.0">
+  <info id="org.santedb.admin" version="2.1.50.0">
     <icon>/org.santedb.admin/img/icon.png</icon>
     <name lang="en">SanteDB Administrative Panel</name>
     <author>SanteSuite Community Partners (see: santesuite.org)</author>
@@ -327,9 +327,6 @@
     <string key="org.santedb.widget.admin.tab.user.security">Security</string>
     <string key="org.santedb.widget.admin.tab.group.profile">Group Profile</string>
     <string key="org.santedb.widget.admin.tab.audit.events">Audit Event Details</string>
-    <string key="org.santedb.widget.admin.tab.policy.core">Core Properties</string>
-    <string key="org.santedb.widget.admin.tab.applications.core">Core Properties</string>
-    <string key="org.santedb.widget.admin.tab.device.core">Core Application Properties</string>
     <string key="org.santedb.widget.admin.panel.user.core">Core Properties</string>
     <string key="org.santedb.widget.admin.panel.user.security">Security Properties</string>
     <string key="org.santedb.widget.admin.panel.group.core">Core Properties</string>

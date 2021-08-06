@@ -79,22 +79,22 @@
                 </div>
                 <div ng-if="!patient._upstream">
                 <div class="m-0 alert alert-primary"
-                    ng-if="patient.tag['$mdm.type'] &amp;&amp; !patient.relationship['MDM-RecordOfTruth'].target">
+                    ng-if="patient.tag['$mdm.type'] &amp;&amp; !patient.relationship['MDM-RecordOfTruth'][0].target">
                     <i class="fas fa-coins"></i>
                     {{ 'ui.mdm.view.master' | i18n }}
                 </div>
                 <div class="m-0 alert alert-success"
-                    ng-if="patient.tag['$mdm.type'] &amp;&amp; patient.relationship['MDM-RecordOfTruth'].target">
+                    ng-if="patient.tag['$mdm.type'] &amp;&amp; patient.relationship['MDM-RecordOfTruth'][0].target">
                     <i class="fas fa-gavel"></i>
                     {{ 'ui.mdm.view.masterAdjudicated' | i18n }}
                 </div>
                 <div class="m-0 alert alert-info d-flex justify-content-between"
-                    ng-if="!patient.tag['$mdm.type'] &amp;&amp; patient.relationship['MDM-Master'].target">
+                    ng-if="!patient.tag['$mdm.type'] &amp;&amp; patient.relationship['MDM-Master'][0].target">
                     <span>
                         <i class="fas fa-database"></i>
                         {{ 'ui.mdm.view.local' | i18n }}
                     </span>
-                    <a ui-sref='{ "id" : patient.relationship["MDM-Master"].target }' class="btn btn-sm btn-info">
+                    <a ui-sref='{ "id" : patient.relationship["MDM-Master"][0].target }' class="btn btn-sm btn-info">
                         <i class="fas fa-coins"></i>
                         {{ 'ui.mdm.action.openMaster' | i18n }}
                     </a>
