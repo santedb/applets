@@ -1,7 +1,17 @@
 @ECHO OFF
 
-	ECHO WILL BUILD i18n
 	SET cwd="%cd%"
+	ECHO WILL BUILD locales
+	PUSHD locales
+	FOR /D %%G IN (.\*) DO (
+		PUSHD %%G
+		IF EXIST "manifest.xml" (
+			pakman --compile --source=.\ --optimize --output=..\bin\org.santedb.%%~nxG.pak --keyFile=..\..\..\..\keys\community.santesuite.net.pfx --keyPassword=..\..\..\..\keys\community.santesuite.net.pass --embedcert --install --publish --publish-server=https://packages.santesuite.net
+		)
+		POPD
+	)
+	POPD
+	ECHO WILL BUILD core
 	FOR /D %%G IN (.\*) DO (
 		PUSHD %%G
 		IF EXIST "manifest.xml" (
