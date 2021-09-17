@@ -996,9 +996,7 @@ function ResourceWrapper(_config) {
      */
     this.findAssociatedAsync = function (id, property, query, state) {
 
-        if (!id)
-            throw new Exception("ArgumentNullException", "Missing scoping identifier");
-        else if (!property)
+        if (!property)
             throw new Exception("ArgumentNullException", "Missing scoping property");
 
         var headers = {
@@ -1009,7 +1007,9 @@ function ResourceWrapper(_config) {
 
         // Prepare query
         var url = null;
-        if (id.id)
+        if (!id)
+            url = `${_config.resource}/${property}`;
+        else if (id.id)
             url = `${_config.resource}/${id.id}/${property}`;
         else
             url = `${_config.resource}/${id}/${property}`;
@@ -1034,9 +1034,7 @@ function ResourceWrapper(_config) {
      */
     this.addAssociatedAsync = function (id, property, data, state) {
 
-        if (!id)
-            throw new Exception("ArgumentNullException", "Missing scoping identifier");
-        else if (!property)
+        if (!property)
             throw new Exception("ArgumentNullException", "Missing scoping property");
 
         var headers = {
@@ -1047,7 +1045,9 @@ function ResourceWrapper(_config) {
 
         // Prepare path
         var url = null;
-        if (id.id)
+        if (!id)
+            url = `${_config.resource}/${property}`;
+        else if (id.id)
             url = `${_config.resource}/${id.id}/${property}`;
         else
             url = `${_config.resource}/${id}/${property}`;
@@ -1072,9 +1072,7 @@ function ResourceWrapper(_config) {
      * @returns {Promise} A promise which is fulfilled when the request comletes
      */
     this.removeAssociatedAsync = function (id, property, associatedId, state) {
-        if (!id)
-            throw new Exception("ArgumentNullException", "Missing scoping identifier");
-        else if (!property)
+        if (!property)
             throw new Exception("ArgumentNullException", "Missing scoping property");
         else if (!associatedId)
             throw new Exception("ArgumentNullException", "Missing associated object id");
@@ -1087,7 +1085,9 @@ function ResourceWrapper(_config) {
 
         // Prepare path
         var url = null;
-        if (id.id)
+        if (!id)
+            url = `${_config.resource}/${property}`;
+        else if (id.id)
             url = `${_config.resource}/${id.id}/${property}`;
         else
             url = `${_config.resource}/${id}/${property}`;

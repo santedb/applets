@@ -57,7 +57,7 @@
   </locales>
 
   <strings lang="en" extern="strings/model.xml"/>
-  <strings lang="en" extern="strings/error.xml" />
+  <strings lang="en" extern="strings/errors.xml" />
   <strings lang="en" extern="strings/ui.xml" />
   <strings lang="en">
     <string key="ui.locale">Language</string>

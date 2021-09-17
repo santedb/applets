@@ -39,7 +39,7 @@ angular.module('santedb').controller('LogViewController', ["$scope", "$rootScope
 
     // Get download link
     $scope.getDownloadLink = function() {
-        return `/ami/Log/Stream/${$stateParams.id}?_sessionId=${window.sessionStorage.getItem("token")}`;
+        return `/ami/Log/Stream/${$stateParams.id}`; //?_sessionId=${window.sessionStorage.getItem("token")}`;
     }
 
     $timeout(function() {

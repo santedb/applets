@@ -11,5 +11,6 @@
     <property name="relationshipTypeModel" behavior="always" all="true" ref="Concept"/>
     <property name="key" all="true"/>
     <property name="quantity" all="true"/>
+    <property name="strength" all="true"/>
   </type>
 </ViewModel>

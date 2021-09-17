@@ -200,6 +200,19 @@ var santedbApp = angular.module('santedb', ['ngSanitize', 'ui.router', 'oc.lazyL
             },
                 'fast');
 
+            // Change title
+            if(transition._targetState._definition.self) {
+                var stateDef = transition._targetState._definition;
+                if(stateDef.parent && stateDef.parent.self.displayName) {
+                    document.title = stateDef.parent.self.displayName;
+                    if(transition._targetState._definition.self.displayName) {
+                        document.title += ` / ${transition._targetState._definition.self.displayName}`;
+                    }
+                }
+                else if(transition._targetState._definition.self.displayName) {
+                    document.title = `${transition._targetState._definition.self.displayName}`;
+                }
+            }
             $("#navbarResponsive").collapse('hide');
             delete($rootScope._transition);
         });

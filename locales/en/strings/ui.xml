@@ -20,6 +20,7 @@
       <string name="1.3.6.1.4.1.33349.3.1.5.9.2.600.1">Change Security Settings</string>
       <string name="error.type.ResetPasswordException.userMessage"><![CDATA[Could not process your password reset request. Please ensure: <ul class='bullet-list'><li>Your user is registered with this service</li><li>You have setup password recovery options</li><li>If your account is not a local account, you are connected to the internet</li></ul>]]></string>
       <string name="ui.login.resetPassword.title">Reset Password</string>
+      <string name="ui.login.resetPassword.noUser">Invalid user or no-reset options configured</string>
       <string name="ui.login.resetPassword.username">Username</string>
       <string name="ui.login.resetPassword.challenge">Security Question</string>
       <string name="ui.login.resetPassword.introduction">This tool will help you reset your password. You will need to have setup a password recovery question in your user profile prior to using this tool</string>
@@ -406,7 +407,7 @@
       <string name="ui.mdm.action.merge.confirm">Are you sure you want to integrate/merge this local record with the current master record?</string>
       <string name="ui.mdm.action.detach.confirm">Are you sure you want to detach (unmerge) this local record from the current master record?</string>
 
-      <!-- Widgets -->
+      <!-- Core Widgets -->
       <string name="org.santedb.widget.mdm.recordOfTruth">Record of Truth</string>
       <string name="org.santedb.widget.mdm.candidate">Candidate Records</string>
       <string name="org.santedb.widget.userEntity.profile">Profile</string>
@@ -415,6 +416,7 @@
       <string name="org.santedb.widget.patient.dataQuality">Data Quality</string>
       <string name="org.santedb.widget.dq.validation">Validation Issues</string>
       <string name="org.santedb.widget.patient.card">ID Card</string>
+
       <!-- Data quality issues -->
       <string name="ui.dq.priority.1">Serious</string>
       <string name="ui.dq.priority.2">Warning</string>
@@ -423,6 +425,7 @@
       <string name="ui.dq.id">ID</string>
       <string name="ui.dq.text">Information</string>
       <string name="ui.dq.type">Classification</string>
+      
       <!-- Session controls -->
       <string name="ui.session.aboutToExpire">Your session will expire in</string>
       <string name="ui.session.action.extend">Click/tap this message to extend your session</string>

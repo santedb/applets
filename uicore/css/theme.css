@@ -30,9 +30,6 @@ label.control-label.required:after {
 }
 
 
-html, body {
-    height:100%
-}
 
 .action-footer {
     bottom: 0;

@@ -158,7 +158,7 @@ angular.module('santedb').controller('PatientDemographicsWidgetController', ['$s
                         n.identifier[key] = [n.identifier[key]];
 
                     n.identifier[key].forEach(function(id) {
-                        id._codeUrl = `/hdsi/Patient/${n.id}/_code/${id.authority.id}?_sessionId=${window.sessionStorage.getItem("token")}`;
+                        id._codeUrl = `/hdsi/Patient/${n.id}/_code/${id.authority.id}` //?_sessionId=${window.sessionStorage.getItem("token")}`;
                     })
                 });
 

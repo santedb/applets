@@ -39,7 +39,7 @@
                 </ul>
             </div>
             <div class="modal-body" ng-if="$root.error.type != 'DetectedIssueException'">
-                <p ng-if="$root.error.userMessage"> <span ng-bind-html="$root.error.userMessage | i18n"></span> ({{ $root.error.message }})</p>
+                <p ng-if="$root.error.userMessage"> <span ng-bind-html="$root.error.userMessage | i18n"></span> ({{ $root.error.message | i18n }})</p>
                 <p ng-if="!$root.error.userMessage">
                     {{ $root.error.message | i18n }}. {{ 'ui.error.description' | i18n }}
                 </p>
