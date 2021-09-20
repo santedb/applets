@@ -2,5 +2,3 @@ basepath = "."
 locales = [ "en","fr","es","sw" ]
 [[includes]]
     path="locales/core.toml"
-[[includes]]
-    path="admin/admin.toml"
