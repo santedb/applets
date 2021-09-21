@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+ <!-- Common Errors -->
+      <string name="ui.error.title">Erreur Système</string>
+
+      </resources>
