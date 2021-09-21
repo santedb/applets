@@ -632,8 +632,10 @@ function ResourceWrapper(_config) {
         else
             url = _config.resource;
 
-        if (id && id._upstream)
-            url += "?_upstream=true";
+        if (id && id._upstream) {
+            query = query || {};
+            query._upstream = id._upstream;
+        }
 
         var headers = {
             Accept: _config.accept
@@ -1111,7 +1113,7 @@ function ResourceWrapper(_config) {
      * @param {any} state A state for correlating multiple requests
      * @returns {Promise} A promise which is fulfilled when the request comletes
      */
-    this.getAssociatedAsync = function (id, property, associatedId, state) {
+    this.getAssociatedAsync = function (id, property, associatedId, query, state) {
         if (!id)
             throw new Exception("ArgumentNullException", "Missing scoping identifier");
         else if (!property)
@@ -1132,9 +1134,14 @@ function ResourceWrapper(_config) {
         else
             url = `${_config.resource}/${id}/${property}`;
 
+        if(associatedId.id) 
+            url += `/${associatedId.id}`;
+        else 
+            url += `/${associatedId}`;
+
         return _config.api.getAsync({
+            query: query,
             headers: headers,
-            id: associatedId,
             state: state,
             resource: url,
             contentType: _config.accept
