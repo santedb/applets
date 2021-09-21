@@ -157,6 +157,22 @@
     <string name="ui.operator.ge" priority="0">ပိုကြီး / ပိုများ</string>
     <string name="ui.operator.gte" priority="0">ပိုကြီး / ပိုများ / ညီမျှသည်</string>
     <string name="ui.operator.lte" priority="0">နည်းသော / ညီမျှသည်</string>
+    <string name="ui.session.aboutToExpire" priority="0">သင့်ရဲ့ session သက်တမ်းကုန်ဆုံးပါလိမ့်မယ်</string>
+    <string name="ui.session.action.extend" priority="0">သင့်ရဲ့ session ကိုတိုးချဲ့ဖို့ဒီမက်ဆေ့ခ်ျကိုနှိပ် / ထိပုတ်ပါ</string>
+    <string name="ui.mail.search" priority="0">မက်ဆေ့ခ်ျများကိုရှာပါ</string>
+    <string name="ui.mail.from" priority="0">မှ</string>
+    <string name="ui.mail.to" priority="0">ရန်</string>
+    <string name="ui.mail.time" priority="0">ပို့ပြီး</string>
+    <string name="ui.mail.all" priority="0">ကျွန်ုပ်၏စာတိုက်ပုံး</string>
+    <string name="ui.mail.archive" priority="0">မော်ကွန်းတိုက်</string>
+    <string name="ui.mail.acknowledge" priority="0">အသိအမှတ်ပြုပါ</string>
+    <string name="ui.mail.reply" priority="0">ပြန်ပြောပါ</string>
+    <string name="ui.mail.flags.System" priority="0">စနစ် သတိပေးချက်</string>
+    <string name="ui.mail.flags.None" priority="0">မက်ဆေ့ခ်ျအသစ်</string>
+    <string name="ui.mail.flags.Acknowledged" priority="0">အသိအမှတ်ပြုပီး</string>
+    <string name="ui.mail.flags.HighPriority" priority="0">အရေးပါမှု</string>
+    <string name="ui.mail.flags.Archived" priority="0">မော်ကွန်းတင်ပီး</string>
+    <string name="ui.mail.flags.Alert" priority="0">သတိပေးချက် အားအချက်ပြပီး</string>
     <string name="AUTH_LCK" priority="0">သင့်အကောင့်သော့ခတ်ထားခံရသည် ကျေးဇူးပြု၍ နောက်မှ log in လုပ်ပါ (သို့) support ကိုဆက်သွယ်ပါ</string>
     <string name="AUTH_INV" priority="0">မမှန်ကန်သောအသုံးပြုသူအမည်နှင့် / သို့မဟုတ်စကားဝှက်။ ကျေးဇူးပြုပြီးသင်ဖြည့်ထားသောအသေးစိတ်ကိုစစ်ဆေး။ ထပ်မံကြိုးစားပါ</string>
     <string name="ui.view.upstream" priority="0">ဤမှတ်တမ်းသည်ပြင်ပစနစ်မှရရှိသည်။ သင်ဒေသခံမိတ္တူကူးယူပြီးသည်အထိဤမှတ်တမ်းအတွက်လုပ်ဆောင်မှုများကိုပိတ်ထားနိုင်သည်</string>
