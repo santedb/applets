@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="ui.model.securityProvenance.type.device">Device Principal</string>
       <string name="ui.model.securityProvenance.type.user">User Principal</string>
@@ -38,7 +39,7 @@
       <string name="ui.model.securityPolicy.createdBy">Created By</string>
       <string name="ui.model.securityPolicy.obsoletedBy">Deleted By</string>
       <string name="ui.model.securityPolicy.updatedBy">Updated By</string>
-      <string name="ui.model.securityPolicy.canOverride">This policy can be overridden by a user with the "Override" policy applied to their account</string>
+      <string name="ui.model.securityPolicy.canOverride">This policy can be overridden by a user with the &quot;Override&quot; policy applied to their account</string>
       <string name="ui.model.securityPolicy.canOverride.true">The policy system will allow the user to override this policy decision</string>
       <string name="ui.model.securityPolicy.canOverride.true.summary">Overridable</string>
       <string name="ui.model.securityPolicy.canOverride.false">The user cannot override the policy decision</string>
@@ -92,10 +93,9 @@
       <string name="ui.model.assigningAuthority.domainName">Namespace ID</string>
       <string name="ui.model.assigningAuthority.name">Name</string>
       <string name="ui.model.assigningAuthority.isUnique">Unique</string>
-      <string name="ui.model.assigningAuthority.updatedBy">Last Update</string>
+      <string name="ui.model.assigningAuthority.updatedBy">Updated By</string>
       <string name="ui.model.assigningAuthority.id">UUID</string>
       <string name="ui.model.assigningAuthority.createdBy">Created By</string>
-      <string name="ui.model.assigningAuthority.updatedBy">Updated By</string>
       <string name="ui.model.assigningAuthority.obsoletedBy">Deleted By</string>
       <string name="ui.model.assigningAuthority.assigningApplication">Assigning App</string>
       <string name="ui.model.assigningAuthority.scope">Scope</string>
@@ -112,7 +112,7 @@
       <string name="ui.model.entity.relationship.Caregiver">Caregiver(s)</string>
       <string name="ui.model.entity.relationship.Citizen">Citizenship(s)</string>
       <string name="ui.model.entity.relationship.CoverageSponsor">Coverage/Sponsor</string>
-      <string name="ui.model.entity.relationship.DedicatedServiceDeliveryLocation">Primary Facility</string>
+      <string name="ui.model.entity.relationship.DedicatedServiceDeliveryLocation">Facilities</string>
       <string name="ui.model.entity.relationship.Employee">Employer</string>
       <string name="ui.model.entity.relationship.Location">Location</string>
       <string name="ui.model.entity.relationship.Guarantor">Guarantor</string>
@@ -123,7 +123,7 @@
       <string name="ui.model.entity.relationship.Mother">Mother</string>
       <string name="ui.model.entity.relationship.ServiceDeliveryLocation">Registered At</string>
       <string name="ui.model.entity.relationship.SigningAuthorityOrOfficer">Power of Attorney</string>
-      <string name="ui.model.entity.relationship.structured">This entity is a proper record. To edit it, you'll need to visit the object's detail page</string>
+      <string name="ui.model.entity.relationship.structured">This entity is a proper record. To edit it, you\'ll need to visit the object\'s detail page</string>
       <string name="ui.model.entity.relationship.Student">School</string>
       <string name="ui.model.entity.address">Address</string>
       <string name="ui.model.entity.address.title">Address Registration</string>
@@ -151,7 +151,6 @@
       <string name="ui.model.entity.language.preferred">Preferred</string>
       <string name="ui.model.entity.relationship.relationshipType">Relationship</string>
       <string name="ui.model.entity.relationship.Employer">Employer</string>
-      <string name="ui.model.entity.relationship.DedicatedServiceDeliveryLocation">Facilities</string>
       <string name="ui.model.entity.telecom.NullFlavor-NoInformation">Other</string>
       <string name="ui.model.entity.telecom.AnsweringService">Answering Service</string>
       <string name="ui.model.entity.telecom.EmergencyContact">Emergency</string>
@@ -211,7 +210,6 @@
       <string name="ui.model.patient.multipleBirthOrder.4">4th of multiple-birth</string>
       <string name="ui.model.patient.multipleBirthOrder.5">5th of multiple-birth</string>
       <string name="ui.model.person.occupation">Occupation</string>
-      <string name="ui.model.patient.vipStatus">VIP Status</string>
       <string name="ui.model.patient.summary">Patient Summary</string>
       <string name="ui.model.place.name">Name</string>
       <string name="ui.model.place.classConcept">Classification</string>
