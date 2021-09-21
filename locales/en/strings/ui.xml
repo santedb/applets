@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="ui.debug">DEBUG ENVIRONMENT - NOT FOR PRODUCTION USE</string>
       <string name="ui.card">Card</string>
@@ -18,7 +19,6 @@
       <string name="ui.elevate">You are attempting to access a function with a heightened security risk. Please re-authenticate yourself.</string>
       <string name="ui.elevate.scope">Policies requiring elevation:</string>
       <string name="1.3.6.1.4.1.33349.3.1.5.9.2.600.1">Change Security Settings</string>
-      <string name="error.type.ResetPasswordException.userMessage"><![CDATA[Could not process your password reset request. Please ensure: <ul class='bullet-list'><li>Your user is registered with this service</li><li>You have setup password recovery options</li><li>If your account is not a local account, you are connected to the internet</li></ul>]]></string>
       <string name="ui.login.resetPassword.title">Reset Password</string>
       <string name="ui.login.resetPassword.noUser">Invalid user or no-reset options configured</string>
       <string name="ui.login.resetPassword.username">Username</string>
@@ -171,7 +171,6 @@
       <string name="ui.action.reset">Reset</string>
       <string name="ui.action.resetAll">Reset All</string>
       <string name="ui.action.apply">Apply</string>
-      <string name="ui.action.download">Download</string>
       <string name="ui.action.reactivate">Re-Activate</string>
       <string name="ui.action.bug">Report Bug</string>
       <string name="ui.action.logout">Logout</string>
@@ -184,7 +183,6 @@
       <string name="ui.action.print">Print</string>
       <string name="ui.action.convertTo">Convert To</string>
       <string name="ui.action.new">New</string>
-      <string name="ui.action.add">Add</string>
       <string name="ui.action.resetPassword">Reset Pwd</string>
       <!-- Common Operators -->
       <string name="ui.operator.eq">Equals</string>
@@ -197,7 +195,7 @@
       <!-- Subscription Type Translations -->
       <string name="ui.subscription.person.all">All Persons</string>
       <string name="ui.subscription.act.all">All Acts</string>
-      <string name="ui.subscription.place.all">All Places</string>
+      <string name="ui.subscription.place.all">All places in my country (not-recommended)</string>
       <string name="ui.subscription.organization.all">All Organizations</string>
       <string name="ui.subscription.userEntity.all">All Users</string>
       <string name="ui.subscription.provider.all">All Providers</string>
@@ -222,7 +220,6 @@
       <string name="ui.subscription.codeSystem.liveInState">Patients who live in my state</string>
       <string name="ui.subscription.referenceTerm.all">All Reference Terms (recommended)</string>
       <string name="ui.subscription.place.county">All places in my county/district</string>
-      <string name="ui.subscription.place.all">All places in my country (not-recommended)</string>
       <string name="ui.subscription.place.outOfState">All places out of my state/province (background after start)</string>
       <string name="ui.subscription.place.outOfCounty">All places out of my county/district (background after start)</string>
       <string name="ui.subscription.place.assigned">All places that are assigned to my facility</string>
@@ -243,7 +240,7 @@
       <string name="ui.config.subscribe.authority.label">Assigning Authority</string>
       <string name="ui.config.subscribe.authority.help">Use this option to subscribe to patients with a particular identifier</string>
       <string name="ui.config.realm.title">Domain</string>
-      <string name="ui.config.realm.description">This SanteDB client application needs to contact a centralized instanced called a "domain". This screen will allow you to configure the specific details of how this mobile device will contact the domain.</string>
+      <string name="ui.config.realm.description">This SanteDB client application needs to contact a centralized instanced called a &quot;domain&quot;. This screen will allow you to configure the specific details of how this mobile device will contact the domain.</string>
       <string name="ui.config.realm.deviceName.label">Devices ID</string>
       <string name="ui.config.realm.deviceName.help">A name for this device. For example: 'GoodHealthTablet1'</string>
       <string name="ui.config.realm.name.label">Address</string>
@@ -397,10 +394,10 @@
       <string name="ui.mdm.action.openRot">Go to RECORD OF TRUTH</string>
       <string name="ui.mdm.view.local">You are viewing a LOCAL record. This record comes from a particular source system</string>
       <string name="ui.mdm.view.master">You are looking at a MASTER record. This record is synthesized from multiple LOCAL records</string>
-      <string name="ui.mdm.view.masterAdjudicated">You are looking at a &lt;strong>MASTER&lt;/strong> record with a &lt;strong>RECORD OF TRUTH&lt;/strong>. Use the MDM tab to pull data from locals into this record of truth</string>
+      <string name="ui.mdm.view.masterAdjudicated">You are looking at a &lt;strong&gt;MASTER&lt;/strong&gt; record with a &lt;strong&gt;RECORD OF TRUTH&lt;/strong&gt;. Use the MDM tab to pull data from locals into this record of truth</string>
       <string name="ui.mdm.isTrue">This MASTER is based on the RECORD OF TRUTH meaning it has been validated by an authorized device</string>
       <string name="ui.mdm.edit.master">This is a MASTER record. Editing it will result in the creation a new LOCAL record for the administrative panel which will be.</string>
-      <string name="ui.mdm.edit.recordOfTruth">You are editing a RECORD OF TRUTH, this record should contain the "official" data for this object.</string>
+      <string name="ui.mdm.edit.recordOfTruth">You are editing a RECORD OF TRUTH, this record should contain the &quot;official&quot; data for this object.</string>
       <string name="ui.mdm.edit.local">This is a LOCAL record. Editing it may result in data mis-match between the system which supplied the data and the server</string>
       <string name="ui.mdm.edit.linkedEditWarning">This data may be linked to other entities which may not be subject to MDM rules. You should either clone it convert it.</string>
       <string name="ui.mdm.action.ignore.confirm">Are you sure you want to mark this record as a non-match?</string>
