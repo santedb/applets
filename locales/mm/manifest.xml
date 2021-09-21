@@ -1,0 +1,57 @@
+<!--
+ - Copyright 2015-2018 Mohawk College of Applied Arts and Technology
+ -
+ - 
+ - Licensed under the Apache License, Version 2.0 (the "License"); you 
+ - may not use this file except in compliance with the License. You may 
+ - obtain a copy of the License at 
+ - 
+ - http://www.apache.org/licenses/LICENSE-2.0 
+ - 
+ - Unless required by applicable law or agreed to in writing, software
+ - distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+ - WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the 
+ - License for the specific language governing permissions and limitations under 
+ - the License.
+ - 
+ - User: justin
+ - Date: 2018-7-23
+ -->
+<AppletManifest xmlns="http://santedb.org/applet">
+  <info id="org.santedb.i18n.my" version="2.1.55.0">
+    <icon>/org.santedb.core/img/i18n.png</icon>
+    <name lang="en">Myanmar Applet Support</name>
+    <author>SanteSuite Community Partners (see: santesuite.org)</author>
+  </info>
+  <locales>
+    <locale code="mm">
+      <asset>/org.santedb.i18n.mm/lib/angular-locale_my.js</asset>
+      <asset>/org.santedb.i18n.mm/lib/santedb-my.js</asset>
+    </locale>
+  </locales>
+
+  <strings lang="my" extern="strings/model.xml"/>
+  <strings lang="my" extern="strings/errors.xml" />
+  <strings lang="my" extern="strings/ui.xml" />
+  <strings lang="my">
+    <string key="ui.locale.my">မြန်မာဘာသာ</string>
+    <string key="ui.locale">Language</string>
+        <string key="ui.locale.en" priority="0">အင်္ဂလိပ်</string>
+    <string key="ui.locale.en-au" priority="0">အင်္ဂလိပ် (Australiaစတြေးလျ)</string>
+    <string key="ui.locale.en-ca" priority="0">အင်္ဂလိပ် (ကနေဒါ)</string>
+    <string key="ui.locale.en-gb" priority="0">အင်္ဂလိပ် (ယူကေ)</string>
+    <string key="ui.locale.en-iso" priority="0">အင်္ဂလိပ် (ISO)</string>
+    <string key="ui.locale.en-nz" priority="0">အင်္ဂလိပ် (နယူးဇီလန်)</string>
+    <string key="ui.locale.en-ph" priority="0">အင်္ဂလိပ် (ဖိလစ်ပိုင်)</string>
+    <string key="ui.locale.es" priority="0">စပိန်ဘာသာစကား</string>
+    <string key="ui.locale.es-es" priority="0">စပိန် (စပိန်)</string>
+    <string key="ui.locale.es-mx" priority="0">စပိန် (မက္ကစီကို)</string>
+    <string key="ui.locale.es-us" priority="0">စပိန် (ယူအက်စ်)</string>
+    <string key="ui.locale.fr" priority="0">ပြင်သစ်</string>
+    <string key="ui.locale.fr-be" priority="0">ပြင်သစ် (ဘယ်လ်ဂျီယံ)</string>
+    <string key="ui.locale.fr-ca" priority="0">ပြင်သစ် (ကနေဒါ)</string>
+    <string key="ui.locale.fr-ch" priority="0">ပြင်သစ် (ဆွစ်)</string>
+    <string key="ui.locale.fr-fr" priority="0">ပြင်သစ် (ပြင်သစ်)</string>
+  </strings>
+
+</AppletManifest>

@@ -1,0 +1,163 @@
+<resources>
+    <string name="ui.action.login" priority="0">စနစ်ထဲ သို့ ဝင်ရန်</string>
+    <string name="ui.login.input.username" priority="0">အီးမေးလိပ်စာ</string>
+    <string name="ui.login.input.password" priority="0">စကားဝှက်ကို</string>
+    <string name="ui.login.input.username" priority="0">အီးမေးလိပ်စာ</string>
+    <string name="ui.login.input.password" priority="0">စကားဝှက်ကို</string>
+    <string name="ui.login.input.pin" priority="0">ပင်နံပါတ် #</string>
+    <string name="ui.login.title.elevate" priority="0">အသုံးပြုသူ Elevation</string>
+    <string name="ui.login.input.purpose" priority="0">အကြောင်းပြချက်</string>
+    <string name="ui.login.realm" priority="0">ဘုံအတွက်လုံခြုံရေးအသေးစိတ်ကိုရိုက်ထည့်ပါ</string>
+    <string name="ui.login.title" priority="0">SanteDB သို့ဝင်ရောက်ပါ</string>
+    <string name="ui.login.message" priority="0">SanteDB မှကြိုဆိုပါတယ်</string>
+    <string name="ui.logout" priority="0">ထွက်ပေါက်</string>
+    <string name="ui.logout.confirm" priority="0">သင်သည်သင်၏ session ကိုအဆုံးသတ်ချင်တာ သေချာလား?</string>
+    <string name="ui.password.title" priority="0">စကားဝှက်ကိုသတ်မှတ်ပါ</string>
+    <string name="ui.password.help" priority="0">အသုံးပြုသူအကောင့်အတွက်စကားဝှက်ကိုသတ်မှတ်ပါ</string>
+    <string name="ui.password.existing.label" priority="0">လက်ရှိစကားဝှက်</string>
+    <string name="ui.password.existing.help" priority="0">သင့်ရဲ့လက်ရှိစကားဝှက်ကိုရိုက်ထည့်ပါ</string>
+    <string name="ui.password.new.label" priority="0">စကားဝှကိအသစ်</string>
+    <string name="ui.password.new.help" priority="0">ဤအသုံးပြုသူအကောင့်အတွက်စကားဝှက်အသစ်ကိုရိုက်ထည့်ပါ</string>
+    <string name="ui.password.confirm.label" priority="0">စကားဝှက်ကိုအတည်ပြုပါ</string>
+    <string name="ui.password.confirm.help" priority="0">အတည်ပြုရန်သင်၏စကားဝှက်ကိုပြန်လည်ရိုက်ထည့်ပါ</string>
+    <string name="ui.password.pin.new.label" priority="0">ပင်နံပါတ်အသစ်</string>
+    <string name="ui.password.pin.new.help" priority="0">ဒီအကောင့်အတွက် ပင်နံပါတ်(PIN) အသစ်ကိုထည့်ပါ</string>
+    <string name="ui.password.pin.confirm.label" priority="0">ပင်နံပါတ် (PIN) ကိုအတည်ပြုပါ</string>
+    <string name="ui.password.pin.confirm.help" priority="0">အတည်ပြုရန်သင်၏ ပင်နံပါတ် (PIN) ကိုပြန်လည်ရိုက်ထည့်ပါ</string>
+    <string name="ui.password.strength.lowlow" priority="0">အလွန်အားနည်းနေ</string>
+    <string name="ui.password.strength.low" priority="0">အားနည်း</string>
+    <string name="ui.password.strength.moderate" priority="0">အလယ်အလတ်</string>
+    <string name="ui.password.strength.high" priority="0">အားကောင်း</string>
+    <string name="ui.password.strength.highhigh" priority="0">အလွန်အားကောင်းတဲ့</string>
+    <string name="ui.password.strength.label" priority="0">အား အနည်း အများ</string>
+    <string name="ui.password.error.mismatch" priority="0">စကားဝှက်မှာကိုက်ညီရမည်</string>
+    <string name="ui.password.notification.success" priority="0">စကားဝှက်အပြောင်းအလဲများကိုသိမ်းဆည်းပြီးပါပြီ။</string>
+    <string name="ui.password.error.complexity" priority="0">စကားဝှက်သည်ရှုပ်ထွေးမှုလိုအပ်ချက်များနှင့်မကိုက်ညီပါ</string>
+    <string name="ui.password.error.history" priority="0">စကားဝှက်သည်လက်ရှိစကားဝှက်နှင့်မတူပါ</string>
+    <string name="ui.state" priority="0">အခြေအနေ</string>
+    <string name="ui.state.active" priority="0">တက်ကြွ</string>
+    <string name="ui.state.inactive" priority="0">မလှုပ်မရှား</string>
+    <string name="ui.state.new" priority="0">အသစ်</string>
+    <string name="ui.state.notrun" priority="0">လှုပ်ရှား အလုပ်မလုပ်သေး</string>
+    <string name="ui.state.running" priority="0">လှုပ်ရှား အလုပ်လုပ်</string>
+    <string name="ui.state.obsolete" priority="0">ခေတ်ကုန်သွားပြီ</string>
+    <string name="ui.state.cancelled" priority="0">ဖျက်သိမ်းခဲ့သည်</string>
+    <string name="ui.state.complete" priority="0">ပြီးပြည့်စုံ</string>
+    <string name="ui.state.abort" priority="0">ဖျက်သိမ်းလိုက်သည်</string>
+    <string name="ui.state.stop" priority="0">ရပ်လိုက်ပြီ</string>
+    <string name="ui.state.nullified" priority="0">အမှားထဲသို့ဝင်ခဲ့သည်</string>
+    <string name="ui.state.locked" priority="0">သော့ခတ်</string>
+    <string name="ui.state.readonly" priority="0">ဖတ်ရန်</string>
+    <string name="ui.state.offline" priority="0">အော့ဖ်လိုင်း (အင်တာနက်မချိတ်ဆက်ထား)</string>
+    <string name="ui.state.online" priority="0">အွန်လိုင်း (အင်တာနက်ချိတ်ဆက်ထား)</string>
+    <string name="ui.state.degraded" priority="0">ဗဟိုချိတ်ဆက်မရနိုင်ပါ</string>
+    <string name="ui.priority.info" priority="0">အချက်အလက်</string>
+    <string name="ui.priority.warn" priority="0">သတိပေးချက်</string>
+    <string name="ui.priority.error" priority="0">အသိပေးစာ</string>
+    <string name="ui.sync" priority="0">ထပ်တူပြုခြင်း</string>
+    <string name="ui.sync.clear" priority="0">သဘောထား ကွဲ လွဲ ခြင်း မရှိ</string>
+    <string name="ui.sync.conflict" priority="0">သဘောထား ကွဲ လွဲ ခြင်း</string>
+    <string name="ui.sync.outbound" priority="0">Outbox Queue</string>
+    <string name="ui.sync.outbound.text" priority="0">(ပေးပို့ရန်)</string>
+    <string name="ui.sync.inbound" priority="0">Inbox Queue</string>
+    <string name="ui.sync.inbound.text" priority="0">(ပြုပြင်ရန်)</string>
+    <string name="ui.sync.admin" priority="0">အက်မင် တန်းစီ</string>
+    <string name="ui.sync.admin.text" priority="0">(ပေးပို့ရန်)</string>
+    <string name="ui.sync.dead" priority="0">သဘောထား ကွဲ လွဲ ခြင်း</string>
+    <string name="ui.sync.dead.text" priority="0">(ဖြေရှင်းရန်)</string>
+    <string name="ui.sync.log" priority="0">ထပ်တူပြုခြင်းမှတ်တမ်း</string>
+    <string name="ui.sync.log.resource" priority="0">အရင်းအမြစ်</string>
+    <string name="ui.sync.log.etag" priority="0">နောက်ဆုံးဗားရှင်း</string>
+    <string name="ui.sync.log.date" priority="0">အချိန်ဇယား တံဆိပ် တိုက်ဆိုင်ညှိယူပါ</string>
+    <string name="ui.sync.retry" priority="0">Re- တန်းစီ သဘောထား ကွဲ လွဲ ခြင်း</string>
+    <string name="ui.sync.now" priority="0">ယခုထပ်တူပြုပါ</string>
+    <string name="ui.sync.queue.id" priority="0">မှတ်ပုံတင်</string>
+    <string name="ui.sync.queue.action" priority="0">လှုပ်ရှားမှု</string>
+    <string name="ui.sync.queue.data" priority="0">ဒေတာအမျိုးအစား</string>
+    <string name="ui.sync.queue.state" priority="0">အခြေအနေ</string>
+    <string name="ui.sync.queue.originalDate" priority="0">အချိန်ဇယား တံဆိပ်</string>
+    <string name="ui.sync.queue.resubmit" priority="0">ထပ်မံတင်သွင်းသည့်အရာဝတ္ထု</string>
+    <string name="ui.sync.queue.resolve" priority="0">ဖြေရှင်းပါ</string>
+    <string name="ui.sync.queue.ignore" priority="0">လျစ်လျူရှုပါ</string>
+    <string name="ui.sync.patch.applyTo" priority="0">လျှောက်ထား</string>
+    <string name="ui.sync.patch.version" priority="0">ဗားရှင်း</string>
+    <string name="ui.sync.patch.actions.operation" priority="0">ဖျော်ဖြေပါ</string>
+    <string name="ui.sync.patch.actions.path" priority="0">အိမ်ခြံမြေတွင်</string>
+    <string name="ui.sync.patch.actions.value" priority="0">တန်ဖိုးအသစ်</string>
+    <string name="ui.sync.patch.actions" priority="0">လျှောက်ထားခံရဖို့လုပ်ဆောင်ချက်များကို</string>
+    <string name="ui.sync.log.none" priority="0">အဘယ်အရာကိုမျှထပ်တူမပြုပါ</string>
+    <string name="ui.sync.queue.error" priority="0">အမှား</string>
+    <string name="ui.sync.dead.ignoreConfirm" priority="0">ဤconflict/သဘောထား ကွဲ လွဲ ခြင်း ကိုသင်လျစ်လျူရှုလိုပါသလား။ သင်၏ပြောင်းလဲမှုများကိုဗဟိုဆာဗာသို့ပေးပို့မည်မဟုတ်ပါ။</string>
+    <string name="ui.sync.resetConfirm" priority="0">သင်ဤအမျိုးအစားအတွက်ထပ်တူပြုခြင်းမှတ်တမ်းကိုပြန်လည်စတင်လိုသည်မှာသေချာပါသလား။</string>
+    <string name="ui.action" priority="0">လုပ်ဆောင်ချက်များ</string>
+    <string name="ui.action.ok" priority="0">အိုကေ</string>
+    <string name="ui.action.dismiss" priority="0">ပယ်ချ</string>
+    <string name="ui.action.cancel" priority="0">ပယ်ဖျက်ပါ</string>
+    <string name="ui.action.cancel.confirm" priority="0">ဖျက်သိမ်းချင်တာသေချာလား</string>
+    <string name="ui.action.save" priority="0">သိမ်းဆည်းပါ</string>
+    <string name="ui.action.search" priority="0">ရှာပါ</string>
+    <string name="ui.action.search.upstream" priority="0">ဗဟိုဆာဗာကိုရှာပါ</string>
+    <string name="ui.action.login" priority="0">စနစ်ထဲ သို့ ဝင်ရန်</string>
+    <string name="ui.action.passwordReset" priority="0">စကားဝှက်ကိုမေ့နေပါသလား</string>
+    <string name="ui.action.ignore" priority="0">လျစ်လျူရှုပါ</string>
+    <string name="ui.action.next" priority="0">နောက်တစ်ခု</string>
+    <string name="ui.action.prev" priority="0">အရင်တစ်ခု</string>
+    <string name="ui.action.back" priority="0">နောက်သို့</string>
+    <string name="ui.action.home" priority="0">အိမ်ပြန်သည်</string>
+    <string name="ui.action.reload" priority="0">ပြန်တင်ပါ</string>
+    <string name="ui.action.download" priority="0">ဒေါင်းလုပ်</string>
+    <string name="ui.action.create" priority="0">ဖန်တီးပါ</string>
+    <string name="ui.action.delete" priority="0">ဖျက်ပါ</string>
+    <string name="ui.action.nullify" priority="0">Nullify / Purge</string>
+    <string name="ui.action.nullify.confirm" priority="0">ဤအရာဝတ္ထုကိုသင်ဖျက်သိမ်းလိုကြောင်းသေချာပါသလား။ ဒါကိုဖျက်လို့မရပါဘူး</string>
+    <string name="ui.action.delete.confirm" priority="0">သင်ဤအရာဝတ္ထုကိုဖျက်ချင်သည်သေချာလား။</string>
+    <string name="ui.action.undelete" priority="0">ဖျက် ခြင်း ကို မလုပ် ဆောင် ပါ</string>
+    <string name="ui.action.view" priority="0">ကြည့်ရှုပါ</string>
+    <string name="ui.action.edit" priority="0">တည်းဖြတ်ပါ</string>
+    <string name="ui.action.override" priority="0">ပယ်ဖျက်သည်</string>
+    <string name="ui.action.run" priority="0">ပြေးပါ</string>
+    <string name="ui.action.merge" priority="0">ပေါင်းစည်း</string>
+    <string name="ui.action.enable" priority="0">Enable လုပ်ပါ</string>
+    <string name="ui.action.disable" priority="0">ပိတ်ပါ</string>
+    <string name="ui.action.scan" priority="0">စကင်ဖတ်စစ်ဆေးပါ</string>
+    <string name="ui.action.finish" priority="0">ပြီးပြီ</string>
+    <string name="ui.action.add" priority="0">ထည့်ပါ</string>
+    <string name="ui.action.register" priority="0">မှတ်ပုံတင်ပါ</string>
+    <string name="ui.action.remove" priority="0">ဖယ်ရှားပါ</string>
+    <string name="ui.action.selectAll" priority="0">အားလုံးရွေးပါ</string>
+    <string name="ui.action.selectNone" priority="0">None ကိုရွေးပါ</string>
+    <string name="ui.action.generate" priority="0">Generate</string>
+    <string name="ui.action.lock" priority="0">သော့ခတ်</string>
+    <string name="ui.action.unlock" priority="0">သော့ ဖွင်ု</string>
+    <string name="ui.action.showAll" priority="0">အားလုံးပြပါ</string>
+    <string name="ui.action.showDeleted" priority="0">ဖျက် ထား (Deleted) ခဲ့ တာ တွေ ပြ </string>
+    <string name="ui.action.clone" priority="0">ကိုယ်ပွား</string>
+    <string name="ui.action.reset" priority="0">ပြန်လည်စတင်</string>
+    <string name="ui.action.resetAll" priority="0">အားလုံးကိုပြန်လည်သတ်မှတ်</string>
+    <string name="ui.action.apply" priority="0">လျှောက်ထားပါ</string>
+    <string name="ui.action.download" priority="0">ဒေါင်းလုပ်</string>
+    <string name="ui.action.reactivate" priority="0">ပြန်လည်အသက်သွင်းပါ</string>
+    <string name="ui.action.logout" priority="0">ထွက်ပေါက်</string>
+    <string name="ui.action.close" priority="0">ပိတ်</string>
+    <string name="ui.action.findDuplicates" priority="0">ပုံတူပွားများရှာပါ</string>
+    <string name="ui.action.detach" priority="0">ခွာ</string>
+    <string name="ui.pref.nevershow" priority="0">ဒီမက်ဆေ့ခ်ျကိုထပ်မံပြရန်ဘယ်တော့မှမ</string>
+    <string name="ui.action.upgrade" priority="0">အဆင့်မြှင့်တင်ပါ</string>
+    <string name="ui.action.convert" priority="0">ပြောင်းပါ</string>
+    <string name="ui.action.convertTo" priority="0">ပြောင်းရန်</string>
+    <string name="ui.action.new" priority="0">အသစ်</string>
+    <string name="ui.action.add" priority="0">ထည့်ပါ</string>
+    <string name="ui.action.resetPassword" priority="0">စကားဝှက် ကိုပြန်လည်သတ်မှတ်ပါ</string>
+    <string name="ui.wait" priority="0">ကျေးဇူးပြုပြီးခဏစောင့်ပါ...</string>
+    <string name="ui.search" priority="0">ရှာဖွေနေသည် ...</string>
+    <string name="ui.operator.eq" priority="0">ညီမျှသည်</string>
+    <string name="ui.operator.ne" priority="0">မတူညီပါ</string>
+    <string name="ui.operator.similar" priority="0">ဆင်တူ</string>
+    <string name="ui.operator.le" priority="0">နည်းသော</string>
+    <string name="ui.operator.ge" priority="0">ပိုကြီး / ပိုများ</string>
+    <string name="ui.operator.gte" priority="0">ပိုကြီး / ပိုများ / ညီမျှသည်</string>
+    <string name="ui.operator.lte" priority="0">နည်းသော / ညီမျှသည်</string>
+    <string name="AUTH_LCK" priority="0">သင့်အကောင့်သော့ခတ်ထားခံရသည် ကျေးဇူးပြု၍ နောက်မှ log in လုပ်ပါ (သို့) support ကိုဆက်သွယ်ပါ</string>
+    <string name="AUTH_INV" priority="0">မမှန်ကန်သောအသုံးပြုသူအမည်နှင့် / သို့မဟုတ်စကားဝှက်။ ကျေးဇူးပြုပြီးသင်ဖြည့်ထားသောအသေးစိတ်ကိုစစ်ဆေး။ ထပ်မံကြိုးစားပါ</string>
+    <string name="ui.view.upstream" priority="0">ဤမှတ်တမ်းသည်ပြင်ပစနစ်မှရရှိသည်။ သင်ဒေသခံမိတ္တူကူးယူပြီးသည်အထိဤမှတ်တမ်းအတွက်လုပ်ဆောင်မှုများကိုပိတ်ထားနိုင်သည်</string>
+   </resources>
