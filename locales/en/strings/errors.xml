@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
  <!-- Common Errors -->
       <string name="ui.error.title">System Error</string>
@@ -29,13 +30,13 @@
       <string name="error.type.NotSupportedException">Not Supported</string>
       <string name="error.type.NotSupportedException.userMessage">The function you are trying to perform is not supported under your current configuration</string>
       <string name="error.type.FileNotFoundException">Record Not Found</string>
-      <string name="error.type.FileNotFoundException.userMessage">The record you're attempting to load does not exist, or you may not have permission to view it</string>
+      <string name="error.type.FileNotFoundException.userMessage">The record you\'re attempting to load does not exist, or you may not have permission to view it</string>
       <string name="error.type.KeyNotFoundException">Record Not Found</string>
-      <string name="error.type.KeyNotFoundException.userMessage">The record you're attempting to load does not exist, or you may not have permission to view it</string>
+      <string name="error.type.KeyNotFoundException.userMessage">The record you\'re attempting to load does not exist, or you may not have permission to view it</string>
       <string name="error.type.SecurityException">Security Exception</string>
       <string name="error.noScript.title">Enable JavaScript</string>
       <string name="error.noScript.text">SanteDB requires the use of JavaScript to function. It appears that your browser does not support JavaScript or has JavaScript disabled. Please check your security settings and refresh the page</string>
       <string name="error.login.invalidPassword">Invalid username or password</string>
       <string name="error.invalidBrowser.title">Invalid Browser</string>
-      <string name="error.invalidBrowser.text">SanteDB won't work on this browser. Supported browsers including: &lt;ul>&lt;li>Google Chrome&lt;/li>&lt;li>Mozilla Firefox&lt;/li>&lt;li>Microsoft Edge&lt;/li>&lt;li>Android 5.0 or higher&lt;/li>&lt;/ul></string>
+      <string name="error.invalidBrowser.text">SanteDB won't work on this browser. Supported browsers including: &lt;ul&gt;&lt;li&gt;Google Chrome&lt;/li&gt;&lt;li&gt;Mozilla Firefox&lt;/li&gt;&lt;li&gt;Microsoft Edge&lt;/li&gt;&lt;li&gt;Android 5.0 or higher&lt;/li&gt;&lt;/ul&gt;</string>
 </resources>
