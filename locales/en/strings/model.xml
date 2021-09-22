@@ -103,7 +103,7 @@
       <string name="ui.model.assigningAuthority.validation">Validation Regex</string>
       <string name="ui.model.assigningAuthority.policy">Disclosure Policy</string>
       <string name="ui.model.version.sequence">Sequence</string>
-      <string name="ui.model.version.createdBy">Created</string>
+      <string name="ui.model.version.createdBy">Last Changed By</string>
       <string name="ui.model.version.replaces">Replaces Version</string>
       <string name="ui.model.version.changed">Changed Properties</string>
       <string name="ui.model.version.initial">Initial Version</string>
@@ -125,6 +125,7 @@
       <string name="ui.model.entity.relationship.SigningAuthorityOrOfficer">Power of Attorney</string>
       <string name="ui.model.entity.relationship.structured">This entity is a proper record. To edit it, you'll need to visit the object's detail page</string>
       <string name="ui.model.entity.relationship.Student">School</string>
+      <string name="ui.model.entity.relationship.MDMDuplicate">Duplicates</string>
       <string name="ui.model.entity.address">Address</string>
       <string name="ui.model.entity.address.title">Address Registration</string>
       <string name="ui.model.entity.address.use">Address Type</string>
@@ -161,6 +162,7 @@
       <string name="ui.model.entity.telecom.Public">Home/Public</string>
       <string name="ui.model.entity.telecom.TemporaryAddress">Temporary</string>
       <string name="ui.model.entity.telecom.WorkPlace">Work</string>
+      <string name="ui.model.entity.identifier">Identifiers</string>
       <string name="ui.model.entity.identifier.authority.remove.confirm">Are you sure you want to remove this identifier from this entity?</string>
       <string name="ui.model.entity.identifier.authority.noAssign">No Authority</string>
       <string name="ui.model.entity.identifier.authority.noAssign.help">The administrative portal has no authority to assign this identifier</string>

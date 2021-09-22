@@ -35,6 +35,7 @@
     <property name="holderModel" behavior="never"/>
     <property name="sourceModel" behavior="never"/>
     <property name="relationshipTypeModel" behavior="always"/>
+    <property name="strength" behavior="always"/>
   </type>
   <type type="ActRelationship" all="false">
     <property name="source" all="true"/>
@@ -110,12 +111,16 @@
       <property name="*" all="false">
         <property name="id" all="true"/>
         <property name="relationshipType" all="true"/>
+        <property name="target" all="true"/>
         <property name="targetModel" all="false" behavior="always">
           <property name="name" behavior="always"/>
+          <property name="identifier" behavior="always"/>
         </property>
         <property name="holderModel" behavior="never"/>
         <property name="sourceModel" behavior="never"/>
         <property name="relationshipTypeModel" behavior="never"/>
+        <property name="strength" behavior="always"/>
+
       </property>
     </property>
     <property name="participation" all="false" behavior="never"/>
