@@ -24,6 +24,8 @@
         </span><span ng-if="provData.deviceModel">
             <i class="fas fa-desktop" ng-if="provData.deviceModel"></i> {{ provData.deviceModel.name }}
         </span>
+        <span ng-if="provData.applicationModel">
+            <i class="fas fa-window-maximize" ng-if="provData.applicationModel"></i> {{ provData.applicationModel.name }}</span>
         <div class="btn-group d-inline"><button type="button" class="btn btn-link" data-toggle="popover" data-trigger="focus"
                 data-title="{{ 'ui.provenance.extraInfo' | i18n }}" data-content=""><i
                     class="fas fa-info-circle"></i></button>

@@ -254,8 +254,10 @@ SanteDBWrapper.prototype.display = new function () {
             }
             return nameStr;
         }
-        else 
+        else if(typeof(name) === 'string')
             return name;
+        else 
+            return "N/A";
     },
         /**
          * @method
