@@ -42,6 +42,9 @@
       <string name="error.type.ArgumentNullException">Argument Null or Empty</string> 
       <string name="error.type.ArgumentNullException.userMessage">Value cannot be null or empty</string> 
       <string name="error.messaging.fhir.match.operation">Error running match operation on {param}</string>
+      <string name="error.messaging.fhir.adverseEvent.act">This act does not appear to be an adverse event</string>
+      <string name="error.messaging.fhir.bundle.fhirBundle">Expected a FHIR bundle</string>
+      <string name="error.type.ArgumentException">{param}</string>
 
 
 
