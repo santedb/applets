@@ -537,6 +537,106 @@ function APIWrapper(_config) {
     };
 
     /**
+        * @method checkoutAsync
+        * @memberof APIWrapper
+        * @summary Performs a CHECKOUT on an existing item on the instance which locks the resource from modifications by others
+        * @param {any} configuration The configuration object
+        * @param {string} configuration.resource The resource that is to be locked
+        * @param {any} configuration.state A piece of state data which is passed back to the caller for state tracking
+        * @param {boolean} configuration.sync When true, executes the request in synchronous mode
+        * @param {any} configuration.id The object that is to be locked on the server
+        * @param {any} configuration.data The additional data that should be sent for the delete command
+        * @param {string} configuration.contentType Identifies the content type of the data
+        * @returns {Promise} The promise for the operation
+        */
+     this.checkoutAsync = function (configuration) {
+        return new Promise(function (fulfill, reject) {
+            $.ajax({
+                method: 'CHECKOUT',
+                url: _config.base + configuration.resource + (configuration.id ? (_config.idByQuery ? "?_id=" + configuration.id : "/" + configuration.id) : ""),
+                headers: configuration.headers,
+                async: !configuration.sync,
+                success: function (xhr, status, response) {
+                    try {
+                        if (xhr && response.getResponseHeader("etag"))
+                            xhr.etag = response.getResponseHeader("etag");
+                        if (fulfill) fulfill(xhr, configuration.state);
+                    }
+                    catch (e) {
+                        if (reject) reject(e.responseJSON || e, configuration.state);
+                    }
+                },
+                error: function (e, data, setting) {
+                    if (SanteDB._globalErrorHandler(e, data, setting))
+                        return;
+                    var error = e.responseJSON;
+
+                    if (reject) {
+                        if (error && error.error !== undefined) // oauth2
+                            reject(new Exception(error.type, error.error, error.error_description, error.caused_by), configuration.state);
+                        else if (error && (error.$type === "Exception" || error.$type))
+                            reject(new Exception(error.$type, error.message, error.detail, error.cause, error.stack, error.policyId, error.policyOutcome, error.rules), configuration.state);
+                        else
+                            reject(new Exception("HttpException", "error.http." + e.status, e, null), configuration.state);
+                    }
+                    else
+                        console.error("UNHANDLED PROMISE REJECT: " + JSON.stringify(e));
+                }
+            });
+        });
+    };
+
+    /**
+        * @method checkinAsync
+        * @memberof APIWrapper
+        * @summary Performs a CHECKIN on an existing item on the instance
+        * @param {any} configuration The configuration object
+        * @param {string} configuration.resource The resource that is to be locked
+        * @param {any} configuration.state A piece of state data which is passed back to the caller for state tracking
+        * @param {boolean} configuration.sync When true, executes the request in synchronous mode
+        * @param {any} configuration.id The object that is to be locked on the server
+        * @param {any} configuration.data The additional data that should be sent for the delete command
+        * @param {string} configuration.contentType Identifies the content type of the data
+        * @returns {Promise} The promise for the operation
+        */
+    this.checkinAsync = function (configuration) {
+        return new Promise(function (fulfill, reject) {
+            $.ajax({
+                method: 'CHECKIN',
+                url: _config.base + configuration.resource + (configuration.id ? (_config.idByQuery ? "?_id=" + configuration.id : "/" + configuration.id) : ""),
+                headers: configuration.headers,
+                async: !configuration.sync,
+                success: function (xhr, status, response) {
+                    try {
+                        if (xhr)
+                            xhr.etag = response.getResponseHeader("etag");
+                        if (fulfill) fulfill(xhr, configuration.state);
+                    }
+                    catch (e) {
+                        if (reject) reject(e.responseJSON || e, configuration.state);
+                    }
+                },
+                error: function (e, data, setting) {
+                    if (SanteDB._globalErrorHandler(e, data, setting))
+                        return;
+                    var error = e.responseJSON;
+
+                    if (reject) {
+                        if (error && error.error !== undefined) // oauth2
+                            reject(new Exception(error.type, error.error, error.error_description, error.caused_by), configuration.state);
+                        else if (error && (error.$type === "Exception" || error.$type))
+                            reject(new Exception(error.$type, error.message, error.detail, error.cause, error.stack, error.policyId, error.policyOutcome, error.rules), configuration.state);
+                        else
+                            reject(new Exception("HttpException", "error.http." + e.status, e, null), configuration.state);
+                    }
+                    else
+                        console.error("UNHANDLED PROMISE REJECT: " + JSON.stringify(e));
+                }
+            });
+        });
+    };
+
+    /**
         * @method touchAsync
         * @memberof APIWrapper
         * @summary Performs a TOUCH on an existing item on the instance
@@ -888,6 +988,54 @@ function ResourceWrapper(_config) {
     };
 
     /**
+    * @method lockAsync
+    * @memberof ResourceWrapper
+    * @summary Performs the specified CHECKOUT operation on the server
+    * @param {string} id The unique identifier for the object on which the invokation is to be called
+    * @param {any} state A unique state object which is passed back to the caller
+    * @returns {Promise} The promise for the operation
+    */
+     this.checkoutAsync = function (id, state) {
+
+        var headers = {
+            Accept: _config.accept
+        };
+        if (_config.viewModel)
+            headers["X-SanteDB-ViewModel"] = _config.viewModel;
+
+        return _config.api.checkoutAsync({
+            headers: headers,
+            id: id,
+            state: state,
+            resource: _config.resource
+        });
+    };
+
+    /**
+    * @method unLockAsync
+    * @memberof ResourceWrapper
+    * @summary Performs the specified CHECKIN operation on the server
+    * @param {string} id The unique identifier for the object on which the invokation is to be called
+    * @param {any} state A unique state object which is passed back to the caller
+    * @returns {Promise} The promise for the operation
+    */
+    this.checkinAsync = function (id, state) {
+
+        var headers = {
+            Accept: _config.accept
+        };
+        if (_config.viewModel)
+            headers["X-SanteDB-ViewModel"] = _config.viewModel;
+
+        return _config.api.checkinAsync({
+            headers: headers,
+            id: id,
+            state: state,
+            resource: _config.resource
+        });
+    };
+
+    /**
     * @method touchAsync
     * @memberof ResourceWrapper
     * @summary Performs a TOUCH operation on the specified resource (updating it's creation time)
@@ -1169,7 +1317,7 @@ function ResourceWrapper(_config) {
 function SanteDBWrapper() {
     "use strict";
 
-    var _viewModelJsonMime = "application/json+sdb-viewModel";
+    var _viewModelJsonMime = "application/json+sdb-viewmodel";
 
     // Get the version of this API Wrapper
     this.getVersion = function () {

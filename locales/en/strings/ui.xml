@@ -149,6 +149,8 @@
       <string name="ui.action.override">Override</string>
       <string name="ui.action.run">Run</string>
       <string name="ui.action.merge">Merge</string>
+      <string name="ui.action.link">Link</string>
+      <string name="ui.action.resolve">Resolve</string>
       <string name="ui.action.enable">Enable</string>
       <string name="ui.action.disable">Disable</string>
       <string name="ui.action.scan">Scan</string>

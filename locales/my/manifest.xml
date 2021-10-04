@@ -52,6 +52,7 @@
     <string key="ui.locale.fr-ca" priority="0">ပြင်သစ် (ကနေဒါ)</string>
     <string key="ui.locale.fr-ch" priority="0">ပြင်သစ် (ဆွစ်)</string>
     <string key="ui.locale.fr-fr" priority="0">ပြင်သစ် (ပြင်သစ်)</string>
+    
   </strings>
 
 </AppletManifest>
