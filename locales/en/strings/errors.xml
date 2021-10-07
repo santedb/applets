@@ -44,8 +44,14 @@
       <string name="error.messaging.fhir.match.operation">Error running match operation on {param}</string>
       <string name="error.messaging.fhir.adverseEvent.act">This act does not appear to be an adverse event</string>
       <string name="error.messaging.fhir.bundle.fhirBundle">Expected a FHIR bundle</string>
-      <string name="error.type.ArgumentException">{param}</string>
-
+      <string name="error.type.ArgumentException">Invalid Argument: {param}</string>
       <string name="error.type.NotSupportedExeption.paramOnlySupported">Only {param} references are supported</string>
+      <string name="error.type.InvalidDataException">Invalid data</string>
+      <string name="error.type.InvalidOperation">Invalid Operation</string>
+      <string name="error.type.InvalidDataException.userMessage">Invalid {param}</string>
+      <string name="error.messaging.fhir.subscription.emailScheme">Scheme of the endpoint for e-mail subscriptions is {param}</string>
+      <string name="error.messaging.fhir.resourceBase.key">Target's key does not equal key on path</string>
+      <string name="error.type.FhirException">Error Executing FHIR Operation</string>
+
 
 </resources>
