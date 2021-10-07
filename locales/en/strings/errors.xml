@@ -46,7 +46,6 @@
       <string name="error.messaging.fhir.bundle.fhirBundle">Expected a FHIR bundle</string>
       <string name="error.type.ArgumentException">{param}</string>
 
-
-
+      <string name="error.type.NotSupportedExeption.paramOnlySupported">Only {param} references are supported</string>
 
 </resources>
