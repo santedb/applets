@@ -91,7 +91,9 @@
     <property name="creationTimeModel" behavior="never"/>
     <property name="version" behavior="always"/>
     <property name="name" all="true" ref="EntityName" behavior="always"/>
-    <property name="address" all="true" ref="EntityAddress" behavior="always"/>
+    <property name="address" all="true" behavior="always">
+      <property name="*" ref="EntityAddress" behavior="always"/>
+    </property>
     <property name="identifier" all="true" behavior="always">
       <property name="*" all="true" behavior="always" />
     </property>

@@ -68,12 +68,12 @@ angular.module('santedb').controller('JobAdminController', ["$scope", "$rootScop
             var jobInfo = await SanteDB.resources.jobInfo.getAsync(id);
             if(!jobParameters && jobInfo.parameters && jobInfo.parameters.length > 0) {
                 $scope.currentJob = jobInfo;
-                $("#jobParameterDialog").modal(true);
+                $("#jobParameterDialog").modal('show');
                 try { $scope.$applyAsync(); }
                 catch(e) { }
                 return;
             }
-            $("#jobParameterDialog").modal(false);
+            
 
         }
         catch(e) {
@@ -81,6 +81,7 @@ angular.module('santedb').controller('JobAdminController', ["$scope", "$rootScop
             return;
         }
 
+        $("#jobParameterDialog").modal('hide');
         if(confirm(SanteDB.locale.getString("ui.admin.job.runJob.confirm"))) 
         {
             try {

@@ -289,6 +289,8 @@ SanteDBWrapper.prototype.display = new function () {
                     addrStr += address.component.AdditionalLocator + ", ";
                 if (address.component.StreetAddressLine)
                     addrStr += address.component.StreetAddressLine + ", ";
+                else if (address.component.AddressLine)
+                    addrStr += address.component.AddressLine + ", ";
                 if (address.component.Precinct)
                     addrStr += address.component.Precinct + ", ";
                 if (address.component.City)
