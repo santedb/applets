@@ -55,7 +55,7 @@
       <string name="error.type.InvalidOperation.cannotCreate">Cannot create unless source and target are {param}</string>
       <string name="error.type.InvalidOperation.cannotChange">Cannot change the source of relationship from {param} to {param2}</string>
       <string name="error.messaging.fhir.relatedPerson.patientRelationship">RelatedPerson requires Patient relationship</string>
-      <string name="error.messaging.fhir.relatedPerson.oneRelationshipType">RelatedPerson nust have EXACTLY ONE relationship type</string>
+      <string name="error.messaging.fhir.relatedPerson.oneRelationshipType">RelatedPerson must have EXACTLY ONE relationship type</string>
       <string name="error.type.KeyNotFoundException.cannotLocateRegistered">Can\'t locate a registered {param}</string>
       <string name="error.messaging.fhir.patientResource.cannotLocatePatient">Cannot locate patient referenced by {param} relationship</string>
       <string name="error.type.InvalidOperation.cannotDetermine">Cannot determine how to include {param}</string>
