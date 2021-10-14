@@ -69,7 +69,7 @@
       <string name="error.messaging.gs1.placeNotFound">Place {param} not found</string>
       <string name="error.messaging.gs1.originalOrder">Could not find originalOrder</string>
       <string name="error.messaging.gs1.seller">Could not find seller id with {param}</string>
-      <string name="error.messaging.hl7.QbpMessage.responseType">Response type not found</string>
+      <string name="error.messaging.hl7.responseType">Response type not found</string>
       <string name="error.messaging.hl7.query">Query must provide at least one understood filter</string>
       <string name="error.messaging.hl7.dsc">DSC^1 must be UUID provided by this service</string>
       <string name="error.messaging.hl7.repositoryService">Cannot find repository service for {param}</string>
