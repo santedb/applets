@@ -60,4 +60,24 @@
       <string name="error.messaging.fhir.patientResource.cannotLocatePatient">Cannot locate patient referenced by {param} relationship</string>
       <string name="error.type.InvalidOperation.cannotDetermine">Cannot determine how to include {param}</string>
       <string name="error.messaging.fhir.resourceBase.key">Target\'s key does not equal key on path</string>
+      <string name="error.messaging.gs1.invalidMessage">Invalid message sent</string>
+      <string name="error.messaging.gs1.locationNotFound">{param} location not found</string>
+      <string name="error.messaging.gs1.despatchedQuantity">Despatched quantity must be reported in units or doses</string>
+      <string name="error.messaging.gs1.configuration">{param} configuration must carry OID and be named {param} in repository</string>
+      <string name="error.messaging.gs1.errorIssuing">Error issuing despatch advice: {param}</string>
+      <string name="error.messaging.gs1.issuingAuthority">Could not find default issuing authority for advice identification. Please configure a valid OID</string>
+      <string name="error.messaging.gs1.placeNotFound">Place {param} not found</string>
+      <string name="error.messaging.gs1.originalOrder">Could not find originalOrder</string>
+      <string name="error.messaging.gs1.seller">Could not find seller id with {param}</string>
+      <string name="error.messaging.hl7.QbpMessage.responseType">Response type not found</string>
+      <string name="error.messaging.hl7.query">Query must provide at least one understood filter</string>
+      <string name="error.messaging.hl7.dsc">DSC^1 must be UUID provided by this service</string>
+      <string name="error.messaging.hl7.repositoryService">Cannot find repository service for {param}</string>
+      <string name="error.messaging.hl7.notUnderstood">{param} not understood or mapped</string>
+      <string name="error.type.UnauthorizedAccessException">Server requires authenticated application</string>
+      <string name="error.messaging.hl7.invalidMessage">Invalid message</string>
+      <string name="error.messaging.h17.authorizationToken">Must carry MSH-8 authorization token information</string>
+      <string name="error.messaging.h17.authenticating">{param} must be provided for authenticating {param2}</string>
+      <string name="error.messaging.hl7.sllpNotUsed">MSH-4 and MSH-8 must always be provided for authenticating device when SLLP is not used</string>
+      
 </resources>
