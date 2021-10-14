@@ -79,5 +79,8 @@
       <string name="error.messaging.h17.authorizationToken">Must carry MSH-8 authorization token information</string>
       <string name="error.messaging.h17.authenticating">{param} must be provided for authenticating {param2}</string>
       <string name="error.messaging.hl7.sllpNotUsed">MSH-4 and MSH-8 must always be provided for authenticating device when SLLP is not used</string>
+      <string name="error.messaging.hl7.invalidValue">Couldn't understand {param}, valid values are NONE, MSH8, or SFT4</string>
+      <string name="error.messaging.hl7.invalidUrl">{param} is not a valid URL</string>
+      <string name="error.messaging.hl7.invalidTimeout">Invalid timeout</string>
       
 </resources>
