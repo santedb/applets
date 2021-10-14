@@ -82,5 +82,7 @@
       <string name="error.messaging.hl7.invalidValue">Couldn't understand {param}, valid values are NONE, MSH8, or SFT4</string>
       <string name="error.messaging.hl7.invalidUrl">{param} is not a valid URL</string>
       <string name="error.messaging.hl7.invalidTimeout">Invalid timeout</string>
+      <string name="error.type.HL7ProcessingException">Error processing {param}</string>
+      
       
 </resources>
