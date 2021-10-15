@@ -83,6 +83,18 @@
       <string name="error.messaging.hl7.invalidUrl">{param} is not a valid URL</string>
       <string name="error.messaging.hl7.invalidTimeout">Invalid timeout</string>
       <string name="error.type.HL7ProcessingException">Error processing {param}</string>
-      
-      
+      <string name="error.messaging.hl7.entityNOK">Cannot locate described NOK entity on patient record</string>
+      <string name="error.messaging.hl7.requirementXON">XON requires identifier</string>
+      <string name="error.messaging.hl7.requirementPD1">PD1 segment requires a PID segment to precede it</string>
+      <string name="error.messaging.hl7.patientMRG">MRG Patient Not Found</string>
+      <string name="error.messaging.hl7.birthPlace">Cannot find unique birth place registration with name {param} ({param2} results found). Try using UUID.</string>
+      <string name="error.messaging.hl7.identityPatient">Couldn\'t understand any patient identity</string>
+      <string name="error.messaging.hl7.limitationFunctional">Handicap / Functional Limitation handler for PD1 is not completed yet</string>
+      <string name="error.messaging.hl7.conversionPID">Cannot convert {param} to PID</string>
+      <string name="error.messaging.hl7.facilityId">Facility {param} could not be found</string>
+      <string name="error.messaging.hl7.authorityNone">No authority configured for {param}</string>
+      <string name="error.messaging.hl7.protectionInvalid">Protection indicator {param} is invalid</string>
+      <string name="error.messaging.hl7.countryCode">Cannot find country with code {param}</string>
+      <string name="error.messaging.hl7.segmentRequirement">{param} Requires {param2} segment to be processed</string>
+
 </resources>
