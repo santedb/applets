@@ -106,13 +106,13 @@ angular.module('santedb-lib')
 
                                     if (!b.when || scope.$eval(b.when, { r: r, cell: m, StatusKeys: StatusKeys})) {
                                         if (b.sref)
-                                            retVal += `<a title="${SanteDB.locale.getString('ui.action.' + b.name)}" ui-sref="${b.sref}({ id: '${r.id}' })" class="btn ${(b.className || 'btn-default')}">`;
+                                            retVal += `<a title="${SanteDB.locale.getString(b.hint ? scope.i18nPrefix + b.hint : 'ui.action.' + b.name)}" ui-sref="${b.sref}({ id: '${r.id}' })" class="btn ${(b.className || 'btn-default')}">`;
                                         else
-                                            retVal += `<a title="${SanteDB.locale.getString('ui.action.' + b.name)}" href="" ng-click="$parent.${b.action}('${r.id}', ${m.row})" class="btn ${(b.className || 'btn-default')}">`;
+                                            retVal += `<a title="${SanteDB.locale.getString(b.hint ? scope.i18nPrefix + b.hint : 'ui.action.' + b.name)}" href="" ng-click="$parent.${b.action}('${r.id}', ${m.row})" class="btn ${(b.className || 'btn-default')}">`;
                                         retVal += `<i class="${b.icon || 'fas fas-eye-open'}"></i>&nbsp;`;
 
                                         if (b.name)
-                                            retVal += `<span class="d-sm-none d-lg-inline">${SanteDB.locale.getString(b.label || 'ui.action.' + b.name)}</span>`;
+                                            retVal += `<span class="d-sm-none d-lg-inline">${SanteDB.locale.getString(b.label ? scope.i18nPrefix + b.label : 'ui.action.' + b.name)}</span>`;
                                         retVal += "</a>";
                                     }
                                 });
@@ -133,7 +133,7 @@ angular.module('santedb-lib')
                             .filter(b=> !b.demand || b.demand && $rootScope.session && $rootScope.session.scope.filter(o=>b.demand.indexOf(o) == 0).length > 0) // check policy
                             .map(function (b) {
                             return {
-                                text: `<i class="${b.icon}"></i> ` + SanteDB.locale.getString('ui.action.' + b.name),
+                                text: `<i class="${b.icon}"></i> ` + SanteDB.locale.getString(b.label ? scope.i18nPrefix + b.label : 'ui.action.' + b.name),
                                 className: `btn ${b.className || 'btn-default'}`,
                                 action: function (e, dt, node, config) {
                                     if(b.sref)

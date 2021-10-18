@@ -27,12 +27,11 @@
   </type>
 
   <type type="EntityRelationship" all="false">
-    <property name="source" all="true"/>
+    <property name="holder" all="true"/>
     <property name="target" all="true"/>
     <property name="relationshipType" all="true"/>
     <property name="key" all="true"/>
     <property name="quantity" all="true"/>
-    <property name="holderModel" behavior="never"/>
     <property name="sourceModel" behavior="never"/>
     <property name="relationshipTypeModel" behavior="always"/>
     <property name="strength" behavior="always"/>

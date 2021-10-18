@@ -42,6 +42,42 @@ var ExecutionEnvironment = {
 */
 function APIWrapper(_config) {
 
+    var _viewModelJsonMime = "application/json+sdb-viewmodel";
+
+    /**
+     * @method
+     * @summary Resolves all $ref in the object with the $id data
+     * @param {any} object The object which should be resolved
+     */
+    function _resolveObjectRefs(object, referenceDictionary) {
+
+        referenceDictionary = referenceDictionary || {};
+
+        // This is not really an object but a reference to an object
+        if (object == null) {
+            return null;
+        }
+        else if (object.$ref !== undefined) {
+            return referenceDictionary[object.$ref];
+        }
+        else if (Array.isArray(object)) {
+            return object.map(o => _resolveObjectRefs(o, referenceDictionary));
+        }
+        else if (typeof (object) == 'object' &&
+            !(object instanceof Date)) {
+            if (object.$id !== undefined) {
+                referenceDictionary[`#${object.$id}`] = object;
+            }
+            Object.keys(object).forEach(p => {
+                object[p] = _resolveObjectRefs(object[p], referenceDictionary);
+            });
+            return object;
+        }
+        else {
+            return object;
+        }
+
+    }
 
     /**
      * @method
@@ -90,7 +126,14 @@ function APIWrapper(_config) {
                     try {
                         if (xhr && response.getResponseHeader("etag"))
                             xhr.etag = response.getResponseHeader("etag");
-                        if (fulfill) fulfill(xhr, configuration.state);
+                        if (fulfill) {
+                            if (configuration.headers && configuration.headers["Accept"] == _viewModelJsonMime) {
+                                fulfill(_resolveObjectRefs(xhr), configuration.state);
+                            }
+                            else {
+                                fulfill(xhr, configuration.state);
+                            }
+                        }
                     }
                     catch (e) {
                         if (reject) reject(e.responseJSON || e, configuration.state);
@@ -143,7 +186,15 @@ function APIWrapper(_config) {
                     try {
                         if (xhr && response.getResponseHeader("etag"))
                             xhr.etag = response.getResponseHeader("etag");
-                        if (fulfill) fulfill(xhr, configuration.state);
+                        if (fulfill) {
+                            if (configuration.headers && configuration.headers["Accept"] == _viewModelJsonMime) {
+                                fulfill(_resolveObjectRefs(xhr), configuration.state);
+                            }
+                            else {
+                                fulfill(xhr, configuration.state);
+                            }
+                        }
+
                     }
                     catch (e) {
                         if (reject) reject(e.responseJSON || e, configuration.state);
@@ -194,7 +245,15 @@ function APIWrapper(_config) {
                     try {
                         if (xhr && response.getResponseHeader("etag"))
                             xhr.etag = response.getResponseHeader("etag");
-                        if (fulfill) fulfill(xhr, configuration.state);
+                        if (fulfill) {
+                            if (configuration.headers && configuration.headers["Accept"] == _viewModelJsonMime) {
+                                fulfill(_resolveObjectRefs(xhr), configuration.state);
+                            }
+                            else {
+                                fulfill(xhr, configuration.state);
+                            }
+                        }
+
                     }
                     catch (e) {
                         if (reject) reject(e.responseJSON || e, configuration.state);
@@ -245,7 +304,14 @@ function APIWrapper(_config) {
                 async: !configuration.sync,
                 success: function (xhr, status, response) {
                     try {
-                        if (fulfill) fulfill(xhr, configuration.state);
+                        if (fulfill) {
+                            if (configuration.headers && configuration.headers["Accept"] == _viewModelJsonMime) {
+                                fulfill(_resolveObjectRefs(xhr), configuration.state);
+                            }
+                            else {
+                                fulfill(xhr, configuration.state);
+                            }
+                        }
                     }
                     catch (e) {
                         if (reject) reject(e.responseJSON || e, configuration.state);
@@ -295,7 +361,14 @@ function APIWrapper(_config) {
                     try {
                         if (xhr && response.getResponseHeader("etag"))
                             xhr.etag = response.getResponseHeader("etag");
-                        if (fulfill) fulfill(xhr, configuration.state);
+                        if (fulfill) {
+                            if (configuration.headers && configuration.headers["Accept"] == _viewModelJsonMime) {
+                                fulfill(_resolveObjectRefs(xhr), configuration.state);
+                            }
+                            else {
+                                fulfill(xhr, configuration.state);
+                            }
+                        }
                     }
                     catch (e) {
                         if (reject) reject(e.responseJSON || e, configuration.state);
@@ -349,7 +422,14 @@ function APIWrapper(_config) {
                     try {
                         if (xhr && response.getResponseHeader("etag"))
                             xhr.etag = response.getResponseHeader("etag");
-                        if (fulfill) fulfill(xhr, configuration.state);
+                        if (fulfill) {
+                            if (configuration.headers && configuration.headers["Accept"] == _viewModelJsonMime) {
+                                fulfill(_resolveObjectRefs(xhr), configuration.state);
+                            }
+                            else {
+                                fulfill(xhr, configuration.state);
+                            }
+                        }
                     }
                     catch (e) {
                         if (reject) reject(e.responseJSON || e, configuration.state);
@@ -410,7 +490,14 @@ function APIWrapper(_config) {
                     try {
                         if (xhr && response.getResponseHeader("etag"))
                             xhr.etag = response.getResponseHeader("etag");
-                        if (fulfill) fulfill(xhr, configuration.state);
+                        if (fulfill) {
+                            if (configuration.headers && configuration.headers["Accept"] == _viewModelJsonMime) {
+                                fulfill(_resolveObjectRefs(xhr), configuration.state);
+                            }
+                            else {
+                                fulfill(xhr, configuration.state);
+                            }
+                        }
                     }
                     catch (e) {
                         if (reject) reject(e.responseJSON || e, configuration.state);
@@ -460,7 +547,14 @@ function APIWrapper(_config) {
                     try {
                         if (xhr && response.getResponseHeader("etag"))
                             xhr.etag = response.getResponseHeader("etag");
-                        if (fulfill) fulfill(xhr, configuration.state);
+                        if (fulfill) {
+                            if (configuration.headers && configuration.headers["Accept"] == _viewModelJsonMime) {
+                                fulfill(_resolveObjectRefs(xhr), configuration.state);
+                            }
+                            else {
+                                fulfill(xhr, configuration.state);
+                            }
+                        }
                     }
                     catch (e) {
                         if (reject) reject(e.responseJSON || e, configuration.state);
@@ -510,7 +604,14 @@ function APIWrapper(_config) {
                     try {
                         if (xhr)
                             xhr.etag = response.getResponseHeader("etag");
-                        if (fulfill) fulfill(xhr, configuration.state);
+                        if (fulfill) {
+                            if (configuration.headers && configuration.headers["Accept"] == _viewModelJsonMime) {
+                                fulfill(_resolveObjectRefs(xhr), configuration.state);
+                            }
+                            else {
+                                fulfill(xhr, configuration.state);
+                            }
+                        }
                     }
                     catch (e) {
                         if (reject) reject(e.responseJSON || e, configuration.state);
@@ -549,7 +650,7 @@ function APIWrapper(_config) {
         * @param {string} configuration.contentType Identifies the content type of the data
         * @returns {Promise} The promise for the operation
         */
-     this.checkoutAsync = function (configuration) {
+    this.checkoutAsync = function (configuration) {
         return new Promise(function (fulfill, reject) {
             $.ajax({
                 method: 'CHECKOUT',
@@ -560,7 +661,14 @@ function APIWrapper(_config) {
                     try {
                         if (xhr && response.getResponseHeader("etag"))
                             xhr.etag = response.getResponseHeader("etag");
-                        if (fulfill) fulfill(xhr, configuration.state);
+                        if (fulfill) {
+                            if (configuration.headers && configuration.headers["Accept"] == _viewModelJsonMime) {
+                                fulfill(_resolveObjectRefs(xhr), configuration.state);
+                            }
+                            else {
+                                fulfill(xhr, configuration.state);
+                            }
+                        }
                     }
                     catch (e) {
                         if (reject) reject(e.responseJSON || e, configuration.state);
@@ -610,7 +718,14 @@ function APIWrapper(_config) {
                     try {
                         if (xhr)
                             xhr.etag = response.getResponseHeader("etag");
-                        if (fulfill) fulfill(xhr, configuration.state);
+                        if (fulfill) {
+                            if (configuration.headers && configuration.headers["Accept"] == _viewModelJsonMime) {
+                                fulfill(_resolveObjectRefs(xhr), configuration.state);
+                            }
+                            else {
+                                fulfill(xhr, configuration.state);
+                            }
+                        }
                     }
                     catch (e) {
                         if (reject) reject(e.responseJSON || e, configuration.state);
@@ -660,7 +775,14 @@ function APIWrapper(_config) {
                     try {
                         if (xhr && response.getResponseHeader("etag"))
                             xhr.etag = response.getResponseHeader("etag");
-                        if (fulfill) fulfill(xhr, configuration.state);
+                        if (fulfill) {
+                            if (configuration.headers && configuration.headers["Accept"] == _viewModelJsonMime) {
+                                fulfill(_resolveObjectRefs(xhr), configuration.state);
+                            }
+                            else {
+                                fulfill(xhr, configuration.state);
+                            }
+                        }
                     }
                     catch (e) {
                         if (reject) reject(e.responseJSON || e, configuration.state);
@@ -716,7 +838,7 @@ function ResourceWrapper(_config) {
         * @param {any} state A unique state object which is passed back to the caller
         * @returns {Promise} The promise for the operation
         */
-    this.getAsync = function (id, viewModel, query, state) {
+    this.getAsync = function (id, viewModel, query, upstream, state) {
 
         // Prepare query
         var url = null;
@@ -733,8 +855,11 @@ function ResourceWrapper(_config) {
             url = _config.resource;
 
         if (id && id._upstream) {
-            query = query || {};
-            query._upstream = id._upstream;
+            headers["X-SanteDB-Upstream"] = id._upstream;
+        }
+
+        if (upstream) {
+            headers["X-SanteDB-Upstream"] = true;
         }
 
         var headers = {
@@ -765,7 +890,7 @@ function ResourceWrapper(_config) {
         * @param {any} state A unique state object which is passed back to the caller
         * @returns {Promise} The promise for the operation
         */
-    this.findAsync = function (query, viewModel, state) {
+    this.findAsync = function (query, viewModel, upstream, state) {
 
         var headers = {
             Accept: _config.accept
@@ -775,6 +900,10 @@ function ResourceWrapper(_config) {
             headers["X-SanteDB-ViewModel"] = viewModel;
         else if (_config.viewModel)
             headers["X-SanteDB-ViewModel"] = _config.viewModel;
+
+        if (upstream) {
+            headers["X-SanteDB-Upstream"] = true;
+        }
 
         return _config.api.getAsync({
             headers: headers,
@@ -816,7 +945,7 @@ function ResourceWrapper(_config) {
         * @param {any} state A unique state object which is passed back to the caller
         * @returns {Promise} The promise for the operation
         */
-    this.insertAsync = function (data, state) {
+    this.insertAsync = function (data, upstream, state) {
 
         if (data.$type !== _config.resource && data.$type !== `${_config.resource}Info`)
             throw new Exception("ArgumentException", "error.invalidType", `Invalid type, resource wrapper expects ${_config.resource} however ${data.$type} specified`);
@@ -836,6 +965,10 @@ function ResourceWrapper(_config) {
             delete (data.createdBy);
         if (data.creationTime)
             delete (data.creationTime);
+
+        if (upstream) {
+            headers["X-SanteDB-Upstream"] = true;
+        }
 
         // Perform post
         return _config.api.postAsync({
@@ -857,13 +990,17 @@ function ResourceWrapper(_config) {
      * @param {any} state A unique state object which is passed back to the caller
      * @returns {Promise} The promise for the operation
      */
-    this.patchAsync = function (id, etag, patch, state) {
+    this.patchAsync = function (id, etag, patch, upstream, state) {
         if (patch.$type !== "Patch")
             throw new Exception("ArgumentException", "error.invalidType", `Invalid type, resource wrapper expects ${_config.resource} however ${data.$type} specified`);
 
         var headers = {};
         if (etag)
             headers['If-Match'] = etag;
+
+        if (upstream) {
+            headers["X-SanteDB-Upstream"] = true;
+        }
 
         // Send PUT
         return _config.api.patchAsync({
@@ -885,7 +1022,7 @@ function ResourceWrapper(_config) {
         * @param {any} state A unique state object which is passed back to the caller
         * @returns {Promise} The promise for the operation
         */
-    this.updateAsync = function (id, data, state) {
+    this.updateAsync = function (id, data, upstream, state) {
 
         if (data.$type !== _config.resource && data.$type !== `${_config.resource}Info`)
             throw new Exception("ArgumentException", "error.invalidType", `Invalid type, resource wrapper expects ${_config.resource} however ${data.$type} specified`);
@@ -902,6 +1039,10 @@ function ResourceWrapper(_config) {
         };
         if (_config.viewModel)
             headers["X-SanteDB-ViewModel"] = _config.viewModel;
+
+        if (upstream) {
+            headers["X-SanteDB-Upstream"] = true;
+        }
 
         // Send PUT
         return _config.api.putAsync({
@@ -922,13 +1063,17 @@ function ResourceWrapper(_config) {
     * @param {any} state A unique state object which is passed back to the caller
     * @returns {Promise} The promise for the operation
     */
-    this.deleteAsync = function (id, state) {
+    this.deleteAsync = function (id, upstream, state) {
 
         var headers = {
             Accept: _config.accept
         };
         if (_config.viewModel)
             headers["X-SanteDB-ViewModel"] = _config.viewModel;
+
+        if (upstream) {
+            headers["X-SanteDB-Upstream"] = true;
+        }
 
         return _config.api.deleteAsync({
             headers: headers,
@@ -947,13 +1092,17 @@ function ResourceWrapper(_config) {
     * @param {any} state A unique state object which is passed back to the caller
     * @returns {Promise} The promise for the operation
     */
-    this.lockAsync = function (id, state) {
+    this.lockAsync = function (id, upstream, state) {
 
         var headers = {
             Accept: _config.accept
         };
         if (_config.viewModel)
             headers["X-SanteDB-ViewModel"] = _config.viewModel;
+
+        if (upstream) {
+            headers["X-SanteDB-Upstream"] = true;
+        }
 
         return _config.api.lockAsync({
             headers: headers,
@@ -971,13 +1120,17 @@ function ResourceWrapper(_config) {
     * @param {any} state A unique state object which is passed back to the caller
     * @returns {Promise} The promise for the operation
     */
-    this.unLockAsync = function (id, state) {
+    this.unLockAsync = function (id, upstream, state) {
 
         var headers = {
             Accept: _config.accept
         };
         if (_config.viewModel)
             headers["X-SanteDB-ViewModel"] = _config.viewModel;
+
+        if (upstream) {
+            headers["X-SanteDB-Upstream"] = true;
+        }
 
         return _config.api.unLockAsync({
             headers: headers,
@@ -995,13 +1148,17 @@ function ResourceWrapper(_config) {
     * @param {any} state A unique state object which is passed back to the caller
     * @returns {Promise} The promise for the operation
     */
-     this.checkoutAsync = function (id, state) {
+    this.checkoutAsync = function (id, upstream, state) {
 
         var headers = {
             Accept: _config.accept
         };
         if (_config.viewModel)
             headers["X-SanteDB-ViewModel"] = _config.viewModel;
+
+        if (upstream) {
+            headers["X-SanteDB-Upstream"] = true;
+        }
 
         return _config.api.checkoutAsync({
             headers: headers,
@@ -1019,13 +1176,17 @@ function ResourceWrapper(_config) {
     * @param {any} state A unique state object which is passed back to the caller
     * @returns {Promise} The promise for the operation
     */
-    this.checkinAsync = function (id, state) {
+    this.checkinAsync = function (id, upstream, state) {
 
         var headers = {
             Accept: _config.accept
         };
         if (_config.viewModel)
             headers["X-SanteDB-ViewModel"] = _config.viewModel;
+
+        if (upstream) {
+            headers["X-SanteDB-Upstream"] = true;
+        }
 
         return _config.api.checkinAsync({
             headers: headers,
@@ -1092,7 +1253,7 @@ function ResourceWrapper(_config) {
         * @param {any} state A unique state object which is passed back to the caller
         * @returns {Promise} The promise for the operation
         */
-    this.nullifyAsync = function (id, state) {
+    this.nullifyAsync = function (id, upstream, state) {
 
         var headers = {
             Accept: _config.accept
@@ -1100,6 +1261,10 @@ function ResourceWrapper(_config) {
         if (_config.viewModel)
             headers["X-SanteDB-ViewModel"] = _config.viewModel;
 
+        if(upstream) {
+            headers["X-SanteDB-Upstream"] = true;
+        }
+    
         return _config.api.deleteAsync({
             headers: headers,
             id: id,
@@ -1118,19 +1283,24 @@ function ResourceWrapper(_config) {
         * @param {any} state A unique state object which is passed back to the caller
         * @returns {Promise} The promise for the operation
         */
-    this.cancelAsync = function (id, state) {
+    this.cancelAsync = function (id, upstream, state) {
         var headers = {
             Accept: _config.accept
         };
         if (_config.viewModel)
             headers["X-SanteDB-ViewModel"] = _config.viewModel;
 
+            if(upstream) {
+                headers["X-SanteDB-Upstream"] = true;
+            }
+    
         return _config.api.deleteAsync({
             headers: headers,
             id: id,
             mode: "CANCEL",
             state: state,
             resource: _config.resource
+
         });
     };
 
@@ -1144,7 +1314,7 @@ function ResourceWrapper(_config) {
      * @param {any} query The query you want to execute
      * @returns {Promise} A promise for when the request completes
      */
-    this.findAssociatedAsync = function (id, property, query, state) {
+    this.findAssociatedAsync = function (id, property, query, upstream, state) {
 
         if (!property)
             throw new Exception("ArgumentNullException", "Missing scoping property");
@@ -1164,6 +1334,10 @@ function ResourceWrapper(_config) {
         else
             url = `${_config.resource}/${id}/${property}`;
 
+            if(upstream) {
+                headers["X-SanteDB-Upstream"] = true;
+            }
+    
         return _config.api.getAsync({
             headers: headers,
             query: query,
@@ -1182,7 +1356,7 @@ function ResourceWrapper(_config) {
      * @param {any} state A stateful object for callback correlation
      * @returns {Promise} A promise which is fulfilled when the request is complete
      */
-    this.addAssociatedAsync = function (id, property, data, state) {
+    this.addAssociatedAsync = function (id, property, data, upstream, state) {
 
         if (!property)
             throw new Exception("ArgumentNullException", "Missing scoping property");
@@ -1202,12 +1376,17 @@ function ResourceWrapper(_config) {
         else
             url = `${_config.resource}/${id}/${property}`;
 
+        if(upstream) {
+            headers["X-SanteDB-Upstream"] = true;
+        }
+    
         return _config.api.postAsync({
             headers: headers,
             data: data,
             state: state,
             resource: url,
             contentType: _config.accept
+
         });
     };
 
@@ -1219,9 +1398,10 @@ function ResourceWrapper(_config) {
      * @param {string} property The property path from which the object is to be removed
      * @param {string} associatedId The identifier of the sub-object to be removed
      * @param {any} state A state for correlating multiple requests
+     * @param {Boolean} upstream True if the query should be sent to upstream service
      * @returns {Promise} A promise which is fulfilled when the request comletes
      */
-    this.removeAssociatedAsync = function (id, property, associatedId, state) {
+    this.removeAssociatedAsync = function (id, property, associatedId, upstream, state) {
         if (!property)
             throw new Exception("ArgumentNullException", "Missing scoping property");
         else if (!associatedId)
@@ -1242,6 +1422,10 @@ function ResourceWrapper(_config) {
         else
             url = `${_config.resource}/${id}/${property}`;
 
+        if(upstream) {
+            headers["X-SanteDB-Upstream"] = true;
+        }
+    
         return _config.api.deleteAsync({
             headers: headers,
             id: associatedId,
@@ -1261,7 +1445,7 @@ function ResourceWrapper(_config) {
      * @param {any} state A state for correlating multiple requests
      * @returns {Promise} A promise which is fulfilled when the request comletes
      */
-    this.getAssociatedAsync = function (id, property, associatedId, query, state) {
+    this.getAssociatedAsync = function (id, property, associatedId, query, upstream, state) {
         if (!id)
             throw new Exception("ArgumentNullException", "Missing scoping identifier");
         else if (!property)
@@ -1282,11 +1466,15 @@ function ResourceWrapper(_config) {
         else
             url = `${_config.resource}/${id}/${property}`;
 
-        if(associatedId.id) 
+        if (associatedId.id)
             url += `/${associatedId.id}`;
-        else 
+        else
             url += `/${associatedId}`;
 
+            if(upstream) {
+                headers["X-SanteDB-Upstream"] = true;
+            }
+    
         return _config.api.getAsync({
             query: query,
             headers: headers,
@@ -1321,7 +1509,7 @@ function SanteDBWrapper() {
 
     // Get the version of this API Wrapper
     this.getVersion = function () {
-        return "2.0.36.0";
+        return "2.1.85.0";
     }
 
     /**
@@ -1417,9 +1605,9 @@ function SanteDBWrapper() {
         var _resourceStates = {};
         var _idParsers = {};
         var _idClassifiers = {};
-        var _templateView  ={};
+        var _templateView = {};
         var _templateForm = {};
-        
+
         // JWS Pattern
         var jwsDataPattern = /^(.*?)\.(.*?)\.(.*?)$/;
 
@@ -1502,22 +1690,19 @@ function SanteDBWrapper() {
          * @summary Scans a barcode using @see scanBarcodeAsync however interprets the identifier rather than returning the raw data
          * @returns {string} The interpreted barcode identifier information
          */
-        this.scanIdentifierAsync = async function() {
+        this.scanIdentifierAsync = async function () {
             var data = await SanteDB.application.scanBarcodeAsync();
 
-            if(jwsDataPattern.test(data))
-            {
+            if (jwsDataPattern.test(data)) {
                 var match = jwsDataPattern.exec(data);
                 var idData = JSON.parse(atob(match[2]));
                 return idData.id[0].value;
             }
-            else 
-            {
+            else {
                 var idDomain = SanteDB.application.classifyIdentifier(data);
-                if(idDomain.length == 1)
-                {
+                if (idDomain.length == 1) {
                     var parser = SanteDB.application.getIdentifierParser(idDomain[0]);
-                    if(parser) data = parser(data);
+                    if (parser) data = parser(data);
                 }
                 return data;
             }
@@ -1531,11 +1716,11 @@ function SanteDBWrapper() {
          * @param {*} noValidate True if the barcode should not be validated
          * @param {*} upstream True if search upstream
          */
-        this.searchByBarcodeAsync = async function(qrCodeData, noValidate, upstream) {
+        this.searchByBarcodeAsync = async function (qrCodeData, noValidate, upstream) {
             try {
                 if (!qrCodeData)
                     qrCodeData = await SanteDB.application.scanBarcodeAsync();
-        
+
                 // QR Code is a signed code
                 if (jwsDataPattern.test(qrCodeData)) {
                     var result = await SanteDB.application.ptrSearchAsync(qrCodeData, !noValidate, upstream || false);
@@ -1544,30 +1729,29 @@ function SanteDBWrapper() {
                     return result;
                 }
                 else {
-        
+
                     var idDomain = SanteDB.application.classifyIdentifier(qrCodeData);
-                    if(idDomain.length == 1)
-                    {
+                    if (idDomain.length == 1) {
                         var parser = SanteDB.application.getIdentifierParser(idDomain[0]);
-                        if(parser) qrCodeData = parser(qrCodeData);
+                        if (parser) qrCodeData = parser(qrCodeData);
                     }
-                    var result = await SanteDB.resources.entity.findAsync({ "identifier.value" : qrCodeData});
+                    var result = await SanteDB.resources.entity.findAsync({ "identifier.value": qrCodeData });
                     result.$search = qrCodeData;
                     return result;
                 }
             }
             catch (e) {
-                if(!e) // No error
+                if (!e) // No error
                     return null;
                 // Error was with validating the code
                 else if (e.rules && e.rules.length > 0 && e.rules.filter(o => o.id == "jws.verification" || o.id == "jws.app" || o.id == "jws.key").length == e.rules.length) {
                     return await SanteDB.application.searchByBarcodeAsync(qrCodeData, true, upstream);
                 }
-                else if(!upstream && (e.$type == "KeyNotFoundException" || e.cause && e.cause.$type == "KeyNotFoundException")  && confirm(SanteDB.locale.getString("ui.emr.search.online"))) {
+                else if (!upstream && (e.$type == "KeyNotFoundException" || e.cause && e.cause.$type == "KeyNotFoundException") && confirm(SanteDB.locale.getString("ui.emr.search.online"))) {
                     // Ask the user if they want to search upstream, only if they are allowed
                     var session = await SanteDB.authentication.getSessionInfoAsync();
-        
-                    if(session.method == "LOCAL") // Local session so elevate to use the principal elevator
+
+                    if (session.method == "LOCAL") // Local session so elevate to use the principal elevator
                     {
                         var elevator = new ApplicationPrincipalElevator();
                         await elevator.elevate(session);
@@ -1627,15 +1811,14 @@ function SanteDBWrapper() {
          * @param {string} domain The domain which is being classified
          * @param {RegExp} regexClassification The classification regex
          */
-        this.addIdentifierClassifier = function(domain, regexClassification) {
+        this.addIdentifierClassifier = function (domain, regexClassification) {
             _idClassifiers[domain] = regexClassification;
 
-            if(!_idParsers[domain]) // We can implement a parser by returning the first capture group of the regex
-                _idParsers[domain] = function(value) {
+            if (!_idParsers[domain]) // We can implement a parser by returning the first capture group of the regex
+                _idParsers[domain] = function (value) {
                     var matchData = regexClassification.exec(value);
-                    if(matchData)
-                    {
-                        if(matchData.length > 1)
+                    if (matchData) {
+                        if (matchData.length > 1)
                             return matchData[1];
                         return matchData[0];
                     }
@@ -1650,8 +1833,8 @@ function SanteDBWrapper() {
          * @param {string} value The value of the identifier
          * @returns {Array} An array of potential identity domains which the value could belong to
          */
-        this.classifyIdentifier = function(value) {
-            return Object.keys(_idClassifiers).filter(o=>_idClassifiers[o].test(value));
+        this.classifyIdentifier = function (value) {
+            return Object.keys(_idClassifiers).filter(o => _idClassifiers[o].test(value));
         }
 
         /**
@@ -1664,7 +1847,7 @@ function SanteDBWrapper() {
          *      return dln.subString(0, 10);
          *  });
          */
-        this.addIdentifierParser = function(domain, parserCallback) {
+        this.addIdentifierParser = function (domain, parserCallback) {
             _idParsers[domain] = parserCallback;
         }
 
@@ -1674,7 +1857,7 @@ function SanteDBWrapper() {
          * @param {string} domain The domain to which the parser belongs
          * @returns {function} The parser function
          */
-        this.getIdentifierParser = function(domain) {
+        this.getIdentifierParser = function (domain) {
             return _idParsers[domain];
         }
 
@@ -2109,11 +2292,11 @@ function SanteDBWrapper() {
          * @summary Show a toast to the user
          * @param {string} text The text of the toast
          */
-        this.showToast = function(text) {
+        this.showToast = function (text) {
             try {
                 __SanteDBAppService.ShowToast(text);
             }
-            catch(e) {
+            catch (e) {
             }
         }
         /**
@@ -2176,6 +2359,26 @@ function SanteDBWrapper() {
      * @property {ResourceWrapper} userEntity Functions for interacting with {@link UserEntity}
      */
     function ResourceApi() {
+
+        // Reference to this
+        var _me = this;
+
+        /**
+         * @method
+         * @summary Sometimes when a link is retrieved it is a base class - this function ensures that the @value is of type @desiredType if not it will fetch
+         * @param {any} value The current value of the object which should be the desired type
+         * @param {String} desiredType The type of resource that the value should be or else the resource is fetched
+         * @returns {Promise} A promise for the fulfillment of the check
+         */
+        this.ensureTypeAsync = function (value, desiredType) {
+            if (value == null || value.$type === undefined || value.$type === desiredType) {
+                return value;
+            }
+            else if (value.id) {
+                return _me[desiredType.toCamelCase()].getAsync(value.id);
+            }
+        }
+
         /**
         * @type {ResourceWrapper}
         * @memberof SanteDBWrapper.ResourceApi
@@ -2692,7 +2895,7 @@ function SanteDBWrapper() {
          * @param {string} key The key of the setting to retrieve
          * @returns {String} The value of the setting
          */
-        this.getAppSettingAsync = function(key) {
+        this.getAppSettingAsync = function (key) {
             return _resources.configuration.getAssociatedAsync("global", "setting", key)[0];
         }
 
@@ -2702,8 +2905,8 @@ function SanteDBWrapper() {
          * @param {string} key The key of the setting to retrieve
          * @returns {String} The value of the setting
          */
-        this.setAppSettingAsync = function(key, value) {
-            return _resources.configuration.addAssociatedAsync("global","setting", [{ key: key, value: value }]);
+        this.setAppSettingAsync = function (key, value) {
+            return _resources.configuration.addAssociatedAsync("global", "setting", [{ key: key, value: value }]);
         }
 
         /**
@@ -3245,31 +3448,26 @@ function SanteDBWrapper() {
                 try {
 
                     var refreshToken = window.sessionStorage.getItem("refresh_token");
-                    if (refreshToken) {
-                        _auth.postAsync({
-                            resource: "oauth2_token",
-                            data: {
-                                grant_type: 'refresh_token',
-                                refresh_token: refreshToken,
-                                scope: "*"
-                            },
-                            contentType: 'application/x-www-form-urlencoded'
+                    _auth.postAsync({
+                        resource: "oauth2_token",
+                        data: {
+                            grant_type: 'refresh_token',
+                            refresh_token: refreshToken || 'cookie',
+                            scope: "*"
+                        },
+                        contentType: 'application/x-www-form-urlencoded'
+                    })
+                        .then(function (d) {
+                            if (!noSession) {
+                                _oauthSession = d;
+                                _session = null;
+                                if (d.access_token) window.sessionStorage.setItem('token', d.access_token || d.token);
+                                if (d.refresh_token) window.sessionStorage.setItem('refresh_token', d.refresh_token);
+                                _authentication.getSessionInfoAsync().then(fulfill).catch(reject);
+                            }
+                            else if (fulfill) fulfill(d);
                         })
-                            .then(function (d) {
-                                if (!noSession) {
-                                    _oauthSession = d;
-                                    _session = null;
-                                    if (d.access_token) window.sessionStorage.setItem('token', d.access_token || d.token);
-                                    if (d.refresh_token) window.sessionStorage.setItem('refresh_token', d.refresh_token);
-                                    _authentication.getSessionInfoAsync().then(fulfill).catch(reject);
-                                }
-                                else if (fulfill) fulfill(d);
-                            })
-                            .catch(reject);
-                    }
-                    else {
-                        if (reject) reject(new Exception("SecurityException", "error.security", "Cannot refresh a null session"));
-                    }
+                        .catch(reject);
                 }
                 catch (e) {
                     var ex = e.responseJSON || e;
@@ -3529,7 +3727,7 @@ function SanteDBWrapper() {
                         window.sessionStorage.getItem("token"));
                 if (!_magic)
                     _magic = __SanteDBAppService.GetMagic();
-                
+
             }
             data.setRequestHeader("X-SdbLanguage", SanteDB.locale.getLocale()); // Set the UI locale
             data.setRequestHeader("X-SdbMagic", _magic);
