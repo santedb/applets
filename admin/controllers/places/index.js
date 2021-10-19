@@ -82,7 +82,7 @@ angular.module('santedb').controller('PlaceIndexController', ["$scope", "$rootSc
                 $rootScope.errorHandler(e);
             }
             finally {
-                $("#PlaceTable").attr("newQuery", true);
+                $("#PlaceTable").attr("newQueryId", true);
                 $("#PlaceTable table").DataTable().draw();
             }
 
@@ -111,7 +111,7 @@ angular.module('santedb').controller('PlaceIndexController', ["$scope", "$rootSc
                 $rootScope.errorHandler(e);
             }
             finally {
-                $("#PlaceTable").attr("newQuery", true);
+                $("#PlaceTable").attr("newQueryId", true);
                 $("#PlaceTable table").DataTable().draw();
             }
 

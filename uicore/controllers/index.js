@@ -203,8 +203,11 @@ var santedbApp = angular.module('santedb', ['ngSanitize', 'ui.router', 'oc.lazyL
             $rootScope.previousState = transition.$from();
 
             // Change title
-            if (transition.$to()) {
+            if (transition.$to() && transition.$to().self && transition.$to().self.displayName) {
                 document.title = `${transition.$to().self.displayName}`;
+            }
+            else {
+                document.title = SanteDB.locale.getString("ui.title");
             }
             $("#navbarResponsive").collapse('hide');
             delete ($rootScope._transition);

@@ -840,6 +840,10 @@ function ResourceWrapper(_config) {
         */
     this.getAsync = function (id, viewModel, query, upstream, state) {
 
+        var headers = {
+            Accept: _config.accept
+        };
+
         // Prepare query
         var url = null;
         if (id) {
@@ -861,10 +865,6 @@ function ResourceWrapper(_config) {
         if (upstream) {
             headers["X-SanteDB-Upstream"] = true;
         }
-
-        var headers = {
-            Accept: _config.accept
-        };
 
         if (viewModel)
             headers["X-SanteDB-ViewModel"] = viewModel;
