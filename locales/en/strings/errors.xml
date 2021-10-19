@@ -41,6 +41,7 @@
       <string name="error.invalidBrowser.text">SanteDB won\'t work on this browser. Supported browsers including: &lt;ul&gt;&lt;li&gt;Google Chrome&lt;/li&gt;&lt;li&gt;Mozilla Firefox&lt;/li&gt;&lt;li&gt;Microsoft Edge&lt;/li&gt;&lt;li&gt;Android 5.0 or higher&lt;/li&gt;&lt;/ul&gt;</string>
       <string name="error.type.ArgumentNullException">Argument Null or Empty</string> 
       <string name="error.type.ArgumentNullException.userMessage">Value cannot be null or empty</string> 
+      <string name="error.type.ArgumentNullException.missingPatient">Message did not contain a patient</string>
       <string name="error.messaging.fhir.match.operation">Error running match operation on {param}</string>
       <string name="error.messaging.fhir.adverseEvent.act">This act does not appear to be an adverse event</string>
       <string name="error.messaging.fhir.bundle.fhirBundle">Expected a FHIR bundle</string>
@@ -49,12 +50,14 @@
 
       <string name="error.type.InvalidDataException">Invalid data</string>
       <string name="error.type.InvalidOperation">Invalid Operation</string>
+      <string name="error.type.InvalidOperation.missingPatientRepo">Cannot find repository for Patient</string>
       <string name="error.type.InvalidDataException.userMessage">Invalid {param}</string>
       <string name="error.messaging.fhir.subscription.emailScheme">Scheme of the endpoint for e-mail subscriptions is {param}</string>
       <string name="error.type.FhirException">Error Executing FHIR Operation</string>
       <string name="error.type.KeyNotFoundException.couldNotResolve">Could not resolve {param}</string>
       <string name="error.type.InvalidOperation.cannotCreate">Cannot create unless source and target are {param}</string>
       <string name="error.type.InvalidOperation.cannotChange">Cannot change the source of relationship from {param} to {param2}</string>
+      <string name="error.type.InvalidOperation.eventNotUnderstood">Do not understand event {param}</string>
       <string name="error.messaging.fhir.relatedPerson.patientRelationship">RelatedPerson requires Patient relationship</string>
       <string name="error.messaging.fhir.relatedPerson.oneRelationshipType">RelatedPerson must have EXACTLY ONE relationship type</string>
       <string name="error.type.KeyNotFoundException.cannotLocateRegistered">Can\'t locate a registered {param}</string>
@@ -106,5 +109,11 @@
       <string name="error.type.ArgumentNullException.param">{param} cannot be null</string> 
       <string name="error.messaging.fhir.util.extensionNotUnderstood">Extension type is not understood</string>
       <string name="error.messaging.fhir.util.resourceTypeNotValid">Resource type: {param} is not valid</string>
+      <string name="error.messaging.fhir.util.extensionNotUnderstood">Extension type is not understood</string>
+      <string name="error.messaging.fhir.util.resourceTypeNotValid">Resource type: {param} is not valid</string>
+      <string name="error.messaging.hl7.messages.errorPerformingAdmit">Error performing admit</string>
+      <string name="error.messaging.hl7.messages.mergeMissingPair">Merge requires at least one pair of PID and MRG</string>
+      <string name="error.messaging.hl7.messages.errorPerformingMerge">Error performing merge</string>
+      <string name="error.messaging.rest.HDSI.careplanRequiresPatient">Careplan requires a patient or bundle containing a patient entry</string>
 
 </resources>
