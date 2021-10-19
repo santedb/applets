@@ -96,5 +96,12 @@
       <string name="error.messaging.hl7.protectionInvalid">Protection indicator {param} is invalid</string>
       <string name="error.messaging.hl7.countryCode">Cannot find country with code {param}</string>
       <string name="error.messaging.hl7.segmentRequirement">{param} Requires {param2} segment to be processed</string>
+      <string name="error.server.core.servicePersistence">Unable to locate persistence service: {param}</string>
+      <string name="error.server.core.validationFail">{param} Validation Failed</string>
+      <string name="error.server.core.supportTouch">Repository must support TOUCH</string>
+      <string name="error.server.core.conceptTerm">Cannot find concept/reference term service</string>
+      <string name="error.server.core.userCreated">Could not find created user from identity provider</string>
+      <string name="error.type.KeyNotFoundException.notFound">{param} not found</string>
+      <string name="error.type.ArgumentNullException.param">{param} cannot be null</string> 
 
 </resources>
