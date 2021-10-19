@@ -46,6 +46,7 @@
       <string name="error.messaging.fhir.bundle.fhirBundle">Expected a FHIR bundle</string>
       <string name="error.type.ArgumentException">Invalid Argument: {param}</string>
       <string name="error.type.NotSupportedExeption.paramOnlySupported">Only {param} references are supported</string>
+
       <string name="error.type.InvalidDataException">Invalid data</string>
       <string name="error.type.InvalidOperation">Invalid Operation</string>
       <string name="error.type.InvalidDataException.userMessage">Invalid {param}</string>
@@ -103,5 +104,7 @@
       <string name="error.server.core.userCreated">Could not find created user from identity provider</string>
       <string name="error.type.KeyNotFoundException.notFound">{param} not found</string>
       <string name="error.type.ArgumentNullException.param">{param} cannot be null</string> 
+      <string name="error.messaging.fhir.util.extensionNotUnderstood">Extension type is not understood</string>
+      <string name="error.messaging.fhir.util.resourceTypeNotValid">Resource type: {param} is not valid</string>
 
 </resources>
