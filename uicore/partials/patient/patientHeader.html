@@ -56,10 +56,10 @@
                         <div class="col-8">
                             <div class="d-flex flex-wrap justify-content-end">
                                 <div class="p-2"
-                                    ng-if="id.value &amp;&amp; domain != $root.system.config.application.setting['aa.preferred']"
+                                    ng-if="id[0].value &amp;&amp; domain != $root.system.config.application.setting['aa.preferred']"
                                     ng-repeat="(domain, id) in patient.identifier track by $index">
-                                    <i class="far fa-id-card"></i> {{ id.value }} <span
-                                        class="badge badge-info">{{ id.authority.name }}</span>
+                                    <i class="far fa-id-card"></i> {{ id[0].value }} <span
+                                        class="badge badge-info">{{ id[0].authority.name }}</span>
                                 </div>
                             </div>
                         </div>

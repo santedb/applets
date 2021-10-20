@@ -31,7 +31,7 @@ angular.module('santedb').controller('PolicyIndexController', ["$scope", "$rootS
             $("#action_grp_" + index + " a i.fa-trash").removeClass("fa-trash").addClass("fa-circle-notch fa-spin");
             SanteDB.resources.securityPolicy.deleteAsync(id)
                 .then(function (e) {
-                    $("#SecurityPolicyTable").attr("newQuery", true);
+                    $("#SecurityPolicyTable").attr("newQueryId", true);
                     $("#SecurityPolicyTable table").DataTable().draw();
                 })
                 .catch($rootScope.errorHandler);
@@ -58,7 +58,7 @@ angular.module('santedb').controller('PolicyIndexController', ["$scope", "$rootS
 
             SanteDB.resources.securityPolicy.patchAsync(id, null, patch)
                 .then(function (e) {
-                    $("#SecurityPolicyTable").attr("newQuery", true);
+                    $("#SecurityPolicyTable").attr("newQueryId", true);
                     $("#SecurityPolicyTable table").DataTable().draw();
                 })
                 .catch(function (e) {

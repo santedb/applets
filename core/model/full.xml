@@ -20,7 +20,7 @@
  -->
 <ViewModel xmlns="http://santedb.org/model/view">
   <include>base</include>
-
+ 
   <type type="ActProtocol" all="false">
     <property name="protocol" behavior="always"/>
     <property name="protocolModel" behavior="always" all="false">
@@ -80,8 +80,8 @@
     <property name="previousVersionModel" behavior="never"/>
     <property name="determinerConceptModel" behavior="never"/>
     <property name="typeConceptModel" behavior="always" ref="Concept"/>
-    <property name="createdBy" behavior="never"/>
-    <property name="creationTime" behavior="never"/>
+    <property name="createdBy" behavior="always" all="true"/>
+    <property name="creationTime" behavior="always"/>
     <property name="creationTimeModel" behavior="never"/>
     <property name="version" behavior="never"/>
     <property name="name" all="true" ref="EntityName" behavior="always"/>

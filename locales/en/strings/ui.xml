@@ -149,6 +149,8 @@
       <string name="ui.action.override">Override</string>
       <string name="ui.action.run">Run</string>
       <string name="ui.action.merge">Merge</string>
+      <string name="ui.action.link">Link</string>
+      <string name="ui.action.resolve">Resolve</string>
       <string name="ui.action.enable">Enable</string>
       <string name="ui.action.disable">Disable</string>
       <string name="ui.action.scan">Scan</string>
@@ -176,7 +178,8 @@
       <string name="ui.action.logout">Logout</string>
       <string name="ui.action.close">Close</string>
       <string name="ui.action.findDuplicates">Find Duplicates</string>
-      <string name="ui.action.detach">Detach</string>
+      <string name="ui.action.unlink">Unlink</string>
+      <string name="ui.action.detail">Details</string>
       <string name="ui.pref.nevershow">Never show this message again</string>
       <string name="ui.action.upgrade">Upgrade</string>
       <string name="ui.action.convert">Convert</string>
@@ -380,30 +383,6 @@
       <string name="org.santedb.widget.patient.base">Basic Information</string>
       <string name="org.santedb.widget.patient.identity">Identity</string>
       <string name="org.santedb.widget.patient.nok">Next of Kin</string>
-
-      <!-- Master Data Management -->
-      <string name="org.santedb.widget.patient.mdm">Master Data Management</string>
-      <string name="org.santedb.widget.mdm.locals">Local Records</string>
-      <string name="org.santedb.widget.mdm.duplicates">Probable Local Records</string>
-      <string name="ui.santedb.widget.mdm.duplicates.recordInfo">Local Record</string>
-      <string name="ui.santedb.widget.mdm.duplicates.createdBy">Source</string>
-      <string name="ui.mdm.type.L">LOCAL RECORD</string>
-      <string name="ui.mdm.type.M">MASTER RECORD</string>
-      <string name="ui.mdm.type.T">RECORD OF TRUTH</string>
-      <string name="ui.mdm.action.openMaster">Go to MASTER</string>
-      <string name="ui.mdm.action.openRot">Go to RECORD OF TRUTH</string>
-      <string name="ui.mdm.view.local">You are viewing a LOCAL record. This record comes from a particular source system</string>
-      <string name="ui.mdm.view.master">You are looking at a MASTER record. This record is synthesized from multiple LOCAL records</string>
-      <string name="ui.mdm.view.masterAdjudicated">You are looking at a &lt;strong&gt;MASTER&lt;/strong&gt; record with a &lt;strong&gt;RECORD OF TRUTH&lt;/strong&gt;. Use the MDM tab to pull data from locals into this record of truth</string>
-      <string name="ui.mdm.isTrue">This MASTER is based on the RECORD OF TRUTH meaning it has been validated by an authorized device</string>
-      <string name="ui.mdm.edit.master">This is a MASTER record. Editing it will result in the creation a new LOCAL record for the administrative panel which will be.</string>
-      <string name="ui.mdm.edit.recordOfTruth">You are editing a RECORD OF TRUTH, this record should contain the &quot;official&quot; data for this object.</string>
-      <string name="ui.mdm.edit.local">This is a LOCAL record. Editing it may result in data mis-match between the system which supplied the data and the server</string>
-      <string name="ui.mdm.edit.linkedEditWarning">This data may be linked to other entities which may not be subject to MDM rules. You should either clone it convert it.</string>
-      <string name="ui.mdm.action.ignore.confirm">Are you sure you want to mark this record as a non-match?</string>
-      <string name="ui.mdm.action.merge.confirm">Are you sure you want to integrate/merge this local record with the current master record?</string>
-      <string name="ui.mdm.action.detach.confirm">Are you sure you want to detach (unmerge) this local record from the current master record?</string>
-
       <!-- Core Widgets -->
       <string name="org.santedb.widget.mdm.recordOfTruth">Record of Truth</string>
       <string name="org.santedb.widget.mdm.candidate">Candidate Records</string>

@@ -26,7 +26,12 @@ angular.module('santedb').controller('JobAdminController', ["$scope", "$rootScop
             case "Completed":
                 return `<span class="badge badge-success badge-pill"><i class="fas fa-check"></i> ${SanteDB.locale.getString("ui.state.complete")}</span>`;
             case "Running":
-                return `<span class="badge badge-primary badge-pill"><i class="fas fa-play"></i> ${SanteDB.locale.getString("ui.state.running")}</span>`;
+                if(job.status) {
+                    return `<span class="badge badge-primary badge-pill"><i class="fas fa-play"></i> ${SanteDB.locale.getString("ui.state.running")} (${Math.round(job.progress * 100)}%)</span> - ${job.status}`;
+                }
+                else {
+                    return `<span class="badge badge-primary badge-pill"><i class="fas fa-play"></i> ${SanteDB.locale.getString("ui.state.running")}</span>`;
+                }
             case "Cancelled":
                 return `<span class="badge badge-warning badge-pill"><i class="fas fa-info-circle"></i> ${SanteDB.locale.getString("ui.state.cancelled")}</span>`;
             case "Aborted":
@@ -56,11 +61,31 @@ angular.module('santedb').controller('JobAdminController', ["$scope", "$rootScop
     }
 
     // Render run
-    $scope.runJob = async function(id) {
+    $scope.runJob = async function(id, index, jobParameters) {
+
+        // Get the job 
+        try {
+            var jobInfo = await SanteDB.resources.jobInfo.getAsync(id);
+            if(!jobParameters && jobInfo.parameters && jobInfo.parameters.length > 0) {
+                $scope.currentJob = jobInfo;
+                $("#jobParameterDialog").modal('show');
+                try { $scope.$applyAsync(); }
+                catch(e) { }
+                return;
+            }
+            
+
+        }
+        catch(e) {
+            $rootScope.errorHandler(e);
+            return;
+        }
+
+        $("#jobParameterDialog").modal('hide');
         if(confirm(SanteDB.locale.getString("ui.admin.job.runJob.confirm"))) 
         {
             try {
-                await SanteDB.resources.jobInfo.updateAsync(id, { "$type" : "JobInfo" });
+                await SanteDB.resources.jobInfo.updateAsync(id, { "$type" : "JobInfo", "parameters" : jobParameters });
                 $("#jobsTable table").DataTable().ajax.reload();
 
             }   

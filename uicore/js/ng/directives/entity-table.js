@@ -43,7 +43,8 @@ angular.module('santedb-lib')
                 canSize: "<",
                 noButtons: "<",
                 buttonBar: "<",
-                itemClass: "<"
+                itemClass: "<",
+                stateless: "<"
             },
             restrict: 'E',
             replace: true,
@@ -65,11 +66,20 @@ angular.module('santedb-lib')
                     scope.propertyPath = attrs.propertyPath;
 
                     var columns = scope.properties.map(function (m) {
+
+                        var expectedType = null;
+                        // Name and type?
+                        if(m.indexOf('@') > -1) {
+                            var metaData = m.split('@');
+                            m = metaData[0];
+                            expectedType = metaData[1];
+                        }
                         var renderer = scope.render ? scope.render[m] : null;
 
                         return {
                             orderable: (renderer == null || scope.sort && scope.sort[m] !== undefined) || false,
                             data: m,
+                            expectedType: expectedType,
                             class: scope.itemClass ? scope.itemClass[m] : null,
                             defaultContent: '',
                             render: renderer ?
@@ -106,13 +116,15 @@ angular.module('santedb-lib')
 
                                     if (!b.when || scope.$eval(b.when, { r: r, cell: m, StatusKeys: StatusKeys})) {
                                         if (b.sref)
-                                            retVal += `<a title="${SanteDB.locale.getString('ui.action.' + b.name)}" ui-sref="${b.sref}({ id: '${r.id}' })" class="btn ${(b.className || 'btn-default')}">`;
+                                            retVal += `<a id="${attrs.type}${b.name}${m.row}" title="${SanteDB.locale.getString(b.hint ? scope.i18nPrefix + b.hint : 'ui.action.' + b.name)}" ui-sref="${b.sref}({ id: '${r.id}' })" class="btn ${(b.className || 'btn-default')}">`;
+                                        else if(b.href)
+                                            retVal += `<a id="${attrs.type}${b.name}${m.row}" title="${SanteDB.locale.getString(b.hint ? scope.i18nPrefix + b.hint : 'ui.action.' + b.name)}" href="${b.href}/${r.id}" class="btn ${(b.className || 'btn-default')}">`;
                                         else
-                                            retVal += `<a title="${SanteDB.locale.getString('ui.action.' + b.name)}" href="" ng-click="$parent.${b.action}('${r.id}', ${m.row})" class="btn ${(b.className || 'btn-default')}">`;
+                                            retVal += `<a id="${attrs.type}${b.name}${m.row}" title="${SanteDB.locale.getString(b.hint ? scope.i18nPrefix + b.hint : 'ui.action.' + b.name)}" href="" ng-click="$parent.${b.action}('${r.id}', ${m.row})" class="btn ${(b.className || 'btn-default')}">`;
                                         retVal += `<i class="${b.icon || 'fas fas-eye-open'}"></i>&nbsp;`;
 
                                         if (b.name)
-                                            retVal += `<span class="d-sm-none d-lg-inline">${SanteDB.locale.getString(b.label || 'ui.action.' + b.name)}</span>`;
+                                            retVal += `<span class="d-sm-none d-lg-inline">${SanteDB.locale.getString(b.label ? scope.i18nPrefix + b.label : 'ui.action.' + b.name)}</span>`;
                                         retVal += "</a>";
                                     }
                                 });
@@ -133,11 +145,13 @@ angular.module('santedb-lib')
                             .filter(b=> !b.demand || b.demand && $rootScope.session && $rootScope.session.scope.filter(o=>b.demand.indexOf(o) == 0).length > 0) // check policy
                             .map(function (b) {
                             return {
-                                text: `<i class="${b.icon}"></i> ` + SanteDB.locale.getString('ui.action.' + b.name),
+                                text: `<i class="${b.icon}"></i> ` + SanteDB.locale.getString(b.label ? scope.i18nPrefix + b.label : 'ui.action.' + b.name),
                                 className: `btn ${b.className || 'btn-default'}`,
                                 action: function (e, dt, node, config) {
                                     if(b.sref)
                                         $state.transitionTo(b.sref);
+                                    else if(b.href)
+                                        window.location = b.href;
                                     else 
                                         scope.$parent[b.action]();
                                 }
@@ -202,7 +216,7 @@ angular.module('santedb-lib')
                         serverSide: true,
                         searching: scope.canFilter,
                         "oSearch": scope.defaultFilter ? {"sSearch": scope.defaultFilter} : undefined,
-                        ajax: function (data, callback, settings) {
+                        ajax: async function (data, callback, settings) {
 
                             
                             var query = angular.copy(scope.defaultQuery) || {};
@@ -217,17 +231,21 @@ angular.module('santedb-lib')
 
                                 query["_orderBy"] = `${orderExpr}:${data.order[0].dir}`;
                             }
-                            if (scope.extenral)
-                                query["_upstream"] = true;
+                            
 
                             var thisQuery = JSON.stringify(query);
-                            if (lastQuery != thisQuery || element.attr("newQuery") == "true") {
+
+
+                            if (lastQuery != thisQuery || element.attr("newQueryId") == "true") {
                                 lastQuery = thisQuery;
                                 queryId = SanteDB.application.newGuid();
-                                element.attr("newQuery", false);
+                                element.attr("newQueryId", false);
                             }
 
-                            query["_queryId"] = queryId;
+                            if(!scope.stateless) {
+                                query["_queryId"] = queryId;
+                            }
+
                             query["_count"] = data.length;
                             query["_offset"] = data.start;
 
@@ -237,33 +255,53 @@ angular.module('santedb-lib')
                                 if(isSearching)
                                 {
                                     if(!returnTimer)
-                                        returnTimer = setTimeout(() => dt.ajax.reload(), 1000);
+                                        returnTimer = setTimeout(() => dt.ajax.reload(), 2000);
                                 }
                                 else {
                                     if(returnTimer) clearTimeout(returnTimer); // cancel the previous timer
                                     isSearching = true;
-                                    SanteDB.resources[attrs.type.toCamelCase()].findAsync(query)
-                                        .then(function (res) {
+                                    var searchPromise = null;
 
-                                            res.resource = res.resource || [];
-                                            callback({
-                                                data: res.resource.map(function (item) {
-                                                    if (scope.propertyPath)
-                                                        return item[scope.propertyPath];
-                                                    else
-                                                        return item;
-                                                }),
-                                                recordsTotal: res.totalResults || res.size || 0,
-                                                recordsFiltered: res.totalResults || res.size || 0,
-                                                iTotalRecords: res.totalResults || res.size || 0,
-                                                iTotalDisplayRecords: res.totalResults  || res.size  || 0
-                                            });
-                                            isSearching = false;
-                                        })
-                                        .catch(function (err) { 
-                                            isSearching = false;
-                                            $rootScope.errorHandler(err);
+                                    if(attrs.subResource) {
+                                        searchPromise = SanteDB.resources[attrs.type.toCamelCase()].findAssociatedAsync(null, attrs.subResource, query, scope.external);
+                                    }
+                                    else {
+                                        searchPromise = SanteDB.resources[attrs.type.toCamelCase()].findAsync(query, undefined, scope.external);
+                                    }
+                                    
+                                    try {
+                                        var res = await searchPromise;
+
+                                        res.resource = res.resource || [];
+
+                                        // Ensure types 
+                                        for(var c in columns) {
+                                            var colData = columns[c];
+                                            if(colData.expectedType) { // ensure type
+                                                // Await all resources to have expected type
+                                                await Promise.all(res.resource.map(async res => res[colData.data] =  await SanteDB.resources.ensureTypeAsync(res[colData.data], colData.expectedType)));       
+                                            }
+                                        };
+                                        // Callback to DT
+                                        callback({
+                                            data: res.resource.map(function (item) {
+                                                if (scope.propertyPath)
+                                                    return item[scope.propertyPath];
+                                                else
+                                                    return item;
+                                            }),
+                                            recordsTotal: res.totalResults || res.size || 0,
+                                            recordsFiltered: res.totalResults || res.size || 0,
+                                            iTotalRecords: res.totalResults || res.size || 0,
+                                            iTotalDisplayRecords: res.totalResults  || res.size  || 0
                                         });
+                                        // HACK: Don't send up another search for 2 sec
+                                        setTimeout(()=>isSearching = false, 500); 
+                                    }
+                                    catch(err) {
+                                        isSearching = false;
+                                        $rootScope.errorHandler(err);
+                                    }
                                 }
                             }
                             else {

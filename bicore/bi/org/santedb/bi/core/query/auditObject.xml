@@ -40,7 +40,7 @@
         <invariant>FirebirdSQL</invariant>
       </providers>
       <![CDATA[
-        SELECT 
+        SELECT DISTINCT
           AUD_TBL.ID AS ID,
           AUD_ACT_TBL.USR_NAME AS USER_NAME,
           AP AS ACCESS_POINT, 
