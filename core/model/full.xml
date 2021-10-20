@@ -20,7 +20,7 @@
  -->
 <ViewModel xmlns="http://santedb.org/model/view">
   <include>base</include>
-
+ 
   <type type="ActProtocol" all="false">
     <property name="protocol" behavior="always"/>
     <property name="protocolModel" behavior="always" all="false">

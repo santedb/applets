@@ -27,12 +27,14 @@ angular.module('santedb').controller('EditPolicyController', ["$scope", "$rootSc
         $scope.isLoading = true;
         SanteDB.resources.securityPolicy.getAsync($stateParams.id)
             .then(function (u) {
-                $scope.isLoading = false;
-                $scope.target = $scope.target || {};
-                $scope.target.securityPolicy = u;
-                $scope.target.securityPolicy.etag = u.etag;
-                $scope.target.id = u.id;
-                $scope.$apply();
+                $timeout(() => {
+                    $scope.isLoading = false;
+                    $scope.target = $scope.target || {};
+                    $scope.target.securityPolicy = u;
+                    
+                    $scope.target.securityPolicy.etag = u.etag;
+                    $scope.target.id = u.id;
+                });
             })
             .catch($rootScope.errorHandler);
 
@@ -122,14 +124,14 @@ angular.module('santedb').controller('EditPolicyController', ["$scope", "$rootSc
         }
     }
 
-    
+
     /**
      * @summary Reactivate Inactive User
      */
-    $scope.reactivatePolicy = async function() {
-        if(!confirm(SanteDB.locale.getString("ui.admin.policy.reactivate.confirm")))
+    $scope.reactivatePolicy = async function () {
+        if (!confirm(SanteDB.locale.getString("ui.admin.policy.reactivate.confirm")))
             return;
-        
+
         try {
             var patch = new Patch({
                 change: [

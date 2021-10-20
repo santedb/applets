@@ -142,7 +142,7 @@
     <string name="ui.admin.audit.core.source">Source</string>
     <string name="ui.admin.audit.core.sid">EID</string>
     <string name="ui.admin.audit.network.url">URL</string>
-    
+    <string name="ui.admin.audit.name">Display</string>
     <string name="ui.admin.audit.network">Network</string>
     <string name="ui.admin.audit.actors">Users &amp; Computers</string>
     <string name="ui.admin.audit.actors.uname">User Name</string>
@@ -151,11 +151,15 @@
     <string name="ui.admin.audit.actors.role">Roles</string>
     <string name="ui.admin.audit.objects">Data &amp; Objects</string>
     <string name="ui.admin.audit.object.type">Type</string>
-    <string name="ui.admin.audit.object.lifecycle">LC</string>
-    <string name="ui.admin.audit.object.id">ID</string>
+    <string name="ui.admin.audit.object.lifecycle">Lifecycle</string>
+    <string name="ui.admin.audit.object.id">Identifier</string>
     <string name="ui.admin.audit.object.data">Data</string>
     <string name="ui.admin.audit.object.role">Role</string>
     <string name="ui.admin.audit.query">Query Executed</string>
+    <string name="ui.admin.audit.object.idType">ID Type</string>
+    <string name="ui.admin.audit.data.key">Key</string>
+    <string name="ui.admin.audit.data.value">Value</string>
+    <string name="ui.admin.audit.data">Extended Data</string>
     <!-- Profile -->
     <string name="ui.admin.profile">Profile</string>
     <!-- Login Message -->
@@ -201,7 +205,7 @@
     <string name="org.santedb.widget.admin.panel.audit.network">Network</string>
     <string name="org.santedb.widget.admin.panel.audit.usersAndComputers">Users and Computers</string>
     <string name="org.santedb.widget.admin.panel.audit.dataAndObjects">Data and Objects</string>
-
+    <string name="org.santedb.widget.admin.tab.policy.core">Policy Properties</string>
     <string name="org.santedb.widget.admin.panel.policy.core">Core Properties</string>
     <string name="org.santedb.widget.admin.panel.applications.core">Core Application Properties</string>
     <string name="org.santedb.widget.admin.panel.applications.security">Security Properties</string>

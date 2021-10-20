@@ -255,7 +255,7 @@ angular.module('santedb-lib')
                                 if(isSearching)
                                 {
                                     if(!returnTimer)
-                                        returnTimer = setTimeout(() => dt.ajax.reload(), 1000);
+                                        returnTimer = setTimeout(() => dt.ajax.reload(), 2000);
                                 }
                                 else {
                                     if(returnTimer) clearTimeout(returnTimer); // cancel the previous timer
@@ -295,7 +295,8 @@ angular.module('santedb-lib')
                                             iTotalRecords: res.totalResults || res.size || 0,
                                             iTotalDisplayRecords: res.totalResults  || res.size  || 0
                                         });
-                                        isSearching = false;
+                                        // HACK: Don't send up another search for 2 sec
+                                        setTimeout(()=>isSearching = false, 500); 
                                     }
                                     catch(err) {
                                         isSearching = false;

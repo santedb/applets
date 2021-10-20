@@ -17,11 +17,9 @@
  */
 angular.module('santedb').controller('ViewAuditController', ["$scope", "$rootScope", "$state", "$templateCache", "$stateParams", "$compile", '$timeout', function ($scope, $rootScope, $state, $templateCache, $stateParams, $compile, $timeout) {
 
-    console.log(`In view.js for audit`)
     if ($stateParams.id) {
         SanteDB.resources.audit.getAsync($stateParams.id)
             .then ( r=> {
-                console.log(r);
                 $scope.isLoading = false;
                 $scope.target = $scope.target || {};
                 $scope.target.audit = r;

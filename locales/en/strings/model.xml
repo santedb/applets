@@ -273,6 +273,7 @@
       <string name="ui.model.audit.outcome.success">Success</string>
       <string name="ui.model.audit.outcome.warning">Minor/Moderate Fail</string>
       <string name="ui.model.audit.outcome.error">Serious Fail</string>
+      <string name="ui.model.audit.outcome.epic">Major Fail</string>
       <string name="ui.model.audit.timestamp">Timestamp</string>
       <string name="ui.model.audit.actor">Actor</string>
       <string name="ui.model.audit.action.create">Creation</string>
@@ -282,6 +283,8 @@
       <string name="ui.model.audit.action.delete">Delete</string>
       <string name="ui.model.audit.event.securityAlert">Security Alert</string>
       <string name="ui.model.audit.event.userAuthentication">Authentication</string>
+      <string name="ui.model.audit.event.networkActivity">Network Activity</string>
+      <string name="ui.model.audit.event.applicationActivity">Application Activity</string>
       <string name="ui.model.audit.event.import">Import Data</string>
       <string name="ui.model.audit.event.export">Export Data</string>
       <string name="ui.model.audit.event.query">Query</string>
