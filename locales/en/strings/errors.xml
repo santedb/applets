@@ -132,4 +132,10 @@
       <string name="error.messaging.hl7.messages.mergeMissingPair">Merge requires at least one pair of PID and MRG</string>
       <string name="error.messaging.hl7.messages.errorPerformingMerge">Error performing merge</string>
       <string name="error.messaging.rest.HDSI.careplanRequiresPatient">Careplan requires a patient or bundle containing a patient entry</string>
+      <string name="error.type.NotSupportedException.operation">Operation {param} not supported</string>
+      <string name="error.rest.hdsi.supportTouch">Repository service does not support TOUCH</string>
+      <string name="error.rest.hdsi.notSupportCancel">Repository for {param} does not support Cancel</string>
+      <string name="error.rest.hdsi.notSupportNullify">Repository for {param} does not support Nullify</string>
+      <string name="error.type.ObjectLockedException">The object is locked</string>
+      <string name="error.rest.hdsi.handleUserEntity">Can only handle UserEntity</string>
 </resources>
