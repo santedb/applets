@@ -36,7 +36,6 @@ angular.module('santedb-lib')
                 actions: "<",
                 render: "<",
                 i18nPrefix: "<",
-                multiSelect: "<",
                 sort: "<",
                 defaultFilter: "<",
                 canFilter: "<",
@@ -44,7 +43,8 @@ angular.module('santedb-lib')
                 noButtons: "<",
                 buttonBar: "<",
                 itemClass: "<",
-                stateless: "<"
+                stateless: "<",
+                subResourceHolder: "="
             },
             restrict: 'E',
             replace: true,
@@ -147,6 +147,7 @@ angular.module('santedb-lib')
                             return {
                                 text: `<i class="${b.icon}"></i> ` + SanteDB.locale.getString(b.label ? scope.i18nPrefix + b.label : 'ui.action.' + b.name),
                                 className: `btn ${b.className || 'btn-default'}`,
+                                attr: { id:  `${attrs.type}${b.name}` },
                                 action: function (e, dt, node, config) {
                                     if(b.sref)
                                         $state.transitionTo(b.sref);
@@ -263,7 +264,12 @@ angular.module('santedb-lib')
                                     var searchPromise = null;
 
                                     if(attrs.subResource) {
-                                        searchPromise = SanteDB.resources[attrs.type.toCamelCase()].findAssociatedAsync(null, attrs.subResource, query, scope.external);
+                                        if(scope.subResourceHolder) {
+                                            searchPromise = SanteDB.resources[attrs.type.toCamelCase()].findAssociatedAsync(scope.subResourceHolder, attrs.subResource, query, scope.external);
+                                        }
+                                        else {
+                                            searchPromise = SanteDB.resources[attrs.type.toCamelCase()].findAssociatedAsync(null, attrs.subResource, query, scope.external);
+                                        }
                                     }
                                     else {
                                         searchPromise = SanteDB.resources[attrs.type.toCamelCase()].findAsync(query, undefined, scope.external);

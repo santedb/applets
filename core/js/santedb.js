@@ -1483,6 +1483,58 @@ function ResourceWrapper(_config) {
             contentType: _config.accept
         });
     }
+
+     /**
+     * @method invokeOperationAsync
+     * @memberof ResourceWrapper
+     * @summary Invokes the specified method
+     * @param {string} id The identifier of the container (null if global execute)
+     * @param {string} operation The operation you want to execute
+     * @param {any} parameters The parameters to the operation being executes (example: { clear: true, softFind: true })
+     * @param {bool} upstream True if the operation shold be executed opstream 
+     * @param {object} state A tracking state to send to the callback
+     * @returns {Promise} A promise which is fulfilled when the request is complete
+     */
+      this.invokeOperationAsync = function (id, operation, parameters, upstream, state) {
+
+        if (!operation)
+            throw new Exception("ArgumentNullException", "Missing scoping property");
+
+        var headers = {
+            Accept: _config.accept
+        };
+        if (_config.viewModel) 
+            headers["X-SanteDB-ViewModel"] = _config.viewModel;
+
+        // Prepare path
+        var url = null;
+        if (!id)
+            url = `${_config.resource}/$${operation}`;
+        else if (id.id)
+            url = `${_config.resource}/${id.id}/$${operation}`;
+        else
+            url = `${_config.resource}/${id}/$${operation}`;
+
+
+        if(upstream) {
+            headers["X-SanteDB-Upstream"] = true;
+        }
+    
+        // Prepare parameters object 
+        var requestParms = { parameter: [] };
+        if(parameters) {
+            Object.keys(parameters).forEach(p=>requestParms.parameter.push({ name: p, value: parameters[p] }));
+        }
+
+        return _config.api.postAsync({
+            headers: headers,
+            data: requestParms,
+            state: state,
+            resource: url,
+            contentType: "application/json"
+
+        });
+    }
 };
 
 //if (!SanteDB) 
@@ -1795,12 +1847,13 @@ function SanteDBWrapper() {
          * @summary Call the resource viewers
          * @param {*} resourceType The type of resource
          * @param {*} parms The parameters to pass
+         * @param {*} state The state host to use
          */
-        this.callResourceViewer = function (resourceType, parms) {
+        this.callResourceViewer = function (resourceType, state, parms) {
             var callList = _resourceStates[resourceType];
             if (callList) {
                 for (var c in callList)
-                    if (callList[c](parms)) return true;
+                    if (callList[c](state, parms)) return true;
             }
             return false;
         }

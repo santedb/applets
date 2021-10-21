@@ -58,7 +58,8 @@ angular.module('santedb-lib')
             contextName: '<',
             currentTab: '=',
             scopedObject: '=',
-            editForm: '='
+            editForm: '=',
+            noAlt: '<'
         },
         restrict: 'E',
         replace: true,
@@ -107,7 +108,7 @@ angular.module('santedb-lib')
                         $scope.widgetGroups = [];
                         widgets.forEach(function(w) {
 
-                            if(w.size == "Small") {  // combine
+                            /*if(w.size == "Small") {  // combine
                                 if(cGroup == null) {
                                     cGroup = { size: "Small", widgets: [] };
                                     $scope.widgetGroups.push(cGroup);
@@ -116,7 +117,7 @@ angular.module('santedb-lib')
                                 if(cGroup.widgets.length >= w.maxStack)
                                     cGroup = null;
                             }
-                            else 
+                            else */
                                 $scope.widgetGroups.push({ size: w.size, widgets: [w]});
 
                             if($scope.editForm && !w.editForm)
@@ -135,7 +136,7 @@ angular.module('santedb-lib')
             }
         ],
         link: function (scope, element, attrs) {
-        
+            scope.renderSize = attrs.renderSize;
         }
     };
 });

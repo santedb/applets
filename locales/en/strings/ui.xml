@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="ui.debug">DEBUG ENVIRONMENT - NOT FOR PRODUCTION USE</string>
+    <string name="ui.generated.on">Generated On</string>
       <string name="ui.card">Card</string>
       <string name="ui.unknown">N/A</string>
       <string name="ui.confirmed">Confirmed</string>
