@@ -30,9 +30,9 @@
       <string name="error.type.NotSupportedException">Not Supported</string>
       <string name="error.type.NotSupportedException.userMessage">The function you are trying to perform is not supported under your current configuration</string>
       <string name="error.type.FileNotFoundException">Record Not Found</string>
-      <string name="error.type.FileNotFoundException.userMessage">The record you\'re attempting to load does not exist, or you may not have permission to view it</string>
+      <string name="error.type.FileNotFoundException.userMessage">The record you are attempting to load does not exist, or you may not have permission to view it</string>
       <string name="error.type.KeyNotFoundException">Record Not Found</string>
-      <string name="error.type.KeyNotFoundException.userMessage">The record you\'re attempting to load does not exist, or you may not have permission to view it</string>
+      <string name="error.type.KeyNotFoundException.userMessage">The record you are attempting to load does not exist, or you may not have permission to view it</string>
       <string name="error.type.SecurityException">Security Exception</string>
       <string name="error.noScript.title">Enable JavaScript</string>
       <string name="error.noScript.text">SanteDB requires the use of JavaScript to function. It appears that your browser does not support JavaScript or has JavaScript disabled. Please check your security settings and refresh the page</string>
@@ -136,6 +136,7 @@
       <string name="error.rest.hdsi.notSupportNullify">Repository for {param} does not support Nullify</string>
       <string name="error.type.ObjectLockedException">The object is locked</string>
       <string name="error.rest.hdsi.handleUserEntity">Can only handle UserEntity</string>
+<<<<<<< HEAD
       <string name="error.rest.ami.sessionNotFound">Session {param} not found</string>
       <string name="error.rest.ami.policyNotFound">Policy {param} not found</string>
       <string name="error.rest.ami.editSystemPolicy">Policy {param} is a system policy and cannot be edited</string>
@@ -144,4 +145,14 @@
       <string name="error.rest.ami.mismatchUsername">Username mismatch expect {param} but got {param2}</string>
       <string name="error.rest.ami.securityRoleNotFound">Could not find SecurityRole with identifier {param}</string>
       <string name="error.rest.ami.invalidProperty">Property with {param} not valid</string>
+=======
+      <string name="error.messaging.rest.AMI.FileNotFoundParam">File not found: {param}</string>
+      <string name="error.messaging.rest.AMI.noAuditRepository">No audit repository is configured</string>
+      <string name="error.messaging.rest.AMI.errorQueryingProbes">Error querying probes: {param}</string>
+      <string name="error.messaging.rest.AMI.noIJobType">No IJob of type {param} found</string>
+      <string name="error.messaging.rest.AMI.jobCannotBeCancelled">Job cannot be cancelled</string>
+      <string name="error.messaging.rest.AMI.noIJobManager">No IJobManager configured</string>
+      <string name="error.messaging.rest.AMI.couldNotFindJob">Could not find job with ID {param}</string>
+      <string name="error.messaging.rest.AMI.missingJobInfo">Need to pass JobInfo to start a Job</string>
+>>>>>>> d2d2d8779f848f3958d11585e4e72d5a39ee610e
 </resources>
