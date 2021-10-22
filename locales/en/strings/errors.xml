@@ -138,4 +138,12 @@
       <string name="error.rest.hdsi.notSupportNullify">Repository for {param} does not support Nullify</string>
       <string name="error.type.ObjectLockedException">The object is locked</string>
       <string name="error.rest.hdsi.handleUserEntity">Can only handle UserEntity</string>
+      <string name="error.messaging.rest.AMI.FileNotFoundParam">File not found: {param}</string>
+      <string name="error.messaging.rest.AMI.noAuditRepository">No audit repository is configured</string>
+      <string name="error.messaging.rest.AMI.errorQueryingProbes">Error querying probes: {param}</string>
+      <string name="error.messaging.rest.AMI.noIJobType">No IJob of type {param} found</string>
+      <string name="error.messaging.rest.AMI.jobCannotBeCancelled">Job cannot be cancelled</string>
+      <string name="error.messaging.rest.AMI.noIJobManager">No IJobManager configured</string>
+      <string name="error.messaging.rest.AMI.couldNotFindJob">Could not find job with ID {param}</string>
+      <string name="error.messaging.rest.AMI.missingJobInfo">Need to pass JobInfo to start a Job</string>
 </resources>
