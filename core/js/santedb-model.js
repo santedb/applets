@@ -1,19 +1,19 @@
-// SanteDB.Core.Auditing.AuditableObject, SanteDB.Core.Model, Version=2.0.59.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Auditing.AuditableObject, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
 //if(!AuditableObject)
 /**
  * @class
  * @constructor
  * @public
- * @summary             Identifies an object that adds context to the audit            
- * @property {AuditCode} customCode            Custom id type code            
- * @property {AuditableObjectIdType} idType            Identifies the type of identifier supplied            (see: {@link AuditableObjectIdType} for values)
- * @property {AuditableObjectLifecycle} lifecycle            Identifies where in the lifecycle of the object this object is currently within            (see: {@link AuditableObjectLifecycle} for values)
- * @property {string} name            Data associated with the object            
- * @property {ObjectDataExtension} dictionary            Additional object data            
- * @property {string} id            Identifies the object in the event            
- * @property {string} queryData            Data associated with the object            
- * @property {AuditableObjectRole} role            Identifies the role type of the object            (see: {@link AuditableObjectRole} for values)
- * @property {AuditableObjectType} type            Identifies the type of object being expressed            (see: {@link AuditableObjectType} for values)
+ * @summary Identifies an object that adds context to the audit
+ * @property {AuditCode} customCode Custom id type code
+ * @property {AuditableObjectIdType} idType Identifies the type of identifier supplied(see: {@link AuditableObjectIdType} for values)
+ * @property {AuditableObjectLifecycle} lifecycle Identifies where in the lifecycle of the object this object is currently within(see: {@link AuditableObjectLifecycle} for values)
+ * @property {string} name Data associated with the object
+ * @property {ObjectDataExtension} dictionary Additional object data
+ * @property {string} id Identifies the object in the event
+ * @property {string} queryData Data associated with the object
+ * @property {AuditableObjectRole} role Identifies the role type of the object(see: {@link AuditableObjectRole} for values)
+ * @property {AuditableObjectType} type Identifies the type of object being expressed(see: {@link AuditableObjectType} for values)
  * @param {AuditableObject} copyData Copy constructor (if present)
  */
 function AuditableObject (copyData) { 
@@ -39,20 +39,20 @@ function AuditableObject (copyData) {
 	this.customCode = copyData.customCode;
 	}
 }  // AuditableObject 
-// SanteDB.Core.Auditing.AuditActorData, SanteDB.Core.Model, Version=2.0.59.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Auditing.AuditActorData, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
 //if(!AuditActorData)
 /**
  * @class
  * @constructor
  * @public
- * @summary             Data related to actors that participate in the event            
- * @property {AuditCode} role            Identifies the role(s) that the actor has played            
- * @property {string} altUid            Alternative user identifier            
- * @property {string} apId            Identifies the network access point from which the user accessed the system            
- * @property {NetworkAccessPointType} apType            Identifies the type of network access point            (see: {@link NetworkAccessPointType} for values)
- * @property {string} uid            The unique identifier for the user in the system            
- * @property {boolean} isReq            True if the user is the primary requestor            
- * @property {string} uname            The name of the user in the system            
+ * @summary Data related to actors that participate in the event
+ * @property {AuditCode} role Identifies the role(s) that the actor has played
+ * @property {string} altUid Alternative user identifier
+ * @property {string} apId Identifies the network access point from which the user accessed the system
+ * @property {NetworkAccessPointType} apType Identifies the type of network access point(see: {@link NetworkAccessPointType} for values)
+ * @property {string} uid The unique identifier for the user in the system
+ * @property {boolean} isReq True if the user is the primary requestor
+ * @property {string} uname The name of the user in the system
  * @param {AuditActorData} copyData Copy constructor (if present)
  */
 function AuditActorData (copyData) { 
@@ -74,18 +74,18 @@ function AuditActorData (copyData) {
 	this.role = copyData.role;
 	}
 }  // AuditActorData 
-// SanteDB.Core.Auditing.AuditCode, SanteDB.Core.Model, Version=2.0.59.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Auditing.AuditCode, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
 //if(!AuditCode)
 /**
  * @class
  * @constructor
  * @public
- * @summary             Represents an audit code.            
- * @property {string} code            Gets or sets the code of the code value.            
- * @property {string} system            Gets or sets the system in which the code value is drawn.            
- * @property {string} systemName            Gets or sets the human readable name of the code system.            
- * @property {string} systemVersion            Gets or sets the version of the code system.            
- * @property {string} display            Gets or sets the display name.            
+ * @summary Represents an audit code.
+ * @property {string} code Gets or sets the code of the code value.
+ * @property {string} system Gets or sets the system in which the code value is drawn.
+ * @property {string} systemName Gets or sets the human readable name of the code system.
+ * @property {string} systemVersion Gets or sets the version of the code system.
+ * @property {string} display Gets or sets the display name.
  * @param {AuditCode} copyData Copy constructor (if present)
  */
 function AuditCode (copyData) { 
@@ -103,31 +103,34 @@ function AuditCode (copyData) {
 	this.code = copyData.code;
 	}
 }  // AuditCode 
-// SanteDB.Core.Auditing.AuditData, SanteDB.Core.Model, Version=2.0.59.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Auditing.AuditData, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
 //if(!AuditData)
 /**
  * @class
  * @constructor
  * @public
  * @extends IdentifiedData
- * @summary             Specific information related to an audit            
- * @property {ActionType} action            Identifies the action code            (see: {@link ActionType} for values)
- * @property {AuditActorData} actor            Represents the actors within the audit event            
- * @property {AuditableObject} object            Represents other objects of interest            
- * @property {EventIdentifierType} event            Identifies the event            (see: {@link EventIdentifierType} for values)
- * @property {AuditCode} type            Identifies the type of event            
- * @property {OutcomeIndicator} outcome            Identifies the outcome of the event            (see: {@link OutcomeIndicator} for values)
- * @property {Date} timestamp            Event timestamp            
- * @property {object} meta            Metadata about the audit             
+ * @summary Specific information related to an audit
+ * @property {ActionType} action Identifies the action code(see: {@link ActionType} for values)
+ * @property {AuditActorData} actor Represents the actors within the audit event
+ * @property {AuditableObject} object Represents other objects of interest
+ * @property {EventIdentifierType} event Identifies the event(see: {@link EventIdentifierType} for values)
+ * @property {AuditCode} type Identifies the type of event
+ * @property {OutcomeIndicator} outcome Identifies the outcome of the event(see: {@link OutcomeIndicator} for values)
+ * @property {Date} timestamp Event timestamp
+ * @property {object} meta Metadata about the audit
  * @property {AuditMetadata} meta.classifier  where classifier is from {@link AuditMetadata} key
- * @property {Date} modifiedOn            Represents the modified on            
- * @property {string} id            Gets or sets the primary identifying UUID of this object            
- * @property {string} $type            Gets the type registration of this object            
+ * @property {Date} modifiedOn Represents the modified on
+ * @property {string} id Gets or sets the primary identifying UUID of this object
+ * @property {BatchOperationType} operation Gets or sets the operation(see: {@link BatchOperationType} for values)
+ * @property {string} $type Gets the type registration of this object
  * @param {AuditData} copyData Copy constructor (if present)
  */
 function AuditData (copyData) { 
 	this.$type = 'AuditData';
 	if(copyData) {
+	/** @type {BatchOperationType} */
+	this.operation = copyData.operation;
 	/** @type {string} */
 	this.id = copyData.id;
 	/** @type {Date} */
@@ -150,15 +153,15 @@ function AuditData (copyData) {
 	this.action = copyData.action;
 	}
 }  // AuditData 
-// SanteDB.Core.Auditing.AuditMetadata, SanteDB.Core.Model, Version=2.0.59.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Auditing.AuditMetadata, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
 //if(!AuditMetadata)
 /**
  * @class
  * @constructor
  * @public
- * @summary             Represents audit metadata such as submission time, submission sequence, etc.            
- * @property {AuditMetadataKey} key            Gets or sets the metadata key            (see: {@link AuditMetadataKey} for values)
- * @property {string} value            Gets or sets the process name            
+ * @summary Represents audit metadata such as submission time, submission sequence, etc.
+ * @property {AuditMetadataKey} key Gets or sets the metadata key(see: {@link AuditMetadataKey} for values)
+ * @property {string} value Gets or sets the process name
  * @param {AuditMetadata} copyData Copy constructor (if present)
  */
 function AuditMetadata (copyData) { 
@@ -170,7 +173,7 @@ function AuditMetadata (copyData) {
 	this.key = copyData.key;
 	}
 }  // AuditMetadata 
-// SanteDB.Core.Model.Association`1, SanteDB.Core.Model, Version=2.0.59.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Association`1, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
 //if(!Association)
 /**
  * @class
@@ -178,18 +181,21 @@ function AuditMetadata (copyData) {
  * @public
  * @abstract
  * @extends IdentifiedData
- * @summary             Represents a base class for association between two objects            
+ * @summary Represents a base class for association between two objects
  * @description 
- * @property {Date} modifiedOn            Get the modification date            
- * @property {string} source            Gets or sets the source entity's key (where the relationship is FROM)            
- * @property {IdentifiedData} sourceModel [Delay loaded from source],             The entity that this relationship targets            
- * @property {string} id            Gets or sets the primary identifying UUID of this object            
- * @property {string} $type            Gets the type registration of this object            
+ * @property {Date} modifiedOn Get the modification date
+ * @property {string} source Gets or sets the source entity's key (where the relationship is FROM)
+ * @property {IdentifiedData} sourceModel [Delay loaded from source],  The entity that this relationship targets
+ * @property {string} id Gets or sets the primary identifying UUID of this object
+ * @property {BatchOperationType} operation Gets or sets the operation(see: {@link BatchOperationType} for values)
+ * @property {string} $type Gets the type registration of this object
  * @param {Association} copyData Copy constructor (if present)
  */
 function Association (copyData) { 
 	this.$type = 'Association';
 	if(copyData) {
+	/** @type {BatchOperationType} */
+	this.operation = copyData.operation;
 	/** @type {string} */
 	this.id = copyData.id;
 	/** @type {IdentifiedData} */
@@ -200,7 +206,7 @@ function Association (copyData) {
 	this.modifiedOn = copyData.modifiedOn;
 	}
 }  // Association 
-// SanteDB.Core.Model.BaseEntityData, SanteDB.Core.Model, Version=2.0.59.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.BaseEntityData, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
 //if(!BaseEntityData)
 /**
  * @class
@@ -208,28 +214,29 @@ function Association (copyData) {
  * @public
  * @abstract
  * @extends IdentifiedData
- * @summary             Represents the root of all model classes in the SanteDB Core            
- * @description 
- *             This abstract class is used to encapsulate the key properties of base data elements in the SanteDB
- *             model, namely it keeps track of which entities created and obsoleted a particular resource and when those
- *             events occurred.
- *             
- * @property {Date} creationTimeModel [Delay loaded from creationTime],             Gets or sets the time at which the data was created            
- * @property {Date} creationTime            Gets or sets the creation time as an ISO date format            
- * @property {Date} obsoletionTimeModel [Delay loaded from obsoletionTime],             Gets or sets the time when the data is or will become invalid            
- * @property {Date} obsoletionTime            Gets or sets the time that the data is no longer valid (was deleted/obsoleted) in ISO format            
- * @property {SecurityProvenance} createdByModel [Delay loaded from createdBy],             Gets or sets the user that created this base data            
- * @property {Date} modifiedOn            Gets the time that the object was last modified (from base data, default to CreationTime)            
- * @property {SecurityProvenance} obsoletedByModel [Delay loaded from obsoletedBy],             Gets or sets the user that obsoleted this base data            
- * @property {string} createdBy            Gets or sets the security provenance object which represents the creation of this object            
- * @property {string} obsoletedBy            Gets or sets the security provenance object which represents the obsoletion of this data            
- * @property {string} id            Gets or sets the primary identifying UUID of this object            
- * @property {string} $type            Gets the type registration of this object            
+ * @summary Represents the root of all model classes in the SanteDB Core
+ * @description This abstract class is used to encapsulate the key properties of base data elements in the SanteDB
+            model, namely it keeps track of which entities created and obsoleted a particular resource and when those
+            events occurred.
+ * @property {Date} creationTimeModel [Delay loaded from creationTime],  Gets or sets the time at which the data was created
+ * @property {Date} creationTime Gets or sets the creation time as an ISO date format
+ * @property {Date} obsoletionTimeModel [Delay loaded from obsoletionTime],  Gets or sets the time when the data is or will become invalid
+ * @property {Date} obsoletionTime Gets or sets the time that the data is no longer valid (was deleted/obsoleted) in ISO format
+ * @property {SecurityProvenance} createdByModel [Delay loaded from createdBy],  Gets or sets the user that created this base data
+ * @property {Date} modifiedOn Gets the time that the object was last modified (from base data, default to CreationTime)
+ * @property {SecurityProvenance} obsoletedByModel [Delay loaded from obsoletedBy],  Gets or sets the user that obsoleted this base data
+ * @property {string} createdBy Gets or sets the security provenance object which represents the creation of this object
+ * @property {string} obsoletedBy Gets or sets the security provenance object which represents the obsoletion of this data
+ * @property {string} id Gets or sets the primary identifying UUID of this object
+ * @property {BatchOperationType} operation Gets or sets the operation(see: {@link BatchOperationType} for values)
+ * @property {string} $type Gets the type registration of this object
  * @param {BaseEntityData} copyData Copy constructor (if present)
  */
 function BaseEntityData (copyData) { 
 	this.$type = 'BaseEntityData';
 	if(copyData) {
+	/** @type {BatchOperationType} */
+	this.operation = copyData.operation;
 	/** @type {string} */
 	this.id = copyData.id;
 	/** @type {string} */
@@ -252,17 +259,18 @@ function BaseEntityData (copyData) {
 	this.creationTimeModel = copyData.creationTimeModel;
 	}
 }  // BaseEntityData 
-// SanteDB.Core.Model.IdentifiedData, SanteDB.Core.Model, Version=2.0.59.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.IdentifiedData, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
 //if(!IdentifiedData)
 /**
  * @class
  * @constructor
  * @public
  * @abstract
- * @summary             Represents data that is identified by a key            
- * @property {string} id            Gets or sets the primary identifying UUID of this object            
- * @property {string} $type            Gets the type registration of this object            
- * @property {Date} modifiedOn            Gets or sets date/time that this object was last created or modified            
+ * @summary Represents data that is identified by a key
+ * @property {string} id Gets or sets the primary identifying UUID of this object
+ * @property {BatchOperationType} operation Gets or sets the operation(see: {@link BatchOperationType} for values)
+ * @property {string} $type Gets the type registration of this object
+ * @property {Date} modifiedOn Gets or sets date/time that this object was last created or modified
  * @param {IdentifiedData} copyData Copy constructor (if present)
  */
 function IdentifiedData (copyData) { 
@@ -270,38 +278,43 @@ function IdentifiedData (copyData) {
 	if(copyData) {
 	/** @type {Date} */
 	this.modifiedOn = copyData.modifiedOn;
+	/** @type {BatchOperationType} */
+	this.operation = copyData.operation;
 	/** @type {string} */
 	this.id = copyData.id;
 	}
 }  // IdentifiedData 
-// SanteDB.Core.Model.NonVersionedEntityData, SanteDB.Core.Model, Version=2.0.59.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.NonVersionedEntityData, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
 //if(!NonVersionedEntityData)
 /**
  * @class
  * @constructor
  * @public
  * @extends BaseEntityData
- * @summary             Updateable entity data which is not versioned            
+ * @summary Updateable entity data which is not versioned
  * @description Non versioned data in SanteDB means that data can be updated (modified) in the underlying data store and changes are not tracked.
- * @property {Date} updatedTime            Gets or sets the time that this object was last modified in ISO format            
- * @property {Date} modifiedOn            Gets the time this item was modified            
- * @property {SecurityProvenance} updatedByModel [Delay loaded from updatedBy],             Gets or sets the user that updated this base data            
- * @property {string} updatedBy            Gets or sets the provenance identifier associated with the last update of this object            
- * @property {Date} creationTimeModel [Delay loaded from creationTime],             Gets or sets the time at which the data was created            
- * @property {Date} creationTime            Gets or sets the creation time as an ISO date format            
- * @property {Date} obsoletionTimeModel [Delay loaded from obsoletionTime],             Gets or sets the time when the data is or will become invalid            
- * @property {Date} obsoletionTime            Gets or sets the time that the data is no longer valid (was deleted/obsoleted) in ISO format            
- * @property {SecurityProvenance} createdByModel [Delay loaded from createdBy],             Gets or sets the user that created this base data            
- * @property {SecurityProvenance} obsoletedByModel [Delay loaded from obsoletedBy],             Gets or sets the user that obsoleted this base data            
- * @property {string} createdBy            Gets or sets the security provenance object which represents the creation of this object            
- * @property {string} obsoletedBy            Gets or sets the security provenance object which represents the obsoletion of this data            
- * @property {string} id            Gets or sets the primary identifying UUID of this object            
- * @property {string} $type            Gets the type registration of this object            
+ * @property {Date} updatedTime Gets or sets the time that this object was last modified in ISO format
+ * @property {Date} modifiedOn Gets the time this item was modified
+ * @property {SecurityProvenance} updatedByModel [Delay loaded from updatedBy],  Gets or sets the user that updated this base data
+ * @property {string} updatedBy Gets or sets the provenance identifier associated with the last update of this object
+ * @property {Date} creationTimeModel [Delay loaded from creationTime],  Gets or sets the time at which the data was created
+ * @property {Date} creationTime Gets or sets the creation time as an ISO date format
+ * @property {Date} obsoletionTimeModel [Delay loaded from obsoletionTime],  Gets or sets the time when the data is or will become invalid
+ * @property {Date} obsoletionTime Gets or sets the time that the data is no longer valid (was deleted/obsoleted) in ISO format
+ * @property {SecurityProvenance} createdByModel [Delay loaded from createdBy],  Gets or sets the user that created this base data
+ * @property {SecurityProvenance} obsoletedByModel [Delay loaded from obsoletedBy],  Gets or sets the user that obsoleted this base data
+ * @property {string} createdBy Gets or sets the security provenance object which represents the creation of this object
+ * @property {string} obsoletedBy Gets or sets the security provenance object which represents the obsoletion of this data
+ * @property {string} id Gets or sets the primary identifying UUID of this object
+ * @property {BatchOperationType} operation Gets or sets the operation(see: {@link BatchOperationType} for values)
+ * @property {string} $type Gets the type registration of this object
  * @param {NonVersionedEntityData} copyData Copy constructor (if present)
  */
 function NonVersionedEntityData (copyData) { 
 	this.$type = 'NonVersionedEntityData';
 	if(copyData) {
+	/** @type {BatchOperationType} */
+	this.operation = copyData.operation;
 	/** @type {string} */
 	this.id = copyData.id;
 	/** @type {string} */
@@ -330,7 +343,7 @@ function NonVersionedEntityData (copyData) {
 	this.updatedTime = copyData.updatedTime;
 	}
 }  // NonVersionedEntityData 
-// SanteDB.Core.Model.VersionedAssociation`1, SanteDB.Core.Model, Version=2.0.59.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.VersionedAssociation`1, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
 //if(!VersionedAssociation)
 /**
  * @class
@@ -338,21 +351,24 @@ function NonVersionedEntityData (copyData) {
  * @public
  * @abstract
  * @extends Association
- * @summary             Represents a relational class which is bound on a version boundary            
- * @description This association is used to link two complex objects to one another when the version 
- *             of the source object at time of assoication carries meaning.
- * @property {number} effectiveVersionSequence            Gets or sets the version sequence of the source object when this assoication became active            
- * @property {number} obsoleteVersionSequence            Gets or sets the sequence identifier of the source when this association is no longer active            
+ * @summary Represents a relational class which is bound on a version boundary
+ * @description <p>This association is used to link two complex objects to one another when the version 
+            of the source object at time of assoication carries meaning.</p>
+ * @property {number} effectiveVersionSequence Gets or sets the version sequence of the source object when this assoication became active
+ * @property {number} obsoleteVersionSequence Gets or sets the sequence identifier of the source when this association is no longer active
  * @property {Date} modifiedOn
  * @property {string} source
  * @property {VersionedEntityData} sourceModel [Delay loaded from source], 
- * @property {string} id            Gets or sets the primary identifying UUID of this object            
- * @property {string} $type            Gets the type registration of this object            
+ * @property {string} id Gets or sets the primary identifying UUID of this object
+ * @property {BatchOperationType} operation Gets or sets the operation(see: {@link BatchOperationType} for values)
+ * @property {string} $type Gets the type registration of this object
  * @param {VersionedAssociation} copyData Copy constructor (if present)
  */
 function VersionedAssociation (copyData) { 
 	this.$type = 'VersionedAssociation';
 	if(copyData) {
+	/** @type {BatchOperationType} */
+	this.operation = copyData.operation;
 	/** @type {string} */
 	this.id = copyData.id;
 	/** @type {VersionedEntityData} */
@@ -367,7 +383,7 @@ function VersionedAssociation (copyData) {
 	this.effectiveVersionSequence = copyData.effectiveVersionSequence;
 	}
 }  // VersionedAssociation 
-// SanteDB.Core.Model.VersionedEntityData`1, SanteDB.Core.Model, Version=2.0.59.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.VersionedEntityData`1, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
 //if(!VersionedEntityData)
 /**
  * @class
@@ -375,28 +391,31 @@ function VersionedAssociation (copyData) {
  * @public
  * @abstract
  * @extends BaseEntityData
- * @summary             Represents versioned based data            
- * @description In SanteDB, certain objects are not actually updated or deleted, rather they are subsequent versions
- *             of the data appended to the previous. This class represents the base class of all objects which are versioned objects
- * @property {string} previousVersion            Gets or sets the UUID of the previous version of this record            
- * @property {string} version            Gets or sets the UUID of the current version of this object            
- * @property {number} sequence            The sequence number of the version (for ordering)            
- * @property {Date} creationTimeModel [Delay loaded from creationTime],             Gets or sets the time at which the data was created            
- * @property {Date} creationTime            Gets or sets the creation time as an ISO date format            
- * @property {Date} obsoletionTimeModel [Delay loaded from obsoletionTime],             Gets or sets the time when the data is or will become invalid            
- * @property {Date} obsoletionTime            Gets or sets the time that the data is no longer valid (was deleted/obsoleted) in ISO format            
- * @property {SecurityProvenance} createdByModel [Delay loaded from createdBy],             Gets or sets the user that created this base data            
- * @property {Date} modifiedOn            Gets the time that the object was last modified (from base data, default to CreationTime)            
- * @property {SecurityProvenance} obsoletedByModel [Delay loaded from obsoletedBy],             Gets or sets the user that obsoleted this base data            
- * @property {string} createdBy            Gets or sets the security provenance object which represents the creation of this object            
- * @property {string} obsoletedBy            Gets or sets the security provenance object which represents the obsoletion of this data            
- * @property {string} id            Gets or sets the primary identifying UUID of this object            
- * @property {string} $type            Gets the type registration of this object            
+ * @summary Represents versioned based data
+ * @description <p>In SanteDB, certain objects are not actually updated or deleted, rather they are subsequent versions
+            of the data appended to the previous. This class represents the base class of all objects which are versioned objects</p>
+ * @property {string} previousVersion Gets or sets the UUID of the previous version of this record
+ * @property {string} version Gets or sets the UUID of the current version of this object
+ * @property {number} sequence The sequence number of the version (for ordering)
+ * @property {Date} creationTimeModel [Delay loaded from creationTime],  Gets or sets the time at which the data was created
+ * @property {Date} creationTime Gets or sets the creation time as an ISO date format
+ * @property {Date} obsoletionTimeModel [Delay loaded from obsoletionTime],  Gets or sets the time when the data is or will become invalid
+ * @property {Date} obsoletionTime Gets or sets the time that the data is no longer valid (was deleted/obsoleted) in ISO format
+ * @property {SecurityProvenance} createdByModel [Delay loaded from createdBy],  Gets or sets the user that created this base data
+ * @property {Date} modifiedOn Gets the time that the object was last modified (from base data, default to CreationTime)
+ * @property {SecurityProvenance} obsoletedByModel [Delay loaded from obsoletedBy],  Gets or sets the user that obsoleted this base data
+ * @property {string} createdBy Gets or sets the security provenance object which represents the creation of this object
+ * @property {string} obsoletedBy Gets or sets the security provenance object which represents the obsoletion of this data
+ * @property {string} id Gets or sets the primary identifying UUID of this object
+ * @property {BatchOperationType} operation Gets or sets the operation(see: {@link BatchOperationType} for values)
+ * @property {string} $type Gets the type registration of this object
  * @param {VersionedEntityData} copyData Copy constructor (if present)
  */
 function VersionedEntityData (copyData) { 
 	this.$type = 'VersionedEntityData';
 	if(copyData) {
+	/** @type {BatchOperationType} */
+	this.operation = copyData.operation;
 	/** @type {string} */
 	this.id = copyData.id;
 	/** @type {string} */
@@ -425,17 +444,17 @@ function VersionedEntityData (copyData) {
 	this.previousVersion = copyData.previousVersion;
 	}
 }  // VersionedEntityData 
-// SanteDB.Core.Model.Warehouse.DatamartDefinition, SanteDB.Core.Model, Version=2.0.59.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Warehouse.DatamartDefinition, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
 //if(!DatamartDefinition)
 /**
  * @class
  * @constructor
  * @public
- * @summary             Represents a datamart definition which contains the definition of fields for a datamart            
- * @property {string} id            Gets or sets the identifier of the data mart            
- * @property {string} name            Gets or sets the name of the data mart            
- * @property {Date} creationTime            Gets or sets the time that the data mart was created            
- * @property {DatamartSchema} schema            Gets or sets the datamart schema            
+ * @summary Represents a datamart definition which contains the definition of fields for a datamart
+ * @property {string} id Gets or sets the identifier of the data mart
+ * @property {string} name Gets or sets the name of the data mart
+ * @property {Date} creationTime Gets or sets the time that the data mart was created
+ * @property {DatamartSchema} schema Gets or sets the datamart schema
  * @param {DatamartDefinition} copyData Copy constructor (if present)
  */
 function DatamartDefinition (copyData) { 
@@ -451,17 +470,18 @@ function DatamartDefinition (copyData) {
 	this.id = copyData.id;
 	}
 }  // DatamartDefinition 
-// SanteDB.Core.Model.Warehouse.DatamartSchema, SanteDB.Core.Model, Version=2.0.59.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Warehouse.DatamartSchema, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
 //if(!DatamartSchema)
 /**
  * @class
  * @constructor
  * @public
- * @summary             Represents a datamart schema which gives hints to the properties to be stored from             a dynamic object            
- * @property {string} id            Gets or sets the unique identifier for the schema itself            
- * @property {string} name            Gets or sets the name of the element in the database            
- * @property {DatamartSchemaProperty} property            Gets or sets the property names for the schema element            
- * @property {DatamartStoredQuery} sqp            Gets or sets the query associated with the schema            
+ * @summary Represents a datamart schema which gives hints to the properties to be stored from 
+            a dynamic object
+ * @property {string} id Gets or sets the unique identifier for the schema itself
+ * @property {string} name Gets or sets the name of the element in the database
+ * @property {DatamartSchemaProperty} property Gets or sets the property names for the schema element
+ * @property {DatamartStoredQuery} sqp Gets or sets the query associated with the schema
  * @param {DatamartSchema} copyData Copy constructor (if present)
  */
 function DatamartSchema (copyData) { 
@@ -477,18 +497,18 @@ function DatamartSchema (copyData) {
 	this.id = copyData.id;
 	}
 }  // DatamartSchema 
-// SanteDB.Core.Model.Warehouse.DatamartSchemaProperty, SanteDB.Core.Model, Version=2.0.59.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Warehouse.DatamartSchemaProperty, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
 //if(!DatamartSchemaProperty)
 /**
  * @class
  * @constructor
  * @public
- * @summary             Represents a single property on the data mart schema            
- * @property {string} id            Gets or sets the identifier of the warehouse property            
- * @property {string} name            Gets or sets the name of the property            
- * @property {SchemaPropertyType} type            Gets or sets the type of property            (see: {@link SchemaPropertyType} for values)
- * @property {SchemaPropertyAttributes} attributes            Gets or sets the attributes associated with the property            (see: {@link SchemaPropertyAttributes} for values)
- * @property {DatamartSchemaProperty} property            Gets or sets the sub-properties of this property            
+ * @summary Represents a single property on the data mart schema
+ * @property {string} id Gets or sets the identifier of the warehouse property
+ * @property {string} name Gets or sets the name of the property
+ * @property {SchemaPropertyType} type Gets or sets the type of property(see: {@link SchemaPropertyType} for values)
+ * @property {SchemaPropertyAttributes} attributes Gets or sets the attributes associated with the property(see: {@link SchemaPropertyAttributes} for values)
+ * @property {DatamartSchemaProperty} property Gets or sets the sub-properties of this property
  * @param {DatamartSchemaProperty} copyData Copy constructor (if present)
  */
 function DatamartSchemaProperty (copyData) { 
@@ -506,18 +526,18 @@ function DatamartSchemaProperty (copyData) {
 	this.id = copyData.id;
 	}
 }  // DatamartSchemaProperty 
-// SanteDB.Core.Model.Warehouse.DatamartStoredQuery, SanteDB.Core.Model, Version=2.0.59.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Warehouse.DatamartStoredQuery, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
 //if(!DatamartStoredQuery)
 /**
  * @class
  * @constructor
  * @public
- * @summary             Represents a stored query creation statement            
- * @property {string} connection            Attachments            
- * @property {string} id            Gets or sets the provider identifier            
- * @property {string} name            Definition of the query            
- * @property {DatamartSchemaProperty} property            Gets or sets the property names for the schema element            
- * @property {DatamartStoredQueryDefinition} select            Definition of the query            
+ * @summary Represents a stored query creation statement
+ * @property {string} connection Attachments
+ * @property {string} id Gets or sets the provider identifier
+ * @property {string} name Definition of the query
+ * @property {DatamartSchemaProperty} property Gets or sets the property names for the schema element
+ * @property {DatamartStoredQueryDefinition} select Definition of the query
  * @param {DatamartStoredQuery} copyData Copy constructor (if present)
  */
 function DatamartStoredQuery (copyData) { 
@@ -535,15 +555,15 @@ function DatamartStoredQuery (copyData) {
 	this.connection = copyData.connection;
 	}
 }  // DatamartStoredQuery 
-// SanteDB.Core.Model.Warehouse.DatamartStoredQueryDefinition, SanteDB.Core.Model, Version=2.0.59.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Warehouse.DatamartStoredQueryDefinition, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
 //if(!DatamartStoredQueryDefinition)
 /**
  * @class
  * @constructor
  * @public
- * @summary             Represents the SQL for an actual query            
- * @property {string} provider            Provider identifier            
- * @property {string} sql            The SQL             
+ * @summary Represents the SQL for an actual query
+ * @property {string} provider Provider identifier
+ * @property {string} sql The SQL
  * @param {DatamartStoredQueryDefinition} copyData Copy constructor (if present)
  */
 function DatamartStoredQueryDefinition (copyData) { 
@@ -555,13 +575,13 @@ function DatamartStoredQueryDefinition (copyData) {
 	this.provider = copyData.provider;
 	}
 }  // DatamartStoredQueryDefinition 
-// SanteDB.Core.Model.Warehouse.DataWarehouseObjectPropertyValue, SanteDB.Core.Model, Version=2.0.59.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Warehouse.DataWarehouseObjectPropertyValue, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
 //if(!DataWarehouseObjectPropertyValue)
 /**
  * @class
  * @constructor
  * @public
- * @summary             Warehouse object property value            
+ * @summary Warehouse object property value
  * @param {DataWarehouseObjectPropertyValue} copyData Copy constructor (if present)
  */
 function DataWarehouseObjectPropertyValue (copyData) { 
@@ -569,14 +589,14 @@ function DataWarehouseObjectPropertyValue (copyData) {
 	if(copyData) {
 	}
 }  // DataWarehouseObjectPropertyValue 
-// SanteDB.Core.Model.Warehouse.DataWarehouseObject, SanteDB.Core.Model, Version=2.0.59.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Warehouse.DataWarehouseObject, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
 //if(!DataWarehouseObject)
 /**
  * @class
  * @constructor
  * @public
- * @summary             Data warehousing object wrapper             
- * @property {DataWarehouseObjectPropertyValue} p            Gets or sets the properties            
+ * @summary Data warehousing object wrapper
+ * @property {DataWarehouseObjectPropertyValue} p Gets or sets the properties
  * @param {DataWarehouseObject} copyData Copy constructor (if present)
  */
 function DataWarehouseObject (copyData) { 
@@ -586,20 +606,20 @@ function DataWarehouseObject (copyData) {
 	this.p = copyData.p;
 	}
 }  // DataWarehouseObject 
-// SanteDB.Core.Model.Subscription.SubscriptionClientDefinition, SanteDB.Core.Model, Version=2.0.59.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Subscription.SubscriptionClientDefinition, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
 //if(!SubscriptionClientDefinition)
 /**
  * @class
  * @constructor
  * @public
- * @summary             Represents client side definition            
- * @property {string} resource            Gets or sets the resource type reference            
- * @property {string} name            Gets or sets the name of the subscription            
- * @property {SubscriptionModeType} mode            Gets or sets the mode of the subscription            (see: {@link SubscriptionModeType} for values)
- * @property {SubscriptionTriggerType} trigger            Gets or sets the trigger            (see: {@link SubscriptionTriggerType} for values)
- * @property {boolean} ignoreModifiedOn            Gets or sets the ignore modified on (prevents If-Modified-Since from being used)            
- * @property {string} guards            Gets or sets the guards which indicate when this subscription can be activated            
- * @property {string} filters            Gets or sets the filters            
+ * @summary Represents client side definition
+ * @property {string} resource Gets or sets the resource type reference
+ * @property {string} name Gets or sets the name of the subscription
+ * @property {SubscriptionModeType} mode Gets or sets the mode of the subscription(see: {@link SubscriptionModeType} for values)
+ * @property {SubscriptionTriggerType} trigger Gets or sets the trigger(see: {@link SubscriptionTriggerType} for values)
+ * @property {boolean} ignoreModifiedOn Gets or sets the ignore modified on (prevents If-Modified-Since from being used)
+ * @property {string} guards Gets or sets the guards which indicate when this subscription can be activated
+ * @property {string} filters Gets or sets the filters
  * @param {SubscriptionClientDefinition} copyData Copy constructor (if present)
  */
 function SubscriptionClientDefinition (copyData) { 
@@ -621,24 +641,27 @@ function SubscriptionClientDefinition (copyData) {
 	this.resource = copyData.resource;
 	}
 }  // SubscriptionClientDefinition 
-// SanteDB.Core.Model.Subscription.SubscriptionDefinition, SanteDB.Core.Model, Version=2.0.59.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Subscription.SubscriptionDefinition, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
 //if(!SubscriptionDefinition)
 /**
  * @class
  * @constructor
  * @public
  * @extends IdentifiedData
- * @summary             Class which is used to define a subscription type which clients can consume            
- * @property {string} uuid            Gets or sets the uuid            
- * @property {Date} modifiedOn            Gets the time that this was modified            
- * @property {SubscriptionClientDefinition} definitions            Gets or sets the client side definitions            
- * @property {string} id            Gets or sets the primary identifying UUID of this object            
- * @property {string} $type            Gets the type registration of this object            
+ * @summary Class which is used to define a subscription type which clients can consume
+ * @property {string} uuid Gets or sets the uuid
+ * @property {Date} modifiedOn Gets the time that this was modified
+ * @property {SubscriptionClientDefinition} definitions Gets or sets the client side definitions
+ * @property {string} id Gets or sets the primary identifying UUID of this object
+ * @property {BatchOperationType} operation Gets or sets the operation(see: {@link BatchOperationType} for values)
+ * @property {string} $type Gets the type registration of this object
  * @param {SubscriptionDefinition} copyData Copy constructor (if present)
  */
 function SubscriptionDefinition (copyData) { 
 	this.$type = 'SubscriptionDefinition';
 	if(copyData) {
+	/** @type {BatchOperationType} */
+	this.operation = copyData.operation;
 	/** @type {string} */
 	this.id = copyData.id;
 	/** @type {SubscriptionClientDefinition} */
@@ -649,39 +672,42 @@ function SubscriptionDefinition (copyData) {
 	this.uuid = copyData.uuid;
 	}
 }  // SubscriptionDefinition 
-// SanteDB.Core.Model.Security.SecurityApplication, SanteDB.Core.Model, Version=2.0.59.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Security.SecurityApplication, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
 //if(!SecurityApplication)
 /**
  * @class
  * @constructor
  * @public
- * @summary             Represents a security application            
- * @property {string} applicationSecret            Gets or sets the application secret used for authenticating the application            
- * @property {string} name            Gets or sets the name of the security device/user/role/device.            
- * @property {string} lockout            Gets or sets the lockout time as XML date            
- * @property {Date} lockoutModel [Delay loaded from lockout],             Gets or sets the lockout            
- * @property {number} invalidAuth            Gets or sets the number of invalid authentication attempts            
- * @property {string} lastAuthenticationTime            Gets the last authenticated time            
- * @property {Date} lastAuthenticationTimeModel [Delay loaded from lastAuthenticationTime],             Gets or sets the last authentication time as a DTO            
- * @property {Date} updatedTime            Gets or sets the time that this object was last modified in ISO format            
- * @property {Date} modifiedOn            Gets the time this item was modified            
- * @property {SecurityProvenance} updatedByModel [Delay loaded from updatedBy],             Gets or sets the user that updated this base data            
- * @property {string} updatedBy            Gets or sets the provenance identifier associated with the last update of this object            
- * @property {Date} creationTimeModel [Delay loaded from creationTime],             Gets or sets the time at which the data was created            
- * @property {Date} creationTime            Gets or sets the creation time as an ISO date format            
- * @property {Date} obsoletionTimeModel [Delay loaded from obsoletionTime],             Gets or sets the time when the data is or will become invalid            
- * @property {Date} obsoletionTime            Gets or sets the time that the data is no longer valid (was deleted/obsoleted) in ISO format            
- * @property {SecurityProvenance} createdByModel [Delay loaded from createdBy],             Gets or sets the user that created this base data            
- * @property {SecurityProvenance} obsoletedByModel [Delay loaded from obsoletedBy],             Gets or sets the user that obsoleted this base data            
- * @property {string} createdBy            Gets or sets the security provenance object which represents the creation of this object            
- * @property {string} obsoletedBy            Gets or sets the security provenance object which represents the obsoletion of this data            
- * @property {string} id            Gets or sets the primary identifying UUID of this object            
- * @property {string} $type            Gets the type registration of this object            
+ * @summary Represents a security application
+ * @property {string} applicationSecret Gets or sets the application secret used for authenticating the application
+ * @property {string} name Gets or sets the name of the security device/user/role/device.
+ * @property {string} lockout Gets or sets the lockout time as XML date
+ * @property {Date} lockoutModel [Delay loaded from lockout],  Gets or sets the lockout
+ * @property {number} invalidAuth Gets or sets the number of invalid authentication attempts
+ * @property {string} lastAuthenticationTime Gets the last authenticated time
+ * @property {Date} lastAuthenticationTimeModel [Delay loaded from lastAuthenticationTime],  Gets or sets the last authentication time as a DTO
+ * @property {Date} updatedTime Gets or sets the time that this object was last modified in ISO format
+ * @property {Date} modifiedOn Gets the time this item was modified
+ * @property {SecurityProvenance} updatedByModel [Delay loaded from updatedBy],  Gets or sets the user that updated this base data
+ * @property {string} updatedBy Gets or sets the provenance identifier associated with the last update of this object
+ * @property {Date} creationTimeModel [Delay loaded from creationTime],  Gets or sets the time at which the data was created
+ * @property {Date} creationTime Gets or sets the creation time as an ISO date format
+ * @property {Date} obsoletionTimeModel [Delay loaded from obsoletionTime],  Gets or sets the time when the data is or will become invalid
+ * @property {Date} obsoletionTime Gets or sets the time that the data is no longer valid (was deleted/obsoleted) in ISO format
+ * @property {SecurityProvenance} createdByModel [Delay loaded from createdBy],  Gets or sets the user that created this base data
+ * @property {SecurityProvenance} obsoletedByModel [Delay loaded from obsoletedBy],  Gets or sets the user that obsoleted this base data
+ * @property {string} createdBy Gets or sets the security provenance object which represents the creation of this object
+ * @property {string} obsoletedBy Gets or sets the security provenance object which represents the obsoletion of this data
+ * @property {string} id Gets or sets the primary identifying UUID of this object
+ * @property {BatchOperationType} operation Gets or sets the operation(see: {@link BatchOperationType} for values)
+ * @property {string} $type Gets the type registration of this object
  * @param {SecurityApplication} copyData Copy constructor (if present)
  */
 function SecurityApplication (copyData) { 
 	this.$type = 'SecurityApplication';
 	if(copyData) {
+	/** @type {BatchOperationType} */
+	this.operation = copyData.operation;
 	/** @type {string} */
 	this.id = copyData.id;
 	/** @type {string} */
@@ -724,33 +750,36 @@ function SecurityApplication (copyData) {
 	this.applicationSecret = copyData.applicationSecret;
 	}
 }  // SecurityApplication 
-// SanteDB.Core.Model.Security.SecurityChallenge, SanteDB.Core.Model, Version=2.0.59.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Security.SecurityChallenge, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
 //if(!SecurityChallenge)
 /**
  * @class
  * @constructor
  * @public
- * @summary             Represents a security challenge            
- * @property {string} text            The text for the security challenge            
- * @property {Date} updatedTime            Gets or sets the time that this object was last modified in ISO format            
- * @property {Date} modifiedOn            Gets the time this item was modified            
- * @property {SecurityProvenance} updatedByModel [Delay loaded from updatedBy],             Gets or sets the user that updated this base data            
- * @property {string} updatedBy            Gets or sets the provenance identifier associated with the last update of this object            
- * @property {Date} creationTimeModel [Delay loaded from creationTime],             Gets or sets the time at which the data was created            
- * @property {Date} creationTime            Gets or sets the creation time as an ISO date format            
- * @property {Date} obsoletionTimeModel [Delay loaded from obsoletionTime],             Gets or sets the time when the data is or will become invalid            
- * @property {Date} obsoletionTime            Gets or sets the time that the data is no longer valid (was deleted/obsoleted) in ISO format            
- * @property {SecurityProvenance} createdByModel [Delay loaded from createdBy],             Gets or sets the user that created this base data            
- * @property {SecurityProvenance} obsoletedByModel [Delay loaded from obsoletedBy],             Gets or sets the user that obsoleted this base data            
- * @property {string} createdBy            Gets or sets the security provenance object which represents the creation of this object            
- * @property {string} obsoletedBy            Gets or sets the security provenance object which represents the obsoletion of this data            
- * @property {string} id            Gets or sets the primary identifying UUID of this object            
- * @property {string} $type            Gets the type registration of this object            
+ * @summary Represents a security challenge
+ * @property {string} text The text for the security challenge
+ * @property {Date} updatedTime Gets or sets the time that this object was last modified in ISO format
+ * @property {Date} modifiedOn Gets the time this item was modified
+ * @property {SecurityProvenance} updatedByModel [Delay loaded from updatedBy],  Gets or sets the user that updated this base data
+ * @property {string} updatedBy Gets or sets the provenance identifier associated with the last update of this object
+ * @property {Date} creationTimeModel [Delay loaded from creationTime],  Gets or sets the time at which the data was created
+ * @property {Date} creationTime Gets or sets the creation time as an ISO date format
+ * @property {Date} obsoletionTimeModel [Delay loaded from obsoletionTime],  Gets or sets the time when the data is or will become invalid
+ * @property {Date} obsoletionTime Gets or sets the time that the data is no longer valid (was deleted/obsoleted) in ISO format
+ * @property {SecurityProvenance} createdByModel [Delay loaded from createdBy],  Gets or sets the user that created this base data
+ * @property {SecurityProvenance} obsoletedByModel [Delay loaded from obsoletedBy],  Gets or sets the user that obsoleted this base data
+ * @property {string} createdBy Gets or sets the security provenance object which represents the creation of this object
+ * @property {string} obsoletedBy Gets or sets the security provenance object which represents the obsoletion of this data
+ * @property {string} id Gets or sets the primary identifying UUID of this object
+ * @property {BatchOperationType} operation Gets or sets the operation(see: {@link BatchOperationType} for values)
+ * @property {string} $type Gets the type registration of this object
  * @param {SecurityChallenge} copyData Copy constructor (if present)
  */
 function SecurityChallenge (copyData) { 
 	this.$type = 'SecurityChallenge';
 	if(copyData) {
+	/** @type {BatchOperationType} */
+	this.operation = copyData.operation;
 	/** @type {string} */
 	this.id = copyData.id;
 	/** @type {string} */
@@ -781,39 +810,42 @@ function SecurityChallenge (copyData) {
 	this.text = copyData.text;
 	}
 }  // SecurityChallenge 
-// SanteDB.Core.Model.Security.SecurityDevice, SanteDB.Core.Model, Version=2.0.59.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Security.SecurityDevice, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
 //if(!SecurityDevice)
 /**
  * @class
  * @constructor
  * @public
- * @summary             Represents a security device            
- * @property {string} deviceSecret            Gets or sets the device secret            
- * @property {string} name            Gets or sets the name of the security device/user/role/devie            
- * @property {string} lockout            Gets or sets the lockout time as XML date            
- * @property {Date} lockoutModel [Delay loaded from lockout],             Gets or sets the lockout            
- * @property {number} invalidAuth            Gets or sets the number of invalid authentication attempts            
- * @property {string} lastAuthenticationTime            Gets the last authenticated time            
- * @property {Date} lastAuthenticationTimeModel [Delay loaded from lastAuthenticationTime],             Gets or sets the last authentication time as a DTO            
- * @property {Date} updatedTime            Gets or sets the time that this object was last modified in ISO format            
- * @property {Date} modifiedOn            Gets the time this item was modified            
- * @property {SecurityProvenance} updatedByModel [Delay loaded from updatedBy],             Gets or sets the user that updated this base data            
- * @property {string} updatedBy            Gets or sets the provenance identifier associated with the last update of this object            
- * @property {Date} creationTimeModel [Delay loaded from creationTime],             Gets or sets the time at which the data was created            
- * @property {Date} creationTime            Gets or sets the creation time as an ISO date format            
- * @property {Date} obsoletionTimeModel [Delay loaded from obsoletionTime],             Gets or sets the time when the data is or will become invalid            
- * @property {Date} obsoletionTime            Gets or sets the time that the data is no longer valid (was deleted/obsoleted) in ISO format            
- * @property {SecurityProvenance} createdByModel [Delay loaded from createdBy],             Gets or sets the user that created this base data            
- * @property {SecurityProvenance} obsoletedByModel [Delay loaded from obsoletedBy],             Gets or sets the user that obsoleted this base data            
- * @property {string} createdBy            Gets or sets the security provenance object which represents the creation of this object            
- * @property {string} obsoletedBy            Gets or sets the security provenance object which represents the obsoletion of this data            
- * @property {string} id            Gets or sets the primary identifying UUID of this object            
- * @property {string} $type            Gets the type registration of this object            
+ * @summary Represents a security device
+ * @property {string} deviceSecret Gets or sets the device secret
+ * @property {string} name Gets or sets the name of the security device/user/role/devie
+ * @property {string} lockout Gets or sets the lockout time as XML date
+ * @property {Date} lockoutModel [Delay loaded from lockout],  Gets or sets the lockout
+ * @property {number} invalidAuth Gets or sets the number of invalid authentication attempts
+ * @property {string} lastAuthenticationTime Gets the last authenticated time
+ * @property {Date} lastAuthenticationTimeModel [Delay loaded from lastAuthenticationTime],  Gets or sets the last authentication time as a DTO
+ * @property {Date} updatedTime Gets or sets the time that this object was last modified in ISO format
+ * @property {Date} modifiedOn Gets the time this item was modified
+ * @property {SecurityProvenance} updatedByModel [Delay loaded from updatedBy],  Gets or sets the user that updated this base data
+ * @property {string} updatedBy Gets or sets the provenance identifier associated with the last update of this object
+ * @property {Date} creationTimeModel [Delay loaded from creationTime],  Gets or sets the time at which the data was created
+ * @property {Date} creationTime Gets or sets the creation time as an ISO date format
+ * @property {Date} obsoletionTimeModel [Delay loaded from obsoletionTime],  Gets or sets the time when the data is or will become invalid
+ * @property {Date} obsoletionTime Gets or sets the time that the data is no longer valid (was deleted/obsoleted) in ISO format
+ * @property {SecurityProvenance} createdByModel [Delay loaded from createdBy],  Gets or sets the user that created this base data
+ * @property {SecurityProvenance} obsoletedByModel [Delay loaded from obsoletedBy],  Gets or sets the user that obsoleted this base data
+ * @property {string} createdBy Gets or sets the security provenance object which represents the creation of this object
+ * @property {string} obsoletedBy Gets or sets the security provenance object which represents the obsoletion of this data
+ * @property {string} id Gets or sets the primary identifying UUID of this object
+ * @property {BatchOperationType} operation Gets or sets the operation(see: {@link BatchOperationType} for values)
+ * @property {string} $type Gets the type registration of this object
  * @param {SecurityDevice} copyData Copy constructor (if present)
  */
 function SecurityDevice (copyData) { 
 	this.$type = 'SecurityDevice';
 	if(copyData) {
+	/** @type {BatchOperationType} */
+	this.operation = copyData.operation;
 	/** @type {string} */
 	this.id = copyData.id;
 	/** @type {string} */
@@ -856,32 +888,35 @@ function SecurityDevice (copyData) {
 	this.deviceSecret = copyData.deviceSecret;
 	}
 }  // SecurityDevice 
-// SanteDB.Core.Model.Security.SecurityEntity, SanteDB.Core.Model, Version=2.0.59.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Security.SecurityEntity, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
 //if(!SecurityEntity)
 /**
  * @class
  * @constructor
  * @public
- * @summary             Security Entity base class            
- * @property {Date} updatedTime            Gets or sets the time that this object was last modified in ISO format            
- * @property {Date} modifiedOn            Gets the time this item was modified            
- * @property {SecurityProvenance} updatedByModel [Delay loaded from updatedBy],             Gets or sets the user that updated this base data            
- * @property {string} updatedBy            Gets or sets the provenance identifier associated with the last update of this object            
- * @property {Date} creationTimeModel [Delay loaded from creationTime],             Gets or sets the time at which the data was created            
- * @property {Date} creationTime            Gets or sets the creation time as an ISO date format            
- * @property {Date} obsoletionTimeModel [Delay loaded from obsoletionTime],             Gets or sets the time when the data is or will become invalid            
- * @property {Date} obsoletionTime            Gets or sets the time that the data is no longer valid (was deleted/obsoleted) in ISO format            
- * @property {SecurityProvenance} createdByModel [Delay loaded from createdBy],             Gets or sets the user that created this base data            
- * @property {SecurityProvenance} obsoletedByModel [Delay loaded from obsoletedBy],             Gets or sets the user that obsoleted this base data            
- * @property {string} createdBy            Gets or sets the security provenance object which represents the creation of this object            
- * @property {string} obsoletedBy            Gets or sets the security provenance object which represents the obsoletion of this data            
- * @property {string} id            Gets or sets the primary identifying UUID of this object            
- * @property {string} $type            Gets the type registration of this object            
+ * @summary Security Entity base class
+ * @property {Date} updatedTime Gets or sets the time that this object was last modified in ISO format
+ * @property {Date} modifiedOn Gets the time this item was modified
+ * @property {SecurityProvenance} updatedByModel [Delay loaded from updatedBy],  Gets or sets the user that updated this base data
+ * @property {string} updatedBy Gets or sets the provenance identifier associated with the last update of this object
+ * @property {Date} creationTimeModel [Delay loaded from creationTime],  Gets or sets the time at which the data was created
+ * @property {Date} creationTime Gets or sets the creation time as an ISO date format
+ * @property {Date} obsoletionTimeModel [Delay loaded from obsoletionTime],  Gets or sets the time when the data is or will become invalid
+ * @property {Date} obsoletionTime Gets or sets the time that the data is no longer valid (was deleted/obsoleted) in ISO format
+ * @property {SecurityProvenance} createdByModel [Delay loaded from createdBy],  Gets or sets the user that created this base data
+ * @property {SecurityProvenance} obsoletedByModel [Delay loaded from obsoletedBy],  Gets or sets the user that obsoleted this base data
+ * @property {string} createdBy Gets or sets the security provenance object which represents the creation of this object
+ * @property {string} obsoletedBy Gets or sets the security provenance object which represents the obsoletion of this data
+ * @property {string} id Gets or sets the primary identifying UUID of this object
+ * @property {BatchOperationType} operation Gets or sets the operation(see: {@link BatchOperationType} for values)
+ * @property {string} $type Gets the type registration of this object
  * @param {SecurityEntity} copyData Copy constructor (if present)
  */
 function SecurityEntity (copyData) { 
 	this.$type = 'SecurityEntity';
 	if(copyData) {
+	/** @type {BatchOperationType} */
+	this.operation = copyData.operation;
 	/** @type {string} */
 	this.id = copyData.id;
 	/** @type {string} */
@@ -910,35 +945,38 @@ function SecurityEntity (copyData) {
 	this.updatedTime = copyData.updatedTime;
 	}
 }  // SecurityEntity 
-// SanteDB.Core.Model.Security.SecurityPolicy, SanteDB.Core.Model, Version=2.0.59.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Security.SecurityPolicy, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
 //if(!SecurityPolicy)
 /**
  * @class
  * @constructor
  * @public
  * @extends BaseEntityData
- * @summary             Represents a simply security policy            
- * @property {string} handler            Gets or sets the handler which may handle this policy            
- * @property {string} name            Gets or sets the name of the policy            
- * @property {string} oid            Gets or sets the universal ID            
- * @property {boolean} isPublic            Whether the property is public            
- * @property {boolean} canOverride            Whether the policy can be elevated over            
- * @property {Date} creationTimeModel [Delay loaded from creationTime],             Gets or sets the time at which the data was created            
- * @property {Date} creationTime            Gets or sets the creation time as an ISO date format            
- * @property {Date} obsoletionTimeModel [Delay loaded from obsoletionTime],             Gets or sets the time when the data is or will become invalid            
- * @property {Date} obsoletionTime            Gets or sets the time that the data is no longer valid (was deleted/obsoleted) in ISO format            
- * @property {SecurityProvenance} createdByModel [Delay loaded from createdBy],             Gets or sets the user that created this base data            
- * @property {Date} modifiedOn            Gets the time that the object was last modified (from base data, default to CreationTime)            
- * @property {SecurityProvenance} obsoletedByModel [Delay loaded from obsoletedBy],             Gets or sets the user that obsoleted this base data            
- * @property {string} createdBy            Gets or sets the security provenance object which represents the creation of this object            
- * @property {string} obsoletedBy            Gets or sets the security provenance object which represents the obsoletion of this data            
- * @property {string} id            Gets or sets the primary identifying UUID of this object            
- * @property {string} $type            Gets the type registration of this object            
+ * @summary Represents a simply security policy
+ * @property {string} handler Gets or sets the handler which may handle this policy
+ * @property {string} name Gets or sets the name of the policy
+ * @property {string} oid Gets or sets the universal ID
+ * @property {boolean} isPublic Whether the property is public
+ * @property {boolean} canOverride Whether the policy can be elevated over
+ * @property {Date} creationTimeModel [Delay loaded from creationTime],  Gets or sets the time at which the data was created
+ * @property {Date} creationTime Gets or sets the creation time as an ISO date format
+ * @property {Date} obsoletionTimeModel [Delay loaded from obsoletionTime],  Gets or sets the time when the data is or will become invalid
+ * @property {Date} obsoletionTime Gets or sets the time that the data is no longer valid (was deleted/obsoleted) in ISO format
+ * @property {SecurityProvenance} createdByModel [Delay loaded from createdBy],  Gets or sets the user that created this base data
+ * @property {Date} modifiedOn Gets the time that the object was last modified (from base data, default to CreationTime)
+ * @property {SecurityProvenance} obsoletedByModel [Delay loaded from obsoletedBy],  Gets or sets the user that obsoleted this base data
+ * @property {string} createdBy Gets or sets the security provenance object which represents the creation of this object
+ * @property {string} obsoletedBy Gets or sets the security provenance object which represents the obsoletion of this data
+ * @property {string} id Gets or sets the primary identifying UUID of this object
+ * @property {BatchOperationType} operation Gets or sets the operation(see: {@link BatchOperationType} for values)
+ * @property {string} $type Gets the type registration of this object
  * @param {SecurityPolicy} copyData Copy constructor (if present)
  */
 function SecurityPolicy (copyData) { 
 	this.$type = 'SecurityPolicy';
 	if(copyData) {
+	/** @type {BatchOperationType} */
+	this.operation = copyData.operation;
 	/** @type {string} */
 	this.id = copyData.id;
 	/** @type {string} */
@@ -971,27 +1009,30 @@ function SecurityPolicy (copyData) {
 	this.handler = copyData.handler;
 	}
 }  // SecurityPolicy 
-// SanteDB.Core.Model.Security.SecurityPolicyInstance, SanteDB.Core.Model, Version=2.0.59.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Security.SecurityPolicyInstance, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
 //if(!SecurityPolicyInstance)
 /**
  * @class
  * @constructor
  * @public
  * @extends Association
- * @summary             Represents a security policy instance            
- * @property {string} policy            Gets or sets the policy key            
- * @property {string} policyModel [Delay loaded from policy],             The policy            
- * @property {PolicyGrantType} grant            Gets or sets whether the policy is a Deny            (see: {@link PolicyGrantType} for values)
+ * @summary Represents a security policy instance
+ * @property {string} policy Gets or sets the policy key
+ * @property {string} policyModel [Delay loaded from policy],  The policy
+ * @property {PolicyGrantType} grant Gets or sets whether the policy is a Deny(see: {@link PolicyGrantType} for values)
  * @property {Date} modifiedOn
  * @property {string} source
  * @property {SecurityEntity} sourceModel [Delay loaded from source], 
- * @property {string} id            Gets or sets the primary identifying UUID of this object            
- * @property {string} $type            Gets the type registration of this object            
+ * @property {string} id Gets or sets the primary identifying UUID of this object
+ * @property {BatchOperationType} operation Gets or sets the operation(see: {@link BatchOperationType} for values)
+ * @property {string} $type Gets the type registration of this object
  * @param {SecurityPolicyInstance} copyData Copy constructor (if present)
  */
 function SecurityPolicyInstance (copyData) { 
 	this.$type = 'SecurityPolicyInstance';
 	if(copyData) {
+	/** @type {BatchOperationType} */
+	this.operation = copyData.operation;
 	/** @type {string} */
 	this.id = copyData.id;
 	/** @type {SecurityEntity} */
@@ -1008,33 +1049,36 @@ function SecurityPolicyInstance (copyData) {
 	this.policy = copyData.policy;
 	}
 }  // SecurityPolicyInstance 
-// SanteDB.Core.Model.Security.SecurityProvenance, SanteDB.Core.Model, Version=2.0.59.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Security.SecurityProvenance, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
 //if(!SecurityProvenance)
 /**
  * @class
  * @constructor
  * @public
  * @extends IdentifiedData
- * @summary             Represents security provenance information            
- * @property {Date} modifiedOn            Gets the time that the provenance was modified / created            
- * @property {Date} creationTimeModel [Delay loaded from creationTime],             Gets or sets the time at which the data was created            
- * @property {Date} creationTime            Gets or sets the creation time in XML format            
- * @property {string} application            Gets or sets the application key            
- * @property {string} user            Gets or sets the user key            
- * @property {string} device            Gets or sets the device key             
- * @property {string} session            Gets or sets the session            
- * @property {string} extern            Gets or sets the external security object reference            
- * @property {string} externClass            Gets the type of object that the external key references            
- * @property {SecurityDevice} deviceModel [Delay loaded from device],             Gets the security user for the provenance if applicable            
- * @property {SecurityUser} userModel [Delay loaded from user],             Gets the security user for the provenance if applicable            
- * @property {SecurityApplication} applicationModel [Delay loaded from application],             Gets the security application for the provenance if applicable            
- * @property {string} id            Gets or sets the primary identifying UUID of this object            
- * @property {string} $type            Gets the type registration of this object            
+ * @summary Represents security provenance information
+ * @property {Date} modifiedOn Gets the time that the provenance was modified / created
+ * @property {Date} creationTimeModel [Delay loaded from creationTime],  Gets or sets the time at which the data was created
+ * @property {Date} creationTime Gets or sets the creation time in XML format
+ * @property {string} application Gets or sets the application key
+ * @property {string} user Gets or sets the user key
+ * @property {string} device Gets or sets the device key
+ * @property {string} session Gets or sets the session
+ * @property {string} extern Gets or sets the external security object reference
+ * @property {string} externClass Gets the type of object that the external key references
+ * @property {SecurityDevice} deviceModel [Delay loaded from device],  Gets the security user for the provenance if applicable
+ * @property {SecurityUser} userModel [Delay loaded from user],  Gets the security user for the provenance if applicable
+ * @property {SecurityApplication} applicationModel [Delay loaded from application],  Gets the security application for the provenance if applicable
+ * @property {string} id Gets or sets the primary identifying UUID of this object
+ * @property {BatchOperationType} operation Gets or sets the operation(see: {@link BatchOperationType} for values)
+ * @property {string} $type Gets the type registration of this object
  * @param {SecurityProvenance} copyData Copy constructor (if present)
  */
 function SecurityProvenance (copyData) { 
 	this.$type = 'SecurityProvenance';
 	if(copyData) {
+	/** @type {BatchOperationType} */
+	this.operation = copyData.operation;
 	/** @type {string} */
 	this.id = copyData.id;
 	/** @type {SecurityApplication} */
@@ -1063,34 +1107,37 @@ function SecurityProvenance (copyData) {
 	this.modifiedOn = copyData.modifiedOn;
 	}
 }  // SecurityProvenance 
-// SanteDB.Core.Model.Security.SecurityRole, SanteDB.Core.Model, Version=2.0.59.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Security.SecurityRole, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
 //if(!SecurityRole)
 /**
  * @class
  * @constructor
  * @public
- * @summary             Security role            
- * @property {string} name            Gets or sets the name of the security role            
- * @property {string} description            Description of the role            
- * @property {Date} updatedTime            Gets or sets the time that this object was last modified in ISO format            
- * @property {Date} modifiedOn            Gets the time this item was modified            
- * @property {SecurityProvenance} updatedByModel [Delay loaded from updatedBy],             Gets or sets the user that updated this base data            
- * @property {string} updatedBy            Gets or sets the provenance identifier associated with the last update of this object            
- * @property {Date} creationTimeModel [Delay loaded from creationTime],             Gets or sets the time at which the data was created            
- * @property {Date} creationTime            Gets or sets the creation time as an ISO date format            
- * @property {Date} obsoletionTimeModel [Delay loaded from obsoletionTime],             Gets or sets the time when the data is or will become invalid            
- * @property {Date} obsoletionTime            Gets or sets the time that the data is no longer valid (was deleted/obsoleted) in ISO format            
- * @property {SecurityProvenance} createdByModel [Delay loaded from createdBy],             Gets or sets the user that created this base data            
- * @property {SecurityProvenance} obsoletedByModel [Delay loaded from obsoletedBy],             Gets or sets the user that obsoleted this base data            
- * @property {string} createdBy            Gets or sets the security provenance object which represents the creation of this object            
- * @property {string} obsoletedBy            Gets or sets the security provenance object which represents the obsoletion of this data            
- * @property {string} id            Gets or sets the primary identifying UUID of this object            
- * @property {string} $type            Gets the type registration of this object            
+ * @summary Security role
+ * @property {string} name Gets or sets the name of the security role
+ * @property {string} description Description of the role
+ * @property {Date} updatedTime Gets or sets the time that this object was last modified in ISO format
+ * @property {Date} modifiedOn Gets the time this item was modified
+ * @property {SecurityProvenance} updatedByModel [Delay loaded from updatedBy],  Gets or sets the user that updated this base data
+ * @property {string} updatedBy Gets or sets the provenance identifier associated with the last update of this object
+ * @property {Date} creationTimeModel [Delay loaded from creationTime],  Gets or sets the time at which the data was created
+ * @property {Date} creationTime Gets or sets the creation time as an ISO date format
+ * @property {Date} obsoletionTimeModel [Delay loaded from obsoletionTime],  Gets or sets the time when the data is or will become invalid
+ * @property {Date} obsoletionTime Gets or sets the time that the data is no longer valid (was deleted/obsoleted) in ISO format
+ * @property {SecurityProvenance} createdByModel [Delay loaded from createdBy],  Gets or sets the user that created this base data
+ * @property {SecurityProvenance} obsoletedByModel [Delay loaded from obsoletedBy],  Gets or sets the user that obsoleted this base data
+ * @property {string} createdBy Gets or sets the security provenance object which represents the creation of this object
+ * @property {string} obsoletedBy Gets or sets the security provenance object which represents the obsoletion of this data
+ * @property {string} id Gets or sets the primary identifying UUID of this object
+ * @property {BatchOperationType} operation Gets or sets the operation(see: {@link BatchOperationType} for values)
+ * @property {string} $type Gets the type registration of this object
  * @param {SecurityRole} copyData Copy constructor (if present)
  */
 function SecurityRole (copyData) { 
 	this.$type = 'SecurityRole';
 	if(copyData) {
+	/** @type {BatchOperationType} */
+	this.operation = copyData.operation;
 	/** @type {string} */
 	this.id = copyData.id;
 	/** @type {string} */
@@ -1123,50 +1170,53 @@ function SecurityRole (copyData) {
 	this.name = copyData.name;
 	}
 }  // SecurityRole 
-// SanteDB.Core.Model.Security.SecurityUser, SanteDB.Core.Model, Version=2.0.59.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Security.SecurityUser, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
 //if(!SecurityUser)
 /**
  * @class
  * @constructor
  * @public
- * @summary             Security user represents a user for the purpose of security             
- * @property {string} email            Gets or sets the email address of the user            
- * @property {boolean} emailConfirmed            Gets or sets whether the email address is confirmed            
- * @property {number} invalidLoginAttempts            Gets or sets the number of invalid login attempts by the user            
- * @property {Date} lockoutModel [Delay loaded from lockout],             Gets or sets whether the account is locked out            
- * @property {string} lockout            Gets or sets the creation time in XML format            
- * @property {string} password            Gets or sets whether the password hash is enabled            
- * @property {string} securityStamp            Gets or sets whether the security has is enabled            
- * @property {boolean} twoFactorEnabled            Gets or sets whether two factor authentication is required            
- * @property {string} userName            Gets or sets the logical user name ofthe user            
- * @property {Array<byte>} photo            Gets or sets the binary representation of the user's photo            
- * @property {Date} lastLoginTimeModel [Delay loaded from lastLoginTime],             The last login time            
- * @property {Date} lastLoginTime            Gets or sets the creation time in XML format            
- * @property {Date} passwordExpiryModel [Delay loaded from passwordExpiry],             The last login time            
- * @property {string} passwordExpiry            Gets or sets the creation time in XML format            
- * @property {string} phoneNumber            Gets or sets the patient's phone number            
- * @property {boolean} phoneNumberConfirmed            Gets or sets whether the phone number was confirmed            
- * @property {string} twoFactorMechanism            Gets or sets the preferred tfa mechanism            
- * @property {string} userClass            Gets or sets the user class key            (see: {@link UserClassKeys} for values)
- * @property {Date} updatedTime            Gets or sets the time that this object was last modified in ISO format            
- * @property {Date} modifiedOn            Gets the time this item was modified            
- * @property {SecurityProvenance} updatedByModel [Delay loaded from updatedBy],             Gets or sets the user that updated this base data            
- * @property {string} updatedBy            Gets or sets the provenance identifier associated with the last update of this object            
- * @property {Date} creationTimeModel [Delay loaded from creationTime],             Gets or sets the time at which the data was created            
- * @property {Date} creationTime            Gets or sets the creation time as an ISO date format            
- * @property {Date} obsoletionTimeModel [Delay loaded from obsoletionTime],             Gets or sets the time when the data is or will become invalid            
- * @property {Date} obsoletionTime            Gets or sets the time that the data is no longer valid (was deleted/obsoleted) in ISO format            
- * @property {SecurityProvenance} createdByModel [Delay loaded from createdBy],             Gets or sets the user that created this base data            
- * @property {SecurityProvenance} obsoletedByModel [Delay loaded from obsoletedBy],             Gets or sets the user that obsoleted this base data            
- * @property {string} createdBy            Gets or sets the security provenance object which represents the creation of this object            
- * @property {string} obsoletedBy            Gets or sets the security provenance object which represents the obsoletion of this data            
- * @property {string} id            Gets or sets the primary identifying UUID of this object            
- * @property {string} $type            Gets the type registration of this object            
+ * @summary Security user represents a user for the purpose of security
+ * @property {string} email Gets or sets the email address of the user
+ * @property {boolean} emailConfirmed Gets or sets whether the email address is confirmed
+ * @property {number} invalidLoginAttempts Gets or sets the number of invalid login attempts by the user
+ * @property {Date} lockoutModel [Delay loaded from lockout],  Gets or sets whether the account is locked out
+ * @property {string} lockout Gets or sets the creation time in XML format
+ * @property {string} password Gets or sets whether the password hash is enabled
+ * @property {string} securityStamp Gets or sets whether the security has is enabled
+ * @property {boolean} twoFactorEnabled Gets or sets whether two factor authentication is required
+ * @property {string} userName Gets or sets the logical user name ofthe user
+ * @property {Array<byte>} photo Gets or sets the binary representation of the user's photo
+ * @property {Date} lastLoginTimeModel [Delay loaded from lastLoginTime],  The last login time
+ * @property {Date} lastLoginTime Gets or sets the creation time in XML format
+ * @property {Date} passwordExpiryModel [Delay loaded from passwordExpiry],  The last login time
+ * @property {string} passwordExpiry Gets or sets the creation time in XML format
+ * @property {string} phoneNumber Gets or sets the patient's phone number
+ * @property {boolean} phoneNumberConfirmed Gets or sets whether the phone number was confirmed
+ * @property {string} twoFactorMechanism Gets or sets the preferred tfa mechanism
+ * @property {string} userClass Gets or sets the user class key(see: {@link UserClassKeys} for values)
+ * @property {Date} updatedTime Gets or sets the time that this object was last modified in ISO format
+ * @property {Date} modifiedOn Gets the time this item was modified
+ * @property {SecurityProvenance} updatedByModel [Delay loaded from updatedBy],  Gets or sets the user that updated this base data
+ * @property {string} updatedBy Gets or sets the provenance identifier associated with the last update of this object
+ * @property {Date} creationTimeModel [Delay loaded from creationTime],  Gets or sets the time at which the data was created
+ * @property {Date} creationTime Gets or sets the creation time as an ISO date format
+ * @property {Date} obsoletionTimeModel [Delay loaded from obsoletionTime],  Gets or sets the time when the data is or will become invalid
+ * @property {Date} obsoletionTime Gets or sets the time that the data is no longer valid (was deleted/obsoleted) in ISO format
+ * @property {SecurityProvenance} createdByModel [Delay loaded from createdBy],  Gets or sets the user that created this base data
+ * @property {SecurityProvenance} obsoletedByModel [Delay loaded from obsoletedBy],  Gets or sets the user that obsoleted this base data
+ * @property {string} createdBy Gets or sets the security provenance object which represents the creation of this object
+ * @property {string} obsoletedBy Gets or sets the security provenance object which represents the obsoletion of this data
+ * @property {string} id Gets or sets the primary identifying UUID of this object
+ * @property {BatchOperationType} operation Gets or sets the operation(see: {@link BatchOperationType} for values)
+ * @property {string} $type Gets the type registration of this object
  * @param {SecurityUser} copyData Copy constructor (if present)
  */
 function SecurityUser (copyData) { 
 	this.$type = 'SecurityUser';
 	if(copyData) {
+	/** @type {BatchOperationType} */
+	this.operation = copyData.operation;
 	/** @type {string} */
 	this.id = copyData.id;
 	/** @type {string} */
@@ -1231,36 +1281,38 @@ function SecurityUser (copyData) {
 	this.email = copyData.email;
 	}
 }  // SecurityUser 
-// SanteDB.Core.Model.Roles.Patient, SanteDB.Core.Model, Version=2.0.59.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Roles.Patient, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
 //if(!Patient)
 /**
  * @class
  * @constructor
  * @public
- * @summary             Represents an entity which is a patient            
- * @property {Date} deceasedDate            Deceased date XML            
- * @property {DatePrecision} deceasedDatePrecision            Gets or sets the precision of the date of deceased            (see: {@link DatePrecision} for values)
- * @property {number} multipleBirthOrder            Gets or sets the multiple birth order of the patient             
- * @property {string} genderConcept            Gets or sets the gender concept key            
- * @property {Concept} genderConceptModel [Delay loaded from genderConcept],             Gets or sets the gender concept            
- * @property {string} vipStatus            Gets or sets the VIP code            
- * @property {string} maritalStatus            Gets or sets the key of the marital status concept            
- * @property {string} educationLevel            Gets or sets the key of the education level            
- * @property {string} livingArrangement            Gets or sets the living arrangement            
- * @property {string} religion            Gets or sets the religious affiliation            
- * @property {Concept} maritalStatusModel [Delay loaded from maritalStatus],             Gets or sets the marital status code            
- * @property {Concept} vipStatusModel [Delay loaded from vipStatus],             Gets or sets the VIP status code            
- * @property {Concept} educationLevelModel [Delay loaded from educationLevel],             Gets or sets the education level of the person            
- * @property {Concept} livingArrangementModel [Delay loaded from livingArrangement],             Gets or sets the living arrangements            
- * @property {Concept} religionModel [Delay loaded from religion],             Gets or sets the religious affiliation            
- * @property {string} ethnicity            Gets or sets the ethnicity codes            
- * @property {Concept} ethnicityModel [Delay loaded from ethnicity],             Gets the ethic group concepts            
- * @property {DatePrecision} dateOfBirthPrecision            Gets or sets the precision ofthe date of birth            (see: {@link DatePrecision} for values)
- * @property {string} dateOfBirth            Gets the date of birth as XML            
- * @property {PersonLanguageCommunication} language            Gets the person's languages of communication            
- * @property {string} occupation            Gets or sets the religious affiliation            
- * @property {Concept} occupationModel [Delay loaded from occupation],             Gets or sets the marital status code            
- * @property {object} address            Gets a list of all addresses associated with the entity            
+ * @summary Represents an entity which is a patient
+ * @property {Date} deceasedDate Deceased date XML
+ * @property {DatePrecision} deceasedDatePrecision Gets or sets the precision of the date of deceased(see: {@link DatePrecision} for values)
+ * @property {number} multipleBirthOrder Gets or sets the multiple birth order of the patient
+ * @property {string} vipStatus Gets or sets the VIP code
+ * @property {string} maritalStatus Gets or sets the key of the marital status concept
+ * @property {string} educationLevel Gets or sets the key of the education level
+ * @property {string} livingArrangement Gets or sets the living arrangement
+ * @property {string} religion Gets or sets the religious affiliation
+ * @property {string} nationality Gets or sets the religious affiliation
+ * @property {Concept} nationalityModel [Delay loaded from nationality],  Gets or sets the marital status code
+ * @property {Concept} maritalStatusModel [Delay loaded from maritalStatus],  Gets or sets the marital status code
+ * @property {Concept} vipStatusModel [Delay loaded from vipStatus],  Gets or sets the VIP status code
+ * @property {Concept} educationLevelModel [Delay loaded from educationLevel],  Gets or sets the education level of the person
+ * @property {Concept} livingArrangementModel [Delay loaded from livingArrangement],  Gets or sets the living arrangements
+ * @property {Concept} religionModel [Delay loaded from religion],  Gets or sets the religious affiliation
+ * @property {string} ethnicity Gets or sets the ethnicity codes
+ * @property {Concept} ethnicityModel [Delay loaded from ethnicity],  Gets the ethic group concepts
+ * @property {DatePrecision} dateOfBirthPrecision Gets or sets the precision ofthe date of birth(see: {@link DatePrecision} for values)
+ * @property {string} genderConcept Gets or sets the gender concept key
+ * @property {Concept} genderConceptModel [Delay loaded from genderConcept],  Gets or sets the gender concept
+ * @property {string} dateOfBirth Gets the date of birth as XML
+ * @property {PersonLanguageCommunication} language Gets the person's languages of communication
+ * @property {string} occupation Gets or sets the religious affiliation
+ * @property {Concept} occupationModel [Delay loaded from occupation],  Gets or sets the marital status code
+ * @property {object} address Gets a list of all addresses associated with the entity
  * @property {EntityAddress} address.Alphabetic             Represents an alphabetic address used for matching             
  * @property {EntityAddress} address.BadAddress             Represents a bad address, i.e. an address which is old or invalid.            
  * @property {EntityAddress} address.Direct             Represents a workplace address that reaches the person directly without intermediaries.            
@@ -1277,17 +1329,17 @@ function SecurityUser (copyData) {
  * @property {EntityAddress} address.VacationHome             Represents a vacation home to reach a person while on vacation.            
  * @property {EntityAddress} address.WorkPlace             Represents an office address, should be used for business communications            
  * @property {EntityAddress} address.$other Unclassified
- * @property {Concept} classConceptModel [Delay loaded from classConcept],             Class concept datal load property            
- * @property {string} classConcept            Class concept            (see: {@link EntityClassKeys} for values)
- * @property {Act} creationActModel [Delay loaded from creationAct],             Creation act reference            
- * @property {string} creationAct            Creation act reference            
- * @property {Concept} determinerConceptModel [Delay loaded from determinerConcept],             Determiner concept            
- * @property {string} determinerConcept            Determiner concept            (see: {@link DeterminerKeys} for values)
- * @property {object} extension            Gets a list of all extensions associated with the entity            
+ * @property {Concept} classConceptModel [Delay loaded from classConcept],  Class concept datal load property
+ * @property {string} classConcept Class concept(see: {@link EntityClassKeys} for values)
+ * @property {Act} creationActModel [Delay loaded from creationAct],  Creation act reference
+ * @property {string} creationAct Creation act reference
+ * @property {Concept} determinerConceptModel [Delay loaded from determinerConcept],  Determiner concept
+ * @property {string} determinerConcept Determiner concept(see: {@link DeterminerKeys} for values)
+ * @property {object} extension Gets a list of all extensions associated with the entity
  * @property {string} extension.classifier  where classifier is from {@link Extension} extensionType
- * @property {object} identifier            Gets the identifiers associated with this entity            
+ * @property {object} identifier Gets the identifiers associated with this entity
  * @property {EntityIdentifier} identifier.classifier  where classifier is from {@link IdentifierBase} authority
- * @property {object} name            Gets a list of all names associated with the entity            
+ * @property {object} name Gets a list of all names associated with the entity
  * @property {EntityName} name.Alphabetic             The name used is an alphabetic representation of the name (ex: romaji in Japanese)            
  * @property {EntityName} name.Anonymous             The name is an anonymous name for the object (not the real name but a name used for care delivery)            
  * @property {EntityName} name.Artist             The name represents an artist name or stage name            
@@ -1305,8 +1357,8 @@ function SecurityUser (copyData) {
  * @property {EntityName} name.Soundex             The name represents the computed soundex code of a name            
  * @property {EntityName} name.Syllabic             The name represents a syllabic name.            
  * @property {EntityName} name.$other Unclassified
- * @property {string} note            Gets a list of all notes associated with the entity            
- * @property {object} participation            Gets the acts in which this entity participates            
+ * @property {EntityNote} note Gets a list of all notes associated with the entity
+ * @property {object} participation Gets the acts in which this entity participates
  * @property {ActParticipation} participation.Admitter             The player entity was the person who was responsible for admitting the patient into a facility or care scenario.            
  * @property {ActParticipation} participation.Attender             The player entity represents the attending physician for the patient            
  * @property {ActParticipation} participation.Authenticator             The player entity represents an entity which authenticates the provision of care            
@@ -1364,7 +1416,7 @@ function SecurityUser (copyData) {
  * @property {ActParticipation} participation.Via             The player entity represents an entity where the act occurred "via" this entity (i.e. in transport)            
  * @property {ActParticipation} participation.Witness             The player entity represents a legal witness to the act occurring.            
  * @property {ActParticipation} participation.$other Unclassified
- * @property {object} relationship            Gets a list of all associated entities for this entity            
+ * @property {object} relationship Gets a list of all associated entities for this entity
  * @property {EntityRelationship} relationship.Access             The source entity gives access to the target entity            
  * @property {EntityRelationship} relationship.ActiveMoiety             Active ingredient, where not the ingredient substance (player), but itaTMs active moiety is the "basis of strength"            
  * @property {EntityRelationship} relationship.AdministerableMaterial             The source represents a meterial that is an administerable form of the target            
@@ -1520,12 +1572,14 @@ function SecurityUser (copyData) {
  * @property {EntityRelationship} relationship.Instance             The target entity represents an instance of the scoper entity            
  * @property {EntityRelationship} relationship.LocatedEntity             Relates the target entity to a source location            
  * @property {EntityRelationship} relationship.Duplicate             Duplicate entity            
+ * @property {EntityRelationship} relationship.Scoper             Duplicate entity            
+ * @property {EntityRelationship} relationship.EquivalentEntity             Referenced entities            
  * @property {EntityRelationship} relationship.$other Unclassified
- * @property {Concept} statusConceptModel [Delay loaded from statusConcept],             Status concept id            
- * @property {string} statusConcept            Status concept id            (see: {@link StatusKeys} for values)
- * @property {object} tag            Gets a list of all tags associated with the entity            
+ * @property {Concept} statusConceptModel [Delay loaded from statusConcept],  Status concept id
+ * @property {string} statusConcept Status concept id(see: {@link StatusKeys} for values)
+ * @property {object} tag Gets a list of all tags associated with the entity
  * @property {string} tag.classifier  where classifier is from {@link Tag} key
- * @property {object} telecom            Gets a list of all telecommunications addresses associated with the entity            
+ * @property {object} telecom Gets a list of all telecommunications addresses associated with the entity
  * @property {EntityTelecomAddress} telecom.AnsweringService             answering service            
  * @property {EntityTelecomAddress} telecom.EmergencyContact             Emergency contact            
  * @property {EntityTelecomAddress} telecom.MobileContact             Mobile phone contact            
@@ -1534,30 +1588,33 @@ function SecurityUser (copyData) {
  * @property {EntityTelecomAddress} telecom.TemporaryAddress             temporary contact            
  * @property {EntityTelecomAddress} telecom.WorkPlace             For use in the workplace            
  * @property {EntityTelecomAddress} telecom.$other Unclassified
- * @property {string} template            Gets the template key            
- * @property {TemplateDefinition} templateModel [Delay loaded from template],             Gets or sets the template definition            
- * @property {Concept} typeConceptModel [Delay loaded from typeConcept],             Type concept identifier            
- * @property {string} typeConcept            Type concept identifier            
- * @property {SecurityPolicyInstance} policy            Gets or sets the security policy instances associated with the entity            
+ * @property {string} template Gets the template key
+ * @property {TemplateDefinition} templateModel [Delay loaded from template],  Gets or sets the template definition
+ * @property {Concept} typeConceptModel [Delay loaded from typeConcept],  Type concept identifier
+ * @property {string} typeConcept Type concept identifier
+ * @property {SecurityPolicyInstance} policy Gets or sets the security policy instances associated with the entity
  * @property {string} previousVersion
  * @property {string} version
  * @property {number} sequence
- * @property {Date} creationTimeModel [Delay loaded from creationTime],             Gets or sets the time at which the data was created            
- * @property {Date} creationTime            Gets or sets the creation time as an ISO date format            
- * @property {Date} obsoletionTimeModel [Delay loaded from obsoletionTime],             Gets or sets the time when the data is or will become invalid            
- * @property {Date} obsoletionTime            Gets or sets the time that the data is no longer valid (was deleted/obsoleted) in ISO format            
- * @property {SecurityProvenance} createdByModel [Delay loaded from createdBy],             Gets or sets the user that created this base data            
- * @property {Date} modifiedOn            Gets the time that the object was last modified (from base data, default to CreationTime)            
- * @property {SecurityProvenance} obsoletedByModel [Delay loaded from obsoletedBy],             Gets or sets the user that obsoleted this base data            
- * @property {string} createdBy            Gets or sets the security provenance object which represents the creation of this object            
- * @property {string} obsoletedBy            Gets or sets the security provenance object which represents the obsoletion of this data            
- * @property {string} id            Gets or sets the primary identifying UUID of this object            
- * @property {string} $type            Gets the type registration of this object            
+ * @property {Date} creationTimeModel [Delay loaded from creationTime],  Gets or sets the time at which the data was created
+ * @property {Date} creationTime Gets or sets the creation time as an ISO date format
+ * @property {Date} obsoletionTimeModel [Delay loaded from obsoletionTime],  Gets or sets the time when the data is or will become invalid
+ * @property {Date} obsoletionTime Gets or sets the time that the data is no longer valid (was deleted/obsoleted) in ISO format
+ * @property {SecurityProvenance} createdByModel [Delay loaded from createdBy],  Gets or sets the user that created this base data
+ * @property {Date} modifiedOn Gets the time that the object was last modified (from base data, default to CreationTime)
+ * @property {SecurityProvenance} obsoletedByModel [Delay loaded from obsoletedBy],  Gets or sets the user that obsoleted this base data
+ * @property {string} createdBy Gets or sets the security provenance object which represents the creation of this object
+ * @property {string} obsoletedBy Gets or sets the security provenance object which represents the obsoletion of this data
+ * @property {string} id Gets or sets the primary identifying UUID of this object
+ * @property {BatchOperationType} operation Gets or sets the operation(see: {@link BatchOperationType} for values)
+ * @property {string} $type Gets the type registration of this object
  * @param {Patient} copyData Copy constructor (if present)
  */
 function Patient (copyData) { 
 	this.$type = 'Patient';
 	if(copyData) {
+	/** @type {BatchOperationType} */
+	this.operation = copyData.operation;
 	/** @type {string} */
 	this.id = copyData.id;
 	/** @type {string} */
@@ -1606,7 +1663,7 @@ function Patient (copyData) {
 	this.relationship = copyData.relationship;
 	/** @type {object} */
 	this.participation = copyData.participation;
-	/** @type {string} */
+	/** @type {EntityNote} */
 	this.note = copyData.note;
 	/** @type {object} */
 	this.name = copyData.name;
@@ -1636,6 +1693,10 @@ function Patient (copyData) {
 	this.language = copyData.language;
 	/** @type {string} */
 	this.dateOfBirth = copyData.dateOfBirth;
+	/** @type {Concept} */
+	this.genderConceptModel = copyData.genderConceptModel;
+	/** @type {string} */
+	this.genderConcept = copyData.genderConcept;
 	/** @type {DatePrecision} */
 	this.dateOfBirthPrecision = copyData.dateOfBirthPrecision;
 	/** @type {Concept} */
@@ -1652,6 +1713,10 @@ function Patient (copyData) {
 	this.vipStatusModel = copyData.vipStatusModel;
 	/** @type {Concept} */
 	this.maritalStatusModel = copyData.maritalStatusModel;
+	/** @type {Concept} */
+	this.nationalityModel = copyData.nationalityModel;
+	/** @type {string} */
+	this.nationality = copyData.nationality;
 	/** @type {string} */
 	this.religion = copyData.religion;
 	/** @type {string} */
@@ -1662,10 +1727,6 @@ function Patient (copyData) {
 	this.maritalStatus = copyData.maritalStatus;
 	/** @type {string} */
 	this.vipStatus = copyData.vipStatus;
-	/** @type {Concept} */
-	this.genderConceptModel = copyData.genderConceptModel;
-	/** @type {string} */
-	this.genderConcept = copyData.genderConcept;
 	/** @type {number} */
 	this.multipleBirthOrder = copyData.multipleBirthOrder;
 	/** @type {DatePrecision} */
@@ -1674,21 +1735,23 @@ function Patient (copyData) {
 	this.deceasedDate = copyData.deceasedDate;
 	}
 }  // Patient 
-// SanteDB.Core.Model.Roles.Provider, SanteDB.Core.Model, Version=2.0.59.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Roles.Provider, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
 //if(!Provider)
 /**
  * @class
  * @constructor
  * @public
- * @summary             Represents a provider role of a person            
- * @property {string} providerSpecialty            Gets or sets the provider specialty key            
- * @property {Concept} providerSpecialtyModel [Delay loaded from providerSpecialty],             Gets or sets the provider specialty            
- * @property {DatePrecision} dateOfBirthPrecision            Gets or sets the precision ofthe date of birth            (see: {@link DatePrecision} for values)
- * @property {string} dateOfBirth            Gets the date of birth as XML            
- * @property {PersonLanguageCommunication} language            Gets the person's languages of communication            
- * @property {string} occupation            Gets or sets the religious affiliation            
- * @property {Concept} occupationModel [Delay loaded from occupation],             Gets or sets the marital status code            
- * @property {object} address            Gets a list of all addresses associated with the entity            
+ * @summary Represents a provider role of a person
+ * @property {string} providerSpecialty Gets or sets the provider specialty key
+ * @property {Concept} providerSpecialtyModel [Delay loaded from providerSpecialty],  Gets or sets the provider specialty
+ * @property {DatePrecision} dateOfBirthPrecision Gets or sets the precision ofthe date of birth(see: {@link DatePrecision} for values)
+ * @property {string} genderConcept Gets or sets the gender concept key
+ * @property {Concept} genderConceptModel [Delay loaded from genderConcept],  Gets or sets the gender concept
+ * @property {string} dateOfBirth Gets the date of birth as XML
+ * @property {PersonLanguageCommunication} language Gets the person's languages of communication
+ * @property {string} occupation Gets or sets the religious affiliation
+ * @property {Concept} occupationModel [Delay loaded from occupation],  Gets or sets the marital status code
+ * @property {object} address Gets a list of all addresses associated with the entity
  * @property {EntityAddress} address.Alphabetic             Represents an alphabetic address used for matching             
  * @property {EntityAddress} address.BadAddress             Represents a bad address, i.e. an address which is old or invalid.            
  * @property {EntityAddress} address.Direct             Represents a workplace address that reaches the person directly without intermediaries.            
@@ -1705,17 +1768,17 @@ function Patient (copyData) {
  * @property {EntityAddress} address.VacationHome             Represents a vacation home to reach a person while on vacation.            
  * @property {EntityAddress} address.WorkPlace             Represents an office address, should be used for business communications            
  * @property {EntityAddress} address.$other Unclassified
- * @property {Concept} classConceptModel [Delay loaded from classConcept],             Class concept datal load property            
- * @property {string} classConcept            Class concept            (see: {@link EntityClassKeys} for values)
- * @property {Act} creationActModel [Delay loaded from creationAct],             Creation act reference            
- * @property {string} creationAct            Creation act reference            
- * @property {Concept} determinerConceptModel [Delay loaded from determinerConcept],             Determiner concept            
- * @property {string} determinerConcept            Determiner concept            (see: {@link DeterminerKeys} for values)
- * @property {object} extension            Gets a list of all extensions associated with the entity            
+ * @property {Concept} classConceptModel [Delay loaded from classConcept],  Class concept datal load property
+ * @property {string} classConcept Class concept(see: {@link EntityClassKeys} for values)
+ * @property {Act} creationActModel [Delay loaded from creationAct],  Creation act reference
+ * @property {string} creationAct Creation act reference
+ * @property {Concept} determinerConceptModel [Delay loaded from determinerConcept],  Determiner concept
+ * @property {string} determinerConcept Determiner concept(see: {@link DeterminerKeys} for values)
+ * @property {object} extension Gets a list of all extensions associated with the entity
  * @property {string} extension.classifier  where classifier is from {@link Extension} extensionType
- * @property {object} identifier            Gets the identifiers associated with this entity            
+ * @property {object} identifier Gets the identifiers associated with this entity
  * @property {EntityIdentifier} identifier.classifier  where classifier is from {@link IdentifierBase} authority
- * @property {object} name            Gets a list of all names associated with the entity            
+ * @property {object} name Gets a list of all names associated with the entity
  * @property {EntityName} name.Alphabetic             The name used is an alphabetic representation of the name (ex: romaji in Japanese)            
  * @property {EntityName} name.Anonymous             The name is an anonymous name for the object (not the real name but a name used for care delivery)            
  * @property {EntityName} name.Artist             The name represents an artist name or stage name            
@@ -1733,8 +1796,8 @@ function Patient (copyData) {
  * @property {EntityName} name.Soundex             The name represents the computed soundex code of a name            
  * @property {EntityName} name.Syllabic             The name represents a syllabic name.            
  * @property {EntityName} name.$other Unclassified
- * @property {string} note            Gets a list of all notes associated with the entity            
- * @property {object} participation            Gets the acts in which this entity participates            
+ * @property {EntityNote} note Gets a list of all notes associated with the entity
+ * @property {object} participation Gets the acts in which this entity participates
  * @property {ActParticipation} participation.Admitter             The player entity was the person who was responsible for admitting the patient into a facility or care scenario.            
  * @property {ActParticipation} participation.Attender             The player entity represents the attending physician for the patient            
  * @property {ActParticipation} participation.Authenticator             The player entity represents an entity which authenticates the provision of care            
@@ -1792,7 +1855,7 @@ function Patient (copyData) {
  * @property {ActParticipation} participation.Via             The player entity represents an entity where the act occurred "via" this entity (i.e. in transport)            
  * @property {ActParticipation} participation.Witness             The player entity represents a legal witness to the act occurring.            
  * @property {ActParticipation} participation.$other Unclassified
- * @property {object} relationship            Gets a list of all associated entities for this entity            
+ * @property {object} relationship Gets a list of all associated entities for this entity
  * @property {EntityRelationship} relationship.Access             The source entity gives access to the target entity            
  * @property {EntityRelationship} relationship.ActiveMoiety             Active ingredient, where not the ingredient substance (player), but itaTMs active moiety is the "basis of strength"            
  * @property {EntityRelationship} relationship.AdministerableMaterial             The source represents a meterial that is an administerable form of the target            
@@ -1948,12 +2011,14 @@ function Patient (copyData) {
  * @property {EntityRelationship} relationship.Instance             The target entity represents an instance of the scoper entity            
  * @property {EntityRelationship} relationship.LocatedEntity             Relates the target entity to a source location            
  * @property {EntityRelationship} relationship.Duplicate             Duplicate entity            
+ * @property {EntityRelationship} relationship.Scoper             Duplicate entity            
+ * @property {EntityRelationship} relationship.EquivalentEntity             Referenced entities            
  * @property {EntityRelationship} relationship.$other Unclassified
- * @property {Concept} statusConceptModel [Delay loaded from statusConcept],             Status concept id            
- * @property {string} statusConcept            Status concept id            (see: {@link StatusKeys} for values)
- * @property {object} tag            Gets a list of all tags associated with the entity            
+ * @property {Concept} statusConceptModel [Delay loaded from statusConcept],  Status concept id
+ * @property {string} statusConcept Status concept id(see: {@link StatusKeys} for values)
+ * @property {object} tag Gets a list of all tags associated with the entity
  * @property {string} tag.classifier  where classifier is from {@link Tag} key
- * @property {object} telecom            Gets a list of all telecommunications addresses associated with the entity            
+ * @property {object} telecom Gets a list of all telecommunications addresses associated with the entity
  * @property {EntityTelecomAddress} telecom.AnsweringService             answering service            
  * @property {EntityTelecomAddress} telecom.EmergencyContact             Emergency contact            
  * @property {EntityTelecomAddress} telecom.MobileContact             Mobile phone contact            
@@ -1962,30 +2027,33 @@ function Patient (copyData) {
  * @property {EntityTelecomAddress} telecom.TemporaryAddress             temporary contact            
  * @property {EntityTelecomAddress} telecom.WorkPlace             For use in the workplace            
  * @property {EntityTelecomAddress} telecom.$other Unclassified
- * @property {string} template            Gets the template key            
- * @property {TemplateDefinition} templateModel [Delay loaded from template],             Gets or sets the template definition            
- * @property {Concept} typeConceptModel [Delay loaded from typeConcept],             Type concept identifier            
- * @property {string} typeConcept            Type concept identifier            
- * @property {SecurityPolicyInstance} policy            Gets or sets the security policy instances associated with the entity            
+ * @property {string} template Gets the template key
+ * @property {TemplateDefinition} templateModel [Delay loaded from template],  Gets or sets the template definition
+ * @property {Concept} typeConceptModel [Delay loaded from typeConcept],  Type concept identifier
+ * @property {string} typeConcept Type concept identifier
+ * @property {SecurityPolicyInstance} policy Gets or sets the security policy instances associated with the entity
  * @property {string} previousVersion
  * @property {string} version
  * @property {number} sequence
- * @property {Date} creationTimeModel [Delay loaded from creationTime],             Gets or sets the time at which the data was created            
- * @property {Date} creationTime            Gets or sets the creation time as an ISO date format            
- * @property {Date} obsoletionTimeModel [Delay loaded from obsoletionTime],             Gets or sets the time when the data is or will become invalid            
- * @property {Date} obsoletionTime            Gets or sets the time that the data is no longer valid (was deleted/obsoleted) in ISO format            
- * @property {SecurityProvenance} createdByModel [Delay loaded from createdBy],             Gets or sets the user that created this base data            
- * @property {Date} modifiedOn            Gets the time that the object was last modified (from base data, default to CreationTime)            
- * @property {SecurityProvenance} obsoletedByModel [Delay loaded from obsoletedBy],             Gets or sets the user that obsoleted this base data            
- * @property {string} createdBy            Gets or sets the security provenance object which represents the creation of this object            
- * @property {string} obsoletedBy            Gets or sets the security provenance object which represents the obsoletion of this data            
- * @property {string} id            Gets or sets the primary identifying UUID of this object            
- * @property {string} $type            Gets the type registration of this object            
+ * @property {Date} creationTimeModel [Delay loaded from creationTime],  Gets or sets the time at which the data was created
+ * @property {Date} creationTime Gets or sets the creation time as an ISO date format
+ * @property {Date} obsoletionTimeModel [Delay loaded from obsoletionTime],  Gets or sets the time when the data is or will become invalid
+ * @property {Date} obsoletionTime Gets or sets the time that the data is no longer valid (was deleted/obsoleted) in ISO format
+ * @property {SecurityProvenance} createdByModel [Delay loaded from createdBy],  Gets or sets the user that created this base data
+ * @property {Date} modifiedOn Gets the time that the object was last modified (from base data, default to CreationTime)
+ * @property {SecurityProvenance} obsoletedByModel [Delay loaded from obsoletedBy],  Gets or sets the user that obsoleted this base data
+ * @property {string} createdBy Gets or sets the security provenance object which represents the creation of this object
+ * @property {string} obsoletedBy Gets or sets the security provenance object which represents the obsoletion of this data
+ * @property {string} id Gets or sets the primary identifying UUID of this object
+ * @property {BatchOperationType} operation Gets or sets the operation(see: {@link BatchOperationType} for values)
+ * @property {string} $type Gets the type registration of this object
  * @param {Provider} copyData Copy constructor (if present)
  */
 function Provider (copyData) { 
 	this.$type = 'Provider';
 	if(copyData) {
+	/** @type {BatchOperationType} */
+	this.operation = copyData.operation;
 	/** @type {string} */
 	this.id = copyData.id;
 	/** @type {string} */
@@ -2034,7 +2102,7 @@ function Provider (copyData) {
 	this.relationship = copyData.relationship;
 	/** @type {object} */
 	this.participation = copyData.participation;
-	/** @type {string} */
+	/** @type {EntityNote} */
 	this.note = copyData.note;
 	/** @type {object} */
 	this.name = copyData.name;
@@ -2064,6 +2132,10 @@ function Provider (copyData) {
 	this.language = copyData.language;
 	/** @type {string} */
 	this.dateOfBirth = copyData.dateOfBirth;
+	/** @type {Concept} */
+	this.genderConceptModel = copyData.genderConceptModel;
+	/** @type {string} */
+	this.genderConcept = copyData.genderConcept;
 	/** @type {DatePrecision} */
 	this.dateOfBirthPrecision = copyData.dateOfBirthPrecision;
 	/** @type {Concept} */
@@ -2072,33 +2144,36 @@ function Provider (copyData) {
 	this.providerSpecialty = copyData.providerSpecialty;
 	}
 }  // Provider 
-// SanteDB.Core.Model.Patch.Patch, SanteDB.Core.Model, Version=2.0.59.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Patch.Patch, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
 //if(!Patch)
 /**
  * @class
  * @constructor
  * @public
  * @extends BaseEntityData
- * @summary             Represents a series of patch instructions             
- * @property {string} version            Gets or sets the version of the patch file            
- * @property {PatchTarget} appliesTo            Application version            
- * @property {PatchOperation} change            A list of patch operations to be applied to the object            
- * @property {Date} creationTimeModel [Delay loaded from creationTime],             Gets or sets the time at which the data was created            
- * @property {Date} creationTime            Gets or sets the creation time as an ISO date format            
- * @property {Date} obsoletionTimeModel [Delay loaded from obsoletionTime],             Gets or sets the time when the data is or will become invalid            
- * @property {Date} obsoletionTime            Gets or sets the time that the data is no longer valid (was deleted/obsoleted) in ISO format            
- * @property {SecurityProvenance} createdByModel [Delay loaded from createdBy],             Gets or sets the user that created this base data            
- * @property {Date} modifiedOn            Gets the time that the object was last modified (from base data, default to CreationTime)            
- * @property {SecurityProvenance} obsoletedByModel [Delay loaded from obsoletedBy],             Gets or sets the user that obsoleted this base data            
- * @property {string} createdBy            Gets or sets the security provenance object which represents the creation of this object            
- * @property {string} obsoletedBy            Gets or sets the security provenance object which represents the obsoletion of this data            
- * @property {string} id            Gets or sets the primary identifying UUID of this object            
- * @property {string} $type            Gets the type registration of this object            
+ * @summary Represents a series of patch instructions
+ * @property {string} version Gets or sets the version of the patch file
+ * @property {PatchTarget} appliesTo Application version
+ * @property {PatchOperation} change A list of patch operations to be applied to the object
+ * @property {Date} creationTimeModel [Delay loaded from creationTime],  Gets or sets the time at which the data was created
+ * @property {Date} creationTime Gets or sets the creation time as an ISO date format
+ * @property {Date} obsoletionTimeModel [Delay loaded from obsoletionTime],  Gets or sets the time when the data is or will become invalid
+ * @property {Date} obsoletionTime Gets or sets the time that the data is no longer valid (was deleted/obsoleted) in ISO format
+ * @property {SecurityProvenance} createdByModel [Delay loaded from createdBy],  Gets or sets the user that created this base data
+ * @property {Date} modifiedOn Gets the time that the object was last modified (from base data, default to CreationTime)
+ * @property {SecurityProvenance} obsoletedByModel [Delay loaded from obsoletedBy],  Gets or sets the user that obsoleted this base data
+ * @property {string} createdBy Gets or sets the security provenance object which represents the creation of this object
+ * @property {string} obsoletedBy Gets or sets the security provenance object which represents the obsoletion of this data
+ * @property {string} id Gets or sets the primary identifying UUID of this object
+ * @property {BatchOperationType} operation Gets or sets the operation(see: {@link BatchOperationType} for values)
+ * @property {string} $type Gets the type registration of this object
  * @param {Patch} copyData Copy constructor (if present)
  */
 function Patch (copyData) { 
 	this.$type = 'Patch';
 	if(copyData) {
+	/** @type {BatchOperationType} */
+	this.operation = copyData.operation;
 	/** @type {string} */
 	this.id = copyData.id;
 	/** @type {string} */
@@ -2127,16 +2202,16 @@ function Patch (copyData) {
 	this.version = copyData.version;
 	}
 }  // Patch 
-// SanteDB.Core.Model.Patch.PatchOperation, SanteDB.Core.Model, Version=2.0.59.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Patch.PatchOperation, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
 //if(!PatchOperation)
 /**
  * @class
  * @constructor
  * @public
- * @summary             Represents a single patch operation            
- * @property {PatchOperationType} op            Gets or sets the operation type            (see: {@link PatchOperationType} for values)
- * @property {string} path            Gets or sets the path            
- * @property {Object} value            Get or sets the value            
+ * @summary Represents a single patch operation
+ * @property {PatchOperationType} op Gets or sets the operation type(see: {@link PatchOperationType} for values)
+ * @property {string} path Gets or sets the path
+ * @property {Object} value Get or sets the value
  * @param {PatchOperation} copyData Copy constructor (if present)
  */
 function PatchOperation (copyData) { 
@@ -2150,17 +2225,17 @@ function PatchOperation (copyData) {
 	this.op = copyData.op;
 	}
 }  // PatchOperation 
-// SanteDB.Core.Model.Patch.PatchTarget, SanteDB.Core.Model, Version=2.0.59.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Patch.PatchTarget, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
 //if(!PatchTarget)
 /**
  * @class
  * @constructor
  * @public
- * @summary             Represents a target of a patch            
- * @property {string} type            Identifies the target type            
- * @property {string} id            Gets or sets the key            
- * @property {string} version            Gets or sets the key            
- * @property {string} etag            Gets or sets the tag of the item            
+ * @summary Represents a target of a patch
+ * @property {string} type Identifies the target type
+ * @property {string} id Gets or sets the key
+ * @property {string} version Gets or sets the key
+ * @property {string} etag Gets or sets the tag of the item
  * @param {PatchTarget} copyData Copy constructor (if present)
  */
 function PatchTarget (copyData) { 
@@ -2176,19 +2251,19 @@ function PatchTarget (copyData) {
 	this.type = copyData.type;
 	}
 }  // PatchTarget 
-// SanteDB.Core.Model.Entities.ApplicationEntity, SanteDB.Core.Model, Version=2.0.59.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Entities.ApplicationEntity, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
 //if(!ApplicationEntity)
 /**
  * @class
  * @constructor
  * @public
- * @summary             An associative entity which links a SecurityApplication to an Entity            
- * @property {SecurityApplication} securityApplicationModel [Delay loaded from securityApplication],             Gets or sets the security application            
- * @property {string} securityApplication            Gets or sets the security application            
- * @property {string} softwareName            Gets or sets the name of the software            
- * @property {string} vendorName            Gets or sets the vendoer name of the software            
- * @property {string} versionName            Gets or sets the version of the software            
- * @property {object} address            Gets a list of all addresses associated with the entity            
+ * @summary An associative entity which links a SecurityApplication to an Entity
+ * @property {SecurityApplication} securityApplicationModel [Delay loaded from securityApplication],  Gets or sets the security application
+ * @property {string} securityApplication Gets or sets the security application
+ * @property {string} softwareName Gets or sets the name of the software
+ * @property {string} vendorName Gets or sets the vendoer name of the software
+ * @property {string} versionName Gets or sets the version of the software
+ * @property {object} address Gets a list of all addresses associated with the entity
  * @property {EntityAddress} address.Alphabetic             Represents an alphabetic address used for matching             
  * @property {EntityAddress} address.BadAddress             Represents a bad address, i.e. an address which is old or invalid.            
  * @property {EntityAddress} address.Direct             Represents a workplace address that reaches the person directly without intermediaries.            
@@ -2205,17 +2280,17 @@ function PatchTarget (copyData) {
  * @property {EntityAddress} address.VacationHome             Represents a vacation home to reach a person while on vacation.            
  * @property {EntityAddress} address.WorkPlace             Represents an office address, should be used for business communications            
  * @property {EntityAddress} address.$other Unclassified
- * @property {Concept} classConceptModel [Delay loaded from classConcept],             Class concept datal load property            
- * @property {string} classConcept            Class concept            (see: {@link EntityClassKeys} for values)
- * @property {Act} creationActModel [Delay loaded from creationAct],             Creation act reference            
- * @property {string} creationAct            Creation act reference            
- * @property {Concept} determinerConceptModel [Delay loaded from determinerConcept],             Determiner concept            
- * @property {string} determinerConcept            Determiner concept            (see: {@link DeterminerKeys} for values)
- * @property {object} extension            Gets a list of all extensions associated with the entity            
+ * @property {Concept} classConceptModel [Delay loaded from classConcept],  Class concept datal load property
+ * @property {string} classConcept Class concept(see: {@link EntityClassKeys} for values)
+ * @property {Act} creationActModel [Delay loaded from creationAct],  Creation act reference
+ * @property {string} creationAct Creation act reference
+ * @property {Concept} determinerConceptModel [Delay loaded from determinerConcept],  Determiner concept
+ * @property {string} determinerConcept Determiner concept(see: {@link DeterminerKeys} for values)
+ * @property {object} extension Gets a list of all extensions associated with the entity
  * @property {string} extension.classifier  where classifier is from {@link Extension} extensionType
- * @property {object} identifier            Gets the identifiers associated with this entity            
+ * @property {object} identifier Gets the identifiers associated with this entity
  * @property {EntityIdentifier} identifier.classifier  where classifier is from {@link IdentifierBase} authority
- * @property {object} name            Gets a list of all names associated with the entity            
+ * @property {object} name Gets a list of all names associated with the entity
  * @property {EntityName} name.Alphabetic             The name used is an alphabetic representation of the name (ex: romaji in Japanese)            
  * @property {EntityName} name.Anonymous             The name is an anonymous name for the object (not the real name but a name used for care delivery)            
  * @property {EntityName} name.Artist             The name represents an artist name or stage name            
@@ -2233,8 +2308,8 @@ function PatchTarget (copyData) {
  * @property {EntityName} name.Soundex             The name represents the computed soundex code of a name            
  * @property {EntityName} name.Syllabic             The name represents a syllabic name.            
  * @property {EntityName} name.$other Unclassified
- * @property {string} note            Gets a list of all notes associated with the entity            
- * @property {object} participation            Gets the acts in which this entity participates            
+ * @property {EntityNote} note Gets a list of all notes associated with the entity
+ * @property {object} participation Gets the acts in which this entity participates
  * @property {ActParticipation} participation.Admitter             The player entity was the person who was responsible for admitting the patient into a facility or care scenario.            
  * @property {ActParticipation} participation.Attender             The player entity represents the attending physician for the patient            
  * @property {ActParticipation} participation.Authenticator             The player entity represents an entity which authenticates the provision of care            
@@ -2292,7 +2367,7 @@ function PatchTarget (copyData) {
  * @property {ActParticipation} participation.Via             The player entity represents an entity where the act occurred "via" this entity (i.e. in transport)            
  * @property {ActParticipation} participation.Witness             The player entity represents a legal witness to the act occurring.            
  * @property {ActParticipation} participation.$other Unclassified
- * @property {object} relationship            Gets a list of all associated entities for this entity            
+ * @property {object} relationship Gets a list of all associated entities for this entity
  * @property {EntityRelationship} relationship.Access             The source entity gives access to the target entity            
  * @property {EntityRelationship} relationship.ActiveMoiety             Active ingredient, where not the ingredient substance (player), but itaTMs active moiety is the "basis of strength"            
  * @property {EntityRelationship} relationship.AdministerableMaterial             The source represents a meterial that is an administerable form of the target            
@@ -2448,12 +2523,14 @@ function PatchTarget (copyData) {
  * @property {EntityRelationship} relationship.Instance             The target entity represents an instance of the scoper entity            
  * @property {EntityRelationship} relationship.LocatedEntity             Relates the target entity to a source location            
  * @property {EntityRelationship} relationship.Duplicate             Duplicate entity            
+ * @property {EntityRelationship} relationship.Scoper             Duplicate entity            
+ * @property {EntityRelationship} relationship.EquivalentEntity             Referenced entities            
  * @property {EntityRelationship} relationship.$other Unclassified
- * @property {Concept} statusConceptModel [Delay loaded from statusConcept],             Status concept id            
- * @property {string} statusConcept            Status concept id            (see: {@link StatusKeys} for values)
- * @property {object} tag            Gets a list of all tags associated with the entity            
+ * @property {Concept} statusConceptModel [Delay loaded from statusConcept],  Status concept id
+ * @property {string} statusConcept Status concept id(see: {@link StatusKeys} for values)
+ * @property {object} tag Gets a list of all tags associated with the entity
  * @property {string} tag.classifier  where classifier is from {@link Tag} key
- * @property {object} telecom            Gets a list of all telecommunications addresses associated with the entity            
+ * @property {object} telecom Gets a list of all telecommunications addresses associated with the entity
  * @property {EntityTelecomAddress} telecom.AnsweringService             answering service            
  * @property {EntityTelecomAddress} telecom.EmergencyContact             Emergency contact            
  * @property {EntityTelecomAddress} telecom.MobileContact             Mobile phone contact            
@@ -2462,30 +2539,33 @@ function PatchTarget (copyData) {
  * @property {EntityTelecomAddress} telecom.TemporaryAddress             temporary contact            
  * @property {EntityTelecomAddress} telecom.WorkPlace             For use in the workplace            
  * @property {EntityTelecomAddress} telecom.$other Unclassified
- * @property {string} template            Gets the template key            
- * @property {TemplateDefinition} templateModel [Delay loaded from template],             Gets or sets the template definition            
- * @property {Concept} typeConceptModel [Delay loaded from typeConcept],             Type concept identifier            
- * @property {string} typeConcept            Type concept identifier            
- * @property {SecurityPolicyInstance} policy            Gets or sets the security policy instances associated with the entity            
+ * @property {string} template Gets the template key
+ * @property {TemplateDefinition} templateModel [Delay loaded from template],  Gets or sets the template definition
+ * @property {Concept} typeConceptModel [Delay loaded from typeConcept],  Type concept identifier
+ * @property {string} typeConcept Type concept identifier
+ * @property {SecurityPolicyInstance} policy Gets or sets the security policy instances associated with the entity
  * @property {string} previousVersion
  * @property {string} version
  * @property {number} sequence
- * @property {Date} creationTimeModel [Delay loaded from creationTime],             Gets or sets the time at which the data was created            
- * @property {Date} creationTime            Gets or sets the creation time as an ISO date format            
- * @property {Date} obsoletionTimeModel [Delay loaded from obsoletionTime],             Gets or sets the time when the data is or will become invalid            
- * @property {Date} obsoletionTime            Gets or sets the time that the data is no longer valid (was deleted/obsoleted) in ISO format            
- * @property {SecurityProvenance} createdByModel [Delay loaded from createdBy],             Gets or sets the user that created this base data            
- * @property {Date} modifiedOn            Gets the time that the object was last modified (from base data, default to CreationTime)            
- * @property {SecurityProvenance} obsoletedByModel [Delay loaded from obsoletedBy],             Gets or sets the user that obsoleted this base data            
- * @property {string} createdBy            Gets or sets the security provenance object which represents the creation of this object            
- * @property {string} obsoletedBy            Gets or sets the security provenance object which represents the obsoletion of this data            
- * @property {string} id            Gets or sets the primary identifying UUID of this object            
- * @property {string} $type            Gets the type registration of this object            
+ * @property {Date} creationTimeModel [Delay loaded from creationTime],  Gets or sets the time at which the data was created
+ * @property {Date} creationTime Gets or sets the creation time as an ISO date format
+ * @property {Date} obsoletionTimeModel [Delay loaded from obsoletionTime],  Gets or sets the time when the data is or will become invalid
+ * @property {Date} obsoletionTime Gets or sets the time that the data is no longer valid (was deleted/obsoleted) in ISO format
+ * @property {SecurityProvenance} createdByModel [Delay loaded from createdBy],  Gets or sets the user that created this base data
+ * @property {Date} modifiedOn Gets the time that the object was last modified (from base data, default to CreationTime)
+ * @property {SecurityProvenance} obsoletedByModel [Delay loaded from obsoletedBy],  Gets or sets the user that obsoleted this base data
+ * @property {string} createdBy Gets or sets the security provenance object which represents the creation of this object
+ * @property {string} obsoletedBy Gets or sets the security provenance object which represents the obsoletion of this data
+ * @property {string} id Gets or sets the primary identifying UUID of this object
+ * @property {BatchOperationType} operation Gets or sets the operation(see: {@link BatchOperationType} for values)
+ * @property {string} $type Gets the type registration of this object
  * @param {ApplicationEntity} copyData Copy constructor (if present)
  */
 function ApplicationEntity (copyData) { 
 	this.$type = 'ApplicationEntity';
 	if(copyData) {
+	/** @type {BatchOperationType} */
+	this.operation = copyData.operation;
 	/** @type {string} */
 	this.id = copyData.id;
 	/** @type {string} */
@@ -2534,7 +2614,7 @@ function ApplicationEntity (copyData) {
 	this.relationship = copyData.relationship;
 	/** @type {object} */
 	this.participation = copyData.participation;
-	/** @type {string} */
+	/** @type {EntityNote} */
 	this.note = copyData.note;
 	/** @type {object} */
 	this.name = copyData.name;
@@ -2568,31 +2648,26 @@ function ApplicationEntity (copyData) {
 	this.securityApplicationModel = copyData.securityApplicationModel;
 	}
 }  // ApplicationEntity 
-// SanteDB.Core.Model.Entities.Container, SanteDB.Core.Model, Version=2.0.59.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Entities.Container, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
 //if(!Container)
 /**
  * @class
  * @constructor
  * @public
- * @summary             Represents a container.            
- * @property {number} barrierDeltaQuantity            Gets or sets the barrier delta quantity. The distance from the Point of Reference to the separator material (barrier) within a container.            
- * @property {number} bottomDeltaQuantity            Gets or sets the bottom delta quantity. The distance from the Point of Reference to the outside bottom of the container.            
- * @property {number} capacityQuantity            Gets or sets the capacity quantity. The functional capacity of the container.            
- * @property {Concept} capTypeConceptModel [Delay loaded from capTypeConcept],             Gets or sets the cap type concept. The type of container cap consistent with de-capping, piercing or other automated manipulation.            
- * @property {string} capTypeConcept            Gets or sets the cap type concept key.            
- * @property {number} diameterQuantity            Gets or sets the diameter quantity. The outside diameter of the container.            
- * @property {number} heightQuantity            Gets or sets the height quantity. The height of the container.            
- * @property {Concept} separatorTypeConceptModel [Delay loaded from separatorTypeConcept],             Gets or sets the separator type concept. A material added to a container to facilitate and create a physical separation of specimen components of differing density.            Examples: A gel material added to blood collection tubes that following centrifugation creates a physical barrier between the blood cells and the serum or plasma.            
- * @property {string} separatorTypeConcept            Gets or sets the separator type concept key.            
- * @property {string} lotNumber            Gets or sets the lot number of the manufactured material            
- * @property {Date} expiryDate            Gets or sets the expiry date of the material            
- * @property {Concept} formConceptModel [Delay loaded from formConcept],             Gets or sets the concept which dictates the form of the material (solid, liquid, capsule, injection, etc.)            
- * @property {string} formConcept            Gets or sets the form concept's key            
- * @property {boolean} isAdministrative            True if the material is simply administrative            
- * @property {number} quantity            The base quantity of the object in the units. This differs from quantity on the relationship            which is a /per ...            
- * @property {Concept} quantityConceptModel [Delay loaded from quantityConcept],             Gets or sets the concept which dictates the unit of measure for a single instance of this entity            
- * @property {string} quantityConcept            Gets or sets the quantity concept ref            
- * @property {object} address            Gets a list of all addresses associated with the entity            
+ * @summary Represents a container.
+ * @property {number} capacityQuantity Gets or sets the capacity quantity. The functional capacity of the container.
+ * @property {number} diameterQuantity Gets or sets the diameter quantity. The outside diameter of the container.
+ * @property {number} heightQuantity Gets or sets the height quantity. The height of the container.
+ * @property {string} lotNumber Gets or sets the lot number of the manufactured material
+ * @property {Date} expiryDate Gets or sets the expiry date of the material
+ * @property {Concept} formConceptModel [Delay loaded from formConcept],  Gets or sets the concept which dictates the form of the material (solid, liquid, capsule, injection, etc.)
+ * @property {string} formConcept Gets or sets the form concept's key
+ * @property {boolean} isAdministrative True if the material is simply administrative
+ * @property {number} quantity The base quantity of the object in the units. This differs from quantity on the relationship
+            which is a /per ...
+ * @property {Concept} quantityConceptModel [Delay loaded from quantityConcept],  Gets or sets the concept which dictates the unit of measure for a single instance of this entity
+ * @property {string} quantityConcept Gets or sets the quantity concept ref
+ * @property {object} address Gets a list of all addresses associated with the entity
  * @property {EntityAddress} address.Alphabetic             Represents an alphabetic address used for matching             
  * @property {EntityAddress} address.BadAddress             Represents a bad address, i.e. an address which is old or invalid.            
  * @property {EntityAddress} address.Direct             Represents a workplace address that reaches the person directly without intermediaries.            
@@ -2609,17 +2684,17 @@ function ApplicationEntity (copyData) {
  * @property {EntityAddress} address.VacationHome             Represents a vacation home to reach a person while on vacation.            
  * @property {EntityAddress} address.WorkPlace             Represents an office address, should be used for business communications            
  * @property {EntityAddress} address.$other Unclassified
- * @property {Concept} classConceptModel [Delay loaded from classConcept],             Class concept datal load property            
- * @property {string} classConcept            Class concept            (see: {@link EntityClassKeys} for values)
- * @property {Act} creationActModel [Delay loaded from creationAct],             Creation act reference            
- * @property {string} creationAct            Creation act reference            
- * @property {Concept} determinerConceptModel [Delay loaded from determinerConcept],             Determiner concept            
- * @property {string} determinerConcept            Determiner concept            (see: {@link DeterminerKeys} for values)
- * @property {object} extension            Gets a list of all extensions associated with the entity            
+ * @property {Concept} classConceptModel [Delay loaded from classConcept],  Class concept datal load property
+ * @property {string} classConcept Class concept(see: {@link EntityClassKeys} for values)
+ * @property {Act} creationActModel [Delay loaded from creationAct],  Creation act reference
+ * @property {string} creationAct Creation act reference
+ * @property {Concept} determinerConceptModel [Delay loaded from determinerConcept],  Determiner concept
+ * @property {string} determinerConcept Determiner concept(see: {@link DeterminerKeys} for values)
+ * @property {object} extension Gets a list of all extensions associated with the entity
  * @property {string} extension.classifier  where classifier is from {@link Extension} extensionType
- * @property {object} identifier            Gets the identifiers associated with this entity            
+ * @property {object} identifier Gets the identifiers associated with this entity
  * @property {EntityIdentifier} identifier.classifier  where classifier is from {@link IdentifierBase} authority
- * @property {object} name            Gets a list of all names associated with the entity            
+ * @property {object} name Gets a list of all names associated with the entity
  * @property {EntityName} name.Alphabetic             The name used is an alphabetic representation of the name (ex: romaji in Japanese)            
  * @property {EntityName} name.Anonymous             The name is an anonymous name for the object (not the real name but a name used for care delivery)            
  * @property {EntityName} name.Artist             The name represents an artist name or stage name            
@@ -2637,8 +2712,8 @@ function ApplicationEntity (copyData) {
  * @property {EntityName} name.Soundex             The name represents the computed soundex code of a name            
  * @property {EntityName} name.Syllabic             The name represents a syllabic name.            
  * @property {EntityName} name.$other Unclassified
- * @property {string} note            Gets a list of all notes associated with the entity            
- * @property {object} participation            Gets the acts in which this entity participates            
+ * @property {EntityNote} note Gets a list of all notes associated with the entity
+ * @property {object} participation Gets the acts in which this entity participates
  * @property {ActParticipation} participation.Admitter             The player entity was the person who was responsible for admitting the patient into a facility or care scenario.            
  * @property {ActParticipation} participation.Attender             The player entity represents the attending physician for the patient            
  * @property {ActParticipation} participation.Authenticator             The player entity represents an entity which authenticates the provision of care            
@@ -2696,7 +2771,7 @@ function ApplicationEntity (copyData) {
  * @property {ActParticipation} participation.Via             The player entity represents an entity where the act occurred "via" this entity (i.e. in transport)            
  * @property {ActParticipation} participation.Witness             The player entity represents a legal witness to the act occurring.            
  * @property {ActParticipation} participation.$other Unclassified
- * @property {object} relationship            Gets a list of all associated entities for this entity            
+ * @property {object} relationship Gets a list of all associated entities for this entity
  * @property {EntityRelationship} relationship.Access             The source entity gives access to the target entity            
  * @property {EntityRelationship} relationship.ActiveMoiety             Active ingredient, where not the ingredient substance (player), but itaTMs active moiety is the "basis of strength"            
  * @property {EntityRelationship} relationship.AdministerableMaterial             The source represents a meterial that is an administerable form of the target            
@@ -2852,12 +2927,14 @@ function ApplicationEntity (copyData) {
  * @property {EntityRelationship} relationship.Instance             The target entity represents an instance of the scoper entity            
  * @property {EntityRelationship} relationship.LocatedEntity             Relates the target entity to a source location            
  * @property {EntityRelationship} relationship.Duplicate             Duplicate entity            
+ * @property {EntityRelationship} relationship.Scoper             Duplicate entity            
+ * @property {EntityRelationship} relationship.EquivalentEntity             Referenced entities            
  * @property {EntityRelationship} relationship.$other Unclassified
- * @property {Concept} statusConceptModel [Delay loaded from statusConcept],             Status concept id            
- * @property {string} statusConcept            Status concept id            (see: {@link StatusKeys} for values)
- * @property {object} tag            Gets a list of all tags associated with the entity            
+ * @property {Concept} statusConceptModel [Delay loaded from statusConcept],  Status concept id
+ * @property {string} statusConcept Status concept id(see: {@link StatusKeys} for values)
+ * @property {object} tag Gets a list of all tags associated with the entity
  * @property {string} tag.classifier  where classifier is from {@link Tag} key
- * @property {object} telecom            Gets a list of all telecommunications addresses associated with the entity            
+ * @property {object} telecom Gets a list of all telecommunications addresses associated with the entity
  * @property {EntityTelecomAddress} telecom.AnsweringService             answering service            
  * @property {EntityTelecomAddress} telecom.EmergencyContact             Emergency contact            
  * @property {EntityTelecomAddress} telecom.MobileContact             Mobile phone contact            
@@ -2866,30 +2943,33 @@ function ApplicationEntity (copyData) {
  * @property {EntityTelecomAddress} telecom.TemporaryAddress             temporary contact            
  * @property {EntityTelecomAddress} telecom.WorkPlace             For use in the workplace            
  * @property {EntityTelecomAddress} telecom.$other Unclassified
- * @property {string} template            Gets the template key            
- * @property {TemplateDefinition} templateModel [Delay loaded from template],             Gets or sets the template definition            
- * @property {Concept} typeConceptModel [Delay loaded from typeConcept],             Type concept identifier            
- * @property {string} typeConcept            Type concept identifier            
- * @property {SecurityPolicyInstance} policy            Gets or sets the security policy instances associated with the entity            
+ * @property {string} template Gets the template key
+ * @property {TemplateDefinition} templateModel [Delay loaded from template],  Gets or sets the template definition
+ * @property {Concept} typeConceptModel [Delay loaded from typeConcept],  Type concept identifier
+ * @property {string} typeConcept Type concept identifier
+ * @property {SecurityPolicyInstance} policy Gets or sets the security policy instances associated with the entity
  * @property {string} previousVersion
  * @property {string} version
  * @property {number} sequence
- * @property {Date} creationTimeModel [Delay loaded from creationTime],             Gets or sets the time at which the data was created            
- * @property {Date} creationTime            Gets or sets the creation time as an ISO date format            
- * @property {Date} obsoletionTimeModel [Delay loaded from obsoletionTime],             Gets or sets the time when the data is or will become invalid            
- * @property {Date} obsoletionTime            Gets or sets the time that the data is no longer valid (was deleted/obsoleted) in ISO format            
- * @property {SecurityProvenance} createdByModel [Delay loaded from createdBy],             Gets or sets the user that created this base data            
- * @property {Date} modifiedOn            Gets the time that the object was last modified (from base data, default to CreationTime)            
- * @property {SecurityProvenance} obsoletedByModel [Delay loaded from obsoletedBy],             Gets or sets the user that obsoleted this base data            
- * @property {string} createdBy            Gets or sets the security provenance object which represents the creation of this object            
- * @property {string} obsoletedBy            Gets or sets the security provenance object which represents the obsoletion of this data            
- * @property {string} id            Gets or sets the primary identifying UUID of this object            
- * @property {string} $type            Gets the type registration of this object            
+ * @property {Date} creationTimeModel [Delay loaded from creationTime],  Gets or sets the time at which the data was created
+ * @property {Date} creationTime Gets or sets the creation time as an ISO date format
+ * @property {Date} obsoletionTimeModel [Delay loaded from obsoletionTime],  Gets or sets the time when the data is or will become invalid
+ * @property {Date} obsoletionTime Gets or sets the time that the data is no longer valid (was deleted/obsoleted) in ISO format
+ * @property {SecurityProvenance} createdByModel [Delay loaded from createdBy],  Gets or sets the user that created this base data
+ * @property {Date} modifiedOn Gets the time that the object was last modified (from base data, default to CreationTime)
+ * @property {SecurityProvenance} obsoletedByModel [Delay loaded from obsoletedBy],  Gets or sets the user that obsoleted this base data
+ * @property {string} createdBy Gets or sets the security provenance object which represents the creation of this object
+ * @property {string} obsoletedBy Gets or sets the security provenance object which represents the obsoletion of this data
+ * @property {string} id Gets or sets the primary identifying UUID of this object
+ * @property {BatchOperationType} operation Gets or sets the operation(see: {@link BatchOperationType} for values)
+ * @property {string} $type Gets the type registration of this object
  * @param {Container} copyData Copy constructor (if present)
  */
 function Container (copyData) { 
 	this.$type = 'Container';
 	if(copyData) {
+	/** @type {BatchOperationType} */
+	this.operation = copyData.operation;
 	/** @type {string} */
 	this.id = copyData.id;
 	/** @type {string} */
@@ -2938,7 +3018,7 @@ function Container (copyData) {
 	this.relationship = copyData.relationship;
 	/** @type {object} */
 	this.participation = copyData.participation;
-	/** @type {string} */
+	/** @type {EntityNote} */
 	this.note = copyData.note;
 	/** @type {object} */
 	this.name = copyData.name;
@@ -2976,39 +3056,27 @@ function Container (copyData) {
 	this.expiryDate = copyData.expiryDate;
 	/** @type {string} */
 	this.lotNumber = copyData.lotNumber;
-	/** @type {string} */
-	this.separatorTypeConcept = copyData.separatorTypeConcept;
-	/** @type {Concept} */
-	this.separatorTypeConceptModel = copyData.separatorTypeConceptModel;
 	/** @type {number} */
 	this.heightQuantity = copyData.heightQuantity;
 	/** @type {number} */
 	this.diameterQuantity = copyData.diameterQuantity;
-	/** @type {string} */
-	this.capTypeConcept = copyData.capTypeConcept;
-	/** @type {Concept} */
-	this.capTypeConceptModel = copyData.capTypeConceptModel;
 	/** @type {number} */
 	this.capacityQuantity = copyData.capacityQuantity;
-	/** @type {number} */
-	this.bottomDeltaQuantity = copyData.bottomDeltaQuantity;
-	/** @type {number} */
-	this.barrierDeltaQuantity = copyData.barrierDeltaQuantity;
 	}
 }  // Container 
-// SanteDB.Core.Model.Entities.DeviceEntity, SanteDB.Core.Model, Version=2.0.59.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Entities.DeviceEntity, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
 //if(!DeviceEntity)
 /**
  * @class
  * @constructor
  * @public
- * @summary             Represents a device entity            
- * @property {string} manufacturerModelName            Gets or sets the manufacturer model name            
- * @property {string} operatingSystemName            Gets or sets the operating system name            
- * @property {SecurityDevice} securityDeviceModel [Delay loaded from securityDevice],             Gets or sets the security device            
- * @property {string} securityDevice            Gets or sets the security device key            
- * @property {GeoTag} geo            Gets or sets the geo tag            
- * @property {object} address            Gets a list of all addresses associated with the entity            
+ * @summary Represents a device entity
+ * @property {string} manufacturerModelName Gets or sets the manufacturer model name
+ * @property {string} operatingSystemName Gets or sets the operating system name
+ * @property {SecurityDevice} securityDeviceModel [Delay loaded from securityDevice],  Gets or sets the security device
+ * @property {string} securityDevice Gets or sets the security device key
+ * @property {GeoTag} geo Gets or sets the geo tag
+ * @property {object} address Gets a list of all addresses associated with the entity
  * @property {EntityAddress} address.Alphabetic             Represents an alphabetic address used for matching             
  * @property {EntityAddress} address.BadAddress             Represents a bad address, i.e. an address which is old or invalid.            
  * @property {EntityAddress} address.Direct             Represents a workplace address that reaches the person directly without intermediaries.            
@@ -3025,17 +3093,17 @@ function Container (copyData) {
  * @property {EntityAddress} address.VacationHome             Represents a vacation home to reach a person while on vacation.            
  * @property {EntityAddress} address.WorkPlace             Represents an office address, should be used for business communications            
  * @property {EntityAddress} address.$other Unclassified
- * @property {Concept} classConceptModel [Delay loaded from classConcept],             Class concept datal load property            
- * @property {string} classConcept            Class concept            (see: {@link EntityClassKeys} for values)
- * @property {Act} creationActModel [Delay loaded from creationAct],             Creation act reference            
- * @property {string} creationAct            Creation act reference            
- * @property {Concept} determinerConceptModel [Delay loaded from determinerConcept],             Determiner concept            
- * @property {string} determinerConcept            Determiner concept            (see: {@link DeterminerKeys} for values)
- * @property {object} extension            Gets a list of all extensions associated with the entity            
+ * @property {Concept} classConceptModel [Delay loaded from classConcept],  Class concept datal load property
+ * @property {string} classConcept Class concept(see: {@link EntityClassKeys} for values)
+ * @property {Act} creationActModel [Delay loaded from creationAct],  Creation act reference
+ * @property {string} creationAct Creation act reference
+ * @property {Concept} determinerConceptModel [Delay loaded from determinerConcept],  Determiner concept
+ * @property {string} determinerConcept Determiner concept(see: {@link DeterminerKeys} for values)
+ * @property {object} extension Gets a list of all extensions associated with the entity
  * @property {string} extension.classifier  where classifier is from {@link Extension} extensionType
- * @property {object} identifier            Gets the identifiers associated with this entity            
+ * @property {object} identifier Gets the identifiers associated with this entity
  * @property {EntityIdentifier} identifier.classifier  where classifier is from {@link IdentifierBase} authority
- * @property {object} name            Gets a list of all names associated with the entity            
+ * @property {object} name Gets a list of all names associated with the entity
  * @property {EntityName} name.Alphabetic             The name used is an alphabetic representation of the name (ex: romaji in Japanese)            
  * @property {EntityName} name.Anonymous             The name is an anonymous name for the object (not the real name but a name used for care delivery)            
  * @property {EntityName} name.Artist             The name represents an artist name or stage name            
@@ -3053,8 +3121,8 @@ function Container (copyData) {
  * @property {EntityName} name.Soundex             The name represents the computed soundex code of a name            
  * @property {EntityName} name.Syllabic             The name represents a syllabic name.            
  * @property {EntityName} name.$other Unclassified
- * @property {string} note            Gets a list of all notes associated with the entity            
- * @property {object} participation            Gets the acts in which this entity participates            
+ * @property {EntityNote} note Gets a list of all notes associated with the entity
+ * @property {object} participation Gets the acts in which this entity participates
  * @property {ActParticipation} participation.Admitter             The player entity was the person who was responsible for admitting the patient into a facility or care scenario.            
  * @property {ActParticipation} participation.Attender             The player entity represents the attending physician for the patient            
  * @property {ActParticipation} participation.Authenticator             The player entity represents an entity which authenticates the provision of care            
@@ -3112,7 +3180,7 @@ function Container (copyData) {
  * @property {ActParticipation} participation.Via             The player entity represents an entity where the act occurred "via" this entity (i.e. in transport)            
  * @property {ActParticipation} participation.Witness             The player entity represents a legal witness to the act occurring.            
  * @property {ActParticipation} participation.$other Unclassified
- * @property {object} relationship            Gets a list of all associated entities for this entity            
+ * @property {object} relationship Gets a list of all associated entities for this entity
  * @property {EntityRelationship} relationship.Access             The source entity gives access to the target entity            
  * @property {EntityRelationship} relationship.ActiveMoiety             Active ingredient, where not the ingredient substance (player), but itaTMs active moiety is the "basis of strength"            
  * @property {EntityRelationship} relationship.AdministerableMaterial             The source represents a meterial that is an administerable form of the target            
@@ -3268,12 +3336,14 @@ function Container (copyData) {
  * @property {EntityRelationship} relationship.Instance             The target entity represents an instance of the scoper entity            
  * @property {EntityRelationship} relationship.LocatedEntity             Relates the target entity to a source location            
  * @property {EntityRelationship} relationship.Duplicate             Duplicate entity            
+ * @property {EntityRelationship} relationship.Scoper             Duplicate entity            
+ * @property {EntityRelationship} relationship.EquivalentEntity             Referenced entities            
  * @property {EntityRelationship} relationship.$other Unclassified
- * @property {Concept} statusConceptModel [Delay loaded from statusConcept],             Status concept id            
- * @property {string} statusConcept            Status concept id            (see: {@link StatusKeys} for values)
- * @property {object} tag            Gets a list of all tags associated with the entity            
+ * @property {Concept} statusConceptModel [Delay loaded from statusConcept],  Status concept id
+ * @property {string} statusConcept Status concept id(see: {@link StatusKeys} for values)
+ * @property {object} tag Gets a list of all tags associated with the entity
  * @property {string} tag.classifier  where classifier is from {@link Tag} key
- * @property {object} telecom            Gets a list of all telecommunications addresses associated with the entity            
+ * @property {object} telecom Gets a list of all telecommunications addresses associated with the entity
  * @property {EntityTelecomAddress} telecom.AnsweringService             answering service            
  * @property {EntityTelecomAddress} telecom.EmergencyContact             Emergency contact            
  * @property {EntityTelecomAddress} telecom.MobileContact             Mobile phone contact            
@@ -3282,30 +3352,33 @@ function Container (copyData) {
  * @property {EntityTelecomAddress} telecom.TemporaryAddress             temporary contact            
  * @property {EntityTelecomAddress} telecom.WorkPlace             For use in the workplace            
  * @property {EntityTelecomAddress} telecom.$other Unclassified
- * @property {string} template            Gets the template key            
- * @property {TemplateDefinition} templateModel [Delay loaded from template],             Gets or sets the template definition            
- * @property {Concept} typeConceptModel [Delay loaded from typeConcept],             Type concept identifier            
- * @property {string} typeConcept            Type concept identifier            
- * @property {SecurityPolicyInstance} policy            Gets or sets the security policy instances associated with the entity            
+ * @property {string} template Gets the template key
+ * @property {TemplateDefinition} templateModel [Delay loaded from template],  Gets or sets the template definition
+ * @property {Concept} typeConceptModel [Delay loaded from typeConcept],  Type concept identifier
+ * @property {string} typeConcept Type concept identifier
+ * @property {SecurityPolicyInstance} policy Gets or sets the security policy instances associated with the entity
  * @property {string} previousVersion
  * @property {string} version
  * @property {number} sequence
- * @property {Date} creationTimeModel [Delay loaded from creationTime],             Gets or sets the time at which the data was created            
- * @property {Date} creationTime            Gets or sets the creation time as an ISO date format            
- * @property {Date} obsoletionTimeModel [Delay loaded from obsoletionTime],             Gets or sets the time when the data is or will become invalid            
- * @property {Date} obsoletionTime            Gets or sets the time that the data is no longer valid (was deleted/obsoleted) in ISO format            
- * @property {SecurityProvenance} createdByModel [Delay loaded from createdBy],             Gets or sets the user that created this base data            
- * @property {Date} modifiedOn            Gets the time that the object was last modified (from base data, default to CreationTime)            
- * @property {SecurityProvenance} obsoletedByModel [Delay loaded from obsoletedBy],             Gets or sets the user that obsoleted this base data            
- * @property {string} createdBy            Gets or sets the security provenance object which represents the creation of this object            
- * @property {string} obsoletedBy            Gets or sets the security provenance object which represents the obsoletion of this data            
- * @property {string} id            Gets or sets the primary identifying UUID of this object            
- * @property {string} $type            Gets the type registration of this object            
+ * @property {Date} creationTimeModel [Delay loaded from creationTime],  Gets or sets the time at which the data was created
+ * @property {Date} creationTime Gets or sets the creation time as an ISO date format
+ * @property {Date} obsoletionTimeModel [Delay loaded from obsoletionTime],  Gets or sets the time when the data is or will become invalid
+ * @property {Date} obsoletionTime Gets or sets the time that the data is no longer valid (was deleted/obsoleted) in ISO format
+ * @property {SecurityProvenance} createdByModel [Delay loaded from createdBy],  Gets or sets the user that created this base data
+ * @property {Date} modifiedOn Gets the time that the object was last modified (from base data, default to CreationTime)
+ * @property {SecurityProvenance} obsoletedByModel [Delay loaded from obsoletedBy],  Gets or sets the user that obsoleted this base data
+ * @property {string} createdBy Gets or sets the security provenance object which represents the creation of this object
+ * @property {string} obsoletedBy Gets or sets the security provenance object which represents the obsoletion of this data
+ * @property {string} id Gets or sets the primary identifying UUID of this object
+ * @property {BatchOperationType} operation Gets or sets the operation(see: {@link BatchOperationType} for values)
+ * @property {string} $type Gets the type registration of this object
  * @param {DeviceEntity} copyData Copy constructor (if present)
  */
 function DeviceEntity (copyData) { 
 	this.$type = 'DeviceEntity';
 	if(copyData) {
+	/** @type {BatchOperationType} */
+	this.operation = copyData.operation;
 	/** @type {string} */
 	this.id = copyData.id;
 	/** @type {string} */
@@ -3354,7 +3427,7 @@ function DeviceEntity (copyData) {
 	this.relationship = copyData.relationship;
 	/** @type {object} */
 	this.participation = copyData.participation;
-	/** @type {string} */
+	/** @type {EntityNote} */
 	this.note = copyData.note;
 	/** @type {object} */
 	this.name = copyData.name;
@@ -3388,18 +3461,16 @@ function DeviceEntity (copyData) {
 	this.manufacturerModelName = copyData.manufacturerModelName;
 	}
 }  // DeviceEntity 
-// SanteDB.Core.Model.Entities.Entity, SanteDB.Core.Model, Version=2.0.59.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Entities.Entity, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
 //if(!Entity)
 /**
  * @class
  * @constructor
  * @public
  * @extends VersionedEntityData
- * @summary             Represents the base class of all entities (persons, places, things) in SanteDB            
- * @description 
- *             In SanteDB, an entity represents a physical object which can be acted upon or can participate in an act. 
- *             
- * @property {object} address            Gets a list of all addresses associated with the entity            
+ * @summary Represents the base class of all entities (persons, places, things) in SanteDB
+ * @description In SanteDB, an entity represents a physical object which can be acted upon or can participate in an act.
+ * @property {object} address Gets a list of all addresses associated with the entity
  * @property {EntityAddress} address.Alphabetic             Represents an alphabetic address used for matching             
  * @property {EntityAddress} address.BadAddress             Represents a bad address, i.e. an address which is old or invalid.            
  * @property {EntityAddress} address.Direct             Represents a workplace address that reaches the person directly without intermediaries.            
@@ -3416,17 +3487,17 @@ function DeviceEntity (copyData) {
  * @property {EntityAddress} address.VacationHome             Represents a vacation home to reach a person while on vacation.            
  * @property {EntityAddress} address.WorkPlace             Represents an office address, should be used for business communications            
  * @property {EntityAddress} address.$other Unclassified
- * @property {Concept} classConceptModel [Delay loaded from classConcept],             Class concept datal load property            
- * @property {string} classConcept            Class concept            (see: {@link EntityClassKeys} for values)
- * @property {Act} creationActModel [Delay loaded from creationAct],             Creation act reference            
- * @property {string} creationAct            Creation act reference            
- * @property {Concept} determinerConceptModel [Delay loaded from determinerConcept],             Determiner concept            
- * @property {string} determinerConcept            Determiner concept            (see: {@link DeterminerKeys} for values)
- * @property {object} extension            Gets a list of all extensions associated with the entity            
+ * @property {Concept} classConceptModel [Delay loaded from classConcept],  Class concept datal load property
+ * @property {string} classConcept Class concept(see: {@link EntityClassKeys} for values)
+ * @property {Act} creationActModel [Delay loaded from creationAct],  Creation act reference
+ * @property {string} creationAct Creation act reference
+ * @property {Concept} determinerConceptModel [Delay loaded from determinerConcept],  Determiner concept
+ * @property {string} determinerConcept Determiner concept(see: {@link DeterminerKeys} for values)
+ * @property {object} extension Gets a list of all extensions associated with the entity
  * @property {string} extension.classifier  where classifier is from {@link Extension} extensionType
- * @property {object} identifier            Gets the identifiers associated with this entity            
+ * @property {object} identifier Gets the identifiers associated with this entity
  * @property {EntityIdentifier} identifier.classifier  where classifier is from {@link IdentifierBase} authority
- * @property {object} name            Gets a list of all names associated with the entity            
+ * @property {object} name Gets a list of all names associated with the entity
  * @property {EntityName} name.Alphabetic             The name used is an alphabetic representation of the name (ex: romaji in Japanese)            
  * @property {EntityName} name.Anonymous             The name is an anonymous name for the object (not the real name but a name used for care delivery)            
  * @property {EntityName} name.Artist             The name represents an artist name or stage name            
@@ -3444,8 +3515,8 @@ function DeviceEntity (copyData) {
  * @property {EntityName} name.Soundex             The name represents the computed soundex code of a name            
  * @property {EntityName} name.Syllabic             The name represents a syllabic name.            
  * @property {EntityName} name.$other Unclassified
- * @property {string} note            Gets a list of all notes associated with the entity            
- * @property {object} participation            Gets the acts in which this entity participates            
+ * @property {EntityNote} note Gets a list of all notes associated with the entity
+ * @property {object} participation Gets the acts in which this entity participates
  * @property {ActParticipation} participation.Admitter             The player entity was the person who was responsible for admitting the patient into a facility or care scenario.            
  * @property {ActParticipation} participation.Attender             The player entity represents the attending physician for the patient            
  * @property {ActParticipation} participation.Authenticator             The player entity represents an entity which authenticates the provision of care            
@@ -3503,7 +3574,7 @@ function DeviceEntity (copyData) {
  * @property {ActParticipation} participation.Via             The player entity represents an entity where the act occurred "via" this entity (i.e. in transport)            
  * @property {ActParticipation} participation.Witness             The player entity represents a legal witness to the act occurring.            
  * @property {ActParticipation} participation.$other Unclassified
- * @property {object} relationship            Gets a list of all associated entities for this entity            
+ * @property {object} relationship Gets a list of all associated entities for this entity
  * @property {EntityRelationship} relationship.Access             The source entity gives access to the target entity            
  * @property {EntityRelationship} relationship.ActiveMoiety             Active ingredient, where not the ingredient substance (player), but itaTMs active moiety is the "basis of strength"            
  * @property {EntityRelationship} relationship.AdministerableMaterial             The source represents a meterial that is an administerable form of the target            
@@ -3659,12 +3730,14 @@ function DeviceEntity (copyData) {
  * @property {EntityRelationship} relationship.Instance             The target entity represents an instance of the scoper entity            
  * @property {EntityRelationship} relationship.LocatedEntity             Relates the target entity to a source location            
  * @property {EntityRelationship} relationship.Duplicate             Duplicate entity            
+ * @property {EntityRelationship} relationship.Scoper             Duplicate entity            
+ * @property {EntityRelationship} relationship.EquivalentEntity             Referenced entities            
  * @property {EntityRelationship} relationship.$other Unclassified
- * @property {Concept} statusConceptModel [Delay loaded from statusConcept],             Status concept id            
- * @property {string} statusConcept            Status concept id            (see: {@link StatusKeys} for values)
- * @property {object} tag            Gets a list of all tags associated with the entity            
+ * @property {Concept} statusConceptModel [Delay loaded from statusConcept],  Status concept id
+ * @property {string} statusConcept Status concept id(see: {@link StatusKeys} for values)
+ * @property {object} tag Gets a list of all tags associated with the entity
  * @property {string} tag.classifier  where classifier is from {@link Tag} key
- * @property {object} telecom            Gets a list of all telecommunications addresses associated with the entity            
+ * @property {object} telecom Gets a list of all telecommunications addresses associated with the entity
  * @property {EntityTelecomAddress} telecom.AnsweringService             answering service            
  * @property {EntityTelecomAddress} telecom.EmergencyContact             Emergency contact            
  * @property {EntityTelecomAddress} telecom.MobileContact             Mobile phone contact            
@@ -3673,30 +3746,33 @@ function DeviceEntity (copyData) {
  * @property {EntityTelecomAddress} telecom.TemporaryAddress             temporary contact            
  * @property {EntityTelecomAddress} telecom.WorkPlace             For use in the workplace            
  * @property {EntityTelecomAddress} telecom.$other Unclassified
- * @property {string} template            Gets the template key            
- * @property {TemplateDefinition} templateModel [Delay loaded from template],             Gets or sets the template definition            
- * @property {Concept} typeConceptModel [Delay loaded from typeConcept],             Type concept identifier            
- * @property {string} typeConcept            Type concept identifier            
- * @property {SecurityPolicyInstance} policy            Gets or sets the security policy instances associated with the entity            
+ * @property {string} template Gets the template key
+ * @property {TemplateDefinition} templateModel [Delay loaded from template],  Gets or sets the template definition
+ * @property {Concept} typeConceptModel [Delay loaded from typeConcept],  Type concept identifier
+ * @property {string} typeConcept Type concept identifier
+ * @property {SecurityPolicyInstance} policy Gets or sets the security policy instances associated with the entity
  * @property {string} previousVersion
  * @property {string} version
  * @property {number} sequence
- * @property {Date} creationTimeModel [Delay loaded from creationTime],             Gets or sets the time at which the data was created            
- * @property {Date} creationTime            Gets or sets the creation time as an ISO date format            
- * @property {Date} obsoletionTimeModel [Delay loaded from obsoletionTime],             Gets or sets the time when the data is or will become invalid            
- * @property {Date} obsoletionTime            Gets or sets the time that the data is no longer valid (was deleted/obsoleted) in ISO format            
- * @property {SecurityProvenance} createdByModel [Delay loaded from createdBy],             Gets or sets the user that created this base data            
- * @property {Date} modifiedOn            Gets the time that the object was last modified (from base data, default to CreationTime)            
- * @property {SecurityProvenance} obsoletedByModel [Delay loaded from obsoletedBy],             Gets or sets the user that obsoleted this base data            
- * @property {string} createdBy            Gets or sets the security provenance object which represents the creation of this object            
- * @property {string} obsoletedBy            Gets or sets the security provenance object which represents the obsoletion of this data            
- * @property {string} id            Gets or sets the primary identifying UUID of this object            
- * @property {string} $type            Gets the type registration of this object            
+ * @property {Date} creationTimeModel [Delay loaded from creationTime],  Gets or sets the time at which the data was created
+ * @property {Date} creationTime Gets or sets the creation time as an ISO date format
+ * @property {Date} obsoletionTimeModel [Delay loaded from obsoletionTime],  Gets or sets the time when the data is or will become invalid
+ * @property {Date} obsoletionTime Gets or sets the time that the data is no longer valid (was deleted/obsoleted) in ISO format
+ * @property {SecurityProvenance} createdByModel [Delay loaded from createdBy],  Gets or sets the user that created this base data
+ * @property {Date} modifiedOn Gets the time that the object was last modified (from base data, default to CreationTime)
+ * @property {SecurityProvenance} obsoletedByModel [Delay loaded from obsoletedBy],  Gets or sets the user that obsoleted this base data
+ * @property {string} createdBy Gets or sets the security provenance object which represents the creation of this object
+ * @property {string} obsoletedBy Gets or sets the security provenance object which represents the obsoletion of this data
+ * @property {string} id Gets or sets the primary identifying UUID of this object
+ * @property {BatchOperationType} operation Gets or sets the operation(see: {@link BatchOperationType} for values)
+ * @property {string} $type Gets the type registration of this object
  * @param {Entity} copyData Copy constructor (if present)
  */
 function Entity (copyData) { 
 	this.$type = 'Entity';
 	if(copyData) {
+	/** @type {BatchOperationType} */
+	this.operation = copyData.operation;
 	/** @type {string} */
 	this.id = copyData.id;
 	/** @type {string} */
@@ -3745,7 +3821,7 @@ function Entity (copyData) {
 	this.relationship = copyData.relationship;
 	/** @type {object} */
 	this.participation = copyData.participation;
-	/** @type {string} */
+	/** @type {EntityNote} */
 	this.note = copyData.note;
 	/** @type {object} */
 	this.name = copyData.name;
@@ -3769,17 +3845,17 @@ function Entity (copyData) {
 	this.address = copyData.address;
 	}
 }  // Entity 
-// SanteDB.Core.Model.Entities.EntityAddress, SanteDB.Core.Model, Version=2.0.59.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Entities.EntityAddress, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
 //if(!EntityAddress)
 /**
  * @class
  * @constructor
  * @public
  * @extends VersionedAssociation
- * @summary             Entity address            
- * @property {Concept} useModel [Delay loaded from use],             Gets or sets the address use            
- * @property {string} use            Gets or sets the address use key            (see: {@link AddressUseKeys} for values)
- * @property {object} component            Gets or sets the component types            
+ * @summary Entity address
+ * @property {Concept} useModel [Delay loaded from use],  Gets or sets the address use
+ * @property {string} use Gets or sets the address use key(see: {@link AddressUseKeys} for values)
+ * @property {object} component Gets or sets the component types
  * @property {string} component.AdditionalLocator             An additional locator (example: Beside the red barn).            
  * @property {string} component.AddressLine             An address line as would appear on an address (example: 123 Main Street West)            
  * @property {string} component.BuildingNumber             Identifies a particular building on a street (example: A23 Building)            
@@ -3814,13 +3890,16 @@ function Entity (copyData) {
  * @property {Date} modifiedOn
  * @property {string} source
  * @property {Entity} sourceModel [Delay loaded from source], 
- * @property {string} id            Gets or sets the primary identifying UUID of this object            
- * @property {string} $type            Gets the type registration of this object            
+ * @property {string} id Gets or sets the primary identifying UUID of this object
+ * @property {BatchOperationType} operation Gets or sets the operation(see: {@link BatchOperationType} for values)
+ * @property {string} $type Gets the type registration of this object
  * @param {EntityAddress} copyData Copy constructor (if present)
  */
 function EntityAddress (copyData) { 
 	this.$type = 'EntityAddress';
 	if(copyData) {
+	/** @type {BatchOperationType} */
+	this.operation = copyData.operation;
 	/** @type {string} */
 	this.id = copyData.id;
 	/** @type {Entity} */
@@ -3841,27 +3920,30 @@ function EntityAddress (copyData) {
 	this.useModel = copyData.useModel;
 	}
 }  // EntityAddress 
-// SanteDB.Core.Model.Entities.EntityAddressComponent, SanteDB.Core.Model, Version=2.0.59.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Entities.EntityAddressComponent, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
 //if(!AddressComponent)
 /**
  * @class
  * @constructor
  * @public
  * @extends GenericComponentValues
- * @summary             A single address component            
- * @property {string} type            Gets or sets the component type key            (see: {@link AddressComponentKeys} for values)
+ * @summary A single address component
+ * @property {string} type Gets or sets the component type key(see: {@link AddressComponentKeys} for values)
  * @property {Concept} typeModel [Delay loaded from type], 
  * @property {string} value
  * @property {Date} modifiedOn
  * @property {string} source
  * @property {EntityAddress} sourceModel [Delay loaded from source], 
- * @property {string} id            Gets or sets the primary identifying UUID of this object            
- * @property {string} $type            Gets the type registration of this object            
+ * @property {string} id Gets or sets the primary identifying UUID of this object
+ * @property {BatchOperationType} operation Gets or sets the operation(see: {@link BatchOperationType} for values)
+ * @property {string} $type Gets the type registration of this object
  * @param {AddressComponent} copyData Copy constructor (if present)
  */
 function AddressComponent (copyData) { 
 	this.$type = 'AddressComponent';
 	if(copyData) {
+	/** @type {BatchOperationType} */
+	this.operation = copyData.operation;
 	/** @type {string} */
 	this.id = copyData.id;
 	/** @type {EntityAddress} */
@@ -3878,15 +3960,15 @@ function AddressComponent (copyData) {
 	this.type = copyData.type;
 	}
 }  // AddressComponent 
-// SanteDB.Core.Model.Entities.EntityName, SanteDB.Core.Model, Version=2.0.59.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Entities.EntityName, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
 //if(!EntityName)
 /**
  * @class
  * @constructor
  * @public
  * @extends VersionedAssociation
- * @summary             Represents a name for an entity            
- * @property {object} component            Gets or sets the individual component types            
+ * @summary Represents a name for an entity
+ * @property {object} component Gets or sets the individual component types
  * @property {string} component.Delimiter             The name component represents a delimeter in a name such as hyphen or space            
  * @property {string} component.Family             The name component represents the surname            
  * @property {string} component.Given             The name component represents the given name            
@@ -3894,20 +3976,23 @@ function AddressComponent (copyData) {
  * @property {string} component.Suffix             The name component represents a suffix such as III or Esq.            
  * @property {string} component.Title             The name component represents a formal title like Mr, Dr, Capt.            
  * @property {string} component.$other Unclassified
- * @property {Concept} useModel [Delay loaded from use],             Gets or sets the name use            
- * @property {string} use            Gets or sets the name use key            (see: {@link NameUseKeys} for values)
+ * @property {Concept} useModel [Delay loaded from use],  Gets or sets the name use
+ * @property {string} use Gets or sets the name use key(see: {@link NameUseKeys} for values)
  * @property {number} effectiveVersionSequence
  * @property {number} obsoleteVersionSequence
  * @property {Date} modifiedOn
  * @property {string} source
  * @property {Entity} sourceModel [Delay loaded from source], 
- * @property {string} id            Gets or sets the primary identifying UUID of this object            
- * @property {string} $type            Gets the type registration of this object            
+ * @property {string} id Gets or sets the primary identifying UUID of this object
+ * @property {BatchOperationType} operation Gets or sets the operation(see: {@link BatchOperationType} for values)
+ * @property {string} $type Gets the type registration of this object
  * @param {EntityName} copyData Copy constructor (if present)
  */
 function EntityName (copyData) { 
 	this.$type = 'EntityName';
 	if(copyData) {
+	/** @type {BatchOperationType} */
+	this.operation = copyData.operation;
 	/** @type {string} */
 	this.id = copyData.id;
 	/** @type {Entity} */
@@ -3928,27 +4013,30 @@ function EntityName (copyData) {
 	this.component = copyData.component;
 	}
 }  // EntityName 
-// SanteDB.Core.Model.Entities.EntityNameComponent, SanteDB.Core.Model, Version=2.0.59.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Entities.EntityNameComponent, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
 //if(!EntityNameComponent)
 /**
  * @class
  * @constructor
  * @public
  * @extends GenericComponentValues
- * @summary             Represents a name component which is bound to a name            
- * @property {string} type            Gets or sets the component type key            (see: {@link NameComponentKeys} for values)
+ * @summary Represents a name component which is bound to a name
+ * @property {string} type Gets or sets the component type key(see: {@link NameComponentKeys} for values)
  * @property {Concept} typeModel [Delay loaded from type], 
  * @property {string} value
  * @property {Date} modifiedOn
  * @property {string} source
  * @property {EntityName} sourceModel [Delay loaded from source], 
- * @property {string} id            Gets or sets the primary identifying UUID of this object            
- * @property {string} $type            Gets the type registration of this object            
+ * @property {string} id Gets or sets the primary identifying UUID of this object
+ * @property {BatchOperationType} operation Gets or sets the operation(see: {@link BatchOperationType} for values)
+ * @property {string} $type Gets the type registration of this object
  * @param {EntityNameComponent} copyData Copy constructor (if present)
  */
 function EntityNameComponent (copyData) { 
 	this.$type = 'EntityNameComponent';
 	if(copyData) {
+	/** @type {BatchOperationType} */
+	this.operation = copyData.operation;
 	/** @type {string} */
 	this.id = copyData.id;
 	/** @type {EntityName} */
@@ -3965,34 +4053,42 @@ function EntityNameComponent (copyData) {
 	this.type = copyData.type;
 	}
 }  // EntityNameComponent 
-// SanteDB.Core.Model.Entities.EntityRelationship, SanteDB.Core.Model, Version=2.0.59.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Entities.EntityRelationship, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
 //if(!EntityRelationship)
 /**
  * @class
  * @constructor
  * @public
  * @extends VersionedAssociation
- * @summary             Represents an association between two entities            
- * @property {Entity} holderModel [Delay loaded from holder],             The entity that this relationship targets            
- * @property {string} holder            The entity that this relationship targets            
- * @property {boolean} inversionInd            The inversion indicator            
- * @property {number} quantity            Represents the quantity of target in source            
- * @property {Concept} relationshipTypeModel [Delay loaded from relationshipType],             Gets or sets the association type            
- * @property {string} relationshipType            Association type key            (see: {@link EntityRelationshipTypeKeys} for values)
- * @property {Entity} targetModel [Delay loaded from target],             Target entity reference            
- * @property {string} target            The target of the association            
+ * @summary Represents an association between two entities
+ * @property {Entity} holderModel [Delay loaded from holder],  The entity that this relationship targets
+ * @property {string} holder The entity that this relationship targets
+ * @property {boolean} inversionInd The inversion indicator
+ * @property {Double} strength The strength (confidence) of the relationship between source and target
+ * @property {number} quantity Represents the quantity of target in source
+ * @property {Concept} relationshipTypeModel [Delay loaded from relationshipType],  Gets or sets the association type
+ * @property {string} relationshipType Association type key(see: {@link EntityRelationshipTypeKeys} for values)
+ * @property {Concept} relationshipRoleModel [Delay loaded from relationshipRole],  Gets or sets the association type
+ * @property {string} relationshipRole Association type key
+ * @property {Concept} classificationModel [Delay loaded from classification],  Gets or sets the an additional (sub-type) of the relationship
+ * @property {string} classification Association type key(see: {@link RelationshipClassKeys} for values)
+ * @property {Entity} targetModel [Delay loaded from target],  Target entity reference
+ * @property {string} target The target of the association
  * @property {number} effectiveVersionSequence
  * @property {number} obsoleteVersionSequence
  * @property {Date} modifiedOn
  * @property {string} source
  * @property {Entity} sourceModel [Delay loaded from source], 
- * @property {string} id            Gets or sets the primary identifying UUID of this object            
- * @property {string} $type            Gets the type registration of this object            
+ * @property {string} id Gets or sets the primary identifying UUID of this object
+ * @property {BatchOperationType} operation Gets or sets the operation(see: {@link BatchOperationType} for values)
+ * @property {string} $type Gets the type registration of this object
  * @param {EntityRelationship} copyData Copy constructor (if present)
  */
 function EntityRelationship (copyData) { 
 	this.$type = 'EntityRelationship';
 	if(copyData) {
+	/** @type {BatchOperationType} */
+	this.operation = copyData.operation;
 	/** @type {string} */
 	this.id = copyData.id;
 	/** @type {Entity} */
@@ -4010,11 +4106,21 @@ function EntityRelationship (copyData) {
 	/** @type {Entity} */
 	this.targetModel = copyData.targetModel;
 	/** @type {string} */
+	this.classification = copyData.classification;
+	/** @type {Concept} */
+	this.classificationModel = copyData.classificationModel;
+	/** @type {string} */
+	this.relationshipRole = copyData.relationshipRole;
+	/** @type {Concept} */
+	this.relationshipRoleModel = copyData.relationshipRoleModel;
+	/** @type {string} */
 	this.relationshipType = copyData.relationshipType;
 	/** @type {Concept} */
 	this.relationshipTypeModel = copyData.relationshipTypeModel;
 	/** @type {number} */
 	this.quantity = copyData.quantity;
+	/** @type {Double} */
+	this.strength = copyData.strength;
 	/** @type {boolean} */
 	this.inversionInd = copyData.inversionInd;
 	/** @type {string} */
@@ -4023,31 +4129,34 @@ function EntityRelationship (copyData) {
 	this.holderModel = copyData.holderModel;
 	}
 }  // EntityRelationship 
-// SanteDB.Core.Model.Entities.EntityTelecomAddress, SanteDB.Core.Model, Version=2.0.59.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Entities.EntityTelecomAddress, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
 //if(!EntityTelecomAddress)
 /**
  * @class
  * @constructor
  * @public
  * @extends VersionedAssociation
- * @summary             Represents an entity telecom address            
- * @property {Concept} useModel [Delay loaded from use],             Gets or sets the name use            
- * @property {string} use            Gets or sets the name use key            (see: {@link TelecomAddressUseKeys} for values)
- * @property {Concept} typeModel [Delay loaded from type],             Gets or sets the name use            
- * @property {string} type            Gets or sets the name use key            (see: {@link TelecomAddressTypeKeys} for values)
- * @property {string} value            Gets or sets the value of the telecom address            
+ * @summary Represents an entity telecom address
+ * @property {Concept} useModel [Delay loaded from use],  Gets or sets the name use
+ * @property {string} use Gets or sets the name use key(see: {@link TelecomAddressUseKeys} for values)
+ * @property {Concept} typeModel [Delay loaded from type],  Gets or sets the name use
+ * @property {string} type Gets or sets the name use key(see: {@link TelecomAddressTypeKeys} for values)
+ * @property {string} value Gets or sets the value of the telecom address
  * @property {number} effectiveVersionSequence
  * @property {number} obsoleteVersionSequence
  * @property {Date} modifiedOn
  * @property {string} source
  * @property {Entity} sourceModel [Delay loaded from source], 
- * @property {string} id            Gets or sets the primary identifying UUID of this object            
- * @property {string} $type            Gets the type registration of this object            
+ * @property {string} id Gets or sets the primary identifying UUID of this object
+ * @property {BatchOperationType} operation Gets or sets the operation(see: {@link BatchOperationType} for values)
+ * @property {string} $type Gets the type registration of this object
  * @param {EntityTelecomAddress} copyData Copy constructor (if present)
  */
 function EntityTelecomAddress (copyData) { 
 	this.$type = 'EntityTelecomAddress';
 	if(copyData) {
+	/** @type {BatchOperationType} */
+	this.operation = copyData.operation;
 	/** @type {string} */
 	this.id = copyData.id;
 	/** @type {Entity} */
@@ -4072,7 +4181,7 @@ function EntityTelecomAddress (copyData) {
 	this.useModel = copyData.useModel;
 	}
 }  // EntityTelecomAddress 
-// SanteDB.Core.Model.Entities.GenericComponentValues`1, SanteDB.Core.Model, Version=2.0.59.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Entities.GenericComponentValues`1, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
 //if(!GenericComponentValues)
 /**
  * @class
@@ -4080,20 +4189,23 @@ function EntityTelecomAddress (copyData) {
  * @public
  * @abstract
  * @extends Association
- * @summary             A generic class representing components of a larger item (i.e. address, name, etc);            
- * @property {Concept} typeModel [Delay loaded from type],             Gets or sets the type of address component            
- * @property {string} type            Component type key            
- * @property {string} value            Gets or sets the value of the name component            
+ * @summary A generic class representing components of a larger item (i.e. address, name, etc);
+ * @property {Concept} typeModel [Delay loaded from type],  Gets or sets the type of address component
+ * @property {string} type Component type key
+ * @property {string} value Gets or sets the value of the name component
  * @property {Date} modifiedOn
  * @property {string} source
  * @property {IdentifiedData} sourceModel [Delay loaded from source], 
- * @property {string} id            Gets or sets the primary identifying UUID of this object            
- * @property {string} $type            Gets the type registration of this object            
+ * @property {string} id Gets or sets the primary identifying UUID of this object
+ * @property {BatchOperationType} operation Gets or sets the operation(see: {@link BatchOperationType} for values)
+ * @property {string} $type Gets the type registration of this object
  * @param {GenericComponentValues} copyData Copy constructor (if present)
  */
 function GenericComponentValues (copyData) { 
 	this.$type = 'GenericComponentValues';
 	if(copyData) {
+	/** @type {BatchOperationType} */
+	this.operation = copyData.operation;
 	/** @type {string} */
 	this.id = copyData.id;
 	/** @type {IdentifiedData} */
@@ -4110,26 +4222,25 @@ function GenericComponentValues (copyData) {
 	this.typeModel = copyData.typeModel;
 	}
 }  // GenericComponentValues 
-// SanteDB.Core.Model.Entities.ManufacturedMaterial, SanteDB.Core.Model, Version=2.0.59.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Entities.ManufacturedMaterial, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
 //if(!ManufacturedMaterial)
 /**
  * @class
  * @constructor
  * @public
- * @summary             Represents a material which is manufactured by a particular organization or company.            
- * @description 
- *             A manufactured material represents an instance of a material which was or can be manufactured by 
- *             an organization and tracked as stock.
- *             
- * @property {string} lotNumber            Gets or sets the lot number of the manufactured material            
- * @property {Date} expiryDate            Gets or sets the expiry date of the material            
- * @property {Concept} formConceptModel [Delay loaded from formConcept],             Gets or sets the concept which dictates the form of the material (solid, liquid, capsule, injection, etc.)            
- * @property {string} formConcept            Gets or sets the form concept's key            
- * @property {boolean} isAdministrative            True if the material is simply administrative            
- * @property {number} quantity            The base quantity of the object in the units. This differs from quantity on the relationship            which is a /per ...            
- * @property {Concept} quantityConceptModel [Delay loaded from quantityConcept],             Gets or sets the concept which dictates the unit of measure for a single instance of this entity            
- * @property {string} quantityConcept            Gets or sets the quantity concept ref            
- * @property {object} address            Gets a list of all addresses associated with the entity            
+ * @summary Represents a material which is manufactured by a particular organization or company.
+ * @description A manufactured material represents an instance of a material which was or can be manufactured by 
+            an organization and tracked as stock.
+ * @property {string} lotNumber Gets or sets the lot number of the manufactured material
+ * @property {Date} expiryDate Gets or sets the expiry date of the material
+ * @property {Concept} formConceptModel [Delay loaded from formConcept],  Gets or sets the concept which dictates the form of the material (solid, liquid, capsule, injection, etc.)
+ * @property {string} formConcept Gets or sets the form concept's key
+ * @property {boolean} isAdministrative True if the material is simply administrative
+ * @property {number} quantity The base quantity of the object in the units. This differs from quantity on the relationship
+            which is a /per ...
+ * @property {Concept} quantityConceptModel [Delay loaded from quantityConcept],  Gets or sets the concept which dictates the unit of measure for a single instance of this entity
+ * @property {string} quantityConcept Gets or sets the quantity concept ref
+ * @property {object} address Gets a list of all addresses associated with the entity
  * @property {EntityAddress} address.Alphabetic             Represents an alphabetic address used for matching             
  * @property {EntityAddress} address.BadAddress             Represents a bad address, i.e. an address which is old or invalid.            
  * @property {EntityAddress} address.Direct             Represents a workplace address that reaches the person directly without intermediaries.            
@@ -4146,17 +4257,17 @@ function GenericComponentValues (copyData) {
  * @property {EntityAddress} address.VacationHome             Represents a vacation home to reach a person while on vacation.            
  * @property {EntityAddress} address.WorkPlace             Represents an office address, should be used for business communications            
  * @property {EntityAddress} address.$other Unclassified
- * @property {Concept} classConceptModel [Delay loaded from classConcept],             Class concept datal load property            
- * @property {string} classConcept            Class concept            (see: {@link EntityClassKeys} for values)
- * @property {Act} creationActModel [Delay loaded from creationAct],             Creation act reference            
- * @property {string} creationAct            Creation act reference            
- * @property {Concept} determinerConceptModel [Delay loaded from determinerConcept],             Determiner concept            
- * @property {string} determinerConcept            Determiner concept            (see: {@link DeterminerKeys} for values)
- * @property {object} extension            Gets a list of all extensions associated with the entity            
+ * @property {Concept} classConceptModel [Delay loaded from classConcept],  Class concept datal load property
+ * @property {string} classConcept Class concept(see: {@link EntityClassKeys} for values)
+ * @property {Act} creationActModel [Delay loaded from creationAct],  Creation act reference
+ * @property {string} creationAct Creation act reference
+ * @property {Concept} determinerConceptModel [Delay loaded from determinerConcept],  Determiner concept
+ * @property {string} determinerConcept Determiner concept(see: {@link DeterminerKeys} for values)
+ * @property {object} extension Gets a list of all extensions associated with the entity
  * @property {string} extension.classifier  where classifier is from {@link Extension} extensionType
- * @property {object} identifier            Gets the identifiers associated with this entity            
+ * @property {object} identifier Gets the identifiers associated with this entity
  * @property {EntityIdentifier} identifier.classifier  where classifier is from {@link IdentifierBase} authority
- * @property {object} name            Gets a list of all names associated with the entity            
+ * @property {object} name Gets a list of all names associated with the entity
  * @property {EntityName} name.Alphabetic             The name used is an alphabetic representation of the name (ex: romaji in Japanese)            
  * @property {EntityName} name.Anonymous             The name is an anonymous name for the object (not the real name but a name used for care delivery)            
  * @property {EntityName} name.Artist             The name represents an artist name or stage name            
@@ -4174,8 +4285,8 @@ function GenericComponentValues (copyData) {
  * @property {EntityName} name.Soundex             The name represents the computed soundex code of a name            
  * @property {EntityName} name.Syllabic             The name represents a syllabic name.            
  * @property {EntityName} name.$other Unclassified
- * @property {string} note            Gets a list of all notes associated with the entity            
- * @property {object} participation            Gets the acts in which this entity participates            
+ * @property {EntityNote} note Gets a list of all notes associated with the entity
+ * @property {object} participation Gets the acts in which this entity participates
  * @property {ActParticipation} participation.Admitter             The player entity was the person who was responsible for admitting the patient into a facility or care scenario.            
  * @property {ActParticipation} participation.Attender             The player entity represents the attending physician for the patient            
  * @property {ActParticipation} participation.Authenticator             The player entity represents an entity which authenticates the provision of care            
@@ -4233,7 +4344,7 @@ function GenericComponentValues (copyData) {
  * @property {ActParticipation} participation.Via             The player entity represents an entity where the act occurred "via" this entity (i.e. in transport)            
  * @property {ActParticipation} participation.Witness             The player entity represents a legal witness to the act occurring.            
  * @property {ActParticipation} participation.$other Unclassified
- * @property {object} relationship            Gets a list of all associated entities for this entity            
+ * @property {object} relationship Gets a list of all associated entities for this entity
  * @property {EntityRelationship} relationship.Access             The source entity gives access to the target entity            
  * @property {EntityRelationship} relationship.ActiveMoiety             Active ingredient, where not the ingredient substance (player), but itaTMs active moiety is the "basis of strength"            
  * @property {EntityRelationship} relationship.AdministerableMaterial             The source represents a meterial that is an administerable form of the target            
@@ -4389,12 +4500,14 @@ function GenericComponentValues (copyData) {
  * @property {EntityRelationship} relationship.Instance             The target entity represents an instance of the scoper entity            
  * @property {EntityRelationship} relationship.LocatedEntity             Relates the target entity to a source location            
  * @property {EntityRelationship} relationship.Duplicate             Duplicate entity            
+ * @property {EntityRelationship} relationship.Scoper             Duplicate entity            
+ * @property {EntityRelationship} relationship.EquivalentEntity             Referenced entities            
  * @property {EntityRelationship} relationship.$other Unclassified
- * @property {Concept} statusConceptModel [Delay loaded from statusConcept],             Status concept id            
- * @property {string} statusConcept            Status concept id            (see: {@link StatusKeys} for values)
- * @property {object} tag            Gets a list of all tags associated with the entity            
+ * @property {Concept} statusConceptModel [Delay loaded from statusConcept],  Status concept id
+ * @property {string} statusConcept Status concept id(see: {@link StatusKeys} for values)
+ * @property {object} tag Gets a list of all tags associated with the entity
  * @property {string} tag.classifier  where classifier is from {@link Tag} key
- * @property {object} telecom            Gets a list of all telecommunications addresses associated with the entity            
+ * @property {object} telecom Gets a list of all telecommunications addresses associated with the entity
  * @property {EntityTelecomAddress} telecom.AnsweringService             answering service            
  * @property {EntityTelecomAddress} telecom.EmergencyContact             Emergency contact            
  * @property {EntityTelecomAddress} telecom.MobileContact             Mobile phone contact            
@@ -4403,30 +4516,33 @@ function GenericComponentValues (copyData) {
  * @property {EntityTelecomAddress} telecom.TemporaryAddress             temporary contact            
  * @property {EntityTelecomAddress} telecom.WorkPlace             For use in the workplace            
  * @property {EntityTelecomAddress} telecom.$other Unclassified
- * @property {string} template            Gets the template key            
- * @property {TemplateDefinition} templateModel [Delay loaded from template],             Gets or sets the template definition            
- * @property {Concept} typeConceptModel [Delay loaded from typeConcept],             Type concept identifier            
- * @property {string} typeConcept            Type concept identifier            
- * @property {SecurityPolicyInstance} policy            Gets or sets the security policy instances associated with the entity            
+ * @property {string} template Gets the template key
+ * @property {TemplateDefinition} templateModel [Delay loaded from template],  Gets or sets the template definition
+ * @property {Concept} typeConceptModel [Delay loaded from typeConcept],  Type concept identifier
+ * @property {string} typeConcept Type concept identifier
+ * @property {SecurityPolicyInstance} policy Gets or sets the security policy instances associated with the entity
  * @property {string} previousVersion
  * @property {string} version
  * @property {number} sequence
- * @property {Date} creationTimeModel [Delay loaded from creationTime],             Gets or sets the time at which the data was created            
- * @property {Date} creationTime            Gets or sets the creation time as an ISO date format            
- * @property {Date} obsoletionTimeModel [Delay loaded from obsoletionTime],             Gets or sets the time when the data is or will become invalid            
- * @property {Date} obsoletionTime            Gets or sets the time that the data is no longer valid (was deleted/obsoleted) in ISO format            
- * @property {SecurityProvenance} createdByModel [Delay loaded from createdBy],             Gets or sets the user that created this base data            
- * @property {Date} modifiedOn            Gets the time that the object was last modified (from base data, default to CreationTime)            
- * @property {SecurityProvenance} obsoletedByModel [Delay loaded from obsoletedBy],             Gets or sets the user that obsoleted this base data            
- * @property {string} createdBy            Gets or sets the security provenance object which represents the creation of this object            
- * @property {string} obsoletedBy            Gets or sets the security provenance object which represents the obsoletion of this data            
- * @property {string} id            Gets or sets the primary identifying UUID of this object            
- * @property {string} $type            Gets the type registration of this object            
+ * @property {Date} creationTimeModel [Delay loaded from creationTime],  Gets or sets the time at which the data was created
+ * @property {Date} creationTime Gets or sets the creation time as an ISO date format
+ * @property {Date} obsoletionTimeModel [Delay loaded from obsoletionTime],  Gets or sets the time when the data is or will become invalid
+ * @property {Date} obsoletionTime Gets or sets the time that the data is no longer valid (was deleted/obsoleted) in ISO format
+ * @property {SecurityProvenance} createdByModel [Delay loaded from createdBy],  Gets or sets the user that created this base data
+ * @property {Date} modifiedOn Gets the time that the object was last modified (from base data, default to CreationTime)
+ * @property {SecurityProvenance} obsoletedByModel [Delay loaded from obsoletedBy],  Gets or sets the user that obsoleted this base data
+ * @property {string} createdBy Gets or sets the security provenance object which represents the creation of this object
+ * @property {string} obsoletedBy Gets or sets the security provenance object which represents the obsoletion of this data
+ * @property {string} id Gets or sets the primary identifying UUID of this object
+ * @property {BatchOperationType} operation Gets or sets the operation(see: {@link BatchOperationType} for values)
+ * @property {string} $type Gets the type registration of this object
  * @param {ManufacturedMaterial} copyData Copy constructor (if present)
  */
 function ManufacturedMaterial (copyData) { 
 	this.$type = 'ManufacturedMaterial';
 	if(copyData) {
+	/** @type {BatchOperationType} */
+	this.operation = copyData.operation;
 	/** @type {string} */
 	this.id = copyData.id;
 	/** @type {string} */
@@ -4475,7 +4591,7 @@ function ManufacturedMaterial (copyData) {
 	this.relationship = copyData.relationship;
 	/** @type {object} */
 	this.participation = copyData.participation;
-	/** @type {string} */
+	/** @type {EntityNote} */
 	this.note = copyData.note;
 	/** @type {object} */
 	this.name = copyData.name;
@@ -4515,22 +4631,23 @@ function ManufacturedMaterial (copyData) {
 	this.lotNumber = copyData.lotNumber;
 	}
 }  // ManufacturedMaterial 
-// SanteDB.Core.Model.Entities.Material, SanteDB.Core.Model, Version=2.0.59.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Entities.Material, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
 //if(!Material)
 /**
  * @class
  * @constructor
  * @public
- * @summary             Represents a material which describes a type of material (i.e. scapel, antigen, etc.) and serves as a base class for manufactured materials            
+ * @summary Represents a material which describes a type of material (i.e. scapel, antigen, etc.) and serves as a base class for manufactured materials
  * @description In SanteDB, a Material represents the base class for kinds and instances of materials which may or may not be manufactured by a manufacturer
- * @property {Date} expiryDate            Gets or sets the expiry date of the material            
- * @property {Concept} formConceptModel [Delay loaded from formConcept],             Gets or sets the concept which dictates the form of the material (solid, liquid, capsule, injection, etc.)            
- * @property {string} formConcept            Gets or sets the form concept's key            
- * @property {boolean} isAdministrative            True if the material is simply administrative            
- * @property {number} quantity            The base quantity of the object in the units. This differs from quantity on the relationship            which is a /per ...            
- * @property {Concept} quantityConceptModel [Delay loaded from quantityConcept],             Gets or sets the concept which dictates the unit of measure for a single instance of this entity            
- * @property {string} quantityConcept            Gets or sets the quantity concept ref            
- * @property {object} address            Gets a list of all addresses associated with the entity            
+ * @property {Date} expiryDate Gets or sets the expiry date of the material
+ * @property {Concept} formConceptModel [Delay loaded from formConcept],  Gets or sets the concept which dictates the form of the material (solid, liquid, capsule, injection, etc.)
+ * @property {string} formConcept Gets or sets the form concept's key
+ * @property {boolean} isAdministrative True if the material is simply administrative
+ * @property {number} quantity The base quantity of the object in the units. This differs from quantity on the relationship
+            which is a /per ...
+ * @property {Concept} quantityConceptModel [Delay loaded from quantityConcept],  Gets or sets the concept which dictates the unit of measure for a single instance of this entity
+ * @property {string} quantityConcept Gets or sets the quantity concept ref
+ * @property {object} address Gets a list of all addresses associated with the entity
  * @property {EntityAddress} address.Alphabetic             Represents an alphabetic address used for matching             
  * @property {EntityAddress} address.BadAddress             Represents a bad address, i.e. an address which is old or invalid.            
  * @property {EntityAddress} address.Direct             Represents a workplace address that reaches the person directly without intermediaries.            
@@ -4547,17 +4664,17 @@ function ManufacturedMaterial (copyData) {
  * @property {EntityAddress} address.VacationHome             Represents a vacation home to reach a person while on vacation.            
  * @property {EntityAddress} address.WorkPlace             Represents an office address, should be used for business communications            
  * @property {EntityAddress} address.$other Unclassified
- * @property {Concept} classConceptModel [Delay loaded from classConcept],             Class concept datal load property            
- * @property {string} classConcept            Class concept            (see: {@link EntityClassKeys} for values)
- * @property {Act} creationActModel [Delay loaded from creationAct],             Creation act reference            
- * @property {string} creationAct            Creation act reference            
- * @property {Concept} determinerConceptModel [Delay loaded from determinerConcept],             Determiner concept            
- * @property {string} determinerConcept            Determiner concept            (see: {@link DeterminerKeys} for values)
- * @property {object} extension            Gets a list of all extensions associated with the entity            
+ * @property {Concept} classConceptModel [Delay loaded from classConcept],  Class concept datal load property
+ * @property {string} classConcept Class concept(see: {@link EntityClassKeys} for values)
+ * @property {Act} creationActModel [Delay loaded from creationAct],  Creation act reference
+ * @property {string} creationAct Creation act reference
+ * @property {Concept} determinerConceptModel [Delay loaded from determinerConcept],  Determiner concept
+ * @property {string} determinerConcept Determiner concept(see: {@link DeterminerKeys} for values)
+ * @property {object} extension Gets a list of all extensions associated with the entity
  * @property {string} extension.classifier  where classifier is from {@link Extension} extensionType
- * @property {object} identifier            Gets the identifiers associated with this entity            
+ * @property {object} identifier Gets the identifiers associated with this entity
  * @property {EntityIdentifier} identifier.classifier  where classifier is from {@link IdentifierBase} authority
- * @property {object} name            Gets a list of all names associated with the entity            
+ * @property {object} name Gets a list of all names associated with the entity
  * @property {EntityName} name.Alphabetic             The name used is an alphabetic representation of the name (ex: romaji in Japanese)            
  * @property {EntityName} name.Anonymous             The name is an anonymous name for the object (not the real name but a name used for care delivery)            
  * @property {EntityName} name.Artist             The name represents an artist name or stage name            
@@ -4575,8 +4692,8 @@ function ManufacturedMaterial (copyData) {
  * @property {EntityName} name.Soundex             The name represents the computed soundex code of a name            
  * @property {EntityName} name.Syllabic             The name represents a syllabic name.            
  * @property {EntityName} name.$other Unclassified
- * @property {string} note            Gets a list of all notes associated with the entity            
- * @property {object} participation            Gets the acts in which this entity participates            
+ * @property {EntityNote} note Gets a list of all notes associated with the entity
+ * @property {object} participation Gets the acts in which this entity participates
  * @property {ActParticipation} participation.Admitter             The player entity was the person who was responsible for admitting the patient into a facility or care scenario.            
  * @property {ActParticipation} participation.Attender             The player entity represents the attending physician for the patient            
  * @property {ActParticipation} participation.Authenticator             The player entity represents an entity which authenticates the provision of care            
@@ -4634,7 +4751,7 @@ function ManufacturedMaterial (copyData) {
  * @property {ActParticipation} participation.Via             The player entity represents an entity where the act occurred "via" this entity (i.e. in transport)            
  * @property {ActParticipation} participation.Witness             The player entity represents a legal witness to the act occurring.            
  * @property {ActParticipation} participation.$other Unclassified
- * @property {object} relationship            Gets a list of all associated entities for this entity            
+ * @property {object} relationship Gets a list of all associated entities for this entity
  * @property {EntityRelationship} relationship.Access             The source entity gives access to the target entity            
  * @property {EntityRelationship} relationship.ActiveMoiety             Active ingredient, where not the ingredient substance (player), but itaTMs active moiety is the "basis of strength"            
  * @property {EntityRelationship} relationship.AdministerableMaterial             The source represents a meterial that is an administerable form of the target            
@@ -4790,12 +4907,14 @@ function ManufacturedMaterial (copyData) {
  * @property {EntityRelationship} relationship.Instance             The target entity represents an instance of the scoper entity            
  * @property {EntityRelationship} relationship.LocatedEntity             Relates the target entity to a source location            
  * @property {EntityRelationship} relationship.Duplicate             Duplicate entity            
+ * @property {EntityRelationship} relationship.Scoper             Duplicate entity            
+ * @property {EntityRelationship} relationship.EquivalentEntity             Referenced entities            
  * @property {EntityRelationship} relationship.$other Unclassified
- * @property {Concept} statusConceptModel [Delay loaded from statusConcept],             Status concept id            
- * @property {string} statusConcept            Status concept id            (see: {@link StatusKeys} for values)
- * @property {object} tag            Gets a list of all tags associated with the entity            
+ * @property {Concept} statusConceptModel [Delay loaded from statusConcept],  Status concept id
+ * @property {string} statusConcept Status concept id(see: {@link StatusKeys} for values)
+ * @property {object} tag Gets a list of all tags associated with the entity
  * @property {string} tag.classifier  where classifier is from {@link Tag} key
- * @property {object} telecom            Gets a list of all telecommunications addresses associated with the entity            
+ * @property {object} telecom Gets a list of all telecommunications addresses associated with the entity
  * @property {EntityTelecomAddress} telecom.AnsweringService             answering service            
  * @property {EntityTelecomAddress} telecom.EmergencyContact             Emergency contact            
  * @property {EntityTelecomAddress} telecom.MobileContact             Mobile phone contact            
@@ -4804,30 +4923,33 @@ function ManufacturedMaterial (copyData) {
  * @property {EntityTelecomAddress} telecom.TemporaryAddress             temporary contact            
  * @property {EntityTelecomAddress} telecom.WorkPlace             For use in the workplace            
  * @property {EntityTelecomAddress} telecom.$other Unclassified
- * @property {string} template            Gets the template key            
- * @property {TemplateDefinition} templateModel [Delay loaded from template],             Gets or sets the template definition            
- * @property {Concept} typeConceptModel [Delay loaded from typeConcept],             Type concept identifier            
- * @property {string} typeConcept            Type concept identifier            
- * @property {SecurityPolicyInstance} policy            Gets or sets the security policy instances associated with the entity            
+ * @property {string} template Gets the template key
+ * @property {TemplateDefinition} templateModel [Delay loaded from template],  Gets or sets the template definition
+ * @property {Concept} typeConceptModel [Delay loaded from typeConcept],  Type concept identifier
+ * @property {string} typeConcept Type concept identifier
+ * @property {SecurityPolicyInstance} policy Gets or sets the security policy instances associated with the entity
  * @property {string} previousVersion
  * @property {string} version
  * @property {number} sequence
- * @property {Date} creationTimeModel [Delay loaded from creationTime],             Gets or sets the time at which the data was created            
- * @property {Date} creationTime            Gets or sets the creation time as an ISO date format            
- * @property {Date} obsoletionTimeModel [Delay loaded from obsoletionTime],             Gets or sets the time when the data is or will become invalid            
- * @property {Date} obsoletionTime            Gets or sets the time that the data is no longer valid (was deleted/obsoleted) in ISO format            
- * @property {SecurityProvenance} createdByModel [Delay loaded from createdBy],             Gets or sets the user that created this base data            
- * @property {Date} modifiedOn            Gets the time that the object was last modified (from base data, default to CreationTime)            
- * @property {SecurityProvenance} obsoletedByModel [Delay loaded from obsoletedBy],             Gets or sets the user that obsoleted this base data            
- * @property {string} createdBy            Gets or sets the security provenance object which represents the creation of this object            
- * @property {string} obsoletedBy            Gets or sets the security provenance object which represents the obsoletion of this data            
- * @property {string} id            Gets or sets the primary identifying UUID of this object            
- * @property {string} $type            Gets the type registration of this object            
+ * @property {Date} creationTimeModel [Delay loaded from creationTime],  Gets or sets the time at which the data was created
+ * @property {Date} creationTime Gets or sets the creation time as an ISO date format
+ * @property {Date} obsoletionTimeModel [Delay loaded from obsoletionTime],  Gets or sets the time when the data is or will become invalid
+ * @property {Date} obsoletionTime Gets or sets the time that the data is no longer valid (was deleted/obsoleted) in ISO format
+ * @property {SecurityProvenance} createdByModel [Delay loaded from createdBy],  Gets or sets the user that created this base data
+ * @property {Date} modifiedOn Gets the time that the object was last modified (from base data, default to CreationTime)
+ * @property {SecurityProvenance} obsoletedByModel [Delay loaded from obsoletedBy],  Gets or sets the user that obsoleted this base data
+ * @property {string} createdBy Gets or sets the security provenance object which represents the creation of this object
+ * @property {string} obsoletedBy Gets or sets the security provenance object which represents the obsoletion of this data
+ * @property {string} id Gets or sets the primary identifying UUID of this object
+ * @property {BatchOperationType} operation Gets or sets the operation(see: {@link BatchOperationType} for values)
+ * @property {string} $type Gets the type registration of this object
  * @param {Material} copyData Copy constructor (if present)
  */
 function Material (copyData) { 
 	this.$type = 'Material';
 	if(copyData) {
+	/** @type {BatchOperationType} */
+	this.operation = copyData.operation;
 	/** @type {string} */
 	this.id = copyData.id;
 	/** @type {string} */
@@ -4876,7 +4998,7 @@ function Material (copyData) {
 	this.relationship = copyData.relationship;
 	/** @type {object} */
 	this.participation = copyData.participation;
-	/** @type {string} */
+	/** @type {EntityNote} */
 	this.note = copyData.note;
 	/** @type {object} */
 	this.name = copyData.name;
@@ -4914,16 +5036,16 @@ function Material (copyData) {
 	this.expiryDate = copyData.expiryDate;
 	}
 }  // Material 
-// SanteDB.Core.Model.Entities.Organization, SanteDB.Core.Model, Version=2.0.59.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Entities.Organization, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
 //if(!Organization)
 /**
  * @class
  * @constructor
  * @public
- * @summary             Organization entity            
- * @property {Concept} industryConceptModel [Delay loaded from industryConcept],             Gets or sets the industry concept key            
- * @property {string} industryConcept            Gets or sets the concept key which classifies the industry in which the organization operates            
- * @property {object} address            Gets a list of all addresses associated with the entity            
+ * @summary Organization entity
+ * @property {Concept} industryConceptModel [Delay loaded from industryConcept],  Gets or sets the industry concept key
+ * @property {string} industryConcept Gets or sets the concept key which classifies the industry in which the organization operates
+ * @property {object} address Gets a list of all addresses associated with the entity
  * @property {EntityAddress} address.Alphabetic             Represents an alphabetic address used for matching             
  * @property {EntityAddress} address.BadAddress             Represents a bad address, i.e. an address which is old or invalid.            
  * @property {EntityAddress} address.Direct             Represents a workplace address that reaches the person directly without intermediaries.            
@@ -4940,17 +5062,17 @@ function Material (copyData) {
  * @property {EntityAddress} address.VacationHome             Represents a vacation home to reach a person while on vacation.            
  * @property {EntityAddress} address.WorkPlace             Represents an office address, should be used for business communications            
  * @property {EntityAddress} address.$other Unclassified
- * @property {Concept} classConceptModel [Delay loaded from classConcept],             Class concept datal load property            
- * @property {string} classConcept            Class concept            (see: {@link EntityClassKeys} for values)
- * @property {Act} creationActModel [Delay loaded from creationAct],             Creation act reference            
- * @property {string} creationAct            Creation act reference            
- * @property {Concept} determinerConceptModel [Delay loaded from determinerConcept],             Determiner concept            
- * @property {string} determinerConcept            Determiner concept            (see: {@link DeterminerKeys} for values)
- * @property {object} extension            Gets a list of all extensions associated with the entity            
+ * @property {Concept} classConceptModel [Delay loaded from classConcept],  Class concept datal load property
+ * @property {string} classConcept Class concept(see: {@link EntityClassKeys} for values)
+ * @property {Act} creationActModel [Delay loaded from creationAct],  Creation act reference
+ * @property {string} creationAct Creation act reference
+ * @property {Concept} determinerConceptModel [Delay loaded from determinerConcept],  Determiner concept
+ * @property {string} determinerConcept Determiner concept(see: {@link DeterminerKeys} for values)
+ * @property {object} extension Gets a list of all extensions associated with the entity
  * @property {string} extension.classifier  where classifier is from {@link Extension} extensionType
- * @property {object} identifier            Gets the identifiers associated with this entity            
+ * @property {object} identifier Gets the identifiers associated with this entity
  * @property {EntityIdentifier} identifier.classifier  where classifier is from {@link IdentifierBase} authority
- * @property {object} name            Gets a list of all names associated with the entity            
+ * @property {object} name Gets a list of all names associated with the entity
  * @property {EntityName} name.Alphabetic             The name used is an alphabetic representation of the name (ex: romaji in Japanese)            
  * @property {EntityName} name.Anonymous             The name is an anonymous name for the object (not the real name but a name used for care delivery)            
  * @property {EntityName} name.Artist             The name represents an artist name or stage name            
@@ -4968,8 +5090,8 @@ function Material (copyData) {
  * @property {EntityName} name.Soundex             The name represents the computed soundex code of a name            
  * @property {EntityName} name.Syllabic             The name represents a syllabic name.            
  * @property {EntityName} name.$other Unclassified
- * @property {string} note            Gets a list of all notes associated with the entity            
- * @property {object} participation            Gets the acts in which this entity participates            
+ * @property {EntityNote} note Gets a list of all notes associated with the entity
+ * @property {object} participation Gets the acts in which this entity participates
  * @property {ActParticipation} participation.Admitter             The player entity was the person who was responsible for admitting the patient into a facility or care scenario.            
  * @property {ActParticipation} participation.Attender             The player entity represents the attending physician for the patient            
  * @property {ActParticipation} participation.Authenticator             The player entity represents an entity which authenticates the provision of care            
@@ -5027,7 +5149,7 @@ function Material (copyData) {
  * @property {ActParticipation} participation.Via             The player entity represents an entity where the act occurred "via" this entity (i.e. in transport)            
  * @property {ActParticipation} participation.Witness             The player entity represents a legal witness to the act occurring.            
  * @property {ActParticipation} participation.$other Unclassified
- * @property {object} relationship            Gets a list of all associated entities for this entity            
+ * @property {object} relationship Gets a list of all associated entities for this entity
  * @property {EntityRelationship} relationship.Access             The source entity gives access to the target entity            
  * @property {EntityRelationship} relationship.ActiveMoiety             Active ingredient, where not the ingredient substance (player), but itaTMs active moiety is the "basis of strength"            
  * @property {EntityRelationship} relationship.AdministerableMaterial             The source represents a meterial that is an administerable form of the target            
@@ -5183,12 +5305,14 @@ function Material (copyData) {
  * @property {EntityRelationship} relationship.Instance             The target entity represents an instance of the scoper entity            
  * @property {EntityRelationship} relationship.LocatedEntity             Relates the target entity to a source location            
  * @property {EntityRelationship} relationship.Duplicate             Duplicate entity            
+ * @property {EntityRelationship} relationship.Scoper             Duplicate entity            
+ * @property {EntityRelationship} relationship.EquivalentEntity             Referenced entities            
  * @property {EntityRelationship} relationship.$other Unclassified
- * @property {Concept} statusConceptModel [Delay loaded from statusConcept],             Status concept id            
- * @property {string} statusConcept            Status concept id            (see: {@link StatusKeys} for values)
- * @property {object} tag            Gets a list of all tags associated with the entity            
+ * @property {Concept} statusConceptModel [Delay loaded from statusConcept],  Status concept id
+ * @property {string} statusConcept Status concept id(see: {@link StatusKeys} for values)
+ * @property {object} tag Gets a list of all tags associated with the entity
  * @property {string} tag.classifier  where classifier is from {@link Tag} key
- * @property {object} telecom            Gets a list of all telecommunications addresses associated with the entity            
+ * @property {object} telecom Gets a list of all telecommunications addresses associated with the entity
  * @property {EntityTelecomAddress} telecom.AnsweringService             answering service            
  * @property {EntityTelecomAddress} telecom.EmergencyContact             Emergency contact            
  * @property {EntityTelecomAddress} telecom.MobileContact             Mobile phone contact            
@@ -5197,30 +5321,33 @@ function Material (copyData) {
  * @property {EntityTelecomAddress} telecom.TemporaryAddress             temporary contact            
  * @property {EntityTelecomAddress} telecom.WorkPlace             For use in the workplace            
  * @property {EntityTelecomAddress} telecom.$other Unclassified
- * @property {string} template            Gets the template key            
- * @property {TemplateDefinition} templateModel [Delay loaded from template],             Gets or sets the template definition            
- * @property {Concept} typeConceptModel [Delay loaded from typeConcept],             Type concept identifier            
- * @property {string} typeConcept            Type concept identifier            
- * @property {SecurityPolicyInstance} policy            Gets or sets the security policy instances associated with the entity            
+ * @property {string} template Gets the template key
+ * @property {TemplateDefinition} templateModel [Delay loaded from template],  Gets or sets the template definition
+ * @property {Concept} typeConceptModel [Delay loaded from typeConcept],  Type concept identifier
+ * @property {string} typeConcept Type concept identifier
+ * @property {SecurityPolicyInstance} policy Gets or sets the security policy instances associated with the entity
  * @property {string} previousVersion
  * @property {string} version
  * @property {number} sequence
- * @property {Date} creationTimeModel [Delay loaded from creationTime],             Gets or sets the time at which the data was created            
- * @property {Date} creationTime            Gets or sets the creation time as an ISO date format            
- * @property {Date} obsoletionTimeModel [Delay loaded from obsoletionTime],             Gets or sets the time when the data is or will become invalid            
- * @property {Date} obsoletionTime            Gets or sets the time that the data is no longer valid (was deleted/obsoleted) in ISO format            
- * @property {SecurityProvenance} createdByModel [Delay loaded from createdBy],             Gets or sets the user that created this base data            
- * @property {Date} modifiedOn            Gets the time that the object was last modified (from base data, default to CreationTime)            
- * @property {SecurityProvenance} obsoletedByModel [Delay loaded from obsoletedBy],             Gets or sets the user that obsoleted this base data            
- * @property {string} createdBy            Gets or sets the security provenance object which represents the creation of this object            
- * @property {string} obsoletedBy            Gets or sets the security provenance object which represents the obsoletion of this data            
- * @property {string} id            Gets or sets the primary identifying UUID of this object            
- * @property {string} $type            Gets the type registration of this object            
+ * @property {Date} creationTimeModel [Delay loaded from creationTime],  Gets or sets the time at which the data was created
+ * @property {Date} creationTime Gets or sets the creation time as an ISO date format
+ * @property {Date} obsoletionTimeModel [Delay loaded from obsoletionTime],  Gets or sets the time when the data is or will become invalid
+ * @property {Date} obsoletionTime Gets or sets the time that the data is no longer valid (was deleted/obsoleted) in ISO format
+ * @property {SecurityProvenance} createdByModel [Delay loaded from createdBy],  Gets or sets the user that created this base data
+ * @property {Date} modifiedOn Gets the time that the object was last modified (from base data, default to CreationTime)
+ * @property {SecurityProvenance} obsoletedByModel [Delay loaded from obsoletedBy],  Gets or sets the user that obsoleted this base data
+ * @property {string} createdBy Gets or sets the security provenance object which represents the creation of this object
+ * @property {string} obsoletedBy Gets or sets the security provenance object which represents the obsoletion of this data
+ * @property {string} id Gets or sets the primary identifying UUID of this object
+ * @property {BatchOperationType} operation Gets or sets the operation(see: {@link BatchOperationType} for values)
+ * @property {string} $type Gets the type registration of this object
  * @param {Organization} copyData Copy constructor (if present)
  */
 function Organization (copyData) { 
 	this.$type = 'Organization';
 	if(copyData) {
+	/** @type {BatchOperationType} */
+	this.operation = copyData.operation;
 	/** @type {string} */
 	this.id = copyData.id;
 	/** @type {string} */
@@ -5269,7 +5396,7 @@ function Organization (copyData) {
 	this.relationship = copyData.relationship;
 	/** @type {object} */
 	this.participation = copyData.participation;
-	/** @type {string} */
+	/** @type {EntityNote} */
 	this.note = copyData.note;
 	/** @type {object} */
 	this.name = copyData.name;
@@ -5297,19 +5424,21 @@ function Organization (copyData) {
 	this.industryConceptModel = copyData.industryConceptModel;
 	}
 }  // Organization 
-// SanteDB.Core.Model.Entities.Person, SanteDB.Core.Model, Version=2.0.59.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Entities.Person, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
 //if(!Person)
 /**
  * @class
  * @constructor
  * @public
- * @summary             Represents an entity which is a person            
- * @property {DatePrecision} dateOfBirthPrecision            Gets or sets the precision ofthe date of birth            (see: {@link DatePrecision} for values)
- * @property {string} dateOfBirth            Gets the date of birth as XML            
- * @property {PersonLanguageCommunication} language            Gets the person's languages of communication            
- * @property {string} occupation            Gets or sets the religious affiliation            
- * @property {Concept} occupationModel [Delay loaded from occupation],             Gets or sets the marital status code            
- * @property {object} address            Gets a list of all addresses associated with the entity            
+ * @summary Represents an entity which is a person
+ * @property {DatePrecision} dateOfBirthPrecision Gets or sets the precision ofthe date of birth(see: {@link DatePrecision} for values)
+ * @property {string} genderConcept Gets or sets the gender concept key
+ * @property {Concept} genderConceptModel [Delay loaded from genderConcept],  Gets or sets the gender concept
+ * @property {string} dateOfBirth Gets the date of birth as XML
+ * @property {PersonLanguageCommunication} language Gets the person's languages of communication
+ * @property {string} occupation Gets or sets the religious affiliation
+ * @property {Concept} occupationModel [Delay loaded from occupation],  Gets or sets the marital status code
+ * @property {object} address Gets a list of all addresses associated with the entity
  * @property {EntityAddress} address.Alphabetic             Represents an alphabetic address used for matching             
  * @property {EntityAddress} address.BadAddress             Represents a bad address, i.e. an address which is old or invalid.            
  * @property {EntityAddress} address.Direct             Represents a workplace address that reaches the person directly without intermediaries.            
@@ -5326,17 +5455,17 @@ function Organization (copyData) {
  * @property {EntityAddress} address.VacationHome             Represents a vacation home to reach a person while on vacation.            
  * @property {EntityAddress} address.WorkPlace             Represents an office address, should be used for business communications            
  * @property {EntityAddress} address.$other Unclassified
- * @property {Concept} classConceptModel [Delay loaded from classConcept],             Class concept datal load property            
- * @property {string} classConcept            Class concept            (see: {@link EntityClassKeys} for values)
- * @property {Act} creationActModel [Delay loaded from creationAct],             Creation act reference            
- * @property {string} creationAct            Creation act reference            
- * @property {Concept} determinerConceptModel [Delay loaded from determinerConcept],             Determiner concept            
- * @property {string} determinerConcept            Determiner concept            (see: {@link DeterminerKeys} for values)
- * @property {object} extension            Gets a list of all extensions associated with the entity            
+ * @property {Concept} classConceptModel [Delay loaded from classConcept],  Class concept datal load property
+ * @property {string} classConcept Class concept(see: {@link EntityClassKeys} for values)
+ * @property {Act} creationActModel [Delay loaded from creationAct],  Creation act reference
+ * @property {string} creationAct Creation act reference
+ * @property {Concept} determinerConceptModel [Delay loaded from determinerConcept],  Determiner concept
+ * @property {string} determinerConcept Determiner concept(see: {@link DeterminerKeys} for values)
+ * @property {object} extension Gets a list of all extensions associated with the entity
  * @property {string} extension.classifier  where classifier is from {@link Extension} extensionType
- * @property {object} identifier            Gets the identifiers associated with this entity            
+ * @property {object} identifier Gets the identifiers associated with this entity
  * @property {EntityIdentifier} identifier.classifier  where classifier is from {@link IdentifierBase} authority
- * @property {object} name            Gets a list of all names associated with the entity            
+ * @property {object} name Gets a list of all names associated with the entity
  * @property {EntityName} name.Alphabetic             The name used is an alphabetic representation of the name (ex: romaji in Japanese)            
  * @property {EntityName} name.Anonymous             The name is an anonymous name for the object (not the real name but a name used for care delivery)            
  * @property {EntityName} name.Artist             The name represents an artist name or stage name            
@@ -5354,8 +5483,8 @@ function Organization (copyData) {
  * @property {EntityName} name.Soundex             The name represents the computed soundex code of a name            
  * @property {EntityName} name.Syllabic             The name represents a syllabic name.            
  * @property {EntityName} name.$other Unclassified
- * @property {string} note            Gets a list of all notes associated with the entity            
- * @property {object} participation            Gets the acts in which this entity participates            
+ * @property {EntityNote} note Gets a list of all notes associated with the entity
+ * @property {object} participation Gets the acts in which this entity participates
  * @property {ActParticipation} participation.Admitter             The player entity was the person who was responsible for admitting the patient into a facility or care scenario.            
  * @property {ActParticipation} participation.Attender             The player entity represents the attending physician for the patient            
  * @property {ActParticipation} participation.Authenticator             The player entity represents an entity which authenticates the provision of care            
@@ -5413,7 +5542,7 @@ function Organization (copyData) {
  * @property {ActParticipation} participation.Via             The player entity represents an entity where the act occurred "via" this entity (i.e. in transport)            
  * @property {ActParticipation} participation.Witness             The player entity represents a legal witness to the act occurring.            
  * @property {ActParticipation} participation.$other Unclassified
- * @property {object} relationship            Gets a list of all associated entities for this entity            
+ * @property {object} relationship Gets a list of all associated entities for this entity
  * @property {EntityRelationship} relationship.Access             The source entity gives access to the target entity            
  * @property {EntityRelationship} relationship.ActiveMoiety             Active ingredient, where not the ingredient substance (player), but itaTMs active moiety is the "basis of strength"            
  * @property {EntityRelationship} relationship.AdministerableMaterial             The source represents a meterial that is an administerable form of the target            
@@ -5569,12 +5698,14 @@ function Organization (copyData) {
  * @property {EntityRelationship} relationship.Instance             The target entity represents an instance of the scoper entity            
  * @property {EntityRelationship} relationship.LocatedEntity             Relates the target entity to a source location            
  * @property {EntityRelationship} relationship.Duplicate             Duplicate entity            
+ * @property {EntityRelationship} relationship.Scoper             Duplicate entity            
+ * @property {EntityRelationship} relationship.EquivalentEntity             Referenced entities            
  * @property {EntityRelationship} relationship.$other Unclassified
- * @property {Concept} statusConceptModel [Delay loaded from statusConcept],             Status concept id            
- * @property {string} statusConcept            Status concept id            (see: {@link StatusKeys} for values)
- * @property {object} tag            Gets a list of all tags associated with the entity            
+ * @property {Concept} statusConceptModel [Delay loaded from statusConcept],  Status concept id
+ * @property {string} statusConcept Status concept id(see: {@link StatusKeys} for values)
+ * @property {object} tag Gets a list of all tags associated with the entity
  * @property {string} tag.classifier  where classifier is from {@link Tag} key
- * @property {object} telecom            Gets a list of all telecommunications addresses associated with the entity            
+ * @property {object} telecom Gets a list of all telecommunications addresses associated with the entity
  * @property {EntityTelecomAddress} telecom.AnsweringService             answering service            
  * @property {EntityTelecomAddress} telecom.EmergencyContact             Emergency contact            
  * @property {EntityTelecomAddress} telecom.MobileContact             Mobile phone contact            
@@ -5583,30 +5714,33 @@ function Organization (copyData) {
  * @property {EntityTelecomAddress} telecom.TemporaryAddress             temporary contact            
  * @property {EntityTelecomAddress} telecom.WorkPlace             For use in the workplace            
  * @property {EntityTelecomAddress} telecom.$other Unclassified
- * @property {string} template            Gets the template key            
- * @property {TemplateDefinition} templateModel [Delay loaded from template],             Gets or sets the template definition            
- * @property {Concept} typeConceptModel [Delay loaded from typeConcept],             Type concept identifier            
- * @property {string} typeConcept            Type concept identifier            
- * @property {SecurityPolicyInstance} policy            Gets or sets the security policy instances associated with the entity            
+ * @property {string} template Gets the template key
+ * @property {TemplateDefinition} templateModel [Delay loaded from template],  Gets or sets the template definition
+ * @property {Concept} typeConceptModel [Delay loaded from typeConcept],  Type concept identifier
+ * @property {string} typeConcept Type concept identifier
+ * @property {SecurityPolicyInstance} policy Gets or sets the security policy instances associated with the entity
  * @property {string} previousVersion
  * @property {string} version
  * @property {number} sequence
- * @property {Date} creationTimeModel [Delay loaded from creationTime],             Gets or sets the time at which the data was created            
- * @property {Date} creationTime            Gets or sets the creation time as an ISO date format            
- * @property {Date} obsoletionTimeModel [Delay loaded from obsoletionTime],             Gets or sets the time when the data is or will become invalid            
- * @property {Date} obsoletionTime            Gets or sets the time that the data is no longer valid (was deleted/obsoleted) in ISO format            
- * @property {SecurityProvenance} createdByModel [Delay loaded from createdBy],             Gets or sets the user that created this base data            
- * @property {Date} modifiedOn            Gets the time that the object was last modified (from base data, default to CreationTime)            
- * @property {SecurityProvenance} obsoletedByModel [Delay loaded from obsoletedBy],             Gets or sets the user that obsoleted this base data            
- * @property {string} createdBy            Gets or sets the security provenance object which represents the creation of this object            
- * @property {string} obsoletedBy            Gets or sets the security provenance object which represents the obsoletion of this data            
- * @property {string} id            Gets or sets the primary identifying UUID of this object            
- * @property {string} $type            Gets the type registration of this object            
+ * @property {Date} creationTimeModel [Delay loaded from creationTime],  Gets or sets the time at which the data was created
+ * @property {Date} creationTime Gets or sets the creation time as an ISO date format
+ * @property {Date} obsoletionTimeModel [Delay loaded from obsoletionTime],  Gets or sets the time when the data is or will become invalid
+ * @property {Date} obsoletionTime Gets or sets the time that the data is no longer valid (was deleted/obsoleted) in ISO format
+ * @property {SecurityProvenance} createdByModel [Delay loaded from createdBy],  Gets or sets the user that created this base data
+ * @property {Date} modifiedOn Gets the time that the object was last modified (from base data, default to CreationTime)
+ * @property {SecurityProvenance} obsoletedByModel [Delay loaded from obsoletedBy],  Gets or sets the user that obsoleted this base data
+ * @property {string} createdBy Gets or sets the security provenance object which represents the creation of this object
+ * @property {string} obsoletedBy Gets or sets the security provenance object which represents the obsoletion of this data
+ * @property {string} id Gets or sets the primary identifying UUID of this object
+ * @property {BatchOperationType} operation Gets or sets the operation(see: {@link BatchOperationType} for values)
+ * @property {string} $type Gets the type registration of this object
  * @param {Person} copyData Copy constructor (if present)
  */
 function Person (copyData) { 
 	this.$type = 'Person';
 	if(copyData) {
+	/** @type {BatchOperationType} */
+	this.operation = copyData.operation;
 	/** @type {string} */
 	this.id = copyData.id;
 	/** @type {string} */
@@ -5655,7 +5789,7 @@ function Person (copyData) {
 	this.relationship = copyData.relationship;
 	/** @type {object} */
 	this.participation = copyData.participation;
-	/** @type {string} */
+	/** @type {EntityNote} */
 	this.note = copyData.note;
 	/** @type {object} */
 	this.name = copyData.name;
@@ -5685,32 +5819,39 @@ function Person (copyData) {
 	this.language = copyData.language;
 	/** @type {string} */
 	this.dateOfBirth = copyData.dateOfBirth;
+	/** @type {Concept} */
+	this.genderConceptModel = copyData.genderConceptModel;
+	/** @type {string} */
+	this.genderConcept = copyData.genderConcept;
 	/** @type {DatePrecision} */
 	this.dateOfBirthPrecision = copyData.dateOfBirthPrecision;
 	}
 }  // Person 
-// SanteDB.Core.Model.Entities.PersonLanguageCommunication, SanteDB.Core.Model, Version=2.0.59.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Entities.PersonLanguageCommunication, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
 //if(!PersonLanguageCommunication)
 /**
  * @class
  * @constructor
  * @public
  * @extends VersionedAssociation
- * @summary             Represents a single preferred communication method for the entity            
- * @property {boolean} isPreferred            Gets or set the user's preference indicator            
- * @property {string} languageCode            Gets or sets the language code            
+ * @summary Represents a single preferred communication method for the entity
+ * @property {boolean} isPreferred Gets or set the user's preference indicator
+ * @property {string} languageCode Gets or sets the language code
  * @property {number} effectiveVersionSequence
  * @property {number} obsoleteVersionSequence
  * @property {Date} modifiedOn
  * @property {string} source
  * @property {Entity} sourceModel [Delay loaded from source], 
- * @property {string} id            Gets or sets the primary identifying UUID of this object            
- * @property {string} $type            Gets the type registration of this object            
+ * @property {string} id Gets or sets the primary identifying UUID of this object
+ * @property {BatchOperationType} operation Gets or sets the operation(see: {@link BatchOperationType} for values)
+ * @property {string} $type Gets the type registration of this object
  * @param {PersonLanguageCommunication} copyData Copy constructor (if present)
  */
 function PersonLanguageCommunication (copyData) { 
 	this.$type = 'PersonLanguageCommunication';
 	if(copyData) {
+	/** @type {BatchOperationType} */
+	this.operation = copyData.operation;
 	/** @type {string} */
 	this.id = copyData.id;
 	/** @type {Entity} */
@@ -5729,18 +5870,18 @@ function PersonLanguageCommunication (copyData) {
 	this.isPreferred = copyData.isPreferred;
 	}
 }  // PersonLanguageCommunication 
-// SanteDB.Core.Model.Entities.Place, SanteDB.Core.Model, Version=2.0.59.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Entities.Place, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
 //if(!Place)
 /**
  * @class
  * @constructor
  * @public
- * @summary             An entity which is a place where healthcare services are delivered            
- * @property {string} classConcept            Gets or sets the class concept key            (see: {@link EntityClassKeys} for values)
- * @property {boolean} isMobile            True if location is mobile            
- * @property {GeoTag} geo            Gets the geographic tag            
- * @property {PlaceService} service            Gets the services            
- * @property {object} address            Gets a list of all addresses associated with the entity            
+ * @summary An entity which is a place where healthcare services are delivered
+ * @property {string} classConcept Gets or sets the class concept key(see: {@link EntityClassKeys} for values)
+ * @property {boolean} isMobile True if location is mobile
+ * @property {GeoTag} geo Gets the geographic tag
+ * @property {PlaceService} service Gets the services
+ * @property {object} address Gets a list of all addresses associated with the entity
  * @property {EntityAddress} address.Alphabetic             Represents an alphabetic address used for matching             
  * @property {EntityAddress} address.BadAddress             Represents a bad address, i.e. an address which is old or invalid.            
  * @property {EntityAddress} address.Direct             Represents a workplace address that reaches the person directly without intermediaries.            
@@ -5757,16 +5898,16 @@ function PersonLanguageCommunication (copyData) {
  * @property {EntityAddress} address.VacationHome             Represents a vacation home to reach a person while on vacation.            
  * @property {EntityAddress} address.WorkPlace             Represents an office address, should be used for business communications            
  * @property {EntityAddress} address.$other Unclassified
- * @property {Concept} classConceptModel [Delay loaded from classConcept],             Class concept datal load property            
- * @property {Act} creationActModel [Delay loaded from creationAct],             Creation act reference            
- * @property {string} creationAct            Creation act reference            
- * @property {Concept} determinerConceptModel [Delay loaded from determinerConcept],             Determiner concept            
- * @property {string} determinerConcept            Determiner concept            (see: {@link DeterminerKeys} for values)
- * @property {object} extension            Gets a list of all extensions associated with the entity            
+ * @property {Concept} classConceptModel [Delay loaded from classConcept],  Class concept datal load property
+ * @property {Act} creationActModel [Delay loaded from creationAct],  Creation act reference
+ * @property {string} creationAct Creation act reference
+ * @property {Concept} determinerConceptModel [Delay loaded from determinerConcept],  Determiner concept
+ * @property {string} determinerConcept Determiner concept(see: {@link DeterminerKeys} for values)
+ * @property {object} extension Gets a list of all extensions associated with the entity
  * @property {string} extension.classifier  where classifier is from {@link Extension} extensionType
- * @property {object} identifier            Gets the identifiers associated with this entity            
+ * @property {object} identifier Gets the identifiers associated with this entity
  * @property {EntityIdentifier} identifier.classifier  where classifier is from {@link IdentifierBase} authority
- * @property {object} name            Gets a list of all names associated with the entity            
+ * @property {object} name Gets a list of all names associated with the entity
  * @property {EntityName} name.Alphabetic             The name used is an alphabetic representation of the name (ex: romaji in Japanese)            
  * @property {EntityName} name.Anonymous             The name is an anonymous name for the object (not the real name but a name used for care delivery)            
  * @property {EntityName} name.Artist             The name represents an artist name or stage name            
@@ -5784,8 +5925,8 @@ function PersonLanguageCommunication (copyData) {
  * @property {EntityName} name.Soundex             The name represents the computed soundex code of a name            
  * @property {EntityName} name.Syllabic             The name represents a syllabic name.            
  * @property {EntityName} name.$other Unclassified
- * @property {string} note            Gets a list of all notes associated with the entity            
- * @property {object} participation            Gets the acts in which this entity participates            
+ * @property {EntityNote} note Gets a list of all notes associated with the entity
+ * @property {object} participation Gets the acts in which this entity participates
  * @property {ActParticipation} participation.Admitter             The player entity was the person who was responsible for admitting the patient into a facility or care scenario.            
  * @property {ActParticipation} participation.Attender             The player entity represents the attending physician for the patient            
  * @property {ActParticipation} participation.Authenticator             The player entity represents an entity which authenticates the provision of care            
@@ -5843,7 +5984,7 @@ function PersonLanguageCommunication (copyData) {
  * @property {ActParticipation} participation.Via             The player entity represents an entity where the act occurred "via" this entity (i.e. in transport)            
  * @property {ActParticipation} participation.Witness             The player entity represents a legal witness to the act occurring.            
  * @property {ActParticipation} participation.$other Unclassified
- * @property {object} relationship            Gets a list of all associated entities for this entity            
+ * @property {object} relationship Gets a list of all associated entities for this entity
  * @property {EntityRelationship} relationship.Access             The source entity gives access to the target entity            
  * @property {EntityRelationship} relationship.ActiveMoiety             Active ingredient, where not the ingredient substance (player), but itaTMs active moiety is the "basis of strength"            
  * @property {EntityRelationship} relationship.AdministerableMaterial             The source represents a meterial that is an administerable form of the target            
@@ -5999,12 +6140,14 @@ function PersonLanguageCommunication (copyData) {
  * @property {EntityRelationship} relationship.Instance             The target entity represents an instance of the scoper entity            
  * @property {EntityRelationship} relationship.LocatedEntity             Relates the target entity to a source location            
  * @property {EntityRelationship} relationship.Duplicate             Duplicate entity            
+ * @property {EntityRelationship} relationship.Scoper             Duplicate entity            
+ * @property {EntityRelationship} relationship.EquivalentEntity             Referenced entities            
  * @property {EntityRelationship} relationship.$other Unclassified
- * @property {Concept} statusConceptModel [Delay loaded from statusConcept],             Status concept id            
- * @property {string} statusConcept            Status concept id            (see: {@link StatusKeys} for values)
- * @property {object} tag            Gets a list of all tags associated with the entity            
+ * @property {Concept} statusConceptModel [Delay loaded from statusConcept],  Status concept id
+ * @property {string} statusConcept Status concept id(see: {@link StatusKeys} for values)
+ * @property {object} tag Gets a list of all tags associated with the entity
  * @property {string} tag.classifier  where classifier is from {@link Tag} key
- * @property {object} telecom            Gets a list of all telecommunications addresses associated with the entity            
+ * @property {object} telecom Gets a list of all telecommunications addresses associated with the entity
  * @property {EntityTelecomAddress} telecom.AnsweringService             answering service            
  * @property {EntityTelecomAddress} telecom.EmergencyContact             Emergency contact            
  * @property {EntityTelecomAddress} telecom.MobileContact             Mobile phone contact            
@@ -6013,30 +6156,33 @@ function PersonLanguageCommunication (copyData) {
  * @property {EntityTelecomAddress} telecom.TemporaryAddress             temporary contact            
  * @property {EntityTelecomAddress} telecom.WorkPlace             For use in the workplace            
  * @property {EntityTelecomAddress} telecom.$other Unclassified
- * @property {string} template            Gets the template key            
- * @property {TemplateDefinition} templateModel [Delay loaded from template],             Gets or sets the template definition            
- * @property {Concept} typeConceptModel [Delay loaded from typeConcept],             Type concept identifier            
- * @property {string} typeConcept            Type concept identifier            
- * @property {SecurityPolicyInstance} policy            Gets or sets the security policy instances associated with the entity            
+ * @property {string} template Gets the template key
+ * @property {TemplateDefinition} templateModel [Delay loaded from template],  Gets or sets the template definition
+ * @property {Concept} typeConceptModel [Delay loaded from typeConcept],  Type concept identifier
+ * @property {string} typeConcept Type concept identifier
+ * @property {SecurityPolicyInstance} policy Gets or sets the security policy instances associated with the entity
  * @property {string} previousVersion
  * @property {string} version
  * @property {number} sequence
- * @property {Date} creationTimeModel [Delay loaded from creationTime],             Gets or sets the time at which the data was created            
- * @property {Date} creationTime            Gets or sets the creation time as an ISO date format            
- * @property {Date} obsoletionTimeModel [Delay loaded from obsoletionTime],             Gets or sets the time when the data is or will become invalid            
- * @property {Date} obsoletionTime            Gets or sets the time that the data is no longer valid (was deleted/obsoleted) in ISO format            
- * @property {SecurityProvenance} createdByModel [Delay loaded from createdBy],             Gets or sets the user that created this base data            
- * @property {Date} modifiedOn            Gets the time that the object was last modified (from base data, default to CreationTime)            
- * @property {SecurityProvenance} obsoletedByModel [Delay loaded from obsoletedBy],             Gets or sets the user that obsoleted this base data            
- * @property {string} createdBy            Gets or sets the security provenance object which represents the creation of this object            
- * @property {string} obsoletedBy            Gets or sets the security provenance object which represents the obsoletion of this data            
- * @property {string} id            Gets or sets the primary identifying UUID of this object            
- * @property {string} $type            Gets the type registration of this object            
+ * @property {Date} creationTimeModel [Delay loaded from creationTime],  Gets or sets the time at which the data was created
+ * @property {Date} creationTime Gets or sets the creation time as an ISO date format
+ * @property {Date} obsoletionTimeModel [Delay loaded from obsoletionTime],  Gets or sets the time when the data is or will become invalid
+ * @property {Date} obsoletionTime Gets or sets the time that the data is no longer valid (was deleted/obsoleted) in ISO format
+ * @property {SecurityProvenance} createdByModel [Delay loaded from createdBy],  Gets or sets the user that created this base data
+ * @property {Date} modifiedOn Gets the time that the object was last modified (from base data, default to CreationTime)
+ * @property {SecurityProvenance} obsoletedByModel [Delay loaded from obsoletedBy],  Gets or sets the user that obsoleted this base data
+ * @property {string} createdBy Gets or sets the security provenance object which represents the creation of this object
+ * @property {string} obsoletedBy Gets or sets the security provenance object which represents the obsoletion of this data
+ * @property {string} id Gets or sets the primary identifying UUID of this object
+ * @property {BatchOperationType} operation Gets or sets the operation(see: {@link BatchOperationType} for values)
+ * @property {string} $type Gets the type registration of this object
  * @param {Place} copyData Copy constructor (if present)
  */
 function Place (copyData) { 
 	this.$type = 'Place';
 	if(copyData) {
+	/** @type {BatchOperationType} */
+	this.operation = copyData.operation;
 	/** @type {string} */
 	this.id = copyData.id;
 	/** @type {string} */
@@ -6085,7 +6231,7 @@ function Place (copyData) {
 	this.relationship = copyData.relationship;
 	/** @type {object} */
 	this.participation = copyData.participation;
-	/** @type {string} */
+	/** @type {EntityNote} */
 	this.note = copyData.note;
 	/** @type {object} */
 	this.name = copyData.name;
@@ -6115,29 +6261,32 @@ function Place (copyData) {
 	this.classConcept = copyData.classConcept;
 	}
 }  // Place 
-// SanteDB.Core.Model.Entities.PlaceService, SanteDB.Core.Model, Version=2.0.59.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Entities.PlaceService, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
 //if(!PlaceService)
 /**
  * @class
  * @constructor
  * @public
  * @extends VersionedAssociation
- * @summary             Represents a service for a place            
- * @property {Concept} serviceConceptModel [Delay loaded from serviceConcept],             Gets or sets the service concept            
- * @property {string} serviceConcept            Gets or sets the service concept key            
- * @property {Object} serviceSchedule            The schedule that the service is offered            
+ * @summary Represents a service for a place
+ * @property {Concept} serviceConceptModel [Delay loaded from serviceConcept],  Gets or sets the service concept
+ * @property {string} serviceConcept Gets or sets the service concept key
+ * @property {string} serviceSchedule The schedule that the service is offered
  * @property {number} effectiveVersionSequence
  * @property {number} obsoleteVersionSequence
  * @property {Date} modifiedOn
  * @property {string} source
  * @property {Entity} sourceModel [Delay loaded from source], 
- * @property {string} id            Gets or sets the primary identifying UUID of this object            
- * @property {string} $type            Gets the type registration of this object            
+ * @property {string} id Gets or sets the primary identifying UUID of this object
+ * @property {BatchOperationType} operation Gets or sets the operation(see: {@link BatchOperationType} for values)
+ * @property {string} $type Gets the type registration of this object
  * @param {PlaceService} copyData Copy constructor (if present)
  */
 function PlaceService (copyData) { 
 	this.$type = 'PlaceService';
 	if(copyData) {
+	/** @type {BatchOperationType} */
+	this.operation = copyData.operation;
 	/** @type {string} */
 	this.id = copyData.id;
 	/** @type {Entity} */
@@ -6150,7 +6299,7 @@ function PlaceService (copyData) {
 	this.obsoleteVersionSequence = copyData.obsoleteVersionSequence;
 	/** @type {number} */
 	this.effectiveVersionSequence = copyData.effectiveVersionSequence;
-	/** @type {Object} */
+	/** @type {string} */
 	this.serviceSchedule = copyData.serviceSchedule;
 	/** @type {string} */
 	this.serviceConcept = copyData.serviceConcept;
@@ -6158,21 +6307,25 @@ function PlaceService (copyData) {
 	this.serviceConceptModel = copyData.serviceConceptModel;
 	}
 }  // PlaceService 
-// SanteDB.Core.Model.Entities.UserEntity, SanteDB.Core.Model, Version=2.0.59.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Entities.UserEntity, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
 //if(!UserEntity)
 /**
  * @class
  * @constructor
  * @public
- * @summary             Represents a user entity            
- * @property {SecurityUser} securityUserModel [Delay loaded from securityUser],             Gets or sets the security user key            
- * @property {string} securityUser            Gets or sets the security user key            
- * @property {DatePrecision} dateOfBirthPrecision            Gets or sets the precision ofthe date of birth            (see: {@link DatePrecision} for values)
- * @property {string} dateOfBirth            Gets the date of birth as XML            
- * @property {PersonLanguageCommunication} language            Gets the person's languages of communication            
- * @property {string} occupation            Gets or sets the religious affiliation            
- * @property {Concept} occupationModel [Delay loaded from occupation],             Gets or sets the marital status code            
- * @property {object} address            Gets a list of all addresses associated with the entity            
+ * @summary Represents a user entity
+ * @description A UserEntity is used to represent a user which is not a provider nor a patient which
+            may use the system - a person with whom a user is associated
+ * @property {SecurityUser} securityUserModel [Delay loaded from securityUser],  Gets or sets the security user key
+ * @property {string} securityUser Gets or sets the security user key
+ * @property {DatePrecision} dateOfBirthPrecision Gets or sets the precision ofthe date of birth(see: {@link DatePrecision} for values)
+ * @property {string} genderConcept Gets or sets the gender concept key
+ * @property {Concept} genderConceptModel [Delay loaded from genderConcept],  Gets or sets the gender concept
+ * @property {string} dateOfBirth Gets the date of birth as XML
+ * @property {PersonLanguageCommunication} language Gets the person's languages of communication
+ * @property {string} occupation Gets or sets the religious affiliation
+ * @property {Concept} occupationModel [Delay loaded from occupation],  Gets or sets the marital status code
+ * @property {object} address Gets a list of all addresses associated with the entity
  * @property {EntityAddress} address.Alphabetic             Represents an alphabetic address used for matching             
  * @property {EntityAddress} address.BadAddress             Represents a bad address, i.e. an address which is old or invalid.            
  * @property {EntityAddress} address.Direct             Represents a workplace address that reaches the person directly without intermediaries.            
@@ -6189,17 +6342,17 @@ function PlaceService (copyData) {
  * @property {EntityAddress} address.VacationHome             Represents a vacation home to reach a person while on vacation.            
  * @property {EntityAddress} address.WorkPlace             Represents an office address, should be used for business communications            
  * @property {EntityAddress} address.$other Unclassified
- * @property {Concept} classConceptModel [Delay loaded from classConcept],             Class concept datal load property            
- * @property {string} classConcept            Class concept            (see: {@link EntityClassKeys} for values)
- * @property {Act} creationActModel [Delay loaded from creationAct],             Creation act reference            
- * @property {string} creationAct            Creation act reference            
- * @property {Concept} determinerConceptModel [Delay loaded from determinerConcept],             Determiner concept            
- * @property {string} determinerConcept            Determiner concept            (see: {@link DeterminerKeys} for values)
- * @property {object} extension            Gets a list of all extensions associated with the entity            
+ * @property {Concept} classConceptModel [Delay loaded from classConcept],  Class concept datal load property
+ * @property {string} classConcept Class concept(see: {@link EntityClassKeys} for values)
+ * @property {Act} creationActModel [Delay loaded from creationAct],  Creation act reference
+ * @property {string} creationAct Creation act reference
+ * @property {Concept} determinerConceptModel [Delay loaded from determinerConcept],  Determiner concept
+ * @property {string} determinerConcept Determiner concept(see: {@link DeterminerKeys} for values)
+ * @property {object} extension Gets a list of all extensions associated with the entity
  * @property {string} extension.classifier  where classifier is from {@link Extension} extensionType
- * @property {object} identifier            Gets the identifiers associated with this entity            
+ * @property {object} identifier Gets the identifiers associated with this entity
  * @property {EntityIdentifier} identifier.classifier  where classifier is from {@link IdentifierBase} authority
- * @property {object} name            Gets a list of all names associated with the entity            
+ * @property {object} name Gets a list of all names associated with the entity
  * @property {EntityName} name.Alphabetic             The name used is an alphabetic representation of the name (ex: romaji in Japanese)            
  * @property {EntityName} name.Anonymous             The name is an anonymous name for the object (not the real name but a name used for care delivery)            
  * @property {EntityName} name.Artist             The name represents an artist name or stage name            
@@ -6217,8 +6370,8 @@ function PlaceService (copyData) {
  * @property {EntityName} name.Soundex             The name represents the computed soundex code of a name            
  * @property {EntityName} name.Syllabic             The name represents a syllabic name.            
  * @property {EntityName} name.$other Unclassified
- * @property {string} note            Gets a list of all notes associated with the entity            
- * @property {object} participation            Gets the acts in which this entity participates            
+ * @property {EntityNote} note Gets a list of all notes associated with the entity
+ * @property {object} participation Gets the acts in which this entity participates
  * @property {ActParticipation} participation.Admitter             The player entity was the person who was responsible for admitting the patient into a facility or care scenario.            
  * @property {ActParticipation} participation.Attender             The player entity represents the attending physician for the patient            
  * @property {ActParticipation} participation.Authenticator             The player entity represents an entity which authenticates the provision of care            
@@ -6276,7 +6429,7 @@ function PlaceService (copyData) {
  * @property {ActParticipation} participation.Via             The player entity represents an entity where the act occurred "via" this entity (i.e. in transport)            
  * @property {ActParticipation} participation.Witness             The player entity represents a legal witness to the act occurring.            
  * @property {ActParticipation} participation.$other Unclassified
- * @property {object} relationship            Gets a list of all associated entities for this entity            
+ * @property {object} relationship Gets a list of all associated entities for this entity
  * @property {EntityRelationship} relationship.Access             The source entity gives access to the target entity            
  * @property {EntityRelationship} relationship.ActiveMoiety             Active ingredient, where not the ingredient substance (player), but itaTMs active moiety is the "basis of strength"            
  * @property {EntityRelationship} relationship.AdministerableMaterial             The source represents a meterial that is an administerable form of the target            
@@ -6432,12 +6585,14 @@ function PlaceService (copyData) {
  * @property {EntityRelationship} relationship.Instance             The target entity represents an instance of the scoper entity            
  * @property {EntityRelationship} relationship.LocatedEntity             Relates the target entity to a source location            
  * @property {EntityRelationship} relationship.Duplicate             Duplicate entity            
+ * @property {EntityRelationship} relationship.Scoper             Duplicate entity            
+ * @property {EntityRelationship} relationship.EquivalentEntity             Referenced entities            
  * @property {EntityRelationship} relationship.$other Unclassified
- * @property {Concept} statusConceptModel [Delay loaded from statusConcept],             Status concept id            
- * @property {string} statusConcept            Status concept id            (see: {@link StatusKeys} for values)
- * @property {object} tag            Gets a list of all tags associated with the entity            
+ * @property {Concept} statusConceptModel [Delay loaded from statusConcept],  Status concept id
+ * @property {string} statusConcept Status concept id(see: {@link StatusKeys} for values)
+ * @property {object} tag Gets a list of all tags associated with the entity
  * @property {string} tag.classifier  where classifier is from {@link Tag} key
- * @property {object} telecom            Gets a list of all telecommunications addresses associated with the entity            
+ * @property {object} telecom Gets a list of all telecommunications addresses associated with the entity
  * @property {EntityTelecomAddress} telecom.AnsweringService             answering service            
  * @property {EntityTelecomAddress} telecom.EmergencyContact             Emergency contact            
  * @property {EntityTelecomAddress} telecom.MobileContact             Mobile phone contact            
@@ -6446,30 +6601,33 @@ function PlaceService (copyData) {
  * @property {EntityTelecomAddress} telecom.TemporaryAddress             temporary contact            
  * @property {EntityTelecomAddress} telecom.WorkPlace             For use in the workplace            
  * @property {EntityTelecomAddress} telecom.$other Unclassified
- * @property {string} template            Gets the template key            
- * @property {TemplateDefinition} templateModel [Delay loaded from template],             Gets or sets the template definition            
- * @property {Concept} typeConceptModel [Delay loaded from typeConcept],             Type concept identifier            
- * @property {string} typeConcept            Type concept identifier            
- * @property {SecurityPolicyInstance} policy            Gets or sets the security policy instances associated with the entity            
+ * @property {string} template Gets the template key
+ * @property {TemplateDefinition} templateModel [Delay loaded from template],  Gets or sets the template definition
+ * @property {Concept} typeConceptModel [Delay loaded from typeConcept],  Type concept identifier
+ * @property {string} typeConcept Type concept identifier
+ * @property {SecurityPolicyInstance} policy Gets or sets the security policy instances associated with the entity
  * @property {string} previousVersion
  * @property {string} version
  * @property {number} sequence
- * @property {Date} creationTimeModel [Delay loaded from creationTime],             Gets or sets the time at which the data was created            
- * @property {Date} creationTime            Gets or sets the creation time as an ISO date format            
- * @property {Date} obsoletionTimeModel [Delay loaded from obsoletionTime],             Gets or sets the time when the data is or will become invalid            
- * @property {Date} obsoletionTime            Gets or sets the time that the data is no longer valid (was deleted/obsoleted) in ISO format            
- * @property {SecurityProvenance} createdByModel [Delay loaded from createdBy],             Gets or sets the user that created this base data            
- * @property {Date} modifiedOn            Gets the time that the object was last modified (from base data, default to CreationTime)            
- * @property {SecurityProvenance} obsoletedByModel [Delay loaded from obsoletedBy],             Gets or sets the user that obsoleted this base data            
- * @property {string} createdBy            Gets or sets the security provenance object which represents the creation of this object            
- * @property {string} obsoletedBy            Gets or sets the security provenance object which represents the obsoletion of this data            
- * @property {string} id            Gets or sets the primary identifying UUID of this object            
- * @property {string} $type            Gets the type registration of this object            
+ * @property {Date} creationTimeModel [Delay loaded from creationTime],  Gets or sets the time at which the data was created
+ * @property {Date} creationTime Gets or sets the creation time as an ISO date format
+ * @property {Date} obsoletionTimeModel [Delay loaded from obsoletionTime],  Gets or sets the time when the data is or will become invalid
+ * @property {Date} obsoletionTime Gets or sets the time that the data is no longer valid (was deleted/obsoleted) in ISO format
+ * @property {SecurityProvenance} createdByModel [Delay loaded from createdBy],  Gets or sets the user that created this base data
+ * @property {Date} modifiedOn Gets the time that the object was last modified (from base data, default to CreationTime)
+ * @property {SecurityProvenance} obsoletedByModel [Delay loaded from obsoletedBy],  Gets or sets the user that obsoleted this base data
+ * @property {string} createdBy Gets or sets the security provenance object which represents the creation of this object
+ * @property {string} obsoletedBy Gets or sets the security provenance object which represents the obsoletion of this data
+ * @property {string} id Gets or sets the primary identifying UUID of this object
+ * @property {BatchOperationType} operation Gets or sets the operation(see: {@link BatchOperationType} for values)
+ * @property {string} $type Gets the type registration of this object
  * @param {UserEntity} copyData Copy constructor (if present)
  */
 function UserEntity (copyData) { 
 	this.$type = 'UserEntity';
 	if(copyData) {
+	/** @type {BatchOperationType} */
+	this.operation = copyData.operation;
 	/** @type {string} */
 	this.id = copyData.id;
 	/** @type {string} */
@@ -6518,7 +6676,7 @@ function UserEntity (copyData) {
 	this.relationship = copyData.relationship;
 	/** @type {object} */
 	this.participation = copyData.participation;
-	/** @type {string} */
+	/** @type {EntityNote} */
 	this.note = copyData.note;
 	/** @type {object} */
 	this.name = copyData.name;
@@ -6548,6 +6706,10 @@ function UserEntity (copyData) {
 	this.language = copyData.language;
 	/** @type {string} */
 	this.dateOfBirth = copyData.dateOfBirth;
+	/** @type {Concept} */
+	this.genderConceptModel = copyData.genderConceptModel;
+	/** @type {string} */
+	this.genderConcept = copyData.genderConcept;
 	/** @type {DatePrecision} */
 	this.dateOfBirthPrecision = copyData.dateOfBirthPrecision;
 	/** @type {string} */
@@ -6556,47 +6718,50 @@ function UserEntity (copyData) {
 	this.securityUserModel = copyData.securityUserModel;
 	}
 }  // UserEntity 
-// SanteDB.Core.Model.DataTypes.AssigningAuthority, SanteDB.Core.Model, Version=2.0.59.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.DataTypes.AssigningAuthority, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
 //if(!AssigningAuthority)
 /**
  * @class
  * @constructor
  * @public
- * @summary             Represents a model class which is an assigning authority            
- * @property {string} name            Gets or sets the name of the assigning authority            
- * @property {string} domainName            Gets or sets the domain name of the assigning authority            
- * @property {string} description            Gets or sets the description of the assigning authority            
- * @property {string} oid            Gets or sets the oid of the assigning authority            
- * @property {string} url            The URL of the assigning authority            
- * @property {string} scope            Represents scopes to which the authority is bound            
- * @property {string} assigningApplication            Assigning device identifier            
- * @property {string} policyModel [Delay loaded from policy],             Gets or sets the policy             
- * @property {string} policy            Gets or sets the policy key associated with this assigning authority for disclosure            
- * @property {string} validation            Gets or sets the validation regex            
- * @property {boolean} isUnique            True if the assigning authority values should be unique            
- * @property {string} customValidator            Gets or sets the IIdentifierValidator instance to use for this solution             
- * @property {SecurityApplication} assigningApplicationModel [Delay loaded from assigningApplication],             Gets or sets the assigning device            
- * @property {object} scopeModel [Delay loaded from scope],             Gets concept sets to which this concept is a member            
+ * @summary Represents a model class which is an assigning authority
+ * @property {string} name Gets or sets the name of the assigning authority
+ * @property {string} domainName Gets or sets the domain name of the assigning authority
+ * @property {string} description Gets or sets the description of the assigning authority
+ * @property {string} oid Gets or sets the oid of the assigning authority
+ * @property {string} url The URL of the assigning authority
+ * @property {string} scope Represents scopes to which the authority is bound
+ * @property {string} assigningApplication Assigning device identifier
+ * @property {string} policyModel [Delay loaded from policy],  Gets or sets the policy
+ * @property {string} policy Gets or sets the policy key associated with this assigning authority for disclosure
+ * @property {string} validation Gets or sets the validation regex
+ * @property {boolean} isUnique True if the assigning authority values should be unique
+ * @property {string} customValidator Gets or sets the IIdentifierValidator instance to use for this solution
+ * @property {SecurityApplication} assigningApplicationModel [Delay loaded from assigningApplication],  Gets or sets the assigning device
+ * @property {object} scopeModel [Delay loaded from scope],  Gets concept sets to which this concept is a member
  * @property {Concept} scope.classifier  where classifier is from {@link Concept} mnemonic
- * @property {Date} updatedTime            Gets or sets the time that this object was last modified in ISO format            
- * @property {Date} modifiedOn            Gets the time this item was modified            
- * @property {SecurityProvenance} updatedByModel [Delay loaded from updatedBy],             Gets or sets the user that updated this base data            
- * @property {string} updatedBy            Gets or sets the provenance identifier associated with the last update of this object            
- * @property {Date} creationTimeModel [Delay loaded from creationTime],             Gets or sets the time at which the data was created            
- * @property {Date} creationTime            Gets or sets the creation time as an ISO date format            
- * @property {Date} obsoletionTimeModel [Delay loaded from obsoletionTime],             Gets or sets the time when the data is or will become invalid            
- * @property {Date} obsoletionTime            Gets or sets the time that the data is no longer valid (was deleted/obsoleted) in ISO format            
- * @property {SecurityProvenance} createdByModel [Delay loaded from createdBy],             Gets or sets the user that created this base data            
- * @property {SecurityProvenance} obsoletedByModel [Delay loaded from obsoletedBy],             Gets or sets the user that obsoleted this base data            
- * @property {string} createdBy            Gets or sets the security provenance object which represents the creation of this object            
- * @property {string} obsoletedBy            Gets or sets the security provenance object which represents the obsoletion of this data            
- * @property {string} id            Gets or sets the primary identifying UUID of this object            
- * @property {string} $type            Gets the type registration of this object            
+ * @property {Date} updatedTime Gets or sets the time that this object was last modified in ISO format
+ * @property {Date} modifiedOn Gets the time this item was modified
+ * @property {SecurityProvenance} updatedByModel [Delay loaded from updatedBy],  Gets or sets the user that updated this base data
+ * @property {string} updatedBy Gets or sets the provenance identifier associated with the last update of this object
+ * @property {Date} creationTimeModel [Delay loaded from creationTime],  Gets or sets the time at which the data was created
+ * @property {Date} creationTime Gets or sets the creation time as an ISO date format
+ * @property {Date} obsoletionTimeModel [Delay loaded from obsoletionTime],  Gets or sets the time when the data is or will become invalid
+ * @property {Date} obsoletionTime Gets or sets the time that the data is no longer valid (was deleted/obsoleted) in ISO format
+ * @property {SecurityProvenance} createdByModel [Delay loaded from createdBy],  Gets or sets the user that created this base data
+ * @property {SecurityProvenance} obsoletedByModel [Delay loaded from obsoletedBy],  Gets or sets the user that obsoleted this base data
+ * @property {string} createdBy Gets or sets the security provenance object which represents the creation of this object
+ * @property {string} obsoletedBy Gets or sets the security provenance object which represents the obsoletion of this data
+ * @property {string} id Gets or sets the primary identifying UUID of this object
+ * @property {BatchOperationType} operation Gets or sets the operation(see: {@link BatchOperationType} for values)
+ * @property {string} $type Gets the type registration of this object
  * @param {AssigningAuthority} copyData Copy constructor (if present)
  */
 function AssigningAuthority (copyData) { 
 	this.$type = 'AssigningAuthority';
 	if(copyData) {
+	/** @type {BatchOperationType} */
+	this.operation = copyData.operation;
 	/** @type {string} */
 	this.id = copyData.id;
 	/** @type {string} */
@@ -6653,39 +6818,42 @@ function AssigningAuthority (copyData) {
 	this.name = copyData.name;
 	}
 }  // AssigningAuthority 
-// SanteDB.Core.Model.DataTypes.CodeSystem, SanteDB.Core.Model, Version=2.0.59.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.DataTypes.CodeSystem, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
 //if(!CodeSystem)
 /**
  * @class
  * @constructor
  * @public
- * @summary             Represents a code system which is a collection of reference terms            
- * @property {string} name            Gets or sets the name of the code system            
- * @property {string} oid            Gets or sets the Oid of the code system            
- * @property {string} authority            Gets or sets the authority of the code system            
- * @property {string} obsoletionReason            Gets or sets the obsoletion reason of the code system            
- * @property {string} url            Gets or sets the URL of the code system            
- * @property {string} version            Gets or sets the version text of the code system            
- * @property {string} description            Gets or sets the human description            
- * @property {Date} updatedTime            Gets or sets the time that this object was last modified in ISO format            
- * @property {Date} modifiedOn            Gets the time this item was modified            
- * @property {SecurityProvenance} updatedByModel [Delay loaded from updatedBy],             Gets or sets the user that updated this base data            
- * @property {string} updatedBy            Gets or sets the provenance identifier associated with the last update of this object            
- * @property {Date} creationTimeModel [Delay loaded from creationTime],             Gets or sets the time at which the data was created            
- * @property {Date} creationTime            Gets or sets the creation time as an ISO date format            
- * @property {Date} obsoletionTimeModel [Delay loaded from obsoletionTime],             Gets or sets the time when the data is or will become invalid            
- * @property {Date} obsoletionTime            Gets or sets the time that the data is no longer valid (was deleted/obsoleted) in ISO format            
- * @property {SecurityProvenance} createdByModel [Delay loaded from createdBy],             Gets or sets the user that created this base data            
- * @property {SecurityProvenance} obsoletedByModel [Delay loaded from obsoletedBy],             Gets or sets the user that obsoleted this base data            
- * @property {string} createdBy            Gets or sets the security provenance object which represents the creation of this object            
- * @property {string} obsoletedBy            Gets or sets the security provenance object which represents the obsoletion of this data            
- * @property {string} id            Gets or sets the primary identifying UUID of this object            
- * @property {string} $type            Gets the type registration of this object            
+ * @summary Represents a code system which is a collection of reference terms
+ * @property {string} name Gets or sets the name of the code system
+ * @property {string} oid Gets or sets the Oid of the code system
+ * @property {string} authority Gets or sets the authority of the code system
+ * @property {string} obsoletionReason Gets or sets the obsoletion reason of the code system
+ * @property {string} url Gets or sets the URL of the code system
+ * @property {string} version Gets or sets the version text of the code system
+ * @property {string} description Gets or sets the human description
+ * @property {Date} updatedTime Gets or sets the time that this object was last modified in ISO format
+ * @property {Date} modifiedOn Gets the time this item was modified
+ * @property {SecurityProvenance} updatedByModel [Delay loaded from updatedBy],  Gets or sets the user that updated this base data
+ * @property {string} updatedBy Gets or sets the provenance identifier associated with the last update of this object
+ * @property {Date} creationTimeModel [Delay loaded from creationTime],  Gets or sets the time at which the data was created
+ * @property {Date} creationTime Gets or sets the creation time as an ISO date format
+ * @property {Date} obsoletionTimeModel [Delay loaded from obsoletionTime],  Gets or sets the time when the data is or will become invalid
+ * @property {Date} obsoletionTime Gets or sets the time that the data is no longer valid (was deleted/obsoleted) in ISO format
+ * @property {SecurityProvenance} createdByModel [Delay loaded from createdBy],  Gets or sets the user that created this base data
+ * @property {SecurityProvenance} obsoletedByModel [Delay loaded from obsoletedBy],  Gets or sets the user that obsoleted this base data
+ * @property {string} createdBy Gets or sets the security provenance object which represents the creation of this object
+ * @property {string} obsoletedBy Gets or sets the security provenance object which represents the obsoletion of this data
+ * @property {string} id Gets or sets the primary identifying UUID of this object
+ * @property {BatchOperationType} operation Gets or sets the operation(see: {@link BatchOperationType} for values)
+ * @property {string} $type Gets the type registration of this object
  * @param {CodeSystem} copyData Copy constructor (if present)
  */
 function CodeSystem (copyData) { 
 	this.$type = 'CodeSystem';
 	if(copyData) {
+	/** @type {BatchOperationType} */
+	this.operation = copyData.operation;
 	/** @type {string} */
 	this.id = copyData.id;
 	/** @type {string} */
@@ -6728,52 +6896,57 @@ function CodeSystem (copyData) {
 	this.name = copyData.name;
 	}
 }  // CodeSystem 
-// SanteDB.Core.Model.DataTypes.Concept, SanteDB.Core.Model, Version=2.0.59.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.DataTypes.Concept, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
 //if(!Concept)
 /**
  * @class
  * @constructor
  * @public
  * @extends VersionedEntityData
- * @summary             A class representing a generic concept used in the SanteDB datamodel            
- * @property {boolean} isReadonly            Gets or sets an indicator which dictates whether the concept is a system concept            
- * @property {string} mnemonic            Gets or sets the unchanging mnemonic for the concept            
- * @property {string} statusConcept            Gets or sets the status concept key            (see: {@link StatusKeys} for values)
- * @property {Concept} statusConceptModel [Delay loaded from statusConcept],             Gets or sets the status of the concept            
- * @property {object} relationship            Gets a list of concept relationships            
+ * @summary A class representing a generic concept used in the SanteDB datamodel
+ * @property {boolean} isReadonly Gets or sets an indicator which dictates whether the concept is a system concept
+ * @property {string} mnemonic Gets or sets the unchanging mnemonic for the concept
+ * @property {string} statusConcept Gets or sets the status concept key(see: {@link StatusKeys} for values)
+ * @property {Concept} statusConceptModel [Delay loaded from statusConcept],  Gets or sets the status of the concept
+ * @property {object} relationship Gets a list of concept relationships
  * @property {ConceptRelationship} relationship.InverseOf             The source concept has the inverse meaning of the target concept            
  * @property {ConceptRelationship} relationship.MemberOf             The source concept is a member of the target concept            
  * @property {ConceptRelationship} relationship.NegationOf             The source concept is a negation of the target concept            
  * @property {ConceptRelationship} relationship.SameAs             The source concept has the same meaning as the target concept            
+ * @property {ConceptRelationship} relationship.NarrowerThan             The source concept is narrower in meaning than the target            
+ * @property {ConceptRelationship} relationship.WiderThan             The source concept is wider in meaning than the target            
  * @property {ConceptRelationship} relationship.$other Unclassified
- * @property {string} conceptClass            Gets or sets the class identifier            (see: {@link ConceptClassKeys} for values)
- * @property {ConceptClass} conceptClassModel [Delay loaded from conceptClass],             Gets or sets the classification of the concept            
- * @property {object} referenceTerm            Gets a list of concept reference terms            
+ * @property {string} conceptClass Gets or sets the class identifier(see: {@link ConceptClassKeys} for values)
+ * @property {ConceptClass} conceptClassModel [Delay loaded from conceptClass],  Gets or sets the classification of the concept
+ * @property {object} referenceTerm Gets a list of concept reference terms
  * @property {ConceptReferenceTerm} referenceTerm.classifier  where classifier is from {@link ConceptReferenceTerm} term
- * @property {object} name            Gets the concept names            
+ * @property {object} name Gets the concept names
  * @property {string} name.classifier  where classifier is from {@link ConceptName} language
- * @property {string} conceptSet            Concept sets as identifiers for XML purposes only            
- * @property {object} conceptSetModel [Delay loaded from conceptSet],             Gets concept sets to which this concept is a member            
+ * @property {string} conceptSet Concept sets as identifiers for XML purposes only
+ * @property {object} conceptSetModel [Delay loaded from conceptSet],  Gets concept sets to which this concept is a member
  * @property {ConceptSet} conceptSet.classifier  where classifier is from {@link ConceptSet} mnemonic
  * @property {string} previousVersion
  * @property {string} version
  * @property {number} sequence
- * @property {Date} creationTimeModel [Delay loaded from creationTime],             Gets or sets the time at which the data was created            
- * @property {Date} creationTime            Gets or sets the creation time as an ISO date format            
- * @property {Date} obsoletionTimeModel [Delay loaded from obsoletionTime],             Gets or sets the time when the data is or will become invalid            
- * @property {Date} obsoletionTime            Gets or sets the time that the data is no longer valid (was deleted/obsoleted) in ISO format            
- * @property {SecurityProvenance} createdByModel [Delay loaded from createdBy],             Gets or sets the user that created this base data            
- * @property {Date} modifiedOn            Gets the time that the object was last modified (from base data, default to CreationTime)            
- * @property {SecurityProvenance} obsoletedByModel [Delay loaded from obsoletedBy],             Gets or sets the user that obsoleted this base data            
- * @property {string} createdBy            Gets or sets the security provenance object which represents the creation of this object            
- * @property {string} obsoletedBy            Gets or sets the security provenance object which represents the obsoletion of this data            
- * @property {string} id            Gets or sets the primary identifying UUID of this object            
- * @property {string} $type            Gets the type registration of this object            
+ * @property {Date} creationTimeModel [Delay loaded from creationTime],  Gets or sets the time at which the data was created
+ * @property {Date} creationTime Gets or sets the creation time as an ISO date format
+ * @property {Date} obsoletionTimeModel [Delay loaded from obsoletionTime],  Gets or sets the time when the data is or will become invalid
+ * @property {Date} obsoletionTime Gets or sets the time that the data is no longer valid (was deleted/obsoleted) in ISO format
+ * @property {SecurityProvenance} createdByModel [Delay loaded from createdBy],  Gets or sets the user that created this base data
+ * @property {Date} modifiedOn Gets the time that the object was last modified (from base data, default to CreationTime)
+ * @property {SecurityProvenance} obsoletedByModel [Delay loaded from obsoletedBy],  Gets or sets the user that obsoleted this base data
+ * @property {string} createdBy Gets or sets the security provenance object which represents the creation of this object
+ * @property {string} obsoletedBy Gets or sets the security provenance object which represents the obsoletion of this data
+ * @property {string} id Gets or sets the primary identifying UUID of this object
+ * @property {BatchOperationType} operation Gets or sets the operation(see: {@link BatchOperationType} for values)
+ * @property {string} $type Gets the type registration of this object
  * @param {Concept} copyData Copy constructor (if present)
  */
 function Concept (copyData) { 
 	this.$type = 'Concept';
 	if(copyData) {
+	/** @type {BatchOperationType} */
+	this.operation = copyData.operation;
 	/** @type {string} */
 	this.id = copyData.id;
 	/** @type {string} */
@@ -6824,34 +6997,37 @@ function Concept (copyData) {
 	this.isReadonly = copyData.isReadonly;
 	}
 }  // Concept 
-// SanteDB.Core.Model.DataTypes.ConceptClass, SanteDB.Core.Model, Version=2.0.59.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.DataTypes.ConceptClass, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
 //if(!ConceptClass)
 /**
  * @class
  * @constructor
  * @public
- * @summary             Identifies a classification for a concept            
- * @property {string} name            Gets or sets the name of the concept class            
- * @property {string} mnemonic            Gets or sets the mnemonic            
- * @property {Date} updatedTime            Gets or sets the time that this object was last modified in ISO format            
- * @property {Date} modifiedOn            Gets the time this item was modified            
- * @property {SecurityProvenance} updatedByModel [Delay loaded from updatedBy],             Gets or sets the user that updated this base data            
- * @property {string} updatedBy            Gets or sets the provenance identifier associated with the last update of this object            
- * @property {Date} creationTimeModel [Delay loaded from creationTime],             Gets or sets the time at which the data was created            
- * @property {Date} creationTime            Gets or sets the creation time as an ISO date format            
- * @property {Date} obsoletionTimeModel [Delay loaded from obsoletionTime],             Gets or sets the time when the data is or will become invalid            
- * @property {Date} obsoletionTime            Gets or sets the time that the data is no longer valid (was deleted/obsoleted) in ISO format            
- * @property {SecurityProvenance} createdByModel [Delay loaded from createdBy],             Gets or sets the user that created this base data            
- * @property {SecurityProvenance} obsoletedByModel [Delay loaded from obsoletedBy],             Gets or sets the user that obsoleted this base data            
- * @property {string} createdBy            Gets or sets the security provenance object which represents the creation of this object            
- * @property {string} obsoletedBy            Gets or sets the security provenance object which represents the obsoletion of this data            
- * @property {string} id            Gets or sets the primary identifying UUID of this object            
- * @property {string} $type            Gets the type registration of this object            
+ * @summary Identifies a classification for a concept
+ * @property {string} name Gets or sets the name of the concept class
+ * @property {string} mnemonic Gets or sets the mnemonic
+ * @property {Date} updatedTime Gets or sets the time that this object was last modified in ISO format
+ * @property {Date} modifiedOn Gets the time this item was modified
+ * @property {SecurityProvenance} updatedByModel [Delay loaded from updatedBy],  Gets or sets the user that updated this base data
+ * @property {string} updatedBy Gets or sets the provenance identifier associated with the last update of this object
+ * @property {Date} creationTimeModel [Delay loaded from creationTime],  Gets or sets the time at which the data was created
+ * @property {Date} creationTime Gets or sets the creation time as an ISO date format
+ * @property {Date} obsoletionTimeModel [Delay loaded from obsoletionTime],  Gets or sets the time when the data is or will become invalid
+ * @property {Date} obsoletionTime Gets or sets the time that the data is no longer valid (was deleted/obsoleted) in ISO format
+ * @property {SecurityProvenance} createdByModel [Delay loaded from createdBy],  Gets or sets the user that created this base data
+ * @property {SecurityProvenance} obsoletedByModel [Delay loaded from obsoletedBy],  Gets or sets the user that obsoleted this base data
+ * @property {string} createdBy Gets or sets the security provenance object which represents the creation of this object
+ * @property {string} obsoletedBy Gets or sets the security provenance object which represents the obsoletion of this data
+ * @property {string} id Gets or sets the primary identifying UUID of this object
+ * @property {BatchOperationType} operation Gets or sets the operation(see: {@link BatchOperationType} for values)
+ * @property {string} $type Gets the type registration of this object
  * @param {ConceptClass} copyData Copy constructor (if present)
  */
 function ConceptClass (copyData) { 
 	this.$type = 'ConceptClass';
 	if(copyData) {
+	/** @type {BatchOperationType} */
+	this.operation = copyData.operation;
 	/** @type {string} */
 	this.id = copyData.id;
 	/** @type {string} */
@@ -6884,28 +7060,31 @@ function ConceptClass (copyData) {
 	this.name = copyData.name;
 	}
 }  // ConceptClass 
-// SanteDB.Core.Model.DataTypes.ConceptName, SanteDB.Core.Model, Version=2.0.59.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.DataTypes.ConceptName, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
 //if(!ConceptName)
 /**
  * @class
  * @constructor
  * @public
  * @extends VersionedAssociation
- * @summary             Represents a name (human name) that a concept may have            
- * @property {string} language            Gets or sets the language code of the object            
- * @property {string} value            Gets or sets the name of the reference term            
+ * @summary Represents a name (human name) that a concept may have
+ * @property {string} language Gets or sets the language code of the object
+ * @property {string} value Gets or sets the name of the reference term
  * @property {number} effectiveVersionSequence
  * @property {number} obsoleteVersionSequence
  * @property {Date} modifiedOn
  * @property {string} source
  * @property {Concept} sourceModel [Delay loaded from source], 
- * @property {string} id            Gets or sets the primary identifying UUID of this object            
- * @property {string} $type            Gets the type registration of this object            
+ * @property {string} id Gets or sets the primary identifying UUID of this object
+ * @property {BatchOperationType} operation Gets or sets the operation(see: {@link BatchOperationType} for values)
+ * @property {string} $type Gets the type registration of this object
  * @param {ConceptName} copyData Copy constructor (if present)
  */
 function ConceptName (copyData) { 
 	this.$type = 'ConceptName';
 	if(copyData) {
+	/** @type {BatchOperationType} */
+	this.operation = copyData.operation;
 	/** @type {string} */
 	this.id = copyData.id;
 	/** @type {Concept} */
@@ -6924,30 +7103,33 @@ function ConceptName (copyData) {
 	this.language = copyData.language;
 	}
 }  // ConceptName 
-// SanteDB.Core.Model.DataTypes.ConceptReferenceTerm, SanteDB.Core.Model, Version=2.0.59.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.DataTypes.ConceptReferenceTerm, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
 //if(!ConceptReferenceTerm)
 /**
  * @class
  * @constructor
  * @public
  * @extends VersionedAssociation
- * @summary             Represents a reference term relationship between a concept and reference term            
- * @property {string} term            Gets or sets the reference term identifier            
- * @property {ReferenceTerm} termModel [Delay loaded from term],             Gets or set the reference term            
- * @property {string} relationshipType            Gets or sets the relationship type identifier            
- * @property {ConceptRelationshipType} relationshipTypeModel [Delay loaded from relationshipType],             Gets or sets the relationship type            
+ * @summary Represents a reference term relationship between a concept and reference term
+ * @property {string} term Gets or sets the reference term identifier
+ * @property {ReferenceTerm} termModel [Delay loaded from term],  Gets or set the reference term
+ * @property {string} relationshipType Gets or sets the relationship type identifier
+ * @property {ConceptRelationshipType} relationshipTypeModel [Delay loaded from relationshipType],  Gets or sets the relationship type
  * @property {number} effectiveVersionSequence
  * @property {number} obsoleteVersionSequence
  * @property {Date} modifiedOn
  * @property {string} source
  * @property {Concept} sourceModel [Delay loaded from source], 
- * @property {string} id            Gets or sets the primary identifying UUID of this object            
- * @property {string} $type            Gets the type registration of this object            
+ * @property {string} id Gets or sets the primary identifying UUID of this object
+ * @property {BatchOperationType} operation Gets or sets the operation(see: {@link BatchOperationType} for values)
+ * @property {string} $type Gets the type registration of this object
  * @param {ConceptReferenceTerm} copyData Copy constructor (if present)
  */
 function ConceptReferenceTerm (copyData) { 
 	this.$type = 'ConceptReferenceTerm';
 	if(copyData) {
+	/** @type {BatchOperationType} */
+	this.operation = copyData.operation;
 	/** @type {string} */
 	this.id = copyData.id;
 	/** @type {Concept} */
@@ -6970,30 +7152,33 @@ function ConceptReferenceTerm (copyData) {
 	this.term = copyData.term;
 	}
 }  // ConceptReferenceTerm 
-// SanteDB.Core.Model.DataTypes.ConceptRelationship, SanteDB.Core.Model, Version=2.0.59.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.DataTypes.ConceptRelationship, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
 //if(!ConceptRelationship)
 /**
  * @class
  * @constructor
  * @public
  * @extends VersionedAssociation
- * @summary             Represents a relationship between two concepts            
- * @property {string} targetConcept            Gets or sets the target concept identifier            
- * @property {Concept} targetConceptModel [Delay loaded from targetConcept],             Gets or sets the target concept            
- * @property {string} relationshipType            Relationship type            (see: {@link ConceptRelationshipTypeKeys} for values)
- * @property {ConceptRelationshipType} relationshipTypeModel [Delay loaded from relationshipType],             Gets or sets the relationship type            
+ * @summary Represents a relationship between two concepts
+ * @property {string} targetConcept Gets or sets the target concept identifier
+ * @property {Concept} targetConceptModel [Delay loaded from targetConcept],  Gets or sets the target concept
+ * @property {string} relationshipType Relationship type(see: {@link ConceptRelationshipTypeKeys} for values)
+ * @property {ConceptRelationshipType} relationshipTypeModel [Delay loaded from relationshipType],  Gets or sets the relationship type
  * @property {number} effectiveVersionSequence
  * @property {number} obsoleteVersionSequence
  * @property {Date} modifiedOn
  * @property {string} source
  * @property {Concept} sourceModel [Delay loaded from source], 
- * @property {string} id            Gets or sets the primary identifying UUID of this object            
- * @property {string} $type            Gets the type registration of this object            
+ * @property {string} id Gets or sets the primary identifying UUID of this object
+ * @property {BatchOperationType} operation Gets or sets the operation(see: {@link BatchOperationType} for values)
+ * @property {string} $type Gets the type registration of this object
  * @param {ConceptRelationship} copyData Copy constructor (if present)
  */
 function ConceptRelationship (copyData) { 
 	this.$type = 'ConceptRelationship';
 	if(copyData) {
+	/** @type {BatchOperationType} */
+	this.operation = copyData.operation;
 	/** @type {string} */
 	this.id = copyData.id;
 	/** @type {Concept} */
@@ -7016,34 +7201,37 @@ function ConceptRelationship (copyData) {
 	this.targetConcept = copyData.targetConcept;
 	}
 }  // ConceptRelationship 
-// SanteDB.Core.Model.DataTypes.ConceptRelationshipType, SanteDB.Core.Model, Version=2.0.59.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.DataTypes.ConceptRelationshipType, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
 //if(!ConceptRelationshipType)
 /**
  * @class
  * @constructor
  * @public
- * @summary             Concept relationship type            
- * @property {string} name            Gets or sets the name of the relationship            
- * @property {string} mnemonic            The invariant of the relationship type            
- * @property {Date} updatedTime            Gets or sets the time that this object was last modified in ISO format            
- * @property {Date} modifiedOn            Gets the time this item was modified            
- * @property {SecurityProvenance} updatedByModel [Delay loaded from updatedBy],             Gets or sets the user that updated this base data            
- * @property {string} updatedBy            Gets or sets the provenance identifier associated with the last update of this object            
- * @property {Date} creationTimeModel [Delay loaded from creationTime],             Gets or sets the time at which the data was created            
- * @property {Date} creationTime            Gets or sets the creation time as an ISO date format            
- * @property {Date} obsoletionTimeModel [Delay loaded from obsoletionTime],             Gets or sets the time when the data is or will become invalid            
- * @property {Date} obsoletionTime            Gets or sets the time that the data is no longer valid (was deleted/obsoleted) in ISO format            
- * @property {SecurityProvenance} createdByModel [Delay loaded from createdBy],             Gets or sets the user that created this base data            
- * @property {SecurityProvenance} obsoletedByModel [Delay loaded from obsoletedBy],             Gets or sets the user that obsoleted this base data            
- * @property {string} createdBy            Gets or sets the security provenance object which represents the creation of this object            
- * @property {string} obsoletedBy            Gets or sets the security provenance object which represents the obsoletion of this data            
- * @property {string} id            Gets or sets the primary identifying UUID of this object            
- * @property {string} $type            Gets the type registration of this object            
+ * @summary Concept relationship type
+ * @property {string} name Gets or sets the name of the relationship
+ * @property {string} mnemonic The invariant of the relationship type
+ * @property {Date} updatedTime Gets or sets the time that this object was last modified in ISO format
+ * @property {Date} modifiedOn Gets the time this item was modified
+ * @property {SecurityProvenance} updatedByModel [Delay loaded from updatedBy],  Gets or sets the user that updated this base data
+ * @property {string} updatedBy Gets or sets the provenance identifier associated with the last update of this object
+ * @property {Date} creationTimeModel [Delay loaded from creationTime],  Gets or sets the time at which the data was created
+ * @property {Date} creationTime Gets or sets the creation time as an ISO date format
+ * @property {Date} obsoletionTimeModel [Delay loaded from obsoletionTime],  Gets or sets the time when the data is or will become invalid
+ * @property {Date} obsoletionTime Gets or sets the time that the data is no longer valid (was deleted/obsoleted) in ISO format
+ * @property {SecurityProvenance} createdByModel [Delay loaded from createdBy],  Gets or sets the user that created this base data
+ * @property {SecurityProvenance} obsoletedByModel [Delay loaded from obsoletedBy],  Gets or sets the user that obsoleted this base data
+ * @property {string} createdBy Gets or sets the security provenance object which represents the creation of this object
+ * @property {string} obsoletedBy Gets or sets the security provenance object which represents the obsoletion of this data
+ * @property {string} id Gets or sets the primary identifying UUID of this object
+ * @property {BatchOperationType} operation Gets or sets the operation(see: {@link BatchOperationType} for values)
+ * @property {string} $type Gets the type registration of this object
  * @param {ConceptRelationshipType} copyData Copy constructor (if present)
  */
 function ConceptRelationshipType (copyData) { 
 	this.$type = 'ConceptRelationshipType';
 	if(copyData) {
+	/** @type {BatchOperationType} */
+	this.operation = copyData.operation;
 	/** @type {string} */
 	this.id = copyData.id;
 	/** @type {string} */
@@ -7076,37 +7264,40 @@ function ConceptRelationshipType (copyData) {
 	this.name = copyData.name;
 	}
 }  // ConceptRelationshipType 
-// SanteDB.Core.Model.DataTypes.ConceptSet, SanteDB.Core.Model, Version=2.0.59.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.DataTypes.ConceptSet, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
 //if(!ConceptSet)
 /**
  * @class
  * @constructor
  * @public
- * @summary             Represents set of concepts            
- * @property {string} name            Gets or sets the name of the concept set            
- * @property {string} mnemonic            Gets or sets the mnemonic for the concept set (used for convenient lookup)            
- * @property {string} oid            Gets or sets the oid of the concept set            
- * @property {string} url            Gets or sets the url of the concept set            
- * @property {string} concept            Concepts as identifiers for XML purposes only            
- * @property {Date} updatedTime            Gets or sets the time that this object was last modified in ISO format            
- * @property {Date} modifiedOn            Gets the time this item was modified            
- * @property {SecurityProvenance} updatedByModel [Delay loaded from updatedBy],             Gets or sets the user that updated this base data            
- * @property {string} updatedBy            Gets or sets the provenance identifier associated with the last update of this object            
- * @property {Date} creationTimeModel [Delay loaded from creationTime],             Gets or sets the time at which the data was created            
- * @property {Date} creationTime            Gets or sets the creation time as an ISO date format            
- * @property {Date} obsoletionTimeModel [Delay loaded from obsoletionTime],             Gets or sets the time when the data is or will become invalid            
- * @property {Date} obsoletionTime            Gets or sets the time that the data is no longer valid (was deleted/obsoleted) in ISO format            
- * @property {SecurityProvenance} createdByModel [Delay loaded from createdBy],             Gets or sets the user that created this base data            
- * @property {SecurityProvenance} obsoletedByModel [Delay loaded from obsoletedBy],             Gets or sets the user that obsoleted this base data            
- * @property {string} createdBy            Gets or sets the security provenance object which represents the creation of this object            
- * @property {string} obsoletedBy            Gets or sets the security provenance object which represents the obsoletion of this data            
- * @property {string} id            Gets or sets the primary identifying UUID of this object            
- * @property {string} $type            Gets the type registration of this object            
+ * @summary Represents set of concepts
+ * @property {string} name Gets or sets the name of the concept set
+ * @property {string} mnemonic Gets or sets the mnemonic for the concept set (used for convenient lookup)
+ * @property {string} oid Gets or sets the oid of the concept set
+ * @property {string} url Gets or sets the url of the concept set
+ * @property {string} concept Concepts as identifiers for XML purposes only
+ * @property {Date} updatedTime Gets or sets the time that this object was last modified in ISO format
+ * @property {Date} modifiedOn Gets the time this item was modified
+ * @property {SecurityProvenance} updatedByModel [Delay loaded from updatedBy],  Gets or sets the user that updated this base data
+ * @property {string} updatedBy Gets or sets the provenance identifier associated with the last update of this object
+ * @property {Date} creationTimeModel [Delay loaded from creationTime],  Gets or sets the time at which the data was created
+ * @property {Date} creationTime Gets or sets the creation time as an ISO date format
+ * @property {Date} obsoletionTimeModel [Delay loaded from obsoletionTime],  Gets or sets the time when the data is or will become invalid
+ * @property {Date} obsoletionTime Gets or sets the time that the data is no longer valid (was deleted/obsoleted) in ISO format
+ * @property {SecurityProvenance} createdByModel [Delay loaded from createdBy],  Gets or sets the user that created this base data
+ * @property {SecurityProvenance} obsoletedByModel [Delay loaded from obsoletedBy],  Gets or sets the user that obsoleted this base data
+ * @property {string} createdBy Gets or sets the security provenance object which represents the creation of this object
+ * @property {string} obsoletedBy Gets or sets the security provenance object which represents the obsoletion of this data
+ * @property {string} id Gets or sets the primary identifying UUID of this object
+ * @property {BatchOperationType} operation Gets or sets the operation(see: {@link BatchOperationType} for values)
+ * @property {string} $type Gets the type registration of this object
  * @param {ConceptSet} copyData Copy constructor (if present)
  */
 function ConceptSet (copyData) { 
 	this.$type = 'ConceptSet';
 	if(copyData) {
+	/** @type {BatchOperationType} */
+	this.operation = copyData.operation;
 	/** @type {string} */
 	this.id = copyData.id;
 	/** @type {string} */
@@ -7145,7 +7336,7 @@ function ConceptSet (copyData) {
 	this.name = copyData.name;
 	}
 }  // ConceptSet 
-// SanteDB.Core.Model.DataTypes.Extension`1, SanteDB.Core.Model, Version=2.0.59.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.DataTypes.Extension`1, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
 //if(!Extension)
 /**
  * @class
@@ -7153,23 +7344,26 @@ function ConceptSet (copyData) {
  * @public
  * @abstract
  * @extends VersionedAssociation
- * @summary             Represents a base entity extension            
- * @property {Array<byte>} value            Gets or sets the value of the extension            
- * @property {string} valueModel [Delay loaded from value],             Value as string of bytes            
- * @property {ExtensionType} extensionTypeModel [Delay loaded from extensionType],             Gets or sets the extension type            
- * @property {string} extensionType            Gets or sets the extension type key            
+ * @summary Represents a base entity extension
+ * @property {Array<byte>} value Gets or sets the value of the extension
+ * @property {string} valueModel [Delay loaded from value],  Value as string of bytes
+ * @property {ExtensionType} extensionTypeModel [Delay loaded from extensionType],  Gets or sets the extension type
+ * @property {string} extensionType Gets or sets the extension type key
  * @property {number} effectiveVersionSequence
  * @property {number} obsoleteVersionSequence
  * @property {Date} modifiedOn
  * @property {string} source
  * @property {VersionedEntityData} sourceModel [Delay loaded from source], 
- * @property {string} id            Gets or sets the primary identifying UUID of this object            
- * @property {string} $type            Gets the type registration of this object            
+ * @property {string} id Gets or sets the primary identifying UUID of this object
+ * @property {BatchOperationType} operation Gets or sets the operation(see: {@link BatchOperationType} for values)
+ * @property {string} $type Gets the type registration of this object
  * @param {Extension} copyData Copy constructor (if present)
  */
 function Extension (copyData) { 
 	this.$type = 'Extension';
 	if(copyData) {
+	/** @type {BatchOperationType} */
+	this.operation = copyData.operation;
 	/** @type {string} */
 	this.id = copyData.id;
 	/** @type {VersionedEntityData} */
@@ -7192,14 +7386,14 @@ function Extension (copyData) {
 	this.value = copyData.value;
 	}
 }  // Extension 
-// SanteDB.Core.Model.DataTypes.EntityExtension, SanteDB.Core.Model, Version=2.0.59.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.DataTypes.EntityExtension, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
 //if(!EntityExtension)
 /**
  * @class
  * @constructor
  * @public
  * @extends Extension
- * @summary             Extension bound to entity            
+ * @summary Extension bound to entity
  * @property {Array<byte>} value
  * @property {string} valueModel [Delay loaded from value], 
  * @property {ExtensionType} extensionTypeModel [Delay loaded from extensionType], 
@@ -7209,13 +7403,16 @@ function Extension (copyData) {
  * @property {Date} modifiedOn
  * @property {string} source
  * @property {Entity} sourceModel [Delay loaded from source], 
- * @property {string} id            Gets or sets the primary identifying UUID of this object            
- * @property {string} $type            Gets the type registration of this object            
+ * @property {string} id Gets or sets the primary identifying UUID of this object
+ * @property {BatchOperationType} operation Gets or sets the operation(see: {@link BatchOperationType} for values)
+ * @property {string} $type Gets the type registration of this object
  * @param {EntityExtension} copyData Copy constructor (if present)
  */
 function EntityExtension (copyData) { 
 	this.$type = 'EntityExtension';
 	if(copyData) {
+	/** @type {BatchOperationType} */
+	this.operation = copyData.operation;
 	/** @type {string} */
 	this.id = copyData.id;
 	/** @type {Entity} */
@@ -7238,14 +7435,14 @@ function EntityExtension (copyData) {
 	this.value = copyData.value;
 	}
 }  // EntityExtension 
-// SanteDB.Core.Model.DataTypes.ActExtension, SanteDB.Core.Model, Version=2.0.59.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.DataTypes.ActExtension, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
 //if(!ActExtension)
 /**
  * @class
  * @constructor
  * @public
  * @extends Extension
- * @summary             Act extension            
+ * @summary Act extension
  * @property {Array<byte>} value
  * @property {string} valueModel [Delay loaded from value], 
  * @property {ExtensionType} extensionTypeModel [Delay loaded from extensionType], 
@@ -7255,13 +7452,16 @@ function EntityExtension (copyData) {
  * @property {Date} modifiedOn
  * @property {string} source
  * @property {Act} sourceModel [Delay loaded from source], 
- * @property {string} id            Gets or sets the primary identifying UUID of this object            
- * @property {string} $type            Gets the type registration of this object            
+ * @property {string} id Gets or sets the primary identifying UUID of this object
+ * @property {BatchOperationType} operation Gets or sets the operation(see: {@link BatchOperationType} for values)
+ * @property {string} $type Gets the type registration of this object
  * @param {ActExtension} copyData Copy constructor (if present)
  */
 function ActExtension (copyData) { 
 	this.$type = 'ActExtension';
 	if(copyData) {
+	/** @type {BatchOperationType} */
+	this.operation = copyData.operation;
 	/** @type {string} */
 	this.id = copyData.id;
 	/** @type {Act} */
@@ -7284,34 +7484,37 @@ function ActExtension (copyData) {
 	this.value = copyData.value;
 	}
 }  // ActExtension 
-// SanteDB.Core.Model.DataTypes.ExtensionType, SanteDB.Core.Model, Version=2.0.59.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.DataTypes.ExtensionType, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
 //if(!ExtensionType)
 /**
  * @class
  * @constructor
  * @public
- * @summary             Instructions on how an extensionshould be handled            
- * @property {string} handlerClass            Gets or sets the description            
- * @property {string} name            Gets or sets the description            
- * @property {Date} updatedTime            Gets or sets the time that this object was last modified in ISO format            
- * @property {Date} modifiedOn            Gets the time this item was modified            
- * @property {SecurityProvenance} updatedByModel [Delay loaded from updatedBy],             Gets or sets the user that updated this base data            
- * @property {string} updatedBy            Gets or sets the provenance identifier associated with the last update of this object            
- * @property {Date} creationTimeModel [Delay loaded from creationTime],             Gets or sets the time at which the data was created            
- * @property {Date} creationTime            Gets or sets the creation time as an ISO date format            
- * @property {Date} obsoletionTimeModel [Delay loaded from obsoletionTime],             Gets or sets the time when the data is or will become invalid            
- * @property {Date} obsoletionTime            Gets or sets the time that the data is no longer valid (was deleted/obsoleted) in ISO format            
- * @property {SecurityProvenance} createdByModel [Delay loaded from createdBy],             Gets or sets the user that created this base data            
- * @property {SecurityProvenance} obsoletedByModel [Delay loaded from obsoletedBy],             Gets or sets the user that obsoleted this base data            
- * @property {string} createdBy            Gets or sets the security provenance object which represents the creation of this object            
- * @property {string} obsoletedBy            Gets or sets the security provenance object which represents the obsoletion of this data            
- * @property {string} id            Gets or sets the primary identifying UUID of this object            
- * @property {string} $type            Gets the type registration of this object            
+ * @summary Instructions on how an extensionshould be handled
+ * @property {string} handlerClass Gets or sets the description
+ * @property {string} name Gets or sets the description
+ * @property {Date} updatedTime Gets or sets the time that this object was last modified in ISO format
+ * @property {Date} modifiedOn Gets the time this item was modified
+ * @property {SecurityProvenance} updatedByModel [Delay loaded from updatedBy],  Gets or sets the user that updated this base data
+ * @property {string} updatedBy Gets or sets the provenance identifier associated with the last update of this object
+ * @property {Date} creationTimeModel [Delay loaded from creationTime],  Gets or sets the time at which the data was created
+ * @property {Date} creationTime Gets or sets the creation time as an ISO date format
+ * @property {Date} obsoletionTimeModel [Delay loaded from obsoletionTime],  Gets or sets the time when the data is or will become invalid
+ * @property {Date} obsoletionTime Gets or sets the time that the data is no longer valid (was deleted/obsoleted) in ISO format
+ * @property {SecurityProvenance} createdByModel [Delay loaded from createdBy],  Gets or sets the user that created this base data
+ * @property {SecurityProvenance} obsoletedByModel [Delay loaded from obsoletedBy],  Gets or sets the user that obsoleted this base data
+ * @property {string} createdBy Gets or sets the security provenance object which represents the creation of this object
+ * @property {string} obsoletedBy Gets or sets the security provenance object which represents the obsoletion of this data
+ * @property {string} id Gets or sets the primary identifying UUID of this object
+ * @property {BatchOperationType} operation Gets or sets the operation(see: {@link BatchOperationType} for values)
+ * @property {string} $type Gets the type registration of this object
  * @param {ExtensionType} copyData Copy constructor (if present)
  */
 function ExtensionType (copyData) { 
 	this.$type = 'ExtensionType';
 	if(copyData) {
+	/** @type {BatchOperationType} */
+	this.operation = copyData.operation;
 	/** @type {string} */
 	this.id = copyData.id;
 	/** @type {string} */
@@ -7344,25 +7547,28 @@ function ExtensionType (copyData) {
 	this.handlerClass = copyData.handlerClass;
 	}
 }  // ExtensionType 
-// SanteDB.Core.Model.DataTypes.GeoTag, SanteDB.Core.Model, Version=2.0.59.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.DataTypes.GeoTag, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
 //if(!GeoTag)
 /**
  * @class
  * @constructor
  * @public
  * @extends IdentifiedData
- * @summary             Represents a simple geographic tagging attribute            
- * @property {Date} modifiedOn            Gets the default modified on            
- * @property {Double} lat            Gets the latitude            
- * @property {Double} lng            Gets or sets the longitude of the object            
- * @property {boolean} precise            Gets or sets the accuracy of the geo-tag            
- * @property {string} id            Gets or sets the primary identifying UUID of this object            
- * @property {string} $type            Gets the type registration of this object            
+ * @summary Represents a simple geographic tagging attribute
+ * @property {Date} modifiedOn Gets the default modified on
+ * @property {Double} lat Gets the latitude
+ * @property {Double} lng Gets or sets the longitude of the object
+ * @property {boolean} precise Gets or sets the accuracy of the geo-tag
+ * @property {string} id Gets or sets the primary identifying UUID of this object
+ * @property {BatchOperationType} operation Gets or sets the operation(see: {@link BatchOperationType} for values)
+ * @property {string} $type Gets the type registration of this object
  * @param {GeoTag} copyData Copy constructor (if present)
  */
 function GeoTag (copyData) { 
 	this.$type = 'GeoTag';
 	if(copyData) {
+	/** @type {BatchOperationType} */
+	this.operation = copyData.operation;
 	/** @type {string} */
 	this.id = copyData.id;
 	/** @type {boolean} */
@@ -7375,14 +7581,42 @@ function GeoTag (copyData) {
 	this.modifiedOn = copyData.modifiedOn;
 	}
 }  // GeoTag 
-// SanteDB.Core.Model.DataTypes.EntityIdentifier, SanteDB.Core.Model, Version=2.0.59.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.DataTypes.IdentifiedDataReference, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
+//if(!Reference)
+/**
+ * @class
+ * @constructor
+ * @public
+ * @extends IdentifiedData
+ * @summary A reference to any identified data object
+ * @description The identified data reference class is not persisted as an object per se, rather it
+            serves as a link to a piece of data which already exists where the type may not
+            be known or where the type is known but limited fields are required to reference the data
+ * @property {string} $type Get the type identifier
+ * @property {Date} modifiedOn Modified on
+ * @property {string} id Gets or sets the primary identifying UUID of this object
+ * @property {BatchOperationType} operation Gets or sets the operation(see: {@link BatchOperationType} for values)
+ * @param {Reference} copyData Copy constructor (if present)
+ */
+function Reference (copyData) { 
+	this.$type = 'Reference';
+	if(copyData) {
+	/** @type {BatchOperationType} */
+	this.operation = copyData.operation;
+	/** @type {string} */
+	this.id = copyData.id;
+	/** @type {Date} */
+	this.modifiedOn = copyData.modifiedOn;
+	}
+}  // Reference 
+// SanteDB.Core.Model.DataTypes.EntityIdentifier, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
 //if(!EntityIdentifier)
 /**
  * @class
  * @constructor
  * @public
  * @extends IdentifierBase
- * @summary             Entity identifiers            
+ * @summary Entity identifiers
  * @property {string} value
  * @property {Date} issued
  * @property {Date} expires
@@ -7394,13 +7628,16 @@ function GeoTag (copyData) {
  * @property {Date} modifiedOn
  * @property {string} source
  * @property {Entity} sourceModel [Delay loaded from source], 
- * @property {string} id            Gets or sets the primary identifying UUID of this object            
- * @property {string} $type            Gets the type registration of this object            
+ * @property {string} id Gets or sets the primary identifying UUID of this object
+ * @property {BatchOperationType} operation Gets or sets the operation(see: {@link BatchOperationType} for values)
+ * @property {string} $type Gets the type registration of this object
  * @param {EntityIdentifier} copyData Copy constructor (if present)
  */
 function EntityIdentifier (copyData) { 
 	this.$type = 'EntityIdentifier';
 	if(copyData) {
+	/** @type {BatchOperationType} */
+	this.operation = copyData.operation;
 	/** @type {string} */
 	this.id = copyData.id;
 	/** @type {Entity} */
@@ -7427,14 +7664,14 @@ function EntityIdentifier (copyData) {
 	this.value = copyData.value;
 	}
 }  // EntityIdentifier 
-// SanteDB.Core.Model.DataTypes.ActIdentifier, SanteDB.Core.Model, Version=2.0.59.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.DataTypes.ActIdentifier, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
 //if(!ActIdentifier)
 /**
  * @class
  * @constructor
  * @public
  * @extends IdentifierBase
- * @summary             Act identifier            
+ * @summary Act identifier
  * @property {string} value
  * @property {Date} issued
  * @property {Date} expires
@@ -7446,13 +7683,16 @@ function EntityIdentifier (copyData) {
  * @property {Date} modifiedOn
  * @property {string} source
  * @property {Act} sourceModel [Delay loaded from source], 
- * @property {string} id            Gets or sets the primary identifying UUID of this object            
- * @property {string} $type            Gets the type registration of this object            
+ * @property {string} id Gets or sets the primary identifying UUID of this object
+ * @property {BatchOperationType} operation Gets or sets the operation(see: {@link BatchOperationType} for values)
+ * @property {string} $type Gets the type registration of this object
  * @param {ActIdentifier} copyData Copy constructor (if present)
  */
 function ActIdentifier (copyData) { 
 	this.$type = 'ActIdentifier';
 	if(copyData) {
+	/** @type {BatchOperationType} */
+	this.operation = copyData.operation;
 	/** @type {string} */
 	this.id = copyData.id;
 	/** @type {Act} */
@@ -7479,7 +7719,7 @@ function ActIdentifier (copyData) {
 	this.value = copyData.value;
 	}
 }  // ActIdentifier 
-// SanteDB.Core.Model.DataTypes.IdentifierBase`1, SanteDB.Core.Model, Version=2.0.59.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.DataTypes.IdentifierBase`1, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
 //if(!IdentifierBase)
 /**
  * @class
@@ -7487,25 +7727,28 @@ function ActIdentifier (copyData) {
  * @public
  * @abstract
  * @extends VersionedAssociation
- * @summary             Represents an external assigned identifier            
- * @property {string} value            Gets or sets the value of the identifier            
- * @property {Date} issued            Serialization property for issued date            
- * @property {Date} expires            Serialization field for expiry date            
- * @property {string} checkDigit            Gets or sets the check-digit if it is stored separate from the identifier            
- * @property {IdentifierType} type            Gets or sets the identifier type            
- * @property {AssigningAuthority} authority            Gets or sets a minimal assigning authority from XML data            
+ * @summary Represents an external assigned identifier
+ * @property {string} value Gets or sets the value of the identifier
+ * @property {Date} issued Serialization property for issued date
+ * @property {Date} expires Serialization field for expiry date
+ * @property {string} checkDigit Gets or sets the check-digit if it is stored separate from the identifier
+ * @property {IdentifierType} type Gets or sets the identifier type
+ * @property {AssigningAuthority} authority Gets or sets a minimal assigning authority from XML data
  * @property {number} effectiveVersionSequence
  * @property {number} obsoleteVersionSequence
  * @property {Date} modifiedOn
  * @property {string} source
  * @property {VersionedEntityData} sourceModel [Delay loaded from source], 
- * @property {string} id            Gets or sets the primary identifying UUID of this object            
- * @property {string} $type            Gets the type registration of this object            
+ * @property {string} id Gets or sets the primary identifying UUID of this object
+ * @property {BatchOperationType} operation Gets or sets the operation(see: {@link BatchOperationType} for values)
+ * @property {string} $type Gets the type registration of this object
  * @param {IdentifierBase} copyData Copy constructor (if present)
  */
 function IdentifierBase (copyData) { 
 	this.$type = 'IdentifierBase';
 	if(copyData) {
+	/** @type {BatchOperationType} */
+	this.operation = copyData.operation;
 	/** @type {string} */
 	this.id = copyData.id;
 	/** @type {VersionedEntityData} */
@@ -7532,34 +7775,37 @@ function IdentifierBase (copyData) {
 	this.value = copyData.value;
 	}
 }  // IdentifierBase 
-// SanteDB.Core.Model.DataTypes.IdentifierType, SanteDB.Core.Model, Version=2.0.59.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.DataTypes.IdentifierType, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
 //if(!IdentifierType)
 /**
  * @class
  * @constructor
  * @public
  * @extends BaseEntityData
- * @summary             Represents a basic information class which classifies the use of an identifier            
- * @property {string} scopeConcept            Gets or sets the id of the scope concept            
- * @property {string} typeConcept            Gets or sets the concept which identifies the type            
- * @property {Concept} typeConceptModel [Delay loaded from typeConcept],             Type concept            
- * @property {Concept} scopeConceptModel [Delay loaded from scopeConcept],             Gets the scope of the identifier            
- * @property {Date} creationTimeModel [Delay loaded from creationTime],             Gets or sets the time at which the data was created            
- * @property {Date} creationTime            Gets or sets the creation time as an ISO date format            
- * @property {Date} obsoletionTimeModel [Delay loaded from obsoletionTime],             Gets or sets the time when the data is or will become invalid            
- * @property {Date} obsoletionTime            Gets or sets the time that the data is no longer valid (was deleted/obsoleted) in ISO format            
- * @property {SecurityProvenance} createdByModel [Delay loaded from createdBy],             Gets or sets the user that created this base data            
- * @property {Date} modifiedOn            Gets the time that the object was last modified (from base data, default to CreationTime)            
- * @property {SecurityProvenance} obsoletedByModel [Delay loaded from obsoletedBy],             Gets or sets the user that obsoleted this base data            
- * @property {string} createdBy            Gets or sets the security provenance object which represents the creation of this object            
- * @property {string} obsoletedBy            Gets or sets the security provenance object which represents the obsoletion of this data            
- * @property {string} id            Gets or sets the primary identifying UUID of this object            
- * @property {string} $type            Gets the type registration of this object            
+ * @summary Represents a basic information class which classifies the use of an identifier
+ * @property {string} scopeConcept Gets or sets the id of the scope concept
+ * @property {string} typeConcept Gets or sets the concept which identifies the type
+ * @property {Concept} typeConceptModel [Delay loaded from typeConcept],  Type concept
+ * @property {Concept} scopeConceptModel [Delay loaded from scopeConcept],  Gets the scope of the identifier
+ * @property {Date} creationTimeModel [Delay loaded from creationTime],  Gets or sets the time at which the data was created
+ * @property {Date} creationTime Gets or sets the creation time as an ISO date format
+ * @property {Date} obsoletionTimeModel [Delay loaded from obsoletionTime],  Gets or sets the time when the data is or will become invalid
+ * @property {Date} obsoletionTime Gets or sets the time that the data is no longer valid (was deleted/obsoleted) in ISO format
+ * @property {SecurityProvenance} createdByModel [Delay loaded from createdBy],  Gets or sets the user that created this base data
+ * @property {Date} modifiedOn Gets the time that the object was last modified (from base data, default to CreationTime)
+ * @property {SecurityProvenance} obsoletedByModel [Delay loaded from obsoletedBy],  Gets or sets the user that obsoleted this base data
+ * @property {string} createdBy Gets or sets the security provenance object which represents the creation of this object
+ * @property {string} obsoletedBy Gets or sets the security provenance object which represents the obsoletion of this data
+ * @property {string} id Gets or sets the primary identifying UUID of this object
+ * @property {BatchOperationType} operation Gets or sets the operation(see: {@link BatchOperationType} for values)
+ * @property {string} $type Gets the type registration of this object
  * @param {IdentifierType} copyData Copy constructor (if present)
  */
 function IdentifierType (copyData) { 
 	this.$type = 'IdentifierType';
 	if(copyData) {
+	/** @type {BatchOperationType} */
+	this.operation = copyData.operation;
 	/** @type {string} */
 	this.id = copyData.id;
 	/** @type {string} */
@@ -7590,7 +7836,7 @@ function IdentifierType (copyData) {
 	this.scopeConcept = copyData.scopeConcept;
 	}
 }  // IdentifierType 
-// SanteDB.Core.Model.DataTypes.Note`1, SanteDB.Core.Model, Version=2.0.59.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.DataTypes.Note`1, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
 //if(!Note)
 /**
  * @class
@@ -7598,22 +7844,25 @@ function IdentifierType (copyData) {
  * @public
  * @abstract
  * @extends VersionedAssociation
- * @summary             Generic note class            
- * @property {string} text            Gets or sets the note text            
- * @property {string} author            Gets or sets the author key            
- * @property {Entity} authorModel [Delay loaded from author],             Gets or sets the author entity            
+ * @summary Generic note class
+ * @property {string} text Gets or sets the note text
+ * @property {string} author Gets or sets the author key
+ * @property {Entity} authorModel [Delay loaded from author],  Gets or sets the author entity
  * @property {number} effectiveVersionSequence
  * @property {number} obsoleteVersionSequence
  * @property {Date} modifiedOn
  * @property {string} source
  * @property {VersionedEntityData} sourceModel [Delay loaded from source], 
- * @property {string} id            Gets or sets the primary identifying UUID of this object            
- * @property {string} $type            Gets the type registration of this object            
+ * @property {string} id Gets or sets the primary identifying UUID of this object
+ * @property {BatchOperationType} operation Gets or sets the operation(see: {@link BatchOperationType} for values)
+ * @property {string} $type Gets the type registration of this object
  * @param {Note} copyData Copy constructor (if present)
  */
 function Note (copyData) { 
 	this.$type = 'Note';
 	if(copyData) {
+	/** @type {BatchOperationType} */
+	this.operation = copyData.operation;
 	/** @type {string} */
 	this.id = copyData.id;
 	/** @type {VersionedEntityData} */
@@ -7634,14 +7883,14 @@ function Note (copyData) {
 	this.text = copyData.text;
 	}
 }  // Note 
-// SanteDB.Core.Model.DataTypes.EntityNote, SanteDB.Core.Model, Version=2.0.59.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.DataTypes.EntityNote, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
 //if(!EntityNote)
 /**
  * @class
  * @constructor
  * @public
  * @extends Note
- * @summary             Represents a note attached to an entity            
+ * @summary Represents a note attached to an entity
  * @property {string} text
  * @property {string} author
  * @property {Entity} authorModel [Delay loaded from author], 
@@ -7650,13 +7899,16 @@ function Note (copyData) {
  * @property {Date} modifiedOn
  * @property {string} source
  * @property {Entity} sourceModel [Delay loaded from source], 
- * @property {string} id            Gets or sets the primary identifying UUID of this object            
- * @property {string} $type            Gets the type registration of this object            
+ * @property {string} id Gets or sets the primary identifying UUID of this object
+ * @property {BatchOperationType} operation Gets or sets the operation(see: {@link BatchOperationType} for values)
+ * @property {string} $type Gets the type registration of this object
  * @param {EntityNote} copyData Copy constructor (if present)
  */
 function EntityNote (copyData) { 
 	this.$type = 'EntityNote';
 	if(copyData) {
+	/** @type {BatchOperationType} */
+	this.operation = copyData.operation;
 	/** @type {string} */
 	this.id = copyData.id;
 	/** @type {Entity} */
@@ -7677,14 +7929,14 @@ function EntityNote (copyData) {
 	this.text = copyData.text;
 	}
 }  // EntityNote 
-// SanteDB.Core.Model.DataTypes.ActNote, SanteDB.Core.Model, Version=2.0.59.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.DataTypes.ActNote, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
 //if(!ActNote)
 /**
  * @class
  * @constructor
  * @public
  * @extends Note
- * @summary             Represents a note attached to an entity            
+ * @summary Represents a note attached to an entity
  * @property {string} text
  * @property {string} author
  * @property {Entity} authorModel [Delay loaded from author], 
@@ -7693,13 +7945,16 @@ function EntityNote (copyData) {
  * @property {Date} modifiedOn
  * @property {string} source
  * @property {Act} sourceModel [Delay loaded from source], 
- * @property {string} id            Gets or sets the primary identifying UUID of this object            
- * @property {string} $type            Gets the type registration of this object            
+ * @property {string} id Gets or sets the primary identifying UUID of this object
+ * @property {BatchOperationType} operation Gets or sets the operation(see: {@link BatchOperationType} for values)
+ * @property {string} $type Gets the type registration of this object
  * @param {ActNote} copyData Copy constructor (if present)
  */
 function ActNote (copyData) { 
 	this.$type = 'ActNote';
 	if(copyData) {
+	/** @type {BatchOperationType} */
+	this.operation = copyData.operation;
 	/** @type {string} */
 	this.id = copyData.id;
 	/** @type {Act} */
@@ -7720,37 +7975,40 @@ function ActNote (copyData) {
 	this.text = copyData.text;
 	}
 }  // ActNote 
-// SanteDB.Core.Model.DataTypes.ReferenceTerm, SanteDB.Core.Model, Version=2.0.59.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.DataTypes.ReferenceTerm, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
 //if(!ReferenceTerm)
 /**
  * @class
  * @constructor
  * @public
- * @summary             Represents a basic reference term            
- * @property {string} mnemonic            Gets or sets the mnemonic for the reference term            
- * @property {CodeSystem} codeSystemModel [Delay loaded from codeSystem],             Gets or sets the code system             
- * @property {string} codeSystem            Gets or sets the code system identifier            (see: {@link CodeSystemKeys} for values)
- * @property {object} name            Gets display names associated with the reference term            
+ * @summary Represents a basic reference term
+ * @property {string} mnemonic Gets or sets the mnemonic for the reference term
+ * @property {CodeSystem} codeSystemModel [Delay loaded from codeSystem],  Gets or sets the code system
+ * @property {string} codeSystem Gets or sets the code system identifier(see: {@link CodeSystemKeys} for values)
+ * @property {object} name Gets display names associated with the reference term
  * @property {string} name.classifier  where classifier is from {@link ReferenceTermName} language
- * @property {Date} updatedTime            Gets or sets the time that this object was last modified in ISO format            
- * @property {Date} modifiedOn            Gets the time this item was modified            
- * @property {SecurityProvenance} updatedByModel [Delay loaded from updatedBy],             Gets or sets the user that updated this base data            
- * @property {string} updatedBy            Gets or sets the provenance identifier associated with the last update of this object            
- * @property {Date} creationTimeModel [Delay loaded from creationTime],             Gets or sets the time at which the data was created            
- * @property {Date} creationTime            Gets or sets the creation time as an ISO date format            
- * @property {Date} obsoletionTimeModel [Delay loaded from obsoletionTime],             Gets or sets the time when the data is or will become invalid            
- * @property {Date} obsoletionTime            Gets or sets the time that the data is no longer valid (was deleted/obsoleted) in ISO format            
- * @property {SecurityProvenance} createdByModel [Delay loaded from createdBy],             Gets or sets the user that created this base data            
- * @property {SecurityProvenance} obsoletedByModel [Delay loaded from obsoletedBy],             Gets or sets the user that obsoleted this base data            
- * @property {string} createdBy            Gets or sets the security provenance object which represents the creation of this object            
- * @property {string} obsoletedBy            Gets or sets the security provenance object which represents the obsoletion of this data            
- * @property {string} id            Gets or sets the primary identifying UUID of this object            
- * @property {string} $type            Gets the type registration of this object            
+ * @property {Date} updatedTime Gets or sets the time that this object was last modified in ISO format
+ * @property {Date} modifiedOn Gets the time this item was modified
+ * @property {SecurityProvenance} updatedByModel [Delay loaded from updatedBy],  Gets or sets the user that updated this base data
+ * @property {string} updatedBy Gets or sets the provenance identifier associated with the last update of this object
+ * @property {Date} creationTimeModel [Delay loaded from creationTime],  Gets or sets the time at which the data was created
+ * @property {Date} creationTime Gets or sets the creation time as an ISO date format
+ * @property {Date} obsoletionTimeModel [Delay loaded from obsoletionTime],  Gets or sets the time when the data is or will become invalid
+ * @property {Date} obsoletionTime Gets or sets the time that the data is no longer valid (was deleted/obsoleted) in ISO format
+ * @property {SecurityProvenance} createdByModel [Delay loaded from createdBy],  Gets or sets the user that created this base data
+ * @property {SecurityProvenance} obsoletedByModel [Delay loaded from obsoletedBy],  Gets or sets the user that obsoleted this base data
+ * @property {string} createdBy Gets or sets the security provenance object which represents the creation of this object
+ * @property {string} obsoletedBy Gets or sets the security provenance object which represents the obsoletion of this data
+ * @property {string} id Gets or sets the primary identifying UUID of this object
+ * @property {BatchOperationType} operation Gets or sets the operation(see: {@link BatchOperationType} for values)
+ * @property {string} $type Gets the type registration of this object
  * @param {ReferenceTerm} copyData Copy constructor (if present)
  */
 function ReferenceTerm (copyData) { 
 	this.$type = 'ReferenceTerm';
 	if(copyData) {
+	/** @type {BatchOperationType} */
+	this.operation = copyData.operation;
 	/** @type {string} */
 	this.id = copyData.id;
 	/** @type {string} */
@@ -7787,33 +8045,36 @@ function ReferenceTerm (copyData) {
 	this.mnemonic = copyData.mnemonic;
 	}
 }  // ReferenceTerm 
-// SanteDB.Core.Model.DataTypes.ReferenceTermName, SanteDB.Core.Model, Version=2.0.59.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.DataTypes.ReferenceTermName, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
 //if(!ReferenceTermName)
 /**
  * @class
  * @constructor
  * @public
  * @extends BaseEntityData
- * @summary             Display name of a code system or reference term            
- * @property {string} language            Gets or sets the language code of the object            
- * @property {string} value            Gets or sets the name of the reference term            
- * @property {string} source            Gets the source entity key            
- * @property {Date} creationTimeModel [Delay loaded from creationTime],             Gets or sets the time at which the data was created            
- * @property {Date} creationTime            Gets or sets the creation time as an ISO date format            
- * @property {Date} obsoletionTimeModel [Delay loaded from obsoletionTime],             Gets or sets the time when the data is or will become invalid            
- * @property {Date} obsoletionTime            Gets or sets the time that the data is no longer valid (was deleted/obsoleted) in ISO format            
- * @property {SecurityProvenance} createdByModel [Delay loaded from createdBy],             Gets or sets the user that created this base data            
- * @property {Date} modifiedOn            Gets the time that the object was last modified (from base data, default to CreationTime)            
- * @property {SecurityProvenance} obsoletedByModel [Delay loaded from obsoletedBy],             Gets or sets the user that obsoleted this base data            
- * @property {string} createdBy            Gets or sets the security provenance object which represents the creation of this object            
- * @property {string} obsoletedBy            Gets or sets the security provenance object which represents the obsoletion of this data            
- * @property {string} id            Gets or sets the primary identifying UUID of this object            
- * @property {string} $type            Gets the type registration of this object            
+ * @summary Display name of a code system or reference term
+ * @property {string} language Gets or sets the language code of the object
+ * @property {string} value Gets or sets the name of the reference term
+ * @property {string} source Gets the source entity key
+ * @property {Date} creationTimeModel [Delay loaded from creationTime],  Gets or sets the time at which the data was created
+ * @property {Date} creationTime Gets or sets the creation time as an ISO date format
+ * @property {Date} obsoletionTimeModel [Delay loaded from obsoletionTime],  Gets or sets the time when the data is or will become invalid
+ * @property {Date} obsoletionTime Gets or sets the time that the data is no longer valid (was deleted/obsoleted) in ISO format
+ * @property {SecurityProvenance} createdByModel [Delay loaded from createdBy],  Gets or sets the user that created this base data
+ * @property {Date} modifiedOn Gets the time that the object was last modified (from base data, default to CreationTime)
+ * @property {SecurityProvenance} obsoletedByModel [Delay loaded from obsoletedBy],  Gets or sets the user that obsoleted this base data
+ * @property {string} createdBy Gets or sets the security provenance object which represents the creation of this object
+ * @property {string} obsoletedBy Gets or sets the security provenance object which represents the obsoletion of this data
+ * @property {string} id Gets or sets the primary identifying UUID of this object
+ * @property {BatchOperationType} operation Gets or sets the operation(see: {@link BatchOperationType} for values)
+ * @property {string} $type Gets the type registration of this object
  * @param {ReferenceTermName} copyData Copy constructor (if present)
  */
 function ReferenceTermName (copyData) { 
 	this.$type = 'ReferenceTermName';
 	if(copyData) {
+	/** @type {BatchOperationType} */
+	this.operation = copyData.operation;
 	/** @type {string} */
 	this.id = copyData.id;
 	/** @type {string} */
@@ -7842,7 +8103,7 @@ function ReferenceTermName (copyData) {
 	this.language = copyData.language;
 	}
 }  // ReferenceTermName 
-// SanteDB.Core.Model.DataTypes.Tag`1, SanteDB.Core.Model, Version=2.0.59.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.DataTypes.Tag`1, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
 //if(!Tag)
 /**
  * @class
@@ -7850,27 +8111,30 @@ function ReferenceTermName (copyData) {
  * @public
  * @abstract
  * @extends BaseEntityData
- * @summary             Represents the base class for tags            
- * @property {string} key            Gets or sets the key of the tag            
- * @property {string} value            Gets or sets the value of the tag            
- * @property {string} source            Gets or sets the source entity's key (where the relationship is FROM)            
- * @property {IdentifiedData} sourceModel [Delay loaded from source],             The entity that this relationship targets            
- * @property {Date} creationTimeModel [Delay loaded from creationTime],             Gets or sets the time at which the data was created            
- * @property {Date} creationTime            Gets or sets the creation time as an ISO date format            
- * @property {Date} obsoletionTimeModel [Delay loaded from obsoletionTime],             Gets or sets the time when the data is or will become invalid            
- * @property {Date} obsoletionTime            Gets or sets the time that the data is no longer valid (was deleted/obsoleted) in ISO format            
- * @property {SecurityProvenance} createdByModel [Delay loaded from createdBy],             Gets or sets the user that created this base data            
- * @property {Date} modifiedOn            Gets the time that the object was last modified (from base data, default to CreationTime)            
- * @property {SecurityProvenance} obsoletedByModel [Delay loaded from obsoletedBy],             Gets or sets the user that obsoleted this base data            
- * @property {string} createdBy            Gets or sets the security provenance object which represents the creation of this object            
- * @property {string} obsoletedBy            Gets or sets the security provenance object which represents the obsoletion of this data            
- * @property {string} id            Gets or sets the primary identifying UUID of this object            
- * @property {string} $type            Gets the type registration of this object            
+ * @summary Represents the base class for tags
+ * @property {string} key Gets or sets the key of the tag
+ * @property {string} value Gets or sets the value of the tag
+ * @property {string} source Gets or sets the source entity's key (where the relationship is FROM)
+ * @property {IdentifiedData} sourceModel [Delay loaded from source],  The entity that this relationship targets
+ * @property {Date} creationTimeModel [Delay loaded from creationTime],  Gets or sets the time at which the data was created
+ * @property {Date} creationTime Gets or sets the creation time as an ISO date format
+ * @property {Date} obsoletionTimeModel [Delay loaded from obsoletionTime],  Gets or sets the time when the data is or will become invalid
+ * @property {Date} obsoletionTime Gets or sets the time that the data is no longer valid (was deleted/obsoleted) in ISO format
+ * @property {SecurityProvenance} createdByModel [Delay loaded from createdBy],  Gets or sets the user that created this base data
+ * @property {Date} modifiedOn Gets the time that the object was last modified (from base data, default to CreationTime)
+ * @property {SecurityProvenance} obsoletedByModel [Delay loaded from obsoletedBy],  Gets or sets the user that obsoleted this base data
+ * @property {string} createdBy Gets or sets the security provenance object which represents the creation of this object
+ * @property {string} obsoletedBy Gets or sets the security provenance object which represents the obsoletion of this data
+ * @property {string} id Gets or sets the primary identifying UUID of this object
+ * @property {BatchOperationType} operation Gets or sets the operation(see: {@link BatchOperationType} for values)
+ * @property {string} $type Gets the type registration of this object
  * @param {Tag} copyData Copy constructor (if present)
  */
 function Tag (copyData) { 
 	this.$type = 'Tag';
 	if(copyData) {
+	/** @type {BatchOperationType} */
+	this.operation = copyData.operation;
 	/** @type {string} */
 	this.id = copyData.id;
 	/** @type {string} */
@@ -7901,34 +8165,37 @@ function Tag (copyData) {
 	this.key = copyData.key;
 	}
 }  // Tag 
-// SanteDB.Core.Model.DataTypes.EntityTag, SanteDB.Core.Model, Version=2.0.59.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.DataTypes.EntityTag, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
 //if(!EntityTag)
 /**
  * @class
  * @constructor
  * @public
  * @extends Tag
- * @summary             Represents a tag associated with an entity            
+ * @summary Represents a tag associated with an entity
  * @property {string} key
  * @property {string} value
  * @property {string} source
  * @property {Entity} sourceModel [Delay loaded from source], 
- * @property {Date} creationTimeModel [Delay loaded from creationTime],             Gets or sets the time at which the data was created            
- * @property {Date} creationTime            Gets or sets the creation time as an ISO date format            
- * @property {Date} obsoletionTimeModel [Delay loaded from obsoletionTime],             Gets or sets the time when the data is or will become invalid            
- * @property {Date} obsoletionTime            Gets or sets the time that the data is no longer valid (was deleted/obsoleted) in ISO format            
- * @property {SecurityProvenance} createdByModel [Delay loaded from createdBy],             Gets or sets the user that created this base data            
- * @property {Date} modifiedOn            Gets the time that the object was last modified (from base data, default to CreationTime)            
- * @property {SecurityProvenance} obsoletedByModel [Delay loaded from obsoletedBy],             Gets or sets the user that obsoleted this base data            
- * @property {string} createdBy            Gets or sets the security provenance object which represents the creation of this object            
- * @property {string} obsoletedBy            Gets or sets the security provenance object which represents the obsoletion of this data            
- * @property {string} id            Gets or sets the primary identifying UUID of this object            
- * @property {string} $type            Gets the type registration of this object            
+ * @property {Date} creationTimeModel [Delay loaded from creationTime],  Gets or sets the time at which the data was created
+ * @property {Date} creationTime Gets or sets the creation time as an ISO date format
+ * @property {Date} obsoletionTimeModel [Delay loaded from obsoletionTime],  Gets or sets the time when the data is or will become invalid
+ * @property {Date} obsoletionTime Gets or sets the time that the data is no longer valid (was deleted/obsoleted) in ISO format
+ * @property {SecurityProvenance} createdByModel [Delay loaded from createdBy],  Gets or sets the user that created this base data
+ * @property {Date} modifiedOn Gets the time that the object was last modified (from base data, default to CreationTime)
+ * @property {SecurityProvenance} obsoletedByModel [Delay loaded from obsoletedBy],  Gets or sets the user that obsoleted this base data
+ * @property {string} createdBy Gets or sets the security provenance object which represents the creation of this object
+ * @property {string} obsoletedBy Gets or sets the security provenance object which represents the obsoletion of this data
+ * @property {string} id Gets or sets the primary identifying UUID of this object
+ * @property {BatchOperationType} operation Gets or sets the operation(see: {@link BatchOperationType} for values)
+ * @property {string} $type Gets the type registration of this object
  * @param {EntityTag} copyData Copy constructor (if present)
  */
 function EntityTag (copyData) { 
 	this.$type = 'EntityTag';
 	if(copyData) {
+	/** @type {BatchOperationType} */
+	this.operation = copyData.operation;
 	/** @type {string} */
 	this.id = copyData.id;
 	/** @type {string} */
@@ -7959,34 +8226,37 @@ function EntityTag (copyData) {
 	this.key = copyData.key;
 	}
 }  // EntityTag 
-// SanteDB.Core.Model.DataTypes.ActTag, SanteDB.Core.Model, Version=2.0.59.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.DataTypes.ActTag, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
 //if(!ActTag)
 /**
  * @class
  * @constructor
  * @public
  * @extends Tag
- * @summary             Represents a tag on an act            
+ * @summary Represents a tag on an act
  * @property {string} key
  * @property {string} value
  * @property {string} source
  * @property {Act} sourceModel [Delay loaded from source], 
- * @property {Date} creationTimeModel [Delay loaded from creationTime],             Gets or sets the time at which the data was created            
- * @property {Date} creationTime            Gets or sets the creation time as an ISO date format            
- * @property {Date} obsoletionTimeModel [Delay loaded from obsoletionTime],             Gets or sets the time when the data is or will become invalid            
- * @property {Date} obsoletionTime            Gets or sets the time that the data is no longer valid (was deleted/obsoleted) in ISO format            
- * @property {SecurityProvenance} createdByModel [Delay loaded from createdBy],             Gets or sets the user that created this base data            
- * @property {Date} modifiedOn            Gets the time that the object was last modified (from base data, default to CreationTime)            
- * @property {SecurityProvenance} obsoletedByModel [Delay loaded from obsoletedBy],             Gets or sets the user that obsoleted this base data            
- * @property {string} createdBy            Gets or sets the security provenance object which represents the creation of this object            
- * @property {string} obsoletedBy            Gets or sets the security provenance object which represents the obsoletion of this data            
- * @property {string} id            Gets or sets the primary identifying UUID of this object            
- * @property {string} $type            Gets the type registration of this object            
+ * @property {Date} creationTimeModel [Delay loaded from creationTime],  Gets or sets the time at which the data was created
+ * @property {Date} creationTime Gets or sets the creation time as an ISO date format
+ * @property {Date} obsoletionTimeModel [Delay loaded from obsoletionTime],  Gets or sets the time when the data is or will become invalid
+ * @property {Date} obsoletionTime Gets or sets the time that the data is no longer valid (was deleted/obsoleted) in ISO format
+ * @property {SecurityProvenance} createdByModel [Delay loaded from createdBy],  Gets or sets the user that created this base data
+ * @property {Date} modifiedOn Gets the time that the object was last modified (from base data, default to CreationTime)
+ * @property {SecurityProvenance} obsoletedByModel [Delay loaded from obsoletedBy],  Gets or sets the user that obsoleted this base data
+ * @property {string} createdBy Gets or sets the security provenance object which represents the creation of this object
+ * @property {string} obsoletedBy Gets or sets the security provenance object which represents the obsoletion of this data
+ * @property {string} id Gets or sets the primary identifying UUID of this object
+ * @property {BatchOperationType} operation Gets or sets the operation(see: {@link BatchOperationType} for values)
+ * @property {string} $type Gets the type registration of this object
  * @param {ActTag} copyData Copy constructor (if present)
  */
 function ActTag (copyData) { 
 	this.$type = 'ActTag';
 	if(copyData) {
+	/** @type {BatchOperationType} */
+	this.operation = copyData.operation;
 	/** @type {string} */
 	this.id = copyData.id;
 	/** @type {string} */
@@ -8017,36 +8287,39 @@ function ActTag (copyData) {
 	this.key = copyData.key;
 	}
 }  // ActTag 
-// SanteDB.Core.Model.DataTypes.TemplateDefinition, SanteDB.Core.Model, Version=2.0.59.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.DataTypes.TemplateDefinition, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
 //if(!TemplateDefinition)
 /**
  * @class
  * @constructor
  * @public
- * @summary             Represents a template definition            
- * @property {string} mnemonic            Gets or sets the mnemonic            
- * @property {string} name            Gets or set the name             
- * @property {string} oid            Gets or sets the oid of the concept set            
- * @property {string} description            Gets or sets the description            
- * @property {Date} updatedTime            Gets or sets the time that this object was last modified in ISO format            
- * @property {Date} modifiedOn            Gets the time this item was modified            
- * @property {SecurityProvenance} updatedByModel [Delay loaded from updatedBy],             Gets or sets the user that updated this base data            
- * @property {string} updatedBy            Gets or sets the provenance identifier associated with the last update of this object            
- * @property {Date} creationTimeModel [Delay loaded from creationTime],             Gets or sets the time at which the data was created            
- * @property {Date} creationTime            Gets or sets the creation time as an ISO date format            
- * @property {Date} obsoletionTimeModel [Delay loaded from obsoletionTime],             Gets or sets the time when the data is or will become invalid            
- * @property {Date} obsoletionTime            Gets or sets the time that the data is no longer valid (was deleted/obsoleted) in ISO format            
- * @property {SecurityProvenance} createdByModel [Delay loaded from createdBy],             Gets or sets the user that created this base data            
- * @property {SecurityProvenance} obsoletedByModel [Delay loaded from obsoletedBy],             Gets or sets the user that obsoleted this base data            
- * @property {string} createdBy            Gets or sets the security provenance object which represents the creation of this object            
- * @property {string} obsoletedBy            Gets or sets the security provenance object which represents the obsoletion of this data            
- * @property {string} id            Gets or sets the primary identifying UUID of this object            
- * @property {string} $type            Gets the type registration of this object            
+ * @summary Represents a template definition
+ * @property {string} mnemonic Gets or sets the mnemonic
+ * @property {string} name Gets or set the name
+ * @property {string} oid Gets or sets the oid of the concept set
+ * @property {string} description Gets or sets the description
+ * @property {Date} updatedTime Gets or sets the time that this object was last modified in ISO format
+ * @property {Date} modifiedOn Gets the time this item was modified
+ * @property {SecurityProvenance} updatedByModel [Delay loaded from updatedBy],  Gets or sets the user that updated this base data
+ * @property {string} updatedBy Gets or sets the provenance identifier associated with the last update of this object
+ * @property {Date} creationTimeModel [Delay loaded from creationTime],  Gets or sets the time at which the data was created
+ * @property {Date} creationTime Gets or sets the creation time as an ISO date format
+ * @property {Date} obsoletionTimeModel [Delay loaded from obsoletionTime],  Gets or sets the time when the data is or will become invalid
+ * @property {Date} obsoletionTime Gets or sets the time that the data is no longer valid (was deleted/obsoleted) in ISO format
+ * @property {SecurityProvenance} createdByModel [Delay loaded from createdBy],  Gets or sets the user that created this base data
+ * @property {SecurityProvenance} obsoletedByModel [Delay loaded from obsoletedBy],  Gets or sets the user that obsoleted this base data
+ * @property {string} createdBy Gets or sets the security provenance object which represents the creation of this object
+ * @property {string} obsoletedBy Gets or sets the security provenance object which represents the obsoletion of this data
+ * @property {string} id Gets or sets the primary identifying UUID of this object
+ * @property {BatchOperationType} operation Gets or sets the operation(see: {@link BatchOperationType} for values)
+ * @property {string} $type Gets the type registration of this object
  * @param {TemplateDefinition} copyData Copy constructor (if present)
  */
 function TemplateDefinition (copyData) { 
 	this.$type = 'TemplateDefinition';
 	if(copyData) {
+	/** @type {BatchOperationType} */
+	this.operation = copyData.operation;
 	/** @type {string} */
 	this.id = copyData.id;
 	/** @type {string} */
@@ -8083,32 +8356,32 @@ function TemplateDefinition (copyData) {
 	this.mnemonic = copyData.mnemonic;
 	}
 }  // TemplateDefinition 
-// SanteDB.Core.Model.Collection.Bundle, SanteDB.Core.Model, Version=2.0.59.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Collection.Bundle, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
 //if(!Bundle)
 /**
  * @class
  * @constructor
  * @public
  * @extends IdentifiedData
- * @summary             Represents a collection of model items             
- * @property {Date} modifiedOn            Gets the time the bundle was modified            
- * @property {IdentifiedData} resource            Gets or sets items in the bundle            
- * @property {string} entry            Entry into the bundle            
- * @property {number} offset            Gets or sets the count in this bundle            
- * @property {number} count            Gets or sets the count in this bundle            
- * @property {number} totalResults            Gets or sets the total results            
- * @property {string} ref            Gets or sets the keys of objects that aren't really in the bundle but are expansion items            
- * @property {string} id            Gets or sets the primary identifying UUID of this object            
- * @property {string} $type            Gets the type registration of this object            
+ * @summary A bundle represents a batch of objects which are included within the bundle
+ * @property {Date} modifiedOn Gets the time the bundle was modified
+ * @property {IdentifiedData} resource Gets or sets items in the bundle
+ * @property {string} focal Entry into the bundle
+ * @property {number} offset Gets or sets the count in this bundle
+ * @property {number} count Gets or sets the count in this bundle
+ * @property {number} totalResults Gets or sets the total results
+ * @property {string} id Gets or sets the primary identifying UUID of this object
+ * @property {BatchOperationType} operation Gets or sets the operation(see: {@link BatchOperationType} for values)
+ * @property {string} $type Gets the type registration of this object
  * @param {Bundle} copyData Copy constructor (if present)
  */
 function Bundle (copyData) { 
 	this.$type = 'Bundle';
 	if(copyData) {
+	/** @type {BatchOperationType} */
+	this.operation = copyData.operation;
 	/** @type {string} */
 	this.id = copyData.id;
-	/** @type {string} */
-	this.ref = copyData.ref;
 	/** @type {number} */
 	this.totalResults = copyData.totalResults;
 	/** @type {number} */
@@ -8116,45 +8389,47 @@ function Bundle (copyData) {
 	/** @type {number} */
 	this.offset = copyData.offset;
 	/** @type {string} */
-	this.entry = copyData.entry;
+	this.focal = copyData.focal;
 	/** @type {IdentifiedData} */
 	this.resource = copyData.resource;
 	/** @type {Date} */
 	this.modifiedOn = copyData.modifiedOn;
 	}
 }  // Bundle 
-// SanteDB.Core.Model.Acts.Account, SanteDB.Core.Model, Version=2.0.59.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Acts.Account, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
 //if(!Account)
 /**
  * @class
  * @constructor
  * @public
- * @summary             Represents an Account            
+ * @summary Represents an Account
  * @description An account represents a simple structure for tracking balance and one or more invoice entries
- * @property {number} balance            Gets or sets the balance of this account            
- * @property {string} currency            Gets or sets the currency concept UUID for this account            
- * @property {Concept} currencyModel [Delay loaded from currency],             Gets or sets the currency            
- * @property {number} minBalance            Gets or sets the minimum balance of this account            
- * @property {number} maxBalance            Gets or sets the maximum balance of this account            
- * @property {boolean} isNegated            Gets or sets an indicator which identifies whether the act actually occurred, or            specifically did not occur            
- * @property {string} template            Gets the template UUID upon which this act is based            
- * @property {TemplateDefinition} templateModel [Delay loaded from template],             Gets or sets the template definition            
- * @property {Date} actTime            Gets or sets the moment in time that this act occurred in ISO format            
- * @property {Date} startTime            Gets or sets the time when the act should or did start ocurring in ISO format            
- * @property {Date} stopTime            Gets or sets the time when the act should or did stop ocurring in ISO format            
- * @property {string} classConcept            Gets or sets the key of the concept which classifies the act.            (see: {@link ActClassKeys} for values)
- * @property {string} moodConcept            Gets or sets the key of the concept which specifies the mood of the act.            (see: {@link ActMoodKeys} for values)
- * @property {string} reasonConcept            Gets or sets the key of the concept which defines the reason why the act is or didn't occur            (see: {@link ActReasonKeys} for values)
- * @property {string} statusConcept            Gets or sets the key of the concept which describes the current status of the act            (see: {@link StatusKeys} for values)
- * @property {string} typeConcept            Gets or sets the key of the conccept which further classifies the type of act occurring            
- * @property {Concept} classConceptModel [Delay loaded from classConcept],             Gets or sets the concept which classifies the type of act            
- * @property {Concept} moodConceptModel [Delay loaded from moodConcept],             Gets or sets the concept which specifies the mood of the act            
- * @property {Concept} reasonConceptModel [Delay loaded from reasonConcept],             Gets or sets the concept which indicates the reason of the act            
- * @property {Concept} statusConceptModel [Delay loaded from statusConcept],             Gets or sets the current status concept of the act            
- * @property {Concept} typeConceptModel [Delay loaded from typeConcept],             Type concept identifier            
- * @property {object} identifier            Gets or sets the identifiers by which this act is known as in other systems            
+            against a record target.
+ * @property {number} balance Gets or sets the balance of this account
+ * @property {string} currency Gets or sets the currency concept UUID for this account
+ * @property {Concept} currencyModel [Delay loaded from currency],  Gets or sets the currency
+ * @property {number} minBalance Gets or sets the minimum balance of this account
+ * @property {number} maxBalance Gets or sets the maximum balance of this account
+ * @property {boolean} isNegated Gets or sets an indicator which identifies whether the act actually occurred, or
+            specifically did not occur
+ * @property {string} template Gets the template UUID upon which this act is based
+ * @property {TemplateDefinition} templateModel [Delay loaded from template],  Gets or sets the template definition
+ * @property {Date} actTime Gets or sets the moment in time that this act occurred in ISO format
+ * @property {Date} startTime Gets or sets the time when the act should or did start ocurring in ISO format
+ * @property {Date} stopTime Gets or sets the time when the act should or did stop ocurring in ISO format
+ * @property {string} classConcept Gets or sets the key of the concept which classifies the act.(see: {@link ActClassKeys} for values)
+ * @property {string} moodConcept Gets or sets the key of the concept which specifies the mood of the act.(see: {@link ActMoodKeys} for values)
+ * @property {string} reasonConcept Gets or sets the key of the concept which defines the reason why the act is or didn't occur(see: {@link ActReasonKeys} for values)
+ * @property {string} statusConcept Gets or sets the key of the concept which describes the current status of the act(see: {@link StatusKeys} for values)
+ * @property {string} typeConcept Gets or sets the key of the conccept which further classifies the type of act occurring
+ * @property {Concept} classConceptModel [Delay loaded from classConcept],  Gets or sets the concept which classifies the type of act
+ * @property {Concept} moodConceptModel [Delay loaded from moodConcept],  Gets or sets the concept which specifies the mood of the act
+ * @property {Concept} reasonConceptModel [Delay loaded from reasonConcept],  Gets or sets the concept which indicates the reason of the act
+ * @property {Concept} statusConceptModel [Delay loaded from statusConcept],  Gets or sets the current status concept of the act
+ * @property {Concept} typeConceptModel [Delay loaded from typeConcept],  Type concept identifier
+ * @property {object} identifier Gets or sets the identifiers by which this act is known as in other systems
  * @property {ActIdentifier} identifier.classifier  where classifier is from {@link IdentifierBase} authority
- * @property {object} relationship            Gets a list of all associated acts for this act            
+ * @property {object} relationship Gets a list of all associated acts for this act
  * @property {ActRelationship} relationship.Appends             Indicates that the source act appends information contained in the target act            
  * @property {ActRelationship} relationship.Arrival             Links the transortation act from another act            
  * @property {ActRelationship} relationship.Departure             Links a transporation act from another act indicating departure of the subject            
@@ -8180,14 +8455,14 @@ function Bundle (copyData) {
  * @property {ActRelationship} relationship.Transforms             Indicates that the source act transforms the target act            
  * @property {ActRelationship} relationship.Duplicate             Duplicate entity            
  * @property {ActRelationship} relationship.$other Unclassified
- * @property {SecurityPolicyInstance} policy            Gets or sets the security policy instances associated with the act            
- * @property {object} extension            Gets a list of all extensions associated with the act            
+ * @property {SecurityPolicyInstance} policy Gets or sets the security policy instances associated with the act
+ * @property {object} extension Gets a list of all extensions associated with the act
  * @property {string} extension.classifier  where classifier is from {@link Extension} extensionType
- * @property {string} note            Gets a list of all notes associated with the act            
- * @property {object} tag            Gets a list of all tags associated with the act            
+ * @property {ActNote} note Gets a list of all notes associated with the act
+ * @property {object} tag Gets a list of all tags associated with the act
  * @property {string} tag.classifier  where classifier is from {@link Tag} key
- * @property {ActProtocol} protocol            Identifies protocols attached to the act            
- * @property {object} participation            Gets or sets the entities and participations they play in the act            
+ * @property {ActProtocol} protocol Identifies protocols attached to the act
+ * @property {object} participation Gets or sets the entities and participations they play in the act
  * @property {ActParticipation} participation.Admitter             The player entity was the person who was responsible for admitting the patient into a facility or care scenario.            
  * @property {ActParticipation} participation.Attender             The player entity represents the attending physician for the patient            
  * @property {ActParticipation} participation.Authenticator             The player entity represents an entity which authenticates the provision of care            
@@ -8245,26 +8520,29 @@ function Bundle (copyData) {
  * @property {ActParticipation} participation.Via             The player entity represents an entity where the act occurred "via" this entity (i.e. in transport)            
  * @property {ActParticipation} participation.Witness             The player entity represents a legal witness to the act occurring.            
  * @property {ActParticipation} participation.$other Unclassified
- * @property {GeoTag} geo            Gets or sets the geo-tag            
+ * @property {GeoTag} geo Gets or sets the geo-tag
  * @property {string} previousVersion
  * @property {string} version
  * @property {number} sequence
- * @property {Date} creationTimeModel [Delay loaded from creationTime],             Gets or sets the time at which the data was created            
- * @property {Date} creationTime            Gets or sets the creation time as an ISO date format            
- * @property {Date} obsoletionTimeModel [Delay loaded from obsoletionTime],             Gets or sets the time when the data is or will become invalid            
- * @property {Date} obsoletionTime            Gets or sets the time that the data is no longer valid (was deleted/obsoleted) in ISO format            
- * @property {SecurityProvenance} createdByModel [Delay loaded from createdBy],             Gets or sets the user that created this base data            
- * @property {Date} modifiedOn            Gets the time that the object was last modified (from base data, default to CreationTime)            
- * @property {SecurityProvenance} obsoletedByModel [Delay loaded from obsoletedBy],             Gets or sets the user that obsoleted this base data            
- * @property {string} createdBy            Gets or sets the security provenance object which represents the creation of this object            
- * @property {string} obsoletedBy            Gets or sets the security provenance object which represents the obsoletion of this data            
- * @property {string} id            Gets or sets the primary identifying UUID of this object            
- * @property {string} $type            Gets the type registration of this object            
+ * @property {Date} creationTimeModel [Delay loaded from creationTime],  Gets or sets the time at which the data was created
+ * @property {Date} creationTime Gets or sets the creation time as an ISO date format
+ * @property {Date} obsoletionTimeModel [Delay loaded from obsoletionTime],  Gets or sets the time when the data is or will become invalid
+ * @property {Date} obsoletionTime Gets or sets the time that the data is no longer valid (was deleted/obsoleted) in ISO format
+ * @property {SecurityProvenance} createdByModel [Delay loaded from createdBy],  Gets or sets the user that created this base data
+ * @property {Date} modifiedOn Gets the time that the object was last modified (from base data, default to CreationTime)
+ * @property {SecurityProvenance} obsoletedByModel [Delay loaded from obsoletedBy],  Gets or sets the user that obsoleted this base data
+ * @property {string} createdBy Gets or sets the security provenance object which represents the creation of this object
+ * @property {string} obsoletedBy Gets or sets the security provenance object which represents the obsoletion of this data
+ * @property {string} id Gets or sets the primary identifying UUID of this object
+ * @property {BatchOperationType} operation Gets or sets the operation(see: {@link BatchOperationType} for values)
+ * @property {string} $type Gets the type registration of this object
  * @param {Account} copyData Copy constructor (if present)
  */
 function Account (copyData) { 
 	this.$type = 'Account';
 	if(copyData) {
+	/** @type {BatchOperationType} */
+	this.operation = copyData.operation;
 	/** @type {string} */
 	this.id = copyData.id;
 	/** @type {string} */
@@ -8299,7 +8577,7 @@ function Account (copyData) {
 	this.protocol = copyData.protocol;
 	/** @type {object} */
 	this.tag = copyData.tag;
-	/** @type {string} */
+	/** @type {ActNote} */
 	this.note = copyData.note;
 	/** @type {object} */
 	this.extension = copyData.extension;
@@ -8353,46 +8631,67 @@ function Account (copyData) {
 	this.balance = copyData.balance;
 	}
 }  // Account 
-// SanteDB.Core.Model.Acts.Act, SanteDB.Core.Model, Version=2.0.59.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Acts.Act, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
 //if(!Act)
 /**
  * @class
  * @constructor
  * @public
  * @extends VersionedEntityData
- * @summary             Represents the base class for an act (something which is done or actioned on)            
- * @description 
- *             An Act, in the context of the reference information model (RIM) represents something that is done to a patient. More precisely, an Act
- *             is anything that occurs involving entities in which the entity's state is changed or is documented.
- *             
- *             Examples of Acts Include:
- *              - The administration of a substance to a patient - The observing of a value for the patient - An encounter or visit that occurs where the patient receives one or more services - Any other action such as supply request, or problem recordation
- *             The property which classifies what specific type of action an act represents is its , which dictates
- *             what type an act is. Class concept keys can be found in here .
- *             
- *             This structure is used to represent events, proposals, and requests. That is to say, the Act structure can represent the request to 
- *             do an act, the intent to perform an act, or the actual act being performed itself. This classification of mode happens based on the 
- *              mood concept. Mood concept keys can be found on the  structure.
- *             
- * @property {boolean} isNegated            Gets or sets an indicator which identifies whether the act actually occurred, or            specifically did not occur            
- * @property {string} template            Gets the template UUID upon which this act is based            
- * @property {TemplateDefinition} templateModel [Delay loaded from template],             Gets or sets the template definition            
- * @property {Date} actTime            Gets or sets the moment in time that this act occurred in ISO format            
- * @property {Date} startTime            Gets or sets the time when the act should or did start ocurring in ISO format            
- * @property {Date} stopTime            Gets or sets the time when the act should or did stop ocurring in ISO format            
- * @property {string} classConcept            Gets or sets the key of the concept which classifies the act.            (see: {@link ActClassKeys} for values)
- * @property {string} moodConcept            Gets or sets the key of the concept which specifies the mood of the act.            (see: {@link ActMoodKeys} for values)
- * @property {string} reasonConcept            Gets or sets the key of the concept which defines the reason why the act is or didn't occur            (see: {@link ActReasonKeys} for values)
- * @property {string} statusConcept            Gets or sets the key of the concept which describes the current status of the act            (see: {@link StatusKeys} for values)
- * @property {string} typeConcept            Gets or sets the key of the conccept which further classifies the type of act occurring            
- * @property {Concept} classConceptModel [Delay loaded from classConcept],             Gets or sets the concept which classifies the type of act            
- * @property {Concept} moodConceptModel [Delay loaded from moodConcept],             Gets or sets the concept which specifies the mood of the act            
- * @property {Concept} reasonConceptModel [Delay loaded from reasonConcept],             Gets or sets the concept which indicates the reason of the act            
- * @property {Concept} statusConceptModel [Delay loaded from statusConcept],             Gets or sets the current status concept of the act            
- * @property {Concept} typeConceptModel [Delay loaded from typeConcept],             Type concept identifier            
- * @property {object} identifier            Gets or sets the identifiers by which this act is known as in other systems            
+ * @summary Represents the base class for an act (something which is done or actioned on)
+ * @description <p>
+            An Act, in the context of the reference information model (RIM) represents something that is done to a patient. More precisely, an Act
+            is anything that occurs involving entities in which the entity's state is changed or is documented.
+            </p><p>
+            Examples of Acts Include:
+            </p><ul><li><strong>
+    {@link SubstanceAdministration}
+  </strong><span>
+      - The administration of a substance to a patient</span></li><li><strong>
+    {@link Observation}
+  </strong><span>
+      - The observing of a value for the patient</span></li><li><strong>
+    {@link PatientEncounter}
+  </strong><span>
+      - An encounter or visit that occurs where the patient receives one or more services</span></li><li><strong>
+    {@link Act}
+  </strong><span>
+      - Any other action such as supply request, or problem recordation</span></li></ul><p>
+            The property which classifies what specific type of action an act represents is its 
+    {@link ClassConceptKey}
+  , which dictates
+            what type an act is. Class concept keys can be found in here 
+    {@link ActClassKeys}
+  .
+            </p><p>
+            This structure is used to represent events, proposals, and requests. That is to say, the Act structure can represent the request to
+            do an act, the intent to perform an act, or the actual act being performed itself. This classification of mode happens based on the
+            
+    {@link MoodConceptKey}
+   mood concept. Mood concept keys can be found on the 
+    {@link ActMoodKeys}
+   structure.
+            </p>
+ * @property {boolean} isNegated Gets or sets an indicator which identifies whether the act actually occurred, or
+            specifically did not occur
+ * @property {string} template Gets the template UUID upon which this act is based
+ * @property {TemplateDefinition} templateModel [Delay loaded from template],  Gets or sets the template definition
+ * @property {Date} actTime Gets or sets the moment in time that this act occurred in ISO format
+ * @property {Date} startTime Gets or sets the time when the act should or did start ocurring in ISO format
+ * @property {Date} stopTime Gets or sets the time when the act should or did stop ocurring in ISO format
+ * @property {string} classConcept Gets or sets the key of the concept which classifies the act.(see: {@link ActClassKeys} for values)
+ * @property {string} moodConcept Gets or sets the key of the concept which specifies the mood of the act.(see: {@link ActMoodKeys} for values)
+ * @property {string} reasonConcept Gets or sets the key of the concept which defines the reason why the act is or didn't occur(see: {@link ActReasonKeys} for values)
+ * @property {string} statusConcept Gets or sets the key of the concept which describes the current status of the act(see: {@link StatusKeys} for values)
+ * @property {string} typeConcept Gets or sets the key of the conccept which further classifies the type of act occurring
+ * @property {Concept} classConceptModel [Delay loaded from classConcept],  Gets or sets the concept which classifies the type of act
+ * @property {Concept} moodConceptModel [Delay loaded from moodConcept],  Gets or sets the concept which specifies the mood of the act
+ * @property {Concept} reasonConceptModel [Delay loaded from reasonConcept],  Gets or sets the concept which indicates the reason of the act
+ * @property {Concept} statusConceptModel [Delay loaded from statusConcept],  Gets or sets the current status concept of the act
+ * @property {Concept} typeConceptModel [Delay loaded from typeConcept],  Type concept identifier
+ * @property {object} identifier Gets or sets the identifiers by which this act is known as in other systems
  * @property {ActIdentifier} identifier.classifier  where classifier is from {@link IdentifierBase} authority
- * @property {object} relationship            Gets a list of all associated acts for this act            
+ * @property {object} relationship Gets a list of all associated acts for this act
  * @property {ActRelationship} relationship.Appends             Indicates that the source act appends information contained in the target act            
  * @property {ActRelationship} relationship.Arrival             Links the transortation act from another act            
  * @property {ActRelationship} relationship.Departure             Links a transporation act from another act indicating departure of the subject            
@@ -8418,14 +8717,14 @@ function Account (copyData) {
  * @property {ActRelationship} relationship.Transforms             Indicates that the source act transforms the target act            
  * @property {ActRelationship} relationship.Duplicate             Duplicate entity            
  * @property {ActRelationship} relationship.$other Unclassified
- * @property {SecurityPolicyInstance} policy            Gets or sets the security policy instances associated with the act            
- * @property {object} extension            Gets a list of all extensions associated with the act            
+ * @property {SecurityPolicyInstance} policy Gets or sets the security policy instances associated with the act
+ * @property {object} extension Gets a list of all extensions associated with the act
  * @property {string} extension.classifier  where classifier is from {@link Extension} extensionType
- * @property {string} note            Gets a list of all notes associated with the act            
- * @property {object} tag            Gets a list of all tags associated with the act            
+ * @property {ActNote} note Gets a list of all notes associated with the act
+ * @property {object} tag Gets a list of all tags associated with the act
  * @property {string} tag.classifier  where classifier is from {@link Tag} key
- * @property {ActProtocol} protocol            Identifies protocols attached to the act            
- * @property {object} participation            Gets or sets the entities and participations they play in the act            
+ * @property {ActProtocol} protocol Identifies protocols attached to the act
+ * @property {object} participation Gets or sets the entities and participations they play in the act
  * @property {ActParticipation} participation.Admitter             The player entity was the person who was responsible for admitting the patient into a facility or care scenario.            
  * @property {ActParticipation} participation.Attender             The player entity represents the attending physician for the patient            
  * @property {ActParticipation} participation.Authenticator             The player entity represents an entity which authenticates the provision of care            
@@ -8483,26 +8782,29 @@ function Account (copyData) {
  * @property {ActParticipation} participation.Via             The player entity represents an entity where the act occurred "via" this entity (i.e. in transport)            
  * @property {ActParticipation} participation.Witness             The player entity represents a legal witness to the act occurring.            
  * @property {ActParticipation} participation.$other Unclassified
- * @property {GeoTag} geo            Gets or sets the geo-tag            
+ * @property {GeoTag} geo Gets or sets the geo-tag
  * @property {string} previousVersion
  * @property {string} version
  * @property {number} sequence
- * @property {Date} creationTimeModel [Delay loaded from creationTime],             Gets or sets the time at which the data was created            
- * @property {Date} creationTime            Gets or sets the creation time as an ISO date format            
- * @property {Date} obsoletionTimeModel [Delay loaded from obsoletionTime],             Gets or sets the time when the data is or will become invalid            
- * @property {Date} obsoletionTime            Gets or sets the time that the data is no longer valid (was deleted/obsoleted) in ISO format            
- * @property {SecurityProvenance} createdByModel [Delay loaded from createdBy],             Gets or sets the user that created this base data            
- * @property {Date} modifiedOn            Gets the time that the object was last modified (from base data, default to CreationTime)            
- * @property {SecurityProvenance} obsoletedByModel [Delay loaded from obsoletedBy],             Gets or sets the user that obsoleted this base data            
- * @property {string} createdBy            Gets or sets the security provenance object which represents the creation of this object            
- * @property {string} obsoletedBy            Gets or sets the security provenance object which represents the obsoletion of this data            
- * @property {string} id            Gets or sets the primary identifying UUID of this object            
- * @property {string} $type            Gets the type registration of this object            
+ * @property {Date} creationTimeModel [Delay loaded from creationTime],  Gets or sets the time at which the data was created
+ * @property {Date} creationTime Gets or sets the creation time as an ISO date format
+ * @property {Date} obsoletionTimeModel [Delay loaded from obsoletionTime],  Gets or sets the time when the data is or will become invalid
+ * @property {Date} obsoletionTime Gets or sets the time that the data is no longer valid (was deleted/obsoleted) in ISO format
+ * @property {SecurityProvenance} createdByModel [Delay loaded from createdBy],  Gets or sets the user that created this base data
+ * @property {Date} modifiedOn Gets the time that the object was last modified (from base data, default to CreationTime)
+ * @property {SecurityProvenance} obsoletedByModel [Delay loaded from obsoletedBy],  Gets or sets the user that obsoleted this base data
+ * @property {string} createdBy Gets or sets the security provenance object which represents the creation of this object
+ * @property {string} obsoletedBy Gets or sets the security provenance object which represents the obsoletion of this data
+ * @property {string} id Gets or sets the primary identifying UUID of this object
+ * @property {BatchOperationType} operation Gets or sets the operation(see: {@link BatchOperationType} for values)
+ * @property {string} $type Gets the type registration of this object
  * @param {Act} copyData Copy constructor (if present)
  */
 function Act (copyData) { 
 	this.$type = 'Act';
 	if(copyData) {
+	/** @type {BatchOperationType} */
+	this.operation = copyData.operation;
 	/** @type {string} */
 	this.id = copyData.id;
 	/** @type {string} */
@@ -8537,7 +8839,7 @@ function Act (copyData) {
 	this.protocol = copyData.protocol;
 	/** @type {object} */
 	this.tag = copyData.tag;
-	/** @type {string} */
+	/** @type {ActNote} */
 	this.note = copyData.note;
 	/** @type {object} */
 	this.extension = copyData.extension;
@@ -8581,40 +8883,57 @@ function Act (copyData) {
 	this.isNegated = copyData.isNegated;
 	}
 }  // Act 
-// SanteDB.Core.Model.Acts.ActParticipation, SanteDB.Core.Model, Version=2.0.59.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Acts.ActParticipation, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
 //if(!ActParticipation)
 /**
  * @class
  * @constructor
  * @public
  * @extends VersionedAssociation
- * @summary             Associates an entity which participates in an act            
- * @description 
- *             An act participation instance is used to link an  entity instance to an  act instance. It is said that the
- *             player  participates in the act  in a particular role .
- *             
- *             Act participations can also be quantified. For example, if 100 doses of a particlar material  were consumed
- *             as part of an act, then the quantity would be 100.
- *             
- * @property {string} player            Gets or sets the target entity reference            
- * @property {string} participationRole            Gets or sets the participation role key            (see: {@link ActParticipationKey} for values)
- * @property {Entity} playerModel [Delay loaded from player],             Gets or sets the entity which participated in the act            
- * @property {Concept} participationRoleModel [Delay loaded from participationRole],             Gets or sets the role that the entity played in participating in the act            
- * @property {string} act            The entity that this relationship targets            
- * @property {Act} actModel [Delay loaded from act],             The entity that this relationship targets            
- * @property {number} quantity            Gets or sets the quantity of player in the act            
+ * @summary Associates an entity which participates in an act
+ * @description <p>
+            An act participation instance is used to link an 
+    {@link Entity}
+   entity instance to an 
+    {@link Act}
+   act instance. It is said that the
+            player (
+    {@link PlayerEntityKey}
+  ) participates in the act (
+    {@link ActKey}
+  ) in a particular role (
+    {@link ParticipationRoleKey}
+  ).
+            </p><p>
+            Act participations can also be quantified. For example, if 100 doses of a particlar material (
+    {@link ManufacturedMaterial}
+  ) were consumed
+            as part of an act, then the quantity would be 100.
+            </p>
+ * @property {Concept} classificationModel [Delay loaded from classification],  Gets or sets the an additional (sub-type) of the relationship
+ * @property {string} classification Association type key(see: {@link RelationshipClassKeys} for values)
+ * @property {string} player Gets or sets the target entity reference
+ * @property {string} participationRole Gets or sets the participation role key(see: {@link ActParticipationKey} for values)
+ * @property {Entity} playerModel [Delay loaded from player],  Gets or sets the entity which participated in the act
+ * @property {Concept} participationRoleModel [Delay loaded from participationRole],  Gets or sets the role that the entity played in participating in the act
+ * @property {string} act The entity that this relationship targets
+ * @property {Act} actModel [Delay loaded from act],  The entity that this relationship targets
+ * @property {number} quantity Gets or sets the quantity of player in the act
  * @property {number} effectiveVersionSequence
  * @property {number} obsoleteVersionSequence
  * @property {Date} modifiedOn
  * @property {string} source
  * @property {Act} sourceModel [Delay loaded from source], 
- * @property {string} id            Gets or sets the primary identifying UUID of this object            
- * @property {string} $type            Gets the type registration of this object            
+ * @property {string} id Gets or sets the primary identifying UUID of this object
+ * @property {BatchOperationType} operation Gets or sets the operation(see: {@link BatchOperationType} for values)
+ * @property {string} $type Gets the type registration of this object
  * @param {ActParticipation} copyData Copy constructor (if present)
  */
 function ActParticipation (copyData) { 
 	this.$type = 'ActParticipation';
 	if(copyData) {
+	/** @type {BatchOperationType} */
+	this.operation = copyData.operation;
 	/** @type {string} */
 	this.id = copyData.id;
 	/** @type {Act} */
@@ -8641,34 +8960,45 @@ function ActParticipation (copyData) {
 	this.participationRole = copyData.participationRole;
 	/** @type {string} */
 	this.player = copyData.player;
+	/** @type {string} */
+	this.classification = copyData.classification;
+	/** @type {Concept} */
+	this.classificationModel = copyData.classificationModel;
 	}
 }  // ActParticipation 
-// SanteDB.Core.Model.Acts.ActProtocol, SanteDB.Core.Model, Version=2.0.59.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Acts.ActProtocol, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
 //if(!ActProtocol)
 /**
  * @class
  * @constructor
  * @public
  * @extends Association
- * @summary             Represents information related to the clinical protocol to which an act is a member of            
- * @description 
- *             The  class is used to link an act instance  with the clinical 
- *             protocol  to which the act belongs.
- *             
- * @property {string} protocol            Gets or sets the protocol  to which this act belongs            
- * @property {Protocol} protocolModel [Delay loaded from protocol],             Gets or sets the protocol data related to the protocol            
- * @property {number} sequence            Represents the sequence of the act in the protocol            
- * @property {Array<byte>} state            Represents any state data related to the act / protocol link            
+ * @summary Represents information related to the clinical protocol to which an act is a member of
+ * @description The 
+    {@link ActProtocol}
+   class is used to link an act instance (
+    {@link Act}
+  ) with the clinical 
+            protocol (
+    {@link Protocol}
+  ) to which the act belongs.
+ * @property {string} protocol Gets or sets the protocol  to which this act belongs
+ * @property {Protocol} protocolModel [Delay loaded from protocol],  Gets or sets the protocol data related to the protocol
+ * @property {number} sequence Represents the sequence of the act in the protocol
+ * @property {Array<byte>} state Represents any state data related to the act / protocol link
  * @property {Date} modifiedOn
  * @property {string} source
  * @property {Act} sourceModel [Delay loaded from source], 
- * @property {string} id            Gets or sets the primary identifying UUID of this object            
- * @property {string} $type            Gets the type registration of this object            
+ * @property {string} id Gets or sets the primary identifying UUID of this object
+ * @property {BatchOperationType} operation Gets or sets the operation(see: {@link BatchOperationType} for values)
+ * @property {string} $type Gets the type registration of this object
  * @param {ActProtocol} copyData Copy constructor (if present)
  */
 function ActProtocol (copyData) { 
 	this.$type = 'ActProtocol';
 	if(copyData) {
+	/** @type {BatchOperationType} */
+	this.operation = copyData.operation;
 	/** @type {string} */
 	this.id = copyData.id;
 	/** @type {Act} */
@@ -8687,35 +9017,44 @@ function ActProtocol (copyData) {
 	this.protocol = copyData.protocol;
 	}
 }  // ActProtocol 
-// SanteDB.Core.Model.Acts.ActRelationship, SanteDB.Core.Model, Version=2.0.59.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Acts.ActRelationship, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
 //if(!ActRelationship)
 /**
  * @class
  * @constructor
  * @public
  * @extends VersionedAssociation
- * @summary             Used to link two or more acts together            
- * @description 
- *             An act relationship is used to link a source act with a target act  in a particular type of 
- *             relationship . This structure is often used to link together sub-components of an 
- *             encounter with the encounter, but can also be used to link together chronic care episodes.
- *             
- * @property {string} target            The target of the association            
- * @property {Act} targetModel [Delay loaded from target],             Target act reference            
- * @property {string} relationshipType            Association type key            (see: {@link ActRelationshipTypeKeys} for values)
- * @property {Concept} relationshipTypeModel [Delay loaded from relationshipType],             Gets or sets the association type            
+ * @summary Used to link two or more acts together
+ * @description <p>
+            An act relationship is used to link a source act with a target act (
+    {@link TargetActKey}
+  ) in a particular type of 
+            relationship (
+    {@link RelationshipTypeKey}
+  ). This structure is often used to link together sub-components of an 
+            encounter with the encounter, but can also be used to link together chronic care episodes.
+            </p>
+ * @property {Concept} classificationModel [Delay loaded from classification],  Gets or sets the an additional (sub-type) of the relationship
+ * @property {string} classification Association type key(see: {@link RelationshipClassKeys} for values)
+ * @property {string} target The target of the association
+ * @property {Act} targetModel [Delay loaded from target],  Target act reference
+ * @property {string} relationshipType Association type key(see: {@link ActRelationshipTypeKeys} for values)
+ * @property {Concept} relationshipTypeModel [Delay loaded from relationshipType],  Gets or sets the association type
  * @property {number} effectiveVersionSequence
  * @property {number} obsoleteVersionSequence
  * @property {Date} modifiedOn
  * @property {string} source
  * @property {Act} sourceModel [Delay loaded from source], 
- * @property {string} id            Gets or sets the primary identifying UUID of this object            
- * @property {string} $type            Gets the type registration of this object            
+ * @property {string} id Gets or sets the primary identifying UUID of this object
+ * @property {BatchOperationType} operation Gets or sets the operation(see: {@link BatchOperationType} for values)
+ * @property {string} $type Gets the type registration of this object
  * @param {ActRelationship} copyData Copy constructor (if present)
  */
 function ActRelationship (copyData) { 
 	this.$type = 'ActRelationship';
 	if(copyData) {
+	/** @type {BatchOperationType} */
+	this.operation = copyData.operation;
 	/** @type {string} */
 	this.id = copyData.id;
 	/** @type {Act} */
@@ -8736,22 +9075,24 @@ function ActRelationship (copyData) {
 	this.targetModel = copyData.targetModel;
 	/** @type {string} */
 	this.target = copyData.target;
+	/** @type {string} */
+	this.classification = copyData.classification;
+	/** @type {Concept} */
+	this.classificationModel = copyData.classificationModel;
 	}
 }  // ActRelationship 
-// SanteDB.Core.Model.Acts.CarePlan, SanteDB.Core.Model, Version=2.0.59.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Acts.CarePlan, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
 //if(!CarePlan)
 /**
  * @class
  * @constructor
  * @public
  * @extends BaseEntityData
- * @summary             Represents a care plan            
- * @description 
- *             The care plan object is used to represent a collection of clinical protocols which the care planning
- *             engine proposes should be done as part of the patient's course of care.
- *             
- * @property {Patient} target            Target of the careplan            
- * @property {object} act            Action to take            
+ * @summary Represents a care plan
+ * @description The care plan object is used to represent a collection of clinical protocols which the care planning
+            engine proposes should be done as part of the patient's course of care.
+ * @property {Patient} target Target of the careplan
+ * @property {object} act Action to take
  * @property {Act} act.AccountManagement             The act represents generic account management such as adjudications, financial adjustments, stock counting, etc.            
  * @property {Act} act.Act             The act represents a generic act which has no special classification            
  * @property {Act} act.Battery             The act represents a simple battery of procedures/administrations/tests/etc.            
@@ -8773,22 +9114,25 @@ function ActRelationship (copyData) {
  * @property {Act} act.InvoiceElement             Represents a single invoice element            
  * @property {Act} act.List             List            
  * @property {Act} act.$other Unclassified
- * @property {Date} creationTimeModel [Delay loaded from creationTime],             Gets or sets the time at which the data was created            
- * @property {Date} creationTime            Gets or sets the creation time as an ISO date format            
- * @property {Date} obsoletionTimeModel [Delay loaded from obsoletionTime],             Gets or sets the time when the data is or will become invalid            
- * @property {Date} obsoletionTime            Gets or sets the time that the data is no longer valid (was deleted/obsoleted) in ISO format            
- * @property {SecurityProvenance} createdByModel [Delay loaded from createdBy],             Gets or sets the user that created this base data            
- * @property {Date} modifiedOn            Gets the time that the object was last modified (from base data, default to CreationTime)            
- * @property {SecurityProvenance} obsoletedByModel [Delay loaded from obsoletedBy],             Gets or sets the user that obsoleted this base data            
- * @property {string} createdBy            Gets or sets the security provenance object which represents the creation of this object            
- * @property {string} obsoletedBy            Gets or sets the security provenance object which represents the obsoletion of this data            
- * @property {string} id            Gets or sets the primary identifying UUID of this object            
- * @property {string} $type            Gets the type registration of this object            
+ * @property {Date} creationTimeModel [Delay loaded from creationTime],  Gets or sets the time at which the data was created
+ * @property {Date} creationTime Gets or sets the creation time as an ISO date format
+ * @property {Date} obsoletionTimeModel [Delay loaded from obsoletionTime],  Gets or sets the time when the data is or will become invalid
+ * @property {Date} obsoletionTime Gets or sets the time that the data is no longer valid (was deleted/obsoleted) in ISO format
+ * @property {SecurityProvenance} createdByModel [Delay loaded from createdBy],  Gets or sets the user that created this base data
+ * @property {Date} modifiedOn Gets the time that the object was last modified (from base data, default to CreationTime)
+ * @property {SecurityProvenance} obsoletedByModel [Delay loaded from obsoletedBy],  Gets or sets the user that obsoleted this base data
+ * @property {string} createdBy Gets or sets the security provenance object which represents the creation of this object
+ * @property {string} obsoletedBy Gets or sets the security provenance object which represents the obsoletion of this data
+ * @property {string} id Gets or sets the primary identifying UUID of this object
+ * @property {BatchOperationType} operation Gets or sets the operation(see: {@link BatchOperationType} for values)
+ * @property {string} $type Gets the type registration of this object
  * @param {CarePlan} copyData Copy constructor (if present)
  */
 function CarePlan (copyData) { 
 	this.$type = 'CarePlan';
 	if(copyData) {
+	/** @type {BatchOperationType} */
+	this.operation = copyData.operation;
 	/** @type {string} */
 	this.id = copyData.id;
 	/** @type {string} */
@@ -8815,32 +9159,33 @@ function CarePlan (copyData) {
 	this.target = copyData.target;
 	}
 }  // CarePlan 
-// SanteDB.Core.Model.Acts.ControlAct, SanteDB.Core.Model, Version=2.0.59.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Acts.ControlAct, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
 //if(!ControlAct)
 /**
  * @class
  * @constructor
  * @public
- * @summary             Represents an act which indicates why data was created/changed            
- * @property {boolean} isNegated            Gets or sets an indicator which identifies whether the act actually occurred, or            specifically did not occur            
- * @property {string} template            Gets the template UUID upon which this act is based            
- * @property {TemplateDefinition} templateModel [Delay loaded from template],             Gets or sets the template definition            
- * @property {Date} actTime            Gets or sets the moment in time that this act occurred in ISO format            
- * @property {Date} startTime            Gets or sets the time when the act should or did start ocurring in ISO format            
- * @property {Date} stopTime            Gets or sets the time when the act should or did stop ocurring in ISO format            
- * @property {string} classConcept            Gets or sets the key of the concept which classifies the act.            (see: {@link ActClassKeys} for values)
- * @property {string} moodConcept            Gets or sets the key of the concept which specifies the mood of the act.            (see: {@link ActMoodKeys} for values)
- * @property {string} reasonConcept            Gets or sets the key of the concept which defines the reason why the act is or didn't occur            (see: {@link ActReasonKeys} for values)
- * @property {string} statusConcept            Gets or sets the key of the concept which describes the current status of the act            (see: {@link StatusKeys} for values)
- * @property {string} typeConcept            Gets or sets the key of the conccept which further classifies the type of act occurring            
- * @property {Concept} classConceptModel [Delay loaded from classConcept],             Gets or sets the concept which classifies the type of act            
- * @property {Concept} moodConceptModel [Delay loaded from moodConcept],             Gets or sets the concept which specifies the mood of the act            
- * @property {Concept} reasonConceptModel [Delay loaded from reasonConcept],             Gets or sets the concept which indicates the reason of the act            
- * @property {Concept} statusConceptModel [Delay loaded from statusConcept],             Gets or sets the current status concept of the act            
- * @property {Concept} typeConceptModel [Delay loaded from typeConcept],             Type concept identifier            
- * @property {object} identifier            Gets or sets the identifiers by which this act is known as in other systems            
+ * @summary Represents an act which indicates why data was created/changed
+ * @property {boolean} isNegated Gets or sets an indicator which identifies whether the act actually occurred, or
+            specifically did not occur
+ * @property {string} template Gets the template UUID upon which this act is based
+ * @property {TemplateDefinition} templateModel [Delay loaded from template],  Gets or sets the template definition
+ * @property {Date} actTime Gets or sets the moment in time that this act occurred in ISO format
+ * @property {Date} startTime Gets or sets the time when the act should or did start ocurring in ISO format
+ * @property {Date} stopTime Gets or sets the time when the act should or did stop ocurring in ISO format
+ * @property {string} classConcept Gets or sets the key of the concept which classifies the act.(see: {@link ActClassKeys} for values)
+ * @property {string} moodConcept Gets or sets the key of the concept which specifies the mood of the act.(see: {@link ActMoodKeys} for values)
+ * @property {string} reasonConcept Gets or sets the key of the concept which defines the reason why the act is or didn't occur(see: {@link ActReasonKeys} for values)
+ * @property {string} statusConcept Gets or sets the key of the concept which describes the current status of the act(see: {@link StatusKeys} for values)
+ * @property {string} typeConcept Gets or sets the key of the conccept which further classifies the type of act occurring
+ * @property {Concept} classConceptModel [Delay loaded from classConcept],  Gets or sets the concept which classifies the type of act
+ * @property {Concept} moodConceptModel [Delay loaded from moodConcept],  Gets or sets the concept which specifies the mood of the act
+ * @property {Concept} reasonConceptModel [Delay loaded from reasonConcept],  Gets or sets the concept which indicates the reason of the act
+ * @property {Concept} statusConceptModel [Delay loaded from statusConcept],  Gets or sets the current status concept of the act
+ * @property {Concept} typeConceptModel [Delay loaded from typeConcept],  Type concept identifier
+ * @property {object} identifier Gets or sets the identifiers by which this act is known as in other systems
  * @property {ActIdentifier} identifier.classifier  where classifier is from {@link IdentifierBase} authority
- * @property {object} relationship            Gets a list of all associated acts for this act            
+ * @property {object} relationship Gets a list of all associated acts for this act
  * @property {ActRelationship} relationship.Appends             Indicates that the source act appends information contained in the target act            
  * @property {ActRelationship} relationship.Arrival             Links the transortation act from another act            
  * @property {ActRelationship} relationship.Departure             Links a transporation act from another act indicating departure of the subject            
@@ -8866,14 +9211,14 @@ function CarePlan (copyData) {
  * @property {ActRelationship} relationship.Transforms             Indicates that the source act transforms the target act            
  * @property {ActRelationship} relationship.Duplicate             Duplicate entity            
  * @property {ActRelationship} relationship.$other Unclassified
- * @property {SecurityPolicyInstance} policy            Gets or sets the security policy instances associated with the act            
- * @property {object} extension            Gets a list of all extensions associated with the act            
+ * @property {SecurityPolicyInstance} policy Gets or sets the security policy instances associated with the act
+ * @property {object} extension Gets a list of all extensions associated with the act
  * @property {string} extension.classifier  where classifier is from {@link Extension} extensionType
- * @property {string} note            Gets a list of all notes associated with the act            
- * @property {object} tag            Gets a list of all tags associated with the act            
+ * @property {ActNote} note Gets a list of all notes associated with the act
+ * @property {object} tag Gets a list of all tags associated with the act
  * @property {string} tag.classifier  where classifier is from {@link Tag} key
- * @property {ActProtocol} protocol            Identifies protocols attached to the act            
- * @property {object} participation            Gets or sets the entities and participations they play in the act            
+ * @property {ActProtocol} protocol Identifies protocols attached to the act
+ * @property {object} participation Gets or sets the entities and participations they play in the act
  * @property {ActParticipation} participation.Admitter             The player entity was the person who was responsible for admitting the patient into a facility or care scenario.            
  * @property {ActParticipation} participation.Attender             The player entity represents the attending physician for the patient            
  * @property {ActParticipation} participation.Authenticator             The player entity represents an entity which authenticates the provision of care            
@@ -8931,26 +9276,29 @@ function CarePlan (copyData) {
  * @property {ActParticipation} participation.Via             The player entity represents an entity where the act occurred "via" this entity (i.e. in transport)            
  * @property {ActParticipation} participation.Witness             The player entity represents a legal witness to the act occurring.            
  * @property {ActParticipation} participation.$other Unclassified
- * @property {GeoTag} geo            Gets or sets the geo-tag            
+ * @property {GeoTag} geo Gets or sets the geo-tag
  * @property {string} previousVersion
  * @property {string} version
  * @property {number} sequence
- * @property {Date} creationTimeModel [Delay loaded from creationTime],             Gets or sets the time at which the data was created            
- * @property {Date} creationTime            Gets or sets the creation time as an ISO date format            
- * @property {Date} obsoletionTimeModel [Delay loaded from obsoletionTime],             Gets or sets the time when the data is or will become invalid            
- * @property {Date} obsoletionTime            Gets or sets the time that the data is no longer valid (was deleted/obsoleted) in ISO format            
- * @property {SecurityProvenance} createdByModel [Delay loaded from createdBy],             Gets or sets the user that created this base data            
- * @property {Date} modifiedOn            Gets the time that the object was last modified (from base data, default to CreationTime)            
- * @property {SecurityProvenance} obsoletedByModel [Delay loaded from obsoletedBy],             Gets or sets the user that obsoleted this base data            
- * @property {string} createdBy            Gets or sets the security provenance object which represents the creation of this object            
- * @property {string} obsoletedBy            Gets or sets the security provenance object which represents the obsoletion of this data            
- * @property {string} id            Gets or sets the primary identifying UUID of this object            
- * @property {string} $type            Gets the type registration of this object            
+ * @property {Date} creationTimeModel [Delay loaded from creationTime],  Gets or sets the time at which the data was created
+ * @property {Date} creationTime Gets or sets the creation time as an ISO date format
+ * @property {Date} obsoletionTimeModel [Delay loaded from obsoletionTime],  Gets or sets the time when the data is or will become invalid
+ * @property {Date} obsoletionTime Gets or sets the time that the data is no longer valid (was deleted/obsoleted) in ISO format
+ * @property {SecurityProvenance} createdByModel [Delay loaded from createdBy],  Gets or sets the user that created this base data
+ * @property {Date} modifiedOn Gets the time that the object was last modified (from base data, default to CreationTime)
+ * @property {SecurityProvenance} obsoletedByModel [Delay loaded from obsoletedBy],  Gets or sets the user that obsoleted this base data
+ * @property {string} createdBy Gets or sets the security provenance object which represents the creation of this object
+ * @property {string} obsoletedBy Gets or sets the security provenance object which represents the obsoletion of this data
+ * @property {string} id Gets or sets the primary identifying UUID of this object
+ * @property {BatchOperationType} operation Gets or sets the operation(see: {@link BatchOperationType} for values)
+ * @property {string} $type Gets the type registration of this object
  * @param {ControlAct} copyData Copy constructor (if present)
  */
 function ControlAct (copyData) { 
 	this.$type = 'ControlAct';
 	if(copyData) {
+	/** @type {BatchOperationType} */
+	this.operation = copyData.operation;
 	/** @type {string} */
 	this.id = copyData.id;
 	/** @type {string} */
@@ -8985,7 +9333,7 @@ function ControlAct (copyData) {
 	this.protocol = copyData.protocol;
 	/** @type {object} */
 	this.tag = copyData.tag;
-	/** @type {string} */
+	/** @type {ActNote} */
 	this.note = copyData.note;
 	/** @type {object} */
 	this.extension = copyData.extension;
@@ -9029,37 +9377,38 @@ function ControlAct (copyData) {
 	this.isNegated = copyData.isNegated;
 	}
 }  // ControlAct 
-// SanteDB.Core.Model.Acts.FinancialContract, SanteDB.Core.Model, Version=2.0.59.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Acts.FinancialContract, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
 //if(!FinancialContract)
 /**
  * @class
  * @constructor
  * @public
- * @summary             Represents a financial contract which is executed between two parties (examples: insurance)            
+ * @summary Represents a financial contract which is executed between two parties (examples: insurance)
  * @description A financial contract represents a contract between two parties whereby there is a financial 
- *             motive involved. This can be a contract between an employer and an employee, two or more clinics,
- *             or even an insurance policy
- * @property {string} paymentTerms            Gets or sets the payment terms            
- * @property {Concept} paymentTermsModel [Delay loaded from paymentTerms],             Gets or sets the payment terms            
- * @property {boolean} isNegated            Gets or sets an indicator which identifies whether the act actually occurred, or            specifically did not occur            
- * @property {string} template            Gets the template UUID upon which this act is based            
- * @property {TemplateDefinition} templateModel [Delay loaded from template],             Gets or sets the template definition            
- * @property {Date} actTime            Gets or sets the moment in time that this act occurred in ISO format            
- * @property {Date} startTime            Gets or sets the time when the act should or did start ocurring in ISO format            
- * @property {Date} stopTime            Gets or sets the time when the act should or did stop ocurring in ISO format            
- * @property {string} classConcept            Gets or sets the key of the concept which classifies the act.            (see: {@link ActClassKeys} for values)
- * @property {string} moodConcept            Gets or sets the key of the concept which specifies the mood of the act.            (see: {@link ActMoodKeys} for values)
- * @property {string} reasonConcept            Gets or sets the key of the concept which defines the reason why the act is or didn't occur            (see: {@link ActReasonKeys} for values)
- * @property {string} statusConcept            Gets or sets the key of the concept which describes the current status of the act            (see: {@link StatusKeys} for values)
- * @property {string} typeConcept            Gets or sets the key of the conccept which further classifies the type of act occurring            
- * @property {Concept} classConceptModel [Delay loaded from classConcept],             Gets or sets the concept which classifies the type of act            
- * @property {Concept} moodConceptModel [Delay loaded from moodConcept],             Gets or sets the concept which specifies the mood of the act            
- * @property {Concept} reasonConceptModel [Delay loaded from reasonConcept],             Gets or sets the concept which indicates the reason of the act            
- * @property {Concept} statusConceptModel [Delay loaded from statusConcept],             Gets or sets the current status concept of the act            
- * @property {Concept} typeConceptModel [Delay loaded from typeConcept],             Type concept identifier            
- * @property {object} identifier            Gets or sets the identifiers by which this act is known as in other systems            
+            motive involved. This can be a contract between an employer and an employee, two or more clinics,
+            or even an insurance policy
+ * @property {string} paymentTerms Gets or sets the payment terms
+ * @property {Concept} paymentTermsModel [Delay loaded from paymentTerms],  Gets or sets the payment terms
+ * @property {boolean} isNegated Gets or sets an indicator which identifies whether the act actually occurred, or
+            specifically did not occur
+ * @property {string} template Gets the template UUID upon which this act is based
+ * @property {TemplateDefinition} templateModel [Delay loaded from template],  Gets or sets the template definition
+ * @property {Date} actTime Gets or sets the moment in time that this act occurred in ISO format
+ * @property {Date} startTime Gets or sets the time when the act should or did start ocurring in ISO format
+ * @property {Date} stopTime Gets or sets the time when the act should or did stop ocurring in ISO format
+ * @property {string} classConcept Gets or sets the key of the concept which classifies the act.(see: {@link ActClassKeys} for values)
+ * @property {string} moodConcept Gets or sets the key of the concept which specifies the mood of the act.(see: {@link ActMoodKeys} for values)
+ * @property {string} reasonConcept Gets or sets the key of the concept which defines the reason why the act is or didn't occur(see: {@link ActReasonKeys} for values)
+ * @property {string} statusConcept Gets or sets the key of the concept which describes the current status of the act(see: {@link StatusKeys} for values)
+ * @property {string} typeConcept Gets or sets the key of the conccept which further classifies the type of act occurring
+ * @property {Concept} classConceptModel [Delay loaded from classConcept],  Gets or sets the concept which classifies the type of act
+ * @property {Concept} moodConceptModel [Delay loaded from moodConcept],  Gets or sets the concept which specifies the mood of the act
+ * @property {Concept} reasonConceptModel [Delay loaded from reasonConcept],  Gets or sets the concept which indicates the reason of the act
+ * @property {Concept} statusConceptModel [Delay loaded from statusConcept],  Gets or sets the current status concept of the act
+ * @property {Concept} typeConceptModel [Delay loaded from typeConcept],  Type concept identifier
+ * @property {object} identifier Gets or sets the identifiers by which this act is known as in other systems
  * @property {ActIdentifier} identifier.classifier  where classifier is from {@link IdentifierBase} authority
- * @property {object} relationship            Gets a list of all associated acts for this act            
+ * @property {object} relationship Gets a list of all associated acts for this act
  * @property {ActRelationship} relationship.Appends             Indicates that the source act appends information contained in the target act            
  * @property {ActRelationship} relationship.Arrival             Links the transortation act from another act            
  * @property {ActRelationship} relationship.Departure             Links a transporation act from another act indicating departure of the subject            
@@ -9085,14 +9434,14 @@ function ControlAct (copyData) {
  * @property {ActRelationship} relationship.Transforms             Indicates that the source act transforms the target act            
  * @property {ActRelationship} relationship.Duplicate             Duplicate entity            
  * @property {ActRelationship} relationship.$other Unclassified
- * @property {SecurityPolicyInstance} policy            Gets or sets the security policy instances associated with the act            
- * @property {object} extension            Gets a list of all extensions associated with the act            
+ * @property {SecurityPolicyInstance} policy Gets or sets the security policy instances associated with the act
+ * @property {object} extension Gets a list of all extensions associated with the act
  * @property {string} extension.classifier  where classifier is from {@link Extension} extensionType
- * @property {string} note            Gets a list of all notes associated with the act            
- * @property {object} tag            Gets a list of all tags associated with the act            
+ * @property {ActNote} note Gets a list of all notes associated with the act
+ * @property {object} tag Gets a list of all tags associated with the act
  * @property {string} tag.classifier  where classifier is from {@link Tag} key
- * @property {ActProtocol} protocol            Identifies protocols attached to the act            
- * @property {object} participation            Gets or sets the entities and participations they play in the act            
+ * @property {ActProtocol} protocol Identifies protocols attached to the act
+ * @property {object} participation Gets or sets the entities and participations they play in the act
  * @property {ActParticipation} participation.Admitter             The player entity was the person who was responsible for admitting the patient into a facility or care scenario.            
  * @property {ActParticipation} participation.Attender             The player entity represents the attending physician for the patient            
  * @property {ActParticipation} participation.Authenticator             The player entity represents an entity which authenticates the provision of care            
@@ -9150,26 +9499,29 @@ function ControlAct (copyData) {
  * @property {ActParticipation} participation.Via             The player entity represents an entity where the act occurred "via" this entity (i.e. in transport)            
  * @property {ActParticipation} participation.Witness             The player entity represents a legal witness to the act occurring.            
  * @property {ActParticipation} participation.$other Unclassified
- * @property {GeoTag} geo            Gets or sets the geo-tag            
+ * @property {GeoTag} geo Gets or sets the geo-tag
  * @property {string} previousVersion
  * @property {string} version
  * @property {number} sequence
- * @property {Date} creationTimeModel [Delay loaded from creationTime],             Gets or sets the time at which the data was created            
- * @property {Date} creationTime            Gets or sets the creation time as an ISO date format            
- * @property {Date} obsoletionTimeModel [Delay loaded from obsoletionTime],             Gets or sets the time when the data is or will become invalid            
- * @property {Date} obsoletionTime            Gets or sets the time that the data is no longer valid (was deleted/obsoleted) in ISO format            
- * @property {SecurityProvenance} createdByModel [Delay loaded from createdBy],             Gets or sets the user that created this base data            
- * @property {Date} modifiedOn            Gets the time that the object was last modified (from base data, default to CreationTime)            
- * @property {SecurityProvenance} obsoletedByModel [Delay loaded from obsoletedBy],             Gets or sets the user that obsoleted this base data            
- * @property {string} createdBy            Gets or sets the security provenance object which represents the creation of this object            
- * @property {string} obsoletedBy            Gets or sets the security provenance object which represents the obsoletion of this data            
- * @property {string} id            Gets or sets the primary identifying UUID of this object            
- * @property {string} $type            Gets the type registration of this object            
+ * @property {Date} creationTimeModel [Delay loaded from creationTime],  Gets or sets the time at which the data was created
+ * @property {Date} creationTime Gets or sets the creation time as an ISO date format
+ * @property {Date} obsoletionTimeModel [Delay loaded from obsoletionTime],  Gets or sets the time when the data is or will become invalid
+ * @property {Date} obsoletionTime Gets or sets the time that the data is no longer valid (was deleted/obsoleted) in ISO format
+ * @property {SecurityProvenance} createdByModel [Delay loaded from createdBy],  Gets or sets the user that created this base data
+ * @property {Date} modifiedOn Gets the time that the object was last modified (from base data, default to CreationTime)
+ * @property {SecurityProvenance} obsoletedByModel [Delay loaded from obsoletedBy],  Gets or sets the user that obsoleted this base data
+ * @property {string} createdBy Gets or sets the security provenance object which represents the creation of this object
+ * @property {string} obsoletedBy Gets or sets the security provenance object which represents the obsoletion of this data
+ * @property {string} id Gets or sets the primary identifying UUID of this object
+ * @property {BatchOperationType} operation Gets or sets the operation(see: {@link BatchOperationType} for values)
+ * @property {string} $type Gets the type registration of this object
  * @param {FinancialContract} copyData Copy constructor (if present)
  */
 function FinancialContract (copyData) { 
 	this.$type = 'FinancialContract';
 	if(copyData) {
+	/** @type {BatchOperationType} */
+	this.operation = copyData.operation;
 	/** @type {string} */
 	this.id = copyData.id;
 	/** @type {string} */
@@ -9204,7 +9556,7 @@ function FinancialContract (copyData) {
 	this.protocol = copyData.protocol;
 	/** @type {object} */
 	this.tag = copyData.tag;
-	/** @type {string} */
+	/** @type {ActNote} */
 	this.note = copyData.note;
 	/** @type {object} */
 	this.extension = copyData.extension;
@@ -9252,37 +9604,38 @@ function FinancialContract (copyData) {
 	this.paymentTerms = copyData.paymentTerms;
 	}
 }  // FinancialContract 
-// SanteDB.Core.Model.Acts.FinancialTransaction, SanteDB.Core.Model, Version=2.0.59.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Acts.FinancialTransaction, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
 //if(!FinancialTransaction)
 /**
  * @class
  * @constructor
  * @public
- * @summary             Represents an act whereby financial devices are exchanged between accounts            
- * @property {number} amount            Gets or sets the amount of the financial transaction            
- * @property {string} currency            Gets or sets the currency key            
- * @property {Concept} currencyModel [Delay loaded from currency],             Gets or sets the currency             
- * @property {Single} creditExchange            Gets or sets the crediting exchange rate            
- * @property {Single} debitExchange            Gets or sets the debit exchange rate            
- * @property {boolean} isNegated            Gets or sets an indicator which identifies whether the act actually occurred, or            specifically did not occur            
- * @property {string} template            Gets the template UUID upon which this act is based            
- * @property {TemplateDefinition} templateModel [Delay loaded from template],             Gets or sets the template definition            
- * @property {Date} actTime            Gets or sets the moment in time that this act occurred in ISO format            
- * @property {Date} startTime            Gets or sets the time when the act should or did start ocurring in ISO format            
- * @property {Date} stopTime            Gets or sets the time when the act should or did stop ocurring in ISO format            
- * @property {string} classConcept            Gets or sets the key of the concept which classifies the act.            (see: {@link ActClassKeys} for values)
- * @property {string} moodConcept            Gets or sets the key of the concept which specifies the mood of the act.            (see: {@link ActMoodKeys} for values)
- * @property {string} reasonConcept            Gets or sets the key of the concept which defines the reason why the act is or didn't occur            (see: {@link ActReasonKeys} for values)
- * @property {string} statusConcept            Gets or sets the key of the concept which describes the current status of the act            (see: {@link StatusKeys} for values)
- * @property {string} typeConcept            Gets or sets the key of the conccept which further classifies the type of act occurring            
- * @property {Concept} classConceptModel [Delay loaded from classConcept],             Gets or sets the concept which classifies the type of act            
- * @property {Concept} moodConceptModel [Delay loaded from moodConcept],             Gets or sets the concept which specifies the mood of the act            
- * @property {Concept} reasonConceptModel [Delay loaded from reasonConcept],             Gets or sets the concept which indicates the reason of the act            
- * @property {Concept} statusConceptModel [Delay loaded from statusConcept],             Gets or sets the current status concept of the act            
- * @property {Concept} typeConceptModel [Delay loaded from typeConcept],             Type concept identifier            
- * @property {object} identifier            Gets or sets the identifiers by which this act is known as in other systems            
+ * @summary Represents an act whereby financial devices are exchanged between accounts
+ * @property {number} amount Gets or sets the amount of the financial transaction
+ * @property {string} currency Gets or sets the currency key
+ * @property {Concept} currencyModel [Delay loaded from currency],  Gets or sets the currency
+ * @property {Single} creditExchange Gets or sets the crediting exchange rate
+ * @property {Single} debitExchange Gets or sets the debit exchange rate
+ * @property {boolean} isNegated Gets or sets an indicator which identifies whether the act actually occurred, or
+            specifically did not occur
+ * @property {string} template Gets the template UUID upon which this act is based
+ * @property {TemplateDefinition} templateModel [Delay loaded from template],  Gets or sets the template definition
+ * @property {Date} actTime Gets or sets the moment in time that this act occurred in ISO format
+ * @property {Date} startTime Gets or sets the time when the act should or did start ocurring in ISO format
+ * @property {Date} stopTime Gets or sets the time when the act should or did stop ocurring in ISO format
+ * @property {string} classConcept Gets or sets the key of the concept which classifies the act.(see: {@link ActClassKeys} for values)
+ * @property {string} moodConcept Gets or sets the key of the concept which specifies the mood of the act.(see: {@link ActMoodKeys} for values)
+ * @property {string} reasonConcept Gets or sets the key of the concept which defines the reason why the act is or didn't occur(see: {@link ActReasonKeys} for values)
+ * @property {string} statusConcept Gets or sets the key of the concept which describes the current status of the act(see: {@link StatusKeys} for values)
+ * @property {string} typeConcept Gets or sets the key of the conccept which further classifies the type of act occurring
+ * @property {Concept} classConceptModel [Delay loaded from classConcept],  Gets or sets the concept which classifies the type of act
+ * @property {Concept} moodConceptModel [Delay loaded from moodConcept],  Gets or sets the concept which specifies the mood of the act
+ * @property {Concept} reasonConceptModel [Delay loaded from reasonConcept],  Gets or sets the concept which indicates the reason of the act
+ * @property {Concept} statusConceptModel [Delay loaded from statusConcept],  Gets or sets the current status concept of the act
+ * @property {Concept} typeConceptModel [Delay loaded from typeConcept],  Type concept identifier
+ * @property {object} identifier Gets or sets the identifiers by which this act is known as in other systems
  * @property {ActIdentifier} identifier.classifier  where classifier is from {@link IdentifierBase} authority
- * @property {object} relationship            Gets a list of all associated acts for this act            
+ * @property {object} relationship Gets a list of all associated acts for this act
  * @property {ActRelationship} relationship.Appends             Indicates that the source act appends information contained in the target act            
  * @property {ActRelationship} relationship.Arrival             Links the transortation act from another act            
  * @property {ActRelationship} relationship.Departure             Links a transporation act from another act indicating departure of the subject            
@@ -9308,14 +9661,14 @@ function FinancialContract (copyData) {
  * @property {ActRelationship} relationship.Transforms             Indicates that the source act transforms the target act            
  * @property {ActRelationship} relationship.Duplicate             Duplicate entity            
  * @property {ActRelationship} relationship.$other Unclassified
- * @property {SecurityPolicyInstance} policy            Gets or sets the security policy instances associated with the act            
- * @property {object} extension            Gets a list of all extensions associated with the act            
+ * @property {SecurityPolicyInstance} policy Gets or sets the security policy instances associated with the act
+ * @property {object} extension Gets a list of all extensions associated with the act
  * @property {string} extension.classifier  where classifier is from {@link Extension} extensionType
- * @property {string} note            Gets a list of all notes associated with the act            
- * @property {object} tag            Gets a list of all tags associated with the act            
+ * @property {ActNote} note Gets a list of all notes associated with the act
+ * @property {object} tag Gets a list of all tags associated with the act
  * @property {string} tag.classifier  where classifier is from {@link Tag} key
- * @property {ActProtocol} protocol            Identifies protocols attached to the act            
- * @property {object} participation            Gets or sets the entities and participations they play in the act            
+ * @property {ActProtocol} protocol Identifies protocols attached to the act
+ * @property {object} participation Gets or sets the entities and participations they play in the act
  * @property {ActParticipation} participation.Admitter             The player entity was the person who was responsible for admitting the patient into a facility or care scenario.            
  * @property {ActParticipation} participation.Attender             The player entity represents the attending physician for the patient            
  * @property {ActParticipation} participation.Authenticator             The player entity represents an entity which authenticates the provision of care            
@@ -9373,26 +9726,29 @@ function FinancialContract (copyData) {
  * @property {ActParticipation} participation.Via             The player entity represents an entity where the act occurred "via" this entity (i.e. in transport)            
  * @property {ActParticipation} participation.Witness             The player entity represents a legal witness to the act occurring.            
  * @property {ActParticipation} participation.$other Unclassified
- * @property {GeoTag} geo            Gets or sets the geo-tag            
+ * @property {GeoTag} geo Gets or sets the geo-tag
  * @property {string} previousVersion
  * @property {string} version
  * @property {number} sequence
- * @property {Date} creationTimeModel [Delay loaded from creationTime],             Gets or sets the time at which the data was created            
- * @property {Date} creationTime            Gets or sets the creation time as an ISO date format            
- * @property {Date} obsoletionTimeModel [Delay loaded from obsoletionTime],             Gets or sets the time when the data is or will become invalid            
- * @property {Date} obsoletionTime            Gets or sets the time that the data is no longer valid (was deleted/obsoleted) in ISO format            
- * @property {SecurityProvenance} createdByModel [Delay loaded from createdBy],             Gets or sets the user that created this base data            
- * @property {Date} modifiedOn            Gets the time that the object was last modified (from base data, default to CreationTime)            
- * @property {SecurityProvenance} obsoletedByModel [Delay loaded from obsoletedBy],             Gets or sets the user that obsoleted this base data            
- * @property {string} createdBy            Gets or sets the security provenance object which represents the creation of this object            
- * @property {string} obsoletedBy            Gets or sets the security provenance object which represents the obsoletion of this data            
- * @property {string} id            Gets or sets the primary identifying UUID of this object            
- * @property {string} $type            Gets the type registration of this object            
+ * @property {Date} creationTimeModel [Delay loaded from creationTime],  Gets or sets the time at which the data was created
+ * @property {Date} creationTime Gets or sets the creation time as an ISO date format
+ * @property {Date} obsoletionTimeModel [Delay loaded from obsoletionTime],  Gets or sets the time when the data is or will become invalid
+ * @property {Date} obsoletionTime Gets or sets the time that the data is no longer valid (was deleted/obsoleted) in ISO format
+ * @property {SecurityProvenance} createdByModel [Delay loaded from createdBy],  Gets or sets the user that created this base data
+ * @property {Date} modifiedOn Gets the time that the object was last modified (from base data, default to CreationTime)
+ * @property {SecurityProvenance} obsoletedByModel [Delay loaded from obsoletedBy],  Gets or sets the user that obsoleted this base data
+ * @property {string} createdBy Gets or sets the security provenance object which represents the creation of this object
+ * @property {string} obsoletedBy Gets or sets the security provenance object which represents the obsoletion of this data
+ * @property {string} id Gets or sets the primary identifying UUID of this object
+ * @property {BatchOperationType} operation Gets or sets the operation(see: {@link BatchOperationType} for values)
+ * @property {string} $type Gets the type registration of this object
  * @param {FinancialTransaction} copyData Copy constructor (if present)
  */
 function FinancialTransaction (copyData) { 
 	this.$type = 'FinancialTransaction';
 	if(copyData) {
+	/** @type {BatchOperationType} */
+	this.operation = copyData.operation;
 	/** @type {string} */
 	this.id = copyData.id;
 	/** @type {string} */
@@ -9427,7 +9783,7 @@ function FinancialTransaction (copyData) {
 	this.protocol = copyData.protocol;
 	/** @type {object} */
 	this.tag = copyData.tag;
-	/** @type {string} */
+	/** @type {ActNote} */
 	this.note = copyData.note;
 	/** @type {object} */
 	this.extension = copyData.extension;
@@ -9481,42 +9837,43 @@ function FinancialTransaction (copyData) {
 	this.amount = copyData.amount;
 	}
 }  // FinancialTransaction 
-// SanteDB.Core.Model.Acts.InvoiceElement, SanteDB.Core.Model, Version=2.0.59.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Acts.InvoiceElement, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
 //if(!InvoiceElement)
 /**
  * @class
  * @constructor
  * @public
- * @summary             Represents an invoice element            
+ * @summary Represents an invoice element
  * @description An invoice element represents an act on a single financial transaction which records
- *             the financial impact of a particular service.
- * @property {string} modifier            Gets or sets the modifier            
- * @property {Concept} modifierModel [Delay loaded from modifier],             Gets or sets the modifier            
- * @property {number} unitQty            Gets or sets the number of units included in the price            
- * @property {number} unitPrice            Gets or sets the price of each unit            
- * @property {number} netPrice            Gets or sets the net amount            
- * @property {string} currency            Gets or sets the currency of the invoice line item            
- * @property {Concept} currencyModel [Delay loaded from currency],             Gets or sets the currency of this transaction            
- * @property {Single} factor            When provided, can specify the factor to allow for different amounts to be charged based on insurance provider negotiations            
- * @property {boolean} isNegated            Gets or sets an indicator which identifies whether the act actually occurred, or            specifically did not occur            
- * @property {string} template            Gets the template UUID upon which this act is based            
- * @property {TemplateDefinition} templateModel [Delay loaded from template],             Gets or sets the template definition            
- * @property {Date} actTime            Gets or sets the moment in time that this act occurred in ISO format            
- * @property {Date} startTime            Gets or sets the time when the act should or did start ocurring in ISO format            
- * @property {Date} stopTime            Gets or sets the time when the act should or did stop ocurring in ISO format            
- * @property {string} classConcept            Gets or sets the key of the concept which classifies the act.            (see: {@link ActClassKeys} for values)
- * @property {string} moodConcept            Gets or sets the key of the concept which specifies the mood of the act.            (see: {@link ActMoodKeys} for values)
- * @property {string} reasonConcept            Gets or sets the key of the concept which defines the reason why the act is or didn't occur            (see: {@link ActReasonKeys} for values)
- * @property {string} statusConcept            Gets or sets the key of the concept which describes the current status of the act            (see: {@link StatusKeys} for values)
- * @property {string} typeConcept            Gets or sets the key of the conccept which further classifies the type of act occurring            
- * @property {Concept} classConceptModel [Delay loaded from classConcept],             Gets or sets the concept which classifies the type of act            
- * @property {Concept} moodConceptModel [Delay loaded from moodConcept],             Gets or sets the concept which specifies the mood of the act            
- * @property {Concept} reasonConceptModel [Delay loaded from reasonConcept],             Gets or sets the concept which indicates the reason of the act            
- * @property {Concept} statusConceptModel [Delay loaded from statusConcept],             Gets or sets the current status concept of the act            
- * @property {Concept} typeConceptModel [Delay loaded from typeConcept],             Type concept identifier            
- * @property {object} identifier            Gets or sets the identifiers by which this act is known as in other systems            
+            the financial impact of a particular service.
+ * @property {string} modifier Gets or sets the modifier
+ * @property {Concept} modifierModel [Delay loaded from modifier],  Gets or sets the modifier
+ * @property {number} unitQty Gets or sets the number of units included in the price
+ * @property {number} unitPrice Gets or sets the price of each unit
+ * @property {number} netPrice Gets or sets the net amount
+ * @property {string} currency Gets or sets the currency of the invoice line item
+ * @property {Concept} currencyModel [Delay loaded from currency],  Gets or sets the currency of this transaction
+ * @property {Single} factor When provided, can specify the factor to allow for different amounts to be charged based on insurance provider negotiations
+ * @property {boolean} isNegated Gets or sets an indicator which identifies whether the act actually occurred, or
+            specifically did not occur
+ * @property {string} template Gets the template UUID upon which this act is based
+ * @property {TemplateDefinition} templateModel [Delay loaded from template],  Gets or sets the template definition
+ * @property {Date} actTime Gets or sets the moment in time that this act occurred in ISO format
+ * @property {Date} startTime Gets or sets the time when the act should or did start ocurring in ISO format
+ * @property {Date} stopTime Gets or sets the time when the act should or did stop ocurring in ISO format
+ * @property {string} classConcept Gets or sets the key of the concept which classifies the act.(see: {@link ActClassKeys} for values)
+ * @property {string} moodConcept Gets or sets the key of the concept which specifies the mood of the act.(see: {@link ActMoodKeys} for values)
+ * @property {string} reasonConcept Gets or sets the key of the concept which defines the reason why the act is or didn't occur(see: {@link ActReasonKeys} for values)
+ * @property {string} statusConcept Gets or sets the key of the concept which describes the current status of the act(see: {@link StatusKeys} for values)
+ * @property {string} typeConcept Gets or sets the key of the conccept which further classifies the type of act occurring
+ * @property {Concept} classConceptModel [Delay loaded from classConcept],  Gets or sets the concept which classifies the type of act
+ * @property {Concept} moodConceptModel [Delay loaded from moodConcept],  Gets or sets the concept which specifies the mood of the act
+ * @property {Concept} reasonConceptModel [Delay loaded from reasonConcept],  Gets or sets the concept which indicates the reason of the act
+ * @property {Concept} statusConceptModel [Delay loaded from statusConcept],  Gets or sets the current status concept of the act
+ * @property {Concept} typeConceptModel [Delay loaded from typeConcept],  Type concept identifier
+ * @property {object} identifier Gets or sets the identifiers by which this act is known as in other systems
  * @property {ActIdentifier} identifier.classifier  where classifier is from {@link IdentifierBase} authority
- * @property {object} relationship            Gets a list of all associated acts for this act            
+ * @property {object} relationship Gets a list of all associated acts for this act
  * @property {ActRelationship} relationship.Appends             Indicates that the source act appends information contained in the target act            
  * @property {ActRelationship} relationship.Arrival             Links the transortation act from another act            
  * @property {ActRelationship} relationship.Departure             Links a transporation act from another act indicating departure of the subject            
@@ -9542,14 +9899,14 @@ function FinancialTransaction (copyData) {
  * @property {ActRelationship} relationship.Transforms             Indicates that the source act transforms the target act            
  * @property {ActRelationship} relationship.Duplicate             Duplicate entity            
  * @property {ActRelationship} relationship.$other Unclassified
- * @property {SecurityPolicyInstance} policy            Gets or sets the security policy instances associated with the act            
- * @property {object} extension            Gets a list of all extensions associated with the act            
+ * @property {SecurityPolicyInstance} policy Gets or sets the security policy instances associated with the act
+ * @property {object} extension Gets a list of all extensions associated with the act
  * @property {string} extension.classifier  where classifier is from {@link Extension} extensionType
- * @property {string} note            Gets a list of all notes associated with the act            
- * @property {object} tag            Gets a list of all tags associated with the act            
+ * @property {ActNote} note Gets a list of all notes associated with the act
+ * @property {object} tag Gets a list of all tags associated with the act
  * @property {string} tag.classifier  where classifier is from {@link Tag} key
- * @property {ActProtocol} protocol            Identifies protocols attached to the act            
- * @property {object} participation            Gets or sets the entities and participations they play in the act            
+ * @property {ActProtocol} protocol Identifies protocols attached to the act
+ * @property {object} participation Gets or sets the entities and participations they play in the act
  * @property {ActParticipation} participation.Admitter             The player entity was the person who was responsible for admitting the patient into a facility or care scenario.            
  * @property {ActParticipation} participation.Attender             The player entity represents the attending physician for the patient            
  * @property {ActParticipation} participation.Authenticator             The player entity represents an entity which authenticates the provision of care            
@@ -9607,26 +9964,29 @@ function FinancialTransaction (copyData) {
  * @property {ActParticipation} participation.Via             The player entity represents an entity where the act occurred "via" this entity (i.e. in transport)            
  * @property {ActParticipation} participation.Witness             The player entity represents a legal witness to the act occurring.            
  * @property {ActParticipation} participation.$other Unclassified
- * @property {GeoTag} geo            Gets or sets the geo-tag            
+ * @property {GeoTag} geo Gets or sets the geo-tag
  * @property {string} previousVersion
  * @property {string} version
  * @property {number} sequence
- * @property {Date} creationTimeModel [Delay loaded from creationTime],             Gets or sets the time at which the data was created            
- * @property {Date} creationTime            Gets or sets the creation time as an ISO date format            
- * @property {Date} obsoletionTimeModel [Delay loaded from obsoletionTime],             Gets or sets the time when the data is or will become invalid            
- * @property {Date} obsoletionTime            Gets or sets the time that the data is no longer valid (was deleted/obsoleted) in ISO format            
- * @property {SecurityProvenance} createdByModel [Delay loaded from createdBy],             Gets or sets the user that created this base data            
- * @property {Date} modifiedOn            Gets the time that the object was last modified (from base data, default to CreationTime)            
- * @property {SecurityProvenance} obsoletedByModel [Delay loaded from obsoletedBy],             Gets or sets the user that obsoleted this base data            
- * @property {string} createdBy            Gets or sets the security provenance object which represents the creation of this object            
- * @property {string} obsoletedBy            Gets or sets the security provenance object which represents the obsoletion of this data            
- * @property {string} id            Gets or sets the primary identifying UUID of this object            
- * @property {string} $type            Gets the type registration of this object            
+ * @property {Date} creationTimeModel [Delay loaded from creationTime],  Gets or sets the time at which the data was created
+ * @property {Date} creationTime Gets or sets the creation time as an ISO date format
+ * @property {Date} obsoletionTimeModel [Delay loaded from obsoletionTime],  Gets or sets the time when the data is or will become invalid
+ * @property {Date} obsoletionTime Gets or sets the time that the data is no longer valid (was deleted/obsoleted) in ISO format
+ * @property {SecurityProvenance} createdByModel [Delay loaded from createdBy],  Gets or sets the user that created this base data
+ * @property {Date} modifiedOn Gets the time that the object was last modified (from base data, default to CreationTime)
+ * @property {SecurityProvenance} obsoletedByModel [Delay loaded from obsoletedBy],  Gets or sets the user that obsoleted this base data
+ * @property {string} createdBy Gets or sets the security provenance object which represents the creation of this object
+ * @property {string} obsoletedBy Gets or sets the security provenance object which represents the obsoletion of this data
+ * @property {string} id Gets or sets the primary identifying UUID of this object
+ * @property {BatchOperationType} operation Gets or sets the operation(see: {@link BatchOperationType} for values)
+ * @property {string} $type Gets the type registration of this object
  * @param {InvoiceElement} copyData Copy constructor (if present)
  */
 function InvoiceElement (copyData) { 
 	this.$type = 'InvoiceElement';
 	if(copyData) {
+	/** @type {BatchOperationType} */
+	this.operation = copyData.operation;
 	/** @type {string} */
 	this.id = copyData.id;
 	/** @type {string} */
@@ -9661,7 +10021,7 @@ function InvoiceElement (copyData) {
 	this.protocol = copyData.protocol;
 	/** @type {object} */
 	this.tag = copyData.tag;
-	/** @type {string} */
+	/** @type {ActNote} */
 	this.note = copyData.note;
 	/** @type {object} */
 	this.extension = copyData.extension;
@@ -9721,42 +10081,53 @@ function InvoiceElement (copyData) {
 	this.modifier = copyData.modifier;
 	}
 }  // InvoiceElement 
-// SanteDB.Core.Model.Acts.Observation, SanteDB.Core.Model, Version=2.0.59.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Acts.Observation, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
 //if(!Observation)
 /**
  * @class
  * @constructor
  * @public
- * @summary             Represents a act () which is an observation            
- * @description 
- *             The observation class itself is an abstract class which is generically used to represent something that is observed about a patient.
- *             
- *             It is not recommended to use this class directly, rather one of its sub classes based on the type of observation being made such as:
- *             Coded observation  for observations whose values are codified (example: blood type, presentation, etc.), Quantity observations  for observations whose values are quantified values (example: weight, height, etc.), Text observations  for observations whose values are textual in nature.
- *             No matter what type of value an observation carries (coded, quantity, text) it is always classified by the type concept .
- *             
- * @property {string} interpretationConcept            Gets or sets the interpretation concept            
- * @property {string} valueType            Value type            
- * @property {Concept} interpretationConceptModel [Delay loaded from interpretationConcept],             Gets or sets the concept which indicates the interpretation of the observtion            
- * @property {boolean} isNegated            Gets or sets an indicator which identifies whether the act actually occurred, or            specifically did not occur            
- * @property {string} template            Gets the template UUID upon which this act is based            
- * @property {TemplateDefinition} templateModel [Delay loaded from template],             Gets or sets the template definition            
- * @property {Date} actTime            Gets or sets the moment in time that this act occurred in ISO format            
- * @property {Date} startTime            Gets or sets the time when the act should or did start ocurring in ISO format            
- * @property {Date} stopTime            Gets or sets the time when the act should or did stop ocurring in ISO format            
- * @property {string} classConcept            Gets or sets the key of the concept which classifies the act.            (see: {@link ActClassKeys} for values)
- * @property {string} moodConcept            Gets or sets the key of the concept which specifies the mood of the act.            (see: {@link ActMoodKeys} for values)
- * @property {string} reasonConcept            Gets or sets the key of the concept which defines the reason why the act is or didn't occur            (see: {@link ActReasonKeys} for values)
- * @property {string} statusConcept            Gets or sets the key of the concept which describes the current status of the act            (see: {@link StatusKeys} for values)
- * @property {string} typeConcept            Gets or sets the key of the conccept which further classifies the type of act occurring            
- * @property {Concept} classConceptModel [Delay loaded from classConcept],             Gets or sets the concept which classifies the type of act            
- * @property {Concept} moodConceptModel [Delay loaded from moodConcept],             Gets or sets the concept which specifies the mood of the act            
- * @property {Concept} reasonConceptModel [Delay loaded from reasonConcept],             Gets or sets the concept which indicates the reason of the act            
- * @property {Concept} statusConceptModel [Delay loaded from statusConcept],             Gets or sets the current status concept of the act            
- * @property {Concept} typeConceptModel [Delay loaded from typeConcept],             Type concept identifier            
- * @property {object} identifier            Gets or sets the identifiers by which this act is known as in other systems            
+ * @summary Represents a act (
+    {@link Act}
+  ) which is an observation
+ * @description <p>
+            The observation class itself is an abstract class which is generically used to represent something that is observed about a patient.
+            </p><p>
+            It is not recommended to use this class directly, rather one of its sub classes based on the type of observation being made such as:
+            </p><table><thead><tr><th>Observation</th><th>Type</th><th>Description</th></tr></thead><tbody><tr><td>Coded</td><td>
+    {@link CodedObservation}
+  </td><td>Observations whose values are codified (example: blood type, presentation, etc.)</td></tr><tr><td>Quantity</td><td>
+    {@link QuantityObservation}
+  </td><td>Observations whose values are codified (example: blood type, presentation, etc.)</td></tr><tr><td>Text</td><td>
+    {@link TextObservation}
+  </td><td>Observations whose values are codified (example: blood type, presentation, etc.)</td></tr></tbody></table><p>
+            No matter what type of value an observation carries (coded, quantity, text) it is always classified by the type concept (
+    {@link TypeConceptKey}
+  ).
+            </p>
+ * @property {string} interpretationConcept Gets or sets the interpretation concept
+ * @property {string} valueType Value type
+ * @property {Concept} interpretationConceptModel [Delay loaded from interpretationConcept],  Gets or sets the concept which indicates the interpretation of the observtion
+ * @property {boolean} isNegated Gets or sets an indicator which identifies whether the act actually occurred, or
+            specifically did not occur
+ * @property {string} template Gets the template UUID upon which this act is based
+ * @property {TemplateDefinition} templateModel [Delay loaded from template],  Gets or sets the template definition
+ * @property {Date} actTime Gets or sets the moment in time that this act occurred in ISO format
+ * @property {Date} startTime Gets or sets the time when the act should or did start ocurring in ISO format
+ * @property {Date} stopTime Gets or sets the time when the act should or did stop ocurring in ISO format
+ * @property {string} classConcept Gets or sets the key of the concept which classifies the act.(see: {@link ActClassKeys} for values)
+ * @property {string} moodConcept Gets or sets the key of the concept which specifies the mood of the act.(see: {@link ActMoodKeys} for values)
+ * @property {string} reasonConcept Gets or sets the key of the concept which defines the reason why the act is or didn't occur(see: {@link ActReasonKeys} for values)
+ * @property {string} statusConcept Gets or sets the key of the concept which describes the current status of the act(see: {@link StatusKeys} for values)
+ * @property {string} typeConcept Gets or sets the key of the conccept which further classifies the type of act occurring
+ * @property {Concept} classConceptModel [Delay loaded from classConcept],  Gets or sets the concept which classifies the type of act
+ * @property {Concept} moodConceptModel [Delay loaded from moodConcept],  Gets or sets the concept which specifies the mood of the act
+ * @property {Concept} reasonConceptModel [Delay loaded from reasonConcept],  Gets or sets the concept which indicates the reason of the act
+ * @property {Concept} statusConceptModel [Delay loaded from statusConcept],  Gets or sets the current status concept of the act
+ * @property {Concept} typeConceptModel [Delay loaded from typeConcept],  Type concept identifier
+ * @property {object} identifier Gets or sets the identifiers by which this act is known as in other systems
  * @property {ActIdentifier} identifier.classifier  where classifier is from {@link IdentifierBase} authority
- * @property {object} relationship            Gets a list of all associated acts for this act            
+ * @property {object} relationship Gets a list of all associated acts for this act
  * @property {ActRelationship} relationship.Appends             Indicates that the source act appends information contained in the target act            
  * @property {ActRelationship} relationship.Arrival             Links the transortation act from another act            
  * @property {ActRelationship} relationship.Departure             Links a transporation act from another act indicating departure of the subject            
@@ -9782,14 +10153,14 @@ function InvoiceElement (copyData) {
  * @property {ActRelationship} relationship.Transforms             Indicates that the source act transforms the target act            
  * @property {ActRelationship} relationship.Duplicate             Duplicate entity            
  * @property {ActRelationship} relationship.$other Unclassified
- * @property {SecurityPolicyInstance} policy            Gets or sets the security policy instances associated with the act            
- * @property {object} extension            Gets a list of all extensions associated with the act            
+ * @property {SecurityPolicyInstance} policy Gets or sets the security policy instances associated with the act
+ * @property {object} extension Gets a list of all extensions associated with the act
  * @property {string} extension.classifier  where classifier is from {@link Extension} extensionType
- * @property {string} note            Gets a list of all notes associated with the act            
- * @property {object} tag            Gets a list of all tags associated with the act            
+ * @property {ActNote} note Gets a list of all notes associated with the act
+ * @property {object} tag Gets a list of all tags associated with the act
  * @property {string} tag.classifier  where classifier is from {@link Tag} key
- * @property {ActProtocol} protocol            Identifies protocols attached to the act            
- * @property {object} participation            Gets or sets the entities and participations they play in the act            
+ * @property {ActProtocol} protocol Identifies protocols attached to the act
+ * @property {object} participation Gets or sets the entities and participations they play in the act
  * @property {ActParticipation} participation.Admitter             The player entity was the person who was responsible for admitting the patient into a facility or care scenario.            
  * @property {ActParticipation} participation.Attender             The player entity represents the attending physician for the patient            
  * @property {ActParticipation} participation.Authenticator             The player entity represents an entity which authenticates the provision of care            
@@ -9847,26 +10218,29 @@ function InvoiceElement (copyData) {
  * @property {ActParticipation} participation.Via             The player entity represents an entity where the act occurred "via" this entity (i.e. in transport)            
  * @property {ActParticipation} participation.Witness             The player entity represents a legal witness to the act occurring.            
  * @property {ActParticipation} participation.$other Unclassified
- * @property {GeoTag} geo            Gets or sets the geo-tag            
+ * @property {GeoTag} geo Gets or sets the geo-tag
  * @property {string} previousVersion
  * @property {string} version
  * @property {number} sequence
- * @property {Date} creationTimeModel [Delay loaded from creationTime],             Gets or sets the time at which the data was created            
- * @property {Date} creationTime            Gets or sets the creation time as an ISO date format            
- * @property {Date} obsoletionTimeModel [Delay loaded from obsoletionTime],             Gets or sets the time when the data is or will become invalid            
- * @property {Date} obsoletionTime            Gets or sets the time that the data is no longer valid (was deleted/obsoleted) in ISO format            
- * @property {SecurityProvenance} createdByModel [Delay loaded from createdBy],             Gets or sets the user that created this base data            
- * @property {Date} modifiedOn            Gets the time that the object was last modified (from base data, default to CreationTime)            
- * @property {SecurityProvenance} obsoletedByModel [Delay loaded from obsoletedBy],             Gets or sets the user that obsoleted this base data            
- * @property {string} createdBy            Gets or sets the security provenance object which represents the creation of this object            
- * @property {string} obsoletedBy            Gets or sets the security provenance object which represents the obsoletion of this data            
- * @property {string} id            Gets or sets the primary identifying UUID of this object            
- * @property {string} $type            Gets the type registration of this object            
+ * @property {Date} creationTimeModel [Delay loaded from creationTime],  Gets or sets the time at which the data was created
+ * @property {Date} creationTime Gets or sets the creation time as an ISO date format
+ * @property {Date} obsoletionTimeModel [Delay loaded from obsoletionTime],  Gets or sets the time when the data is or will become invalid
+ * @property {Date} obsoletionTime Gets or sets the time that the data is no longer valid (was deleted/obsoleted) in ISO format
+ * @property {SecurityProvenance} createdByModel [Delay loaded from createdBy],  Gets or sets the user that created this base data
+ * @property {Date} modifiedOn Gets the time that the object was last modified (from base data, default to CreationTime)
+ * @property {SecurityProvenance} obsoletedByModel [Delay loaded from obsoletedBy],  Gets or sets the user that obsoleted this base data
+ * @property {string} createdBy Gets or sets the security provenance object which represents the creation of this object
+ * @property {string} obsoletedBy Gets or sets the security provenance object which represents the obsoletion of this data
+ * @property {string} id Gets or sets the primary identifying UUID of this object
+ * @property {BatchOperationType} operation Gets or sets the operation(see: {@link BatchOperationType} for values)
+ * @property {string} $type Gets the type registration of this object
  * @param {Observation} copyData Copy constructor (if present)
  */
 function Observation (copyData) { 
 	this.$type = 'Observation';
 	if(copyData) {
+	/** @type {BatchOperationType} */
+	this.operation = copyData.operation;
 	/** @type {string} */
 	this.id = copyData.id;
 	/** @type {string} */
@@ -9901,7 +10275,7 @@ function Observation (copyData) {
 	this.protocol = copyData.protocol;
 	/** @type {object} */
 	this.tag = copyData.tag;
-	/** @type {string} */
+	/** @type {ActNote} */
 	this.note = copyData.note;
 	/** @type {object} */
 	this.extension = copyData.extension;
@@ -9951,42 +10325,41 @@ function Observation (copyData) {
 	this.interpretationConcept = copyData.interpretationConcept;
 	}
 }  // Observation 
-// SanteDB.Core.Model.Acts.QuantityObservation, SanteDB.Core.Model, Version=2.0.59.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Acts.QuantityObservation, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
 //if(!QuantityObservation)
 /**
  * @class
  * @constructor
  * @public
- * @summary             Represents an observation that contains a quantity            
- * @description 
- *             The quantity observation class should be used whenever you wish to store an observation which carries a numerical value 
- *             and an optional unit of measure (example: length = 3.2 ft, weight = 1.2 kg, etc.)
- *             
- * @property {number} value            Gets or sets the observed quantity            
- * @property {string} valueType            Value type            
- * @property {string} unitOfMeasure            Gets or sets the key of the uom concept            
- * @property {Concept} unitOfMeasureModel [Delay loaded from unitOfMeasure],             Gets or sets the unit of measure            
- * @property {string} interpretationConcept            Gets or sets the interpretation concept            
- * @property {Concept} interpretationConceptModel [Delay loaded from interpretationConcept],             Gets or sets the concept which indicates the interpretation of the observtion            
- * @property {boolean} isNegated            Gets or sets an indicator which identifies whether the act actually occurred, or            specifically did not occur            
- * @property {string} template            Gets the template UUID upon which this act is based            
- * @property {TemplateDefinition} templateModel [Delay loaded from template],             Gets or sets the template definition            
- * @property {Date} actTime            Gets or sets the moment in time that this act occurred in ISO format            
- * @property {Date} startTime            Gets or sets the time when the act should or did start ocurring in ISO format            
- * @property {Date} stopTime            Gets or sets the time when the act should or did stop ocurring in ISO format            
- * @property {string} classConcept            Gets or sets the key of the concept which classifies the act.            (see: {@link ActClassKeys} for values)
- * @property {string} moodConcept            Gets or sets the key of the concept which specifies the mood of the act.            (see: {@link ActMoodKeys} for values)
- * @property {string} reasonConcept            Gets or sets the key of the concept which defines the reason why the act is or didn't occur            (see: {@link ActReasonKeys} for values)
- * @property {string} statusConcept            Gets or sets the key of the concept which describes the current status of the act            (see: {@link StatusKeys} for values)
- * @property {string} typeConcept            Gets or sets the key of the conccept which further classifies the type of act occurring            
- * @property {Concept} classConceptModel [Delay loaded from classConcept],             Gets or sets the concept which classifies the type of act            
- * @property {Concept} moodConceptModel [Delay loaded from moodConcept],             Gets or sets the concept which specifies the mood of the act            
- * @property {Concept} reasonConceptModel [Delay loaded from reasonConcept],             Gets or sets the concept which indicates the reason of the act            
- * @property {Concept} statusConceptModel [Delay loaded from statusConcept],             Gets or sets the current status concept of the act            
- * @property {Concept} typeConceptModel [Delay loaded from typeConcept],             Type concept identifier            
- * @property {object} identifier            Gets or sets the identifiers by which this act is known as in other systems            
+ * @summary Represents an observation that contains a quantity
+ * @description The quantity observation class should be used whenever you wish to store an observation which carries a numerical value
+            and an optional unit of measure (example: length = 3.2 ft, weight = 1.2 kg, etc.)
+ * @property {number} value Gets or sets the observed quantity
+ * @property {string} valueType Value type
+ * @property {string} unitOfMeasure Gets or sets the key of the uom concept
+ * @property {Concept} unitOfMeasureModel [Delay loaded from unitOfMeasure],  Gets or sets the unit of measure
+ * @property {string} interpretationConcept Gets or sets the interpretation concept
+ * @property {Concept} interpretationConceptModel [Delay loaded from interpretationConcept],  Gets or sets the concept which indicates the interpretation of the observtion
+ * @property {boolean} isNegated Gets or sets an indicator which identifies whether the act actually occurred, or
+            specifically did not occur
+ * @property {string} template Gets the template UUID upon which this act is based
+ * @property {TemplateDefinition} templateModel [Delay loaded from template],  Gets or sets the template definition
+ * @property {Date} actTime Gets or sets the moment in time that this act occurred in ISO format
+ * @property {Date} startTime Gets or sets the time when the act should or did start ocurring in ISO format
+ * @property {Date} stopTime Gets or sets the time when the act should or did stop ocurring in ISO format
+ * @property {string} classConcept Gets or sets the key of the concept which classifies the act.(see: {@link ActClassKeys} for values)
+ * @property {string} moodConcept Gets or sets the key of the concept which specifies the mood of the act.(see: {@link ActMoodKeys} for values)
+ * @property {string} reasonConcept Gets or sets the key of the concept which defines the reason why the act is or didn't occur(see: {@link ActReasonKeys} for values)
+ * @property {string} statusConcept Gets or sets the key of the concept which describes the current status of the act(see: {@link StatusKeys} for values)
+ * @property {string} typeConcept Gets or sets the key of the conccept which further classifies the type of act occurring
+ * @property {Concept} classConceptModel [Delay loaded from classConcept],  Gets or sets the concept which classifies the type of act
+ * @property {Concept} moodConceptModel [Delay loaded from moodConcept],  Gets or sets the concept which specifies the mood of the act
+ * @property {Concept} reasonConceptModel [Delay loaded from reasonConcept],  Gets or sets the concept which indicates the reason of the act
+ * @property {Concept} statusConceptModel [Delay loaded from statusConcept],  Gets or sets the current status concept of the act
+ * @property {Concept} typeConceptModel [Delay loaded from typeConcept],  Type concept identifier
+ * @property {object} identifier Gets or sets the identifiers by which this act is known as in other systems
  * @property {ActIdentifier} identifier.classifier  where classifier is from {@link IdentifierBase} authority
- * @property {object} relationship            Gets a list of all associated acts for this act            
+ * @property {object} relationship Gets a list of all associated acts for this act
  * @property {ActRelationship} relationship.Appends             Indicates that the source act appends information contained in the target act            
  * @property {ActRelationship} relationship.Arrival             Links the transortation act from another act            
  * @property {ActRelationship} relationship.Departure             Links a transporation act from another act indicating departure of the subject            
@@ -10012,14 +10385,14 @@ function Observation (copyData) {
  * @property {ActRelationship} relationship.Transforms             Indicates that the source act transforms the target act            
  * @property {ActRelationship} relationship.Duplicate             Duplicate entity            
  * @property {ActRelationship} relationship.$other Unclassified
- * @property {SecurityPolicyInstance} policy            Gets or sets the security policy instances associated with the act            
- * @property {object} extension            Gets a list of all extensions associated with the act            
+ * @property {SecurityPolicyInstance} policy Gets or sets the security policy instances associated with the act
+ * @property {object} extension Gets a list of all extensions associated with the act
  * @property {string} extension.classifier  where classifier is from {@link Extension} extensionType
- * @property {string} note            Gets a list of all notes associated with the act            
- * @property {object} tag            Gets a list of all tags associated with the act            
+ * @property {ActNote} note Gets a list of all notes associated with the act
+ * @property {object} tag Gets a list of all tags associated with the act
  * @property {string} tag.classifier  where classifier is from {@link Tag} key
- * @property {ActProtocol} protocol            Identifies protocols attached to the act            
- * @property {object} participation            Gets or sets the entities and participations they play in the act            
+ * @property {ActProtocol} protocol Identifies protocols attached to the act
+ * @property {object} participation Gets or sets the entities and participations they play in the act
  * @property {ActParticipation} participation.Admitter             The player entity was the person who was responsible for admitting the patient into a facility or care scenario.            
  * @property {ActParticipation} participation.Attender             The player entity represents the attending physician for the patient            
  * @property {ActParticipation} participation.Authenticator             The player entity represents an entity which authenticates the provision of care            
@@ -10077,26 +10450,29 @@ function Observation (copyData) {
  * @property {ActParticipation} participation.Via             The player entity represents an entity where the act occurred "via" this entity (i.e. in transport)            
  * @property {ActParticipation} participation.Witness             The player entity represents a legal witness to the act occurring.            
  * @property {ActParticipation} participation.$other Unclassified
- * @property {GeoTag} geo            Gets or sets the geo-tag            
+ * @property {GeoTag} geo Gets or sets the geo-tag
  * @property {string} previousVersion
  * @property {string} version
  * @property {number} sequence
- * @property {Date} creationTimeModel [Delay loaded from creationTime],             Gets or sets the time at which the data was created            
- * @property {Date} creationTime            Gets or sets the creation time as an ISO date format            
- * @property {Date} obsoletionTimeModel [Delay loaded from obsoletionTime],             Gets or sets the time when the data is or will become invalid            
- * @property {Date} obsoletionTime            Gets or sets the time that the data is no longer valid (was deleted/obsoleted) in ISO format            
- * @property {SecurityProvenance} createdByModel [Delay loaded from createdBy],             Gets or sets the user that created this base data            
- * @property {Date} modifiedOn            Gets the time that the object was last modified (from base data, default to CreationTime)            
- * @property {SecurityProvenance} obsoletedByModel [Delay loaded from obsoletedBy],             Gets or sets the user that obsoleted this base data            
- * @property {string} createdBy            Gets or sets the security provenance object which represents the creation of this object            
- * @property {string} obsoletedBy            Gets or sets the security provenance object which represents the obsoletion of this data            
- * @property {string} id            Gets or sets the primary identifying UUID of this object            
- * @property {string} $type            Gets the type registration of this object            
+ * @property {Date} creationTimeModel [Delay loaded from creationTime],  Gets or sets the time at which the data was created
+ * @property {Date} creationTime Gets or sets the creation time as an ISO date format
+ * @property {Date} obsoletionTimeModel [Delay loaded from obsoletionTime],  Gets or sets the time when the data is or will become invalid
+ * @property {Date} obsoletionTime Gets or sets the time that the data is no longer valid (was deleted/obsoleted) in ISO format
+ * @property {SecurityProvenance} createdByModel [Delay loaded from createdBy],  Gets or sets the user that created this base data
+ * @property {Date} modifiedOn Gets the time that the object was last modified (from base data, default to CreationTime)
+ * @property {SecurityProvenance} obsoletedByModel [Delay loaded from obsoletedBy],  Gets or sets the user that obsoleted this base data
+ * @property {string} createdBy Gets or sets the security provenance object which represents the creation of this object
+ * @property {string} obsoletedBy Gets or sets the security provenance object which represents the obsoletion of this data
+ * @property {string} id Gets or sets the primary identifying UUID of this object
+ * @property {BatchOperationType} operation Gets or sets the operation(see: {@link BatchOperationType} for values)
+ * @property {string} $type Gets the type registration of this object
  * @param {QuantityObservation} copyData Copy constructor (if present)
  */
 function QuantityObservation (copyData) { 
 	this.$type = 'QuantityObservation';
 	if(copyData) {
+	/** @type {BatchOperationType} */
+	this.operation = copyData.operation;
 	/** @type {string} */
 	this.id = copyData.id;
 	/** @type {string} */
@@ -10131,7 +10507,7 @@ function QuantityObservation (copyData) {
 	this.protocol = copyData.protocol;
 	/** @type {object} */
 	this.tag = copyData.tag;
-	/** @type {string} */
+	/** @type {ActNote} */
 	this.note = copyData.note;
 	/** @type {object} */
 	this.extension = copyData.extension;
@@ -10187,41 +10563,40 @@ function QuantityObservation (copyData) {
 	this.value = copyData.value;
 	}
 }  // QuantityObservation 
-// SanteDB.Core.Model.Acts.TextObservation, SanteDB.Core.Model, Version=2.0.59.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Acts.TextObservation, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
 //if(!TextObservation)
 /**
  * @class
  * @constructor
  * @public
- * @summary             Represents an observation with a text value            
- * @description 
- *             The text observation type represents an observation made with a textual value. This is done whenever an observation type 
- *             cannot be quantified or classified using either a coded or observed value. Please note that this type should not be used
- *             for taking notes, rather it is a specific type of thing observed about a patient. For example: Interpretation of patient's mood
- *             
- * @property {string} valueType            Value type            
- * @property {string} value            Gets or sets the textual value            
- * @property {string} interpretationConcept            Gets or sets the interpretation concept            
- * @property {Concept} interpretationConceptModel [Delay loaded from interpretationConcept],             Gets or sets the concept which indicates the interpretation of the observtion            
- * @property {boolean} isNegated            Gets or sets an indicator which identifies whether the act actually occurred, or            specifically did not occur            
- * @property {string} template            Gets the template UUID upon which this act is based            
- * @property {TemplateDefinition} templateModel [Delay loaded from template],             Gets or sets the template definition            
- * @property {Date} actTime            Gets or sets the moment in time that this act occurred in ISO format            
- * @property {Date} startTime            Gets or sets the time when the act should or did start ocurring in ISO format            
- * @property {Date} stopTime            Gets or sets the time when the act should or did stop ocurring in ISO format            
- * @property {string} classConcept            Gets or sets the key of the concept which classifies the act.            (see: {@link ActClassKeys} for values)
- * @property {string} moodConcept            Gets or sets the key of the concept which specifies the mood of the act.            (see: {@link ActMoodKeys} for values)
- * @property {string} reasonConcept            Gets or sets the key of the concept which defines the reason why the act is or didn't occur            (see: {@link ActReasonKeys} for values)
- * @property {string} statusConcept            Gets or sets the key of the concept which describes the current status of the act            (see: {@link StatusKeys} for values)
- * @property {string} typeConcept            Gets or sets the key of the conccept which further classifies the type of act occurring            
- * @property {Concept} classConceptModel [Delay loaded from classConcept],             Gets or sets the concept which classifies the type of act            
- * @property {Concept} moodConceptModel [Delay loaded from moodConcept],             Gets or sets the concept which specifies the mood of the act            
- * @property {Concept} reasonConceptModel [Delay loaded from reasonConcept],             Gets or sets the concept which indicates the reason of the act            
- * @property {Concept} statusConceptModel [Delay loaded from statusConcept],             Gets or sets the current status concept of the act            
- * @property {Concept} typeConceptModel [Delay loaded from typeConcept],             Type concept identifier            
- * @property {object} identifier            Gets or sets the identifiers by which this act is known as in other systems            
+ * @summary Represents an observation with a text value
+ * @description The text observation type represents an observation made with a textual value. This is done whenever an observation type
+            cannot be quantified or classified using either a coded or observed value. Please note that this type should not be used
+            for taking notes, rather it is a specific type of thing observed about a patient. For example: Interpretation of patient's mood
+ * @property {string} valueType Value type
+ * @property {string} value Gets or sets the textual value
+ * @property {string} interpretationConcept Gets or sets the interpretation concept
+ * @property {Concept} interpretationConceptModel [Delay loaded from interpretationConcept],  Gets or sets the concept which indicates the interpretation of the observtion
+ * @property {boolean} isNegated Gets or sets an indicator which identifies whether the act actually occurred, or
+            specifically did not occur
+ * @property {string} template Gets the template UUID upon which this act is based
+ * @property {TemplateDefinition} templateModel [Delay loaded from template],  Gets or sets the template definition
+ * @property {Date} actTime Gets or sets the moment in time that this act occurred in ISO format
+ * @property {Date} startTime Gets or sets the time when the act should or did start ocurring in ISO format
+ * @property {Date} stopTime Gets or sets the time when the act should or did stop ocurring in ISO format
+ * @property {string} classConcept Gets or sets the key of the concept which classifies the act.(see: {@link ActClassKeys} for values)
+ * @property {string} moodConcept Gets or sets the key of the concept which specifies the mood of the act.(see: {@link ActMoodKeys} for values)
+ * @property {string} reasonConcept Gets or sets the key of the concept which defines the reason why the act is or didn't occur(see: {@link ActReasonKeys} for values)
+ * @property {string} statusConcept Gets or sets the key of the concept which describes the current status of the act(see: {@link StatusKeys} for values)
+ * @property {string} typeConcept Gets or sets the key of the conccept which further classifies the type of act occurring
+ * @property {Concept} classConceptModel [Delay loaded from classConcept],  Gets or sets the concept which classifies the type of act
+ * @property {Concept} moodConceptModel [Delay loaded from moodConcept],  Gets or sets the concept which specifies the mood of the act
+ * @property {Concept} reasonConceptModel [Delay loaded from reasonConcept],  Gets or sets the concept which indicates the reason of the act
+ * @property {Concept} statusConceptModel [Delay loaded from statusConcept],  Gets or sets the current status concept of the act
+ * @property {Concept} typeConceptModel [Delay loaded from typeConcept],  Type concept identifier
+ * @property {object} identifier Gets or sets the identifiers by which this act is known as in other systems
  * @property {ActIdentifier} identifier.classifier  where classifier is from {@link IdentifierBase} authority
- * @property {object} relationship            Gets a list of all associated acts for this act            
+ * @property {object} relationship Gets a list of all associated acts for this act
  * @property {ActRelationship} relationship.Appends             Indicates that the source act appends information contained in the target act            
  * @property {ActRelationship} relationship.Arrival             Links the transortation act from another act            
  * @property {ActRelationship} relationship.Departure             Links a transporation act from another act indicating departure of the subject            
@@ -10247,14 +10622,14 @@ function QuantityObservation (copyData) {
  * @property {ActRelationship} relationship.Transforms             Indicates that the source act transforms the target act            
  * @property {ActRelationship} relationship.Duplicate             Duplicate entity            
  * @property {ActRelationship} relationship.$other Unclassified
- * @property {SecurityPolicyInstance} policy            Gets or sets the security policy instances associated with the act            
- * @property {object} extension            Gets a list of all extensions associated with the act            
+ * @property {SecurityPolicyInstance} policy Gets or sets the security policy instances associated with the act
+ * @property {object} extension Gets a list of all extensions associated with the act
  * @property {string} extension.classifier  where classifier is from {@link Extension} extensionType
- * @property {string} note            Gets a list of all notes associated with the act            
- * @property {object} tag            Gets a list of all tags associated with the act            
+ * @property {ActNote} note Gets a list of all notes associated with the act
+ * @property {object} tag Gets a list of all tags associated with the act
  * @property {string} tag.classifier  where classifier is from {@link Tag} key
- * @property {ActProtocol} protocol            Identifies protocols attached to the act            
- * @property {object} participation            Gets or sets the entities and participations they play in the act            
+ * @property {ActProtocol} protocol Identifies protocols attached to the act
+ * @property {object} participation Gets or sets the entities and participations they play in the act
  * @property {ActParticipation} participation.Admitter             The player entity was the person who was responsible for admitting the patient into a facility or care scenario.            
  * @property {ActParticipation} participation.Attender             The player entity represents the attending physician for the patient            
  * @property {ActParticipation} participation.Authenticator             The player entity represents an entity which authenticates the provision of care            
@@ -10312,26 +10687,29 @@ function QuantityObservation (copyData) {
  * @property {ActParticipation} participation.Via             The player entity represents an entity where the act occurred "via" this entity (i.e. in transport)            
  * @property {ActParticipation} participation.Witness             The player entity represents a legal witness to the act occurring.            
  * @property {ActParticipation} participation.$other Unclassified
- * @property {GeoTag} geo            Gets or sets the geo-tag            
+ * @property {GeoTag} geo Gets or sets the geo-tag
  * @property {string} previousVersion
  * @property {string} version
  * @property {number} sequence
- * @property {Date} creationTimeModel [Delay loaded from creationTime],             Gets or sets the time at which the data was created            
- * @property {Date} creationTime            Gets or sets the creation time as an ISO date format            
- * @property {Date} obsoletionTimeModel [Delay loaded from obsoletionTime],             Gets or sets the time when the data is or will become invalid            
- * @property {Date} obsoletionTime            Gets or sets the time that the data is no longer valid (was deleted/obsoleted) in ISO format            
- * @property {SecurityProvenance} createdByModel [Delay loaded from createdBy],             Gets or sets the user that created this base data            
- * @property {Date} modifiedOn            Gets the time that the object was last modified (from base data, default to CreationTime)            
- * @property {SecurityProvenance} obsoletedByModel [Delay loaded from obsoletedBy],             Gets or sets the user that obsoleted this base data            
- * @property {string} createdBy            Gets or sets the security provenance object which represents the creation of this object            
- * @property {string} obsoletedBy            Gets or sets the security provenance object which represents the obsoletion of this data            
- * @property {string} id            Gets or sets the primary identifying UUID of this object            
- * @property {string} $type            Gets the type registration of this object            
+ * @property {Date} creationTimeModel [Delay loaded from creationTime],  Gets or sets the time at which the data was created
+ * @property {Date} creationTime Gets or sets the creation time as an ISO date format
+ * @property {Date} obsoletionTimeModel [Delay loaded from obsoletionTime],  Gets or sets the time when the data is or will become invalid
+ * @property {Date} obsoletionTime Gets or sets the time that the data is no longer valid (was deleted/obsoleted) in ISO format
+ * @property {SecurityProvenance} createdByModel [Delay loaded from createdBy],  Gets or sets the user that created this base data
+ * @property {Date} modifiedOn Gets the time that the object was last modified (from base data, default to CreationTime)
+ * @property {SecurityProvenance} obsoletedByModel [Delay loaded from obsoletedBy],  Gets or sets the user that obsoleted this base data
+ * @property {string} createdBy Gets or sets the security provenance object which represents the creation of this object
+ * @property {string} obsoletedBy Gets or sets the security provenance object which represents the obsoletion of this data
+ * @property {string} id Gets or sets the primary identifying UUID of this object
+ * @property {BatchOperationType} operation Gets or sets the operation(see: {@link BatchOperationType} for values)
+ * @property {string} $type Gets the type registration of this object
  * @param {TextObservation} copyData Copy constructor (if present)
  */
 function TextObservation (copyData) { 
 	this.$type = 'TextObservation';
 	if(copyData) {
+	/** @type {BatchOperationType} */
+	this.operation = copyData.operation;
 	/** @type {string} */
 	this.id = copyData.id;
 	/** @type {string} */
@@ -10366,7 +10744,7 @@ function TextObservation (copyData) {
 	this.protocol = copyData.protocol;
 	/** @type {object} */
 	this.tag = copyData.tag;
-	/** @type {string} */
+	/** @type {ActNote} */
 	this.note = copyData.note;
 	/** @type {object} */
 	this.extension = copyData.extension;
@@ -10418,41 +10796,40 @@ function TextObservation (copyData) {
 	this.valueType = copyData.valueType;
 	}
 }  // TextObservation 
-// SanteDB.Core.Model.Acts.CodedObservation, SanteDB.Core.Model, Version=2.0.59.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Acts.CodedObservation, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
 //if(!CodedObservation)
 /**
  * @class
  * @constructor
  * @public
- * @summary             Represents an observation with a concept value            
- * @description 
- *             A coded observation represents an observation whose value is classified using a coded concept. For example: fetal presentation, 
- *             stage of pregnancy, etc.
- *             
- * @property {string} valueType            Value type            
- * @property {string} value            Gets or sets the key of the uom concept            
- * @property {Concept} valueModel [Delay loaded from value],             Gets or sets the coded value of the observation            
- * @property {string} interpretationConcept            Gets or sets the interpretation concept            
- * @property {Concept} interpretationConceptModel [Delay loaded from interpretationConcept],             Gets or sets the concept which indicates the interpretation of the observtion            
- * @property {boolean} isNegated            Gets or sets an indicator which identifies whether the act actually occurred, or            specifically did not occur            
- * @property {string} template            Gets the template UUID upon which this act is based            
- * @property {TemplateDefinition} templateModel [Delay loaded from template],             Gets or sets the template definition            
- * @property {Date} actTime            Gets or sets the moment in time that this act occurred in ISO format            
- * @property {Date} startTime            Gets or sets the time when the act should or did start ocurring in ISO format            
- * @property {Date} stopTime            Gets or sets the time when the act should or did stop ocurring in ISO format            
- * @property {string} classConcept            Gets or sets the key of the concept which classifies the act.            (see: {@link ActClassKeys} for values)
- * @property {string} moodConcept            Gets or sets the key of the concept which specifies the mood of the act.            (see: {@link ActMoodKeys} for values)
- * @property {string} reasonConcept            Gets or sets the key of the concept which defines the reason why the act is or didn't occur            (see: {@link ActReasonKeys} for values)
- * @property {string} statusConcept            Gets or sets the key of the concept which describes the current status of the act            (see: {@link StatusKeys} for values)
- * @property {string} typeConcept            Gets or sets the key of the conccept which further classifies the type of act occurring            
- * @property {Concept} classConceptModel [Delay loaded from classConcept],             Gets or sets the concept which classifies the type of act            
- * @property {Concept} moodConceptModel [Delay loaded from moodConcept],             Gets or sets the concept which specifies the mood of the act            
- * @property {Concept} reasonConceptModel [Delay loaded from reasonConcept],             Gets or sets the concept which indicates the reason of the act            
- * @property {Concept} statusConceptModel [Delay loaded from statusConcept],             Gets or sets the current status concept of the act            
- * @property {Concept} typeConceptModel [Delay loaded from typeConcept],             Type concept identifier            
- * @property {object} identifier            Gets or sets the identifiers by which this act is known as in other systems            
+ * @summary Represents an observation with a concept value
+ * @description A coded observation represents an observation whose value is classified using a coded concept. For example: fetal presentation,
+            stage of pregnancy, etc.
+ * @property {string} valueType Value type
+ * @property {string} value Gets or sets the key of the uom concept
+ * @property {Concept} valueModel [Delay loaded from value],  Gets or sets the coded value of the observation
+ * @property {string} interpretationConcept Gets or sets the interpretation concept
+ * @property {Concept} interpretationConceptModel [Delay loaded from interpretationConcept],  Gets or sets the concept which indicates the interpretation of the observtion
+ * @property {boolean} isNegated Gets or sets an indicator which identifies whether the act actually occurred, or
+            specifically did not occur
+ * @property {string} template Gets the template UUID upon which this act is based
+ * @property {TemplateDefinition} templateModel [Delay loaded from template],  Gets or sets the template definition
+ * @property {Date} actTime Gets or sets the moment in time that this act occurred in ISO format
+ * @property {Date} startTime Gets or sets the time when the act should or did start ocurring in ISO format
+ * @property {Date} stopTime Gets or sets the time when the act should or did stop ocurring in ISO format
+ * @property {string} classConcept Gets or sets the key of the concept which classifies the act.(see: {@link ActClassKeys} for values)
+ * @property {string} moodConcept Gets or sets the key of the concept which specifies the mood of the act.(see: {@link ActMoodKeys} for values)
+ * @property {string} reasonConcept Gets or sets the key of the concept which defines the reason why the act is or didn't occur(see: {@link ActReasonKeys} for values)
+ * @property {string} statusConcept Gets or sets the key of the concept which describes the current status of the act(see: {@link StatusKeys} for values)
+ * @property {string} typeConcept Gets or sets the key of the conccept which further classifies the type of act occurring
+ * @property {Concept} classConceptModel [Delay loaded from classConcept],  Gets or sets the concept which classifies the type of act
+ * @property {Concept} moodConceptModel [Delay loaded from moodConcept],  Gets or sets the concept which specifies the mood of the act
+ * @property {Concept} reasonConceptModel [Delay loaded from reasonConcept],  Gets or sets the concept which indicates the reason of the act
+ * @property {Concept} statusConceptModel [Delay loaded from statusConcept],  Gets or sets the current status concept of the act
+ * @property {Concept} typeConceptModel [Delay loaded from typeConcept],  Type concept identifier
+ * @property {object} identifier Gets or sets the identifiers by which this act is known as in other systems
  * @property {ActIdentifier} identifier.classifier  where classifier is from {@link IdentifierBase} authority
- * @property {object} relationship            Gets a list of all associated acts for this act            
+ * @property {object} relationship Gets a list of all associated acts for this act
  * @property {ActRelationship} relationship.Appends             Indicates that the source act appends information contained in the target act            
  * @property {ActRelationship} relationship.Arrival             Links the transortation act from another act            
  * @property {ActRelationship} relationship.Departure             Links a transporation act from another act indicating departure of the subject            
@@ -10478,14 +10855,14 @@ function TextObservation (copyData) {
  * @property {ActRelationship} relationship.Transforms             Indicates that the source act transforms the target act            
  * @property {ActRelationship} relationship.Duplicate             Duplicate entity            
  * @property {ActRelationship} relationship.$other Unclassified
- * @property {SecurityPolicyInstance} policy            Gets or sets the security policy instances associated with the act            
- * @property {object} extension            Gets a list of all extensions associated with the act            
+ * @property {SecurityPolicyInstance} policy Gets or sets the security policy instances associated with the act
+ * @property {object} extension Gets a list of all extensions associated with the act
  * @property {string} extension.classifier  where classifier is from {@link Extension} extensionType
- * @property {string} note            Gets a list of all notes associated with the act            
- * @property {object} tag            Gets a list of all tags associated with the act            
+ * @property {ActNote} note Gets a list of all notes associated with the act
+ * @property {object} tag Gets a list of all tags associated with the act
  * @property {string} tag.classifier  where classifier is from {@link Tag} key
- * @property {ActProtocol} protocol            Identifies protocols attached to the act            
- * @property {object} participation            Gets or sets the entities and participations they play in the act            
+ * @property {ActProtocol} protocol Identifies protocols attached to the act
+ * @property {object} participation Gets or sets the entities and participations they play in the act
  * @property {ActParticipation} participation.Admitter             The player entity was the person who was responsible for admitting the patient into a facility or care scenario.            
  * @property {ActParticipation} participation.Attender             The player entity represents the attending physician for the patient            
  * @property {ActParticipation} participation.Authenticator             The player entity represents an entity which authenticates the provision of care            
@@ -10543,26 +10920,29 @@ function TextObservation (copyData) {
  * @property {ActParticipation} participation.Via             The player entity represents an entity where the act occurred "via" this entity (i.e. in transport)            
  * @property {ActParticipation} participation.Witness             The player entity represents a legal witness to the act occurring.            
  * @property {ActParticipation} participation.$other Unclassified
- * @property {GeoTag} geo            Gets or sets the geo-tag            
+ * @property {GeoTag} geo Gets or sets the geo-tag
  * @property {string} previousVersion
  * @property {string} version
  * @property {number} sequence
- * @property {Date} creationTimeModel [Delay loaded from creationTime],             Gets or sets the time at which the data was created            
- * @property {Date} creationTime            Gets or sets the creation time as an ISO date format            
- * @property {Date} obsoletionTimeModel [Delay loaded from obsoletionTime],             Gets or sets the time when the data is or will become invalid            
- * @property {Date} obsoletionTime            Gets or sets the time that the data is no longer valid (was deleted/obsoleted) in ISO format            
- * @property {SecurityProvenance} createdByModel [Delay loaded from createdBy],             Gets or sets the user that created this base data            
- * @property {Date} modifiedOn            Gets the time that the object was last modified (from base data, default to CreationTime)            
- * @property {SecurityProvenance} obsoletedByModel [Delay loaded from obsoletedBy],             Gets or sets the user that obsoleted this base data            
- * @property {string} createdBy            Gets or sets the security provenance object which represents the creation of this object            
- * @property {string} obsoletedBy            Gets or sets the security provenance object which represents the obsoletion of this data            
- * @property {string} id            Gets or sets the primary identifying UUID of this object            
- * @property {string} $type            Gets the type registration of this object            
+ * @property {Date} creationTimeModel [Delay loaded from creationTime],  Gets or sets the time at which the data was created
+ * @property {Date} creationTime Gets or sets the creation time as an ISO date format
+ * @property {Date} obsoletionTimeModel [Delay loaded from obsoletionTime],  Gets or sets the time when the data is or will become invalid
+ * @property {Date} obsoletionTime Gets or sets the time that the data is no longer valid (was deleted/obsoleted) in ISO format
+ * @property {SecurityProvenance} createdByModel [Delay loaded from createdBy],  Gets or sets the user that created this base data
+ * @property {Date} modifiedOn Gets the time that the object was last modified (from base data, default to CreationTime)
+ * @property {SecurityProvenance} obsoletedByModel [Delay loaded from obsoletedBy],  Gets or sets the user that obsoleted this base data
+ * @property {string} createdBy Gets or sets the security provenance object which represents the creation of this object
+ * @property {string} obsoletedBy Gets or sets the security provenance object which represents the obsoletion of this data
+ * @property {string} id Gets or sets the primary identifying UUID of this object
+ * @property {BatchOperationType} operation Gets or sets the operation(see: {@link BatchOperationType} for values)
+ * @property {string} $type Gets the type registration of this object
  * @param {CodedObservation} copyData Copy constructor (if present)
  */
 function CodedObservation (copyData) { 
 	this.$type = 'CodedObservation';
 	if(copyData) {
+	/** @type {BatchOperationType} */
+	this.operation = copyData.operation;
 	/** @type {string} */
 	this.id = copyData.id;
 	/** @type {string} */
@@ -10597,7 +10977,7 @@ function CodedObservation (copyData) {
 	this.protocol = copyData.protocol;
 	/** @type {object} */
 	this.tag = copyData.tag;
-	/** @type {string} */
+	/** @type {ActNote} */
 	this.note = copyData.note;
 	/** @type {object} */
 	this.extension = copyData.extension;
@@ -10651,37 +11031,38 @@ function CodedObservation (copyData) {
 	this.valueType = copyData.valueType;
 	}
 }  // CodedObservation 
-// SanteDB.Core.Model.Acts.PatientEncounter, SanteDB.Core.Model, Version=2.0.59.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Acts.PatientEncounter, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
 //if(!PatientEncounter)
 /**
  * @class
  * @constructor
  * @public
- * @summary              Represents an encounter a patient has with the health system             
- * @description An encounter is a special type of act which represents an episode of care which a patient experiences with the health system. 
- *             An encounter is used to document things like hospital visits, inpatient care encounters, or any longer running series of actions which 
- *             are linked by the admit -> discharge workflow.
- * @property {string} dischargeDisposition            Gets or sets the key of discharge disposition            
- * @property {Concept} dischargeDispositionModel [Delay loaded from dischargeDisposition],             Gets or sets the discharge disposition (how the patient left the encounter            
- * @property {boolean} isNegated            Gets or sets an indicator which identifies whether the act actually occurred, or            specifically did not occur            
- * @property {string} template            Gets the template UUID upon which this act is based            
- * @property {TemplateDefinition} templateModel [Delay loaded from template],             Gets or sets the template definition            
- * @property {Date} actTime            Gets or sets the moment in time that this act occurred in ISO format            
- * @property {Date} startTime            Gets or sets the time when the act should or did start ocurring in ISO format            
- * @property {Date} stopTime            Gets or sets the time when the act should or did stop ocurring in ISO format            
- * @property {string} classConcept            Gets or sets the key of the concept which classifies the act.            (see: {@link ActClassKeys} for values)
- * @property {string} moodConcept            Gets or sets the key of the concept which specifies the mood of the act.            (see: {@link ActMoodKeys} for values)
- * @property {string} reasonConcept            Gets or sets the key of the concept which defines the reason why the act is or didn't occur            (see: {@link ActReasonKeys} for values)
- * @property {string} statusConcept            Gets or sets the key of the concept which describes the current status of the act            (see: {@link StatusKeys} for values)
- * @property {string} typeConcept            Gets or sets the key of the conccept which further classifies the type of act occurring            
- * @property {Concept} classConceptModel [Delay loaded from classConcept],             Gets or sets the concept which classifies the type of act            
- * @property {Concept} moodConceptModel [Delay loaded from moodConcept],             Gets or sets the concept which specifies the mood of the act            
- * @property {Concept} reasonConceptModel [Delay loaded from reasonConcept],             Gets or sets the concept which indicates the reason of the act            
- * @property {Concept} statusConceptModel [Delay loaded from statusConcept],             Gets or sets the current status concept of the act            
- * @property {Concept} typeConceptModel [Delay loaded from typeConcept],             Type concept identifier            
- * @property {object} identifier            Gets or sets the identifiers by which this act is known as in other systems            
+ * @summary Represents an encounter a patient has with the health system
+ * @description <p>An encounter is a special type of act which represents an episode of care which a patient experiences with the health system. 
+            An encounter is used to document things like hospital visits, inpatient care encounters, or any longer running series of actions which 
+            are linked by the admit -&gt; discharge workflow.</p>
+ * @property {string} dischargeDisposition Gets or sets the key of discharge disposition
+ * @property {Concept} dischargeDispositionModel [Delay loaded from dischargeDisposition],  Gets or sets the discharge disposition (how the patient left the encounter
+ * @property {boolean} isNegated Gets or sets an indicator which identifies whether the act actually occurred, or
+            specifically did not occur
+ * @property {string} template Gets the template UUID upon which this act is based
+ * @property {TemplateDefinition} templateModel [Delay loaded from template],  Gets or sets the template definition
+ * @property {Date} actTime Gets or sets the moment in time that this act occurred in ISO format
+ * @property {Date} startTime Gets or sets the time when the act should or did start ocurring in ISO format
+ * @property {Date} stopTime Gets or sets the time when the act should or did stop ocurring in ISO format
+ * @property {string} classConcept Gets or sets the key of the concept which classifies the act.(see: {@link ActClassKeys} for values)
+ * @property {string} moodConcept Gets or sets the key of the concept which specifies the mood of the act.(see: {@link ActMoodKeys} for values)
+ * @property {string} reasonConcept Gets or sets the key of the concept which defines the reason why the act is or didn't occur(see: {@link ActReasonKeys} for values)
+ * @property {string} statusConcept Gets or sets the key of the concept which describes the current status of the act(see: {@link StatusKeys} for values)
+ * @property {string} typeConcept Gets or sets the key of the conccept which further classifies the type of act occurring
+ * @property {Concept} classConceptModel [Delay loaded from classConcept],  Gets or sets the concept which classifies the type of act
+ * @property {Concept} moodConceptModel [Delay loaded from moodConcept],  Gets or sets the concept which specifies the mood of the act
+ * @property {Concept} reasonConceptModel [Delay loaded from reasonConcept],  Gets or sets the concept which indicates the reason of the act
+ * @property {Concept} statusConceptModel [Delay loaded from statusConcept],  Gets or sets the current status concept of the act
+ * @property {Concept} typeConceptModel [Delay loaded from typeConcept],  Type concept identifier
+ * @property {object} identifier Gets or sets the identifiers by which this act is known as in other systems
  * @property {ActIdentifier} identifier.classifier  where classifier is from {@link IdentifierBase} authority
- * @property {object} relationship            Gets a list of all associated acts for this act            
+ * @property {object} relationship Gets a list of all associated acts for this act
  * @property {ActRelationship} relationship.Appends             Indicates that the source act appends information contained in the target act            
  * @property {ActRelationship} relationship.Arrival             Links the transortation act from another act            
  * @property {ActRelationship} relationship.Departure             Links a transporation act from another act indicating departure of the subject            
@@ -10707,14 +11088,14 @@ function CodedObservation (copyData) {
  * @property {ActRelationship} relationship.Transforms             Indicates that the source act transforms the target act            
  * @property {ActRelationship} relationship.Duplicate             Duplicate entity            
  * @property {ActRelationship} relationship.$other Unclassified
- * @property {SecurityPolicyInstance} policy            Gets or sets the security policy instances associated with the act            
- * @property {object} extension            Gets a list of all extensions associated with the act            
+ * @property {SecurityPolicyInstance} policy Gets or sets the security policy instances associated with the act
+ * @property {object} extension Gets a list of all extensions associated with the act
  * @property {string} extension.classifier  where classifier is from {@link Extension} extensionType
- * @property {string} note            Gets a list of all notes associated with the act            
- * @property {object} tag            Gets a list of all tags associated with the act            
+ * @property {ActNote} note Gets a list of all notes associated with the act
+ * @property {object} tag Gets a list of all tags associated with the act
  * @property {string} tag.classifier  where classifier is from {@link Tag} key
- * @property {ActProtocol} protocol            Identifies protocols attached to the act            
- * @property {object} participation            Gets or sets the entities and participations they play in the act            
+ * @property {ActProtocol} protocol Identifies protocols attached to the act
+ * @property {object} participation Gets or sets the entities and participations they play in the act
  * @property {ActParticipation} participation.Admitter             The player entity was the person who was responsible for admitting the patient into a facility or care scenario.            
  * @property {ActParticipation} participation.Attender             The player entity represents the attending physician for the patient            
  * @property {ActParticipation} participation.Authenticator             The player entity represents an entity which authenticates the provision of care            
@@ -10772,26 +11153,29 @@ function CodedObservation (copyData) {
  * @property {ActParticipation} participation.Via             The player entity represents an entity where the act occurred "via" this entity (i.e. in transport)            
  * @property {ActParticipation} participation.Witness             The player entity represents a legal witness to the act occurring.            
  * @property {ActParticipation} participation.$other Unclassified
- * @property {GeoTag} geo            Gets or sets the geo-tag            
+ * @property {GeoTag} geo Gets or sets the geo-tag
  * @property {string} previousVersion
  * @property {string} version
  * @property {number} sequence
- * @property {Date} creationTimeModel [Delay loaded from creationTime],             Gets or sets the time at which the data was created            
- * @property {Date} creationTime            Gets or sets the creation time as an ISO date format            
- * @property {Date} obsoletionTimeModel [Delay loaded from obsoletionTime],             Gets or sets the time when the data is or will become invalid            
- * @property {Date} obsoletionTime            Gets or sets the time that the data is no longer valid (was deleted/obsoleted) in ISO format            
- * @property {SecurityProvenance} createdByModel [Delay loaded from createdBy],             Gets or sets the user that created this base data            
- * @property {Date} modifiedOn            Gets the time that the object was last modified (from base data, default to CreationTime)            
- * @property {SecurityProvenance} obsoletedByModel [Delay loaded from obsoletedBy],             Gets or sets the user that obsoleted this base data            
- * @property {string} createdBy            Gets or sets the security provenance object which represents the creation of this object            
- * @property {string} obsoletedBy            Gets or sets the security provenance object which represents the obsoletion of this data            
- * @property {string} id            Gets or sets the primary identifying UUID of this object            
- * @property {string} $type            Gets the type registration of this object            
+ * @property {Date} creationTimeModel [Delay loaded from creationTime],  Gets or sets the time at which the data was created
+ * @property {Date} creationTime Gets or sets the creation time as an ISO date format
+ * @property {Date} obsoletionTimeModel [Delay loaded from obsoletionTime],  Gets or sets the time when the data is or will become invalid
+ * @property {Date} obsoletionTime Gets or sets the time that the data is no longer valid (was deleted/obsoleted) in ISO format
+ * @property {SecurityProvenance} createdByModel [Delay loaded from createdBy],  Gets or sets the user that created this base data
+ * @property {Date} modifiedOn Gets the time that the object was last modified (from base data, default to CreationTime)
+ * @property {SecurityProvenance} obsoletedByModel [Delay loaded from obsoletedBy],  Gets or sets the user that obsoleted this base data
+ * @property {string} createdBy Gets or sets the security provenance object which represents the creation of this object
+ * @property {string} obsoletedBy Gets or sets the security provenance object which represents the obsoletion of this data
+ * @property {string} id Gets or sets the primary identifying UUID of this object
+ * @property {BatchOperationType} operation Gets or sets the operation(see: {@link BatchOperationType} for values)
+ * @property {string} $type Gets the type registration of this object
  * @param {PatientEncounter} copyData Copy constructor (if present)
  */
 function PatientEncounter (copyData) { 
 	this.$type = 'PatientEncounter';
 	if(copyData) {
+	/** @type {BatchOperationType} */
+	this.operation = copyData.operation;
 	/** @type {string} */
 	this.id = copyData.id;
 	/** @type {string} */
@@ -10826,7 +11210,7 @@ function PatientEncounter (copyData) {
 	this.protocol = copyData.protocol;
 	/** @type {object} */
 	this.tag = copyData.tag;
-	/** @type {string} */
+	/** @type {ActNote} */
 	this.note = copyData.note;
 	/** @type {object} */
 	this.extension = copyData.extension;
@@ -10874,38 +11258,40 @@ function PatientEncounter (copyData) {
 	this.dischargeDisposition = copyData.dischargeDisposition;
 	}
 }  // PatientEncounter 
-// SanteDB.Core.Model.Acts.Procedure, SanteDB.Core.Model, Version=2.0.59.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Acts.Procedure, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
 //if(!Procedure)
 /**
  * @class
  * @constructor
  * @public
- * @summary             Represents a class which has an immediate and primary outcome and is an alteration             of the physical condition of the subject.            
- * @property {string} method            Gets or sets te method/technique used to perform the procedure            
- * @property {string} approachSite            Gets or sets the anatomical site or system through which the procedure was performed            
- * @property {string} targetSite            Gets or sets the anatomical site or system which is the target of the procedure            
- * @property {Concept} methodModel [Delay loaded from method],             Gets or sets te method/technique used to perform the procedure            
- * @property {Concept} approachSiteModel [Delay loaded from approachSite],             Gets or sets the anatomical site or system which is the target of the procedure            
- * @property {Concept} targetSiteModel [Delay loaded from targetSite],             Gets or sets te method/technique used to perform the procedure            
- * @property {boolean} isNegated            Gets or sets an indicator which identifies whether the act actually occurred, or            specifically did not occur            
- * @property {string} template            Gets the template UUID upon which this act is based            
- * @property {TemplateDefinition} templateModel [Delay loaded from template],             Gets or sets the template definition            
- * @property {Date} actTime            Gets or sets the moment in time that this act occurred in ISO format            
- * @property {Date} startTime            Gets or sets the time when the act should or did start ocurring in ISO format            
- * @property {Date} stopTime            Gets or sets the time when the act should or did stop ocurring in ISO format            
- * @property {string} classConcept            Gets or sets the key of the concept which classifies the act.            (see: {@link ActClassKeys} for values)
- * @property {string} moodConcept            Gets or sets the key of the concept which specifies the mood of the act.            (see: {@link ActMoodKeys} for values)
- * @property {string} reasonConcept            Gets or sets the key of the concept which defines the reason why the act is or didn't occur            (see: {@link ActReasonKeys} for values)
- * @property {string} statusConcept            Gets or sets the key of the concept which describes the current status of the act            (see: {@link StatusKeys} for values)
- * @property {string} typeConcept            Gets or sets the key of the conccept which further classifies the type of act occurring            
- * @property {Concept} classConceptModel [Delay loaded from classConcept],             Gets or sets the concept which classifies the type of act            
- * @property {Concept} moodConceptModel [Delay loaded from moodConcept],             Gets or sets the concept which specifies the mood of the act            
- * @property {Concept} reasonConceptModel [Delay loaded from reasonConcept],             Gets or sets the concept which indicates the reason of the act            
- * @property {Concept} statusConceptModel [Delay loaded from statusConcept],             Gets or sets the current status concept of the act            
- * @property {Concept} typeConceptModel [Delay loaded from typeConcept],             Type concept identifier            
- * @property {object} identifier            Gets or sets the identifiers by which this act is known as in other systems            
+ * @summary Represents a class which has an immediate and primary outcome and is an alteration 
+            of the physical condition of the subject.
+ * @property {string} method Gets or sets te method/technique used to perform the procedure
+ * @property {string} approachSite Gets or sets the anatomical site or system through which the procedure was performed
+ * @property {string} targetSite Gets or sets the anatomical site or system which is the target of the procedure
+ * @property {Concept} methodModel [Delay loaded from method],  Gets or sets te method/technique used to perform the procedure
+ * @property {Concept} approachSiteModel [Delay loaded from approachSite],  Gets or sets the anatomical site or system which is the target of the procedure
+ * @property {Concept} targetSiteModel [Delay loaded from targetSite],  Gets or sets te method/technique used to perform the procedure
+ * @property {boolean} isNegated Gets or sets an indicator which identifies whether the act actually occurred, or
+            specifically did not occur
+ * @property {string} template Gets the template UUID upon which this act is based
+ * @property {TemplateDefinition} templateModel [Delay loaded from template],  Gets or sets the template definition
+ * @property {Date} actTime Gets or sets the moment in time that this act occurred in ISO format
+ * @property {Date} startTime Gets or sets the time when the act should or did start ocurring in ISO format
+ * @property {Date} stopTime Gets or sets the time when the act should or did stop ocurring in ISO format
+ * @property {string} classConcept Gets or sets the key of the concept which classifies the act.(see: {@link ActClassKeys} for values)
+ * @property {string} moodConcept Gets or sets the key of the concept which specifies the mood of the act.(see: {@link ActMoodKeys} for values)
+ * @property {string} reasonConcept Gets or sets the key of the concept which defines the reason why the act is or didn't occur(see: {@link ActReasonKeys} for values)
+ * @property {string} statusConcept Gets or sets the key of the concept which describes the current status of the act(see: {@link StatusKeys} for values)
+ * @property {string} typeConcept Gets or sets the key of the conccept which further classifies the type of act occurring
+ * @property {Concept} classConceptModel [Delay loaded from classConcept],  Gets or sets the concept which classifies the type of act
+ * @property {Concept} moodConceptModel [Delay loaded from moodConcept],  Gets or sets the concept which specifies the mood of the act
+ * @property {Concept} reasonConceptModel [Delay loaded from reasonConcept],  Gets or sets the concept which indicates the reason of the act
+ * @property {Concept} statusConceptModel [Delay loaded from statusConcept],  Gets or sets the current status concept of the act
+ * @property {Concept} typeConceptModel [Delay loaded from typeConcept],  Type concept identifier
+ * @property {object} identifier Gets or sets the identifiers by which this act is known as in other systems
  * @property {ActIdentifier} identifier.classifier  where classifier is from {@link IdentifierBase} authority
- * @property {object} relationship            Gets a list of all associated acts for this act            
+ * @property {object} relationship Gets a list of all associated acts for this act
  * @property {ActRelationship} relationship.Appends             Indicates that the source act appends information contained in the target act            
  * @property {ActRelationship} relationship.Arrival             Links the transortation act from another act            
  * @property {ActRelationship} relationship.Departure             Links a transporation act from another act indicating departure of the subject            
@@ -10931,14 +11317,14 @@ function PatientEncounter (copyData) {
  * @property {ActRelationship} relationship.Transforms             Indicates that the source act transforms the target act            
  * @property {ActRelationship} relationship.Duplicate             Duplicate entity            
  * @property {ActRelationship} relationship.$other Unclassified
- * @property {SecurityPolicyInstance} policy            Gets or sets the security policy instances associated with the act            
- * @property {object} extension            Gets a list of all extensions associated with the act            
+ * @property {SecurityPolicyInstance} policy Gets or sets the security policy instances associated with the act
+ * @property {object} extension Gets a list of all extensions associated with the act
  * @property {string} extension.classifier  where classifier is from {@link Extension} extensionType
- * @property {string} note            Gets a list of all notes associated with the act            
- * @property {object} tag            Gets a list of all tags associated with the act            
+ * @property {ActNote} note Gets a list of all notes associated with the act
+ * @property {object} tag Gets a list of all tags associated with the act
  * @property {string} tag.classifier  where classifier is from {@link Tag} key
- * @property {ActProtocol} protocol            Identifies protocols attached to the act            
- * @property {object} participation            Gets or sets the entities and participations they play in the act            
+ * @property {ActProtocol} protocol Identifies protocols attached to the act
+ * @property {object} participation Gets or sets the entities and participations they play in the act
  * @property {ActParticipation} participation.Admitter             The player entity was the person who was responsible for admitting the patient into a facility or care scenario.            
  * @property {ActParticipation} participation.Attender             The player entity represents the attending physician for the patient            
  * @property {ActParticipation} participation.Authenticator             The player entity represents an entity which authenticates the provision of care            
@@ -10996,26 +11382,29 @@ function PatientEncounter (copyData) {
  * @property {ActParticipation} participation.Via             The player entity represents an entity where the act occurred "via" this entity (i.e. in transport)            
  * @property {ActParticipation} participation.Witness             The player entity represents a legal witness to the act occurring.            
  * @property {ActParticipation} participation.$other Unclassified
- * @property {GeoTag} geo            Gets or sets the geo-tag            
+ * @property {GeoTag} geo Gets or sets the geo-tag
  * @property {string} previousVersion
  * @property {string} version
  * @property {number} sequence
- * @property {Date} creationTimeModel [Delay loaded from creationTime],             Gets or sets the time at which the data was created            
- * @property {Date} creationTime            Gets or sets the creation time as an ISO date format            
- * @property {Date} obsoletionTimeModel [Delay loaded from obsoletionTime],             Gets or sets the time when the data is or will become invalid            
- * @property {Date} obsoletionTime            Gets or sets the time that the data is no longer valid (was deleted/obsoleted) in ISO format            
- * @property {SecurityProvenance} createdByModel [Delay loaded from createdBy],             Gets or sets the user that created this base data            
- * @property {Date} modifiedOn            Gets the time that the object was last modified (from base data, default to CreationTime)            
- * @property {SecurityProvenance} obsoletedByModel [Delay loaded from obsoletedBy],             Gets or sets the user that obsoleted this base data            
- * @property {string} createdBy            Gets or sets the security provenance object which represents the creation of this object            
- * @property {string} obsoletedBy            Gets or sets the security provenance object which represents the obsoletion of this data            
- * @property {string} id            Gets or sets the primary identifying UUID of this object            
- * @property {string} $type            Gets the type registration of this object            
+ * @property {Date} creationTimeModel [Delay loaded from creationTime],  Gets or sets the time at which the data was created
+ * @property {Date} creationTime Gets or sets the creation time as an ISO date format
+ * @property {Date} obsoletionTimeModel [Delay loaded from obsoletionTime],  Gets or sets the time when the data is or will become invalid
+ * @property {Date} obsoletionTime Gets or sets the time that the data is no longer valid (was deleted/obsoleted) in ISO format
+ * @property {SecurityProvenance} createdByModel [Delay loaded from createdBy],  Gets or sets the user that created this base data
+ * @property {Date} modifiedOn Gets the time that the object was last modified (from base data, default to CreationTime)
+ * @property {SecurityProvenance} obsoletedByModel [Delay loaded from obsoletedBy],  Gets or sets the user that obsoleted this base data
+ * @property {string} createdBy Gets or sets the security provenance object which represents the creation of this object
+ * @property {string} obsoletedBy Gets or sets the security provenance object which represents the obsoletion of this data
+ * @property {string} id Gets or sets the primary identifying UUID of this object
+ * @property {BatchOperationType} operation Gets or sets the operation(see: {@link BatchOperationType} for values)
+ * @property {string} $type Gets the type registration of this object
  * @param {Procedure} copyData Copy constructor (if present)
  */
 function Procedure (copyData) { 
 	this.$type = 'Procedure';
 	if(copyData) {
+	/** @type {BatchOperationType} */
+	this.operation = copyData.operation;
 	/** @type {string} */
 	this.id = copyData.id;
 	/** @type {string} */
@@ -11050,7 +11439,7 @@ function Procedure (copyData) {
 	this.protocol = copyData.protocol;
 	/** @type {object} */
 	this.tag = copyData.tag;
-	/** @type {string} */
+	/** @type {ActNote} */
 	this.note = copyData.note;
 	/** @type {object} */
 	this.extension = copyData.extension;
@@ -11106,38 +11495,43 @@ function Procedure (copyData) {
 	this.method = copyData.method;
 	}
 }  // Procedure 
-// SanteDB.Core.Model.Acts.Protocol, SanteDB.Core.Model, Version=2.0.59.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Acts.Protocol, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
 //if(!Protocol)
 /**
  * @class
  * @constructor
  * @public
  * @extends BaseEntityData
- * @summary             Represents the model of a clinical protocol            
- * @description The protocol type is used to store and retrieve the particular definition of a clinical protocol. In 
- *             SanteDB, a clinical protocol represents a series of steps that *should* be taken by a clinician when caring for 
- *             a patient.
- *             A series of proposed steps generated by these protocol definitions are used to represent a care plan .
- *             
- * @property {string} name            Gets or sets the name of the protocol            
- * @property {string} handlerClass            Gets or sets the handler class AQN            
- * @property {string} oid            Gets or sets the OID            
- * @property {Date} creationTimeModel [Delay loaded from creationTime],             Gets or sets the time at which the data was created            
- * @property {Date} creationTime            Gets or sets the creation time as an ISO date format            
- * @property {Date} obsoletionTimeModel [Delay loaded from obsoletionTime],             Gets or sets the time when the data is or will become invalid            
- * @property {Date} obsoletionTime            Gets or sets the time that the data is no longer valid (was deleted/obsoleted) in ISO format            
- * @property {SecurityProvenance} createdByModel [Delay loaded from createdBy],             Gets or sets the user that created this base data            
- * @property {Date} modifiedOn            Gets the time that the object was last modified (from base data, default to CreationTime)            
- * @property {SecurityProvenance} obsoletedByModel [Delay loaded from obsoletedBy],             Gets or sets the user that obsoleted this base data            
- * @property {string} createdBy            Gets or sets the security provenance object which represents the creation of this object            
- * @property {string} obsoletedBy            Gets or sets the security provenance object which represents the obsoletion of this data            
- * @property {string} id            Gets or sets the primary identifying UUID of this object            
- * @property {string} $type            Gets the type registration of this object            
+ * @summary Represents the model of a clinical protocol
+ * @description <p>The protocol type is used to store and retrieve the particular definition of a clinical protocol. In 
+            SanteDB, a clinical protocol represents a series of steps that *should* be taken by a clinician when caring for 
+            a patient.</p><p>
+            A series of proposed steps generated by these protocol definitions are used to represent a care plan (
+    {@link CarePlan}
+  ).
+            </p>
+ * @property {string} name Gets or sets the name of the protocol
+ * @property {string} handlerClass Gets or sets the handler class AQN
+ * @property {string} oid Gets or sets the OID
+ * @property {Date} creationTimeModel [Delay loaded from creationTime],  Gets or sets the time at which the data was created
+ * @property {Date} creationTime Gets or sets the creation time as an ISO date format
+ * @property {Date} obsoletionTimeModel [Delay loaded from obsoletionTime],  Gets or sets the time when the data is or will become invalid
+ * @property {Date} obsoletionTime Gets or sets the time that the data is no longer valid (was deleted/obsoleted) in ISO format
+ * @property {SecurityProvenance} createdByModel [Delay loaded from createdBy],  Gets or sets the user that created this base data
+ * @property {Date} modifiedOn Gets the time that the object was last modified (from base data, default to CreationTime)
+ * @property {SecurityProvenance} obsoletedByModel [Delay loaded from obsoletedBy],  Gets or sets the user that obsoleted this base data
+ * @property {string} createdBy Gets or sets the security provenance object which represents the creation of this object
+ * @property {string} obsoletedBy Gets or sets the security provenance object which represents the obsoletion of this data
+ * @property {string} id Gets or sets the primary identifying UUID of this object
+ * @property {BatchOperationType} operation Gets or sets the operation(see: {@link BatchOperationType} for values)
+ * @property {string} $type Gets the type registration of this object
  * @param {Protocol} copyData Copy constructor (if present)
  */
 function Protocol (copyData) { 
 	this.$type = 'Protocol';
 	if(copyData) {
+	/** @type {BatchOperationType} */
+	this.operation = copyData.operation;
 	/** @type {string} */
 	this.id = copyData.id;
 	/** @type {string} */
@@ -11166,47 +11560,52 @@ function Protocol (copyData) {
 	this.name = copyData.name;
 	}
 }  // Protocol 
-// SanteDB.Core.Model.Acts.SubstanceAdministration, SanteDB.Core.Model, Version=2.0.59.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Acts.SubstanceAdministration, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
 //if(!SubstanceAdministration)
 /**
  * @class
  * @constructor
  * @public
- * @summary             Represents an act whereby a substance is administered to the patient            
- * @description The substance administration act is used whenever a clinician administers, plans to administer or should administer to a patient, a substance. 
- *             The substance that is administered is open but should be represented as either a Consumable (something that was consumed in the act of administration 
- *             like a manufactured material  or a product (if proposing or planning)).
- *             The type of administration (immunization, drug therapy, treatment, etc.) is classified by the substance administration's type concept . In some cases
- *             the dose quantity or dose measure are not required (when giving just "a dose") however it is recommended that implementations accurately track
- *             how much of the substance was administered.
- *             
- * @property {string} route            Gets or sets the key for route            
- * @property {string} doseUnit            Gets or sets the key for dosing unit            
- * @property {Concept} routeModel [Delay loaded from route],             Gets or sets a concept which indicates the route of administration (eg: Oral, Injection, etc.)            
- * @property {Concept} doseUnitModel [Delay loaded from doseUnit],             Gets or sets a concept which indicates the unit of measure for the dose (eg: 5 mL, 10 mL, 1 drop, etc.)            
- * @property {number} doseQuantity            Gets or sets the amount of substance administered            
- * @property {number} doseSequence            The sequence of the dose (i.e. OPV 0 = 0 , OPV 1 = 1, etc.)            
- * @property {string} site            Gets or sets the site            
- * @property {Concept} siteModel [Delay loaded from site],             Gets or sets a concept which indicates the site of administration            
- * @property {boolean} isNegated            Gets or sets an indicator which identifies whether the act actually occurred, or            specifically did not occur            
- * @property {string} template            Gets the template UUID upon which this act is based            
- * @property {TemplateDefinition} templateModel [Delay loaded from template],             Gets or sets the template definition            
- * @property {Date} actTime            Gets or sets the moment in time that this act occurred in ISO format            
- * @property {Date} startTime            Gets or sets the time when the act should or did start ocurring in ISO format            
- * @property {Date} stopTime            Gets or sets the time when the act should or did stop ocurring in ISO format            
- * @property {string} classConcept            Gets or sets the key of the concept which classifies the act.            (see: {@link ActClassKeys} for values)
- * @property {string} moodConcept            Gets or sets the key of the concept which specifies the mood of the act.            (see: {@link ActMoodKeys} for values)
- * @property {string} reasonConcept            Gets or sets the key of the concept which defines the reason why the act is or didn't occur            (see: {@link ActReasonKeys} for values)
- * @property {string} statusConcept            Gets or sets the key of the concept which describes the current status of the act            (see: {@link StatusKeys} for values)
- * @property {string} typeConcept            Gets or sets the key of the conccept which further classifies the type of act occurring            
- * @property {Concept} classConceptModel [Delay loaded from classConcept],             Gets or sets the concept which classifies the type of act            
- * @property {Concept} moodConceptModel [Delay loaded from moodConcept],             Gets or sets the concept which specifies the mood of the act            
- * @property {Concept} reasonConceptModel [Delay loaded from reasonConcept],             Gets or sets the concept which indicates the reason of the act            
- * @property {Concept} statusConceptModel [Delay loaded from statusConcept],             Gets or sets the current status concept of the act            
- * @property {Concept} typeConceptModel [Delay loaded from typeConcept],             Type concept identifier            
- * @property {object} identifier            Gets or sets the identifiers by which this act is known as in other systems            
+ * @summary Represents an act whereby a substance is administered to the patient
+ * @description <p>The substance administration act is used whenever a clinician administers, plans to administer or should administer to a patient, a substance. 
+            The substance that is administered is open but should be represented as either a Consumable (something that was consumed in the act of administration 
+            like a manufactured material (
+    {@link ManufacturedMaterial}
+  ) or a product (if proposing or planning)).</p><p>
+            The type of administration (immunization, drug therapy, treatment, etc.) is classified by the substance administration's type concept (
+    {@link TypeConceptKey}
+  ). In some cases
+            the dose quantity or dose measure are not required (when giving just "a dose") however it is recommended that implementations accurately track
+            how much of the substance was administered.
+            </p>
+ * @property {string} route Gets or sets the key for route
+ * @property {string} doseUnit Gets or sets the key for dosing unit
+ * @property {Concept} routeModel [Delay loaded from route],  Gets or sets a concept which indicates the route of administration (eg: Oral, Injection, etc.)
+ * @property {Concept} doseUnitModel [Delay loaded from doseUnit],  Gets or sets a concept which indicates the unit of measure for the dose (eg: 5 mL, 10 mL, 1 drop, etc.)
+ * @property {number} doseQuantity Gets or sets the amount of substance administered
+ * @property {number} doseSequence The sequence of the dose (i.e. OPV 0 = 0 , OPV 1 = 1, etc.)
+ * @property {string} site Gets or sets the site
+ * @property {Concept} siteModel [Delay loaded from site],  Gets or sets a concept which indicates the site of administration
+ * @property {boolean} isNegated Gets or sets an indicator which identifies whether the act actually occurred, or
+            specifically did not occur
+ * @property {string} template Gets the template UUID upon which this act is based
+ * @property {TemplateDefinition} templateModel [Delay loaded from template],  Gets or sets the template definition
+ * @property {Date} actTime Gets or sets the moment in time that this act occurred in ISO format
+ * @property {Date} startTime Gets or sets the time when the act should or did start ocurring in ISO format
+ * @property {Date} stopTime Gets or sets the time when the act should or did stop ocurring in ISO format
+ * @property {string} classConcept Gets or sets the key of the concept which classifies the act.(see: {@link ActClassKeys} for values)
+ * @property {string} moodConcept Gets or sets the key of the concept which specifies the mood of the act.(see: {@link ActMoodKeys} for values)
+ * @property {string} reasonConcept Gets or sets the key of the concept which defines the reason why the act is or didn't occur(see: {@link ActReasonKeys} for values)
+ * @property {string} statusConcept Gets or sets the key of the concept which describes the current status of the act(see: {@link StatusKeys} for values)
+ * @property {string} typeConcept Gets or sets the key of the conccept which further classifies the type of act occurring
+ * @property {Concept} classConceptModel [Delay loaded from classConcept],  Gets or sets the concept which classifies the type of act
+ * @property {Concept} moodConceptModel [Delay loaded from moodConcept],  Gets or sets the concept which specifies the mood of the act
+ * @property {Concept} reasonConceptModel [Delay loaded from reasonConcept],  Gets or sets the concept which indicates the reason of the act
+ * @property {Concept} statusConceptModel [Delay loaded from statusConcept],  Gets or sets the current status concept of the act
+ * @property {Concept} typeConceptModel [Delay loaded from typeConcept],  Type concept identifier
+ * @property {object} identifier Gets or sets the identifiers by which this act is known as in other systems
  * @property {ActIdentifier} identifier.classifier  where classifier is from {@link IdentifierBase} authority
- * @property {object} relationship            Gets a list of all associated acts for this act            
+ * @property {object} relationship Gets a list of all associated acts for this act
  * @property {ActRelationship} relationship.Appends             Indicates that the source act appends information contained in the target act            
  * @property {ActRelationship} relationship.Arrival             Links the transortation act from another act            
  * @property {ActRelationship} relationship.Departure             Links a transporation act from another act indicating departure of the subject            
@@ -11232,14 +11631,14 @@ function Protocol (copyData) {
  * @property {ActRelationship} relationship.Transforms             Indicates that the source act transforms the target act            
  * @property {ActRelationship} relationship.Duplicate             Duplicate entity            
  * @property {ActRelationship} relationship.$other Unclassified
- * @property {SecurityPolicyInstance} policy            Gets or sets the security policy instances associated with the act            
- * @property {object} extension            Gets a list of all extensions associated with the act            
+ * @property {SecurityPolicyInstance} policy Gets or sets the security policy instances associated with the act
+ * @property {object} extension Gets a list of all extensions associated with the act
  * @property {string} extension.classifier  where classifier is from {@link Extension} extensionType
- * @property {string} note            Gets a list of all notes associated with the act            
- * @property {object} tag            Gets a list of all tags associated with the act            
+ * @property {ActNote} note Gets a list of all notes associated with the act
+ * @property {object} tag Gets a list of all tags associated with the act
  * @property {string} tag.classifier  where classifier is from {@link Tag} key
- * @property {ActProtocol} protocol            Identifies protocols attached to the act            
- * @property {object} participation            Gets or sets the entities and participations they play in the act            
+ * @property {ActProtocol} protocol Identifies protocols attached to the act
+ * @property {object} participation Gets or sets the entities and participations they play in the act
  * @property {ActParticipation} participation.Admitter             The player entity was the person who was responsible for admitting the patient into a facility or care scenario.            
  * @property {ActParticipation} participation.Attender             The player entity represents the attending physician for the patient            
  * @property {ActParticipation} participation.Authenticator             The player entity represents an entity which authenticates the provision of care            
@@ -11297,26 +11696,29 @@ function Protocol (copyData) {
  * @property {ActParticipation} participation.Via             The player entity represents an entity where the act occurred "via" this entity (i.e. in transport)            
  * @property {ActParticipation} participation.Witness             The player entity represents a legal witness to the act occurring.            
  * @property {ActParticipation} participation.$other Unclassified
- * @property {GeoTag} geo            Gets or sets the geo-tag            
+ * @property {GeoTag} geo Gets or sets the geo-tag
  * @property {string} previousVersion
  * @property {string} version
  * @property {number} sequence
- * @property {Date} creationTimeModel [Delay loaded from creationTime],             Gets or sets the time at which the data was created            
- * @property {Date} creationTime            Gets or sets the creation time as an ISO date format            
- * @property {Date} obsoletionTimeModel [Delay loaded from obsoletionTime],             Gets or sets the time when the data is or will become invalid            
- * @property {Date} obsoletionTime            Gets or sets the time that the data is no longer valid (was deleted/obsoleted) in ISO format            
- * @property {SecurityProvenance} createdByModel [Delay loaded from createdBy],             Gets or sets the user that created this base data            
- * @property {Date} modifiedOn            Gets the time that the object was last modified (from base data, default to CreationTime)            
- * @property {SecurityProvenance} obsoletedByModel [Delay loaded from obsoletedBy],             Gets or sets the user that obsoleted this base data            
- * @property {string} createdBy            Gets or sets the security provenance object which represents the creation of this object            
- * @property {string} obsoletedBy            Gets or sets the security provenance object which represents the obsoletion of this data            
- * @property {string} id            Gets or sets the primary identifying UUID of this object            
- * @property {string} $type            Gets the type registration of this object            
+ * @property {Date} creationTimeModel [Delay loaded from creationTime],  Gets or sets the time at which the data was created
+ * @property {Date} creationTime Gets or sets the creation time as an ISO date format
+ * @property {Date} obsoletionTimeModel [Delay loaded from obsoletionTime],  Gets or sets the time when the data is or will become invalid
+ * @property {Date} obsoletionTime Gets or sets the time that the data is no longer valid (was deleted/obsoleted) in ISO format
+ * @property {SecurityProvenance} createdByModel [Delay loaded from createdBy],  Gets or sets the user that created this base data
+ * @property {Date} modifiedOn Gets the time that the object was last modified (from base data, default to CreationTime)
+ * @property {SecurityProvenance} obsoletedByModel [Delay loaded from obsoletedBy],  Gets or sets the user that obsoleted this base data
+ * @property {string} createdBy Gets or sets the security provenance object which represents the creation of this object
+ * @property {string} obsoletedBy Gets or sets the security provenance object which represents the obsoletion of this data
+ * @property {string} id Gets or sets the primary identifying UUID of this object
+ * @property {BatchOperationType} operation Gets or sets the operation(see: {@link BatchOperationType} for values)
+ * @property {string} $type Gets the type registration of this object
  * @param {SubstanceAdministration} copyData Copy constructor (if present)
  */
 function SubstanceAdministration (copyData) { 
 	this.$type = 'SubstanceAdministration';
 	if(copyData) {
+	/** @type {BatchOperationType} */
+	this.operation = copyData.operation;
 	/** @type {string} */
 	this.id = copyData.id;
 	/** @type {string} */
@@ -11351,7 +11753,7 @@ function SubstanceAdministration (copyData) {
 	this.protocol = copyData.protocol;
 	/** @type {object} */
 	this.tag = copyData.tag;
-	/** @type {string} */
+	/** @type {ActNote} */
 	this.note = copyData.note;
 	/** @type {object} */
 	this.extension = copyData.extension;
@@ -11411,7 +11813,7 @@ function SubstanceAdministration (copyData) {
 	this.route = copyData.route;
 	}
 }  // SubstanceAdministration 
-// SanteDB.Core.Auditing.AuditableObjectIdType, SanteDB.Core.Model, Version=2.0.59.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Auditing.AuditableObjectIdType, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
 // if(!AuditableObjectIdType)
 /**
  * @enum {string}
@@ -11427,7 +11829,7 @@ const AuditableObjectIdType = {
 	/** 
 	 * 
 	 */
-	MedicalRecord : 'NotSpecified',
+	MedicalRecord : 'MedicalRecord',
 	/** 
 	 * 
 	 */
@@ -11477,7 +11879,7 @@ const AuditableObjectIdType = {
 	 */
 	Custom : 'Custom',
 }  // AuditableObjectIdType 
-// SanteDB.Core.Auditing.AuditableObjectLifecycle, SanteDB.Core.Model, Version=2.0.59.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Auditing.AuditableObjectLifecycle, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
 // if(!AuditableObjectLifecycle)
 /**
  * @enum {string}
@@ -11551,7 +11953,7 @@ const AuditableObjectLifecycle = {
 	 */
 	PermanentErasure : 'PermanentErasure',
 }  // AuditableObjectLifecycle 
-// SanteDB.Core.Auditing.AuditableObjectRole, SanteDB.Core.Model, Version=2.0.59.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Auditing.AuditableObjectRole, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
 // if(!AuditableObjectRole)
 /**
  * @enum {string}
@@ -11657,7 +12059,7 @@ const AuditableObjectRole = {
 	 */
 	Query : 'Query',
 }  // AuditableObjectRole 
-// SanteDB.Core.Auditing.AuditableObjectType, SanteDB.Core.Model, Version=2.0.59.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Auditing.AuditableObjectType, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
 // if(!AuditableObjectType)
 /**
  * @enum {string}
@@ -11687,7 +12089,7 @@ const AuditableObjectType = {
 	 */
 	Other : 'Other',
 }  // AuditableObjectType 
-// SanteDB.Core.Auditing.NetworkAccessPointType, SanteDB.Core.Model, Version=2.0.59.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Auditing.NetworkAccessPointType, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
 // if(!NetworkAccessPointType)
 /**
  * @enum {string}
@@ -11709,7 +12111,7 @@ const NetworkAccessPointType = {
 	 */
 	TelephoneNumber : 'TelephoneNumber',
 }  // NetworkAccessPointType 
-// SanteDB.Core.Auditing.ActionType, SanteDB.Core.Model, Version=2.0.59.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Auditing.ActionType, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
 // if(!ActionType)
 /**
  * @enum {string}
@@ -11739,7 +12141,7 @@ const ActionType = {
 	 */
 	Execute : 'Execute',
 }  // ActionType 
-// SanteDB.Core.Auditing.EventIdentifierType, SanteDB.Core.Model, Version=2.0.59.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Auditing.EventIdentifierType, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
 // if(!EventIdentifierType)
 /**
  * @enum {string}
@@ -11825,7 +12227,7 @@ const EventIdentifierType = {
 	 */
 	Logout : 'Logout',
 }  // EventIdentifierType 
-// SanteDB.Core.Auditing.OutcomeIndicator, SanteDB.Core.Model, Version=2.0.59.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Auditing.OutcomeIndicator, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
 // if(!OutcomeIndicator)
 /**
  * @enum {string}
@@ -11851,7 +12253,37 @@ const OutcomeIndicator = {
 	 */
 	EpicFail : 'EpicFail',
 }  // OutcomeIndicator 
-// SanteDB.Core.Auditing.AuditMetadataKey, SanteDB.Core.Model, Version=2.0.59.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.DataTypes.BatchOperationType, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
+// if(!BatchOperationType)
+/**
+ * @enum {string}
+ * @public
+ * @readonly
+ * @summary             Batch operation type            
+ */
+const BatchOperationType = { 
+	/** 
+	 *             Automatically decide             
+	 */
+	Auto : 'Auto',
+	/** 
+	 *             Insert the object only            
+	 */
+	Insert : 'Insert',
+	/** 
+	 *             Insert the object or update it            
+	 */
+	InsertOrUpdate : 'InsertOrUpdate',
+	/** 
+	 *             Update the object only            
+	 */
+	Update : 'Update',
+	/** 
+	 *             Delete the object            
+	 */
+	Obsolete : 'Obsolete',
+}  // BatchOperationType 
+// SanteDB.Core.Auditing.AuditMetadataKey, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
 // if(!AuditMetadataKey)
 /**
  * @enum {string}
@@ -11921,7 +12353,7 @@ const AuditMetadataKey = {
 	 */
 	CorrelationToken : 'CorrelationToken',
 }  // AuditMetadataKey 
-// SanteDB.Core.Model.Warehouse.SchemaPropertyType, SanteDB.Core.Model, Version=2.0.59.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Warehouse.SchemaPropertyType, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
 // if(!SchemaPropertyType)
 /**
  * @enum {string}
@@ -11975,7 +12407,7 @@ const SchemaPropertyType = {
 	 */
 	TimeStamp : 'TimeStamp',
 }  // SchemaPropertyType 
-// SanteDB.Core.Model.Warehouse.SchemaPropertyAttributes, SanteDB.Core.Model, Version=2.0.59.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Warehouse.SchemaPropertyAttributes, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
 // if(!SchemaPropertyAttributes)
 /**
  * @enum {string}
@@ -12001,7 +12433,7 @@ const SchemaPropertyAttributes = {
 	 */
 	Unique : 'Unique',
 }  // SchemaPropertyAttributes 
-// SanteDB.Core.Model.Subscription.SubscriptionModeType, SanteDB.Core.Model, Version=2.0.59.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Subscription.SubscriptionModeType, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
 // if(!SubscriptionModeType)
 /**
  * @enum {string}
@@ -12023,7 +12455,7 @@ const SubscriptionModeType = {
 	 */
 	AllOrSubscription : 'AllOrSubscription',
 }  // SubscriptionModeType 
-// SanteDB.Core.Model.Subscription.SubscriptionTriggerType, SanteDB.Core.Model, Version=2.0.59.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Subscription.SubscriptionTriggerType, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
 // if(!SubscriptionTriggerType)
 /**
  * @enum {string}
@@ -12069,7 +12501,7 @@ const SubscriptionTriggerType = {
 	 */
 	Manual : 'Manual',
 }  // SubscriptionTriggerType 
-// SanteDB.Core.Model.Security.PolicyGrantType, SanteDB.Core.Model, Version=2.0.59.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Security.PolicyGrantType, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
 // if(!PolicyGrantType)
 /**
  * @enum {string}
@@ -12091,7 +12523,7 @@ const PolicyGrantType = {
 	 */
 	Grant : 'Grant',
 }  // PolicyGrantType 
-// SanteDB.Core.Model.Constants.UserClassKeys, SanteDB.Core.Model, Version=2.0.59.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Constants.UserClassKeys, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
 // if(!UserClassKeys)
 /**
  * @enum {string}
@@ -12113,7 +12545,7 @@ const UserClassKeys = {
 	 */
 	SystemUser : '9f71bb34-9691-440f-8249-9c831ea16d58',
 }  // UserClassKeys 
-// SanteDB.Core.Model.DataTypes.DatePrecision, SanteDB.Core.Model, Version=2.0.59.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.DataTypes.DatePrecision, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
 // if(!DatePrecision)
 /**
  * @enum {string}
@@ -12151,7 +12583,7 @@ const DatePrecision = {
 	 */
 	Second : 'Second',
 }  // DatePrecision 
-// SanteDB.Core.Model.Constants.AddressUseKeys, SanteDB.Core.Model, Version=2.0.59.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Constants.AddressUseKeys, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
 // if(!AddressUseKeys)
 /**
  * @enum {string}
@@ -12221,7 +12653,7 @@ const AddressUseKeys = {
 	 */
 	WorkPlace : 'eaa6f08e-bb8e-4457-9dc0-3a1555fadf5c',
 }  // AddressUseKeys 
-// SanteDB.Core.Model.Constants.EntityClassKeys, SanteDB.Core.Model, Version=2.0.59.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Constants.EntityClassKeys, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
 // if(!EntityClassKeys)
 /**
  * @enum {string}
@@ -12310,8 +12742,12 @@ const EntityClassKeys = {
 	 *             State            
 	 */
 	State : '8cf4b0b0-84e5-4122-85fe-6afa8240c218',
+	/** 
+	 *             Represents a precinct or sub-division of a city such as a burrogh            
+	 */
+	PrecinctOrBorough : 'acafe0f2-e209-43bb-8633-3665fd7c90ba',
 }  // EntityClassKeys 
-// SanteDB.Core.Model.Constants.DeterminerKeys, SanteDB.Core.Model, Version=2.0.59.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Constants.DeterminerKeys, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
 // if(!DeterminerKeys)
 /**
  * @enum {string}
@@ -12333,7 +12769,7 @@ const DeterminerKeys = {
 	 */
 	Specific : 'f29f08de-78a7-4a5e-aeaf-7b545ba19a09',
 }  // DeterminerKeys 
-// SanteDB.Core.Model.Constants.NameUseKeys, SanteDB.Core.Model, Version=2.0.59.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Constants.NameUseKeys, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
 // if(!NameUseKeys)
 /**
  * @enum {string}
@@ -12407,7 +12843,7 @@ const NameUseKeys = {
 	 */
 	Syllabic : 'b4ca3bf0-a7fc-44f3-87d5-e126beda93ff',
 }  // NameUseKeys 
-// SanteDB.Core.Model.Constants.ActParticipationKey, SanteDB.Core.Model, Version=2.0.59.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Constants.ActParticipationKey, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
 // if(!ActParticipationKey)
 /**
  * @enum {string}
@@ -12641,7 +13077,7 @@ const ActParticipationKey = {
 	 */
 	Witness : '0b82357f-5ae0-4543-ab8e-a33e9b315bab',
 }  // ActParticipationKey 
-// SanteDB.Core.Model.Constants.EntityRelationshipTypeKeys, SanteDB.Core.Model, Version=2.0.59.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Constants.EntityRelationshipTypeKeys, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
 // if(!EntityRelationshipTypeKeys)
 /**
  * @enum {string}
@@ -13270,8 +13706,16 @@ const EntityRelationshipTypeKeys = {
 	 *             Duplicate entity            
 	 */
 	Duplicate : '2bbf068b-9121-4081-bf3c-ab62c01362ee',
+	/** 
+	 *             Duplicate entity            
+	 */
+	Scoper : 'fcd37959-5bc2-48db-bbb5-36afd9edf19a',
+	/** 
+	 *             Referenced entities            
+	 */
+	EquivalentEntity : '395f4edf-5d5d-4950-9f5e-f827f72e4b32',
 }  // EntityRelationshipTypeKeys 
-// SanteDB.Core.Model.Constants.StatusKeys, SanteDB.Core.Model, Version=2.0.59.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Constants.StatusKeys, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
 // if(!StatusKeys)
 /**
  * @enum {string}
@@ -13309,7 +13753,7 @@ const StatusKeys = {
 	 */
 	Purged : '39995c08-0a5c-4549-8ba7-d187f9b3c4fd',
 }  // StatusKeys 
-// SanteDB.Core.Model.Constants.TelecomAddressUseKeys, SanteDB.Core.Model, Version=2.0.59.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Constants.TelecomAddressUseKeys, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
 // if(!TelecomAddressUseKeys)
 /**
  * @enum {string}
@@ -13347,7 +13791,7 @@ const TelecomAddressUseKeys = {
 	 */
 	WorkPlace : 'eaa6f08e-bb8e-4457-9dc0-3a1555fadf5c',
 }  // TelecomAddressUseKeys 
-// SanteDB.Core.Model.Patch.PatchOperationType, SanteDB.Core.Model, Version=2.0.59.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Patch.PatchOperationType, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
 // if(!PatchOperationType)
 /**
  * @enum {string}
@@ -13373,7 +13817,7 @@ const PatchOperationType = {
 	 */
 	Test : 'Test',
 }  // PatchOperationType 
-// SanteDB.Core.Model.Constants.AddressComponentKeys, SanteDB.Core.Model, Version=2.0.59.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Constants.AddressComponentKeys, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
 // if(!AddressComponentKeys)
 /**
  * @enum {string}
@@ -13495,7 +13939,7 @@ const AddressComponentKeys = {
 	 */
 	UnitIdentifier : '908c09df-81fe-45ac-9233-0881a278a401',
 }  // AddressComponentKeys 
-// SanteDB.Core.Model.Constants.NameComponentKeys, SanteDB.Core.Model, Version=2.0.59.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Constants.NameComponentKeys, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
 // if(!NameComponentKeys)
 /**
  * @enum {string}
@@ -13529,7 +13973,29 @@ const NameComponentKeys = {
 	 */
 	Title : '4386d92a-d81b-4033-b968-01e57e20d5e0',
 }  // NameComponentKeys 
-// SanteDB.Core.Model.Constants.TelecomAddressTypeKeys, SanteDB.Core.Model, Version=2.0.59.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Constants.RelationshipClassKeys, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
+// if(!RelationshipClassKeys)
+/**
+ * @enum {string}
+ * @public
+ * @readonly
+ * @summary             Base entity relationship type keys            
+ */
+const RelationshipClassKeys = { 
+	/** 
+	 *             The target is referenced by the holder however the target exists as an independent object            
+	 */
+	ReferencedObjectLink : '724b1fc7-94fc-43e5-b597-b6ed2fb8f660',
+	/** 
+	 *             The target is referenced by the holder, however the target cannot exist without the holder object (it relies on the holder to give it context)            
+	 */
+	ContainedObjectLink : 'b23a00bb-34b0-4704-ac5b-53330a8852b3',
+	/** 
+	 *             The target is referenced by the holder by a system process and should not be disclosed on non-internal APIs            
+	 */
+	PrivateLink : 'ca3057c3-ce83-4ca5-a0c4-fa0480b7f991',
+}  // RelationshipClassKeys 
+// SanteDB.Core.Model.Constants.TelecomAddressTypeKeys, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
 // if(!TelecomAddressTypeKeys)
 /**
  * @enum {string}
@@ -13563,7 +14029,7 @@ const TelecomAddressTypeKeys = {
 	 */
 	Internet : 'c1c0a4e9-4238-4044-b89b-9c9798995b93',
 }  // TelecomAddressTypeKeys 
-// SanteDB.Core.Model.Constants.ConceptRelationshipTypeKeys, SanteDB.Core.Model, Version=2.0.59.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Constants.ConceptRelationshipTypeKeys, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
 // if(!ConceptRelationshipTypeKeys)
 /**
  * @enum {string}
@@ -13588,8 +14054,16 @@ const ConceptRelationshipTypeKeys = {
 	 *             The source concept has the same meaning as the target concept            
 	 */
 	SameAs : '2c4dafc2-566a-41ae-9ebc-3097d7d22f4a',
+	/** 
+	 *             The source concept is narrower in meaning than the target            
+	 */
+	NarrowerThan : 'ae8b4f2f-009f-4e0d-b35e-5a89555c5990',
+	/** 
+	 *             The source concept is wider in meaning than the target            
+	 */
+	WiderThan : 'ae8b4f2f-009f-4e0d-b35e-5a89555c5980',
 }  // ConceptRelationshipTypeKeys 
-// SanteDB.Core.Model.Constants.ConceptClassKeys, SanteDB.Core.Model, Version=2.0.59.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Constants.ConceptClassKeys, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
 // if(!ConceptClassKeys)
 /**
  * @enum {string}
@@ -13655,7 +14129,7 @@ const ConceptClassKeys = {
 	 */
 	Language : 'ed032625-8139-4bdd-af25-c54a6960f87d',
 }  // ConceptClassKeys 
-// SanteDB.Core.Model.Constants.CodeSystemKeys, SanteDB.Core.Model, Version=2.0.59.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Constants.CodeSystemKeys, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
 // if(!CodeSystemKeys)
 /**
  * @enum {string}
@@ -13713,7 +14187,7 @@ const CodeSystemKeys = {
 	 */
 	AdministrativeGender : '7a3a7139-b93e-4a99-bd54-749e30fe712a',
 }  // CodeSystemKeys 
-// SanteDB.Core.Model.Constants.ActClassKeys, SanteDB.Core.Model, Version=2.0.59.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Constants.ActClassKeys, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
 // if(!ActClassKeys)
 /**
  * @enum {string}
@@ -13803,7 +14277,7 @@ const ActClassKeys = {
 	 */
 	List : 'b0323489-9a09-411a-bb55-ff283830ea1a',
 }  // ActClassKeys 
-// SanteDB.Core.Model.Constants.ActMoodKeys, SanteDB.Core.Model, Version=2.0.59.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Constants.ActMoodKeys, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
 // if(!ActMoodKeys)
 /**
  * @enum {string}
@@ -13849,7 +14323,7 @@ const ActMoodKeys = {
 	 */
 	Request : 'e658ca72-3b6a-4099-ab6e-7cf6861a5b61',
 }  // ActMoodKeys 
-// SanteDB.Core.Model.Constants.ActReasonKeys, SanteDB.Core.Model, Version=2.0.59.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Constants.ActReasonKeys, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
 // if(!ActReasonKeys)
 /**
  * @enum {string}
@@ -13899,7 +14373,7 @@ const ActReasonKeys = {
 	 */
 	ColdStorageFailure : '06922eac-0cae-49af-a33c-fc7096349e4a',
 }  // ActReasonKeys 
-// SanteDB.Core.Model.Constants.ActRelationshipTypeKeys, SanteDB.Core.Model, Version=2.0.59.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Constants.ActRelationshipTypeKeys, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
 // if(!ActRelationshipTypeKeys)
 /**
  * @enum {string}
@@ -14005,7 +14479,7 @@ const ActRelationshipTypeKeys = {
 	 */
 	Duplicate : '2bbf068b-9121-4081-bf3c-ab62c01362ee',
 }  // ActRelationshipTypeKeys 
-// SanteDB.Core.Model.Constants.NullReasonKeys, SanteDB.Core.Model, Version=2.0.59.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Constants.NullReasonKeys, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
 // if(!NullReasonKeys)
 /**
  * @enum {string}
@@ -14076,11 +14550,8 @@ const NullReasonKeys = {
 	Masked : '9b16bf12-073e-4ea4-b6c5-e1b93e8fd490',
 }  // NullReasonKeys 
 
-// Empty guid
-//if(!EmptyGuid)
-    EmptyGuid = "00000000-0000-0000-0000-000000000000";
+EmptyGuid = "00000000 - 0000 - 0000 - 0000 - 000000000000";
 
-//if(!Exception)
 /**
 * @class
 * @summary Represents a simple exception class
@@ -14095,24 +14566,25 @@ const NullReasonKeys = {
 * @param {Exception} cause The cause of the exception
 */
 function Exception(type, message, detail, cause, stack, policyId, policyOutcome, rules, data) {
-	_self = this;
-	/** @type {string} */
-	this.$type = type;
-	/** @type {string} */
-	this.message = message;
-	/** @type {string} */
-	this.detail = detail;
-	/** @type {Exception} */
-	this.cause = cause;
-	/** @type {string} */
-	this.stack = stack;
-	/** @type {string} */
-	this.policy = policyId;
-	/** @type {string} */
-	this.policyOutcome = policyOutcome;
-	/** @type {Array} */
-	this.rules = rules;
-	/** @type {Array} */
-	this.data = data;
+    _self = this;
+    /** @type {string} */
+    this.$type = type;
+    /** @type {string} */
+    this.message = message;
+    /** @type {string} */
+    this.detail = detail;
+    /** @type {Exception} */
+    this.cause = cause;
+    /** @type {string} */
+    this.stack = stack;
+    /** @type {string} */
+    this.policy = policyId;
+    /** @type {string} */
+    this.policyOutcome = policyOutcome;
+    /** @type {Array} */
+    this.rules = rules;
+    /** @type {Array} */
+    this.data = data;
 }
 
+                    

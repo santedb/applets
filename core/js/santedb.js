@@ -1497,6 +1497,7 @@ function ResourceWrapper(_config) {
      */
       this.invokeOperationAsync = function (id, operation, parameters, upstream, state) {
 
+
         if (!operation)
             throw new Exception("ArgumentNullException", "Missing scoping property");
 
@@ -2462,6 +2463,18 @@ function SanteDBWrapper() {
             resource: "Patient",
             api: _hdsi
         });
+
+        /**
+         * @type {ResourceWrapper}
+         * @memberof SanteDBWrapper.ResourceApi
+         * @summary Match configuration API
+         */
+        this.matchConfiguration = new ResourceWrapper({
+            accept: "application/json",
+            resource: "MatchConfiguration",
+            api: _ami
+        });
+
         /**
             * @type {ResourceWrapper}
             * @memberof SanteDBWrapper.ResourceApi

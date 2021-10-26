@@ -26,7 +26,7 @@ angular.module('santedb-lib')
      * @summary Directive for rendering a table of entities
      */
     .directive('entityTable', ['$timeout', '$compile', '$rootScope', '$state', function ($timeout, $compile, $rootScope, $state) {
-        
+
         return {
             scope: {
                 properties: "<",
@@ -69,7 +69,7 @@ angular.module('santedb-lib')
 
                         var expectedType = null;
                         // Name and type?
-                        if(m.indexOf('@') > -1) {
+                        if (m.indexOf('@') > -1) {
                             var metaData = m.split('@');
                             m = metaData[0];
                             expectedType = metaData[1];
@@ -83,14 +83,14 @@ angular.module('santedb-lib')
                             class: scope.itemClass ? scope.itemClass[m] : null,
                             defaultContent: '',
                             render: renderer ?
-                                function (d, t, r) { 
-                                    if(typeof(renderer) == "function")
+                                function (d, t, r) {
+                                    if (typeof (renderer) == "function")
                                         return renderer(r);
-                                    else if(typeof(scope.$parent[renderer]) === "function")
+                                    else if (typeof (scope.$parent[renderer]) === "function")
                                         return scope.$parent[renderer](r);
-                                    else 
+                                    else
                                         return `<span class='alert alert-danger'><i class='fas fa-bug'></i> ${renderer} not a function</span>`;
-                                 } :
+                                } :
                                 m.indexOf("Time") > -1 ?
                                     function (d, t, r) {
                                         return d ? moment(d).format(SanteDB.locale.dateFormats.second) :
@@ -110,14 +110,14 @@ angular.module('santedb-lib')
                                 var retVal = `<div class='btn-group' id='action_grp_${m.row}'>`;
                                 scope.itemActions.forEach(function (b) {
 
-                                    if(b.demand && $rootScope.session &&
-                                        $rootScope.session.scope.filter(o=>b.demand.indexOf(o) == 0).length == 0) // check policy
+                                    if (b.demand && $rootScope.session &&
+                                        $rootScope.session.scope.filter(o => b.demand.indexOf(o) == 0).length == 0) // check policy
                                         return;
 
-                                    if (!b.when || scope.$eval(b.when, { r: r, cell: m, StatusKeys: StatusKeys})) {
+                                    if (!b.when || scope.$eval(b.when, { r: r, cell: m, StatusKeys: StatusKeys })) {
                                         if (b.sref)
                                             retVal += `<a id="${attrs.type}${b.name}${m.row}" title="${SanteDB.locale.getString(b.hint ? scope.i18nPrefix + b.hint : 'ui.action.' + b.name)}" ui-sref="${b.sref}({ id: '${r.id}' })" class="btn ${(b.className || 'btn-default')}">`;
-                                        else if(b.href)
+                                        else if (b.href)
                                             retVal += `<a id="${attrs.type}${b.name}${m.row}" title="${SanteDB.locale.getString(b.hint ? scope.i18nPrefix + b.hint : 'ui.action.' + b.name)}" href="${b.href}/${r.id}" class="btn ${(b.className || 'btn-default')}">`;
                                         else
                                             retVal += `<a id="${attrs.type}${b.name}${m.row}" title="${SanteDB.locale.getString(b.hint ? scope.i18nPrefix + b.hint : 'ui.action.' + b.name)}" href="" ng-click="$parent.${b.action}('${r.id}', ${m.row})" class="btn ${(b.className || 'btn-default')}">`;
@@ -135,64 +135,64 @@ angular.module('santedb-lib')
 
                     // Buttons
                     var buttons = [];
-                    
-                    if(scope.buttonBar) 
-                        buttons = [ 'copy' ];
-                    else if(scope.noButtons)
+
+                    if (scope.buttonBar)
+                        buttons = ['copy'];
+                    else if (scope.noButtons)
                         buttons = [];
                     else {
                         buttons = (scope.actions || [])
-                            .filter(b=> !b.demand || b.demand && $rootScope.session && $rootScope.session.scope.filter(o=>b.demand.indexOf(o) == 0).length > 0) // check policy
+                            .filter(b => !b.demand || b.demand && $rootScope.session && $rootScope.session.scope.filter(o => b.demand.indexOf(o) == 0).length > 0) // check policy
                             .map(function (b) {
-                            return {
-                                text: `<i class="${b.icon}"></i> ` + SanteDB.locale.getString(b.label ? scope.i18nPrefix + b.label : 'ui.action.' + b.name),
-                                className: `btn ${b.className || 'btn-default'}`,
-                                attr: { id:  `${attrs.type}${b.name}` },
-                                action: function (e, dt, node, config) {
-                                    if(b.sref)
-                                        $state.transitionTo(b.sref);
-                                    else if(b.href)
-                                        window.location = b.href;
-                                    else 
-                                        scope.$parent[b.action]();
+                                return {
+                                    text: `<i class="${b.icon}"></i> ` + SanteDB.locale.getString(b.label ? scope.i18nPrefix + b.label : 'ui.action.' + b.name),
+                                    className: `btn ${b.className || 'btn-default'}`,
+                                    attr: { id: `${attrs.type}${b.name}` },
+                                    action: function (e, dt, node, config) {
+                                        if (b.sref)
+                                            $state.transitionTo(b.sref);
+                                        else if (b.href)
+                                            window.location = b.href;
+                                        else
+                                            scope.$parent[b.action]();
+                                    }
                                 }
-                            }
-                        });
+                            });
 
                         // Add refresh button
                         buttons.push(
-                        'reload'
+                            'reload'
                         );
 
                         // Add a show obsolete button
-                        if(scope.defaultQuery && scope.defaultQuery.obsoletionTime)
+                        if (scope.defaultQuery && scope.defaultQuery.obsoletionTime)
                             buttons.push({
                                 text: "<i class='fas fa-trash'></i> " + SanteDB.locale.getString("ui.action.showDeleted"),
                                 className: "btn btn-light",
                                 action: function (e, dt, node, config) {
-                                    
+
                                     var btn = $("button.btn-light:has(i.fa-trash)", element);
-                                    if(btn.hasClass("active")) { // active to inactive
+                                    if (btn.hasClass("active")) { // active to inactive
                                         scope.defaultQuery.obsoletionTime = 'null';
                                         btn.removeClass("active");
                                     }
                                     else {
                                         scope.defaultQuery.obsoletionTime = '!null';
-                                       btn.addClass("active");
+                                        btn.addClass("active");
                                     }
-                                    
+
                                     dt.ajax.reload();
-                                    
+
                                 }
                             });
-                        else if(scope.defaultQuery && scope.defaultQuery.statusConcept)
+                        else if (scope.defaultQuery && scope.defaultQuery.statusConcept)
                             buttons.push({
                                 text: "<i class='fas fa-trash'></i> " + SanteDB.locale.getString("ui.action.showDeleted"),
                                 className: "btn btn-light",
                                 action: function (e, dt, node, config) {
                                     var btn = $("button.btn-light:has(i.fa-trash)", element);
 
-                                    if(btn.hasClass("active")) { // active to inactive
+                                    if (btn.hasClass("active")) { // active to inactive
                                         scope.defaultQuery.statusConcept = StatusKeys.Active;
                                         btn.removeClass("active");
                                     }
@@ -200,42 +200,39 @@ angular.module('santedb-lib')
                                         scope.defaultQuery.statusConcept = StatusKeys.Obsolete;
                                         btn.addClass("active");
                                     }
-                                    
+
                                     dt.ajax.reload();
                                 }
                             });
                     }
-                    
+
                     // Default is true
-                    if(scope.canFilter === undefined)
+                    if (scope.canFilter === undefined)
                         scope.canFilter = true;
-                    
+
                     var dt = $("table", element).DataTable({
                         lengthChange: scope.canSize,
                         processing: true,
                         buttons: buttons,
                         serverSide: true,
                         searching: scope.canFilter,
-                        "oSearch": scope.defaultFilter ? {"sSearch": scope.defaultFilter} : undefined,
+                        "oSearch": scope.defaultFilter ? { "sSearch": scope.defaultFilter } : undefined,
                         ajax: async function (data, callback, settings) {
 
-                            
                             var query = angular.copy(scope.defaultQuery) || {};
-                            if(data.search.value) {
+                            if (data.search.value) {
                                 if (data.search.value.length > 0)
                                     query[attrs.searchField] = `~${data.search.value}`;
                             }
                             if (data.order[0].column != 0) {
                                 var orderExpr = colname = scope.properties[data.order[0].column - 1]; // -1 because the ID column is hidden
-                                if(scope.sort && scope.sort[colname])
+                                if (scope.sort && scope.sort[colname])
                                     orderExpr = scope.sort[colname];
 
                                 query["_orderBy"] = `${orderExpr}:${data.order[0].dir}`;
                             }
-                            
 
                             var thisQuery = JSON.stringify(query);
-
 
                             if (lastQuery != thisQuery || element.attr("newQueryId") == "true") {
                                 lastQuery = thisQuery;
@@ -243,75 +240,71 @@ angular.module('santedb-lib')
                                 element.attr("newQueryId", false);
                             }
 
-                            if(!scope.stateless) {
+                            if (!scope.stateless) {
                                 query["_queryId"] = queryId;
                             }
 
                             query["_count"] = data.length;
                             query["_offset"] = data.start;
 
-                            if(!query._noexec) {
-                                
-                                // Set a timeout for 1s and then re-check 
-                                if(isSearching)
-                                {
-                                    if(!returnTimer)
-                                        returnTimer = setTimeout(() => dt.ajax.reload(), 2000);
-                                }
-                                else {
-                                    if(returnTimer) clearTimeout(returnTimer); // cancel the previous timer
-                                    isSearching = true;
-                                    var searchPromise = null;
+                            if (!query._noexec) {
 
-                                    if(attrs.subResource) {
-                                        if(scope.subResourceHolder) {
-                                            searchPromise = SanteDB.resources[attrs.type.toCamelCase()].findAssociatedAsync(scope.subResourceHolder, attrs.subResource, query, scope.external);
-                                        }
-                                        else {
-                                            searchPromise = SanteDB.resources[attrs.type.toCamelCase()].findAssociatedAsync(null, attrs.subResource, query, scope.external);
-                                        }
+                                // Unfortunately the data tables control passes each keystroke to the server
+                                // this can ovwerhelm busy servers - so we want to delay searching as long as possible
+
+                                var searchPromise = null;
+
+                                if (attrs.subResource) {
+                                    if (scope.subResourceHolder) {
+                                        searchPromise = SanteDB.resources[attrs.type.toCamelCase()].findAssociatedAsync(scope.subResourceHolder, attrs.subResource, query, scope.external);
                                     }
                                     else {
-                                        searchPromise = SanteDB.resources[attrs.type.toCamelCase()].findAsync(query, undefined, scope.external);
+                                        searchPromise = SanteDB.resources[attrs.type.toCamelCase()].findAssociatedAsync(null, attrs.subResource, query, scope.external);
                                     }
-                                    
-                                    try {
-                                        var res = await searchPromise;
+                                }
+                                else {
+                                    searchPromise = SanteDB.resources[attrs.type.toCamelCase()].findAsync(query, undefined, scope.external);
+                                }
 
-                                        res.resource = res.resource || [];
+                                try {
+                                    var res = await searchPromise;
 
-                                        // Ensure types 
-                                        for(var c in columns) {
-                                            var colData = columns[c];
-                                            if(colData.expectedType) { // ensure type
-                                                // Await all resources to have expected type
-                                                await Promise.all(res.resource.map(async res => res[colData.data] =  await SanteDB.resources.ensureTypeAsync(res[colData.data], colData.expectedType)));       
-                                            }
-                                        };
-                                        // Callback to DT
-                                        callback({
-                                            data: res.resource.map(function (item) {
-                                                if (scope.propertyPath)
-                                                    return item[scope.propertyPath];
-                                                else
-                                                    return item;
-                                            }),
-                                            recordsTotal: res.totalResults || res.size || 0,
-                                            recordsFiltered: res.totalResults || res.size || 0,
-                                            iTotalRecords: res.totalResults || res.size || 0,
-                                            iTotalDisplayRecords: res.totalResults  || res.size  || 0
-                                        });
-                                        // HACK: Don't send up another search for 2 sec
-                                        setTimeout(()=>isSearching = false, 500); 
-                                    }
-                                    catch(err) {
-                                        isSearching = false;
-                                        $rootScope.errorHandler(err);
-                                    }
+                                    res.resource = res.resource || [];
+
+                                    // Ensure types 
+                                    for (var c in columns) {
+                                        var colData = columns[c];
+                                        if (colData.expectedType) { // ensure type
+                                            // Await all resources to have expected type
+                                            await Promise.all(res.resource.map(async res => res[colData.data] = await SanteDB.resources.ensureTypeAsync(res[colData.data], colData.expectedType)));
+                                        }
+                                    };
+                                    // Callback to DT
+                                    callback({
+                                        data: res.resource.map(function (item) {
+                                            if (scope.propertyPath)
+                                                return item[scope.propertyPath];
+                                            else
+                                                return item;
+                                        }),
+                                        recordsTotal: res.totalResults || res.size || 0,
+                                        recordsFiltered: res.totalResults || res.size || 0,
+                                        iTotalRecords: res.totalResults || res.size || 0,
+                                        iTotalDisplayRecords: res.totalResults || res.size || 0
+                                    });
+
+                                }
+                                catch (err) {
+
+                                    $rootScope.errorHandler(err);
+                                }
+                                finally {
+                                    // Hack - only search on a timer rather than each keystroke
+                                    setTimeout(() => isSearching = false, 500);
                                 }
                             }
                             else {
-                                callback({ 
+                                callback({
                                     data: [],
                                     recordsTotal: 0,
                                     recordsFiltered: 0,
@@ -332,11 +325,11 @@ angular.module('santedb-lib')
                         dt.buttons().container().appendTo($(buttonSelector, dt.table().container()));
                         if (dt.buttons().container().length == 0) {
                             $timeout(() => bindButtons(element, buttonBar), 100);
-                        } else if(buttonBar) {
+                        } else if (buttonBar) {
                             $(buttonBar).appendTo($(buttonSelector, dt.table().container()));
                         }
 
-                        if(!scope.canFilter)  {
+                        if (!scope.canFilter) {
                             $(buttonSelector, dt.table().container()).removeClass("col-md-6").addClass("col-md-12");
                             buttonSelector = '.col-md-12:eq(0)';
                         }
@@ -344,7 +337,7 @@ angular.module('santedb-lib')
                     };
 
                     // Add watch to scope query
-                    scope.$watch((s)=>JSON.stringify(s.defaultQuery), function(n,o) { if(n && n != o) dt.ajax.reload() });
+                    scope.$watch((s) => JSON.stringify(s.defaultQuery), function (n, o) { if (n && n != o) dt.ajax.reload() });
                     bindButtons(element, scope.buttonBar);
                 });
             }
