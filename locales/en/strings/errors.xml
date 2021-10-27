@@ -50,6 +50,9 @@
       <string name="error.type.InvalidOperation">Invalid Operation</string>
       <string name="error.type.InvalidDataException.userMessage">Invalid {param}</string>
       <string name="error.messaging.fhir.subscription.emailScheme">Scheme of the endpoint for e-mail subscriptions is {param}</string>
+      <string name="error.messaging.fhir.handlers.handlerRequired">Handler is required</string>
+      <string name="error.messaging.fhir.handlers.invalidResourceType">Resource type {param} is invalid</string>
+      <string name="error.messaging.fhir.handlers.noRegisteredHandler">No handler registered for {param}</string>
       <string name="error.type.FhirException">Error Executing FHIR Operation</string>
       <string name="error.type.KeyNotFoundException.couldNotResolve">Could not resolve {param}</string>
       <string name="error.type.InvalidOperation.cannotCreate">Cannot create unless source and target are {param}</string>
@@ -166,4 +169,15 @@
       <string name="error.rest.ami.subscriptionQuery">Could not execute subscription query</string>
       <string name="error.rest.ami.updatingSubscription">Error updating subscription: {param}</string>
       <string name="error.rest.ami.incorrectParameterType">Parameter must be of type PubSubSubscription</string>
+      <string name="error.rest.common.RepositoryServiceNotFound">IRepositoryService<{param}> not found and no repository is found</string>
+      <string name="error.rest.common.invalidDataSubmission">Invalid data submission. Expected {param} but received {param1}. If you are submitting a bundle, ensure it has an entry point</string>
+      <string name="error.rest.common.errorCreatingParam">Error creating {param}</string>
+      <string name="error.rest.common.invalidDataType">Invalid data type</string>
+      <string name="error.rest.common.gettingResource">Error getting resource {param}</string>
+      <string name="error.rest.common.obsoletingResource">Error obsoleting resource {param}</string>
+      <string name="error.rest.common.queryDataSource">Error querying data source</string>
+      <string name="error.rest.common.freetextNotSupported">Attempting to run a freetext search in a context which does not support freetext searches</string>
+      <string name="error.rest.common.queryingRepository">Error querying underlying repository</string>
+      <string name="error.rest.common.invalidPersistentType">Invalid persistence type</string>
+      <string name="error.rest.common.updatingResource">Error updating resource</string>
 </resources>
