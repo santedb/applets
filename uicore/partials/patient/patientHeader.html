@@ -56,10 +56,10 @@
                         <div class="col-8">
                             <div class="d-flex flex-wrap justify-content-end">
                                 <div class="p-2"
-                                    ng-if="id.value &amp;&amp; domain != $root.system.config.application.setting['aa.preferred']"
+                                    ng-if="id[0].value &amp;&amp; domain != $root.system.config.application.setting['aa.preferred']"
                                     ng-repeat="(domain, id) in patient.identifier track by $index">
-                                    <i class="far fa-id-card"></i> {{ id.value }} <span
-                                        class="badge badge-info">{{ id.authority.name }}</span>
+                                    <i class="far fa-id-card"></i> {{ id[0].value }} <span
+                                        class="badge badge-info">{{ id[0].authority.name }}</span>
                                 </div>
                             </div>
                         </div>
@@ -79,22 +79,22 @@
                 </div>
                 <div ng-if="!patient._upstream">
                 <div class="m-0 alert alert-primary"
-                    ng-if="patient.tag['$mdm.type'] &amp;&amp; !patient.relationship['MDM-RecordOfTruth'].target">
+                    ng-if="patient.tag['$mdm.type'] &amp;&amp; !patient.relationship['MDM-RecordOfTruth'][0].target">
                     <i class="fas fa-coins"></i>
                     {{ 'ui.mdm.view.master' | i18n }}
                 </div>
                 <div class="m-0 alert alert-success"
-                    ng-if="patient.tag['$mdm.type'] &amp;&amp; patient.relationship['MDM-RecordOfTruth'].target">
+                    ng-if="patient.tag['$mdm.type'] &amp;&amp; patient.relationship['MDM-RecordOfTruth'][0].target">
                     <i class="fas fa-gavel"></i>
                     {{ 'ui.mdm.view.masterAdjudicated' | i18n }}
                 </div>
                 <div class="m-0 alert alert-info d-flex justify-content-between"
-                    ng-if="!patient.tag['$mdm.type'] &amp;&amp; patient.relationship['MDM-Master'].target">
+                    ng-if="!patient.tag['$mdm.type'] &amp;&amp; patient.relationship['MDM-Master'][0].target">
                     <span>
                         <i class="fas fa-database"></i>
                         {{ 'ui.mdm.view.local' | i18n }}
                     </span>
-                    <a ui-sref='{ "id" : patient.relationship["MDM-Master"].target }' class="btn btn-sm btn-info">
+                    <a ui-sref='{ "id" : patient.relationship["MDM-Master"][0].target }' class="btn btn-sm btn-info">
                         <i class="fas fa-coins"></i>
                         {{ 'ui.mdm.action.openMaster' | i18n }}
                     </a>

@@ -1,0 +1,6 @@
+basepath="."
+locales = [ "en","fr","es","sw", "it", "my" ]    
+[[paths]]
+    refernece = "en/strings/**"
+    l10n = "{locale}/strings/**"
+

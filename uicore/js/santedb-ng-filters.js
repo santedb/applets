@@ -96,6 +96,16 @@ angular.module('santedb-lib')
         }
     })
     /**
+     * @method base64decode
+     * @memberof Angular
+     * @summary Decode 
+     */
+     .filter('base64decode', function() {
+        return function(modelValue) {
+            return atob(modelValue);
+        }
+    })
+    /**
      * @method name
      * @memberof Angular
      * @summary Renders an entity name to the display

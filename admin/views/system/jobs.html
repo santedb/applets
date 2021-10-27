@@ -18,4 +18,39 @@
         render="{ state: 'renderState', lastRun: 'renderLastRun' }"
         item-actions="[ { name: 'run', action: 'runJob', demand: '1.3.6.1.4.1.33349.3.1.5.9.2.10', className: 'btn-primary', icon: 'fa fa-play', when : 'r.state != \'Running\'' }, { name: 'cancel', action: 'cancelJob', demand: '1.3.6.1.4.1.33349.3.1.5.9.2.10', className: 'btn-danger', icon: 'fa fa-stop', when : 'r.canCancel &amp;&amp; r.state == \'Running\'' } ]">
     </entity-table>
+
+    <div class="modal" id="jobParameterDialog" tabindex="-1" role="dialog" aria-labelledby="jobParameterDialogTitle"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="jobParameterDialogTitle">
+                        <i class="fa fa-fw fa-table"></i> {{ currentJob.name }}</h5>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">
+                            <i class="fa fa-times"></i>
+                        </span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <table class="table table-striped">
+                        <tr ng-repeat="p in currentJob.parameters"> 
+                            <th>{{ p.key }}</th>
+                            <td ng-switch="p.type">
+                                <input ng-model="p.value" class="form-control" type="text" ng-switch-when="String" />
+                                <input ng-model="p.value" type="checkbox" ng-switch-when="Boolean" />
+                                <input ng-model="p.value" class="form-control" type="number" ng-switch-when="Integer" />
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" type="button" data-dismiss="modal">
+                        <i class="fa fa-times"></i> {{ 'ui.action.cancel' | i18n }}</button>
+                    <button type="button" ng-click="runJob(currentJob.id, 0, currentJob.parameters)" class="btn btn-primary">
+                        <i class="fa fa-sign-out-alt"></i> {{ 'ui.action.ok' | i18n }}</button>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>

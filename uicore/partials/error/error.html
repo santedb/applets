@@ -1,7 +1,7 @@
 <div xmlns="http://www.w3.org/1999/xhtml">
-    <p ng-if="error.userMessage"> <span ng-bind-html="error.userMessage | i18n"></span> ({{ error.message }})</p>
+    <p ng-if="error.userMessage"> <span ng-bind-html="error.userMessage | i18n"></span> ({{ error.message }}) </p>
     <p ng-if="!error.userMessage">
-        {{ error.message | i18n }}. {{ 'ui.error.description' | i18n }}
+        {{ error.message | i18n }}. {{ 'ui.error.description' | i18n }} 
     </p>
     <div ng-switch="ng-switch"  ng-if="!error.userMessage">
         <div ng-case-when="error.message || error.details.responseJSON">

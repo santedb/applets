@@ -1,0 +1,119 @@
+<div xmlns="http://www.w3.org/1999/xhtml" xmlns:sdb="http://santedb.org/applet"
+    oc-lazy-load="{ name: 'AuditDataController', files: ['/org.santedb.admin/controllers/audit/widgets/data.js'] }">
+    <sdb:widget order="16" name="org.santedb.widget.admin.panel.audit.dataAndObjects" headerClass="bl-light"
+        size="Large" type="Panel" context="org.santedb.securityAudit.admin">
+        <sdb:icon>fas fa-cubes</sdb:icon>
+        <sdb:description lang="en">Event Information</sdb:description>
+    </sdb:widget>
+
+    <div class="row" ng-if="!scopedObject.audit">
+        <div class="col">
+            <p class="m-auto"><i class="fas fa-circle-notch fa-spin"></i> {{ 'ui.wait' | i18n }}</p>
+        </div>
+    </div>
+    <div ng-show="scopedObject" ng-controller="ViewAuditController">
+        <div class="card" ng-repeat="o in scopedObject.audit.object track by $index">
+            <div class="card-header">
+                <h5 class="m-1 card-title" ng-switch="o.idType">
+                    <a ng-switch-when="Uri" href="{{o.id}}"> {{ o.id }} <sup><i
+                                class="fas fa-external-link-alt"></i></sup></a>
+                    <a ng-switch-when="UserIdentifier" ui-sref="santedb-admin.security.users.edit({id:o.id})">
+                        <i class="fas fa-user"></i> {{ o.id }}</a>
+
+                    <a ng-switch-when="PatientNumber"
+                        ng-click="navigate('santedb-admin.mpi.patients.view', { id: o.id })">
+                        <i class="fas fa-hospital-user"></i> {{ o.id }}</a>
+                    <span ng-switch-when="Custom" ng-switch="o.customCode.code">
+                        <a ng-switch-when="SecurityRole" ui-sref="santedb-admin.security.groups.edit({id:o.id})">
+                            <i class="fas fa-users"></i> {{ o.id }}</a>
+                        <a ng-switch-when="SecurityAudit" ui-sref=".({id:o.id})">
+                            <i class="fas fa-shield-alt"></i> {{ o.id }}
+                        </a>
+                        <span ng-switch-default="">
+
+                            {{ o.id }} <span class="badge badge-info">{{ o.customCode.code
+                                }}</span>
+                            </span>
+                            </span>
+                        <span ng-switch-when="SearchCritereon"><i class="fas fa-search"></i> {{ 'ui.admin.audit.query' |
+                            i18n }}</span>
+                        <span ng-switch-default="">{{ o.id }} <span class="badge badge-info">{{ o.idType
+                                }}</span></span>
+                </h5>
+            </div>
+            <div class="card-body">
+                <div class="container-fuild">
+                    <div class="row">
+
+                        <label class="control-label col-md-2">{{ 'ui.admin.audit.object.type' | i18n }}</label>
+                        <div class="col-md-4"><i class="fas"
+                                ng-class="{ 'fa-user' : o.type == 'Person', 'fa-cog' : o.type == 'SystemObject', 'fa-building' : o.type == 'Organization', 'fa-question' : o.type == 'Other' }"></i>
+                            {{ o.type }}</div>
+                        <label class="control-label col-md-2">{{ 'ui.admin.audit.object.lifecycle' | i18n }}</label>
+                        <div class="col-md-4"><i class="fas"
+                                ng-class="{ 'fa-plus' : o.lifecycle == 'Creation', 'fa-file-import' : o.lifecycle == 'Import', 'fa-pencil-alt' : o.lifecycle == 'Amendment','fa-random' : o.lifecycle == 'Translation', 'fa-search' : o.lifecycle == 'Access', 'fa-object-group' : o.lifecycle == 'Aggregation', 'fa-file-export' : o.lifecycle == 'Export', 'fa-comment-medical' : o.lifecycle == 'Disclosure', 'fa-file-archive' : o.lifecycle == 'Archiving', 'fa-trash' : o.lifecycle == 'PermanentErasure', 'fa-recycle' : o.lifecycle == 'LogicalDeletion' }"></i>
+
+                            {{ o.lifecycle }}</div>
+                        <label class="control-label col-md-2">{{ 'ui.admin.audit.object.role' | i18n }}</label>
+                        <div class="col-md-4">
+                            <i class="fas"
+                                ng-class="{ 'fa-user-nurse' : o.role == 'Provider', 'fa-user-md' : o.role == 'Doctor', 'fa-shield-alt' : o.role == 'SecurityResource', 'fa-user' : o.role == 'SecurityUser', 'fa-database': o.role == 'DataRepository', 'fa-table': o.role == 'Table', 'fa-search' : o.role == 'Query', 'fa-bed' : o.role == 'Patient', 'fa-building' : o.role == 'Location', 'fa-file' : o.role == 'Report', 'fa-files' : o.role == 'MasterFile' }"></i>
+
+                            {{ o.role }}
+                        </div>
+                        <label class="control-label col-md-2">{{ 'ui.admin.audit.object.idType' | i18n }}</label>
+                        <div class="col-md-4">
+                            <i class="fas"
+                                ng-class="{ 'fa-question-circle' : o.idType == 'Custom', 'fa-filter' : o.idType == 'SearchCritereon' }"></i>
+
+                            {{ o.idType }}
+                            <span ng-if="o.customCode" class="badge badge-info">
+                                {{ o.customCode.code }} / {{ o.customCode.system }}
+                            </span>
+                        </div>
+                    </div>
+                    <div class="row" ng-if="o.name">
+                        <label class="control-label col-sm-2 col-xs-12">{{ 'ui.admin.audit.name' | i18n
+                            }}</label>
+                        <div class="col-sm-10 col-xs-12">
+
+
+                            {{ o.name }}
+                        </div>
+                    </div>
+                    <div class="row" ng-if="o.queryData">
+                        <label class="control-label col-sm-2 col-xs-12">{{ 'ui.admin.audit.query' | i18n
+                            }}</label>
+                        <div class="col-sm-10 col-xs-12">
+
+
+                            <code>{{ o.queryData }}</code>
+                        </div>
+
+                    </div>
+                    <div class="row" ng-if="o.dictionary.length">
+                        <label class="control-label col-sm-2 col-xs-12">{{ 'ui.admin.audit.data' | i18n }}</label>
+                        <div class="col-sm-10 col-xs-12">
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>{{ 'ui.admin.audit.data.key' | i18n }}</th>
+                                        <th>{{ 'ui.admin.audit.data.value' | i18n }}</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="v in o.dictionary">
+                                        <td>{{ v.key }}</td>
+                                        <td>{{ v.value | base64decode }}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

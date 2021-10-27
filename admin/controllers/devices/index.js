@@ -31,7 +31,7 @@ angular.module('santedb').controller('DeviceIndexController', ["$scope", "$rootS
             $("#action_grp_" + index + " a i.fa-trash").removeClass("fa-trash").addClass("fa-circle-notch fa-spin");
             try {
                 await SanteDB.resources.securityDevice.deleteAsync(id);
-                $("#SecurityDeviceTable").attr("newQuery", true);
+                $("#SecurityDeviceTable").attr("newQueryId", true);
                 $("#SecurityDeviceTable table").DataTable().draw();
             } catch(e) { $rootScope.errorHandler(e); };
 
@@ -58,7 +58,7 @@ angular.module('santedb').controller('DeviceIndexController', ["$scope", "$rootS
 
             try {
                 await  SanteDB.resources.securityDevice.patchAsync(id, data.securityStamp, patch);
-                $("#SecurityDeviceTable").attr("newQuery", true);
+                $("#SecurityDeviceTable").attr("newQueryId", true);
                 $("#SecurityDeviceTable table").DataTable().draw();
             } catch(e) {
                     $("#action_grp_" + index + " a").removeClass("disabled");

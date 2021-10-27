@@ -30,7 +30,7 @@ angular.module('santedb').controller('ApplicationIndexController', ["$scope", "$
             $("#action_grp_" + index + " a i.fa-trash").removeClass("fa-trash").addClass("fa-circle-notch fa-spin");
             SanteDB.resources.securityApplication.deleteAsync(id)
                 .then(function (e) {
-                    $("#SecurityApplicationTable").attr("newQuery", true);
+                    $("#SecurityApplicationTable").attr("newQueryId", true);
                     $("#SecurityApplicationTable table").DataTable().draw();
                 })
                 .catch($rootScope.errorHandler);
@@ -57,7 +57,7 @@ angular.module('santedb').controller('ApplicationIndexController', ["$scope", "$
 
             SanteDB.resources.securityApplication.patchAsync(id, data.securityStamp, patch)
                 .then(function (e) {
-                    $("#SecurityApplicationTable").attr("newQuery", true);
+                    $("#SecurityApplicationTable").attr("newQueryId", true);
                     $("#SecurityApplicationTable table").DataTable().draw();
                 })
                 .catch(function (e) {

@@ -1,0 +1,19 @@
+<div xmlns="http://www.w3.org/1999/xhtml" xmlns:sdb="http://santedb.org/applet" 
+     >
+    <sdb:widget order="15" name="org.santedb.widget.admin.panel.group.policies" headerClass="bl-light"
+        size="Large" type="Panel" context="org.santedb.securityRole.admin">
+        <sdb:icon>fas fa-id-badge</sdb:icon>
+        <sdb:description lang="en">Assigned Policies</sdb:description>
+    </sdb:widget>
+
+    <div class="row" ng-if="!scopedObject">
+        <div class="col">
+            <p class="m-auto"><i class="fas fa-circle-notch fa-spin"></i> {{ 'ui.wait' | i18n }}</p>
+        </div>
+    </div>
+
+    <div ng-show="scopedObject.securityRole.id" >
+        <entity-policy-admin securable="scopedObject.securityRole" policy="scopedObject.policy"></entity-policy-admin>
+    </div>
+
+</div>

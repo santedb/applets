@@ -1,0 +1,86 @@
+<!--
+ - Copyright 2015-2018 Mohawk College of Applied Arts and Technology
+ -
+ - 
+ - Licensed under the Apache License, Version 2.0 (the "License"); you 
+ - may not use this file except in compliance with the License. You may 
+ - obtain a copy of the License at 
+ - 
+ - http://www.apache.org/licenses/LICENSE-2.0 
+ - 
+ - Unless required by applicable law or agreed to in writing, software
+ - distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+ - WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the 
+ - License for the specific language governing permissions and limitations under 
+ - the License.
+ - 
+ - User: justin
+ - Date: 2018-7-23
+ -->
+<AppletManifest xmlns="http://santedb.org/applet">
+  <info id="org.santedb.i18n.en" version="2.1.90.0">
+    <icon>/org.santedb.core/img/i18n.png</icon>
+    <name lang="en">English Applet Support</name>
+    <author>SanteSuite Community Partners (see: santesuite.org)</author>
+  </info>
+  <locales>
+    <locale code="en">
+      <asset>/org.santedb.i18n.en/lib/angular/en.js</asset>
+      <asset>/org.santedb.i18n.en/lib/select2/en.js</asset>
+      <asset>/org.santedb.i18n.en/lib/santedb/en.js</asset>
+    </locale>
+    <locale code="en-au">
+      <asset>/org.santedb.i18n.en/lib/angular/en-au.js</asset>
+      <asset>/org.santedb.i18n.en/lib/santedb/en.js</asset>
+      <asset>/org.santedb.i18n.en/lib/select2/en.js</asset>
+    </locale>
+    <locale code="en-ca">
+      <asset>/org.santedb.i18n.en/lib/angular/en-ca.js</asset>
+      <asset>/org.santedb.i18n.en/lib/select2/en.js</asset>
+      <asset>/org.santedb.i18n.en/lib/santedb/en.js</asset>
+    </locale>
+    <locale code="en-gb">
+      <asset>/org.santedb.i18n.en/lib/angular/en-gb.js</asset>
+      <asset>/org.santedb.i18n.en/lib/select2/en.js</asset>
+      <asset>/org.santedb.i18n.en/lib/santedb/en.js</asset>
+    </locale>
+    <locale code="en-nz">
+      <asset>/org.santedb.i18n.en/lib/angular/en-nz.js</asset>
+      <asset>/org.santedb.i18n.en/lib/select2/en.js</asset>
+      <asset>/org.santedb.i18n.en/lib/santedb/en.js</asset>
+    </locale>
+    <locale code="en-ph">
+      <asset>/org.santedb.i18n.en/lib/angular/en-ph.js</asset>
+      <asset>/org.santedb.i18n.en/lib/select2/en.js</asset>
+      <asset>/org.santedb.i18n.en/lib/santedb/en.js</asset>
+    </locale>
+  </locales>
+
+  <strings lang="en" extern="strings/model.xml"/>
+  <strings lang="en" extern="strings/errors.xml" />
+  <strings lang="en" extern="strings/ui.xml" />
+  <strings lang="en">
+    <string key="ui.locale">Language</string>
+    <string key="ui.locale.en">English</string>
+    <string key="ui.locale.en-au">English (Australia)</string>
+    <string key="ui.locale.en-ca">English (Canada)</string>
+    <string key="ui.locale.en-gb">English (UK)</string>
+    <string key="ui.locale.en-iso">English (ISO)</string>
+    <string key="ui.locale.en-nz">English (New Zealand)</string>
+    <string key="ui.locale.en-ph">English (Philippines)</string>
+    <string key="ui.locale.es">Spanish</string>
+    <string key="ui.locale.es-es">Spanish (Spain)</string>
+    <string key="ui.locale.es-mx">Spanish (Mexico)</string>
+    <string key="ui.locale.es-us">Spanish (US)</string>
+    <string key="ui.locale.fr">French</string>
+    <string key="ui.locale.fr-be">French (Belgiun)</string>
+    <string key="ui.locale.fr-ca">French (Canada)</string>
+    <string key="ui.locale.fr-ch">French (Swiss)</string>
+    <string key="ui.locale.fr-fr">French (France)</string>
+    <string key="ui.locale.sw">Swahili</string>
+    <string key="ui.locale.sw-ke">Swahili (Kenya)</string>
+    <string key="ui.locale.sw-tz">Swahili (Tanzania)</string>
+    <string key="ui.locale.sw-ug">Swahili (Uganda)</string>
+  </strings>
+
+</AppletManifest>

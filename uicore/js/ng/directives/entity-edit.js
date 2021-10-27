@@ -27,6 +27,18 @@ angular.module('santedb-lib')
      * @summary Entity Address Editing
      * @memberof Angular
      * @method addressEdit
+     * 
+     * @param {EntityAddress} address The address which is the be edited by this control
+     * @param {boolean} noAdd When true, don't allow for adding of new addresses to the address collection
+     * @param {boolean} noType When true, dont display the type of address selection
+     * @param {boolean} simpleEntry When true, only allow simple entry (text boxes only)
+     * @param {boolean} isRequired When true, the fields in the address will be marked as required
+     * @param {form} ownerForm The angular form which hosts this control
+     * @param {string} controlPrefix The prefix to add to all inputs which allow validation and access by other JavaScript
+     * @example
+     * <form novalidate="novalidate" name="myForm">
+     *      <address-edit address="scopedObject.address" no-add="true" no-type="false" simple-entry="true" 
+     *          owner-form="myForm" />
      */
     .directive('addressEdit', ['$rootScope', function ($rootScope) {
         return {
@@ -108,10 +120,21 @@ angular.module('santedb-lib')
         }
     }])
     /**
-    * @summary Entity Name Editing
+    * @summary Allows for the editing of a name
     * @memberof Angular
     * @method nameEdit
-    */
+    * @param {EntityName} name The name which is the be edited by this control
+     * @param {boolean} noAdd When true, don't allow for adding of new names to the names collection
+     * @param {boolean} noType When true, dont display the type of names selection
+     * @param {boolean} simpleEntry When true, only allow simple entry (text boxes for first name part of first name only)
+     * @param {boolean} isRequired When true, the fields in the name will be marked as required
+     * @param {form} ownerForm The angular form which hosts this control
+     * @param {string} controlPrefix The prefix to add to all inputs which allow validation and access by other JavaScript
+     * @example
+      * <form novalidate="novalidate" name="myForm">
+     *      <name-edit name="scopedObject.name" no-add="true" no-type="false" simple-entry="true" 
+     *          owner-form="myForm" />
+     */
     .directive('nameEdit', ['$rootScope', function ($rootScope) {
         return {
             restrict: 'E',
@@ -119,7 +142,6 @@ angular.module('santedb-lib')
             templateUrl: './org.santedb.uicore/directives/nameEdit.html',
             scope: {
                 name: '=',
-                simpleName: '<',
                 noAdd: '<',
                 noType: '<',
                 simpleEntry: '<',
@@ -198,6 +220,13 @@ angular.module('santedb-lib')
     * @summary Entity Telecom Editing
     * @memberof Angular
     * @method telecomEdit
+    * @param {Telecom} telecom The telecommunications address which is being edited
+    * @param {bool} singleEdit When true, only allow editing of a single telecom address
+    * @param {form} ownerForm The name of the form which owns this input 
+    * @param {boolean} noLabel When true, don't display labels on each address type 
+    * @example
+    *   <form name="myForm" novalidate="novalidate">
+    *       <telecom-edit telecom="scopedObject.telecom" single-edit="false" owner-form="myForm" />
     */
     .directive('telecomEdit', ['$rootScope', function ($rootScope) {
 
@@ -262,9 +291,16 @@ angular.module('santedb-lib')
         }
     }])
     /**
-    * @summary Entity Identifier
+    * @summary Entity Identifier edit control as a collection
     * @memberof Angular
     * @method identifierEdit
+    * @param {EntityIdentifier} identifier The identifier collection to be edited
+    * @param {form} ownerForm The form which owns this
+    * @param {UUID} containerClass The classifier which should be used to filter the identity domains in the edit list
+    * @example
+    *   <form name="myForm" novalidate="novalidate">
+    *       <identifier-list-edit identifier="scopedObject.identifier" owner-form="myForm"
+    *           container-class="scopedObject.classConcept" />
     */
     .directive('identifierListEdit', ['$rootScope', function ($rootScope) {
         return {
@@ -345,9 +381,22 @@ angular.module('santedb-lib')
         }
     }])
     /**
-    * @summary Entity Identifier
+    * @summary Entity Identifier edit for a single identifier
     * @memberof Angular
     * @method identifierEdit
+    * @param {EntityIdentifier} identifier The identifier to edit
+    * @param {form} ownerForm The form which owns this control (used for validation)
+    * @param {UUID} containerClass The classification code which identifier domains must belong to
+    * @param {boolean} noDomain When true, don't show an identity domain selector
+    * @param {boolean} isRequired When true, indicate that the inputs should be required
+    * @param {boolean} noScan When true, don't show the QR code / identity scanner
+    * @param {boolean} noLabel When true, don't show labels on the inputs
+    * @example 
+    *   <form name="myForm" novalidate="novalidate">
+    *       <identifier-edit identifier="scopedObject.identifier[NID]"
+    *           owner-form="myForm"
+    *           container-class="scopedObject.classConcept"
+    *           no-scan="true" />
     */
     .directive('identifierEdit', ['$rootScope', function ($rootScope) {
 
@@ -363,8 +412,6 @@ angular.module('santedb-lib')
                 containerClass: '<',
                 noDomain: '<',
                 isRequired: '<',
-                removeFn: '<',
-                addFn: '<',
                 noScan: '<',
                 noLabel: '<'
             },
@@ -455,6 +502,7 @@ angular.module('santedb-lib')
             },
             controller: ['$scope', '$rootScope', function ($scope, $rootScope) {
 
+                // The types of relationships which are used to drive the inputs for lookup
                 $scope.adminRelationTypes = {
                     Caregiver: {
                         applyTo: [EntityClassKeys.Patient, EntityClassKeys.Person],

@@ -39,9 +39,9 @@ body.fixed-nav {
 }
 
 .content-wrapper {
-  min-height: calc(100vh - 56px);
+  min-height: calc(100vh - 112px);
   padding-top: 1rem;
-  max-height: calc(100vh - 56px)
+  max-height: calc(100vh - 112px)
 }
 
 .scroll-to-top {
@@ -265,6 +265,7 @@ body.fixed-nav {
 
 #mainNav.fixed-top.navbar-light .sidenav-toggler {
   background-color: #dee2e6;
+  height: 100vh;
 }
 
 #mainNav.fixed-top.navbar-light .sidenav-toggler a i {
@@ -274,6 +275,7 @@ body.fixed-nav {
 body.sidenav-toggled #mainNav.fixed-top .sidenav-toggler {
   overflow-x: hidden;
   width: 75px;
+  height: 100vh;
 }
 
 body.sidenav-toggled #mainNav.fixed-top .sidenav-toggler .nav-item,
@@ -317,6 +319,7 @@ body.sidenav-toggled #mainNav.static-top #sidenavToggler i {
 @media (min-width: 1100px) {
   .content-wrapper {
     margin-left: 250px;
+    margin-top: 56px;
   }
 }
 

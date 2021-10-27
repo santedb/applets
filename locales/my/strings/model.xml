@@ -1,0 +1,168 @@
+<resources>
+    <string name="ui.model.securityUser.id" priority="0">လုံခြုံရေး ID</string>
+    <string name="ui.model.securityUser.userName" priority="0">အသုံးပြုသူအမည်</string>
+    <string name="ui.model.securityUser.createdBy" priority="0">မှဖန်တီးသည်</string>
+    <string name="ui.model.securityUser.updatedBy" priority="0">နောက်ဆုံးပြောင်းလဲ ထား ခြင်း /သူ </string>
+    <string name="ui.model.securityUser.obsoletedBy" priority="0">ဖျက်ထား ခြင်း /သူ </string>
+    <string name="ui.model.securityUser.lastLoginTime" priority="0">နောက်ဆုံး  လော့ဂ်အင် ဝင်ထား ခြင်း /သူ</string>
+    <string name="ui.model.securityUser.invalidLoginAttempts" priority="0">မမှန်ကန်သောလော့ဂ်အင်များ</string>
+    <string name="ui.model.securityUser.title" priority="0">အသုံးပြုသူ</string>
+    <string name="ui.model.securityUser.password" priority="0">စကားဝှက်</string>
+    <string name="ui.model.securityRole.title" priority="0">အခန်းက</string>
+    <string name="ui.model.securityUser.email" priority="0">လုံခြုံရေးအီးမေးလ်  စာ</string>
+    <string name="ui.model.securityUser.phoneNumber" priority="0">လုံခြုံရေးဖုန်း</string>
+    <string name="ui.model.securityUser.twoFactorEnabled" priority="0">TFA Enabled</string>
+    <string name="ui.model.securityUser.twoFactorEnabled.true" priority="0">Enabled</string>
+    <string name="ui.model.securityUser.twoFactorEnabled.false" priority="0">ပိတ်ထားသည်</string>
+    <string name="ui.model.userEntity.givenName" priority="0">အမည် (အမည်ရှေ့ပိုင်းစာလုံးများ)</string>
+    <string name="ui.model.userEntity.familyName" priority="0">မိသားစုနာမည်/ အမည်နောက်ဆုံး စာလုံး  </string>
+    <string name="ui.model.userEntity.language" priority="0">ပိုမိုနှစ်သက်ဘာသာစကား</string>
+    <string name="ui.model.userEntity.relationship.DedicatedServiceDeliveryLocation" priority="0">ကျန်းမာရေးဝန်ဆောင်မှု မူလပထမ နေရာ</string>
+    <string name="ui.model.userEntity.relationship.Employee" priority="0">အလုပ်ရှင်</string>
+    <string name="ui.model.securityUser.lockout" priority="0">တိုင်အောင်သော့ခတ်</string>
+    <string name="ui.model.securityRole.id" priority="0">လုံခြုံရေး ID</string>
+    <string name="ui.model.securityUser.passwordExpiry" priority="0">သက်တမ်းကုန်ဆုံးသည်</string>
+    <string name="ui.model.entityIdentifier.authority" priority="0">မှ တာဝန် ပေး</string>
+    <string name="ui.model.entityIdentifier.value" priority="0">ID နံပါတ်</string>
+    <string name="ui.model.entityName.given" priority="0">အမည် (အမည်ရှေ့ပိုင်းစာလုံးများ)</string>
+    <string name="ui.model.entityName.use" priority="0">အမည်အသုံးပြု</string>
+    <string name="ui.model.entityAddress.use" priority="0">လိပ်စာအသုံးပြု</string>
+    <string name="ui.model.entityTelecom.use" priority="0">ဆက်သွယ်ရေးအသုံးပြု</string>
+    <string name="ui.model.entityRelationship.type" priority="0">အမျိုးအစား</string>
+    <string name="ui.model.entityRelationship.prefix" priority="0">တစ်ခုရှိ</string>
+    <string name="ui.model.entityRelationship.inverse.prefix" priority="0">Is a</string>
+    <string name="ui.model.entityRelationship.inverse.suffix" priority="0">၏</string>
+    <string name="ui.model.entityRelationship.target" priority="0">အတူ</string>
+    <string name="ui.model.entity.relationship.Caregiver" priority="0">စောင့်ရှောက်သူ (များ)</string>
+    <string name="ui.model.entity.relationship.Citizen" priority="0">နိုင်ငံသား</string>
+    <string name="ui.model.entity.relationship.CoverageSponsor" priority="0">ပံ့ပိုးမှု - ပံ့ပိုးမှု</string>
+    <string name="ui.model.entity.relationship.DedicatedServiceDeliveryLocation" priority="0">ကျန်းမာရေးဝန်ဆောင်မှု မူလပထမ နေရာ</string>
+    <string name="ui.model.entity.relationship.Employee" priority="0">အလုပ်ရှင်</string>
+    <string name="ui.model.entity.relationship.Location" priority="0">တည်နေရာ</string>
+    <string name="ui.model.entity.relationship.Guarantor" priority="0">အာမခံချက်</string>
+    <string name="ui.model.entity.relationship.HealthcareProvider" priority="0">အဓိကထောက်ပံ့သူ</string>
+    <string name="ui.model.entity.relationship.IncidentalServiceDeliveryLocation" priority="0">အခြားဝန်ဆောင်မှုများ</string>
+    <string name="ui.model.entity.relationship.NaturalFatherOfFetus" priority="0">ဇာတိဖခင်</string>
+    <string name="ui.model.entity.relationship.Father" priority="0">ဖခင်</string>
+    <string name="ui.model.entity.relationship.Mother" priority="0">အမေ</string>
+    <string name="ui.model.entity.relationship.ServiceDeliveryLocation" priority="0">မှတ်ပုံတင်ထား သည်မှာ</string>
+    <string name="ui.model.entity.relationship.SigningAuthorityOrOfficer" priority="0">ကိုယ်စားလှယ်လွှဲစာ</string>
+    <string name="ui.model.entity.relationship.structured" priority="0">ဒီ entity တစ်ခုသင့်လျော်သောစံချိန်ဖြစ်ပါတယ်။ ၎င်းကိုတည်းဖြတ်ရန်သင်သည်အရာဝတ္ထု၏အသေးစိတ်စာမျက်နှာသို့သွားရန်လိုအပ်သည်</string>
+    <string name="ui.model.entity.relationship.Student" priority="0">ကျောင်း</string>
+    <string name="ui.model.entity.address" priority="0">လိပ်စာ</string>
+    <string name="ui.model.entity.address.title" priority="0">လိပ်စာမှတ်ပုံတင်</string>
+    <string name="ui.model.entity.address.use" priority="0">လိပ်စာအမျိုးအစား</string>
+    <string name="ui.model.entity.address.component.state" priority="0">ပြည်နယ် / ပြည်နယ်</string>
+    <string name="ui.model.entity.address.component.county" priority="0">မြို့နယ်</string>
+    <string name="ui.model.entity.address.component.city" priority="0">မြို့တော်</string>
+    <string name="ui.model.entity.address.component.street" priority="0">လမ်း</string>
+    <string name="ui.model.entity.address.component.postalcode" priority="0">စာတိုက် / ZIP နံပါတ်</string>
+    <string name="ui.model.entity.address.component.country" priority="0">နိုင်ငံ</string>
+    <string name="ui.model.entity.name" priority="0">နာမည်</string>
+    <string name="ui.model.entity.name.title" priority="0">အမည်မှတ်ပုံတင်ခြင်း</string>
+    <string name="ui.model.entity.name.use" priority="0">နာမည်အမျိုးအစား</string>
+    <string name="ui.model.entity.name.component.prefix" priority="0">ရှေ့ဆက် စကားလုံး</string>
+    <string name="ui.model.entity.name.component.given" priority="0">နာမည်</string>
+    <string name="ui.model.entity.name.component.family" priority="0">မိသားစု</string>
+    <string name="ui.model.entity.name.component.suffix" priority="0">နောက်ဆက် စကားလုံး</string>
+    <string name="ui.model.entity.telecom" priority="0">ဆက်သွယ်ရန်အချက်အလက်</string>
+    <string name="ui.model.entity.genderConcept" priority="0">လိင်</string>
+    <string name="ui.model.entity.demographics" priority="0">အပိုဆောင်းအချက်အလက်</string>
+    <string name="ui.model.entity.dateOfBirth" priority="0">မွေးရက်</string>
+    <string name="ui.model.entity.dateOfBirth.approx" priority="0">ခန့်မှန်းခြေ</string>
+    <string name="ui.model.entity.language" priority="0">ဘာသာစကား (များ)</string>
+    <string name="ui.model.entity.language.preferred" priority="0">ပိုမိုနှစ်သက်သည်</string>
+    <string name="ui.model.entity.relationship.relationshipType" priority="0">လက်တွဲဖော်/မိသားစုဝင်များ/ဆက်နွယ်ပတ်သက်ပုံ</string>
+    <string name="ui.model.entity.relationship.Employer" priority="0">အလုပ်ရှင်</string>
+    <string name="ui.model.entity.relationship.DedicatedServiceDeliveryLocation" priority="0">ကျန်းမာရေးဝန်ဆောင်မှု မူလပထမ နေရာ</string>
+    <string name="ui.model.entity.telecom.NullFlavor-NoInformation" priority="0">အခြား</string>
+    <string name="ui.model.entity.telecom.AnsweringService" priority="0">အဖြေဝန်ဆောင်မှု</string>
+    <string name="ui.model.entity.telecom.EmergencyContact" priority="0">အရေးပေါ်</string>
+    <string name="ui.model.entity.telecom.MobileContact" priority="0">မိုဘိုင်း</string>
+    <string name="ui.model.entity.telecom.Public" priority="0">နေအိမ် / အများပြည်သူ</string>
+    <string name="ui.model.entity.telecom.TemporaryAddress" priority="0">ယာယီ</string>
+    <string name="ui.model.entity.telecom.WorkPlace" priority="0">အလုပ်</string>
+    <string name="ui.model.entity.identifier.authority.remove.confirm" priority="0">ဒီအမှတ်အသားကိုဒီ entity ကနေဖယ်ထုတ်ချင်တာသေချာလား။</string>
+    <string name="ui.model.entity.identifier.authority.noAssign" priority="0">အခွင့်အာဏာမရှိပါ</string>
+    <string name="ui.model.entity.identifier.authority.noAssign.help" priority="0">အုပ်ချုပ်ရေးပေါ်တယ်သည်ဤသတ်မှတ်သူအားသတ်မှတ်ပိုင်ခွင့်မရှိပါ</string>
+    <string name="ui.model.entity.identifier.authority" priority="0">ဒိုမိန်း</string>
+    <string name="ui.model.patient.administrativeInfo" priority="0">အပို</string>
+    <string name="ui.model.patient.demographics" priority="0">လူ ဦး ရေ ဆိုင်ရာအချက်အလက်</string>
+    <string name="ui.model.patient.birth" priority="0">မွေးဖွားခြင်း</string>
+    <string name="ui.model.patient.death" priority="0">သေခြင်း</string>
+    <string name="ui.model.patient.name" priority="0">နာမည်</string>
+    <string name="ui.model.patient.name.use" priority="0">အသုံးပြုပါ</string>
+    <string name="ui.model.patient.name.component.prefix" priority="0">ရှေ့ဆက် စကားလုံး</string>
+    <string name="ui.model.patient.name.component.suffix" priority="0">နောက်ဆက် စကားလုံး</string>
+    <string name="ui.model.patient.name.component.given" priority="0">ပေးထားသည်</string>
+    <string name="ui.model.patient.name.component.family" priority="0">မိသားစု</string>
+    <string name="ui.model.patient.names" priority="0">အမည်များ</string>
+    <string name="ui.model.patient.addresses" priority="0">လိပ်စာများ</string>
+    <string name="ui.model.patient.address" priority="0">လိပ်စာ</string>
+    <string name="ui.model.patient.address.use" priority="0">အသုံးပြုပါ</string>
+    <string name="ui.model.patient.address.component.country" priority="0">နိုင်ငံ</string>
+    <string name="ui.model.patient.address.component.state" priority="0">ပြည်နယ် / ပြည်နယ်</string>
+    <string name="ui.model.patient.address.component.county" priority="0">မြို့နယ်</string>
+    <string name="ui.model.patient.address.component.city" priority="0">မြို့ / မြို့</string>
+    <string name="ui.model.patient.address.component.precinct" priority="0">ဝိုင်း၊ အပိုင်း၊ </string>
+    <string name="ui.model.patient.address.component.street" priority="0">လမ်း</string>
+    <string name="ui.model.patient.address.component.postalcode" priority="0">စာတိုက်/Zip ကုဒ်</string>
+    <string name="ui.model.patient.dateOfBirth" priority="0">မွေးနေ့ (ရက်၊လ၊ခုနှစ်)</string>
+    <string name="ui.model.patient.dateOfBirth.approx" priority="0">ခန့်မှန်းခြေ</string>
+    <string name="ui.model.patient.dateOfBirth.required" priority="0">ဒီစစ်ဆင်ရေးပြီးစီးရန်မွေးဖွားသည့်ရက်နှင့်ကျားမမလိုအပ်သည်</string>
+    <string name="ui.model.patient.genderConcept" priority="0">လိင်</string>
+    <string name="ui.model.patient.identifier" priority="0">အမှတ်အသား (များ)</string>
+    <string name="ui.model.patient.creationTime" priority="0">အချိန်ဇယား တံဆိပ်</string>
+    <string name="ui.model.patient.telecom" priority="0">ဆက်သွယ်ရန်</string>
+    <string name="ui.model.patient.telecoms" priority="0">ဆက်သွယ်ရန်</string>
+    <string name="ui.model.patient.relationship" priority="0">လက်တွဲဖော်/မိသားစုဝင်များ/ဆက်နွယ်ပတ်သက်ပုံ</string>
+    <string name="ui.model.patient.deceasedIndicator" priority="0">ကွယ်လွန်</string>
+    <string name="ui.model.patient.deceased" priority="0">သေဆုံးသော နေ့</string>
+    <string name="ui.model.patient.multipleBirth" priority="0">မွေးဖွားခြင်း (အမွှာမွေး မျိုးစုံ)</string>
+    <string name="ui.model.patient.birthplace" priority="0">မွေးရပ်မြေ (မြို့နယ်)</string>
+    <string name="ui.model.patient.register" priority="0">မှတ်ပုံတင်ထား သည်မှာ</string>
+    <string name="ui.model.patient.dedicatedServiceDeliveryLocation" priority="0">အဆောက်အ ဦး များ</string>
+    <string name="ui.model.patient.placeOfDeath" priority="0">သေဆုံး ခဲ့သော နေရာ</string>
+    <string name="ui.model.patient.multipleBirthOrder" priority="0">အမွှာ /သုံး မွှာ  /...</string>
+    <string name="ui.model.patient.multipleBirthOrder.0" priority="0">အမည်မသိ (မျိုးစုံ မွေးဖွားခြင်း အမွှာမွေး မျိုးစုံ- ၏)</string>
+    <string name="ui.model.patient.multipleBirthOrder.1" priority="0">အမွှာမွေးမျိုးစုံ - မွေးဖွားခြင်း၏ 1st</string>
+    <string name="ui.model.patient.multipleBirthOrder.2" priority="0">အမွှာမွေးမျိုးစုံ - မျိုးစုံ၏ဒုတိယ</string>
+    <string name="ui.model.patient.multipleBirthOrder.3" priority="0">အမွှာမွေးမျိုးစုံ - မွေးဖွားမှု၏ 3rd</string>
+    <string name="ui.model.patient.multipleBirthOrder.4" priority="0">အမွှာမွေးမျိုးစုံမွေးခြင်း၏ 4th</string>
+    <string name="ui.model.patient.multipleBirthOrder.5" priority="0">အမွှာမွေးမျိုးစုံ - မျိုးပွား၏ 5th</string>
+    <string name="ui.model.patient.summary" priority="0">လူနာအကျဉ်းချုပ်</string>
+    <string name="ui.model.place.name" priority="0">နာမည်</string>
+    <string name="ui.model.place.classConcept" priority="0">ခွဲခြား</string>
+    <string name="ui.model.place.typeConcept" priority="0">အမျိုးအစား</string>
+    <string name="ui.model.place.address" priority="0">လိပ်စာ</string>
+    <string name="ui.model.place.updatedBy" priority="0">နောက်ဆုံး update ပြောင်းလဲထား ခြင်း /သူ </string>
+    <string name="ui.model.place.statusConcept" priority="0">အခြေအနေ</string>
+    <string name="ui.model.patient.saveSuccess" priority="0">လူနာ update/အောင်မြင်စွာ  ပြောင်းလဲ</string>
+    <string name="ui.model.person.saveSuccess" priority="0">ဆက်စပ်သောလူကိုအောင်မြင်စွာ update လုပ်</string>
+    <string name="ui.model.place.saveSuccess" priority="0">နေရာကိုအောင်မြင်စွာ update လုပ်</string>
+    <string name="ui.model.userEntity.saveSuccess" priority="0">အသုံးပြုသူကို update /ပြောင်းလဲ အောင်မြင်</string>
+    <string name="ui.model.securityUser.saveSuccess" priority="0">အသုံးပြုသူကိုupdate /ပြောင်းလဲ အောင်မြင်</string>
+    <string name="ui.model.Patient._code.validation" priority="0">လူနာများအတွက် QR ကုဒ်သက်တမ်းကုန်ဆုံးသွားပြီသို့မဟုတ်နှောင့်ယှက်ခံခဲ့ရသည်။ ကျေးဇူးပြု၍ လူနာကိုစစ်ဆေးပြီး &lt;strong&gt; &lt;i class = fas fa-id-card ""&gt; &lt;/i&gt; ID Card ကိုဖန်တီး &lt;/strong&gt; ကိုနှိပ်ပါ (သို့) ဤစာကိုနှိပ်ပါ""</string>
+    <string name="ui.model.job.name" priority="0">အလုပ်အမည်</string>
+    <string name="ui.model.job.tag" priority="0">ဗားရှင်း</string>
+    <string name="ui.model.job.state" priority="0">လက်ရှိအခြေအနေ</string>
+    <string name="ui.model.job.lastRun" priority="0">နောက်ဆုံးလှုပ်ရှား အလုပ်လုပ်</string>
+    <string name="ui.model.act.template" priority="0">Template / အမျိုးအစား</string>
+    <string name="ui.model.act.typeConcept" priority="0">အမျိုးအစား</string>
+    <string name="ui.model.act.actTime" priority="0">အချိန်ဇယား တံဆိပ်</string>
+    <string name="ui.model.act.startTime" priority="0">စတင်ချိန်</string>
+    <string name="ui.model.act.stopTime" priority="0">ပြီး ဆုံးချိန်/အချိန်ကိုရပ်ပါ</string>
+    <string name="ui.model.act.participation.Location" priority="0">တည်နေရာ (များ)</string>
+    <string name="ui.model.act.participation.Authororiginator" priority="0">စာရေးသူ / သတင်းပို့ သူ</string>
+    <string name="ui.model.act.participation.Performer" priority="0">လုပ်ငန်း လုပ်ဆောင်သူ (များ)</string>
+    <string name="ui.model.act.participation.Attender" priority="0">ဆရာဝန် တက်/လာ ရောက်ခြင်း</string>
+    <string name="ui.model.act.template.help" priority="0">အဖြစ်အပျက်အမျိုးအစားကိုသတ်မှတ်သည်</string>
+    <string name="ui.model.act.typeConcept.help" priority="0">ဖြစ်ရပ်၏ခွဲခြားသတ်မှတ်</string>
+    <string name="ui.model.act.actTime.help" priority="0">ဒီဖြစ်ရပ်ဖြစ်ပွားသည့်အချိန်ကိုသတ်မှတ်သည်</string>
+    <string name="ui.model.act.participation.Location.help" priority="0">ဒီဖြစ်ရပ်မှတ်တမ်းတင် / ဖြစ်ပွားခဲ့သည်ရှိရာတည်နေရာဖော်ပြသည်</string>
+    <string name="ui.model.act.participation.Authororiginator.help" priority="0">အဖြစ်အပျက်ကိုမှတ်တမ်းတင်ရန် / အစီရင်ခံရန်တာ ၀ န်ရှိသူလူ / သူများ</string>
+    <string name="ui.model.act.participation.Baby.dateOfBirth.help" priority="0">မွေးကင်းစမွေးဖွားသည့်ရက်</string>
+    <string name="ui.model.act.participation.Baby.genderConcept.help" priority="0">မွေးကင်းစ၏ထူထောင်ကျား</string>
+    <string name="ui.model.act.participation.Baby.multipleBirthIndicator.help" priority="0">ဒီမွေးကင်းစကလေးတစ် ဦး မျိုးစုံမွေးဖွားမှု၏အစိတ်အပိုင်းတစ်ခုဖြစ်ခဲ့လျှင် (အမွှာ</string>
+    <string name="ui.model.act.participation.Baby.birthplace.help" priority="0">မွေးကင်းစကလေးမွေးသည့်နေရာ (ဆေးရုံ၊ မြို့နယ်၊ စသဖြင့်)</string>
+</resources>

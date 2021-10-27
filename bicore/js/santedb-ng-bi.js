@@ -83,7 +83,7 @@ angular.module('santedb-lib')
     .directive('report', ['$rootScope', '$timeout', '$compile', function ($rootScope, $timeout, $compile) {
         return {
             scope: {
-                id: "=",
+                reportId: "=",
                 parameters: "=",
                 view: "="
             },
@@ -97,7 +97,7 @@ angular.module('santedb-lib')
                 $scope.printReport = async function (view) {
                     try {
                         SanteDB.display.buttonWait(`#btnPrintReport_${view}`, true);
-                        var report = await SanteDBBi.renderReportAsync($scope.id, view, "html", $scope.parameters);
+                        var report = await SanteDBBi.renderReportAsync($scope.reportId, view, "html", $scope.parameters);
 
                         var printFn = function(printWindow) {
                             printWindow.document.write(`<html><head><title>${SanteDB.locale.getString($scope.report.label)}</title><link rel="stylesheet" type="text/css" href="/org.santedb.bicore/css/print.css" /></head><body>`);
@@ -142,7 +142,7 @@ angular.module('santedb-lib')
                     try {
                         SanteDB.display.buttonWait(`#btnDownloadReport_${view}`, true);
                         var parms = jQuery.param($scope.parameters);
-                        parms += `&_download=true&_sessionId=${window.sessionStorage.token}`;
+                        parms += `&_download=true`; //&_sessionId=${window.sessionStorage.token}`;
                         window.location = `/bis/Report/${format}/${$scope.report.id}?${parms}`;
                     }
                     catch (e) {
@@ -170,7 +170,7 @@ angular.module('santedb-lib')
                 if (!scope.parameters)
                     scope.parameters = {};
                 if (scope.report == null) {
-                    SanteDBBi.resources.report.getAsync(scope.id)
+                    SanteDBBi.resources.report.getAsync(scope.reportId)
                         .then(function (report) {
                             // Process the parameters from the result
                             var parameters = [];
@@ -193,7 +193,7 @@ angular.module('santedb-lib')
                                     });
                             });
 
-                            scope.htmlId = scope.id.replace(/\./g, "");
+                            scope.htmlId = scope.reportId.replace(/\./g, "");
                             scope.report = report;
                             scope.report.parameterDefinitions = parameters;
 
@@ -240,7 +240,7 @@ angular.module('santedb-lib')
 
         return {
             scope: {
-                id: "<",
+                reportId: "<",
                 parameters: "=",
                 view: "<"
             },
@@ -277,14 +277,14 @@ angular.module('santedb-lib')
 
                 // Report rendering function
                 scope.renderReport = function (n, o) {
-                    if (scope.id &&
+                    if (scope.reportId &&
                         scope.view &&
                         !scope.isRendering) {
                         hasRendered = true;
                         scope.parameters = scope.parameters || {};
                         setReportContent(`<i class='fas fa-circle-notch fa-spin'></i> ${SanteDB.locale.getString("ui.wait")}`, false);
                         scope.isRendering = true;
-                        SanteDBBi.renderReportAsync(scope.id, scope.view, "html", scope.parameters)
+                        SanteDBBi.renderReportAsync(scope.reportId, scope.view, "html", scope.parameters)
                             .then(function (d) {
                                 scope.isRendering = false;
                                 setReportContent(d, true);
@@ -294,7 +294,7 @@ angular.module('santedb-lib')
                                 while (cause.cause)
                                     cause = cause.cause;
                                 scope.isRendering = false;
-                                setReportContent(`<div class='alert alert-info'><i class="fas fa-exclamation-triangle"></i> ${SanteDB.locale.getString(cause.message)}</div>`, true);
+                                setReportContent(`<div class='alert alert-info'><i class="fas fa-exclamation-triangle"></i> ${SanteDB.locale.getString(cause.message)} - ${cause.detail.statusText} - ${cause.detail.responseText}</div>`, true);
                             });
                     }
                 }

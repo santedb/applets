@@ -1,0 +1,66 @@
+<div xmlns="http://www.w3.org/1999/xhtml" xmlns:sdb="http://santedb.org/applet" 
+    oc-lazy-load="{ name: 'AuditEventController', files: ['/org.santedb.admin/controllers/audit/widgets/events.js'] }" >
+    <sdb:widget order="15" name="org.santedb.widget.admin.panel.audit.eventInfo" headerClass="bl-light"
+        size="Large" type="Panel" context="org.santedb.securityAudit.admin">
+        <sdb:icon>fas fa-database</sdb:icon>
+        <sdb:description lang="en">Event Information</sdb:description>
+    </sdb:widget>
+
+    <div class="row" ng-if="!scopedObject">
+        <div class="col">
+            <p class="m-auto"><i class="fas fa-circle-notch fa-spin"></i> {{ 'ui.wait' | i18n }}</p>
+        </div>
+    </div>
+
+    <div ng-if="scopedObject.audit" ng-controller="AuditEventInformationController">
+        <div class="container-fluid">
+            <div class="row">
+                <label
+                    class="control-label col-4">{{ 'ui.admin.audit.core.sid' | i18n }}</label>
+                <div class="col-8">{{scopedObject.audit.id}}
+                </div>
+            </div>
+            <div class="row">
+                <label
+                    class="control-label col-4">{{ 'ui.admin.audit.core.action' | i18n }}</label>
+                <div class="col-8" ng-bind-html="renderAction(scopedObject.audit)">
+                </div>
+            </div>
+            <div class="row">
+                <label
+                    class="control-label col-4">{{ 'ui.admin.audit.core.event' | i18n }}</label>
+                <div class="col-8" ng-bind-html="renderEvent(scopedObject.audit)">
+                </div>
+            </div>
+            <div class="row">
+                <label
+                    class="control-label col-4">{{ 'ui.admin.audit.core.timestamp' | i18n }}</label>
+                <div class="col-8" ng-bind-html="scopedObject.audit.timestamp | extDate">
+                </div>
+            </div>
+            <div class="row">
+                <label
+                    class="control-label col-4">{{ 'ui.admin.audit.core.outcome' | i18n }}</label>
+                <div class="col-8" ng-bind-html="renderOutcome(scopedObject.audit)">
+                </div>
+            </div>
+            <div class="row">
+                <label
+                    class="control-label col-4">{{ 'ui.admin.audit.core.process' | i18n }}</label>
+                <div class="col-8">{{scopedObject.audit.metaDisplay.ProcessName}} <small
+                        class="badge badge-info">PID {{scopedObject.audit.metaDisplay.PID}}</small>
+                </div>
+            </div>
+            <div class="row">
+                <label
+                    class="control-label col-4">{{ 'ui.admin.audit.core.source' | i18n }}</label>
+                <div class="col-8">
+                    <i class="fas"
+                        ng-class="{ 'fa-laptop-medical' : scopedObject.audit.metaDisplay.AuditSourceType == 'EndUserInterface' , 'fa-server' :  scopedObject.audit.metaDisplay.AuditSourceType == 'ApplicationServerProcess'}"></i>
+                    {{scopedObject.audit.metaDisplay.AuditSourceType}}
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

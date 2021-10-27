@@ -171,10 +171,10 @@ SanteDBWrapper.prototype.display = new function () {
         if (id === undefined)
             return "";
         if (domain && id[domain])
-            return id[domain].value;
+            return id[domain][0].value;
         else
             for (var k in id)
-                return id[k].value;
+                return id[k][0].value;
     };
     /**
      * @method
@@ -254,8 +254,10 @@ SanteDBWrapper.prototype.display = new function () {
             }
             return nameStr;
         }
-        else 
+        else if(typeof(name) === 'string')
             return name;
+        else 
+            return "N/A";
     },
         /**
          * @method
@@ -287,6 +289,8 @@ SanteDBWrapper.prototype.display = new function () {
                     addrStr += address.component.AdditionalLocator + ", ";
                 if (address.component.StreetAddressLine)
                     addrStr += address.component.StreetAddressLine + ", ";
+                else if (address.component.AddressLine)
+                    addrStr += address.component.AddressLine + ", ";
                 if (address.component.Precinct)
                     addrStr += address.component.Precinct + ", ";
                 if (address.component.City)

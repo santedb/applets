@@ -1,0 +1,29 @@
+<resources>
+    <string name="ui.bi.common.tabular">Tabular</string>
+    <string name="ui.bi.common.chart">Chart</string>
+    <string name="ui.bi.common.parameters">Filter</string>
+    <string name="ui.bi.common.view.week">Weekday</string>
+    <string name="ui.bi.common.view.date">Date</string>
+    <string name="ui.bi.common.view.time">Time</string>
+    <string name="ui.bi.common.view.action">Activity</string>
+    <string name="ui.bi.common.view.outcome">Outcome</string>
+    <string name="ui.bi.common.view.user">User</string>
+
+    <string name="ui.bi.core.report.audit.objectAccess">Object Access</string>
+    <!-- Common Parameter Labels -->
+    <string name="ui.bi.core.user.class">User Class</string>
+    <string name="ui.bi.core.date.from">From</string>
+    <string name="ui.bi.core.date.to">Until</string>
+
+    <!-- Common Output -->
+    <string name="ui.bi.core.label.date">Date</string>
+    <string name="ui.bi.core.label.count">Count</string>
+    <string name="ui.bi.core.label.total">Total</string>
+    <!-- Default BI Core Reports--> 
+    <string name="ui.bi.core.report.session.date">System Sessions</string>
+
+    <string name="ui.bi.core.common.occupation">Occupation</string>
+    <string name="ui.bi.fileFormat.html">HTML Document (HTML)</string>
+    <string name="ui.bi.fileFormat.csv">Comma-Separated (CSV)</string>
+    <string name="ui.bi.fileFormat.xls">Excel 2003 XML (XLS)</string>
+</resources>

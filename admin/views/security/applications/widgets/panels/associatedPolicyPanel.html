@@ -1,0 +1,23 @@
+<div xmlns="http://www.w3.org/1999/xhtml" xmlns:sdb="http://santedb.org/applet" 
+    oc-lazy-load="{ name: 'EditApplicationController', files: ['/org.santedb.admin/controllers/applications/edit.js'] }" >
+    <sdb:widget order="16" name="org.santedb.widget.admin.panel.applications.policies"  headerClass="bl-light"
+        size="Large" type="Panel" context="org.santedb.securityApplications.admin">
+        <sdb:icon>fas fa-certificate</sdb:icon>
+        <sdb:description lang="en">Associated Policies</sdb:description>
+    </sdb:widget>
+
+    <div class="row" ng-if="!scopedObject">
+        <div class="col">
+            <p class="m-auto"><i class="fas fa-circle-notch fa-spin"></i> {{ 'ui.wait' | i18n }}</p>
+        </div>
+    </div>
+
+    <div ng-if="scopedObject.securityApplication.id" ng-controller="EditApplicationController">
+        <div class="collapse show" id="policyGroupProps">
+            <div class="card-body container-fluid">
+                <entity-policy-admin securable="scopedObject.securityApplication" policy="scopedObject.policy">
+                </entity-policy-admin>
+            </div>
+        </div>
+    </div>
+</div>

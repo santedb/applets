@@ -36,7 +36,7 @@ angular.module('santedb-lib')
             require: 'ngModel',
             templateUrl: './org.santedb.uicore/directives/conceptSelect.html',
             scope: {
-                conceptSet: '=',
+                conceptSet: '<',
                 addConcept: '=',
                 excludeConcepts: '=',
                 key: "<"

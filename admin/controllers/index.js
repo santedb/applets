@@ -35,11 +35,11 @@ angular.module('santedb').controller('AdminLayoutController', ["$scope", "$rootS
     
     // On logout transition to the login state
     $("#logoutModal").on("hidden.bs.modal", function() {
-        if(!window.sessionStorage.getItem("token"))
-        {
+        // if(!window.sessionStorage.getItem("token"))
+        // {
             $templateCache.removeAll();
             $state.transitionTo('login'); 
-        }
+        // }
     });
 
     // abandon session
