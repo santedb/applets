@@ -169,7 +169,7 @@
       <string name="error.rest.ami.subscriptionQuery">Could not execute subscription query</string>
       <string name="error.rest.ami.updatingSubscription">Error updating subscription: {param}</string>
       <string name="error.rest.ami.incorrectParameterType">Parameter must be of type PubSubSubscription</string>
-      <string name="error.rest.common.RepositoryServiceNotFound">IRepositoryService<{param}> not found and no repository is found</string>
+      <string name="error.rest.common.RepositoryServiceNotFound">IRepositoryService&lt;{param}&gt; not found and no repository is found</string>
       <string name="error.rest.common.invalidDataSubmission">Invalid data submission. Expected {param} but received {param1}. If you are submitting a bundle, ensure it has an entry point</string>
       <string name="error.rest.common.errorCreatingParam">Error creating {param}</string>
       <string name="error.rest.common.invalidDataType">Invalid data type</string>
