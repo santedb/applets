@@ -3147,8 +3147,8 @@ function SanteDBWrapper() {
         // Process oauth response session data
         var _afterAuthenticate = function (oauthResponse, fulfill, reject) {
             _oauthSession = oauthResponse;
-            if (oauthResponse.access_token) window.sessionStorage.setItem('token', oauthResponse.access_token || oauthResponse.token);
-            if (oauthResponse.refresh_token) window.sessionStorage.setItem('refresh_token', oauthResponse.refresh_token);
+            //if (oauthResponse.access_token) window.sessionStorage.setItem('token', oauthResponse.access_token || oauthResponse.token);
+            //if (oauthResponse.refresh_token) window.sessionStorage.setItem('refresh_token', oauthResponse.refresh_token);
             if (oauthResponse.id_token)
                 try {
                     var tokenData = JSON.parse(atob(oauthResponse.id_token.split('.')[1]));
@@ -3486,8 +3486,8 @@ function SanteDBWrapper() {
                         .then(function (d) {
                             if (!noSession) {
                                 _oauthSession = d;
-                                if (d.access_token) window.sessionStorage.setItem('token', d.access_token || d.token);
-                                if (d.refresh_token) window.sessionStorage.setItem('refresh_token', d.refresh_token);
+                                //if (d.access_token) window.sessionStorage.setItem('token', d.access_token || d.token);
+                                //if (d.refresh_token) window.sessionStorage.setItem('refresh_token', d.refresh_token);
                                 _authentication.getSessionInfoAsync().then(fulfill).catch(reject);
                             }
                             else if (fulfill) fulfill(d);
@@ -3527,8 +3527,8 @@ function SanteDBWrapper() {
                             if (!noSession) {
                                 _oauthSession = d;
                                 _session = null;
-                                if (d.access_token) window.sessionStorage.setItem('token', d.access_token || d.token);
-                                if (d.refresh_token) window.sessionStorage.setItem('refresh_token', d.refresh_token);
+                                //if (d.access_token) window.sessionStorage.setItem('token', d.access_token || d.token);
+                                //if (d.refresh_token) window.sessionStorage.setItem('refresh_token', d.refresh_token);
                                 _authentication.getSessionInfoAsync().then(fulfill).catch(reject);
                             }
                             else if (fulfill) fulfill(d);
@@ -3788,9 +3788,9 @@ function SanteDBWrapper() {
                     data.setRequestHeader("Authorization", "BEARER " +
                         elevatorToken);
                 }
-                else if (window.sessionStorage.getItem('token'))
-                    data.setRequestHeader("Authorization", "BEARER " +
-                        window.sessionStorage.getItem("token"));
+                // else if (window.sessionStorage.getItem('token'))
+                //     data.setRequestHeader("Authorization", "BEARER " +
+                //         window.sessionStorage.getItem("token"));
                 if (!_magic)
                     _magic = __SanteDBAppService.GetMagic();
 

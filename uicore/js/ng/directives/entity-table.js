@@ -215,6 +215,7 @@ angular.module('santedb-lib')
                         processing: true,
                         buttons: buttons,
                         serverSide: true,
+                        searchDelay: 1000,
                         searching: scope.canFilter,
                         "oSearch": scope.defaultFilter ? { "sSearch": scope.defaultFilter } : undefined,
                         ajax: async function (data, callback, settings) {
@@ -317,9 +318,32 @@ angular.module('santedb-lib')
                             $compile(angular.element(r).contents())(scope);
                             scope.$digest()
                         },
-                        columns: columns
+                        columns: columns,
+                        language: {
+                            "decimal": "",
+                            "emptyTable": SanteDB.locale.getString("ui.table.empty"),
+                            "info": SanteDB.locale.getString("ui.table.info"), // "Showing _START_ to _END_ of _TOTAL_ entries",
+                            "infoEmpty": SanteDB.locale.getString("ui.table.infoEmpty"),
+                            "infoFiltered": SanteDB.locale.getString("ui.table.infoFiltered"), // "(filtered from _MAX_ total entries)",
+                            "infoPostFix": "",
+                            "thousands": ",",
+                            "search": SanteDB.locale.getString("ui.table.search"),
+                            "zeroRecords": SanteDB.locale.getString("ui.table.noRecords"),
+                            "paginate": {
+                                "first": SanteDB.locale.getString("ui.table.page.first"),
+                                "last": SanteDB.locale.getString("ui.table.page.last"),
+                                "next": SanteDB.locale.getString("ui.table.page.next"),
+                                "previous": SanteDB.locale.getString("ui.table.page.previous")
+                            },
+                            "aria": {
+                                "sortAscending": SanteDB.locale.getString("ui.table.sort.ascending"),
+                                "sortDescending": SanteDB.locale.getString("ui.table.sort.descending")
+                            },
+                            "searchPlaceholder": SanteDB.locale.getString(`ui.table.search.field.${attrs.searchField}`)
+                        }
                     });
 
+                    //$("input",element).attr('placeholder', `search ${SanteDB.getString(attrs.searchField)}`);
                     var buttonSelector = '.col-md-6:eq(0)';
                     var bindButtons = function (element, buttonBar) {
                         dt.buttons().container().appendTo($(buttonSelector, dt.table().container()));

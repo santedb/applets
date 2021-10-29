@@ -31,9 +31,9 @@ angular.module('santedb-lib')
         return {
             request: function (config) {
                 config.headers = config.headers || {};
-                if (window.sessionStorage.getItem('token')) {
-                    config.headers.Authorization = 'BEARER ' + window.sessionStorage.getItem('token');
-                }
+                // if (window.sessionStorage.getItem('token')) {
+                //     config.headers.Authorization = 'BEARER ' + window.sessionStorage.getItem('token');
+                // }
 
                 if(SanteDB.locale.getLocale())
                     config.headers["X-SdbLanguage"] = SanteDB.locale.getLocale();

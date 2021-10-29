@@ -188,6 +188,30 @@
       <string name="ui.action.convertTo">Convert To</string>
       <string name="ui.action.new">New</string>
       <string name="ui.action.resetPassword">Reset Pwd</string>
+      <string name="ui.action.report">Report</string>
+
+      <!-- Data Tables -->
+      <string name="ui.table.empty">No Results Returned</string>
+      <string name="ui.table.info">Showing _START_ to _END_ of _TOTAL_ results</string>
+      <string name="ui.table.infoEmpty">Showing 0 to 0 of 0 results</string>
+      <string name="ui.table.infoFiltered">(from _MAX_ total entries)</string>
+      <string name="ui.table.processing">Loading Records</string>
+      <string name="ui.table.noRecords">No records found</string>
+      <string name="ui.table.page.first">First</string>
+      <string name="ui.table.page.next">Next</string>
+      <string name="ui.table.page.previous">Previous</string>
+      <string name="ui.table.page.last">Last</string>
+      <string name="ui.table.sort.ascending">Sort ascending order</string>
+      <string name="ui.table.sort.descending">Sort descneding order</string>
+      <string name="ui.table.search">Search:</string>
+      <string name="ui.table.search.field._any">Freetext Search</string>
+      <string name="ui.table.search.field.address.component.value">Search by address</string>
+      <string name="ui.table.search.field.identifier.value">Search by id</string>
+      <string name="ui.table.search.field.name.component.value">Search by name</string>
+      <string name="ui.table.search.field.name">Search by name</string>
+      <string name="ui.table.search.field.userName">Search by user name</string>
+      <string name="ui.table.search.field.user.userName">Search by user name</string>
+
       <!-- Common Operators -->
       <string name="ui.operator.eq">Equals</string>
       <string name="ui.operator.ne">Not Equal</string>
