@@ -58,6 +58,9 @@ angular.module('santedb-lib')
 
             var retVal = "";
             switch (selection.$type) {
+                case "Patient":
+                    retVal += "<i class='fa fa-user-hospital'></i> ";
+                    break;
                 case "UserEntity":
                 case "Provider":
                 case "Patient":
