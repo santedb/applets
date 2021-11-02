@@ -270,7 +270,7 @@
       <string name="ui.config.realm.title">Domain</string>
       <string name="ui.config.realm.description">This SanteDB client application needs to contact a centralized instanced called a &quot;domain&quot;. This screen will allow you to configure the specific details of how this mobile device will contact the domain.</string>
       <string name="ui.config.realm.deviceName.label">Devices ID</string>
-      <string name="ui.config.realm.deviceName.help">A name for this device. For example: 'GoodHealthTablet1'</string>
+      <string name="ui.config.realm.deviceName.help">A name for this device. For example: \'GoodHealthTablet1\'</string>
       <string name="ui.config.realm.name.label">Address</string>
       <string name="ui.config.realm.name.help">The IP address or host name of the domain controller</string>
       <string name="ui.config.realm.trace.label">Enable Tracing</string>
@@ -317,7 +317,7 @@
       <string name="ui.config.subscribe.facility.help">One or more facilities that you are subscribing to</string>
       <string name="ui.config.subscribe.objects.label">Subscriptions</string>
       <string name="ui.config.data.title">Database</string>
-      <string name="ui.config.data.description">SanteDB's disconnected client needs to cache data locally for offline use. There are a variety of storage engines which may be available on your platform, select the data storage options here.</string>
+      <string name="ui.config.data.description">SanteDB\'s disconnected client needs to cache data locally for offline use. There are a variety of storage engines which may be available on your platform, select the data storage options here.</string>
       <string name="ui.config.data.provider.label">Database</string>
       <string name="ui.config.data.provider.help">Depending on the size of the subscription, and technology this device is using, you can get significant performance gains by selecting a more powerful database technology</string>
       <string name="ui.config.dbp.help.SQLite">This device operates standalone</string>
@@ -383,7 +383,7 @@
       <string name="ui.config.role.applet.autoUpdate.label">Automatically update applets</string>
       <string name="ui.config.role.applet.autoUpdate.help">Selecting this option will automatically update applets</string>
       <string name="ui.config.services.title">Application Services</string>
-      <string name="ui.config.services.description">In SanteDB a 'service' is a native plugin that operates within the application host context. You can use this screen to enable or disable services in the SanteDB application context. Warning: If you're unsure what this panel does, leave the defaults enabled</string>
+      <string name="ui.config.services.description">In SanteDB a \'service\' is a native plugin that operates within the application host context. You can use this screen to enable or disable services in the SanteDB application context. Warning: If you\'re unsure what this panel does, leave the defaults enabled</string>
       <string name="ui.config.services.type.label">Enabled Services</string>
       <string name="ui.provenance.extraInfo">Provenance Data</string>
       <string name="ui.provenance.unknown">Not Available</string>
@@ -449,7 +449,7 @@
       <string name="ui.mail.flags.Alert">Flagged Alert</string>
 
       <!-- Security Challenges -->
-      <string name="security.challenge.text1">Your favorite pet's name</string>
-      <string name="security.challenge.text2">Your oldest sibling's name</string>
+      <string name="security.challenge.text1">Your favorite pet\'s name</string>
+      <string name="security.challenge.text2">Your oldest sibling\'s name</string>
       <string name="security.challenge.text3">The city where you were born</string>
 </resources>

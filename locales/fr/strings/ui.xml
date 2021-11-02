@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+      <string name="ui.login.title">Connectez-vous à SanteDB</string>
+      <string name="ui.login.message">Bienvenue à SanteDB</string>
+
+      
+      </resources>
