@@ -1,34 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
-<string name="ui.error.title" priority="0">စနစ်အမှား</string>
-    <string name="ui.error.description" priority="0">အပိုဆောင်းအသေးစိတ်ကိုလိုက်နာပါ</string>
-    <string name="ui.error.causedBy" priority="0">အကြောင်းရင်း -</string>
-    <string name="error.type.DetectedIssueException.detail" priority="0">ကြုံတွေ့ရသောစည်းမျဉ်းချိုးဖောက်မှုများ</string>
-    <string name="ui.error.contactSysAdmin" priority="0">ကျေးဇူးပြု၍ bug report တစ်ခုတင်ပါ (သို့) သင်၏ system administrator ကိုဤအချက်အလက်နှင့်ဆက်သွယ်ပါ</string>
-    <string name="ui.error.required" priority="0">တောင်းဆိုနေတဲ့/လိုအပ်သော အကွက် တွင် အချက် အလက် ပျောက်နေသည်</string>
-    <string name="ui.error.pattern" priority="0">မမှန်ကန်သောပုံစံ (ထည့်သွင်းမှုမှန်ကန်သောပုံစံဖြင့်သေချာအောင်လုပ်ပါ)</string>
-    <string name="ui.error.duplicate" priority="0">ပုံတူပွား/ ထပ်တူ ဖြစ် နေ သည့် မှတ်တမ်း တွေ့ ရှိ</string>
-    <string name="error.http.403" priority="0">ဝင်ရောက်ချိတ်ဆက်ရန်ငြင်းဆိုခြင်း</string>
-    <string name="error.http.403.text" priority="0">သင့်တောင်းဆိုချက်ကိုငြင်းပယ်ပြီးစာရင်းစစ်ခဲ့သည် ဤအရင်းအမြစ်ကိုရယူနိုင်ရန်သင်သည်သင်၏လက်ရှိ session ကိုမြှင့်တင်ရန်၊ သင့်လျော်သောခွင့်ပြုချက်ရယူရန်သို့မဟုတ်အခြားသူတစ် ဦး အနေဖြင့်ယာယီစစ်မှန်ကြောင်းအတည်ပြုရန်လိုအပ်သည်။ အောက်ဖော်ပြပါ override option ကိုရွေးချယ်ခြင်းအားဖြင့်သင်၏ session ကိုမြှင့်တင်ရန်ကြိုးစားနိုင်သည်</string>
-    <string name="error.http.404" priority="0">တောင်းဆိုထားသောအရင်းအမြစ်ကိုရှာမရပါ</string>
-    <string name="error.http.405" priority="0">နည်းလမ်းမထောက်ပံ့ပါ</string>
-    <string name="error.http.0" priority="0">Fatal error</string>
-    <string name="error.http.409" priority="0">သဘောထား ကွဲ လွဲ ခြင်း</string>
-    <string name="error.http.409.text" priority="0">အသစ်ပြောင်းခြင်း သဘောထား ကွဲ လွဲ ခြင်း (Conflict) တွေ့ရှိခဲ့သည်။ အခြားသူကသင်ကဲ့သို့တူညီသောမှတ်တမ်းကိုတည်းဖြတ်သောအခါဤသို့ များသောအားဖြင့်ဖြစ်ပွားလေ့ရှိသည်။ ကျေးဇူးပြုပြီးစာမျက်နှာကို refresh လုပ်ပြီးနောက်တစ်ခါထပ်မံကြိုးစားပါ</string>
-    <string name="error.http.500" priority="0">အထွေထွေအမှား</string>
-    <string name="error.http.501" priority="0">နည်းလမ်းအကောင်အထည် မ ဖော်ဘူး</string>
-    <string name="error.http.502" priority="0">Proxy အမှား</string>
-    <string name="error.type.DetectedIssueException" priority="0">စည်းမျဉ်းများချိုးဖောက်မှု</string>
-    <string name="error.type.Exception" priority="0">အထွေထွေအမှား</string>
-    <string name="error.type.HttpException" priority="0">ဆက်သွယ်ရေးအမှား</string>
-    <string name="error.type.WebException" priority="0">ဆက်သွယ်ရေးအမှား</string>
-    <string name="error.type.NotImplementedException" priority="0">အကောင်အထည်ဖော်ခြင်းမရှိပါ</string>
-    <string name="error.type.NotImplementedException.userMessage" priority="0">သင်လုပ်ဆောင်ရန်ကြိုးစားနေသည့်လုပ်ဆောင်ချက်သည်အကောင်အထည်မဖော်သေးပါ</string>
-    <string name="error.type.NotSupportedException" priority="0">မထောက်ပံ့ပါ</string>
-    <string name="error.type.NotSupportedException.userMessage" priority="0">သင်လုပ်ဆောင်ရန်ကြိုးစားနေသည့်လုပ်ဆောင်ချက်သည်သင်၏လက်ရှိဖွဲ့စည်းပုံအောက်တွင်မထောက်ပံ့ပါ</string>
-    <string name="error.type.SecurityException" priority="0">လုံခြုံရေးခြွင်းချက်</string>
-    <string name="error.noScript.title" priority="0">JavaScript ဖွင့်ပါ</string>
-    <string name="error.noScript.text" priority="0">SanteDB သည်အလုပ်လုပ်ရန် JavaScript အသုံးပြုရန်လိုအပ်သည်။ သင်၏ browser သည် JavaScript ကိုမပံ့ပိုးသကဲ့သို့ JavaScript ကိုပိတ်ထားပုံရသည်။ ကျေးဇူးပြု၍ သင်၏လုံခြုံရေးချိန်ညှိချက်များကိုစစ်ဆေးပြီးစာမျက်နှာကိုrefresh လုပ်ပြီးနောက်တစ်ခါထပ်မံကြိုးစားပါ</string>
-    <string name="error.login.invalidPassword" priority="0">မမှန်ကန်သောအသုံးပြုသူအမည်သို့မဟုတ်စကားဝှက်</string>
-    <string name="error.invalidBrowser.title" priority="0">မမှန်ကန်သောဘရောင်ဇာ</string>
-    <string name="error.invalidBrowser.text" priority="0">SanteDB သည်ဤဘရောင်ဇာတွင်အလုပ်မလုပ်ပါ။ &lt;ul&gt; &lt;li&gt; Google Chrome &lt;/li&gt; &lt;li&gt; Mozilla Firefox &lt;/li&gt; &lt;li&gt; Microsoft Edge &lt;/li&gt; &lt;li&gt; Android 5.0 နှင့်အထက် &lt;/li&gt; &lt;/ul&gt; တို့ပါဝင်သည်။</string>
- </resources>
+ <!-- Common Errors -->
+      <string name="ui.error.title">စနစ်အမှား</string>
+      <string name="ui.error.description">အပိုဆောင်းအသေးစိတ်ကိုလိုက်နာပါ</string>
+      <string name="ui.error.causedBy">အကြောင်းရင်း -</string>
+      <string name="error.type.DetectedIssueException.detail">ကြုံတွေ့ရသောစည်းမျဉ်းချိုးဖောက်မှုများ</string>
+      <string name="ui.error.contactSysAdmin">ကျေးဇူးပြု၍ bug report တစ်ခုတင်ပါ (သို့) သင်၏ system administrator ကိုဤအချက်အလက်နှင့်ဆက်သွယ်ပါ</string>
+      <string name="ui.error.required">တောင်းဆိုနေတဲ့/လိုအပ်သော အကွက် တွင် အချက် အလက် ပျောက်နေသည်</string>
+      <string name="ui.error.pattern">မမှန်ကန်သောပုံစံ (ထည့်သွင်းမှုမှန်ကန်သောပုံစံဖြင့်သေချာအောင်လုပ်ပါ)</string>
+      <string name="ui.error.duplicate">ပုံတူပွား/ ထပ်တူ ဖြစ် နေ သည့် မှတ်တမ်း တွေ့ ရှိ</string>
+      <string name="error.http.403">ဝင်ရောက်ချိတ်ဆက်ရန်ငြင်းဆိုခြင်း</string>
+      <string name="error.http.403.text">သင့်တောင်းဆိုချက်ကိုငြင်းပယ်ပြီးစာရင်းစစ်ခဲ့သည် ဤအရင်းအမြစ်ကိုရယူနိုင်ရန်သင်သည်သင်၏လက်ရှိ session ကိုမြှင့်တင်ရန်၊ သင့်လျော်သောခွင့်ပြုချက်ရယူရန်သို့မဟုတ်အခြားသူတစ် ဦး အနေဖြင့်ယာယီစစ်မှန်ကြောင်းအတည်ပြုရန်လိုအပ်သည်။ အောက်ဖော်ပြပါ override option ကိုရွေးချယ်ခြင်းအားဖြင့်သင်၏ session ကိုမြှင့်တင်ရန်ကြိုးစားနိုင်သည်</string>
+      <string name="error.http.404">တောင်းဆိုထားသောအရင်းအမြစ်ကိုရှာမရပါ</string>
+      <string name="error.http.405">နည်းလမ်းမထောက်ပံ့ပါ</string>
+      <string name="error.http.0">Fatal error</string>
+      <string name="error.http.409">သဘောထား ကွဲ လွဲ ခြင်း</string>
+      <string name="error.http.409.text">အသစ်ပြောင်းခြင်း သဘောထား ကွဲ လွဲ ခြင်း (Conflict) တွေ့ရှိခဲ့သည်။ အခြားသူကသင်ကဲ့သို့တူညီသောမှတ်တမ်းကိုတည်းဖြတ်သောအခါဤသို့ များသောအားဖြင့်ဖြစ်ပွားလေ့ရှိသည်။ ကျေးဇူးပြုပြီးစာမျက်နှာကို refresh လုပ်ပြီးနောက်တစ်ခါထပ်မံကြိုးစားပါ</string>
+      <string name="error.http.500">အထွေထွေအမှား</string>
+      <string name="error.http.501">နည်းလမ်းအကောင်အထည် မ ဖော်ဘူး</string>
+      <string name="error.http.502">Proxy အမှား</string>
+
+      <string name="error.type.DetectedIssueException">စည်းမျဉ်းများချိုးဖောက်မှု</string>
+      <string name="error.type.Exception">အထွေထွေအမှား</string>
+      <string name="error.type.HttpException">ဆက်သွယ်ရေးအမှား</string>
+      <string name="error.type.WebException">ဆက်သွယ်ရေးအမှား</string>
+      <string name="error.type.NotImplementedException">အကောင်အထည်ဖော်ခြင်းမရှိပါ</string>
+      <string name="error.type.NotImplementedException.userMessage">သင်လုပ်ဆောင်ရန်ကြိုးစားနေသည့်လုပ်ဆောင်ချက်သည်အကောင်အထည်မဖော်သေးပါ</string>
+      <string name="error.type.NotSupportedException">မထောက်ပံ့ပါ</string>
+      <string name="error.type.NotSupportedException.userMessage">သင်လုပ်ဆောင်ရန်ကြိုးစားနေသည့်လုပ်ဆောင်ချက်သည်သင်၏လက်ရှိဖွဲ့စည်းပုံအောက်တွင်မထောက်ပံ့ပါ</string>
+      <string name="error.type.SecurityException">လုံခြုံရေးခြွင်းချက်</string>
+      <string name="error.noScript.title">JavaScript ဖွင့်ပါ</string>
+      <string name="error.noScript.text">SanteDB သည်အလုပ်လုပ်ရန် JavaScript အသုံးပြုရန်လိုအပ်သည်။ သင်၏ browser သည် JavaScript ကိုမပံ့ပိုးသကဲ့သို့ JavaScript ကိုပိတ်ထားပုံရသည်။ ကျေးဇူးပြု၍ သင်၏လုံခြုံရေးချိန်ညှိချက်များကိုစစ်ဆေးပြီးစာမျက်နှာကိုrefresh လုပ်ပြီးနောက်တစ်ခါထပ်မံကြိုးစားပါ</string>
+      <string name="error.login.invalidPassword">မမှန်ကန်သောအသုံးပြုသူအမည်သို့မဟုတ်စကားဝှက်</string>
+      <string name="error.invalidBrowser.title">မမှန်ကန်သောဘရောင်ဇာ</string>
+      <string name="error.invalidBrowser.text">SanteDB သည်ဤဘရောင်ဇာတွင်အလုပ်မလုပ်ပါ။ &lt;ul&gt; &lt;li&gt; Google Chrome &lt;/li&gt; &lt;li&gt; Mozilla Firefox &lt;/li&gt; &lt;li&gt; Microsoft Edge &lt;/li&gt; &lt;li&gt; Android 5.0 နှင့်အထက် &lt;/li&gt; &lt;/ul&gt; တို့ပါဝင်သည်။</string> 
+      </resources>

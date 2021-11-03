@@ -3633,11 +3633,23 @@ function SanteDBWrapper() {
             * @memberof SanteDBWrapper.LocalizationApi
             * @method getString
             * @param {string} stringId The id of the localization string to get
+            * @param {any} parameters The parameters used to substitute the string value
             * @returns {string} The localized string
             */
-        this.getString = function (stringId) {
+        this.getString = function (stringId, parameters) {
             try {
                 var retVal = __SanteDBAppService.GetString(stringId);
+
+                if(retVal) {
+                    retVal = retVal.replace(/(\{.*\})/ig, function(s) {
+                        if(typeof s === 'string' && parameters) {
+                            return parameters[s.substring(1, s.length - 1)];
+                        }
+                        else {
+                            return s;
+                        }
+                    });
+                }
                 return retVal || stringId;
             }
             catch (e) {
