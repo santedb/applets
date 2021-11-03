@@ -3642,7 +3642,12 @@ function SanteDBWrapper() {
 
                 if(retVal) {
                     retVal = retVal.replace(/(\{.*\})/ig, function(s) {
-                        return parameters[s];
+                        if(typeof s === 'string' && parameters) {
+                            return parameters[s.substring(1, s.length - 1)];
+                        }
+                        else {
+                            return s;
+                        }
                     });
                 }
                 return retVal || stringId;

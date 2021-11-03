@@ -293,4 +293,7 @@
       <string name="ui.model.logFileInfo.size">Size</string>
       <string name="ui.model.logFileInfo.$type">Log</string>
       
+      <!-- Santedb-Match Model -->
+      <string name="ui.model.matchConfiguration.creationTime">Original Creation Time</string>
+      <string name="ui.model.matchConfiguration.createdBy">Original Author</string>
 </resources>

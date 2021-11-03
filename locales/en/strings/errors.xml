@@ -180,4 +180,9 @@
       <string name="error.rest.common.queryingRepository">Error querying underlying repository</string>
       <string name="error.rest.common.invalidPersistentType">Invalid persistence type</string>
       <string name="error.rest.common.updatingResource">Error updating resource</string>
+      <string name="error.auth.cancelled">Authentication Cancelled</string>
+      <string name="error.auth.general">General authentication error for {userName}</string>
+      <string name="error.auth.tfaClaims">Invalid Multi-Factor authentication claims for {userName}</string>
+      <string name="error.auth.tfaMismatch">MFA authentication failed with {result}</string>
+      <string name="error.auth.invalid">Username or password invalid</string>
 </resources>
