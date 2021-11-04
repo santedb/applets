@@ -8,6 +8,7 @@
       <string name="ui.error.contactSysAdmin">Please file a bug report, or contact your system administrator with this information</string>
       <string name="ui.error.required">Required field missing</string>
       <string name="ui.error.pattern">Invalid format (please ensure input is in correct format)</string>
+      <string name="ui.error.pattern.ext">Invalid format (expected: {pattern})</string>
       <string name="ui.error.duplicate">Duplicate record detected</string>
       <string name="error.http.403">Access Denied</string>
       <string name="error.http.403.text">Your request has been denied and audited. In order to access this resource, you must first either elevate your current session, obtain appropriate authorization, or temporary authenticate as someone else. You can attempt to elevate your session by selecting the override option below</string>
@@ -123,6 +124,7 @@
       <string name="error.server.core.supportTouch">Repository must support TOUCH</string>
       <string name="error.server.core.conceptTerm">Cannot find concept/reference term service</string>
       <string name="error.server.core.userCreated">Could not find created user from identity provider</string>
+      <string name="error.server.core.duplicateKey">Duplicate object with UUID {id}</string>
       <string name="error.type.KeyNotFoundException.notFound">{param} not found</string>
       <string name="error.type.ArgumentNullException.param">{param} cannot be null</string> 
       <string name="error.type.InvalidOperation.missingPatientRepo">Cannot find repository for Patient</string>

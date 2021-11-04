@@ -28,8 +28,8 @@ angular.module('santedb-lib')
      * @summary Renders a localized string
      */
     .filter('i18n', function () {
-        return function (value) {
-            return SanteDB.locale.getString(value);
+        return function (value, parmObject) {
+            return SanteDB.locale.getString(value, parmObject);
         }
     })
      /**

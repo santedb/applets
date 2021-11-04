@@ -294,6 +294,53 @@
       <string name="ui.model.logFileInfo.$type">Log</string>
       
       <!-- Santedb-Match Model -->
-      <string name="ui.model.matchConfiguration.creationTime">Original Creation Time</string>
-      <string name="ui.model.matchConfiguration.createdBy">Original Author</string>
+      <string name="ui.model.matchConfiguration.meta.creationTime">Creation Time</string>
+      <string name="ui.model.matchConfiguration.meta.createdBy">Author/Created By</string>
+      <string name="ui.model.matchConfiguration.meta.updatedTime">Updated Time</string>
+      <string name="ui.model.matchConfiguration.meta.updatedBy">Updated By</string>
+      <string name="ui.model.matchConfiguration.id">ID</string>
+      <string name="ui.model.matchConfiguration.id.hint">The unique identifier for this matching configuration file.</string>
+      <string name="ui.model.matchConfiguration.meta.version">Version</string>
+      <string name="ui.model.matchConfiguration.target">Resource(s)</string>
+      <string name="ui.model.matchConfiguration.target.hint"><![CDATA[The resource types (like <code>Patient</code>, <code>Person</code>, etc.) which this match configuration can be used for. The Master Data Management layer will use this information to determine which matching configurations to use]]></string>
+      <string name="ui.model.matchConfiguration.meta.tags">Tags</string>
+      <string name="ui.model.matchConfiguration.meta.tags.hint"><![CDATA[Optional tags which are used by the SanteDB iCDR and other plugins to determine how to handle matches of this configuration. Common tags are <ul><li><code>$mdm.auto-link</code> - Instruct MDM to automatically link the matches which meet the Match threshold without human intervention</li></ul>]]></string>
+      <string name="ui.model.matchConfiguration.description">Description</string>
+      <string name="ui.model.matchConfiguration.description.hint">Enter a description for your match configuration</string>
+      <string name="ui.model.matchConfiguration.evaluationMode">Evaluation Mode</string>
+      <string name="ui.model.matchConfiguration.classification">Classification Ranges</string>
+      <string name="ui.model.matchConfiguration.evaluationMode.AbsoluteScore.hint">When classifying the result - the absolute scores will be used for classification</string>
+      <string name="ui.model.matchConfiguration.evaluationMode.Percentage.hint">When classifying the result - the relative % score will be used for classification</string>
+      <string name="ui.model.matchConfiguration.blocking.maxResults">Batch Size</string>
+      <string name="ui.model.matchConfiguration.blocking.maxResults.description">{recs} will be loaded per query</string>
+      <string name="ui.model.matchConfiguration.blocking.maxResults.hint">Indicates the maximum number of records to load into memory from the database before matching commences.</string>
+      <string name="ui.model.matchConfiguration.blocking.op">Set Operation</string>
+      <string name="ui.model.matchConfiguration.blocking.op.AndAlso">INTERSECT WITH</string>
+      <string name="ui.model.matchConfiguration.blocking.op.OrElse">UNION WITH</string>
+      <string name="ui.model.matchConfiguration.blocking.op.hint"><![CDATA[Indicates the method that the results from this block set will be incorporated into the previous. <ul><li><code>INTERSECT WITH</code> - Records in this block must also appear in the previous block</li><li><code>UNION WITH</code> - Records in this block which have to previously appeared will be included</li></ul>]]></string>
+      <string name="ui.model.matchConfiguration.blocking.filters">Block Filters</string>
+      <string name="ui.model.matchConfiguration.blocking.filters.hint"><![CDATA[Indicates the query statements which will be sent to the database or other physical store. These are in <a href=" https://help.santesuite.org/santedb/extending-santedb/service-apis/health-data-service-interface-hdsi/hdsi-query-syntax" target="_blank">HDSI format</a>]]></string>
+      <string name="ui.model.matchConfiguration.scoring.id">Attribute ID</string>
+      <string name="ui.model.matchConfiguration.scoring.id.hint">A refernce identifier which this scoring attribute can be referenced by (recommended)</string>
+      <string name="ui.model.matchConfiguration.scoring.property">Property List</string>
+      <string name="ui.model.matchConfiguration.scoring.property.hint"><![CDATA[The access properties which are used to retrieve data from the <em>$input</em> and blocked record. These are in <a href=" https://help.santesuite.org/santedb/extending-santedb/service-apis/health-data-service-interface-hdsi/hdsi-query-syntax" target="_blank">HDSI format</a>]]></string>
+      <string name="ui.model.matchConfiguration.scoring.M">M Value</string>
+      <string name="ui.model.matchConfiguration.scoring.M.hint"><![CDATA[In record linkage the <em>M</em> value describes the likelihood that, when two values agree, they represent a definite match.]]></string>
+      <string name="ui.model.matchConfiguration.scoring.U">U Value</string>
+      <string name="ui.model.matchConfiguration.scoring.M.hint"><![CDATA[In record linkage the <em>U</em> value describes the likelihood that, when two values agree, they agreed by complete coincidence.]]></string>
+      <string name="ui.model.matchConfiguration.scoring.matchWeight">Weight (Match)</string>
+      <string name="ui.model.matchConfiguration.scoring.matchWeight.hint"><![CDATA[The match weight is the computed weighting for this attribute which is added to the candidates score when the assertions agree. The value is derived from <code>ln(m / u) / ln(2.0)</code>]]></string>
+      <string name="ui.model.matchConfiguration.scoring.nonMatchWeight">Weight (Non-Match)</string>
+      <string name="ui.model.matchConfiguration.scoring.nonMatchWeight.hint"><![CDATA[The non-match weight is a computed weighting for this attribute which is added to the candidate\'s score when the assertions disagree (fail). The value is derived from <code>ln((1 - m) / (1 - u)) / ln(2.0)</code>]]></string>
+      <string name="ui.model.matchConfiguration.scoring.whenNull">When Null</string>
+      <string name="ui.model.matchConfiguration.scoring.whenNull.hint"><![CDATA[Indicates the action which should be taken when the <code>input</code> or <code>blocked</code> record do not have a value populated at <code>property</code>]]></string>
+      <string name="ui.model.matchConfiguration.scoring.whenNull.Disqualify">The entire candidate match pair is disqualified from consideration as a match</string>
+      <string name="ui.model.matchConfiguration.scoring.whenNull.Ignore">The attribute is removed from consideration (note: this reduces the total possible score)</string>
+      <string name="ui.model.matchConfiguration.scoring.whenNull.Match">The attribute is scored as though the missing recrd would have matched</string>
+      <string name="ui.model.matchConfiguration.scoring.whenNull.NonMatch">The attribute is scored as though the missing record would not have matched</string>
+      <string name="ui.model.matchConfiguration.scoring.whenNull.None">The attribute assertions continue to be executed (most likely this results in a non-match score)</string>
+      <string name="ui.model.matchConfiguration.scoring.whenNull.Zero">The attribute is scored as 0 rather than the non-match score</string>
+      <string name="ui.model.matchConfiguration.scoring.when">Evaluation Guard</string>
+      <string name="ui.model.matchConfiguration.scoring.when.hint"><![CDATA[When the attribute specifies an evaluation guard the guard attributes must <ul><li>Have been evaluated successfully</li><li>Match the criteria specified</li></ul> Otherwise the <code>whenNull</code> action is taken.]]></string>
+
 </resources>

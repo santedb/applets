@@ -385,6 +385,7 @@
       <string name="ui.config.services.title">Application Services</string>
       <string name="ui.config.services.description">In SanteDB a \'service\' is a native plugin that operates within the application host context. You can use this screen to enable or disable services in the SanteDB application context. Warning: If you\'re unsure what this panel does, leave the defaults enabled</string>
       <string name="ui.config.services.type.label">Enabled Services</string>
+      <string name="ui.config.appliedRestart">Configuration has been saved - restarting the application host. This page will refresh in {time} seconds</string>
       <string name="ui.provenance.extraInfo">Provenance Data</string>
       <string name="ui.provenance.unknown">Not Available</string>
       <string name="ui.provenance.timestamp">Time</string>
