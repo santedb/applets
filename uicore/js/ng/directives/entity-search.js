@@ -188,7 +188,7 @@ angular.module('santedb-lib')
                             });
                             $(selectControl)[0].add(new Option(`<i class='fa fa-circle-notch fa-spin'></i> ${SanteDB.locale.getString("ui.wait")}`, "loading", true, true));
 
-                            value.forEach(async function (v) {
+                            value.filter(o=>o).forEach(async function (v) {
 
                                 if ($scope.valueProperty && v[$scope.valueProperty])
                                     v = v[$scope.valueProperty];

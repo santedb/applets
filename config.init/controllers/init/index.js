@@ -19,7 +19,7 @@
  * User: Justin Fyfe
  * Date: 2019-8-8
  */
-angular.module('santedb').controller('InitialSettingsController', ['$scope', '$rootScope', function ($scope, $rootScope) {
+angular.module('santedb').controller('InitialSettingsController', ['$scope', '$rootScope', '$interval', '$timeout', function ($scope, $rootScope, $interval, $timeout) {
 
     // Reference data
     $scope.reference = {
@@ -131,7 +131,7 @@ angular.module('santedb').controller('InitialSettingsController', ['$scope', '$r
             }
 
         }
-        else
+        else 
             $("#alreadyConfiguredModal").modal({ backdrop: 'static' });
         $scope.$apply();
     }
@@ -289,14 +289,32 @@ angular.module('santedb').controller('InitialSettingsController', ['$scope', '$r
             // Define the services
             $scope.config.application.service = $scope.serverCaps.appInfo.service.filter(function (s) { return s.active; })
                 .map(function (m) { return { type: m.type } });
-
+            $scope.config.autoRestart = true;
             SanteDB.configuration.saveAsync($scope.config)
                 .then(function (c) {
                     SanteDB.display.buttonWait("#finishButton", false);
-                    SanteDB.application.close();
-                    $("#completeModal").modal({
-                        backdrop: 'static'
-                    });
+
+                    if(c.autoRestart) {
+                        $timeout(_ => {
+                            $scope.restartTimer = 20;
+                            $("#countdownModal").modal({
+                                backdrop: 'static'
+                            });
+                            var iv = $interval(() => {
+                                if($scope.restartTimer-- < 0)
+                                { 
+                                    window.location.hash = '';
+                                    window.location.reload();
+                                }
+                            }, 1000);
+                        });
+                    }
+                    else {
+                        SanteDB.application.close();
+                        $("#completeModal").modal({
+                            backdrop: 'static'
+                        });
+                    }
                 })
                 .catch(function (e) {
                     SanteDB.display.buttonWait("#finishButton", false);
