@@ -1,50 +1,7 @@
 /// <reference path="../../../core/js/santedb.js"/>
 angular.module('santedb').controller('PatientDemographicsWidgetController', ['$scope', '$rootScope', function ($scope, $rootScope) {
 
-    async function correctEntityInformation(entity) {
-        // Update the address - Correcting any linked addresses to the strong addresses
-        // TODO: 
-        if (entity.address) {
-            var addressList = [];
-            var promises = Object.keys(entity.address).map(async function (k) {
-                try {
-                    var addr = entity.address[k];
-                    if (!Array.isArray(addr))
-                        addr = [addr];
-
-                    var intlPromises = addr.map(async function (addrItem) {
-                        addrItem.use = addrItem.useModel.id;
-                        addrItem.component = addrItem.component || {};
-                        delete (addrItem.useModel);
-                        addressList.push(addrItem);
-                    });
-                    await Promise.all(intlPromises);
-                }
-                catch (e) {
-                }
-            });
-            await Promise.all(promises);
-            entity.address = { "$other": addressList };
-        }
-        if (entity.name) {
-            var nameList = [];
-            Object.keys(entity.name).forEach(function (k) {
-
-                var name = entity.name[k];
-                if (!Array.isArray(name))
-                    name = [name];
-
-                name.forEach(function (nameItem) {
-                    nameItem.use = nameItem.useModel.id;
-                    delete (nameItem.useModel);
-                    nameList.push(nameItem);
-                })
-
-            });
-            entity.name = { "$other": nameList };
-        }
-
-    }
+   
 
     $scope.update = async function (form) {
 
@@ -56,27 +13,36 @@ angular.module('santedb').controller('PatientDemographicsWidgetController', ['$s
         // Now post the changed update object 
         try {
             var submissionObject = angular.copy($scope.editObject);
-            await correctEntityInformation(submissionObject);
-
-            if (submissionObject.tag && submissionObject.tag["$generated"]) {
-                submissionObject.tag["$mdm.type"] = "T"; // Set a ROT tag
-                submissionObject.determinerConcept = '6b1d6764-12be-42dc-a5dc-52fc275c4935'; // set update as a ROT
-            }
-            else // Not a MDM so just update the determiner to be specific
-            submissionObject.determinerConcept = DeterminerKeys.Specific;
+            await prepareEntityForSubmission(submissionObject);
 
             // Bundle to be submitted
-            var bundle = new Bundle({ resource: [ submissionObject ]});
+            var bundle = new Bundle({ resource: [submissionObject] });
 
             // Now have any of our relationships changed?
-            if(submissionObject.relationship) {
-                var changedRels = Object.keys(submissionObject.relationship).map(o=>submissionObject.relationship[o].targetModel).flat();
-                changedRels.filter(o=>o && o.$edited).forEach(function(object) {
-                    correctEntityInformation(object);
-                    bundle.resource.push(object);
-                })
+            if (submissionObject.relationship) {
+                // Conver the relationship sub objects to bundle objects
+                await Promise.all(Object.keys(submissionObject.relationship).map(async function(k) {
+                    // Since we can only link on this panel to existing objects we just need the target and source
+                    var codeType = await SanteDB.resources.concept.findAsync({ 'mnemonic' : k});
+                    if(codeType.totalResults == 1) {
+                        submissionObject.relationship[k].forEach(rel => {
+                            bundle.resource.push(new EntityRelationship({
+                                id: rel.id, 
+                                holder: submissionObject.id,
+                                target: rel.target,
+                                relationshipType: codeType.resource[0].id
+                            }));
+                        });
+                        
+                    }
+                    else {
+                        console.warn("Skipping relationship", k, "could not find code expected 1 but got ", codeType.totalResults);
+                    }
+                }));
+                delete submissionObject.relationship; // don't send relationships as part of the object
             }
 
+            
             await SanteDB.resources.bundle.insertAsync(bundle);
             $scope.scopedObject = await SanteDB.resources.patient.getAsync($scope.scopedObject.id, "full"); // re-fetch the patient
             toastr.success(SanteDB.locale.getString("ui.model.patient.saveSuccess"));
@@ -89,38 +55,38 @@ angular.module('santedb').controller('PatientDemographicsWidgetController', ['$s
     };
 
     // Add identifier
-    $scope.addIdentifier = function(id) {
-        if(!$scope.panel.editForm.$valid) return;
-        else  {
+    $scope.addIdentifier = function (id) {
+        if (!$scope.panel.editForm.$valid) return;
+        else {
             var authority = id.authority.domainName;
             var existing = $scope.editObject.identifier[authority];
-            if(!existing) // no identifiers in this domain
+            if (!existing) // no identifiers in this domain
                 $scope.editObject.identifier[authority] = existing = [];
-            else if(!Array.isArray(existing)) // Has only one => turn into array
-                $scope.editObject.identifier[authority]  = existing = [existing];
+            else if (!Array.isArray(existing)) // Has only one => turn into array
+                $scope.editObject.identifier[authority] = existing = [existing];
             id.id = SanteDB.application.newGuid();
             existing.push(angular.copy(id));
-            delete(id.authority);
-            delete(id.value);
-            delete(id.id);
+            delete (id.authority);
+            delete (id.value);
+            delete (id.id);
         }
     }
 
     // Remove identifier
-    $scope.removeIdentifier = function(authority, id) {
+    $scope.removeIdentifier = function (authority, id) {
 
         if (confirm(SanteDB.locale.getString("ui.model.entity.identifier.authority.remove.confirm"))) {
             var idList = $scope.editObject.identifier[authority];
-            if(!Array.isArray(idList))
+            if (!Array.isArray(idList))
                 idList = [idList];
-        
-                // Remove value from specified list
+
+            // Remove value from specified list
             idList = idList.filter(o => o.value != id);
 
             // Any items
-            if(idList.length == 0) 
-                delete($scope.editObject.identifier[authority]);
-            else 
+            if (idList.length == 0)
+                delete ($scope.editObject.identifier[authority]);
+            else
                 $scope.editObject.identifier[authority] = idList;
         }
     }
@@ -152,17 +118,17 @@ angular.module('santedb').controller('PatientDemographicsWidgetController', ['$s
                 $scope.editObject = angular.copy(n);
 
             // Correct identifiers to all be arrays
-            if(n.identifier) 
-                Object.keys(n.identifier).forEach(function(key) {
-                    if(!Array.isArray(n.identifier[key]))
+            if (n.identifier)
+                Object.keys(n.identifier).forEach(function (key) {
+                    if (!Array.isArray(n.identifier[key]))
                         n.identifier[key] = [n.identifier[key]];
 
-                    n.identifier[key].forEach(function(id) {
+                    n.identifier[key].forEach(function (id) {
                         id._codeUrl = `/hdsi/Patient/${n.id}/_code/${id.authority.id}` //?_sessionId=${window.sessionStorage.getItem("token")}`;
                     })
                 });
 
-                
+
             // Attempt to load family relationship types
             if ($scope.panel.name == 'org.santedb.widget.patient.nok') // for NOK we want to load more data 
             {
@@ -179,9 +145,9 @@ angular.module('santedb').controller('PatientDemographicsWidgetController', ['$s
                         var displayRelationships = Object.keys(n.relationship).map(o => n.relationship[o]).flat();
                         var editRelationships = Object.keys($scope.editObject.relationship).map(o => $scope.editObject.relationship[o]).flat();
                         displayRelationships.forEach(async function (rel) {
-                            if($scope.familyRelationTypes.map(o=>o.id).indexOf(rel.relationshipType) == -1) return;
-                            var editRel = editRelationships.filter(o=>o.relationshipType == rel.relationshipType && o.source == rel.source && o.target == rel.target);
-                            
+                            if ($scope.familyRelationTypes.map(o => o.id).indexOf(rel.relationshipType) == -1) return;
+                            var editRel = editRelationships.filter(o => o.relationshipType == rel.relationshipType && o.source == rel.source && o.target == rel.target);
+
                             if (rel.source && rel.source != n.id || rel.holder && !rel.holder == n.id) {
                                 editRel[0].sourceModel = rel.sourceModel = await SanteDB.resources.entity.getAsync(rel.source || rel.holder, "full");
                                 editRel[0].inverse = rel.inverse = true;
@@ -196,7 +162,7 @@ angular.module('santedb').controller('PatientDemographicsWidgetController', ['$s
                                 rel.relationshipTypeModel = await SanteDB.resources.concept.getAsync(rel.relationshipType);
 
                         });
-                        
+
                     }
                     catch (e) {
                         console.error(`Cannot load family members: ${e}`)
@@ -247,24 +213,23 @@ angular.module('santedb').controller('PatientDemographicsWidgetController', ['$s
     /**
      * Convert the specified person (reclass it) to a full patient
      */
-    $scope.convertToPatient = async function(personToConvert) {
+    $scope.convertToPatient = async function (personToConvert) {
 
-        if(!personToConvert.$converting)
+        if (!personToConvert.$converting)
             personToConvert.$converting = true;
-        else if(confirm(SanteDB.locale.getString("ui.model.reclass.confirm")))
-        {
+        else if (confirm(SanteDB.locale.getString("ui.model.reclass.confirm"))) {
             try {
                 var patient = new Patient(personToConvert);
 
                 patient.tag = patient.tag || {};
                 patient.classConcept = EntityClassKeys.Patient;
-                delete(patient.classConceptModel);
+                delete (patient.classConceptModel);
                 patient.tag["$sys.reclass"] = "true";
-                
+
                 var updatedPerson = await SanteDB.resources.patient.updateAsync(personToConvert.id, patient);
                 personToConvert.$type = "Patient";
             }
-            catch(e) {
+            catch (e) {
                 $rootScope.errorHandler(e);
             }
         }

@@ -128,7 +128,9 @@
     <property name="version" behavior="always"/>
     <property name="occupationModel" all="true" behavior="always" ref="Concept"/>
 
-    <property name="name" all="true" ref="EntityName" behavior="always"/>
+    <property name="name" all="true" behavior="always">
+      <property name="*" ref="EntityName" behavior="always"/>
+    </property>
     <property name="address" all="true" behavior="always">
       <property name="*" ref="EntityAddress" behavior="always"/>
     </property>
@@ -153,8 +155,10 @@
         <property name="target"/>
         <property name="targetModel" behavior="always">
           <property name="id"/>
-          <property name="name" behavior="always" ref="EntityName"/>
-          <property name="identifier" behavior="always" ref="EntityIdentifier"/>
+            <property name="name" all="true" behavior="always">
+                <property name="*" ref="EntityName" behavior="always"/>
+              </property>
+              <property name="identifier" behavior="always" ref="EntityIdentifier"/>
         </property>
       </property>
       <property name="ServiceDeliveryLocation">
@@ -165,8 +169,10 @@
         <property name="target"/>
         <property name="targetModel" behavior="always">
           <property name="id"/>
-          <property name="name" behavior="always" ref="EntityName"/>
-          <property name="identifier" behavior="always" ref="EntityIdentifier"/>
+              <property name="name" all="true" behavior="always">
+                <property name="*" ref="EntityName" behavior="always"/>
+              </property>
+              <property name="identifier" behavior="always" ref="EntityIdentifier"/>
         </property>
       </property>
       <property name="Birthplace" all="true">
@@ -178,9 +184,13 @@
         <property name="targetModel" behavior="always" all="false">
           <property name="id"/>
           <property name="classConcept"/>
-          <property name="name" behavior="always" ref="EntityName"/>
+          <property name="name" all="true" behavior="always">
+            <property name="*" ref="EntityName" behavior="always"/>
+          </property>
           <property name="identifier" behavior="always" ref="EntityIdentifier"/>
-          <property name="address" behavior="always" ref="EntityAddress"/>
+          <property name="address" behavior="always">
+            <property name="*" ref="EntityAddress" behavior="always" />
+          </property>
         </property>
       </property>
       <property name="*" ref="EntityRelationship" all="true"/>
@@ -203,7 +213,9 @@
     <property name="classConcept" behavior="never"/>
     <property name="determinerConceptModel" behavior="never"/>
     <property name="statusConceptModel" behavior="never"/>
-    <property name="name" all="true" ref="EntityName" behavior="always"/>
+    <property name="name" all="true" behavior="always">
+      <property name="*" ref="EntityName" />
+    </property>
     <property name="identifier" all="true" ref="EntityIdentifier" behavior="always"/>
     <property name="typeConceptModel" behavior="always" ref="Concept"/>
     <property name="relationship" all="true">
@@ -227,7 +239,9 @@
     <property name="creationTime" behavior="never"/>
     <property name="creationTimeModel" behavior="never"/>
     <property name="version" behavior="never"/>
-    <property name="name" all="true" ref="EntityName" behavior="always"/>
+    <property name="name" all="true" behavior="always">
+      <property name="*" ref="EntityName" />
+    </property>
     <property name="identifier" all="true" ref="EntityIdentifier" behavior="always"/>
     <property name="classConceptModel" behavior="never"/>
     <property name="classConcept" behavior="never"/>
@@ -250,7 +264,9 @@
     <property name="creationTime" behavior="always"/>
     <property name="creationTimeModel" behavior="never"/>
     <property name="version" behavior="never"/>
-    <property name="name" all="true" ref="EntityName" behavior="always"/>
+    <property name="name" all="true" behavior="always">
+      <property name="*" ref="EntityName" />
+    </property>
     <property name="address" all="true" ref="EntityAddress" behavior="always"/>
     <property name="classConceptModel" behavior="always" ref="Concept"/>
     <property name="classConcept" behavior="never"/>
@@ -262,7 +278,9 @@
         <property name="id"/>
         <property name="target"/>
         <property name="targetModel" behavior="always" all="false">
-          <property name="name" ref="EntityName" all="true"/>
+          <property name="name" all="true" behavior="always">
+            <property name="*" ref="EntityName" />
+          </property>
           <property name="id"/>
           <property name="version"/>
           <property name="relationship" behavior="never"/>
@@ -279,7 +297,9 @@
           <property name="expiryDate"/>
           <property name="typeConceptModel" behavior="always" ref="Concept"/>
           <property name="identifier" all="true"/>
-          <property name="name" all="true" behavior="always" ref="EntityName"/>
+          <property name="name" all="true" behavior="always">
+            <property name="*" ref="EntityName" />
+          </property>
         </property>
       </property>
       <property name="*" all="true">
