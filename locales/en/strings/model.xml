@@ -327,7 +327,7 @@
       <string name="ui.model.matchConfiguration.scoring.M">M Value</string>
       <string name="ui.model.matchConfiguration.scoring.M.hint"><![CDATA[In record linkage the <em>M</em> value describes the likelihood that, when two values agree, they represent a definite match.]]></string>
       <string name="ui.model.matchConfiguration.scoring.U">U Value</string>
-      <string name="ui.model.matchConfiguration.scoring.M.hint"><![CDATA[In record linkage the <em>U</em> value describes the likelihood that, when two values agree, they agreed by complete coincidence.]]></string>
+      <string name="ui.model.matchConfiguration.scoring.U.hint"><![CDATA[In record linkage the <em>U</em> value describes the likelihood that, when two values agree, they agreed by complete coincidence.]]></string>
       <string name="ui.model.matchConfiguration.scoring.matchWeight">Weight (Match)</string>
       <string name="ui.model.matchConfiguration.scoring.matchWeight.hint"><![CDATA[The match weight is the computed weighting for this attribute which is added to the candidates score when the assertions agree. The value is derived from <code>ln(m / u) / ln(2.0)</code>]]></string>
       <string name="ui.model.matchConfiguration.scoring.nonMatchWeight">Weight (Non-Match)</string>

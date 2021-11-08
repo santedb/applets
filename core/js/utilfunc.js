@@ -410,5 +410,6 @@ async function prepareEntityForSubmission(entity) {
     delete entity.relationship['MDM-Master'];
     delete entity.relationship['MDM-Ignore'];
     delete entity.relationship['MDM-RecordOfTruth'];
+    delete entity.relationship['Replaces'];
 
 }
