@@ -102,10 +102,21 @@ angular.module('santedb-lib')
                 });
                 ngModel.$render = function () {
                     if (ngModel.$viewValue) {
+
+                        var value = ngModel.$viewValue;
+
+                        if(Array.isArray(value)) {
+                            value = value[0];
+                        }
+
                         // is there a key? 
-                        var valueKey = ngModel.$viewValue.id;
-                        if (scope.key)
-                            valueKey = ngModel.$viewValue[scope.key];
+                        var valueKey = value;
+                        if(value.id) {
+                            valueKey = value.id;
+                        }
+                        if (scope.key) {
+                            valueKey = value[scope.key];
+                        }
                         $(element).val(valueKey);
                     }
                     else

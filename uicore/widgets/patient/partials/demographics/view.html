@@ -3,11 +3,13 @@
         <label class="col-sm-3 col-xs-4 control-label">{{ 'ui.model.patient.name' | i18n }}</label>
         <div class="col-sm-9 col-xs-8">
             <ul class="list-group">
-                <li class="d-flex align-items-center" ng-repeat="(n, name) in scopedObject.name">
-                    <span ng-if="!name.use" ng-repeat="r in name">
-                        {{ r | name }} <span class=" d-none d-sm-inline"><span
-                                class="badge badge-light">{{ r.useModel | concept }}</span></span>
-                    </span>
+                <li class="d-flex" ng-repeat="(n, name) in scopedObject.name">
+                    <ul class="list-group" ng-if="!name.use">
+                        <li ng-repeat="r in name">
+                            {{ r | name }} <span class=" d-none d-sm-inline"><span
+                                    class="badge badge-light">{{ r.useModel | concept }}</span></span>
+                            </li>
+                    </ul>
                     <span ng-if="name.use">
                         {{ name | name }} <span class=" d-none d-sm-inline"><span
                                 class="badge badge-light">{{ name.useModel | concept }}</span></span>
@@ -34,8 +36,15 @@
             <div ng-if="scopedObject.address">
                 <ul class="list-group">
                     <li class="d-flex align-items-center" ng-repeat="(n, address) in scopedObject.address">
+                        <ul class="list-group" ng-if="!addres.use">
+                            <li  ng-repeat="r in address">
+                                {{ r | address }} <span class=" d-none d-sm-inline"><span
+                                        class="badge badge-light">{{ r.useModel | concept }}</span></span>
+                                </li>
+                        </ul>
+                        <span ng-if="address.use">
                         {{ address | address }} <span class=" d-none d-sm-inline"><span
-                                class="badge badge-light">{{ address.useModel | concept }}</span></span></li>
+                                class="badge badge-light">{{ address.useModel | concept }}</span></span></span></li>
                 </ul>
             </div>
             <div ng-if="!scopedObject.address">
@@ -102,7 +111,7 @@
             {{ v.targetModel.name | name }}
         </div>
         <div ng-if="v.length" class="col-sm-9 col-xs-12">
-            <ul>
+            <ul class="list-group">
                 <li ng-repeat="i in v track by $index">
                     {{ i.targetModel.name | name }}
                 </li>

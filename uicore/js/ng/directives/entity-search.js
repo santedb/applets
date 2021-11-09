@@ -262,7 +262,8 @@ angular.module('santedb-lib')
                             delay: 500,
                             method: "GET",
                             headers: {
-                                "Accept": "application/json+sdb-viewmodel"
+                                "Accept": "application/json+sdb-viewmodel",
+                                "X-SDB-ViewModel" : "dropdown"
                             },
                             data: function (params) {
 
