@@ -1483,6 +1483,59 @@ function ResourceWrapper(_config) {
             contentType: _config.accept
         });
     }
+
+     /**
+     * @method invokeOperationAsync
+     * @memberof ResourceWrapper
+     * @summary Invokes the specified method
+     * @param {string} id The identifier of the container (null if global execute)
+     * @param {string} operation The operation you want to execute
+     * @param {any} parameters The parameters to the operation being executes (example: { clear: true, softFind: true })
+     * @param {bool} upstream True if the operation shold be executed opstream 
+     * @param {object} state A tracking state to send to the callback
+     * @returns {Promise} A promise which is fulfilled when the request is complete
+     */
+      this.invokeOperationAsync = function (id, operation, parameters, upstream, state) {
+
+
+        if (!operation)
+            throw new Exception("ArgumentNullException", "Missing scoping property");
+
+        var headers = {
+            Accept: _config.accept
+        };
+        if (_config.viewModel) 
+            headers["X-SanteDB-ViewModel"] = _config.viewModel;
+
+        // Prepare path
+        var url = null;
+        if (!id)
+            url = `${_config.resource}/$${operation}`;
+        else if (id.id)
+            url = `${_config.resource}/${id.id}/$${operation}`;
+        else
+            url = `${_config.resource}/${id}/$${operation}`;
+
+
+        if(upstream) {
+            headers["X-SanteDB-Upstream"] = true;
+        }
+    
+        // Prepare parameters object 
+        var requestParms = { parameter: [] };
+        if(parameters) {
+            Object.keys(parameters).forEach(p=>requestParms.parameter.push({ name: p, value: parameters[p] }));
+        }
+
+        return _config.api.postAsync({
+            headers: headers,
+            data: requestParms,
+            state: state,
+            resource: url,
+            contentType: "application/json"
+
+        });
+    }
 };
 
 //if (!SanteDB) 
@@ -1795,12 +1848,13 @@ function SanteDBWrapper() {
          * @summary Call the resource viewers
          * @param {*} resourceType The type of resource
          * @param {*} parms The parameters to pass
+         * @param {*} state The state host to use
          */
-        this.callResourceViewer = function (resourceType, parms) {
+        this.callResourceViewer = function (resourceType, state, parms) {
             var callList = _resourceStates[resourceType];
             if (callList) {
                 for (var c in callList)
-                    if (callList[c](parms)) return true;
+                    if (callList[c](state, parms)) return true;
             }
             return false;
         }
@@ -2409,6 +2463,18 @@ function SanteDBWrapper() {
             resource: "Patient",
             api: _hdsi
         });
+
+        /**
+         * @type {ResourceWrapper}
+         * @memberof SanteDBWrapper.ResourceApi
+         * @summary Match configuration API
+         */
+        this.matchConfiguration = new ResourceWrapper({
+            accept: "application/json",
+            resource: "MatchConfiguration",
+            api: _ami
+        });
+
         /**
             * @type {ResourceWrapper}
             * @memberof SanteDBWrapper.ResourceApi
@@ -3081,8 +3147,8 @@ function SanteDBWrapper() {
         // Process oauth response session data
         var _afterAuthenticate = function (oauthResponse, fulfill, reject) {
             _oauthSession = oauthResponse;
-            if (oauthResponse.access_token) window.sessionStorage.setItem('token', oauthResponse.access_token || oauthResponse.token);
-            if (oauthResponse.refresh_token) window.sessionStorage.setItem('refresh_token', oauthResponse.refresh_token);
+            //if (oauthResponse.access_token) window.sessionStorage.setItem('token', oauthResponse.access_token || oauthResponse.token);
+            //if (oauthResponse.refresh_token) window.sessionStorage.setItem('refresh_token', oauthResponse.refresh_token);
             if (oauthResponse.id_token)
                 try {
                     var tokenData = JSON.parse(atob(oauthResponse.id_token.split('.')[1]));
@@ -3420,8 +3486,8 @@ function SanteDBWrapper() {
                         .then(function (d) {
                             if (!noSession) {
                                 _oauthSession = d;
-                                if (d.access_token) window.sessionStorage.setItem('token', d.access_token || d.token);
-                                if (d.refresh_token) window.sessionStorage.setItem('refresh_token', d.refresh_token);
+                                //if (d.access_token) window.sessionStorage.setItem('token', d.access_token || d.token);
+                                //if (d.refresh_token) window.sessionStorage.setItem('refresh_token', d.refresh_token);
                                 _authentication.getSessionInfoAsync().then(fulfill).catch(reject);
                             }
                             else if (fulfill) fulfill(d);
@@ -3461,8 +3527,8 @@ function SanteDBWrapper() {
                             if (!noSession) {
                                 _oauthSession = d;
                                 _session = null;
-                                if (d.access_token) window.sessionStorage.setItem('token', d.access_token || d.token);
-                                if (d.refresh_token) window.sessionStorage.setItem('refresh_token', d.refresh_token);
+                                //if (d.access_token) window.sessionStorage.setItem('token', d.access_token || d.token);
+                                //if (d.refresh_token) window.sessionStorage.setItem('refresh_token', d.refresh_token);
                                 _authentication.getSessionInfoAsync().then(fulfill).catch(reject);
                             }
                             else if (fulfill) fulfill(d);
@@ -3567,11 +3633,23 @@ function SanteDBWrapper() {
             * @memberof SanteDBWrapper.LocalizationApi
             * @method getString
             * @param {string} stringId The id of the localization string to get
+            * @param {any} parameters The parameters used to substitute the string value
             * @returns {string} The localized string
             */
-        this.getString = function (stringId) {
+        this.getString = function (stringId, parameters) {
             try {
                 var retVal = __SanteDBAppService.GetString(stringId);
+
+                if(retVal) {
+                    retVal = retVal.replace(/(\{.*?\})/ig, function(s) {
+                        if(typeof s === 'string' && parameters) {
+                            return parameters[s.substring(1, s.length - 1)];
+                        }
+                        else {
+                            return s;
+                        }
+                    });
+                }
                 return retVal || stringId;
             }
             catch (e) {
@@ -3722,9 +3800,9 @@ function SanteDBWrapper() {
                     data.setRequestHeader("Authorization", "BEARER " +
                         elevatorToken);
                 }
-                else if (window.sessionStorage.getItem('token'))
-                    data.setRequestHeader("Authorization", "BEARER " +
-                        window.sessionStorage.getItem("token"));
+                // else if (window.sessionStorage.getItem('token'))
+                //     data.setRequestHeader("Authorization", "BEARER " +
+                //         window.sessionStorage.getItem("token"));
                 if (!_magic)
                     _magic = __SanteDBAppService.GetMagic();
 

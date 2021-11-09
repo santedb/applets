@@ -63,28 +63,42 @@
 
   <!-- Entity Information -->
   <type type="Entity" all="false">
-    <property name="name" all="true" ref="EntityName" behavior="always"/>
+    <property name="name" behavior="always">
+      <property name="*"  all="true" ref="EntityName"/>
+    </property>
   </type>
 
   <type type="Person" all="true">
-    <property name="name" all="true" ref="EntityName" behavior="always"/>
+    <property name="name" behavior="always">
+      <property name="*"  all="true" ref="EntityName"/>
+    </property>
   </type>
 
   <type type="Patient" all="true">
-    <property name="name" all="true" ref="EntityName" behavior="always"/>
+    <property name="name" behavior="always">
+      <property name="*"  all="true" ref="EntityName"/>
+    </property>
   </type>
 
   <type type="ManufacturedMaterial" all="true">
-    <property name="name" all="true" ref="EntityName" behavior="always"/>
+    <property name="name" behavior="always">
+      <property name="*"  all="true" ref="EntityName"/>
+    </property>
   </type>
 
   <type type="Material" all="true">
-    <property name="name" all="true" ref="EntityName" behavior="always"/>
+    <property name="name" behavior="always">
+      <property name="*"  all="true" ref="EntityName"/>
+    </property>
   </type>
 
   <type type="Place" all="true">
-    <property name="name" all="true" ref="EntityName" behavior="always"/>
-    <property name="address" all="true" ref="EntityAddress" behavior="always"/>
+    <property name="name" behavior="always">
+      <property name="*"  all="true" ref="EntityName"/>
+    </property>
+    <property name="address" behavior="always">
+      <property name="*"  all="true" ref="EntityAddress"/>
+    </property>
     <property name="typeConceptModel" all="true" ref="Concept" behavior="always"/>
     <property name="classConceptModel" all="true" ref="Concept" behavior="always"/>
   </type>

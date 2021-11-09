@@ -15,7 +15,8 @@ angular.module('santedb-lib')
             scope: {
                 contextName: '<',
                 currentTab: '=',
-                scopedObject: '='
+                scopedObject: '=',
+                view: '<'
             },
             restrict: 'E',
             replace: true,
@@ -30,7 +31,7 @@ angular.module('santedb-lib')
                             $scope.widgets = await SanteDB.application.getWidgetsAsync(context, "Tab");
                             $scope.$apply();
                         }
-                        catch(e){
+                        catch (e) {
                             $scope.error = e.message;
                             console.error(e);
                         }
@@ -52,90 +53,94 @@ angular.module('santedb-lib')
      * @example
      * <widget-panel context-name="'org.santedb.patient'"/>
     */
-   .directive('widgetPanels', function () {
-    return {
-        scope: {
-            contextName: '<',
-            currentTab: '=',
-            scopedObject: '=',
-            editForm: '='
-        },
-        restrict: 'E',
-        replace: true,
-        transclude: false,
-        templateUrl: './org.santedb.uicore/directives/widgetPanel.html',
-        controller: ['$scope', '$rootScope',
-            function ($scope, $rootScope) {
+    .directive('widgetPanels', function () {
+        return {
+            scope: {
+                contextName: '<',
+                currentTab: '=',
+                scopedObject: '=',
+                editForm: '=',
+                noAlt: '<',
+                view: '<'
+            },
+            restrict: 'E',
+            replace: true,
+            transclude: false,
+            templateUrl: './org.santedb.uicore/directives/widgetPanel.html',
+            controller: ['$scope', '$rootScope',
+                function ($scope, $rootScope) {
 
-                $scope.setView = async function(panel, view) {
-                    $scope.original = angular.copy($scope.scopedObject);
-                    panel.view = view;
-                }
-
-                $scope.closeView = async function(panel) {
-                    if(panel.editForm.$pristine || confirm(SanteDB.locale.getString("ui.action.cancel.confirm")))
-                        $scope.scopedObject = $scope.original;
-                    delete(panel.view);
-                }
-
-                $scope.submitEditForm = async function(panel){
-
-                    if(panel.view == 'Edit') {
-                        if(panel.editForm) {
-                            setTimeout(function() {
-                                panel.editForm.$$element.submit();
-                                if(panel.editForm.$valid)
-                                    panel.view = null;
-                                try { $scope.$apply(); }
-                                catch(e) {}
-                            }, 50);
-                        }
-                        else 
-                            panel.view = null;
+                    $scope.setView = async function (panel, view) {
+                        $scope.original = angular.copy($scope.scopedObject);
+                        panel.view = view;
                     }
-                    else 
-                        panel.view = 'Edit';
-                }
 
-                // Fetch the widgets which are valid in this context
-                async function getWidgets(context) {
-                    try {
-                        var widgets = await SanteDB.application.getWidgetsAsync(context, "Panel");
+                    $scope.closeView = async function (panel) {
+                        if (panel.editForm.$pristine || confirm(SanteDB.locale.getString("ui.action.cancel.confirm")))
+                            $scope.scopedObject = $scope.original;
+                        delete (panel.view);
+                    }
 
-                        // Small are combined 2 per group
-                        var cGroup = null;
-                        $scope.widgetGroups = [];
-                        widgets.forEach(function(w) {
+                    $scope.submitEditForm = async function (panel) {
 
-                            if(w.size == "Small") {  // combine
-                                if(cGroup == null) {
-                                    cGroup = { size: "Small", widgets: [] };
-                                    $scope.widgetGroups.push(cGroup);
-                                }
-                                cGroup.widgets.push(w);
-                                if(cGroup.widgets.length >= w.maxStack)
-                                    cGroup = null;
+                        if (panel.view == 'Edit') {
+                            if (panel.editForm) {
+                                setTimeout(function () {
+                                    panel.editForm.$$element.submit();
+                                    if (panel.editForm.$valid)
+                                        panel.view = null;
+                                    try { $scope.$apply(); }
+                                    catch (e) { }
+                                }, 50);
                             }
-                            else 
-                                $scope.widgetGroups.push({ size: w.size, widgets: [w]});
-
-                            if($scope.editForm && !w.editForm)
-                                w.editForm = $scope.editForm;
-                        });
-
-                        $scope.$apply();
+                            else
+                                panel.view = null;
+                        }
+                        else
+                            panel.view = 'Edit';
                     }
-                    catch(e){
-                        $scope.error = e.message;
-                        console.error(e);
+
+                    // Fetch the widgets which are valid in this context
+                    async function getWidgets(context) {
+                        try {
+                            var widgets = await SanteDB.application.getWidgetsAsync(context, "Panel");
+
+                            // Small are combined 2 per group
+                            var cGroup = null;
+                            $scope.widgetGroups = [];
+                            widgets.forEach(function (w) {
+
+                                /*if(w.size == "Small") {  // combine
+                                    if(cGroup == null) {
+                                        cGroup = { size: "Small", widgets: [] };
+                                        $scope.widgetGroups.push(cGroup);
+                                    }
+                                    cGroup.widgets.push(w);
+                                    if(cGroup.widgets.length >= w.maxStack)
+                                        cGroup = null;
+                                }
+                                else */
+                                w.view = $scope.view;
+                                $scope.widgetGroups.push({ size: w.size, widgets: [w] });
+
+                                if ($scope.editForm && !w.editForm)
+                                    w.editForm = $scope.editForm;
+                            });
+
+                            $scope.$apply();
+                        }
+                        catch (e) {
+                            $scope.error = e.message;
+                            console.error(e);
+                        }
                     }
+
+                    getWidgets($scope.contextName);
                 }
+            ],
+            link: function (scope, element, attrs) {
+                scope.renderSize = attrs.renderSize;
 
-                getWidgets($scope.contextName);
             }
-        ],
-        link: function (scope, element, attrs) {
-        
-        }
-    };
-});
+        };
+    });

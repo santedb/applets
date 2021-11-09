@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="ui.debug">DEBUG ENVIRONMENT - NOT FOR PRODUCTION USE</string>
+    <string name="ui.generated.on">Generated On</string>
       <string name="ui.card">Card</string>
       <string name="ui.unknown">N/A</string>
       <string name="ui.confirmed">Confirmed</string>
@@ -187,6 +188,30 @@
       <string name="ui.action.convertTo">Convert To</string>
       <string name="ui.action.new">New</string>
       <string name="ui.action.resetPassword">Reset Pwd</string>
+      <string name="ui.action.report">Report</string>
+
+      <!-- Data Tables -->
+      <string name="ui.table.empty">No Results Returned</string>
+      <string name="ui.table.info">Showing _START_ to _END_ of _TOTAL_ results</string>
+      <string name="ui.table.infoEmpty">Showing 0 to 0 of 0 results</string>
+      <string name="ui.table.infoFiltered">(from _MAX_ total entries)</string>
+      <string name="ui.table.processing">Loading Records</string>
+      <string name="ui.table.noRecords">No records found</string>
+      <string name="ui.table.page.first">First</string>
+      <string name="ui.table.page.next">Next</string>
+      <string name="ui.table.page.previous">Previous</string>
+      <string name="ui.table.page.last">Last</string>
+      <string name="ui.table.sort.ascending">Sort ascending order</string>
+      <string name="ui.table.sort.descending">Sort descneding order</string>
+      <string name="ui.table.search">Search:</string>
+      <string name="ui.table.search.field._any">Freetext Search</string>
+      <string name="ui.table.search.field.address.component.value">Search by address</string>
+      <string name="ui.table.search.field.identifier.value">Search by id</string>
+      <string name="ui.table.search.field.name.component.value">Search by name</string>
+      <string name="ui.table.search.field.name">Search by name</string>
+      <string name="ui.table.search.field.userName">Search by user name</string>
+      <string name="ui.table.search.field.user.userName">Search by user name</string>
+
       <!-- Common Operators -->
       <string name="ui.operator.eq">Equals</string>
       <string name="ui.operator.ne">Not Equal</string>
@@ -245,7 +270,7 @@
       <string name="ui.config.realm.title">Domain</string>
       <string name="ui.config.realm.description">This SanteDB client application needs to contact a centralized instanced called a &quot;domain&quot;. This screen will allow you to configure the specific details of how this mobile device will contact the domain.</string>
       <string name="ui.config.realm.deviceName.label">Devices ID</string>
-      <string name="ui.config.realm.deviceName.help">A name for this device. For example: 'GoodHealthTablet1'</string>
+      <string name="ui.config.realm.deviceName.help">A name for this device. For example: \'GoodHealthTablet1\'</string>
       <string name="ui.config.realm.name.label">Address</string>
       <string name="ui.config.realm.name.help">The IP address or host name of the domain controller</string>
       <string name="ui.config.realm.trace.label">Enable Tracing</string>
@@ -292,7 +317,7 @@
       <string name="ui.config.subscribe.facility.help">One or more facilities that you are subscribing to</string>
       <string name="ui.config.subscribe.objects.label">Subscriptions</string>
       <string name="ui.config.data.title">Database</string>
-      <string name="ui.config.data.description">SanteDB's disconnected client needs to cache data locally for offline use. There are a variety of storage engines which may be available on your platform, select the data storage options here.</string>
+      <string name="ui.config.data.description">SanteDB\'s disconnected client needs to cache data locally for offline use. There are a variety of storage engines which may be available on your platform, select the data storage options here.</string>
       <string name="ui.config.data.provider.label">Database</string>
       <string name="ui.config.data.provider.help">Depending on the size of the subscription, and technology this device is using, you can get significant performance gains by selecting a more powerful database technology</string>
       <string name="ui.config.dbp.help.SQLite">This device operates standalone</string>
@@ -358,8 +383,9 @@
       <string name="ui.config.role.applet.autoUpdate.label">Automatically update applets</string>
       <string name="ui.config.role.applet.autoUpdate.help">Selecting this option will automatically update applets</string>
       <string name="ui.config.services.title">Application Services</string>
-      <string name="ui.config.services.description">In SanteDB a 'service' is a native plugin that operates within the application host context. You can use this screen to enable or disable services in the SanteDB application context. Warning: If you're unsure what this panel does, leave the defaults enabled</string>
+      <string name="ui.config.services.description">In SanteDB a \'service\' is a native plugin that operates within the application host context. You can use this screen to enable or disable services in the SanteDB application context. Warning: If you\'re unsure what this panel does, leave the defaults enabled</string>
       <string name="ui.config.services.type.label">Enabled Services</string>
+      <string name="ui.config.appliedRestart">Configuration has been saved - restarting the application host. This page will refresh in {time} seconds</string>
       <string name="ui.provenance.extraInfo">Provenance Data</string>
       <string name="ui.provenance.unknown">Not Available</string>
       <string name="ui.provenance.timestamp">Time</string>
@@ -424,7 +450,43 @@
       <string name="ui.mail.flags.Alert">Flagged Alert</string>
 
       <!-- Security Challenges -->
-      <string name="security.challenge.text1">Your favorite pet's name</string>
-      <string name="security.challenge.text2">Your oldest sibling's name</string>
+      <string name="security.challenge.text1">Your favorite pet\'s name</string>
+      <string name="security.challenge.text2">Your oldest sibling\'s name</string>
       <string name="security.challenge.text3">The city where you were born</string>
+
+            <!-- Master Data Management -->
+      <string name="org.santedb.widget.patient.mdm">Master Data Management</string>
+      <string name="org.santedb.widget.mdm.locals">Local Records</string>
+      <string name="org.santedb.widget.mdm.duplicates">Probable Local Records</string>
+      <string name="ui.santedb.widget.mdm.duplicates.link">Link this candidate local to the master record</string>
+      <string name="ui.santedb.widget.mdm.duplicates.ignore">Ignore this candidate local and NEVER flag the candidate again</string>
+      <string name="ui.santedb.widget.mdm.duplicates.detail">Show a detailed match report for the match pair</string>
+      <string name="ui.santedb.widget.mdm.duplicates.unlink">Un-link this local from this master - creating a new master for the unlinked local and ignoring future matches</string>
+      <string name="ui.santedb.widget.mdm.duplicates.unignore">Un-ignore this record - it will be considered a duplicate in future matching activities</string>
+      <string name="ui.santedb.widget.mdm.duplicates.classificationConcept">Class</string>
+      <string name="ui.santedb.widget.mdm.duplicates.strength">Strength</string>
+      <string name="ui.santedb.widget.mdm.duplicates.recordInfo">Local Record</string>
+      <string name="ui.santedb.widget.mdm.duplicates.createdBy">Source</string>
+      <string name="ui.santedb.widget.mdm.duplicates.assign">Attach</string>
+      <string name="ui.mdm.type.L">LOCAL RECORD</string>
+      <string name="ui.mdm.type.M">MASTER RECORD</string>
+      <string name="ui.mdm.type.T">RECORD OF TRUTH</string>
+      <string name="ui.mdm.rot">This record has been verified</string>
+      <string name="ui.mdm.action.openMaster">Go to MASTER</string>
+      <string name="ui.mdm.action.openRot">Go to RECORD OF TRUTH</string>
+      <string name="ui.mdm.view.local">You are viewing a LOCAL record. This record comes from a particular source system</string>
+      <string name="ui.mdm.view.recordOfTruth">You are looking at a RECORD OF TRUTH. This record should be considered official information</string>
+      <string name="ui.mdm.view.master">You are looking at a MASTER record. This record is synthesized from multiple LOCAL records</string>
+      <string name="ui.mdm.view.masterAdjudicated">You are looking at a &lt;strong&gt;MASTER&lt;/strong&gt; record with a &lt;strong&gt;RECORD OF TRUTH&lt;/strong&gt;. Use the MDM tab to pull data from locals into this record of truth</string>
+      <string name="ui.mdm.isTrue">This MASTER record has been verified. The data you are seeing is the OFFICIAL data from the RECORD OF TRUTH.</string>
+      <string name="ui.mdm.edit.master">This is a MASTER record. Editing it will result in the creation a new LOCAL record for the administrative panel which will be.</string>
+      <string name="ui.mdm.edit.recordOfTruth">You are editing a RECORD OF TRUTH, this record should contain the &quot;official&quot; data for this object.</string>
+      <string name="ui.mdm.edit.local">This is a LOCAL record. Editing it may result in data mis-match between the system which supplied the data and the server</string>
+      <string name="ui.mdm.edit.linkedEditWarning">This data may be linked to other entities which may not be subject to MDM rules. You should either clone it convert it.</string>
+      <string name="ui.mdm.action.ignore.confirm">Are you sure you want to mark this record as a non-match?</string>
+      <string name="ui.mdm.action.merge.confirm">Are you sure you want to integrate/merge this local record with the current master record?</string>
+      <string name="ui.mdm.action.detach.confirm">Are you sure you want to detach (unmerge) this local record from the current master record?</string>
+      <string name="ui.mdm.view.recordOfTruth">This record is a RECORD OF TRUTH. This means that this record has been validated the "official" data for a MASTER record</string>
+
+
 </resources>

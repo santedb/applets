@@ -318,8 +318,21 @@ function scrubModelProperties(source) {
     return source;
 }
 
-// Correct information such as addresses and other information on the patient profile
-async function correctEntityInformation(entity) {
+/**
+ * @summary Ensures that the entity being submitted doesn't have any odd or nasty data - also ensures that the 
+ * @param {Entity} entity The entity to be corrected
+ */
+async function prepareEntityForSubmission(entity) {
+
+    if (entity.tag && entity.tag["$generated"]) {
+        entity.tag["$mdm.type"] = "T"; // Set a ROT tag
+        entity.determinerConcept = '6b1d6764-12be-42dc-a5dc-52fc275c4935'; // set update as a ROT
+    }
+    else  // Not a MDM so just update the determiner to be specific
+    {
+        entity.determinerConcept = DeterminerKeys.Specific;
+    }
+
     // Update the address - Correcting any linked addresses to the strong addresses
     // TODO: 
     if (entity.address) {
@@ -370,5 +383,33 @@ async function correctEntityInformation(entity) {
         });
         entity.name = { "$other": nameList };
     }
+    
+    // Clear out the relationships of their MDM keys
+    if(entity.relationship) {
+        Object.keys(entity.relationship).forEach((k) => {
+            entity.relationship[k] = entity.relationship[k].map((r) => {
+                if(r.targetModel && r.targetModel.id) {
+                    r.target = r.targetModel.id;
+                    delete r.targetModel;
+                }
+                if(r.holderModel && r.holderModel.id) {
+                    r.holder = r.holderModel.id;
+                    delete r.holderModel;
+                }
+                delete r.relationshipTypeModel;
+                delete r.relationshipRoleModel;
+                delete r.classificationModel;
+                return r;
+            });
+        });
+
+    }
+    
+    // Remove any MDM keys
+    delete entity.relationship['MDM-Duplicate'];
+    delete entity.relationship['MDM-Master'];
+    delete entity.relationship['MDM-Ignore'];
+    delete entity.relationship['MDM-RecordOfTruth'];
+    delete entity.relationship['Replaces'];
 
 }

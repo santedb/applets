@@ -367,7 +367,7 @@ var santedbApp = angular.module('santedb', ['ngSanitize', 'ui.router', 'oc.lazyL
                 toastr.clear();
 
         };
-        $interval(ivlFn, 10000);
+        $interval(ivlFn, 15000);
 
 
         // Set locale for sleect2
