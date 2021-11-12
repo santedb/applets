@@ -14550,7 +14550,7 @@ const NullReasonKeys = {
 	Masked : '9b16bf12-073e-4ea4-b6c5-e1b93e8fd490',
 }  // NullReasonKeys 
 
-EmptyGuid = "00000000 - 0000 - 0000 - 0000 - 000000000000";
+EmptyGuid = "00000000-0000-0000-0000-000000000000";
 
 /**
 * @class
