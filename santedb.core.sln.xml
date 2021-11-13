@@ -1,5 +1,5 @@
 <AppletManifest xmlns="http://santedb.org/applet">
-  <info id="santedb.core.sln" version="2.1.90.0">
+  <info id="santedb.core.sln" version="2.1.113.0">
     <icon>/org.santedb.core/img/icon.png</icon>
     <name lang="en">SanteDB Core Solution</name>
     <author>SanteSuite Contributors</author>
