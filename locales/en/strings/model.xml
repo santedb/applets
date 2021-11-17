@@ -129,22 +129,34 @@
       <string name="ui.model.entity.address">Address</string>
       <string name="ui.model.entity.address.title">Address Registration</string>
       <string name="ui.model.entity.address.use">Address Type</string>
+      <string name="ui.model.entity.address.use.hint"><![CDATA[Indicates the intended use of the address such as <code>PhysicalVisit</string> for a physical address, or <code>WorkPlace</code>, etc.]]></string>
 
 
       <string name="ui.model.entity.address.component.state">State/Province</string>
+      <string name="ui.model.entity.address.component.state.hint"><![CDATA[A partition of a country (also known as a Region, Territory, Zone, etc.)]]></string>
       <string name="ui.model.entity.address.component.county">County/District</string>
+      <string name="ui.model.entity.address.component.county.hint"><![CDATA[A partition of a state, province, region (also known as a Division, District, Parish, etc.)]]></string>
       <string name="ui.model.entity.address.component.city">City</string>
+      <string name="ui.model.entity.address.component.city.hint"><![CDATA[An municipal area (also known as Town, Municipality, City, Village, etc.) ]]></string>
       <string name="ui.model.entity.address.component.street">Street</string>
+      <string name="ui.model.entity.address.component.street.hint"><![CDATA[A location (building number, unit number, etc.) which is used to located the address on a street or road.]]></string>
       <string name="ui.model.entity.address.component.precinct">Precinct/Borough</string>
+      <string name="ui.model.entity.address.component.precinct.hint"><![CDATA[A partition of a city (also a borough, division, ward/village, etc.) ]]></string>
       <string name="ui.model.entity.address.component.postalcode">Postal/ZIP</string>
+      <string name="ui.model.entity.address.component.postalcode.hint"><![CDATA[A codified representation of the address used for postal delivery and/or package routing, etc.]]></string>
       <string name="ui.model.entity.address.component.country">Country</string>
       <string name="ui.model.entity.name">Name</string>
       <string name="ui.model.entity.name.title">Name Registration</string>
       <string name="ui.model.entity.name.use">Name Type</string>
+      <string name="ui.model.entity.name.use.hint"><![CDATA[The intended use for the name. For example <code>OfficialRecord</code> would indicate the name is used on official documentation.]]></string>
       <string name="ui.model.entity.name.component.prefix">Prefix</string>
+      <string name="ui.model.entity.name.component.prefix.hint"><![CDATA[A prefix or honorary title used (example: <code>Sir</code>, <code>Mr.</code>, <code>Ms.</code>)]]></string>
       <string name="ui.model.entity.name.component.given">Given</string>
+      <string name="ui.model.entity.name.component.given.hint"><![CDATA[Given names of the entity]]></string>
       <string name="ui.model.entity.name.component.family">Family</string>
+      <string name="ui.model.entity.name.component.family.hint"><![CDATA[Family names of the entity (or surname)]]></string>
       <string name="ui.model.entity.name.component.suffix">Suffix</string>
+      <string name="ui.model.entity.name.component.suffix.hint"><![CDATA[Suffixes for the name such as an enumetion (William Gates <code>III</code>) a designator (Joe Smith <code>Jr.</code>) or designated title (Dr. Fran Smith <code>MD</code>)]]></string>
       <string name="ui.model.entity.telecom">Contact Info</string>
       <string name="ui.model.entity.genderConcept">Gender</string>
       <string name="ui.model.entity.demographics">Additional Info</string>
@@ -182,6 +194,7 @@
       <string name="ui.model.patient.addresses">Addresses</string>
       <string name="ui.model.patient.address">Address</string>
       <string name="ui.model.patient.address.use">Use</string>
+
       <string name="ui.model.patient.address.component.country">Country</string>
       <string name="ui.model.patient.address.component.state">State/Province</string>
       <string name="ui.model.patient.address.component.county">County/District</string>
@@ -312,8 +325,9 @@
       <string name="ui.model.matchConfiguration.evaluationMode.AbsoluteScore.hint">When classifying the result - the absolute scores will be used for classification</string>
       <string name="ui.model.matchConfiguration.evaluationMode.Percentage.hint">When classifying the result - the relative % score will be used for classification</string>
       <string name="ui.model.matchConfiguration.blocking.maxResults">Batch Size</string>
-      <string name="ui.model.matchConfiguration.blocking.maxResults.description">{recs} will be loaded per query</string>
+      <string name="ui.model.matchConfiguration.blocking.maxResults.description">{recs} per query</string>
       <string name="ui.model.matchConfiguration.blocking.maxResults.hint">Indicates the maximum number of records to load into memory from the database before matching commences.</string>
+      <string name="ui.model.matchConfiguration.blocking.maxResults.inputHelp">The lower this number is, the more round-trips to the database are required</string>
       <string name="ui.model.matchConfiguration.blocking.op">Set Operation</string>
       <string name="ui.model.matchConfiguration.blocking.op.AndAlso">INTERSECT WITH</string>
       <string name="ui.model.matchConfiguration.blocking.op.OrElse">UNION WITH</string>

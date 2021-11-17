@@ -50,7 +50,7 @@
           dcsd_utc as death_time,
           mb_ord as multi_birth,
           dob as birth_time,
-          coalesce(gndr.mnemonic, 'NullFlavor-Unknown') as gender,
+          coalesce(gndr.mnemonic, 'Unknown') as gender,
           ent_vrsn_tbl.crt_utc as created_time,
           mrtl.mnemonic as marital_status,
           edu_lvl.mnemonic as edu_level,

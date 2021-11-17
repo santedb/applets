@@ -95,7 +95,10 @@ angular.module('santedb-lib')
                 element.on('change', function (e) {
                     var val = $(element).val();
 
-                    if (scope.key)
+                    if(val === "") {
+                        scope.$apply(() => ngModel.$setViewValue(null));
+                    }
+                    else if (scope.key)
                         scope.$apply(() => ngModel.$setViewValue(scope.setValues.find(o => o.id == val)[scope.key]));
                     else
                         scope.$apply(() => ngModel.$setViewValue(scope.setValues.find(o => o.id == val)));

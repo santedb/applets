@@ -83,6 +83,7 @@
           <bi:labels  format="#0">(DateTime.Now - birth_time).TotalDays / 365.25</bi:labels>
           <bi:dataset label="Females" fn="sum">Female</bi:dataset>
           <bi:dataset label="Males" fn="sum">Male</bi:dataset>
+          <bi:dataset label="Unknown/Other" fn="sum">Unknown</bi:dataset>
         </bi:chart>
       </div>
     </add>

@@ -72,6 +72,7 @@
           <bi:labels format="yyyy-MM">created_date</bi:labels>
           <bi:dataset label="Female">Female</bi:dataset>
           <bi:dataset label="Male">Male</bi:dataset>
+          <bi:dataset label="Unknown/Other">Unknown</bi:dataset>
         </bi:chart>
       </div>
     </add>
