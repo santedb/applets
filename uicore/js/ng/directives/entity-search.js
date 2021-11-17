@@ -128,7 +128,7 @@ angular.module('santedb-lib')
                 retVal += selection.text;
 
             retVal += "&nbsp;";
-            if(!minRender) {
+            if (!minRender) {
                 if (selection.address)
                     retVal += "<small class='d-none d-sm-inline'> - (<i class='fa fa-map-marker'></i> " + SanteDB.display.renderEntityAddress(selection.address) + ")</small>";
                 else if (selection.oid)
@@ -188,7 +188,7 @@ angular.module('santedb-lib')
                             });
                             $(selectControl)[0].add(new Option(`<i class='fa fa-circle-notch fa-spin'></i> ${SanteDB.locale.getString("ui.wait")}`, "loading", true, true));
 
-                            value.filter(o=>o).forEach(async function (v) {
+                            value.filter(o => o).forEach(async function (v) {
 
                                 if ($scope.valueProperty && v[$scope.valueProperty])
                                     v = v[$scope.valueProperty];
@@ -235,13 +235,31 @@ angular.module('santedb-lib')
                     var modelType = scope.type;
                     var filter = scope.filter || {};
                     var displayString = scope.display;
-                    var searchProperty = scope.searchField || "name.component.value";
+                    var searchProperty = scope.searchField;
                     var defaultResults = scope.defaultResults;
                     var groupString = scope.groupBy;
                     var groupDisplayString = scope.groupDisplay;
                     var resultProperty = scope.key || "id";
                     var selector = scope.selector;
                     var valueProperty = scope.valueProperty;
+
+                    if (!searchProperty) {
+                        switch (modelType) {
+                            case "Entity":
+                            case "Patient":
+                            case "Person":
+                            case "Organization":
+                            case "UserEntity":
+                            case "Place":
+                            case "Material":
+                            case "ManufacturedMaterial":
+                                searchProperty = "name.component.value";
+                                break;
+                            case "Concept":
+                                searchProperty = "name.value";
+                                break;
+                        }
+                    }
 
                     $(element).find('option[value="? undefined:undefined ?"]').remove();
 
@@ -256,14 +274,14 @@ angular.module('santedb-lib')
                         },
                         dataAdapter: $.fn.select2.amd.require('select2/data/extended-ajax'),
                         ajax: {
-                           
+
                             url: SanteDB.resources[modelType.toCamelCase()].getUrl(), //((modelType == "SecurityUser" || modelType == "SecurityRole" || modelType == "SecurityPolicy") ? "/ami/" : "/hdsi/") + modelType,
                             dataType: 'json',
                             delay: 500,
                             method: "GET",
                             headers: {
                                 "Accept": "application/json+sdb-viewmodel",
-                                "X-SDB-ViewModel" : "dropdown"
+                                "X-SDB-ViewModel": "dropdown"
                             },
                             data: function (params) {
 
@@ -350,26 +368,26 @@ angular.module('santedb-lib')
                             cache: true
                         },
                         escapeMarkup: function (markup) { return markup; }, // Format normally
-                        templateSelection: function(o) { return renderObject(o, scope.minRender); },
+                        templateSelection: function (o) { return renderObject(o, scope.minRender); },
                         keepSearchResults: true,
-                        templateResult: function(o) { return renderObject(o, scope.minRender); }
+                        templateResult: function (o) { return renderObject(o, scope.minRender); }
                     });
 
                     // // on first focus (bubbles up to document), open the menu
                     $(element).parent().on('focusin', '.select2-selection.select2-selection--single', function (e) {
                         $(this).closest(".select2-container").siblings('select:enabled').select2('open');
                     });
-                    
+
                     //   // steal focus during close - only capture once and stop propogation
-                    if(scope.autoTabNext)
+                    if (scope.autoTabNext)
                         $($(element).parent(), 'select.select2').on('select2:close', function (e) {
                             $(element).trigger("focusout");
 
                             // HACK: Focus the next form-control on close
                             var controls = $('.form-control');
                             var eindex = -1;
-                            controls.each(function(i, e) { if(e.name == element[0].name) eindex = i; });
-                            if(eindex > -1) {
+                            controls.each(function (i, e) { if (e.name == element[0].name) eindex = i; });
+                            if (eindex > -1) {
                                 var nextControl = controls[eindex + 1].name;
                                 e.stopPropagation();
                                 $(`[name=${nextControl}]`).focus();
@@ -384,16 +402,16 @@ angular.module('santedb-lib')
                             val = val.filter(o => o != "loading");
 
                         // Is there a copy command
-                        if(scope.copyNulls && !Array.isArray(val)) {
+                        if (scope.copyNulls && !Array.isArray(val)) {
                             var data = $(element).select2("data")[0];
 
                             var target = scope.copyNulls.to;
                             var from = scope.copyNulls.from.split('.').reduce((p, c, i) => i == 1 ? data[p][c] : p[c]);
-                            scope.copyNulls.values.forEach(o=>target[o] = target[o] || from[o] );
+                            scope.copyNulls.values.forEach(o => target[o] = target[o] || from[o]);
 
                         }
-                        if(scope.changeClear && val != ngModel.$viewValue && scope.changeClear.scope) {
-                            scope.changeClear.values.forEach(o=>scope.changeClear.scope[o] = null);
+                        if (scope.changeClear && val != ngModel.$viewValue && scope.changeClear.scope) {
+                            scope.changeClear.values.forEach(o => scope.changeClear.scope[o] = null);
                         }
                         //e.currentTarget.options.selectedIndex = e.currentTarget.options.length - 1;
                         if (valueProperty) {

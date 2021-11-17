@@ -161,3 +161,43 @@ ul.bullet-list {
     margin-left: 4rem;
     list-style-type: disc;
 }
+
+
+
+/*the container must be positioned relative:*/
+.hdsi-autocomplete {
+    position: relative;
+    display: inline-block;
+  }
+  
+.hdsi-autocomplete-items {
+    position: absolute;
+    border: 1px solid #d4d4d4;
+    border-bottom: none;
+    border-top: none;
+    z-index: 99;
+    /*position the autocomplete items to be the same width as the container:*/
+    top: 100%;
+    left: 0;
+    right: 0;
+    max-height:15vh;
+    overflow-y: auto;
+  }
+  
+  .hdsi-autocomplete-items div {
+    padding: 10px;
+    cursor: pointer;
+    background-color: #fff; 
+    border-bottom: 1px solid #d4d4d4; 
+  }
+  
+  /*when hovering an item:*/
+  .hdsi-autocomplete-items div:hover {
+    background-color: #e9e9e9; 
+  }
+  
+  /*when navigating through the items using the arrow keys:*/
+  .hdsi-autocomplete-active {
+    background-color: DodgerBlue !important; 
+    color: #ffffff; 
+  }

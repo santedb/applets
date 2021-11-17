@@ -2465,6 +2465,17 @@ function SanteDBWrapper() {
         });
 
         /**
+            * @type {ResourceWrapper}
+            * @memberof SanteDBWrapper.ResourceApi
+            * @summary Represents the Patient Resource
+            */
+         this.extensionType = new ResourceWrapper({
+            accept: _viewModelJsonMime,
+            resource: "ExtensionType",
+            api: _hdsi
+        });
+
+        /**
          * @type {ResourceWrapper}
          * @memberof SanteDBWrapper.ResourceApi
          * @summary Match configuration API

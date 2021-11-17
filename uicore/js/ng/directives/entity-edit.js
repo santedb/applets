@@ -147,7 +147,8 @@ angular.module('santedb-lib')
                 simpleEntry: '<',
                 isRequired: '<',
                 ownerForm: '<',
-                controlPrefix: '<'
+                controlPrefix: '<',
+                inputStyle: '<'
             },
             controller: ['$scope', '$rootScope', function ($scope, $rootScope) {
 
