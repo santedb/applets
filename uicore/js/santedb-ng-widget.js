@@ -22,14 +22,14 @@ angular.module('santedb-lib')
             replace: true,
             transclude: false,
             templateUrl: './org.santedb.uicore/directives/widgetTab.html',
-            controller: ['$scope', '$rootScope',
-                function ($scope, $rootScope) {
+            controller: ['$scope', '$timeout',
+                function ($scope, $timeout) {
 
                     // Fetch the widgets which are valid in this context
                     async function getWidgets(context) {
                         try {
-                            $scope.widgets = await SanteDB.application.getWidgetsAsync(context, "Tab");
-                            $scope.$apply();
+                            var widgets = await SanteDB.application.getWidgetsAsync(context, "Tab");
+                            $timeout(() => $scope.widgets = widgets);
                         }
                         catch (e) {
                             $scope.error = e.message;
@@ -67,8 +67,8 @@ angular.module('santedb-lib')
             replace: true,
             transclude: false,
             templateUrl: './org.santedb.uicore/directives/widgetPanel.html',
-            controller: ['$scope', '$rootScope',
-                function ($scope, $rootScope) {
+            controller: ['$scope', '$timeout',
+                function ($scope, $timeout) {
 
                     $scope.setView = async function (panel, view) {
                         $scope.original = angular.copy($scope.scopedObject);
@@ -85,12 +85,10 @@ angular.module('santedb-lib')
 
                         if (panel.view == 'Edit') {
                             if (panel.editForm) {
-                                setTimeout(function () {
+                                $timeout(() => {
                                     panel.editForm.$$element.submit();
                                     if (panel.editForm.$valid)
                                         panel.view = null;
-                                    try { $scope.$apply(); }
-                                    catch (e) { }
                                 }, 50);
                             }
                             else
@@ -106,8 +104,7 @@ angular.module('santedb-lib')
                             var widgets = await SanteDB.application.getWidgetsAsync(context, "Panel");
 
                             // Small are combined 2 per group
-                            var cGroup = null;
-                            $scope.widgetGroups = [];
+                            var widgetGroups = [];
                             widgets.forEach(function (w) {
 
                                 /*if(w.size == "Small") {  // combine
@@ -121,13 +118,15 @@ angular.module('santedb-lib')
                                 }
                                 else */
                                 w.view = $scope.view;
-                                $scope.widgetGroups.push({ size: w.size, widgets: [w] });
+                                widgetGroups.push({ size: w.size, widgets: [w] });
 
                                 if ($scope.editForm && !w.editForm)
                                     w.editForm = $scope.editForm;
                             });
 
-                            $scope.$apply();
+                            $timeout(() => {
+                                $scope.widgetGroups = widgetGroups;
+                            })
                         }
                         catch (e) {
                             $scope.error = e.message;

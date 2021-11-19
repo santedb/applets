@@ -49,7 +49,7 @@ angular.module('santedb-lib')
             link: function (scope, element, attrs, ngModel) {
 
 
-                var tokens = scope.includeRhs ? /^.*[\[\]\|\.\?\@\=\$\:\()]$/i : /^.*[\[\]\|\.\?\@\$\:\()]$/i;
+                var tokens = scope.includeRhs ? /^.*[\[\|\.\?\@\=\$\:\()]$/i : /^.*[\[\|\.\?\@\$\:\()]$/i;
                 var filterExtract = scope.includeRhs ? /^(.*[\[\]\|\.\?\@\=\$\:\()])(.*)$/i : /^(.*[\[\]\|\.\?\@\$\:\()])(.*)$/i;
 
                 var autoCompleteData = null;
@@ -58,7 +58,7 @@ angular.module('santedb-lib')
                 var input = $('input', element);
                 // when input is pressed
                 input.on('input', async (o) => {
-                    var val = $(o.currentTarget).val();
+                    var val = $(o.currentTarget).val().substring(0, o.currentTarget.selectionStart);
                     closeAllLists();
 
                     // Create a DIV for the auto-complete
@@ -140,15 +140,23 @@ angular.module('santedb-lib')
 
                     $("div.hdsi-autocomplete-item").on("click", (o) => {
                         var value = $(o.currentTarget).attr("data-value");
-                        var newExpression = $(input).val();
-                        var expressionMatch = newExpression.match(filterExtract);
+                        var newExpressionPre = $(input).val(), newExpressionPost = '';
+                        if(input[0].selectionStart) {
+                            newExpressionPre = $(input).val().substring(0, input[0].selectionStart);
+                            newExpressionPost = $(input).val().substring(input[0].selectionStart);
+                        }
+                        var expressionMatch = newExpressionPre.match(filterExtract), 
+                            postExpressionMatch = newExpressionPost.match(/^(.*?([\[\]\|\.\?\@\$\:\()]))(.*)$/i);
                         if (expressionMatch) { // value 
-                            newExpression = `${expressionMatch[1]}${value}`;
+                            value = `${expressionMatch[1]}${value}`;
+                            if(postExpressionMatch) {
+                                value += `${postExpressionMatch[2]}${postExpressionMatch[3]}`;
+                            }
                         }
                         else {
-                            newExpression = value;
+                            value = `${value}${newExpressionPost}`;
                         }
-                        $(input).val(newExpression);
+                        $(input).val(value);
 
                         closeAllLists();
                         currentFocus = -1;
@@ -173,8 +181,19 @@ angular.module('santedb-lib')
                         ngModel.$setValidity('hdsiNeedsRhs', true);
 
                         var property = autoCompleteData.properties.find(o => o.name == propertyName);
-                        if (!property && newExpression.indexOf('=') == -1 && !scope.includeRhs) {
-
+                        if(propertyName == "") {
+                            if (scope.simpleInput) {
+                                ngModel.$setViewValue(newExpression);
+                            }
+                            else {
+                                ngModel.$setViewValue({
+                                    expression: newExpression
+                                });
+                            }
+                            closeAllLists();
+                            currentFocus = -1;
+                        }
+                        else if (!property && newExpression.indexOf('=') == -1 && !scope.includeRhs) {
                             ngModel.$setValidity('hdsiProperty', false);
                         }
                         else if (newExpression.indexOf('=') == -1 && scope.includeRhs) {

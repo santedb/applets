@@ -356,5 +356,11 @@
       <string name="ui.model.matchConfiguration.scoring.whenNull.Zero">The attribute is scored as 0 rather than the non-match score</string>
       <string name="ui.model.matchConfiguration.scoring.when">Evaluation Guard</string>
       <string name="ui.model.matchConfiguration.scoring.when.hint"><![CDATA[When the attribute specifies an evaluation guard the guard attributes must <ul><li>Have been evaluated successfully</li><li>Match the criteria specified</li></ul> Otherwise the <code>whenNull</code> action is taken.]]></string>
+    <string name="ui.model.matchConfiguration.scoring.description">Notes</string>
+    <string name="ui.model.matchConfiguration.scoring.description.hint">These are comments/notes by the author of the match configuration which provide context to this scoring block</string>
+    <string name="ui.model.matchConfiguration.scoring.assert">Evaluation</string>
+    <string name="ui.model.matchConfiguration.scoring.assert.hint"><![CDATA[The assertions to make on this object - before running the data can be transformed using one or more transformation attributes. Transforms are: <ul><li><strong>Unary</strong> - Applied against the <code>$input</code> and <code>$blocked</code> resulting in new <code>$input</code> and <code>$blocked</code> records (like soundex, levenshtein, etc.)</li><li><strong>Binary</strong> - Applied against the <code>$input</code> and <code>$blocked</code> and return a single <code>result</code></li></ul>]]></string>
+    <string name="ui.model.matchConfiguration.scoring.partialWeight">Partial Weight</string>
+    <string name="ui.model.matchConfiguration.scoring.partialWeight.hint"><![CDATA[When specified, the partial weight will multiply the calculated match or non-match weight by the algorithm selected in the dropdown.]]></string>
 
 </resources>
