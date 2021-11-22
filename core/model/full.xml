@@ -34,6 +34,23 @@
     <property name="source" all="true"/>
     <property name="target" all="true"/>
     <property name="holder" all="true"/>
+    <property name="originalTarget" all="true"/>
+    <property name="originalHolder" all="true"/>
+    <property name="targetModel" all="true" behavior="always" ref="Entity"/>
+    <property name="relationshipType" all="true" behavior="always"/>
+    <property name="holderModel" behavior="never"/>
+    <property name="sourceModel" behavior="never"/>
+    <property name="relationshipTypeModel" behavior="always" all="true" ref="Concept"/>
+    <property name="key" all="true"/>
+    <property name="quantity" all="true"/>
+  </type>
+
+  <type type="EntityRelationshipMaster" all="false">
+    <property name="source" all="true"/>
+    <property name="target" all="true"/>
+    <property name="holder" all="true"/>
+    <property name="originalTarget" all="true"/>
+    <property name="originalHolder" all="true"/>
     <property name="targetModel" all="true" behavior="always" ref="Entity"/>
     <property name="relationshipType" all="true" behavior="always"/>
     <property name="holderModel" behavior="never"/>
@@ -75,6 +92,7 @@
     <property name="templateModel" behavior="always" all="false">
       <property name="mnemonic"/>
     </property>
+    <property name="statusConceptModel" behavior="always" ref="Concept"/>
 
     <property name="classConceptModel" behavior="never"/>
     <property name="previousVersionModel" behavior="never"/>
@@ -127,6 +145,7 @@
     <property name="creationTimeModel" behavior="never"/>
     <property name="version" behavior="always"/>
     <property name="occupationModel" all="true" behavior="always" ref="Concept"/>
+    <property name="statusConceptModel" behavior="always" ref="Concept"/>
 
     <property name="name" all="true" behavior="always">
       <property name="*" ref="EntityName" behavior="always"/>
@@ -212,7 +231,6 @@
     <property name="classConceptModel" behavior="never"/>
     <property name="classConcept" behavior="never"/>
     <property name="determinerConceptModel" behavior="never"/>
-    <property name="statusConceptModel" behavior="never"/>
     <property name="name" all="true" behavior="always">
       <property name="*" ref="EntityName" />
     </property>
