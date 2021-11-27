@@ -43,6 +43,10 @@
       <icon>fab fa-html5</icon>
       <text lang="en">Applets</text>
     </menuItem>-->
+    <menuItem launch="santedb-admin.system.probes" asset="/org.santedb.admin/views/system/probes.html" context="org.santedb.admin">
+      <icon>fas fa-thermometer</icon>
+      <text lang="en">Probes</text>
+    </menuItem>
     <menuItem launch="santedb-admin.system.jobs" asset="/org.santedb.admin/views/system/jobs.html" context="org.santedb.admin">
       <icon>fas fa-cogs</icon>
       <text lang="en">Jobs</text>
@@ -58,6 +62,10 @@
     <menuItem launch="santedb-admin.system.info" asset="/org.santedb.admin/views/system/server/index.html" context="org.santedb.admin">
       <icon>fas fa-info-circle</icon>
       <text lang="en">Server Status</text>
+    </menuItem>
+    <menuItem launch="santedb-admin.system.queue" asset="/org.santedb.admin/views/system/queue.html" context="org.santedb.admin">
+      <icon>fas fa-ellipsis-h</icon>
+      <text lang="en">Dispatch Queue</text>
     </menuItem>
   </menuItem>
   <menuItem context="org.santedb.admin" launch="santedb-admin.security.index" asset="/org.santedb.admin/views/security/index.html" order="-25">

@@ -44,7 +44,8 @@ angular.module('santedb-lib')
                 buttonBar: "<",
                 itemClass: "<",
                 stateless: "<",
-                subResourceHolder: "="
+                subResourceHolder: "=",
+                keyProperty: "<"
             },
             restrict: 'E',
             replace: true,
@@ -100,7 +101,7 @@ angular.module('santedb-lib')
                     });
 
                     // Add ID
-                    columns.unshift({ data: "id", visible: false });
+                    columns.unshift({ data: scope.keyProperty || "id", visible: false });
 
                     // Add buttons 
                     if (scope.itemActions && scope.itemActions.length > 0) {
@@ -116,11 +117,11 @@ angular.module('santedb-lib')
 
                                     if (!b.when || scope.$eval(b.when, { r: r, cell: m, StatusKeys: StatusKeys })) {
                                         if (b.sref)
-                                            retVal += `<a id="${attrs.type}${b.name}${m.row}" title="${SanteDB.locale.getString(b.hint ? scope.i18nPrefix + b.hint : 'ui.action.' + b.name)}" ui-sref="${b.sref}({ id: '${r.id}' })" class="btn ${(b.className || 'btn-default')}">`;
+                                            retVal += `<a id="${attrs.type}${b.name}${m.row}" title="${SanteDB.locale.getString(b.hint ? scope.i18nPrefix + b.hint : 'ui.action.' + b.name)}" ui-sref="${b.sref}({ id: '${r[scope.keyProperty || "id"]}' })" class="btn ${(b.className || 'btn-default')}">`;
                                         else if (b.href)
-                                            retVal += `<a id="${attrs.type}${b.name}${m.row}" title="${SanteDB.locale.getString(b.hint ? scope.i18nPrefix + b.hint : 'ui.action.' + b.name)}" href="${b.href}/${r.id}" class="btn ${(b.className || 'btn-default')}">`;
+                                            retVal += `<a id="${attrs.type}${b.name}${m.row}" title="${SanteDB.locale.getString(b.hint ? scope.i18nPrefix + b.hint : 'ui.action.' + b.name)}" href="${b.href}/${r[scope.keyProperty || "id"]}" class="btn ${(b.className || 'btn-default')}">`;
                                         else
-                                            retVal += `<a id="${attrs.type}${b.name}${m.row}" title="${SanteDB.locale.getString(b.hint ? scope.i18nPrefix + b.hint : 'ui.action.' + b.name)}" href="" ng-click="$parent.${b.action}('${r.id}', ${m.row})" class="btn ${(b.className || 'btn-default')}">`;
+                                            retVal += `<a id="${attrs.type}${b.name}${m.row}" title="${SanteDB.locale.getString(b.hint ? scope.i18nPrefix + b.hint : 'ui.action.' + b.name)}" href="" ng-click="$parent.${b.action}('${r[scope.keyProperty || "id"]}', ${m.row})" class="btn ${(b.className || 'btn-default')}">`;
                                         retVal += `<i class="${b.icon || 'fas fas-eye-open'}"></i>&nbsp;`;
 
                                         if (b.name)

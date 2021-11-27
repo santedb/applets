@@ -189,6 +189,8 @@
       <string name="ui.action.new">New</string>
       <string name="ui.action.resetPassword">Reset Pwd</string>
       <string name="ui.action.report">Report</string>
+      <string name="ui.action.purge">Purge</string>
+      <string name="ui.action.resubmit">Resubmit</string>
 
       <!-- Data Tables -->
       <string name="ui.table.empty">No Results Returned</string>

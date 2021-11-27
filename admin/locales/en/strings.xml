@@ -121,6 +121,8 @@
     <string name="ui.admin.system.confirm.enableService">Are you sure you want to enable this service?</string>
     <string name="ui.admin.system.confirm.serviceChange">The specified service change has been made. You may need to restart the gateway for this change to take effect.</string>
     
+    <string name="ui.admin.system.probe.show">Show Probes From</string>
+
     <!-- Mail  -->
     <string name="ui.admin.mail">Messages</string>
     <string name="ui.admin.mail.new">New Messages</string>
@@ -229,4 +231,11 @@
     <string name="ui.admin.bug.attach.detail">Attach contents of last error message</string>
     <string name="ui.admin.bug.requiredFieldMissing">Please fill out all fields with a * beside them</string>
     <string name="ui.admin.bug.onlineOnly">You must be online to submit a bug</string>
+
+    <!-- Queue Management -->
+    <string name="ui.admin.queue.resubmit.confirm">Are you sure you want to resubmit all objects in {queue} for re-dispatch?</string>
+    <string name="ui.admin.queue.purge.confirm">Are you sure you want to PURGE all objects in {queue}? These messages will be erased forever.</string>
+    <string name="ui.admin.queue.contents.name">Queue Path</string>
+    <string name="ui.admin.queue.contents.size">Waiting Messages</string>
+
 </resources>
