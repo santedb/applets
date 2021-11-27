@@ -1,0 +1,26 @@
+<div xmlns="http://www.w3.org/1999/xhtml" xmlns:sdb="http://santedb.org/applet">
+    <sdb:script static="false">~/controllers/server/queue.js</sdb:script>
+    <sdb:state name="santedb-admin.system.queue">
+        <sdb:demand>1.3.6.1.4.1.33349.3.1.5.9.2.0.16</sdb:demand>
+        <sdb:url>/queue</sdb:url>
+        <sdb:view>
+            <sdb:title lang="en">Dispatch Queues</sdb:title>
+            <sdb:controller>QueueAdminController</sdb:controller>
+        </sdb:view>
+    </sdb:state>
+
+
+    <div ng-if="!queueList">
+        <i class="fas fa-spin fa-circle-notch"></i> {{ 'ui.wait' | i18n }}
+    </div>
+    <div class="alert alert-danger" ng-if="$root.system.config.sync.mode == 'Sync'">
+        <i class="fas fa-exclamation-triangle"></i> {{ 'ui.admin.queue.onlineOnly' | i18n }}
+    </div>
+   
+    <entity-table stateless="true" id="queueTable" type="DispatcherQueue" 
+    search-field="name"
+    external="true" can-filter="true"
+    i18n-prefix="'ui.admin.queue.contents.'"
+    item-actions="[ { name: 'resubmit', action: 'resubmitQueue', demand: '1.3.6.1.4.1.33349.3.1.5.9.2.0.16', className: 'btn-success', icon: 'fa fa-undo', when: 'r.id.indexOf(\'dead\') > -1'}, { name: 'purge', action: 'purgeQueue', demand: '1.3.6.1.4.1.33349.3.1.5.9.2.0.16', className: 'btn-danger', icon: 'fa fa-trash' } ]"
+    properties="[ 'name', 'size' ]" />
+</div>

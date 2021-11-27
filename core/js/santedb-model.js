@@ -1,4 +1,4 @@
-// SanteDB.Core.Auditing.AuditableObject, SanteDB.Core.Model, Version=2.1.113.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Auditing.AuditableObject, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
 //if(!AuditableObject)
 /**
  * @class
@@ -19,27 +19,54 @@
 function AuditableObject (copyData) { 
 	this.$type = 'AuditableObject';
 	if(copyData) {
-	/** @type {AuditableObjectType} */
+	/**
+	 * @summary Identifies the type of object being expressed
+	 * @type {AuditableObjectType} 
+	 */
 	this.type = copyData.type;
-	/** @type {AuditableObjectRole} */
+	/**
+	 * @summary Identifies the role type of the object
+	 * @type {AuditableObjectRole} 
+	 */
 	this.role = copyData.role;
-	/** @type {string} */
+	/**
+	 * @summary Data associated with the object
+	 * @type {string} 
+	 */
 	this.queryData = copyData.queryData;
-	/** @type {string} */
+	/**
+	 * @summary Identifies the object in the event
+	 * @type {string} 
+	 */
 	this.id = copyData.id;
-	/** @type {ObjectDataExtension} */
+	/**
+	 * @summary Additional object data
+	 * @type {ObjectDataExtension} 
+	 */
 	this.dictionary = copyData.dictionary;
-	/** @type {string} */
+	/**
+	 * @summary Data associated with the object
+	 * @type {string} 
+	 */
 	this.name = copyData.name;
-	/** @type {AuditableObjectLifecycle} */
+	/**
+	 * @summary Identifies where in the lifecycle of the object this object is currently within
+	 * @type {AuditableObjectLifecycle} 
+	 */
 	this.lifecycle = copyData.lifecycle;
-	/** @type {AuditableObjectIdType} */
+	/**
+	 * @summary Identifies the type of identifier supplied
+	 * @type {AuditableObjectIdType} 
+	 */
 	this.idType = copyData.idType;
-	/** @type {AuditCode} */
+	/**
+	 * @summary Custom id type code
+	 * @type {AuditCode} 
+	 */
 	this.customCode = copyData.customCode;
 	}
 }  // AuditableObject 
-// SanteDB.Core.Auditing.AuditActorData, SanteDB.Core.Model, Version=2.1.113.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Auditing.AuditActorData, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
 //if(!AuditActorData)
 /**
  * @class
@@ -58,23 +85,44 @@ function AuditableObject (copyData) {
 function AuditActorData (copyData) { 
 	this.$type = 'AuditActorData';
 	if(copyData) {
-	/** @type {string} */
+	/**
+	 * @summary The name of the user in the system
+	 * @type {string} 
+	 */
 	this.uname = copyData.uname;
-	/** @type {boolean} */
+	/**
+	 * @summary True if the user is the primary requestor
+	 * @type {boolean} 
+	 */
 	this.isReq = copyData.isReq;
-	/** @type {string} */
+	/**
+	 * @summary The unique identifier for the user in the system
+	 * @type {string} 
+	 */
 	this.uid = copyData.uid;
-	/** @type {NetworkAccessPointType} */
+	/**
+	 * @summary Identifies the type of network access point
+	 * @type {NetworkAccessPointType} 
+	 */
 	this.apType = copyData.apType;
-	/** @type {string} */
+	/**
+	 * @summary Identifies the network access point from which the user accessed the system
+	 * @type {string} 
+	 */
 	this.apId = copyData.apId;
-	/** @type {string} */
+	/**
+	 * @summary Alternative user identifier
+	 * @type {string} 
+	 */
 	this.altUid = copyData.altUid;
-	/** @type {AuditCode} */
+	/**
+	 * @summary Identifies the role(s) that the actor has played
+	 * @type {AuditCode} 
+	 */
 	this.role = copyData.role;
 	}
 }  // AuditActorData 
-// SanteDB.Core.Auditing.AuditCode, SanteDB.Core.Model, Version=2.1.113.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Auditing.AuditCode, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
 //if(!AuditCode)
 /**
  * @class
@@ -91,19 +139,34 @@ function AuditActorData (copyData) {
 function AuditCode (copyData) { 
 	this.$type = 'AuditCode';
 	if(copyData) {
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the display name.
+	 * @type {string} 
+	 */
 	this.display = copyData.display;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the version of the code system.
+	 * @type {string} 
+	 */
 	this.systemVersion = copyData.systemVersion;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the human readable name of the code system.
+	 * @type {string} 
+	 */
 	this.systemName = copyData.systemName;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the system in which the code value is drawn.
+	 * @type {string} 
+	 */
 	this.system = copyData.system;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the code of the code value.
+	 * @type {string} 
+	 */
 	this.code = copyData.code;
 	}
 }  // AuditCode 
-// SanteDB.Core.Auditing.AuditData, SanteDB.Core.Model, Version=2.1.113.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Auditing.AuditData, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
 //if(!AuditData)
 /**
  * @class
@@ -129,31 +192,64 @@ function AuditCode (copyData) {
 function AuditData (copyData) { 
 	this.$type = 'AuditData';
 	if(copyData) {
-	/** @type {BatchOperationType} */
+	/**
+	 * @summary Gets or sets the operation
+	 * @type {BatchOperationType} 
+	 */
 	this.operation = copyData.operation;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the primary identifying UUID of this object
+	 * @type {string} 
+	 */
 	this.id = copyData.id;
-	/** @type {Date} */
+	/**
+	 * @summary Represents the modified on
+	 * @type {Date} 
+	 */
 	this.modifiedOn = copyData.modifiedOn;
-	/** @type {object} */
+	/**
+	 * @summary Metadata about the audit
+	 * @type {object} 
+	 */
 	this.meta = copyData.meta;
-	/** @type {Date} */
+	/**
+	 * @summary Event timestamp
+	 * @type {Date} 
+	 */
 	this.timestamp = copyData.timestamp;
-	/** @type {OutcomeIndicator} */
+	/**
+	 * @summary Identifies the outcome of the event
+	 * @type {OutcomeIndicator} 
+	 */
 	this.outcome = copyData.outcome;
-	/** @type {AuditCode} */
+	/**
+	 * @summary Identifies the type of event
+	 * @type {AuditCode} 
+	 */
 	this.type = copyData.type;
-	/** @type {EventIdentifierType} */
+	/**
+	 * @summary Identifies the event
+	 * @type {EventIdentifierType} 
+	 */
 	this.event = copyData.event;
-	/** @type {AuditableObject} */
+	/**
+	 * @summary Represents other objects of interest
+	 * @type {AuditableObject} 
+	 */
 	this.object = copyData.object;
-	/** @type {AuditActorData} */
+	/**
+	 * @summary Represents the actors within the audit event
+	 * @type {AuditActorData} 
+	 */
 	this.actor = copyData.actor;
-	/** @type {ActionType} */
+	/**
+	 * @summary Identifies the action code
+	 * @type {ActionType} 
+	 */
 	this.action = copyData.action;
 	}
 }  // AuditData 
-// SanteDB.Core.Auditing.AuditMetadata, SanteDB.Core.Model, Version=2.1.113.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Auditing.AuditMetadata, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
 //if(!AuditMetadata)
 /**
  * @class
@@ -167,13 +263,19 @@ function AuditData (copyData) {
 function AuditMetadata (copyData) { 
 	this.$type = 'AuditMetadata';
 	if(copyData) {
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the process name
+	 * @type {string} 
+	 */
 	this.value = copyData.value;
-	/** @type {AuditMetadataKey} */
+	/**
+	 * @summary Gets or sets the metadata key
+	 * @type {AuditMetadataKey} 
+	 */
 	this.key = copyData.key;
 	}
 }  // AuditMetadata 
-// SanteDB.Core.Model.Association`1, SanteDB.Core.Model, Version=2.1.113.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Association`1, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
 //if(!Association)
 /**
  * @class
@@ -194,19 +296,33 @@ function AuditMetadata (copyData) {
 function Association (copyData) { 
 	this.$type = 'Association';
 	if(copyData) {
-	/** @type {BatchOperationType} */
+	/**
+	 * @summary Gets or sets the operation
+	 * @type {BatchOperationType} 
+	 */
 	this.operation = copyData.operation;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the primary identifying UUID of this object
+	 * @type {string} 
+	 */
 	this.id = copyData.id;
-	/** @type {IdentifiedData} */
+	/**
+	 * @type {IdentifiedData} 
+	 */
 	this.sourceModel = copyData.sourceModel;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the source entity's key (where the relationship is FROM)
+	 * @type {string} 
+	 */
 	this.source = copyData.source;
-	/** @type {Date} */
+	/**
+	 * @summary Get the modification date
+	 * @type {Date} 
+	 */
 	this.modifiedOn = copyData.modifiedOn;
 	}
 }  // Association 
-// SanteDB.Core.Model.BaseEntityData, SanteDB.Core.Model, Version=2.1.113.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.BaseEntityData, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
 //if(!BaseEntityData)
 /**
  * @class
@@ -235,31 +351,60 @@ function Association (copyData) {
 function BaseEntityData (copyData) { 
 	this.$type = 'BaseEntityData';
 	if(copyData) {
-	/** @type {BatchOperationType} */
+	/**
+	 * @summary Gets or sets the operation
+	 * @type {BatchOperationType} 
+	 */
 	this.operation = copyData.operation;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the primary identifying UUID of this object
+	 * @type {string} 
+	 */
 	this.id = copyData.id;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the security provenance object which represents the obsoletion of this data
+	 * @type {string} 
+	 */
 	this.obsoletedBy = copyData.obsoletedBy;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the security provenance object which represents the creation of this object
+	 * @type {string} 
+	 */
 	this.createdBy = copyData.createdBy;
-	/** @type {SecurityProvenance} */
+	/**
+	 * @type {SecurityProvenance} 
+	 */
 	this.obsoletedByModel = copyData.obsoletedByModel;
-	/** @type {Date} */
+	/**
+	 * @summary Gets the time that the object was last modified (from base data, default to CreationTime)
+	 * @type {Date} 
+	 */
 	this.modifiedOn = copyData.modifiedOn;
-	/** @type {SecurityProvenance} */
+	/**
+	 * @type {SecurityProvenance} 
+	 */
 	this.createdByModel = copyData.createdByModel;
-	/** @type {Date} */
+	/**
+	 * @summary Gets or sets the time that the data is no longer valid (was deleted/obsoleted) in ISO format
+	 * @type {Date} 
+	 */
 	this.obsoletionTime = copyData.obsoletionTime;
-	/** @type {Date} */
+	/**
+	 * @type {Date} 
+	 */
 	this.obsoletionTimeModel = copyData.obsoletionTimeModel;
-	/** @type {Date} */
+	/**
+	 * @summary Gets or sets the creation time as an ISO date format
+	 * @type {Date} 
+	 */
 	this.creationTime = copyData.creationTime;
-	/** @type {Date} */
+	/**
+	 * @type {Date} 
+	 */
 	this.creationTimeModel = copyData.creationTimeModel;
 	}
 }  // BaseEntityData 
-// SanteDB.Core.Model.IdentifiedData, SanteDB.Core.Model, Version=2.1.113.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.IdentifiedData, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
 //if(!IdentifiedData)
 /**
  * @class
@@ -276,15 +421,24 @@ function BaseEntityData (copyData) {
 function IdentifiedData (copyData) { 
 	this.$type = 'IdentifiedData';
 	if(copyData) {
-	/** @type {Date} */
+	/**
+	 * @summary Gets or sets date/time that this object was last created or modified
+	 * @type {Date} 
+	 */
 	this.modifiedOn = copyData.modifiedOn;
-	/** @type {BatchOperationType} */
+	/**
+	 * @summary Gets or sets the operation
+	 * @type {BatchOperationType} 
+	 */
 	this.operation = copyData.operation;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the primary identifying UUID of this object
+	 * @type {string} 
+	 */
 	this.id = copyData.id;
 	}
 }  // IdentifiedData 
-// SanteDB.Core.Model.NonVersionedEntityData, SanteDB.Core.Model, Version=2.1.113.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.NonVersionedEntityData, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
 //if(!NonVersionedEntityData)
 /**
  * @class
@@ -313,37 +467,74 @@ function IdentifiedData (copyData) {
 function NonVersionedEntityData (copyData) { 
 	this.$type = 'NonVersionedEntityData';
 	if(copyData) {
-	/** @type {BatchOperationType} */
+	/**
+	 * @summary Gets or sets the operation
+	 * @type {BatchOperationType} 
+	 */
 	this.operation = copyData.operation;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the primary identifying UUID of this object
+	 * @type {string} 
+	 */
 	this.id = copyData.id;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the security provenance object which represents the obsoletion of this data
+	 * @type {string} 
+	 */
 	this.obsoletedBy = copyData.obsoletedBy;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the security provenance object which represents the creation of this object
+	 * @type {string} 
+	 */
 	this.createdBy = copyData.createdBy;
-	/** @type {SecurityProvenance} */
+	/**
+	 * @type {SecurityProvenance} 
+	 */
 	this.obsoletedByModel = copyData.obsoletedByModel;
-	/** @type {SecurityProvenance} */
+	/**
+	 * @type {SecurityProvenance} 
+	 */
 	this.createdByModel = copyData.createdByModel;
-	/** @type {Date} */
+	/**
+	 * @summary Gets or sets the time that the data is no longer valid (was deleted/obsoleted) in ISO format
+	 * @type {Date} 
+	 */
 	this.obsoletionTime = copyData.obsoletionTime;
-	/** @type {Date} */
+	/**
+	 * @type {Date} 
+	 */
 	this.obsoletionTimeModel = copyData.obsoletionTimeModel;
-	/** @type {Date} */
+	/**
+	 * @summary Gets or sets the creation time as an ISO date format
+	 * @type {Date} 
+	 */
 	this.creationTime = copyData.creationTime;
-	/** @type {Date} */
+	/**
+	 * @type {Date} 
+	 */
 	this.creationTimeModel = copyData.creationTimeModel;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the provenance identifier associated with the last update of this object
+	 * @type {string} 
+	 */
 	this.updatedBy = copyData.updatedBy;
-	/** @type {SecurityProvenance} */
+	/**
+	 * @type {SecurityProvenance} 
+	 */
 	this.updatedByModel = copyData.updatedByModel;
-	/** @type {Date} */
+	/**
+	 * @summary Gets the time this item was modified
+	 * @type {Date} 
+	 */
 	this.modifiedOn = copyData.modifiedOn;
-	/** @type {Date} */
+	/**
+	 * @summary Gets or sets the time that this object was last modified in ISO format
+	 * @type {Date} 
+	 */
 	this.updatedTime = copyData.updatedTime;
 	}
 }  // NonVersionedEntityData 
-// SanteDB.Core.Model.VersionedAssociation`1, SanteDB.Core.Model, Version=2.1.113.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.VersionedAssociation`1, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
 //if(!VersionedAssociation)
 /**
  * @class
@@ -367,23 +558,41 @@ function NonVersionedEntityData (copyData) {
 function VersionedAssociation (copyData) { 
 	this.$type = 'VersionedAssociation';
 	if(copyData) {
-	/** @type {BatchOperationType} */
+	/**
+	 * @summary Gets or sets the operation
+	 * @type {BatchOperationType} 
+	 */
 	this.operation = copyData.operation;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the primary identifying UUID of this object
+	 * @type {string} 
+	 */
 	this.id = copyData.id;
-	/** @type {VersionedEntityData} */
+	/**
+	 * @type {VersionedEntityData} 
+	 */
 	this.sourceModel = copyData.sourceModel;
-	/** @type {string} */
+	/**
+	 * @type {string} 
+	 */
 	this.source = copyData.source;
-	/** @type {Date} */
+	/**
+	 * @type {Date} 
+	 */
 	this.modifiedOn = copyData.modifiedOn;
-	/** @type {number} */
+	/**
+	 * @summary Gets or sets the sequence identifier of the source when this association is no longer active
+	 * @type {number} 
+	 */
 	this.obsoleteVersionSequence = copyData.obsoleteVersionSequence;
-	/** @type {number} */
+	/**
+	 * @summary Gets or sets the version sequence of the source object when this assoication became active
+	 * @type {number} 
+	 */
 	this.effectiveVersionSequence = copyData.effectiveVersionSequence;
 	}
 }  // VersionedAssociation 
-// SanteDB.Core.Model.VersionedEntityData`1, SanteDB.Core.Model, Version=2.1.113.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.VersionedEntityData`1, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
 //if(!VersionedEntityData)
 /**
  * @class
@@ -414,37 +623,75 @@ function VersionedAssociation (copyData) {
 function VersionedEntityData (copyData) { 
 	this.$type = 'VersionedEntityData';
 	if(copyData) {
-	/** @type {BatchOperationType} */
+	/**
+	 * @summary Gets or sets the operation
+	 * @type {BatchOperationType} 
+	 */
 	this.operation = copyData.operation;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the primary identifying UUID of this object
+	 * @type {string} 
+	 */
 	this.id = copyData.id;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the security provenance object which represents the obsoletion of this data
+	 * @type {string} 
+	 */
 	this.obsoletedBy = copyData.obsoletedBy;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the security provenance object which represents the creation of this object
+	 * @type {string} 
+	 */
 	this.createdBy = copyData.createdBy;
-	/** @type {SecurityProvenance} */
+	/**
+	 * @type {SecurityProvenance} 
+	 */
 	this.obsoletedByModel = copyData.obsoletedByModel;
-	/** @type {Date} */
+	/**
+	 * @summary Gets the time that the object was last modified (from base data, default to CreationTime)
+	 * @type {Date} 
+	 */
 	this.modifiedOn = copyData.modifiedOn;
-	/** @type {SecurityProvenance} */
+	/**
+	 * @type {SecurityProvenance} 
+	 */
 	this.createdByModel = copyData.createdByModel;
-	/** @type {Date} */
+	/**
+	 * @summary Gets or sets the time that the data is no longer valid (was deleted/obsoleted) in ISO format
+	 * @type {Date} 
+	 */
 	this.obsoletionTime = copyData.obsoletionTime;
-	/** @type {Date} */
+	/**
+	 * @type {Date} 
+	 */
 	this.obsoletionTimeModel = copyData.obsoletionTimeModel;
-	/** @type {Date} */
+	/**
+	 * @summary Gets or sets the creation time as an ISO date format
+	 * @type {Date} 
+	 */
 	this.creationTime = copyData.creationTime;
-	/** @type {Date} */
+	/**
+	 * @type {Date} 
+	 */
 	this.creationTimeModel = copyData.creationTimeModel;
-	/** @type {number} */
+	/**
+	 * @summary The sequence number of the version (for ordering)
+	 * @type {number} 
+	 */
 	this.sequence = copyData.sequence;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the UUID of the current version of this object
+	 * @type {string} 
+	 */
 	this.version = copyData.version;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the UUID of the previous version of this record
+	 * @type {string} 
+	 */
 	this.previousVersion = copyData.previousVersion;
 	}
 }  // VersionedEntityData 
-// SanteDB.Core.Model.Warehouse.DatamartDefinition, SanteDB.Core.Model, Version=2.1.113.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Warehouse.DatamartDefinition, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
 //if(!DatamartDefinition)
 /**
  * @class
@@ -460,17 +707,29 @@ function VersionedEntityData (copyData) {
 function DatamartDefinition (copyData) { 
 	this.$type = 'DatamartDefinition';
 	if(copyData) {
-	/** @type {DatamartSchema} */
+	/**
+	 * @summary Gets or sets the datamart schema
+	 * @type {DatamartSchema} 
+	 */
 	this.schema = copyData.schema;
-	/** @type {Date} */
+	/**
+	 * @summary Gets or sets the time that the data mart was created
+	 * @type {Date} 
+	 */
 	this.creationTime = copyData.creationTime;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the name of the data mart
+	 * @type {string} 
+	 */
 	this.name = copyData.name;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the identifier of the data mart
+	 * @type {string} 
+	 */
 	this.id = copyData.id;
 	}
 }  // DatamartDefinition 
-// SanteDB.Core.Model.Warehouse.DatamartSchema, SanteDB.Core.Model, Version=2.1.113.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Warehouse.DatamartSchema, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
 //if(!DatamartSchema)
 /**
  * @class
@@ -487,17 +746,29 @@ function DatamartDefinition (copyData) {
 function DatamartSchema (copyData) { 
 	this.$type = 'DatamartSchema';
 	if(copyData) {
-	/** @type {DatamartStoredQuery} */
+	/**
+	 * @summary Gets or sets the query associated with the schema
+	 * @type {DatamartStoredQuery} 
+	 */
 	this.sqp = copyData.sqp;
-	/** @type {DatamartSchemaProperty} */
+	/**
+	 * @summary Gets or sets the property names for the schema element
+	 * @type {DatamartSchemaProperty} 
+	 */
 	this.property = copyData.property;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the name of the element in the database
+	 * @type {string} 
+	 */
 	this.name = copyData.name;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the unique identifier for the schema itself
+	 * @type {string} 
+	 */
 	this.id = copyData.id;
 	}
 }  // DatamartSchema 
-// SanteDB.Core.Model.Warehouse.DatamartSchemaProperty, SanteDB.Core.Model, Version=2.1.113.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Warehouse.DatamartSchemaProperty, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
 //if(!DatamartSchemaProperty)
 /**
  * @class
@@ -514,19 +785,34 @@ function DatamartSchema (copyData) {
 function DatamartSchemaProperty (copyData) { 
 	this.$type = 'DatamartSchemaProperty';
 	if(copyData) {
-	/** @type {DatamartSchemaProperty} */
+	/**
+	 * @summary Gets or sets the sub-properties of this property
+	 * @type {DatamartSchemaProperty} 
+	 */
 	this.property = copyData.property;
-	/** @type {SchemaPropertyAttributes} */
+	/**
+	 * @summary Gets or sets the attributes associated with the property
+	 * @type {SchemaPropertyAttributes} 
+	 */
 	this.attributes = copyData.attributes;
-	/** @type {SchemaPropertyType} */
+	/**
+	 * @summary Gets or sets the type of property
+	 * @type {SchemaPropertyType} 
+	 */
 	this.type = copyData.type;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the name of the property
+	 * @type {string} 
+	 */
 	this.name = copyData.name;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the identifier of the warehouse property
+	 * @type {string} 
+	 */
 	this.id = copyData.id;
 	}
 }  // DatamartSchemaProperty 
-// SanteDB.Core.Model.Warehouse.DatamartStoredQuery, SanteDB.Core.Model, Version=2.1.113.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Warehouse.DatamartStoredQuery, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
 //if(!DatamartStoredQuery)
 /**
  * @class
@@ -543,19 +829,34 @@ function DatamartSchemaProperty (copyData) {
 function DatamartStoredQuery (copyData) { 
 	this.$type = 'DatamartStoredQuery';
 	if(copyData) {
-	/** @type {DatamartStoredQueryDefinition} */
+	/**
+	 * @summary Definition of the query
+	 * @type {DatamartStoredQueryDefinition} 
+	 */
 	this.select = copyData.select;
-	/** @type {DatamartSchemaProperty} */
+	/**
+	 * @summary Gets or sets the property names for the schema element
+	 * @type {DatamartSchemaProperty} 
+	 */
 	this.property = copyData.property;
-	/** @type {string} */
+	/**
+	 * @summary Definition of the query
+	 * @type {string} 
+	 */
 	this.name = copyData.name;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the provider identifier
+	 * @type {string} 
+	 */
 	this.id = copyData.id;
-	/** @type {string} */
+	/**
+	 * @summary Attachments
+	 * @type {string} 
+	 */
 	this.connection = copyData.connection;
 	}
 }  // DatamartStoredQuery 
-// SanteDB.Core.Model.Warehouse.DatamartStoredQueryDefinition, SanteDB.Core.Model, Version=2.1.113.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Warehouse.DatamartStoredQueryDefinition, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
 //if(!DatamartStoredQueryDefinition)
 /**
  * @class
@@ -569,13 +870,19 @@ function DatamartStoredQuery (copyData) {
 function DatamartStoredQueryDefinition (copyData) { 
 	this.$type = 'DatamartStoredQueryDefinition';
 	if(copyData) {
-	/** @type {string} */
+	/**
+	 * @summary The SQL
+	 * @type {string} 
+	 */
 	this.sql = copyData.sql;
-	/** @type {string} */
+	/**
+	 * @summary Provider identifier
+	 * @type {string} 
+	 */
 	this.provider = copyData.provider;
 	}
 }  // DatamartStoredQueryDefinition 
-// SanteDB.Core.Model.Warehouse.DataWarehouseObjectPropertyValue, SanteDB.Core.Model, Version=2.1.113.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Warehouse.DataWarehouseObjectPropertyValue, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
 //if(!DataWarehouseObjectPropertyValue)
 /**
  * @class
@@ -589,7 +896,7 @@ function DataWarehouseObjectPropertyValue (copyData) {
 	if(copyData) {
 	}
 }  // DataWarehouseObjectPropertyValue 
-// SanteDB.Core.Model.Warehouse.DataWarehouseObject, SanteDB.Core.Model, Version=2.1.113.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Warehouse.DataWarehouseObject, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
 //if(!DataWarehouseObject)
 /**
  * @class
@@ -602,11 +909,14 @@ function DataWarehouseObjectPropertyValue (copyData) {
 function DataWarehouseObject (copyData) { 
 	this.$type = 'DataWarehouseObject';
 	if(copyData) {
-	/** @type {DataWarehouseObjectPropertyValue} */
+	/**
+	 * @summary Gets or sets the properties
+	 * @type {DataWarehouseObjectPropertyValue} 
+	 */
 	this.p = copyData.p;
 	}
 }  // DataWarehouseObject 
-// SanteDB.Core.Model.Subscription.SubscriptionClientDefinition, SanteDB.Core.Model, Version=2.1.113.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Subscription.SubscriptionClientDefinition, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
 //if(!SubscriptionClientDefinition)
 /**
  * @class
@@ -625,23 +935,44 @@ function DataWarehouseObject (copyData) {
 function SubscriptionClientDefinition (copyData) { 
 	this.$type = 'SubscriptionClientDefinition';
 	if(copyData) {
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the filters
+	 * @type {string} 
+	 */
 	this.filters = copyData.filters;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the guards which indicate when this subscription can be activated
+	 * @type {string} 
+	 */
 	this.guards = copyData.guards;
-	/** @type {boolean} */
+	/**
+	 * @summary Gets or sets the ignore modified on (prevents If-Modified-Since from being used)
+	 * @type {boolean} 
+	 */
 	this.ignoreModifiedOn = copyData.ignoreModifiedOn;
-	/** @type {SubscriptionTriggerType} */
+	/**
+	 * @summary Gets or sets the trigger
+	 * @type {SubscriptionTriggerType} 
+	 */
 	this.trigger = copyData.trigger;
-	/** @type {SubscriptionModeType} */
+	/**
+	 * @summary Gets or sets the mode of the subscription
+	 * @type {SubscriptionModeType} 
+	 */
 	this.mode = copyData.mode;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the name of the subscription
+	 * @type {string} 
+	 */
 	this.name = copyData.name;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the resource type reference
+	 * @type {string} 
+	 */
 	this.resource = copyData.resource;
 	}
 }  // SubscriptionClientDefinition 
-// SanteDB.Core.Model.Subscription.SubscriptionDefinition, SanteDB.Core.Model, Version=2.1.113.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Subscription.SubscriptionDefinition, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
 //if(!SubscriptionDefinition)
 /**
  * @class
@@ -660,19 +991,34 @@ function SubscriptionClientDefinition (copyData) {
 function SubscriptionDefinition (copyData) { 
 	this.$type = 'SubscriptionDefinition';
 	if(copyData) {
-	/** @type {BatchOperationType} */
+	/**
+	 * @summary Gets or sets the operation
+	 * @type {BatchOperationType} 
+	 */
 	this.operation = copyData.operation;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the primary identifying UUID of this object
+	 * @type {string} 
+	 */
 	this.id = copyData.id;
-	/** @type {SubscriptionClientDefinition} */
+	/**
+	 * @summary Gets or sets the client side definitions
+	 * @type {SubscriptionClientDefinition} 
+	 */
 	this.definitions = copyData.definitions;
-	/** @type {Date} */
+	/**
+	 * @summary Gets the time that this was modified
+	 * @type {Date} 
+	 */
 	this.modifiedOn = copyData.modifiedOn;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the uuid
+	 * @type {string} 
+	 */
 	this.uuid = copyData.uuid;
 	}
 }  // SubscriptionDefinition 
-// SanteDB.Core.Model.Security.SecurityApplication, SanteDB.Core.Model, Version=2.1.113.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Security.SecurityApplication, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
 //if(!SecurityApplication)
 /**
  * @class
@@ -706,51 +1052,107 @@ function SubscriptionDefinition (copyData) {
 function SecurityApplication (copyData) { 
 	this.$type = 'SecurityApplication';
 	if(copyData) {
-	/** @type {BatchOperationType} */
+	/**
+	 * @summary Gets or sets the operation
+	 * @type {BatchOperationType} 
+	 */
 	this.operation = copyData.operation;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the primary identifying UUID of this object
+	 * @type {string} 
+	 */
 	this.id = copyData.id;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the security provenance object which represents the obsoletion of this data
+	 * @type {string} 
+	 */
 	this.obsoletedBy = copyData.obsoletedBy;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the security provenance object which represents the creation of this object
+	 * @type {string} 
+	 */
 	this.createdBy = copyData.createdBy;
-	/** @type {SecurityProvenance} */
+	/**
+	 * @type {SecurityProvenance} 
+	 */
 	this.obsoletedByModel = copyData.obsoletedByModel;
-	/** @type {SecurityProvenance} */
+	/**
+	 * @type {SecurityProvenance} 
+	 */
 	this.createdByModel = copyData.createdByModel;
-	/** @type {Date} */
+	/**
+	 * @summary Gets or sets the time that the data is no longer valid (was deleted/obsoleted) in ISO format
+	 * @type {Date} 
+	 */
 	this.obsoletionTime = copyData.obsoletionTime;
-	/** @type {Date} */
+	/**
+	 * @type {Date} 
+	 */
 	this.obsoletionTimeModel = copyData.obsoletionTimeModel;
-	/** @type {Date} */
+	/**
+	 * @summary Gets or sets the creation time as an ISO date format
+	 * @type {Date} 
+	 */
 	this.creationTime = copyData.creationTime;
-	/** @type {Date} */
+	/**
+	 * @type {Date} 
+	 */
 	this.creationTimeModel = copyData.creationTimeModel;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the provenance identifier associated with the last update of this object
+	 * @type {string} 
+	 */
 	this.updatedBy = copyData.updatedBy;
-	/** @type {SecurityProvenance} */
+	/**
+	 * @type {SecurityProvenance} 
+	 */
 	this.updatedByModel = copyData.updatedByModel;
-	/** @type {Date} */
+	/**
+	 * @summary Gets the time this item was modified
+	 * @type {Date} 
+	 */
 	this.modifiedOn = copyData.modifiedOn;
-	/** @type {Date} */
+	/**
+	 * @summary Gets or sets the time that this object was last modified in ISO format
+	 * @type {Date} 
+	 */
 	this.updatedTime = copyData.updatedTime;
-	/** @type {Date} */
+	/**
+	 * @type {Date} 
+	 */
 	this.lastAuthenticationTimeModel = copyData.lastAuthenticationTimeModel;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the last authentication time as a DTO
+	 * @type {string} 
+	 */
 	this.lastAuthenticationTime = copyData.lastAuthenticationTime;
-	/** @type {number} */
+	/**
+	 * @summary Gets or sets the number of invalid authentication attempts
+	 * @type {number} 
+	 */
 	this.invalidAuth = copyData.invalidAuth;
-	/** @type {Date} */
+	/**
+	 * @type {Date} 
+	 */
 	this.lockoutModel = copyData.lockoutModel;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the lockout time as XML date
+	 * @type {string} 
+	 */
 	this.lockout = copyData.lockout;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the name of the security device/user/role/device.
+	 * @type {string} 
+	 */
 	this.name = copyData.name;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the application secret used for authenticating the application
+	 * @type {string} 
+	 */
 	this.applicationSecret = copyData.applicationSecret;
 	}
 }  // SecurityApplication 
-// SanteDB.Core.Model.Security.SecurityChallenge, SanteDB.Core.Model, Version=2.1.113.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Security.SecurityChallenge, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
 //if(!SecurityChallenge)
 /**
  * @class
@@ -778,39 +1180,79 @@ function SecurityApplication (copyData) {
 function SecurityChallenge (copyData) { 
 	this.$type = 'SecurityChallenge';
 	if(copyData) {
-	/** @type {BatchOperationType} */
+	/**
+	 * @summary Gets or sets the operation
+	 * @type {BatchOperationType} 
+	 */
 	this.operation = copyData.operation;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the primary identifying UUID of this object
+	 * @type {string} 
+	 */
 	this.id = copyData.id;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the security provenance object which represents the obsoletion of this data
+	 * @type {string} 
+	 */
 	this.obsoletedBy = copyData.obsoletedBy;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the security provenance object which represents the creation of this object
+	 * @type {string} 
+	 */
 	this.createdBy = copyData.createdBy;
-	/** @type {SecurityProvenance} */
+	/**
+	 * @type {SecurityProvenance} 
+	 */
 	this.obsoletedByModel = copyData.obsoletedByModel;
-	/** @type {SecurityProvenance} */
+	/**
+	 * @type {SecurityProvenance} 
+	 */
 	this.createdByModel = copyData.createdByModel;
-	/** @type {Date} */
+	/**
+	 * @summary Gets or sets the time that the data is no longer valid (was deleted/obsoleted) in ISO format
+	 * @type {Date} 
+	 */
 	this.obsoletionTime = copyData.obsoletionTime;
-	/** @type {Date} */
+	/**
+	 * @type {Date} 
+	 */
 	this.obsoletionTimeModel = copyData.obsoletionTimeModel;
-	/** @type {Date} */
+	/**
+	 * @summary Gets or sets the creation time as an ISO date format
+	 * @type {Date} 
+	 */
 	this.creationTime = copyData.creationTime;
-	/** @type {Date} */
+	/**
+	 * @type {Date} 
+	 */
 	this.creationTimeModel = copyData.creationTimeModel;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the provenance identifier associated with the last update of this object
+	 * @type {string} 
+	 */
 	this.updatedBy = copyData.updatedBy;
-	/** @type {SecurityProvenance} */
+	/**
+	 * @type {SecurityProvenance} 
+	 */
 	this.updatedByModel = copyData.updatedByModel;
-	/** @type {Date} */
+	/**
+	 * @summary Gets the time this item was modified
+	 * @type {Date} 
+	 */
 	this.modifiedOn = copyData.modifiedOn;
-	/** @type {Date} */
+	/**
+	 * @summary Gets or sets the time that this object was last modified in ISO format
+	 * @type {Date} 
+	 */
 	this.updatedTime = copyData.updatedTime;
-	/** @type {string} */
+	/**
+	 * @summary The text for the security challenge
+	 * @type {string} 
+	 */
 	this.text = copyData.text;
 	}
 }  // SecurityChallenge 
-// SanteDB.Core.Model.Security.SecurityDevice, SanteDB.Core.Model, Version=2.1.113.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Security.SecurityDevice, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
 //if(!SecurityDevice)
 /**
  * @class
@@ -844,51 +1286,107 @@ function SecurityChallenge (copyData) {
 function SecurityDevice (copyData) { 
 	this.$type = 'SecurityDevice';
 	if(copyData) {
-	/** @type {BatchOperationType} */
+	/**
+	 * @summary Gets or sets the operation
+	 * @type {BatchOperationType} 
+	 */
 	this.operation = copyData.operation;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the primary identifying UUID of this object
+	 * @type {string} 
+	 */
 	this.id = copyData.id;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the security provenance object which represents the obsoletion of this data
+	 * @type {string} 
+	 */
 	this.obsoletedBy = copyData.obsoletedBy;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the security provenance object which represents the creation of this object
+	 * @type {string} 
+	 */
 	this.createdBy = copyData.createdBy;
-	/** @type {SecurityProvenance} */
+	/**
+	 * @type {SecurityProvenance} 
+	 */
 	this.obsoletedByModel = copyData.obsoletedByModel;
-	/** @type {SecurityProvenance} */
+	/**
+	 * @type {SecurityProvenance} 
+	 */
 	this.createdByModel = copyData.createdByModel;
-	/** @type {Date} */
+	/**
+	 * @summary Gets or sets the time that the data is no longer valid (was deleted/obsoleted) in ISO format
+	 * @type {Date} 
+	 */
 	this.obsoletionTime = copyData.obsoletionTime;
-	/** @type {Date} */
+	/**
+	 * @type {Date} 
+	 */
 	this.obsoletionTimeModel = copyData.obsoletionTimeModel;
-	/** @type {Date} */
+	/**
+	 * @summary Gets or sets the creation time as an ISO date format
+	 * @type {Date} 
+	 */
 	this.creationTime = copyData.creationTime;
-	/** @type {Date} */
+	/**
+	 * @type {Date} 
+	 */
 	this.creationTimeModel = copyData.creationTimeModel;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the provenance identifier associated with the last update of this object
+	 * @type {string} 
+	 */
 	this.updatedBy = copyData.updatedBy;
-	/** @type {SecurityProvenance} */
+	/**
+	 * @type {SecurityProvenance} 
+	 */
 	this.updatedByModel = copyData.updatedByModel;
-	/** @type {Date} */
+	/**
+	 * @summary Gets the time this item was modified
+	 * @type {Date} 
+	 */
 	this.modifiedOn = copyData.modifiedOn;
-	/** @type {Date} */
+	/**
+	 * @summary Gets or sets the time that this object was last modified in ISO format
+	 * @type {Date} 
+	 */
 	this.updatedTime = copyData.updatedTime;
-	/** @type {Date} */
+	/**
+	 * @type {Date} 
+	 */
 	this.lastAuthenticationTimeModel = copyData.lastAuthenticationTimeModel;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the last authentication time as a DTO
+	 * @type {string} 
+	 */
 	this.lastAuthenticationTime = copyData.lastAuthenticationTime;
-	/** @type {number} */
+	/**
+	 * @summary Gets or sets the number of invalid authentication attempts
+	 * @type {number} 
+	 */
 	this.invalidAuth = copyData.invalidAuth;
-	/** @type {Date} */
+	/**
+	 * @type {Date} 
+	 */
 	this.lockoutModel = copyData.lockoutModel;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the lockout time as XML date
+	 * @type {string} 
+	 */
 	this.lockout = copyData.lockout;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the name of the security device/user/role/devie
+	 * @type {string} 
+	 */
 	this.name = copyData.name;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the device secret
+	 * @type {string} 
+	 */
 	this.deviceSecret = copyData.deviceSecret;
 	}
 }  // SecurityDevice 
-// SanteDB.Core.Model.Security.SecurityEntity, SanteDB.Core.Model, Version=2.1.113.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Security.SecurityEntity, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
 //if(!SecurityEntity)
 /**
  * @class
@@ -915,37 +1413,74 @@ function SecurityDevice (copyData) {
 function SecurityEntity (copyData) { 
 	this.$type = 'SecurityEntity';
 	if(copyData) {
-	/** @type {BatchOperationType} */
+	/**
+	 * @summary Gets or sets the operation
+	 * @type {BatchOperationType} 
+	 */
 	this.operation = copyData.operation;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the primary identifying UUID of this object
+	 * @type {string} 
+	 */
 	this.id = copyData.id;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the security provenance object which represents the obsoletion of this data
+	 * @type {string} 
+	 */
 	this.obsoletedBy = copyData.obsoletedBy;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the security provenance object which represents the creation of this object
+	 * @type {string} 
+	 */
 	this.createdBy = copyData.createdBy;
-	/** @type {SecurityProvenance} */
+	/**
+	 * @type {SecurityProvenance} 
+	 */
 	this.obsoletedByModel = copyData.obsoletedByModel;
-	/** @type {SecurityProvenance} */
+	/**
+	 * @type {SecurityProvenance} 
+	 */
 	this.createdByModel = copyData.createdByModel;
-	/** @type {Date} */
+	/**
+	 * @summary Gets or sets the time that the data is no longer valid (was deleted/obsoleted) in ISO format
+	 * @type {Date} 
+	 */
 	this.obsoletionTime = copyData.obsoletionTime;
-	/** @type {Date} */
+	/**
+	 * @type {Date} 
+	 */
 	this.obsoletionTimeModel = copyData.obsoletionTimeModel;
-	/** @type {Date} */
+	/**
+	 * @summary Gets or sets the creation time as an ISO date format
+	 * @type {Date} 
+	 */
 	this.creationTime = copyData.creationTime;
-	/** @type {Date} */
+	/**
+	 * @type {Date} 
+	 */
 	this.creationTimeModel = copyData.creationTimeModel;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the provenance identifier associated with the last update of this object
+	 * @type {string} 
+	 */
 	this.updatedBy = copyData.updatedBy;
-	/** @type {SecurityProvenance} */
+	/**
+	 * @type {SecurityProvenance} 
+	 */
 	this.updatedByModel = copyData.updatedByModel;
-	/** @type {Date} */
+	/**
+	 * @summary Gets the time this item was modified
+	 * @type {Date} 
+	 */
 	this.modifiedOn = copyData.modifiedOn;
-	/** @type {Date} */
+	/**
+	 * @summary Gets or sets the time that this object was last modified in ISO format
+	 * @type {Date} 
+	 */
 	this.updatedTime = copyData.updatedTime;
 	}
 }  // SecurityEntity 
-// SanteDB.Core.Model.Security.SecurityPolicy, SanteDB.Core.Model, Version=2.1.113.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Security.SecurityPolicy, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
 //if(!SecurityPolicy)
 /**
  * @class
@@ -975,41 +1510,85 @@ function SecurityEntity (copyData) {
 function SecurityPolicy (copyData) { 
 	this.$type = 'SecurityPolicy';
 	if(copyData) {
-	/** @type {BatchOperationType} */
+	/**
+	 * @summary Gets or sets the operation
+	 * @type {BatchOperationType} 
+	 */
 	this.operation = copyData.operation;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the primary identifying UUID of this object
+	 * @type {string} 
+	 */
 	this.id = copyData.id;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the security provenance object which represents the obsoletion of this data
+	 * @type {string} 
+	 */
 	this.obsoletedBy = copyData.obsoletedBy;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the security provenance object which represents the creation of this object
+	 * @type {string} 
+	 */
 	this.createdBy = copyData.createdBy;
-	/** @type {SecurityProvenance} */
+	/**
+	 * @type {SecurityProvenance} 
+	 */
 	this.obsoletedByModel = copyData.obsoletedByModel;
-	/** @type {Date} */
+	/**
+	 * @summary Gets the time that the object was last modified (from base data, default to CreationTime)
+	 * @type {Date} 
+	 */
 	this.modifiedOn = copyData.modifiedOn;
-	/** @type {SecurityProvenance} */
+	/**
+	 * @type {SecurityProvenance} 
+	 */
 	this.createdByModel = copyData.createdByModel;
-	/** @type {Date} */
+	/**
+	 * @summary Gets or sets the time that the data is no longer valid (was deleted/obsoleted) in ISO format
+	 * @type {Date} 
+	 */
 	this.obsoletionTime = copyData.obsoletionTime;
-	/** @type {Date} */
+	/**
+	 * @type {Date} 
+	 */
 	this.obsoletionTimeModel = copyData.obsoletionTimeModel;
-	/** @type {Date} */
+	/**
+	 * @summary Gets or sets the creation time as an ISO date format
+	 * @type {Date} 
+	 */
 	this.creationTime = copyData.creationTime;
-	/** @type {Date} */
+	/**
+	 * @type {Date} 
+	 */
 	this.creationTimeModel = copyData.creationTimeModel;
-	/** @type {boolean} */
+	/**
+	 * @summary Whether the policy can be elevated over
+	 * @type {boolean} 
+	 */
 	this.canOverride = copyData.canOverride;
-	/** @type {boolean} */
+	/**
+	 * @summary Whether the property is public
+	 * @type {boolean} 
+	 */
 	this.isPublic = copyData.isPublic;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the universal ID
+	 * @type {string} 
+	 */
 	this.oid = copyData.oid;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the name of the policy
+	 * @type {string} 
+	 */
 	this.name = copyData.name;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the handler which may handle this policy
+	 * @type {string} 
+	 */
 	this.handler = copyData.handler;
 	}
 }  // SecurityPolicy 
-// SanteDB.Core.Model.Security.SecurityPolicyInstance, SanteDB.Core.Model, Version=2.1.113.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Security.SecurityPolicyInstance, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
 //if(!SecurityPolicyInstance)
 /**
  * @class
@@ -1031,25 +1610,45 @@ function SecurityPolicy (copyData) {
 function SecurityPolicyInstance (copyData) { 
 	this.$type = 'SecurityPolicyInstance';
 	if(copyData) {
-	/** @type {BatchOperationType} */
+	/**
+	 * @summary Gets or sets the operation
+	 * @type {BatchOperationType} 
+	 */
 	this.operation = copyData.operation;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the primary identifying UUID of this object
+	 * @type {string} 
+	 */
 	this.id = copyData.id;
-	/** @type {SecurityEntity} */
+	/**
+	 * @type {SecurityEntity} 
+	 */
 	this.sourceModel = copyData.sourceModel;
-	/** @type {string} */
+	/**
+	 * @type {string} 
+	 */
 	this.source = copyData.source;
-	/** @type {Date} */
+	/**
+	 * @type {Date} 
+	 */
 	this.modifiedOn = copyData.modifiedOn;
-	/** @type {PolicyGrantType} */
+	/**
+	 * @summary Gets or sets whether the policy is a Deny
+	 * @type {PolicyGrantType} 
+	 */
 	this.grant = copyData.grant;
-	/** @type {string} */
+	/**
+	 * @type {string} 
+	 */
 	this.policyModel = copyData.policyModel;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the policy key
+	 * @type {string} 
+	 */
 	this.policy = copyData.policy;
 	}
 }  // SecurityPolicyInstance 
-// SanteDB.Core.Model.Security.SecurityProvenance, SanteDB.Core.Model, Version=2.1.113.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Security.SecurityProvenance, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
 //if(!SecurityProvenance)
 /**
  * @class
@@ -1077,37 +1676,75 @@ function SecurityPolicyInstance (copyData) {
 function SecurityProvenance (copyData) { 
 	this.$type = 'SecurityProvenance';
 	if(copyData) {
-	/** @type {BatchOperationType} */
+	/**
+	 * @summary Gets or sets the operation
+	 * @type {BatchOperationType} 
+	 */
 	this.operation = copyData.operation;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the primary identifying UUID of this object
+	 * @type {string} 
+	 */
 	this.id = copyData.id;
-	/** @type {SecurityApplication} */
+	/**
+	 * @type {SecurityApplication} 
+	 */
 	this.applicationModel = copyData.applicationModel;
-	/** @type {SecurityUser} */
+	/**
+	 * @type {SecurityUser} 
+	 */
 	this.userModel = copyData.userModel;
-	/** @type {SecurityDevice} */
+	/**
+	 * @type {SecurityDevice} 
+	 */
 	this.deviceModel = copyData.deviceModel;
-	/** @type {string} */
+	/**
+	 * @summary Gets the type of object that the external key references
+	 * @type {string} 
+	 */
 	this.externClass = copyData.externClass;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the external security object reference
+	 * @type {string} 
+	 */
 	this.extern = copyData.extern;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the session
+	 * @type {string} 
+	 */
 	this.session = copyData.session;
-	/** @type {string} */
+	/**
+	 * @summary Gets the security user for the provenance if applicable
+	 * @type {string} 
+	 */
 	this.device = copyData.device;
-	/** @type {string} */
+	/**
+	 * @summary Gets the security user for the provenance if applicable
+	 * @type {string} 
+	 */
 	this.user = copyData.user;
-	/** @type {string} */
+	/**
+	 * @summary Gets the security application for the provenance if applicable
+	 * @type {string} 
+	 */
 	this.application = copyData.application;
-	/** @type {Date} */
+	/**
+	 * @summary Gets or sets the time at which the data was created
+	 * @type {Date} 
+	 */
 	this.creationTime = copyData.creationTime;
-	/** @type {Date} */
+	/**
+	 * @type {Date} 
+	 */
 	this.creationTimeModel = copyData.creationTimeModel;
-	/** @type {Date} */
+	/**
+	 * @summary Gets the time that the provenance was modified / created
+	 * @type {Date} 
+	 */
 	this.modifiedOn = copyData.modifiedOn;
 	}
 }  // SecurityProvenance 
-// SanteDB.Core.Model.Security.SecurityRole, SanteDB.Core.Model, Version=2.1.113.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Security.SecurityRole, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
 //if(!SecurityRole)
 /**
  * @class
@@ -1136,41 +1773,84 @@ function SecurityProvenance (copyData) {
 function SecurityRole (copyData) { 
 	this.$type = 'SecurityRole';
 	if(copyData) {
-	/** @type {BatchOperationType} */
+	/**
+	 * @summary Gets or sets the operation
+	 * @type {BatchOperationType} 
+	 */
 	this.operation = copyData.operation;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the primary identifying UUID of this object
+	 * @type {string} 
+	 */
 	this.id = copyData.id;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the security provenance object which represents the obsoletion of this data
+	 * @type {string} 
+	 */
 	this.obsoletedBy = copyData.obsoletedBy;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the security provenance object which represents the creation of this object
+	 * @type {string} 
+	 */
 	this.createdBy = copyData.createdBy;
-	/** @type {SecurityProvenance} */
+	/**
+	 * @type {SecurityProvenance} 
+	 */
 	this.obsoletedByModel = copyData.obsoletedByModel;
-	/** @type {SecurityProvenance} */
+	/**
+	 * @type {SecurityProvenance} 
+	 */
 	this.createdByModel = copyData.createdByModel;
-	/** @type {Date} */
+	/**
+	 * @summary Gets or sets the time that the data is no longer valid (was deleted/obsoleted) in ISO format
+	 * @type {Date} 
+	 */
 	this.obsoletionTime = copyData.obsoletionTime;
-	/** @type {Date} */
+	/**
+	 * @type {Date} 
+	 */
 	this.obsoletionTimeModel = copyData.obsoletionTimeModel;
-	/** @type {Date} */
+	/**
+	 * @summary Gets or sets the creation time as an ISO date format
+	 * @type {Date} 
+	 */
 	this.creationTime = copyData.creationTime;
-	/** @type {Date} */
+	/**
+	 * @type {Date} 
+	 */
 	this.creationTimeModel = copyData.creationTimeModel;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the provenance identifier associated with the last update of this object
+	 * @type {string} 
+	 */
 	this.updatedBy = copyData.updatedBy;
-	/** @type {SecurityProvenance} */
+	/**
+	 * @type {SecurityProvenance} 
+	 */
 	this.updatedByModel = copyData.updatedByModel;
-	/** @type {Date} */
+	/**
+	 * @summary Gets the time this item was modified
+	 * @type {Date} 
+	 */
 	this.modifiedOn = copyData.modifiedOn;
-	/** @type {Date} */
+	/**
+	 * @summary Gets or sets the time that this object was last modified in ISO format
+	 * @type {Date} 
+	 */
 	this.updatedTime = copyData.updatedTime;
-	/** @type {string} */
+	/**
+	 * @summary Description of the role
+	 * @type {string} 
+	 */
 	this.description = copyData.description;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the name of the security role
+	 * @type {string} 
+	 */
 	this.name = copyData.name;
 	}
 }  // SecurityRole 
-// SanteDB.Core.Model.Security.SecurityUser, SanteDB.Core.Model, Version=2.1.113.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Security.SecurityUser, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
 //if(!SecurityUser)
 /**
  * @class
@@ -1215,73 +1895,161 @@ function SecurityRole (copyData) {
 function SecurityUser (copyData) { 
 	this.$type = 'SecurityUser';
 	if(copyData) {
-	/** @type {BatchOperationType} */
+	/**
+	 * @summary Gets or sets the operation
+	 * @type {BatchOperationType} 
+	 */
 	this.operation = copyData.operation;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the primary identifying UUID of this object
+	 * @type {string} 
+	 */
 	this.id = copyData.id;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the security provenance object which represents the obsoletion of this data
+	 * @type {string} 
+	 */
 	this.obsoletedBy = copyData.obsoletedBy;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the security provenance object which represents the creation of this object
+	 * @type {string} 
+	 */
 	this.createdBy = copyData.createdBy;
-	/** @type {SecurityProvenance} */
+	/**
+	 * @type {SecurityProvenance} 
+	 */
 	this.obsoletedByModel = copyData.obsoletedByModel;
-	/** @type {SecurityProvenance} */
+	/**
+	 * @type {SecurityProvenance} 
+	 */
 	this.createdByModel = copyData.createdByModel;
-	/** @type {Date} */
+	/**
+	 * @summary Gets or sets the time that the data is no longer valid (was deleted/obsoleted) in ISO format
+	 * @type {Date} 
+	 */
 	this.obsoletionTime = copyData.obsoletionTime;
-	/** @type {Date} */
+	/**
+	 * @type {Date} 
+	 */
 	this.obsoletionTimeModel = copyData.obsoletionTimeModel;
-	/** @type {Date} */
+	/**
+	 * @summary Gets or sets the creation time as an ISO date format
+	 * @type {Date} 
+	 */
 	this.creationTime = copyData.creationTime;
-	/** @type {Date} */
+	/**
+	 * @type {Date} 
+	 */
 	this.creationTimeModel = copyData.creationTimeModel;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the provenance identifier associated with the last update of this object
+	 * @type {string} 
+	 */
 	this.updatedBy = copyData.updatedBy;
-	/** @type {SecurityProvenance} */
+	/**
+	 * @type {SecurityProvenance} 
+	 */
 	this.updatedByModel = copyData.updatedByModel;
-	/** @type {Date} */
+	/**
+	 * @summary Gets the time this item was modified
+	 * @type {Date} 
+	 */
 	this.modifiedOn = copyData.modifiedOn;
-	/** @type {Date} */
+	/**
+	 * @summary Gets or sets the time that this object was last modified in ISO format
+	 * @type {Date} 
+	 */
 	this.updatedTime = copyData.updatedTime;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the user class key
+	 * @type {string} 
+	 */
 	this.userClass = copyData.userClass;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the preferred tfa mechanism
+	 * @type {string} 
+	 */
 	this.twoFactorMechanism = copyData.twoFactorMechanism;
-	/** @type {boolean} */
+	/**
+	 * @summary Gets or sets whether the phone number was confirmed
+	 * @type {boolean} 
+	 */
 	this.phoneNumberConfirmed = copyData.phoneNumberConfirmed;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the patient's phone number
+	 * @type {string} 
+	 */
 	this.phoneNumber = copyData.phoneNumber;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the creation time in XML format
+	 * @type {string} 
+	 */
 	this.passwordExpiry = copyData.passwordExpiry;
-	/** @type {Date} */
+	/**
+	 * @type {Date} 
+	 */
 	this.passwordExpiryModel = copyData.passwordExpiryModel;
-	/** @type {Date} */
+	/**
+	 * @summary Gets or sets the creation time in XML format
+	 * @type {Date} 
+	 */
 	this.lastLoginTime = copyData.lastLoginTime;
-	/** @type {Date} */
+	/**
+	 * @type {Date} 
+	 */
 	this.lastLoginTimeModel = copyData.lastLoginTimeModel;
-	/** @type {Array<byte>} */
+	/**
+	 * @summary Gets or sets the binary representation of the user's photo
+	 * @type {Array<byte>} 
+	 */
 	this.photo = copyData.photo;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the logical user name ofthe user
+	 * @type {string} 
+	 */
 	this.userName = copyData.userName;
-	/** @type {boolean} */
+	/**
+	 * @summary Gets or sets whether two factor authentication is required
+	 * @type {boolean} 
+	 */
 	this.twoFactorEnabled = copyData.twoFactorEnabled;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets whether the security has is enabled
+	 * @type {string} 
+	 */
 	this.securityStamp = copyData.securityStamp;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets whether the password hash is enabled
+	 * @type {string} 
+	 */
 	this.password = copyData.password;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets whether the account is locked out
+	 * @type {string} 
+	 */
 	this.lockout = copyData.lockout;
-	/** @type {Date} */
+	/**
+	 * @type {Date} 
+	 */
 	this.lockoutModel = copyData.lockoutModel;
-	/** @type {number} */
+	/**
+	 * @summary Gets or sets the number of invalid login attempts by the user
+	 * @type {number} 
+	 */
 	this.invalidLoginAttempts = copyData.invalidLoginAttempts;
-	/** @type {boolean} */
+	/**
+	 * @summary Gets or sets whether the email address is confirmed
+	 * @type {boolean} 
+	 */
 	this.emailConfirmed = copyData.emailConfirmed;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the email address of the user
+	 * @type {string} 
+	 */
 	this.email = copyData.email;
 	}
 }  // SecurityUser 
-// SanteDB.Core.Model.Roles.Patient, SanteDB.Core.Model, Version=2.1.113.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Roles.Patient, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
 //if(!Patient)
 /**
  * @class
@@ -1613,129 +2381,287 @@ function SecurityUser (copyData) {
 function Patient (copyData) { 
 	this.$type = 'Patient';
 	if(copyData) {
-	/** @type {BatchOperationType} */
+	/**
+	 * @summary Gets or sets the operation
+	 * @type {BatchOperationType} 
+	 */
 	this.operation = copyData.operation;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the primary identifying UUID of this object
+	 * @type {string} 
+	 */
 	this.id = copyData.id;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the security provenance object which represents the obsoletion of this data
+	 * @type {string} 
+	 */
 	this.obsoletedBy = copyData.obsoletedBy;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the security provenance object which represents the creation of this object
+	 * @type {string} 
+	 */
 	this.createdBy = copyData.createdBy;
-	/** @type {SecurityProvenance} */
+	/**
+	 * @type {SecurityProvenance} 
+	 */
 	this.obsoletedByModel = copyData.obsoletedByModel;
-	/** @type {Date} */
+	/**
+	 * @summary Gets the time that the object was last modified (from base data, default to CreationTime)
+	 * @type {Date} 
+	 */
 	this.modifiedOn = copyData.modifiedOn;
-	/** @type {SecurityProvenance} */
+	/**
+	 * @type {SecurityProvenance} 
+	 */
 	this.createdByModel = copyData.createdByModel;
-	/** @type {Date} */
+	/**
+	 * @summary Gets or sets the time that the data is no longer valid (was deleted/obsoleted) in ISO format
+	 * @type {Date} 
+	 */
 	this.obsoletionTime = copyData.obsoletionTime;
-	/** @type {Date} */
+	/**
+	 * @type {Date} 
+	 */
 	this.obsoletionTimeModel = copyData.obsoletionTimeModel;
-	/** @type {Date} */
+	/**
+	 * @summary Gets or sets the creation time as an ISO date format
+	 * @type {Date} 
+	 */
 	this.creationTime = copyData.creationTime;
-	/** @type {Date} */
+	/**
+	 * @type {Date} 
+	 */
 	this.creationTimeModel = copyData.creationTimeModel;
-	/** @type {number} */
+	/**
+	 * @type {number} 
+	 */
 	this.sequence = copyData.sequence;
-	/** @type {string} */
+	/**
+	 * @type {string} 
+	 */
 	this.version = copyData.version;
-	/** @type {string} */
+	/**
+	 * @type {string} 
+	 */
 	this.previousVersion = copyData.previousVersion;
-	/** @type {SecurityPolicyInstance} */
+	/**
+	 * @summary Gets or sets the security policy instances associated with the entity
+	 * @type {SecurityPolicyInstance} 
+	 */
 	this.policy = copyData.policy;
-	/** @type {string} */
+	/**
+	 * @summary Type concept identifier
+	 * @type {string} 
+	 */
 	this.typeConcept = copyData.typeConcept;
-	/** @type {Concept} */
+	/**
+	 * @type {Concept} 
+	 */
 	this.typeConceptModel = copyData.typeConceptModel;
-	/** @type {TemplateDefinition} */
+	/**
+	 * @type {TemplateDefinition} 
+	 */
 	this.templateModel = copyData.templateModel;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the template definition
+	 * @type {string} 
+	 */
 	this.template = copyData.template;
-	/** @type {object} */
+	/**
+	 * @summary Gets a list of all telecommunications addresses associated with the entity
+	 * @type {object} 
+	 */
 	this.telecom = copyData.telecom;
-	/** @type {object} */
+	/**
+	 * @summary Gets a list of all tags associated with the entity
+	 * @type {object} 
+	 */
 	this.tag = copyData.tag;
-	/** @type {string} */
+	/**
+	 * @summary Status concept id
+	 * @type {string} 
+	 */
 	this.statusConcept = copyData.statusConcept;
-	/** @type {Concept} */
+	/**
+	 * @type {Concept} 
+	 */
 	this.statusConceptModel = copyData.statusConceptModel;
-	/** @type {object} */
+	/**
+	 * @summary Gets a list of all associated entities for this entity
+	 * @type {object} 
+	 */
 	this.relationship = copyData.relationship;
-	/** @type {object} */
+	/**
+	 * @summary Gets the acts in which this entity participates
+	 * @type {object} 
+	 */
 	this.participation = copyData.participation;
-	/** @type {EntityNote} */
+	/**
+	 * @summary Gets a list of all notes associated with the entity
+	 * @type {EntityNote} 
+	 */
 	this.note = copyData.note;
-	/** @type {object} */
+	/**
+	 * @summary Gets a list of all names associated with the entity
+	 * @type {object} 
+	 */
 	this.name = copyData.name;
-	/** @type {object} */
+	/**
+	 * @summary Gets the identifiers associated with this entity
+	 * @type {object} 
+	 */
 	this.identifier = copyData.identifier;
-	/** @type {object} */
+	/**
+	 * @summary Gets a list of all extensions associated with the entity
+	 * @type {object} 
+	 */
 	this.extension = copyData.extension;
-	/** @type {string} */
+	/**
+	 * @summary Determiner concept
+	 * @type {string} 
+	 */
 	this.determinerConcept = copyData.determinerConcept;
-	/** @type {Concept} */
+	/**
+	 * @type {Concept} 
+	 */
 	this.determinerConceptModel = copyData.determinerConceptModel;
-	/** @type {string} */
+	/**
+	 * @summary Creation act reference
+	 * @type {string} 
+	 */
 	this.creationAct = copyData.creationAct;
-	/** @type {Act} */
+	/**
+	 * @type {Act} 
+	 */
 	this.creationActModel = copyData.creationActModel;
-	/** @type {string} */
+	/**
+	 * @summary Class concept datal load property
+	 * @type {string} 
+	 */
 	this.classConcept = copyData.classConcept;
-	/** @type {Concept} */
+	/**
+	 * @type {Concept} 
+	 */
 	this.classConceptModel = copyData.classConceptModel;
-	/** @type {object} */
+	/**
+	 * @summary Gets a list of all addresses associated with the entity
+	 * @type {object} 
+	 */
 	this.address = copyData.address;
-	/** @type {Concept} */
+	/**
+	 * @type {Concept} 
+	 */
 	this.occupationModel = copyData.occupationModel;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the religious affiliation
+	 * @type {string} 
+	 */
 	this.occupation = copyData.occupation;
-	/** @type {PersonLanguageCommunication} */
+	/**
+	 * @summary Gets the person's languages of communication
+	 * @type {PersonLanguageCommunication} 
+	 */
 	this.language = copyData.language;
-	/** @type {string} */
+	/**
+	 * @summary Gets the date of birth as XML
+	 * @type {string} 
+	 */
 	this.dateOfBirth = copyData.dateOfBirth;
-	/** @type {Concept} */
+	/**
+	 * @type {Concept} 
+	 */
 	this.genderConceptModel = copyData.genderConceptModel;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the gender concept key
+	 * @type {string} 
+	 */
 	this.genderConcept = copyData.genderConcept;
-	/** @type {DatePrecision} */
+	/**
+	 * @summary Gets or sets the precision ofthe date of birth
+	 * @type {DatePrecision} 
+	 */
 	this.dateOfBirthPrecision = copyData.dateOfBirthPrecision;
-	/** @type {Concept} */
+	/**
+	 * @type {Concept} 
+	 */
 	this.ethnicityModel = copyData.ethnicityModel;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the ethnicity codes
+	 * @type {string} 
+	 */
 	this.ethnicity = copyData.ethnicity;
-	/** @type {Concept} */
+	/**
+	 * @type {Concept} 
+	 */
 	this.religionModel = copyData.religionModel;
-	/** @type {Concept} */
+	/**
+	 * @type {Concept} 
+	 */
 	this.livingArrangementModel = copyData.livingArrangementModel;
-	/** @type {Concept} */
+	/**
+	 * @type {Concept} 
+	 */
 	this.educationLevelModel = copyData.educationLevelModel;
-	/** @type {Concept} */
+	/**
+	 * @type {Concept} 
+	 */
 	this.vipStatusModel = copyData.vipStatusModel;
-	/** @type {Concept} */
+	/**
+	 * @type {Concept} 
+	 */
 	this.maritalStatusModel = copyData.maritalStatusModel;
-	/** @type {Concept} */
+	/**
+	 * @type {Concept} 
+	 */
 	this.nationalityModel = copyData.nationalityModel;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the religious affiliation
+	 * @type {string} 
+	 */
 	this.nationality = copyData.nationality;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the religious affiliation
+	 * @type {string} 
+	 */
 	this.religion = copyData.religion;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the living arrangements
+	 * @type {string} 
+	 */
 	this.livingArrangement = copyData.livingArrangement;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the education level of the person
+	 * @type {string} 
+	 */
 	this.educationLevel = copyData.educationLevel;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the key of the marital status concept
+	 * @type {string} 
+	 */
 	this.maritalStatus = copyData.maritalStatus;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the VIP status code
+	 * @type {string} 
+	 */
 	this.vipStatus = copyData.vipStatus;
-	/** @type {number} */
+	/**
+	 * @summary Gets or sets the multiple birth order of the patient
+	 * @type {number} 
+	 */
 	this.multipleBirthOrder = copyData.multipleBirthOrder;
-	/** @type {DatePrecision} */
+	/**
+	 * @summary Gets or sets the precision of the date of deceased
+	 * @type {DatePrecision} 
+	 */
 	this.deceasedDatePrecision = copyData.deceasedDatePrecision;
-	/** @type {Date} */
+	/**
+	 * @summary Deceased date XML
+	 * @type {Date} 
+	 */
 	this.deceasedDate = copyData.deceasedDate;
 	}
 }  // Patient 
-// SanteDB.Core.Model.Roles.Provider, SanteDB.Core.Model, Version=2.1.113.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Roles.Provider, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
 //if(!Provider)
 /**
  * @class
@@ -2052,99 +2978,218 @@ function Patient (copyData) {
 function Provider (copyData) { 
 	this.$type = 'Provider';
 	if(copyData) {
-	/** @type {BatchOperationType} */
+	/**
+	 * @summary Gets or sets the operation
+	 * @type {BatchOperationType} 
+	 */
 	this.operation = copyData.operation;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the primary identifying UUID of this object
+	 * @type {string} 
+	 */
 	this.id = copyData.id;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the security provenance object which represents the obsoletion of this data
+	 * @type {string} 
+	 */
 	this.obsoletedBy = copyData.obsoletedBy;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the security provenance object which represents the creation of this object
+	 * @type {string} 
+	 */
 	this.createdBy = copyData.createdBy;
-	/** @type {SecurityProvenance} */
+	/**
+	 * @type {SecurityProvenance} 
+	 */
 	this.obsoletedByModel = copyData.obsoletedByModel;
-	/** @type {Date} */
+	/**
+	 * @summary Gets the time that the object was last modified (from base data, default to CreationTime)
+	 * @type {Date} 
+	 */
 	this.modifiedOn = copyData.modifiedOn;
-	/** @type {SecurityProvenance} */
+	/**
+	 * @type {SecurityProvenance} 
+	 */
 	this.createdByModel = copyData.createdByModel;
-	/** @type {Date} */
+	/**
+	 * @summary Gets or sets the time that the data is no longer valid (was deleted/obsoleted) in ISO format
+	 * @type {Date} 
+	 */
 	this.obsoletionTime = copyData.obsoletionTime;
-	/** @type {Date} */
+	/**
+	 * @type {Date} 
+	 */
 	this.obsoletionTimeModel = copyData.obsoletionTimeModel;
-	/** @type {Date} */
+	/**
+	 * @summary Gets or sets the creation time as an ISO date format
+	 * @type {Date} 
+	 */
 	this.creationTime = copyData.creationTime;
-	/** @type {Date} */
+	/**
+	 * @type {Date} 
+	 */
 	this.creationTimeModel = copyData.creationTimeModel;
-	/** @type {number} */
+	/**
+	 * @type {number} 
+	 */
 	this.sequence = copyData.sequence;
-	/** @type {string} */
+	/**
+	 * @type {string} 
+	 */
 	this.version = copyData.version;
-	/** @type {string} */
+	/**
+	 * @type {string} 
+	 */
 	this.previousVersion = copyData.previousVersion;
-	/** @type {SecurityPolicyInstance} */
+	/**
+	 * @summary Gets or sets the security policy instances associated with the entity
+	 * @type {SecurityPolicyInstance} 
+	 */
 	this.policy = copyData.policy;
-	/** @type {string} */
+	/**
+	 * @summary Type concept identifier
+	 * @type {string} 
+	 */
 	this.typeConcept = copyData.typeConcept;
-	/** @type {Concept} */
+	/**
+	 * @type {Concept} 
+	 */
 	this.typeConceptModel = copyData.typeConceptModel;
-	/** @type {TemplateDefinition} */
+	/**
+	 * @type {TemplateDefinition} 
+	 */
 	this.templateModel = copyData.templateModel;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the template definition
+	 * @type {string} 
+	 */
 	this.template = copyData.template;
-	/** @type {object} */
+	/**
+	 * @summary Gets a list of all telecommunications addresses associated with the entity
+	 * @type {object} 
+	 */
 	this.telecom = copyData.telecom;
-	/** @type {object} */
+	/**
+	 * @summary Gets a list of all tags associated with the entity
+	 * @type {object} 
+	 */
 	this.tag = copyData.tag;
-	/** @type {string} */
+	/**
+	 * @summary Status concept id
+	 * @type {string} 
+	 */
 	this.statusConcept = copyData.statusConcept;
-	/** @type {Concept} */
+	/**
+	 * @type {Concept} 
+	 */
 	this.statusConceptModel = copyData.statusConceptModel;
-	/** @type {object} */
+	/**
+	 * @summary Gets a list of all associated entities for this entity
+	 * @type {object} 
+	 */
 	this.relationship = copyData.relationship;
-	/** @type {object} */
+	/**
+	 * @summary Gets the acts in which this entity participates
+	 * @type {object} 
+	 */
 	this.participation = copyData.participation;
-	/** @type {EntityNote} */
+	/**
+	 * @summary Gets a list of all notes associated with the entity
+	 * @type {EntityNote} 
+	 */
 	this.note = copyData.note;
-	/** @type {object} */
+	/**
+	 * @summary Gets a list of all names associated with the entity
+	 * @type {object} 
+	 */
 	this.name = copyData.name;
-	/** @type {object} */
+	/**
+	 * @summary Gets the identifiers associated with this entity
+	 * @type {object} 
+	 */
 	this.identifier = copyData.identifier;
-	/** @type {object} */
+	/**
+	 * @summary Gets a list of all extensions associated with the entity
+	 * @type {object} 
+	 */
 	this.extension = copyData.extension;
-	/** @type {string} */
+	/**
+	 * @summary Determiner concept
+	 * @type {string} 
+	 */
 	this.determinerConcept = copyData.determinerConcept;
-	/** @type {Concept} */
+	/**
+	 * @type {Concept} 
+	 */
 	this.determinerConceptModel = copyData.determinerConceptModel;
-	/** @type {string} */
+	/**
+	 * @summary Creation act reference
+	 * @type {string} 
+	 */
 	this.creationAct = copyData.creationAct;
-	/** @type {Act} */
+	/**
+	 * @type {Act} 
+	 */
 	this.creationActModel = copyData.creationActModel;
-	/** @type {string} */
+	/**
+	 * @summary Class concept datal load property
+	 * @type {string} 
+	 */
 	this.classConcept = copyData.classConcept;
-	/** @type {Concept} */
+	/**
+	 * @type {Concept} 
+	 */
 	this.classConceptModel = copyData.classConceptModel;
-	/** @type {object} */
+	/**
+	 * @summary Gets a list of all addresses associated with the entity
+	 * @type {object} 
+	 */
 	this.address = copyData.address;
-	/** @type {Concept} */
+	/**
+	 * @type {Concept} 
+	 */
 	this.occupationModel = copyData.occupationModel;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the religious affiliation
+	 * @type {string} 
+	 */
 	this.occupation = copyData.occupation;
-	/** @type {PersonLanguageCommunication} */
+	/**
+	 * @summary Gets the person's languages of communication
+	 * @type {PersonLanguageCommunication} 
+	 */
 	this.language = copyData.language;
-	/** @type {string} */
+	/**
+	 * @summary Gets the date of birth as XML
+	 * @type {string} 
+	 */
 	this.dateOfBirth = copyData.dateOfBirth;
-	/** @type {Concept} */
+	/**
+	 * @type {Concept} 
+	 */
 	this.genderConceptModel = copyData.genderConceptModel;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the gender concept key
+	 * @type {string} 
+	 */
 	this.genderConcept = copyData.genderConcept;
-	/** @type {DatePrecision} */
+	/**
+	 * @summary Gets or sets the precision ofthe date of birth
+	 * @type {DatePrecision} 
+	 */
 	this.dateOfBirthPrecision = copyData.dateOfBirthPrecision;
-	/** @type {Concept} */
+	/**
+	 * @type {Concept} 
+	 */
 	this.providerSpecialtyModel = copyData.providerSpecialtyModel;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the provider specialty key
+	 * @type {string} 
+	 */
 	this.providerSpecialty = copyData.providerSpecialty;
 	}
 }  // Provider 
-// SanteDB.Core.Model.Patch.Patch, SanteDB.Core.Model, Version=2.1.113.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Patch.Patch, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
 //if(!Patch)
 /**
  * @class
@@ -2172,37 +3217,75 @@ function Provider (copyData) {
 function Patch (copyData) { 
 	this.$type = 'Patch';
 	if(copyData) {
-	/** @type {BatchOperationType} */
+	/**
+	 * @summary Gets or sets the operation
+	 * @type {BatchOperationType} 
+	 */
 	this.operation = copyData.operation;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the primary identifying UUID of this object
+	 * @type {string} 
+	 */
 	this.id = copyData.id;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the security provenance object which represents the obsoletion of this data
+	 * @type {string} 
+	 */
 	this.obsoletedBy = copyData.obsoletedBy;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the security provenance object which represents the creation of this object
+	 * @type {string} 
+	 */
 	this.createdBy = copyData.createdBy;
-	/** @type {SecurityProvenance} */
+	/**
+	 * @type {SecurityProvenance} 
+	 */
 	this.obsoletedByModel = copyData.obsoletedByModel;
-	/** @type {Date} */
+	/**
+	 * @summary Gets the time that the object was last modified (from base data, default to CreationTime)
+	 * @type {Date} 
+	 */
 	this.modifiedOn = copyData.modifiedOn;
-	/** @type {SecurityProvenance} */
+	/**
+	 * @type {SecurityProvenance} 
+	 */
 	this.createdByModel = copyData.createdByModel;
-	/** @type {Date} */
+	/**
+	 * @summary Gets or sets the time that the data is no longer valid (was deleted/obsoleted) in ISO format
+	 * @type {Date} 
+	 */
 	this.obsoletionTime = copyData.obsoletionTime;
-	/** @type {Date} */
+	/**
+	 * @type {Date} 
+	 */
 	this.obsoletionTimeModel = copyData.obsoletionTimeModel;
-	/** @type {Date} */
+	/**
+	 * @summary Gets or sets the creation time as an ISO date format
+	 * @type {Date} 
+	 */
 	this.creationTime = copyData.creationTime;
-	/** @type {Date} */
+	/**
+	 * @type {Date} 
+	 */
 	this.creationTimeModel = copyData.creationTimeModel;
-	/** @type {PatchOperation} */
+	/**
+	 * @summary A list of patch operations to be applied to the object
+	 * @type {PatchOperation} 
+	 */
 	this.change = copyData.change;
-	/** @type {PatchTarget} */
+	/**
+	 * @summary Application version
+	 * @type {PatchTarget} 
+	 */
 	this.appliesTo = copyData.appliesTo;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the version of the patch file
+	 * @type {string} 
+	 */
 	this.version = copyData.version;
 	}
 }  // Patch 
-// SanteDB.Core.Model.Patch.PatchOperation, SanteDB.Core.Model, Version=2.1.113.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Patch.PatchOperation, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
 //if(!PatchOperation)
 /**
  * @class
@@ -2217,15 +3300,24 @@ function Patch (copyData) {
 function PatchOperation (copyData) { 
 	this.$type = 'PatchOperation';
 	if(copyData) {
-	/** @type {Object} */
+	/**
+	 * @summary Get or sets the value
+	 * @type {Object} 
+	 */
 	this.value = copyData.value;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the path
+	 * @type {string} 
+	 */
 	this.path = copyData.path;
-	/** @type {PatchOperationType} */
+	/**
+	 * @summary Gets or sets the operation type
+	 * @type {PatchOperationType} 
+	 */
 	this.op = copyData.op;
 	}
 }  // PatchOperation 
-// SanteDB.Core.Model.Patch.PatchTarget, SanteDB.Core.Model, Version=2.1.113.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Patch.PatchTarget, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
 //if(!PatchTarget)
 /**
  * @class
@@ -2241,17 +3333,29 @@ function PatchOperation (copyData) {
 function PatchTarget (copyData) { 
 	this.$type = 'PatchTarget';
 	if(copyData) {
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the tag of the item
+	 * @type {string} 
+	 */
 	this.etag = copyData.etag;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the key
+	 * @type {string} 
+	 */
 	this.version = copyData.version;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the key
+	 * @type {string} 
+	 */
 	this.id = copyData.id;
-	/** @type {string} */
+	/**
+	 * @summary Identifies the target type
+	 * @type {string} 
+	 */
 	this.type = copyData.type;
 	}
 }  // PatchTarget 
-// SanteDB.Core.Model.Entities.ApplicationEntity, SanteDB.Core.Model, Version=2.1.113.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Entities.ApplicationEntity, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
 //if(!ApplicationEntity)
 /**
  * @class
@@ -2564,91 +3668,200 @@ function PatchTarget (copyData) {
 function ApplicationEntity (copyData) { 
 	this.$type = 'ApplicationEntity';
 	if(copyData) {
-	/** @type {BatchOperationType} */
+	/**
+	 * @summary Gets or sets the operation
+	 * @type {BatchOperationType} 
+	 */
 	this.operation = copyData.operation;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the primary identifying UUID of this object
+	 * @type {string} 
+	 */
 	this.id = copyData.id;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the security provenance object which represents the obsoletion of this data
+	 * @type {string} 
+	 */
 	this.obsoletedBy = copyData.obsoletedBy;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the security provenance object which represents the creation of this object
+	 * @type {string} 
+	 */
 	this.createdBy = copyData.createdBy;
-	/** @type {SecurityProvenance} */
+	/**
+	 * @type {SecurityProvenance} 
+	 */
 	this.obsoletedByModel = copyData.obsoletedByModel;
-	/** @type {Date} */
+	/**
+	 * @summary Gets the time that the object was last modified (from base data, default to CreationTime)
+	 * @type {Date} 
+	 */
 	this.modifiedOn = copyData.modifiedOn;
-	/** @type {SecurityProvenance} */
+	/**
+	 * @type {SecurityProvenance} 
+	 */
 	this.createdByModel = copyData.createdByModel;
-	/** @type {Date} */
+	/**
+	 * @summary Gets or sets the time that the data is no longer valid (was deleted/obsoleted) in ISO format
+	 * @type {Date} 
+	 */
 	this.obsoletionTime = copyData.obsoletionTime;
-	/** @type {Date} */
+	/**
+	 * @type {Date} 
+	 */
 	this.obsoletionTimeModel = copyData.obsoletionTimeModel;
-	/** @type {Date} */
+	/**
+	 * @summary Gets or sets the creation time as an ISO date format
+	 * @type {Date} 
+	 */
 	this.creationTime = copyData.creationTime;
-	/** @type {Date} */
+	/**
+	 * @type {Date} 
+	 */
 	this.creationTimeModel = copyData.creationTimeModel;
-	/** @type {number} */
+	/**
+	 * @type {number} 
+	 */
 	this.sequence = copyData.sequence;
-	/** @type {string} */
+	/**
+	 * @type {string} 
+	 */
 	this.version = copyData.version;
-	/** @type {string} */
+	/**
+	 * @type {string} 
+	 */
 	this.previousVersion = copyData.previousVersion;
-	/** @type {SecurityPolicyInstance} */
+	/**
+	 * @summary Gets or sets the security policy instances associated with the entity
+	 * @type {SecurityPolicyInstance} 
+	 */
 	this.policy = copyData.policy;
-	/** @type {string} */
+	/**
+	 * @summary Type concept identifier
+	 * @type {string} 
+	 */
 	this.typeConcept = copyData.typeConcept;
-	/** @type {Concept} */
+	/**
+	 * @type {Concept} 
+	 */
 	this.typeConceptModel = copyData.typeConceptModel;
-	/** @type {TemplateDefinition} */
+	/**
+	 * @type {TemplateDefinition} 
+	 */
 	this.templateModel = copyData.templateModel;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the template definition
+	 * @type {string} 
+	 */
 	this.template = copyData.template;
-	/** @type {object} */
+	/**
+	 * @summary Gets a list of all telecommunications addresses associated with the entity
+	 * @type {object} 
+	 */
 	this.telecom = copyData.telecom;
-	/** @type {object} */
+	/**
+	 * @summary Gets a list of all tags associated with the entity
+	 * @type {object} 
+	 */
 	this.tag = copyData.tag;
-	/** @type {string} */
+	/**
+	 * @summary Status concept id
+	 * @type {string} 
+	 */
 	this.statusConcept = copyData.statusConcept;
-	/** @type {Concept} */
+	/**
+	 * @type {Concept} 
+	 */
 	this.statusConceptModel = copyData.statusConceptModel;
-	/** @type {object} */
+	/**
+	 * @summary Gets a list of all associated entities for this entity
+	 * @type {object} 
+	 */
 	this.relationship = copyData.relationship;
-	/** @type {object} */
+	/**
+	 * @summary Gets the acts in which this entity participates
+	 * @type {object} 
+	 */
 	this.participation = copyData.participation;
-	/** @type {EntityNote} */
+	/**
+	 * @summary Gets a list of all notes associated with the entity
+	 * @type {EntityNote} 
+	 */
 	this.note = copyData.note;
-	/** @type {object} */
+	/**
+	 * @summary Gets a list of all names associated with the entity
+	 * @type {object} 
+	 */
 	this.name = copyData.name;
-	/** @type {object} */
+	/**
+	 * @summary Gets the identifiers associated with this entity
+	 * @type {object} 
+	 */
 	this.identifier = copyData.identifier;
-	/** @type {object} */
+	/**
+	 * @summary Gets a list of all extensions associated with the entity
+	 * @type {object} 
+	 */
 	this.extension = copyData.extension;
-	/** @type {string} */
+	/**
+	 * @summary Determiner concept
+	 * @type {string} 
+	 */
 	this.determinerConcept = copyData.determinerConcept;
-	/** @type {Concept} */
+	/**
+	 * @type {Concept} 
+	 */
 	this.determinerConceptModel = copyData.determinerConceptModel;
-	/** @type {string} */
+	/**
+	 * @summary Creation act reference
+	 * @type {string} 
+	 */
 	this.creationAct = copyData.creationAct;
-	/** @type {Act} */
+	/**
+	 * @type {Act} 
+	 */
 	this.creationActModel = copyData.creationActModel;
-	/** @type {string} */
+	/**
+	 * @summary Class concept datal load property
+	 * @type {string} 
+	 */
 	this.classConcept = copyData.classConcept;
-	/** @type {Concept} */
+	/**
+	 * @type {Concept} 
+	 */
 	this.classConceptModel = copyData.classConceptModel;
-	/** @type {object} */
+	/**
+	 * @summary Gets a list of all addresses associated with the entity
+	 * @type {object} 
+	 */
 	this.address = copyData.address;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the version of the software
+	 * @type {string} 
+	 */
 	this.versionName = copyData.versionName;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the vendoer name of the software
+	 * @type {string} 
+	 */
 	this.vendorName = copyData.vendorName;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the name of the software
+	 * @type {string} 
+	 */
 	this.softwareName = copyData.softwareName;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the security application
+	 * @type {string} 
+	 */
 	this.securityApplication = copyData.securityApplication;
-	/** @type {SecurityApplication} */
+	/**
+	 * @type {SecurityApplication} 
+	 */
 	this.securityApplicationModel = copyData.securityApplicationModel;
 	}
 }  // ApplicationEntity 
-// SanteDB.Core.Model.Entities.Container, SanteDB.Core.Model, Version=2.1.113.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Entities.Container, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
 //if(!Container)
 /**
  * @class
@@ -2968,103 +4181,230 @@ function ApplicationEntity (copyData) {
 function Container (copyData) { 
 	this.$type = 'Container';
 	if(copyData) {
-	/** @type {BatchOperationType} */
+	/**
+	 * @summary Gets or sets the operation
+	 * @type {BatchOperationType} 
+	 */
 	this.operation = copyData.operation;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the primary identifying UUID of this object
+	 * @type {string} 
+	 */
 	this.id = copyData.id;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the security provenance object which represents the obsoletion of this data
+	 * @type {string} 
+	 */
 	this.obsoletedBy = copyData.obsoletedBy;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the security provenance object which represents the creation of this object
+	 * @type {string} 
+	 */
 	this.createdBy = copyData.createdBy;
-	/** @type {SecurityProvenance} */
+	/**
+	 * @type {SecurityProvenance} 
+	 */
 	this.obsoletedByModel = copyData.obsoletedByModel;
-	/** @type {Date} */
+	/**
+	 * @summary Gets the time that the object was last modified (from base data, default to CreationTime)
+	 * @type {Date} 
+	 */
 	this.modifiedOn = copyData.modifiedOn;
-	/** @type {SecurityProvenance} */
+	/**
+	 * @type {SecurityProvenance} 
+	 */
 	this.createdByModel = copyData.createdByModel;
-	/** @type {Date} */
+	/**
+	 * @summary Gets or sets the time that the data is no longer valid (was deleted/obsoleted) in ISO format
+	 * @type {Date} 
+	 */
 	this.obsoletionTime = copyData.obsoletionTime;
-	/** @type {Date} */
+	/**
+	 * @type {Date} 
+	 */
 	this.obsoletionTimeModel = copyData.obsoletionTimeModel;
-	/** @type {Date} */
+	/**
+	 * @summary Gets or sets the creation time as an ISO date format
+	 * @type {Date} 
+	 */
 	this.creationTime = copyData.creationTime;
-	/** @type {Date} */
+	/**
+	 * @type {Date} 
+	 */
 	this.creationTimeModel = copyData.creationTimeModel;
-	/** @type {number} */
+	/**
+	 * @type {number} 
+	 */
 	this.sequence = copyData.sequence;
-	/** @type {string} */
+	/**
+	 * @type {string} 
+	 */
 	this.version = copyData.version;
-	/** @type {string} */
+	/**
+	 * @type {string} 
+	 */
 	this.previousVersion = copyData.previousVersion;
-	/** @type {SecurityPolicyInstance} */
+	/**
+	 * @summary Gets or sets the security policy instances associated with the entity
+	 * @type {SecurityPolicyInstance} 
+	 */
 	this.policy = copyData.policy;
-	/** @type {string} */
+	/**
+	 * @summary Type concept identifier
+	 * @type {string} 
+	 */
 	this.typeConcept = copyData.typeConcept;
-	/** @type {Concept} */
+	/**
+	 * @type {Concept} 
+	 */
 	this.typeConceptModel = copyData.typeConceptModel;
-	/** @type {TemplateDefinition} */
+	/**
+	 * @type {TemplateDefinition} 
+	 */
 	this.templateModel = copyData.templateModel;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the template definition
+	 * @type {string} 
+	 */
 	this.template = copyData.template;
-	/** @type {object} */
+	/**
+	 * @summary Gets a list of all telecommunications addresses associated with the entity
+	 * @type {object} 
+	 */
 	this.telecom = copyData.telecom;
-	/** @type {object} */
+	/**
+	 * @summary Gets a list of all tags associated with the entity
+	 * @type {object} 
+	 */
 	this.tag = copyData.tag;
-	/** @type {string} */
+	/**
+	 * @summary Status concept id
+	 * @type {string} 
+	 */
 	this.statusConcept = copyData.statusConcept;
-	/** @type {Concept} */
+	/**
+	 * @type {Concept} 
+	 */
 	this.statusConceptModel = copyData.statusConceptModel;
-	/** @type {object} */
+	/**
+	 * @summary Gets a list of all associated entities for this entity
+	 * @type {object} 
+	 */
 	this.relationship = copyData.relationship;
-	/** @type {object} */
+	/**
+	 * @summary Gets the acts in which this entity participates
+	 * @type {object} 
+	 */
 	this.participation = copyData.participation;
-	/** @type {EntityNote} */
+	/**
+	 * @summary Gets a list of all notes associated with the entity
+	 * @type {EntityNote} 
+	 */
 	this.note = copyData.note;
-	/** @type {object} */
+	/**
+	 * @summary Gets a list of all names associated with the entity
+	 * @type {object} 
+	 */
 	this.name = copyData.name;
-	/** @type {object} */
+	/**
+	 * @summary Gets the identifiers associated with this entity
+	 * @type {object} 
+	 */
 	this.identifier = copyData.identifier;
-	/** @type {object} */
+	/**
+	 * @summary Gets a list of all extensions associated with the entity
+	 * @type {object} 
+	 */
 	this.extension = copyData.extension;
-	/** @type {string} */
+	/**
+	 * @summary Determiner concept
+	 * @type {string} 
+	 */
 	this.determinerConcept = copyData.determinerConcept;
-	/** @type {Concept} */
+	/**
+	 * @type {Concept} 
+	 */
 	this.determinerConceptModel = copyData.determinerConceptModel;
-	/** @type {string} */
+	/**
+	 * @summary Creation act reference
+	 * @type {string} 
+	 */
 	this.creationAct = copyData.creationAct;
-	/** @type {Act} */
+	/**
+	 * @type {Act} 
+	 */
 	this.creationActModel = copyData.creationActModel;
-	/** @type {string} */
+	/**
+	 * @summary Class concept datal load property
+	 * @type {string} 
+	 */
 	this.classConcept = copyData.classConcept;
-	/** @type {Concept} */
+	/**
+	 * @type {Concept} 
+	 */
 	this.classConceptModel = copyData.classConceptModel;
-	/** @type {object} */
+	/**
+	 * @summary Gets a list of all addresses associated with the entity
+	 * @type {object} 
+	 */
 	this.address = copyData.address;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the concept which dictates the unit of measure for a single instance of this entity
+	 * @type {string} 
+	 */
 	this.quantityConcept = copyData.quantityConcept;
-	/** @type {Concept} */
+	/**
+	 * @type {Concept} 
+	 */
 	this.quantityConceptModel = copyData.quantityConceptModel;
-	/** @type {number} */
+	/**
+	 * @summary The base quantity of the object in the units. This differs from quantity on the relationship
+            which is a /per ...
+	 * @type {number} 
+	 */
 	this.quantity = copyData.quantity;
-	/** @type {boolean} */
+	/**
+	 * @summary True if the material is simply administrative
+	 * @type {boolean} 
+	 */
 	this.isAdministrative = copyData.isAdministrative;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the concept which dictates the form of the material (solid, liquid, capsule, injection, etc.)
+	 * @type {string} 
+	 */
 	this.formConcept = copyData.formConcept;
-	/** @type {Concept} */
+	/**
+	 * @type {Concept} 
+	 */
 	this.formConceptModel = copyData.formConceptModel;
-	/** @type {Date} */
+	/**
+	 * @summary Gets or sets the expiry date of the material
+	 * @type {Date} 
+	 */
 	this.expiryDate = copyData.expiryDate;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the lot number of the manufactured material
+	 * @type {string} 
+	 */
 	this.lotNumber = copyData.lotNumber;
-	/** @type {number} */
+	/**
+	 * @summary Gets or sets the height quantity. The height of the container.
+	 * @type {number} 
+	 */
 	this.heightQuantity = copyData.heightQuantity;
-	/** @type {number} */
+	/**
+	 * @summary Gets or sets the diameter quantity. The outside diameter of the container.
+	 * @type {number} 
+	 */
 	this.diameterQuantity = copyData.diameterQuantity;
-	/** @type {number} */
+	/**
+	 * @summary Gets or sets the capacity quantity. The functional capacity of the container.
+	 * @type {number} 
+	 */
 	this.capacityQuantity = copyData.capacityQuantity;
 	}
 }  // Container 
-// SanteDB.Core.Model.Entities.DeviceEntity, SanteDB.Core.Model, Version=2.1.113.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Entities.DeviceEntity, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
 //if(!DeviceEntity)
 /**
  * @class
@@ -3377,91 +4717,200 @@ function Container (copyData) {
 function DeviceEntity (copyData) { 
 	this.$type = 'DeviceEntity';
 	if(copyData) {
-	/** @type {BatchOperationType} */
+	/**
+	 * @summary Gets or sets the operation
+	 * @type {BatchOperationType} 
+	 */
 	this.operation = copyData.operation;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the primary identifying UUID of this object
+	 * @type {string} 
+	 */
 	this.id = copyData.id;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the security provenance object which represents the obsoletion of this data
+	 * @type {string} 
+	 */
 	this.obsoletedBy = copyData.obsoletedBy;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the security provenance object which represents the creation of this object
+	 * @type {string} 
+	 */
 	this.createdBy = copyData.createdBy;
-	/** @type {SecurityProvenance} */
+	/**
+	 * @type {SecurityProvenance} 
+	 */
 	this.obsoletedByModel = copyData.obsoletedByModel;
-	/** @type {Date} */
+	/**
+	 * @summary Gets the time that the object was last modified (from base data, default to CreationTime)
+	 * @type {Date} 
+	 */
 	this.modifiedOn = copyData.modifiedOn;
-	/** @type {SecurityProvenance} */
+	/**
+	 * @type {SecurityProvenance} 
+	 */
 	this.createdByModel = copyData.createdByModel;
-	/** @type {Date} */
+	/**
+	 * @summary Gets or sets the time that the data is no longer valid (was deleted/obsoleted) in ISO format
+	 * @type {Date} 
+	 */
 	this.obsoletionTime = copyData.obsoletionTime;
-	/** @type {Date} */
+	/**
+	 * @type {Date} 
+	 */
 	this.obsoletionTimeModel = copyData.obsoletionTimeModel;
-	/** @type {Date} */
+	/**
+	 * @summary Gets or sets the creation time as an ISO date format
+	 * @type {Date} 
+	 */
 	this.creationTime = copyData.creationTime;
-	/** @type {Date} */
+	/**
+	 * @type {Date} 
+	 */
 	this.creationTimeModel = copyData.creationTimeModel;
-	/** @type {number} */
+	/**
+	 * @type {number} 
+	 */
 	this.sequence = copyData.sequence;
-	/** @type {string} */
+	/**
+	 * @type {string} 
+	 */
 	this.version = copyData.version;
-	/** @type {string} */
+	/**
+	 * @type {string} 
+	 */
 	this.previousVersion = copyData.previousVersion;
-	/** @type {SecurityPolicyInstance} */
+	/**
+	 * @summary Gets or sets the security policy instances associated with the entity
+	 * @type {SecurityPolicyInstance} 
+	 */
 	this.policy = copyData.policy;
-	/** @type {string} */
+	/**
+	 * @summary Type concept identifier
+	 * @type {string} 
+	 */
 	this.typeConcept = copyData.typeConcept;
-	/** @type {Concept} */
+	/**
+	 * @type {Concept} 
+	 */
 	this.typeConceptModel = copyData.typeConceptModel;
-	/** @type {TemplateDefinition} */
+	/**
+	 * @type {TemplateDefinition} 
+	 */
 	this.templateModel = copyData.templateModel;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the template definition
+	 * @type {string} 
+	 */
 	this.template = copyData.template;
-	/** @type {object} */
+	/**
+	 * @summary Gets a list of all telecommunications addresses associated with the entity
+	 * @type {object} 
+	 */
 	this.telecom = copyData.telecom;
-	/** @type {object} */
+	/**
+	 * @summary Gets a list of all tags associated with the entity
+	 * @type {object} 
+	 */
 	this.tag = copyData.tag;
-	/** @type {string} */
+	/**
+	 * @summary Status concept id
+	 * @type {string} 
+	 */
 	this.statusConcept = copyData.statusConcept;
-	/** @type {Concept} */
+	/**
+	 * @type {Concept} 
+	 */
 	this.statusConceptModel = copyData.statusConceptModel;
-	/** @type {object} */
+	/**
+	 * @summary Gets a list of all associated entities for this entity
+	 * @type {object} 
+	 */
 	this.relationship = copyData.relationship;
-	/** @type {object} */
+	/**
+	 * @summary Gets the acts in which this entity participates
+	 * @type {object} 
+	 */
 	this.participation = copyData.participation;
-	/** @type {EntityNote} */
+	/**
+	 * @summary Gets a list of all notes associated with the entity
+	 * @type {EntityNote} 
+	 */
 	this.note = copyData.note;
-	/** @type {object} */
+	/**
+	 * @summary Gets a list of all names associated with the entity
+	 * @type {object} 
+	 */
 	this.name = copyData.name;
-	/** @type {object} */
+	/**
+	 * @summary Gets the identifiers associated with this entity
+	 * @type {object} 
+	 */
 	this.identifier = copyData.identifier;
-	/** @type {object} */
+	/**
+	 * @summary Gets a list of all extensions associated with the entity
+	 * @type {object} 
+	 */
 	this.extension = copyData.extension;
-	/** @type {string} */
+	/**
+	 * @summary Determiner concept
+	 * @type {string} 
+	 */
 	this.determinerConcept = copyData.determinerConcept;
-	/** @type {Concept} */
+	/**
+	 * @type {Concept} 
+	 */
 	this.determinerConceptModel = copyData.determinerConceptModel;
-	/** @type {string} */
+	/**
+	 * @summary Creation act reference
+	 * @type {string} 
+	 */
 	this.creationAct = copyData.creationAct;
-	/** @type {Act} */
+	/**
+	 * @type {Act} 
+	 */
 	this.creationActModel = copyData.creationActModel;
-	/** @type {string} */
+	/**
+	 * @summary Class concept datal load property
+	 * @type {string} 
+	 */
 	this.classConcept = copyData.classConcept;
-	/** @type {Concept} */
+	/**
+	 * @type {Concept} 
+	 */
 	this.classConceptModel = copyData.classConceptModel;
-	/** @type {object} */
+	/**
+	 * @summary Gets a list of all addresses associated with the entity
+	 * @type {object} 
+	 */
 	this.address = copyData.address;
-	/** @type {GeoTag} */
+	/**
+	 * @summary Gets or sets the geo tag
+	 * @type {GeoTag} 
+	 */
 	this.geo = copyData.geo;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the security device key
+	 * @type {string} 
+	 */
 	this.securityDevice = copyData.securityDevice;
-	/** @type {SecurityDevice} */
+	/**
+	 * @type {SecurityDevice} 
+	 */
 	this.securityDeviceModel = copyData.securityDeviceModel;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the operating system name
+	 * @type {string} 
+	 */
 	this.operatingSystemName = copyData.operatingSystemName;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the manufacturer model name
+	 * @type {string} 
+	 */
 	this.manufacturerModelName = copyData.manufacturerModelName;
 	}
 }  // DeviceEntity 
-// SanteDB.Core.Model.Entities.Entity, SanteDB.Core.Model, Version=2.1.113.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Entities.Entity, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
 //if(!Entity)
 /**
  * @class
@@ -3771,81 +5220,176 @@ function DeviceEntity (copyData) {
 function Entity (copyData) { 
 	this.$type = 'Entity';
 	if(copyData) {
-	/** @type {BatchOperationType} */
+	/**
+	 * @summary Gets or sets the operation
+	 * @type {BatchOperationType} 
+	 */
 	this.operation = copyData.operation;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the primary identifying UUID of this object
+	 * @type {string} 
+	 */
 	this.id = copyData.id;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the security provenance object which represents the obsoletion of this data
+	 * @type {string} 
+	 */
 	this.obsoletedBy = copyData.obsoletedBy;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the security provenance object which represents the creation of this object
+	 * @type {string} 
+	 */
 	this.createdBy = copyData.createdBy;
-	/** @type {SecurityProvenance} */
+	/**
+	 * @type {SecurityProvenance} 
+	 */
 	this.obsoletedByModel = copyData.obsoletedByModel;
-	/** @type {Date} */
+	/**
+	 * @summary Gets the time that the object was last modified (from base data, default to CreationTime)
+	 * @type {Date} 
+	 */
 	this.modifiedOn = copyData.modifiedOn;
-	/** @type {SecurityProvenance} */
+	/**
+	 * @type {SecurityProvenance} 
+	 */
 	this.createdByModel = copyData.createdByModel;
-	/** @type {Date} */
+	/**
+	 * @summary Gets or sets the time that the data is no longer valid (was deleted/obsoleted) in ISO format
+	 * @type {Date} 
+	 */
 	this.obsoletionTime = copyData.obsoletionTime;
-	/** @type {Date} */
+	/**
+	 * @type {Date} 
+	 */
 	this.obsoletionTimeModel = copyData.obsoletionTimeModel;
-	/** @type {Date} */
+	/**
+	 * @summary Gets or sets the creation time as an ISO date format
+	 * @type {Date} 
+	 */
 	this.creationTime = copyData.creationTime;
-	/** @type {Date} */
+	/**
+	 * @type {Date} 
+	 */
 	this.creationTimeModel = copyData.creationTimeModel;
-	/** @type {number} */
+	/**
+	 * @type {number} 
+	 */
 	this.sequence = copyData.sequence;
-	/** @type {string} */
+	/**
+	 * @type {string} 
+	 */
 	this.version = copyData.version;
-	/** @type {string} */
+	/**
+	 * @type {string} 
+	 */
 	this.previousVersion = copyData.previousVersion;
-	/** @type {SecurityPolicyInstance} */
+	/**
+	 * @summary Gets or sets the security policy instances associated with the entity
+	 * @type {SecurityPolicyInstance} 
+	 */
 	this.policy = copyData.policy;
-	/** @type {string} */
+	/**
+	 * @summary Type concept identifier
+	 * @type {string} 
+	 */
 	this.typeConcept = copyData.typeConcept;
-	/** @type {Concept} */
+	/**
+	 * @type {Concept} 
+	 */
 	this.typeConceptModel = copyData.typeConceptModel;
-	/** @type {TemplateDefinition} */
+	/**
+	 * @type {TemplateDefinition} 
+	 */
 	this.templateModel = copyData.templateModel;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the template definition
+	 * @type {string} 
+	 */
 	this.template = copyData.template;
-	/** @type {object} */
+	/**
+	 * @summary Gets a list of all telecommunications addresses associated with the entity
+	 * @type {object} 
+	 */
 	this.telecom = copyData.telecom;
-	/** @type {object} */
+	/**
+	 * @summary Gets a list of all tags associated with the entity
+	 * @type {object} 
+	 */
 	this.tag = copyData.tag;
-	/** @type {string} */
+	/**
+	 * @summary Status concept id
+	 * @type {string} 
+	 */
 	this.statusConcept = copyData.statusConcept;
-	/** @type {Concept} */
+	/**
+	 * @type {Concept} 
+	 */
 	this.statusConceptModel = copyData.statusConceptModel;
-	/** @type {object} */
+	/**
+	 * @summary Gets a list of all associated entities for this entity
+	 * @type {object} 
+	 */
 	this.relationship = copyData.relationship;
-	/** @type {object} */
+	/**
+	 * @summary Gets the acts in which this entity participates
+	 * @type {object} 
+	 */
 	this.participation = copyData.participation;
-	/** @type {EntityNote} */
+	/**
+	 * @summary Gets a list of all notes associated with the entity
+	 * @type {EntityNote} 
+	 */
 	this.note = copyData.note;
-	/** @type {object} */
+	/**
+	 * @summary Gets a list of all names associated with the entity
+	 * @type {object} 
+	 */
 	this.name = copyData.name;
-	/** @type {object} */
+	/**
+	 * @summary Gets the identifiers associated with this entity
+	 * @type {object} 
+	 */
 	this.identifier = copyData.identifier;
-	/** @type {object} */
+	/**
+	 * @summary Gets a list of all extensions associated with the entity
+	 * @type {object} 
+	 */
 	this.extension = copyData.extension;
-	/** @type {string} */
+	/**
+	 * @summary Determiner concept
+	 * @type {string} 
+	 */
 	this.determinerConcept = copyData.determinerConcept;
-	/** @type {Concept} */
+	/**
+	 * @type {Concept} 
+	 */
 	this.determinerConceptModel = copyData.determinerConceptModel;
-	/** @type {string} */
+	/**
+	 * @summary Creation act reference
+	 * @type {string} 
+	 */
 	this.creationAct = copyData.creationAct;
-	/** @type {Act} */
+	/**
+	 * @type {Act} 
+	 */
 	this.creationActModel = copyData.creationActModel;
-	/** @type {string} */
+	/**
+	 * @summary Class concept datal load property
+	 * @type {string} 
+	 */
 	this.classConcept = copyData.classConcept;
-	/** @type {Concept} */
+	/**
+	 * @type {Concept} 
+	 */
 	this.classConceptModel = copyData.classConceptModel;
-	/** @type {object} */
+	/**
+	 * @summary Gets a list of all addresses associated with the entity
+	 * @type {object} 
+	 */
 	this.address = copyData.address;
 	}
 }  // Entity 
-// SanteDB.Core.Model.Entities.EntityAddress, SanteDB.Core.Model, Version=2.1.113.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Entities.EntityAddress, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
 //if(!EntityAddress)
 /**
  * @class
@@ -3898,29 +5442,53 @@ function Entity (copyData) {
 function EntityAddress (copyData) { 
 	this.$type = 'EntityAddress';
 	if(copyData) {
-	/** @type {BatchOperationType} */
+	/**
+	 * @summary Gets or sets the operation
+	 * @type {BatchOperationType} 
+	 */
 	this.operation = copyData.operation;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the primary identifying UUID of this object
+	 * @type {string} 
+	 */
 	this.id = copyData.id;
-	/** @type {Entity} */
+	/**
+	 * @type {Entity} 
+	 */
 	this.sourceModel = copyData.sourceModel;
-	/** @type {string} */
+	/**
+	 * @type {string} 
+	 */
 	this.source = copyData.source;
-	/** @type {Date} */
+	/**
+	 * @type {Date} 
+	 */
 	this.modifiedOn = copyData.modifiedOn;
-	/** @type {number} */
+	/**
+	 * @type {number} 
+	 */
 	this.obsoleteVersionSequence = copyData.obsoleteVersionSequence;
-	/** @type {number} */
+	/**
+	 * @type {number} 
+	 */
 	this.effectiveVersionSequence = copyData.effectiveVersionSequence;
-	/** @type {object} */
+	/**
+	 * @summary Gets or sets the component types
+	 * @type {object} 
+	 */
 	this.component = copyData.component;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the address use key
+	 * @type {string} 
+	 */
 	this.use = copyData.use;
-	/** @type {Concept} */
+	/**
+	 * @type {Concept} 
+	 */
 	this.useModel = copyData.useModel;
 	}
 }  // EntityAddress 
-// SanteDB.Core.Model.Entities.EntityAddressComponent, SanteDB.Core.Model, Version=2.1.113.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Entities.EntityAddressComponent, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
 //if(!AddressComponent)
 /**
  * @class
@@ -3942,25 +5510,44 @@ function EntityAddress (copyData) {
 function AddressComponent (copyData) { 
 	this.$type = 'AddressComponent';
 	if(copyData) {
-	/** @type {BatchOperationType} */
+	/**
+	 * @summary Gets or sets the operation
+	 * @type {BatchOperationType} 
+	 */
 	this.operation = copyData.operation;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the primary identifying UUID of this object
+	 * @type {string} 
+	 */
 	this.id = copyData.id;
-	/** @type {EntityAddress} */
+	/**
+	 * @type {EntityAddress} 
+	 */
 	this.sourceModel = copyData.sourceModel;
-	/** @type {string} */
+	/**
+	 * @type {string} 
+	 */
 	this.source = copyData.source;
-	/** @type {Date} */
+	/**
+	 * @type {Date} 
+	 */
 	this.modifiedOn = copyData.modifiedOn;
-	/** @type {string} */
+	/**
+	 * @type {string} 
+	 */
 	this.value = copyData.value;
-	/** @type {Concept} */
+	/**
+	 * @type {Concept} 
+	 */
 	this.typeModel = copyData.typeModel;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the component type key
+	 * @type {string} 
+	 */
 	this.type = copyData.type;
 	}
 }  // AddressComponent 
-// SanteDB.Core.Model.Entities.EntityName, SanteDB.Core.Model, Version=2.1.113.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Entities.EntityName, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
 //if(!EntityName)
 /**
  * @class
@@ -3991,29 +5578,53 @@ function AddressComponent (copyData) {
 function EntityName (copyData) { 
 	this.$type = 'EntityName';
 	if(copyData) {
-	/** @type {BatchOperationType} */
+	/**
+	 * @summary Gets or sets the operation
+	 * @type {BatchOperationType} 
+	 */
 	this.operation = copyData.operation;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the primary identifying UUID of this object
+	 * @type {string} 
+	 */
 	this.id = copyData.id;
-	/** @type {Entity} */
+	/**
+	 * @type {Entity} 
+	 */
 	this.sourceModel = copyData.sourceModel;
-	/** @type {string} */
+	/**
+	 * @type {string} 
+	 */
 	this.source = copyData.source;
-	/** @type {Date} */
+	/**
+	 * @type {Date} 
+	 */
 	this.modifiedOn = copyData.modifiedOn;
-	/** @type {number} */
+	/**
+	 * @type {number} 
+	 */
 	this.obsoleteVersionSequence = copyData.obsoleteVersionSequence;
-	/** @type {number} */
+	/**
+	 * @type {number} 
+	 */
 	this.effectiveVersionSequence = copyData.effectiveVersionSequence;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the name use key
+	 * @type {string} 
+	 */
 	this.use = copyData.use;
-	/** @type {Concept} */
+	/**
+	 * @type {Concept} 
+	 */
 	this.useModel = copyData.useModel;
-	/** @type {object} */
+	/**
+	 * @summary Gets or sets the individual component types
+	 * @type {object} 
+	 */
 	this.component = copyData.component;
 	}
 }  // EntityName 
-// SanteDB.Core.Model.Entities.EntityNameComponent, SanteDB.Core.Model, Version=2.1.113.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Entities.EntityNameComponent, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
 //if(!EntityNameComponent)
 /**
  * @class
@@ -4035,25 +5646,44 @@ function EntityName (copyData) {
 function EntityNameComponent (copyData) { 
 	this.$type = 'EntityNameComponent';
 	if(copyData) {
-	/** @type {BatchOperationType} */
+	/**
+	 * @summary Gets or sets the operation
+	 * @type {BatchOperationType} 
+	 */
 	this.operation = copyData.operation;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the primary identifying UUID of this object
+	 * @type {string} 
+	 */
 	this.id = copyData.id;
-	/** @type {EntityName} */
+	/**
+	 * @type {EntityName} 
+	 */
 	this.sourceModel = copyData.sourceModel;
-	/** @type {string} */
+	/**
+	 * @type {string} 
+	 */
 	this.source = copyData.source;
-	/** @type {Date} */
+	/**
+	 * @type {Date} 
+	 */
 	this.modifiedOn = copyData.modifiedOn;
-	/** @type {string} */
+	/**
+	 * @type {string} 
+	 */
 	this.value = copyData.value;
-	/** @type {Concept} */
+	/**
+	 * @type {Concept} 
+	 */
 	this.typeModel = copyData.typeModel;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the component type key
+	 * @type {string} 
+	 */
 	this.type = copyData.type;
 	}
 }  // EntityNameComponent 
-// SanteDB.Core.Model.Entities.EntityRelationship, SanteDB.Core.Model, Version=2.1.113.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Entities.EntityRelationship, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
 //if(!EntityRelationship)
 /**
  * @class
@@ -4087,49 +5717,99 @@ function EntityNameComponent (copyData) {
 function EntityRelationship (copyData) { 
 	this.$type = 'EntityRelationship';
 	if(copyData) {
-	/** @type {BatchOperationType} */
+	/**
+	 * @summary Gets or sets the operation
+	 * @type {BatchOperationType} 
+	 */
 	this.operation = copyData.operation;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the primary identifying UUID of this object
+	 * @type {string} 
+	 */
 	this.id = copyData.id;
-	/** @type {Entity} */
+	/**
+	 * @type {Entity} 
+	 */
 	this.sourceModel = copyData.sourceModel;
-	/** @type {string} */
+	/**
+	 * @type {string} 
+	 */
 	this.source = copyData.source;
-	/** @type {Date} */
+	/**
+	 * @type {Date} 
+	 */
 	this.modifiedOn = copyData.modifiedOn;
-	/** @type {number} */
+	/**
+	 * @type {number} 
+	 */
 	this.obsoleteVersionSequence = copyData.obsoleteVersionSequence;
-	/** @type {number} */
+	/**
+	 * @type {number} 
+	 */
 	this.effectiveVersionSequence = copyData.effectiveVersionSequence;
-	/** @type {string} */
+	/**
+	 * @summary The target of the association
+	 * @type {string} 
+	 */
 	this.target = copyData.target;
-	/** @type {Entity} */
+	/**
+	 * @type {Entity} 
+	 */
 	this.targetModel = copyData.targetModel;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the an additional (sub-type) of the relationship
+	 * @type {string} 
+	 */
 	this.classification = copyData.classification;
-	/** @type {Concept} */
+	/**
+	 * @type {Concept} 
+	 */
 	this.classificationModel = copyData.classificationModel;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the association type
+	 * @type {string} 
+	 */
 	this.relationshipRole = copyData.relationshipRole;
-	/** @type {Concept} */
+	/**
+	 * @type {Concept} 
+	 */
 	this.relationshipRoleModel = copyData.relationshipRoleModel;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the association type
+	 * @type {string} 
+	 */
 	this.relationshipType = copyData.relationshipType;
-	/** @type {Concept} */
+	/**
+	 * @type {Concept} 
+	 */
 	this.relationshipTypeModel = copyData.relationshipTypeModel;
-	/** @type {number} */
+	/**
+	 * @summary Represents the quantity of target in source
+	 * @type {number} 
+	 */
 	this.quantity = copyData.quantity;
-	/** @type {Double} */
+	/**
+	 * @summary The strength (confidence) of the relationship between source and target
+	 * @type {Double} 
+	 */
 	this.strength = copyData.strength;
-	/** @type {boolean} */
+	/**
+	 * @summary The inversion indicator
+	 * @type {boolean} 
+	 */
 	this.inversionInd = copyData.inversionInd;
-	/** @type {string} */
+	/**
+	 * @summary The entity that this relationship targets
+	 * @type {string} 
+	 */
 	this.holder = copyData.holder;
-	/** @type {Entity} */
+	/**
+	 * @type {Entity} 
+	 */
 	this.holderModel = copyData.holderModel;
 	}
 }  // EntityRelationship 
-// SanteDB.Core.Model.Entities.EntityTelecomAddress, SanteDB.Core.Model, Version=2.1.113.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Entities.EntityTelecomAddress, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
 //if(!EntityTelecomAddress)
 /**
  * @class
@@ -4155,33 +5835,62 @@ function EntityRelationship (copyData) {
 function EntityTelecomAddress (copyData) { 
 	this.$type = 'EntityTelecomAddress';
 	if(copyData) {
-	/** @type {BatchOperationType} */
+	/**
+	 * @summary Gets or sets the operation
+	 * @type {BatchOperationType} 
+	 */
 	this.operation = copyData.operation;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the primary identifying UUID of this object
+	 * @type {string} 
+	 */
 	this.id = copyData.id;
-	/** @type {Entity} */
+	/**
+	 * @type {Entity} 
+	 */
 	this.sourceModel = copyData.sourceModel;
-	/** @type {string} */
+	/**
+	 * @type {string} 
+	 */
 	this.source = copyData.source;
-	/** @type {Date} */
+	/**
+	 * @type {Date} 
+	 */
 	this.modifiedOn = copyData.modifiedOn;
-	/** @type {number} */
+	/**
+	 * @type {number} 
+	 */
 	this.obsoleteVersionSequence = copyData.obsoleteVersionSequence;
-	/** @type {number} */
+	/**
+	 * @type {number} 
+	 */
 	this.effectiveVersionSequence = copyData.effectiveVersionSequence;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the value of the telecom address
+	 * @type {string} 
+	 */
 	this.value = copyData.value;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the name use key
+	 * @type {string} 
+	 */
 	this.type = copyData.type;
-	/** @type {Concept} */
+	/**
+	 * @type {Concept} 
+	 */
 	this.typeModel = copyData.typeModel;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the name use key
+	 * @type {string} 
+	 */
 	this.use = copyData.use;
-	/** @type {Concept} */
+	/**
+	 * @type {Concept} 
+	 */
 	this.useModel = copyData.useModel;
 	}
 }  // EntityTelecomAddress 
-// SanteDB.Core.Model.Entities.GenericComponentValues`1, SanteDB.Core.Model, Version=2.1.113.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Entities.GenericComponentValues`1, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
 //if(!GenericComponentValues)
 /**
  * @class
@@ -4204,25 +5913,45 @@ function EntityTelecomAddress (copyData) {
 function GenericComponentValues (copyData) { 
 	this.$type = 'GenericComponentValues';
 	if(copyData) {
-	/** @type {BatchOperationType} */
+	/**
+	 * @summary Gets or sets the operation
+	 * @type {BatchOperationType} 
+	 */
 	this.operation = copyData.operation;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the primary identifying UUID of this object
+	 * @type {string} 
+	 */
 	this.id = copyData.id;
-	/** @type {IdentifiedData} */
+	/**
+	 * @type {IdentifiedData} 
+	 */
 	this.sourceModel = copyData.sourceModel;
-	/** @type {string} */
+	/**
+	 * @type {string} 
+	 */
 	this.source = copyData.source;
-	/** @type {Date} */
+	/**
+	 * @type {Date} 
+	 */
 	this.modifiedOn = copyData.modifiedOn;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the value of the name component
+	 * @type {string} 
+	 */
 	this.value = copyData.value;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the type of address component
+	 * @type {string} 
+	 */
 	this.type = copyData.type;
-	/** @type {Concept} */
+	/**
+	 * @type {Concept} 
+	 */
 	this.typeModel = copyData.typeModel;
 	}
 }  // GenericComponentValues 
-// SanteDB.Core.Model.Entities.ManufacturedMaterial, SanteDB.Core.Model, Version=2.1.113.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Entities.ManufacturedMaterial, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
 //if(!ManufacturedMaterial)
 /**
  * @class
@@ -4541,97 +6270,215 @@ function GenericComponentValues (copyData) {
 function ManufacturedMaterial (copyData) { 
 	this.$type = 'ManufacturedMaterial';
 	if(copyData) {
-	/** @type {BatchOperationType} */
+	/**
+	 * @summary Gets or sets the operation
+	 * @type {BatchOperationType} 
+	 */
 	this.operation = copyData.operation;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the primary identifying UUID of this object
+	 * @type {string} 
+	 */
 	this.id = copyData.id;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the security provenance object which represents the obsoletion of this data
+	 * @type {string} 
+	 */
 	this.obsoletedBy = copyData.obsoletedBy;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the security provenance object which represents the creation of this object
+	 * @type {string} 
+	 */
 	this.createdBy = copyData.createdBy;
-	/** @type {SecurityProvenance} */
+	/**
+	 * @type {SecurityProvenance} 
+	 */
 	this.obsoletedByModel = copyData.obsoletedByModel;
-	/** @type {Date} */
+	/**
+	 * @summary Gets the time that the object was last modified (from base data, default to CreationTime)
+	 * @type {Date} 
+	 */
 	this.modifiedOn = copyData.modifiedOn;
-	/** @type {SecurityProvenance} */
+	/**
+	 * @type {SecurityProvenance} 
+	 */
 	this.createdByModel = copyData.createdByModel;
-	/** @type {Date} */
+	/**
+	 * @summary Gets or sets the time that the data is no longer valid (was deleted/obsoleted) in ISO format
+	 * @type {Date} 
+	 */
 	this.obsoletionTime = copyData.obsoletionTime;
-	/** @type {Date} */
+	/**
+	 * @type {Date} 
+	 */
 	this.obsoletionTimeModel = copyData.obsoletionTimeModel;
-	/** @type {Date} */
+	/**
+	 * @summary Gets or sets the creation time as an ISO date format
+	 * @type {Date} 
+	 */
 	this.creationTime = copyData.creationTime;
-	/** @type {Date} */
+	/**
+	 * @type {Date} 
+	 */
 	this.creationTimeModel = copyData.creationTimeModel;
-	/** @type {number} */
+	/**
+	 * @type {number} 
+	 */
 	this.sequence = copyData.sequence;
-	/** @type {string} */
+	/**
+	 * @type {string} 
+	 */
 	this.version = copyData.version;
-	/** @type {string} */
+	/**
+	 * @type {string} 
+	 */
 	this.previousVersion = copyData.previousVersion;
-	/** @type {SecurityPolicyInstance} */
+	/**
+	 * @summary Gets or sets the security policy instances associated with the entity
+	 * @type {SecurityPolicyInstance} 
+	 */
 	this.policy = copyData.policy;
-	/** @type {string} */
+	/**
+	 * @summary Type concept identifier
+	 * @type {string} 
+	 */
 	this.typeConcept = copyData.typeConcept;
-	/** @type {Concept} */
+	/**
+	 * @type {Concept} 
+	 */
 	this.typeConceptModel = copyData.typeConceptModel;
-	/** @type {TemplateDefinition} */
+	/**
+	 * @type {TemplateDefinition} 
+	 */
 	this.templateModel = copyData.templateModel;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the template definition
+	 * @type {string} 
+	 */
 	this.template = copyData.template;
-	/** @type {object} */
+	/**
+	 * @summary Gets a list of all telecommunications addresses associated with the entity
+	 * @type {object} 
+	 */
 	this.telecom = copyData.telecom;
-	/** @type {object} */
+	/**
+	 * @summary Gets a list of all tags associated with the entity
+	 * @type {object} 
+	 */
 	this.tag = copyData.tag;
-	/** @type {string} */
+	/**
+	 * @summary Status concept id
+	 * @type {string} 
+	 */
 	this.statusConcept = copyData.statusConcept;
-	/** @type {Concept} */
+	/**
+	 * @type {Concept} 
+	 */
 	this.statusConceptModel = copyData.statusConceptModel;
-	/** @type {object} */
+	/**
+	 * @summary Gets a list of all associated entities for this entity
+	 * @type {object} 
+	 */
 	this.relationship = copyData.relationship;
-	/** @type {object} */
+	/**
+	 * @summary Gets the acts in which this entity participates
+	 * @type {object} 
+	 */
 	this.participation = copyData.participation;
-	/** @type {EntityNote} */
+	/**
+	 * @summary Gets a list of all notes associated with the entity
+	 * @type {EntityNote} 
+	 */
 	this.note = copyData.note;
-	/** @type {object} */
+	/**
+	 * @summary Gets a list of all names associated with the entity
+	 * @type {object} 
+	 */
 	this.name = copyData.name;
-	/** @type {object} */
+	/**
+	 * @summary Gets the identifiers associated with this entity
+	 * @type {object} 
+	 */
 	this.identifier = copyData.identifier;
-	/** @type {object} */
+	/**
+	 * @summary Gets a list of all extensions associated with the entity
+	 * @type {object} 
+	 */
 	this.extension = copyData.extension;
-	/** @type {string} */
+	/**
+	 * @summary Determiner concept
+	 * @type {string} 
+	 */
 	this.determinerConcept = copyData.determinerConcept;
-	/** @type {Concept} */
+	/**
+	 * @type {Concept} 
+	 */
 	this.determinerConceptModel = copyData.determinerConceptModel;
-	/** @type {string} */
+	/**
+	 * @summary Creation act reference
+	 * @type {string} 
+	 */
 	this.creationAct = copyData.creationAct;
-	/** @type {Act} */
+	/**
+	 * @type {Act} 
+	 */
 	this.creationActModel = copyData.creationActModel;
-	/** @type {string} */
+	/**
+	 * @summary Class concept datal load property
+	 * @type {string} 
+	 */
 	this.classConcept = copyData.classConcept;
-	/** @type {Concept} */
+	/**
+	 * @type {Concept} 
+	 */
 	this.classConceptModel = copyData.classConceptModel;
-	/** @type {object} */
+	/**
+	 * @summary Gets a list of all addresses associated with the entity
+	 * @type {object} 
+	 */
 	this.address = copyData.address;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the concept which dictates the unit of measure for a single instance of this entity
+	 * @type {string} 
+	 */
 	this.quantityConcept = copyData.quantityConcept;
-	/** @type {Concept} */
+	/**
+	 * @type {Concept} 
+	 */
 	this.quantityConceptModel = copyData.quantityConceptModel;
-	/** @type {number} */
+	/**
+	 * @summary The base quantity of the object in the units. This differs from quantity on the relationship
+            which is a /per ...
+	 * @type {number} 
+	 */
 	this.quantity = copyData.quantity;
-	/** @type {boolean} */
+	/**
+	 * @summary True if the material is simply administrative
+	 * @type {boolean} 
+	 */
 	this.isAdministrative = copyData.isAdministrative;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the concept which dictates the form of the material (solid, liquid, capsule, injection, etc.)
+	 * @type {string} 
+	 */
 	this.formConcept = copyData.formConcept;
-	/** @type {Concept} */
+	/**
+	 * @type {Concept} 
+	 */
 	this.formConceptModel = copyData.formConceptModel;
-	/** @type {Date} */
+	/**
+	 * @summary Gets or sets the expiry date of the material
+	 * @type {Date} 
+	 */
 	this.expiryDate = copyData.expiryDate;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the lot number of the manufactured material
+	 * @type {string} 
+	 */
 	this.lotNumber = copyData.lotNumber;
 	}
 }  // ManufacturedMaterial 
-// SanteDB.Core.Model.Entities.Material, SanteDB.Core.Model, Version=2.1.113.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Entities.Material, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
 //if(!Material)
 /**
  * @class
@@ -4948,95 +6795,210 @@ function ManufacturedMaterial (copyData) {
 function Material (copyData) { 
 	this.$type = 'Material';
 	if(copyData) {
-	/** @type {BatchOperationType} */
+	/**
+	 * @summary Gets or sets the operation
+	 * @type {BatchOperationType} 
+	 */
 	this.operation = copyData.operation;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the primary identifying UUID of this object
+	 * @type {string} 
+	 */
 	this.id = copyData.id;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the security provenance object which represents the obsoletion of this data
+	 * @type {string} 
+	 */
 	this.obsoletedBy = copyData.obsoletedBy;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the security provenance object which represents the creation of this object
+	 * @type {string} 
+	 */
 	this.createdBy = copyData.createdBy;
-	/** @type {SecurityProvenance} */
+	/**
+	 * @type {SecurityProvenance} 
+	 */
 	this.obsoletedByModel = copyData.obsoletedByModel;
-	/** @type {Date} */
+	/**
+	 * @summary Gets the time that the object was last modified (from base data, default to CreationTime)
+	 * @type {Date} 
+	 */
 	this.modifiedOn = copyData.modifiedOn;
-	/** @type {SecurityProvenance} */
+	/**
+	 * @type {SecurityProvenance} 
+	 */
 	this.createdByModel = copyData.createdByModel;
-	/** @type {Date} */
+	/**
+	 * @summary Gets or sets the time that the data is no longer valid (was deleted/obsoleted) in ISO format
+	 * @type {Date} 
+	 */
 	this.obsoletionTime = copyData.obsoletionTime;
-	/** @type {Date} */
+	/**
+	 * @type {Date} 
+	 */
 	this.obsoletionTimeModel = copyData.obsoletionTimeModel;
-	/** @type {Date} */
+	/**
+	 * @summary Gets or sets the creation time as an ISO date format
+	 * @type {Date} 
+	 */
 	this.creationTime = copyData.creationTime;
-	/** @type {Date} */
+	/**
+	 * @type {Date} 
+	 */
 	this.creationTimeModel = copyData.creationTimeModel;
-	/** @type {number} */
+	/**
+	 * @type {number} 
+	 */
 	this.sequence = copyData.sequence;
-	/** @type {string} */
+	/**
+	 * @type {string} 
+	 */
 	this.version = copyData.version;
-	/** @type {string} */
+	/**
+	 * @type {string} 
+	 */
 	this.previousVersion = copyData.previousVersion;
-	/** @type {SecurityPolicyInstance} */
+	/**
+	 * @summary Gets or sets the security policy instances associated with the entity
+	 * @type {SecurityPolicyInstance} 
+	 */
 	this.policy = copyData.policy;
-	/** @type {string} */
+	/**
+	 * @summary Type concept identifier
+	 * @type {string} 
+	 */
 	this.typeConcept = copyData.typeConcept;
-	/** @type {Concept} */
+	/**
+	 * @type {Concept} 
+	 */
 	this.typeConceptModel = copyData.typeConceptModel;
-	/** @type {TemplateDefinition} */
+	/**
+	 * @type {TemplateDefinition} 
+	 */
 	this.templateModel = copyData.templateModel;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the template definition
+	 * @type {string} 
+	 */
 	this.template = copyData.template;
-	/** @type {object} */
+	/**
+	 * @summary Gets a list of all telecommunications addresses associated with the entity
+	 * @type {object} 
+	 */
 	this.telecom = copyData.telecom;
-	/** @type {object} */
+	/**
+	 * @summary Gets a list of all tags associated with the entity
+	 * @type {object} 
+	 */
 	this.tag = copyData.tag;
-	/** @type {string} */
+	/**
+	 * @summary Status concept id
+	 * @type {string} 
+	 */
 	this.statusConcept = copyData.statusConcept;
-	/** @type {Concept} */
+	/**
+	 * @type {Concept} 
+	 */
 	this.statusConceptModel = copyData.statusConceptModel;
-	/** @type {object} */
+	/**
+	 * @summary Gets a list of all associated entities for this entity
+	 * @type {object} 
+	 */
 	this.relationship = copyData.relationship;
-	/** @type {object} */
+	/**
+	 * @summary Gets the acts in which this entity participates
+	 * @type {object} 
+	 */
 	this.participation = copyData.participation;
-	/** @type {EntityNote} */
+	/**
+	 * @summary Gets a list of all notes associated with the entity
+	 * @type {EntityNote} 
+	 */
 	this.note = copyData.note;
-	/** @type {object} */
+	/**
+	 * @summary Gets a list of all names associated with the entity
+	 * @type {object} 
+	 */
 	this.name = copyData.name;
-	/** @type {object} */
+	/**
+	 * @summary Gets the identifiers associated with this entity
+	 * @type {object} 
+	 */
 	this.identifier = copyData.identifier;
-	/** @type {object} */
+	/**
+	 * @summary Gets a list of all extensions associated with the entity
+	 * @type {object} 
+	 */
 	this.extension = copyData.extension;
-	/** @type {string} */
+	/**
+	 * @summary Determiner concept
+	 * @type {string} 
+	 */
 	this.determinerConcept = copyData.determinerConcept;
-	/** @type {Concept} */
+	/**
+	 * @type {Concept} 
+	 */
 	this.determinerConceptModel = copyData.determinerConceptModel;
-	/** @type {string} */
+	/**
+	 * @summary Creation act reference
+	 * @type {string} 
+	 */
 	this.creationAct = copyData.creationAct;
-	/** @type {Act} */
+	/**
+	 * @type {Act} 
+	 */
 	this.creationActModel = copyData.creationActModel;
-	/** @type {string} */
+	/**
+	 * @summary Class concept datal load property
+	 * @type {string} 
+	 */
 	this.classConcept = copyData.classConcept;
-	/** @type {Concept} */
+	/**
+	 * @type {Concept} 
+	 */
 	this.classConceptModel = copyData.classConceptModel;
-	/** @type {object} */
+	/**
+	 * @summary Gets a list of all addresses associated with the entity
+	 * @type {object} 
+	 */
 	this.address = copyData.address;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the concept which dictates the unit of measure for a single instance of this entity
+	 * @type {string} 
+	 */
 	this.quantityConcept = copyData.quantityConcept;
-	/** @type {Concept} */
+	/**
+	 * @type {Concept} 
+	 */
 	this.quantityConceptModel = copyData.quantityConceptModel;
-	/** @type {number} */
+	/**
+	 * @summary The base quantity of the object in the units. This differs from quantity on the relationship
+            which is a /per ...
+	 * @type {number} 
+	 */
 	this.quantity = copyData.quantity;
-	/** @type {boolean} */
+	/**
+	 * @summary True if the material is simply administrative
+	 * @type {boolean} 
+	 */
 	this.isAdministrative = copyData.isAdministrative;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the concept which dictates the form of the material (solid, liquid, capsule, injection, etc.)
+	 * @type {string} 
+	 */
 	this.formConcept = copyData.formConcept;
-	/** @type {Concept} */
+	/**
+	 * @type {Concept} 
+	 */
 	this.formConceptModel = copyData.formConceptModel;
-	/** @type {Date} */
+	/**
+	 * @summary Gets or sets the expiry date of the material
+	 * @type {Date} 
+	 */
 	this.expiryDate = copyData.expiryDate;
 	}
 }  // Material 
-// SanteDB.Core.Model.Entities.Organization, SanteDB.Core.Model, Version=2.1.113.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Entities.Organization, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
 //if(!Organization)
 /**
  * @class
@@ -5346,85 +7308,185 @@ function Material (copyData) {
 function Organization (copyData) { 
 	this.$type = 'Organization';
 	if(copyData) {
-	/** @type {BatchOperationType} */
+	/**
+	 * @summary Gets or sets the operation
+	 * @type {BatchOperationType} 
+	 */
 	this.operation = copyData.operation;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the primary identifying UUID of this object
+	 * @type {string} 
+	 */
 	this.id = copyData.id;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the security provenance object which represents the obsoletion of this data
+	 * @type {string} 
+	 */
 	this.obsoletedBy = copyData.obsoletedBy;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the security provenance object which represents the creation of this object
+	 * @type {string} 
+	 */
 	this.createdBy = copyData.createdBy;
-	/** @type {SecurityProvenance} */
+	/**
+	 * @type {SecurityProvenance} 
+	 */
 	this.obsoletedByModel = copyData.obsoletedByModel;
-	/** @type {Date} */
+	/**
+	 * @summary Gets the time that the object was last modified (from base data, default to CreationTime)
+	 * @type {Date} 
+	 */
 	this.modifiedOn = copyData.modifiedOn;
-	/** @type {SecurityProvenance} */
+	/**
+	 * @type {SecurityProvenance} 
+	 */
 	this.createdByModel = copyData.createdByModel;
-	/** @type {Date} */
+	/**
+	 * @summary Gets or sets the time that the data is no longer valid (was deleted/obsoleted) in ISO format
+	 * @type {Date} 
+	 */
 	this.obsoletionTime = copyData.obsoletionTime;
-	/** @type {Date} */
+	/**
+	 * @type {Date} 
+	 */
 	this.obsoletionTimeModel = copyData.obsoletionTimeModel;
-	/** @type {Date} */
+	/**
+	 * @summary Gets or sets the creation time as an ISO date format
+	 * @type {Date} 
+	 */
 	this.creationTime = copyData.creationTime;
-	/** @type {Date} */
+	/**
+	 * @type {Date} 
+	 */
 	this.creationTimeModel = copyData.creationTimeModel;
-	/** @type {number} */
+	/**
+	 * @type {number} 
+	 */
 	this.sequence = copyData.sequence;
-	/** @type {string} */
+	/**
+	 * @type {string} 
+	 */
 	this.version = copyData.version;
-	/** @type {string} */
+	/**
+	 * @type {string} 
+	 */
 	this.previousVersion = copyData.previousVersion;
-	/** @type {SecurityPolicyInstance} */
+	/**
+	 * @summary Gets or sets the security policy instances associated with the entity
+	 * @type {SecurityPolicyInstance} 
+	 */
 	this.policy = copyData.policy;
-	/** @type {string} */
+	/**
+	 * @summary Type concept identifier
+	 * @type {string} 
+	 */
 	this.typeConcept = copyData.typeConcept;
-	/** @type {Concept} */
+	/**
+	 * @type {Concept} 
+	 */
 	this.typeConceptModel = copyData.typeConceptModel;
-	/** @type {TemplateDefinition} */
+	/**
+	 * @type {TemplateDefinition} 
+	 */
 	this.templateModel = copyData.templateModel;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the template definition
+	 * @type {string} 
+	 */
 	this.template = copyData.template;
-	/** @type {object} */
+	/**
+	 * @summary Gets a list of all telecommunications addresses associated with the entity
+	 * @type {object} 
+	 */
 	this.telecom = copyData.telecom;
-	/** @type {object} */
+	/**
+	 * @summary Gets a list of all tags associated with the entity
+	 * @type {object} 
+	 */
 	this.tag = copyData.tag;
-	/** @type {string} */
+	/**
+	 * @summary Status concept id
+	 * @type {string} 
+	 */
 	this.statusConcept = copyData.statusConcept;
-	/** @type {Concept} */
+	/**
+	 * @type {Concept} 
+	 */
 	this.statusConceptModel = copyData.statusConceptModel;
-	/** @type {object} */
+	/**
+	 * @summary Gets a list of all associated entities for this entity
+	 * @type {object} 
+	 */
 	this.relationship = copyData.relationship;
-	/** @type {object} */
+	/**
+	 * @summary Gets the acts in which this entity participates
+	 * @type {object} 
+	 */
 	this.participation = copyData.participation;
-	/** @type {EntityNote} */
+	/**
+	 * @summary Gets a list of all notes associated with the entity
+	 * @type {EntityNote} 
+	 */
 	this.note = copyData.note;
-	/** @type {object} */
+	/**
+	 * @summary Gets a list of all names associated with the entity
+	 * @type {object} 
+	 */
 	this.name = copyData.name;
-	/** @type {object} */
+	/**
+	 * @summary Gets the identifiers associated with this entity
+	 * @type {object} 
+	 */
 	this.identifier = copyData.identifier;
-	/** @type {object} */
+	/**
+	 * @summary Gets a list of all extensions associated with the entity
+	 * @type {object} 
+	 */
 	this.extension = copyData.extension;
-	/** @type {string} */
+	/**
+	 * @summary Determiner concept
+	 * @type {string} 
+	 */
 	this.determinerConcept = copyData.determinerConcept;
-	/** @type {Concept} */
+	/**
+	 * @type {Concept} 
+	 */
 	this.determinerConceptModel = copyData.determinerConceptModel;
-	/** @type {string} */
+	/**
+	 * @summary Creation act reference
+	 * @type {string} 
+	 */
 	this.creationAct = copyData.creationAct;
-	/** @type {Act} */
+	/**
+	 * @type {Act} 
+	 */
 	this.creationActModel = copyData.creationActModel;
-	/** @type {string} */
+	/**
+	 * @summary Class concept datal load property
+	 * @type {string} 
+	 */
 	this.classConcept = copyData.classConcept;
-	/** @type {Concept} */
+	/**
+	 * @type {Concept} 
+	 */
 	this.classConceptModel = copyData.classConceptModel;
-	/** @type {object} */
+	/**
+	 * @summary Gets a list of all addresses associated with the entity
+	 * @type {object} 
+	 */
 	this.address = copyData.address;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the concept key which classifies the industry in which the organization operates
+	 * @type {string} 
+	 */
 	this.industryConcept = copyData.industryConcept;
-	/** @type {Concept} */
+	/**
+	 * @type {Concept} 
+	 */
 	this.industryConceptModel = copyData.industryConceptModel;
 	}
 }  // Organization 
-// SanteDB.Core.Model.Entities.Person, SanteDB.Core.Model, Version=2.1.113.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Entities.Person, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
 //if(!Person)
 /**
  * @class
@@ -5739,95 +7801,209 @@ function Organization (copyData) {
 function Person (copyData) { 
 	this.$type = 'Person';
 	if(copyData) {
-	/** @type {BatchOperationType} */
+	/**
+	 * @summary Gets or sets the operation
+	 * @type {BatchOperationType} 
+	 */
 	this.operation = copyData.operation;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the primary identifying UUID of this object
+	 * @type {string} 
+	 */
 	this.id = copyData.id;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the security provenance object which represents the obsoletion of this data
+	 * @type {string} 
+	 */
 	this.obsoletedBy = copyData.obsoletedBy;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the security provenance object which represents the creation of this object
+	 * @type {string} 
+	 */
 	this.createdBy = copyData.createdBy;
-	/** @type {SecurityProvenance} */
+	/**
+	 * @type {SecurityProvenance} 
+	 */
 	this.obsoletedByModel = copyData.obsoletedByModel;
-	/** @type {Date} */
+	/**
+	 * @summary Gets the time that the object was last modified (from base data, default to CreationTime)
+	 * @type {Date} 
+	 */
 	this.modifiedOn = copyData.modifiedOn;
-	/** @type {SecurityProvenance} */
+	/**
+	 * @type {SecurityProvenance} 
+	 */
 	this.createdByModel = copyData.createdByModel;
-	/** @type {Date} */
+	/**
+	 * @summary Gets or sets the time that the data is no longer valid (was deleted/obsoleted) in ISO format
+	 * @type {Date} 
+	 */
 	this.obsoletionTime = copyData.obsoletionTime;
-	/** @type {Date} */
+	/**
+	 * @type {Date} 
+	 */
 	this.obsoletionTimeModel = copyData.obsoletionTimeModel;
-	/** @type {Date} */
+	/**
+	 * @summary Gets or sets the creation time as an ISO date format
+	 * @type {Date} 
+	 */
 	this.creationTime = copyData.creationTime;
-	/** @type {Date} */
+	/**
+	 * @type {Date} 
+	 */
 	this.creationTimeModel = copyData.creationTimeModel;
-	/** @type {number} */
+	/**
+	 * @type {number} 
+	 */
 	this.sequence = copyData.sequence;
-	/** @type {string} */
+	/**
+	 * @type {string} 
+	 */
 	this.version = copyData.version;
-	/** @type {string} */
+	/**
+	 * @type {string} 
+	 */
 	this.previousVersion = copyData.previousVersion;
-	/** @type {SecurityPolicyInstance} */
+	/**
+	 * @summary Gets or sets the security policy instances associated with the entity
+	 * @type {SecurityPolicyInstance} 
+	 */
 	this.policy = copyData.policy;
-	/** @type {string} */
+	/**
+	 * @summary Type concept identifier
+	 * @type {string} 
+	 */
 	this.typeConcept = copyData.typeConcept;
-	/** @type {Concept} */
+	/**
+	 * @type {Concept} 
+	 */
 	this.typeConceptModel = copyData.typeConceptModel;
-	/** @type {TemplateDefinition} */
+	/**
+	 * @type {TemplateDefinition} 
+	 */
 	this.templateModel = copyData.templateModel;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the template definition
+	 * @type {string} 
+	 */
 	this.template = copyData.template;
-	/** @type {object} */
+	/**
+	 * @summary Gets a list of all telecommunications addresses associated with the entity
+	 * @type {object} 
+	 */
 	this.telecom = copyData.telecom;
-	/** @type {object} */
+	/**
+	 * @summary Gets a list of all tags associated with the entity
+	 * @type {object} 
+	 */
 	this.tag = copyData.tag;
-	/** @type {string} */
+	/**
+	 * @summary Status concept id
+	 * @type {string} 
+	 */
 	this.statusConcept = copyData.statusConcept;
-	/** @type {Concept} */
+	/**
+	 * @type {Concept} 
+	 */
 	this.statusConceptModel = copyData.statusConceptModel;
-	/** @type {object} */
+	/**
+	 * @summary Gets a list of all associated entities for this entity
+	 * @type {object} 
+	 */
 	this.relationship = copyData.relationship;
-	/** @type {object} */
+	/**
+	 * @summary Gets the acts in which this entity participates
+	 * @type {object} 
+	 */
 	this.participation = copyData.participation;
-	/** @type {EntityNote} */
+	/**
+	 * @summary Gets a list of all notes associated with the entity
+	 * @type {EntityNote} 
+	 */
 	this.note = copyData.note;
-	/** @type {object} */
+	/**
+	 * @summary Gets a list of all names associated with the entity
+	 * @type {object} 
+	 */
 	this.name = copyData.name;
-	/** @type {object} */
+	/**
+	 * @summary Gets the identifiers associated with this entity
+	 * @type {object} 
+	 */
 	this.identifier = copyData.identifier;
-	/** @type {object} */
+	/**
+	 * @summary Gets a list of all extensions associated with the entity
+	 * @type {object} 
+	 */
 	this.extension = copyData.extension;
-	/** @type {string} */
+	/**
+	 * @summary Determiner concept
+	 * @type {string} 
+	 */
 	this.determinerConcept = copyData.determinerConcept;
-	/** @type {Concept} */
+	/**
+	 * @type {Concept} 
+	 */
 	this.determinerConceptModel = copyData.determinerConceptModel;
-	/** @type {string} */
+	/**
+	 * @summary Creation act reference
+	 * @type {string} 
+	 */
 	this.creationAct = copyData.creationAct;
-	/** @type {Act} */
+	/**
+	 * @type {Act} 
+	 */
 	this.creationActModel = copyData.creationActModel;
-	/** @type {string} */
+	/**
+	 * @summary Class concept datal load property
+	 * @type {string} 
+	 */
 	this.classConcept = copyData.classConcept;
-	/** @type {Concept} */
+	/**
+	 * @type {Concept} 
+	 */
 	this.classConceptModel = copyData.classConceptModel;
-	/** @type {object} */
+	/**
+	 * @summary Gets a list of all addresses associated with the entity
+	 * @type {object} 
+	 */
 	this.address = copyData.address;
-	/** @type {Concept} */
+	/**
+	 * @type {Concept} 
+	 */
 	this.occupationModel = copyData.occupationModel;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the religious affiliation
+	 * @type {string} 
+	 */
 	this.occupation = copyData.occupation;
-	/** @type {PersonLanguageCommunication} */
+	/**
+	 * @summary Gets the person's languages of communication
+	 * @type {PersonLanguageCommunication} 
+	 */
 	this.language = copyData.language;
-	/** @type {string} */
+	/**
+	 * @summary Gets the date of birth as XML
+	 * @type {string} 
+	 */
 	this.dateOfBirth = copyData.dateOfBirth;
-	/** @type {Concept} */
+	/**
+	 * @type {Concept} 
+	 */
 	this.genderConceptModel = copyData.genderConceptModel;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the gender concept key
+	 * @type {string} 
+	 */
 	this.genderConcept = copyData.genderConcept;
-	/** @type {DatePrecision} */
+	/**
+	 * @summary Gets or sets the precision ofthe date of birth
+	 * @type {DatePrecision} 
+	 */
 	this.dateOfBirthPrecision = copyData.dateOfBirthPrecision;
 	}
 }  // Person 
-// SanteDB.Core.Model.Entities.PersonLanguageCommunication, SanteDB.Core.Model, Version=2.1.113.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Entities.PersonLanguageCommunication, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
 //if(!PersonLanguageCommunication)
 /**
  * @class
@@ -5850,27 +8026,49 @@ function Person (copyData) {
 function PersonLanguageCommunication (copyData) { 
 	this.$type = 'PersonLanguageCommunication';
 	if(copyData) {
-	/** @type {BatchOperationType} */
+	/**
+	 * @summary Gets or sets the operation
+	 * @type {BatchOperationType} 
+	 */
 	this.operation = copyData.operation;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the primary identifying UUID of this object
+	 * @type {string} 
+	 */
 	this.id = copyData.id;
-	/** @type {Entity} */
+	/**
+	 * @type {Entity} 
+	 */
 	this.sourceModel = copyData.sourceModel;
-	/** @type {string} */
+	/**
+	 * @type {string} 
+	 */
 	this.source = copyData.source;
-	/** @type {Date} */
+	/**
+	 * @type {Date} 
+	 */
 	this.modifiedOn = copyData.modifiedOn;
-	/** @type {number} */
+	/**
+	 * @type {number} 
+	 */
 	this.obsoleteVersionSequence = copyData.obsoleteVersionSequence;
-	/** @type {number} */
+	/**
+	 * @type {number} 
+	 */
 	this.effectiveVersionSequence = copyData.effectiveVersionSequence;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the language code
+	 * @type {string} 
+	 */
 	this.languageCode = copyData.languageCode;
-	/** @type {boolean} */
+	/**
+	 * @summary Gets or set the user's preference indicator
+	 * @type {boolean} 
+	 */
 	this.isPreferred = copyData.isPreferred;
 	}
 }  // PersonLanguageCommunication 
-// SanteDB.Core.Model.Entities.Place, SanteDB.Core.Model, Version=2.1.113.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Entities.Place, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
 //if(!Place)
 /**
  * @class
@@ -6181,87 +8379,191 @@ function PersonLanguageCommunication (copyData) {
 function Place (copyData) { 
 	this.$type = 'Place';
 	if(copyData) {
-	/** @type {BatchOperationType} */
+	/**
+	 * @summary Gets or sets the operation
+	 * @type {BatchOperationType} 
+	 */
 	this.operation = copyData.operation;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the primary identifying UUID of this object
+	 * @type {string} 
+	 */
 	this.id = copyData.id;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the security provenance object which represents the obsoletion of this data
+	 * @type {string} 
+	 */
 	this.obsoletedBy = copyData.obsoletedBy;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the security provenance object which represents the creation of this object
+	 * @type {string} 
+	 */
 	this.createdBy = copyData.createdBy;
-	/** @type {SecurityProvenance} */
+	/**
+	 * @type {SecurityProvenance} 
+	 */
 	this.obsoletedByModel = copyData.obsoletedByModel;
-	/** @type {Date} */
+	/**
+	 * @summary Gets the time that the object was last modified (from base data, default to CreationTime)
+	 * @type {Date} 
+	 */
 	this.modifiedOn = copyData.modifiedOn;
-	/** @type {SecurityProvenance} */
+	/**
+	 * @type {SecurityProvenance} 
+	 */
 	this.createdByModel = copyData.createdByModel;
-	/** @type {Date} */
+	/**
+	 * @summary Gets or sets the time that the data is no longer valid (was deleted/obsoleted) in ISO format
+	 * @type {Date} 
+	 */
 	this.obsoletionTime = copyData.obsoletionTime;
-	/** @type {Date} */
+	/**
+	 * @type {Date} 
+	 */
 	this.obsoletionTimeModel = copyData.obsoletionTimeModel;
-	/** @type {Date} */
+	/**
+	 * @summary Gets or sets the creation time as an ISO date format
+	 * @type {Date} 
+	 */
 	this.creationTime = copyData.creationTime;
-	/** @type {Date} */
+	/**
+	 * @type {Date} 
+	 */
 	this.creationTimeModel = copyData.creationTimeModel;
-	/** @type {number} */
+	/**
+	 * @type {number} 
+	 */
 	this.sequence = copyData.sequence;
-	/** @type {string} */
+	/**
+	 * @type {string} 
+	 */
 	this.version = copyData.version;
-	/** @type {string} */
+	/**
+	 * @type {string} 
+	 */
 	this.previousVersion = copyData.previousVersion;
-	/** @type {SecurityPolicyInstance} */
+	/**
+	 * @summary Gets or sets the security policy instances associated with the entity
+	 * @type {SecurityPolicyInstance} 
+	 */
 	this.policy = copyData.policy;
-	/** @type {string} */
+	/**
+	 * @summary Type concept identifier
+	 * @type {string} 
+	 */
 	this.typeConcept = copyData.typeConcept;
-	/** @type {Concept} */
+	/**
+	 * @type {Concept} 
+	 */
 	this.typeConceptModel = copyData.typeConceptModel;
-	/** @type {TemplateDefinition} */
+	/**
+	 * @type {TemplateDefinition} 
+	 */
 	this.templateModel = copyData.templateModel;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the template definition
+	 * @type {string} 
+	 */
 	this.template = copyData.template;
-	/** @type {object} */
+	/**
+	 * @summary Gets a list of all telecommunications addresses associated with the entity
+	 * @type {object} 
+	 */
 	this.telecom = copyData.telecom;
-	/** @type {object} */
+	/**
+	 * @summary Gets a list of all tags associated with the entity
+	 * @type {object} 
+	 */
 	this.tag = copyData.tag;
-	/** @type {string} */
+	/**
+	 * @summary Status concept id
+	 * @type {string} 
+	 */
 	this.statusConcept = copyData.statusConcept;
-	/** @type {Concept} */
+	/**
+	 * @type {Concept} 
+	 */
 	this.statusConceptModel = copyData.statusConceptModel;
-	/** @type {object} */
+	/**
+	 * @summary Gets a list of all associated entities for this entity
+	 * @type {object} 
+	 */
 	this.relationship = copyData.relationship;
-	/** @type {object} */
+	/**
+	 * @summary Gets the acts in which this entity participates
+	 * @type {object} 
+	 */
 	this.participation = copyData.participation;
-	/** @type {EntityNote} */
+	/**
+	 * @summary Gets a list of all notes associated with the entity
+	 * @type {EntityNote} 
+	 */
 	this.note = copyData.note;
-	/** @type {object} */
+	/**
+	 * @summary Gets a list of all names associated with the entity
+	 * @type {object} 
+	 */
 	this.name = copyData.name;
-	/** @type {object} */
+	/**
+	 * @summary Gets the identifiers associated with this entity
+	 * @type {object} 
+	 */
 	this.identifier = copyData.identifier;
-	/** @type {object} */
+	/**
+	 * @summary Gets a list of all extensions associated with the entity
+	 * @type {object} 
+	 */
 	this.extension = copyData.extension;
-	/** @type {string} */
+	/**
+	 * @summary Determiner concept
+	 * @type {string} 
+	 */
 	this.determinerConcept = copyData.determinerConcept;
-	/** @type {Concept} */
+	/**
+	 * @type {Concept} 
+	 */
 	this.determinerConceptModel = copyData.determinerConceptModel;
-	/** @type {string} */
+	/**
+	 * @summary Creation act reference
+	 * @type {string} 
+	 */
 	this.creationAct = copyData.creationAct;
-	/** @type {Act} */
+	/**
+	 * @type {Act} 
+	 */
 	this.creationActModel = copyData.creationActModel;
-	/** @type {Concept} */
+	/**
+	 * @type {Concept} 
+	 */
 	this.classConceptModel = copyData.classConceptModel;
-	/** @type {object} */
+	/**
+	 * @summary Gets a list of all addresses associated with the entity
+	 * @type {object} 
+	 */
 	this.address = copyData.address;
-	/** @type {PlaceService} */
+	/**
+	 * @summary Gets the services
+	 * @type {PlaceService} 
+	 */
 	this.service = copyData.service;
-	/** @type {GeoTag} */
+	/**
+	 * @summary Gets the geographic tag
+	 * @type {GeoTag} 
+	 */
 	this.geo = copyData.geo;
-	/** @type {boolean} */
+	/**
+	 * @summary True if location is mobile
+	 * @type {boolean} 
+	 */
 	this.isMobile = copyData.isMobile;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the class concept key
+	 * @type {string} 
+	 */
 	this.classConcept = copyData.classConcept;
 	}
 }  // Place 
-// SanteDB.Core.Model.Entities.PlaceService, SanteDB.Core.Model, Version=2.1.113.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Entities.PlaceService, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
 //if(!PlaceService)
 /**
  * @class
@@ -6285,29 +8587,53 @@ function Place (copyData) {
 function PlaceService (copyData) { 
 	this.$type = 'PlaceService';
 	if(copyData) {
-	/** @type {BatchOperationType} */
+	/**
+	 * @summary Gets or sets the operation
+	 * @type {BatchOperationType} 
+	 */
 	this.operation = copyData.operation;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the primary identifying UUID of this object
+	 * @type {string} 
+	 */
 	this.id = copyData.id;
-	/** @type {Entity} */
+	/**
+	 * @type {Entity} 
+	 */
 	this.sourceModel = copyData.sourceModel;
-	/** @type {string} */
+	/**
+	 * @type {string} 
+	 */
 	this.source = copyData.source;
-	/** @type {Date} */
+	/**
+	 * @type {Date} 
+	 */
 	this.modifiedOn = copyData.modifiedOn;
-	/** @type {number} */
+	/**
+	 * @type {number} 
+	 */
 	this.obsoleteVersionSequence = copyData.obsoleteVersionSequence;
-	/** @type {number} */
+	/**
+	 * @type {number} 
+	 */
 	this.effectiveVersionSequence = copyData.effectiveVersionSequence;
-	/** @type {string} */
+	/**
+	 * @summary The schedule that the service is offered
+	 * @type {string} 
+	 */
 	this.serviceSchedule = copyData.serviceSchedule;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the service concept key
+	 * @type {string} 
+	 */
 	this.serviceConcept = copyData.serviceConcept;
-	/** @type {Concept} */
+	/**
+	 * @type {Concept} 
+	 */
 	this.serviceConceptModel = copyData.serviceConceptModel;
 	}
 }  // PlaceService 
-// SanteDB.Core.Model.Entities.UserEntity, SanteDB.Core.Model, Version=2.1.113.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Entities.UserEntity, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
 //if(!UserEntity)
 /**
  * @class
@@ -6626,99 +8952,218 @@ function PlaceService (copyData) {
 function UserEntity (copyData) { 
 	this.$type = 'UserEntity';
 	if(copyData) {
-	/** @type {BatchOperationType} */
+	/**
+	 * @summary Gets or sets the operation
+	 * @type {BatchOperationType} 
+	 */
 	this.operation = copyData.operation;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the primary identifying UUID of this object
+	 * @type {string} 
+	 */
 	this.id = copyData.id;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the security provenance object which represents the obsoletion of this data
+	 * @type {string} 
+	 */
 	this.obsoletedBy = copyData.obsoletedBy;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the security provenance object which represents the creation of this object
+	 * @type {string} 
+	 */
 	this.createdBy = copyData.createdBy;
-	/** @type {SecurityProvenance} */
+	/**
+	 * @type {SecurityProvenance} 
+	 */
 	this.obsoletedByModel = copyData.obsoletedByModel;
-	/** @type {Date} */
+	/**
+	 * @summary Gets the time that the object was last modified (from base data, default to CreationTime)
+	 * @type {Date} 
+	 */
 	this.modifiedOn = copyData.modifiedOn;
-	/** @type {SecurityProvenance} */
+	/**
+	 * @type {SecurityProvenance} 
+	 */
 	this.createdByModel = copyData.createdByModel;
-	/** @type {Date} */
+	/**
+	 * @summary Gets or sets the time that the data is no longer valid (was deleted/obsoleted) in ISO format
+	 * @type {Date} 
+	 */
 	this.obsoletionTime = copyData.obsoletionTime;
-	/** @type {Date} */
+	/**
+	 * @type {Date} 
+	 */
 	this.obsoletionTimeModel = copyData.obsoletionTimeModel;
-	/** @type {Date} */
+	/**
+	 * @summary Gets or sets the creation time as an ISO date format
+	 * @type {Date} 
+	 */
 	this.creationTime = copyData.creationTime;
-	/** @type {Date} */
+	/**
+	 * @type {Date} 
+	 */
 	this.creationTimeModel = copyData.creationTimeModel;
-	/** @type {number} */
+	/**
+	 * @type {number} 
+	 */
 	this.sequence = copyData.sequence;
-	/** @type {string} */
+	/**
+	 * @type {string} 
+	 */
 	this.version = copyData.version;
-	/** @type {string} */
+	/**
+	 * @type {string} 
+	 */
 	this.previousVersion = copyData.previousVersion;
-	/** @type {SecurityPolicyInstance} */
+	/**
+	 * @summary Gets or sets the security policy instances associated with the entity
+	 * @type {SecurityPolicyInstance} 
+	 */
 	this.policy = copyData.policy;
-	/** @type {string} */
+	/**
+	 * @summary Type concept identifier
+	 * @type {string} 
+	 */
 	this.typeConcept = copyData.typeConcept;
-	/** @type {Concept} */
+	/**
+	 * @type {Concept} 
+	 */
 	this.typeConceptModel = copyData.typeConceptModel;
-	/** @type {TemplateDefinition} */
+	/**
+	 * @type {TemplateDefinition} 
+	 */
 	this.templateModel = copyData.templateModel;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the template definition
+	 * @type {string} 
+	 */
 	this.template = copyData.template;
-	/** @type {object} */
+	/**
+	 * @summary Gets a list of all telecommunications addresses associated with the entity
+	 * @type {object} 
+	 */
 	this.telecom = copyData.telecom;
-	/** @type {object} */
+	/**
+	 * @summary Gets a list of all tags associated with the entity
+	 * @type {object} 
+	 */
 	this.tag = copyData.tag;
-	/** @type {string} */
+	/**
+	 * @summary Status concept id
+	 * @type {string} 
+	 */
 	this.statusConcept = copyData.statusConcept;
-	/** @type {Concept} */
+	/**
+	 * @type {Concept} 
+	 */
 	this.statusConceptModel = copyData.statusConceptModel;
-	/** @type {object} */
+	/**
+	 * @summary Gets a list of all associated entities for this entity
+	 * @type {object} 
+	 */
 	this.relationship = copyData.relationship;
-	/** @type {object} */
+	/**
+	 * @summary Gets the acts in which this entity participates
+	 * @type {object} 
+	 */
 	this.participation = copyData.participation;
-	/** @type {EntityNote} */
+	/**
+	 * @summary Gets a list of all notes associated with the entity
+	 * @type {EntityNote} 
+	 */
 	this.note = copyData.note;
-	/** @type {object} */
+	/**
+	 * @summary Gets a list of all names associated with the entity
+	 * @type {object} 
+	 */
 	this.name = copyData.name;
-	/** @type {object} */
+	/**
+	 * @summary Gets the identifiers associated with this entity
+	 * @type {object} 
+	 */
 	this.identifier = copyData.identifier;
-	/** @type {object} */
+	/**
+	 * @summary Gets a list of all extensions associated with the entity
+	 * @type {object} 
+	 */
 	this.extension = copyData.extension;
-	/** @type {string} */
+	/**
+	 * @summary Determiner concept
+	 * @type {string} 
+	 */
 	this.determinerConcept = copyData.determinerConcept;
-	/** @type {Concept} */
+	/**
+	 * @type {Concept} 
+	 */
 	this.determinerConceptModel = copyData.determinerConceptModel;
-	/** @type {string} */
+	/**
+	 * @summary Creation act reference
+	 * @type {string} 
+	 */
 	this.creationAct = copyData.creationAct;
-	/** @type {Act} */
+	/**
+	 * @type {Act} 
+	 */
 	this.creationActModel = copyData.creationActModel;
-	/** @type {string} */
+	/**
+	 * @summary Class concept datal load property
+	 * @type {string} 
+	 */
 	this.classConcept = copyData.classConcept;
-	/** @type {Concept} */
+	/**
+	 * @type {Concept} 
+	 */
 	this.classConceptModel = copyData.classConceptModel;
-	/** @type {object} */
+	/**
+	 * @summary Gets a list of all addresses associated with the entity
+	 * @type {object} 
+	 */
 	this.address = copyData.address;
-	/** @type {Concept} */
+	/**
+	 * @type {Concept} 
+	 */
 	this.occupationModel = copyData.occupationModel;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the religious affiliation
+	 * @type {string} 
+	 */
 	this.occupation = copyData.occupation;
-	/** @type {PersonLanguageCommunication} */
+	/**
+	 * @summary Gets the person's languages of communication
+	 * @type {PersonLanguageCommunication} 
+	 */
 	this.language = copyData.language;
-	/** @type {string} */
+	/**
+	 * @summary Gets the date of birth as XML
+	 * @type {string} 
+	 */
 	this.dateOfBirth = copyData.dateOfBirth;
-	/** @type {Concept} */
+	/**
+	 * @type {Concept} 
+	 */
 	this.genderConceptModel = copyData.genderConceptModel;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the gender concept key
+	 * @type {string} 
+	 */
 	this.genderConcept = copyData.genderConcept;
-	/** @type {DatePrecision} */
+	/**
+	 * @summary Gets or sets the precision ofthe date of birth
+	 * @type {DatePrecision} 
+	 */
 	this.dateOfBirthPrecision = copyData.dateOfBirthPrecision;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the security user key
+	 * @type {string} 
+	 */
 	this.securityUser = copyData.securityUser;
-	/** @type {SecurityUser} */
+	/**
+	 * @type {SecurityUser} 
+	 */
 	this.securityUserModel = copyData.securityUserModel;
 	}
 }  // UserEntity 
-// SanteDB.Core.Model.DataTypes.AssigningAuthority, SanteDB.Core.Model, Version=2.1.113.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.DataTypes.AssigningAuthority, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
 //if(!AssigningAuthority)
 /**
  * @class
@@ -6760,65 +9205,141 @@ function UserEntity (copyData) {
 function AssigningAuthority (copyData) { 
 	this.$type = 'AssigningAuthority';
 	if(copyData) {
-	/** @type {BatchOperationType} */
+	/**
+	 * @summary Gets or sets the operation
+	 * @type {BatchOperationType} 
+	 */
 	this.operation = copyData.operation;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the primary identifying UUID of this object
+	 * @type {string} 
+	 */
 	this.id = copyData.id;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the security provenance object which represents the obsoletion of this data
+	 * @type {string} 
+	 */
 	this.obsoletedBy = copyData.obsoletedBy;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the security provenance object which represents the creation of this object
+	 * @type {string} 
+	 */
 	this.createdBy = copyData.createdBy;
-	/** @type {SecurityProvenance} */
+	/**
+	 * @type {SecurityProvenance} 
+	 */
 	this.obsoletedByModel = copyData.obsoletedByModel;
-	/** @type {SecurityProvenance} */
+	/**
+	 * @type {SecurityProvenance} 
+	 */
 	this.createdByModel = copyData.createdByModel;
-	/** @type {Date} */
+	/**
+	 * @summary Gets or sets the time that the data is no longer valid (was deleted/obsoleted) in ISO format
+	 * @type {Date} 
+	 */
 	this.obsoletionTime = copyData.obsoletionTime;
-	/** @type {Date} */
+	/**
+	 * @type {Date} 
+	 */
 	this.obsoletionTimeModel = copyData.obsoletionTimeModel;
-	/** @type {Date} */
+	/**
+	 * @summary Gets or sets the creation time as an ISO date format
+	 * @type {Date} 
+	 */
 	this.creationTime = copyData.creationTime;
-	/** @type {Date} */
+	/**
+	 * @type {Date} 
+	 */
 	this.creationTimeModel = copyData.creationTimeModel;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the provenance identifier associated with the last update of this object
+	 * @type {string} 
+	 */
 	this.updatedBy = copyData.updatedBy;
-	/** @type {SecurityProvenance} */
+	/**
+	 * @type {SecurityProvenance} 
+	 */
 	this.updatedByModel = copyData.updatedByModel;
-	/** @type {Date} */
+	/**
+	 * @summary Gets the time this item was modified
+	 * @type {Date} 
+	 */
 	this.modifiedOn = copyData.modifiedOn;
-	/** @type {Date} */
+	/**
+	 * @summary Gets or sets the time that this object was last modified in ISO format
+	 * @type {Date} 
+	 */
 	this.updatedTime = copyData.updatedTime;
-	/** @type {object} */
+	/**
+	 * @type {object} 
+	 */
 	this.scopeModel = copyData.scopeModel;
-	/** @type {SecurityApplication} */
+	/**
+	 * @type {SecurityApplication} 
+	 */
 	this.assigningApplicationModel = copyData.assigningApplicationModel;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the IIdentifierValidator instance to use for this solution
+	 * @type {string} 
+	 */
 	this.customValidator = copyData.customValidator;
-	/** @type {boolean} */
+	/**
+	 * @summary True if the assigning authority values should be unique
+	 * @type {boolean} 
+	 */
 	this.isUnique = copyData.isUnique;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the validation regex
+	 * @type {string} 
+	 */
 	this.validation = copyData.validation;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the policy key associated with this assigning authority for disclosure
+	 * @type {string} 
+	 */
 	this.policy = copyData.policy;
-	/** @type {string} */
+	/**
+	 * @type {string} 
+	 */
 	this.policyModel = copyData.policyModel;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the assigning device
+	 * @type {string} 
+	 */
 	this.assigningApplication = copyData.assigningApplication;
-	/** @type {string} */
+	/**
+	 * @summary Gets concept sets to which this concept is a member
+	 * @type {string} 
+	 */
 	this.scope = copyData.scope;
-	/** @type {string} */
+	/**
+	 * @summary The URL of the assigning authority
+	 * @type {string} 
+	 */
 	this.url = copyData.url;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the oid of the assigning authority
+	 * @type {string} 
+	 */
 	this.oid = copyData.oid;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the description of the assigning authority
+	 * @type {string} 
+	 */
 	this.description = copyData.description;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the domain name of the assigning authority
+	 * @type {string} 
+	 */
 	this.domainName = copyData.domainName;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the name of the assigning authority
+	 * @type {string} 
+	 */
 	this.name = copyData.name;
 	}
 }  // AssigningAuthority 
-// SanteDB.Core.Model.DataTypes.CodeSystem, SanteDB.Core.Model, Version=2.1.113.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.DataTypes.CodeSystem, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
 //if(!CodeSystem)
 /**
  * @class
@@ -6852,51 +9373,109 @@ function AssigningAuthority (copyData) {
 function CodeSystem (copyData) { 
 	this.$type = 'CodeSystem';
 	if(copyData) {
-	/** @type {BatchOperationType} */
+	/**
+	 * @summary Gets or sets the operation
+	 * @type {BatchOperationType} 
+	 */
 	this.operation = copyData.operation;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the primary identifying UUID of this object
+	 * @type {string} 
+	 */
 	this.id = copyData.id;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the security provenance object which represents the obsoletion of this data
+	 * @type {string} 
+	 */
 	this.obsoletedBy = copyData.obsoletedBy;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the security provenance object which represents the creation of this object
+	 * @type {string} 
+	 */
 	this.createdBy = copyData.createdBy;
-	/** @type {SecurityProvenance} */
+	/**
+	 * @type {SecurityProvenance} 
+	 */
 	this.obsoletedByModel = copyData.obsoletedByModel;
-	/** @type {SecurityProvenance} */
+	/**
+	 * @type {SecurityProvenance} 
+	 */
 	this.createdByModel = copyData.createdByModel;
-	/** @type {Date} */
+	/**
+	 * @summary Gets or sets the time that the data is no longer valid (was deleted/obsoleted) in ISO format
+	 * @type {Date} 
+	 */
 	this.obsoletionTime = copyData.obsoletionTime;
-	/** @type {Date} */
+	/**
+	 * @type {Date} 
+	 */
 	this.obsoletionTimeModel = copyData.obsoletionTimeModel;
-	/** @type {Date} */
+	/**
+	 * @summary Gets or sets the creation time as an ISO date format
+	 * @type {Date} 
+	 */
 	this.creationTime = copyData.creationTime;
-	/** @type {Date} */
+	/**
+	 * @type {Date} 
+	 */
 	this.creationTimeModel = copyData.creationTimeModel;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the provenance identifier associated with the last update of this object
+	 * @type {string} 
+	 */
 	this.updatedBy = copyData.updatedBy;
-	/** @type {SecurityProvenance} */
+	/**
+	 * @type {SecurityProvenance} 
+	 */
 	this.updatedByModel = copyData.updatedByModel;
-	/** @type {Date} */
+	/**
+	 * @summary Gets the time this item was modified
+	 * @type {Date} 
+	 */
 	this.modifiedOn = copyData.modifiedOn;
-	/** @type {Date} */
+	/**
+	 * @summary Gets or sets the time that this object was last modified in ISO format
+	 * @type {Date} 
+	 */
 	this.updatedTime = copyData.updatedTime;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the human description
+	 * @type {string} 
+	 */
 	this.description = copyData.description;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the version text of the code system
+	 * @type {string} 
+	 */
 	this.version = copyData.version;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the URL of the code system
+	 * @type {string} 
+	 */
 	this.url = copyData.url;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the obsoletion reason of the code system
+	 * @type {string} 
+	 */
 	this.obsoletionReason = copyData.obsoletionReason;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the authority of the code system
+	 * @type {string} 
+	 */
 	this.authority = copyData.authority;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the Oid of the code system
+	 * @type {string} 
+	 */
 	this.oid = copyData.oid;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the name of the code system
+	 * @type {string} 
+	 */
 	this.name = copyData.name;
 	}
 }  // CodeSystem 
-// SanteDB.Core.Model.DataTypes.Concept, SanteDB.Core.Model, Version=2.1.113.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.DataTypes.Concept, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
 //if(!Concept)
 /**
  * @class
@@ -6945,59 +9524,124 @@ function CodeSystem (copyData) {
 function Concept (copyData) { 
 	this.$type = 'Concept';
 	if(copyData) {
-	/** @type {BatchOperationType} */
+	/**
+	 * @summary Gets or sets the operation
+	 * @type {BatchOperationType} 
+	 */
 	this.operation = copyData.operation;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the primary identifying UUID of this object
+	 * @type {string} 
+	 */
 	this.id = copyData.id;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the security provenance object which represents the obsoletion of this data
+	 * @type {string} 
+	 */
 	this.obsoletedBy = copyData.obsoletedBy;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the security provenance object which represents the creation of this object
+	 * @type {string} 
+	 */
 	this.createdBy = copyData.createdBy;
-	/** @type {SecurityProvenance} */
+	/**
+	 * @type {SecurityProvenance} 
+	 */
 	this.obsoletedByModel = copyData.obsoletedByModel;
-	/** @type {Date} */
+	/**
+	 * @summary Gets the time that the object was last modified (from base data, default to CreationTime)
+	 * @type {Date} 
+	 */
 	this.modifiedOn = copyData.modifiedOn;
-	/** @type {SecurityProvenance} */
+	/**
+	 * @type {SecurityProvenance} 
+	 */
 	this.createdByModel = copyData.createdByModel;
-	/** @type {Date} */
+	/**
+	 * @summary Gets or sets the time that the data is no longer valid (was deleted/obsoleted) in ISO format
+	 * @type {Date} 
+	 */
 	this.obsoletionTime = copyData.obsoletionTime;
-	/** @type {Date} */
+	/**
+	 * @type {Date} 
+	 */
 	this.obsoletionTimeModel = copyData.obsoletionTimeModel;
-	/** @type {Date} */
+	/**
+	 * @summary Gets or sets the creation time as an ISO date format
+	 * @type {Date} 
+	 */
 	this.creationTime = copyData.creationTime;
-	/** @type {Date} */
+	/**
+	 * @type {Date} 
+	 */
 	this.creationTimeModel = copyData.creationTimeModel;
-	/** @type {number} */
+	/**
+	 * @type {number} 
+	 */
 	this.sequence = copyData.sequence;
-	/** @type {string} */
+	/**
+	 * @type {string} 
+	 */
 	this.version = copyData.version;
-	/** @type {string} */
+	/**
+	 * @type {string} 
+	 */
 	this.previousVersion = copyData.previousVersion;
-	/** @type {object} */
+	/**
+	 * @type {object} 
+	 */
 	this.conceptSetModel = copyData.conceptSetModel;
-	/** @type {string} */
+	/**
+	 * @summary Gets concept sets to which this concept is a member
+	 * @type {string} 
+	 */
 	this.conceptSet = copyData.conceptSet;
-	/** @type {object} */
+	/**
+	 * @summary Gets the concept names
+	 * @type {object} 
+	 */
 	this.name = copyData.name;
-	/** @type {object} */
+	/**
+	 * @summary Gets a list of concept reference terms
+	 * @type {object} 
+	 */
 	this.referenceTerm = copyData.referenceTerm;
-	/** @type {ConceptClass} */
+	/**
+	 * @type {ConceptClass} 
+	 */
 	this.conceptClassModel = copyData.conceptClassModel;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the classification of the concept
+	 * @type {string} 
+	 */
 	this.conceptClass = copyData.conceptClass;
-	/** @type {object} */
+	/**
+	 * @summary Gets a list of concept relationships
+	 * @type {object} 
+	 */
 	this.relationship = copyData.relationship;
-	/** @type {Concept} */
+	/**
+	 * @type {Concept} 
+	 */
 	this.statusConceptModel = copyData.statusConceptModel;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the status of the concept
+	 * @type {string} 
+	 */
 	this.statusConcept = copyData.statusConcept;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the unchanging mnemonic for the concept
+	 * @type {string} 
+	 */
 	this.mnemonic = copyData.mnemonic;
-	/** @type {boolean} */
+	/**
+	 * @summary Gets or sets an indicator which dictates whether the concept is a system concept
+	 * @type {boolean} 
+	 */
 	this.isReadonly = copyData.isReadonly;
 	}
 }  // Concept 
-// SanteDB.Core.Model.DataTypes.ConceptClass, SanteDB.Core.Model, Version=2.1.113.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.DataTypes.ConceptClass, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
 //if(!ConceptClass)
 /**
  * @class
@@ -7026,41 +9670,84 @@ function Concept (copyData) {
 function ConceptClass (copyData) { 
 	this.$type = 'ConceptClass';
 	if(copyData) {
-	/** @type {BatchOperationType} */
+	/**
+	 * @summary Gets or sets the operation
+	 * @type {BatchOperationType} 
+	 */
 	this.operation = copyData.operation;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the primary identifying UUID of this object
+	 * @type {string} 
+	 */
 	this.id = copyData.id;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the security provenance object which represents the obsoletion of this data
+	 * @type {string} 
+	 */
 	this.obsoletedBy = copyData.obsoletedBy;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the security provenance object which represents the creation of this object
+	 * @type {string} 
+	 */
 	this.createdBy = copyData.createdBy;
-	/** @type {SecurityProvenance} */
+	/**
+	 * @type {SecurityProvenance} 
+	 */
 	this.obsoletedByModel = copyData.obsoletedByModel;
-	/** @type {SecurityProvenance} */
+	/**
+	 * @type {SecurityProvenance} 
+	 */
 	this.createdByModel = copyData.createdByModel;
-	/** @type {Date} */
+	/**
+	 * @summary Gets or sets the time that the data is no longer valid (was deleted/obsoleted) in ISO format
+	 * @type {Date} 
+	 */
 	this.obsoletionTime = copyData.obsoletionTime;
-	/** @type {Date} */
+	/**
+	 * @type {Date} 
+	 */
 	this.obsoletionTimeModel = copyData.obsoletionTimeModel;
-	/** @type {Date} */
+	/**
+	 * @summary Gets or sets the creation time as an ISO date format
+	 * @type {Date} 
+	 */
 	this.creationTime = copyData.creationTime;
-	/** @type {Date} */
+	/**
+	 * @type {Date} 
+	 */
 	this.creationTimeModel = copyData.creationTimeModel;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the provenance identifier associated with the last update of this object
+	 * @type {string} 
+	 */
 	this.updatedBy = copyData.updatedBy;
-	/** @type {SecurityProvenance} */
+	/**
+	 * @type {SecurityProvenance} 
+	 */
 	this.updatedByModel = copyData.updatedByModel;
-	/** @type {Date} */
+	/**
+	 * @summary Gets the time this item was modified
+	 * @type {Date} 
+	 */
 	this.modifiedOn = copyData.modifiedOn;
-	/** @type {Date} */
+	/**
+	 * @summary Gets or sets the time that this object was last modified in ISO format
+	 * @type {Date} 
+	 */
 	this.updatedTime = copyData.updatedTime;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the mnemonic
+	 * @type {string} 
+	 */
 	this.mnemonic = copyData.mnemonic;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the name of the concept class
+	 * @type {string} 
+	 */
 	this.name = copyData.name;
 	}
 }  // ConceptClass 
-// SanteDB.Core.Model.DataTypes.ConceptName, SanteDB.Core.Model, Version=2.1.113.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.DataTypes.ConceptName, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
 //if(!ConceptName)
 /**
  * @class
@@ -7083,27 +9770,49 @@ function ConceptClass (copyData) {
 function ConceptName (copyData) { 
 	this.$type = 'ConceptName';
 	if(copyData) {
-	/** @type {BatchOperationType} */
+	/**
+	 * @summary Gets or sets the operation
+	 * @type {BatchOperationType} 
+	 */
 	this.operation = copyData.operation;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the primary identifying UUID of this object
+	 * @type {string} 
+	 */
 	this.id = copyData.id;
-	/** @type {Concept} */
+	/**
+	 * @type {Concept} 
+	 */
 	this.sourceModel = copyData.sourceModel;
-	/** @type {string} */
+	/**
+	 * @type {string} 
+	 */
 	this.source = copyData.source;
-	/** @type {Date} */
+	/**
+	 * @type {Date} 
+	 */
 	this.modifiedOn = copyData.modifiedOn;
-	/** @type {number} */
+	/**
+	 * @type {number} 
+	 */
 	this.obsoleteVersionSequence = copyData.obsoleteVersionSequence;
-	/** @type {number} */
+	/**
+	 * @type {number} 
+	 */
 	this.effectiveVersionSequence = copyData.effectiveVersionSequence;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the name of the reference term
+	 * @type {string} 
+	 */
 	this.value = copyData.value;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the language code of the object
+	 * @type {string} 
+	 */
 	this.language = copyData.language;
 	}
 }  // ConceptName 
-// SanteDB.Core.Model.DataTypes.ConceptReferenceTerm, SanteDB.Core.Model, Version=2.1.113.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.DataTypes.ConceptReferenceTerm, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
 //if(!ConceptReferenceTerm)
 /**
  * @class
@@ -7128,31 +9837,57 @@ function ConceptName (copyData) {
 function ConceptReferenceTerm (copyData) { 
 	this.$type = 'ConceptReferenceTerm';
 	if(copyData) {
-	/** @type {BatchOperationType} */
+	/**
+	 * @summary Gets or sets the operation
+	 * @type {BatchOperationType} 
+	 */
 	this.operation = copyData.operation;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the primary identifying UUID of this object
+	 * @type {string} 
+	 */
 	this.id = copyData.id;
-	/** @type {Concept} */
+	/**
+	 * @type {Concept} 
+	 */
 	this.sourceModel = copyData.sourceModel;
-	/** @type {string} */
+	/**
+	 * @type {string} 
+	 */
 	this.source = copyData.source;
-	/** @type {Date} */
+	/**
+	 * @type {Date} 
+	 */
 	this.modifiedOn = copyData.modifiedOn;
-	/** @type {number} */
+	/**
+	 * @type {number} 
+	 */
 	this.obsoleteVersionSequence = copyData.obsoleteVersionSequence;
-	/** @type {number} */
+	/**
+	 * @type {number} 
+	 */
 	this.effectiveVersionSequence = copyData.effectiveVersionSequence;
-	/** @type {ConceptRelationshipType} */
+	/**
+	 * @type {ConceptRelationshipType} 
+	 */
 	this.relationshipTypeModel = copyData.relationshipTypeModel;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the relationship type identifier
+	 * @type {string} 
+	 */
 	this.relationshipType = copyData.relationshipType;
-	/** @type {ReferenceTerm} */
+	/**
+	 * @type {ReferenceTerm} 
+	 */
 	this.termModel = copyData.termModel;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the reference term identifier
+	 * @type {string} 
+	 */
 	this.term = copyData.term;
 	}
 }  // ConceptReferenceTerm 
-// SanteDB.Core.Model.DataTypes.ConceptRelationship, SanteDB.Core.Model, Version=2.1.113.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.DataTypes.ConceptRelationship, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
 //if(!ConceptRelationship)
 /**
  * @class
@@ -7177,31 +9912,57 @@ function ConceptReferenceTerm (copyData) {
 function ConceptRelationship (copyData) { 
 	this.$type = 'ConceptRelationship';
 	if(copyData) {
-	/** @type {BatchOperationType} */
+	/**
+	 * @summary Gets or sets the operation
+	 * @type {BatchOperationType} 
+	 */
 	this.operation = copyData.operation;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the primary identifying UUID of this object
+	 * @type {string} 
+	 */
 	this.id = copyData.id;
-	/** @type {Concept} */
+	/**
+	 * @type {Concept} 
+	 */
 	this.sourceModel = copyData.sourceModel;
-	/** @type {string} */
+	/**
+	 * @type {string} 
+	 */
 	this.source = copyData.source;
-	/** @type {Date} */
+	/**
+	 * @type {Date} 
+	 */
 	this.modifiedOn = copyData.modifiedOn;
-	/** @type {number} */
+	/**
+	 * @type {number} 
+	 */
 	this.obsoleteVersionSequence = copyData.obsoleteVersionSequence;
-	/** @type {number} */
+	/**
+	 * @type {number} 
+	 */
 	this.effectiveVersionSequence = copyData.effectiveVersionSequence;
-	/** @type {ConceptRelationshipType} */
+	/**
+	 * @type {ConceptRelationshipType} 
+	 */
 	this.relationshipTypeModel = copyData.relationshipTypeModel;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the relationship type
+	 * @type {string} 
+	 */
 	this.relationshipType = copyData.relationshipType;
-	/** @type {Concept} */
+	/**
+	 * @type {Concept} 
+	 */
 	this.targetConceptModel = copyData.targetConceptModel;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the target concept identifier
+	 * @type {string} 
+	 */
 	this.targetConcept = copyData.targetConcept;
 	}
 }  // ConceptRelationship 
-// SanteDB.Core.Model.DataTypes.ConceptRelationshipType, SanteDB.Core.Model, Version=2.1.113.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.DataTypes.ConceptRelationshipType, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
 //if(!ConceptRelationshipType)
 /**
  * @class
@@ -7230,41 +9991,84 @@ function ConceptRelationship (copyData) {
 function ConceptRelationshipType (copyData) { 
 	this.$type = 'ConceptRelationshipType';
 	if(copyData) {
-	/** @type {BatchOperationType} */
+	/**
+	 * @summary Gets or sets the operation
+	 * @type {BatchOperationType} 
+	 */
 	this.operation = copyData.operation;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the primary identifying UUID of this object
+	 * @type {string} 
+	 */
 	this.id = copyData.id;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the security provenance object which represents the obsoletion of this data
+	 * @type {string} 
+	 */
 	this.obsoletedBy = copyData.obsoletedBy;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the security provenance object which represents the creation of this object
+	 * @type {string} 
+	 */
 	this.createdBy = copyData.createdBy;
-	/** @type {SecurityProvenance} */
+	/**
+	 * @type {SecurityProvenance} 
+	 */
 	this.obsoletedByModel = copyData.obsoletedByModel;
-	/** @type {SecurityProvenance} */
+	/**
+	 * @type {SecurityProvenance} 
+	 */
 	this.createdByModel = copyData.createdByModel;
-	/** @type {Date} */
+	/**
+	 * @summary Gets or sets the time that the data is no longer valid (was deleted/obsoleted) in ISO format
+	 * @type {Date} 
+	 */
 	this.obsoletionTime = copyData.obsoletionTime;
-	/** @type {Date} */
+	/**
+	 * @type {Date} 
+	 */
 	this.obsoletionTimeModel = copyData.obsoletionTimeModel;
-	/** @type {Date} */
+	/**
+	 * @summary Gets or sets the creation time as an ISO date format
+	 * @type {Date} 
+	 */
 	this.creationTime = copyData.creationTime;
-	/** @type {Date} */
+	/**
+	 * @type {Date} 
+	 */
 	this.creationTimeModel = copyData.creationTimeModel;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the provenance identifier associated with the last update of this object
+	 * @type {string} 
+	 */
 	this.updatedBy = copyData.updatedBy;
-	/** @type {SecurityProvenance} */
+	/**
+	 * @type {SecurityProvenance} 
+	 */
 	this.updatedByModel = copyData.updatedByModel;
-	/** @type {Date} */
+	/**
+	 * @summary Gets the time this item was modified
+	 * @type {Date} 
+	 */
 	this.modifiedOn = copyData.modifiedOn;
-	/** @type {Date} */
+	/**
+	 * @summary Gets or sets the time that this object was last modified in ISO format
+	 * @type {Date} 
+	 */
 	this.updatedTime = copyData.updatedTime;
-	/** @type {string} */
+	/**
+	 * @summary The invariant of the relationship type
+	 * @type {string} 
+	 */
 	this.mnemonic = copyData.mnemonic;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the name of the relationship
+	 * @type {string} 
+	 */
 	this.name = copyData.name;
 	}
 }  // ConceptRelationshipType 
-// SanteDB.Core.Model.DataTypes.ConceptSet, SanteDB.Core.Model, Version=2.1.113.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.DataTypes.ConceptSet, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
 //if(!ConceptSet)
 /**
  * @class
@@ -7296,47 +10100,99 @@ function ConceptRelationshipType (copyData) {
 function ConceptSet (copyData) { 
 	this.$type = 'ConceptSet';
 	if(copyData) {
-	/** @type {BatchOperationType} */
+	/**
+	 * @summary Gets or sets the operation
+	 * @type {BatchOperationType} 
+	 */
 	this.operation = copyData.operation;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the primary identifying UUID of this object
+	 * @type {string} 
+	 */
 	this.id = copyData.id;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the security provenance object which represents the obsoletion of this data
+	 * @type {string} 
+	 */
 	this.obsoletedBy = copyData.obsoletedBy;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the security provenance object which represents the creation of this object
+	 * @type {string} 
+	 */
 	this.createdBy = copyData.createdBy;
-	/** @type {SecurityProvenance} */
+	/**
+	 * @type {SecurityProvenance} 
+	 */
 	this.obsoletedByModel = copyData.obsoletedByModel;
-	/** @type {SecurityProvenance} */
+	/**
+	 * @type {SecurityProvenance} 
+	 */
 	this.createdByModel = copyData.createdByModel;
-	/** @type {Date} */
+	/**
+	 * @summary Gets or sets the time that the data is no longer valid (was deleted/obsoleted) in ISO format
+	 * @type {Date} 
+	 */
 	this.obsoletionTime = copyData.obsoletionTime;
-	/** @type {Date} */
+	/**
+	 * @type {Date} 
+	 */
 	this.obsoletionTimeModel = copyData.obsoletionTimeModel;
-	/** @type {Date} */
+	/**
+	 * @summary Gets or sets the creation time as an ISO date format
+	 * @type {Date} 
+	 */
 	this.creationTime = copyData.creationTime;
-	/** @type {Date} */
+	/**
+	 * @type {Date} 
+	 */
 	this.creationTimeModel = copyData.creationTimeModel;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the provenance identifier associated with the last update of this object
+	 * @type {string} 
+	 */
 	this.updatedBy = copyData.updatedBy;
-	/** @type {SecurityProvenance} */
+	/**
+	 * @type {SecurityProvenance} 
+	 */
 	this.updatedByModel = copyData.updatedByModel;
-	/** @type {Date} */
+	/**
+	 * @summary Gets the time this item was modified
+	 * @type {Date} 
+	 */
 	this.modifiedOn = copyData.modifiedOn;
-	/** @type {Date} */
+	/**
+	 * @summary Gets or sets the time that this object was last modified in ISO format
+	 * @type {Date} 
+	 */
 	this.updatedTime = copyData.updatedTime;
-	/** @type {string} */
+	/**
+	 * @summary Concepts as identifiers for XML purposes only
+	 * @type {string} 
+	 */
 	this.concept = copyData.concept;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the url of the concept set
+	 * @type {string} 
+	 */
 	this.url = copyData.url;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the oid of the concept set
+	 * @type {string} 
+	 */
 	this.oid = copyData.oid;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the mnemonic for the concept set (used for convenient lookup)
+	 * @type {string} 
+	 */
 	this.mnemonic = copyData.mnemonic;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the name of the concept set
+	 * @type {string} 
+	 */
 	this.name = copyData.name;
 	}
 }  // ConceptSet 
-// SanteDB.Core.Model.DataTypes.Extension`1, SanteDB.Core.Model, Version=2.1.113.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.DataTypes.Extension`1, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
 //if(!Extension)
 /**
  * @class
@@ -7362,31 +10218,57 @@ function ConceptSet (copyData) {
 function Extension (copyData) { 
 	this.$type = 'Extension';
 	if(copyData) {
-	/** @type {BatchOperationType} */
+	/**
+	 * @summary Gets or sets the operation
+	 * @type {BatchOperationType} 
+	 */
 	this.operation = copyData.operation;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the primary identifying UUID of this object
+	 * @type {string} 
+	 */
 	this.id = copyData.id;
-	/** @type {VersionedEntityData} */
+	/**
+	 * @type {VersionedEntityData} 
+	 */
 	this.sourceModel = copyData.sourceModel;
-	/** @type {string} */
+	/**
+	 * @type {string} 
+	 */
 	this.source = copyData.source;
-	/** @type {Date} */
+	/**
+	 * @type {Date} 
+	 */
 	this.modifiedOn = copyData.modifiedOn;
-	/** @type {number} */
+	/**
+	 * @type {number} 
+	 */
 	this.obsoleteVersionSequence = copyData.obsoleteVersionSequence;
-	/** @type {number} */
+	/**
+	 * @type {number} 
+	 */
 	this.effectiveVersionSequence = copyData.effectiveVersionSequence;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the extension type key
+	 * @type {string} 
+	 */
 	this.extensionType = copyData.extensionType;
-	/** @type {ExtensionType} */
+	/**
+	 * @type {ExtensionType} 
+	 */
 	this.extensionTypeModel = copyData.extensionTypeModel;
-	/** @type {string} */
+	/**
+	 * @type {string} 
+	 */
 	this.valueModel = copyData.valueModel;
-	/** @type {Array<byte>} */
+	/**
+	 * @summary Gets or sets the value of the extension
+	 * @type {Array<byte>} 
+	 */
 	this.value = copyData.value;
 	}
 }  // Extension 
-// SanteDB.Core.Model.DataTypes.EntityExtension, SanteDB.Core.Model, Version=2.1.113.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.DataTypes.EntityExtension, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
 //if(!EntityExtension)
 /**
  * @class
@@ -7411,31 +10293,55 @@ function Extension (copyData) {
 function EntityExtension (copyData) { 
 	this.$type = 'EntityExtension';
 	if(copyData) {
-	/** @type {BatchOperationType} */
+	/**
+	 * @summary Gets or sets the operation
+	 * @type {BatchOperationType} 
+	 */
 	this.operation = copyData.operation;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the primary identifying UUID of this object
+	 * @type {string} 
+	 */
 	this.id = copyData.id;
-	/** @type {Entity} */
+	/**
+	 * @type {Entity} 
+	 */
 	this.sourceModel = copyData.sourceModel;
-	/** @type {string} */
+	/**
+	 * @type {string} 
+	 */
 	this.source = copyData.source;
-	/** @type {Date} */
+	/**
+	 * @type {Date} 
+	 */
 	this.modifiedOn = copyData.modifiedOn;
-	/** @type {number} */
+	/**
+	 * @type {number} 
+	 */
 	this.obsoleteVersionSequence = copyData.obsoleteVersionSequence;
-	/** @type {number} */
+	/**
+	 * @type {number} 
+	 */
 	this.effectiveVersionSequence = copyData.effectiveVersionSequence;
-	/** @type {string} */
+	/**
+	 * @type {string} 
+	 */
 	this.extensionType = copyData.extensionType;
-	/** @type {ExtensionType} */
+	/**
+	 * @type {ExtensionType} 
+	 */
 	this.extensionTypeModel = copyData.extensionTypeModel;
-	/** @type {string} */
+	/**
+	 * @type {string} 
+	 */
 	this.valueModel = copyData.valueModel;
-	/** @type {Array<byte>} */
+	/**
+	 * @type {Array<byte>} 
+	 */
 	this.value = copyData.value;
 	}
 }  // EntityExtension 
-// SanteDB.Core.Model.DataTypes.ActExtension, SanteDB.Core.Model, Version=2.1.113.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.DataTypes.ActExtension, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
 //if(!ActExtension)
 /**
  * @class
@@ -7460,31 +10366,55 @@ function EntityExtension (copyData) {
 function ActExtension (copyData) { 
 	this.$type = 'ActExtension';
 	if(copyData) {
-	/** @type {BatchOperationType} */
+	/**
+	 * @summary Gets or sets the operation
+	 * @type {BatchOperationType} 
+	 */
 	this.operation = copyData.operation;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the primary identifying UUID of this object
+	 * @type {string} 
+	 */
 	this.id = copyData.id;
-	/** @type {Act} */
+	/**
+	 * @type {Act} 
+	 */
 	this.sourceModel = copyData.sourceModel;
-	/** @type {string} */
+	/**
+	 * @type {string} 
+	 */
 	this.source = copyData.source;
-	/** @type {Date} */
+	/**
+	 * @type {Date} 
+	 */
 	this.modifiedOn = copyData.modifiedOn;
-	/** @type {number} */
+	/**
+	 * @type {number} 
+	 */
 	this.obsoleteVersionSequence = copyData.obsoleteVersionSequence;
-	/** @type {number} */
+	/**
+	 * @type {number} 
+	 */
 	this.effectiveVersionSequence = copyData.effectiveVersionSequence;
-	/** @type {string} */
+	/**
+	 * @type {string} 
+	 */
 	this.extensionType = copyData.extensionType;
-	/** @type {ExtensionType} */
+	/**
+	 * @type {ExtensionType} 
+	 */
 	this.extensionTypeModel = copyData.extensionTypeModel;
-	/** @type {string} */
+	/**
+	 * @type {string} 
+	 */
 	this.valueModel = copyData.valueModel;
-	/** @type {Array<byte>} */
+	/**
+	 * @type {Array<byte>} 
+	 */
 	this.value = copyData.value;
 	}
 }  // ActExtension 
-// SanteDB.Core.Model.DataTypes.ExtensionType, SanteDB.Core.Model, Version=2.1.113.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.DataTypes.ExtensionType, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
 //if(!ExtensionType)
 /**
  * @class
@@ -7513,41 +10443,84 @@ function ActExtension (copyData) {
 function ExtensionType (copyData) { 
 	this.$type = 'ExtensionType';
 	if(copyData) {
-	/** @type {BatchOperationType} */
+	/**
+	 * @summary Gets or sets the operation
+	 * @type {BatchOperationType} 
+	 */
 	this.operation = copyData.operation;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the primary identifying UUID of this object
+	 * @type {string} 
+	 */
 	this.id = copyData.id;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the security provenance object which represents the obsoletion of this data
+	 * @type {string} 
+	 */
 	this.obsoletedBy = copyData.obsoletedBy;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the security provenance object which represents the creation of this object
+	 * @type {string} 
+	 */
 	this.createdBy = copyData.createdBy;
-	/** @type {SecurityProvenance} */
+	/**
+	 * @type {SecurityProvenance} 
+	 */
 	this.obsoletedByModel = copyData.obsoletedByModel;
-	/** @type {SecurityProvenance} */
+	/**
+	 * @type {SecurityProvenance} 
+	 */
 	this.createdByModel = copyData.createdByModel;
-	/** @type {Date} */
+	/**
+	 * @summary Gets or sets the time that the data is no longer valid (was deleted/obsoleted) in ISO format
+	 * @type {Date} 
+	 */
 	this.obsoletionTime = copyData.obsoletionTime;
-	/** @type {Date} */
+	/**
+	 * @type {Date} 
+	 */
 	this.obsoletionTimeModel = copyData.obsoletionTimeModel;
-	/** @type {Date} */
+	/**
+	 * @summary Gets or sets the creation time as an ISO date format
+	 * @type {Date} 
+	 */
 	this.creationTime = copyData.creationTime;
-	/** @type {Date} */
+	/**
+	 * @type {Date} 
+	 */
 	this.creationTimeModel = copyData.creationTimeModel;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the provenance identifier associated with the last update of this object
+	 * @type {string} 
+	 */
 	this.updatedBy = copyData.updatedBy;
-	/** @type {SecurityProvenance} */
+	/**
+	 * @type {SecurityProvenance} 
+	 */
 	this.updatedByModel = copyData.updatedByModel;
-	/** @type {Date} */
+	/**
+	 * @summary Gets the time this item was modified
+	 * @type {Date} 
+	 */
 	this.modifiedOn = copyData.modifiedOn;
-	/** @type {Date} */
+	/**
+	 * @summary Gets or sets the time that this object was last modified in ISO format
+	 * @type {Date} 
+	 */
 	this.updatedTime = copyData.updatedTime;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the description
+	 * @type {string} 
+	 */
 	this.name = copyData.name;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the description
+	 * @type {string} 
+	 */
 	this.handlerClass = copyData.handlerClass;
 	}
 }  // ExtensionType 
-// SanteDB.Core.Model.DataTypes.GeoTag, SanteDB.Core.Model, Version=2.1.113.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.DataTypes.GeoTag, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
 //if(!GeoTag)
 /**
  * @class
@@ -7567,21 +10540,39 @@ function ExtensionType (copyData) {
 function GeoTag (copyData) { 
 	this.$type = 'GeoTag';
 	if(copyData) {
-	/** @type {BatchOperationType} */
+	/**
+	 * @summary Gets or sets the operation
+	 * @type {BatchOperationType} 
+	 */
 	this.operation = copyData.operation;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the primary identifying UUID of this object
+	 * @type {string} 
+	 */
 	this.id = copyData.id;
-	/** @type {boolean} */
+	/**
+	 * @summary Gets or sets the accuracy of the geo-tag
+	 * @type {boolean} 
+	 */
 	this.precise = copyData.precise;
-	/** @type {Double} */
+	/**
+	 * @summary Gets or sets the longitude of the object
+	 * @type {Double} 
+	 */
 	this.lng = copyData.lng;
-	/** @type {Double} */
+	/**
+	 * @summary Gets the latitude
+	 * @type {Double} 
+	 */
 	this.lat = copyData.lat;
-	/** @type {Date} */
+	/**
+	 * @summary Gets the default modified on
+	 * @type {Date} 
+	 */
 	this.modifiedOn = copyData.modifiedOn;
 	}
 }  // GeoTag 
-// SanteDB.Core.Model.DataTypes.IdentifiedDataReference, SanteDB.Core.Model, Version=2.1.113.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.DataTypes.IdentifiedDataReference, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
 //if(!Reference)
 /**
  * @class
@@ -7601,15 +10592,24 @@ function GeoTag (copyData) {
 function Reference (copyData) { 
 	this.$type = 'Reference';
 	if(copyData) {
-	/** @type {BatchOperationType} */
+	/**
+	 * @summary Gets or sets the operation
+	 * @type {BatchOperationType} 
+	 */
 	this.operation = copyData.operation;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the primary identifying UUID of this object
+	 * @type {string} 
+	 */
 	this.id = copyData.id;
-	/** @type {Date} */
+	/**
+	 * @summary Modified on
+	 * @type {Date} 
+	 */
 	this.modifiedOn = copyData.modifiedOn;
 	}
 }  // Reference 
-// SanteDB.Core.Model.DataTypes.EntityIdentifier, SanteDB.Core.Model, Version=2.1.113.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.DataTypes.EntityIdentifier, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
 //if(!EntityIdentifier)
 /**
  * @class
@@ -7636,35 +10636,63 @@ function Reference (copyData) {
 function EntityIdentifier (copyData) { 
 	this.$type = 'EntityIdentifier';
 	if(copyData) {
-	/** @type {BatchOperationType} */
+	/**
+	 * @summary Gets or sets the operation
+	 * @type {BatchOperationType} 
+	 */
 	this.operation = copyData.operation;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the primary identifying UUID of this object
+	 * @type {string} 
+	 */
 	this.id = copyData.id;
-	/** @type {Entity} */
+	/**
+	 * @type {Entity} 
+	 */
 	this.sourceModel = copyData.sourceModel;
-	/** @type {string} */
+	/**
+	 * @type {string} 
+	 */
 	this.source = copyData.source;
-	/** @type {Date} */
+	/**
+	 * @type {Date} 
+	 */
 	this.modifiedOn = copyData.modifiedOn;
-	/** @type {number} */
+	/**
+	 * @type {number} 
+	 */
 	this.obsoleteVersionSequence = copyData.obsoleteVersionSequence;
-	/** @type {number} */
+	/**
+	 * @type {number} 
+	 */
 	this.effectiveVersionSequence = copyData.effectiveVersionSequence;
-	/** @type {AssigningAuthority} */
+	/**
+	 * @type {AssigningAuthority} 
+	 */
 	this.authority = copyData.authority;
-	/** @type {IdentifierType} */
+	/**
+	 * @type {IdentifierType} 
+	 */
 	this.type = copyData.type;
-	/** @type {string} */
+	/**
+	 * @type {string} 
+	 */
 	this.checkDigit = copyData.checkDigit;
-	/** @type {Date} */
+	/**
+	 * @type {Date} 
+	 */
 	this.expires = copyData.expires;
-	/** @type {Date} */
+	/**
+	 * @type {Date} 
+	 */
 	this.issued = copyData.issued;
-	/** @type {string} */
+	/**
+	 * @type {string} 
+	 */
 	this.value = copyData.value;
 	}
 }  // EntityIdentifier 
-// SanteDB.Core.Model.DataTypes.ActIdentifier, SanteDB.Core.Model, Version=2.1.113.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.DataTypes.ActIdentifier, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
 //if(!ActIdentifier)
 /**
  * @class
@@ -7691,35 +10719,63 @@ function EntityIdentifier (copyData) {
 function ActIdentifier (copyData) { 
 	this.$type = 'ActIdentifier';
 	if(copyData) {
-	/** @type {BatchOperationType} */
+	/**
+	 * @summary Gets or sets the operation
+	 * @type {BatchOperationType} 
+	 */
 	this.operation = copyData.operation;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the primary identifying UUID of this object
+	 * @type {string} 
+	 */
 	this.id = copyData.id;
-	/** @type {Act} */
+	/**
+	 * @type {Act} 
+	 */
 	this.sourceModel = copyData.sourceModel;
-	/** @type {string} */
+	/**
+	 * @type {string} 
+	 */
 	this.source = copyData.source;
-	/** @type {Date} */
+	/**
+	 * @type {Date} 
+	 */
 	this.modifiedOn = copyData.modifiedOn;
-	/** @type {number} */
+	/**
+	 * @type {number} 
+	 */
 	this.obsoleteVersionSequence = copyData.obsoleteVersionSequence;
-	/** @type {number} */
+	/**
+	 * @type {number} 
+	 */
 	this.effectiveVersionSequence = copyData.effectiveVersionSequence;
-	/** @type {AssigningAuthority} */
+	/**
+	 * @type {AssigningAuthority} 
+	 */
 	this.authority = copyData.authority;
-	/** @type {IdentifierType} */
+	/**
+	 * @type {IdentifierType} 
+	 */
 	this.type = copyData.type;
-	/** @type {string} */
+	/**
+	 * @type {string} 
+	 */
 	this.checkDigit = copyData.checkDigit;
-	/** @type {Date} */
+	/**
+	 * @type {Date} 
+	 */
 	this.expires = copyData.expires;
-	/** @type {Date} */
+	/**
+	 * @type {Date} 
+	 */
 	this.issued = copyData.issued;
-	/** @type {string} */
+	/**
+	 * @type {string} 
+	 */
 	this.value = copyData.value;
 	}
 }  // ActIdentifier 
-// SanteDB.Core.Model.DataTypes.IdentifierBase`1, SanteDB.Core.Model, Version=2.1.113.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.DataTypes.IdentifierBase`1, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
 //if(!IdentifierBase)
 /**
  * @class
@@ -7747,35 +10803,69 @@ function ActIdentifier (copyData) {
 function IdentifierBase (copyData) { 
 	this.$type = 'IdentifierBase';
 	if(copyData) {
-	/** @type {BatchOperationType} */
+	/**
+	 * @summary Gets or sets the operation
+	 * @type {BatchOperationType} 
+	 */
 	this.operation = copyData.operation;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the primary identifying UUID of this object
+	 * @type {string} 
+	 */
 	this.id = copyData.id;
-	/** @type {VersionedEntityData} */
+	/**
+	 * @type {VersionedEntityData} 
+	 */
 	this.sourceModel = copyData.sourceModel;
-	/** @type {string} */
+	/**
+	 * @type {string} 
+	 */
 	this.source = copyData.source;
-	/** @type {Date} */
+	/**
+	 * @type {Date} 
+	 */
 	this.modifiedOn = copyData.modifiedOn;
-	/** @type {number} */
+	/**
+	 * @type {number} 
+	 */
 	this.obsoleteVersionSequence = copyData.obsoleteVersionSequence;
-	/** @type {number} */
+	/**
+	 * @type {number} 
+	 */
 	this.effectiveVersionSequence = copyData.effectiveVersionSequence;
-	/** @type {AssigningAuthority} */
+	/**
+	 * @summary Gets or sets a minimal assigning authority from XML data
+	 * @type {AssigningAuthority} 
+	 */
 	this.authority = copyData.authority;
-	/** @type {IdentifierType} */
+	/**
+	 * @summary Gets or sets the identifier type
+	 * @type {IdentifierType} 
+	 */
 	this.type = copyData.type;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the check-digit if it is stored separate from the identifier
+	 * @type {string} 
+	 */
 	this.checkDigit = copyData.checkDigit;
-	/** @type {Date} */
+	/**
+	 * @summary Serialization field for expiry date
+	 * @type {Date} 
+	 */
 	this.expires = copyData.expires;
-	/** @type {Date} */
+	/**
+	 * @summary Serialization property for issued date
+	 * @type {Date} 
+	 */
 	this.issued = copyData.issued;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the value of the identifier
+	 * @type {string} 
+	 */
 	this.value = copyData.value;
 	}
 }  // IdentifierBase 
-// SanteDB.Core.Model.DataTypes.IdentifierType, SanteDB.Core.Model, Version=2.1.113.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.DataTypes.IdentifierType, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
 //if(!IdentifierType)
 /**
  * @class
@@ -7804,39 +10894,78 @@ function IdentifierBase (copyData) {
 function IdentifierType (copyData) { 
 	this.$type = 'IdentifierType';
 	if(copyData) {
-	/** @type {BatchOperationType} */
+	/**
+	 * @summary Gets or sets the operation
+	 * @type {BatchOperationType} 
+	 */
 	this.operation = copyData.operation;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the primary identifying UUID of this object
+	 * @type {string} 
+	 */
 	this.id = copyData.id;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the security provenance object which represents the obsoletion of this data
+	 * @type {string} 
+	 */
 	this.obsoletedBy = copyData.obsoletedBy;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the security provenance object which represents the creation of this object
+	 * @type {string} 
+	 */
 	this.createdBy = copyData.createdBy;
-	/** @type {SecurityProvenance} */
+	/**
+	 * @type {SecurityProvenance} 
+	 */
 	this.obsoletedByModel = copyData.obsoletedByModel;
-	/** @type {Date} */
+	/**
+	 * @summary Gets the time that the object was last modified (from base data, default to CreationTime)
+	 * @type {Date} 
+	 */
 	this.modifiedOn = copyData.modifiedOn;
-	/** @type {SecurityProvenance} */
+	/**
+	 * @type {SecurityProvenance} 
+	 */
 	this.createdByModel = copyData.createdByModel;
-	/** @type {Date} */
+	/**
+	 * @summary Gets or sets the time that the data is no longer valid (was deleted/obsoleted) in ISO format
+	 * @type {Date} 
+	 */
 	this.obsoletionTime = copyData.obsoletionTime;
-	/** @type {Date} */
+	/**
+	 * @type {Date} 
+	 */
 	this.obsoletionTimeModel = copyData.obsoletionTimeModel;
-	/** @type {Date} */
+	/**
+	 * @summary Gets or sets the creation time as an ISO date format
+	 * @type {Date} 
+	 */
 	this.creationTime = copyData.creationTime;
-	/** @type {Date} */
+	/**
+	 * @type {Date} 
+	 */
 	this.creationTimeModel = copyData.creationTimeModel;
-	/** @type {Concept} */
+	/**
+	 * @type {Concept} 
+	 */
 	this.scopeConceptModel = copyData.scopeConceptModel;
-	/** @type {Concept} */
+	/**
+	 * @type {Concept} 
+	 */
 	this.typeConceptModel = copyData.typeConceptModel;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the concept which identifies the type
+	 * @type {string} 
+	 */
 	this.typeConcept = copyData.typeConcept;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the id of the scope concept
+	 * @type {string} 
+	 */
 	this.scopeConcept = copyData.scopeConcept;
 	}
 }  // IdentifierType 
-// SanteDB.Core.Model.DataTypes.Note`1, SanteDB.Core.Model, Version=2.1.113.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.DataTypes.Note`1, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
 //if(!Note)
 /**
  * @class
@@ -7861,29 +10990,53 @@ function IdentifierType (copyData) {
 function Note (copyData) { 
 	this.$type = 'Note';
 	if(copyData) {
-	/** @type {BatchOperationType} */
+	/**
+	 * @summary Gets or sets the operation
+	 * @type {BatchOperationType} 
+	 */
 	this.operation = copyData.operation;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the primary identifying UUID of this object
+	 * @type {string} 
+	 */
 	this.id = copyData.id;
-	/** @type {VersionedEntityData} */
+	/**
+	 * @type {VersionedEntityData} 
+	 */
 	this.sourceModel = copyData.sourceModel;
-	/** @type {string} */
+	/**
+	 * @type {string} 
+	 */
 	this.source = copyData.source;
-	/** @type {Date} */
+	/**
+	 * @type {Date} 
+	 */
 	this.modifiedOn = copyData.modifiedOn;
-	/** @type {number} */
+	/**
+	 * @type {number} 
+	 */
 	this.obsoleteVersionSequence = copyData.obsoleteVersionSequence;
-	/** @type {number} */
+	/**
+	 * @type {number} 
+	 */
 	this.effectiveVersionSequence = copyData.effectiveVersionSequence;
-	/** @type {Entity} */
+	/**
+	 * @type {Entity} 
+	 */
 	this.authorModel = copyData.authorModel;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the author entity
+	 * @type {string} 
+	 */
 	this.author = copyData.author;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the note text
+	 * @type {string} 
+	 */
 	this.text = copyData.text;
 	}
 }  // Note 
-// SanteDB.Core.Model.DataTypes.EntityNote, SanteDB.Core.Model, Version=2.1.113.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.DataTypes.EntityNote, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
 //if(!EntityNote)
 /**
  * @class
@@ -7907,29 +11060,51 @@ function Note (copyData) {
 function EntityNote (copyData) { 
 	this.$type = 'EntityNote';
 	if(copyData) {
-	/** @type {BatchOperationType} */
+	/**
+	 * @summary Gets or sets the operation
+	 * @type {BatchOperationType} 
+	 */
 	this.operation = copyData.operation;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the primary identifying UUID of this object
+	 * @type {string} 
+	 */
 	this.id = copyData.id;
-	/** @type {Entity} */
+	/**
+	 * @type {Entity} 
+	 */
 	this.sourceModel = copyData.sourceModel;
-	/** @type {string} */
+	/**
+	 * @type {string} 
+	 */
 	this.source = copyData.source;
-	/** @type {Date} */
+	/**
+	 * @type {Date} 
+	 */
 	this.modifiedOn = copyData.modifiedOn;
-	/** @type {number} */
+	/**
+	 * @type {number} 
+	 */
 	this.obsoleteVersionSequence = copyData.obsoleteVersionSequence;
-	/** @type {number} */
+	/**
+	 * @type {number} 
+	 */
 	this.effectiveVersionSequence = copyData.effectiveVersionSequence;
-	/** @type {Entity} */
+	/**
+	 * @type {Entity} 
+	 */
 	this.authorModel = copyData.authorModel;
-	/** @type {string} */
+	/**
+	 * @type {string} 
+	 */
 	this.author = copyData.author;
-	/** @type {string} */
+	/**
+	 * @type {string} 
+	 */
 	this.text = copyData.text;
 	}
 }  // EntityNote 
-// SanteDB.Core.Model.DataTypes.ActNote, SanteDB.Core.Model, Version=2.1.113.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.DataTypes.ActNote, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
 //if(!ActNote)
 /**
  * @class
@@ -7953,29 +11128,51 @@ function EntityNote (copyData) {
 function ActNote (copyData) { 
 	this.$type = 'ActNote';
 	if(copyData) {
-	/** @type {BatchOperationType} */
+	/**
+	 * @summary Gets or sets the operation
+	 * @type {BatchOperationType} 
+	 */
 	this.operation = copyData.operation;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the primary identifying UUID of this object
+	 * @type {string} 
+	 */
 	this.id = copyData.id;
-	/** @type {Act} */
+	/**
+	 * @type {Act} 
+	 */
 	this.sourceModel = copyData.sourceModel;
-	/** @type {string} */
+	/**
+	 * @type {string} 
+	 */
 	this.source = copyData.source;
-	/** @type {Date} */
+	/**
+	 * @type {Date} 
+	 */
 	this.modifiedOn = copyData.modifiedOn;
-	/** @type {number} */
+	/**
+	 * @type {number} 
+	 */
 	this.obsoleteVersionSequence = copyData.obsoleteVersionSequence;
-	/** @type {number} */
+	/**
+	 * @type {number} 
+	 */
 	this.effectiveVersionSequence = copyData.effectiveVersionSequence;
-	/** @type {Entity} */
+	/**
+	 * @type {Entity} 
+	 */
 	this.authorModel = copyData.authorModel;
-	/** @type {string} */
+	/**
+	 * @type {string} 
+	 */
 	this.author = copyData.author;
-	/** @type {string} */
+	/**
+	 * @type {string} 
+	 */
 	this.text = copyData.text;
 	}
 }  // ActNote 
-// SanteDB.Core.Model.DataTypes.ReferenceTerm, SanteDB.Core.Model, Version=2.1.113.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.DataTypes.ReferenceTerm, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
 //if(!ReferenceTerm)
 /**
  * @class
@@ -8007,45 +11204,93 @@ function ActNote (copyData) {
 function ReferenceTerm (copyData) { 
 	this.$type = 'ReferenceTerm';
 	if(copyData) {
-	/** @type {BatchOperationType} */
+	/**
+	 * @summary Gets or sets the operation
+	 * @type {BatchOperationType} 
+	 */
 	this.operation = copyData.operation;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the primary identifying UUID of this object
+	 * @type {string} 
+	 */
 	this.id = copyData.id;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the security provenance object which represents the obsoletion of this data
+	 * @type {string} 
+	 */
 	this.obsoletedBy = copyData.obsoletedBy;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the security provenance object which represents the creation of this object
+	 * @type {string} 
+	 */
 	this.createdBy = copyData.createdBy;
-	/** @type {SecurityProvenance} */
+	/**
+	 * @type {SecurityProvenance} 
+	 */
 	this.obsoletedByModel = copyData.obsoletedByModel;
-	/** @type {SecurityProvenance} */
+	/**
+	 * @type {SecurityProvenance} 
+	 */
 	this.createdByModel = copyData.createdByModel;
-	/** @type {Date} */
+	/**
+	 * @summary Gets or sets the time that the data is no longer valid (was deleted/obsoleted) in ISO format
+	 * @type {Date} 
+	 */
 	this.obsoletionTime = copyData.obsoletionTime;
-	/** @type {Date} */
+	/**
+	 * @type {Date} 
+	 */
 	this.obsoletionTimeModel = copyData.obsoletionTimeModel;
-	/** @type {Date} */
+	/**
+	 * @summary Gets or sets the creation time as an ISO date format
+	 * @type {Date} 
+	 */
 	this.creationTime = copyData.creationTime;
-	/** @type {Date} */
+	/**
+	 * @type {Date} 
+	 */
 	this.creationTimeModel = copyData.creationTimeModel;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the provenance identifier associated with the last update of this object
+	 * @type {string} 
+	 */
 	this.updatedBy = copyData.updatedBy;
-	/** @type {SecurityProvenance} */
+	/**
+	 * @type {SecurityProvenance} 
+	 */
 	this.updatedByModel = copyData.updatedByModel;
-	/** @type {Date} */
+	/**
+	 * @summary Gets the time this item was modified
+	 * @type {Date} 
+	 */
 	this.modifiedOn = copyData.modifiedOn;
-	/** @type {Date} */
+	/**
+	 * @summary Gets or sets the time that this object was last modified in ISO format
+	 * @type {Date} 
+	 */
 	this.updatedTime = copyData.updatedTime;
-	/** @type {object} */
+	/**
+	 * @summary Gets display names associated with the reference term
+	 * @type {object} 
+	 */
 	this.name = copyData.name;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the code system identifier
+	 * @type {string} 
+	 */
 	this.codeSystem = copyData.codeSystem;
-	/** @type {CodeSystem} */
+	/**
+	 * @type {CodeSystem} 
+	 */
 	this.codeSystemModel = copyData.codeSystemModel;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the mnemonic for the reference term
+	 * @type {string} 
+	 */
 	this.mnemonic = copyData.mnemonic;
 	}
 }  // ReferenceTerm 
-// SanteDB.Core.Model.DataTypes.ReferenceTermName, SanteDB.Core.Model, Version=2.1.113.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.DataTypes.ReferenceTermName, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
 //if(!ReferenceTermName)
 /**
  * @class
@@ -8073,37 +11318,75 @@ function ReferenceTerm (copyData) {
 function ReferenceTermName (copyData) { 
 	this.$type = 'ReferenceTermName';
 	if(copyData) {
-	/** @type {BatchOperationType} */
+	/**
+	 * @summary Gets or sets the operation
+	 * @type {BatchOperationType} 
+	 */
 	this.operation = copyData.operation;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the primary identifying UUID of this object
+	 * @type {string} 
+	 */
 	this.id = copyData.id;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the security provenance object which represents the obsoletion of this data
+	 * @type {string} 
+	 */
 	this.obsoletedBy = copyData.obsoletedBy;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the security provenance object which represents the creation of this object
+	 * @type {string} 
+	 */
 	this.createdBy = copyData.createdBy;
-	/** @type {SecurityProvenance} */
+	/**
+	 * @type {SecurityProvenance} 
+	 */
 	this.obsoletedByModel = copyData.obsoletedByModel;
-	/** @type {Date} */
+	/**
+	 * @summary Gets the time that the object was last modified (from base data, default to CreationTime)
+	 * @type {Date} 
+	 */
 	this.modifiedOn = copyData.modifiedOn;
-	/** @type {SecurityProvenance} */
+	/**
+	 * @type {SecurityProvenance} 
+	 */
 	this.createdByModel = copyData.createdByModel;
-	/** @type {Date} */
+	/**
+	 * @summary Gets or sets the time that the data is no longer valid (was deleted/obsoleted) in ISO format
+	 * @type {Date} 
+	 */
 	this.obsoletionTime = copyData.obsoletionTime;
-	/** @type {Date} */
+	/**
+	 * @type {Date} 
+	 */
 	this.obsoletionTimeModel = copyData.obsoletionTimeModel;
-	/** @type {Date} */
+	/**
+	 * @summary Gets or sets the creation time as an ISO date format
+	 * @type {Date} 
+	 */
 	this.creationTime = copyData.creationTime;
-	/** @type {Date} */
+	/**
+	 * @type {Date} 
+	 */
 	this.creationTimeModel = copyData.creationTimeModel;
-	/** @type {string} */
+	/**
+	 * @summary Gets the source entity key
+	 * @type {string} 
+	 */
 	this.source = copyData.source;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the name of the reference term
+	 * @type {string} 
+	 */
 	this.value = copyData.value;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the language code of the object
+	 * @type {string} 
+	 */
 	this.language = copyData.language;
 	}
 }  // ReferenceTermName 
-// SanteDB.Core.Model.DataTypes.Tag`1, SanteDB.Core.Model, Version=2.1.113.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.DataTypes.Tag`1, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
 //if(!Tag)
 /**
  * @class
@@ -8133,39 +11416,79 @@ function ReferenceTermName (copyData) {
 function Tag (copyData) { 
 	this.$type = 'Tag';
 	if(copyData) {
-	/** @type {BatchOperationType} */
+	/**
+	 * @summary Gets or sets the operation
+	 * @type {BatchOperationType} 
+	 */
 	this.operation = copyData.operation;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the primary identifying UUID of this object
+	 * @type {string} 
+	 */
 	this.id = copyData.id;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the security provenance object which represents the obsoletion of this data
+	 * @type {string} 
+	 */
 	this.obsoletedBy = copyData.obsoletedBy;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the security provenance object which represents the creation of this object
+	 * @type {string} 
+	 */
 	this.createdBy = copyData.createdBy;
-	/** @type {SecurityProvenance} */
+	/**
+	 * @type {SecurityProvenance} 
+	 */
 	this.obsoletedByModel = copyData.obsoletedByModel;
-	/** @type {Date} */
+	/**
+	 * @summary Gets the time that the object was last modified (from base data, default to CreationTime)
+	 * @type {Date} 
+	 */
 	this.modifiedOn = copyData.modifiedOn;
-	/** @type {SecurityProvenance} */
+	/**
+	 * @type {SecurityProvenance} 
+	 */
 	this.createdByModel = copyData.createdByModel;
-	/** @type {Date} */
+	/**
+	 * @summary Gets or sets the time that the data is no longer valid (was deleted/obsoleted) in ISO format
+	 * @type {Date} 
+	 */
 	this.obsoletionTime = copyData.obsoletionTime;
-	/** @type {Date} */
+	/**
+	 * @type {Date} 
+	 */
 	this.obsoletionTimeModel = copyData.obsoletionTimeModel;
-	/** @type {Date} */
+	/**
+	 * @summary Gets or sets the creation time as an ISO date format
+	 * @type {Date} 
+	 */
 	this.creationTime = copyData.creationTime;
-	/** @type {Date} */
+	/**
+	 * @type {Date} 
+	 */
 	this.creationTimeModel = copyData.creationTimeModel;
-	/** @type {IdentifiedData} */
+	/**
+	 * @type {IdentifiedData} 
+	 */
 	this.sourceModel = copyData.sourceModel;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the source entity's key (where the relationship is FROM)
+	 * @type {string} 
+	 */
 	this.source = copyData.source;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the value of the tag
+	 * @type {string} 
+	 */
 	this.value = copyData.value;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the key of the tag
+	 * @type {string} 
+	 */
 	this.key = copyData.key;
 	}
 }  // Tag 
-// SanteDB.Core.Model.DataTypes.EntityTag, SanteDB.Core.Model, Version=2.1.113.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.DataTypes.EntityTag, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
 //if(!EntityTag)
 /**
  * @class
@@ -8194,39 +11517,76 @@ function Tag (copyData) {
 function EntityTag (copyData) { 
 	this.$type = 'EntityTag';
 	if(copyData) {
-	/** @type {BatchOperationType} */
+	/**
+	 * @summary Gets or sets the operation
+	 * @type {BatchOperationType} 
+	 */
 	this.operation = copyData.operation;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the primary identifying UUID of this object
+	 * @type {string} 
+	 */
 	this.id = copyData.id;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the security provenance object which represents the obsoletion of this data
+	 * @type {string} 
+	 */
 	this.obsoletedBy = copyData.obsoletedBy;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the security provenance object which represents the creation of this object
+	 * @type {string} 
+	 */
 	this.createdBy = copyData.createdBy;
-	/** @type {SecurityProvenance} */
+	/**
+	 * @type {SecurityProvenance} 
+	 */
 	this.obsoletedByModel = copyData.obsoletedByModel;
-	/** @type {Date} */
+	/**
+	 * @summary Gets the time that the object was last modified (from base data, default to CreationTime)
+	 * @type {Date} 
+	 */
 	this.modifiedOn = copyData.modifiedOn;
-	/** @type {SecurityProvenance} */
+	/**
+	 * @type {SecurityProvenance} 
+	 */
 	this.createdByModel = copyData.createdByModel;
-	/** @type {Date} */
+	/**
+	 * @summary Gets or sets the time that the data is no longer valid (was deleted/obsoleted) in ISO format
+	 * @type {Date} 
+	 */
 	this.obsoletionTime = copyData.obsoletionTime;
-	/** @type {Date} */
+	/**
+	 * @type {Date} 
+	 */
 	this.obsoletionTimeModel = copyData.obsoletionTimeModel;
-	/** @type {Date} */
+	/**
+	 * @summary Gets or sets the creation time as an ISO date format
+	 * @type {Date} 
+	 */
 	this.creationTime = copyData.creationTime;
-	/** @type {Date} */
+	/**
+	 * @type {Date} 
+	 */
 	this.creationTimeModel = copyData.creationTimeModel;
-	/** @type {Entity} */
+	/**
+	 * @type {Entity} 
+	 */
 	this.sourceModel = copyData.sourceModel;
-	/** @type {string} */
+	/**
+	 * @type {string} 
+	 */
 	this.source = copyData.source;
-	/** @type {string} */
+	/**
+	 * @type {string} 
+	 */
 	this.value = copyData.value;
-	/** @type {string} */
+	/**
+	 * @type {string} 
+	 */
 	this.key = copyData.key;
 	}
 }  // EntityTag 
-// SanteDB.Core.Model.DataTypes.ActTag, SanteDB.Core.Model, Version=2.1.113.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.DataTypes.ActTag, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
 //if(!ActTag)
 /**
  * @class
@@ -8255,39 +11615,76 @@ function EntityTag (copyData) {
 function ActTag (copyData) { 
 	this.$type = 'ActTag';
 	if(copyData) {
-	/** @type {BatchOperationType} */
+	/**
+	 * @summary Gets or sets the operation
+	 * @type {BatchOperationType} 
+	 */
 	this.operation = copyData.operation;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the primary identifying UUID of this object
+	 * @type {string} 
+	 */
 	this.id = copyData.id;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the security provenance object which represents the obsoletion of this data
+	 * @type {string} 
+	 */
 	this.obsoletedBy = copyData.obsoletedBy;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the security provenance object which represents the creation of this object
+	 * @type {string} 
+	 */
 	this.createdBy = copyData.createdBy;
-	/** @type {SecurityProvenance} */
+	/**
+	 * @type {SecurityProvenance} 
+	 */
 	this.obsoletedByModel = copyData.obsoletedByModel;
-	/** @type {Date} */
+	/**
+	 * @summary Gets the time that the object was last modified (from base data, default to CreationTime)
+	 * @type {Date} 
+	 */
 	this.modifiedOn = copyData.modifiedOn;
-	/** @type {SecurityProvenance} */
+	/**
+	 * @type {SecurityProvenance} 
+	 */
 	this.createdByModel = copyData.createdByModel;
-	/** @type {Date} */
+	/**
+	 * @summary Gets or sets the time that the data is no longer valid (was deleted/obsoleted) in ISO format
+	 * @type {Date} 
+	 */
 	this.obsoletionTime = copyData.obsoletionTime;
-	/** @type {Date} */
+	/**
+	 * @type {Date} 
+	 */
 	this.obsoletionTimeModel = copyData.obsoletionTimeModel;
-	/** @type {Date} */
+	/**
+	 * @summary Gets or sets the creation time as an ISO date format
+	 * @type {Date} 
+	 */
 	this.creationTime = copyData.creationTime;
-	/** @type {Date} */
+	/**
+	 * @type {Date} 
+	 */
 	this.creationTimeModel = copyData.creationTimeModel;
-	/** @type {Act} */
+	/**
+	 * @type {Act} 
+	 */
 	this.sourceModel = copyData.sourceModel;
-	/** @type {string} */
+	/**
+	 * @type {string} 
+	 */
 	this.source = copyData.source;
-	/** @type {string} */
+	/**
+	 * @type {string} 
+	 */
 	this.value = copyData.value;
-	/** @type {string} */
+	/**
+	 * @type {string} 
+	 */
 	this.key = copyData.key;
 	}
 }  // ActTag 
-// SanteDB.Core.Model.DataTypes.TemplateDefinition, SanteDB.Core.Model, Version=2.1.113.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.DataTypes.TemplateDefinition, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
 //if(!TemplateDefinition)
 /**
  * @class
@@ -8318,45 +11715,94 @@ function ActTag (copyData) {
 function TemplateDefinition (copyData) { 
 	this.$type = 'TemplateDefinition';
 	if(copyData) {
-	/** @type {BatchOperationType} */
+	/**
+	 * @summary Gets or sets the operation
+	 * @type {BatchOperationType} 
+	 */
 	this.operation = copyData.operation;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the primary identifying UUID of this object
+	 * @type {string} 
+	 */
 	this.id = copyData.id;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the security provenance object which represents the obsoletion of this data
+	 * @type {string} 
+	 */
 	this.obsoletedBy = copyData.obsoletedBy;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the security provenance object which represents the creation of this object
+	 * @type {string} 
+	 */
 	this.createdBy = copyData.createdBy;
-	/** @type {SecurityProvenance} */
+	/**
+	 * @type {SecurityProvenance} 
+	 */
 	this.obsoletedByModel = copyData.obsoletedByModel;
-	/** @type {SecurityProvenance} */
+	/**
+	 * @type {SecurityProvenance} 
+	 */
 	this.createdByModel = copyData.createdByModel;
-	/** @type {Date} */
+	/**
+	 * @summary Gets or sets the time that the data is no longer valid (was deleted/obsoleted) in ISO format
+	 * @type {Date} 
+	 */
 	this.obsoletionTime = copyData.obsoletionTime;
-	/** @type {Date} */
+	/**
+	 * @type {Date} 
+	 */
 	this.obsoletionTimeModel = copyData.obsoletionTimeModel;
-	/** @type {Date} */
+	/**
+	 * @summary Gets or sets the creation time as an ISO date format
+	 * @type {Date} 
+	 */
 	this.creationTime = copyData.creationTime;
-	/** @type {Date} */
+	/**
+	 * @type {Date} 
+	 */
 	this.creationTimeModel = copyData.creationTimeModel;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the provenance identifier associated with the last update of this object
+	 * @type {string} 
+	 */
 	this.updatedBy = copyData.updatedBy;
-	/** @type {SecurityProvenance} */
+	/**
+	 * @type {SecurityProvenance} 
+	 */
 	this.updatedByModel = copyData.updatedByModel;
-	/** @type {Date} */
+	/**
+	 * @summary Gets the time this item was modified
+	 * @type {Date} 
+	 */
 	this.modifiedOn = copyData.modifiedOn;
-	/** @type {Date} */
+	/**
+	 * @summary Gets or sets the time that this object was last modified in ISO format
+	 * @type {Date} 
+	 */
 	this.updatedTime = copyData.updatedTime;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the description
+	 * @type {string} 
+	 */
 	this.description = copyData.description;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the oid of the concept set
+	 * @type {string} 
+	 */
 	this.oid = copyData.oid;
-	/** @type {string} */
+	/**
+	 * @summary Gets or set the name
+	 * @type {string} 
+	 */
 	this.name = copyData.name;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the mnemonic
+	 * @type {string} 
+	 */
 	this.mnemonic = copyData.mnemonic;
 	}
 }  // TemplateDefinition 
-// SanteDB.Core.Model.Collection.Bundle, SanteDB.Core.Model, Version=2.1.113.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Collection.Bundle, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
 //if(!Bundle)
 /**
  * @class
@@ -8378,25 +11824,49 @@ function TemplateDefinition (copyData) {
 function Bundle (copyData) { 
 	this.$type = 'Bundle';
 	if(copyData) {
-	/** @type {BatchOperationType} */
+	/**
+	 * @summary Gets or sets the operation
+	 * @type {BatchOperationType} 
+	 */
 	this.operation = copyData.operation;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the primary identifying UUID of this object
+	 * @type {string} 
+	 */
 	this.id = copyData.id;
-	/** @type {number} */
+	/**
+	 * @summary Gets or sets the total results
+	 * @type {number} 
+	 */
 	this.totalResults = copyData.totalResults;
-	/** @type {number} */
+	/**
+	 * @summary Gets or sets the count in this bundle
+	 * @type {number} 
+	 */
 	this.count = copyData.count;
-	/** @type {number} */
+	/**
+	 * @summary Gets or sets the count in this bundle
+	 * @type {number} 
+	 */
 	this.offset = copyData.offset;
-	/** @type {string} */
+	/**
+	 * @summary Entry into the bundle
+	 * @type {string} 
+	 */
 	this.focal = copyData.focal;
-	/** @type {IdentifiedData} */
+	/**
+	 * @summary Gets or sets items in the bundle
+	 * @type {IdentifiedData} 
+	 */
 	this.resource = copyData.resource;
-	/** @type {Date} */
+	/**
+	 * @summary Gets the time the bundle was modified
+	 * @type {Date} 
+	 */
 	this.modifiedOn = copyData.modifiedOn;
 	}
 }  // Bundle 
-// SanteDB.Core.Model.Acts.Account, SanteDB.Core.Model, Version=2.1.113.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Acts.Account, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
 //if(!Account)
 /**
  * @class
@@ -8541,97 +12011,216 @@ function Bundle (copyData) {
 function Account (copyData) { 
 	this.$type = 'Account';
 	if(copyData) {
-	/** @type {BatchOperationType} */
+	/**
+	 * @summary Gets or sets the operation
+	 * @type {BatchOperationType} 
+	 */
 	this.operation = copyData.operation;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the primary identifying UUID of this object
+	 * @type {string} 
+	 */
 	this.id = copyData.id;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the security provenance object which represents the obsoletion of this data
+	 * @type {string} 
+	 */
 	this.obsoletedBy = copyData.obsoletedBy;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the security provenance object which represents the creation of this object
+	 * @type {string} 
+	 */
 	this.createdBy = copyData.createdBy;
-	/** @type {SecurityProvenance} */
+	/**
+	 * @type {SecurityProvenance} 
+	 */
 	this.obsoletedByModel = copyData.obsoletedByModel;
-	/** @type {Date} */
+	/**
+	 * @summary Gets the time that the object was last modified (from base data, default to CreationTime)
+	 * @type {Date} 
+	 */
 	this.modifiedOn = copyData.modifiedOn;
-	/** @type {SecurityProvenance} */
+	/**
+	 * @type {SecurityProvenance} 
+	 */
 	this.createdByModel = copyData.createdByModel;
-	/** @type {Date} */
+	/**
+	 * @summary Gets or sets the time that the data is no longer valid (was deleted/obsoleted) in ISO format
+	 * @type {Date} 
+	 */
 	this.obsoletionTime = copyData.obsoletionTime;
-	/** @type {Date} */
+	/**
+	 * @type {Date} 
+	 */
 	this.obsoletionTimeModel = copyData.obsoletionTimeModel;
-	/** @type {Date} */
+	/**
+	 * @summary Gets or sets the creation time as an ISO date format
+	 * @type {Date} 
+	 */
 	this.creationTime = copyData.creationTime;
-	/** @type {Date} */
+	/**
+	 * @type {Date} 
+	 */
 	this.creationTimeModel = copyData.creationTimeModel;
-	/** @type {number} */
+	/**
+	 * @type {number} 
+	 */
 	this.sequence = copyData.sequence;
-	/** @type {string} */
+	/**
+	 * @type {string} 
+	 */
 	this.version = copyData.version;
-	/** @type {string} */
+	/**
+	 * @type {string} 
+	 */
 	this.previousVersion = copyData.previousVersion;
-	/** @type {GeoTag} */
+	/**
+	 * @summary Gets or sets the geo-tag
+	 * @type {GeoTag} 
+	 */
 	this.geo = copyData.geo;
-	/** @type {object} */
+	/**
+	 * @summary Gets or sets the entities and participations they play in the act
+	 * @type {object} 
+	 */
 	this.participation = copyData.participation;
-	/** @type {ActProtocol} */
+	/**
+	 * @summary Identifies protocols attached to the act
+	 * @type {ActProtocol} 
+	 */
 	this.protocol = copyData.protocol;
-	/** @type {object} */
+	/**
+	 * @summary Gets a list of all tags associated with the act
+	 * @type {object} 
+	 */
 	this.tag = copyData.tag;
-	/** @type {ActNote} */
+	/**
+	 * @summary Gets a list of all notes associated with the act
+	 * @type {ActNote} 
+	 */
 	this.note = copyData.note;
-	/** @type {object} */
+	/**
+	 * @summary Gets a list of all extensions associated with the act
+	 * @type {object} 
+	 */
 	this.extension = copyData.extension;
-	/** @type {SecurityPolicyInstance} */
+	/**
+	 * @summary Gets or sets the security policy instances associated with the act
+	 * @type {SecurityPolicyInstance} 
+	 */
 	this.policy = copyData.policy;
-	/** @type {object} */
+	/**
+	 * @summary Gets a list of all associated acts for this act
+	 * @type {object} 
+	 */
 	this.relationship = copyData.relationship;
-	/** @type {object} */
+	/**
+	 * @summary Gets or sets the identifiers by which this act is known as in other systems
+	 * @type {object} 
+	 */
 	this.identifier = copyData.identifier;
-	/** @type {Concept} */
+	/**
+	 * @type {Concept} 
+	 */
 	this.typeConceptModel = copyData.typeConceptModel;
-	/** @type {Concept} */
+	/**
+	 * @type {Concept} 
+	 */
 	this.statusConceptModel = copyData.statusConceptModel;
-	/** @type {Concept} */
+	/**
+	 * @type {Concept} 
+	 */
 	this.reasonConceptModel = copyData.reasonConceptModel;
-	/** @type {Concept} */
+	/**
+	 * @type {Concept} 
+	 */
 	this.moodConceptModel = copyData.moodConceptModel;
-	/** @type {Concept} */
+	/**
+	 * @type {Concept} 
+	 */
 	this.classConceptModel = copyData.classConceptModel;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the key of the conccept which further classifies the type of act occurring
+	 * @type {string} 
+	 */
 	this.typeConcept = copyData.typeConcept;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the key of the concept which describes the current status of the act
+	 * @type {string} 
+	 */
 	this.statusConcept = copyData.statusConcept;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the key of the concept which defines the reason why the act is or didn't occur
+	 * @type {string} 
+	 */
 	this.reasonConcept = copyData.reasonConcept;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the key of the concept which specifies the mood of the act.
+	 * @type {string} 
+	 */
 	this.moodConcept = copyData.moodConcept;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the key of the concept which classifies the act.
+	 * @type {string} 
+	 */
 	this.classConcept = copyData.classConcept;
-	/** @type {Date} */
+	/**
+	 * @summary Gets or sets the time when the act should or did stop ocurring in ISO format
+	 * @type {Date} 
+	 */
 	this.stopTime = copyData.stopTime;
-	/** @type {Date} */
+	/**
+	 * @summary Gets or sets the time when the act should or did start ocurring in ISO format
+	 * @type {Date} 
+	 */
 	this.startTime = copyData.startTime;
-	/** @type {Date} */
+	/**
+	 * @summary Gets or sets the moment in time that this act occurred in ISO format
+	 * @type {Date} 
+	 */
 	this.actTime = copyData.actTime;
-	/** @type {TemplateDefinition} */
+	/**
+	 * @type {TemplateDefinition} 
+	 */
 	this.templateModel = copyData.templateModel;
-	/** @type {string} */
+	/**
+	 * @summary Gets the template UUID upon which this act is based
+	 * @type {string} 
+	 */
 	this.template = copyData.template;
-	/** @type {boolean} */
+	/**
+	 * @summary Gets or sets an indicator which identifies whether the act actually occurred, or
+            specifically did not occur
+	 * @type {boolean} 
+	 */
 	this.isNegated = copyData.isNegated;
-	/** @type {number} */
+	/**
+	 * @summary Gets or sets the maximum balance of this account
+	 * @type {number} 
+	 */
 	this.maxBalance = copyData.maxBalance;
-	/** @type {number} */
+	/**
+	 * @summary Gets or sets the minimum balance of this account
+	 * @type {number} 
+	 */
 	this.minBalance = copyData.minBalance;
-	/** @type {Concept} */
+	/**
+	 * @type {Concept} 
+	 */
 	this.currencyModel = copyData.currencyModel;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the currency concept UUID for this account
+	 * @type {string} 
+	 */
 	this.currency = copyData.currency;
-	/** @type {number} */
+	/**
+	 * @summary Gets or sets the balance of this account
+	 * @type {number} 
+	 */
 	this.balance = copyData.balance;
 	}
 }  // Account 
-// SanteDB.Core.Model.Acts.Act, SanteDB.Core.Model, Version=2.1.113.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Acts.Act, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
 //if(!Act)
 /**
  * @class
@@ -8803,87 +12392,192 @@ function Account (copyData) {
 function Act (copyData) { 
 	this.$type = 'Act';
 	if(copyData) {
-	/** @type {BatchOperationType} */
+	/**
+	 * @summary Gets or sets the operation
+	 * @type {BatchOperationType} 
+	 */
 	this.operation = copyData.operation;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the primary identifying UUID of this object
+	 * @type {string} 
+	 */
 	this.id = copyData.id;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the security provenance object which represents the obsoletion of this data
+	 * @type {string} 
+	 */
 	this.obsoletedBy = copyData.obsoletedBy;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the security provenance object which represents the creation of this object
+	 * @type {string} 
+	 */
 	this.createdBy = copyData.createdBy;
-	/** @type {SecurityProvenance} */
+	/**
+	 * @type {SecurityProvenance} 
+	 */
 	this.obsoletedByModel = copyData.obsoletedByModel;
-	/** @type {Date} */
+	/**
+	 * @summary Gets the time that the object was last modified (from base data, default to CreationTime)
+	 * @type {Date} 
+	 */
 	this.modifiedOn = copyData.modifiedOn;
-	/** @type {SecurityProvenance} */
+	/**
+	 * @type {SecurityProvenance} 
+	 */
 	this.createdByModel = copyData.createdByModel;
-	/** @type {Date} */
+	/**
+	 * @summary Gets or sets the time that the data is no longer valid (was deleted/obsoleted) in ISO format
+	 * @type {Date} 
+	 */
 	this.obsoletionTime = copyData.obsoletionTime;
-	/** @type {Date} */
+	/**
+	 * @type {Date} 
+	 */
 	this.obsoletionTimeModel = copyData.obsoletionTimeModel;
-	/** @type {Date} */
+	/**
+	 * @summary Gets or sets the creation time as an ISO date format
+	 * @type {Date} 
+	 */
 	this.creationTime = copyData.creationTime;
-	/** @type {Date} */
+	/**
+	 * @type {Date} 
+	 */
 	this.creationTimeModel = copyData.creationTimeModel;
-	/** @type {number} */
+	/**
+	 * @type {number} 
+	 */
 	this.sequence = copyData.sequence;
-	/** @type {string} */
+	/**
+	 * @type {string} 
+	 */
 	this.version = copyData.version;
-	/** @type {string} */
+	/**
+	 * @type {string} 
+	 */
 	this.previousVersion = copyData.previousVersion;
-	/** @type {GeoTag} */
+	/**
+	 * @summary Gets or sets the geo-tag
+	 * @type {GeoTag} 
+	 */
 	this.geo = copyData.geo;
-	/** @type {object} */
+	/**
+	 * @summary Gets or sets the entities and participations they play in the act
+	 * @type {object} 
+	 */
 	this.participation = copyData.participation;
-	/** @type {ActProtocol} */
+	/**
+	 * @summary Identifies protocols attached to the act
+	 * @type {ActProtocol} 
+	 */
 	this.protocol = copyData.protocol;
-	/** @type {object} */
+	/**
+	 * @summary Gets a list of all tags associated with the act
+	 * @type {object} 
+	 */
 	this.tag = copyData.tag;
-	/** @type {ActNote} */
+	/**
+	 * @summary Gets a list of all notes associated with the act
+	 * @type {ActNote} 
+	 */
 	this.note = copyData.note;
-	/** @type {object} */
+	/**
+	 * @summary Gets a list of all extensions associated with the act
+	 * @type {object} 
+	 */
 	this.extension = copyData.extension;
-	/** @type {SecurityPolicyInstance} */
+	/**
+	 * @summary Gets or sets the security policy instances associated with the act
+	 * @type {SecurityPolicyInstance} 
+	 */
 	this.policy = copyData.policy;
-	/** @type {object} */
+	/**
+	 * @summary Gets a list of all associated acts for this act
+	 * @type {object} 
+	 */
 	this.relationship = copyData.relationship;
-	/** @type {object} */
+	/**
+	 * @summary Gets or sets the identifiers by which this act is known as in other systems
+	 * @type {object} 
+	 */
 	this.identifier = copyData.identifier;
-	/** @type {Concept} */
+	/**
+	 * @type {Concept} 
+	 */
 	this.typeConceptModel = copyData.typeConceptModel;
-	/** @type {Concept} */
+	/**
+	 * @type {Concept} 
+	 */
 	this.statusConceptModel = copyData.statusConceptModel;
-	/** @type {Concept} */
+	/**
+	 * @type {Concept} 
+	 */
 	this.reasonConceptModel = copyData.reasonConceptModel;
-	/** @type {Concept} */
+	/**
+	 * @type {Concept} 
+	 */
 	this.moodConceptModel = copyData.moodConceptModel;
-	/** @type {Concept} */
+	/**
+	 * @type {Concept} 
+	 */
 	this.classConceptModel = copyData.classConceptModel;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the key of the conccept which further classifies the type of act occurring
+	 * @type {string} 
+	 */
 	this.typeConcept = copyData.typeConcept;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the key of the concept which describes the current status of the act
+	 * @type {string} 
+	 */
 	this.statusConcept = copyData.statusConcept;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the key of the concept which defines the reason why the act is or didn't occur
+	 * @type {string} 
+	 */
 	this.reasonConcept = copyData.reasonConcept;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the key of the concept which specifies the mood of the act.
+	 * @type {string} 
+	 */
 	this.moodConcept = copyData.moodConcept;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the key of the concept which classifies the act.
+	 * @type {string} 
+	 */
 	this.classConcept = copyData.classConcept;
-	/** @type {Date} */
+	/**
+	 * @summary Gets or sets the time when the act should or did stop ocurring in ISO format
+	 * @type {Date} 
+	 */
 	this.stopTime = copyData.stopTime;
-	/** @type {Date} */
+	/**
+	 * @summary Gets or sets the time when the act should or did start ocurring in ISO format
+	 * @type {Date} 
+	 */
 	this.startTime = copyData.startTime;
-	/** @type {Date} */
+	/**
+	 * @summary Gets or sets the moment in time that this act occurred in ISO format
+	 * @type {Date} 
+	 */
 	this.actTime = copyData.actTime;
-	/** @type {TemplateDefinition} */
+	/**
+	 * @type {TemplateDefinition} 
+	 */
 	this.templateModel = copyData.templateModel;
-	/** @type {string} */
+	/**
+	 * @summary Gets the template UUID upon which this act is based
+	 * @type {string} 
+	 */
 	this.template = copyData.template;
-	/** @type {boolean} */
+	/**
+	 * @summary Gets or sets an indicator which identifies whether the act actually occurred, or
+            specifically did not occur
+	 * @type {boolean} 
+	 */
 	this.isNegated = copyData.isNegated;
 	}
 }  // Act 
-// SanteDB.Core.Model.Acts.ActParticipation, SanteDB.Core.Model, Version=2.1.113.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Acts.ActParticipation, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
 //if(!ActParticipation)
 /**
  * @class
@@ -8932,41 +12626,80 @@ function Act (copyData) {
 function ActParticipation (copyData) { 
 	this.$type = 'ActParticipation';
 	if(copyData) {
-	/** @type {BatchOperationType} */
+	/**
+	 * @summary Gets or sets the operation
+	 * @type {BatchOperationType} 
+	 */
 	this.operation = copyData.operation;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the primary identifying UUID of this object
+	 * @type {string} 
+	 */
 	this.id = copyData.id;
-	/** @type {Act} */
+	/**
+	 * @type {Act} 
+	 */
 	this.sourceModel = copyData.sourceModel;
-	/** @type {string} */
+	/**
+	 * @type {string} 
+	 */
 	this.source = copyData.source;
-	/** @type {Date} */
+	/**
+	 * @type {Date} 
+	 */
 	this.modifiedOn = copyData.modifiedOn;
-	/** @type {number} */
+	/**
+	 * @type {number} 
+	 */
 	this.obsoleteVersionSequence = copyData.obsoleteVersionSequence;
-	/** @type {number} */
+	/**
+	 * @type {number} 
+	 */
 	this.effectiveVersionSequence = copyData.effectiveVersionSequence;
-	/** @type {number} */
+	/**
+	 * @summary Gets or sets the quantity of player in the act
+	 * @type {number} 
+	 */
 	this.quantity = copyData.quantity;
-	/** @type {Act} */
+	/**
+	 * @type {Act} 
+	 */
 	this.actModel = copyData.actModel;
-	/** @type {string} */
+	/**
+	 * @summary The entity that this relationship targets
+	 * @type {string} 
+	 */
 	this.act = copyData.act;
-	/** @type {Concept} */
+	/**
+	 * @type {Concept} 
+	 */
 	this.participationRoleModel = copyData.participationRoleModel;
-	/** @type {Entity} */
+	/**
+	 * @type {Entity} 
+	 */
 	this.playerModel = copyData.playerModel;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the role that the entity played in participating in the act
+	 * @type {string} 
+	 */
 	this.participationRole = copyData.participationRole;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the entity which participated in the act
+	 * @type {string} 
+	 */
 	this.player = copyData.player;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the an additional (sub-type) of the relationship
+	 * @type {string} 
+	 */
 	this.classification = copyData.classification;
-	/** @type {Concept} */
+	/**
+	 * @type {Concept} 
+	 */
 	this.classificationModel = copyData.classificationModel;
 	}
 }  // ActParticipation 
-// SanteDB.Core.Model.Acts.ActProtocol, SanteDB.Core.Model, Version=2.1.113.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Acts.ActProtocol, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
 //if(!ActProtocol)
 /**
  * @class
@@ -8997,27 +12730,50 @@ function ActParticipation (copyData) {
 function ActProtocol (copyData) { 
 	this.$type = 'ActProtocol';
 	if(copyData) {
-	/** @type {BatchOperationType} */
+	/**
+	 * @summary Gets or sets the operation
+	 * @type {BatchOperationType} 
+	 */
 	this.operation = copyData.operation;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the primary identifying UUID of this object
+	 * @type {string} 
+	 */
 	this.id = copyData.id;
-	/** @type {Act} */
+	/**
+	 * @type {Act} 
+	 */
 	this.sourceModel = copyData.sourceModel;
-	/** @type {string} */
+	/**
+	 * @type {string} 
+	 */
 	this.source = copyData.source;
-	/** @type {Date} */
+	/**
+	 * @type {Date} 
+	 */
 	this.modifiedOn = copyData.modifiedOn;
-	/** @type {Array<byte>} */
+	/**
+	 * @summary Represents any state data related to the act / protocol link
+	 * @type {Array<byte>} 
+	 */
 	this.state = copyData.state;
-	/** @type {number} */
+	/**
+	 * @summary Represents the sequence of the act in the protocol
+	 * @type {number} 
+	 */
 	this.sequence = copyData.sequence;
-	/** @type {Protocol} */
+	/**
+	 * @type {Protocol} 
+	 */
 	this.protocolModel = copyData.protocolModel;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the protocol data related to the protocol
+	 * @type {string} 
+	 */
 	this.protocol = copyData.protocol;
 	}
 }  // ActProtocol 
-// SanteDB.Core.Model.Acts.ActRelationship, SanteDB.Core.Model, Version=2.1.113.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Acts.ActRelationship, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
 //if(!ActRelationship)
 /**
  * @class
@@ -9053,35 +12809,66 @@ function ActProtocol (copyData) {
 function ActRelationship (copyData) { 
 	this.$type = 'ActRelationship';
 	if(copyData) {
-	/** @type {BatchOperationType} */
+	/**
+	 * @summary Gets or sets the operation
+	 * @type {BatchOperationType} 
+	 */
 	this.operation = copyData.operation;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the primary identifying UUID of this object
+	 * @type {string} 
+	 */
 	this.id = copyData.id;
-	/** @type {Act} */
+	/**
+	 * @type {Act} 
+	 */
 	this.sourceModel = copyData.sourceModel;
-	/** @type {string} */
+	/**
+	 * @type {string} 
+	 */
 	this.source = copyData.source;
-	/** @type {Date} */
+	/**
+	 * @type {Date} 
+	 */
 	this.modifiedOn = copyData.modifiedOn;
-	/** @type {number} */
+	/**
+	 * @type {number} 
+	 */
 	this.obsoleteVersionSequence = copyData.obsoleteVersionSequence;
-	/** @type {number} */
+	/**
+	 * @type {number} 
+	 */
 	this.effectiveVersionSequence = copyData.effectiveVersionSequence;
-	/** @type {Concept} */
+	/**
+	 * @type {Concept} 
+	 */
 	this.relationshipTypeModel = copyData.relationshipTypeModel;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the association type
+	 * @type {string} 
+	 */
 	this.relationshipType = copyData.relationshipType;
-	/** @type {Act} */
+	/**
+	 * @type {Act} 
+	 */
 	this.targetModel = copyData.targetModel;
-	/** @type {string} */
+	/**
+	 * @summary The target of the association
+	 * @type {string} 
+	 */
 	this.target = copyData.target;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the an additional (sub-type) of the relationship
+	 * @type {string} 
+	 */
 	this.classification = copyData.classification;
-	/** @type {Concept} */
+	/**
+	 * @type {Concept} 
+	 */
 	this.classificationModel = copyData.classificationModel;
 	}
 }  // ActRelationship 
-// SanteDB.Core.Model.Acts.CarePlan, SanteDB.Core.Model, Version=2.1.113.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Acts.CarePlan, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
 //if(!CarePlan)
 /**
  * @class
@@ -9131,35 +12918,70 @@ function ActRelationship (copyData) {
 function CarePlan (copyData) { 
 	this.$type = 'CarePlan';
 	if(copyData) {
-	/** @type {BatchOperationType} */
+	/**
+	 * @summary Gets or sets the operation
+	 * @type {BatchOperationType} 
+	 */
 	this.operation = copyData.operation;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the primary identifying UUID of this object
+	 * @type {string} 
+	 */
 	this.id = copyData.id;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the security provenance object which represents the obsoletion of this data
+	 * @type {string} 
+	 */
 	this.obsoletedBy = copyData.obsoletedBy;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the security provenance object which represents the creation of this object
+	 * @type {string} 
+	 */
 	this.createdBy = copyData.createdBy;
-	/** @type {SecurityProvenance} */
+	/**
+	 * @type {SecurityProvenance} 
+	 */
 	this.obsoletedByModel = copyData.obsoletedByModel;
-	/** @type {Date} */
+	/**
+	 * @summary Gets the time that the object was last modified (from base data, default to CreationTime)
+	 * @type {Date} 
+	 */
 	this.modifiedOn = copyData.modifiedOn;
-	/** @type {SecurityProvenance} */
+	/**
+	 * @type {SecurityProvenance} 
+	 */
 	this.createdByModel = copyData.createdByModel;
-	/** @type {Date} */
+	/**
+	 * @summary Gets or sets the time that the data is no longer valid (was deleted/obsoleted) in ISO format
+	 * @type {Date} 
+	 */
 	this.obsoletionTime = copyData.obsoletionTime;
-	/** @type {Date} */
+	/**
+	 * @type {Date} 
+	 */
 	this.obsoletionTimeModel = copyData.obsoletionTimeModel;
-	/** @type {Date} */
+	/**
+	 * @summary Gets or sets the creation time as an ISO date format
+	 * @type {Date} 
+	 */
 	this.creationTime = copyData.creationTime;
-	/** @type {Date} */
+	/**
+	 * @type {Date} 
+	 */
 	this.creationTimeModel = copyData.creationTimeModel;
-	/** @type {object} */
+	/**
+	 * @summary Action to take
+	 * @type {object} 
+	 */
 	this.act = copyData.act;
-	/** @type {Patient} */
+	/**
+	 * @summary Target of the careplan
+	 * @type {Patient} 
+	 */
 	this.target = copyData.target;
 	}
 }  // CarePlan 
-// SanteDB.Core.Model.Acts.ControlAct, SanteDB.Core.Model, Version=2.1.113.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Acts.ControlAct, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
 //if(!ControlAct)
 /**
  * @class
@@ -9297,87 +13119,192 @@ function CarePlan (copyData) {
 function ControlAct (copyData) { 
 	this.$type = 'ControlAct';
 	if(copyData) {
-	/** @type {BatchOperationType} */
+	/**
+	 * @summary Gets or sets the operation
+	 * @type {BatchOperationType} 
+	 */
 	this.operation = copyData.operation;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the primary identifying UUID of this object
+	 * @type {string} 
+	 */
 	this.id = copyData.id;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the security provenance object which represents the obsoletion of this data
+	 * @type {string} 
+	 */
 	this.obsoletedBy = copyData.obsoletedBy;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the security provenance object which represents the creation of this object
+	 * @type {string} 
+	 */
 	this.createdBy = copyData.createdBy;
-	/** @type {SecurityProvenance} */
+	/**
+	 * @type {SecurityProvenance} 
+	 */
 	this.obsoletedByModel = copyData.obsoletedByModel;
-	/** @type {Date} */
+	/**
+	 * @summary Gets the time that the object was last modified (from base data, default to CreationTime)
+	 * @type {Date} 
+	 */
 	this.modifiedOn = copyData.modifiedOn;
-	/** @type {SecurityProvenance} */
+	/**
+	 * @type {SecurityProvenance} 
+	 */
 	this.createdByModel = copyData.createdByModel;
-	/** @type {Date} */
+	/**
+	 * @summary Gets or sets the time that the data is no longer valid (was deleted/obsoleted) in ISO format
+	 * @type {Date} 
+	 */
 	this.obsoletionTime = copyData.obsoletionTime;
-	/** @type {Date} */
+	/**
+	 * @type {Date} 
+	 */
 	this.obsoletionTimeModel = copyData.obsoletionTimeModel;
-	/** @type {Date} */
+	/**
+	 * @summary Gets or sets the creation time as an ISO date format
+	 * @type {Date} 
+	 */
 	this.creationTime = copyData.creationTime;
-	/** @type {Date} */
+	/**
+	 * @type {Date} 
+	 */
 	this.creationTimeModel = copyData.creationTimeModel;
-	/** @type {number} */
+	/**
+	 * @type {number} 
+	 */
 	this.sequence = copyData.sequence;
-	/** @type {string} */
+	/**
+	 * @type {string} 
+	 */
 	this.version = copyData.version;
-	/** @type {string} */
+	/**
+	 * @type {string} 
+	 */
 	this.previousVersion = copyData.previousVersion;
-	/** @type {GeoTag} */
+	/**
+	 * @summary Gets or sets the geo-tag
+	 * @type {GeoTag} 
+	 */
 	this.geo = copyData.geo;
-	/** @type {object} */
+	/**
+	 * @summary Gets or sets the entities and participations they play in the act
+	 * @type {object} 
+	 */
 	this.participation = copyData.participation;
-	/** @type {ActProtocol} */
+	/**
+	 * @summary Identifies protocols attached to the act
+	 * @type {ActProtocol} 
+	 */
 	this.protocol = copyData.protocol;
-	/** @type {object} */
+	/**
+	 * @summary Gets a list of all tags associated with the act
+	 * @type {object} 
+	 */
 	this.tag = copyData.tag;
-	/** @type {ActNote} */
+	/**
+	 * @summary Gets a list of all notes associated with the act
+	 * @type {ActNote} 
+	 */
 	this.note = copyData.note;
-	/** @type {object} */
+	/**
+	 * @summary Gets a list of all extensions associated with the act
+	 * @type {object} 
+	 */
 	this.extension = copyData.extension;
-	/** @type {SecurityPolicyInstance} */
+	/**
+	 * @summary Gets or sets the security policy instances associated with the act
+	 * @type {SecurityPolicyInstance} 
+	 */
 	this.policy = copyData.policy;
-	/** @type {object} */
+	/**
+	 * @summary Gets a list of all associated acts for this act
+	 * @type {object} 
+	 */
 	this.relationship = copyData.relationship;
-	/** @type {object} */
+	/**
+	 * @summary Gets or sets the identifiers by which this act is known as in other systems
+	 * @type {object} 
+	 */
 	this.identifier = copyData.identifier;
-	/** @type {Concept} */
+	/**
+	 * @type {Concept} 
+	 */
 	this.typeConceptModel = copyData.typeConceptModel;
-	/** @type {Concept} */
+	/**
+	 * @type {Concept} 
+	 */
 	this.statusConceptModel = copyData.statusConceptModel;
-	/** @type {Concept} */
+	/**
+	 * @type {Concept} 
+	 */
 	this.reasonConceptModel = copyData.reasonConceptModel;
-	/** @type {Concept} */
+	/**
+	 * @type {Concept} 
+	 */
 	this.moodConceptModel = copyData.moodConceptModel;
-	/** @type {Concept} */
+	/**
+	 * @type {Concept} 
+	 */
 	this.classConceptModel = copyData.classConceptModel;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the key of the conccept which further classifies the type of act occurring
+	 * @type {string} 
+	 */
 	this.typeConcept = copyData.typeConcept;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the key of the concept which describes the current status of the act
+	 * @type {string} 
+	 */
 	this.statusConcept = copyData.statusConcept;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the key of the concept which defines the reason why the act is or didn't occur
+	 * @type {string} 
+	 */
 	this.reasonConcept = copyData.reasonConcept;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the key of the concept which specifies the mood of the act.
+	 * @type {string} 
+	 */
 	this.moodConcept = copyData.moodConcept;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the key of the concept which classifies the act.
+	 * @type {string} 
+	 */
 	this.classConcept = copyData.classConcept;
-	/** @type {Date} */
+	/**
+	 * @summary Gets or sets the time when the act should or did stop ocurring in ISO format
+	 * @type {Date} 
+	 */
 	this.stopTime = copyData.stopTime;
-	/** @type {Date} */
+	/**
+	 * @summary Gets or sets the time when the act should or did start ocurring in ISO format
+	 * @type {Date} 
+	 */
 	this.startTime = copyData.startTime;
-	/** @type {Date} */
+	/**
+	 * @summary Gets or sets the moment in time that this act occurred in ISO format
+	 * @type {Date} 
+	 */
 	this.actTime = copyData.actTime;
-	/** @type {TemplateDefinition} */
+	/**
+	 * @type {TemplateDefinition} 
+	 */
 	this.templateModel = copyData.templateModel;
-	/** @type {string} */
+	/**
+	 * @summary Gets the template UUID upon which this act is based
+	 * @type {string} 
+	 */
 	this.template = copyData.template;
-	/** @type {boolean} */
+	/**
+	 * @summary Gets or sets an indicator which identifies whether the act actually occurred, or
+            specifically did not occur
+	 * @type {boolean} 
+	 */
 	this.isNegated = copyData.isNegated;
 	}
 }  // ControlAct 
-// SanteDB.Core.Model.Acts.FinancialContract, SanteDB.Core.Model, Version=2.1.113.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Acts.FinancialContract, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
 //if(!FinancialContract)
 /**
  * @class
@@ -9520,91 +13447,201 @@ function ControlAct (copyData) {
 function FinancialContract (copyData) { 
 	this.$type = 'FinancialContract';
 	if(copyData) {
-	/** @type {BatchOperationType} */
+	/**
+	 * @summary Gets or sets the operation
+	 * @type {BatchOperationType} 
+	 */
 	this.operation = copyData.operation;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the primary identifying UUID of this object
+	 * @type {string} 
+	 */
 	this.id = copyData.id;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the security provenance object which represents the obsoletion of this data
+	 * @type {string} 
+	 */
 	this.obsoletedBy = copyData.obsoletedBy;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the security provenance object which represents the creation of this object
+	 * @type {string} 
+	 */
 	this.createdBy = copyData.createdBy;
-	/** @type {SecurityProvenance} */
+	/**
+	 * @type {SecurityProvenance} 
+	 */
 	this.obsoletedByModel = copyData.obsoletedByModel;
-	/** @type {Date} */
+	/**
+	 * @summary Gets the time that the object was last modified (from base data, default to CreationTime)
+	 * @type {Date} 
+	 */
 	this.modifiedOn = copyData.modifiedOn;
-	/** @type {SecurityProvenance} */
+	/**
+	 * @type {SecurityProvenance} 
+	 */
 	this.createdByModel = copyData.createdByModel;
-	/** @type {Date} */
+	/**
+	 * @summary Gets or sets the time that the data is no longer valid (was deleted/obsoleted) in ISO format
+	 * @type {Date} 
+	 */
 	this.obsoletionTime = copyData.obsoletionTime;
-	/** @type {Date} */
+	/**
+	 * @type {Date} 
+	 */
 	this.obsoletionTimeModel = copyData.obsoletionTimeModel;
-	/** @type {Date} */
+	/**
+	 * @summary Gets or sets the creation time as an ISO date format
+	 * @type {Date} 
+	 */
 	this.creationTime = copyData.creationTime;
-	/** @type {Date} */
+	/**
+	 * @type {Date} 
+	 */
 	this.creationTimeModel = copyData.creationTimeModel;
-	/** @type {number} */
+	/**
+	 * @type {number} 
+	 */
 	this.sequence = copyData.sequence;
-	/** @type {string} */
+	/**
+	 * @type {string} 
+	 */
 	this.version = copyData.version;
-	/** @type {string} */
+	/**
+	 * @type {string} 
+	 */
 	this.previousVersion = copyData.previousVersion;
-	/** @type {GeoTag} */
+	/**
+	 * @summary Gets or sets the geo-tag
+	 * @type {GeoTag} 
+	 */
 	this.geo = copyData.geo;
-	/** @type {object} */
+	/**
+	 * @summary Gets or sets the entities and participations they play in the act
+	 * @type {object} 
+	 */
 	this.participation = copyData.participation;
-	/** @type {ActProtocol} */
+	/**
+	 * @summary Identifies protocols attached to the act
+	 * @type {ActProtocol} 
+	 */
 	this.protocol = copyData.protocol;
-	/** @type {object} */
+	/**
+	 * @summary Gets a list of all tags associated with the act
+	 * @type {object} 
+	 */
 	this.tag = copyData.tag;
-	/** @type {ActNote} */
+	/**
+	 * @summary Gets a list of all notes associated with the act
+	 * @type {ActNote} 
+	 */
 	this.note = copyData.note;
-	/** @type {object} */
+	/**
+	 * @summary Gets a list of all extensions associated with the act
+	 * @type {object} 
+	 */
 	this.extension = copyData.extension;
-	/** @type {SecurityPolicyInstance} */
+	/**
+	 * @summary Gets or sets the security policy instances associated with the act
+	 * @type {SecurityPolicyInstance} 
+	 */
 	this.policy = copyData.policy;
-	/** @type {object} */
+	/**
+	 * @summary Gets a list of all associated acts for this act
+	 * @type {object} 
+	 */
 	this.relationship = copyData.relationship;
-	/** @type {object} */
+	/**
+	 * @summary Gets or sets the identifiers by which this act is known as in other systems
+	 * @type {object} 
+	 */
 	this.identifier = copyData.identifier;
-	/** @type {Concept} */
+	/**
+	 * @type {Concept} 
+	 */
 	this.typeConceptModel = copyData.typeConceptModel;
-	/** @type {Concept} */
+	/**
+	 * @type {Concept} 
+	 */
 	this.statusConceptModel = copyData.statusConceptModel;
-	/** @type {Concept} */
+	/**
+	 * @type {Concept} 
+	 */
 	this.reasonConceptModel = copyData.reasonConceptModel;
-	/** @type {Concept} */
+	/**
+	 * @type {Concept} 
+	 */
 	this.moodConceptModel = copyData.moodConceptModel;
-	/** @type {Concept} */
+	/**
+	 * @type {Concept} 
+	 */
 	this.classConceptModel = copyData.classConceptModel;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the key of the conccept which further classifies the type of act occurring
+	 * @type {string} 
+	 */
 	this.typeConcept = copyData.typeConcept;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the key of the concept which describes the current status of the act
+	 * @type {string} 
+	 */
 	this.statusConcept = copyData.statusConcept;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the key of the concept which defines the reason why the act is or didn't occur
+	 * @type {string} 
+	 */
 	this.reasonConcept = copyData.reasonConcept;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the key of the concept which specifies the mood of the act.
+	 * @type {string} 
+	 */
 	this.moodConcept = copyData.moodConcept;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the key of the concept which classifies the act.
+	 * @type {string} 
+	 */
 	this.classConcept = copyData.classConcept;
-	/** @type {Date} */
+	/**
+	 * @summary Gets or sets the time when the act should or did stop ocurring in ISO format
+	 * @type {Date} 
+	 */
 	this.stopTime = copyData.stopTime;
-	/** @type {Date} */
+	/**
+	 * @summary Gets or sets the time when the act should or did start ocurring in ISO format
+	 * @type {Date} 
+	 */
 	this.startTime = copyData.startTime;
-	/** @type {Date} */
+	/**
+	 * @summary Gets or sets the moment in time that this act occurred in ISO format
+	 * @type {Date} 
+	 */
 	this.actTime = copyData.actTime;
-	/** @type {TemplateDefinition} */
+	/**
+	 * @type {TemplateDefinition} 
+	 */
 	this.templateModel = copyData.templateModel;
-	/** @type {string} */
+	/**
+	 * @summary Gets the template UUID upon which this act is based
+	 * @type {string} 
+	 */
 	this.template = copyData.template;
-	/** @type {boolean} */
+	/**
+	 * @summary Gets or sets an indicator which identifies whether the act actually occurred, or
+            specifically did not occur
+	 * @type {boolean} 
+	 */
 	this.isNegated = copyData.isNegated;
-	/** @type {Concept} */
+	/**
+	 * @type {Concept} 
+	 */
 	this.paymentTermsModel = copyData.paymentTermsModel;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the payment terms
+	 * @type {string} 
+	 */
 	this.paymentTerms = copyData.paymentTerms;
 	}
 }  // FinancialContract 
-// SanteDB.Core.Model.Acts.FinancialTransaction, SanteDB.Core.Model, Version=2.1.113.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Acts.FinancialTransaction, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
 //if(!FinancialTransaction)
 /**
  * @class
@@ -9747,97 +13784,216 @@ function FinancialContract (copyData) {
 function FinancialTransaction (copyData) { 
 	this.$type = 'FinancialTransaction';
 	if(copyData) {
-	/** @type {BatchOperationType} */
+	/**
+	 * @summary Gets or sets the operation
+	 * @type {BatchOperationType} 
+	 */
 	this.operation = copyData.operation;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the primary identifying UUID of this object
+	 * @type {string} 
+	 */
 	this.id = copyData.id;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the security provenance object which represents the obsoletion of this data
+	 * @type {string} 
+	 */
 	this.obsoletedBy = copyData.obsoletedBy;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the security provenance object which represents the creation of this object
+	 * @type {string} 
+	 */
 	this.createdBy = copyData.createdBy;
-	/** @type {SecurityProvenance} */
+	/**
+	 * @type {SecurityProvenance} 
+	 */
 	this.obsoletedByModel = copyData.obsoletedByModel;
-	/** @type {Date} */
+	/**
+	 * @summary Gets the time that the object was last modified (from base data, default to CreationTime)
+	 * @type {Date} 
+	 */
 	this.modifiedOn = copyData.modifiedOn;
-	/** @type {SecurityProvenance} */
+	/**
+	 * @type {SecurityProvenance} 
+	 */
 	this.createdByModel = copyData.createdByModel;
-	/** @type {Date} */
+	/**
+	 * @summary Gets or sets the time that the data is no longer valid (was deleted/obsoleted) in ISO format
+	 * @type {Date} 
+	 */
 	this.obsoletionTime = copyData.obsoletionTime;
-	/** @type {Date} */
+	/**
+	 * @type {Date} 
+	 */
 	this.obsoletionTimeModel = copyData.obsoletionTimeModel;
-	/** @type {Date} */
+	/**
+	 * @summary Gets or sets the creation time as an ISO date format
+	 * @type {Date} 
+	 */
 	this.creationTime = copyData.creationTime;
-	/** @type {Date} */
+	/**
+	 * @type {Date} 
+	 */
 	this.creationTimeModel = copyData.creationTimeModel;
-	/** @type {number} */
+	/**
+	 * @type {number} 
+	 */
 	this.sequence = copyData.sequence;
-	/** @type {string} */
+	/**
+	 * @type {string} 
+	 */
 	this.version = copyData.version;
-	/** @type {string} */
+	/**
+	 * @type {string} 
+	 */
 	this.previousVersion = copyData.previousVersion;
-	/** @type {GeoTag} */
+	/**
+	 * @summary Gets or sets the geo-tag
+	 * @type {GeoTag} 
+	 */
 	this.geo = copyData.geo;
-	/** @type {object} */
+	/**
+	 * @summary Gets or sets the entities and participations they play in the act
+	 * @type {object} 
+	 */
 	this.participation = copyData.participation;
-	/** @type {ActProtocol} */
+	/**
+	 * @summary Identifies protocols attached to the act
+	 * @type {ActProtocol} 
+	 */
 	this.protocol = copyData.protocol;
-	/** @type {object} */
+	/**
+	 * @summary Gets a list of all tags associated with the act
+	 * @type {object} 
+	 */
 	this.tag = copyData.tag;
-	/** @type {ActNote} */
+	/**
+	 * @summary Gets a list of all notes associated with the act
+	 * @type {ActNote} 
+	 */
 	this.note = copyData.note;
-	/** @type {object} */
+	/**
+	 * @summary Gets a list of all extensions associated with the act
+	 * @type {object} 
+	 */
 	this.extension = copyData.extension;
-	/** @type {SecurityPolicyInstance} */
+	/**
+	 * @summary Gets or sets the security policy instances associated with the act
+	 * @type {SecurityPolicyInstance} 
+	 */
 	this.policy = copyData.policy;
-	/** @type {object} */
+	/**
+	 * @summary Gets a list of all associated acts for this act
+	 * @type {object} 
+	 */
 	this.relationship = copyData.relationship;
-	/** @type {object} */
+	/**
+	 * @summary Gets or sets the identifiers by which this act is known as in other systems
+	 * @type {object} 
+	 */
 	this.identifier = copyData.identifier;
-	/** @type {Concept} */
+	/**
+	 * @type {Concept} 
+	 */
 	this.typeConceptModel = copyData.typeConceptModel;
-	/** @type {Concept} */
+	/**
+	 * @type {Concept} 
+	 */
 	this.statusConceptModel = copyData.statusConceptModel;
-	/** @type {Concept} */
+	/**
+	 * @type {Concept} 
+	 */
 	this.reasonConceptModel = copyData.reasonConceptModel;
-	/** @type {Concept} */
+	/**
+	 * @type {Concept} 
+	 */
 	this.moodConceptModel = copyData.moodConceptModel;
-	/** @type {Concept} */
+	/**
+	 * @type {Concept} 
+	 */
 	this.classConceptModel = copyData.classConceptModel;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the key of the conccept which further classifies the type of act occurring
+	 * @type {string} 
+	 */
 	this.typeConcept = copyData.typeConcept;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the key of the concept which describes the current status of the act
+	 * @type {string} 
+	 */
 	this.statusConcept = copyData.statusConcept;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the key of the concept which defines the reason why the act is or didn't occur
+	 * @type {string} 
+	 */
 	this.reasonConcept = copyData.reasonConcept;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the key of the concept which specifies the mood of the act.
+	 * @type {string} 
+	 */
 	this.moodConcept = copyData.moodConcept;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the key of the concept which classifies the act.
+	 * @type {string} 
+	 */
 	this.classConcept = copyData.classConcept;
-	/** @type {Date} */
+	/**
+	 * @summary Gets or sets the time when the act should or did stop ocurring in ISO format
+	 * @type {Date} 
+	 */
 	this.stopTime = copyData.stopTime;
-	/** @type {Date} */
+	/**
+	 * @summary Gets or sets the time when the act should or did start ocurring in ISO format
+	 * @type {Date} 
+	 */
 	this.startTime = copyData.startTime;
-	/** @type {Date} */
+	/**
+	 * @summary Gets or sets the moment in time that this act occurred in ISO format
+	 * @type {Date} 
+	 */
 	this.actTime = copyData.actTime;
-	/** @type {TemplateDefinition} */
+	/**
+	 * @type {TemplateDefinition} 
+	 */
 	this.templateModel = copyData.templateModel;
-	/** @type {string} */
+	/**
+	 * @summary Gets the template UUID upon which this act is based
+	 * @type {string} 
+	 */
 	this.template = copyData.template;
-	/** @type {boolean} */
+	/**
+	 * @summary Gets or sets an indicator which identifies whether the act actually occurred, or
+            specifically did not occur
+	 * @type {boolean} 
+	 */
 	this.isNegated = copyData.isNegated;
-	/** @type {Single} */
+	/**
+	 * @summary Gets or sets the debit exchange rate
+	 * @type {Single} 
+	 */
 	this.debitExchange = copyData.debitExchange;
-	/** @type {Single} */
+	/**
+	 * @summary Gets or sets the crediting exchange rate
+	 * @type {Single} 
+	 */
 	this.creditExchange = copyData.creditExchange;
-	/** @type {Concept} */
+	/**
+	 * @type {Concept} 
+	 */
 	this.currencyModel = copyData.currencyModel;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the currency key
+	 * @type {string} 
+	 */
 	this.currency = copyData.currency;
-	/** @type {number} */
+	/**
+	 * @summary Gets or sets the amount of the financial transaction
+	 * @type {number} 
+	 */
 	this.amount = copyData.amount;
 	}
 }  // FinancialTransaction 
-// SanteDB.Core.Model.Acts.InvoiceElement, SanteDB.Core.Model, Version=2.1.113.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Acts.InvoiceElement, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
 //if(!InvoiceElement)
 /**
  * @class
@@ -9985,103 +14141,230 @@ function FinancialTransaction (copyData) {
 function InvoiceElement (copyData) { 
 	this.$type = 'InvoiceElement';
 	if(copyData) {
-	/** @type {BatchOperationType} */
+	/**
+	 * @summary Gets or sets the operation
+	 * @type {BatchOperationType} 
+	 */
 	this.operation = copyData.operation;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the primary identifying UUID of this object
+	 * @type {string} 
+	 */
 	this.id = copyData.id;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the security provenance object which represents the obsoletion of this data
+	 * @type {string} 
+	 */
 	this.obsoletedBy = copyData.obsoletedBy;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the security provenance object which represents the creation of this object
+	 * @type {string} 
+	 */
 	this.createdBy = copyData.createdBy;
-	/** @type {SecurityProvenance} */
+	/**
+	 * @type {SecurityProvenance} 
+	 */
 	this.obsoletedByModel = copyData.obsoletedByModel;
-	/** @type {Date} */
+	/**
+	 * @summary Gets the time that the object was last modified (from base data, default to CreationTime)
+	 * @type {Date} 
+	 */
 	this.modifiedOn = copyData.modifiedOn;
-	/** @type {SecurityProvenance} */
+	/**
+	 * @type {SecurityProvenance} 
+	 */
 	this.createdByModel = copyData.createdByModel;
-	/** @type {Date} */
+	/**
+	 * @summary Gets or sets the time that the data is no longer valid (was deleted/obsoleted) in ISO format
+	 * @type {Date} 
+	 */
 	this.obsoletionTime = copyData.obsoletionTime;
-	/** @type {Date} */
+	/**
+	 * @type {Date} 
+	 */
 	this.obsoletionTimeModel = copyData.obsoletionTimeModel;
-	/** @type {Date} */
+	/**
+	 * @summary Gets or sets the creation time as an ISO date format
+	 * @type {Date} 
+	 */
 	this.creationTime = copyData.creationTime;
-	/** @type {Date} */
+	/**
+	 * @type {Date} 
+	 */
 	this.creationTimeModel = copyData.creationTimeModel;
-	/** @type {number} */
+	/**
+	 * @type {number} 
+	 */
 	this.sequence = copyData.sequence;
-	/** @type {string} */
+	/**
+	 * @type {string} 
+	 */
 	this.version = copyData.version;
-	/** @type {string} */
+	/**
+	 * @type {string} 
+	 */
 	this.previousVersion = copyData.previousVersion;
-	/** @type {GeoTag} */
+	/**
+	 * @summary Gets or sets the geo-tag
+	 * @type {GeoTag} 
+	 */
 	this.geo = copyData.geo;
-	/** @type {object} */
+	/**
+	 * @summary Gets or sets the entities and participations they play in the act
+	 * @type {object} 
+	 */
 	this.participation = copyData.participation;
-	/** @type {ActProtocol} */
+	/**
+	 * @summary Identifies protocols attached to the act
+	 * @type {ActProtocol} 
+	 */
 	this.protocol = copyData.protocol;
-	/** @type {object} */
+	/**
+	 * @summary Gets a list of all tags associated with the act
+	 * @type {object} 
+	 */
 	this.tag = copyData.tag;
-	/** @type {ActNote} */
+	/**
+	 * @summary Gets a list of all notes associated with the act
+	 * @type {ActNote} 
+	 */
 	this.note = copyData.note;
-	/** @type {object} */
+	/**
+	 * @summary Gets a list of all extensions associated with the act
+	 * @type {object} 
+	 */
 	this.extension = copyData.extension;
-	/** @type {SecurityPolicyInstance} */
+	/**
+	 * @summary Gets or sets the security policy instances associated with the act
+	 * @type {SecurityPolicyInstance} 
+	 */
 	this.policy = copyData.policy;
-	/** @type {object} */
+	/**
+	 * @summary Gets a list of all associated acts for this act
+	 * @type {object} 
+	 */
 	this.relationship = copyData.relationship;
-	/** @type {object} */
+	/**
+	 * @summary Gets or sets the identifiers by which this act is known as in other systems
+	 * @type {object} 
+	 */
 	this.identifier = copyData.identifier;
-	/** @type {Concept} */
+	/**
+	 * @type {Concept} 
+	 */
 	this.typeConceptModel = copyData.typeConceptModel;
-	/** @type {Concept} */
+	/**
+	 * @type {Concept} 
+	 */
 	this.statusConceptModel = copyData.statusConceptModel;
-	/** @type {Concept} */
+	/**
+	 * @type {Concept} 
+	 */
 	this.reasonConceptModel = copyData.reasonConceptModel;
-	/** @type {Concept} */
+	/**
+	 * @type {Concept} 
+	 */
 	this.moodConceptModel = copyData.moodConceptModel;
-	/** @type {Concept} */
+	/**
+	 * @type {Concept} 
+	 */
 	this.classConceptModel = copyData.classConceptModel;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the key of the conccept which further classifies the type of act occurring
+	 * @type {string} 
+	 */
 	this.typeConcept = copyData.typeConcept;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the key of the concept which describes the current status of the act
+	 * @type {string} 
+	 */
 	this.statusConcept = copyData.statusConcept;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the key of the concept which defines the reason why the act is or didn't occur
+	 * @type {string} 
+	 */
 	this.reasonConcept = copyData.reasonConcept;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the key of the concept which specifies the mood of the act.
+	 * @type {string} 
+	 */
 	this.moodConcept = copyData.moodConcept;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the key of the concept which classifies the act.
+	 * @type {string} 
+	 */
 	this.classConcept = copyData.classConcept;
-	/** @type {Date} */
+	/**
+	 * @summary Gets or sets the time when the act should or did stop ocurring in ISO format
+	 * @type {Date} 
+	 */
 	this.stopTime = copyData.stopTime;
-	/** @type {Date} */
+	/**
+	 * @summary Gets or sets the time when the act should or did start ocurring in ISO format
+	 * @type {Date} 
+	 */
 	this.startTime = copyData.startTime;
-	/** @type {Date} */
+	/**
+	 * @summary Gets or sets the moment in time that this act occurred in ISO format
+	 * @type {Date} 
+	 */
 	this.actTime = copyData.actTime;
-	/** @type {TemplateDefinition} */
+	/**
+	 * @type {TemplateDefinition} 
+	 */
 	this.templateModel = copyData.templateModel;
-	/** @type {string} */
+	/**
+	 * @summary Gets the template UUID upon which this act is based
+	 * @type {string} 
+	 */
 	this.template = copyData.template;
-	/** @type {boolean} */
+	/**
+	 * @summary Gets or sets an indicator which identifies whether the act actually occurred, or
+            specifically did not occur
+	 * @type {boolean} 
+	 */
 	this.isNegated = copyData.isNegated;
-	/** @type {Single} */
+	/**
+	 * @summary When provided, can specify the factor to allow for different amounts to be charged based on insurance provider negotiations
+	 * @type {Single} 
+	 */
 	this.factor = copyData.factor;
-	/** @type {Concept} */
+	/**
+	 * @type {Concept} 
+	 */
 	this.currencyModel = copyData.currencyModel;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the currency of the invoice line item
+	 * @type {string} 
+	 */
 	this.currency = copyData.currency;
-	/** @type {number} */
+	/**
+	 * @summary Gets or sets the net amount
+	 * @type {number} 
+	 */
 	this.netPrice = copyData.netPrice;
-	/** @type {number} */
+	/**
+	 * @summary Gets or sets the price of each unit
+	 * @type {number} 
+	 */
 	this.unitPrice = copyData.unitPrice;
-	/** @type {number} */
+	/**
+	 * @summary Gets or sets the number of units included in the price
+	 * @type {number} 
+	 */
 	this.unitQty = copyData.unitQty;
-	/** @type {Concept} */
+	/**
+	 * @type {Concept} 
+	 */
 	this.modifierModel = copyData.modifierModel;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the modifier
+	 * @type {string} 
+	 */
 	this.modifier = copyData.modifier;
 	}
 }  // InvoiceElement 
-// SanteDB.Core.Model.Acts.Observation, SanteDB.Core.Model, Version=2.1.113.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Acts.Observation, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
 //if(!Observation)
 /**
  * @class
@@ -10239,93 +14522,206 @@ function InvoiceElement (copyData) {
 function Observation (copyData) { 
 	this.$type = 'Observation';
 	if(copyData) {
-	/** @type {BatchOperationType} */
+	/**
+	 * @summary Gets or sets the operation
+	 * @type {BatchOperationType} 
+	 */
 	this.operation = copyData.operation;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the primary identifying UUID of this object
+	 * @type {string} 
+	 */
 	this.id = copyData.id;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the security provenance object which represents the obsoletion of this data
+	 * @type {string} 
+	 */
 	this.obsoletedBy = copyData.obsoletedBy;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the security provenance object which represents the creation of this object
+	 * @type {string} 
+	 */
 	this.createdBy = copyData.createdBy;
-	/** @type {SecurityProvenance} */
+	/**
+	 * @type {SecurityProvenance} 
+	 */
 	this.obsoletedByModel = copyData.obsoletedByModel;
-	/** @type {Date} */
+	/**
+	 * @summary Gets the time that the object was last modified (from base data, default to CreationTime)
+	 * @type {Date} 
+	 */
 	this.modifiedOn = copyData.modifiedOn;
-	/** @type {SecurityProvenance} */
+	/**
+	 * @type {SecurityProvenance} 
+	 */
 	this.createdByModel = copyData.createdByModel;
-	/** @type {Date} */
+	/**
+	 * @summary Gets or sets the time that the data is no longer valid (was deleted/obsoleted) in ISO format
+	 * @type {Date} 
+	 */
 	this.obsoletionTime = copyData.obsoletionTime;
-	/** @type {Date} */
+	/**
+	 * @type {Date} 
+	 */
 	this.obsoletionTimeModel = copyData.obsoletionTimeModel;
-	/** @type {Date} */
+	/**
+	 * @summary Gets or sets the creation time as an ISO date format
+	 * @type {Date} 
+	 */
 	this.creationTime = copyData.creationTime;
-	/** @type {Date} */
+	/**
+	 * @type {Date} 
+	 */
 	this.creationTimeModel = copyData.creationTimeModel;
-	/** @type {number} */
+	/**
+	 * @type {number} 
+	 */
 	this.sequence = copyData.sequence;
-	/** @type {string} */
+	/**
+	 * @type {string} 
+	 */
 	this.version = copyData.version;
-	/** @type {string} */
+	/**
+	 * @type {string} 
+	 */
 	this.previousVersion = copyData.previousVersion;
-	/** @type {GeoTag} */
+	/**
+	 * @summary Gets or sets the geo-tag
+	 * @type {GeoTag} 
+	 */
 	this.geo = copyData.geo;
-	/** @type {object} */
+	/**
+	 * @summary Gets or sets the entities and participations they play in the act
+	 * @type {object} 
+	 */
 	this.participation = copyData.participation;
-	/** @type {ActProtocol} */
+	/**
+	 * @summary Identifies protocols attached to the act
+	 * @type {ActProtocol} 
+	 */
 	this.protocol = copyData.protocol;
-	/** @type {object} */
+	/**
+	 * @summary Gets a list of all tags associated with the act
+	 * @type {object} 
+	 */
 	this.tag = copyData.tag;
-	/** @type {ActNote} */
+	/**
+	 * @summary Gets a list of all notes associated with the act
+	 * @type {ActNote} 
+	 */
 	this.note = copyData.note;
-	/** @type {object} */
+	/**
+	 * @summary Gets a list of all extensions associated with the act
+	 * @type {object} 
+	 */
 	this.extension = copyData.extension;
-	/** @type {SecurityPolicyInstance} */
+	/**
+	 * @summary Gets or sets the security policy instances associated with the act
+	 * @type {SecurityPolicyInstance} 
+	 */
 	this.policy = copyData.policy;
-	/** @type {object} */
+	/**
+	 * @summary Gets a list of all associated acts for this act
+	 * @type {object} 
+	 */
 	this.relationship = copyData.relationship;
-	/** @type {object} */
+	/**
+	 * @summary Gets or sets the identifiers by which this act is known as in other systems
+	 * @type {object} 
+	 */
 	this.identifier = copyData.identifier;
-	/** @type {Concept} */
+	/**
+	 * @type {Concept} 
+	 */
 	this.typeConceptModel = copyData.typeConceptModel;
-	/** @type {Concept} */
+	/**
+	 * @type {Concept} 
+	 */
 	this.statusConceptModel = copyData.statusConceptModel;
-	/** @type {Concept} */
+	/**
+	 * @type {Concept} 
+	 */
 	this.reasonConceptModel = copyData.reasonConceptModel;
-	/** @type {Concept} */
+	/**
+	 * @type {Concept} 
+	 */
 	this.moodConceptModel = copyData.moodConceptModel;
-	/** @type {Concept} */
+	/**
+	 * @type {Concept} 
+	 */
 	this.classConceptModel = copyData.classConceptModel;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the key of the conccept which further classifies the type of act occurring
+	 * @type {string} 
+	 */
 	this.typeConcept = copyData.typeConcept;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the key of the concept which describes the current status of the act
+	 * @type {string} 
+	 */
 	this.statusConcept = copyData.statusConcept;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the key of the concept which defines the reason why the act is or didn't occur
+	 * @type {string} 
+	 */
 	this.reasonConcept = copyData.reasonConcept;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the key of the concept which specifies the mood of the act.
+	 * @type {string} 
+	 */
 	this.moodConcept = copyData.moodConcept;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the key of the concept which classifies the act.
+	 * @type {string} 
+	 */
 	this.classConcept = copyData.classConcept;
-	/** @type {Date} */
+	/**
+	 * @summary Gets or sets the time when the act should or did stop ocurring in ISO format
+	 * @type {Date} 
+	 */
 	this.stopTime = copyData.stopTime;
-	/** @type {Date} */
+	/**
+	 * @summary Gets or sets the time when the act should or did start ocurring in ISO format
+	 * @type {Date} 
+	 */
 	this.startTime = copyData.startTime;
-	/** @type {Date} */
+	/**
+	 * @summary Gets or sets the moment in time that this act occurred in ISO format
+	 * @type {Date} 
+	 */
 	this.actTime = copyData.actTime;
-	/** @type {TemplateDefinition} */
+	/**
+	 * @type {TemplateDefinition} 
+	 */
 	this.templateModel = copyData.templateModel;
-	/** @type {string} */
+	/**
+	 * @summary Gets the template UUID upon which this act is based
+	 * @type {string} 
+	 */
 	this.template = copyData.template;
-	/** @type {boolean} */
+	/**
+	 * @summary Gets or sets an indicator which identifies whether the act actually occurred, or
+            specifically did not occur
+	 * @type {boolean} 
+	 */
 	this.isNegated = copyData.isNegated;
-	/** @type {Concept} */
+	/**
+	 * @type {Concept} 
+	 */
 	this.interpretationConceptModel = copyData.interpretationConceptModel;
-	/** @type {string} */
+	/**
+	 * @summary Value type
+	 * @type {string} 
+	 */
 	this.valueType = copyData.valueType;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the concept which indicates the interpretation of the observtion
+	 * @type {string} 
+	 */
 	this.interpretationConcept = copyData.interpretationConcept;
 	}
 }  // Observation 
-// SanteDB.Core.Model.Acts.QuantityObservation, SanteDB.Core.Model, Version=2.1.113.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Acts.QuantityObservation, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
 //if(!QuantityObservation)
 /**
  * @class
@@ -10471,99 +14867,220 @@ function Observation (copyData) {
 function QuantityObservation (copyData) { 
 	this.$type = 'QuantityObservation';
 	if(copyData) {
-	/** @type {BatchOperationType} */
+	/**
+	 * @summary Gets or sets the operation
+	 * @type {BatchOperationType} 
+	 */
 	this.operation = copyData.operation;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the primary identifying UUID of this object
+	 * @type {string} 
+	 */
 	this.id = copyData.id;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the security provenance object which represents the obsoletion of this data
+	 * @type {string} 
+	 */
 	this.obsoletedBy = copyData.obsoletedBy;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the security provenance object which represents the creation of this object
+	 * @type {string} 
+	 */
 	this.createdBy = copyData.createdBy;
-	/** @type {SecurityProvenance} */
+	/**
+	 * @type {SecurityProvenance} 
+	 */
 	this.obsoletedByModel = copyData.obsoletedByModel;
-	/** @type {Date} */
+	/**
+	 * @summary Gets the time that the object was last modified (from base data, default to CreationTime)
+	 * @type {Date} 
+	 */
 	this.modifiedOn = copyData.modifiedOn;
-	/** @type {SecurityProvenance} */
+	/**
+	 * @type {SecurityProvenance} 
+	 */
 	this.createdByModel = copyData.createdByModel;
-	/** @type {Date} */
+	/**
+	 * @summary Gets or sets the time that the data is no longer valid (was deleted/obsoleted) in ISO format
+	 * @type {Date} 
+	 */
 	this.obsoletionTime = copyData.obsoletionTime;
-	/** @type {Date} */
+	/**
+	 * @type {Date} 
+	 */
 	this.obsoletionTimeModel = copyData.obsoletionTimeModel;
-	/** @type {Date} */
+	/**
+	 * @summary Gets or sets the creation time as an ISO date format
+	 * @type {Date} 
+	 */
 	this.creationTime = copyData.creationTime;
-	/** @type {Date} */
+	/**
+	 * @type {Date} 
+	 */
 	this.creationTimeModel = copyData.creationTimeModel;
-	/** @type {number} */
+	/**
+	 * @type {number} 
+	 */
 	this.sequence = copyData.sequence;
-	/** @type {string} */
+	/**
+	 * @type {string} 
+	 */
 	this.version = copyData.version;
-	/** @type {string} */
+	/**
+	 * @type {string} 
+	 */
 	this.previousVersion = copyData.previousVersion;
-	/** @type {GeoTag} */
+	/**
+	 * @summary Gets or sets the geo-tag
+	 * @type {GeoTag} 
+	 */
 	this.geo = copyData.geo;
-	/** @type {object} */
+	/**
+	 * @summary Gets or sets the entities and participations they play in the act
+	 * @type {object} 
+	 */
 	this.participation = copyData.participation;
-	/** @type {ActProtocol} */
+	/**
+	 * @summary Identifies protocols attached to the act
+	 * @type {ActProtocol} 
+	 */
 	this.protocol = copyData.protocol;
-	/** @type {object} */
+	/**
+	 * @summary Gets a list of all tags associated with the act
+	 * @type {object} 
+	 */
 	this.tag = copyData.tag;
-	/** @type {ActNote} */
+	/**
+	 * @summary Gets a list of all notes associated with the act
+	 * @type {ActNote} 
+	 */
 	this.note = copyData.note;
-	/** @type {object} */
+	/**
+	 * @summary Gets a list of all extensions associated with the act
+	 * @type {object} 
+	 */
 	this.extension = copyData.extension;
-	/** @type {SecurityPolicyInstance} */
+	/**
+	 * @summary Gets or sets the security policy instances associated with the act
+	 * @type {SecurityPolicyInstance} 
+	 */
 	this.policy = copyData.policy;
-	/** @type {object} */
+	/**
+	 * @summary Gets a list of all associated acts for this act
+	 * @type {object} 
+	 */
 	this.relationship = copyData.relationship;
-	/** @type {object} */
+	/**
+	 * @summary Gets or sets the identifiers by which this act is known as in other systems
+	 * @type {object} 
+	 */
 	this.identifier = copyData.identifier;
-	/** @type {Concept} */
+	/**
+	 * @type {Concept} 
+	 */
 	this.typeConceptModel = copyData.typeConceptModel;
-	/** @type {Concept} */
+	/**
+	 * @type {Concept} 
+	 */
 	this.statusConceptModel = copyData.statusConceptModel;
-	/** @type {Concept} */
+	/**
+	 * @type {Concept} 
+	 */
 	this.reasonConceptModel = copyData.reasonConceptModel;
-	/** @type {Concept} */
+	/**
+	 * @type {Concept} 
+	 */
 	this.moodConceptModel = copyData.moodConceptModel;
-	/** @type {Concept} */
+	/**
+	 * @type {Concept} 
+	 */
 	this.classConceptModel = copyData.classConceptModel;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the key of the conccept which further classifies the type of act occurring
+	 * @type {string} 
+	 */
 	this.typeConcept = copyData.typeConcept;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the key of the concept which describes the current status of the act
+	 * @type {string} 
+	 */
 	this.statusConcept = copyData.statusConcept;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the key of the concept which defines the reason why the act is or didn't occur
+	 * @type {string} 
+	 */
 	this.reasonConcept = copyData.reasonConcept;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the key of the concept which specifies the mood of the act.
+	 * @type {string} 
+	 */
 	this.moodConcept = copyData.moodConcept;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the key of the concept which classifies the act.
+	 * @type {string} 
+	 */
 	this.classConcept = copyData.classConcept;
-	/** @type {Date} */
+	/**
+	 * @summary Gets or sets the time when the act should or did stop ocurring in ISO format
+	 * @type {Date} 
+	 */
 	this.stopTime = copyData.stopTime;
-	/** @type {Date} */
+	/**
+	 * @summary Gets or sets the time when the act should or did start ocurring in ISO format
+	 * @type {Date} 
+	 */
 	this.startTime = copyData.startTime;
-	/** @type {Date} */
+	/**
+	 * @summary Gets or sets the moment in time that this act occurred in ISO format
+	 * @type {Date} 
+	 */
 	this.actTime = copyData.actTime;
-	/** @type {TemplateDefinition} */
+	/**
+	 * @type {TemplateDefinition} 
+	 */
 	this.templateModel = copyData.templateModel;
-	/** @type {string} */
+	/**
+	 * @summary Gets the template UUID upon which this act is based
+	 * @type {string} 
+	 */
 	this.template = copyData.template;
-	/** @type {boolean} */
+	/**
+	 * @summary Gets or sets an indicator which identifies whether the act actually occurred, or
+            specifically did not occur
+	 * @type {boolean} 
+	 */
 	this.isNegated = copyData.isNegated;
-	/** @type {Concept} */
+	/**
+	 * @type {Concept} 
+	 */
 	this.interpretationConceptModel = copyData.interpretationConceptModel;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the concept which indicates the interpretation of the observtion
+	 * @type {string} 
+	 */
 	this.interpretationConcept = copyData.interpretationConcept;
-	/** @type {Concept} */
+	/**
+	 * @type {Concept} 
+	 */
 	this.unitOfMeasureModel = copyData.unitOfMeasureModel;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the key of the uom concept
+	 * @type {string} 
+	 */
 	this.unitOfMeasure = copyData.unitOfMeasure;
-	/** @type {string} */
+	/**
+	 * @summary Value type
+	 * @type {string} 
+	 */
 	this.valueType = copyData.valueType;
-	/** @type {number} */
+	/**
+	 * @summary Gets or sets the observed quantity
+	 * @type {number} 
+	 */
 	this.value = copyData.value;
 	}
 }  // QuantityObservation 
-// SanteDB.Core.Model.Acts.TextObservation, SanteDB.Core.Model, Version=2.1.113.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Acts.TextObservation, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
 //if(!TextObservation)
 /**
  * @class
@@ -10708,95 +15225,211 @@ function QuantityObservation (copyData) {
 function TextObservation (copyData) { 
 	this.$type = 'TextObservation';
 	if(copyData) {
-	/** @type {BatchOperationType} */
+	/**
+	 * @summary Gets or sets the operation
+	 * @type {BatchOperationType} 
+	 */
 	this.operation = copyData.operation;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the primary identifying UUID of this object
+	 * @type {string} 
+	 */
 	this.id = copyData.id;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the security provenance object which represents the obsoletion of this data
+	 * @type {string} 
+	 */
 	this.obsoletedBy = copyData.obsoletedBy;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the security provenance object which represents the creation of this object
+	 * @type {string} 
+	 */
 	this.createdBy = copyData.createdBy;
-	/** @type {SecurityProvenance} */
+	/**
+	 * @type {SecurityProvenance} 
+	 */
 	this.obsoletedByModel = copyData.obsoletedByModel;
-	/** @type {Date} */
+	/**
+	 * @summary Gets the time that the object was last modified (from base data, default to CreationTime)
+	 * @type {Date} 
+	 */
 	this.modifiedOn = copyData.modifiedOn;
-	/** @type {SecurityProvenance} */
+	/**
+	 * @type {SecurityProvenance} 
+	 */
 	this.createdByModel = copyData.createdByModel;
-	/** @type {Date} */
+	/**
+	 * @summary Gets or sets the time that the data is no longer valid (was deleted/obsoleted) in ISO format
+	 * @type {Date} 
+	 */
 	this.obsoletionTime = copyData.obsoletionTime;
-	/** @type {Date} */
+	/**
+	 * @type {Date} 
+	 */
 	this.obsoletionTimeModel = copyData.obsoletionTimeModel;
-	/** @type {Date} */
+	/**
+	 * @summary Gets or sets the creation time as an ISO date format
+	 * @type {Date} 
+	 */
 	this.creationTime = copyData.creationTime;
-	/** @type {Date} */
+	/**
+	 * @type {Date} 
+	 */
 	this.creationTimeModel = copyData.creationTimeModel;
-	/** @type {number} */
+	/**
+	 * @type {number} 
+	 */
 	this.sequence = copyData.sequence;
-	/** @type {string} */
+	/**
+	 * @type {string} 
+	 */
 	this.version = copyData.version;
-	/** @type {string} */
+	/**
+	 * @type {string} 
+	 */
 	this.previousVersion = copyData.previousVersion;
-	/** @type {GeoTag} */
+	/**
+	 * @summary Gets or sets the geo-tag
+	 * @type {GeoTag} 
+	 */
 	this.geo = copyData.geo;
-	/** @type {object} */
+	/**
+	 * @summary Gets or sets the entities and participations they play in the act
+	 * @type {object} 
+	 */
 	this.participation = copyData.participation;
-	/** @type {ActProtocol} */
+	/**
+	 * @summary Identifies protocols attached to the act
+	 * @type {ActProtocol} 
+	 */
 	this.protocol = copyData.protocol;
-	/** @type {object} */
+	/**
+	 * @summary Gets a list of all tags associated with the act
+	 * @type {object} 
+	 */
 	this.tag = copyData.tag;
-	/** @type {ActNote} */
+	/**
+	 * @summary Gets a list of all notes associated with the act
+	 * @type {ActNote} 
+	 */
 	this.note = copyData.note;
-	/** @type {object} */
+	/**
+	 * @summary Gets a list of all extensions associated with the act
+	 * @type {object} 
+	 */
 	this.extension = copyData.extension;
-	/** @type {SecurityPolicyInstance} */
+	/**
+	 * @summary Gets or sets the security policy instances associated with the act
+	 * @type {SecurityPolicyInstance} 
+	 */
 	this.policy = copyData.policy;
-	/** @type {object} */
+	/**
+	 * @summary Gets a list of all associated acts for this act
+	 * @type {object} 
+	 */
 	this.relationship = copyData.relationship;
-	/** @type {object} */
+	/**
+	 * @summary Gets or sets the identifiers by which this act is known as in other systems
+	 * @type {object} 
+	 */
 	this.identifier = copyData.identifier;
-	/** @type {Concept} */
+	/**
+	 * @type {Concept} 
+	 */
 	this.typeConceptModel = copyData.typeConceptModel;
-	/** @type {Concept} */
+	/**
+	 * @type {Concept} 
+	 */
 	this.statusConceptModel = copyData.statusConceptModel;
-	/** @type {Concept} */
+	/**
+	 * @type {Concept} 
+	 */
 	this.reasonConceptModel = copyData.reasonConceptModel;
-	/** @type {Concept} */
+	/**
+	 * @type {Concept} 
+	 */
 	this.moodConceptModel = copyData.moodConceptModel;
-	/** @type {Concept} */
+	/**
+	 * @type {Concept} 
+	 */
 	this.classConceptModel = copyData.classConceptModel;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the key of the conccept which further classifies the type of act occurring
+	 * @type {string} 
+	 */
 	this.typeConcept = copyData.typeConcept;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the key of the concept which describes the current status of the act
+	 * @type {string} 
+	 */
 	this.statusConcept = copyData.statusConcept;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the key of the concept which defines the reason why the act is or didn't occur
+	 * @type {string} 
+	 */
 	this.reasonConcept = copyData.reasonConcept;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the key of the concept which specifies the mood of the act.
+	 * @type {string} 
+	 */
 	this.moodConcept = copyData.moodConcept;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the key of the concept which classifies the act.
+	 * @type {string} 
+	 */
 	this.classConcept = copyData.classConcept;
-	/** @type {Date} */
+	/**
+	 * @summary Gets or sets the time when the act should or did stop ocurring in ISO format
+	 * @type {Date} 
+	 */
 	this.stopTime = copyData.stopTime;
-	/** @type {Date} */
+	/**
+	 * @summary Gets or sets the time when the act should or did start ocurring in ISO format
+	 * @type {Date} 
+	 */
 	this.startTime = copyData.startTime;
-	/** @type {Date} */
+	/**
+	 * @summary Gets or sets the moment in time that this act occurred in ISO format
+	 * @type {Date} 
+	 */
 	this.actTime = copyData.actTime;
-	/** @type {TemplateDefinition} */
+	/**
+	 * @type {TemplateDefinition} 
+	 */
 	this.templateModel = copyData.templateModel;
-	/** @type {string} */
+	/**
+	 * @summary Gets the template UUID upon which this act is based
+	 * @type {string} 
+	 */
 	this.template = copyData.template;
-	/** @type {boolean} */
+	/**
+	 * @summary Gets or sets an indicator which identifies whether the act actually occurred, or
+            specifically did not occur
+	 * @type {boolean} 
+	 */
 	this.isNegated = copyData.isNegated;
-	/** @type {Concept} */
+	/**
+	 * @type {Concept} 
+	 */
 	this.interpretationConceptModel = copyData.interpretationConceptModel;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the concept which indicates the interpretation of the observtion
+	 * @type {string} 
+	 */
 	this.interpretationConcept = copyData.interpretationConcept;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the textual value
+	 * @type {string} 
+	 */
 	this.value = copyData.value;
-	/** @type {string} */
+	/**
+	 * @summary Value type
+	 * @type {string} 
+	 */
 	this.valueType = copyData.valueType;
 	}
 }  // TextObservation 
-// SanteDB.Core.Model.Acts.CodedObservation, SanteDB.Core.Model, Version=2.1.113.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Acts.CodedObservation, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
 //if(!CodedObservation)
 /**
  * @class
@@ -10941,97 +15574,215 @@ function TextObservation (copyData) {
 function CodedObservation (copyData) { 
 	this.$type = 'CodedObservation';
 	if(copyData) {
-	/** @type {BatchOperationType} */
+	/**
+	 * @summary Gets or sets the operation
+	 * @type {BatchOperationType} 
+	 */
 	this.operation = copyData.operation;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the primary identifying UUID of this object
+	 * @type {string} 
+	 */
 	this.id = copyData.id;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the security provenance object which represents the obsoletion of this data
+	 * @type {string} 
+	 */
 	this.obsoletedBy = copyData.obsoletedBy;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the security provenance object which represents the creation of this object
+	 * @type {string} 
+	 */
 	this.createdBy = copyData.createdBy;
-	/** @type {SecurityProvenance} */
+	/**
+	 * @type {SecurityProvenance} 
+	 */
 	this.obsoletedByModel = copyData.obsoletedByModel;
-	/** @type {Date} */
+	/**
+	 * @summary Gets the time that the object was last modified (from base data, default to CreationTime)
+	 * @type {Date} 
+	 */
 	this.modifiedOn = copyData.modifiedOn;
-	/** @type {SecurityProvenance} */
+	/**
+	 * @type {SecurityProvenance} 
+	 */
 	this.createdByModel = copyData.createdByModel;
-	/** @type {Date} */
+	/**
+	 * @summary Gets or sets the time that the data is no longer valid (was deleted/obsoleted) in ISO format
+	 * @type {Date} 
+	 */
 	this.obsoletionTime = copyData.obsoletionTime;
-	/** @type {Date} */
+	/**
+	 * @type {Date} 
+	 */
 	this.obsoletionTimeModel = copyData.obsoletionTimeModel;
-	/** @type {Date} */
+	/**
+	 * @summary Gets or sets the creation time as an ISO date format
+	 * @type {Date} 
+	 */
 	this.creationTime = copyData.creationTime;
-	/** @type {Date} */
+	/**
+	 * @type {Date} 
+	 */
 	this.creationTimeModel = copyData.creationTimeModel;
-	/** @type {number} */
+	/**
+	 * @type {number} 
+	 */
 	this.sequence = copyData.sequence;
-	/** @type {string} */
+	/**
+	 * @type {string} 
+	 */
 	this.version = copyData.version;
-	/** @type {string} */
+	/**
+	 * @type {string} 
+	 */
 	this.previousVersion = copyData.previousVersion;
-	/** @type {GeoTag} */
+	/**
+	 * @summary Gets or sets the geo-tag
+	 * @type {GeoTag} 
+	 */
 	this.geo = copyData.geo;
-	/** @type {object} */
+	/**
+	 * @summary Gets or sets the entities and participations they play in the act
+	 * @type {object} 
+	 */
 	this.participation = copyData.participation;
-	/** @type {ActProtocol} */
+	/**
+	 * @summary Identifies protocols attached to the act
+	 * @type {ActProtocol} 
+	 */
 	this.protocol = copyData.protocol;
-	/** @type {object} */
+	/**
+	 * @summary Gets a list of all tags associated with the act
+	 * @type {object} 
+	 */
 	this.tag = copyData.tag;
-	/** @type {ActNote} */
+	/**
+	 * @summary Gets a list of all notes associated with the act
+	 * @type {ActNote} 
+	 */
 	this.note = copyData.note;
-	/** @type {object} */
+	/**
+	 * @summary Gets a list of all extensions associated with the act
+	 * @type {object} 
+	 */
 	this.extension = copyData.extension;
-	/** @type {SecurityPolicyInstance} */
+	/**
+	 * @summary Gets or sets the security policy instances associated with the act
+	 * @type {SecurityPolicyInstance} 
+	 */
 	this.policy = copyData.policy;
-	/** @type {object} */
+	/**
+	 * @summary Gets a list of all associated acts for this act
+	 * @type {object} 
+	 */
 	this.relationship = copyData.relationship;
-	/** @type {object} */
+	/**
+	 * @summary Gets or sets the identifiers by which this act is known as in other systems
+	 * @type {object} 
+	 */
 	this.identifier = copyData.identifier;
-	/** @type {Concept} */
+	/**
+	 * @type {Concept} 
+	 */
 	this.typeConceptModel = copyData.typeConceptModel;
-	/** @type {Concept} */
+	/**
+	 * @type {Concept} 
+	 */
 	this.statusConceptModel = copyData.statusConceptModel;
-	/** @type {Concept} */
+	/**
+	 * @type {Concept} 
+	 */
 	this.reasonConceptModel = copyData.reasonConceptModel;
-	/** @type {Concept} */
+	/**
+	 * @type {Concept} 
+	 */
 	this.moodConceptModel = copyData.moodConceptModel;
-	/** @type {Concept} */
+	/**
+	 * @type {Concept} 
+	 */
 	this.classConceptModel = copyData.classConceptModel;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the key of the conccept which further classifies the type of act occurring
+	 * @type {string} 
+	 */
 	this.typeConcept = copyData.typeConcept;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the key of the concept which describes the current status of the act
+	 * @type {string} 
+	 */
 	this.statusConcept = copyData.statusConcept;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the key of the concept which defines the reason why the act is or didn't occur
+	 * @type {string} 
+	 */
 	this.reasonConcept = copyData.reasonConcept;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the key of the concept which specifies the mood of the act.
+	 * @type {string} 
+	 */
 	this.moodConcept = copyData.moodConcept;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the key of the concept which classifies the act.
+	 * @type {string} 
+	 */
 	this.classConcept = copyData.classConcept;
-	/** @type {Date} */
+	/**
+	 * @summary Gets or sets the time when the act should or did stop ocurring in ISO format
+	 * @type {Date} 
+	 */
 	this.stopTime = copyData.stopTime;
-	/** @type {Date} */
+	/**
+	 * @summary Gets or sets the time when the act should or did start ocurring in ISO format
+	 * @type {Date} 
+	 */
 	this.startTime = copyData.startTime;
-	/** @type {Date} */
+	/**
+	 * @summary Gets or sets the moment in time that this act occurred in ISO format
+	 * @type {Date} 
+	 */
 	this.actTime = copyData.actTime;
-	/** @type {TemplateDefinition} */
+	/**
+	 * @type {TemplateDefinition} 
+	 */
 	this.templateModel = copyData.templateModel;
-	/** @type {string} */
+	/**
+	 * @summary Gets the template UUID upon which this act is based
+	 * @type {string} 
+	 */
 	this.template = copyData.template;
-	/** @type {boolean} */
+	/**
+	 * @summary Gets or sets an indicator which identifies whether the act actually occurred, or
+            specifically did not occur
+	 * @type {boolean} 
+	 */
 	this.isNegated = copyData.isNegated;
-	/** @type {Concept} */
+	/**
+	 * @type {Concept} 
+	 */
 	this.interpretationConceptModel = copyData.interpretationConceptModel;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the concept which indicates the interpretation of the observtion
+	 * @type {string} 
+	 */
 	this.interpretationConcept = copyData.interpretationConcept;
-	/** @type {Concept} */
+	/**
+	 * @type {Concept} 
+	 */
 	this.valueModel = copyData.valueModel;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the coded value of the observation
+	 * @type {string} 
+	 */
 	this.value = copyData.value;
-	/** @type {string} */
+	/**
+	 * @summary Value type
+	 * @type {string} 
+	 */
 	this.valueType = copyData.valueType;
 	}
 }  // CodedObservation 
-// SanteDB.Core.Model.Acts.PatientEncounter, SanteDB.Core.Model, Version=2.1.113.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Acts.PatientEncounter, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
 //if(!PatientEncounter)
 /**
  * @class
@@ -11174,91 +15925,201 @@ function CodedObservation (copyData) {
 function PatientEncounter (copyData) { 
 	this.$type = 'PatientEncounter';
 	if(copyData) {
-	/** @type {BatchOperationType} */
+	/**
+	 * @summary Gets or sets the operation
+	 * @type {BatchOperationType} 
+	 */
 	this.operation = copyData.operation;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the primary identifying UUID of this object
+	 * @type {string} 
+	 */
 	this.id = copyData.id;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the security provenance object which represents the obsoletion of this data
+	 * @type {string} 
+	 */
 	this.obsoletedBy = copyData.obsoletedBy;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the security provenance object which represents the creation of this object
+	 * @type {string} 
+	 */
 	this.createdBy = copyData.createdBy;
-	/** @type {SecurityProvenance} */
+	/**
+	 * @type {SecurityProvenance} 
+	 */
 	this.obsoletedByModel = copyData.obsoletedByModel;
-	/** @type {Date} */
+	/**
+	 * @summary Gets the time that the object was last modified (from base data, default to CreationTime)
+	 * @type {Date} 
+	 */
 	this.modifiedOn = copyData.modifiedOn;
-	/** @type {SecurityProvenance} */
+	/**
+	 * @type {SecurityProvenance} 
+	 */
 	this.createdByModel = copyData.createdByModel;
-	/** @type {Date} */
+	/**
+	 * @summary Gets or sets the time that the data is no longer valid (was deleted/obsoleted) in ISO format
+	 * @type {Date} 
+	 */
 	this.obsoletionTime = copyData.obsoletionTime;
-	/** @type {Date} */
+	/**
+	 * @type {Date} 
+	 */
 	this.obsoletionTimeModel = copyData.obsoletionTimeModel;
-	/** @type {Date} */
+	/**
+	 * @summary Gets or sets the creation time as an ISO date format
+	 * @type {Date} 
+	 */
 	this.creationTime = copyData.creationTime;
-	/** @type {Date} */
+	/**
+	 * @type {Date} 
+	 */
 	this.creationTimeModel = copyData.creationTimeModel;
-	/** @type {number} */
+	/**
+	 * @type {number} 
+	 */
 	this.sequence = copyData.sequence;
-	/** @type {string} */
+	/**
+	 * @type {string} 
+	 */
 	this.version = copyData.version;
-	/** @type {string} */
+	/**
+	 * @type {string} 
+	 */
 	this.previousVersion = copyData.previousVersion;
-	/** @type {GeoTag} */
+	/**
+	 * @summary Gets or sets the geo-tag
+	 * @type {GeoTag} 
+	 */
 	this.geo = copyData.geo;
-	/** @type {object} */
+	/**
+	 * @summary Gets or sets the entities and participations they play in the act
+	 * @type {object} 
+	 */
 	this.participation = copyData.participation;
-	/** @type {ActProtocol} */
+	/**
+	 * @summary Identifies protocols attached to the act
+	 * @type {ActProtocol} 
+	 */
 	this.protocol = copyData.protocol;
-	/** @type {object} */
+	/**
+	 * @summary Gets a list of all tags associated with the act
+	 * @type {object} 
+	 */
 	this.tag = copyData.tag;
-	/** @type {ActNote} */
+	/**
+	 * @summary Gets a list of all notes associated with the act
+	 * @type {ActNote} 
+	 */
 	this.note = copyData.note;
-	/** @type {object} */
+	/**
+	 * @summary Gets a list of all extensions associated with the act
+	 * @type {object} 
+	 */
 	this.extension = copyData.extension;
-	/** @type {SecurityPolicyInstance} */
+	/**
+	 * @summary Gets or sets the security policy instances associated with the act
+	 * @type {SecurityPolicyInstance} 
+	 */
 	this.policy = copyData.policy;
-	/** @type {object} */
+	/**
+	 * @summary Gets a list of all associated acts for this act
+	 * @type {object} 
+	 */
 	this.relationship = copyData.relationship;
-	/** @type {object} */
+	/**
+	 * @summary Gets or sets the identifiers by which this act is known as in other systems
+	 * @type {object} 
+	 */
 	this.identifier = copyData.identifier;
-	/** @type {Concept} */
+	/**
+	 * @type {Concept} 
+	 */
 	this.typeConceptModel = copyData.typeConceptModel;
-	/** @type {Concept} */
+	/**
+	 * @type {Concept} 
+	 */
 	this.statusConceptModel = copyData.statusConceptModel;
-	/** @type {Concept} */
+	/**
+	 * @type {Concept} 
+	 */
 	this.reasonConceptModel = copyData.reasonConceptModel;
-	/** @type {Concept} */
+	/**
+	 * @type {Concept} 
+	 */
 	this.moodConceptModel = copyData.moodConceptModel;
-	/** @type {Concept} */
+	/**
+	 * @type {Concept} 
+	 */
 	this.classConceptModel = copyData.classConceptModel;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the key of the conccept which further classifies the type of act occurring
+	 * @type {string} 
+	 */
 	this.typeConcept = copyData.typeConcept;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the key of the concept which describes the current status of the act
+	 * @type {string} 
+	 */
 	this.statusConcept = copyData.statusConcept;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the key of the concept which defines the reason why the act is or didn't occur
+	 * @type {string} 
+	 */
 	this.reasonConcept = copyData.reasonConcept;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the key of the concept which specifies the mood of the act.
+	 * @type {string} 
+	 */
 	this.moodConcept = copyData.moodConcept;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the key of the concept which classifies the act.
+	 * @type {string} 
+	 */
 	this.classConcept = copyData.classConcept;
-	/** @type {Date} */
+	/**
+	 * @summary Gets or sets the time when the act should or did stop ocurring in ISO format
+	 * @type {Date} 
+	 */
 	this.stopTime = copyData.stopTime;
-	/** @type {Date} */
+	/**
+	 * @summary Gets or sets the time when the act should or did start ocurring in ISO format
+	 * @type {Date} 
+	 */
 	this.startTime = copyData.startTime;
-	/** @type {Date} */
+	/**
+	 * @summary Gets or sets the moment in time that this act occurred in ISO format
+	 * @type {Date} 
+	 */
 	this.actTime = copyData.actTime;
-	/** @type {TemplateDefinition} */
+	/**
+	 * @type {TemplateDefinition} 
+	 */
 	this.templateModel = copyData.templateModel;
-	/** @type {string} */
+	/**
+	 * @summary Gets the template UUID upon which this act is based
+	 * @type {string} 
+	 */
 	this.template = copyData.template;
-	/** @type {boolean} */
+	/**
+	 * @summary Gets or sets an indicator which identifies whether the act actually occurred, or
+            specifically did not occur
+	 * @type {boolean} 
+	 */
 	this.isNegated = copyData.isNegated;
-	/** @type {Concept} */
+	/**
+	 * @type {Concept} 
+	 */
 	this.dischargeDispositionModel = copyData.dischargeDispositionModel;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the discharge disposition (how the patient left the encounter
+	 * @type {string} 
+	 */
 	this.dischargeDisposition = copyData.dischargeDisposition;
 	}
 }  // PatientEncounter 
-// SanteDB.Core.Model.Acts.Procedure, SanteDB.Core.Model, Version=2.1.113.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Acts.Procedure, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
 //if(!Procedure)
 /**
  * @class
@@ -11403,99 +16264,219 @@ function PatientEncounter (copyData) {
 function Procedure (copyData) { 
 	this.$type = 'Procedure';
 	if(copyData) {
-	/** @type {BatchOperationType} */
+	/**
+	 * @summary Gets or sets the operation
+	 * @type {BatchOperationType} 
+	 */
 	this.operation = copyData.operation;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the primary identifying UUID of this object
+	 * @type {string} 
+	 */
 	this.id = copyData.id;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the security provenance object which represents the obsoletion of this data
+	 * @type {string} 
+	 */
 	this.obsoletedBy = copyData.obsoletedBy;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the security provenance object which represents the creation of this object
+	 * @type {string} 
+	 */
 	this.createdBy = copyData.createdBy;
-	/** @type {SecurityProvenance} */
+	/**
+	 * @type {SecurityProvenance} 
+	 */
 	this.obsoletedByModel = copyData.obsoletedByModel;
-	/** @type {Date} */
+	/**
+	 * @summary Gets the time that the object was last modified (from base data, default to CreationTime)
+	 * @type {Date} 
+	 */
 	this.modifiedOn = copyData.modifiedOn;
-	/** @type {SecurityProvenance} */
+	/**
+	 * @type {SecurityProvenance} 
+	 */
 	this.createdByModel = copyData.createdByModel;
-	/** @type {Date} */
+	/**
+	 * @summary Gets or sets the time that the data is no longer valid (was deleted/obsoleted) in ISO format
+	 * @type {Date} 
+	 */
 	this.obsoletionTime = copyData.obsoletionTime;
-	/** @type {Date} */
+	/**
+	 * @type {Date} 
+	 */
 	this.obsoletionTimeModel = copyData.obsoletionTimeModel;
-	/** @type {Date} */
+	/**
+	 * @summary Gets or sets the creation time as an ISO date format
+	 * @type {Date} 
+	 */
 	this.creationTime = copyData.creationTime;
-	/** @type {Date} */
+	/**
+	 * @type {Date} 
+	 */
 	this.creationTimeModel = copyData.creationTimeModel;
-	/** @type {number} */
+	/**
+	 * @type {number} 
+	 */
 	this.sequence = copyData.sequence;
-	/** @type {string} */
+	/**
+	 * @type {string} 
+	 */
 	this.version = copyData.version;
-	/** @type {string} */
+	/**
+	 * @type {string} 
+	 */
 	this.previousVersion = copyData.previousVersion;
-	/** @type {GeoTag} */
+	/**
+	 * @summary Gets or sets the geo-tag
+	 * @type {GeoTag} 
+	 */
 	this.geo = copyData.geo;
-	/** @type {object} */
+	/**
+	 * @summary Gets or sets the entities and participations they play in the act
+	 * @type {object} 
+	 */
 	this.participation = copyData.participation;
-	/** @type {ActProtocol} */
+	/**
+	 * @summary Identifies protocols attached to the act
+	 * @type {ActProtocol} 
+	 */
 	this.protocol = copyData.protocol;
-	/** @type {object} */
+	/**
+	 * @summary Gets a list of all tags associated with the act
+	 * @type {object} 
+	 */
 	this.tag = copyData.tag;
-	/** @type {ActNote} */
+	/**
+	 * @summary Gets a list of all notes associated with the act
+	 * @type {ActNote} 
+	 */
 	this.note = copyData.note;
-	/** @type {object} */
+	/**
+	 * @summary Gets a list of all extensions associated with the act
+	 * @type {object} 
+	 */
 	this.extension = copyData.extension;
-	/** @type {SecurityPolicyInstance} */
+	/**
+	 * @summary Gets or sets the security policy instances associated with the act
+	 * @type {SecurityPolicyInstance} 
+	 */
 	this.policy = copyData.policy;
-	/** @type {object} */
+	/**
+	 * @summary Gets a list of all associated acts for this act
+	 * @type {object} 
+	 */
 	this.relationship = copyData.relationship;
-	/** @type {object} */
+	/**
+	 * @summary Gets or sets the identifiers by which this act is known as in other systems
+	 * @type {object} 
+	 */
 	this.identifier = copyData.identifier;
-	/** @type {Concept} */
+	/**
+	 * @type {Concept} 
+	 */
 	this.typeConceptModel = copyData.typeConceptModel;
-	/** @type {Concept} */
+	/**
+	 * @type {Concept} 
+	 */
 	this.statusConceptModel = copyData.statusConceptModel;
-	/** @type {Concept} */
+	/**
+	 * @type {Concept} 
+	 */
 	this.reasonConceptModel = copyData.reasonConceptModel;
-	/** @type {Concept} */
+	/**
+	 * @type {Concept} 
+	 */
 	this.moodConceptModel = copyData.moodConceptModel;
-	/** @type {Concept} */
+	/**
+	 * @type {Concept} 
+	 */
 	this.classConceptModel = copyData.classConceptModel;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the key of the conccept which further classifies the type of act occurring
+	 * @type {string} 
+	 */
 	this.typeConcept = copyData.typeConcept;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the key of the concept which describes the current status of the act
+	 * @type {string} 
+	 */
 	this.statusConcept = copyData.statusConcept;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the key of the concept which defines the reason why the act is or didn't occur
+	 * @type {string} 
+	 */
 	this.reasonConcept = copyData.reasonConcept;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the key of the concept which specifies the mood of the act.
+	 * @type {string} 
+	 */
 	this.moodConcept = copyData.moodConcept;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the key of the concept which classifies the act.
+	 * @type {string} 
+	 */
 	this.classConcept = copyData.classConcept;
-	/** @type {Date} */
+	/**
+	 * @summary Gets or sets the time when the act should or did stop ocurring in ISO format
+	 * @type {Date} 
+	 */
 	this.stopTime = copyData.stopTime;
-	/** @type {Date} */
+	/**
+	 * @summary Gets or sets the time when the act should or did start ocurring in ISO format
+	 * @type {Date} 
+	 */
 	this.startTime = copyData.startTime;
-	/** @type {Date} */
+	/**
+	 * @summary Gets or sets the moment in time that this act occurred in ISO format
+	 * @type {Date} 
+	 */
 	this.actTime = copyData.actTime;
-	/** @type {TemplateDefinition} */
+	/**
+	 * @type {TemplateDefinition} 
+	 */
 	this.templateModel = copyData.templateModel;
-	/** @type {string} */
+	/**
+	 * @summary Gets the template UUID upon which this act is based
+	 * @type {string} 
+	 */
 	this.template = copyData.template;
-	/** @type {boolean} */
+	/**
+	 * @summary Gets or sets an indicator which identifies whether the act actually occurred, or
+            specifically did not occur
+	 * @type {boolean} 
+	 */
 	this.isNegated = copyData.isNegated;
-	/** @type {Concept} */
+	/**
+	 * @type {Concept} 
+	 */
 	this.targetSiteModel = copyData.targetSiteModel;
-	/** @type {Concept} */
+	/**
+	 * @type {Concept} 
+	 */
 	this.approachSiteModel = copyData.approachSiteModel;
-	/** @type {Concept} */
+	/**
+	 * @type {Concept} 
+	 */
 	this.methodModel = copyData.methodModel;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the anatomical site or system which is the target of the procedure
+	 * @type {string} 
+	 */
 	this.targetSite = copyData.targetSite;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the anatomical site or system through which the procedure was performed
+	 * @type {string} 
+	 */
 	this.approachSite = copyData.approachSite;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets te method/technique used to perform the procedure
+	 * @type {string} 
+	 */
 	this.method = copyData.method;
 	}
 }  // Procedure 
-// SanteDB.Core.Model.Acts.Protocol, SanteDB.Core.Model, Version=2.1.113.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Acts.Protocol, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
 //if(!Protocol)
 /**
  * @class
@@ -11530,37 +16511,75 @@ function Procedure (copyData) {
 function Protocol (copyData) { 
 	this.$type = 'Protocol';
 	if(copyData) {
-	/** @type {BatchOperationType} */
+	/**
+	 * @summary Gets or sets the operation
+	 * @type {BatchOperationType} 
+	 */
 	this.operation = copyData.operation;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the primary identifying UUID of this object
+	 * @type {string} 
+	 */
 	this.id = copyData.id;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the security provenance object which represents the obsoletion of this data
+	 * @type {string} 
+	 */
 	this.obsoletedBy = copyData.obsoletedBy;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the security provenance object which represents the creation of this object
+	 * @type {string} 
+	 */
 	this.createdBy = copyData.createdBy;
-	/** @type {SecurityProvenance} */
+	/**
+	 * @type {SecurityProvenance} 
+	 */
 	this.obsoletedByModel = copyData.obsoletedByModel;
-	/** @type {Date} */
+	/**
+	 * @summary Gets the time that the object was last modified (from base data, default to CreationTime)
+	 * @type {Date} 
+	 */
 	this.modifiedOn = copyData.modifiedOn;
-	/** @type {SecurityProvenance} */
+	/**
+	 * @type {SecurityProvenance} 
+	 */
 	this.createdByModel = copyData.createdByModel;
-	/** @type {Date} */
+	/**
+	 * @summary Gets or sets the time that the data is no longer valid (was deleted/obsoleted) in ISO format
+	 * @type {Date} 
+	 */
 	this.obsoletionTime = copyData.obsoletionTime;
-	/** @type {Date} */
+	/**
+	 * @type {Date} 
+	 */
 	this.obsoletionTimeModel = copyData.obsoletionTimeModel;
-	/** @type {Date} */
+	/**
+	 * @summary Gets or sets the creation time as an ISO date format
+	 * @type {Date} 
+	 */
 	this.creationTime = copyData.creationTime;
-	/** @type {Date} */
+	/**
+	 * @type {Date} 
+	 */
 	this.creationTimeModel = copyData.creationTimeModel;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the OID
+	 * @type {string} 
+	 */
 	this.oid = copyData.oid;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the handler class AQN
+	 * @type {string} 
+	 */
 	this.handlerClass = copyData.handlerClass;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the name of the protocol
+	 * @type {string} 
+	 */
 	this.name = copyData.name;
 	}
 }  // Protocol 
-// SanteDB.Core.Model.Acts.SubstanceAdministration, SanteDB.Core.Model, Version=2.1.113.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Acts.SubstanceAdministration, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
 //if(!SubstanceAdministration)
 /**
  * @class
@@ -11717,103 +16736,229 @@ function Protocol (copyData) {
 function SubstanceAdministration (copyData) { 
 	this.$type = 'SubstanceAdministration';
 	if(copyData) {
-	/** @type {BatchOperationType} */
+	/**
+	 * @summary Gets or sets the operation
+	 * @type {BatchOperationType} 
+	 */
 	this.operation = copyData.operation;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the primary identifying UUID of this object
+	 * @type {string} 
+	 */
 	this.id = copyData.id;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the security provenance object which represents the obsoletion of this data
+	 * @type {string} 
+	 */
 	this.obsoletedBy = copyData.obsoletedBy;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the security provenance object which represents the creation of this object
+	 * @type {string} 
+	 */
 	this.createdBy = copyData.createdBy;
-	/** @type {SecurityProvenance} */
+	/**
+	 * @type {SecurityProvenance} 
+	 */
 	this.obsoletedByModel = copyData.obsoletedByModel;
-	/** @type {Date} */
+	/**
+	 * @summary Gets the time that the object was last modified (from base data, default to CreationTime)
+	 * @type {Date} 
+	 */
 	this.modifiedOn = copyData.modifiedOn;
-	/** @type {SecurityProvenance} */
+	/**
+	 * @type {SecurityProvenance} 
+	 */
 	this.createdByModel = copyData.createdByModel;
-	/** @type {Date} */
+	/**
+	 * @summary Gets or sets the time that the data is no longer valid (was deleted/obsoleted) in ISO format
+	 * @type {Date} 
+	 */
 	this.obsoletionTime = copyData.obsoletionTime;
-	/** @type {Date} */
+	/**
+	 * @type {Date} 
+	 */
 	this.obsoletionTimeModel = copyData.obsoletionTimeModel;
-	/** @type {Date} */
+	/**
+	 * @summary Gets or sets the creation time as an ISO date format
+	 * @type {Date} 
+	 */
 	this.creationTime = copyData.creationTime;
-	/** @type {Date} */
+	/**
+	 * @type {Date} 
+	 */
 	this.creationTimeModel = copyData.creationTimeModel;
-	/** @type {number} */
+	/**
+	 * @type {number} 
+	 */
 	this.sequence = copyData.sequence;
-	/** @type {string} */
+	/**
+	 * @type {string} 
+	 */
 	this.version = copyData.version;
-	/** @type {string} */
+	/**
+	 * @type {string} 
+	 */
 	this.previousVersion = copyData.previousVersion;
-	/** @type {GeoTag} */
+	/**
+	 * @summary Gets or sets the geo-tag
+	 * @type {GeoTag} 
+	 */
 	this.geo = copyData.geo;
-	/** @type {object} */
+	/**
+	 * @summary Gets or sets the entities and participations they play in the act
+	 * @type {object} 
+	 */
 	this.participation = copyData.participation;
-	/** @type {ActProtocol} */
+	/**
+	 * @summary Identifies protocols attached to the act
+	 * @type {ActProtocol} 
+	 */
 	this.protocol = copyData.protocol;
-	/** @type {object} */
+	/**
+	 * @summary Gets a list of all tags associated with the act
+	 * @type {object} 
+	 */
 	this.tag = copyData.tag;
-	/** @type {ActNote} */
+	/**
+	 * @summary Gets a list of all notes associated with the act
+	 * @type {ActNote} 
+	 */
 	this.note = copyData.note;
-	/** @type {object} */
+	/**
+	 * @summary Gets a list of all extensions associated with the act
+	 * @type {object} 
+	 */
 	this.extension = copyData.extension;
-	/** @type {SecurityPolicyInstance} */
+	/**
+	 * @summary Gets or sets the security policy instances associated with the act
+	 * @type {SecurityPolicyInstance} 
+	 */
 	this.policy = copyData.policy;
-	/** @type {object} */
+	/**
+	 * @summary Gets a list of all associated acts for this act
+	 * @type {object} 
+	 */
 	this.relationship = copyData.relationship;
-	/** @type {object} */
+	/**
+	 * @summary Gets or sets the identifiers by which this act is known as in other systems
+	 * @type {object} 
+	 */
 	this.identifier = copyData.identifier;
-	/** @type {Concept} */
+	/**
+	 * @type {Concept} 
+	 */
 	this.typeConceptModel = copyData.typeConceptModel;
-	/** @type {Concept} */
+	/**
+	 * @type {Concept} 
+	 */
 	this.statusConceptModel = copyData.statusConceptModel;
-	/** @type {Concept} */
+	/**
+	 * @type {Concept} 
+	 */
 	this.reasonConceptModel = copyData.reasonConceptModel;
-	/** @type {Concept} */
+	/**
+	 * @type {Concept} 
+	 */
 	this.moodConceptModel = copyData.moodConceptModel;
-	/** @type {Concept} */
+	/**
+	 * @type {Concept} 
+	 */
 	this.classConceptModel = copyData.classConceptModel;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the key of the conccept which further classifies the type of act occurring
+	 * @type {string} 
+	 */
 	this.typeConcept = copyData.typeConcept;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the key of the concept which describes the current status of the act
+	 * @type {string} 
+	 */
 	this.statusConcept = copyData.statusConcept;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the key of the concept which defines the reason why the act is or didn't occur
+	 * @type {string} 
+	 */
 	this.reasonConcept = copyData.reasonConcept;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the key of the concept which specifies the mood of the act.
+	 * @type {string} 
+	 */
 	this.moodConcept = copyData.moodConcept;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets the key of the concept which classifies the act.
+	 * @type {string} 
+	 */
 	this.classConcept = copyData.classConcept;
-	/** @type {Date} */
+	/**
+	 * @summary Gets or sets the time when the act should or did stop ocurring in ISO format
+	 * @type {Date} 
+	 */
 	this.stopTime = copyData.stopTime;
-	/** @type {Date} */
+	/**
+	 * @summary Gets or sets the time when the act should or did start ocurring in ISO format
+	 * @type {Date} 
+	 */
 	this.startTime = copyData.startTime;
-	/** @type {Date} */
+	/**
+	 * @summary Gets or sets the moment in time that this act occurred in ISO format
+	 * @type {Date} 
+	 */
 	this.actTime = copyData.actTime;
-	/** @type {TemplateDefinition} */
+	/**
+	 * @type {TemplateDefinition} 
+	 */
 	this.templateModel = copyData.templateModel;
-	/** @type {string} */
+	/**
+	 * @summary Gets the template UUID upon which this act is based
+	 * @type {string} 
+	 */
 	this.template = copyData.template;
-	/** @type {boolean} */
+	/**
+	 * @summary Gets or sets an indicator which identifies whether the act actually occurred, or
+            specifically did not occur
+	 * @type {boolean} 
+	 */
 	this.isNegated = copyData.isNegated;
-	/** @type {Concept} */
+	/**
+	 * @type {Concept} 
+	 */
 	this.siteModel = copyData.siteModel;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets a concept which indicates the site of administration
+	 * @type {string} 
+	 */
 	this.site = copyData.site;
-	/** @type {number} */
+	/**
+	 * @summary The sequence of the dose (i.e. OPV 0 = 0 , OPV 1 = 1, etc.)
+	 * @type {number} 
+	 */
 	this.doseSequence = copyData.doseSequence;
-	/** @type {number} */
+	/**
+	 * @summary Gets or sets the amount of substance administered
+	 * @type {number} 
+	 */
 	this.doseQuantity = copyData.doseQuantity;
-	/** @type {Concept} */
+	/**
+	 * @type {Concept} 
+	 */
 	this.doseUnitModel = copyData.doseUnitModel;
-	/** @type {Concept} */
+	/**
+	 * @type {Concept} 
+	 */
 	this.routeModel = copyData.routeModel;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets a concept which indicates the unit of measure for the dose (eg: 5 mL, 10 mL, 1 drop, etc.)
+	 * @type {string} 
+	 */
 	this.doseUnit = copyData.doseUnit;
-	/** @type {string} */
+	/**
+	 * @summary Gets or sets a concept which indicates the route of administration (eg: Oral, Injection, etc.)
+	 * @type {string} 
+	 */
 	this.route = copyData.route;
 	}
 }  // SubstanceAdministration 
-// SanteDB.Core.Auditing.AuditableObjectIdType, SanteDB.Core.Model, Version=2.1.113.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Auditing.AuditableObjectIdType, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
 // if(!AuditableObjectIdType)
 /**
  * @enum {string}
@@ -11879,7 +17024,7 @@ const AuditableObjectIdType = {
 	 */
 	Custom : 'Custom',
 }  // AuditableObjectIdType 
-// SanteDB.Core.Auditing.AuditableObjectLifecycle, SanteDB.Core.Model, Version=2.1.113.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Auditing.AuditableObjectLifecycle, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
 // if(!AuditableObjectLifecycle)
 /**
  * @enum {string}
@@ -11953,7 +17098,7 @@ const AuditableObjectLifecycle = {
 	 */
 	PermanentErasure : 'PermanentErasure',
 }  // AuditableObjectLifecycle 
-// SanteDB.Core.Auditing.AuditableObjectRole, SanteDB.Core.Model, Version=2.1.113.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Auditing.AuditableObjectRole, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
 // if(!AuditableObjectRole)
 /**
  * @enum {string}
@@ -12059,7 +17204,7 @@ const AuditableObjectRole = {
 	 */
 	Query : 'Query',
 }  // AuditableObjectRole 
-// SanteDB.Core.Auditing.AuditableObjectType, SanteDB.Core.Model, Version=2.1.113.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Auditing.AuditableObjectType, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
 // if(!AuditableObjectType)
 /**
  * @enum {string}
@@ -12089,7 +17234,7 @@ const AuditableObjectType = {
 	 */
 	Other : 'Other',
 }  // AuditableObjectType 
-// SanteDB.Core.Auditing.NetworkAccessPointType, SanteDB.Core.Model, Version=2.1.113.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Auditing.NetworkAccessPointType, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
 // if(!NetworkAccessPointType)
 /**
  * @enum {string}
@@ -12111,7 +17256,7 @@ const NetworkAccessPointType = {
 	 */
 	TelephoneNumber : 'TelephoneNumber',
 }  // NetworkAccessPointType 
-// SanteDB.Core.Auditing.ActionType, SanteDB.Core.Model, Version=2.1.113.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Auditing.ActionType, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
 // if(!ActionType)
 /**
  * @enum {string}
@@ -12141,7 +17286,7 @@ const ActionType = {
 	 */
 	Execute : 'Execute',
 }  // ActionType 
-// SanteDB.Core.Auditing.EventIdentifierType, SanteDB.Core.Model, Version=2.1.113.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Auditing.EventIdentifierType, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
 // if(!EventIdentifierType)
 /**
  * @enum {string}
@@ -12227,7 +17372,7 @@ const EventIdentifierType = {
 	 */
 	Logout : 'Logout',
 }  // EventIdentifierType 
-// SanteDB.Core.Auditing.OutcomeIndicator, SanteDB.Core.Model, Version=2.1.113.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Auditing.OutcomeIndicator, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
 // if(!OutcomeIndicator)
 /**
  * @enum {string}
@@ -12253,7 +17398,7 @@ const OutcomeIndicator = {
 	 */
 	EpicFail : 'EpicFail',
 }  // OutcomeIndicator 
-// SanteDB.Core.Model.DataTypes.BatchOperationType, SanteDB.Core.Model, Version=2.1.113.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.DataTypes.BatchOperationType, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
 // if(!BatchOperationType)
 /**
  * @enum {string}
@@ -12279,11 +17424,11 @@ const BatchOperationType = {
 	 */
 	Update : 'Update',
 	/** 
-	 *             Delete the object            
+	 * 
 	 */
 	Obsolete : 'Obsolete',
 }  // BatchOperationType 
-// SanteDB.Core.Auditing.AuditMetadataKey, SanteDB.Core.Model, Version=2.1.113.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Auditing.AuditMetadataKey, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
 // if(!AuditMetadataKey)
 /**
  * @enum {string}
@@ -12301,11 +17446,11 @@ const AuditMetadataKey = {
 	 */
 	ProcessName : 'ProcessName',
 	/** 
-	 *             Identifies the remote host            
+	 *             Identifies the remote host as an IP address            
 	 */
 	RemoteHost : 'RemoteHost',
 	/** 
-	 *             Identifies the remote endpoint            
+	 * 
 	 */
 	RemoteEndpoint : 'RemoteEndpoint',
 	/** 
@@ -12353,7 +17498,7 @@ const AuditMetadataKey = {
 	 */
 	CorrelationToken : 'CorrelationToken',
 }  // AuditMetadataKey 
-// SanteDB.Core.Model.Warehouse.SchemaPropertyType, SanteDB.Core.Model, Version=2.1.113.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Warehouse.SchemaPropertyType, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
 // if(!SchemaPropertyType)
 /**
  * @enum {string}
@@ -12407,7 +17552,7 @@ const SchemaPropertyType = {
 	 */
 	TimeStamp : 'TimeStamp',
 }  // SchemaPropertyType 
-// SanteDB.Core.Model.Warehouse.SchemaPropertyAttributes, SanteDB.Core.Model, Version=2.1.113.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Warehouse.SchemaPropertyAttributes, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
 // if(!SchemaPropertyAttributes)
 /**
  * @enum {string}
@@ -12433,7 +17578,7 @@ const SchemaPropertyAttributes = {
 	 */
 	Unique : 'Unique',
 }  // SchemaPropertyAttributes 
-// SanteDB.Core.Model.Subscription.SubscriptionModeType, SanteDB.Core.Model, Version=2.1.113.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Subscription.SubscriptionModeType, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
 // if(!SubscriptionModeType)
 /**
  * @enum {string}
@@ -12455,7 +17600,7 @@ const SubscriptionModeType = {
 	 */
 	AllOrSubscription : 'AllOrSubscription',
 }  // SubscriptionModeType 
-// SanteDB.Core.Model.Subscription.SubscriptionTriggerType, SanteDB.Core.Model, Version=2.1.113.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Subscription.SubscriptionTriggerType, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
 // if(!SubscriptionTriggerType)
 /**
  * @enum {string}
@@ -12501,7 +17646,7 @@ const SubscriptionTriggerType = {
 	 */
 	Manual : 'Manual',
 }  // SubscriptionTriggerType 
-// SanteDB.Core.Model.Security.PolicyGrantType, SanteDB.Core.Model, Version=2.1.113.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Security.PolicyGrantType, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
 // if(!PolicyGrantType)
 /**
  * @enum {string}
@@ -12523,7 +17668,7 @@ const PolicyGrantType = {
 	 */
 	Grant : 'Grant',
 }  // PolicyGrantType 
-// SanteDB.Core.Model.Constants.UserClassKeys, SanteDB.Core.Model, Version=2.1.113.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Constants.UserClassKeys, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
 // if(!UserClassKeys)
 /**
  * @enum {string}
@@ -12545,7 +17690,7 @@ const UserClassKeys = {
 	 */
 	SystemUser : '9f71bb34-9691-440f-8249-9c831ea16d58',
 }  // UserClassKeys 
-// SanteDB.Core.Model.DataTypes.DatePrecision, SanteDB.Core.Model, Version=2.1.113.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.DataTypes.DatePrecision, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
 // if(!DatePrecision)
 /**
  * @enum {string}
@@ -12583,7 +17728,7 @@ const DatePrecision = {
 	 */
 	Second : 'Second',
 }  // DatePrecision 
-// SanteDB.Core.Model.Constants.AddressUseKeys, SanteDB.Core.Model, Version=2.1.113.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Constants.AddressUseKeys, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
 // if(!AddressUseKeys)
 /**
  * @enum {string}
@@ -12653,7 +17798,7 @@ const AddressUseKeys = {
 	 */
 	WorkPlace : 'eaa6f08e-bb8e-4457-9dc0-3a1555fadf5c',
 }  // AddressUseKeys 
-// SanteDB.Core.Model.Constants.EntityClassKeys, SanteDB.Core.Model, Version=2.1.113.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Constants.EntityClassKeys, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
 // if(!EntityClassKeys)
 /**
  * @enum {string}
@@ -12747,7 +17892,7 @@ const EntityClassKeys = {
 	 */
 	PrecinctOrBorough : 'acafe0f2-e209-43bb-8633-3665fd7c90ba',
 }  // EntityClassKeys 
-// SanteDB.Core.Model.Constants.DeterminerKeys, SanteDB.Core.Model, Version=2.1.113.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Constants.DeterminerKeys, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
 // if(!DeterminerKeys)
 /**
  * @enum {string}
@@ -12769,7 +17914,7 @@ const DeterminerKeys = {
 	 */
 	Specific : 'f29f08de-78a7-4a5e-aeaf-7b545ba19a09',
 }  // DeterminerKeys 
-// SanteDB.Core.Model.Constants.NameUseKeys, SanteDB.Core.Model, Version=2.1.113.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Constants.NameUseKeys, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
 // if(!NameUseKeys)
 /**
  * @enum {string}
@@ -12843,7 +17988,7 @@ const NameUseKeys = {
 	 */
 	Syllabic : 'b4ca3bf0-a7fc-44f3-87d5-e126beda93ff',
 }  // NameUseKeys 
-// SanteDB.Core.Model.Constants.ActParticipationKey, SanteDB.Core.Model, Version=2.1.113.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Constants.ActParticipationKey, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
 // if(!ActParticipationKey)
 /**
  * @enum {string}
@@ -13077,7 +18222,7 @@ const ActParticipationKey = {
 	 */
 	Witness : '0b82357f-5ae0-4543-ab8e-a33e9b315bab',
 }  // ActParticipationKey 
-// SanteDB.Core.Model.Constants.EntityRelationshipTypeKeys, SanteDB.Core.Model, Version=2.1.113.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Constants.EntityRelationshipTypeKeys, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
 // if(!EntityRelationshipTypeKeys)
 /**
  * @enum {string}
@@ -13715,7 +18860,7 @@ const EntityRelationshipTypeKeys = {
 	 */
 	EquivalentEntity : '395f4edf-5d5d-4950-9f5e-f827f72e4b32',
 }  // EntityRelationshipTypeKeys 
-// SanteDB.Core.Model.Constants.StatusKeys, SanteDB.Core.Model, Version=2.1.113.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Constants.StatusKeys, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
 // if(!StatusKeys)
 /**
  * @enum {string}
@@ -13745,7 +18890,7 @@ const StatusKeys = {
 	 */
 	Cancelled : '3efd3b6e-02d5-4cc9-9088-ef8f31e321c5',
 	/** 
-	 *             Indicates that the entity or act did exist at one point, however it no longer exists            
+	 *             Indicates that the entity or act did exist at one point, however the data is no long considered accurate or the most up to date            
 	 */
 	Obsolete : 'bdef5f90-5497-4f26-956c-8f818cce2bd2',
 	/** 
@@ -13753,7 +18898,7 @@ const StatusKeys = {
 	 */
 	Purged : '39995c08-0a5c-4549-8ba7-d187f9b3c4fd',
 }  // StatusKeys 
-// SanteDB.Core.Model.Constants.TelecomAddressUseKeys, SanteDB.Core.Model, Version=2.1.113.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Constants.TelecomAddressUseKeys, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
 // if(!TelecomAddressUseKeys)
 /**
  * @enum {string}
@@ -13791,7 +18936,7 @@ const TelecomAddressUseKeys = {
 	 */
 	WorkPlace : 'eaa6f08e-bb8e-4457-9dc0-3a1555fadf5c',
 }  // TelecomAddressUseKeys 
-// SanteDB.Core.Model.Patch.PatchOperationType, SanteDB.Core.Model, Version=2.1.113.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Patch.PatchOperationType, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
 // if(!PatchOperationType)
 /**
  * @enum {string}
@@ -13817,7 +18962,7 @@ const PatchOperationType = {
 	 */
 	Test : 'Test',
 }  // PatchOperationType 
-// SanteDB.Core.Model.Constants.AddressComponentKeys, SanteDB.Core.Model, Version=2.1.113.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Constants.AddressComponentKeys, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
 // if(!AddressComponentKeys)
 /**
  * @enum {string}
@@ -13939,7 +19084,7 @@ const AddressComponentKeys = {
 	 */
 	UnitIdentifier : '908c09df-81fe-45ac-9233-0881a278a401',
 }  // AddressComponentKeys 
-// SanteDB.Core.Model.Constants.NameComponentKeys, SanteDB.Core.Model, Version=2.1.113.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Constants.NameComponentKeys, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
 // if(!NameComponentKeys)
 /**
  * @enum {string}
@@ -13973,7 +19118,7 @@ const NameComponentKeys = {
 	 */
 	Title : '4386d92a-d81b-4033-b968-01e57e20d5e0',
 }  // NameComponentKeys 
-// SanteDB.Core.Model.Constants.RelationshipClassKeys, SanteDB.Core.Model, Version=2.1.113.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Constants.RelationshipClassKeys, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
 // if(!RelationshipClassKeys)
 /**
  * @enum {string}
@@ -13995,7 +19140,7 @@ const RelationshipClassKeys = {
 	 */
 	PrivateLink : 'ca3057c3-ce83-4ca5-a0c4-fa0480b7f991',
 }  // RelationshipClassKeys 
-// SanteDB.Core.Model.Constants.TelecomAddressTypeKeys, SanteDB.Core.Model, Version=2.1.113.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Constants.TelecomAddressTypeKeys, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
 // if(!TelecomAddressTypeKeys)
 /**
  * @enum {string}
@@ -14029,7 +19174,7 @@ const TelecomAddressTypeKeys = {
 	 */
 	Internet : 'c1c0a4e9-4238-4044-b89b-9c9798995b93',
 }  // TelecomAddressTypeKeys 
-// SanteDB.Core.Model.Constants.ConceptRelationshipTypeKeys, SanteDB.Core.Model, Version=2.1.113.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Constants.ConceptRelationshipTypeKeys, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
 // if(!ConceptRelationshipTypeKeys)
 /**
  * @enum {string}
@@ -14063,7 +19208,7 @@ const ConceptRelationshipTypeKeys = {
 	 */
 	WiderThan : 'ae8b4f2f-009f-4e0d-b35e-5a89555c5980',
 }  // ConceptRelationshipTypeKeys 
-// SanteDB.Core.Model.Constants.ConceptClassKeys, SanteDB.Core.Model, Version=2.1.113.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Constants.ConceptClassKeys, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
 // if(!ConceptClassKeys)
 /**
  * @enum {string}
@@ -14129,7 +19274,7 @@ const ConceptClassKeys = {
 	 */
 	Language : 'ed032625-8139-4bdd-af25-c54a6960f87d',
 }  // ConceptClassKeys 
-// SanteDB.Core.Model.Constants.CodeSystemKeys, SanteDB.Core.Model, Version=2.1.113.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Constants.CodeSystemKeys, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
 // if(!CodeSystemKeys)
 /**
  * @enum {string}
@@ -14187,7 +19332,7 @@ const CodeSystemKeys = {
 	 */
 	AdministrativeGender : '7a3a7139-b93e-4a99-bd54-749e30fe712a',
 }  // CodeSystemKeys 
-// SanteDB.Core.Model.Constants.ActClassKeys, SanteDB.Core.Model, Version=2.1.113.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Constants.ActClassKeys, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
 // if(!ActClassKeys)
 /**
  * @enum {string}
@@ -14277,7 +19422,7 @@ const ActClassKeys = {
 	 */
 	List : 'b0323489-9a09-411a-bb55-ff283830ea1a',
 }  // ActClassKeys 
-// SanteDB.Core.Model.Constants.ActMoodKeys, SanteDB.Core.Model, Version=2.1.113.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Constants.ActMoodKeys, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
 // if(!ActMoodKeys)
 /**
  * @enum {string}
@@ -14323,7 +19468,7 @@ const ActMoodKeys = {
 	 */
 	Request : 'e658ca72-3b6a-4099-ab6e-7cf6861a5b61',
 }  // ActMoodKeys 
-// SanteDB.Core.Model.Constants.ActReasonKeys, SanteDB.Core.Model, Version=2.1.113.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Constants.ActReasonKeys, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
 // if(!ActReasonKeys)
 /**
  * @enum {string}
@@ -14373,7 +19518,7 @@ const ActReasonKeys = {
 	 */
 	ColdStorageFailure : '06922eac-0cae-49af-a33c-fc7096349e4a',
 }  // ActReasonKeys 
-// SanteDB.Core.Model.Constants.ActRelationshipTypeKeys, SanteDB.Core.Model, Version=2.1.113.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Constants.ActRelationshipTypeKeys, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
 // if(!ActRelationshipTypeKeys)
 /**
  * @enum {string}
@@ -14479,7 +19624,7 @@ const ActRelationshipTypeKeys = {
 	 */
 	Duplicate : '2bbf068b-9121-4081-bf3c-ab62c01362ee',
 }  // ActRelationshipTypeKeys 
-// SanteDB.Core.Model.Constants.NullReasonKeys, SanteDB.Core.Model, Version=2.1.113.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Constants.NullReasonKeys, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
 // if(!NullReasonKeys)
 /**
  * @enum {string}
@@ -14550,7 +19695,7 @@ const NullReasonKeys = {
 	Masked : '9b16bf12-073e-4ea4-b6c5-e1b93e8fd490',
 }  // NullReasonKeys 
 
-EmptyGuid = "00000000-0000-0000-0000-000000000000";
+EmptyGuid = "00000000 - 0000 - 0000 - 0000 - 000000000000";
 
 /**
 * @class

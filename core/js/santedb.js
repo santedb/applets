@@ -1024,9 +1024,7 @@ function ResourceWrapper(_config) {
         */
     this.updateAsync = function (id, data, upstream, state) {
 
-        if (data.$type !== _config.resource && data.$type !== `${_config.resource}Info`)
-            throw new Exception("ArgumentException", "error.invalidType", `Invalid type, resource wrapper expects ${_config.resource} however ${data.$type} specified`);
-        else if (data.id && data.id !== id)
+        if (data.id && data.id !== id)
             throw new Exception("ArgumentException", "error.invalidValue", `Identifier mismatch, PUT identifier  ${id} doesn't match ${data.id}`);
 
         if (data.updatedBy)
@@ -2845,6 +2843,16 @@ function SanteDBWrapper() {
         this.probe = new ResourceWrapper({
             resource: "Probe",
             accept: _viewModelJsonMime,
+            api: _ami
+        });
+        /**
+         * @type {ResourceWrapper}
+         * @memberOf SanteDBWrapper.resources
+         * @summary Wrapper for dispatch queue management API
+         */
+         this.dispatcherQueue = new ResourceWrapper({
+            resource: "DispatcherQueueInfo",
+            accept: "application/json",
             api: _ami
         });
         /**
