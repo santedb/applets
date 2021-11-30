@@ -63,36 +63,61 @@
 
   <!-- Entity Information -->
   <type type="Entity" all="false">
+   <property name="identifier" behavior="always">
+      <property name="*"  all="true" ref="EntityIdentifier"/>
+    </property>
     <property name="name" behavior="always">
       <property name="*"  all="true" ref="EntityName"/>
     </property>
   </type>
 
   <type type="Person" all="true">
+    <property name="identifier" behavior="always">
+      <property name="*"  all="true" ref="EntityIdentifier"/>
+    </property>
     <property name="name" behavior="always">
       <property name="*"  all="true" ref="EntityName"/>
+    </property>
+    <property name="address" behavior="always">
+      <property name="*"  all="true" ref="EntityAddress"/>
     </property>
   </type>
 
   <type type="Patient" all="true">
+    <property name="identifier" behavior="always">
+      <property name="*"  all="true" ref="EntityIdentifier"/>
+    </property>
     <property name="name" behavior="always">
       <property name="*"  all="true" ref="EntityName"/>
+    </property>
+    <property name="address" behavior="always">
+      <property name="*"  all="true" ref="EntityAddress"/>
     </property>
   </type>
 
   <type type="ManufacturedMaterial" all="true">
+    <property name="identifier" behavior="always">
+      <property name="*"  all="true" ref="EntityIdentifier"/>
+    </property>
     <property name="name" behavior="always">
       <property name="*"  all="true" ref="EntityName"/>
     </property>
   </type>
 
   <type type="Material" all="true">
+    <property name="identifier" behavior="always">
+      <property name="*"  all="true" ref="EntityIdentifier"/>
+    </property>
     <property name="name" behavior="always">
       <property name="*"  all="true" ref="EntityName"/>
     </property>
   </type>
 
   <type type="Place" all="true">
+    
+    <property name="identifier" behavior="always">
+      <property name="*"  all="true" ref="EntityIdentifier"/>
+    </property>
     <property name="name" behavior="always">
       <property name="*"  all="true" ref="EntityName"/>
     </property>

@@ -7,7 +7,7 @@
                         <h5 class="float-left mb-0">
                             <i ng-class="panel.icon"></i> {{ panel.name | i18n }}
                         </h5>
-                        <div class="btn-group float-right" ng-if="panel.altViews &amp;&amp; panel.altViews != 'None'">
+                        <div class="btn-group float-right" ng-if="panel.altViews &amp;&amp; panel.altViews != 'None' &amp;&amp; !noAlt">
                             <button class="btn btn-danger" ng-if="panel.view" ng-click="closeView(panel)">
                                 <i class="fa fa-times"></i>
                             </button>

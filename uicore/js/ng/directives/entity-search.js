@@ -59,11 +59,11 @@ angular.module('santedb-lib')
             var retVal = "";
             switch (selection.$type) {
                 case "Patient":
-                    retVal += "<i class='fa fa-user-hospital'></i> ";
+                    retVal += "<i class='fa fa-hospital-user'></i> ";
                     break;
                 case "UserEntity":
                 case "Provider":
-                case "Patient":
+                case "Person":
                     retVal += "<i class='fa fa-user'></i> ";
                     break;
                 case "Material":
@@ -138,6 +138,10 @@ angular.module('santedb-lib')
                 retVal += ` <span class='badge badge-secondary'>${SanteDB.display.renderConcept(selection.classConceptModel)}</span>`;
             else if (selection.typeConceptModel) {
                 retVal += `<span class="badge badge-secondary">${SanteDB.display.renderConcept(selection.typeConceptModel)}</span> `;
+            }
+
+            if(selection.identifier) {
+                retVal += `<small class="ml-2 d-none d-sm-inline badge badge-info"><i class="fas fa-id-card"></i> ${SanteDB.display.renderIdentifier(selection.identifier)}</small>`;
             }
 
             return retVal;
@@ -370,7 +374,8 @@ angular.module('santedb-lib')
                         escapeMarkup: function (markup) { return markup; }, // Format normally
                         templateSelection: function (o) { return renderObject(o, scope.minRender); },
                         keepSearchResults: true,
-                        templateResult: function (o) { return renderObject(o, scope.minRender); }
+                        templateResult: function (o) { return renderObject(o, scope.minRender); },
+                        placeholder: SanteDB.locale.getString(`ui.table.search.field.${searchProperty}`)
                     });
 
                     // // on first focus (bubbles up to document), open the menu
