@@ -67,7 +67,7 @@
                             <label class="col-sm-12 col-md-3 control-label required">{{ 'ui.model.person.occupation' |
                                 i18n }}</label>
                             <div class="col-sm-12 col-md-9">
-                                <concept-select ng-model="editObject.occupationModel"
+                                <concept-select ng-model="editObject.occupation"
                                     concept-set="'OccupationType'"
                                     add-concept="['6052712a-340e-4480-ad6b-409ba320db4f','61d8f65c-747e-4a99-982f-a42ac5437473']"
                                     class="form-control" />
@@ -79,7 +79,7 @@
                             <label class="col-sm-12 col-md-3 control-label required">{{ 'ui.model.patient.vipStatus' |
                                 i18n }}</label>
                             <div class="col-sm-12 col-md-9">
-                                <concept-select ng-model="editObject.vipStatusModel"
+                                <concept-select ng-model="editObject.vipStatus"
                                     concept-set="'VeryImportantPersonStatus'"
                                     add-concept="['6052712a-340e-4480-ad6b-409ba320db4f','61d8f65c-747e-4a99-982f-a42ac5437473']"
                                     class="form-control" />
@@ -122,7 +122,7 @@
                             <div class="col-sm-12 col-md-9">
                                 <concept-select class="form-control" required="required"
                                     name="birthGender"
-                                    concept-set="'AdministrativeGenderCode'" ng-model="editObject.genderConceptModel" />
+                                    concept-set="'AdministrativeGenderCode'" ng-model="editObject.genderConcept" />
                                     <div class="alert alert-danger" ng-if="panel.editForm['birthGender'].$invalid">{{ 'ui.error.required' | i18n }}</div>
                             </div>
                         </div>

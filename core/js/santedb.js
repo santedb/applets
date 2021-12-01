@@ -1604,7 +1604,7 @@ function SanteDBWrapper() {
         // Object has $type and $type is not the first property
         if (object.$type) {
             var retVal = { $type: object.$type };
-            Object.keys(object).filter(function (d) { return d != "$type" })
+            Object.keys(object).filter(function (d) { return d != "$type" && !d.endsWith("Model") })
                 .forEach(function (k) {
                     retVal[k] = object[k];
                     if (!retVal[k] || k.startsWith("_"));
@@ -1614,7 +1614,7 @@ function SanteDBWrapper() {
                         for (var i in retVal[k])
                             if (retVal[k][i].$type)
                                 retVal[k][i] = _reorderProperties(retVal[k][i]);
-                })
+                });
             return retVal;
         }
         return object;

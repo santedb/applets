@@ -1,5 +1,5 @@
 /// <reference path="../../../core/js/santedb.js"/>
-angular.module('santedb').controller('PatientDemographicsWidgetController', ['$scope', '$rootScope', function ($scope, $rootScope) {
+angular.module('santedb').controller('PatientDemographicsWidgetController', ['$scope', '$rootScope', "$timeout", function ($scope, $rootScope, $timeout) {
 
    
 
@@ -25,7 +25,7 @@ angular.module('santedb').controller('PatientDemographicsWidgetController', ['$s
                     // Since we can only link on this panel to existing objects we just need the target and source
                     var codeType = await SanteDB.resources.concept.findAsync({ 'mnemonic' : k});
                     if(codeType.totalResults == 1) {
-                        submissionObject.relationship[k].forEach(rel => {
+                        submissionObject.relationship[k].filter(r=>r.$type != "EntityRelationshipMaster").forEach(rel => {
                             bundle.resource.push(new EntityRelationship({
                                 id: rel.id, 
                                 holder: submissionObject.id,
@@ -40,11 +40,14 @@ angular.module('santedb').controller('PatientDemographicsWidgetController', ['$s
                     }
                 }));
                 delete submissionObject.relationship; // don't send relationships as part of the object
+                submissionObject.relationship = {};
             }
 
             
             await SanteDB.resources.bundle.insertAsync(bundle);
-            $scope.scopedObject = await SanteDB.resources.patient.getAsync($scope.scopedObject.id, "full"); // re-fetch the patient
+
+            var updated = await SanteDB.resources.patient.getAsync($scope.scopedObject.id, "full"); // re-fetch the patient
+            $timeout(() => $scope.scopedObject = updated);
             toastr.success(SanteDB.locale.getString("ui.model.patient.saveSuccess"));
             form.$valid = true;
         }

@@ -1,5 +1,7 @@
 <div xmlns="http://www.w3.org/1999/xhtml">
-        <div ng-class="{ 'row' : !noLabel }" ng-repeat="(t, tel) in telecom" ng-if="!singleEdit || singleEdit == t">
+    <div ng-repeat="(t, value) in telecom">
+        <div ng-class="{ 'row' : !noLabel }" ng-repeat="tel in value" ng-if="!singleEdit || singleEdit == t">
+            
             <label ng-if="!noLabel" class="col-md-3 col-sm-12 control-label">{{ 'ui.model.entity.telecom.' + t | i18n }}</label>
             <!-- TODO: Clean this up -->
             <div ng-class="{ 'col-md-9 col-sm-12' : !noLabel }" class="input-group">
@@ -19,4 +21,5 @@
                 <input type="{{ tel.type == 'c1c0a4e9-4238-4044-b89b-9c9798995b93' ? 'email' : 'tel'}}" class="form-control" ng-model="tel.editValue"/>
             </div>
         </div>
+    </div>
 </div>

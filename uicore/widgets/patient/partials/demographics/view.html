@@ -1,4 +1,5 @@
 <div xmlns="http://www.w3.org/1999/xhtml">
+    
     <div class="row">
         <label class="col-sm-3 col-xs-4 control-label">{{ 'ui.model.patient.name' | i18n }}</label>
         <div class="col-sm-9 col-xs-8">
@@ -52,10 +53,25 @@
             </div>
         </div>
         <label class="col-sm-3 col-xs-12 control-label">{{ 'ui.model.patient.telecom' | i18n }}</label>
-        <div class="col-sm-9 col-xs-12" ng-repeat="(k,tel) in scopedObject.telecom track by $index"
-            ng-class="{ 'offset-sm-3': $index > 0 }">
-            <a href="{{tel.value}}" target="_blank">{{tel.value}} <span
-                    class="badge badge-pill badge-info">{{ tel.useModel | concept }}</span></a>
+        <div class="col-sm-9 col-xs-12">
+            <div ng-if="scopedObject.telecom">
+                <ul class="list-group">
+                    <li class="d-flex align-items-center" ng-repeat="(n, telecom) in scopedObject.telecom">
+                        <ul class="list-group" ng-if="!telecom.use">
+                            <li  ng-repeat="r in telecom">
+                                <a href="{{r.value}}">{{r.value}}</a>
+                                    <span class=" d-none d-sm-inline"><span
+                                        class="badge badge-light">{{ r.useModel | concept }}</span></span>
+                                </li>
+                        </ul>
+                        <span ng-if="telecom.use">
+                         <a href="{{telecom.value}}">{{telecom.value}}</a> <span class=" d-none d-sm-inline"><span
+                                class="badge badge-light">{{ address.useModel | concept }}</span></span></span></li>
+                </ul>
+            </div>
+            <div ng-if="!scopedObject.address">
+                {{ 'ui.unknown' | i18n }}
+            </div>
         </div>
     </div>
 

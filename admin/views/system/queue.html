@@ -10,17 +10,23 @@
     </sdb:state>
 
 
-    <div ng-if="!queueList">
-        <i class="fas fa-spin fa-circle-notch"></i> {{ 'ui.wait' | i18n }}
-    </div>
-    <div class="alert alert-danger" ng-if="$root.system.config.sync.mode == 'Sync'">
-        <i class="fas fa-exclamation-triangle"></i> {{ 'ui.admin.queue.onlineOnly' | i18n }}
-    </div>
    
     <entity-table stateless="true" id="queueTable" type="DispatcherQueue" 
     search-field="name"
-    external="true" can-filter="true"
+     can-filter="true"
+     default-query="{ _upstream: extern }"
     i18n-prefix="'ui.admin.queue.contents.'"
     item-actions="[ { name: 'resubmit', action: 'resubmitQueue', demand: '1.3.6.1.4.1.33349.3.1.5.9.2.0.16', className: 'btn-success', icon: 'fa fa-undo', when: 'r.id.indexOf(\'dead\') > -1'}, { name: 'purge', action: 'purgeQueue', demand: '1.3.6.1.4.1.33349.3.1.5.9.2.0.16', className: 'btn-danger', icon: 'fa fa-trash' } ]"
-    properties="[ 'name', 'size' ]" />
+    properties="[ 'name', 'size' ]"
+    button-bar="'#extraControls'" />
+
+    <div id="extraControls" class="input-group">
+        <div class="input-group-prepend">
+            <span class="input-group-text">{{ 'ui.admin.system.logs.show' | i18n }}</span>
+        </div>
+        <select class="form-control" ng-model="extern" ng-change="initializeView()">
+            <option value="false">{{ 'ui.admin.system.logs.local' | i18n }}</option>
+            <option ng-if="$root.system.online" value="true">{{ 'ui.admin.system.logs.remote' | i18n }}</option>
+        </select>
+    </div>
 </div>

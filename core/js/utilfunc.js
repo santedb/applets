@@ -409,10 +409,12 @@ async function prepareEntityForSubmission(entity) {
     }
     
     // Remove any MDM keys
-    delete entity.relationship['MDM-Duplicate'];
-    delete entity.relationship['MDM-Master'];
-    delete entity.relationship['MDM-Ignore'];
-    delete entity.relationship['MDM-RecordOfTruth'];
-    delete entity.relationship['Replaces'];
+    if(entity.relationship) {
+        delete entity.relationship['MDM-Duplicate'];
+        delete entity.relationship['MDM-Master'];
+        delete entity.relationship['MDM-Ignore'];
+        delete entity.relationship['MDM-RecordOfTruth'];
+        delete entity.relationship['Replaces'];
+    }
 
 }

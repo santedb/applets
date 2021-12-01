@@ -267,23 +267,25 @@ angular.module('santedb-lib')
 
                 keys.forEach((k) => {
                     if (!scope.telecom[k])
-                        scope.telecom[k] = {};
-                    if (!scope.telecom[k].type)
-                        scope.telecom[k].type = /^mailto:.*$/i.test(scope.telecom[k].value) ? "c1c0a4e9-4238-4044-b89b-9c9798995b93" : "c1c0a4e9-4238-4044-b89b-9c9798995b99";
+                        scope.telecom[k] = [];
+                    if(!scope.telecom[k][0])
+                        scope.telecom[k].push({});
+                    if (!scope.telecom[k][0].type)
+                        scope.telecom[k][0].type = /^mailto:.*$/i.test(scope.telecom[k][0].value) ? "c1c0a4e9-4238-4044-b89b-9c9798995b93" : "c1c0a4e9-4238-4044-b89b-9c9798995b99";
 
-                    if (scope.telecom[k].value)
-                        scope.telecom[k].editValue = scope.telecom[k].value.replace(/(tel:|mailto:)/i, '');
+                    if (scope.telecom[k][0].value)
+                        scope.telecom[k][0].editValue = scope.telecom[k][0].value.replace(/(tel:|mailto:)/i, '');
                 });
 
-                scope.$watch((s) => Object.keys(s.telecom).map((o) => s.telecom[o].editValue).join(";"), function (n, o) {
+                scope.$watch((s) => Object.keys(s.telecom).map((o) => s.telecom[o][0].editValue).join(";"), function (n, o) {
                     Object.keys(scope.telecom).forEach((k) => {
-                        if (scope.telecom[k].editValue)
-                            switch (scope.telecom[k].type) {
+                        if (scope.telecom[k][0].editValue)
+                            switch (scope.telecom[k][0].type) {
                                 case "c1c0a4e9-4238-4044-b89b-9c9798995b93":
-                                    scope.telecom[k].value = "mailto:" + scope.telecom[k].editValue;
+                                    scope.telecom[k][0].value = "mailto:" + scope.telecom[k][0].editValue;
                                     break;
                                 default:
-                                    scope.telecom[k].value = "tel:" + scope.telecom[k].editValue;
+                                    scope.telecom[k][0].value = "tel:" + scope.telecom[k][0].editValue;
                                     break;
                             }
                     });
@@ -356,11 +358,11 @@ angular.module('santedb-lib')
                     scope.identifier[key].forEach(function (v) { v.readonly = true; });
                 });
                 // Get a list of identity domains available for our scope and emit them to the identifier array
-                SanteDB.resources.assigningAuthority.findAsync({ scope: scope.containerClass })
+                SanteDB.resources.assigningAuthority.findAsync()
                     .then(function (bundle) {
                         if (bundle.resource) {
-                            bundle.resource.forEach(function (authority) {
-
+                            bundle.resource.filter(o=> o.scope == null || o.scope.length == 0 || o.scope.indexOf(scope.containerClass) > -1).forEach(function (authority) {
+                                
                                 authority.generator = SanteDB.application.getIdentifierGenerator(authority.domainName);
                                 if (scope.identifier[authority.domainName]) {
                                     scope.identifier[authority.domainName].forEach(v => v.authority = authority);

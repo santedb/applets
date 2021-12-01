@@ -213,6 +213,7 @@
       <string name="ui.table.search.field.name">Search by name</string>
       <string name="ui.table.search.field.userName">Search by user name</string>
       <string name="ui.table.search.field.user.userName">Search by user name</string>
+      <string name="ui.table.search.field.actor.uname">Search by actor</string>
 
       <!-- Common Operators -->
       <string name="ui.operator.eq">Equals</string>
@@ -476,7 +477,7 @@
       <string name="ui.mdm.rot">This record has been verified</string>
       <string name="ui.mdm.action.openMaster">Go to MASTER</string>
       <string name="ui.mdm.action.openRot">Go to RECORD OF TRUTH</string>
-      <string name="ui.mdm.view.local">You are viewing a LOCAL record. This record comes from a particular source system</string>
+      <string name="ui.mdm.view.local">You are viewing a LOCAL record. This record comes from a particular source system. This data should be treated as readonly (edit with caution).</string>
       <string name="ui.mdm.view.recordOfTruth">You are looking at a RECORD OF TRUTH. This record should be considered official information</string>
       <string name="ui.mdm.view.master">You are looking at a MASTER record. This record is synthesized from multiple LOCAL records</string>
       <string name="ui.mdm.view.masterAdjudicated">You are looking at a &lt;strong&gt;MASTER&lt;/strong&gt; record with a &lt;strong&gt;RECORD OF TRUTH&lt;/strong&gt;. Use the MDM tab to pull data from locals into this record of truth</string>
@@ -490,5 +491,7 @@
       <string name="ui.mdm.action.detach.confirm">Are you sure you want to detach (unmerge) this local record from the current master record?</string>
       <string name="ui.mdm.view.recordOfTruth">This record is a RECORD OF TRUTH. This means that this record has been validated the "official" data for a MASTER record</string>
 
+      <!-- Notices on the UI -->
+      <string name="ui.notices.privacyControls.masked">This record has been flagged and masked/altered by privacy enforcement to protect sensitive information. You may be asked to re-authenticate yourself or you may be restricted for editing the record. Additional additional security audits have been logged.</string>
 
 </resources>
