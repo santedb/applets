@@ -29,7 +29,7 @@
                                 {{ 'ui.model.place.classConcept' | i18n }}
                             </label>
                             <div class="col-sm-12 col-md-10">
-                                <concept-select class="form-control" required="required" concept-set="'PlaceClass'" ng-model="target.classConceptModel"/>
+                                <concept-select class="form-control" required="required" concept-set="'PlaceClass'" ng-model="target.classConcept"/>
                             </div>
                         </div>
                         <div class="form-group row" ng-if="target.classConcept == 'ff34dfa7-c6d3-4f8b-bc9f-14bcdc13ba6c'">
@@ -37,7 +37,7 @@
                                 {{ 'ui.model.place.typeConcept' | i18n }}
                             </label>
                             <div class="col-sm-12 col-md-10">
-                                <concept-select class="form-control" required="required" concept-set="'PlaceTypeConcept'" ng-model="target.typeConceptModel"/>
+                                <concept-select class="form-control" required="required" concept-set="'PlaceTypeConcept'" ng-model="target.typeConcept"/>
                             </div>
                         </div>
                         <div class="form-group row">
@@ -48,7 +48,7 @@
                                     <div class="row" ng-repeat="name in target.name.other track by $index">
                                         <div class="col-4">
                                             <concept-select class="form-control" ng-required="$index > 0"
-                                                concept-set="'NameUse'" ng-model="name.useModel" />
+                                                concept-set="'NameUse'" ng-model="name.use" />
                                         </div>
                                         <div class="col-8">
                                             <div class="input-group"><input

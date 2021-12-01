@@ -78,6 +78,9 @@
 
         </div>
     </div>
+    <div class="m-0 alert alert-dark" ng-if="patient.tag['$pep.masked'] == 'true'">
+        <i class="fas fa-exclamation-circle"></i> {{ 'ui.notices.privacyControls.masked' | i18n }}
+    </div>
     <div class="m-0 alert alert-warning" ng-if="patient._upstream">
         <span>
             <i class="fas fa-cloud"></i>
@@ -111,10 +114,11 @@
                     {{ 'ui.mdm.view.recordOfTruth' | i18n }}
                 </div>
                 <div ng-switch-default="ng-switch-default" class="alert alert-info">
-                    <i class="fas fa-database"></i>
+                    <i class="fas fa-database" ng-init="patient._readonly = true"></i>
                     {{ 'ui.mdm.view.local' | i18n }}
                 </div>
             </div>
         </div>
     </div>
+    
 </div>

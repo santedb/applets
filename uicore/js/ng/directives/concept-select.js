@@ -100,8 +100,11 @@ angular.module('santedb-lib')
                     }
                     else if (scope.key)
                         scope.$apply(() => ngModel.$setViewValue(scope.setValues.find(o => o.id == val)[scope.key]));
-                    else
+                    else if (scope._complexValue)
                         scope.$apply(() => ngModel.$setViewValue(scope.setValues.find(o => o.id == val)));
+                    else 
+                        scope.$apply(() => ngModel.$setViewValue(val));
+
                 });
                 ngModel.$render = function () {
                     if (ngModel.$viewValue) {
@@ -115,9 +118,11 @@ angular.module('santedb-lib')
                         // is there a key? 
                         var valueKey = value;
                         if(value.id) {
+                            scope._complexValue = true;
                             valueKey = value.id;
                         }
                         if (scope.key) {
+                            scope._complexValue = true;
                             valueKey = value[scope.key];
                         }
                         $(element).val(valueKey);

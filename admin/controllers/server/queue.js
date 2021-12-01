@@ -20,6 +20,7 @@
  */
 angular.module('santedb').controller('QueueAdminController', ["$scope", "$rootScope", '$interval', '$timeout', function ($scope, $rootScope, $interval, $timeout) {
 
+    $scope.extern = "false";
 
     $scope.purgeQueue = async function (id, idx) {
         if(confirm(SanteDB.locale.getString("ui.admin.queue.purge.confirm", { queue: id })))
@@ -27,7 +28,7 @@ angular.module('santedb').controller('QueueAdminController', ["$scope", "$rootSc
 
             try {
                 SanteDB.display.buttonWait(`#DispatcherQueuerepurge${idx}`, true);
-                await SanteDB.resources.dispatcherQueue.deleteAsync(id, true);
+                await SanteDB.resources.dispatcherQueue.deleteAsync(id, $scope.extern == "true");
                 $("div[type=DispatcherQueue] table").DataTable().ajax.reload()
 
             }   
@@ -48,7 +49,7 @@ angular.module('santedb').controller('QueueAdminController', ["$scope", "$rootSc
 
             try {
                 SanteDB.display.buttonWait(`#DispatcherQueueresubmit${idx}`, true);
-                await SanteDB.resources.dispatcherQueue.updateAsync(id, { "$type": "SanteDB.Core.Queue.DispatcherQueueInfo, SanteDB.Core.Api", "id": id }, true);
+                await SanteDB.resources.dispatcherQueue.updateAsync(id, { "$type": "SanteDB.Core.Queue.DispatcherQueueInfo, SanteDB.Core.Api", "id": id }, $scope.extern == "true");
                 $("div[type=DispatcherQueue] table").DataTable().ajax.reload()
 
             }   
@@ -61,22 +62,5 @@ angular.module('santedb').controller('QueueAdminController', ["$scope", "$rootSc
             }
         }
     }
-
-    // Initialize the view
-    async function initializeView() {
-        try {
-            var queueList = await SanteDB.resources.dispatcherQueue.findAsync({ _upstream: true});
-
-
-            $timeout(() => {
-                $scope.queueList = queueList.resource;
-            });
-        }
-        catch (e) {
-            $rootScope.errorHandler(e);
-        }
-    }
-
-    initializeView();
 
 }]);

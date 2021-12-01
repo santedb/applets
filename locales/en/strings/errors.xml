@@ -188,6 +188,7 @@
       <string name="error.auth.tfaClaims">Invalid Multi-Factor authentication claims for {userName}</string>
       <string name="error.auth.tfaMismatch">MFA authentication failed with {result}</string>
       <string name="error.auth.invalid">Username or password invalid</string>
+      <string name="error.server.core.privacyControlFailure">An attempt was made to change a record which has active privacy controls (i.e. data is hidden or masked) activated. Please contact an administrator to obtain appropriate access permissions to this record</string>
 
       <string name="ui.error.hdsi.propertyMissing"><![CDATA[HDSI expression does not appear to point to a valid property. Ensure that <ul><li>Your guard expressions are closed</li><li>Properties are cast to the correct type</li><li>Property paths don\'t end with a period</li></ul>]]></string>
       <string name="ui.error.hdsi.rhsMissing"><![CDATA[This HDSI input requires a full expression in the form of <code>clause=value</code> - ensure you have a full expression]]></string>

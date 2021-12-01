@@ -47,10 +47,10 @@ angular.module('santedb-lib')
                // Load concept set
                async function loadAuthority(identityScope) {
                    try {
-                       if(!loaded[scope]) 
+                       if(!loaded[identityScope]) 
                        {
                            loaded[identityScope] = { callme : [] };
-                           scope.setValues = (await SanteDB.resources.assigningAuthority.findAsync({ "scope" : identityScope })).resource;
+                           scope.setValues = (await SanteDB.resources.assigningAuthority.findAsync()).resource.filter(o=>o.scope == null || o.scope.length == 0 || o.scope.indexOf(identityScope) > -1);
                            loaded[identityScope].callme.forEach((r) => r(scope.setValues));
                            loaded[identityScope]= scope.setValues;
                            scope.$apply();
