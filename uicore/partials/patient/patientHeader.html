@@ -11,14 +11,14 @@
                     <div class="col-6">
                         <div class="p-2 flex-grow-1">
                             <h5 class="m-0">{{ patient.name | name }} <span class="p-2 badge"
-                                ng-class="{ 'badge-primary' : patient.statusConcept == 'c8064cbd-fa06-4530-b430-1a52f1530c27' , 'badge-success' : patient.statusConcept == 'c34fcbf1-e0fe-4989-90fd-0dc49e1b9685' , 'badge-warning' : patient.statusConcept == '0bbec253-21a1-49cb-b376-7fe4d0592cda', 'badge-danger' : patient.statusConcept == 'cd4aa3c4-02d5-4cc9-9088-ef8f31e321c5', 'badge-dark' : patient.statusConcept == 'bdef5f90-5497-4f26-956c-8f818cce2bd2' }">
-                                {{ patient.statusConceptModel | concept }}
-                            </span></h5>
-                            
+                                    ng-class="{ 'badge-primary' : patient.statusConcept == 'c8064cbd-fa06-4530-b430-1a52f1530c27' , 'badge-success' : patient.statusConcept == 'c34fcbf1-e0fe-4989-90fd-0dc49e1b9685' , 'badge-warning' : patient.statusConcept == '0bbec253-21a1-49cb-b376-7fe4d0592cda', 'badge-danger' : patient.statusConcept == 'cd4aa3c4-02d5-4cc9-9088-ef8f31e321c5', 'badge-dark' : patient.statusConcept == 'bdef5f90-5497-4f26-956c-8f818cce2bd2' }">
+                                    {{ patient.statusConceptModel | concept }}
+                                </span></h5>
+
                         </div>
                     </div>
                     <div class="col-6">
-                        
+
                         <div class="p-2 flex-grow-1 float-right"
                             ng-if="$root.system.config.application.setting['aa.preferred'] &amp;&amp; patient.identifier[$root.system.config.application.setting['aa.preferred']]">
                             <h5 class="m-0 p-0"><i class="fas fa-id-card"></i>
@@ -74,7 +74,7 @@
                     </div>
                 </div>
             </div>
-            
+
 
         </div>
     </div>
@@ -91,15 +91,29 @@
             {{ 'ui.action.download' | i18n }}
         </a>
     </div>
-    <div ng-if="!patient._upstream" ng-switch="patient.tag['$mdm.type']">
+    <div ng-if="!patient._upstream &amp;&amp; patient &amp;&amp; patient.relationship['MDM-Master']" ng-switch="patient.tag['$mdm.type']">
         <div class="m-0" ng-switch-when="M">
             <div class=" alert alert-primary" ng-if="!patient.relationship['MDM-RecordOfTruth']">
                 <i class="fas fa-coins"></i>
                 {{ 'ui.mdm.view.master' | i18n }}
             </div>
             <div class="alert alert-success" ng-if="patient.relationship['MDM-RecordOfTruth']">
-                <i class="fas fa-gavel"></i>
-                {{ 'ui.mdm.view.masterAdjudicated' | i18n }}
+                <div class="d-flex justify-content-between">
+                    <div><i class="fas fa-gavel" ng-init="patient._readonly = true"></i>
+                        {{ 'ui.mdm.view.masterAdjudicated' | i18n }}
+                    </div>
+                    <div class="flex-grow-1">
+                        <div class="float-right btn-group" ng-if="patient._readonly">
+                            <a class="btn btn-sm btn-success" ui-sref=".({ id: patient.relationship['MDM-RecordOfTruth'][0].target })"><i class="fas fa-chevron-right"></i> {{
+                                'ui.mdm.action.openRot' | i18n }}</a>
+                            <button class="btn btn-sm btn-warning" ng-click="patient._readonly=false"><i
+                                    class="fas fa-pencil-alt"></i> {{ 'ui.mdm.action.unlock' | i18n }}</button>
+                        </div>
+
+                    </div>
+
+                </div>
+
             </div>
         </div>
         <div class="m-0 alert alert-warning" ng-switch-when="T">
@@ -114,11 +128,25 @@
                     {{ 'ui.mdm.view.recordOfTruth' | i18n }}
                 </div>
                 <div ng-switch-default="ng-switch-default" class="alert alert-info">
-                    <i class="fas fa-database" ng-init="patient._readonly = true"></i>
-                    {{ 'ui.mdm.view.local' | i18n }}
+                    <div class="d-flex justify-content-between">
+                        <div> 
+                            <i class="fas fa-database" ng-init="patient._readonly = true"></i>
+                            {{ 'ui.mdm.view.local' | i18n }}
+                        </div>
+                        <div class="flex-grow-1">
+                            <div class="float-right btn-group" ng-if="patient._readonly">
+                                <a class="btn btn-sm btn-success" ui-sref=".({ id: patient.relationship['MDM-Master'][0].target })"><i class="fas fa-chevron-right"></i> {{
+                                    'ui.mdm.action.openMaster' | i18n }}</a>
+                                <button class="btn btn-sm btn-warning" ng-click="patient._readonly=false"><i
+                                        class="fas fa-pencil-alt"></i> {{ 'ui.mdm.action.unlock' | i18n }}</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    
                 </div>
             </div>
         </div>
     </div>
-    
+
 </div>

@@ -63,8 +63,9 @@
     <property name="creationTime" />
     <property name="creationTimeModel" behavior="never"/>
     <property name="version" behavior="never"/>
+    <property name="classConcept" behavior="always"/>
 
-    <property name="classConceptModel" behavior="never"/>
+    <property name="classConceptModel" behavior="always"/>
     <property name="previousVersionModel" behavior="never"/>
     <property name="determinerConceptModel" behavior="never"/>
     <property name="typeConceptModel" behavior="always" ref="Concept"/>
@@ -98,8 +99,8 @@
     </property>
     <property name="telecom" all="true" behavior="always"/>
 
-    <property name="classConceptModel" behavior="never"/>
-    <property name="classConcept" behavior="never"/>
+    <property name="classConceptModel" behavior="always"/>
+    <property name="classConcept" behavior="always"/>
     <property name="determinerConceptModel" behavior="never"/>
     <property name="genderConceptModel" all="false" ref="Concept" behavior="always"/>
     <property name="relationship" all="true" behavior="always">

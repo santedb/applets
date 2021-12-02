@@ -125,6 +125,7 @@
       <property name="*"  all="true" ref="EntityAddress"/>
     </property>
     <property name="typeConceptModel" all="true" ref="Concept" behavior="always"/>
+    <property name="classConcept" behavior="always"/>
     <property name="classConceptModel" all="true" ref="Concept" behavior="always"/>
   </type>
 

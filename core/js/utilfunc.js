@@ -390,6 +390,10 @@ async function prepareEntityForSubmission(entity) {
     // Clear out the relationships of their MDM keys
     if(entity.relationship) {
         Object.keys(entity.relationship).forEach((k) => {
+            if(!Array.isArray(entity.relationship[k]))
+            {
+                entity.relationship[k] = [ entity.relationship[k] ];
+            }
             entity.relationship[k] = entity.relationship[k].map((r) => {
                 if(r.targetModel && r.targetModel.id) {
                     r.target = r.targetModel.id;
