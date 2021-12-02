@@ -505,8 +505,13 @@ angular.module('santedb-lib')
             },
             controller: ['$scope', '$rootScope', function ($scope, $rootScope) {
 
+                
+
+
+            }],
+            link: function (scope, element, attrs) {
                 // The types of relationships which are used to drive the inputs for lookup
-                $scope.adminRelationTypes = {
+                scope.adminRelationTypes = {
                     Caregiver: {
                         applyTo: [EntityClassKeys.Patient, EntityClassKeys.Person],
                         entityType: "Organization",
@@ -548,11 +553,6 @@ angular.module('santedb-lib')
                         filter: { statusConcept: StatusKeys.Active } // TODO: Filter on industry code
                     }
                 }
-
-
-            }],
-            link: function (scope, element, attrs) {
-
 
             }
         }

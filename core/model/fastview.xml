@@ -67,7 +67,8 @@
       <property name="mnemonic"/>
     </property>
 
-    <property name="classConceptModel" behavior="never"/>
+    <property name="classConcept" behavior="always"/>
+    <property name="classConceptModel" behavior="always"/>
     <property name="previousVersionModel" behavior="never"/>
     <property name="determinerConceptModel" behavior="never"/>
     <property name="typeConceptModel" behavior="always" ref="Concept"/>
@@ -103,8 +104,8 @@
     <property name="identifier" all="true" ref="EntityIdentifier" behavior="always"/>
     <property name="telecom" all="true" behavior="always"/>
 
-    <property name="classConceptModel" behavior="never"/>
-    <property name="classConcept" behavior="never"/>
+    <property name="classConceptModel" behavior="always"/>
+    <property name="classConcept" behavior="always"/>
     <property name="determinerConceptModel" behavior="never"/>
   </type>
 
@@ -120,8 +121,8 @@
     <property name="name" all="true" ref="EntityName" behavior="always"/>
     <property name="address" all="true" ref="EntityAddress" behavior="always"/>
     <property name="telecom" all="true" behavior="always"/>
-    <property name="classConceptModel" behavior="never"/>
-    <property name="classConcept" behavior="never"/>
+    <property name="classConceptModel" behavior="always"/>
+    <property name="classConcept" behavior="always"/>
     <property name="determinerConceptModel" behavior="never"/>
     <property name="tag" all="true" behavior="always"/>
     <property name="genderConceptModel" behavior="always" ref="Concept"/>
@@ -198,8 +199,8 @@
       <property name="mnemonic"/>
     </property>
 
-    <property name="classConceptModel" behavior="never"/>
-    <property name="classConcept" behavior="never"/>
+    <property name="classConceptModel" behavior="always"/>
+    <property name="classConcept" behavior="always"/>
     <property name="determinerConceptModel" behavior="never"/>
     <property name="statusConceptModel" behavior="never"/>
     <property name="name" all="true" ref="EntityName" behavior="always"/>
@@ -228,8 +229,8 @@
     <property name="version" behavior="never"/>
     <property name="name" all="true" ref="EntityName" behavior="always"/>
     <property name="identifier" all="true" ref="EntityIdentifier" behavior="always"/>
-    <property name="classConceptModel" behavior="never"/>
-    <property name="classConcept" behavior="never"/>
+    <property name="classConceptModel" behavior="always"/>
+    <property name="classConcept" behavior="always"/>
     <property name="determinerConceptModel" behavior="never"/>
     <property name="statusConceptModel" behavior="never"/>
     <property name="typeConceptModel" behavior="always" ref="Concept"/>
@@ -251,8 +252,8 @@
     <property name="version" behavior="never"/>
     <property name="name" all="true" ref="EntityName" behavior="always"/>
     <property name="address" all="true" ref="EntityAddress" behavior="always"/>
-    <property name="classConceptModel" behavior="never"/>
-    <property name="classConcept" behavior="never"/>
+    <property name="classConceptModel" behavior="always"/>
+    <property name="classConcept" behavior="always"/>
     <property name="determinerConceptModel" behavior="never"/>
     <property name="typeConceptModel" all="true" behavior="always" ref="Concept"/>
     <property name="extension" all="true" behavior="always"/>
@@ -310,7 +311,8 @@
 
     <property name="valueModel" all="true" ref="Concept" behavior="always"/>
 
-    <property name="classConceptModel" behavior="never"/>
+    <property name="classConcept" behavior="always"/>
+    <property name="classConceptModel" behavior="always"/>
     <property name="previousVersion" behavior="never"/>
     <property name="previousVersionModel" behavior="never"/>
     <property name="typeConceptModel" behavior="always" ref="Concept"/>
@@ -432,7 +434,8 @@
     <property name="templateModel" behavior="always" all="false">
       <property name="mnemonic"/>
     </property>
-    <property name="classConceptModel" behavior="never"/>
+    <property name="classConcept" behavior="always"/>
+    <property name="classConceptModel" behavior="always"/>
     <property name="previousVersion" behavior="never"/>
     <property name="previousVersionModel" behavior="never"/>
     <property name="typeConceptModel" behavior="always" ref="Concept"/>
@@ -524,7 +527,8 @@
     <property name="templateModel" behavior="always" all="false">
       <property name="mnemonic"/>
     </property>
-    <property name="classConceptModel" behavior="never"/>
+    <property name="classConcept" behavior="always"/>
+    <property name="classConceptModel" behavior="always"/>
     <property name="previousVersion" behavior="never"/>
     <property name="previousVersionModel" behavior="never"/>
     <property name="typeConceptModel" behavior="always" ref="Concept"/>
@@ -576,7 +580,8 @@
     <property name="templateModel" behavior="always" all="false">
       <property name="mnemonic"/>
     </property>
-    <property name="classConceptModel" behavior="never"/>
+    <property name="classConcept" behavior="always"/>
+    <property name="classConceptModel" behavior="always"/>
     <property name="protocol" behavior="always"/>
     <property name="previousVersion" behavior="never"/>
     <property name="previousVersionModel" behavior="never"/>

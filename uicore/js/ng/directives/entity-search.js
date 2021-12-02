@@ -41,16 +41,10 @@ angular.module('santedb-lib')
                     ng-model="config.subscription.facility" 
                     filter='{ "statusConcept.mnemonic" : "ACTIVE" }'/>
      */
+    // TODO: CLEAN THIS UP PLEASE!
     .directive('entitySearch', function ($timeout) {
 
-        function extractProperty(object, path) {
-            var r = object;
-            path.split(/[\.\[\]]/).forEach((p) => {
-                try { if ("" != p) r = r[p] || r['$other'][p]; }
-                catch (e) { if (r['$other']) r['$other'][p]; }
-            });
-            return r;
-        }
+
         function renderObject(selection, minRender) {
 
             if (selection.text)
@@ -140,7 +134,7 @@ angular.module('santedb-lib')
                 retVal += `<span class="badge badge-secondary">${SanteDB.display.renderConcept(selection.typeConceptModel)}</span> `;
             }
 
-            if(selection.identifier) {
+            if (selection.identifier) {
                 retVal += `<small class="ml-2 d-none d-sm-inline badge badge-info"><i class="fas fa-id-card"></i> ${SanteDB.display.renderIdentifier(selection.identifier)}</small>`;
             }
 
@@ -149,21 +143,23 @@ angular.module('santedb-lib')
 
         return {
             scope: {
-                type: '<',
-                display: '<',
-                searchField: '<',
-                defaultResults: '<',
-                groupBy: '<',
-                filter: '=',
-                groupDisplay: '<',
-                key: '<',
-                selector: '<',
-                valueProperty: '<',
-                multiSelect: '<',
-                autoTabNext: '<',
-                copyNulls: '<',
-                minRender: '<',
-                changeClear: '<'
+                type: '<', // The type of object to be searched
+                display: '<', // The expression which dictates the display
+                searchField: '<', // The field on the server to search results for
+                defaultResults: '<', // The default results to show
+                groupBy: '<', // If grouping results (by country, by state, etc.) the grouping expression
+                filter: '=', // The filter to apply in addition to the searchField
+                groupDisplay: '<', // The group display field expression
+                key: '<', // When the default value is provided by the ng-model - this is the property where the resolution should occur (i.e. if the current value is CA and the key is identifier[ISO3166].value then the server will be searched for that filter field)
+                selector: '<', // When values are returned from the server - this is the expression to use to extract the value of the <options>
+                valueProperty: '<', // If the object on ng-model is bound to a complex object instead of a string, this is the path on that object to fetch the value from
+                valueSelector: '<', // If the <options> in the drop down are complex objects, this is the expression to extract the value ot pass to ng-model
+                multiSelect: '<', // True if multiple options can be set
+                autoTabNext: '<', // True if the control should tab to the next control
+                copyNulls: '<', // 
+                minRender: '<', // The minimum number of results to fetch
+                changeClear: '<', // When the object is selected, these are the dependent fields to clear
+                isRequired: '=' // True if the selector is required
             },
             restrict: 'E',
             require: 'ngModel',
@@ -235,6 +231,23 @@ angular.module('santedb-lib')
                 }
             ],
             link: function (scope, element, attrs, ngModel) {
+
+                // Extract property
+                function extractProperty(object, path) {
+                    var r = object;
+                    path.split(/[\.\[\]]/).forEach((p) => {
+                        try { if ("" != p) r = r[p] || r['$other'][p]; }
+                        catch (e) { if (r['$other']) r['$other'][p]; }
+                    });
+
+                    if (r) {
+                        return r;
+                    }
+                    else {
+                        return scope.$eval(`scope.${path}`, { scope: object });
+                    }
+                }
+
                 $timeout(function () {
                     var modelType = scope.type;
                     var filter = scope.filter || {};
@@ -243,7 +256,7 @@ angular.module('santedb-lib')
                     var defaultResults = scope.defaultResults;
                     var groupString = scope.groupBy;
                     var groupDisplayString = scope.groupDisplay;
-                    var resultProperty = scope.key || "id";
+                    var resultProperty = scope.valueSelector || scope.key || "id";
                     var selector = scope.selector;
                     var valueProperty = scope.valueProperty;
 
@@ -307,8 +320,14 @@ angular.module('santedb-lib')
                                     if (groupString == null && data !== undefined) {
                                         retVal.results = retVal.results.concat($.map(data, function (o) {
 
-                                            if (selector && o[selector])
-                                                o = o[selector];
+                                            if (selector) {
+                                                if (o[selector]) {
+                                                    o = o[selector];
+                                                }
+                                                else {
+                                                    o = scope.$eval(`scope.${selector}`, { scope: o });
+                                                }
+                                            }
 
                                             var text = "";
                                             if (displayString) {
@@ -424,6 +443,7 @@ angular.module('santedb-lib')
                             if (Array.isArray(val))
                                 modelVal = val.map(function (v) {
                                     var retVal = {};
+
                                     retVal[valueProperty] = v;
                                     return retVal;
                                 });
@@ -431,8 +451,9 @@ angular.module('santedb-lib')
                                 modelVal[valueProperty] = val;
                             scope.$apply(() => ngModel.$setViewValue(modelVal));
                         }
-                        else
+                        else {
                             scope.$apply(() => ngModel.$setViewValue(val));
+                        }
                     });
                     ngModel.$render = function () {
                         if (valueProperty) {

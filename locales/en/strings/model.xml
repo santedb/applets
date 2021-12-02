@@ -172,7 +172,8 @@
       <string name="ui.model.entity.telecom.MobileContact">Mobile</string>
       <string name="ui.model.entity.telecom.BadAddress">Old/Bad</string>
       <string name="ui.model.entity.telecom.Pager">Pager</string>
-      <string name="ui.model.entity.telecom.Public">Home/Public</string>
+      <string name="ui.model.entity.telecom.PrimaryHome">Primary Home</string>
+      <string name="ui.model.entity.telecom.Public">Public</string>
       <string name="ui.model.entity.telecom.TemporaryAddress">Temporary</string>
       <string name="ui.model.entity.telecom.WorkPlace">Work</string>
       <string name="ui.model.entity.identifier">Identifiers</string>
@@ -208,8 +209,8 @@
       <string name="ui.model.patient.genderConcept">Gender</string>
       <string name="ui.model.patient.identifier">Identifier(s)</string>
       <string name="ui.model.patient.creationTime">Timestamp</string>
-      <string name="ui.model.patient.telecom">Contact</string>
-      <string name="ui.model.patient.telecoms">Contacts</string>
+      <string name="ui.model.patient.telecom">Telephone/Email</string>
+      <string name="ui.model.patient.telecoms">Telephone/Email</string>
       <string name="ui.model.patient.relationship">Relationships</string>
       <string name="ui.model.patient.deceasedIndicator">DECEASED</string>
       <string name="ui.model.patient.deceased">Date of Death</string>
@@ -226,6 +227,11 @@
       <string name="ui.model.patient.multipleBirthOrder.3">3rd of multiple-birth</string>
       <string name="ui.model.patient.multipleBirthOrder.4">4th of multiple-birth</string>
       <string name="ui.model.patient.multipleBirthOrder.5">5th of multiple-birth</string>
+      <string name="ui.model.patient.educationLevel">Education Level</string>
+      <string name="ui.model.patient.livingArrangement">Living Arrangement</string>
+      <string name="ui.model.patient.maritalStatus">Marital Status</string>
+      <string name="ui.model.patient.religion">Religion</string>
+      <string name="ui.model.patient.ethnicity">Ethnic Group / Tribe</string>
       <string name="ui.model.person.occupation">Occupation</string>
       <string name="ui.model.patient.summary">Patient Summary</string>
       <string name="ui.model.place.name">Name</string>
