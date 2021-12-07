@@ -272,9 +272,9 @@
       <string name="ui.config.subscribe.authority.help">Use this option to subscribe to patients with a particular identifier</string>
       <string name="ui.config.realm.title">Domain</string>
       <string name="ui.config.realm.description">This SanteDB client application needs to contact a centralized instanced called a &quot;domain&quot;. This screen will allow you to configure the specific details of how this mobile device will contact the domain.</string>
-      <string name="ui.config.realm.deviceName.label">Devices ID</string>
+      <string name="ui.config.realm.deviceName.label">Device ID</string>
       <string name="ui.config.realm.deviceName.help">A name for this device. For example: \'GoodHealthTablet1\'</string>
-      <string name="ui.config.realm.name.label">Address</string>
+      <string name="ui.config.realm.name.label">Domain</string>
       <string name="ui.config.realm.name.help">The IP address or host name of the domain controller</string>
       <string name="ui.config.realm.trace.label">Enable Tracing</string>
       <string name="ui.config.realm.trace.help">- Log all requests to the server</string>
