@@ -369,4 +369,39 @@
     <string name="ui.model.matchConfiguration.scoring.partialWeight">Partial Weight</string>
     <string name="ui.model.matchConfiguration.scoring.partialWeight.hint"><![CDATA[When specified, the partial weight will multiply the calculated match or non-match weight by the algorithm selected in the dropdown.]]></string>
 
+  <!-- Pub/Sub Models -->
+  <string name="ui.model.pubsubsubscription.name">Name</string>
+  <string name="ui.model.pubsubsubscription.name.hint"><![CDATA[Provide a unique name for the subscription. The name is used internally to identify the subscription data]]></string>
+  <string name="ui.model.pubsubsubscription.description">Description</string>
+  <string name="ui.model.pubsubsubscription.description.hint"><![CDATA[Provide a brief description of the subscription. Include information such as what the subscription does, what is its purpose, etc. For example: <code>Send deceased patient demographics to CRVS system</code>]]></string>
+
+  <string name="ui.model.pubsubsubscription.resource">Applies To</string>
+  <string name="ui.model.pubsubsubscription.resource.hint"><![CDATA[Select the type of resource (RIM resource) that this subscription operates on]]></string>
+
+  <string name="ui.model.pubsubsubscription.event">Event(s)</string>
+  <string name="ui.model.pubsubsubscription.event.hint"><![CDATA[Select one or more events (which occur on the <code>Applies To</code> resource) when the notification should be sent]]></string>
+
+  <string name="ui.model.pubsubsubscription.active">Current State</string>
+  
+  <string name="ui.model.pubsubsubscription.support">Support Contact</string>
+  <string name="ui.model.pubsubsubscription.support.hint"><![CDATA[Provide a support contact (telephone, e-mail, etc.) for this subscription. This can be used for diagnosing connectivity]]></string>
+
+  <string name="ui.model.pubsubsubscription.when">When Criteria</string>
+  <string name="ui.model.pubsubsubscription.when.hint"><![CDATA[Provide one or more filter criteria (which evaluate to true) when this subscription should be triggered (i.e. when should SanteDB send the notification to the remote endpoint)]]></string>
+  
+  <string name="ui.model.pubsubsubscription.notBefore">Not Before</string>
+  <string name="ui.model.pubsubsubscription.notBefore.hint"><![CDATA[Indicates a date/time when this subscription will become active]]></string>
+
+  <string name="ui.model.pubsubsubscription.notAfter">Not After</string>
+  <string name="ui.model.pubsubsubscription.notAfter.hint"><![CDATA[Indicates a date/time when this subscription will cease to be active]]></string>
+
+  <string name="ui.model.pubsubchannel.endpoint">Endpoint</string>
+  <string name="ui.model.pubsubchannel.endpoint.hint"><![CDATA[The remote endpoint where notifications for this subscription should be sent. If selecting <strong>OTHER</strong> as the dispatcher type, the scheme of the URL is used, samples: <ul><li><code>sms://</code> - use the SMS dispatcher</li><li><code>mailto:</code> - use the e-mail dispatcher</li><li><code>llp://</code> - use the HL7v2 dispacher</li></ul>]]></string>
+
+  <string name="ui.model.pubsubchannel.dispatcher">Dispatcher</string>
+  <string name="ui.model.pubsubchannel.dispatcher.hint"><![CDATA[Identifies the type of messaging format to be used to send the notification (for example: FHIR messages, FHIR rest hook, HL7v2, etc.). <strong>OTHER</strong> is used when the iCDR has a dispatcher not listed here]]></string>
+  
+  <string name="ui.model.pubsubchannel.settings">Custom Settings</string>
+  <string name="ui.model.pubsubchannel.settings.hint"><![CDATA[Additional settings (key/value pairs) which are used be the dispatcher to control the flow of information. For exampe, in FHIR these equate to HTTP headers]]></string>
+
 </resources>

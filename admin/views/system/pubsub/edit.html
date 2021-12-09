@@ -1,0 +1,283 @@
+<div xmlns="http://www.w3.org/1999/xhtml" xmlns:sdb="http://santedb.org/applet">
+    <sdb:script static="false">~/controllers/pubsub/edit.js</sdb:script>
+    <sdb:state name="santedb-admin.system.pubsub.edit" abstract="false">
+        <sdb:demand>1.3.6.1.4.1.33349.3.1.5.9.2.0.14.4</sdb:demand>
+        <sdb:url>/:id</sdb:url>
+        <sdb:view>
+            <sdb:controller>PubSubEditController</sdb:controller>
+            <sdb:title lang="en">Edit Subscription</sdb:title>
+        </sdb:view>
+    </sdb:state>
+
+    <div class="row" ng-if="!subscription">
+        <div class="col">
+            <p class="m-auto"><i class="fas fa-circle-notch fa-spin"></i> {{ 'ui.wait' | i18n }}</p>
+        </div>
+    </div>
+
+    <form ng-if="subscription" ng-submit="saveSubscription(editForm)" name="editForm" novalidate="novalidate"
+        class="form">
+        <div class="container">
+            <div class="form-group row">
+                <label class="control-label col-sm-12 col-md-3">{{ 'ui.model.pubsubsubscription.name' | i18n }}
+                    <hint-popover hint-title="ui.model.pubsubsubscription.name"></hint-popover>
+                </label>
+                <div class="col-sm-12 col-md-9">
+                    <input type="text" maxlength="32" name="name" required="required" autocomplete="__away"
+                        class="form-control" ng-model="subscription.name" pattern="^[a-zA-Z0-9_\-]+$" />
+                    <div class="text-danger" ng-show="editForm.name.$error['required']">
+                        <i class="fas fa-exclamation-triangle"></i> {{ 'ui.error.required' | i18n }}
+                    </div>
+                    <div class="text-danger" ng-show="editForm.name.$error['pattern']">
+                        <i class="fas fa-exclamation-triangle"></i> {{ 'ui.error.pattern.ext' | i18n: { pattern: 'A-Z,
+                        0-9, _ or -' } }}
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label class="control-label col-sm-12 col-md-3">{{ 'ui.model.pubsubsubscription.description' | i18n }}
+                    <hint-popover hint-title="ui.model.pubsubsubscription.description"></hint-popover>
+                </label>
+                <div class="col-sm-12 col-md-9">
+                    <textarea type="text" maxlength="1024" name="description" required="required" autocomplete="__away"
+                        class="form-control" ng-model="subscription.description"></textarea>
+                    <div class="float-right">
+                        {{ 1024 - subscription.description.length }} {{ 'ui.common.charsRemain' | i18n }}
+                    </div>
+                    <div class="text-danger" ng-show="editForm.description.$error['required']">
+                        <i class="fas fa-exclamation-triangle"></i> {{ 'ui.error.required' | i18n }}
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label class="control-label col-sm-12 col-md-3">{{ 'ui.model.pubsubsubscription.support' | i18n }}
+                    <hint-popover hint-title="ui.model.pubsubsubscription.support"></hint-popover>
+                </label>
+                <div class="col-sm-12 col-md-9">
+                    <input type="text" maxlength="256" name="support" required="required" autocomplete="__away"
+                        class="form-control" ng-model="subscription.support" />
+                    <div class="text-danger" ng-show="editForm.support.$error['required']">
+                        <i class="fas fa-exclamation-triangle"></i> {{ 'ui.error.required' | i18n }}
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label class="control-label col-sm-12 col-md-3">{{ 'ui.model.pubsubsubscription.resource' | i18n }}
+                    <hint-popover hint-title="ui.model.pubsubsubscription.resource"></hint-popover>
+                </label>
+                <div class="col-sm-12 col-md-9">
+
+                    <select ng-readonly="subscription.id" ng-disabled="subscription.id" class="form-control" name="resource" required="required" ng-model="subscription.resource">
+                        <optgroup label="Entities">
+                            <option value="Entity">Entity</option>
+                            <option value="Person">Person</option>
+                            <option value="Patient">Patient</option>
+                            <option value="Provider">Provider</option>
+                            <option value="Place">Place</option>
+                            <option value="Organization">Organization</option>
+                            <option value="Material">Material</option>
+                            <option value="ManufacturedMaterial">ManufacturedMaterial</option>
+
+                        </optgroup>
+                        <optgroup label="Acts">
+                            <option value="Act">Act</option>
+                            <option value="SubstanceAdministration">SubstanceAdministration</option>
+                            <option value="TextObservation">TextObservation</option>
+                            <option value="CodedObservation">CodedObservation</option>
+                            <option value="QuantityObservation">QuantityObservation</option>
+                            <option value="Procedure">Procedure</option>
+                            <option value="ControlAct">ControlAct</option>
+                        </optgroup>
+                    </select>
+                    <div class="text-danger" ng-show="editForm.resource.$error['required']">
+                        <i class="fas fa-exclamation-triangle"></i> {{ 'ui.error.required' | i18n }}
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label class="control-label col-sm-12 col-md-3">{{ 'ui.model.pubsubsubscription.event' | i18n }}
+                    <hint-popover hint-title="ui.model.pubsubsubscription.event"></hint-popover>
+                </label>
+                <div class="col-sm-12 col-md-9">
+                    <label class="w-50">
+                        <input type="checkbox" ng-model="subscription.eventModel.Create" />
+                        Create
+                    </label>
+                    <label class="w-50">
+                        <input type="checkbox" ng-model="subscription.eventModel.Update" />
+                        Update
+                    </label>
+                    <label class="w-50">
+                        <input type="checkbox" ng-model="subscription.eventModel.Delete" />
+                        Delete
+                    </label>
+                    <label class="w-50">
+                        <input type="checkbox" ng-model="subscription.eventModel.Merge" />
+                        Merge
+                    </label>
+                    <label class="w-50">
+                        <input type="checkbox" ng-model="subscription.eventModel.Unmerge" />
+                        Unmerge
+                    </label>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label class="control-label col-sm-12 col-md-3">{{ 'ui.model.pubsubsubscription.when' | i18n }}
+                    <hint-popover hint-title="ui.model.pubsubsubscription.when"></hint-popover>
+                </label>
+                <div class="col-sm-12 col-md-9">
+                    <ul class="list-group">
+                        <li ng-repeat="n in subscription.when track by $index" class="list-group-item">
+                            <div class="input-group">
+                                <hdsi-expression simple-input="true" required="required" name="when{{$index}}"
+                                focal-type="subscription.resource" include-rhs="true"
+                                ng-model="subscription.when[$index]" />
+                                <div class="input-group-append" ng-if="subscription.when.length > 1">
+                                    <button class="btn btn-danger" type="button" ng-click="subscription.when.splice($index, 1)"><i class="fas fa-times"></i></button>
+                                </div>
+                            </div>
+                            <div class="text-danger" ng-show="editForm['when' + $index].$error['required']">
+                                <i class="fas fa-exclamation-triangle"></i> {{ 'ui.error.required' | i18n}}
+                            </div>
+                        </li>
+                        <li class="list-group-item">
+                            <button class="w-100 btn btn-success" ng-disabled="editForm.$invalid" type="button"
+                                ng-click="subscription.when.push('')"><i class="fas fa-plus-circle"></i> {{
+                                'ui.action.add' | i18n }}</button>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label class="control-label col-sm-12 col-md-3">{{ 'ui.model.pubsubsubscription.notBefore' | i18n }}
+                    <hint-popover hint-title="ui.model.pubsubsubscription.notBefore"></hint-popover>
+                </label>
+                <div class="col-sm-12 col-md-9">
+                    <input type="datetime-local" ng-model="subscription.notBefore" name="notBefore"
+                        max="{{ subscription.notAfter }}" class="form-control" />
+
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label class="control-label col-sm-12 col-md-3">{{ 'ui.model.pubsubsubscription.notAfter' | i18n }}
+                    <hint-popover hint-title="ui.model.pubsubsubscription.notAfter"></hint-popover>
+                </label>
+                <div class="col-sm-12 col-md-9">
+                    <input type="datetime-local" ng-model="subscription.notAfter" name="notBefore"
+                        min="{{ subscription.notBefore }}" class="form-control" />
+
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label class="control-label col-sm-12 col-md-3">{{ 'ui.model.pubsubchannel.endpoint' | i18n }}
+                    <hint-popover hint-title="ui.model.pubsubchannel.endpoint"></hint-popover>
+                </label>
+                <div class="col-sm-12 col-md-9">
+                    <input type="url" name="endpoint" required="required" autocomplete="__away" class="form-control"
+                        ng-model="subscription.channelModel.endpoint" />
+                    <div class="text-danger" ng-show="editForm.endpoint.$error['url']">
+                        <i class="fas fa-exclamation-triangle"></i> {{ 'ui.error.pattern' | i18n }}
+                    </div>
+                    <div class="text-danger" ng-show="editForm.endpoint.$error['required']">
+                        <i class="fas fa-exclamation-triangle"></i> {{ 'ui.error.required' | i18n }}
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label class="control-label col-sm-12 col-md-3">{{ 'ui.model.pubsubchannel.dispatcher' | i18n }}
+                    <hint-popover hint-title="ui.model.pubsubchannel.dispatcher"></hint-popover>
+                </label>
+                <div class="col-sm-12 col-md-9">
+
+                    <select ng-readonly="subscription.id" ng-disabled="subscription.id" class="form-control" name="dispatcher" required="required"
+                        ng-model="subscription.channelModel.dispatcherFactoryId">
+                        <option ng-repeat="d in dispatchers" value="{{d}}">{{d}}</option>
+                    </select>
+                    <div class="text-danger" ng-show="editForm.dispatcher.$error['required']">
+                        <i class="fas fa-exclamation-triangle"></i> {{ 'ui.error.required' | i18n }}
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label class="control-label col-sm-12 col-md-3">{{ 'ui.model.pubsubchannel.settings' | i18n }}
+                    <hint-popover hint-title="ui.model.pubsubchannel.settings"></hint-popover>
+                </label>
+                <div class="col-sm-12 col-md-9">
+                    <table class="table table-striped">
+                        <tbody>
+                            <tr ng-repeat="set in subscription.channelModel.settings track by $index">
+                                <td>
+                                    <input type="text" name="setting{{$index}}name" class="form-control"
+                                        ng-model="set.name" required="required" />
+                                    <div ng-show="editForm['setting' + $index + 'name'].$error['required']"
+                                        class="text-danger">
+                                        <i class="fas fa-exclamation-triangle"></i> {{ 'ui.error.required' | i18n }}
+                                    </div>
+                                </td>
+                                <td>
+                                    <input type="text" name="setting{{$index}}value" class="form-control"
+                                        ng-model="set.value" required="required" />
+                                    <div ng-show="editForm['setting' + $index + 'value'].$error['required']"
+                                        class="text-danger">
+                                        <i class="fas fa-exclamation-triangle"></i> {{ 'ui.error.required' | i18n }}
+                                    </div>
+                                </td>
+                                <td>
+                                    <button class="btn btn-danger" type="button"
+                                        ng-click="subscription.channelModel.settings.splice($index, 1)"><i
+                                            class="fas fa-times"></i></button>
+                                </td>
+                            </tr>
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <td><input type="text" name="newsettingname" class="form-control"
+                                        ng-model="newsetting.name" ng-required="newsetting.value" />
+                                    <div class="text-danger" ng-show="editForm.newsettingname.$error['required']">
+                                        <i class="fas fa-exclamation-triangle"></i> {{ 'ui.error.required' | i18n }}
+                                    </div>
+                                </td>
+                                <td><input type="text" name="newsettingvalue" class="form-control"
+                                        ng-model="newsetting.value" ng-required="newsetting.name" />
+                                    <div class="text-danger" ng-show="editForm.newsettingvalue.$error['required']">
+                                        <i class="fas fa-exclamation-triangle"></i> {{ 'ui.error.required' | i18n }}
+                                    </div>
+                                </td>
+                                <td>
+                                    <button class="btn btn-primary" type="button"
+                                        ng-click="subscription.channelModel.settings.push(newsetting); newsetting={}"><i
+                                            class="fas fa-plus-circle"></i></button>
+                                </td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            </div>
+
+
+            <div class="row">
+                <div class="col">
+                    <div class="float-right">
+                        <button id="btnSave" class="btn btn-primary" type="submit" ng-disabled="editForm.$invalid">
+                            <i class="fas fa-check"></i> {{ 'ui.action.save' | i18n }}
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+
+
+</div>

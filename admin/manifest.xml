@@ -55,6 +55,10 @@
       <icon>far fa-list-alt</icon>
       <text lang="en">Logs</text>
     </menuItem>
+    <menuItem launch="santedb-admin.system.pubsub.index" asset="/org.santedb.admin/views/system/pubsub/index.html" context="org.santedb.admin">
+      <icon>fas fa-bolt</icon>
+      <text lang="en">Pub/Sub Manager</text>
+    </menuItem>
     <menuItem launch="santedb-admin.system.bug" asset="/org.santedb.admin/views/system/bug.html" context="org.santedb.admin">
       <icon>fas fa-bug</icon>
       <text lang="en">Submit Bug</text>

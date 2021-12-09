@@ -41,10 +41,10 @@ angular.module('santedb-lib')
             replace: true,
             templateUrl: './org.santedb.uicore/directives/hdsiEditor.html',
             scope: {
-                focalType: "<",
-                defVariables: "<",
-                includeRhs: "<",
-                simpleInput: "<"
+                focalType: "<", // The type to provide HDSI expression auto-complete data for
+                defVariables: "<", // Any variables (triggered by $) to show autocomplete data for
+                includeRhs: "<", // The expression should include the right hand side
+                simpleInput: "<" // The value in ng-model is a simple string variable
             },
             link: function (scope, element, attrs, ngModel) {
 
@@ -70,10 +70,10 @@ angular.module('santedb-lib')
                     var scopedFilter = val.match(filterExtract);
 
 
-                    if (autoCompleteData == null || scopedFilter && scopedFilter[1] != autoCompleteData.scope) {
+                    if (autoCompleteData == null || scopedFilter && scopedFilter[1] != autoCompleteData.scope || val == "") {
                         autoCompleteData = {};
                         autoCompleteData = await SanteDB.resources[scope.focalType.toCamelCase()].invokeOperationAsync(null, "schema-complete", { expression: val, vars: scope.defVariables });
-                        autoCompleteData.scope = scopedFilter[1];
+                        autoCompleteData.scope = scopedFilter ? scopedFilter[1] : '';
                         currentFocus = -1;
                     }
                     val = scopedFilter ? scopedFilter[2] : val;
