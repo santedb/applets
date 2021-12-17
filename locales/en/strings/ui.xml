@@ -121,6 +121,7 @@
       <string name="ui.action.ok">Ok</string>
       <string name="ui.action.dismiss">Dismiss</string>
       <string name="ui.action.cancel">Cancel</string>
+      <string name="ui.action.clone">Clone</string>
       <string name="ui.action.cancel.confirm">Are you sure you want to cancel?</string>
       <string name="ui.action.save">Save</string>
       <string name="ui.action.submit">Submit</string>
@@ -495,4 +496,25 @@
       <!-- Notices on the UI -->
       <string name="ui.notices.privacyControls.masked">This record has been flagged and masked/altered by privacy enforcement to protect sensitive information. You may be asked to re-authenticate yourself or you may be restricted for editing the record. Additional additional security audits have been logged.</string>
 
+      <!-- Relationship widget -->
+      <string name="ui.entity.relationship.mode">View Mode</string>
+      <string name="ui.entity.relationship.mode.hint"><![CDATA[Controls the rendering of the entity relationship diagram for this entity. 
+      <ul>
+            <li>Simple : Shows the physical relationships and logical relationships (without source)</li>
+            <li>Advnaced : Shows the physical relationships and logical relationships, indicating how the logical relationships are determined</li>
+      </ul>]]></string>
+      <string name="ui.entity.relationship.legend"><![CDATA[ Legend: 
+      <ul class="list-group">
+            <li class="list-group-item"><i class='fas fa-minus'></i> Physical Realtionship (i.e. in database)</li>
+            <li class="list-group-item"><i class='fas fa-ellipsis-h'></i> Logical Relationship (i.e. inferred from master)</li>
+            <li class="list-group-item"><i class="far fa-square relationship-diagram-verified"></i> Verified Entity / Record of Truth</li>
+            <li class="list-group-item"><i class="far fa-square relationship-diagram-inferred"></i> Inferred / Logical Target (i.e. the target entity of a logical relationship)</li>
+            <li class="list-group-item"><i class="far fa-circle relationship-diagram-focus"></i> Focus Resource (this resource)</li>
+            <li class="list-group-item"><i class="far fa-square relationship-diagram-reverse"></i> Reverse Relationship (entity points at this record)</li>
+            <li class="list-group-item"><i class="far fa-square relationship-diagram-obsolete"></i> Deleted / Inactive Target Entity</li>
+            <li class="list-group-item"><i class="fas fa-random relationship-diagram-mdm"></i> MDM Rewrite (i.e. LOCAL/LOCAL is realized as MASTER/MASTER on inferred)</li>
+            
+      </ul>]]></string>
+      <string name="ui.entity.relationship.mode.simple">Simple Relationship Graph</string>
+      <string name="ui.entity.relationship.mode.advanced">Advanced Relationship Graph</string>
 </resources>

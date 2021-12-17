@@ -18859,7 +18859,7 @@ const EntityRelationshipTypeKeys = {
 	 *             Referenced entities            
 	 */
 	EquivalentEntity : '395f4edf-5d5d-4950-9f5e-f827f72e4b32',
-}  // EntityRelationshipTypeKeys 
+}  // EntityRelationshipTypeKeys  
 // SanteDB.Core.Model.Constants.StatusKeys, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
 // if(!StatusKeys)
 /**

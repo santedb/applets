@@ -201,3 +201,37 @@ ul.bullet-list {
     background-color: DodgerBlue !important; 
     color: #ffffff; 
   }
+
+  i.relationship-diagram-verified
+  {
+    background-color: #ffa; color: #00c
+  }
+
+  i.relationship-diagram-inferred
+  {
+    background-color: #faf; color: #c0c
+  }
+
+  i.relationship-diagram-focus
+  {
+    background-color: #afa; color: #0c0
+  }
+
+  i.relationship-diagram-reverse
+  {
+    background-color: #aaf; color: #cc0
+  }
+
+  i.relationship-diagram-mdm
+  {
+    background-color: #ECECFF; color: #000
+  }
+  
+  i.relationship-diagram-obsolete {
+      background-color: #000;
+      color: #f00;
+  }
+  .autoscroll
+  {
+      overflow: auto;
+  }
