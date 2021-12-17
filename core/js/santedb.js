@@ -477,7 +477,7 @@ function APIWrapper(_config) {
     this.deleteAsync = function (configuration) {
         return new Promise(function (fulfill, reject) {
             var hdr = configuration.headers || {};
-            hdr["X-Delete-Mode"] = configuration.mode || "OBSOLETE";
+            hdr["X-Delete-Mode"] = configuration.mode;
             $.ajax({
                 method: 'DELETE',
                 url: _config.base + configuration.resource + (configuration.id ? (_config.idByQuery ? "?_id=" + configuration.id : "/" + configuration.id) : ""),
@@ -1296,6 +1296,37 @@ function ResourceWrapper(_config) {
             headers: headers,
             id: id,
             mode: "CANCEL",
+            state: state,
+            resource: _config.resource
+
+        });
+    };
+
+    
+    /**
+        * @method cancelAsync
+        * @memberof ResourceWrapper
+        * @summary Performs an obsolete on the specified object
+        * @description An obsolete differs from a delete in that a cancel triggers a state change from NORMAL>OBSOLETE
+        * @param {string} id The unique identifier for the object to be cancelled
+        * @param {any} state A unique state object which is passed back to the caller
+        * @returns {Promise} The promise for the operation
+        */
+     this.obsoleteAsync = function (id, upstream, state) {
+        var headers = {
+            Accept: _config.accept
+        };
+        if (_config.viewModel)
+            headers["X-SanteDB-ViewModel"] = _config.viewModel;
+
+        if (upstream) {
+            headers["X-SanteDB-Upstream"] = true;
+        }
+
+        return _config.api.deleteAsync({
+            headers: headers,
+            id: id,
+            mode: "OBSOLETE",
             state: state,
             resource: _config.resource
 

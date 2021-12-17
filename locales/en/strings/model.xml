@@ -107,6 +107,7 @@
       <string name="ui.model.version.replaces">Replaces Version</string>
       <string name="ui.model.version.changed">Changed Properties</string>
       <string name="ui.model.version.initial">Initial Version</string>
+      <string name="ui.model.entity.id">UUID</string>
       <string name="ui.model.entity.relationship.hasA">HAS A</string>
       <string name="ui.model.entity.relationship.isA">IS A</string>
       <string name="ui.model.entity.relationship.Caregiver">Caregiver(s)</string>

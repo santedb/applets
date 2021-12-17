@@ -34,7 +34,7 @@
                 <ul class="list-unstyled">
                     <li ng-repeat="rule in $root.error.rules" ng-class="{'text-danger': rule.priority == 'Error', 'text-warning': rule.priority == 'Warning' }">
                         <i ng-class="{ 'fa-exclamation-circle' : rule.priority == 'Error', 'fa-exclamation-triangle': rule.priority == 'Warning', 'fa-info-circle': rule.priority == 'Informational' }" class="fas"></i>
-                        {{ rule.text }}
+                        <span class="ml-2" ng-bind-html="rule.text | i18n"></span>
                     </li>
                 </ul>
             </div>
