@@ -52,6 +52,7 @@
       <string name="error.type.InvalidOperation">Invalid Operation</string>
       <string name="error.type.InvalidDataException.userMessage">Invalid {param}</string>
       <string name="error.messaging.fhir.subscription.emailScheme">Scheme of the endpoint for e-mail subscriptions is {param}</string>
+      <string name="error.messaging.fhir.observationStatus">Observation status of amended or corrected is not supported</string>
       <string name="error.messaging.fhir.handlers.handlerRequired">Handler is required</string>
       <string name="error.messaging.fhir.handlers.invalidResourceType">Resource type {param} is invalid</string>
       <string name="error.messaging.fhir.handlers.noRegisteredHandler">No handler registered for {param}</string>
