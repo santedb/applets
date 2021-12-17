@@ -301,7 +301,7 @@ angular.module('santedb').controller('InitialSettingsController', ['$scope', '$r
                                 backdrop: 'static'
                             });
                             var iv = $interval(() => {
-                                if($scope.restartTimer-- < 0)
+                                if($scope.restartTimer-- < 3)
                                 { 
                                     window.location.hash = '';
                                     window.location.reload();
