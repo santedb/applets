@@ -62,12 +62,12 @@ angular.module('santedb').controller('EditDeviceSecurityController', ["$scope", 
     /**
      * @summary Reset secret
      */
-    $scope.resetSecret = async function () {
+    $scope.resetSecret = async function (secret) {
         if ($scope.scopedObject.securityDevice.id && !confirm(SanteDB.locale.getString("ui.admin.devices.secret.reset")))
             return;
 
         // Generate UUID
-        var repl = SanteDB.application.generatePassword();
+        var repl = secret || SanteDB.application.generatePassword();
         var patch = new Patch({
             change: [
                 new PatchOperation({
@@ -81,7 +81,18 @@ angular.module('santedb').controller('EditDeviceSecurityController', ["$scope", 
         try {
             SanteDB.display.buttonWait("#resetSecretButton", true);
             await SanteDB.resources.securityDevice.patchAsync($stateParams.id, $scope.scopedObject.securityDevice.etag, patch);
-            $scope.$apply((s) => s.scopedObject.securityDevice.deviceSecret = repl);
+
+
+            $scope.$apply((s) => {
+                if(!secret) {
+                    s.scopedObject.securityDevice.deviceSecret = repl;
+                }
+                else {
+                    s.scopedObject.securityDevice.deviceSecret = null;
+                }
+                s.scopedObject._manualSecret = false;
+                
+            });
         }
         catch (e) {
             $rootScope.errorHandler(e);
