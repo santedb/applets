@@ -1,11 +1,11 @@
-<div xmlns="http://www.w3.org/1999/xhtml" xmlns:sdb="http://santedb.org/applet" 
-oc-lazy-load="{ name: 'EditDeviceSecurityController', files: ['/org.santedb.admin/controllers/devices/widgets/security.js'] }" >
-    <sdb:widget order="15" name="org.santedb.widget.admin.panel.device.security"  headerClass="bl-light"
-        size="Large" type="Panel" context="org.santedb.securityDevice.admin">
+<div xmlns="http://www.w3.org/1999/xhtml" xmlns:sdb="http://santedb.org/applet"
+    oc-lazy-load="{ name: 'EditDeviceSecurityController', files: ['/org.santedb.admin/controllers/devices/widgets/security.js'] }">
+    <sdb:widget order="15" name="org.santedb.widget.admin.panel.device.security" headerClass="bl-light" size="Large"
+        type="Panel" context="org.santedb.securityDevice.admin">
         <sdb:icon>fas fa-shield-alt</sdb:icon>
         <sdb:description lang="en">Security Properties</sdb:description>
     </sdb:widget>
-    
+
     <div class="row" ng-if="!scopedObject">
         <div class="col">
             <p class="m-auto"><i class="fas fa-circle-notch fa-spin"></i> {{ 'ui.wait' | i18n }}</p>
@@ -14,18 +14,17 @@ oc-lazy-load="{ name: 'EditDeviceSecurityController', files: ['/org.santedb.admi
 
     <div id="securityProps" ng-controller="EditDeviceSecurityController">
         <div class="form-group row">
-            <label
-                class="col-xs-12 col-md-2 control-label">{{ 'ui.model.securityDevice.lastAuthenticationTime' | i18n }}</label>
+            <label class="col-xs-12 col-md-2 control-label">{{ 'ui.model.securityDevice.lastAuthenticationTime' | i18n
+                }}</label>
             <div class="col-xs-12 col-md-10" ng-if="scopedObject.securityDevice.lastAuthenticationTime">
                 {{ scopedObject.securityDevice.lastAuthenticationTime | extDate: 'F' }}</div>
             <div class="col-xs-12 col-md-10" ng-if="!scopedObject.securityDevice.lastAuthenticationTime">
                 {{ 'ui.admin.devices.edit.security.neverLoggedIn' | i18n }}</div>
         </div>
         <div class="form-group row" ng-if="scopedObject.securityDevice.id">
-            <label
-                class="col-xs-12 col-md-2 control-label">{{ 'ui.model.securityDevice.invalidAuth' | i18n }}</label>
+            <label class="col-xs-12 col-md-2 control-label">{{ 'ui.model.securityDevice.invalidAuth' | i18n }}</label>
             <div class="col-xs-12 col-md-10">
-                {{ scopedObject.securityDevice.invalidAuth || 0    }}
+                {{ scopedObject.securityDevice.invalidAuth || 0 }}
                 <button ng-click="resetInvalidLogins()" id="resetInvalidLoginsButton" type="button"
                     class="btn btn-info">
                     <i class="fas fa-undo"></i> {{ 'ui.action.reset' | i18n }}
@@ -33,30 +32,40 @@ oc-lazy-load="{ name: 'EditDeviceSecurityController', files: ['/org.santedb.admi
             </div>
         </div>
         <div class="form-group row" ng-if="scopedObject.securityDevice.lockout > $root.page.currentTime">
-            <label for="lockout" class="col-xs-12 col-md-2 control-label">{{ 'ui.model.securityDevice.lockout' | i18n }}</label>
+            <label for="lockout" class="col-xs-12 col-md-2 control-label">{{ 'ui.model.securityDevice.lockout' | i18n
+                }}</label>
             <div class="col-xs-12 col-md-10">
                 {{ scopedObject.securityDevice.lockout | extDate: 'F' }}
-                <button ng-click="unlock()" id="unlockButton" class="btn btn-info"
-                    type="button">
+                <button ng-click="unlock()" id="unlockButton" class="btn btn-info" type="button">
                     <i class="fa fa-lock-open"></i> {{ 'ui.action.unlock' | i18n }}
                 </button>
             </div>
         </div>
         <div class="form-group row" ng-if="scopedObject.securityDevice.id">
-            <label
-                class="col-xs-12 col-md-2 control-label">{{ 'ui.model.securityDevice.secret' | i18n }}</label>
-            <div class="col-sm-12 col-md-10 input-group" ng-if="scopedObject.securityDevice.deviceSecret">
-                    <input name="secret" ng-readonly="scopedObject.securityDevice.id" type="text"
-                        class="form-control" minlength="3" maxlength="64"
-                        readonly="readonly" ng-model="scopedObject.securityDevice.deviceSecret" />
-                    <input-copy-button id="devicesecretCopyButton" class="btn btn-outline-secondary"
-                        source="scopedObject.securityDevice.deviceSecret" />
+            <label class="col-xs-12 col-md-2 control-label">{{ 'ui.model.securityDevice.secret' | i18n }}</label>
+            <div class="col-xs-12 col-md-8">
+                <div class="input-group">
+                    <input name="secret"
+                        ng-readonly="!scopedObject._manualSecret &amp;&amp; scopedObject.securityDevice.id" type="{{ scopedObject._manualSecret ? 'password' : 'text' }}"
+                        ng-if="scopedObject._manualSecret || scopedObject.securityDevice.deviceSecret"
+                        class="form-control" minlength="3" maxlength="64" readonly="readonly"
+                        ng-model="scopedObject.securityDevice.deviceSecret" />
+                    
+                        <div class="input-group-append">
+                    <button ng-click="scopedObject._manualSecret = true" ng-if="!scopedObject._manualSecret &amp;&amp; !scopedObject.securityDevice.deviceSecret" id="manualSecret" class="btn btn-primary"
+                        type="button">
+                        <i class="fa fa-pencil-alt"></i> {{ 'ui.action.edit' | i18n }}
+                    </button>
+                    <button ng-if="scopedObject._manualSecret"
+                        ng-click="resetSecret(scopedObject.securityDevice.deviceSecret)" class="btn btn-success"
+                        type="button">
+                        <i class="fa fa-check"></i> {{ 'ui.action.save' | i18n }}
+                    </button>
+                    <button ng-click="resetSecret()" ng-if="!scopedObject._manualSecret" id="resetSecretButton" class="btn btn-info" type="button">
+                        <i class="fa fa-asterisk"></i> {{ 'ui.action.reset' | i18n }}
+                    </button>
                 </div>
-            <div class="col-xs-12 col-md-2" ng-if="!scopedObject.securityDevice.deviceSecret">
-                <button ng-click="resetSecret()" id="resetSecretButton" class="btn btn-info" 
-                    type="button">
-                    <i class="fa fa-asterisk"></i> {{ 'ui.action.reset' | i18n }}
-                </button>
+                </div>
             </div>
         </div>
     </div>
