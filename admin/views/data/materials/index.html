@@ -33,10 +33,11 @@
     default-query="{ 'obsoletionTime' : 'null', _viewModel: 'full' }"
     render="{ updatedBy: 'renderUpdatedBy', formConcept: 'renderFormConcept', name: 'renderName', typeConcept: 'renderTypeConcept', statusConcept: 'renderStatusConcept', classConcept: 'renderClassConcept' }"
     i18n-prefix="'ui.model.material.'"
-    item-actions="[ { name: 'edit', sref: 'santedb-admin.data.material.edit', demand: '1.3.6.1.4.1.33349.3.1.5.9.2.4.1.0', className: 'btn-primary', icon: 'fa fa-pencil-alt' }, { name: 'delete', action: 'delete', demand: '1.3.6.1.4.1.33349.3.1.5.9.2.4.1.1', className: 'btn-danger', icon: 'fa fa-trash', when: 'r.statusConcept == StatusKeys.Active' },  { name: 'undelete', action: 'delete', demand: '1.3.6.1.4.1.33349.3.1.5.9.2.4.1.1', className: 'btn-success', icon: 'fa fa-trash-restore', when: 'r.statusConcept != StatusKeys.Active' } ]"
-    actions="[ { name: 'create', demand: '1.3.6.1.4.1.33349.3.1.5.9.2.4.1.0', sref: 'santedb-admin.data.material.create', className: 'btn-primary', icon: 'fa fa-plus-circle' }]"
     properties="[ 'name', 'classConcept', 'typeConcept', 'formConcept', 'statusConcept', 'updatedBy' ]">
 
 </entity-table>
 
+<!--    item-actions="[ { name: 'edit', sref: 'santedb-admin.data.material.edit', demand: '1.3.6.1.4.1.33349.3.1.5.9.2.4.1.0', className: 'btn-primary', icon: 'fa fa-pencil-alt' }, { name: 'delete', action: 'delete', demand: '1.3.6.1.4.1.33349.3.1.5.9.2.4.1.1', className: 'btn-danger', icon: 'fa fa-trash', when: 'r.statusConcept == StatusKeys.Active' },  { name: 'undelete', action: 'delete', demand: '1.3.6.1.4.1.33349.3.1.5.9.2.4.1.1', className: 'btn-success', icon: 'fa fa-trash-restore', when: 'r.statusConcept != StatusKeys.Active' } ]"
+    actions="[ { name: 'create', demand: '1.3.6.1.4.1.33349.3.1.5.9.2.4.1.0', sref: 'santedb-admin.data.material.create', className: 'btn-primary', icon: 'fa fa-plus-circle' }]"
+-->
 </div>
