@@ -22,3 +22,7 @@ The packaging instructions have been included in a `pack.bat` file, in order to 
 4. Run `pack.bat keyfile` , for example `pack.bat mykey`
 
 You can use a Microsoft Authenticode Certificate or a certificate issued by the SanteDB Community Certificate Authority. See [Publishing Your Applet](https://help.santesuite.org/santedb/extending-santedb/applets/applet-sdk/packaging-applets#publishing-your-applet)
+
+## Localization
+
+You can follow the [SanteDB Wiki Localization](https://help.santesuite.org/developers/applets/localization) tutorial to understand how applets are localized. If you'd like to localize this project you can contribute to the [SanteDB Core Applets Pontoon Page](https://pontoon.santesuite.net/projects/santedb-core-applets/).
