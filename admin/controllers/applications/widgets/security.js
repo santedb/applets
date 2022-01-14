@@ -21,7 +21,7 @@ angular.module('santedb').controller('EditApplicationSecurityController', ["$sco
      * @summary Reset invalid logins
      */
      $scope.resetInvalidLogins = async function(application) {
-        if(!confirm(SanteDB.locale.getString("ui.admin.devices.invalidLogin.reset")))
+        if(!confirm(SanteDB.locale.getString("ui.admin.applications.invalidLogin.reset")))
             return;
 
         try {

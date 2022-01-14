@@ -307,3 +307,15 @@ SanteDBWrapper.prototype.display = new function () {
         };
 
 };
+
+
+// Initialize the MermaidAPI
+mermaid.mermaidAPI.initialize({
+    "theme": "default",
+    flowchart: {
+        width: '100%',
+        useMaxWidth: false,
+        htmlLabels: true    
+    },
+    securityLevel: 'loose'
+});

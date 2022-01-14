@@ -477,7 +477,7 @@ function APIWrapper(_config) {
     this.deleteAsync = function (configuration) {
         return new Promise(function (fulfill, reject) {
             var hdr = configuration.headers || {};
-            hdr["X-Delete-Mode"] = configuration.mode || "OBSOLETE";
+            hdr["X-Delete-Mode"] = configuration.mode;
             $.ajax({
                 method: 'DELETE',
                 url: _config.base + configuration.resource + (configuration.id ? (_config.idByQuery ? "?_id=" + configuration.id : "/" + configuration.id) : ""),
@@ -947,7 +947,7 @@ function ResourceWrapper(_config) {
         */
     this.insertAsync = function (data, upstream, state) {
 
-        if (data.$type !== _config.resource && data.$type !== `${_config.resource}Info`)
+        if (data.$type !== _config.resource && data.$type !== `${_config.resource}Info` && data.$type !== `${_config.resource}Definition`)
             throw new Exception("ArgumentException", "error.invalidType", `Invalid type, resource wrapper expects ${_config.resource} however ${data.$type} specified`);
 
         var headers = {
@@ -1259,10 +1259,10 @@ function ResourceWrapper(_config) {
         if (_config.viewModel)
             headers["X-SanteDB-ViewModel"] = _config.viewModel;
 
-        if(upstream) {
+        if (upstream) {
             headers["X-SanteDB-Upstream"] = true;
         }
-    
+
         return _config.api.deleteAsync({
             headers: headers,
             id: id,
@@ -1288,14 +1288,45 @@ function ResourceWrapper(_config) {
         if (_config.viewModel)
             headers["X-SanteDB-ViewModel"] = _config.viewModel;
 
-            if(upstream) {
-                headers["X-SanteDB-Upstream"] = true;
-            }
-    
+        if (upstream) {
+            headers["X-SanteDB-Upstream"] = true;
+        }
+
         return _config.api.deleteAsync({
             headers: headers,
             id: id,
             mode: "CANCEL",
+            state: state,
+            resource: _config.resource
+
+        });
+    };
+
+    
+    /**
+        * @method cancelAsync
+        * @memberof ResourceWrapper
+        * @summary Performs an obsolete on the specified object
+        * @description An obsolete differs from a delete in that a cancel triggers a state change from NORMAL>OBSOLETE
+        * @param {string} id The unique identifier for the object to be cancelled
+        * @param {any} state A unique state object which is passed back to the caller
+        * @returns {Promise} The promise for the operation
+        */
+     this.obsoleteAsync = function (id, upstream, state) {
+        var headers = {
+            Accept: _config.accept
+        };
+        if (_config.viewModel)
+            headers["X-SanteDB-ViewModel"] = _config.viewModel;
+
+        if (upstream) {
+            headers["X-SanteDB-Upstream"] = true;
+        }
+
+        return _config.api.deleteAsync({
+            headers: headers,
+            id: id,
+            mode: "OBSOLETE",
             state: state,
             resource: _config.resource
 
@@ -1332,10 +1363,10 @@ function ResourceWrapper(_config) {
         else
             url = `${_config.resource}/${id}/${property}`;
 
-            if(upstream) {
-                headers["X-SanteDB-Upstream"] = true;
-            }
-    
+        if (upstream) {
+            headers["X-SanteDB-Upstream"] = true;
+        }
+
         return _config.api.getAsync({
             headers: headers,
             query: query,
@@ -1374,10 +1405,10 @@ function ResourceWrapper(_config) {
         else
             url = `${_config.resource}/${id}/${property}`;
 
-        if(upstream) {
+        if (upstream) {
             headers["X-SanteDB-Upstream"] = true;
         }
-    
+
         return _config.api.postAsync({
             headers: headers,
             data: data,
@@ -1420,10 +1451,10 @@ function ResourceWrapper(_config) {
         else
             url = `${_config.resource}/${id}/${property}`;
 
-        if(upstream) {
+        if (upstream) {
             headers["X-SanteDB-Upstream"] = true;
         }
-    
+
         return _config.api.deleteAsync({
             headers: headers,
             id: associatedId,
@@ -1469,10 +1500,10 @@ function ResourceWrapper(_config) {
         else
             url += `/${associatedId}`;
 
-            if(upstream) {
-                headers["X-SanteDB-Upstream"] = true;
-            }
-    
+        if (upstream) {
+            headers["X-SanteDB-Upstream"] = true;
+        }
+
         return _config.api.getAsync({
             query: query,
             headers: headers,
@@ -1482,18 +1513,18 @@ function ResourceWrapper(_config) {
         });
     }
 
-     /**
-     * @method invokeOperationAsync
-     * @memberof ResourceWrapper
-     * @summary Invokes the specified method
-     * @param {string} id The identifier of the container (null if global execute)
-     * @param {string} operation The operation you want to execute
-     * @param {any} parameters The parameters to the operation being executes (example: { clear: true, softFind: true })
-     * @param {bool} upstream True if the operation shold be executed opstream 
-     * @param {object} state A tracking state to send to the callback
-     * @returns {Promise} A promise which is fulfilled when the request is complete
-     */
-      this.invokeOperationAsync = function (id, operation, parameters, upstream, state) {
+    /**
+    * @method invokeOperationAsync
+    * @memberof ResourceWrapper
+    * @summary Invokes the specified method
+    * @param {string} id The identifier of the container (null if global execute)
+    * @param {string} operation The operation you want to execute
+    * @param {any} parameters The parameters to the operation being executes (example: { clear: true, softFind: true })
+    * @param {bool} upstream True if the operation shold be executed opstream 
+    * @param {object} state A tracking state to send to the callback
+    * @returns {Promise} A promise which is fulfilled when the request is complete
+    */
+    this.invokeOperationAsync = function (id, operation, parameters, upstream, state) {
 
 
         if (!operation)
@@ -1502,7 +1533,7 @@ function ResourceWrapper(_config) {
         var headers = {
             Accept: _config.accept
         };
-        if (_config.viewModel) 
+        if (_config.viewModel)
             headers["X-SanteDB-ViewModel"] = _config.viewModel;
 
         // Prepare path
@@ -1515,14 +1546,14 @@ function ResourceWrapper(_config) {
             url = `${_config.resource}/${id}/$${operation}`;
 
 
-        if(upstream) {
+        if (upstream) {
             headers["X-SanteDB-Upstream"] = true;
         }
-    
+
         // Prepare parameters object 
         var requestParms = { parameter: [] };
-        if(parameters) {
-            Object.keys(parameters).forEach(p=>requestParms.parameter.push({ name: p, value: parameters[p] }));
+        if (parameters) {
+            Object.keys(parameters).forEach(p => requestParms.parameter.push({ name: p, value: parameters[p] }));
         }
 
         return _config.api.postAsync({
@@ -2465,9 +2496,31 @@ function SanteDBWrapper() {
         /**
             * @type {ResourceWrapper}
             * @memberof SanteDBWrapper.ResourceApi
+            * @summary Represents the PubSubChannel Resource
+            */
+        this.pubSubChannel = new ResourceWrapper({
+            accept: "application/json",
+            resource: "PubSubChannel",
+            api: _ami
+        });
+
+        /**
+        * @type {ResourceWrapper}
+        * @memberof SanteDBWrapper.ResourceApi
+        * @summary Represents the PubSubSubscription Resource
+        */
+        this.pubSubSubscription = new ResourceWrapper({
+            accept: "application/json",
+            resource: "PubSubSubscription",
+            api: _ami
+        });
+
+        /**
+            * @type {ResourceWrapper}
+            * @memberof SanteDBWrapper.ResourceApi
             * @summary Represents the Patient Resource
             */
-         this.extensionType = new ResourceWrapper({
+        this.extensionType = new ResourceWrapper({
             accept: _viewModelJsonMime,
             resource: "ExtensionType",
             api: _hdsi
@@ -2850,7 +2903,7 @@ function SanteDBWrapper() {
          * @memberOf SanteDBWrapper.resources
          * @summary Wrapper for dispatch queue management API
          */
-         this.dispatcherQueue = new ResourceWrapper({
+        this.dispatcherQueue = new ResourceWrapper({
             resource: "DispatcherQueueInfo",
             accept: "application/json",
             api: _ami
@@ -3659,9 +3712,9 @@ function SanteDBWrapper() {
             try {
                 var retVal = __SanteDBAppService.GetString(stringId);
 
-                if(retVal) {
-                    retVal = retVal.replace(/(\{.*?\})/ig, function(s) {
-                        if(typeof s === 'string' && parameters) {
+                if (retVal) {
+                    retVal = retVal.replace(/(\{.*?\})/ig, function (s) {
+                        if (typeof s === 'string' && parameters) {
                             return parameters[s.substring(1, s.length - 1)];
                         }
                         else {

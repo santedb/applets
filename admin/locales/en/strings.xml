@@ -62,17 +62,24 @@
     <string name="ui.admin.devices.lastAuthenticationTime">Last Auth</string>
     <string name="ui.admin.devices.state">Status</string>
     <string name="ui.admin.devices.updatedBy">Last Update</string>
-
+    <string name="ui.admin.devices.secret.reset">Are you sure you want to set this device's secret? (the device may need to be re-configured after this action)</string>
+    <string name="ui.admin.devices.confirmUnlock">Are you sure you wish to unlock this device account?</string>
+    <string name="ui.admin.devices.confirmLock">Are you sure you wish to lock this device account?</string>
+    <string name="ui.admin.devices.invalidLogin.reset">Are you sure you wish to reset this device invalid login attempts counter?</string>
     <!-- Strings for Applications -->
     <string name="ui.admin.applications.name">Application Name</string>
     <string name="ui.admin.applications.lastAuthenticationTime">Last Auth</string>
     <string name="ui.admin.applications.state">Status</string>
     <string name="ui.admin.applications.updatedBy">Last Update</string>
+    <string name="ui.admin.applications.secret.reset">Are you sure you want to set this applications's secret? (the device may need to be re-configured after this action)</string>
     <string name="ui.admin.applications.edit.core.title">Core Application Properties</string>
     <string name="ui.admin.applications.edit.security.title">Security Properties</string>
     <string name="ui.admin.applications.edit.policy.title">Associated Policies</string>
     <string name="ui.admin.applications.edit.demographics.title">Extended Properties</string>
     <string name="ui.admin.applications.edit.security.neverLoggedIn">Never Authenticated</string>
+    <string name="ui.admin.applications.confirmLock">Are you sure you want to lock out this application?</string>
+    <string name="ui.admin.applications.confirmUnlock">Are you sure you want to unlock this application?</string>
+    <string name="ui.admin.applications.invalidLogin.reset">Are you sure you want to reset the invalid authentications for this application?</string>
 
     <!-- Provenance Strings -->
     <string name="ui.admin.provenance.info">Primary Identity</string>
@@ -217,7 +224,8 @@
     <string name="org.santedb.widget.admin.panel.device.security">Security Properties</string>
     <string name="org.santedb.widget.admin.panel.device.extended">Extended Properties</string>
     <string name="org.santedb.widget.admin.panel.device.policies">Assigned Policies</string>
-  
+    <string name="org.santedb.widget.admin.tab.device.core">Device Profile</string>
+    <string name="org.santedb.widget.admin.tab.applications.core">Application Profile</string>
 
     <!-- Bug Reporting -->
     <string name="ui.admin.bug.user">Submitter</string>
@@ -238,4 +246,12 @@
     <string name="ui.admin.queue.contents.name">Queue Path</string>
     <string name="ui.admin.queue.contents.size">Waiting Messages</string>
 
+    <!-- Pub/Sub Management -->
+    <string name="ui.admin.pubsub.disable.confirm">Are you sure you want to disable this subscription? The remote endpoint will stop receiving notifications from this instance of SanteDB</string>
+    <string name="ui.admin.pubsub.enable.confirm">Are you sure you want to enable this subscription? The remote endpoint will begin receiving notifications from this instance of SanteDB</string>
+    <string name="ui.admin.pubsub.delete.confirm">Are you sure you want to delete this subscription?</string>
+    <string name="ui.admin.pubsub.save.success">Pub-sub channel {name} was saved successfully</string>
+    <string name="ui.admin.pubsub.save.error">Pub-sub channel {name} failed save : {reason}</string>
+
+    
 </resources>

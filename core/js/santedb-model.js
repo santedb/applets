@@ -18859,7 +18859,7 @@ const EntityRelationshipTypeKeys = {
 	 *             Referenced entities            
 	 */
 	EquivalentEntity : '395f4edf-5d5d-4950-9f5e-f827f72e4b32',
-}  // EntityRelationshipTypeKeys 
+}  // EntityRelationshipTypeKeys  
 // SanteDB.Core.Model.Constants.StatusKeys, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
 // if(!StatusKeys)
 /**
@@ -19695,7 +19695,7 @@ const NullReasonKeys = {
 	Masked : '9b16bf12-073e-4ea4-b6c5-e1b93e8fd490',
 }  // NullReasonKeys 
 
-EmptyGuid = "00000000 - 0000 - 0000 - 0000 - 000000000000";
+EmptyGuid = "00000000-0000-0000-0000-000000000000";
 
 /**
 * @class
