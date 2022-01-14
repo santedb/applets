@@ -264,7 +264,7 @@
       <string name="ui.model.job.tag">Version</string>
       <string name="ui.model.job.state">Current State</string>
       <string name="ui.model.job.lastRun">Last Run</string>
-
+      <string name="ui.model.job.schedule">Schedule / Repeat</string>
       <string name="ui.model.act.template">Template</string>
       <string name="ui.model.act.typeConcept">Type</string>
       <string name="ui.model.act.actTime">Timestamp</string>

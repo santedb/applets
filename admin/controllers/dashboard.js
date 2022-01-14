@@ -29,6 +29,10 @@ angular.module('santedb').controller('DashboardController', ["$scope", "$rootSco
         yesterday : {
             'from-date' : new Date().yesterday(),
             'to-date': new Date()
+        },
+        dateRange : {
+            'from-date' : new Date().yesterday(),
+            'to-date': new Date()
         }
     };
    

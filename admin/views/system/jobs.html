@@ -14,8 +14,8 @@
         type="JobInfo"
         search-field="name"
         i18n-prefix="'ui.model.job.'"
-        properties="[ 'name', 'tag', 'state', 'lastRun' ]"
-        render="{ state: 'renderState', lastRun: 'renderLastRun' }"
+        properties="[ 'name', 'schedule', 'state', 'lastRun' ]"
+        render="{ schedule: 'renderSchedule', state: 'renderState', lastRun: 'renderLastRun' }"
         item-actions="[ { name: 'run', action: 'runJob', demand: '1.3.6.1.4.1.33349.3.1.5.9.2.10', className: 'btn-primary', icon: 'fa fa-play', when : 'r.state != \'Running\'' }, { name: 'cancel', action: 'cancelJob', demand: '1.3.6.1.4.1.33349.3.1.5.9.2.10', className: 'btn-danger', icon: 'fa fa-stop', when : 'r.canCancel &amp;&amp; r.state == \'Running\'' } ]">
     </entity-table>
 
