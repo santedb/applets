@@ -46,7 +46,8 @@ function APIWrapper(_config) {
 
     /**
      * @method
-     * @summary Resolves all $ref in the object with the $id data
+     * @private
+     * @summary Resolves all $ref in the object with the $id data ensuring the model is ready for display
      * @param {any} object The object which should be resolved
      */
     function _resolveObjectRefs(object, referenceDictionary) {
@@ -81,7 +82,8 @@ function APIWrapper(_config) {
 
     /**
      * @method
-     * @summary Gets the base url
+     * @public
+     * @summary Gets the base url of the API
      * @memberof APIWrapper
      */
     this.getUrl = function () {
@@ -816,6 +818,9 @@ function APIWrapper(_config) {
 * @param {any} _config The configuration object
 * @param {string} _config.resource The resource that is being wrapped
 * @param {APIWrapper} _config.api The API to use for this resource
+* @description A static instance of this API can be accessed on the SanteDB.resource property. This provides a convenient way to use this wrapper with all the 
+*               built-in SanteDB resource types. Constructing this class should only be used when you are accessing a custom resource or extended resource which is 
+*               not in the default SanteDB REST API.
 */
 function ResourceWrapper(_config) {
 
@@ -836,7 +841,21 @@ function ResourceWrapper(_config) {
         * @param {string} viewModel A unique state object which is passed back to the caller
         * @param {any} parms Extra parameters to pass to the get function
         * @param {any} state A unique state object which is passed back to the caller
+        * @param {boolean} upstream True if the get should be directly submitted to the upstream iCDR server
         * @returns {Promise} The promise for the operation
+        * @example Fetch a patient by ID
+        *   async function fetchPatient(id) {
+        *       try {
+        *           // fetch from local dCDR repository
+        *           var local = await SanteDB.resource.patient.getAsync(id, "_full", null, false);
+        *           // fetch from remote dCDR repository
+        *           var remote = await SanteDB.resource.patient.getAsync(id, "_fall", null, true);
+        *           console.info({ "local" : local, "remote" : remote });
+        *       }
+        *       catch(e) {
+        *           console.error(e);
+        *       }
+        *   }
         */
     this.getAsync = function (id, viewModel, query, upstream, state) {
 
@@ -888,7 +907,25 @@ function ResourceWrapper(_config) {
         * @param {any} query The HDSI query to filter on
         * @param {any} viewModel The view model definition to use when loading
         * @param {any} state A unique state object which is passed back to the caller
+        * @param {boolean} upstream True if the query should be directly submitted to the upstream iCDR server
         * @returns {Promise} The promise for the operation
+        * @description This method will execute a full HDSI or AMI query against the SanteDB REST API. The HDSI query {@link https://help.santesuite.org/developers/service-apis/health-data-service-interface-hdsi/hdsi-query-syntax}
+        *                is represented as a JavaScript object with the property path being the key and filter value being the value. Multiple values for the filter property can be expressed as an array. The 
+        *                result of this is a {@link Bundle}.
+        * @example Query for John or Jane Smith
+        *   async function queryForJohnOrJane() {
+        *       try {
+        *           var results = await SanteDB.resources.patient.findAsync({
+        *               "name.component[Given].value" : [ 'John', 'Jane' ],
+        *               "name.component[Family].value" : 'Smith'
+        *           }, 'full', false);
+        *           console.info("Found " + results.total + " matching results");
+        *           results.resource.forEach(r => console.info(r)); // output results
+        *       }
+        *       catch(e) {
+        *           console.error(e);
+        *       }
+        *   }
         */
     this.findAsync = function (query, viewModel, upstream, state) {
 
@@ -943,7 +980,33 @@ function ResourceWrapper(_config) {
         * @summary Inserts a specific instance of the wrapped resource
         * @param {any} data The data / resource which is to be created
         * @param {any} state A unique state object which is passed back to the caller
+        * @param {boolean} upstream True if the registration should be directly submitted to the upstream iCDR server
         * @returns {Promise} The promise for the operation
+        * @description When inserting data into the CDR, it is important that the object passed into {@param data} has an appropriate $type which matches the type of data being 
+        *               sent. This check is done to ensure that a {@link Patient} is not submitted to the {@link Act} endpoint.
+        * @example Register a new Place
+        * async function registerNewPlace(name) {
+        *   try {
+        *       var place = await SanteDB.resources.place.insertAsync(new Place({
+        *           classConcept: EntityClassKeys.CityOrTown,
+        *           name : {    
+        *               OfficialRecord : [
+        *                   {
+        *                       component : {   
+        *                           $other : [
+        *                               name
+        *                           ]
+        *                       }
+        *                   }
+        *               ]
+        *           }
+        *       }));
+        *       console.info("Registered place successfully!", place);
+        *   }
+        *   catch (e) {
+        *       console.error(e);
+        *   }
+        * }
         */
     this.insertAsync = function (data, upstream, state) {
 
@@ -986,9 +1049,12 @@ function ResourceWrapper(_config) {
      * @summary Sends a patch to the service
      * @param {string} id The identifier of the object to patch
      * @param {string} etag The e-tag to assert
+     * @param {boolean} upstream True if the registration should be directly submitted to the upstream iCDR server
      * @param {Patch} patch The patch to be applied
      * @param {any} state A unique state object which is passed back to the caller
      * @returns {Promise} The promise for the operation
+     * @description The patching operation is used to update a portion of the resource without subimtting the entirety of the object to the dCDR or iCDR 
+     *               server ({@link https://help.santesuite.org/developers/service-apis/health-data-service-interface-hdsi/patching})
      */
     this.patchAsync = function (id, etag, patch, upstream, state) {
         if (patch.$type !== "Patch")
@@ -1020,6 +1086,7 @@ function ResourceWrapper(_config) {
         * @param {string} id The unique identifier for the object to be updated
         * @param {any} data The data / resource which is to be updated
         * @param {any} state A unique state object which is passed back to the caller
+        * @param {boolean} upstream True if the update should be directly submitted to the upstream iCDR server
         * @returns {Promise} The promise for the operation
         */
     this.updateAsync = function (id, data, upstream, state) {
@@ -1059,6 +1126,7 @@ function ResourceWrapper(_config) {
     * @summary Performs an obsolete (delete) operation on the server
     * @param {string} id The unique identifier for the object to be deleted
     * @param {any} state A unique state object which is passed back to the caller
+    * @param {boolean} upstream True if the delete should be directly submitted to the upstream iCDR server
     * @returns {Promise} The promise for the operation
     */
     this.deleteAsync = function (id, upstream, state) {
@@ -1088,6 +1156,7 @@ function ResourceWrapper(_config) {
     * @summary Performs the specified LOCK operation on the server
     * @param {string} id The unique identifier for the object on which the invokation is to be called
     * @param {any} state A unique state object which is passed back to the caller
+    * @param {boolean} upstream True if the registration should be directly submitted to the upstream iCDR server
     * @returns {Promise} The promise for the operation
     */
     this.lockAsync = function (id, upstream, state) {
@@ -1116,6 +1185,7 @@ function ResourceWrapper(_config) {
     * @summary Performs the specified UNLOCK operation on the server
     * @param {string} id The unique identifier for the object on which the invokation is to be called
     * @param {any} state A unique state object which is passed back to the caller
+    * @param {boolean} upstream True if the registration should be directly submitted to the upstream iCDR server
     * @returns {Promise} The promise for the operation
     */
     this.unLockAsync = function (id, upstream, state) {
@@ -1144,7 +1214,34 @@ function ResourceWrapper(_config) {
     * @summary Performs the specified CHECKOUT operation on the server
     * @param {string} id The unique identifier for the object on which the invokation is to be called
     * @param {any} state A unique state object which is passed back to the caller
+    * @param {boolean} upstream True if the registration should be directly submitted to the upstream iCDR server
     * @returns {Promise} The promise for the operation
+    * @description The checkout and {@link checkinAsync} methods  are used to control concurrent editing of a resource. It is typically recommended to checkout a resource when a user 
+    *               begins editing an object and perform a checkin when the operation is complete. The iCDR and dCDR will do this automatically when a PUT request is submitted, however
+    *               this occurs after the data is submitted. By performing interactive CHECKOUT and CHECKIN commands you can add an indicator to your user interface to inform th euser
+    *               that another user is editing the object.
+    * @example Checkout / Update / Checkin
+    * 
+    * async loadPatient(id) {
+    *   try {
+    *       await SanteDB.resource.patient.checkoutAsync(id); // attempt to get a lock - this will throw an exception if unsuccessful
+    *       var patient = await SanteDB.resources.patient.getAsync(id); // get the latest version no we're checked out
+    *       $timeout(s => s.patient = patient); // Add to scope    
+    *   }
+    *   catch(e) {
+    *       $timeout(s => s.isLockedOut = true);
+    *   }
+    * }
+    * 
+    * async savePatient(id, patient) {
+    *   try {
+    *       var patient = await SanteDB.resources.patient.updateAsync(id, patient);
+    *       await SanteDB.resources.checkinAsync(id);
+    *   }
+    *   catch(e) {
+    *       console.error(e);
+    *   }
+    * }
     */
     this.checkoutAsync = function (id, upstream, state) {
 
@@ -1172,6 +1269,7 @@ function ResourceWrapper(_config) {
     * @summary Performs the specified CHECKIN operation on the server
     * @param {string} id The unique identifier for the object on which the invokation is to be called
     * @param {any} state A unique state object which is passed back to the caller
+    * @param {boolean} upstream True if the registration should be directly submitted to the upstream iCDR server
     * @returns {Promise} The promise for the operation
     */
     this.checkinAsync = function (id, upstream, state) {
@@ -1197,10 +1295,13 @@ function ResourceWrapper(_config) {
     /**
     * @method touchAsync
     * @memberof ResourceWrapper
-    * @summary Performs a TOUCH operation on the specified resource (updating it's creation time)
+    * @summary Performs a TOUCH operation on the specified resource (updating it's modfiedOn time)
     * @param {string} id The unique identifier for the object on which the invokation is to be called
+    * @param {boolean} upstream True if the registration should be directly submitted to the upstream iCDR server
     * @param {any} state A unique state object which is passed back to the caller
     * @returns {Promise} The promise for the operation
+    * @description The touch method is useful when a user or administrator wants to force the modifiedOn time to be changed on the dCDR or iCDR service. Any subsequenet synchronization
+    *                request will see the object as changed, and will re-download the resource. This is especially useful if the data was updated using the database and SQL.
     */
     this.touchAsync = function (id, state) {
 
@@ -1225,6 +1326,7 @@ function ResourceWrapper(_config) {
    * @param {string} id The unique identifier for the object on which the invokation is to be called
    * @param {any} state A unique state object which is passed back to the caller
    * @returns {Promise} The promise for the operation
+   * @description The copy method is used by the dCDR to download a resource which has been fetched from an upstream iCDR server and create a local dCDR instance of the object.
    */
     this.copyAsync = function (id, state) {
 
@@ -1249,6 +1351,7 @@ function ResourceWrapper(_config) {
         * @description A nullify differs from a delete in that a nullify marks an object as "never existed"
         * @param {string} id The unique identifier for the object to be nullified
         * @param {any} state A unique state object which is passed back to the caller
+        * @param {boolean} upstream True if the registration should be directly submitted to the upstream iCDR server
         * @returns {Promise} The promise for the operation
         */
     this.nullifyAsync = function (id, upstream, state) {
@@ -1280,6 +1383,7 @@ function ResourceWrapper(_config) {
         * @param {string} id The unique identifier for the object to be cancelled
         * @param {any} state A unique state object which is passed back to the caller
         * @returns {Promise} The promise for the operation
+        * @param {boolean} upstream True if the registration should be directly submitted to the upstream iCDR server
         */
     this.cancelAsync = function (id, upstream, state) {
         var headers = {
@@ -1309,6 +1413,7 @@ function ResourceWrapper(_config) {
         * @summary Performs an obsolete on the specified object
         * @description An obsolete differs from a delete in that a cancel triggers a state change from NORMAL>OBSOLETE
         * @param {string} id The unique identifier for the object to be cancelled
+        * @param {boolean} upstream True if the registration should be directly submitted to the upstream iCDR server
         * @param {any} state A unique state object which is passed back to the caller
         * @returns {Promise} The promise for the operation
         */
@@ -1336,12 +1441,30 @@ function ResourceWrapper(_config) {
     /**
      * @method findAssociatedAsync
      * @memberof ResourceWrapper
-     * @summary Performs a find operation on an association
+     * @summary Performs a find operation on an associated object
      * @description Some resources allow you to chain queries which automatically scopes the results to the container
      * @param {string} id The identifier of the object whose children you want query 
      * @param {string} property The property path you would like to filter on 
      * @param {any} query The query you want to execute
+     * @param {boolean} upstream True if the registration should be directly submitted to the upstream iCDR server
      * @returns {Promise} A promise for when the request completes
+     * @description In the HDSI REST interface, an "associated" object is a sub-property or chained property on a parent resource. The resource has to support this type 
+     *               of relationship, and must have a registered child property. This method will allow the JavaScript API to access these chained resources. Like the findAsync
+     *              method, the result of this operation is usually a {@link Bundle}
+     * @example Get Groups a User belongs to
+     * async getGroups(userName) {
+     *  try {
+     *      var users = await SanteDB.resources.securityUser.findAsync({ "userName" : userName });
+     *      var userId = users.resource[0].id;
+     *      // Fetch the groups
+     *      var groups = await SanteDB.resources.securityUser.findAssociatedAsync(userId, 'groups');
+     *      console.info(groups.resource)
+     *  }
+     *  catch(e) {
+     *      console.error(e);
+     *  }
+     * }
+     * @see https://help.santesuite.org/developers/service-apis/health-data-service-interface-hdsi/http-request-verbs#associated-resources
      */
     this.findAssociatedAsync = function (id, property, query, upstream, state) {
 
@@ -1378,12 +1501,15 @@ function ResourceWrapper(_config) {
     /**
      * @method addAssociatedAsync
      * @memberof ResourceWrapper
-     * @summary Adds a new association to the specified parent object
+     * @summary Adds a new association to the specified parent object at the specified path
      * @param {string} id The identifier of the container
      * @param {string} property The associative property you want to add the value to
      * @param {any} data The data to be added as an associative object (note: Most resources require that this object already exist)
      * @param {any} state A stateful object for callback correlation
+     * @param {boolean} upstream True if the registration should be directly submitted to the upstream iCDR server
      * @returns {Promise} A promise which is fulfilled when the request is complete
+     * @see ResourceWrapper.findAssociatedAsync
+     * @see https://help.santesuite.org/developers/service-apis/health-data-service-interface-hdsi/http-request-verbs#associated-resources
      */
     this.addAssociatedAsync = function (id, property, data, upstream, state) {
 
@@ -1429,6 +1555,8 @@ function ResourceWrapper(_config) {
      * @param {any} state A state for correlating multiple requests
      * @param {Boolean} upstream True if the query should be sent to upstream service
      * @returns {Promise} A promise which is fulfilled when the request comletes
+     * @see ResourceWrapper.findAssociatedAsync
+     * @see https://help.santesuite.org/developers/service-apis/health-data-service-interface-hdsi/http-request-verbs#associated-resources
      */
     this.removeAssociatedAsync = function (id, property, associatedId, upstream, state) {
         if (!property)
@@ -1473,6 +1601,8 @@ function ResourceWrapper(_config) {
      * @param {string} associatedId The identifier of the sub-object to be retrieved
      * @param {any} state A state for correlating multiple requests
      * @returns {Promise} A promise which is fulfilled when the request comletes
+     * @see ResourceWrapper.findAssociatedAsync
+     * @see https://help.santesuite.org/developers/service-apis/health-data-service-interface-hdsi/http-request-verbs#associated-resources
      */
     this.getAssociatedAsync = function (id, property, associatedId, query, upstream, state) {
         if (!id)
@@ -1516,13 +1646,26 @@ function ResourceWrapper(_config) {
     /**
     * @method invokeOperationAsync
     * @memberof ResourceWrapper
-    * @summary Invokes the specified method
+    * @summary Invokes the specified method on the specified object
     * @param {string} id The identifier of the container (null if global execute)
     * @param {string} operation The operation you want to execute
     * @param {any} parameters The parameters to the operation being executes (example: { clear: true, softFind: true })
     * @param {bool} upstream True if the operation shold be executed opstream 
     * @param {object} state A tracking state to send to the callback
     * @returns {Promise} A promise which is fulfilled when the request is complete
+    * @description SanteDB's iCDR and dCDR HDSI interfaces allow for the invokation of operations ({@link https://help.santesuite.org/developers/service-apis/health-data-service-interface-hdsi/http-request-verbs#operations}). 
+    *               Operations aren't resources per-se, rather they are remote procedure calls where a caller can pass parameters to the operation. Invokable operations can be bound to specific instances 
+    *               (they operate on a single instance of an object, in which case the id parameter is required), or on a class (in which case id should be undefined).
+    * @example Start all Jobs
+    * async function startAllJobs() {
+    *   try {
+    *       var jobs = await SanteDB.resources.jobInfo.findAsync();
+    *       await Promise.all(jobs.resource.map(j => SanteDB.resources.jobInfo.invokeOperationAsync(j.id, "start")));
+    *   }
+    *   catch(e) {
+    *       console.error(e);
+    *   }
+    * }
     */
     this.invokeOperationAsync = function (id, operation, parameters, upstream, state) {
 
@@ -1694,6 +1837,7 @@ function SanteDBWrapper() {
         var jwsDataPattern = /^(.*?)\.(.*?)\.(.*?)$/;
 
         /**
+         * @memberof SanteDBWrapper.ApplicationApi
         * @summary Wraps native printing functionality for the host operating system
         */
         this.printView = function () {
@@ -1702,9 +1846,11 @@ function SanteDBWrapper() {
 
         /**
          * @summary Fetches sub-templates 
+         * @memberof SanteDBWrapper.ApplicationApi
          * @param {*} collection The participation or relationship property to be fetched
          * @param {*} parms The parameters to fill the template with
-         * @description In some templates, sub objects will have no $type, and just a reference to a template mnemonic
+         * @description In some templates, sub objects will have no $type, and just a reference to a template mnemonic. This method will take a template
+         *              object and will resolve these references to other templates. {@link https://help.santesuite.org/santedb/data-and-information-architecture/conceptual-data-model#templates}
          */
         async function getSubTemplates(collection, parms) {
             var promises = Object.keys(collection).map(function (key) {
@@ -1769,8 +1915,10 @@ function SanteDBWrapper() {
 
         /**
          * @method scanIdentifierAsync
-         * @summary Scans a barcode using @see scanBarcodeAsync however interprets the identifier rather than returning the raw data
+         * @memberof SanteDBWrapper.ApplicationApi
+         * @summary Scans a barcode using {@link scanBarcodeAsync} however interprets the identifier rather than returning the raw data
          * @returns {string} The interpreted barcode identifier information
+         * @see https://help.santesuite.org/developers/service-apis/health-data-service-interface-hdsi/digitally-signed-visual-code-api
          */
         this.scanIdentifierAsync = async function () {
             var data = await SanteDB.application.scanBarcodeAsync();
@@ -1797,6 +1945,8 @@ function SanteDBWrapper() {
          * @param {*} qrCodeData The QR Code data already scanned
          * @param {*} noValidate True if the barcode should not be validated
          * @param {*} upstream True if search upstream
+         * @description This method will use the barcode providers referenced to parse information from the barcode and will search the HDSI for the object which the 
+         *                barcode represents. This method works best with the SanteDB VRP API {@link https://help.santesuite.org/developers/service-apis/health-data-service-interface-hdsi/digitally-signed-visual-code-api}
          */
         this.searchByBarcodeAsync = async function (qrCodeData, noValidate, upstream) {
             try {
@@ -1852,10 +2002,19 @@ function SanteDBWrapper() {
          * @method addResourceViewer
          * @summary Adds a new resource state to let other apps know where to go to view a resource
          * @memberof SanteDBWrapper.ApplicationApi
-         * @param {string} resourceType The type of resource being viewed
+         * @param {string} resourceType The type of resource which the redirectCallback should be called for
          * @param {function} redirectCallback A function that directs to the appropriate state. Shoudl return true
-         * @example
-         * SanteDB.app.addResourceViewer("Patient", function(parms) { $state.transitionTo("my-view.patient". parms); return true; });
+         * @description Each redirectCallback is a function which accepts a state parameter (containing the current AngularJS state service) and a series of routing parameters. The
+         *               redirect callback should determine whether it can handle the passed entity and should perform the redirect and return true.
+         * @example Viewer for patients with no gender only
+         * SanteDB.app.addResourceViewer("Patient", 
+         *      function(state, parms) { 
+         *         if(!parms.genderConcept || parms.genderConcept == NullReasonKeys.NoInformation) {
+         *              state.transitionTo("my-view.patient". parms); 
+         *              return true; 
+         *          }
+         *          return false;
+         *      });
          */
         this.addResourceViewer = function (resourceType, redirectCallback) {
             if (!_resourceStates[resourceType])
@@ -1864,20 +2023,58 @@ function SanteDBWrapper() {
         }
 
         /**
-         * @method getIdentifierGenerator
+         * @method getResourceViewer
          * @summary Gets a generator if one is registered for the specified domain
          * @memberof SanteDBWrapper.ApplicationApi
-         * @param {string} resourceType The domain to get the generator for
+         * @param {string} resourceType The type of resource to retrieve the viewer for
+         * @example Redirect to any resource returned by the Entity API
+         * 
+         * async viewEntity(id) {
+         *  try {
+         *      var entity = await SanteDB.resources.entity.getAsync(id);
+         *      var viewer = SanteDB.application.getResourceViewer(entity.$type);
+         *      if(viewer) {
+         *          // we have a viewer so call it
+         *          viewer($state, entity)
+         *      }
+         *      else {
+         *          console.warn("Cannot find a viewer for this type of data");
+         *      }
+         *  }
+         *  catch(e) {
+         *      console.error(e);
+         *  }
+         * }
          */
         this.getResourceViewer = function (resourceType) {
             return _resourceStates[resourceType];
         }
 
         /**
-         * @summary Call the resource viewers
-         * @param {*} resourceType The type of resource
-         * @param {*} parms The parameters to pass
-         * @param {*} state The state host to use
+         * @method callResourceViewer
+         * @summary Call the resource viewer(s) which are registered for the specified type
+         * @memberof SanteDBWrapper.ApplicationApi
+         * @param {*} resourceType The type of resource to call the viewers for
+         * @param {*} parms The parameters to pass to the viewer (testing if they can handle the resource)
+         * @param {*} state The AngularJS state service to user
+         * @returns {boolean} True if the resource redirect was successful
+         * @example Redirect to appropriate resource handler for entity
+         * 
+         * async viewEntity(id) {
+         *  try {
+         *      var entity = await SanteDB.resources.entity.getAsync(id);
+         *      if(SanteDB.application.callResourceViewer(entity.$type, $state, entity))
+         *      {
+         *          console.info("Redirect successful!");
+         *      }
+         *      else {
+         *          console.warn("Can't find a resource handler", entity);
+         *      }    
+         *  }
+         *  catch(e) {
+         *      console.error(e);
+         *  }
+         * }
          */
         this.callResourceViewer = function (resourceType, state, parms) {
             var callList = _resourceStates[resourceType];
@@ -1890,9 +2087,13 @@ function SanteDBWrapper() {
 
         /**
          * @method addIdentifierClassifier
-         * @summary Adds a new classification map to the identifier 
+         * @summary Adds a new classification map for an  identifier 
+         * @memberof SanteDBWrapper.ApplicationApi
          * @param {string} domain The domain which is being classified
          * @param {RegExp} regexClassification The classification regex
+         * @description Whenever a random barcode is scanned, it could contain any number of fields and information. This function allows implementers to register a regular expression
+         *               which the SanteDB plugins can use to determine which domain a particular identifier scanned from an arbitrary data source might contain. 
+         * @see SanteDBWrapper.ApplicationApi.classifyIdentifier
          */
         this.addIdentifierClassifier = function (domain, regexClassification) {
             _idClassifiers[domain] = regexClassification;
@@ -1912,9 +2113,11 @@ function SanteDBWrapper() {
         /**
          * @method classifyIdentifier
          * @summary Attempts to guess the identifier domains to which an identifier belongs based on its format
+         * @memberof SanteDBWrapper.ApplicationApi
          * @description This method is useful when you're scanning an identifier and need to know which identity domain it may belong to
          * @param {string} value The value of the identifier
          * @returns {Array} An array of potential identity domains which the value could belong to
+         * @see SanteDBWrapper.ApplicationApi.addIdentifierClassifier
          */
         this.classifyIdentifier = function (value) {
             return Object.keys(_idClassifiers).filter(o => _idClassifiers[o].test(value));
@@ -1922,13 +2125,17 @@ function SanteDBWrapper() {
 
         /**
          * @method addIdentifierParser
+         * @memberof SanteDBWrapper.ApplicationApi
          * @summary Adds a new identifier parser
          * @param {string} domain The domain to which the parser belongs
-         * @param {function} parserCallback The callback function 
+         * @param {function} parserCallback The callback function used to parse the identifier
+         * @description Some identifiers scanned from barcodes may contain more than a simple identifier. For example, a WHO DDCC QR code contains other information about the 
+         *               patient such as basic demographics, vaccines, etc. This method allows SanteDB plugins to register and call custom parsing logic for an identity domain.
          * @example
          *  SanteDB.application.addIdentifierParser("DLN", function(dln, context) { 
          *      return dln.subString(0, 10);
          *  });
+         * @see SanteDBWrapper.ApplicationApi.getIdentifierParser
          */
         this.addIdentifierParser = function (domain, parserCallback) {
             _idParsers[domain] = parserCallback;
@@ -1936,9 +2143,10 @@ function SanteDBWrapper() {
 
         /**
          * @method getIdentifierParser
+         * @memberof SanteDBWrapper.ApplicationApi
          * @summary Retrieve identifier parser for the specified domain
          * @param {string} domain The domain to which the parser belongs
-         * @returns {function} The parser function
+         * @returns {function} The parser function which can be used to parse identifiers in the specified domain into their component parts
          */
         this.getIdentifierParser = function (domain) {
             return _idParsers[domain];
@@ -1950,6 +2158,8 @@ function SanteDBWrapper() {
          * @memberof SanteDBWrapper.ApplicationApi
          * @param {string} domain The domain which the generator will create identifiers for
          * @param {function} generatorCallback A function for the generator which returns the new identifier and (optionally) takes the entity for which the identifier is being generated
+         * @description An identifier generator function allows SanteDB common controls to generate new, unique identifiers based on custom identity domain logic. For example, if a user
+         *               wishes to expose to users an option to auto-generate a new unique registration # or input an exisitng one, this function would allow this capability.
          */
         this.addIdentifierGenerator = function (domain, generatorCallback) {
             _idGenerators[domain] = generatorCallback;
@@ -1967,7 +2177,7 @@ function SanteDBWrapper() {
 
         /**
          * @method parseException
-         * @summary Parses an exception string into a local object
+         * @summary Parses an exception string into a {@link Exception} object
          * @memberof SanteDBWrapper.ApplicationApi
          * @param {string} exceptionString The exception string to be parsed
          */
@@ -1993,7 +2203,7 @@ function SanteDBWrapper() {
         }
         /**
          * @method getAppletAssetAsync
-         * @summary Gets an applet object 
+         * @summary Gets an applet manifest object from the server
          * @param {string} appletId The identifier of the applet from which you want to fetch something
          * @param {string} assetPath The path within that asset to the content
          * @memberof SanteDBWrapper.ApplicationApi
@@ -2044,10 +2254,13 @@ function SanteDBWrapper() {
             return strength;
         }
         /**
-         * @summary Get the specified widgets
+         * @summary Get the specified widgets for the specified context
          * @param context The context to fetch widgets for
          * @memberof SanteDBWrapper.ApplicationApi
          * @method getWidgetsAsync
+         * @param type The type of widget to fetch registration information for (panel or tab)
+         * @description This function allows rendering controls to fetch the widgets registered by all plugins for a particular context. 
+         * @see https://help.santesuite.org/developers/applets/assets/html-widgets
          */
         this.getWidgetsAsync = function (context, type) {
             return new Promise(function (fulfill, reject) {
@@ -2085,7 +2298,7 @@ function SanteDBWrapper() {
             __SanteDBAppService.Close();
         }
         /**
-         * @summary Instructs the back end service to perform a system upgrade
+         * @summary Instructs the back-end service to perform a system upgrade
          * @returns {Promise} A promise representing the fulfillment or rejection of update
          * @method doUpdateAsync
          * @memberof SanteDBWrapper.ApplicationApi
@@ -2097,7 +2310,7 @@ function SanteDBWrapper() {
             });
         }
         /**
-         * @summary Instructs the back end service to perform a compact
+         * @summary Instructs the back-end service to perform a compact
          * @param {boolean} takeBackup When true, instructs the back end to take a backup of data
          * @returns {Promise} A promise representing the fulfillment or rejection of update
          * @method compactAsync
@@ -2111,7 +2324,7 @@ function SanteDBWrapper() {
             });
         }
         /**
-         * @summary Instructs the back end service to perform a purge of all data
+         * @summary Instructs the back-end service to perform a purge of all data
          * @param {boolean} takeBackup True if the back-end should take a backup before purge
          * @returns {Promise} The promise representing the fulfillment or rejection
          * @method purgeAsync
@@ -2125,7 +2338,7 @@ function SanteDBWrapper() {
             });
         }
         /**
-         * @summary Instructs the backend to restore the data from a backup
+         * @summary Instructs the backend to restore the data from the most recent backup
          * @returns {Promise} The promise representing the fulfillment or rejection
          * @method restoreAsync
          * @memberof SanteDBWrapper.ApplicationApi
@@ -2136,9 +2349,9 @@ function SanteDBWrapper() {
             });
         }
         /**
-         * @summary Create a backup of current assets
+         * @summary Create a backup of current assets on the dCDR (databases, applets, etc.)
          * @returns {Promise}
-         * @param {boolean} makePublic Make the backup public 
+         * @param {boolean} makePublic Instruct the API to store the back in an unsecured, public location (for example, when migrating to another tablet) 
          * @method createBackupAsync
          * @memberof SanteDBWrapper.ApplicationApi
          */
@@ -2284,6 +2497,7 @@ function SanteDBWrapper() {
          * @memberof SanteDBWrapper.ApplicationApi
          * @returns {string} The HTML content of the input form for the specified template
          * @param {string} templateId The id of the template for which HTML input should be gathered
+         * @description This method allows a plugin to resolve a template identifier (like: entity.tanzania.child) to an actual HTML input form
          */
         this.resolveTemplateForm = function (templateId) {
             return _resources.template.getAssociatedAsync(templateId, "ui", "form.html");
@@ -2294,6 +2508,7 @@ function SanteDBWrapper() {
          * @memberof SanteDBWrapper.ApplicationApi
          * @returns {string} The HTML content of the view for the specified template
          * @param {string} templateId The id of the template for which HTML view should be gathered
+         * @description This method allows a plugin to resolve a template view (to display informaton from the template)
          */
         this.resolveTemplateView = function (templateId) {
             return _resources.template.getAssociatedAsync(templateId, "ui", "view.html");
@@ -2353,6 +2568,9 @@ function SanteDBWrapper() {
          * @method scanBarcode
          * @memberof SanteDBWrapper.ApplicationApi
          * @returns {string} The scanned barcode
+         * @description This method will call the local operating system's implementation of the camera function to scan and decode a barcode. If using SanteDB
+         *               dCDR Web Access Gateway or dCDR Disconnected Gateway then the HTML5 camera object is used, on Android this calls the Android system camera
+         *               and ZXing.
          */
         this.scanBarcodeAsync = function () {
             try {
@@ -2374,6 +2592,8 @@ function SanteDBWrapper() {
          * @memberof SanteDBWrapper.ApplicationApi
          * @summary Show a toast to the user
          * @param {string} text The text of the toast
+         * @description This method is used to trigger an operating system TOAST. If you're using the AngularJS interface (like in the administrative or SanteEMR framework)
+         *               it is recommended to use the toastr interface.
          */
         this.showToast = function (text) {
             try {
@@ -2390,6 +2610,7 @@ function SanteDBWrapper() {
          * @param {*} jwsData The JSON Web Signature data to search
          * @param {boolean} validateSignature True if the service should validate the data
          * @param {boolean} upstream True if the search should be performed against the upstream server
+         * @see https://help.santesuite.org/developers/service-apis/health-data-service-interface-hdsi/digitally-signed-visual-code-api
          */
         this.ptrSearchAsync = function (jwsData, validateSignature, upstream) {
             try {
@@ -2432,6 +2653,8 @@ function SanteDBWrapper() {
      * @property {ResourceWrapper} observation Functions for interacting with {@link Observation}
      * @property {ResourceWrapper} organization Functions for interacting with {@link Organization}
      * @property {ResourceWrapper} patient Functions for interacting with {@link Patient}
+     * @property {ResourceWrapper} entityRelationship Functions for interacting with {@link EntityRelationship}
+     * @property {ResourceWrapper} entity Functions for interacting with {@link Entity}
      * @property {ResourceWrapper} place Functions for interacting with {@link Place}
      * @property {ResourceWrapper} provider Functions for interacting with {@link Provider}
      * @property {ResourceWrapper} queue Functions for interacting with {@link Queue}
@@ -2439,7 +2662,16 @@ function SanteDBWrapper() {
      * @property {ResourceWrapper} substanceAdministration Functions for interacting with {@link SubstanceAdministration}
      * @property {ResourceWrapper} task Functions for interacting with {@link Task}
      * @property {ResourceWrapper} tickle Functions for interacting with {@link Tickle}
+     * @property {ResourceWrapper} pubSubSubscription Functions for interacting with {@link SubscriptionDefinition}
+     * @property {ResourceWrapper} pubSubChannel Functions for interacting with {@link PubSubChannel}
      * @property {ResourceWrapper} userEntity Functions for interacting with {@link UserEntity}
+     * @property {ResourceWrapper} extensionType Functions for interacting with {@link ExtensionType}
+     * @property {ResourceWrapper} matchConfiguration Functions for interacting with {@link MatchConfiguration}
+     * @property {ResourceWrapper} configuration Functions for interacting with {@link Configuration}
+     * @property {ResourceWrapper} dispatcherQueue Functions for interacting with {@link DispatcherQueueInfo}
+     * @property {ResourceWrapper} sessionInfo Functions for interacting with {@link SessionInfo}
+     * @property {ResourceWrapper} probe Functions for interacting with {@link Probe}
+     * @property {ResourceWrapper} queue Functions for interacting with system synchronization queues
      */
     function ResourceApi() {
 
@@ -3031,6 +3263,7 @@ function SanteDBWrapper() {
          * @method getAppSettingAsync
          * @summary Retrieve the specified application setting directly from the configuration API
          * @param {string} key The key of the setting to retrieve
+         * @memberof SanteDBWrapper.ConfigurationApi
          * @returns {String} The value of the setting
          */
         this.getAppSettingAsync = function (key) {
@@ -3039,6 +3272,7 @@ function SanteDBWrapper() {
 
         /**
          * @method getAppSettingAsync
+         * @memberof SanteDBWrapper.ConfigurationApi
          * @summary Retrieve the specified application setting directly from the configuration API
          * @param {string} key The key of the setting to retrieve
          * @returns {String} The value of the setting
@@ -3368,6 +3602,7 @@ function SanteDBWrapper() {
         * @param {string} tfaSecret The two-factor secret if provided
         * @returns {Promise} A promise representing the login request
         * @description This type of grant is an extension of the oauth grants. The resulting session is only valid for changing the user's own password. No other functions will work with this token
+            * @see https://help.santesuite.org/developers/service-apis/openid-connect
         */
         this.challengeLoginAsync = function (userName, challenge, response, tfaSecret) {
             return new Promise(function (fulfill, reject) {
@@ -3412,6 +3647,7 @@ function SanteDBWrapper() {
             * @param {boolean} uacPrompt True if the authentication is part of a UAC prompt and no perminant session is to be 
             * @param {String} purposeOfUse The identifier of the purpose of use for the access
             * @returns {Promise} A promise representing the login request
+            * @see https://help.santesuite.org/developers/service-apis/openid-connect
             */
         this.passwordLoginAsync = function (userName, password, tfaSecret, uacPrompt, purposeOfUse, scope) {
             return new Promise(function (fulfill, reject) {
@@ -3462,6 +3698,7 @@ function SanteDBWrapper() {
             * @param {String} purposeOfUse The reason the authentication is happening
             * @param {Array} scope The requested scope of the session
             * @returns {Promise} A promise representing the login request
+            * @see https://help.santesuite.org/developers/service-apis/openid-connect
             */
         this.pinLoginAsync = function (userName, pin, uacPrompt, purposeOfUse, tfaSecret, scope) {
             return new Promise(function (fulfill, reject) {
@@ -3506,6 +3743,7 @@ function SanteDBWrapper() {
             * @returns {Promise} A promise representing the login request
             * @param {boolean} noSession When true, indicates that a session should not be replaced that the request is a one time use token
             * @param {Array} scope The list of scopes for this session
+            * @see https://help.santesuite.org/developers/service-apis/openid-connect
             */
         this.clientCredentialLoginAsync = function (noSession, scope) {
             return new Promise(function (fulfill, reject) {
@@ -3541,6 +3779,7 @@ function SanteDBWrapper() {
             * @description This function should be called *after* the authorization code has been obtained from the authorization server
             * @param {boolean} noSession When true, indicates that there should not be a persistent session created
             * @returns {Promise} A promise representing the session request
+            * @see https://help.santesuite.org/developers/service-apis/openid-connect
             */
         this.authorizationCodeLoginAsync = function (code, redirect_uri, noSession) {
             return new Promise(function (fulfill, reject) {
@@ -3579,6 +3818,7 @@ function SanteDBWrapper() {
             * @memberof SanteDBWrapper.AuthenticationApi
             * @summary Performs a refresh token grant
             * @param {boolean} noSession True if no session should be setup
+            * @see https://help.santesuite.org/developers/service-apis/openid-connect
             * @returns {Promise} A promise representing the session refresh request
             */
         this.refreshLoginAsync = function () {
@@ -3683,6 +3923,8 @@ function SanteDBWrapper() {
     function LocalizationApi() {
         /**
          * @summary Default date formats
+         * @enum
+         * @memberof SanteDBWrapper.LocalizationApi
          * @property {string} year The format of year precision dates
          * @property {string} month The format of month precision dates
          * @property {string} day The format of day precision dates
@@ -3804,6 +4046,8 @@ function SanteDBWrapper() {
      * @member api
      * @property {SanteDBWrapper.APIWrapper} hdsi Reference to the configured Health Data Service Interface helper
      * @property {SanteDBWrapper.APIWrapper} ami Reference to the configured Administration Management Interface helper
+     * @property {SanteDBWrapper.APIWrapper} auth Reference to the configured Authentication API
+     * @property {SanteDBWrapper.APIWrapper} app Reference to the configured Application API
      */
     this.api = {
         /**
@@ -3831,6 +4075,7 @@ function SanteDBWrapper() {
     /**
      * @memberof SanteDBWrapper
      * @summary Provide access to localization data
+        * @public
      * @type {LocalizationApi}
      */
     this.locale = new LocalizationApi();
@@ -3838,6 +4083,7 @@ function SanteDBWrapper() {
         * @type {ResourceApi}
         * @memberof SanteDBWrapper
         * @summary Provides access to resource handlers
+        * @public
         */
     this.resources = _resources;
     /**
@@ -3849,6 +4095,7 @@ function SanteDBWrapper() {
     /**
         * @summary Authentication functions for SanteDB
         * @memberof SanteDBWrapper
+        * @public
         * @type {AuthenticationApi}
         */
     this.authentication = _authentication;
