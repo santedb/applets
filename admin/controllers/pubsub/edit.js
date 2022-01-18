@@ -72,7 +72,9 @@ angular.module('santedb').controller('PubSubEditController', ["$scope", "$rootSc
         try {
             SanteDB.display.buttonWait("#btnSave", true);
 
-            $scope.subscription.when = [ $scope.subscription.when.filter(o=>o!='').reduce((a,b)=> `${a}&${b}`) ];
+            if($scope.subscription.when) {
+                $scope.subscription.when = [ $scope.subscription.when.filter(o=>o!='').reduce((a,b)=> `${a}&${b}`) ];
+            }
             $scope.subscription.event = Object.keys($scope.subscription.eventModel).filter(o=>$scope.subscription.eventModel[o] === true).join(", ");
             $scope.subscription.channelModel.name = `Channel for ${$scope.subscription.name}`;
             // Are we inserting or updating?
