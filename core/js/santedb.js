@@ -1056,7 +1056,7 @@ function ResourceWrapper(_config) {
      * @description The patching operation is used to update a portion of the resource without subimtting the entirety of the object to the dCDR or iCDR 
      *               server ({@link https://help.santesuite.org/developers/service-apis/health-data-service-interface-hdsi/patching})
      */
-    this.patchAsync = function (id, etag, patch, upstream, state) {
+    this.patchAsync = function (id, etag, patch, upstream, force, state) {
         if (patch.$type !== "Patch")
             throw new Exception("ArgumentException", "error.invalidType", `Invalid type, resource wrapper expects ${_config.resource} however ${data.$type} specified`);
 
@@ -1068,6 +1068,9 @@ function ResourceWrapper(_config) {
             headers["X-SanteDB-Upstream"] = true;
         }
 
+        if(force) {
+            headers['X-Patch-Force'] = true;
+        }
         // Send PUT
         return _config.api.patchAsync({
             headers: headers,
@@ -3463,6 +3466,8 @@ function SanteDBWrapper() {
                         __SanteDBAppService.SetLocale(tokenData.lang);
                     else if (tokenData['http://santedb.org/claims/language'])
                         __SanteDBAppService.SetLocale(tokenData['http://santedb.org/claims/language']);
+                    else 
+                        __SanteDBAppService.SetLocale(null); // default locale
 
                 }
                 catch (e) {
@@ -3897,6 +3902,8 @@ function SanteDBWrapper() {
                             _oauthSession = _session = null;
                             window.sessionStorage.removeItem('token');
                             window.sessionStorage.removeItem('refresh_token');
+                            window.sessionStorage.removeItem('lang');
+                            SanteDB.locale.setLocale(null);
                             if (fulfill) fulfill(d);
                         })
                         .catch(reject);
