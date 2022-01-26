@@ -180,6 +180,7 @@ angular.module('santedb-lib')
                         ngModel.$setValidity('hdsiProperty', true);
                         ngModel.$setValidity('hdsiNeedsRhs', true);
 
+                        autoCompleteData.properties = autoCompleteData.properties || [ { name: propertyName }];
                         var property = autoCompleteData.properties.find(o => o.name == propertyName);
                         if(propertyName == "") {
                             if (scope.simpleInput) {
