@@ -420,7 +420,8 @@
 
       <!-- Model Descriptions -->
       <string name="ui.view.upstream">This record is sourced from an external system. Actions for this record may be disabled until you download a local copy</string>
-      
+      <!-- Patient is deleted -->
+      <string name="ui.view.deletedRecord">This record is deleted and is kept for historical reference only. It cannot be updated or changed</string>
       <!-- Default applications -->
       <string name="org.santedb.debug">SanteDB SDK</string>
       <string name="org.santedb.administration">SanteDB Admin Console</string>
