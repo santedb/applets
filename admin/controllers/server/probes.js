@@ -43,6 +43,9 @@ angular.module('santedb').controller('ProbeAdminController', ["$scope", "$rootSc
             if(reading.value && reading.value.$values) {
                 reading.value.$values.forEach((v) => {
 
+                    if(Number.isFinite(v.value) && v.value.toString().indexOf(".") > -1) {
+                        v.value = v.value.toFixed(2);    
+                    }
                     $(`#ban${v.probe.replaceAll("-","")}`).html(v.value);
 
                 });
