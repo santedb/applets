@@ -36,20 +36,24 @@ angular.module('santedb').controller('ProbeAdminController', ["$scope", "$rootSc
         }
     }
 
-    async function refreshView() {
+    function refreshView() {
+
         for (var p in $scope.probeList) {
             var pid = $scope.probeList[p];
-            var reading = await SanteDB.resources.probe.getAsync(pid, null, { _upstream: $scope.source._upstream });
-            if(reading.value && reading.value.$values) {
-                reading.value.$values.forEach((v) => {
-
-                    if(Number.isFinite(v.value) && v.value.toString().indexOf(".") > -1) {
-                        v.value = v.value.toFixed(2);    
-                    }
-                    $(`#ban${v.probe.replaceAll("-","")}`).html(v.value);
-
-                });
-            }
+            SanteDB.resources.probe.getAsync(pid, null, { _upstream: $scope.source._upstream }).then(reading => {
+                if(reading.value && reading.value.$values) {
+                    reading.value.$values.forEach((v) => {
+    
+                        if(Number.isFinite(v.value) && v.value.toString().indexOf(".") > -1) {
+                            v.value = v.value.toFixed(2);    
+                        }
+                        $(`#ban${v.probe.replaceAll("-","")}`).html(v.value);
+    
+                    });
+                }
+            })
+            .catch();
+            
         }
     };
 
@@ -60,8 +64,8 @@ angular.module('santedb').controller('ProbeAdminController', ["$scope", "$rootSc
         initializeView();
     };
 
-    var refreshInterval = $interval(() => refreshView(), 2000);
-
+    var refreshInterval = $interval(() => refreshView(), 3000);
+    refreshView();
     $scope.$on("$destroy", function () {
         if (refreshInterval) {
             $interval.cancel(refreshInterval);
