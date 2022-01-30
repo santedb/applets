@@ -37,7 +37,7 @@
                         <div class="row">
                             <div class="card col" ng-repeat="comp in probe.component"> <center>
                                 <h5 class="m-1">{{comp.name}}</h5>
-                                <h1 class="m-1" id="ban{{comp._id}}"><i class="fas fa-circle-notch fa-spin fa-fw"></i></h1> 
+                                <h1 class="m-1"><span id="ban{{comp._id}}"><i class="fas fa-circle-notch fa-spin fa-fw"></i></span> <small>{{ comp.unit }}</small></h1> 
                                 <small>{{ comp.description }}</small>
                             </center>
                             </div>
