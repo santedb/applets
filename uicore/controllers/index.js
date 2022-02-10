@@ -337,13 +337,13 @@ var santedbApp = angular.module('santedb', ['ngSanitize', 'ui.router', 'oc.lazyL
                 var messageStr = `${SanteDB.locale.getString("ui.session.aboutToExpire")} ${mins}:${secs} ${SanteDB.locale.getString("ui.session.action.extend")}`;
 
                 if (expiresIn < 0) // already expired
-                    SanteDB.authentication.logoutAsync().then(function () {
-                        $rootScope.session = null;
-                        $templateCache.removeAll();
-                        $state.reload();
-                        delete ($rootScope.session);
-                        toastr.clear();
-                    }).catch($rootScope.errorHandler);
+                {
+                    $rootScope.session = null;
+                    $templateCache.removeAll();
+                    delete ($rootScope.session);
+                    toastr.clear();
+                    $state.reload();
+                }
                 else if (!_extendToast) {
                     _extendToast = toastr.warning(messageStr, null, {
                         closeButton: false,
