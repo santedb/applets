@@ -54,6 +54,8 @@
       <string name="ui.model.entity.address">လိပ်စာ</string>
       <string name="ui.model.entity.address.title">လိပ်စာမှတ်ပုံတင်</string>
       <string name="ui.model.entity.address.use">လိပ်စာအမျိုးအစား</string>
+
+
       <string name="ui.model.entity.address.component.state">ပြည်နယ် / ပြည်နယ်</string>
       <string name="ui.model.entity.address.component.county">မြို့နယ်</string>
       <string name="ui.model.entity.address.component.city">မြို့တော်</string>
@@ -101,6 +103,7 @@
       <string name="ui.model.patient.addresses">လိပ်စာများ</string>
       <string name="ui.model.patient.address">လိပ်စာ</string>
       <string name="ui.model.patient.address.use">အသုံးပြုပါ</string>
+
       <string name="ui.model.patient.address.component.country">နိုင်ငံ</string>
       <string name="ui.model.patient.address.component.state">ပြည်နယ် / ပြည်နယ်</string>
       <string name="ui.model.patient.address.component.county">မြို့နယ်</string>
@@ -143,7 +146,7 @@
       <string name="ui.model.place.saveSuccess">နေရာကိုအောင်မြင်စွာ update လုပ်</string>
       <string name="ui.model.userEntity.saveSuccess">အသုံးပြုသူကို update /ပြောင်းလဲ အောင်မြင်</string>
       <string name="ui.model.securityUser.saveSuccess">အသုံးပြုသူကိုupdate /ပြောင်းလဲ အောင်မြင်</string>
-      <string name="ui.model.Patient._code.validation">လူနာများအတွက် QR ကုဒ်သက်တမ်းကုန်ဆုံးသွားပြီသို့မဟုတ်နှောင့်ယှက်ခံခဲ့ရသည်။ ကျေးဇူးပြု၍ လူနာကိုစစ်ဆေးပြီး &lt;strong&gt; &lt;i class = fas fa-id-card &quot;&quot;&gt; &lt;/i&gt; ID Card ကိုဖန်တီး &lt;/strong&gt; ကိုနှိပ်ပါ (သို့) ဤစာကိုနှိပ်ပါ&quot;&quot;</string>
+      <string name="ui.model.Patient._code.validation">လူနာများအတွက် QR ကုဒ်သက်တမ်းကုန်ဆုံးသွားပြီသို့မဟုတ်နှောင့်ယှက်ခံခဲ့ရသည်။ ကျေးဇူးပြု၍ လူနာကိုစစ်ဆေးပြီး &lt;strong&gt; &lt;i class = &quot;fas fa-id-card&quot;&gt; &lt;/i&gt; ID Card ကိုဖန်တီး &lt;/strong&gt; ကိုနှိပ်ပါ (သို့) ဤစာကိုနှိပ်ပါ</string>
 
       <string name="ui.model.job.name">အလုပ်အမည်</string>
       <string name="ui.model.job.tag">ဗားရှင်း</string>
@@ -172,4 +175,4 @@
       <string name="ui.model.act.participation.Baby.multipleBirthIndicator.help">ဒီမွေးကင်းစကလေးတစ် ဦး မျိုးစုံမွေးဖွားမှု၏အစိတ်အပိုင်းတစ်ခုဖြစ်ခဲ့လျှင် (အမွှာ</string>
       <string name="ui.model.act.participation.Baby.birthplace.help">မွေးကင်းစကလေးမွေးသည့်နေရာ (ဆေးရုံ၊ မြို့နယ်၊ စသဖြင့်)</string>
       
-</resources>
+      </resources>
