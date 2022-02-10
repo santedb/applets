@@ -1,8 +1,8 @@
 <div  xmlns="http://www.w3.org/1999/xhtml">
     <div class="form-group row" ng-if="!noType">
-        <label class="col-sm-12 col-md-3 control-label" ng-class="{'required': isRequired}">{{ 'ui.model.entity.name.use' | i18n }} <hint-popover hint-title="ui.model.entity.name.use" /> </label>
+        <label class="col-sm-12 col-md-3 control-label" ng-class="{'required': isRequired  &amp;&amp; $index == 0 || !noType &amp;&amp; (name.component.Given  || name.component.Family}">{{ 'ui.model.entity.name.use' | i18n }} <hint-popover hint-title="ui.model.entity.name.use" /> </label>
         <div class="col-sm-12 col-md-9">
-            <concept-select class="form-control" id="{{controlPrefix}}name{{$index}}use" ng-required="isRequired || !noType" name="{{controlPrefix}}name{{ $index }}use" concept-set="'NameUse'"
+            <concept-select class="form-control" id="{{controlPrefix}}name{{$index}}use" ng-required="isRequired  &amp;&amp; $index == 0 || !noType &amp;&amp; (name.component.Given  || name.component.Family)" name="{{controlPrefix}}name{{ $index }}use" concept-set="'NameUse'"
                 ng-model="name.use" />
             <div class="text-danger" ng-if="ownerForm[controlPrefix + 'name' + $index  + 'use'].$invalid">
                 <i class="fas fa-exclamation-triangle"></i> {{ 'ui.error.required' | i18n }}</div>
