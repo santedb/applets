@@ -43,6 +43,9 @@
     <property name="relationshipTypeModel" behavior="always" all="true" ref="Concept"/>
     <property name="key" all="true"/>
     <property name="quantity" all="true"/>
+    <property name="strength" all="true"/>
+    <property name="classification" all="true"/>
+    <property name="relationshipRole" all="true"/>
   </type>
 
   <type type="EntityRelationshipMaster" all="false">

@@ -33,6 +33,7 @@
   <type type="EntityRelationship" all="false">
     <property name="source" all="true"/>
     <property name="target" all="true"/>
+    <property name="holder" all="true"/>
     <property name="targetModel" all="true" behavior="always" ref="Entity"/>
     <property name="relationshipType" all="true" behavior="always"/>
     <property name="holderModel" behavior="never"/>
@@ -40,6 +41,9 @@
     <property name="relationshipTypeModel" behavior="never"/>
     <property name="key" all="true"/>
     <property name="quantity" all="true"/>
+     <property name="strength" all="true"/>
+    <property name="classification" all="true"/>
+    <property name="relationshipRole" all="true"/>
   </type>
   <type type="ActRelationship" all="false">
     <property name="source" all="true"/>

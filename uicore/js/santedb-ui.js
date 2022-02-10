@@ -305,6 +305,67 @@ SanteDBWrapper.prototype.display = new function () {
                 return addrStr.substring(0, addrStr.length - 2);
             }
         };
+        
+
+        
+        /**
+         * @method
+         * @memberof SanteDB.display
+         * @param {Patient} patient The patient to be rendered as a string
+         * @param {String} preferredDomain The preferred identity domain for identity rendering
+         */
+        this.renderPatientAsString = function (patient, preferredDomain) {
+            var retVal = '';
+
+            retVal += "<span class='mr-1'>";
+            if(patient.name) {
+                retVal += SanteDB.display.renderEntityName(patient.name);
+            }
+
+            retVal += "</span><span class='mr-1 badge badge-secondary'>";
+
+            if(patient.identifier) {
+                if(preferredDomain && patient.identifier[preferredDomain])
+                    retVal += `<i class="fas fa-id-card"></i> ${SanteDB.display.renderIdentifier(patient.identifier, preferredDomain)}`;
+                else {
+                    var key = Object.keys(patient.identifier)[0];
+                    retVal += `<i class="far fa-id-card"></i> ${SanteDB.display.renderIdentifier(patient.identifier, key)}`;
+                }
+            }
+            
+            retVal += "</span><span class='mr-1'>";
+
+            if(patient.dateOfBirth)
+                retVal += `<br/><i class='fas fa-birthday-cake'></i> ${SanteDB.display.renderDate(patient.dateOfBirth, patient.dateOfBirthPrecision)} `;
+            // Deceased?
+            if(patient.deceasedDate)
+                retVal += `<span class='badge badge-dark'>${SanteDB.locale.getString("ui.model.patient.deceasedIndicator")}</span>`;
+
+            retVal += "</span><span class='mr-1'>";
+            
+            // Gender
+            if(patient.genderConceptModel) {
+                switch(patient.genderConceptModel.mnemonic) {
+                    case 'Male':
+                        retVal += `<i class='fas fa-male' title="${SanteDB.display.renderConcept(patient.genderConceptModel)}"></i> ${SanteDB.display.renderConcept(patient.genderConceptModel)}`;
+                        break;
+                    case 'Female':
+                        retVal += `<i class='fas fa-female' title="${SanteDB.display.renderConcept(patient.genderConceptModel)}"></i> ${SanteDB.display.renderConcept(patient.genderConceptModel)}`;
+                        break;
+                    default:
+                        retVal += `<i class='fas fa-restroom' title="${SanteDB.display.renderConcept(patient.genderConceptModel)}"></i> ${SanteDB.display.renderConcept(patient.genderConceptModel)}`;
+                        break;
+                }
+            }
+            retVal += "</span>";
+
+        
+            if(patient.determinerConcept == "6b1d6764-12be-42dc-a5dc-52fc275c4935") {
+                    retVal += `<span class='badge badge-success' title='${SanteDB.locale.getString("ui.mdm.rot")}'><i class='fas fa-gavel'></i> </span>`
+                }
+            return retVal;
+        };
+
 
 };
 
