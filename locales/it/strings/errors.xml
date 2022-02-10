@@ -1,4 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+      <!-- Common Errors -->
+      <string name="ui.error.title">Errore di sistema</string>
+      <string name="ui.error.description">Seguono ulteriori dettagli:</string>
+      <string name="ui.error.causedBy">Causa:</string>
+      <string name="error.type.DetectedIssueException.detail">Violazioni delle regole aziendali riscontrate:</string>
+      <string name="ui.error.contactSysAdmin">Si prega di inviare una segnalazione di bug o contattare l\'amministratore di sistema con queste informazioni</string>
+      <string name="ui.error.required">Campo obbligatorio mancante</string>
+
+      <string name="error.type.FileNotFoundException">Record non trovato</string>
+      <string name="error.type.KeyNotFoundException">Record non trovato</string> 
       </resources>
