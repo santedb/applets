@@ -18,7 +18,7 @@
  * User: Justin Fyfe
  * Date: 2019-10-5
  */
-angular.module('santedb').controller('JobAdminController', ["$scope", "$rootScope", function ($scope, $rootScope) {
+angular.module('santedb').controller('JobAdminController', ["$scope", "$rootScope", "$timeout", function ($scope, $rootScope, $timeout) {
 
 
     // Render schedule
@@ -30,7 +30,7 @@ angular.module('santedb').controller('JobAdminController', ["$scope", "$rootScop
 
                 }
                 else {
-                    return `<li><i class='fas fa-clock'></i> repeat @ ${o.interval} ivl</li>`;
+                    return `<li><i class='fas fa-clock'></i> repeat ${moment.duration(o.interval).humanize(true)}</li>`;
                 }
             }) + "</ul>";
         }
@@ -43,7 +43,7 @@ angular.module('santedb').controller('JobAdminController', ["$scope", "$rootScop
                 return `<span class="badge badge-success badge-pill"><i class="fas fa-check"></i> ${SanteDB.locale.getString("ui.state.complete")}</span>`;
             case "Running":
                 if (job.status) {
-                    return `<span class="badge badge-primary badge-pill"><i class="fas fa-play"></i> ${SanteDB.locale.getString("ui.state.running")} (${Math.round(job.progress * 100)}%)</span> - ${job.status}`;
+                    return `<div  style="min-width:20vw"><span class="badge badge-primary badge-pill"><i class="fas fa-play"></i> ${SanteDB.locale.getString("ui.state.running")} (${Math.round(job.progress * 100)}%)</span> - ${job.status}</div>`;
                 }
                 else {
                     return `<span class="badge badge-primary badge-pill"><i class="fas fa-play"></i> ${SanteDB.locale.getString("ui.state.running")}</span>`;
@@ -57,6 +57,14 @@ angular.module('santedb').controller('JobAdminController', ["$scope", "$rootScop
             default:
                 return `<span class="badge badge-info badge-pill"><i class="fas fa-clock"></i> ${SanteDB.locale.getString("ui.state.notrun")}</span>`;
         }
+    }
+
+    $scope.renderName = function(job) {
+        retVal = job.name;
+        if(job.description) {
+            retVal += `<br/><small class='text-secondary'>${job.description}</small>`;
+        }
+        return retVal;
     }
 
     // Rende last run
@@ -76,6 +84,72 @@ angular.module('santedb').controller('JobAdminController', ["$scope", "$rootScop
         return retVal;
     }
 
+    // Schedule the job
+    $scope.scheduleJob = async function(id) {
+        try {
+            var jobInfo = await SanteDB.resources.jobInfo.getAsync(id);
+
+            $timeout(_=> {
+                if(!jobInfo.schedule || jobInfo.schedule.length == 0) {
+                    jobInfo.schedule = [{ type: "Never" }];
+                }
+                if(jobInfo.schedule[0].start) {
+                    jobInfo.schedule[0].time = new Date(1970, 0, 0, jobInfo.schedule[0].start.getHours(), jobInfo.schedule[0].start.getMinutes(), 0, 0);
+                }
+                $scope.currentJob = jobInfo; 
+                $("#jobScheduleDialog").modal('show');
+            });
+        }
+        catch(e) {
+            $rootScope.errorHandler(e);
+        }
+    }
+
+
+    $scope.saveJob = async function(form) {
+
+        if(!form.$valid) { return; }
+
+        try {
+
+            SanteDB.display.buttonWait("#saveJobButton", true);
+
+            $scope.currentJob.$type = "JobInfo";
+            switch($scope.currentJob.schedule[0].type) {
+                case "Never":
+                    $scope.currentJob.schedule = [];
+                    break;
+                case "Interval":
+                    $scope.currentJob.schedule = [ {
+                        type: "Interval",
+                        interval: $scope.currentJob.schedule[0].interval
+                    }];
+                    break;
+                case "Scheduled":
+                    $scope.currentJob.schedule = [ {
+                        type: "Scheduled",
+                        start: new Date(`${moment($scope.currentJob.schedule[0].startDate).format("YYYY-MM-DD")}T${moment($scope.currentJob.schedule[0].time).format("HH:mm:00.000Z")}`),
+                        repeat: $scope.currentJob.schedule[0].repeat
+                    }];
+                    break;
+            }
+
+            await SanteDB.resources.jobInfo.updateAsync($scope.currentJob.id, $scope.currentJob);
+
+            $("#jobScheduleDialog").modal('hide');
+
+            $("#jobsTable table").DataTable().ajax.reload();
+
+        }
+        catch(e) {
+            $rootScope.errorHandler(e);
+        }
+        finally {
+            SanteDB.display.buttonWait("#saveJobButton", false);
+
+        }
+
+    }
     // Render run
     $scope.runJob = async function (id, index, jobParameters) {
 

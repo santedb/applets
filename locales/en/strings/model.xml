@@ -265,6 +265,41 @@
       <string name="ui.model.job.state">Current State</string>
       <string name="ui.model.job.lastRun">Last Run</string>
       <string name="ui.model.job.schedule">Schedule / Repeat</string>
+      <string name="ui.model.job.schedule.type">Schedule Type</string>
+      <string name="ui.model.job.schedule.type.hint"><![CDATA[Select the type of scheduling instruction which should be registered for this job. The types of schedule are: 
+        <ul>
+          <li><code>None</code> - The job will never be started on a schedule</li>
+          <li><code>Calendar Schedule</code> - The job will start on the specified date, at the specified time, on the specified days</li>
+          <li><code>Regular Interval</code> - The job will run every X hours, minutes, or days </li>
+        </ul>]]></string>
+      <string name="ui.model.job.schedule.type.never.help">This job is not scheduled to run automatically. It will only run when initiated by a user</string>
+      <string name="ui.model.job.schedule.type.never">No Schedule</string>
+      <string name="ui.model.job.schedule.type.interval">Regular Interval</string>
+      <string name="ui.model.job.schedule.type.interval.help">This job is scheduled to run on an interval. Interval jobs are run every X seconds/minutes/hours regardless of the day or time</string>
+      <string name="ui.model.job.schedule.type.scheduled">Calendar Schedule</string>
+      <string name="ui.model.job.schedule.type.scheduled.help">This job is set on a calendar schedule. Calendar schedule jobs will run on the specified days from the specified start date at the specified time</string>
+      <string name="ui.model.job.schedule.start">Start On</string>
+      <string name="ui.model.job.schedule.start.hint">This schedule will start on the specified date</string>
+      <string name="ui.model.job.schedule.time">At Time</string>
+      <string name="ui.model.job.schedule.time.hint">The time of day when the schedule is to be executed</string>
+      <string name="ui.model.job.schedule.repeat">Repeat</string>
+      <string name="ui.model.job.schedule.repeat.hint">The days of the week to repeat this schedule</string>
+      <string name="ui.model.job.schedule.interval">Every</string>
+      <string name="ui.model.job.schedule.interval.hint">Indicates the repetition of this job</string>
+      <string name="ui.model.job.schedule.interval.mo">Monthly (every 30 days)</string>
+      <string name="ui.model.job.schedule.interval.wk">Weekly (every 7 days)</string>
+      <string name="ui.model.job.schedule.interval.48h">48 hours (every other day)</string>
+      <string name="ui.model.job.schedule.interval.24h">24 hours (once per day)</string>
+      <string name="ui.model.job.schedule.interval.12h">12 hours (2 times daily)</string>
+      <string name="ui.model.job.schedule.interval.6h">6 hours (4 times daily)</string>
+      <string name="ui.model.job.schedule.interval.4h">4 hours (6 times daily)</string>
+      <string name="ui.model.job.schedule.interval.3h">3 hours (8 times daily)</string>
+      <string name="ui.model.job.schedule.interval.2h">2 hours (12 times daily))</string>
+      <string name="ui.model.job.schedule.interval.1h">60 minutes (once per hour)</string>
+      <string name="ui.model.job.schedule.interval.30m">30 minutes</string>
+      <string name="ui.model.job.schedule.interval.15m">15 minutes</string>
+      <string name="ui.model.job.schedule.interval.05m">5 minutes</string>
+
       <string name="ui.model.act.template">Template</string>
       <string name="ui.model.act.typeConcept">Type</string>
       <string name="ui.model.act.actTime">Timestamp</string>

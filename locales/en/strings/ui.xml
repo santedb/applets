@@ -116,6 +116,22 @@
       <string name="ui.sync.queue.error">Error</string>
       <string name="ui.sync.dead.ignoreConfirm">Are you sure you want to ignore this conflict? YOUR CHANGES WILL NOT BE SENT TO CENTRAL SERVER!</string>
       <string name="ui.sync.resetConfirm">Are you sure you want to reset the synchronization log for this type?</string>
+
+      <!-- Common Date -->
+      <string name="ui.date.day.monday">Monday</string>
+      <string name="ui.date.day.tuesday">Tuesday</string>
+      <string name="ui.date.day.wednesday">Wednesday</string>
+      <string name="ui.date.day.thursday">Thursday</string>
+      <string name="ui.date.day.friday">Friday</string>
+      <string name="ui.date.day.saturday">Saturday</string>
+      <string name="ui.date.day.sunday">Sunday</string>
+      <string name="ui.date.day">Day of Week</string>
+      <string name="ui.date.month">Month</string>
+      <string name="ui.date.year">Year</string>
+      <string name="ui.date.quarter">Quarter</string>
+      <string name="ui.date.century">Century</string>
+      <string name="ui.date.decade">Decade</string>
+
       <!-- Common Action buttons -->
       <string name="ui.action">Actions</string>
       <string name="ui.action.ok">Ok</string>
@@ -155,6 +171,7 @@
       <string name="ui.action.resolve">Resolve</string>
       <string name="ui.action.enable">Enable</string>
       <string name="ui.action.disable">Disable</string>
+      <string name="ui.action.schedule">Schedue</string>
       <string name="ui.action.scan">Scan</string>
       <string name="ui.action.finish">Finish</string>
       <string name="ui.action.add">Add</string>
@@ -403,7 +420,8 @@
 
       <!-- Model Descriptions -->
       <string name="ui.view.upstream">This record is sourced from an external system. Actions for this record may be disabled until you download a local copy</string>
-      
+      <!-- Patient is deleted -->
+      <string name="ui.view.deletedRecord">This record is deleted and is kept for historical reference only. It cannot be updated or changed</string>
       <!-- Default applications -->
       <string name="org.santedb.debug">SanteDB SDK</string>
       <string name="org.santedb.administration">SanteDB Admin Console</string>

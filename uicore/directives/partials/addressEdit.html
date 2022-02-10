@@ -1,9 +1,9 @@
 <div xmlns="http://www.w3.org/1999/xhtml">
     <div class="form-group row" ng-if="!noType">
         <label class="col-sm-12 col-md-3 control-label"
-            ng-class="{'required': isRequired  &amp;&amp; $index == 0 || !noType}">{{ 'ui.model.entity.address.use' | i18n }} <hint-popover hint-title="ui.model.entity.address.use" /></label>
+            ng-class="{'required': isRequired  &amp;&amp; $index == 0 || !noType &amp;&amp; (addr.component.Country || addr.component.State || addr.component.City)}">{{ 'ui.model.entity.address.use' | i18n }} <hint-popover hint-title="ui.model.entity.address.use" /></label>
         <div class="col-sm-12 col-md-9">
-            <concept-select class="form-control" ng-required="isRequired  &amp;&amp; $index == 0 || !noType"
+            <concept-select class="form-control" ng-required="isRequired  &amp;&amp; $index == 0 || !noType &amp;&amp; (addr.component.Country || addr.component.State || addr.component.City)"
                 name="{{controlPrefix}}address{{$index}}use" concept-set="'AddressUse'" ng-model="addr.use" />
         </div>
         <div class="text-danger" ng-if="ownerForm[controlPrefix + 'address' + $index + 'use'].$invalid"><i

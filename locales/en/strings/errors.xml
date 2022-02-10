@@ -38,6 +38,8 @@
       <string name="error.type.SecurityException">Security Exception</string>
       <string name="error.noScript.title">Enable JavaScript</string>
       <string name="error.noScript.text">SanteDB requires the use of JavaScript to function. It appears that your browser does not support JavaScript or has JavaScript disabled. Please check your security settings and refresh the page</string>
+      <string name="invalid_grant">Invalid username or password</string>
+      <string name="invalid_scope">Unknown authentication permission requested</string>
       <string name="error.login.invalidPassword">Invalid username or password</string>
       <string name="error.invalidBrowser.title">Invalid Browser</string>
       <string name="error.invalidBrowser.text">SanteDB won\'t work on this browser. Supported browsers including: &lt;ul&gt;&lt;li&gt;Google Chrome&lt;/li&gt;&lt;li&gt;Mozilla Firefox&lt;/li&gt;&lt;li&gt;Microsoft Edge&lt;/li&gt;&lt;li&gt;Android 5.0 or higher&lt;/li&gt;&lt;/ul&gt;</string>
