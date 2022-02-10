@@ -85,7 +85,7 @@
       <string name="error.messaging.h17.authorizationToken">Must carry MSH-8 authorization token information</string>
       <string name="error.messaging.h17.authenticating">{param} must be provided for authenticating {param2}</string>
       <string name="error.messaging.hl7.sllpNotUsed">MSH-4 and MSH-8 must always be provided for authenticating device when SLLP is not used</string>
-      <string name="error.messaging.hl7.invalidValue">Couldn't understand {param}, valid values are NONE, MSH8, or SFT4</string>
+      <string name="error.messaging.hl7.invalidValue">Couldn\'t understand {param}, valid values are NONE, MSH8, or SFT4</string>
       <string name="error.messaging.hl7.invalidUrl">{param} is not a valid URL</string>
       <string name="error.messaging.hl7.invalidTimeout">Invalid timeout</string>
       <string name="error.type.HL7ProcessingException">Error processing {param}</string>
@@ -113,7 +113,7 @@
       <string name="error.server.core.applet.notInstalled">Applet {param} is not installed</string>
       <string name="error.server.core.contentsCorrupted">Package contents of {param} appear to be corrupt!</string>
       <string name="error.server.core.publicKey">Cannot find public key of publisher information for {param} or the local certificate is invalid</string>
-      <string name="error.server.core.packageFishy">Package {param} was published in the future! Something's fishy, refusing to load</string>
+      <string name="error.server.core.packageFishy">Package {param} was published in the future! </string>
       <string name="error.server.core.untrustedApplets">Cannot proceed while untrusted applets are present</string>
       <string name="error.server.core.untrustedApplets.details">Cannot proceed while untrusted applets are present - Run `santedb --install-certs` or install the publisher certificate into `TrustedPublishers` certificate store</string>
       <string name="error.server.core.loadingDisabled">Loading applet manifests directly is disabled for security reasons</string>
@@ -189,7 +189,7 @@
       <string name="error.auth.tfaClaims">Invalid Multi-Factor authentication claims for {userName}</string>
       <string name="error.auth.tfaMismatch">MFA authentication failed with {result}</string>
       <string name="error.auth.invalid">Username or password invalid</string>
-      <string name="error.server.core.privateWriteProtectionFailure"><![CDATA[An attempt was made to create or update data which has protected or redacted fields. This error can occur when: <ul><li>You are trying to set a field forbidden on this server (like religion, or ethniciy)</li><li>You are trying to record an identifier in a protected domain for which you lack permission</li><li>You are attempting to update data which has been masked by the policy enforcement service</li></ul> Please contact your system administrator and try again at a later time]]></string>
+      <string name="error.server.core.privateWriteProtectionFailure"><![CDATA[An attempt was made to create or update data which has protected or redacted fields. This error can occur when: <ul><li>You are trying to set a field forbidden on this server (like religion, or ethnicity)</li><li>You are trying to record an identifier in a protected domain for which you lack permission</li><li>You are attempting to update data which has been masked by the policy enforcement service</li></ul> Please contact your system administrator and try again at a later time]]></string>
       <string name="error.server.core.privacyQueryProtectionFailure"><![CDATA[You are attempting to query for data using a sensitive or protected field. This is not permitted, your request has been denied]]></string>
 
       <string name="ui.error.hdsi.propertyMissing"><![CDATA[HDSI expression does not appear to point to a valid property. Ensure that <ul><li>Your guard expressions are closed</li><li>Properties are cast to the correct type</li><li>Property paths don\'t end with a period</li></ul>]]></string>

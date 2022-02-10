@@ -384,7 +384,7 @@
 
   <string name="ui.model.pubsubsubscription.active">Current State</string>
   
-  <string name="ui.model.pubsubsubscription.support">Support Contact</string>
+  <string name="ui.model.pubsubsubscription.support">Support / Contact</string>
   <string name="ui.model.pubsubsubscription.support.hint"><![CDATA[Provide a support contact (telephone, e-mail, etc.) for this subscription. This can be used for diagnosing connectivity]]></string>
 
   <string name="ui.model.pubsubsubscription.when">When Criteria</string>
