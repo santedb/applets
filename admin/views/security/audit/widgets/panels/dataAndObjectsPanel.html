@@ -30,15 +30,16 @@
                             <i class="fas fa-shield-alt"></i> {{ o.id }}
                         </a>
                         <span ng-switch-default="">
-
-                            {{ o.id }} <span class="badge badge-info">{{ o.customCode.code
-                                }}</span>
-                            </span>
-                            </span>
-                        <span ng-switch-when="SearchCritereon"><i class="fas fa-search"></i> {{ 'ui.admin.audit.query' |
-                            i18n }}</span>
-                        <span ng-switch-default="">{{ o.id }} <span class="badge badge-info">{{ o.idType
-                                }}</span></span>
+                            <button type="button" ng-click="navigateObject(o.customCode.code, o.id)" class="btn btn-link">
+                                <h5 class="m-0">{{ o.id }}</h5> 
+                            </button>
+                            <span class="badge badge-info">{{ o.customCode.code }}</span>
+                        </span>
+                    </span>
+                    <span ng-switch-when="SearchCritereon"><i class="fas fa-search"></i> {{ 'ui.admin.audit.query' |
+                        i18n }}</span>
+                    <span ng-switch-default="">{{ o.id }} <span class="badge badge-info">{{ o.idType
+                            }}</span></span>
                 </h5>
             </div>
             <div class="card-body">
