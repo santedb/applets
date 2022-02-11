@@ -117,4 +117,8 @@ angular.module('santedb').controller('ViewAuditController', ["$scope", "$rootSco
     $scope.renderType = function (audit) {
         return "todo";
     }
+
+    $scope.navigateObject = function(type, id) {
+        SanteDB.application.callResourceViewer(type, $state, { id: id });
+    }
 }]);

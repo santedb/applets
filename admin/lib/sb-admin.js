@@ -67,3 +67,11 @@ function initializeSideNavTriggers() {
 
 
 SanteDB.application.addResourceViewer("AuditData", function(state, parms) { state.transitionTo("santedb-admin.security.audit.view", parms); return true; });
+SanteDB.application.addResourceViewer("SecurityUserInfo", function(state, parms) { state.transitionTo("santedb-admin.security.users.edit", parms); return true; });
+SanteDB.application.addResourceViewer("SecurityUser", function(state, parms) { state.transitionTo("santedb-admin.security.users.edit", parms); return true; });
+SanteDB.application.addResourceViewer("SecurityGroupInfo", function(state, parms) { state.transitionTo("santedb-admin.security.groups.edit", parms); return true; });
+SanteDB.application.addResourceViewer("SecurityGroup", function(state, parms) { state.transitionTo("santedb-admin.security.groups.edit", parms); return true; });
+SanteDB.application.addResourceViewer("SecurityApplicationInfo", function(state, parms) { state.transitionTo("santedb-admin.security.applications.edit", parms); return true; });
+SanteDB.application.addResourceViewer("SecurityApplication", function(state, parms) { state.transitionTo("santedb-admin.security.applications.edit", parms); return true; });
+SanteDB.application.addResourceViewer("SecurityDeviceInfo", function(state, parms) { state.transitionTo("santedb-admin.security.devices.edit", parms); return true; });
+SanteDB.application.addResourceViewer("SecurityDevice", function(state, parms) { state.transitionTo("santedb-admin.security.devices.edit", parms); return true; });
