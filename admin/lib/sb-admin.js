@@ -63,3 +63,7 @@ function initializeSideNavTriggers() {
     event.preventDefault();
   });
 }
+
+
+
+SanteDB.application.addResourceViewer("AuditData", function(state, parms) { state.transitionTo("santedb-admin.security.audit.view", parms); return true; });
