@@ -33,19 +33,12 @@ angular.module('santedb').controller('AdminLayoutController', ["$scope", "$rootS
         ).elevate($rootScope.session);
     }
     
-    // On logout transition to the login state
-    $("#logoutModal").on("hidden.bs.modal", function() {
-        // if(!window.sessionStorage.getItem("token"))
-        // {
-            $templateCache.removeAll();
-            $state.transitionTo('login'); 
-        // }
-    });
-
     // abandon session
     $scope.abandonSession = function() {
         SanteDB.authentication.logoutAsync().then(function() { 
             $("#logoutModal").modal('hide');
+            $templateCache.removeAll();
+            $state.transitionTo('login'); 
         });
     }
 

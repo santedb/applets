@@ -31,6 +31,7 @@ angular.module('santedb-lib')
     .directive("relationshipGraph", ['$state', function ($state) {
 
 
+
         /**
          * 
          * @param {*} entity The entity being drawn

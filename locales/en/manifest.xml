@@ -81,6 +81,8 @@
     <string key="ui.locale.sw-ke">Swahili (Kenya)</string>
     <string key="ui.locale.sw-tz">Swahili (Tanzania)</string>
     <string key="ui.locale.sw-ug">Swahili (Uganda)</string>
+    <string key="ui.locale.it">Italian</string>
+
   </strings>
 
 </AppletManifest>
