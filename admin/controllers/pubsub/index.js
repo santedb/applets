@@ -77,10 +77,8 @@ angular.module('santedb').controller('PubSubIndexController', ["$scope", "$rootS
     // Un-delete a subscription
     $scope.undeleteSubscription = async function(id) {
         try {
-            var sub = await SanteDB.resources.pubSubSubscription.getAsync(id);
-            sub.obsoletionTime = null;
-            sub.obsoletedBy = null;
-            await SanteDB.resources.pubSubSubscription.updateAsync(id, sub);
+            
+            await SanteDB.resources.pubSubSubscription.invokeOperationAsync(id, "activate", { "status": false });
             $("#pubSubManager table").DataTable().ajax.reload();
 
         }
