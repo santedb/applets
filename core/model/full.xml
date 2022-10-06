@@ -316,7 +316,10 @@
     <property name="name" all="true" behavior="always">
       <property name="*" ref="EntityName" />
     </property>
-    <property name="address" all="true" ref="EntityAddress" behavior="always"/>
+    <!--<property name="address" all="true" ref="EntityAddress" behavior="always"/>-->
+    <property name="address" all="true" behavior="always">
+      <property name="*" ref="EntityAddress" />
+    </property>
     <property name="classConceptModel" behavior="always" ref="Concept"/>
     <property name="classConcept" behavior="always"/>
     <property name="determinerConceptModel" behavior="never"/>

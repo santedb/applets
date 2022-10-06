@@ -29,6 +29,8 @@
     <entity-table 
     id="PlaceTable"
     type="Place" 
+    actions="[ { name: 'create', demand: '1.3.6.1.4.1.33349.3.1.5.9.2.4.2.0', sref: 'santedb-admin.data.facility.create', className: 'btn-primary', icon: 'fa fa-plus-circle' }]"
+    item-actions="[ { name: 'edit', sref: 'santedb-admin.data.facility.edit', demand: '1.3.6.1.4.1.33349.3.1.5.9.2.4.2.0', className: 'btn-primary', icon: 'fa fa-pencil-alt' }, { name: 'delete', action: 'delete', demand: '1.3.6.1.4.1.33349.3.1.5.9.2.4.2.1', className: 'btn-danger', icon: 'fa fa-trash', when: 'r.statusConcept ==  StatusKeys.Active' },  { name: 'undelete', action: 'delete', demand: '1.3.6.1.4.1.33349.3.1.5.9.2.4.2.1', className: 'btn-success', icon: 'fa fa-trash-restore', when: 'r.statusConcept != StatusKeys.Active' } ]"
     search-field="name.component.value" 
     default-query="{ 'statusConcept' : StatusKeys.Active, 'classConcept' : 'ff34dfa7-c6d3-4f8b-bc9f-14bcdc13ba6c', _viewModel: 'full' }"
     render="{ updatedBy: 'renderUpdatedBy', 'typeConcept': 'renderTypeConcept', 'name': 'renderName', 'address': 'renderAddress', 'statusConcept': 'renderStatusConcept' }"
@@ -38,6 +40,5 @@
 </entity-table>
 
 <!--
-    actions="[ { name: 'create', demand: '1.3.6.1.4.1.33349.3.1.5.9.2.4.2.0', sref: 'santedb-admin.data.facility.create', className: 'btn-primary', icon: 'fa fa-plus-circle' }]"
-    item-actions="[ { name: 'edit', sref: 'santedb-admin.data.facility.edit', demand: '1.3.6.1.4.1.33349.3.1.5.9.2.4.2.0', className: 'btn-primary', icon: 'fa fa-pencil-alt' }, { name: 'delete', action: 'delete', demand: '1.3.6.1.4.1.33349.3.1.5.9.2.4.2.1', className: 'btn-danger', icon: 'fa fa-trash', when: 'r.statusConcept ==  StatusKeys.Active' },  { name: 'undelete', action: 'delete', demand: '1.3.6.1.4.1.33349.3.1.5.9.2.4.2.1', className: 'btn-success', icon: 'fa fa-trash-restore', when: 'r.statusConcept != StatusKeys.Active' } ]"-->
+    -->
 </div>

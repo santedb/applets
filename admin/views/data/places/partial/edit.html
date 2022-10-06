@@ -45,7 +45,7 @@
                                 for="name">{{ 'ui.model.place.name' | i18n }}</label>
                             <div class="col-sm-12 col-md-10 input-group">
                                 <div class="container-fluid m-0 p-0">
-                                    <div class="row" ng-repeat="name in target.name.other track by $index">
+                                    <div class="row" ng-repeat="name in target.name.$other track by $index">
                                         <div class="col-4">
                                             <concept-select class="form-control" ng-required="$index > 0"
                                                 concept-set="'NameUse'" ng-model="name.use" />
@@ -56,7 +56,7 @@
                                                 type="text" />
                                             <div class="input-group-append" ng-if="$index > 0">
                                                 <button class="btn btn-danger"
-                                                ng-click="target.name.other.splice($index,1)"><i
+                                                ng-click="target.name.$other.splice($index,1)"><i
                                                     class="fas fa-times"></i> <span
                                                     class="d-sm-none d-md-inline"> {{ 'ui.action.remove' | i18n }}</span></button>
                                                 </div>
@@ -65,12 +65,13 @@
                                     </div>
                                     <div class="row">
                                         <div class="col"><button class="float-right btn btn-success"
-                                                ng-click="target.name.other.push({})"><i class="fas fa-plus"></i> <span
+                                                ng-click="target.name.$other.push({})"><i class="fas fa-plus"></i> <span
                                                     class="d-sm-none d-md-inline"> {{ 'ui.action.add' | i18n }}</span></button>
                                         </div>
                                     </div>
                                 </div>
                             </div>
+                            <!--<name-edit name="target.name" owner-form="targetForm"></name-edit>-->
                         </div>
                         <div class="form-group row">
                             <label class="col-sm-12 col-md-2 control-label"
@@ -78,9 +79,9 @@
                             <div class="col-sm-12 col-md-10 input-group">
                                 <entity-search type="'Place'"
                                     group-by="'address.Direct.component.State'" 
-                                    ng-model="target.relationship.Parent.target"
+                                    ng-model="target.relationship.Part.target"
                                     search-field="'name.component.value'"
-                                    filter="{ 'classConcept': target.classConcept == 'ff34dfa7-c6d3-4f8b-bc9f-14bcdc13ba6c' ? EntityClassKeys.ServiceDeliveryLocation : '!ff34dfa7-c6d3-4f8b-bc9f-14bcdc13ba6c', 'statusConcept': 'c8064cbd-fa06-4530-b430-1a52f1530c27' }"
+                                    filter="{ 'classConcept': $scope.isFacility ? EntityClassKeys.ServiceDeliveryLocation : '!ff34dfa7-c6d3-4f8b-bc9f-14bcdc13ba6c', 'statusConcept': StatusKeys.Active }"
                                 ></entity-search>
                             </div>
                         </div>

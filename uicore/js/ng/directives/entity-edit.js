@@ -120,6 +120,39 @@ angular.module('santedb-lib')
         }
     }])
     /**
+     * 
+     */
+    .directive('geoEdit', ['$rootScope', function($rootScope){
+        return {
+            restrict: 'E',
+            replace: true,
+            templateUrl: './org.santedb.uicore/directives/geoEdit.html',
+            scope: {
+                geo: '=',
+                isRequired: '<',
+                ownerForm: '<',
+                controlPrefix: '<'
+            },
+            controller: ['$scope', '$rootScope', function($scope, $rootScope){
+
+            }],
+            link: function(scope, element, attrs){
+
+                // Scan and find the form to which this belongs
+                if (!scope.controlPrefix)
+                    scope.controlPrefix = '';
+
+                if (!scope.geo){
+                    scope.geo = new GeoTag({
+                        lat: 0,
+                        lng: 0                        
+                    });
+                }
+
+            }
+        }
+    }])
+    /**
     * @summary Allows for the editing of a name
     * @memberof Angular
     * @method nameEdit
@@ -130,10 +163,11 @@ angular.module('santedb-lib')
      * @param {boolean} isRequired When true, the fields in the name will be marked as required
      * @param {form} ownerForm The angular form which hosts this control
      * @param {string} controlPrefix The prefix to add to all inputs which allow validation and access by other JavaScript
+     * @param {string} allowedComponents The allowed name components that should be displayed. Separate multiple components by comma. Valid values are prefix, given, family, suffix, $other.
      * @example
       * <form novalidate="novalidate" name="myForm">
      *      <name-edit name="scopedObject.name" no-add="true" no-type="false" simple-entry="true" 
-     *          owner-form="myForm" />
+     *          owner-form="myForm" allowed-components="given,family" />
      */
     .directive('nameEdit', ['$rootScope', function ($rootScope) {
         return {
@@ -148,7 +182,8 @@ angular.module('santedb-lib')
                 isRequired: '<',
                 ownerForm: '<',
                 controlPrefix: '<',
-                inputStyle: '<'
+                inputStyle: '<',
+                allowedComponents: '<'
             },
             controller: ['$scope', '$rootScope', function ($scope, $rootScope) {
 
@@ -160,12 +195,20 @@ angular.module('santedb-lib')
                     $scope.nameEdit.push(new EntityName());
                 }
 
+                $scope.isComponentAllowed = function(component) {
+                    return $scope.allowedComponents.indexOf(component) > -1;
+                }
+
             }],
             link: function (scope, element, attrs) {
 
                 // Scan and find the form to which this belongs
                 if (!scope.controlPrefix)
                     scope.controlPrefix = '';
+
+                if (!scope.allowedComponents || scope.allowedComponents === '' || scope.allowedComponents === ' '){
+                    scope.allowedComponents = "prefix,given,family,suffix"; //Default for compatability.
+                }
 
                 // Flatten name
                 var flattenName = function() {
