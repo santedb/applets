@@ -122,7 +122,7 @@ angular.module('santedb-lib')
     /**
      * 
      */
-    .directive('geoEdit', ['$rootScope', function($rootScope){
+    .directive('geoEdit', ['$rootScope', function ($rootScope) {
         return {
             restrict: 'E',
             replace: true,
@@ -133,19 +133,19 @@ angular.module('santedb-lib')
                 ownerForm: '<',
                 controlPrefix: '<'
             },
-            controller: ['$scope', '$rootScope', function($scope, $rootScope){
+            controller: ['$scope', '$rootScope', function ($scope, $rootScope) {
 
             }],
-            link: function(scope, element, attrs){
+            link: function (scope, element, attrs) {
 
                 // Scan and find the form to which this belongs
                 if (!scope.controlPrefix)
                     scope.controlPrefix = '';
 
-                if (!scope.geo){
+                if (!scope.geo) {
                     scope.geo = new GeoTag({
                         lat: 0,
-                        lng: 0                        
+                        lng: 0
                     });
                 }
 
@@ -195,7 +195,7 @@ angular.module('santedb-lib')
                     $scope.nameEdit.push(new EntityName());
                 }
 
-                $scope.isComponentAllowed = function(component) {
+                $scope.isComponentAllowed = function (component) {
                     return $scope.allowedComponents.indexOf(component) > -1;
                 }
 
@@ -206,12 +206,12 @@ angular.module('santedb-lib')
                 if (!scope.controlPrefix)
                     scope.controlPrefix = '';
 
-                if (!scope.allowedComponents || scope.allowedComponents === '' || scope.allowedComponents === ' '){
+                if (!scope.allowedComponents || scope.allowedComponents === '' || scope.allowedComponents === ' ') {
                     scope.allowedComponents = "prefix,given,family,suffix"; //Default for compatability.
                 }
 
                 // Flatten name
-                var flattenName = function() {
+                var flattenName = function () {
                     bound = true;
                     var flatNameList = [];
                     Object.keys(scope.name).forEach(function (key) {
@@ -230,11 +230,11 @@ angular.module('santedb-lib')
                             flatNameList.push(name);
                     });
 
-                    if(scope.simpleEntry)
-                        flatNameList = [ flatNameList[0] ] ; // simple entry, only edit first name
+                    if (scope.simpleEntry)
+                        flatNameList = [flatNameList[0]]; // simple entry, only edit first name
 
-                        scope.nameEdit = flatNameList;
-                        scope.name = { "$other": flatNameList };
+                    scope.nameEdit = flatNameList;
+                    scope.name = { "$other": flatNameList };
 
                 }
 
@@ -277,15 +277,15 @@ angular.module('santedb-lib')
         var keys = Object.keys(TelecomAddressUseKeys);
         // are there settings which prevent a type of edit from ocurring
         try {
-            keys = keys.filter(o => 
-                !($rootScope && 
-                $rootScope.system && 
-                $rootScope.system.config && 
-                $rootScope.system.config.application && 
-                $rootScope.system.config.application.setting && 
-                $rootScope.system.config.application.setting[`forbid.patient.telecom.${o}`]));
+            keys = keys.filter(o =>
+                !($rootScope &&
+                    $rootScope.system &&
+                    $rootScope.system.config &&
+                    $rootScope.system.config.application &&
+                    $rootScope.system.config.application.setting &&
+                    $rootScope.system.config.application.setting[`forbid.patient.telecom.${o}`]));
         }
-        catch(e) {
+        catch (e) {
             console.warn(e);
         }
         keys.push("NullFlavor-NoInformation");
@@ -311,7 +311,7 @@ angular.module('santedb-lib')
                 keys.forEach((k) => {
                     if (!scope.telecom[k])
                         scope.telecom[k] = [];
-                    if(!scope.telecom[k][0])
+                    if (!scope.telecom[k][0])
                         scope.telecom[k].push({});
                     if (!scope.telecom[k][0].type)
                         scope.telecom[k][0].type = /^mailto:.*$/i.test(scope.telecom[k][0].value) ? "c1c0a4e9-4238-4044-b89b-9c9798995b93" : "c1c0a4e9-4238-4044-b89b-9c9798995b99";
@@ -404,8 +404,8 @@ angular.module('santedb-lib')
                 SanteDB.resources.assigningAuthority.findAsync()
                     .then(function (bundle) {
                         if (bundle.resource) {
-                            bundle.resource.filter(o=> o.scope == null || o.scope.length == 0 || o.scope.indexOf(scope.containerClass) > -1).forEach(function (authority) {
-                                
+                            bundle.resource.filter(o => o.scope == null || o.scope.length == 0 || o.scope.indexOf(scope.containerClass) > -1).forEach(function (authority) {
+
                                 authority.generator = SanteDB.application.getIdentifierGenerator(authority.domainName);
                                 if (scope.identifier[authority.domainName]) {
                                     scope.identifier[authority.domainName].forEach(v => v.authority = authority);
@@ -480,7 +480,7 @@ angular.module('santedb-lib')
 
                         // Is there a parser?
                         var parser = SanteDB.application.getIdentifierParser($scope.identifier.authority.domainName);
-                        if(parser)
+                        if (parser)
                             data = parser(data);
                         $scope.identifier.value = data;
                         try { $scope.$apply(); }
@@ -497,7 +497,7 @@ angular.module('santedb-lib')
                 if (!scope.identifier)
                     scope.identifier = new EntityIdentifier();
 
-                if(!scope.identifier.id)
+                if (!scope.identifier.id)
                     scope.identifier.id = SanteDB.application.newGuid();
 
                 // Get a list of identity domains available for our scope and emit them to the identifier array
@@ -511,10 +511,10 @@ angular.module('santedb-lib')
                                     if (!authority.assigningApplication || authority.assigningAuthority == $rootScope.session.claim.appid) {
                                         authorities[authority.domainName] = authority;
 
-                                        if(authority.validation) {
+                                        if (authority.validation) {
                                             var rExp = new RandExp(new RegExp(authority.validation));
                                             var hint = rExp.gen();
-                                            hint = hint.replace(/[A-Z]/g, 'A').replace(/[0-9]/g,'9').replace(/[a-z]/g,'a');
+                                            hint = hint.replace(/[A-Z]/g, 'A').replace(/[0-9]/g, '9').replace(/[a-z]/g, 'a');
                                             authorities[authority.domainName].validationHint = hint;
                                         }
                                     }
@@ -536,6 +536,8 @@ angular.module('santedb-lib')
     * @summary Administrative relationship editing
     * @memberof Angular
     * @method adminRelationEdit
+    * @param {EntityRelationship} relationship The relationship instance to edit.
+    * @param {string} containerClass The type of relationship entity to search for.
     */
     .directive('adminRelationEdit', ['$rootScope', function ($rootScope) {
         return {
@@ -548,7 +550,7 @@ angular.module('santedb-lib')
             },
             controller: ['$scope', '$rootScope', function ($scope, $rootScope) {
 
-                
+
 
 
             }],
@@ -597,6 +599,103 @@ angular.module('santedb-lib')
                     }
                 }
 
+            }
+        }
+    }])
+    /**
+     * @summary Service Schedule Editor
+     * @memberof Angular
+     * @method scheduleEdit
+     * @param {string} schedule The JSON schedule to be edited.
+     */
+    .directive('scheduleEdit', ['$rootScope', function ($rootScope) {
+
+        let days = {
+            sunday: 0,
+            monday: 1,
+            tuesday: 2,
+            wednesday: 3,
+            thursday: 4,
+            friday: 5,
+            saturday: 6
+        };
+
+        let daykeys = Object.keys(days);
+
+        const toInternalModel = function (serviceSchedule) {
+
+            let model = {};
+
+            if (serviceSchedule && serviceSchedule.schedule && serviceSchedule.schedule.forEach) {
+                daykeys.forEach((day, idx) => {
+                    let scheduleelement = serviceSchedule.schedule.filter(se => (se && se.days && se.days.indexOf && se.days.indexOf(days[day]) > -1));
+                    
+                    if (scheduleelement && scheduleelement.length > 0) {
+                        model[day] = {
+                            start: scheduleelement[0].start,
+                            stop: scheduleelement[0].stop,
+                            capacity: scheduleelement[0].capacity
+                        };
+                    }
+                    else {
+                        model[day] = {
+                            start: null,
+                            stop: null,
+                            capacity: null
+                        };
+                    }
+                });
+            }
+            else {
+                daykeys.forEach(day => model[day] = { start: '', stop: '', capacity: 0 });
+            }
+
+            return model;
+        };
+
+        const toServiceSchedule = function (model) {
+            if (typeof model === 'undefined') {
+                return {};
+            }
+            
+            var schedule = [];
+
+            daykeys.forEach((day, idx) => {
+                let d = model[day];
+
+                if (!d || !d.start || !d.stop || !d.capacity){
+                    return;
+                }
+
+                schedule.push({
+                    days: [days[day]],
+                    start: d.start,
+                    stop: d.stop,
+                    capacity: d.capacity
+                });
+            });
+
+            return {
+                schedule
+            };
+        }
+
+        return {
+            restrict: 'E',
+            replace: true,
+            templateUrl: './org.santedb.uicore/directives/scheduleEdit.html',
+            scope: {
+                jsonSchedule: '='
+            },
+            controller: ['$scope', '$rootScope', '$window', function ($scope, $rootScope, $win) {
+
+            }],
+            link: function (scope, element, attrs) {
+                scope.model = toInternalModel(JSON.parse(scope.jsonSchedule ? scope.jsonSchedule : "{}"));
+
+                scope.$watch((s) => s ? JSON.stringify(s.model) : "null", function(n, o){
+                    scope.jsonSchedule = JSON.stringify(toServiceSchedule(scope.model));
+                });
             }
         }
     }]);

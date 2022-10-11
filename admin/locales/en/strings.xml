@@ -81,6 +81,9 @@
     <string name="ui.admin.applications.confirmUnlock">Are you sure you want to unlock this application?</string>
     <string name="ui.admin.applications.invalidLogin.reset">Are you sure you want to reset the invalid authentications for this application?</string>
 
+    <!-- Strings for Facilities -->
+    <string name="ui.admin.facilities.create.core.title">Facility Profile</string>
+
     <!-- Provenance Strings -->
     <string name="ui.admin.provenance.info">Primary Identity</string>
     <string name="ui.admin.provenance.creationTime">Established</string>
