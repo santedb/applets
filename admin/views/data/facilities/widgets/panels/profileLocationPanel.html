@@ -1,15 +1,24 @@
 <div xmlns="http://www.w3.org/1999/xhtml" xmlns:sdb="http://santedb.org/applet">
-    <sdb:widget order="20" name="org.santedb.widget.admin.panel.facility.profile.location" type="Panel" context="org.santedb.facility.admin.profile" size="Medium">
+    <sdb:widget order="20" name="org.santedb.widget.admin.panel.facility.profile.location" type="Panel"
+        context="org.santedb.facility.admin.profile" size="Medium">
         <sdb:icon>fas fa-fw fa-map-pin</sdb:icon>
         <sdb:description lang="en">Location</sdb:description>
     </sdb:widget>
-    <address-edit owner-form="targetForm" address="scopedObject.address" simple-entry="true" no-add="true"></address-edit>
+    <address-edit owner-form="targetForm" address="scopedObject.address" simple-entry="true" no-add="true">
+    </address-edit>
     <hr />
     <div class="mb-2">
-        <div class="custom-control custom-checkbox">
-            <input type="checkbox" class="custom-control-input" id="isMobile" ng-model="scopedObject.isMobile" />
-            <label for="isMobile" class="custom-control-label">{{ 'ui.model.place.isMobile' | i18n }}</label>
+        <div class="row form-group">
+            <label class="control-label col-sm-12 col-md-3">{{ 'ui.model.place.isMobile' | i18n
+            }} <hint-popover hint-title="ui.model.place.isMobile" /></label>
+            <div class="col-sm-12 col-md-9">
+                <div class="custom-control custom-checkbox">
+                    <input type="checkbox" class="custom-control-input" id="isMobile" ng-model="scopedObject.isMobile" />
+                    <label for="isMobile" class="custom-control-label"></label>
+                </div>
+            </div>
         </div>
+        
     </div>
     <hr />
     <geo-edit owner-form="targetForm" geo="scopedObject.geo"></geo-edit>

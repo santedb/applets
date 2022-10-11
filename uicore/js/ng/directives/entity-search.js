@@ -170,6 +170,8 @@ angular.module('santedb-lib')
                 function ($scope, $rootScope) {
 
                     $scope.setValue = (selectControl, resource, value) => {
+
+
                         if (!value || Array.isArray(value) && value.length == 0) {
                             $(selectControl).find('option').remove();
                             $(selectControl).trigger('change.select2');
@@ -468,7 +470,9 @@ angular.module('santedb-lib')
 
                     // HACK: Screw Select2 , it is so random
                     if (ngModel.$viewValue)
+                    {
                         scope.setValue(element, modelType, ngModel.$viewValue);
+                    }
 
                 });
             }
