@@ -41,6 +41,7 @@ angular.module('santedb-lib')
             },
 
             responseError: function (response) {
+                // TODO: Authentication elevation - check the error_code for the appropriate errors
                 if (response.status === 401) {
                     var oldState = $injector.get('$state').$current.name;
                     window.sessionStorage.removeItem("token");
