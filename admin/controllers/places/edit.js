@@ -32,6 +32,17 @@ angular.module('santedb').controller('PlaceEditController', ["$scope", "$rootSco
                 place.isMobile = false;
             }
 
+            if (typeof place.relationship === 'undefined'){
+                //Put in a default relationship selection.
+                place.relationship = {
+                    Parent: [
+                        {
+                        
+                        }
+                    ]
+                };
+            }
+
             console.log("Place loaded");
             console.log(place);
 
@@ -59,9 +70,6 @@ angular.module('santedb').controller('PlaceEditController', ["$scope", "$rootSco
             name: {
                 $other: [ {
                     component: {
-                        $other : {
-                            value: ""
-                        }
                     },
                     use: NameUseKeys.OfficialRecord
                 } ]

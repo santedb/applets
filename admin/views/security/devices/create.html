@@ -11,7 +11,7 @@
 
     <div xmlns="http://www.w3.org/1999/xhtml">
         <form ng-submit="saveDevice(targetForm)" name="targetForm" novalidate="novalidate">
-            <div class="accordion" id="deviceAccordion">
+            <div class="accordion mb-2" id="deviceAccordion">
                 <div class="card">
                     <div class="card-header">
                         <h2 class="mb-0">
@@ -30,7 +30,7 @@
                                 <div class="col-sm-12 col-md-10 input-group">
                                     <input name="sid" readonly="readonly" type="text" class="form-control"
                                         ng-model="target.securityDevice.id" />
-                                    <input-copy-button class="btn btn-outline-secondary" source="target.securityDevice.id" />
+                                    <input-copy-button button-class="'btn-outline-secondary'" source="target.securityDevice.id" />
                                 </div>
                             </div>
                             <div class="form-group row">
@@ -40,7 +40,7 @@
                                     <input name="devicename" ng-readonly="target.securityDevice.id" type="text"
                                         class="form-control" pattern="^[A-Za-z0-9_\-\.\@\|]{3,}" minlength="3" maxlength="32"
                                         required="required" ng-model="target.securityDevice.name" />
-                                    <input-copy-button id="devicenameCopyButton" class="btn btn-outline-secondary"
+                                    <input-copy-button id="devicenameCopyButton" button-class="'btn-outline-secondary'"
                                         source="target.securityDevice.name" />
                                 </div>
                                 <div class="col-sm-12 col-md-10 offset-md-2">

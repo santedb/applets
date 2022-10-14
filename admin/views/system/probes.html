@@ -15,31 +15,36 @@
     </div>
     <div class="container-fluid" ng-if="probeList">
         <div class="row mb-1">
-            <div class="col">
-                <div  class="input-group">
+            <div class="col mb-2">
+                <div class="input-group">
                     <div class="input-group-prepend">
                         <span class="input-group-text">{{ 'ui.admin.system.probe.show' | i18n }}</span>
                     </div>
                     <select class="form-control" ng-model="source._upstream" ng-change="refreshView()">
                         <option value="false">{{ 'ui.admin.system.logs.local' | i18n }}</option>
-                        <option ng-if="$root.system.online" value="true">{{ 'ui.admin.system.logs.remote' | i18n }}</option>
+                        <option ng-if="$root.system.online" value="true">{{ 'ui.admin.system.logs.remote' | i18n }}
+                        </option>
                     </select>
                 </div>
             </div>
         </div>
-        <div class="row">
-            <div class="col-sm-12 col-md-6" ng-repeat="probe in probeList">
-                <div class="card shadow">
+        <div class="row row-cols-1 row-cols-lg-2">
+            <div class="col mb-3" ng-repeat="probe in probeList">
+                <div class="card shadow h-100">
                     <div class="card-header">
-                        <h5 class="card-title m-1"><i class="fas fa-thermometer fa-fw"></i> {{ probe.name }} <small class="text-subtle">{{ probe.description }}</small></h5>
+                        <h5 class="card-title m-1"><i class="fas fa-thermometer fa-fw"></i> {{ probe.name }} <small
+                                class="text-subtle">{{ probe.description }}</small></h5>
                     </div>
                     <div class="card-body">
-                        <div class="row">
-                            <div class="card col" ng-repeat="comp in probe.component"> <center>
-                                <h5 class="m-1">{{comp.name}}</h5>
-                                <h1 class="m-1"><span id="ban{{comp._id}}"><i class="fas fa-circle-notch fa-spin fa-fw"></i></span> <small>{{ comp.unit }}</small></h1> 
-                                <small>{{ comp.description }}</small>
-                            </center>
+                        <div class="row h-100">
+                            <div class="col" ng-repeat="comp in probe.component">
+                                <div class="card h-100 p-2 text-center">
+                                    <h5 class="m-1">{{comp.name}}</h5>
+                                    <h1 class="m-1"><span id="ban{{comp._id}}"><i
+                                                class="fas fa-circle-notch fa-spin fa-fw"></i></span> <small>{{
+                                            comp.unit }}</small></h1>
+                                    <small>{{ comp.description }}</small>
+                                </div>
                             </div>
                         </div>
 

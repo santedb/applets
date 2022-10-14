@@ -1,0 +1,18 @@
+<div xmlns="http://www.w3.org/1999/xhtml" xmlns:sdb="http://santedb.org/applet">
+    <sdb:widget order="40" name="org.santedb.widget.admin.panel.place.profile.parent" type="Panel" context="org.santedb.place.admin.profile" size="Medium">
+        <sdb:icon>fas fa-fw fa-sitemap</sdb:icon>
+        <sdb:description lang="en">Parent</sdb:description>
+    </sdb:widget>
+    <div class="form-group row">
+        <label class="col-sm-12 col-md-3 control-label">{{ 'ui.model.place.relationship.Parent' | i18n }}</label>
+        <div class="col-sm-12 col-md-9">
+                <entity-search type="'Place'"
+                    group-by="'address.Direct.component.State'" 
+                    ng-model="scopedObject.relationship.Parent[0].target"
+                    search-field="'name.component.value'"
+                    filter="{ 'classConcept': '!ff34dfa7-c6d3-4f8b-bc9f-14bcdc13ba6c', 'statusConcept': StatusKeys.Active }"
+                ></entity-search>
+                
+        </div>
+    </div>
+</div>

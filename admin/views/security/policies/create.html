@@ -13,7 +13,7 @@
         <div class="alert alert-warning" ng-show="!target.securityPolicy.id">
             <i class="fas fa-exclamation-triangle"></i> {{ 'ui.admin.policy.edit.readonly'  | i18n }}
         </div>
-        <div class="card">
+        <div class="card mb-2">
             <div class="card-header">
                 <h2 class="mb-0">
                     <button type="button" class="collapse-indicator btn btn-link p-0" data-toggle="collapse"
@@ -31,7 +31,7 @@
                         <div class="col-sm-12 col-md-10 input-group">
                             <input name="sid" readonly="readonly" type="text" class="form-control"
                                 ng-model="target.securityPolicy.id" />
-                            <input-copy-button class="btn btn-outline-secondary" source="target.securityPolicy.id" />
+                            <input-copy-button button-class="'btn-outline-secondary'" source="target.securityPolicy.id" />
                         </div>
                     </div>
                     <div class="form-group row">
@@ -41,7 +41,7 @@
                             <input name="policyoid" type="text" class="form-control"
                                 pattern="^(\d+?\.){1,}\d+$" minlength="6" maxlength="32" required="required" ng-readonly="target.securityPolicy.id"
                                 ng-model="target.securityPolicy.oid" />
-                            <input-copy-button id="policyoidCopyButton" class="btn btn-outline-secondary"
+                            <input-copy-button id="policyoidCopyButton" button-class="'btn-outline-secondary'"
                                 source="target.securityPolicy.oid" />
                         </div>
                         <div class="col-sm-12 col-md-10 offset-md-2">
@@ -66,7 +66,7 @@
                             <input name="policyname" type="text" class="form-control" ng-readonly="target.securityPolicy.id"
                                 minlength="3" maxlength="32" required="required"
                                 ng-model="target.securityPolicy.name" />
-                            <input-copy-button id="policynameCopyButton" class="btn btn-outline-secondary"
+                            <input-copy-button id="policynameCopyButton" button-class="'btn-outline-secondary'"
                                 source="target.securityPolicy.name" />
                         </div>
                         <div class="col-sm-12 col-md-10 offset-md-2">

@@ -193,6 +193,14 @@
     <string name="ui.admin.data.materials.count">Materials Management</string>
     <string name="ui.admin.data.materials.create">Create Material</string>
 
+    <!-- Place Strings -->
+    <string name="org.santedb.widget.admin.panel.place.profile.name">Name</string>
+    <string name="ui.model.place.id">Id</string>
+    <string name="org.santedb.widget.admin.panel.place.profile.type">Type</string>
+    <string name="org.santedb.widget.admin.panel.place.profile.location">Location</string>
+    <string name="org.santedb.widget.admin.panel.place.profile.parent">Parent</string>
+    
+
     <!-- Edit Identity Domain -->
     <string name="ui.admin.domain.edit.core.title">Identity Domain Properties</string>
     <string name="ui.admin.domain.edit.scope.title"><![CDATA[Authority &amp; Scope]]></string>
