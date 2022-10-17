@@ -9,8 +9,8 @@
         <div class="form-group mb-2">
             <label for="id" class="form-label">{{ 'ui.model.place.id' | i18n }}</label>
             <div class="input-group">
-                <input readonly="readonly" ng-model="scopedObject.id" name="id" id="id" class="form-control" />
-                <input-copy-button button-class="'btn-outline-secondary'" source="scopedObject.id" />
+                <input readonly="readonly" ng-model="scopedObject.place.id" name="id" id="id" class="form-control" />
+                <input-copy-button button-class="'btn-outline-secondary'" source="scopedObject.place.id" />
             </div>
         </div>
         <widget-panels context-name="'org.santedb.place.admin.profile'" scoped-object="scopedObject"></widget-panels>

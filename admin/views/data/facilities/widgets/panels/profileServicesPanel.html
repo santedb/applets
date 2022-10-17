@@ -5,9 +5,9 @@
         <sdb:description lang="en">Services</sdb:description>
     </sdb:widget>
     <div class="container-fluid">
-        <div class="row" ng-repeat="service in scopedObject.service track by $index">
+        <div class="row" ng-repeat="service in scopedObject.place.service track by $index">
             <div class="col-12">
-                <hr ng-if="$index &gt; 0 &amp;&amp; scopedObject.service.length &gt; 1" />
+                <hr ng-if="$index &gt; 0 &amp;&amp; scopedObject.place.service.length &gt; 1" />
                 <div class="form-group row">
                     <label for="service{{$index}}code" class="col-md-3 col-sm-12 control-label">{{
                         'ui.model.service.code' | i18n }}</label>
@@ -23,9 +23,9 @@
                         <schedule-edit json-schedule="service.serviceSchedule"></schedule-edit>
                     </div>
                 </div>
-                <div class="row" ng-if="scopedObject.service.length &gt; 1">
+                <div class="row" ng-if="scopedObject.place.service.length &gt; 1">
                     <div class="col text-right text-end mb-2">
-                        <button type="button" class="btn btn-danger" ng-click="scopedObject.service.splice($index, 1)">{{ 'ui.action.remove' | i18n }}</button>
+                        <button type="button" class="btn btn-danger" ng-click="scopedObject.place.service.splice($index, 1)">{{ 'ui.action.remove' | i18n }}</button>
                     </div>
                 </div>
             </div>
@@ -33,7 +33,7 @@
     </div>
     <div class="d-flex">
         <button class="btn btn-primary" type="button"
-            ng-click="scopedObject.service = scopedObject.service || []; scopedObject.service.push({})"><i
+            ng-click="scopedObject.place.service = scopedObject.place.service || []; scopedObject.place.service.push({})"><i
                 class="fas fa-fw fa-plus"></i> {{ 'ui.action.add' | i18n }}</button>
     </div>
 </div>

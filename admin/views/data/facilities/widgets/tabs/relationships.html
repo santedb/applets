@@ -7,7 +7,7 @@
     </sdb:widget>
     <div class="container-fluid border border-top-0 pb-2">
         <widget-panels context-name="'org.santedb.facility.admin.relationships'" scoped-object="scopedObject"></widget-panels>
-        <div ng-repeat="related in scopedObject.relationship">
+        <div ng-repeat="related in scopedObject.place.relationship">
             <relationship-graph entity="scopedObject" entity-relationship="related" view-mode="simple"></relationship-graph>
         </div>
     </div>

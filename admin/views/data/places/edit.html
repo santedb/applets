@@ -12,8 +12,8 @@
         <div class="card shadow mb-4">
             <div class="card-body">
                 <div class="d-flex align-items-center justify-content-start">
-                    <h5 class="card-title mb-0"><i class="fas fa-map-pin"></i> {{ target.name | name }}</h5>
-                    <div class="ms-3 ml-3 badge badge-info">{{ target.classConceptModel | concept }} {{ target.typeConcept ? '-' : '' }} {{ target.typeConceptModel | concept }}</div>
+                    <h5 class="card-title mb-0"><i class="fas fa-map-pin"></i> {{ target.place.name | name }}</h5>
+                    <div class="ms-3 ml-3 badge badge-info">{{ target.place.classConceptModel | concept }} {{ target.place.typeConcept ? '-' : '' }} {{ target.place.typeConceptModel | concept }}</div>
                 </div>
             </div>
         </div>

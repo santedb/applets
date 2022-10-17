@@ -39,6 +39,11 @@ angular.module('santedb').controller('PlaceEditController', ["$scope", "$rootSco
                         {
                         
                         }
+                    ],
+                    DedicatedServiceDeliveryLocation: [
+                        {
+
+                        }
                     ]
                 };
             }
@@ -57,24 +62,26 @@ angular.module('santedb').controller('PlaceEditController', ["$scope", "$rootSco
 
     if ($stateParams.id){
         loadPlace($stateParams.id).then((place)=> {
-                $timeout(()=>{$scope.target = place;});
+                $timeout(()=>{$scope.target = { place };});
         });
     }
     else{
         // Create a templated place
-        $scope.target = new Place({
-            classConcept: isFacility ? EntityClassKeys.ServiceDeliveryLocation : EntityClassKeys.Place,
-            classConceptModel : { id: isFacility ? EntityClassKeys.ServiceDeliveryLocation : EntityClassKeys.Place },
-            statusConcept: StatusKeys.Active,
-            isMobile: false,
-            name: {
-                $other: [ {
-                    component: {
-                    },
-                    use: NameUseKeys.OfficialRecord
-                } ]
-            }
-        });
+        $scope.target = { 
+            place : new Place({
+                classConcept: isFacility ? EntityClassKeys.ServiceDeliveryLocation : EntityClassKeys.Place,
+                classConceptModel : { id: isFacility ? EntityClassKeys.ServiceDeliveryLocation : EntityClassKeys.Place },
+                statusConcept: StatusKeys.Active,
+                isMobile: false,
+                name: {
+                    $other: [ {
+                        component: {
+                        },
+                        use: NameUseKeys.OfficialRecord
+                    } ]
+                }
+            })
+        };
     }
 
     $scope.savePlace = async function (form) {
@@ -85,17 +92,17 @@ angular.module('santedb').controller('PlaceEditController', ["$scope", "$rootSco
                 //return;
 
             console.log("Place for save");
-            console.log($scope.target);
+            console.log($scope.target.place);
 
-            if(!$scope.target.id) {
-                $scope.target = await SanteDB.resources.place.insertAsync($scope.target);
+            if(!$scope.target.place.id) {
+                $scope.target.place = await SanteDB.resources.place.insertAsync($scope.target.place);
                 toastr.success(SanteDB.locale.getString("ui.model.place.saveSuccess"));
-                $state.transitionTo(isFacility ? 'santedb-admin.data.facility.edit' : 'santedb-admin.data.place.edit', {id: $scope.target.id});
+                $state.transitionTo(isFacility ? 'santedb-admin.data.facility.edit' : 'santedb-admin.data.place.edit', {id: $scope.target.place.id});
             }
             else {
-                $scope.target = await SanteDB.resources.place.updateAsync($stateParams.id, $scope.target);
+                $scope.target.place = await SanteDB.resources.place.updateAsync($stateParams.id, $scope.target.place);
                 toastr.success(SanteDB.locale.getString("ui.admin.place.saveSuccess"));
-                $state.transitionTo(isFacility ? 'santedb-admin.data.facility.index' : 'santedb-admin.data.place.index', {id: $scope.target.id});
+                $state.transitionTo(isFacility ? 'santedb-admin.data.facility.index' : 'santedb-admin.data.place.index', {id: $scope.target.place.id});
 
             }
         }
@@ -108,5 +115,6 @@ angular.module('santedb').controller('PlaceEditController', ["$scope", "$rootSco
             catch (e) {}
         }
     }
+
     
 }]);

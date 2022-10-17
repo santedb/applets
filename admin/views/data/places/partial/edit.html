@@ -7,7 +7,7 @@
                         <button type="button" class="collapse-indicator btn btn-link p-0" data-toggle="collapse"
                             data-target="#placeProfile" aria-expanded="true">
                             <i class="fa"
-                                ng-class="{ 'fa-hospital' : target.classConcept == EntityClassKeys.ServiceDeliveryLocation, 'fa-map' : target.classConcept != EntityClassKeys.ServiceDeliveryLocation }"></i>
+                                ng-class="{ 'fa-hospital' : target.place.classConcept == EntityClassKeys.ServiceDeliveryLocation, 'fa-map' : target.place.classConcept != EntityClassKeys.ServiceDeliveryLocation }"></i>
                             {{ 'ui.admin.places.edit.profile.title' | i18n }}
                             <i class="fa fa-chevron-right"></i>
                         </button>
@@ -20,7 +20,7 @@
                                 {{ 'ui.model.place.classConcept' | i18n }}
                             </label>
                             <div class="col-sm-12 col-md-9">
-                                <concept-select class="form-control" required="required" concept-set="'PlaceClass'" ng-model="target.classConcept"/>
+                                <concept-select class="form-control" required="required" concept-set="'PlaceClass'" ng-model="target.place.classConcept"/>
                             </div>
                         </div>
                         <div class="form-group row"><!--ng-if="target.classConcept == 'ff34dfa7-c6d3-4f8b-bc9f-14bcdc13ba6c'">-->
@@ -28,17 +28,17 @@
                                 {{ 'ui.model.place.typeConcept' | i18n }}
                             </label>
                             <div class="col-sm-12 col-md-9">
-                                <concept-select class="form-control" required="required" concept-set="'PlaceTypeConcept'" ng-model="target.typeConcept"/>
+                                <concept-select class="form-control" required="required" concept-set="'PlaceTypeConcept'" ng-model="target.place.typeConcept"/>
                             </div>
                         </div>
-                        <name-edit name="target.name" no-add="true" no-type="true" simple-entry="true" owner-form="targetForm" allowed-components="'$other'" input-style="'simple'"></name-edit>
+                        <name-edit name="target.place.name" no-add="true" no-type="true" simple-entry="true" owner-form="targetForm" allowed-components="'$other'" input-style="'simple'"></name-edit>
                         <div class="form-group row">
                             <label class="col-sm-12 col-md-3 control-label"
                                 for="name">{{ 'ui.model.place.relationship.Parent' | i18n }}</label>
                             <div class="col-sm-12 col-md-9 input-group">
                                 <entity-search type="'Place'"
                                     group-by="'address.Direct.component.State'" 
-                                    ng-model="target.relationship.Parent.target"
+                                    ng-model="target.place.relationship.Parent.target"
                                     search-field="'name.component.value'"
                                     filter="{ 'classConcept': $scope.isFacility ? EntityClassKeys.ServiceDeliveryLocation : '!ff34dfa7-c6d3-4f8b-bc9f-14bcdc13ba6c', 'statusConcept': StatusKeys.Active }"
                                 ></entity-search>
@@ -57,7 +57,17 @@
                 </div>
                 <div class="collapse show" id="placeFacility">
                     <div class="card-body container-fluid">
-                        HERE!
+                        <div class="form-group row">
+                            <label class="col-sm-12 col-md-3 control-label">{{ 'ui.admin.places.edit.facility' | i18n }}</label>
+                            <div class="col-sm-12 col-md-9">
+                                <entity-search 
+                                    type="'Place'" 
+                                    search-field="'name.component.value'" 
+                                    name="facility" 
+                                    ng-model="target.place.relationship.DedicatedServiceDeliveryLocation.target" 
+                                    filter="{'classConcept': EntityClassKeys.ServiceDeliveryLocation, 'statusConcept': StatusKeys.Active }" class="form-control"></entity-search>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
