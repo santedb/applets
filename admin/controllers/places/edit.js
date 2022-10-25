@@ -47,6 +47,9 @@ angular.module('santedb').controller('PlaceEditController', ["$scope", "$rootSco
                     ]
                 };
             }
+            else if (typeof place.relationship.DedicatedServiceDeliveryLocation === 'undefined'){
+                place.relationship.DedicatedServiceDeliveryLocation = [];
+            }
 
             for (let idx = 0; idx < place.relationship.DedicatedServiceDeliveryLocation.length; idx++) {
                 let dsdl = place.relationship.DedicatedServiceDeliveryLocation[idx];
