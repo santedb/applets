@@ -30,7 +30,6 @@ angular.module('santedb').controller('InitialSettingsController', ['$scope', '$r
     $scope.newItem = {};
     $scope.serverCaps = {};
     $scope.widgets = {};
-
     // Get the widgets for the config panel
     SanteDB.application.getWidgetsAsync("org.santedb.config.init", "Tab").then(function (d) {
         $scope.widgets = d;
@@ -48,100 +47,89 @@ angular.module('santedb').controller('InitialSettingsController', ['$scope', '$r
         }
     }
 
+    
     // Process configuration
-    function _processConfiguration(config, sessionInfo) {
-        $scope.config = config;
+    async function _processConfiguration(config, sessionInfo) {
 
         $("#configurationStages li.nav-item").children("a").on('shown.bs.tab', function (e) {
             $scope.lastTab = e.currentTarget.innerHTML == $("#configurationStages li.nav-item").children("a").last().html();
             $scope.$apply();
         });
 
+        
         if (!config.isConfigured) {
-            $scope.config.security.port = 8080;
-            $scope.config.network.useProxy = $scope.config.network.proxyAddress != null;
-            $scope.config.network.optimize = "gzip";
-            $scope.config.sync = $scope.config.sync || {};
-            $scope.config.sync.mode = "sync";
-            $scope.config.sync.subscribeTo = $scope.config.sync.subscribeTo || [];
-            $scope.config.sync.subscribeType = "Facility";
-            $scope.config.subscription = $scope.config.subscription || {};
-            $scope.config.subscription.mode = $scope.config.subscription.mode || "Subscription";
-            $scope.config.log.mode = $scope.config.log.writers[0].filter || "Warning";
-            if(sessionInfo && sessionInfo.entity)
-                $scope.config.security.owner = [ sessionInfo.entity.id ];
-            $scope.config.sync._resource = {};
 
-           
-            $scope.config.data = {
-                provider: "sqlite",
-                options: {}
-            };
+            config = config.values;
+            config._isConfigured = false;
+                /*$scope.config.network.useProxy = $scope.config.network.proxyAddress != null;
+                $scope.config.network.optimize = "gzip";
+                $scope.config.sync = $scope.config.sync || {};
+                $scope.config.sync.mode = "sync";
+                $scope.config.sync.subscribeTo = $scope.config.sync.subscribeTo || [];
+                $scope.config.sync.subscribeType = "Facility";
+                $scope.config.subscription = $scope.config.subscription || {};
+                $scope.config.subscription.mode = $scope.config.subscription.mode || "Subscription";
+                $scope.config.log.mode = $scope.config.log.writers[0].filter || "Warning";
+                if(sessionInfo && sessionInfo.entity)
+                    $scope.config.security.owner = [ sessionInfo.entity.id ];
+                $scope.config.sync._resource = {};
+            
+                $scope.config.data = {
+                    provider: "sqlite",
+                    options: {}
+                };
 
-            var configuredHasher = $scope.config.application.service.find(function (e) { return e.type.indexOf('PasswordHasher') > -1 });
-            if (configuredHasher) {
-                configuredHasher.type = configuredHasher.type.replace("SanteDB.DisconnectedClient.Xamarin.Security.", "");
-                configuredHasher.type = configuredHasher.type.substr(0, configuredHasher.type.indexOf(","));
-                $scope.config.security.hasher = configuredHasher.type;
-            }
-            else
-                $scope.config.security.hasher = "SHA256PasswordHasher";
+                $scope.config.security.offline = { enable: true };*/
 
-            $scope.config.security.offline = { enable: true };
+            if (config.realm.address) {
 
-            if (config.realmName) {
+                try {
+                    // Get subscription reference
+                    var subscriptions = await SanteDB.resources.subscriptionDefinition.findAsync({ _upstream: true });
+                    var appSolutions = await SanteDB.application.getAppSolutionsAsync();
+                    var appInfo = await SanteDB.application.getAppInfoAsync();
+                    var dataProviders = await SanteDB.configuration.getDataProvidersAsync();
 
-                // Get subscription reference
-                SanteDB.resources.subscriptionDefinition.findAsync({ _upstream: true }).then(function (d) {
-                    $scope.reference.subscriptions = [];
-                    d.resource.forEach(function (itm) {
-                        itm.definitions.forEach(function (defn) {
-                            $scope.reference.subscriptions.push(defn);
-                            $scope.config.sync._resource[defn.name] = { selected: true };
+                    $timeout(_ => {
+                        subscriptions.resource.forEach((itm) => {
+                            itm.definitions.forEach(function (defn) {
+                                $scope.reference.subscriptions.push(defn);
+                                config.sync._resource[defn.name] = { selected: true };
+                            });
                         });
+                        $scope.reference.solutions = appSolutions;
+                        
+                        $scope.serverCaps = appInfo;
+
+                        $scope.reference.dataProviders = dataProviders;
+                        if (config.data.provider) {
+                            $scope.reference.providerData = $scope.reference.dataProviders.find((o) => o.invariant == config.data.provider);
+                        }
                     });
 
-                   
-                    try {
-                        $scope.$apply();
-                    }
-                    catch (e) { }
-                }).catch($rootScope.errorHandler);
-
-
-                SanteDB.application.getAppSolutionsAsync().then(function (s) {
-                    $scope.solutions = s;
-                    $scope.$apply();
-                }).catch($rootScope.errorHandler);
-
-                SanteDB.application.getAppInfoAsync().then(function (d) {
-                    $scope.serverCaps = d;
-                    $scope.$apply();
-
-                    SanteDB.configuration.getDataProvidersAsync().then(function (d) {
-                        $scope.reference.dataProviders = d;
-                        if ($scope.config.data.provider)
-                            $scope.reference.providerData = $scope.reference.dataProviders.find(function (o) { return o.invariant == $scope.config.data.provider });
-                        
-                    }).catch($rootScope.errorHandler);
-
-                }).catch($rootScope.errorHandler);
-
-
+                }
+                catch(e) {
+                    $rootScope.errorHandler(e);
+                }
             }
 
         }
         else 
             $("#alreadyConfiguredModal").modal({ backdrop: 'static' });
-        $scope.$apply();
+
+        return config;
     }
 
     // Get configuration from the server
-    function _getConfiguration(sessionInfo) {
-        SanteDB.configuration.getAsync().then(function (config) {
-            _processConfiguration(config, sessionInfo);
-            
-        }).catch($rootScope.errorHandler);
+    async function _getConfiguration(sessionInfo) {
+        try {
+            var config = await SanteDB.configuration.getAsync();
+            config = await _processConfiguration(config, sessionInfo);
+            $timeout(() => $scope.config = config);
+        }
+        catch(e) {
+            $rootScope.errorHandler(e);
+        }
     }
 
 

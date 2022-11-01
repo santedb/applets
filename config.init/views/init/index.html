@@ -26,7 +26,10 @@
             <sdb:title lang="en">Setup SanteDB</sdb:title>
         </sdb:view>
     </sdb:state>
-    <div ng-if="!config.isConfigured">
+    <div ng-if="!config">
+        <i class="fas fa-circle-notch fa-spin"></i> {{ 'ui.wait' | i18n }}
+    </div>
+    <div ng-if="config &amp;&amp; !config._isConfigured">
         <div class="container-fluid" style="min-height: 100%">
             <div class="row">
                 <div class="col-lg-2 col-sm-4 col-md-3 d-none d-sm-block">

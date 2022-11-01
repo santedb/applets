@@ -3546,7 +3546,7 @@ function SanteDBWrapper() {
             return new Promise(function (fulfill, reject) {
                 if (_session && !forceServer)
                     fulfill(angular.copy(_session));
-                else
+                else 
                     try {
                         _auth.getAsync({
                             resource: "session"
