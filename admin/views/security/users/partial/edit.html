@@ -128,7 +128,16 @@
                                 class="col-xs-12 col-md-2 control-label">{{ 'ui.model.securityUser.email' | i18n }}</label>
                             <div class="col-xs-12 col-md-10">
                                 <input name="email" type="email" class="form-control"
-                                    ng-model="target.entity.email" />
+                                    ng-model="target.entity.email" pattern="[^@ \t\r\n]+@[^@ \t\r\n]+\.[^@ \t\r\n]+"
+                                    required="required"/>
+                                <div ng-show="targetForm.email.$error['required'] &amp;&amp; targetForm.$submitted"
+                                    class="alert-danger">
+                                    <i class="fa fa-exclamation-triangle"></i> {{ 'ui.error.required' | i18n }}
+                                </div>
+                                <div ng-show="targetForm.email.$error['pattern'] &amp;&amp; targetForm.$submitted"
+                                    class="alert-danger">
+                                    <i class="fa fa-exclamation-triangle"></i> {{ 'ui.error.pattern' | i18n }}
+                                </div>    
                             </div>
                         </div>
                         <div class="form-group row">
