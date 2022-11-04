@@ -1750,10 +1750,11 @@ function SanteDBWrapper() {
      */
     var _globalErrorHandler = function (data, setting, err) {
         if (data.status == 401 && data.getResponseHeader("WWW-Authenticate")) {
-            if (_session && _session.exp > Date.now() // User has a session that is valid, but is still 401 hmm... elevation!!!
-                && _elevator
-                && !_elevator.getToken() ||
-                _session == null && _elevator) {
+            if (_session && 
+                _session.exp > Date.now() && // User has a session that is valid, but is still 401 hmm... elevation!!!
+                _elevator &&
+                !_elevator.getToken() ||
+                (_session == null || !_session.access_token) && _elevator) {
 
                 // Was the response a security policy exception where the back end is asking for elevation on the same user account?
                 if (data.responseJSON &&
@@ -3224,7 +3225,8 @@ function SanteDBWrapper() {
                     else {
                         _resources.configuration.getAsync()
                             .then(function (d) {
-                                _masterConfig = d;
+                                _masterConfig = d.values;
+                                _masterConfig._isConfigured = d.isConfigured;
                                 if (fulfill) fulfill(_masterConfig);
                             })
                             .catch(function (e) {
@@ -3306,22 +3308,32 @@ function SanteDBWrapper() {
         }
 
         /**
-            * @method getRealm
+         * @method getClientId
          * @memberof SanteDBWrapper.ConfigurationApi
+         * @summary Get the OAUTH client identifier 
+         * @returns {string} The name of the client Id
+         */
+        this.getClientId = function() {
+            return __SanteDBAppService.GetClientId();
+        }
+
+        /**
+         * @method getDeviceId
+         * @memberof SanteDBWrapper.ConfigurationApi
+         * @summary Get the device identifier 
+         * @returns {string} The name of the device
+         */
+        this.getDeviceId = function() {
+            return __SanteDBAppService.GetDeviceId();
+        }
+        /**
+            * @method getRealm
+            * @memberof SanteDBWrapper.ConfigurationApi
             * @summary Gets the currently configured realm
             * @returns {string} The name of the security realm
             */
         this.getRealm = function () {
-            try {
-                if (!_masterConfig) throw new Exception("Exception", "error.invalidOperation", "You need to call configuration.getAsync() before calling getAppSetting()");
-                return _masterConfig.realmName;
-            }
-            catch (e) {
-                if (!e.$type)
-                    throw new Exception("Exception", "error.unknown", e.detail, e);
-                else
-                    throw e;
-            }
+            return __SanteDBAppService.GetRealm();
         }
 
         /**
@@ -3350,8 +3362,8 @@ function SanteDBWrapper() {
          * @memberof SanteDBWrapper.ConfigurationApi
             * @returns {Promise} The configuration file after joining the realm
             * @param {any} configData The configuration data for the realm
-            * @param {string} configData.domain The domain to which the application is to be joined
-            * @param {string} configData.deviceName The name of the device to join as
+            * @param {string} configData.address The domain to which the application is to be joined
+            * @param {string} configData.device The name of the device to join as
             * @param {boolean} configData.replaceExisting When true, instructs the application to replace an existing registration
             * @param {boolean} configData.enableTrace When true, enables log file tracing of requests
             * @param {boolean} configData.enableSSL When true, enables HTTPS
@@ -3362,19 +3374,14 @@ function SanteDBWrapper() {
         this.joinRealmAsync = function (configData, overwrite) {
             return new Promise(function (fulfill, reject) {
                 try {
+                    var parameters = [ { name: "override", value: overwrite }];
+                    Object.keys(configData).forEach(o=>parameters.push({ name: o, value: configData[o] }));
+
                     _app.postAsync({
-                        resource: "Configuration/Realm",
+                        resource: "Realm/$join",
                         contentType: 'application/json',
                         data: {
-                            realmUri: configData.domain,
-                            deviceName: configData.deviceName,
-                            enableTrace: configData.enableTrace || false,
-                            enableSSL: configData.enableSSL || false,
-                            port: configData.port,
-                            noTimeout: false,
-                            replaceExisting: overwrite || false,
-                            client_secret: configData.client_secret,
-                            domainSecurity: configData.domainSecurity
+                            parameter : parameters
                         }
                     }).then(function (d) {
                         _masterConfig = d;
@@ -3420,7 +3427,7 @@ function SanteDBWrapper() {
             * @returns {Promise} A promise representing the retrieval of the user settings
             */
         this.getUserSettingsAsync = async function () {
-            return _resources.configuration.getAssociatedAsync("user", "settings", ".*");
+            return _resources.configuration.findAssociatedAsync("me", "settings");
         }
         /**
             * @method saveUserPreferencesAsync
@@ -3434,7 +3441,7 @@ function SanteDBWrapper() {
             * ]);
             */
         this.saveUserSettingsAsync = function (preferences) {
-            return _resources.configuration.addAssociatedAsync("user", "settings", preferences);
+            return _resources.configuration.addAssociatedAsync("me", "settings", preferences);
         }
     };
 
@@ -3548,8 +3555,8 @@ function SanteDBWrapper() {
                     fulfill(angular.copy(_session));
                 else 
                     try {
-                        _auth.getAsync({
-                            resource: "session"
+                        _app.getAsync({
+                            resource: "SessionInfo"
                         })
                             .then(function (s) {
                                 _session = s;
@@ -3619,6 +3626,7 @@ function SanteDBWrapper() {
                     _auth.postAsync({
                         resource: "oauth2_token",
                         data: {
+                            client_id: SanteDB.configuration.getClientId(),
                             username: userName,
                             challenge: challenge,
                             response: response,
@@ -3660,16 +3668,29 @@ function SanteDBWrapper() {
                     var headers = {};
                     if (tfaSecret)
                         headers["X-SanteDB-TfaSecret"] = tfaSecret;
-                    if (uacPrompt && purposeOfUse)
-                        headers["X-SanteDBClient-Claim"] =
-                            btoa("urn:santedb:org:override=true;" +
-                                "urn:oasis:names:tc:xacml:2.0:action:purpose=" + purposeOfUse)
 
+                    var claims = {};
+
+                    if (purposeOfUse) {
+                        claims["urn:santedb:org:override"] = "true";
+                        claims["urn:oasis:names:tc:xacml:2.0:action:purpose"] = purposeOfUse;
+                    }
+                    if(uacPrompt) {
+                        claims["http://santedb.org/claims/temporarySession"] = "true";
+                    }
+
+                    if(Object.keys(claims).length > 0) {
+                        headers["X-SanteDBClient-Claim"] =
+                            btoa(Object.keys(claims).map(o=>`${o}=${claims[o]}`).join(";"));
+                    }
+                    
                     _auth.postAsync({
                         resource: "oauth2_token",
                         data: {
+                            client_id: SanteDB.configuration.getClientId(),
                             username: userName,
                             password: password,
+                            no_session: uacPrompt,
                             grant_type: 'password',
                             scope: (scope || ["*"]).join(" ")
                         },
@@ -3711,6 +3732,7 @@ function SanteDBWrapper() {
                     _auth.postAsync({
                         resource: "oauth2_token",
                         data: {
+                            client_id: SanteDB.configuration.getClientId(),
                             username: userName,
                             pin: pin,
                             grant_type: 'pin',
@@ -3757,6 +3779,7 @@ function SanteDBWrapper() {
                         resource: "oauth2_token",
                         data: {
                             grant_type: 'client_credentials',
+                            client_id: SanteDB.configuration.getClientId(),
                             scope: (scope || ["*"]).join(" ")
                         },
                         contentType: 'application/x-www-form-urlencoded'
@@ -3895,8 +3918,13 @@ function SanteDBWrapper() {
         this.logoutAsync = function () {
             return new Promise(function (fulfill, reject) {
                 try {
-                    _auth.deleteAsync({
-                        resource: "session"
+                    _auth.postAsync({
+                        resource: "signout",
+                        data: {
+                            id_token_hint: _oauthSession.access_token,
+                            logout_hint: _session.username,
+                            client_id: SanteDB.configuration.getClientId()
+                        }
                     })
                         .then(function (d) {
                             _oauthSession = _session = null;

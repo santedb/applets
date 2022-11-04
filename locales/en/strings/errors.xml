@@ -196,4 +196,9 @@
 
       <string name="ui.error.hdsi.propertyMissing"><![CDATA[HDSI expression does not appear to point to a valid property. Ensure that <ul><li>Your guard expressions are closed</li><li>Properties are cast to the correct type</li><li>Property paths don\'t end with a period</li></ul>]]></string>
       <string name="ui.error.hdsi.rhsMissing"><![CDATA[This HDSI input requires a full expression in the form of <code>clause=value</code> - ensure you have a full expression]]></string>
+
+      <string name="error.type.UpstreamIntegrationException">Upstream Exception</string>
+      <string name="error.upstream.join">Error joining the upstream realm</string>
+      <string name="error.upstream.version">The upstream version {remote} is not compatible with this client</string>
+      <string name="error.upstream.self">The upstream cannot be the same as the client</string>
 </resources>

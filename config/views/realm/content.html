@@ -74,7 +74,7 @@
             </label>
         </div>
         <div class="btn-group float-right">
-            <button class="btn-danger btn btn-lg" ng-disabled="config.realm.address == null" ng-click="leaveRealm(config.realm.address)">
+            <button class="btn-danger btn btn-lg" ng-disabled="!config.realm.joined" ng-click="leaveRealm(config.realm.address)">
                 {{ 'ui.config.action.realm.leave' | i18n }}
             </button>
             <button class="btn-success btn btn-lg" id="joinRealmButton" type="submit" ng-disabled="!realmForm.$valid || config.realmName != null">

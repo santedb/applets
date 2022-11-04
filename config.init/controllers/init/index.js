@@ -57,10 +57,8 @@ angular.module('santedb').controller('InitialSettingsController', ['$scope', '$r
         });
 
         
-        if (!config.isConfigured) {
+        if (!config._isConfigured) {
 
-            config = config.values;
-            config._isConfigured = false;
                 /*$scope.config.network.useProxy = $scope.config.network.proxyAddress != null;
                 $scope.config.network.optimize = "gzip";
                 $scope.config.sync = $scope.config.sync || {};
@@ -178,7 +176,9 @@ angular.module('santedb').controller('InitialSettingsController', ['$scope', '$r
     // Verifies that a guard condition on a filter passes
     $scope.checkGuard = function (filter) {
 
-        if ($scope.reference[$scope.config.sync.subscribeType.toLowerCase()].length == 0) return false;
+        if ($scope.reference[$scope.config.sync.subscribeType.toLowerCase()].length == 0) {
+            return false;
+        }
 
         try {
             SanteDB.display.buttonWait("#selectAllButton", true);
@@ -242,7 +242,7 @@ angular.module('santedb').controller('InitialSettingsController', ['$scope', '$r
     };
 
     // Select all guard conditions
-    $scope.setSubscriptionSelection = function (value) {
+    $scope.setSubscriptionSelection = async function (value) {
         $scope.reference.subscriptions.forEach(function (s) {
             if (value &&
                 (!s.guard ^ (s.guard && $scope.checkGuard(s))) &&
@@ -258,56 +258,55 @@ angular.module('santedb').controller('InitialSettingsController', ['$scope', '$r
     }
 
     // Save configuration settings
-    $scope.save = function (form) {
+    $scope.save = async function (form) {
 
         try {
             SanteDB.display.buttonWait("#finishButton", true);
+            
             // Find the resource definition 
-            $scope.config.sync.resources = Object.keys($scope.config.sync._resource).filter(function (i) {
-                return $scope.config.sync._resource[i].selected;
-            }).map(function (k) {
-                var retVal = $scope.reference.subscriptions.find(function (p) { return p.name == k });
-                return retVal;
-            }).filter(function (i) { 
-                return i != null && 
+            $scope.config.sync.subscription = Object.keys($scope.config.sync._resource).filter((i) => $scope.config.sync._resource[i].selected)
+                .map(k => $scope.reference.subscriptions.find(p => p.name == k))
+                .filter(i => i != null && 
                     $scope.checkGuard(i) && 
-                    (i.mode == "AllOrSubscription" || i.mode == $scope.config.subscription.mode); 
-            });
+                    (i.mode == "AllOrSubscription" || i.mode == $scope.config.subscription.mode))
+                .map(k=>k.name);
 
             // Define the services
             $scope.config.application.service = $scope.serverCaps.appInfo.service.filter(function (s) { return s.active; })
                 .map(function (m) { return { type: m.type } });
             $scope.config.autoRestart = true;
-            SanteDB.configuration.saveAsync($scope.config)
-                .then(function (c) {
-                    SanteDB.display.buttonWait("#finishButton", false);
+            
+            try {
+                var config = await SanteDB.configuration.saveAsync($scope.config);
+                
+                SanteDB.display.buttonWait("#finishButton", false);
 
-                    if(c.autoRestart) {
-                        $timeout(_ => {
-                            $scope.restartTimer = 20;
-                            $("#countdownModal").modal({
-                                backdrop: 'static'
-                            });
-                            var iv = $interval(() => {
-                                if($scope.restartTimer-- < 3)
-                                { 
-                                    window.location.hash = '';
-                                    window.location.reload();
-                                }
-                            }, 1000);
-                        });
-                    }
-                    else {
-                        SanteDB.application.close();
-                        $("#completeModal").modal({
+                if(c.autoRestart) {
+                    $timeout(_ => {
+                        $scope.restartTimer = 20;
+                        $("#countdownModal").modal({
                             backdrop: 'static'
                         });
-                    }
-                })
-                .catch(function (e) {
-                    SanteDB.display.buttonWait("#finishButton", false);
-                    $rootScope.errorHandler(e);
-                });
+                        var iv = $interval(() => {
+                            if($scope.restartTimer-- < 3)
+                            { 
+                                window.location.hash = '';
+                                window.location.reload();
+                            }
+                        }, 1000);
+                    });
+                }
+                else {
+                    SanteDB.application.close();
+                    $("#completeModal").modal({
+                        backdrop: 'static'
+                    });
+                }
+            }
+            catch(e) {
+                SanteDB.display.buttonWait("#finishButton", false);
+                $rootScope.errorHandler(e);
+            }
         }
         catch (e) {
             SanteDB.display.buttonWait("#finishButton", false);
@@ -316,38 +315,40 @@ angular.module('santedb').controller('InitialSettingsController', ['$scope', '$r
     }
 
     // Join the realm
-    $scope.joinRealm = function (form) {
+    $scope.joinRealm = async function (form) {
 
         if (!form.$valid)
             return;
         else {
             // logic to join the realm
-            var joinRealmFn = function (sessionInfo, override) {
+            var joinRealmFn = async function (sessionInfo, override) {
 
                 SanteDB.display.buttonWait("#joinRealmButton", true);
-                SanteDB.configuration.joinRealmAsync($scope.config.security, override === true)
-                    .then(function (config) {
-                        SanteDB.display.buttonWait("#joinRealmButton", false);
-                        alert(SanteDB.locale.getString("ui.config.realm.success"));
-                        _processConfiguration(config, sessionInfo);
 
-                        //SanteDB.authentication.setElevator(null);
+                try {
+                    await SanteDB.configuration.joinRealmAsync($scope.config.realm, override === true);
+                    SanteDB.display.buttonWait("#joinRealmButton", false);
+                    alert(SanteDB.locale.getString("ui.config.realm.success"));
+                    var config = await _processConfiguration(config, sessionInfo);
+
+                    $timeout(_ => {
+                        $scope.config = config;
                         $scope.next();
-                    })
-                    .catch(function (e) {
+                    });
 
-                        SanteDB.display.buttonWait("#joinRealmButton", false);
-                        if (e.$type == "DuplicateNameException" && !override) {
-                            if (confirm(SanteDB.locale.getString("ui.config.realm.error.duplicate")))
-                                joinRealmFn(sessionInfo, true);
-                            else
-                                $rootScope.errorHandler(e);
-
-                        }
+                }
+                catch (e) {
+                    SanteDB.display.buttonWait("#joinRealmButton", false);
+                    if (e.$type == "DuplicateNameException" && !override) {
+                        if (confirm(SanteDB.locale.getString("ui.config.realm.error.duplicate")))
+                            await joinRealmFn(sessionInfo, true);
                         else
                             $rootScope.errorHandler(e);
 
-                    });
+                    }
+                    else
+                        $rootScope.errorHandler(e);
+                }
             };
             var elevator = new SanteDBElevator(joinRealmFn, false);
             elevator.setCloseCallback(function() {
@@ -355,7 +356,7 @@ angular.module('santedb').controller('InitialSettingsController', ['$scope', '$r
             });
             
             SanteDB.authentication.setElevator(elevator);
-            joinRealmFn();
+            await joinRealmFn();
         }
     }
 }]);
