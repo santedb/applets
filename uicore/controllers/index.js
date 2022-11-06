@@ -75,6 +75,7 @@ var santedbApp = angular.module('santedb', ['ngSanitize', 'ui.router', 'oc.lazyL
     .run(['$rootScope', '$state', '$templateCache', '$transitions', '$ocLazyLoad', '$interval', '$timeout', function ($rootScope, $state, $templateCache, $transitions, $ocLazyLoad, $interval, $timeout) {
 
 
+        $rootScope.system = {};
         /**
          * Register the reload button
          */
@@ -122,15 +123,18 @@ var santedbApp = angular.module('santedb', ['ngSanitize', 'ui.router', 'oc.lazyL
 
         var initialize = async function () {
             $rootScope.system = $rootScope.system || {};
+            await __SanteDBAppService.GetStatus();
+            $rootScope.system.version = SanteDB.application.getVersion();
             $rootScope.system.locale = SanteDB.locale.getLocale();
 
             _setLocaleData();
             // Get configuration
             try {
                 var configuration = await SanteDB.configuration.getAsync();
-                $rootScope.system = $rootScope.system || {};
-                $rootScope.system.version = SanteDB.application.getVersion();
                 $rootScope.system.config = configuration;
+                $rootScope.system.config._isConfigured = configuration.isConfigured;
+                $rootScope.system.config.realmName = SanteDB.configuration.getRealm();
+                $rootScope.system.config.deviceName = SanteDB.configuration.getDeviceId();
                 // Make app settings easier to handle
                 var appSettings = {};
                 configuration.application.setting.forEach((k) => appSettings[k.key] = k.value);

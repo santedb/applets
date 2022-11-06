@@ -39,119 +39,139 @@
                                 <i class="fa fa-globe"></i> {{ 'ui.config.realm.title' | i18n }}</a>
                         </li>
                         <li role="presentation" class="nav-item">
-                            <a class="nav-link" href="javascript:" data-target="#roleTab" data-toggle="tab" ng-class="{ 'disabled' : !config.realmName }">
+                            <a class="nav-link" href="javascript:" data-target="#roleTab" data-toggle="tab"
+                                ng-class="{ 'disabled' : !config.realm.address }">
                                 <i class="far fa-window-maximize"></i> {{ 'ui.config.role.title' | i18n }}</a>
                         </li>
                         <li role="presentation" class="nav-item">
-                            <a class="nav-link" href="javascript:" data-target="#syncTab" data-toggle="tab" ng-class="{ 'disabled' : !config.realmName }">
+                            <a class="nav-link" href="javascript:" data-target="#syncTab" data-toggle="tab"
+                                ng-class="{ 'disabled' : !config.realm.address }">
                                 <i class="fa fa-cloud-download-alt"></i> {{ 'ui.config.sync.title' | i18n }}</a>
                         </li>
                         <li role="presentation" class="nav-item">
-                            <a class="nav-link" href="javascript:" data-target="#subscribeTab" data-toggle="tab" ng-class="{ 'disabled' : !config.realmName }"
-                                ng-if="config.sync.mode == 'sync'">
+                            <a class="nav-link" href="javascript:" data-target="#subscribeTab" data-toggle="tab"
+                                ng-class="{ 'disabled' : !config.realm.address }" ng-if="config.sync.mode == 'sync'">
                                 <i class="fas fa-rss-square"></i> {{ 'ui.config.subscribe.title' | i18n }}</a>
                         </li>
                         <li role="presentation" class="nav-item">
-                            <a class="nav-link" href="javascript:" data-target="#dataTab" data-toggle="tab" ng-class="{ 'disabled' : !config.realmName }"
-                                ng-if="config.sync.mode == 'sync'">
+                            <a class="nav-link" href="javascript:" data-target="#dataTab" data-toggle="tab"
+                                ng-class="{ 'disabled' : !config.realm.address }" ng-if="config.sync.mode == 'sync'">
                                 <i class="fa fa-database"></i> {{ 'ui.config.data.title' | i18n }}</a>
                         </li>
                         <li role="presentation" class="nav-item">
-                            <a class="nav-link" href="javascript:" data-target="#logTab" data-toggle="tab" ng-class="{ 'disabled' : !config.realmName }">
+                            <a class="nav-link" href="javascript:" data-target="#logTab" data-toggle="tab"
+                                ng-class="{ 'disabled' : !config.realm.address }">
                                 <i class="fa fa-list-ol"></i> {{ 'ui.config.log.title' | i18n }}</a>
                         </li>
                         <li role="presentation" class="nav-item">
-                            <a class="nav-link" href="javascript:" data-target="#securityTab" data-toggle="tab" ng-class="{ 'disabled' : !config.realmName }"
-                                ng-if="config.sync.mode == 'sync'">
+                            <a class="nav-link" href="javascript:" data-target="#securityTab" data-toggle="tab"
+                                ng-class="{ 'disabled' : !config.realm.address }" ng-if="config.sync.mode == 'sync'">
                                 <i class="fa fa-shield-alt"></i> {{ 'ui.config.security.title' | i18n }}</a>
                         </li>
                         <li role="presentation" class="nav-item">
-                            <a class="nav-link" href="javascript:" data-target="#servicesTab" data-toggle="tab" ng-class="{ 'disabled' : !config.realmName }">
+                            <a class="nav-link" href="javascript:" data-target="#servicesTab" data-toggle="tab"
+                                ng-class="{ 'disabled' : !config.realm.address }">
                                 <i class="fa fa-cogs"></i> {{ 'ui.config.services.title' | i18n }}</a>
                         </li>
                         <li role="presentation" class="nav-item">
-                            <a class="nav-link" href="javascript:" data-target="#networkTab" data-toggle="tab" ng-class="{ 'disabled' : !config.realmName }">
+                            <a class="nav-link" href="javascript:" data-target="#networkTab" data-toggle="tab"
+                                ng-class="{ 'disabled' : !config.realm.address }">
                                 <i class="fa fa-wifi"></i> {{ 'ui.config.network.title' | i18n }}</a>
                         </li>
                         <li role="presentation" class="nav-item" ng-repeat="widget in widgets">
-                            <a class="nav-link" href="javascript:" data-target="#{{widget.htmlId}}Tab" data-toggle="tab" ng-class="{ 'disabled' : !config.realmName }">
+                            <a class="nav-link" href="javascript:" data-target="#{{widget.htmlId}}Tab" data-toggle="tab"
+                                ng-class="{ 'disabled' : !config.realm.address }">
                                 <i class="{{widget.icon}}"></i> {{ widget.name | i18n }}</a>
                         </li>
                         <li role="presentation" class="nav-item" id="lastTab">
-                            <a class="nav-link" href="javascript:" data-target="#otherTab" data-toggle="tab" ng-class="{ 'disabled' : !config.realmName }">
+                            <a class="nav-link" href="javascript:" data-target="#otherTab" data-toggle="tab"
+                                ng-class="{ 'disabled' : !config.realm.address }">
                                 <i class="fa fa-cog"></i> {{ 'ui.config.other.title' | i18n }}</a>
                         </li>
                     </ul>
                 </div>
-                <div class="col-lg-10 col-sm-8 col-md-9 col-xs-12" style="padding-bottom: 150px; overflow:auto; max-height: 100%">
+                <div class="col-lg-10 col-sm-8 col-md-9 col-xs-12"
+                    style="padding-bottom: 150px; overflow:auto; max-height: 100%">
                     <div class="tab-content">
                         <div role="tabpanel" class="tab-pane fade show active" id="realmTab">
                             <h4>
-                                <i class="fa fa-globe"></i> {{ 'ui.config.realm.title' | i18n }}</h4>
+                                <i class="fa fa-globe"></i> {{ 'ui.config.realm.title' | i18n }}
+                            </h4>
                             <p>{{ 'ui.config.realm.description' | i18n }}</p>
                             <!-- #include virtual="/org.santedb.config/views/realm/content.html" -->
                         </div>
                         <div role="tabpanel" class="tab-pane fade" id="roleTab">
                             <h4>
-                                <i class="far fa-window-maximize"></i> {{ 'ui.config.role.title' | i18n }}</h4>
+                                <i class="far fa-window-maximize"></i> {{ 'ui.config.role.title' | i18n }}
+                            </h4>
                             <p>{{ 'ui.config.role.description' | i18n }}</p>
                             <!-- #include virtual="/org.santedb.config/views/role/content.html" -->
 
                         </div>
                         <div role="tabpanel" class="tab-pane fade" id="syncTab">
                             <h4>
-                                <i class="fa fa-cloud-download-alt"></i> {{ 'ui.config.sync.title' | i18n }}</h4>
+                                <i class="fa fa-cloud-download-alt"></i> {{ 'ui.config.sync.title' | i18n }}
+                            </h4>
                             <p>{{ 'ui.config.sync.description' | i18n }}</p>
                             <!-- #include virtual="/org.santedb.config/views/sync/content.html" -->
                         </div>
                         <div role="tabpanel" class="tab-pane fade" id="subscribeTab">
                             <h4>
-                                <i class="fas fa-rss-square"></i> {{ 'ui.config.subscribe.title' | i18n }}</h4>
+                                <i class="fas fa-rss-square"></i> {{ 'ui.config.subscribe.title' | i18n }}
+                            </h4>
                             <p>{{ 'ui.config.subscribe.description' | i18n }}</p>
                             <!-- #include virtual="/org.santedb.config/views/subscription/content.html" -->
                         </div>
                         <div role="tabpanel" class="tab-pane fade" id="dataTab">
                             <h4>
-                                <i class="fa fa-database"></i> {{ 'ui.config.data.title' | i18n }}</h4>
+                                <i class="fa fa-database"></i> {{ 'ui.config.data.title' | i18n }}
+                            </h4>
                             <p>{{ 'ui.config.data.description' | i18n }}</p>
                             <!-- #include virtual="/org.santedb.config/views/data/content.html" -->
 
                         </div>
                         <div role="tabpanel" class="tab-pane fade" id="logTab">
                             <h4>
-                                <i class="fa fa-list-ol"></i> {{ 'ui.config.log.title' | i18n }}</h4>
+                                <i class="fa fa-list-ol"></i> {{ 'ui.config.log.title' | i18n }}
+                            </h4>
                             <p>{{ 'ui.config.log.description' | i18n }}</p>
                             <!-- #include virtual="/org.santedb.config/views/log/content.html" -->
 
                         </div>
                         <div role="tabpanel" class="tab-pane fade" id="securityTab">
                             <h4>
-                                <i class="fa fa-shield-alt"></i> {{ 'ui.config.security.title' | i18n }}</h4>
+                                <i class="fa fa-shield-alt"></i> {{ 'ui.config.security.title' | i18n }}
+                            </h4>
                             <p>{{ 'ui.config.security.description' | i18n }}</p>
                             <!-- #include virtual="/org.santedb.config/views/security/content.html" -->
                         </div>
                         <div role="tabpanel" class="tab-pane fade" id="servicesTab">
                             <h4>
-                                <i class="fa fa-cogs"></i> {{ 'ui.config.services.title' | i18n }}</h4>
+                                <i class="fa fa-cogs"></i> {{ 'ui.config.services.title' | i18n }}
+                            </h4>
                             <p>{{ 'ui.config.services.description' | i18n }}</p>
                             <!-- #include virtual="/org.santedb.config/views/services/content.html" -->
                         </div>
                         <div role="tabpanel" class="tab-pane fade" id="networkTab">
                             <h4>
-                                <i class="fa fa-wifi"></i> {{ 'ui.config.network.title' | i18n }}</h4>
+                                <i class="fa fa-wifi"></i> {{ 'ui.config.network.title' | i18n }}
+                            </h4>
                             <p>{{ 'ui.config.network.description' | i18n }}</p>
                             <!-- #include virtual="/org.santedb.config/views/network/content.html" -->
                         </div>
-                        <div role="tabpanel" class="tab-pane fade" id="{{widget.htmlId}}Tab" ng-repeat="widget in widgets">
+                        <div role="tabpanel" class="tab-pane fade" id="{{widget.htmlId}}Tab"
+                            ng-repeat="widget in widgets">
                             <h4>
-                                <i class="{{widget.icon}}"></i> {{ widget.name | i18n }}</h4>
+                                <i class="{{widget.icon}}"></i> {{ widget.name | i18n }}
+                            </h4>
                             <p>{{ widget.description[0].value | i18n }}</p>
                             <ng-include src="'/app/Widgets/' + widget.name"></ng-include>
 
                         </div>
                         <div role="tabpanel" class="tab-pane fade" id="otherTab">
                             <h4>
-                                <i class="fa fa-cog"></i> {{ 'ui.config.other.title' | i18n }}</h4>
+                                <i class="fa fa-cog"></i> {{ 'ui.config.other.title' | i18n }}
+                            </h4>
                             <p>{{ 'ui.config.other.description' | i18n }}</p>
                             <!-- #include virtual="/org.santedb.config/views/other/content.html" -->
 
@@ -162,15 +182,23 @@
             </div>
         </div>
         <footer class="action-footer">
-            <div class="btn-group">
-                <button class="btn btn-lg btn-secondary" type="button" ng-click="back()" ng-disabled="wizardStep > 0">
-                    <i class="fa fa-chevron-left"></i> {{ 'ui.action.prev' | i18n }}</button>
-                <button class="btn btn-lg btn-primary" id="nextButton" type="button" ng-if="!lastTab" ng-click="next()">{{ 'ui.action.next' | i18n }}
-                    <i class="fa fa-chevron-right"></i>
-                </button>
-                <button class="btn btn-lg btn-success" id="finishButton" ng-if="lastTab" type="button" ng-click="save()">{{ 'ui.action.finish' | i18n }}
-                    <i class="fa fa-check"></i>
-                </button>
+            <div class="d-none d-md-block col-md-3 text-muted pt-2">
+                <span class="mt-2 m-auto">SanteDB v.{{ $root.system.version }}</span>
+            </div>
+            <div class="col-md-9 col-xs-12">
+                <div class="btn-group float-right">
+                    <button class="btn btn-lg btn-secondary" type="button" ng-click="back()"
+                        ng-disabled="wizardStep > 0">
+                        <i class="fa fa-chevron-left"></i> {{ 'ui.action.prev' | i18n }}</button>
+                    <button class="btn btn-lg btn-primary" id="nextButton" type="button" ng-if="!lastTab"
+                        ng-click="next()">{{ 'ui.action.next' | i18n }}
+                        <i class="fa fa-chevron-right"></i>
+                    </button>
+                    <button class="btn btn-lg btn-success" id="finishButton" ng-if="lastTab" type="button"
+                        ng-click="save()">{{ 'ui.action.finish' | i18n }}
+                        <i class="fa fa-check"></i>
+                    </button>
+                </div>
             </div>
         </footer>
         <div class="modal" id="completeModal" tabindex="-1">
@@ -178,32 +206,36 @@
                 <div class="modal-content">
                     <div class="modal-body text-center">
                         <h5>
-                            <i class="fa fa-exclamation-circle"></i> {{ 'ui.config.complete' | i18n }}</h5>
+                            <i class="fa fa-exclamation-circle"></i> {{ 'ui.config.complete' | i18n }}
+                        </h5>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    <div class="modal" id="alreadyConfiguredModal" tabindex="-1">
+    <div class="modal" id="alreadyConfiguredModal" tabindex="-1" data-backdrop="static">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-body text-center">
                     <h5>
-                        <i class="fa fa-exclamation-circle"></i> {{ 'ui.config.alreadyConfigured' | i18n }}</h5>
+                        <i class="fa fa-exclamation-circle"></i> {{ 'ui.config.alreadyConfigured' | i18n }}
+                    </h5>
                 </div>
             </div>
         </div>
     </div>
-    <div class="modal" id="countdownModal" tabindex="-1">
+    <div class="modal" id="countdownModal" tabindex="-1" data-backdrop="static">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-body text-center">
                     <h5>
-                        <i class="fa fa-exclamation-circle"></i> {{ 'ui.config.appliedRestart' | i18n: { time: restartTimer } }}</h5>
+                        <i class="fa fa-exclamation-circle"></i> {{ 'ui.config.appliedRestart' | i18n: { time:
+                        restartTimer } }}
+                    </h5>
                 </div>
             </div>
         </div>
     </div>
 
-    
+
 </div>

@@ -18,33 +18,127 @@
  - Date: 2019-8-8
  -->
 <div class="container" xmlns="http://www.w3.org/1999/xhtml">
-    <div class="form-group row">
-        <label for="networkOptimization" class="control-label col-md-2  col-xs-12">{{ 'ui.config.network.optimize.label' | i18n }}</label>
-        <div class="col-md-10  col-xs-12">
-            <select class="form-control" id="optimize" name="networkOptimization" ng-model="config.network.optimize">
-                <option value="lzma">{{ 'ui.config.network.optimize.lzma' | i18n }}</option>
-                <option value="bzip2">{{ 'ui.config.network.optimize.bzip2' | i18n }}</option>
-                <option value="gzip" selected="selected">{{ 'ui.config.network.optimize.gzip' | i18n }}</option>
-                <option value="deflate">{{ 'ui.config.network.optimize.deflate' | i18n }}</option>
-                <option value="none">{{ 'ui.config.network.optimize.none' | i18n }}</option>
-            </select>
-            <div class="form-text text-muted">
-                {{ 'ui.config.network.optimize.help' | i18n }}
+    <div class="accordion mb-2" id="networkAccordion">
+        <div class="card">
+            <div class="card-header">
+                <h2 class="mb-0">
+                    <button type="button" class="collapse-indicator btn btn-link p-0" data-toggle="collapse"
+                        data-target="#basicNetworkSettings" aria-expanded="true">
+                        {{ 'ui.config.network.basic.title' | i18n }}
+                        <i class="fa fa-chevron-right"></i>
+                    </button>
+                </h2>
+            </div>
+            <div class="collapse show" id="basicNetworkSettings" data-parent="#networkAccordion">
+                <div class="card-body">
+                    <div class="form-group row">
+                        <label for="networkOptimization" class="control-label col-md-2  col-xs-12">{{ 'ui.config.network.optimize.label'
+                            | i18n }}</label>
+                        <div class="col-md-10  col-xs-12">
+                            <select class="form-control" id="optimize" name="networkOptimization" ng-model="config.client.optimize">
+                                <option value="Lzma">{{ 'ui.config.network.optimize.Lzma' | i18n }}</option>
+                                <option value="Bzip2">{{ 'ui.config.network.optimize.Bzip2' | i18n }}</option>
+                                <option value="Gzip" selected="selected">{{ 'ui.config.network.optimize.Gzip' | i18n }}</option>
+                                <option value="Deflate">{{ 'ui.config.network.optimize.Deflate' | i18n }}</option>
+                                <option value="None">{{ 'ui.config.network.optimize.None' | i18n }}</option>
+                            </select>
+                            <div class="form-text text-muted">
+                                {{ 'ui.config.network.optimize.help' | i18n }} - {{ 'ui.config.network.optimize.' +
+                                config.client.optimize + '.help' | i18n }}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="control-label col-md-2 col-xs-12">{{ 'ui.config.network.clientCert.label' | i18n }}</label>
+                        <div class="col-md-10 col-xs-12">
+                            <select class="form-control" ng-model="config.client.clientCertificate">
+                                <option value="">{{ 'ui.config.network.clientCert.none' | i18n }}</option>
+                                <option ng-repeat="cert in reference.certificates.resource" value="cert.thumbprint">{{ cert.sub }}
+                                </option>
+                            </select>
+                            <div class="form-text text-muted">
+                                {{ 'ui.config.network.clientCert.help' | i18n }}
+                            </div>
+                        </div>
+                
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-header">
+                <h2 class="mb-0">
+                    <button type="button" class="collapse-indicator btn btn-link p-0" data-toggle="collapse"
+                        data-target="#advancedNetworkSettings" aria-expanded="false">
+                        {{ 'ui.config.network.advanced.title' | i18n }}
+                        <i class="fa fa-chevron-right"></i>
+                    </button>
+                </h2>
+            </div>
+            <div class="collapse" id="advancedNetworkSettings" data-parent="#networkAccordion">
+                <div class="card-body">
+                    <div ng-repeat="c in config.client.clients" class="card">
+                        <div class="card-header alert-primary">
+                            <i class="fas fa-ethernet"></i> {{ c.clients }}
+                        </div>
+                        <div class="card-body">
+                            <div class="form-group row">
+                                <label for="networkOptimization" class="control-label col-md-2  col-xs-12">{{ 'ui.config.network.optimize.label'
+                                    | i18n }}</label>
+                                <div class="col-md-10  col-xs-12">
+                                    <select class="form-control" id="optimize" name="networkOptimization" ng-model="c.optimize">
+                                        <option value="Lzma">{{ 'ui.config.network.optimize.Lzma' | i18n }}</option>
+                                        <option value="Bzip2">{{ 'ui.config.network.optimize.Bzip2' | i18n }}</option>
+                                        <option value="Gzip" selected="selected">{{ 'ui.config.network.optimize.Gzip' | i18n }}</option>
+                                        <option value="Deflate">{{ 'ui.config.network.optimize.Deflate' | i18n }}</option>
+                                        <option value="None">{{ 'ui.config.network.optimize.None' | i18n }}</option>
+                                    </select>
+                                    <label><input type="checkbox" ng-model="c.optimizeReq"/> {{ 'ui.config.network.optimize.requests' | i18n }}</label>
+
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="control-label col-md-2 col-xs-12">{{ 'ui.config.network.clientCert.label' | i18n }}</label>
+                                <div class="col-md-10 col-xs-12">
+                                    <select class="form-control" ng-model="c.clientCertificate">
+                                        <option value="">{{ 'ui.config.network.clientCert.none' | i18n }}</option>
+                                        <option ng-repeat="cert in reference.certificates.resource" value="cert.thumbprint">{{ cert.sub }}
+                                        </option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-header">
+                <h2 class="mb-0">
+                    <button type="button" class="collapse-indicator btn btn-link p-0" data-toggle="collapse"
+                        data-target="#proxyNetworkSettings" aria-expanded="false">
+                        {{ 'ui.config.network.proxy.title' | i18n }}
+                        <i class="fa fa-chevron-right"></i>
+                    </button>
+                </h2>
+            </div>
+            <div class="collapse" id="proxyNetworkSettings">
+                <div class="card-body">
+                    <div class="form-group row">
+                        <label class="control-label col-md-2 col-xs-12">{{ 'ui.config.network.proxyAddress.label' | i18n }}</label>
+                        <div class="col-md-10 col-xs-12">
+                            <input type="url" class="form-control" ng-model="config.client.proxyAddress"
+                                placeholder="http://proxyaddress.com" />
+                            <div class="form-text text-muted">
+                                {{ 'ui.config.network.proxyAddress.help' | i18n }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
-    <div class="form-group row">
-        <label class="offset-md-2 col-md-10 col-xs-12">
-            <input ng-model="config.network.useProxy" type="checkbox" /> {{ 'ui.config.network.useProxy' | i18n }}
-        </label>
-    </div>
-    <div class="form-group row" ng-if="config.network.useProxy">
-        <label class="control-label col-md-2 col-xs-12">{{ 'ui.config.network.proxyAddress.label' | i18n }}</label>
-        <div class="col-md-10 col-xs-12">
-            <input type="url" class="form-control" ng-model="config.network.proxyAddress" placeholder="http://proxyaddress.com"/>
-            <div class="form-text text-muted">
-                {{ 'ui.config.network.proxyAddress.help' | i18n }}
-            </div>
-        </div>
-    </div>
+    
+    
+    
 </div>

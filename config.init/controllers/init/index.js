@@ -25,7 +25,8 @@ angular.module('santedb').controller('InitialSettingsController', ['$scope', '$r
     $scope.reference = {
         place: [],
         facility: [],
-        assigningauthority: []
+        assigningauthority: [],
+        subscriptions: []
     };
     $scope.newItem = {};
     $scope.serverCaps = {};
@@ -87,7 +88,9 @@ angular.module('santedb').controller('InitialSettingsController', ['$scope', '$r
                     var appSolutions = await SanteDB.application.getAppSolutionsAsync();
                     var appInfo = await SanteDB.application.getAppInfoAsync();
                     var dataProviders = await SanteDB.configuration.getDataProvidersAsync();
-
+                    var certificates = await SanteDB.resources.certificates.findAsync({ hasPrivateKey: true });
+                    config.sync._resource = {};
+                    config.sync.mode = 'online';
                     $timeout(_ => {
                         subscriptions.resource.forEach((itm) => {
                             itm.definitions.forEach(function (defn) {
@@ -96,11 +99,11 @@ angular.module('santedb').controller('InitialSettingsController', ['$scope', '$r
                             });
                         });
                         $scope.reference.solutions = appSolutions;
-                        
+                        $scope.reference.certificates = certificates;
                         $scope.serverCaps = appInfo;
 
                         $scope.reference.dataProviders = dataProviders;
-                        if (config.data.provider) {
+                        if (config.data && config.data.provider) {
                             $scope.reference.providerData = $scope.reference.dataProviders.find((o) => o.invariant == config.data.provider);
                         }
                     });
@@ -326,10 +329,11 @@ angular.module('santedb').controller('InitialSettingsController', ['$scope', '$r
                 SanteDB.display.buttonWait("#joinRealmButton", true);
 
                 try {
-                    await SanteDB.configuration.joinRealmAsync($scope.config.realm, override === true);
+                    var joinResult = await SanteDB.configuration.joinRealmAsync($scope.config.realm, override === true);
                     SanteDB.display.buttonWait("#joinRealmButton", false);
-                    alert(SanteDB.locale.getString("ui.config.realm.success"));
-                    var config = await _processConfiguration(config, sessionInfo);
+                    alert(joinResult.welcome || SanteDB.locale.getString("ui.config.realm.success", { realm : $scope.config.realm.address}));
+                    var config = await SanteDB.configuration.getAsync(true);
+                    config = await _processConfiguration(config, sessionInfo);
 
                     $timeout(_ => {
                         $scope.config = config;
@@ -339,7 +343,7 @@ angular.module('santedb').controller('InitialSettingsController', ['$scope', '$r
                 }
                 catch (e) {
                     SanteDB.display.buttonWait("#joinRealmButton", false);
-                    if (e.$type == "DuplicateNameException" && !override) {
+                    if ((e.$type == "DuplicateNameException" || e.cause && e.cause.$type == "DuplicateNameException") && !override) {
                         if (confirm(SanteDB.locale.getString("ui.config.realm.error.duplicate")))
                             await joinRealmFn(sessionInfo, true);
                         else
@@ -357,6 +361,13 @@ angular.module('santedb').controller('InitialSettingsController', ['$scope', '$r
             
             SanteDB.authentication.setElevator(elevator);
             await joinRealmFn();
+        }
+    }
+
+    $scope.leaveRealm = async function() {
+        if(confirm(SanteDB.locale.getString("ui.config.action.realm.leave.confirm", { realm: SanteDB.configuration.getRealm() })))
+        {
+
         }
     }
 }]);

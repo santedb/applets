@@ -1737,7 +1737,33 @@ function SanteDBWrapper() {
 
     // Get the version of this API Wrapper
     this.getVersion = function () {
-        return "2.1.85.0";
+        return __SanteDBAppService.GetVersion();
+    }
+
+    /**
+     * @public
+     * @summary Convert an object to parameters
+     * @param {any} object The JavaScript object to convert to a parameters
+     * @return {Parameters} The parameters
+     */
+    this.convertToParameters = function(object) {
+        return { parameter : Object.keys(object).map(k => { return { name: k, value: object[k] } }) };
+    }
+
+    /**
+     * @public
+     * @summary Convert parameters to an object
+     * @param {Parameters} parms The parameters to convert
+     * @return {any} The JavaScript object 
+     */
+    this.convertFromParameters = function(parms) {
+        if(!parms.parameter) {
+            return null;
+        }
+
+        var retVal = {};
+        parms.parameter.forEach(p => retVal[p.name] = p.value);
+        return retVal;
     }
 
     /**
@@ -1905,12 +1931,12 @@ function SanteDBWrapper() {
                             return false;
                         }
                         catch (e) {
-                            console.error(`Error filling ${rel}`);
+                            console.error(`Error filling ${rel}`, e);
                         }
                     });
                 }
                 catch (e) {
-                    console.error(`Error filling ${key}`);
+                    console.error(`Error filling ${key}`, e);
                 }
             }).flat();
             await Promise.all(promises);
@@ -2462,7 +2488,7 @@ function SanteDBWrapper() {
          */
         this.getAppInfoAsync = function (settings) {
             return _ami.getAsync({
-                resource: "Sherlock",
+                resource: "Sherlock/me",
                 query: { _includeUpdates: (settings || {}).updates, _upstream: (settings || {}).remote }
             });
         }
@@ -3184,6 +3210,17 @@ function SanteDBWrapper() {
             accept: _viewModelJsonMime,
             api: _app
         });
+        /**
+        * @type {ResourceWrapper}
+        * @memberOf SanteDBWrapper.resources
+        * @summary Wrapper for certificates definition API
+        */
+         this.certificates = new ResourceWrapper({
+            resource: "Certificate",
+            accept: "application/json",
+            api: _ami
+        });
+        
     };
 
     // HACK: Wrapper pointer facility = place
@@ -3200,6 +3237,7 @@ function SanteDBWrapper() {
      * @memberof SanteDBWrapper
      */
     function ConfigurationApi() {
+
         /**
          * @method getDataProvidersAsync
          * @memberof SanteDBWrapper.ConfigurationApi
@@ -3215,12 +3253,13 @@ function SanteDBWrapper() {
             * @method getAsync
          * @memberof SanteDBWrapper.ConfigurationApi
             * @summary Get the configuration, nb: this caches the configuration
+            * @param {bool} forceServerRefresh True if the cache should be discarded and the configuration re-fetched
             * @returns {Promise} The configuration
             */
-        this.getAsync = function () {
+        this.getAsync = function (forceServerRefresh) {
             return new Promise(function (fulfill, reject) {
                 try {
-                    if (_masterConfig)
+                    if (_masterConfig && !forceServerRefresh)
                         fulfill(_masterConfig);
                     else {
                         _resources.configuration.getAsync()
@@ -3374,20 +3413,21 @@ function SanteDBWrapper() {
         this.joinRealmAsync = function (configData, overwrite) {
             return new Promise(function (fulfill, reject) {
                 try {
-                    var parameters = [ { name: "override", value: overwrite }];
-                    Object.keys(configData).forEach(o=>parameters.push({ name: o, value: configData[o] }));
-
+                    configData.override = overwrite;
+                    var parms = SanteDB.convertToParameters(configData);
+                    
                     _app.postAsync({
                         resource: "Realm/$join",
                         contentType: 'application/json',
-                        data: {
-                            parameter : parameters
-                        }
+                        data: parms
                     }).then(function (d) {
-                        _masterConfig = d;
-                        if (fulfill) fulfill(d);
+                        d = SanteDB.convertFromParameters(d);
+                        if(d.joined) {
+                            __SanteDBAppService.GetStatus().then(()=>fulfill(d));
+                        }
+                        else reject(d);
                     }).catch(function (e) {
-                        console.error(`Error joining realm: ${e}`);
+                        console.error(`Error joining realm: ${e}`, e);
                         if (reject) reject(e.responseJSON || e);
                     });
                 }
@@ -3471,8 +3511,8 @@ function SanteDBWrapper() {
                     // Set the locale
                     if (tokenData.lang)
                         __SanteDBAppService.SetLocale(tokenData.lang);
-                    else if (tokenData['http://santedb.org/claims/language'])
-                        __SanteDBAppService.SetLocale(tokenData['http://santedb.org/claims/language']);
+                    else if (tokenData['urn:santedb:org:lang'])
+                        __SanteDBAppService.SetLocale(tokenData['urn:santedb:org:lang']);
                     else 
                         __SanteDBAppService.SetLocale(null); // default locale
 
@@ -3676,14 +3716,14 @@ function SanteDBWrapper() {
                         claims["urn:oasis:names:tc:xacml:2.0:action:purpose"] = purposeOfUse;
                     }
                     if(uacPrompt) {
-                        claims["http://santedb.org/claims/temporarySession"] = "true";
+                        claims["urn:santedb:org:temporary"] = "true";
                     }
 
                     if(Object.keys(claims).length > 0) {
                         headers["X-SanteDBClient-Claim"] =
                             btoa(Object.keys(claims).map(o=>`${o}=${claims[o]}`).join(";"));
                     }
-                    
+
                     _auth.postAsync({
                         resource: "oauth2_token",
                         data: {
@@ -3990,7 +4030,7 @@ function SanteDBWrapper() {
                 var retVal = __SanteDBAppService.GetString(stringId);
 
                 if (retVal) {
-                    retVal = retVal.replace(/(\{.*?\})/ig, function (s) {
+                    retVal = retVal.replace(/\{.*?\}/ig, function (s) {
                         if (typeof s === 'string' && parameters) {
                             return parameters[s.substring(1, s.length - 1)];
                         }
@@ -4179,6 +4219,15 @@ function SanteDBWrapper() {
  */
 var SanteDB = new SanteDBWrapper();
 
+/**
+ * @enum {CertificateStoreName}
+ * @memberof SanteDB
+ * @summary Certificate store names
+ */
+SanteDB.CertificateStoreName = {
+    ServiceUser : "CurrentUser",
+    EntireMachine : "LocalMachine"
+};
 
 
 /**

@@ -22,7 +22,7 @@
         <div class="form-group row">
             <label class="col-md-2 col-xs-12 control-label" for="deviceName" id="deviceNameLabel">{{ 'ui.config.realm.deviceName.label' | i18n }}</label>
             <div class="col-md-10 col-xs-12">
-                <input ng-model="config.realm.device" ng-required="true" placeholder="tabletid" ng-pattern="/^[A-Za-z][A-Za-z.0-9-_]+$/i"
+                <input ng-disabled="config.realm.joined" ng-model="config.realm.device" ng-required="true" placeholder="tabletid" ng-pattern="/^[A-Za-z][A-Za-z.0-9-_]+$/i"
                     autocorrect="off" autocomplete="__away" autocapitalize="off" spellcheck="false" class="form-control" type="text"
                     name="deviceName" id="deviceName" aria-describedby="deviceNameLabel" />
                 <div class="form-text text-muted">
@@ -33,7 +33,7 @@
         <div class="form-group row">
             <label class="col-md-2 col-xs-12 control-label" for="realmName" id="realmServerLabel">{{ 'ui.config.realm.name.label' | i18n }}</label>
             <div class="col-md-10 col-xs-12">
-                <input ng-model="config.realm.address" ng-required="true" placeholder="demo.openiz.org" ng-pattern="/^[A-Za-z0-9.-]*$/i"
+                <input  ng-disabled="config.realm.joined" ng-model="config.realm.address" ng-required="true" placeholder="demo.openiz.org" ng-pattern="/^[A-Za-z0-9.-]*$/i"
                     class="form-control" autocomplete="__away" autocorrect="off" autocapitalize="off" spellcheck="false" type="text"
                     name="realmServer" id="realmServer" aria-describedby="realmServerLabel" />
                 <div class="form-text text-muted">
@@ -44,9 +44,9 @@
         
         <div class="form-group row">
             <label class="col-md-10 col-xs-12 offset-md-2">
-                <input type="checkbox" ng-model="config.realm.overrideClient" /> {{ 'ui.config.realm.secretOverride.label' | i18n }}
-                <input ng-if="config.realm.overrideClient" type="text" ng-required="config.realm.overrideSecret" class="form-control" ng-model="config.realm.client"/>
-                <input ng-if="config.realm.overrideClient" type="password" ng-required="config.realm.overrideSecret" class="form-control" ng-model="config.realm.secret"/>
+                <input  ng-disabled="config.realm.joined" type="checkbox" ng-model="config.realm.overrideClient" /> {{ 'ui.config.realm.secretOverride.label' | i18n }}
+                <input  ng-disabled="config.realm.joined" ng-if="config.realm.overrideClient" type="text" ng-required="config.realm.overrideSecret" class="form-control" ng-model="config.realm.client"/>
+                <input  ng-disabled="config.realm.joined" ng-if="config.realm.overrideClient" type="password" ng-required="config.realm.overrideSecret" class="form-control" ng-model="config.realm.secret"/>
                 <span class="form-text text-muted d-inline">
                     {{ 'ui.config.realm.secretOverride.help' | i18n }}
                 </span>
@@ -56,7 +56,7 @@
         <div class="form-group row">
             <label class="col-md-2 col-xs-12 control-label" for="realmPort" id="realmPortLabel">{{ 'ui.config.realm.port.label' | i18n }}</label>
             <div class="col-md-10 col-xs-12">
-                <input ng-model="config.realm.port" ng-required="true" class="form-control" autocomplete="__away" autocorrect="off" autocapitalize="off"
+                <input  ng-disabled="config.realm.joined" ng-model="config.realm.port" ng-required="true" class="form-control" autocomplete="__away" autocorrect="off" autocapitalize="off"
                     spellcheck="false" type="number" name="realmPort" id="realmPort" aria-describedby="realmPortLabel" min="1"
                     max="65535" />
                 <div class="form-text text-muted">
@@ -66,7 +66,7 @@
         </div>
         <div class="form-group row">
             <label class="col-md-10 col-xs-12 offset-md-2">
-                <input type="checkbox" ng-model="config.realm.tls" ng-change="config.realm.port = config.realm.tls ? 8443 : 8080"
+                <input  ng-disabled="config.realm.joined" type="checkbox" ng-model="config.realm.tls" ng-change="config.realm.port = config.realm.tls ? 8443 : 8080"
                 /> {{ 'ui.config.realm.ssl.label' | i18n }} -
                 <span class="form-text text-muted d-inline">
                     {{ 'ui.config.realm.ssl.help' | i18n }}
@@ -74,11 +74,11 @@
             </label>
         </div>
         <div class="btn-group float-right">
-            <button class="btn-danger btn btn-lg" ng-disabled="!config.realm.joined" ng-click="leaveRealm(config.realm.address)">
-                {{ 'ui.config.action.realm.leave' | i18n }}
+            <button class="btn-danger btn btn-lg" type="button" ng-if="config.realm.joined" ng-click="leaveRealm(config.realm.address)">
+                <i class="fas fa-sign-out-alt"></i> {{ 'ui.config.action.realm.leave' | i18n }}
             </button>
-            <button class="btn-success btn btn-lg" id="joinRealmButton" type="submit" ng-disabled="!realmForm.$valid || config.realmName != null">
-                {{ 'ui.config.action.realm.join' | i18n }}
+            <button class="btn-success btn btn-lg" id="joinRealmButton" type="submit" ng-disabled="!realmForm.$valid" ng-if="!config.realm.joined">
+                <i class="fas fa-sign-in-alt"></i> {{ 'ui.config.action.realm.join' | i18n }}
             </button>
         </div>
         <div class="clearfix"></div>
