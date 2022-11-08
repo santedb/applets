@@ -2040,7 +2040,7 @@ function SanteDBWrapper() {
          * SanteDB.app.addResourceViewer("Patient", 
          *      function(state, parms) { 
          *         if(!parms.genderConcept || parms.genderConcept == NullReasonKeys.NoInformation) {
-         *              state.transitionTo("my-view.patient". parms); 
+         *              state.go("my-view.patient". parms); 
          *              return true; 
          *          }
          *          return false;
@@ -2668,7 +2668,7 @@ function SanteDBWrapper() {
      * @property {ResourceWrapper} bundle Functions for interacting with {@link Bundle}
      * @property {ResourceWrapper} act Functions for interacting with {@link Act}
      * @property {ResourceWrapper} applicationEntity Functions for interacting with  {@link ApplicationEntity}
-     * @property {ResourceWrapper} assigningAuthority Functions for interacting with {@link AssigningAuthority}
+     * @property {ResourceWrapper} identityDomain Functions for interacting with {@link identityDomain}
      * @property {ResourceWrapper} carePlan Functions for interacting with {@link CarePlan} 
      * @property {ResourceWrapper} codeSystem Functions for interacting with {@link CodeSystem}
      * @property {ResourceWrapper} concept Functions for interacting with {@link Concept}
@@ -2834,9 +2834,9 @@ function SanteDBWrapper() {
          * @summary A resource wrapper for Assigning Authorities
          * @memberof SanteDBWrapper.ResourceApi
          */
-        this.assigningAuthority = new ResourceWrapper({
+        this.identityDomain = new ResourceWrapper({
             accept: _viewModelJsonMime,
-            resource: "AssigningAuthority",
+            resource: "IdentityDomain",
             api: _ami
         });
         /**
@@ -3265,7 +3265,6 @@ function SanteDBWrapper() {
                         _resources.configuration.getAsync()
                             .then(function (d) {
                                 _masterConfig = d.values;
-                                _masterConfig._isConfigured = d.isConfigured;
                                 if (fulfill) fulfill(_masterConfig);
                             })
                             .catch(function (e) {

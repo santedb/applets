@@ -18,21 +18,10 @@
  - Date: 2019-8-8
  -->
 <div class="container" xmlns="http://www.w3.org/1999/xhtml">
+
     <div class="form-group row">
-        <label class="control-label col-md-2 col-xs-12" for="passwordFormat">{{ 'ui.config.security.password.label' | i18n }}</label>
-        <div class="col-md-10 col-xs-12">
-            <select ng-model="config.security.hasher" class="form-control" name="passwordFormat">
-                <option value="SHA256PasswordHasher">{{ 'ui.config.security.password.sha256' | i18n }}</option>
-                <option value="SHA1PasswordHasher">{{ 'ui.config.security.password.sha1' | i18n }}</option>
-                <option value="PlainTextPasswordHasher">{{ 'ui.config.security.password.plain' | i18n }}</option>
-            </select>
-            <div class="form-text text-muted">
-                {{ 'ui.config.security.password.help' | i18n }}
-            </div>
-        </div>
-    </div>
-    <div class="form-group row">
-        <label class="control-label col-md-2 col-xs-12" for="auditRetention">{{ 'ui.config.security.audit.label' | i18n }}</label>
+        <label class="control-label col-md-2 col-xs-12" for="auditRetention">{{ 'ui.config.security.audit.label' | i18n
+            }}</label>
         <div class="col-md-10 col-xs-12">
             <select class="form-control" ng-model="config.security.auditRetention" name="auditRetention">
                 <option value="00:00:00">{{ 'ui.config.security.audit.none' | i18n }}</option>
@@ -43,46 +32,86 @@
                 <option value="2555.00:00:00">{{ 'ui.config.security.audit.7yr' | i18n }}</option>
             </select>
             <div class="form-text text-muted">
-                    {{ 'ui.config.security.audit.help' | i18n }}
-                </div>
+                {{ 'ui.config.security.audit.help' | i18n }}
+            </div>
         </div>
     </div>
     <div class="form-group row">
-        <label class="control-label col-md-2 col-xs-12" for="assignedFacility">{{ 'ui.config.security.facility.title' | i18n }}</label>
+        <label class="control-label col-md-2 col-xs-12" for="assignedFacility">{{ 'ui.config.security.facility.title' |
+            i18n }}</label>
         <div class="col-md-10 col-xs-12">
             <entity-search type="'Place'" name="assignedFacility"
-                filter="{ obsoletionTime: 'null', classConcept: EntityClassKeys.ServiceDeliveryLocation }"
-                class="form-control"
-                multiple="multiple"
-                ng-model="config.security.facility" />
-                                    <div class="form-text text-muted">
-                                        {{ 'ui.config.security.facility.help' | i18n }}
-                                    </div>
+                filter="{ obsoletionTime: 'null', &quot;statusConcept.mnemonic&quot; : &quot;ACTIVE&quot;, &quot;classConcept.mnemonic&quot; : &quot;ServiceDeliveryLocation&quot; }"
+                class="form-control" multiple="multiple" ng-model="config.security.facility" />
+            <div class="form-text text-muted">
+                {{ 'ui.config.security.facility.help' | i18n }}
+            </div>
         </div>
     </div>
     <div class="form-group row">
-        <label class="control-label col-md-2 col-xs-12" for="owner">{{ 'ui.config.security.owner.title' | i18n }}</label>
+        <label class="control-label col-md-2 col-xs-12" for="owner">{{ 'ui.config.security.owner.title' | i18n
+            }}</label>
         <div class="col-md-10 col-xs-12">
-            <entity-search type="'UserEntity'" name="owner"
-                filter="{ obsoletionTime: 'null' }"
-                class="form-control"
-                multiple="multiple"
-                ng-model="config.security.owner" />
-                                    <div class="form-text text-muted">
-                                        {{ 'ui.config.security.owner.help' | i18n }}
-                                    </div>
+            <entity-search type="'UserEntity'" name="owner" filter="{ obsoletionTime: 'null' }" class="form-control"
+                multiple="multiple" ng-model="config.security.owner" />
+            <div class="form-text text-muted">
+                {{ 'ui.config.security.owner.help' | i18n }}
+            </div>
         </div>
     </div>
     <div class="form-group row">
         <label class="offset-md-2 col-md-10  col-xs-12">
-            <input type="checkbox" ng-model="config.security.restrictLogin" ng-disabled="!config.sync.subscribe"/>
+            <input type="checkbox" ng-model="config.security.restrictLogin"
+                ng-disabled="!config.sync.mode == 'Subscription' " />
             {{ 'ui.config.security.onlySubscribed' | i18n }}
         </label>
     </div>
     <div class="form-group row">
         <label class="offset-md-2 col-md-10 col-xs-12">
-            <input type="checkbox" ng-model="config.security.offline.enable"/>
+            <input type="checkbox" ng-model="config.security.allowOffline" />
             {{ 'ui.config.security.localAuth' | i18n }}
         </label>
+    </div>
+    <div class="form-group row">
+        <label class="col-md-2 col-xs-12 control-label">{{ 'ui.config.security.signing' | i18n }}</label>
+        <div class="col-md-10 col-xs-12">
+            <div class="container-fluid">
+                <div class="card" ng-repeat="sgn in config.security.signingKeys track by $index">
+                    <div class="card-header alert-warning">
+                        <i class="fas fa-key"></i> {{ sgn.name }}
+                    </div>
+                    <div class="card-body">
+                        <div class="form-group row">
+                            <label class="control-label col-xs-12 col-md-2">{{ 'ui.config.security.signing.keyName' |
+                                i18n }}</label>
+                            <div class="col-xs-12 col-md-10"><input type="text" class="form-control"
+                                    pattern="^[A-Za-z0-9]{1,}$" ng-model="sgn.name" ng-disabled="sgn.name == 'default'" maxlength="15" />
+                            </div>
+                            <label class="control-label col-xs-12 col-md-2">{{ 'ui.config.security.signing.keyType' |
+                                i18n }}</label>
+                            <div class="col-xs-12 col-md-10"><select class="form-control" ng-model="sgn.type">
+                                    <option value="HS256">HMAC + SHA256</option>
+                                    <option value="RS256">RSA + SHA256</option>
+                                    <option value="RS512">RSA + SHA512</option>
+                                </select>
+                            </div>
+                            <label class="control-label col-xs-12 col-md-2">{{ 'ui.config.security.signing.key' |
+                                i18n }}</label>
+                            <div class="col-xs-12 col-md-10">
+                                <input ng-if="sgn.type == 'HS256'" name="signValue{{$index}}" type="password" ng-model="sgn.value" class="form-control" required="required" />
+                                <select ng-if="sgn.type != 'HS256'" name="signValue{{$index}}" class="form-control" ng-model="sgn.value" required="required">
+                                    <option ng-repeat="cert in reference.certificates.resource" value="cert.thumbprint">{{ cert.sub }}
+                                    </option>
+                                </select>
+                                <span class="text-danger" ng-show="configurationForm['signValue' + $index].$error['pattern']">
+                                    <i class="fas fa-exclamation-triangle"></i> {{ 'ui.error.pattern' | i18n }}
+                                </span>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>

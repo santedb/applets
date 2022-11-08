@@ -90,12 +90,12 @@ angular.module('santedb').controller('PlaceEditController', ["$scope", "$rootSco
             if(!$scope.target.id) {
                 $scope.target = await SanteDB.resources.place.insertAsync($scope.target);
                 toastr.success(SanteDB.locale.getString("ui.model.place.saveSuccess"));
-                $state.transitionTo(isFacility ? 'santedb-admin.data.facility.edit' : 'santedb-admin.data.place.edit', {id: $scope.target.id});
+                $state.go(isFacility ? 'santedb-admin.data.facility.edit' : 'santedb-admin.data.place.edit', {id: $scope.target.id});
             }
             else {
                 $scope.target = await SanteDB.resources.place.updateAsync($stateParams.id, $scope.target);
                 toastr.success(SanteDB.locale.getString("ui.admin.place.saveSuccess"));
-                $state.transitionTo(isFacility ? 'santedb-admin.data.facility.index' : 'santedb-admin.data.place.index', {id: $scope.target.id});
+                $state.go(isFacility ? 'santedb-admin.data.facility.index' : 'santedb-admin.data.place.index', {id: $scope.target.id});
 
             }
         }

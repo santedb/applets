@@ -150,7 +150,7 @@ angular.module('santedb')
                 // Now save the user entity
                 toastr.success(SanteDB.locale.getString("ui.model.securityUser.saveSuccess"));
                 SanteDB.display.buttonWait("#saveUserButton", false);
-                $state.transitionTo("santedb-admin.security.users.index");
+                $state.go("santedb-admin.security.users.index");
             };
             var errorFn = function (e) {
                 SanteDB.display.buttonWait("#saveUserButton", false);

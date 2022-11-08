@@ -21,7 +21,7 @@
                     <div class="card-body container-fluid">
                         <div class="form-group row">
                             <label class="control-label col-sm-12 col-md-2"
-                                for="sid">{{ 'ui.model.assigningAuthority.id' | i18n }}</label>
+                                for="sid">{{ 'ui.model.identityDomain.id' | i18n }}</label>
                             <div class="col-sm-12 col-md-10 input-group">
                                 <input name="sid" readonly="readonly" type="text" class="form-control"
                                     ng-model="authority.id" />
@@ -30,7 +30,7 @@
                         </div>
                         <div class="form-group row">
                             <label class="control-label col-sm-12 col-md-2 required"
-                                for="domainName">{{ 'ui.model.assigningAuthority.domainName' | i18n }}</label>
+                                for="domainName">{{ 'ui.model.identityDomain.domainName' | i18n }}</label>
                             <div class="col-sm-12 col-md-10 input-group">
                                 <input name="domainName" type="text" class="form-control"
                                     ng-model="authority.domainName" pattern="^[A-Za-z_\-0-9]{3,}$"
@@ -53,7 +53,7 @@
                         </div>
                         <div class="form-group row">
                             <label class="control-label col-sm-12 col-md-2 required"
-                                for="oid">{{ 'ui.model.assigningAuthority.oid' | i18n }}</label>
+                                for="oid">{{ 'ui.model.identityDomain.oid' | i18n }}</label>
                             <div class="col-sm-12 col-md-10 input-group">
                                 <input name="oid" type="text" class="form-control" ng-model="authority.oid"
                                     pattern="^[0-9]*?[0-9\.]*$" required="required" /> </div>
@@ -74,7 +74,7 @@
                         </div>
                         <div class="form-group row">
                             <label class="control-label col-sm-12 col-md-2 required"
-                                for="url">{{ 'ui.model.assigningAuthority.url' | i18n }}</label>
+                                for="url">{{ 'ui.model.identityDomain.url' | i18n }}</label>
                             <div class="col-sm-12 col-md-10 input-group">
                                 <input name="url" type="url" class="form-control" ng-model="authority.url" /> </div>
                             <div class="col-sm-12 col-md-10 offset-md-2">
@@ -87,7 +87,7 @@
                         </div>
                         <div class="form-group row">
                             <label class="control-label col-sm-12 col-md-2 required"
-                                for="name">{{ 'ui.model.assigningAuthority.name' | i18n }}</label>
+                                for="name">{{ 'ui.model.identityDomain.name' | i18n }}</label>
                             <div class="col-sm-12 col-md-10 input-group">
                                 <input name="name" type="text" class="form-control" ng-model="authority.name"
                                     maxlength="64" required="required" /> </div>
@@ -100,7 +100,7 @@
                         </div>
                         <div class="form-group row">
                             <label class="control-label col-sm-12 col-md-2"
-                                for="validation">{{ 'ui.model.assigningAuthority.validation' | i18n }}</label>
+                                for="validation">{{ 'ui.model.identityDomain.validation' | i18n }}</label>
                             <div class="col-sm-12 col-md-10 input-group">
                                 <input name="validation" type="text" class="form-control"
                                     ng-model="authority.validation" maxlength="256" /> </div>
@@ -109,12 +109,12 @@
                         <div class="form-group row">
                             <label class="control-label text-left col-sm-12 col-md-10 offset-md-2">
                                 <input type="checkbox" ng-model="authority.isUnique" />
-                                {{ 'ui.model.assigningAuthority.isUnique' | i18n }}
+                                {{ 'ui.model.identityDomain.isUnique' | i18n }}
                             </label>
                         </div>
                         <div class="form-group row" ng-if="authority.createdBy">
                             <label
-                                class="col-sm-12 col-md-2 control-label">{{ 'ui.model.assigningAuthority.createdBy' | i18n }}</label>
+                                class="col-sm-12 col-md-2 control-label">{{ 'ui.model.identityDomain.createdBy' | i18n }}</label>
                             <div class="col-md-10 col-sm-12">
                                 <provenance provenance-id="authority.createdBy"
                                     provenance-time="authority.creationTime"></provenance>
@@ -123,7 +123,7 @@
                         </div>
                         <div class="form-group row" ng-if="authority.updatedBy">
                             <label
-                                class="col-sm-12 col-md-2 control-label">{{ 'ui.model.assigningAuthority.updatedBy' | i18n }}</label>
+                                class="col-sm-12 col-md-2 control-label">{{ 'ui.model.identityDomain.updatedBy' | i18n }}</label>
                             <div class="col-md-10 col-sm-12">
                                 <provenance provenance-id="authority.updatedBy" provenance-time="authority.updatedTime">
                                 </provenance>
@@ -132,7 +132,7 @@
                         </div>
                         <div class="form-group row" ng-if="authority.obsoletedBy">
                             <label
-                                class="col-sm-12 col-md-2 control-label">{{ 'ui.model.assigningAuthority.obsoletedBy' | i18n }}</label>
+                                class="col-sm-12 col-md-2 control-label">{{ 'ui.model.identityDomain.obsoletedBy' | i18n }}</label>
                             <div class="col-md-10 col-sm-12">
                                 <provenance provenance-id="authority.obsoletedBy"
                                     provenance-time="authority.obsoletionTime"></provenance>
@@ -161,7 +161,7 @@
                     <div class="card-body container-fluid">
                         <div class="form-group row">
                             <label
-                                class="control-label col-sm-12 col-md-2">{{ 'ui.model.assigningAuthority.assigningApplication' | i18n }}</label>
+                                class="control-label col-sm-12 col-md-2">{{ 'ui.model.identityDomain.assigningApplication' | i18n }}</label>
                             <div class="col-md-10 col-sm-12">
                                 <entity-search type="'SecurityApplication'"
                                     ng-model="authority.assigningApplication" selector="'entity'"
@@ -170,7 +170,7 @@
                         </div>
                         <div class="form-group row">
                             <label
-                                class="control-label col-sm-12 col-md-2">{{ 'ui.model.assigningAuthority.scope' | i18n }}</label>
+                                class="control-label col-sm-12 col-md-2">{{ 'ui.model.identityDomain.scope' | i18n }}</label>
                             <div class="col-md-10 col-sm-12">
                                 <entity-search multiple="multiple" type="'Concept'" ng-model="authority.scope"
                                     search-field="'name.value'"
@@ -181,7 +181,7 @@
                         </div>
                         <div class="form-group row">
                             <label
-                                class="control-label col-sm-12 col-md-2">{{ 'ui.model.assigningAuthority.policy' | i18n }}</label>
+                                class="control-label col-sm-12 col-md-2">{{ 'ui.model.identityDomain.policy' | i18n }}</label>
                             <div class="col-md-10 col-sm-12">
                                 <entity-search  type="'SecurityPolicy'" ng-model="authority.policy"
                                     search-field="'name'">

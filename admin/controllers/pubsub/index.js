@@ -89,6 +89,6 @@ angular.module('santedb').controller('PubSubIndexController', ["$scope", "$rootS
 
     // Create subscription
     $scope.createSubscription = function() {
-        $state.transitionTo("santedb-admin.system.pubsub.edit", { id: 'new' });
+        $state.go("santedb-admin.system.pubsub.edit", { id: 'new' });
     }
 }])

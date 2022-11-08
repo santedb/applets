@@ -25,9 +25,10 @@ angular.module('santedb').controller('InitialSettingsController', ['$scope', '$r
     $scope.reference = {
         place: [],
         facility: [],
-        assigningauthority: [],
+        identityDomain: [],
         subscriptions: []
     };
+    $scope.permittedSubscriptions = [];
     $scope.newItem = {};
     $scope.serverCaps = {};
     $scope.widgets = {};
@@ -48,138 +49,18 @@ angular.module('santedb').controller('InitialSettingsController', ['$scope', '$r
         }
     }
 
-    
-    // Process configuration
-    async function _processConfiguration(config, sessionInfo) {
 
-        $("#configurationStages li.nav-item").children("a").on('shown.bs.tab', function (e) {
-            $scope.lastTab = e.currentTarget.innerHTML == $("#configurationStages li.nav-item").children("a").last().html();
-            $scope.$apply();
-        });
-
-        
-        if (!config._isConfigured) {
-
-                /*$scope.config.network.useProxy = $scope.config.network.proxyAddress != null;
-                $scope.config.network.optimize = "gzip";
-                $scope.config.sync = $scope.config.sync || {};
-                $scope.config.sync.mode = "sync";
-                $scope.config.sync.subscribeTo = $scope.config.sync.subscribeTo || [];
-                $scope.config.sync.subscribeType = "Facility";
-                $scope.config.subscription = $scope.config.subscription || {};
-                $scope.config.subscription.mode = $scope.config.subscription.mode || "Subscription";
-                $scope.config.log.mode = $scope.config.log.writers[0].filter || "Warning";
-                if(sessionInfo && sessionInfo.entity)
-                    $scope.config.security.owner = [ sessionInfo.entity.id ];
-                $scope.config.sync._resource = {};
-            
-                $scope.config.data = {
-                    provider: "sqlite",
-                    options: {}
-                };
-
-                $scope.config.security.offline = { enable: true };*/
-
-            if (config.realm.address) {
-
-                try {
-                    // Get subscription reference
-                    var subscriptions = await SanteDB.resources.subscriptionDefinition.findAsync({ _upstream: true });
-                    var appSolutions = await SanteDB.application.getAppSolutionsAsync();
-                    var appInfo = await SanteDB.application.getAppInfoAsync();
-                    var dataProviders = await SanteDB.configuration.getDataProvidersAsync();
-                    var certificates = await SanteDB.resources.certificates.findAsync({ hasPrivateKey: true });
-                    config.sync._resource = {};
-                    config.sync.mode = 'online';
-                    $timeout(_ => {
-                        subscriptions.resource.forEach((itm) => {
-                            itm.definitions.forEach(function (defn) {
-                                $scope.reference.subscriptions.push(defn);
-                                config.sync._resource[defn.name] = { selected: true };
-                            });
-                        });
-                        $scope.reference.solutions = appSolutions;
-                        $scope.reference.certificates = certificates;
-                        $scope.serverCaps = appInfo;
-
-                        $scope.reference.dataProviders = dataProviders;
-                        if (config.data && config.data.provider) {
-                            $scope.reference.providerData = $scope.reference.dataProviders.find((o) => o.invariant == config.data.provider);
-                        }
-                    });
-
-                }
-                catch(e) {
-                    $rootScope.errorHandler(e);
-                }
-            }
-
-        }
-        else 
-            $("#alreadyConfiguredModal").modal({ backdrop: 'static' });
-
-        return config;
+    function canSelectSubscription(subscription, referenceObjects) {
+        return subscription.definitions.find(filter => (!filter.guards || filter.guards.length == 0 || checkGuard(filter, referenceObjects)) && ($scope.config.sync.mode == filter.mode || filter.mode == 'AllOrSubscription'));
     }
 
-    // Get configuration from the server
-    async function _getConfiguration(sessionInfo) {
-        try {
-            var config = await SanteDB.configuration.getAsync();
-            config = await _processConfiguration(config, sessionInfo);
-            $timeout(() => $scope.config = config);
+    function checkGuard(filter, referenceObjects) {
+
+        if (!referenceObjects) {
+            referenceObjects = $scope.reference[$scope.config.sync.subscribeType.toCamelCase()]; // copy from scope
         }
-        catch(e) {
-            $rootScope.errorHandler(e);
-        }
-    }
 
-
-    // Get necessary information
-    SanteDB.authentication.setElevator(new SanteDBElevator(_getConfiguration, false));
-    _getConfiguration();
-
-    // Watch for change in data provider
-    $scope.$watch('config.data.provider', function (n, o) {
-        if (n && $scope.reference.dataProviders)
-            $scope.reference.providerData = $scope.reference.dataProviders.find(function (o) { return o.invariant == n });
-    });
-
-    // Watch scope and refresh list of subscriptions
-    $scope.$watch('config.sync.subscribeTo.length', function (n, o) {
-        // Find in new
-        if (n) {
-            $scope.permittedSubscriptions = [];
-            $scope.config.sync.subscribeTo.forEach(function (sid) {
-                var existingInfo = $scope.reference[$scope.config.sync.subscribeType.toLowerCase()].find(function (p) { return p.id === sid });
-                
-                // Don't have any info on this object - Look it up
-                if (!existingInfo) {
-                    SanteDB.display.buttonWait("#selectAllButton", true);
-                    $("#nextButton").prop("disabled", true);
-
-                    SanteDB.resources[$scope.config.sync.subscribeType.toCamelCase()].getAsync(sid).then(function (placeInfo) {
-                        $scope.reference[$scope.config.sync.subscribeType.toLowerCase()].push(placeInfo);
-                        try {
-                            SanteDB.display.buttonWait("#selectAllButton", false);
-                            $("#nextButton").prop("disabled", false);
-                            $scope.permittedSubscriptions = $scope.reference.subscriptions.filter((filter) =>  (!filter.guards || filter.guards.length == 0 || $scope.checkGuard(filter)) && ($scope.config.subscription.mode == filter.mode || filter.mode == 'AllOrSubscription'));
-                            $scope.$apply(); // Apply scope to refresh the check guard conditions
-                        }
-                        catch (e) { }
-                    }).catch((e)=>console.error(e));
-
-                }
-                else {
-                    $scope.permittedSubscriptions = $scope.reference.subscriptions.filter((filter) => (!filter.guards || filter.guards.length == 0 || $scope.checkGuard(filter)) && ($scope.subscription.mode == filter.mode || filter.mode == 'AllOrSubscription'));
-                }
-            });
-        }
-    });
-
-    // Verifies that a guard condition on a filter passes
-    $scope.checkGuard = function (filter) {
-
-        if ($scope.reference[$scope.config.sync.subscribeType.toLowerCase()].length == 0) {
+        if (referenceObjects.length == 0) {
             return false;
         }
 
@@ -191,7 +72,7 @@ angular.module('santedb').controller('InitialSettingsController', ['$scope', '$r
             filter.guards.forEach(function (oldGuard) {
                 if (!retVal) return;
 
-                // Rewrtie guard
+                // Rewrite guard
                 var guardFilterRegex = new RegExp('^([\\!\\sA-Za-z\\.&|]*?)\\[([A-Za-z]*?)\\](.*)$');
                 var newGuard = "";
                 while (oldGuard.length > 0) {
@@ -205,7 +86,7 @@ angular.module('santedb').controller('InitialSettingsController', ['$scope', '$r
                         oldGuard = match[3];
                     }
                 }
-                $scope.reference[$scope.config.sync.subscribeType.toLowerCase()]
+                referenceObjects
                     .filter(function (f) { return $scope.config.sync.subscribeTo && $scope.config.sync.subscribeTo.indexOf(f.id) > -1; })
                     .forEach(function (subscribed) {
                         var e = $scope.$eval(newGuard, { "subscribed": subscribed });
@@ -224,10 +105,143 @@ angular.module('santedb').controller('InitialSettingsController', ['$scope', '$r
         }
     }
 
+    // Process configuration
+    async function _processConfiguration(config, sessionInfo) {
+
+        if (!config._isConfigured) {
+
+            /*$scope.config.network.useProxy = $scope.config.network.proxyAddress != null;
+            $scope.config.network.optimize = "gzip";
+            $scope.config.sync = $scope.config.sync || {};
+            $scope.config.sync.mode = "sync";
+            $scope.config.sync.subscribeTo = $scope.config.sync.subscribeTo || [];
+            $scope.config.sync.subscribeType = "Facility";
+            $scope.config.subscription = $scope.config.subscription || {};
+            $scope.config.subscription.mode = $scope.config.subscription.mode || "Subscription";
+            $scope.config.log.mode = $scope.config.log.writers[0].filter || "Warning";
+            if(sessionInfo && sessionInfo.entity)
+                $scope.config.security.owner = [ sessionInfo.entity.id ];
+            $scope.config.sync._resource = {};
+        
+            $scope.config.data = {
+                provider: "sqlite",
+                options: {}
+            };
+
+            $scope.config.security.offline = { enable: true };*/
+
+            if (config.realm.address) {
+
+                try {
+                    // Get subscription reference
+                    var subscriptions = await SanteDB.resources.subscriptionDefinition.findAsync({ _upstream: true });
+                    var appSolutions = await SanteDB.application.getAppSolutionsAsync();
+                    var appInfo = await SanteDB.application.getAppInfoAsync();
+                    var dataProviders = await SanteDB.configuration.getDataProvidersAsync();
+                    var certificates = await SanteDB.resources.certificates.findAsync({ hasPrivateKey: true });
+                    config.sync._resource = {};
+                    config.sync.subscribeTo = config.sync.subscribeTo || [];
+                    $timeout(_ => {
+                        subscriptions.resource.forEach((itm) => {
+                            $scope.reference.subscriptions.push(itm);
+                            config.sync._resource[itm.uuid] = { selected: true };
+                        });
+                        $scope.reference.solutions = appSolutions;
+                        $scope.reference.certificates = certificates;
+                        $scope.serverCaps = appInfo;
+
+                        $scope.reference.dataProviders = dataProviders;
+                        if (config.data && config.data.provider) {
+                            $scope.reference.providerData = $scope.reference.dataProviders.find((o) => o.invariant == config.data.provider);
+                        }
+                    });
+
+                }
+                catch (e) {
+                    $rootScope.errorHandler(e);
+                }
+            }
+
+        }
+        else
+            $("#alreadyConfiguredModal").modal({ backdrop: 'static' });
+
+        return config;
+    }
+
+    // Get configuration from the server
+    async function _getConfiguration(sessionInfo) {
+        try {
+            var config = await SanteDB.configuration.getAsync();
+            config = await _processConfiguration(config, sessionInfo);
+            $timeout(() => $scope.config = config);
+        }
+        catch (e) {
+            $rootScope.errorHandler(e);
+        }
+    }
+
+
+    // Get necessary information
+    SanteDB.authentication.setElevator(new SanteDBElevator(_getConfiguration, false));
+    _getConfiguration();
+
+    // Watch for change in data provider
+    $scope.$watch('config.data.provider', function (n, o) {
+        if (n && $scope.reference.dataProviders)
+            $scope.reference.providerData = $scope.reference.dataProviders.find(function (o) { return o.invariant == n });
+    });
+
+    $scope.$watch("config.sync.subscribeType", function (n, o) {
+        if (n) {
+
+            $scope.config.sync.subscribeTo = $scope.config.sync.subscribeTo || [];
+            $scope.config.sync.subscribeTo.splice(0, $scope.config.sync.subscribeTo.length);
+            $scope.permittedSubscriptions.splice(0, $scope.permittedSubscriptions.length);
+        }
+    });
+
+    // Watch scope and refresh list of subscriptions
+    $scope.$watch('config.sync.subscribeTo.length', function (n, o) {
+        // Find in new
+        if (n) {
+            $scope.permittedSubscriptions.splice(0, $scope.permittedSubscriptions.length);
+            $scope.config.sync.subscribeTo.forEach(async function (sid) {
+                var referenceObjects = $scope.reference[$scope.config.sync.subscribeType.toCamelCase()];
+                var existingInfo = referenceObjects.find(function (p) { return p.id === sid });
+
+                // Don't have any info on this object - Look it up
+                if (!existingInfo) {
+                    SanteDB.display.buttonWait("#selectAllButton", true);
+                    $("#nextButton").prop("disabled", true);
+                    try {
+                        existingInfo = await SanteDB.resources[$scope.config.sync.subscribeType.toCamelCase()].getAsync(sid, "dropdown");
+                        $timeout(() => {
+                            $scope.reference[$scope.config.sync.subscribeType.toCamelCase()].push(existingInfo);
+                        });
+                        referenceObjects.push(existingInfo);
+                    }
+                    catch (e) {
+                        console.error(e);
+                    }
+                    finally {
+                        SanteDB.display.buttonWait("#selectAllButton", false);
+                        $("#nextButton").prop("disabled", false);
+                    }
+                }
+                var subscriptions = $scope.reference.subscriptions.filter((s) => canSelectSubscription(s, referenceObjects));
+                $timeout(() => {
+                    $scope.permittedSubscriptions = subscriptions;
+                });
+            });
+        }
+    });
+
     // Function to advance to next option
     $scope.next = function () {
         // Find the next option
         var next = $("#configurationStages li.nav-item:has(a.active)~li a");
+        $scope.lastTab = next.length == 1;
         if (next.length > 0)
             $(next[0]).tab('show');
     };
@@ -248,15 +262,21 @@ angular.module('santedb').controller('InitialSettingsController', ['$scope', '$r
     $scope.setSubscriptionSelection = async function (value) {
         $scope.reference.subscriptions.forEach(function (s) {
             if (value &&
-                (!s.guard ^ (s.guard && $scope.checkGuard(s))) &&
-                ($scope.config.subscription.mode == s.mode || s.mode == 'AllOrSubscription')) {
-                $scope.config.sync._resource[s.name] = $scope.config.sync._resource[s.name] || {};
-                $scope.config.sync._resource[s.name].selected = value;
+                canSelectSubscription(s)) {
+                $scope.config.sync._resource[s.uuid] = $scope.config.sync._resource[s.uuid] || {};
+                $scope.config.sync._resource[s.uuid].selected = value;
             }
             else {
-                $scope.config.sync._resource[s.name] = $scope.config.sync._resource[s.name] || {};
-                $scope.config.sync._resource[s.name].selected = false;
+                $scope.config.sync._resource[s.uuid] = $scope.config.sync._resource[s.uuid] || {};
+                $scope.config.sync._resource[s.uuid].selected = false;
             }
+        });
+    }
+
+    $scope.propogateNetworkChanges = function(n,o) {
+        $scope.config.client.clients.forEach(c => {
+            c.optimize = $scope.config.client.optimize,
+            c.clientCertificate = $scope.config.client.clientCertificate;
         });
     }
 
@@ -265,34 +285,40 @@ angular.module('santedb').controller('InitialSettingsController', ['$scope', '$r
 
         try {
             SanteDB.display.buttonWait("#finishButton", true);
-            
+
+            // Get and coy the configuration values
+            var config = angular.copy(await SanteDB.configuration.getAsync());
+            config.values = {};
+            Object.keys(config).filter(o => !o.startsWith("_") && o !== "values").forEach(c => {
+                config.values[c] = $scope.config[c];
+                delete config[c];
+            });
+            config.$type = "Configuration";
             // Find the resource definition 
-            $scope.config.sync.subscription = Object.keys($scope.config.sync._resource).filter((i) => $scope.config.sync._resource[i].selected)
-                .map(k => $scope.reference.subscriptions.find(p => p.name == k))
-                .filter(i => i != null && 
-                    $scope.checkGuard(i) && 
-                    (i.mode == "AllOrSubscription" || i.mode == $scope.config.subscription.mode))
-                .map(k=>k.name);
+            config.values.sync.subscription = Object.keys(config.values.sync._resource).filter((i) => i !== "undefined" && config.values.sync._resource[i].selected)
+                .map(k => reference.subscriptions.find(p => p.uuid == k))
+                .filter(i => i != null &&
+                    checkGuard(i))
+                .map(k => k.uuid);
 
             // Define the services
-            $scope.config.application.service = $scope.serverCaps.appInfo.service.filter(function (s) { return s.active; })
+            config.values.application.service = $scope.serverCaps.appInfo.service.filter(function (s) { return s.active; })
                 .map(function (m) { return { type: m.type } });
-            $scope.config.autoRestart = true;
-            
+            config._autoRestart = true;
+
             try {
-                var config = await SanteDB.configuration.saveAsync($scope.config);
-                
+                config = await SanteDB.configuration.saveAsync(config);
+
                 SanteDB.display.buttonWait("#finishButton", false);
 
-                if(c.autoRestart) {
+                if (config._autoRestart) {
                     $timeout(_ => {
                         $scope.restartTimer = 20;
                         $("#countdownModal").modal({
                             backdrop: 'static'
                         });
                         var iv = $interval(() => {
-                            if($scope.restartTimer-- < 3)
-                            { 
+                            if ($scope.restartTimer-- < 3) {
                                 window.location.hash = '';
                                 window.location.reload();
                             }
@@ -306,7 +332,7 @@ angular.module('santedb').controller('InitialSettingsController', ['$scope', '$r
                     });
                 }
             }
-            catch(e) {
+            catch (e) {
                 SanteDB.display.buttonWait("#finishButton", false);
                 $rootScope.errorHandler(e);
             }
@@ -331,7 +357,7 @@ angular.module('santedb').controller('InitialSettingsController', ['$scope', '$r
                 try {
                     var joinResult = await SanteDB.configuration.joinRealmAsync($scope.config.realm, override === true);
                     SanteDB.display.buttonWait("#joinRealmButton", false);
-                    alert(joinResult.welcome || SanteDB.locale.getString("ui.config.realm.success", { realm : $scope.config.realm.address}));
+                    alert(joinResult.welcome || SanteDB.locale.getString("ui.config.realm.success", { realm: $scope.config.realm.address }));
                     var config = await SanteDB.configuration.getAsync(true);
                     config = await _processConfiguration(config, sessionInfo);
 
@@ -342,7 +368,6 @@ angular.module('santedb').controller('InitialSettingsController', ['$scope', '$r
 
                 }
                 catch (e) {
-                    SanteDB.display.buttonWait("#joinRealmButton", false);
                     if ((e.$type == "DuplicateNameException" || e.cause && e.cause.$type == "DuplicateNameException") && !override) {
                         if (confirm(SanteDB.locale.getString("ui.config.realm.error.duplicate")))
                             await joinRealmFn(sessionInfo, true);
@@ -352,22 +377,57 @@ angular.module('santedb').controller('InitialSettingsController', ['$scope', '$r
                     }
                     else
                         $rootScope.errorHandler(e);
+                    SanteDB.display.buttonWait("#joinRealmButton", false);
+
                 }
             };
             var elevator = new SanteDBElevator(joinRealmFn, false);
-            elevator.setCloseCallback(function() {
-                SanteDB.display.buttonWait("#joinRealmButton", false);
+            elevator.setCloseCallback(function (r) {
+                if (!r) {
+                    SanteDB.display.buttonWait("#joinRealmButton", false);
+                }
             });
-            
+
             SanteDB.authentication.setElevator(elevator);
             await joinRealmFn();
         }
     }
 
-    $scope.leaveRealm = async function() {
-        if(confirm(SanteDB.locale.getString("ui.config.action.realm.leave.confirm", { realm: SanteDB.configuration.getRealm() })))
-        {
+    $scope.leaveRealm = async function () {
+        if (confirm(SanteDB.locale.getString("ui.config.action.realm.leave.confirm", { realm: SanteDB.configuration.getRealm() }))) {
 
+            async function leaveRealmFn() {
+                try {
+                    SanteDB.display.buttonWait("#leaveRealmButton", true);
+
+                    await SanteDB.configuration.leaveRealmAsync();
+                    alert(joinResult.welcome || SanteDB.locale.getString("ui.config.realm.leave", { realm: $scope.config.realm.address }));
+                    var config = await SanteDB.configuration.getAsync(true);
+                    config = await _processConfiguration(config, sessionInfo);
+
+                    $timeout(_ => {
+                        $scope.config = config;
+                        $scope.next();
+                    });
+                }
+                catch (e) {
+                    $rootScope.errorHandler(e);
+                }
+                finally {
+                    SanteDB.display.buttonWait("#leaveRealmButton", false);
+
+                }
+            }
+
+            var elevator = new SanteDBElevator(leaveRealmFn, false);
+            elevator.setCloseCallback(function (r) {
+                if (!r) {
+                    SanteDB.display.buttonWait("#leaveRealmButton", false);
+                }
+            });
+
+            SanteDB.authentication.setElevator(elevator);
+            await leaveRealmFn();
         }
     }
 }]);

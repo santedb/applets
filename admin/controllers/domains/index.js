@@ -24,19 +24,19 @@ angular.module('santedb').controller('IdentityDomainIndexController', ["$scope",
      /**
      * @summary Render updated by
      */
-    $scope.renderUpdatedBy = function (assigningAuthority) {
-        if (assigningAuthority.obsoletedBy != null)
-            return `<provenance provenance-id="'${assigningAuthority.obsoletedBy}'" sessionfn="$parent.sessionFunction" provenance-time="'${assigningAuthority.obsoletedBy}'"></provenance>`;
-        else if (assigningAuthority.updatedBy != null)
-            return `<provenance provenance-id="'${assigningAuthority.updatedBy}'" sessionfn="$parent.sessionFunction" provenance-time="'${assigningAuthority.updatedTime}'"></provenance>`;
-        else if (assigningAuthority.createdBy != null)
-            return `<provenance provenance-id="'${assigningAuthority.createdBy}'" sessionfn="$parent.sessionFunction" provenance-time="'${assigningAuthority.creationTime}'"></provenance>`;
+    $scope.renderUpdatedBy = function (identityDomain) {
+        if (identityDomain.obsoletedBy != null)
+            return `<provenance provenance-id="'${identityDomain.obsoletedBy}'" sessionfn="$parent.sessionFunction" provenance-time="'${identityDomain.obsoletedBy}'"></provenance>`;
+        else if (identityDomain.updatedBy != null)
+            return `<provenance provenance-id="'${identityDomain.updatedBy}'" sessionfn="$parent.sessionFunction" provenance-time="'${identityDomain.updatedTime}'"></provenance>`;
+        else if (identityDomain.createdBy != null)
+            return `<provenance provenance-id="'${identityDomain.createdBy}'" sessionfn="$parent.sessionFunction" provenance-time="'${identityDomain.creationTime}'"></provenance>`;
         return "";
     }
 
     // Render whether AA is unique
-    $scope.renderIsUnique = function(assigningAuthority) {
-        if(assigningAuthority.isUnique)
+    $scope.renderIsUnique = function(identityDomain) {
+        if(identityDomain.isUnique)
             return '<i class="fas fa-check"></i>';
     }
 }]);

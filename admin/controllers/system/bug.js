@@ -68,7 +68,7 @@ angular.module('santedb').controller('SubmitBugController', ["$scope", "$rootSco
             }                
             var result = await SanteDB.application.submitBugReportAsync(submission);
             toastr.info(`${SanteDB.locale.getString("ui.admin.bug.success")} #${result.ticketId}`, null, { preventDuplicates: true });
-            $state.transitionTo("santedb-admin.dashboard");
+            $state.go("santedb-admin.dashboard");
         }
         catch(e) {
             $rootScope.errorHandler(e);

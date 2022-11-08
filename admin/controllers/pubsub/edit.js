@@ -89,7 +89,7 @@ angular.module('santedb').controller('PubSubEditController', ["$scope", "$rootSc
             }
 
             toastr.success(SanteDB.locale.getString("ui.admin.pubsub.save.success", { name: $scope.subscription.name }));
-            $state.transitionTo("santedb-admin.system.pubsub.index");
+            $state.go("santedb-admin.system.pubsub.index");
         }
         catch(e) {
             toastr.error(SanteDB.locale.getString("ui.admin.pubsub.save.error", { name: $scope.subscription.name, reason: e.message }));

@@ -88,7 +88,7 @@ angular.module('santedb').controller('CreateDeviceController', ["$scope", "$root
                 let r = await SanteDB.resources.deviceEntity.insertAsync($scope.target.entity)
                 $scope.target.entity = r;
             toastr.success(SanteDB.locale.getString("ui.model.securityDevice.saveSuccess"));
-            $state.transitionTo("santedb-admin.security.devices.edit", { id: res.id });
+            $state.go("santedb-admin.security.devices.edit", { id: res.id });
 
         }
         catch (e) {

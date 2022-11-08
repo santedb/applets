@@ -35,7 +35,7 @@ function SanteDBElevator(continueWith, purposeOfUse) {
     $("#loginModal").on("shown.bs.modal", function() { _focusFunction(); });
     $("#loginModal").on("hidden.bs.modal", function() {
         if(_onCloseFunction)
-            _onCloseFunction();
+            _onCloseFunction(_token != null);
         $("#loginModal").off("shown.bs.modal");
         $("#loginModal").off("hidden.bs.modal");
     });

@@ -44,10 +44,18 @@
                     <tr ng-repeat="(optKey, optType) in reference.providerData.options track by $index">
                         <td>{{ optKey }}</td>
                         <td ng-switch="optType">
-                            <input ng-switch-when="Boolean" type="checkbox" ng-model="config.data.options[optKey]" value="true"/>
-                            <input ng-switch-when="String" type="text" ng-model="config.data.options[optKey]" class="form-control"/>
-                            <input ng-switch-when="Password" type="password" ng-model="config.data.options[optKey]" class="form-control"/>
-                            <input ng-switch-when="Numeric" type="number" ng-model="config.data.options[optKey]" class="form-control"/>
+                            <input name="option{{optKey}}" ng-switch-when="User" type="text" class="form-control" required="required" ng-model="config.data.options[optKey]" pattern="^[A-Za-z0-9_]+$" value="true" placeholder="{{ 'ui.config.data.options.user.placeholder' | i18n }}"/>
+                            <input name="option{{optKey}}" ng-switch-when="DatabaseName" class="form-control" required="required" type="text" pattern="^[A-Za-z0-9_\.]+$" ng-model="config.data.options[optKey]" placeholder="{{ 'ui.config.data.options.databaseName.placeholder' | i18n }}"/>
+                            <input name="option{{optKey}}" ng-switch-when="Boolean" type="checkbox" ng-model="config.data.options[optKey]" value="true"/>
+                            <input name="option{{optKey}}" ng-switch-when="String" type="text" ng-model="config.data.options[optKey]" class="form-control" placeholder="{{ 'ui.config.data.options.string.placeholder' | i18n }}"/>
+                            <input name="option{{optKey}}" ng-switch-when="Password" type="password"  required="required" ng-model="config.data.options[optKey]" class="form-control"/>
+                            <input name="option{{optKey}}" ng-switch-when="Numeric" type="number" ng-model="config.data.options[optKey]" class="form-control"/>
+                            <span class="text-danger" ng-show="configurationForm['option' + optKey].$error['pattern']">
+                                <i class="fas fa-exclamation-triangle"></i> {{ 'ui.error.pattern' | i18n }}
+                            </span>
+                            <span class="text-danger" ng-show="configurationForm['option' + optKey].$error['required']">
+                                <i class="fas fa-exclamation-triangle"></i> {{ 'ui.error.required' | i18n }}
+                            </span>
                         </td>
                     </tr>
                 </tbody>

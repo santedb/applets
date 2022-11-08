@@ -242,6 +242,11 @@
       <string name="ui.operator.gte">Greater or Equal</string>
       <string name="ui.operator.lte">Less or Equal</string>
       <!-- Subscription Type Translations -->
+      <string name="ui.subscription.definitions">{num} subscribed types</string>
+      <string name="ui.subscription.act.my">My Acts &amp; Events</string>
+      <string name="ui.subscription.entity.my">My Patients, Providers, Places &amp; Materials</string>
+      <string name="ui.subscription.core">Core Subscriptions (recommended)</string>
+      <string name="ui.subscription.act.out">Out of Catchment Acts &amp; Events</string>
       <string name="ui.subscription.person.all">All Persons</string>
       <string name="ui.subscription.act.all">All Acts</string>
       <string name="ui.subscription.place.all">All places in my country (not-recommended)</string>
@@ -255,7 +260,7 @@
       <string name="ui.subscription.quantityObservation.all">All quantified observations (weight, height, etc.)</string>
       <string name="ui.subscription.conceptSet.all">All concept sets (recommended)</string>
       <string name="ui.subscription.concept.all">All concepts (recommended)</string>
-      <string name="ui.subscription.assigningAuthority.all">All assinging authorities (recommended)</string>
+      <string name="ui.subscription.identityDomain.all">All assinging authorities (recommended)</string>
       <string name="ui.subscription.identifierType.all">All identifier types (recommended)</string>
       <string name="ui.subscription.templateDefinition.all">All clinical templates (recommended)</string>
       <string name="ui.subscription.extensionType.all">All extension types (recommended)</string>
@@ -288,8 +293,8 @@
       <string name="ui.config.network.clientCert.label">Client Certificate</string>
       <string name="ui.config.network.clientCert.help">If your upstream requires the use of PKI authentication you may specify the certificate to present to the upstream here. PKI authentication uses encryption to authenticate your SanteDB node with the upstream using strong public key encryption</string>
       <string name="ui.config.subscribe.type.label">Subscription Type</string>
-      <string name="ui.config.subscribe.authority.label">Assigning Authority</string>
-      <string name="ui.config.subscribe.authority.help">Use this option to subscribe to patients with a particular identifier</string>
+      <string name="ui.config.subscribe.authority.label">Identity Domain</string>
+      <string name="ui.config.subscribe.authority.help">Use this option to subscribe to patients with a particular identifier issued within an identity domain</string>
       <string name="ui.config.realm.title">Upstream</string>
       <string name="ui.config.realm.description">This SanteDB client application needs to contact a centralized instanced called an &quot;upstream realm&quot;. This screen will allow you to configure the specific details of how this mobile device will contact the realm's administrative management service.</string>
       <string name="ui.config.realm.deviceName.label">Device ID</string>
@@ -313,7 +318,8 @@
       <string name="ui.config.sync.mode.label">Mode</string>
       <string name="ui.config.sync.mode.help">Use this option to set the mode in which this application behaves</string>
       <string name="ui.config.sync.mode.online">Online Only (No disconnected use)</string>
-      <string name="ui.config.sync.mode.sync">Synchronized</string>
+      <string name="ui.config.sync.mode.sync">Synchronized (Selective Replication)</string>
+      <string name="ui.config.sync.mode.all">Full Replication</string>
       <string name="ui.config.sync.trigger.label">Triggers</string>
       <string name="ui.config.sync.trigger.help">Use this option to specify when a forced synchronization should occur</string>
       <string name="ui.config.sync.trigger.onstart">When the application starts</string>
@@ -326,6 +332,9 @@
       <string name="ui.config.sync.interval.15">Every 15 minutes</string>
       <string name="ui.config.sync.interval.30">Every 30 minutes</string>
       <string name="ui.config.sync.interval.60">Every hour</string>
+      <string name="ui.config.sync.overwriteServer">Auto-resolve conflicts by forcing my updates over the server</string>
+      <string name="ui.config.sync.bigBundles">Instruct the server to send back larger bundles (faster synchronization, however may result in timeouts on slow networks)</string>
+      <string name="ui.config.sync.usePatches">Send partial update messages to the server (PATCH option)</string>
       <string name="ui.config.sync.interval.help">Use this option to control how often automatic polling occurs</string>
       <string name="ui.config.sync.safePatchOnly">Do not auto-merge conflicts on server</string>
       <string name="ui.config.alreadyConfigured">Your instance of SanteDB is already configured!</string>
@@ -363,6 +372,10 @@
       <string name="ui.config.security.title">Security</string>
       <string name="ui.config.security.description">SanteDB disconnected client keeps several security logs and audits of user activity on this device. This is helpful if this device will be offline for extended periods of time. Here you can control various security settings for this device</string>
       <string name="ui.config.security.password.label">Passwords</string>
+      <string name="ui.config.security.signing">Digital Signatures</string>
+      <string name="ui.config.security.signing.keyType">Signature Type</string>
+      <string name="ui.config.security.signing.keyName">Key Name</string>
+      <string name="ui.config.security.signing.key">Key</string>
       <string name="ui.config.security.password.help">Use this setting to modify the password hashing strength. Note: You should only use SHA1 hashing in legacy mode, SHA256 is the recommended setting</string>
       <string name="ui.config.security.password.sha256">SHA256 Password Hashing</string>
       <string name="ui.config.security.password.sha1">SHA1 Password Hashin</string>
@@ -429,6 +442,9 @@
       <string name="ui.provenance.application">App</string>
       <string name="ui.provenance.session">Session</string>
 
+      <string name="ui.config.data.options.string.placeholder">Example: localhost, host.database.com</string>
+      <string name="ui.config.data.options.databaseName.placeholder">Example: mydatabase or mydatabase.sqlite</string>
+      <string name="ui.config.data.options.user.placeholder">Example: postgres, SYSDBA</string>
       <!-- Authentication Issues -->
       <string name="AUTH_LCK">Your account is locked. Please try logging in at a later time, or contacting support</string>
       <string name="AUTH_INV">Invalid Username and/or Password. Please check the details you entered and try again</string>

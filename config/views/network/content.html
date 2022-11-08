@@ -35,7 +35,7 @@
                         <label for="networkOptimization" class="control-label col-md-2  col-xs-12">{{ 'ui.config.network.optimize.label'
                             | i18n }}</label>
                         <div class="col-md-10  col-xs-12">
-                            <select class="form-control" id="optimize" name="networkOptimization" ng-model="config.client.optimize">
+                            <select class="form-control" ng-change="propogateNetworkChanges()" id="optimize" name="networkOptimization" ng-model="config.client.optimize">
                                 <option value="Lzma">{{ 'ui.config.network.optimize.Lzma' | i18n }}</option>
                                 <option value="Bzip2">{{ 'ui.config.network.optimize.Bzip2' | i18n }}</option>
                                 <option value="Gzip" selected="selected">{{ 'ui.config.network.optimize.Gzip' | i18n }}</option>
@@ -51,7 +51,7 @@
                     <div class="form-group row">
                         <label class="control-label col-md-2 col-xs-12">{{ 'ui.config.network.clientCert.label' | i18n }}</label>
                         <div class="col-md-10 col-xs-12">
-                            <select class="form-control" ng-model="config.client.clientCertificate">
+                            <select class="form-control"  ng-change="propogateNetworkChanges()" ng-model="config.client.clientCertificate">
                                 <option value="">{{ 'ui.config.network.clientCert.none' | i18n }}</option>
                                 <option ng-repeat="cert in reference.certificates.resource" value="cert.thumbprint">{{ cert.sub }}
                                 </option>
@@ -77,16 +77,16 @@
             </div>
             <div class="collapse" id="advancedNetworkSettings" data-parent="#networkAccordion">
                 <div class="card-body">
-                    <div ng-repeat="c in config.client.clients" class="card">
+                    <div ng-repeat="c in config.client.clients track by $index" class="card">
                         <div class="card-header alert-primary">
                             <i class="fas fa-ethernet"></i> {{ c.clients }}
                         </div>
                         <div class="card-body">
                             <div class="form-group row">
-                                <label for="networkOptimization" class="control-label col-md-2  col-xs-12">{{ 'ui.config.network.optimize.label'
+                                <label for="networkOptimization{{$index}}" class="control-label col-md-2  col-xs-12">{{ 'ui.config.network.optimize.label'
                                     | i18n }}</label>
                                 <div class="col-md-10  col-xs-12">
-                                    <select class="form-control" id="optimize" name="networkOptimization" ng-model="c.optimize">
+                                    <select class="form-control" id="optimize{{$index}}" name="networkOptimization{{$index}}" ng-model="c.optimize">
                                         <option value="Lzma">{{ 'ui.config.network.optimize.Lzma' | i18n }}</option>
                                         <option value="Bzip2">{{ 'ui.config.network.optimize.Bzip2' | i18n }}</option>
                                         <option value="Gzip" selected="selected">{{ 'ui.config.network.optimize.Gzip' | i18n }}</option>

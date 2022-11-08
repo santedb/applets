@@ -9163,8 +9163,8 @@ function UserEntity (copyData) {
 	this.securityUserModel = copyData.securityUserModel;
 	}
 }  // UserEntity 
-// SanteDB.Core.Model.DataTypes.AssigningAuthority, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
-//if(!AssigningAuthority)
+// SanteDB.Core.Model.DataTypes.identityDomain, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
+//if(!identityDomain)
 /**
  * @class
  * @constructor
@@ -9200,10 +9200,10 @@ function UserEntity (copyData) {
  * @property {string} id Gets or sets the primary identifying UUID of this object
  * @property {BatchOperationType} operation Gets or sets the operation(see: {@link BatchOperationType} for values)
  * @property {string} $type Gets the type registration of this object
- * @param {AssigningAuthority} copyData Copy constructor (if present)
+ * @param {identityDomain} copyData Copy constructor (if present)
  */
-function AssigningAuthority (copyData) { 
-	this.$type = 'AssigningAuthority';
+function IdentityDomain (copyData) { 
+	this.$type = 'IdentityDomain';
 	if(copyData) {
 	/**
 	 * @summary Gets or sets the operation
@@ -9338,7 +9338,7 @@ function AssigningAuthority (copyData) {
 	 */
 	this.name = copyData.name;
 	}
-}  // AssigningAuthority 
+}  // identityDomain 
 // SanteDB.Core.Model.DataTypes.CodeSystem, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
 //if(!CodeSystem)
 /**
@@ -10622,7 +10622,7 @@ function Reference (copyData) {
  * @property {Date} expires
  * @property {string} checkDigit
  * @property {IdentifierType} type
- * @property {AssigningAuthority} authority
+ * @property {identityDomain} authority
  * @property {number} effectiveVersionSequence
  * @property {number} obsoleteVersionSequence
  * @property {Date} modifiedOn
@@ -10667,7 +10667,7 @@ function EntityIdentifier (copyData) {
 	 */
 	this.effectiveVersionSequence = copyData.effectiveVersionSequence;
 	/**
-	 * @type {AssigningAuthority} 
+	 * @type {identityDomain} 
 	 */
 	this.authority = copyData.authority;
 	/**
@@ -10705,7 +10705,7 @@ function EntityIdentifier (copyData) {
  * @property {Date} expires
  * @property {string} checkDigit
  * @property {IdentifierType} type
- * @property {AssigningAuthority} authority
+ * @property {identityDomain} authority
  * @property {number} effectiveVersionSequence
  * @property {number} obsoleteVersionSequence
  * @property {Date} modifiedOn
@@ -10750,7 +10750,7 @@ function ActIdentifier (copyData) {
 	 */
 	this.effectiveVersionSequence = copyData.effectiveVersionSequence;
 	/**
-	 * @type {AssigningAuthority} 
+	 * @type {identityDomain} 
 	 */
 	this.authority = copyData.authority;
 	/**
@@ -10789,7 +10789,7 @@ function ActIdentifier (copyData) {
  * @property {Date} expires Serialization field for expiry date
  * @property {string} checkDigit Gets or sets the check-digit if it is stored separate from the identifier
  * @property {IdentifierType} type Gets or sets the identifier type
- * @property {AssigningAuthority} authority Gets or sets a minimal assigning authority from XML data
+ * @property {identityDomain} authority Gets or sets a minimal assigning authority from XML data
  * @property {number} effectiveVersionSequence
  * @property {number} obsoleteVersionSequence
  * @property {Date} modifiedOn
@@ -10835,7 +10835,7 @@ function IdentifierBase (copyData) {
 	this.effectiveVersionSequence = copyData.effectiveVersionSequence;
 	/**
 	 * @summary Gets or sets a minimal assigning authority from XML data
-	 * @type {AssigningAuthority} 
+	 * @type {identityDomain} 
 	 */
 	this.authority = copyData.authority;
 	/**

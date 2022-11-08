@@ -18,7 +18,7 @@
  - User: Justin Fyfe
  - Date: 2019-8-8
  -->
-<SubscriptionDefinition xmlns="http://santedb.org/subscription"  uuid="81b65812-c14e-4bb4-b7a1-ca7bcee83dbc" resource="Entity">
+<SubscriptionDefinition xmlns="http://santedb.org/subscription" name="ui.subscription.entity.my" uuid="81b65812-c14e-4bb4-b7a1-ca7bcee83dbc" resource="Entity">
 <server>
     <definition invariant="npgsql">
       <![CDATA[
@@ -96,5 +96,7 @@
         <add>_subscription=81b65812-c14e-4bb4-b7a1-ca7bcee83dbc&amp;_placeid=$subscribed.id$&amp;_expand=relationship&amp;_expand=participation</add>
       </filters>
     </definition>
+    <definition resource="Patient" name="ui.subscription.patient.all" mode="all" ignoreModifiedOn="false" trigger="always"/>
+
   </client>
 </SubscriptionDefinition>

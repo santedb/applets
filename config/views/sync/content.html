@@ -22,46 +22,49 @@
         <label class="col-md-2 col-xs-12 control-label" for="syncMode">{{ 'ui.config.sync.mode.label' | i18n }}</label>
         <div class="col-md-10 col-xs-12">
             <select class="form-control" ng-model="config.sync.mode" name="syncMode">
-                <option value="sync">{{ 'ui.config.sync.mode.sync' | i18n }}</option>
-                <option value="online">{{ 'ui.config.sync.mode.online' | i18n }}</option>
+                <option value="Online">{{ 'ui.config.sync.mode.online' | i18n }}</option>
+                <option value="Subscription">{{ 'ui.config.sync.mode.sync' | i18n }}</option>
+                <option value="All">{{ 'ui.config.sync.mode.all' | i18n }}</option>
             </select>
             <div class="form-text text-muted">
                 {{ 'ui.config.sync.mode.help' | i18n }}
             </div>
         </div>
     </div>
-    <!-- <div class="form-group row">
-        <label class="col-md-2 control-label" for="syncTrigger" name="syncTrigger">{{ 'ui.config.sync.trigger.label' | i18n }}</label>
-        <div class="col-md-10">
-            <select class="form-control" ng-model="config.sync.trigger" name="syncTrigger" multiple="multiple">
-                <option selected="selected" value="onstart">{{ 'ui.config.sync.trigger.onstart' | i18n }}</option>
-                <option selected="selected" value="onchange">{{ 'ui.config.sync.trigger.onchange' | i18n }}</option>
-                <option selected="selected" value="oncommit">{{ 'ui.config.sync.trigger.oncommit' | i18n }}</option>
-            </select>
-            <div class="form-text text-muted">
-                {{ 'ui.config.sync.trigger.help' | i18n }}
-            </div>
+    <div ng-if="config.sync.mode != 'Online'">
+        <div class="form-group row">
+            <label class="col-md-10 col-xs-12 offset-md-2">
+                <input type="checkbox" ng-model="config.sync.overwriteServer" value="true" />
+                {{ 'ui.config.sync.overwriteServer' | i18n }}
+            </label>
         </div>
-    </div> -->
-    <div class="form-group row" ng-if="config.sync.mode == 'sync'">
-        <label class="col-md-10 col-xs-12 offset-md-2" >
-            <input type="checkbox" ng-model="config.sync.safePatchOnly" value="true"/>
-            {{ 'ui.config.sync.safePatchOnly' | i18n }}
-        </label>
-    </div>
-    <div class="form-group row" ng-if="config.sync.mode == 'sync'">
-        <label class="col-md-2 col-xs-12 control-label" for="syncInterval">{{ 'ui.config.sync.interval.label' | i18n }}</label>
-        <div class="col-md-10 col-xs-12">
-            <select class="form-control" name="syncInterval" ng-model="config.sync.pollInterval">
-                <option value="00:01:00">{{ 'ui.config.sync.interval.1' | i18n }}</option>
-                <option value="00:05:00">{{ 'ui.config.sync.interval.5' | i18n }}</option>
-                <option value="00:15:00">{{ 'ui.config.sync.interval.15' | i18n }}</option>
-                <option value="00:30:00">{{ 'ui.config.sync.interval.30' | i18n }}</option>
-                <option value="01:00:00">{{ 'ui.config.sync.interval.60' | i18n }}</option>
-                <option value="00:00:00">{{ 'ui.config.sync.interval.0' | i18n }}</option>
-            </select>
-            <div class="form-text text-muted">
-                {{ 'ui.config.sync.interval.help' | i18n }}
+        <div class="form-group row">
+            <label class="col-md-10 col-xs-12 offset-md-2">
+                <input type="checkbox" ng-model="config.sync.bigBundles" value="true" />
+                {{ 'ui.config.sync.bigBundles' | i18n }}
+            </label>
+        </div>
+        <div class="form-group row">
+            <label class="col-md-10 col-xs-12 offset-md-2">
+                <input type="checkbox" ng-model="config.sync.usePatches" value="true" />
+                {{ 'ui.config.sync.usePatches' | i18n }}
+            </label>
+        </div>
+        <div class="form-group row">
+            <label class="col-md-2 col-xs-12 control-label" for="syncInterval">{{ 'ui.config.sync.interval.label' | i18n
+                }}</label>
+            <div class="col-md-10 col-xs-12">
+                <select class="form-control" name="syncInterval" ng-model="config.sync.pollInterval">
+                    <option value="00:01:00">{{ 'ui.config.sync.interval.1' | i18n }}</option>
+                    <option value="00:05:00">{{ 'ui.config.sync.interval.5' | i18n }}</option>
+                    <option value="00:15:00">{{ 'ui.config.sync.interval.15' | i18n }}</option>
+                    <option value="00:30:00">{{ 'ui.config.sync.interval.30' | i18n }}</option>
+                    <option value="01:00:00">{{ 'ui.config.sync.interval.60' | i18n }}</option>
+                    <option value="00:00:00">{{ 'ui.config.sync.interval.0' | i18n }}</option>
+                </select>
+                <div class="form-text text-muted">
+                    {{ 'ui.config.sync.interval.help' | i18n }}
+                </div>
             </div>
         </div>
     </div>

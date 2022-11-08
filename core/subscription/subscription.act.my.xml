@@ -18,7 +18,7 @@
  - User: Justin Fyfe
  - Date: 2019-8-8
  -->
-<SubscriptionDefinition xmlns="http://santedb.org/subscription" uuid="decad40c-a232-482f-b93d-317b25c1ef0d" resource="Act">
+<SubscriptionDefinition xmlns="http://santedb.org/subscription" name="ui.subscription.act.my" uuid="decad40c-a232-482f-b93d-317b25c1ef0d" resource="Act">
   <server>
     <definition invariant="npgsql">
       <![CDATA[

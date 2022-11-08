@@ -95,8 +95,8 @@ angular.module('santedb-lib')
                     else if (autoCompleteData.classifierType) {
                         var autoData = autoCompleteData.classifierValues;
                         if (!autoData) {
-                            if (autoCompleteData.classifierType == "AssigningAuthority") {
-                                autoData = (await SanteDB.resources.assigningAuthority.findAsync({ "domainName": `~${val}%` })).resource.map(o => {
+                            if (autoCompleteData.classifierType == "IdentityDomain") {
+                                autoData = (await SanteDB.resources.identityDomain.findAsync({ "domainName": `~${val}%` })).resource.map(o => {
                                     return {
                                         val: o.domainName,
                                         text: o.name

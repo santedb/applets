@@ -45,7 +45,14 @@ angular.module('santedb-lib')
                 if (response.status === 401) {
                     var oldState = $injector.get('$state').$current.name;
                     window.sessionStorage.removeItem("token");
-                    $injector.get('$state').transitionTo('login'); 
+
+                    var $state = $injector.get('$state');
+
+                    // Ensure that we have a configuration for login
+                    if($rootScope.system && $rootScope.system.config && $rootScope.system.config._isConfigured) {
+                        $state.go('login'); 
+                    }
+                    
                     return $q.reject(response);;
                 }
                 else if(response.status != 503) // Not ready - Resolve with not ready payload (HTML)

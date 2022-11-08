@@ -38,7 +38,7 @@ angular.module('santedb').controller('AdminLayoutController', ["$scope", "$rootS
         SanteDB.authentication.logoutAsync().then(function() { 
             $("#logoutModal").modal('hide');
             $templateCache.removeAll();
-            $state.transitionTo('login'); 
+            $state.go('login'); 
         });
     }
 
@@ -159,5 +159,5 @@ angular.module('santedb').controller('AdminLayoutController', ["$scope", "$rootS
 
     // Is there no route? We should show the dashboard
     if($state.$current == "santedb-admin") 
-        $state.transitionTo("santedb-admin.dashboard");
+        $state.go("santedb-admin.dashboard");
 }]);

@@ -47,7 +47,7 @@ angular.module('santedb').controller('CreateGroupController', ["$scope", "$rootS
                 entity: group.securityRole
             });
             toastr.success(SanteDB.locale.getString("ui.model.securityRole.saveSuccess"));
-            $state.transitionTo("santedb-admin.security.groups.edit", { "id": role.entity.id })
+            $state.go("santedb-admin.security.groups.edit", { "id": role.entity.id })
         }
         catch (e) {
             $rootScope.errorHandler(e);

@@ -401,7 +401,7 @@ angular.module('santedb-lib')
                     scope.identifier[key].forEach(function (v) { v.readonly = true; });
                 });
                 // Get a list of identity domains available for our scope and emit them to the identifier array
-                SanteDB.resources.assigningAuthority.findAsync()
+                SanteDB.resources.identityDomain.findAsync()
                     .then(function (bundle) {
                         if (bundle.resource) {
                             bundle.resource.filter(o => o.scope == null || o.scope.length == 0 || o.scope.indexOf(scope.containerClass) > -1).forEach(function (authority) {
@@ -411,7 +411,7 @@ angular.module('santedb-lib')
                                     scope.identifier[authority.domainName].forEach(v => v.authority = authority);
                                     delete (scope.identifier[authority.domainName].readonly)
                                 }
-                                else if (!authority.assigningApplication || authority.assigningAuthority == $rootScope.session.claim.appid)
+                                else if (!authority.assigningApplication || authority.identityDomain == $rootScope.session.claim.appid)
                                     scope.authorities[authority.domainName] = authority;
 
 
@@ -503,12 +503,12 @@ angular.module('santedb-lib')
                 // Get a list of identity domains available for our scope and emit them to the identifier array
                 if (!authorities) {
                     authorities = {};
-                    SanteDB.resources.assigningAuthority.findAsync({ scope: scope.containerClass })
+                    SanteDB.resources.identityDomain.findAsync({ scope: scope.containerClass })
                         .then(function (bundle) {
                             if (bundle.resource) {
                                 bundle.resource.forEach(function (authority) {
                                     authority.generator = SanteDB.application.getIdentifierGenerator(authority.domainName);
-                                    if (!authority.assigningApplication || authority.assigningAuthority == $rootScope.session.claim.appid) {
+                                    if (!authority.assigningApplication || authority.identityDomain == $rootScope.session.claim.appid) {
                                         authorities[authority.domainName] = authority;
 
                                         if (authority.validation) {

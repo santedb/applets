@@ -17,7 +17,7 @@
  - User: Justin Fyfe
  - Date: 2019-8-8
  -->
-<SubscriptionDefinition xmlns="http://santedb.org/subscription" uuid="a3f5d2a4-c3ef-4349-9dec-bdd6389a7037" resource="Place">
+<SubscriptionDefinition xmlns="http://santedb.org/subscription" name="ui.subscription.places" uuid="a3f5d2a4-c3ef-4349-9dec-bdd6389a7037" resource="Place">
     <client>
       <definition resource="Place" name="ui.subscription.place.all" mode="all" ignoreModifiedOn="false" trigger="on-start on-x-net">
         <filters>

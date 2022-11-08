@@ -76,7 +76,7 @@ angular.module('santedb-lib')
                 case "Entity":
                     retVal += "<i class='fa fa-share-alt'></i> ";
                     break;
-                case "AssigningAuthority":
+                case "IdentityDomain":
                     retVal += "<i class='fa fa-id-card'></i> ";
                     break;
                 case "SecurityRole":

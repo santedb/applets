@@ -46,7 +46,7 @@ angular.module("santedb").controller("LoginController", ['$scope', '$rootScope',
                             }
 
                             if ($stateParams.returnState && $stateParams.returnState != "login")
-                                $state.transitionTo($stateParams.returnState);
+                                $state.go($stateParams.returnState);
                             else
                                 window.location.hash = "#!/";
                         }
@@ -80,7 +80,7 @@ angular.module("santedb").controller("LoginController", ['$scope', '$rootScope',
                             }
 
                             if ($stateParams.returnState && $stateParams.returnState != "login")
-                                $state.transitionTo($stateParams.returnState);
+                                $state.go($stateParams.returnState);
                             else
                                 window.location.hash = "#!/";
                         }

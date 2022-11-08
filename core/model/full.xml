@@ -87,7 +87,7 @@
 	<property name="mnemonic"/>
   </type>
   
-  <type type="AssigningAuthority" all="true">
+  <type type="IdentityDomain" all="true">
     <property name="scopeModel" behavior="always" ref="Concept"/>
   </type>
   <!-- Entity Information -->

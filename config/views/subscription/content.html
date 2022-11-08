@@ -18,50 +18,31 @@
  - Date: 2019-8-8
  -->
 <div class="container" xmlns="http://www.w3.org/1999/xhtml">
-    <div class="row">
-      <div class="col-xs-12">
-        <strong>{{ 'ui.config.subscribe.mode.label' | i18n }}</strong>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-sm-11 offset-sm-1  col-xs-12">
-        <dl>
-          <dd>
-            <label>
-              <input type="radio" name="subscriptionMode" ng-model="config.subscription.mode" value="All" /> {{ 'ui.config.subscribe.mode.all.label' | i18n }}</label>
-          </dd>
-          <dd>
-            <label>
-              <input type="radio" name="subscriptionMode" ng-model="config.subscription.mode" value="Subscription" /> {{ 'ui.config.subscribe.mode.specific.label' | i18n }}</label>
-          </dd>
-        </dl>
-      </div>
-    </div>
-    <div class="form-group row" ng-if="config.subscription.mode == 'Subscription'">
+    <div class="form-group row">
       <label for="subscribeType" class="col-md-2 col-xs-12 control-label">{{ 'ui.config.subscribe.type.label' | i18n }}</label>
       <div class="col-md-10 col-xs-12">
         <select name="subscribeType" ng-model="config.sync.subscribeType" class="form-control">
           <option value="Place">{{ 'ui.config.subscribe.place.label' | i18n }}</option>
           <option value="Facility">{{ 'ui.config.subscribe.facility.label' | i18n }}</option>
-          <option value="AssigningAuthority">{{ 'ui.config.subscribe.authority.label' | i18n}}</option>
+          <option value="IdentityDomain">{{ 'ui.config.subscribe.authority.label' | i18n}}</option>
         </select>
       </div>
     </div>
-    <div class="form-group row" ng-if="config.subscription.mode == 'Subscription'">
+    <div class="form-group row">
       <label for="subscribeFacility" class="col-md-2 col-xs-12 control-label" ng-if="config.sync.subscribeType == 'Facility'">{{ 'ui.config.subscribe.facility.label' | i18n }}</label>
-      <label for="subscribeFacility" class="col-md-2 col-xs-12 control-label" ng-if="config.sync.subscribeType == 'Place'">{{ 'ui.config.subscribe.place.label' | i18n }}</label>
-      <label for="subscribeFacility" class="col-md-2 col-xs-12 control-label" ng-if="config.sync.subscribeType == 'AssigningAuthority'">{{ 'ui.config.subscribe.authority.label' | i18n }}</label>
+      <label for="subscribePlace" class="col-md-2 col-xs-12 control-label" ng-if="config.sync.subscribeType == 'Place'">{{ 'ui.config.subscribe.place.label' | i18n }}</label>
+      <label for="subscribeIdentityDomain" class="col-md-2 col-xs-12 control-label" ng-if="config.sync.subscribeType == 'IdentityDomain'">{{ 'ui.config.subscribe.authority.label' | i18n }}</label>
       <div class="col-md-10 col-xs-12">
-        <entity-search ng-if="config.sync.subscribeType == 'Facility'" type="'Place'" style="height:3em;" ng-required="config.subscription.mode == 'Subscription'" class="form-control" name="subscribeFacility" ng-model="config.sync.subscribeTo" filter="{ &quot;statusConcept.mnemonic&quot; : &quot;ACTIVE&quot;, &quot;classConcept.mnemonic&quot; : &quot;ServiceDeliveryLocation&quot;, _upstream: true }" multiple="multiple" />
-        <entity-search ng-if="config.sync.subscribeType == 'Place'" type="'Place'" style="height:3em;" ng-required="config.subscription.mode == 'Subscription'" class="form-control" name="subscribeFacility" ng-model="config.sync.subscribeTo" group-by="address.Direct.component.State" filter="{ &quot;statusConcept.mnemonic&quot; : &quot;ACTIVE&quot;, &quot;classConcept.mnemonic&quot; : &quot;!ServiceDeliveryLocation&quot;, _upstream: true }" multiple="multiple" />
-        <entity-search ng-if="config.sync.subscribeType == 'AssigningAuthority'" search-field="'name'" type="'AssigningAuthority'" style="height:3em;" ng-required="config.subscription.mode == 'Subscription'" class="form-control" name="subscribeFacility" ng-model="config.sync.subscribeTo" multiple="multiple" filter="{ _upstream: true }" />
+        <entity-search ng-if="config.sync.subscribeType == 'Facility'" type="'Place'" style="height:3em;" required="required" class="form-control" name="subscribeFacility" ng-model="config.sync.subscribeTo" filter="{ &quot;statusConcept.mnemonic&quot; : &quot;ACTIVE&quot;, &quot;classConcept.mnemonic&quot; : &quot;ServiceDeliveryLocation&quot;  }" multiple="multiple" />
+        <entity-search ng-if="config.sync.subscribeType == 'Place'" type="'Place'" style="height:3em;" required="required" class="form-control" name="subscribePlace" ng-model="config.sync.subscribeTo" group-by="address.Direct.component.State" filter="{ &quot;statusConcept.mnemonic&quot; : &quot;ACTIVE&quot;, &quot;classConcept.mnemonic&quot; : &quot;!ServiceDeliveryLocation&quot; }" multiple="multiple" />
+        <entity-search ng-if="config.sync.subscribeType == 'IdentityDomain'" search-field="'name'" type="'IdentityDomain'" style="height:3em;" required="required" class="form-control" name="subscribeIdentityDomain" ng-model="config.sync.subscribeTo" multiple="multiple" filter="{  }" />
         <div class="form-text text-muted" ng-if="config.sync.subscribeType == 'Place'">
           {{ 'ui.config.subscribe.place.help' | i18n }}
       </div>
         <div class="form-text text-muted" ng-if="config.sync.subscribeType == 'Facility'">
           {{ 'ui.config.subscribe.facility.help' | i18n }}
       </div>
-        <div class="form-text text-muted" ng-if="config.sync.subscribeType == 'AssigningAuthority'">
+        <div class="form-text text-muted" ng-if="config.sync.subscribeType == 'IdentityDomain'">
           {{ 'ui.config.subscribe.authority.help' | i18n }}
       </div>
       </div>
@@ -72,7 +53,7 @@
         <ul class="checklist-box" style="height:10em">
           <li ng-repeat="filter in permittedSubscriptions track by $index" >
             <label>
-              <input type="checkbox" ng-model="config.sync._resource[filter.name].selected" value="true" /> {{ filter.name | i18n }} ({{ filter.resource }})</label>
+              <input type="checkbox" ng-model="config.sync._resource[filter.uuid].selected" value="true" /> {{ filter.name | i18n }} ({{ 'ui.subscription.definitions' | i18n:{ num: filter.definitions.length } }})</label>
           </li>
         </ul>
         <div class="btn-group float-right">

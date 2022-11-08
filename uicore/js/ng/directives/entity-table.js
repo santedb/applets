@@ -151,7 +151,7 @@ angular.module('santedb-lib')
                                     attr: { id: `${attrs.type}${b.name}` },
                                     action: function (e, dt, node, config) {
                                         if (b.sref)
-                                            $state.transitionTo(b.sref, b.parms);
+                                            $state.go(b.sref, b.parms);
                                         else if (b.href)
                                             window.location = b.href;
                                         else
