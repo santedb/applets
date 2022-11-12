@@ -258,10 +258,10 @@ angular.module('santedb-lib')
 
                                 if (attrs.subResource) {
                                     if (scope.subResourceHolder) {
-                                        searchPromise = SanteDB.resources[attrs.type.toCamelCase()].findAssociatedAsync(scope.subResourceHolder, attrs.subResource, query, scope.external);
+                                        searchPromise = SanteDB.resources[attrs.type.toCamelCase()].findAssociatedAsync(scope.subResourceHolder, attrs.subResource, query, null, scope.external);
                                     }
                                     else {
-                                        searchPromise = SanteDB.resources[attrs.type.toCamelCase()].findAssociatedAsync(null, attrs.subResource, query, scope.external);
+                                        searchPromise = SanteDB.resources[attrs.type.toCamelCase()].findAssociatedAsync(null, attrs.subResource, query, null, scope.external);
                                     }
                                 }
                                 else {

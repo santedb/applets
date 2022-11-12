@@ -24,6 +24,7 @@
   <type type="TemplateDefinition" all="false">
     <property name="mnemonic"/>
   </type>
+
   <type type="IdentifiedData" all="true">
     <property name="etag" behavior="never"/>
   </type>
@@ -74,6 +75,9 @@
   </type>
   <type type="Bundle" all="true">
     <property name="item" all="true"/>
+  </type>
+  <type type="AmiCollection" all="true">
+    <property name="item" all="true" />
   </type>
 
   <!-- Concepts -->

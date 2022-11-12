@@ -37,6 +37,7 @@
     <add>
       <providers>
         <invariant>npgsql</invariant>
+        <invariant>sqlite</invariant>
       </providers>
       <![CDATA[
         select 

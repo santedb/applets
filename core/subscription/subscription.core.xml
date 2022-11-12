@@ -64,6 +64,5 @@
         <add>statusConcept=!CD4AA3C4-02D5-4CC9-9088-EF8F31E321C5</add>
       </filters>
     </definition>
-    <definition resource="Patient" name="ui.subscription.patient.all" mode="all" ignoreModifiedOn="false" trigger="always"/>
   </client>
 </SubscriptionDefinition>

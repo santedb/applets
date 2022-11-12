@@ -74,39 +74,11 @@ var santedbApp = angular.module('santedb', ['ngSanitize', 'ui.router', 'oc.lazyL
     }])
     .run(['$rootScope', '$state', '$templateCache', '$transitions', '$ocLazyLoad', '$interval', '$timeout', function ($rootScope, $state, $templateCache, $transitions, $ocLazyLoad, $interval, $timeout) {
 
-         
-        // Initialization functions
-        var initialize = async function () {
-            // Get configuration
+        async function _setLocaleData() {
             try {
-                await __SanteDBAppService.GetStatus();
                 var localeData = await SanteDB.resources.locale.findAsync();
-                var session = await SanteDB.authentication.getSessionInfoAsync();
-                var configuration = {};
-                if(session) {
-                    configuration = await SanteDB.configuration.getAsync();
-                }
 
-                 // Extended attributes
-                if (session != null && session.entity != null) {
-                    session.entity.telecom = session.entity.telecom || {};
-                    if (Object.keys(session.entity.telecom).length == 0) 
-                    {
-                        session.entity.telecom.MobilePhone = { value: "" };
-                    }
-                }
-
-                // Get user preferences and set them in this view 
-                if(session) {
-                    var prefs = await SanteDB.configuration.getUserSettingsAsync();
-                    if (Array.isArray(prefs)) {
-                        prefs.forEach(o => SanteDB.configuration.setAppSetting(o.key, o.value));
-                    }
-                }
-                
                 $timeout(() => {
-                    $rootScope.session = session;
-
                     $rootScope.system.locales = Object.keys(localeData);
 
                     var localeAsset = localeData[SanteDB.locale.getLocale()];
@@ -114,6 +86,48 @@ var santedbApp = angular.module('santedb', ['ngSanitize', 'ui.router', 'oc.lazyL
                         localeAsset.forEach(function (l) {
                             $.getScript(l);
                         });
+                });
+            }
+            catch(e) {
+                
+            }
+        }
+
+        // Initialization functions
+        var initialize = async function () {
+            // Get configuration
+            console.info("Initializing Root View");
+            try {
+                await __SanteDBAppService.GetStatus();
+
+                _setLocaleData();
+                var session = await SanteDB.authentication.getSessionInfoAsync();
+                var configuration = {};
+                if (session) {
+                    configuration = await SanteDB.configuration.getAsync();
+                }
+
+                // Extended attributes
+                if (session != null && session.entity != null) {
+                    session.entity.telecom = session.entity.telecom || {};
+                    if (Object.keys(session.entity.telecom).length == 0) {
+                        session.entity.telecom.MobilePhone = { value: "" };
+                    }
+                }
+
+                // Get user preferences and set them in this view 
+                if (session) {
+                    var prefs = await SanteDB.configuration.getUserSettingsAsync();
+                    if (Array.isArray(prefs)) {
+                        prefs.forEach(o => SanteDB.configuration.setAppSetting(o.key, o.value));
+                    }
+                }
+
+                $timeout(() => {
+                    console.info("Populating root context");
+                    $rootScope.session = session;
+
+
                     var realmName = SanteDB.configuration.getRealm();
                     $rootScope.system = $rootScope.system || {};
                     $rootScope.system.version = SanteDB.application.getVersion();
@@ -123,7 +137,7 @@ var santedbApp = angular.module('santedb', ['ngSanitize', 'ui.router', 'oc.lazyL
                     $rootScope.system.config.deviceName = SanteDB.configuration.getDeviceId();
                     // Make app settings easier to handle
                     var appSettings = {};
-                    if(configuration.application) {
+                    if (configuration.application) {
                         configuration.application.setting.forEach((k) => appSettings[k.key] = k.value);
                         $rootScope.system.config.application.setting = appSettings;
                     }
@@ -137,7 +151,7 @@ var santedbApp = angular.module('santedb', ['ngSanitize', 'ui.router', 'oc.lazyL
             }
         };
 
-        
+
         // The online interval to check online state
         var ivlFn = function () {
             $rootScope.system = $rootScope.system || {};
@@ -253,7 +267,7 @@ var santedbApp = angular.module('santedb', ['ngSanitize', 'ui.router', 'oc.lazyL
             if (n && n != o) {
                 SanteDB.locale.setLocale(n);
                 $templateCache.removeAll();
-                if($state.$current.name != "") {
+                if ($state.$current.name != "") {
                     $state.reload();
                 }
             }
@@ -316,7 +330,7 @@ var santedbApp = angular.module('santedb', ['ngSanitize', 'ui.router', 'oc.lazyL
 
         });
 
-       
+
         /**
          * @summary Global Error Handler
          */

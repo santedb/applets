@@ -49,11 +49,12 @@ angular.module('santedb-lib')
                     var $state = $injector.get('$state');
 
                     // Ensure that we have a configuration for login
-                    if($rootScope.system && $rootScope.system.config && $rootScope.system.config._isConfigured) {
+                    if(SanteDB.configuration.getRealm()) {
                         $state.go('login'); 
                     }
-                    
-                    return $q.reject(response);;
+                    else {
+                        return $q.reject(response);;
+                    }
                 }
                 else if(response.status != 503) // Not ready - Resolve with not ready payload (HTML)
 				{

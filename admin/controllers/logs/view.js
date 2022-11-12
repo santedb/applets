@@ -21,49 +21,48 @@
 angular.module('santedb').controller('LogViewController', ["$scope", "$rootScope", "$stateParams", "$timeout", function ($scope, $rootScope, $stateParams, $timeout) {
 
 
-    $scope.isLoading = true;
     var size = 0;
-    SanteDB.application.getLogInfoAsync($stateParams.id, { _count: 4096 })
-        .then(function (d) {
-            $scope.isLoading = false;
-            $scope.log = d;
-            $scope.log.content = atob(d.text);
-            size = $scope.log.content.length;
-            $scope.$apply();
-        })
-        .catch(function (e) {
-            $scope.isLoading = false;
+    var _isEof = false;
+    var _isLoading = false;
+    async function getLogChunk(offset, count) {
+        if(_isLoading) return;
+
+        try {
+            _isLoading = true;
+            var logContents = await SanteDB.application.getLogInfoAsync($stateParams.id, { _offset: offset, _count: count});
+            size = offset + logContents.length;
+            _isEof = logContents.length == 0;
+            $timeout(() => {
+                var existingContent = $scope.log ? $scope.log.content : "";
+                $scope.log = {
+                    content: existingContent + logContents,
+                    name: $stateParams.id
+                };
+                _isLoading = false;
+            });
+        }    
+        catch(e) {
             $rootScope.errorHandler(e);
-            $scope.$apply();
-        });
+            _isLoading = false;
+        }
+    }
+    getLogChunk(0, 4096);
 
     // Get download link
-    $scope.getDownloadLink = function() {
-        return `/ami/Log/Stream/${$stateParams.id}`; //?_sessionId=${window.sessionStorage.getItem("token")}`;
+    $scope.getDownloadLink = function () {
+        return `/ami/Log/${$stateParams.id}?_download=true`; //?_sessionId=${window.sessionStorage.getItem("token")}`;
     }
 
-    $timeout(function() {
-            $("#logContent").on('scroll', function (e) {
-                var o = e.currentTarget;
-                if (o.offsetHeight + o.scrollTop >= o.scrollHeight - 500 && $scope.log.size > size) {
-                    if ($scope.isLoading) return;
-                    $scope.isLoading = true;
-                    SanteDB.application.getLogInfoAsync($stateParams.id, { _offset: size })
-                        .then(function (d) {
-                            $scope.isLoading = false;
-                            $scope.log.content += atob(d.text);
-                            size = $scope.log.content.length;
-                            $scope.$apply();
-                        })
-                        .catch(function (e) {
-                            $scope.isLoading = false;
-                            $rootScope.errorHandler(e);
-                            $scope.$apply();
-                        });
-                }
-            });
-        }
-    , 500);
+    // We use timeout here to wait for the DOM
+    $timeout(function () {
+        $("#logContent").on('scroll', function (e) {
+            var o = e.currentTarget;
+            if (o.offsetHeight + o.scrollTop >= o.scrollHeight - 500 && !_isEof) {
+                getLogChunk(size, 4096);
+            }
+        });
+    }
+        , 500);
 
 
 }]);

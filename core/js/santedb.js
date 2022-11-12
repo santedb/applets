@@ -932,6 +932,7 @@ function ResourceWrapper(_config) {
         var headers = {
             Accept: _config.accept
         };
+        query = query || {};
 
         if (viewModel)
             headers["X-SanteDB-ViewModel"] = viewModel;
@@ -940,6 +941,10 @@ function ResourceWrapper(_config) {
 
         if (upstream) {
             headers["X-SanteDB-Upstream"] = true;
+        }
+
+        if(!query._includeTotal) {
+            query._includeTotal = true;
         }
 
         return _config.api.getAsync({
@@ -1450,6 +1455,7 @@ function ResourceWrapper(_config) {
      * @param {string} property The property path you would like to filter on 
      * @param {any} query The query you want to execute
      * @param {boolean} upstream True if the registration should be directly submitted to the upstream iCDR server
+     * @param {string} viewModel The viewmodel asset to use to render the response
      * @returns {Promise} A promise for when the request completes
      * @description In the HDSI REST interface, an "associated" object is a sub-property or chained property on a parent resource. The resource has to support this type 
      *               of relationship, and must have a registered child property. This method will allow the JavaScript API to access these chained resources. Like the findAsync
@@ -1469,7 +1475,7 @@ function ResourceWrapper(_config) {
      * }
      * @see https://help.santesuite.org/developers/service-apis/health-data-service-interface-hdsi/http-request-verbs#associated-resources
      */
-    this.findAssociatedAsync = function (id, property, query, upstream, state) {
+    this.findAssociatedAsync = function (id, property, query, viewModel, upstream, state) {
 
         if (!property)
             throw new Exception("ArgumentNullException", "Missing scoping property");
@@ -1479,6 +1485,8 @@ function ResourceWrapper(_config) {
         };
         if (_config.viewModel)
             headers["X-SanteDB-ViewModel"] = _config.viewModel;
+        else if(viewModel) 
+            headers["X-SanteDB-ViewModel"] = viewModel; 
 
         // Prepare query
         var url = null;
@@ -2437,12 +2445,16 @@ function SanteDBWrapper() {
          */
         this.getLogInfoAsync = function (_id, query) {
             var resource = "Log";
-            if (_id)
+            var dataType = "json";
+            if (_id) {
                 resource += "/" + _id;
+                dataType = "text";
+            }
 
             return _ami.getAsync({
                 resource: resource,
-                query: query
+                query: query,
+                dataType: dataType
             });
         }
         /**
@@ -3036,7 +3048,7 @@ function SanteDBWrapper() {
             */
         this.mail = new ResourceWrapper({
             accept: _viewModelJsonMime,
-            resource: "MailMessage",
+            resource: "Mailbox",
             api: _ami
         });
         /**
@@ -3711,11 +3723,11 @@ function SanteDBWrapper() {
                     var claims = {};
 
                     if (purposeOfUse) {
-                        claims["urn:santedb:org:override"] = "true";
+                        claims["urn:santedb:org:claim:override"] = "true";
                         claims["urn:oasis:names:tc:xacml:2.0:action:purpose"] = purposeOfUse;
                     }
                     if(uacPrompt) {
-                        claims["urn:santedb:org:temporary"] = "true";
+                        claims["urn:santedb:org:claim:temporary"] = "true";
                     }
 
                     if(Object.keys(claims).length > 0) {

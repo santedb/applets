@@ -29,10 +29,10 @@ angular.module('santedb').controller('SecurityDashboardController', ["$scope", f
 
     async function fetchStats() {
         try {
-            $scope.dashboard.users = (await SanteDB.resources.securityUser.findAsync({_count:0})).size;
-            $scope.dashboard.groups = (await SanteDB.resources.securityRole.findAsync({_count:0})).size;
-            $scope.dashboard.devices = (await SanteDB.resources.securityDevice.findAsync({_count:0})).size;
-            $scope.dashboard.applications = (await SanteDB.resources.securityApplication.findAsync({_count:0})).size;
+            $scope.dashboard.users = (await SanteDB.resources.securityUser.findAsync({_count:0,_includeTotal:true})).size;
+            $scope.dashboard.groups = (await SanteDB.resources.securityRole.findAsync({_count:0,_includeTotal:true})).size;
+            $scope.dashboard.devices = (await SanteDB.resources.securityDevice.findAsync({_count:0,_includeTotal:true})).size;
+            $scope.dashboard.applications = (await SanteDB.resources.securityApplication.findAsync({_count:0,_includeTotal:true})).size;
         }
         catch(e) {
             console.error(e);
