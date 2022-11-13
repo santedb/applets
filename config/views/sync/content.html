@@ -23,8 +23,8 @@
         <div class="col-md-10 col-xs-12">
             <select class="form-control" ng-model="config.sync.mode" name="syncMode">
                 <option value="Online">{{ 'ui.config.sync.mode.online' | i18n }}</option>
-                <option value="Subscription">{{ 'ui.config.sync.mode.sync' | i18n }}</option>
-                <option value="All">{{ 'ui.config.sync.mode.all' | i18n }}</option>
+                <option ng-if="reference.dataProviders.length > 0" value="Subscription">{{ 'ui.config.sync.mode.sync' | i18n }}</option>
+                <option ng-if="reference.dataProviders.length > 0" value="All">{{ 'ui.config.sync.mode.all' | i18n }}</option>
             </select>
             <div class="form-text text-muted">
                 {{ 'ui.config.sync.mode.help' | i18n }}

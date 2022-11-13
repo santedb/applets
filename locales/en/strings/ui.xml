@@ -356,6 +356,8 @@
       <string name="ui.config.data.options.label">Options</string>
       <string name="ui.config.data.options.setting">Setting</string>
       <string name="ui.config.data.options.value">Value</string>
+      <string name="ui.config.data.basic.title">Basic Configuration</string>
+      <string name="ui.config.data.advanced.title">Advanced Configuration</string>
       <string name="ui.config.log.title">Logging</string>
       <string name="ui.config.log.description">SanteDB disconnected clients keep logs about the activities that occur on the mobile. While these are helpful for debugging and bug reports, they may impact performance or take up a lot of space. Use this panel to adjust the loggin levels</string>
       <string name="ui.config.log.verbosity.label">Log Detail</string>

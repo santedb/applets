@@ -151,9 +151,8 @@ angular.module('santedb').controller('InitialSettingsController', ['$scope', '$r
                         $scope.serverCaps = appInfo;
 
                         $scope.reference.dataProviders = dataProviders;
-                        if (config.data && config.data.provider) {
-                            $scope.reference.providerData = $scope.reference.dataProviders.find((o) => o.invariant == config.data.provider);
-                        }
+                        $scope.reference.providerData = {};
+                        $scope.reference.dataProviders.forEach(p => $scope.reference.providerData[p.invariant] = p.options);
                     });
 
                 }
@@ -185,12 +184,6 @@ angular.module('santedb').controller('InitialSettingsController', ['$scope', '$r
     // Get necessary information
     SanteDB.authentication.setElevator(new SanteDBElevator(_getConfiguration, false));
     _getConfiguration();
-
-    // Watch for change in data provider
-    $scope.$watch('config.data.provider', function (n, o) {
-        if (n && $scope.reference.dataProviders)
-            $scope.reference.providerData = $scope.reference.dataProviders.find(function (o) { return o.invariant == n });
-    });
 
     $scope.$watch("config.sync.subscribeType", function (n, o) {
         if (n) {
@@ -273,10 +266,10 @@ angular.module('santedb').controller('InitialSettingsController', ['$scope', '$r
         });
     }
 
-    $scope.propogateNetworkChanges = function(n,o) {
+    $scope.propogateNetworkChanges = function (n, o) {
         $scope.config.client.clients.forEach(c => {
             c.optimize = $scope.config.client.optimize,
-            c.clientCertificate = $scope.config.client.clientCertificate;
+                c.clientCertificate = $scope.config.client.clientCertificate;
         });
     }
 
