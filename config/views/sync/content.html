@@ -55,12 +55,12 @@
                 }}</label>
             <div class="col-md-10 col-xs-12">
                 <select class="form-control" name="syncInterval" ng-model="config.sync.pollInterval">
-                    <option value="00:01:00">{{ 'ui.config.sync.interval.1' | i18n }}</option>
-                    <option value="00:05:00">{{ 'ui.config.sync.interval.5' | i18n }}</option>
-                    <option value="00:15:00">{{ 'ui.config.sync.interval.15' | i18n }}</option>
-                    <option value="00:30:00">{{ 'ui.config.sync.interval.30' | i18n }}</option>
-                    <option value="01:00:00">{{ 'ui.config.sync.interval.60' | i18n }}</option>
-                    <option value="00:00:00">{{ 'ui.config.sync.interval.0' | i18n }}</option>
+                    <option value="PT1M">{{ 'ui.config.sync.interval.1' | i18n }}</option>
+                    <option value="PT5M">{{ 'ui.config.sync.interval.5' | i18n }}</option>
+                    <option value="PT15M">{{ 'ui.config.sync.interval.15' | i18n }}</option>
+                    <option value="PT30M">{{ 'ui.config.sync.interval.30' | i18n }}</option>
+                    <option value="PT1H">{{ 'ui.config.sync.interval.60' | i18n }}</option>
+                    <option value="PT0M">{{ 'ui.config.sync.interval.0' | i18n }}</option>
                 </select>
                 <div class="form-text text-muted">
                     {{ 'ui.config.sync.interval.help' | i18n }}

@@ -268,8 +268,16 @@ angular.module('santedb').controller('InitialSettingsController', ['$scope', '$r
 
     $scope.propogateNetworkChanges = function (n, o) {
         $scope.config.client.clients.forEach(c => {
-            c.optimize = $scope.config.client.optimize,
-                c.clientCertificate = $scope.config.client.clientCertificate;
+            c.optimize = $scope.config.client.optimize;
+            c.clientCertificate = $scope.config.client.clientCertificate;
+        });
+    }
+
+    $scope.propogateDataChanges = function (n, o) {
+        Object.keys($scope.config.data.connections).forEach(k => {
+            var c = $scope.config.data.connections[k];
+            c.provider = $scope.config.data.provider;
+            c.options = angular.copy($scope.config.data.options);
         });
     }
 

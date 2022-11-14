@@ -37,7 +37,7 @@
                             'ui.config.data.provider.label' |
                             i18n }}</label>
                         <div class="col-md-10  col-xs-12">
-                            <select ng-model="config.data.provider" class="form-control" size="1" required="required"
+                            <select ng-model="config.data.provider" ng-change="propogateDataChanges()" class="form-control" size="1" required="required"
                                 name="dataProviderType">
                                 <option ng-repeat="dbp in reference.dataProviders" value="{{dbp.invariant}}">
                                     {{dbp.name}} ({{
@@ -64,24 +64,24 @@
                                     <tr ng-repeat="(optKey, optType) in reference.providerData[config.data.provider] track by $index">
                                         <td>{{ optKey }}</td>
                                         <td ng-switch="optType">
-                                            <input name="option{{optKey}}" ng-switch-when="User" type="text"
+                                            <input ng-change="propogateDataChanges()" name="option{{optKey}}" ng-switch-when="User" type="text"
                                                 class="form-control" required="required"
                                                 ng-model="config.data.options[optKey]" pattern="^[A-Za-z0-9_]+$"
                                                 value="true"
                                                 placeholder="{{ 'ui.config.data.options.user.placeholder' | i18n }}" />
-                                            <input name="option{{optKey}}" ng-switch-when="DatabaseName"
+                                            <input ng-change="propogateDataChanges()" name="option{{optKey}}" ng-switch-when="DatabaseName"
                                                 class="form-control" required="required" type="text"
                                                 pattern="^[A-Za-z0-9_\.]+$" ng-model="config.data.options[optKey]"
                                                 placeholder="{{ 'ui.config.data.options.databaseName.placeholder' | i18n }}" />
-                                            <input name="option{{optKey}}" ng-switch-when="Boolean" type="checkbox"
+                                            <input ng-change="propogateDataChanges()" name="option{{optKey}}" ng-switch-when="Boolean" type="checkbox"
                                                 ng-model="config.data.options[optKey]" value="true" />
-                                            <input name="option{{optKey}}" ng-switch-when="String" type="text"
+                                            <input ng-change="propogateDataChanges()" name="option{{optKey}}" ng-switch-when="String" type="text"
                                                 ng-model="config.data.options[optKey]" class="form-control"
                                                 placeholder="{{ 'ui.config.data.options.string.placeholder' | i18n }}" />
-                                            <input name="option{{optKey}}" ng-switch-when="Password" type="password"
+                                            <input ng-change="propogateDataChanges()" name="option{{optKey}}" ng-switch-when="Password" type="password"
                                                 required="required" ng-model="config.data.options[optKey]"
                                                 class="form-control" />
-                                            <input name="option{{optKey}}" ng-switch-when="Numeric" type="number"
+                                            <input ng-change="propogateDataChanges()" name="option{{optKey}}" ng-switch-when="Numeric" type="number"
                                                 ng-model="config.data.options[optKey]" class="form-control" />
                                             <span class="text-danger"
                                                 ng-show="configurationForm['option' + optKey].$error['pattern']">
