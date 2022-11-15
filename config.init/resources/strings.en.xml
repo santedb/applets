@@ -1,3 +1,7 @@
 <resources>
     <string name="ui.title">SanteDB</string>
+    <string name="AdoAuditConfigurationSection">Audit Database</string>
+    <string name="AdoPersistenceConfigurationSection">Primary CDR Database</string>
+    <string name="AdoPubSubConfigurationSection">Publish/Subscribe Metadata Database</string>
+    <string name="AdoSynchronizationConfigurationSection">Synchronization Database</string>
 </resources>

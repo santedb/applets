@@ -292,8 +292,8 @@
       <!-- Configuration Translations -->
       <string name="ui.config.network.clientCert.label">Client Certificate</string>
       <string name="ui.config.network.clientCert.help">If your upstream requires the use of PKI authentication you may specify the certificate to present to the upstream here. PKI authentication uses encryption to authenticate your SanteDB node with the upstream using strong public key encryption</string>
-      <string name="ui.config.subscribe.type.label">Subscription Type</string>
-      <string name="ui.config.subscribe.authority.label">Identity Domain</string>
+      <string name="ui.config.subscribe.type.label">Selectively Replicate</string>
+      <string name="ui.config.subscribe.authority.label">Identity Domains</string>
       <string name="ui.config.subscribe.authority.help">Use this option to subscribe to patients with a particular identifier issued within an identity domain</string>
       <string name="ui.config.realm.title">Upstream</string>
       <string name="ui.config.realm.description">This SanteDB client application needs to contact a centralized instanced called an &quot;upstream realm&quot;. This screen will allow you to configure the specific details of how this mobile device will contact the realm's administrative management service.</string>
@@ -313,12 +313,17 @@
       <string name="ui.config.realm.secretOverride.help">If your environment has modified the default application secret for this app then use this option to override the default</string>
       <string name="ui.config.realm.success">Welcome to the upstream realm {realm}!</string>
       <string name="ui.config.realm.error.duplicate">This device name has already been registered with the realm. If you replace the device any currently registered neither device will be able to synchronize. Are you sure you want to replace this registration?</string>
-      <string name="ui.config.sync.title">Synchronization</string>
-      <string name="ui.config.sync.description">The SanteDB client application synchronizes data with the centalized server to get the most up to date information. This screen will allow you to configure the behavior of the SanteDB synchronization process</string>
+      <string name="ui.config.integration.title">Integration</string>
+      <string name="ui.config.integration.description">Configure the manner in which this SanteDB instance will interact with the configured upstream service.</string>
+      <string name="ui.config.integration.mode.label">Integration Mode</string>
+      <string name="ui.config.integration.mode.online">Online Only</string>
+      <string name="ui.config.integration.mode.online.help">This dCDR will act as a relay for all requests to the upstream iCDR. The dCDR will have no offline functionality and will serve as a web-portal to the iCDR</string>
+      <string name="ui.config.integration.mode.synchronize">Synchronize</string>
+      <string name="ui.config.integration.mode.synchronize.help">This dCDR will synchornize its data with the upstream iCDR and will provide this information to clients (and the user interface) even if the system is offline</string>
       <string name="ui.config.sync.mode.label">Mode</string>
       <string name="ui.config.sync.mode.help">Use this option to set the mode in which this application behaves</string>
       <string name="ui.config.sync.mode.online">Online Only (No disconnected use)</string>
-      <string name="ui.config.sync.mode.sync">Synchronized (Selective Replication)</string>
+      <string name="ui.config.sync.mode.sync">Selective Replication</string>
       <string name="ui.config.sync.mode.all">Full Replication</string>
       <string name="ui.config.sync.trigger.label">Triggers</string>
       <string name="ui.config.sync.trigger.help">Use this option to specify when a forced synchronization should occur</string>
@@ -343,9 +348,9 @@
       <string name="ui.config.subscribe.mode.label">Subscription Mode</string>
       <string name="ui.config.subscribe.mode.all.label">Subscribe to all data (very large downloads)</string>
       <string name="ui.config.subscribe.mode.specific.label">Subscribe to a particular place (region, district, facility, etc.)</string>
-      <string name="ui.config.subscribe.place.label">Place</string>
+      <string name="ui.config.subscribe.place.label">Places (Villages, Cities, Towns, etc.)</string>
       <string name="ui.config.subscribe.place.help">Enter one or more places you wish this tablet to subscribe to.</string>
-      <string name="ui.config.subscribe.facility.label">Facility</string>
+      <string name="ui.config.subscribe.facility.label">Facilities (Clinics, Hospitals, etc.)</string>
       <string name="ui.config.subscribe.facility.help">One or more facilities that you are subscribing to</string>
       <string name="ui.config.subscribe.objects.label">Subscriptions</string>
       <string name="ui.config.data.title">Database</string>

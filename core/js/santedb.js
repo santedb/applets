@@ -943,7 +943,7 @@ function ResourceWrapper(_config) {
             headers["X-SanteDB-Upstream"] = true;
         }
 
-        if(!query._includeTotal) {
+        if (!query._includeTotal) {
             query._includeTotal = true;
         }
 
@@ -1073,7 +1073,7 @@ function ResourceWrapper(_config) {
             headers["X-SanteDB-Upstream"] = true;
         }
 
-        if(force) {
+        if (force) {
             headers['X-Patch-Force'] = true;
         }
         // Send PUT
@@ -1414,7 +1414,7 @@ function ResourceWrapper(_config) {
         });
     };
 
-    
+
     /**
         * @method cancelAsync
         * @memberof ResourceWrapper
@@ -1425,7 +1425,7 @@ function ResourceWrapper(_config) {
         * @param {any} state A unique state object which is passed back to the caller
         * @returns {Promise} The promise for the operation
         */
-     this.obsoleteAsync = function (id, upstream, state) {
+    this.obsoleteAsync = function (id, upstream, state) {
         var headers = {
             Accept: _config.accept
         };
@@ -1485,8 +1485,8 @@ function ResourceWrapper(_config) {
         };
         if (_config.viewModel)
             headers["X-SanteDB-ViewModel"] = _config.viewModel;
-        else if(viewModel) 
-            headers["X-SanteDB-ViewModel"] = viewModel; 
+        else if (viewModel)
+            headers["X-SanteDB-ViewModel"] = viewModel;
 
         // Prepare query
         var url = null;
@@ -1754,8 +1754,8 @@ function SanteDBWrapper() {
      * @param {any} object The JavaScript object to convert to a parameters
      * @return {Parameters} The parameters
      */
-    this.convertToParameters = function(object) {
-        return { parameter : Object.keys(object).map(k => { return { name: k, value: object[k] } }) };
+    this.convertToParameters = function (object) {
+        return { parameter: Object.keys(object).map(k => { return { name: k, value: object[k] } }) };
     }
 
     /**
@@ -1764,8 +1764,8 @@ function SanteDBWrapper() {
      * @param {Parameters} parms The parameters to convert
      * @return {any} The JavaScript object 
      */
-    this.convertFromParameters = function(parms) {
-        if(!parms.parameter) {
+    this.convertFromParameters = function (parms) {
+        if (!parms.parameter) {
             return null;
         }
 
@@ -1784,7 +1784,7 @@ function SanteDBWrapper() {
      */
     var _globalErrorHandler = function (data, setting, err) {
         if (data.status == 401 && data.getResponseHeader("WWW-Authenticate")) {
-            if (_session && 
+            if (_session &&
                 _session.exp > Date.now() && // User has a session that is valid, but is still 401 hmm... elevation!!!
                 _elevator &&
                 !_elevator.getToken() ||
@@ -3227,12 +3227,12 @@ function SanteDBWrapper() {
         * @memberOf SanteDBWrapper.resources
         * @summary Wrapper for certificates definition API
         */
-         this.certificates = new ResourceWrapper({
+        this.certificates = new ResourceWrapper({
             resource: "Certificate",
             accept: "application/json",
             api: _ami
         });
-        
+
     };
 
     // HACK: Wrapper pointer facility = place
@@ -3259,6 +3259,18 @@ function SanteDBWrapper() {
         this.getDataProvidersAsync = function () {
             return _app.getAsync({
                 resource: "DataProviders"
+            });
+        }
+
+        /**
+         * @method getIntegrationPatternsAsync
+         * @memberof SanteDBWrapper.ConfigurationApi
+         * @return {Promise} The data integration modes
+         * @summary Gets a list of data integration modes which are supported by this server
+         */
+        this.getIntegrationPatternsAsync = function () {
+            return _app.getAsync({
+                resource: "IntegrationPatterns"
             });
         }
         /**
@@ -3363,7 +3375,7 @@ function SanteDBWrapper() {
          * @summary Get the OAUTH client identifier 
          * @returns {string} The name of the client Id
          */
-        this.getClientId = function() {
+        this.getClientId = function () {
             return __SanteDBAppService.GetClientId();
         }
 
@@ -3373,7 +3385,7 @@ function SanteDBWrapper() {
          * @summary Get the device identifier 
          * @returns {string} The name of the device
          */
-        this.getDeviceId = function() {
+        this.getDeviceId = function () {
             return __SanteDBAppService.GetDeviceId();
         }
         /**
@@ -3426,15 +3438,15 @@ function SanteDBWrapper() {
                 try {
                     configData.override = overwrite;
                     var parms = SanteDB.convertToParameters(configData);
-                    
+
                     _app.postAsync({
                         resource: "Realm/$join",
                         contentType: 'application/json',
                         data: parms
                     }).then(function (d) {
                         d = SanteDB.convertFromParameters(d);
-                        if(d.joined) {
-                            __SanteDBAppService.GetStatus().then(()=>fulfill(d));
+                        if (d.joined) {
+                            __SanteDBAppService.GetStatus().then(() => fulfill(d));
                         }
                         else reject(d);
                     }).catch(function (e) {
@@ -3524,7 +3536,7 @@ function SanteDBWrapper() {
                         __SanteDBAppService.SetLocale(tokenData.lang);
                     else if (tokenData['urn:santedb:org:lang'])
                         __SanteDBAppService.SetLocale(tokenData['urn:santedb:org:lang']);
-                    else 
+                    else
                         __SanteDBAppService.SetLocale(null); // default locale
 
                 }
@@ -3604,7 +3616,7 @@ function SanteDBWrapper() {
             return new Promise(function (fulfill, reject) {
                 if (_session && !forceServer)
                     fulfill(angular.copy(_session));
-                else 
+                else
                     try {
                         _app.getAsync({
                             resource: "SessionInfo"
@@ -3726,13 +3738,13 @@ function SanteDBWrapper() {
                         claims["urn:santedb:org:claim:override"] = "true";
                         claims["urn:oasis:names:tc:xacml:2.0:action:purpose"] = purposeOfUse;
                     }
-                    if(uacPrompt) {
+                    if (uacPrompt) {
                         claims["urn:santedb:org:claim:temporary"] = "true";
                     }
 
-                    if(Object.keys(claims).length > 0) {
+                    if (Object.keys(claims).length > 0) {
                         headers["X-SanteDBClient-Claim"] =
-                            btoa(Object.keys(claims).map(o=>`${o}=${claims[o]}`).join(";"));
+                            btoa(Object.keys(claims).map(o => `${o}=${claims[o]}`).join(";"));
                     }
 
                     _auth.postAsync({
@@ -4236,8 +4248,8 @@ var SanteDB = new SanteDBWrapper();
  * @summary Certificate store names
  */
 SanteDB.CertificateStoreName = {
-    ServiceUser : "CurrentUser",
-    EntireMachine : "LocalMachine"
+    ServiceUser: "CurrentUser",
+    EntireMachine: "LocalMachine"
 };
 
 

@@ -51,7 +51,7 @@ angular.module('santedb').controller('InitialSettingsController', ['$scope', '$r
 
 
     function canSelectSubscription(subscription, referenceObjects) {
-        return subscription.definitions.find(filter => (!filter.guards || filter.guards.length == 0 || checkGuard(filter, referenceObjects)) && ($scope.config.sync.mode == filter.mode || filter.mode == 'AllOrSubscription'));
+        return subscription.definitions.find(filter => (!filter.guards || filter.guards.length == 0 || checkGuard(filter, referenceObjects)) && ($scope.config.sync.mode == filter.mode || filter.mode == 'FullOrPartial'));
     }
 
     function checkGuard(filter, referenceObjects) {
@@ -138,18 +138,19 @@ angular.module('santedb').controller('InitialSettingsController', ['$scope', '$r
                     var appSolutions = await SanteDB.application.getAppSolutionsAsync();
                     var appInfo = await SanteDB.application.getAppInfoAsync();
                     var dataProviders = await SanteDB.configuration.getDataProvidersAsync();
+                    var integrationPatterns = await SanteDB.configuration.getIntegrationPatternsAsync();
                     var certificates = await SanteDB.resources.certificates.findAsync({ hasPrivateKey: true });
                     config.sync._resource = {};
                     config.sync.subscribeTo = config.sync.subscribeTo || [];
                     $timeout(_ => {
                         subscriptions.resource.forEach((itm) => {
                             $scope.reference.subscriptions.push(itm);
-                            config.sync._resource[itm.uuid] = { selected: true };
+                            config.sync._resource[itm.id] = { selected: true };
                         });
                         $scope.reference.solutions = appSolutions;
                         $scope.reference.certificates = certificates;
                         $scope.serverCaps = appInfo;
-
+                        $scope.reference.integrationPatterns = integrationPatterns;
                         $scope.reference.dataProviders = dataProviders;
                         $scope.reference.providerData = {};
                         $scope.reference.dataProviders.forEach(p => $scope.reference.providerData[p.invariant] = p.options);
@@ -297,10 +298,9 @@ angular.module('santedb').controller('InitialSettingsController', ['$scope', '$r
             config.$type = "Configuration";
             // Find the resource definition 
             config.values.sync.subscription = Object.keys(config.values.sync._resource).filter((i) => i !== "undefined" && config.values.sync._resource[i].selected)
-                .map(k => reference.subscriptions.find(p => p.uuid == k))
-                .filter(i => i != null &&
-                    checkGuard(i))
-                .map(k => k.uuid);
+                .map(k => $scope.reference.subscriptions.find(p => p.id == k))
+                .filter(i => i != null)
+                .map(k => k.id);
 
             // Define the services
             config.values.application.service = $scope.serverCaps.appInfo.service.filter(function (s) { return s.active; })
