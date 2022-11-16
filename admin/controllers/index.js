@@ -162,6 +162,14 @@ angular.module('santedb').controller('AdminLayoutController', ["$scope", "$rootS
     });
 
     // Is there no route? We should show the dashboard
-    if ($state.$current == "santedb-admin")
-        $state.go("santedb-admin.dashboard");
+    $rootScope.$watch("system.config", function(n, o) {
+        if(n) {
+            if(n._isConfigured === false) {
+                $state.go("santedb-config.initial");
+            }
+            else if ($state.$current == "santedb-admin") {
+                $state.go("santedb-admin.dashboard");
+            }
+        }
+    })
 }]);

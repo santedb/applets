@@ -72,7 +72,7 @@ angular.module('santedb-lib')
 
                     if (autoCompleteData == null || scopedFilter && scopedFilter[1] != autoCompleteData.scope || val == "") {
                         autoCompleteData = {};
-                        autoCompleteData = await SanteDB.resources[scope.focalType.toCamelCase()].invokeOperationAsync(null, "schema-complete", { expression: val, vars: scope.defVariables });
+                        autoCompleteData = await SanteDB.resources[scope.focalType.toCamelCase()].invokeOperationAsync(null, "schema-complete", { expression: val, vars: scope.defVariables }, false);
                         autoCompleteData.scope = scopedFilter ? scopedFilter[1] : '';
                         currentFocus = -1;
                     }

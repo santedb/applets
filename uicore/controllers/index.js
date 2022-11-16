@@ -88,8 +88,8 @@ var santedbApp = angular.module('santedb', ['ngSanitize', 'ui.router', 'oc.lazyL
                         });
                 });
             }
-            catch(e) {
-                
+            catch (e) {
+
             }
         }
 
@@ -105,6 +105,8 @@ var santedbApp = angular.module('santedb', ['ngSanitize', 'ui.router', 'oc.lazyL
                 var configuration = {};
                 if (session) {
                     configuration = await SanteDB.configuration.getAsync();
+                } else {
+                    configuration._isConfigured = SanteDB.configuration.getRealm() != null;
                 }
 
                 // Extended attributes
@@ -142,8 +144,9 @@ var santedbApp = angular.module('santedb', ['ngSanitize', 'ui.router', 'oc.lazyL
                         $rootScope.system.config.application.setting = appSettings;
                     }
                     // Is there a branding environment variable
-                    if ((!realmName) && $state.$current.name != 'santedb-config.initial')
+                    if ((!realmName || configuration && !configuration._isConfigured) && $state.$current.name != 'santedb-config.initial') {
                         $state.go('santedb-config.initial');
+                    }
                 });
             }
             catch (e) {
@@ -327,6 +330,11 @@ var santedbApp = angular.module('santedb', ['ngSanitize', 'ui.router', 'oc.lazyL
             $('.popover').popover('hide');
             $("#pageTransitioner").hide();
             delete ($rootScope._transition);
+
+            // HACK: The user tried to nav to a screen when we wanted to go to a config page
+            if(transition._targetState._identifier == "santedb-config.initial") {
+                window.location = "#!/config/initialSettings";
+            }
 
         });
 

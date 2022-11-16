@@ -877,12 +877,12 @@ function ResourceWrapper(_config) {
         else
             url = _config.resource;
 
-        if (id && id._upstream) {
+        if (id && id._upstream !== undefined) {
             headers["X-SanteDB-Upstream"] = id._upstream;
         }
 
-        if (upstream) {
-            headers["X-SanteDB-Upstream"] = true;
+        if (upstream !== undefined) {
+            headers["X-SanteDB-Upstream"] = upstream;
         }
 
         if (viewModel)
@@ -939,8 +939,8 @@ function ResourceWrapper(_config) {
         else if (_config.viewModel)
             headers["X-SanteDB-ViewModel"] = _config.viewModel;
 
-        if (upstream) {
-            headers["X-SanteDB-Upstream"] = true;
+        if (upstream !== undefined) {
+            headers["X-SanteDB-Upstream"] = upstream;
         }
 
         if (!query._includeTotal) {
@@ -1034,8 +1034,8 @@ function ResourceWrapper(_config) {
         if (data.creationTime)
             delete (data.creationTime);
 
-        if (upstream) {
-            headers["X-SanteDB-Upstream"] = true;
+        if (upstream !== undefined) {
+            headers["X-SanteDB-Upstream"] = upstream;
         }
 
         // Perform post
@@ -1069,8 +1069,8 @@ function ResourceWrapper(_config) {
         if (etag)
             headers['If-Match'] = etag;
 
-        if (upstream) {
-            headers["X-SanteDB-Upstream"] = true;
+        if (upstream !== undefined) {
+            headers["X-SanteDB-Upstream"] = upstream;
         }
 
         if (force) {
@@ -1113,8 +1113,8 @@ function ResourceWrapper(_config) {
         if (_config.viewModel)
             headers["X-SanteDB-ViewModel"] = _config.viewModel;
 
-        if (upstream) {
-            headers["X-SanteDB-Upstream"] = true;
+        if (upstream !== undefined) {
+            headers["X-SanteDB-Upstream"] = upstream;
         }
 
         // Send PUT
@@ -1145,8 +1145,8 @@ function ResourceWrapper(_config) {
         if (_config.viewModel)
             headers["X-SanteDB-ViewModel"] = _config.viewModel;
 
-        if (upstream) {
-            headers["X-SanteDB-Upstream"] = true;
+        if (upstream !== undefined) {
+            headers["X-SanteDB-Upstream"] = upstream;
         }
 
         return _config.api.deleteAsync({
@@ -1175,8 +1175,8 @@ function ResourceWrapper(_config) {
         if (_config.viewModel)
             headers["X-SanteDB-ViewModel"] = _config.viewModel;
 
-        if (upstream) {
-            headers["X-SanteDB-Upstream"] = true;
+        if (upstream !== undefined) {
+            headers["X-SanteDB-Upstream"] = upstream;
         }
 
         return _config.api.lockAsync({
@@ -1204,8 +1204,8 @@ function ResourceWrapper(_config) {
         if (_config.viewModel)
             headers["X-SanteDB-ViewModel"] = _config.viewModel;
 
-        if (upstream) {
-            headers["X-SanteDB-Upstream"] = true;
+        if (upstream !== undefined) {
+            headers["X-SanteDB-Upstream"] = upstream;
         }
 
         return _config.api.unLockAsync({
@@ -1259,8 +1259,8 @@ function ResourceWrapper(_config) {
         if (_config.viewModel)
             headers["X-SanteDB-ViewModel"] = _config.viewModel;
 
-        if (upstream) {
-            headers["X-SanteDB-Upstream"] = true;
+        if (upstream !== undefined) {
+            headers["X-SanteDB-Upstream"] = upstream;
         }
 
         return _config.api.checkoutAsync({
@@ -1288,8 +1288,8 @@ function ResourceWrapper(_config) {
         if (_config.viewModel)
             headers["X-SanteDB-ViewModel"] = _config.viewModel;
 
-        if (upstream) {
-            headers["X-SanteDB-Upstream"] = true;
+        if (upstream !== undefined) {
+            headers["X-SanteDB-Upstream"] = upstream;
         }
 
         return _config.api.checkinAsync({
@@ -1370,8 +1370,8 @@ function ResourceWrapper(_config) {
         if (_config.viewModel)
             headers["X-SanteDB-ViewModel"] = _config.viewModel;
 
-        if (upstream) {
-            headers["X-SanteDB-Upstream"] = true;
+        if (upstream !== undefined) {
+            headers["X-SanteDB-Upstream"] = upstream;
         }
 
         return _config.api.deleteAsync({
@@ -1400,8 +1400,8 @@ function ResourceWrapper(_config) {
         if (_config.viewModel)
             headers["X-SanteDB-ViewModel"] = _config.viewModel;
 
-        if (upstream) {
-            headers["X-SanteDB-Upstream"] = true;
+        if (upstream !== undefined) {
+            headers["X-SanteDB-Upstream"] = upstream;
         }
 
         return _config.api.deleteAsync({
@@ -1432,8 +1432,8 @@ function ResourceWrapper(_config) {
         if (_config.viewModel)
             headers["X-SanteDB-ViewModel"] = _config.viewModel;
 
-        if (upstream) {
-            headers["X-SanteDB-Upstream"] = true;
+        if (upstream !== undefined) {
+            headers["X-SanteDB-Upstream"] = upstream;
         }
 
         return _config.api.deleteAsync({
@@ -1497,8 +1497,8 @@ function ResourceWrapper(_config) {
         else
             url = `${_config.resource}/${id}/${property}`;
 
-        if (upstream) {
-            headers["X-SanteDB-Upstream"] = true;
+        if (upstream !== undefined) {
+            headers["X-SanteDB-Upstream"] = upstream;
         }
 
         return _config.api.getAsync({
@@ -1542,8 +1542,8 @@ function ResourceWrapper(_config) {
         else
             url = `${_config.resource}/${id}/${property}`;
 
-        if (upstream) {
-            headers["X-SanteDB-Upstream"] = true;
+        if (upstream !== undefined) {
+            headers["X-SanteDB-Upstream"] = upstream;
         }
 
         return _config.api.postAsync({
@@ -1590,8 +1590,8 @@ function ResourceWrapper(_config) {
         else
             url = `${_config.resource}/${id}/${property}`;
 
-        if (upstream) {
-            headers["X-SanteDB-Upstream"] = true;
+        if (upstream !== undefined) {
+            headers["X-SanteDB-Upstream"] = upstream;
         }
 
         return _config.api.deleteAsync({
@@ -1641,8 +1641,8 @@ function ResourceWrapper(_config) {
         else
             url += `/${associatedId}`;
 
-        if (upstream) {
-            headers["X-SanteDB-Upstream"] = true;
+        if (upstream !== undefined) {
+            headers["X-SanteDB-Upstream"] = upstream;
         }
 
         return _config.api.getAsync({
@@ -1700,8 +1700,8 @@ function ResourceWrapper(_config) {
             url = `${_config.resource}/${id}/$${operation}`;
 
 
-        if (upstream) {
-            headers["X-SanteDB-Upstream"] = true;
+        if (upstream !== undefined) {
+            headers["X-SanteDB-Upstream"] = upstream;
         }
 
         // Prepare parameters object 
@@ -2704,8 +2704,8 @@ function SanteDBWrapper() {
      * @property {ResourceWrapper} substanceAdministration Functions for interacting with {@link SubstanceAdministration}
      * @property {ResourceWrapper} task Functions for interacting with {@link Task}
      * @property {ResourceWrapper} tickle Functions for interacting with {@link Tickle}
-     * @property {ResourceWrapper} pubSubSubscription Functions for interacting with {@link SubscriptionDefinition}
-     * @property {ResourceWrapper} pubSubChannel Functions for interacting with {@link PubSubChannel}
+     * @property {ResourceWrapper} pubSubSubscriptionDefinition Functions for interacting with {@link SubscriptionDefinition}
+     * @property {ResourceWrapper} pubSubChannelDefinition Functions for interacting with {@link PubSubChannel}
      * @property {ResourceWrapper} userEntity Functions for interacting with {@link UserEntity}
      * @property {ResourceWrapper} extensionType Functions for interacting with {@link ExtensionType}
      * @property {ResourceWrapper} matchConfiguration Functions for interacting with {@link MatchConfiguration}
@@ -2772,9 +2772,9 @@ function SanteDBWrapper() {
             * @memberof SanteDBWrapper.ResourceApi
             * @summary Represents the PubSubChannel Resource
             */
-        this.pubSubChannel = new ResourceWrapper({
+        this.pubSubChannelDefinition = new ResourceWrapper({
             accept: "application/json",
-            resource: "PubSubChannel",
+            resource: "PubSubChannelDefinition",
             api: _ami
         });
 
@@ -2783,9 +2783,9 @@ function SanteDBWrapper() {
         * @memberof SanteDBWrapper.ResourceApi
         * @summary Represents the PubSubSubscription Resource
         */
-        this.pubSubSubscription = new ResourceWrapper({
+        this.pubSubSubscriptionDefinition = new ResourceWrapper({
             accept: "application/json",
-            resource: "PubSubSubscription",
+            resource: "PubSubSubscriptionDefinition",
             api: _ami
         });
 
@@ -3289,6 +3289,7 @@ function SanteDBWrapper() {
                         _resources.configuration.getAsync()
                             .then(function (d) {
                                 _masterConfig = d.values;
+                                _masterConfig._isConfigured = d._isConfigured;
                                 if (fulfill) fulfill(_masterConfig);
                             })
                             .catch(function (e) {

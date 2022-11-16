@@ -29,8 +29,7 @@
                         <i class="fas fa-exclamation-triangle"></i> {{ 'ui.error.required' | i18n }}
                     </div>
                     <div class="text-danger" ng-show="editForm.name.$error['pattern']">
-                        <i class="fas fa-exclamation-triangle"></i> {{ 'ui.error.pattern.ext' | i18n: { pattern: 'A-Z,
-                        0-9, _ or -' } }}
+                        <i class="fas fa-exclamation-triangle"></i> {{ 'ui.error.pattern.ext' | i18n: { pattern: 'A-Z, 0-9, _ or -' } }}
                     </div>
                 </div>
             </div>
@@ -121,7 +120,7 @@
                         Merge
                     </label>
                     <label class="w-50">
-                        <input type="checkbox" ng-model="subscription.eventModel.Unmerge" />
+                        <input type="checkbox" ng-model="subscription.eventModel.UnMerge" />
                         Unmerge
                     </label>
                 </div>
@@ -145,9 +144,12 @@
                             <div class="text-danger" ng-show="editForm['when' + $index].$error['required']">
                                 <i class="fas fa-exclamation-triangle"></i> {{ 'ui.error.required' | i18n}}
                             </div>
+                            <div class="text-danger" ng-show="editForm['when' + $index].$error['hdsiNeedsRhs']">
+                                <i class="fas fa-exclamation-triangle"></i> {{ 'ui.error.needsRhs' | i18n}}
+                            </div>
                         </li>
                         <li class="list-group-item">
-                            <button class="w-100 btn btn-success" ng-disabled="editForm.$invalid" type="button"
+                            <button class="w-100 btn btn-success" ng-disabled="editForm['when' + $index].$invalid" type="button"
                                 ng-click="subscription.when.push('')"><i class="fas fa-plus-circle"></i> {{
                                 'ui.action.add' | i18n }}</button>
                         </li>

@@ -17,7 +17,7 @@ angular.module('santedb').controller('SubmitBugController', ["$scope", "$rootSco
         try {
             var logs = await SanteDB.application.getLogInfoAsync();
             if(logs.resource) {
-                var log = logs.resource.find(o=>o.name == "SanteDB.log");
+                var log = logs.resource[0];
                 $scope.info.logSize = Math.round(log.size / 1024);
             }
             $scope.report.lastError = angular.copy($rootScope.error);
