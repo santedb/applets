@@ -2501,7 +2501,7 @@ function SanteDBWrapper() {
         this.getAppInfoAsync = function (settings) {
             return _ami.getAsync({
                 resource: "Sherlock/me",
-                query: { _includeUpdates: (settings || {}).updates, _upstream: (settings || {}).remote }
+                query: { _includeUpdates: (settings || {}).updates, _upstream: settings._upstream }
             });
         }
         /**

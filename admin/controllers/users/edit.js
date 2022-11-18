@@ -38,7 +38,7 @@ angular.module('santedb')
                 .catch($rootScope.errorHandler);
 
             // Get the related user entity at the same time
-            SanteDB.resources.userEntity.findAsync({ securityUser: $stateParams.id, _viewModel: "full" })
+            SanteDB.resources.userEntity.findAsync({ securityUser: $stateParams.id, _viewModel: "fastview" })
                 .then(function (u) {
                     $scope.isLoading = !$scope.target;
                     $scope.target = $scope.target || {};

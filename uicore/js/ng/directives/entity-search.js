@@ -210,7 +210,7 @@ angular.module('santedb-lib')
                                         }
                                     }
                                     else {
-                                        var res = await api.getAsync({ id: v, viewModel: "dropdown" });
+                                        var res = await api.getAsync({ id: v && v.id ? v.id : v, viewModel: "dropdown" });
                                         if ($(selectControl).find(`option[value='${v}']`).length == 0) {
                                             var obj = res;
                                             if ($scope.selector)

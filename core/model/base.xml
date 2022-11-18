@@ -86,7 +86,7 @@
     <property name="mnemonic"/>
     <property name="id"/>
   </type>
-  <type type="EntityNameComponent" all="false">
+  <type type="EntityNameComponent" all="true">
     <property name="value"/>
   </type>
   <!-- Session information -->

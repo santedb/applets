@@ -155,6 +155,34 @@
     </property>
   </type>
 
+
+  <type type="UserEntity" all="true">
+    <property name="templateModel" behavior="always" all="false">
+      <property name="mnemonic"/>
+    </property>
+    <property name="classConcept" behavior="always"/>
+    <property name="createdBy" behavior="never"/>
+    <property name="creationTime" behavior="never"/>
+    <property name="creationTimeModel" behavior="never"/>
+    <property name="version" behavior="never"/>
+    <property name="name" all="true"  behavior="always">
+      <property name="*" ref="EntityName"/>
+    </property>
+    <property name="address" all="true"  behavior="always">
+      <property name="*" ref="EntityAddress"/>
+    </property>
+    <property name="identifier" all="true"  behavior="always">
+      <property name="*" ref="EntityIdentifier"/>
+    </property>
+    <property name="telecom" all="true" behavior="always"/>
+    <property name="occupationModel" all="true" behavior="always" ref="Concept"/>
+    <property name="classConceptModel" behavior="never"/>
+    <property name="relationship" all="true" behavior="always">
+      <property name="*" ref="EntityRelationship" all="true"/>
+
+    </property>
+  </type>
+
   <type type="Patient" all="true">
     <property name="templateModel" behavior="always" all="false">
       <property name="mnemonic"/>

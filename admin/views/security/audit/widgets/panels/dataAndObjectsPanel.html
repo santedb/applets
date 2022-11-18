@@ -92,7 +92,7 @@
                         </div>
 
                     </div>
-                    <div class="row" ng-if="o.dictionary.length">
+                    <div class="row" ng-if="o.data.length">
                         <label class="control-label col-sm-2 col-xs-12">{{ 'ui.admin.audit.data' | i18n }}</label>
                         <div class="col-sm-10 col-xs-12">
                             <table class="table table-striped">
@@ -103,7 +103,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr ng-repeat="v in o.dictionary">
+                                    <tr ng-repeat="v in o.data">
                                         <td>{{ v.key }}</td>
                                         <td>{{ v.value | base64decode }}</td>
                                     </tr>

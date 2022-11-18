@@ -1,4 +1,5 @@
 <div  xmlns="http://www.w3.org/1999/xhtml">
+  
     <div class="form-group row" ng-if="!noType">
         <label class="col-sm-12 col-md-3 control-label" ng-class="{'required': isRequired  &amp;&amp; $index == 0 || !noType &amp;&amp; (name.component.Given  || name.component.Family)}">{{ 'ui.model.entity.name.use' | i18n }} <hint-popover hint-title="ui.model.entity.name.use" /> </label>
         <div class="col-sm-12 col-md-9">
@@ -8,7 +9,7 @@
                 <i class="fas fa-exclamation-triangle"></i> {{ 'ui.error.required' | i18n }}</div>
         </div>
     </div>
-    <div class="form-group row" ng-if="!$root.system.config.application.setting['forbid.patient.name.prefix'] &amp;&amp; isComponentAllowed('prefix')">
+    <div class="form-group row" ng-if="$root.system.config.application.setting['forbid.patient.name.prefix'] != 'true' &amp;&amp; allowedComponents.indexOf('prefix') > -1">
         <label
             class="col-sm-12 col-md-3 control-label">{{ 'ui.model.entity.name.component.prefix' | i18n }} <hint-popover hint-title="ui.model.entity.name.component.prefix" /> </label>
         <div class="col-sm-12 col-md-9" ng-switch="$root.system.config.application.setting['input.name'] || inputStyle">
@@ -18,7 +19,7 @@
                 ng-model="name.component.Prefix"/>
         </div>
     </div>
-    <div class="form-group row" ng-if="!$root.system.config.application.setting['forbid.patient.name.given'] &amp;&amp; isComponentAllowed('given')">
+    <div class="form-group row" ng-if="$root.system.config.application.setting['forbid.patient.name.given'] != 'true' &amp;&amp; allowedComponents.indexOf('given') > -1">
         <label
             class="col-sm-12 col-md-3 control-label" ng-class="{'required': isRequired &amp;&amp; !$root.system.config.application.setting['optional.patient.name.given']}">{{ 'ui.model.entity.name.component.given' | i18n }} <hint-popover hint-title="ui.model.entity.name.component.given" /></label>
         <div class="col-sm-12 col-md-9" ng-switch="$root.system.config.application.setting['input.name'] || inputStyle">
@@ -30,7 +31,7 @@
                 <i class="fas fa-exclamation-triangle"></i> {{ 'ui.error.required' | i18n }}</div>
         </div>
     </div>
-    <div class="form-group row" ng-if="!$root.system.config.application.setting['forbid.patient.name.family'] &amp;&amp; isComponentAllowed('family')">
+    <div class="form-group row" ng-if="$root.system.config.application.setting['forbid.patient.name.family'] != 'true' &amp;&amp; allowedComponents.indexOf('family') > -1">
         <label
             class="col-sm-12 col-md-3 control-label" ng-class="{'required': isRequired &amp;&amp; !$root.system.config.application.setting['optional.patient.name.family']}">{{ 'ui.model.entity.name.component.family' | i18n }} <hint-popover hint-title="ui.model.entity.name.component.family" /></label>
         <div class="col-sm-12 col-md-9" ng-switch="$root.system.config.application.setting['input.name'] || inputStyle">
@@ -42,7 +43,7 @@
                 <i class="fas fa-exclamation-triangle"></i> {{ 'ui.error.required' | i18n }}</div>
         </div>
     </div>
-    <div class="form-group row" ng-if="!$root.system.config.application.setting['forbid.patient.name.suffix'] &amp;&amp; isComponentAllowed('suffix')">
+    <div class="form-group row" ng-if="$root.system.config.application.setting['forbid.patient.name.suffix'] != 'true' &amp;&amp; allowedComponents.indexOf('suffix') > -1">
         <label
             class="col-sm-12 col-md-3 control-label">{{ 'ui.model.entity.name.component.suffix' | i18n }} <hint-popover hint-title="ui.model.entity.name.component.suffix" /></label>
             <div class="col-sm-12 col-md-9" ng-switch="$root.system.config.application.setting['input.name'] || inputStyle">
@@ -52,7 +53,7 @@
                     ng-model="name.component.Suffix"  />
             </div>
     </div>
-    <div class="form-group row" ng-if="!$root.system.config.application.setting['forbid.patient.name.other'] &amp;&amp; isComponentAllowed('$other')">
+    <div class="form-group row" ng-if="$root.system.config.application.setting['forbid.patient.name.other'] != 'true' &amp;&amp; allowedComponents.indexOf('$other') > -1">
         <label class="col-sm-12 col-md-3 control-label">{{ 'ui.model.entity.name.component.other' | i18n }} <hint-popover hint-title="ui.model.entity.name.component.other" /></label>
         <div class="col-sm-12 col-md-9" ng-switch="$root.system.config.application.setting['input.name'] || inputStyle">
             <tag-input ng-switch-default="" name="{{controlPrefix}}name{{$index }}$other" class="form-control"

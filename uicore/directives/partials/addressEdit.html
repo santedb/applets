@@ -28,7 +28,7 @@
         </div>
     </div>
     <div ng-if="$root.system.config.application.setting['input.address'] != 'select'">
-        <div class="form-group row" ng-if="!$root.system.config.application.setting['forbid.patient.address.country']">
+        <div class="form-group row" ng-if="$root.system.config.application.setting['forbid.patient.address.country'] != 'true'">
             <label class="col-sm-12 col-md-3 control-label"
                 ng-class="{'required': isRequired &amp;&amp; $index == 0  &amp;&amp; !$root.system.config.application.setting['optional.patient.address.country']}">{{ 'ui.model.entity.address.component.country' | i18n }} <hint-popover hint-title="ui.model.entity.address.component.country" /></label>
             <div class="col-sm-12 col-md-9" >
@@ -44,7 +44,7 @@
                         class="fas fa-exclamation-triangle"></i> {{ 'ui.error.required' | i18n }}</div>
             </div>
         </div>
-        <div class="form-group row" ng-if="!$root.system.config.application.setting['forbid.patient.address.state']">
+        <div class="form-group row" ng-if="$root.system.config.application.setting['forbid.patient.address.state'] != 'true'">
             <label class="col-sm-12 col-md-3 control-label"
                 ng-class="{'required': isRequired &amp;&amp; $index == 0  &amp;&amp; !$root.system.config.application.setting['optional.patient.address.state']}">{{ 'ui.model.entity.address.component.state' | i18n }} <hint-popover hint-title="ui.model.entity.address.component.state" /></label>
             <div class="col-sm-12 col-md-9" ng-switch="$root.system.config.application.setting['input.address']">
@@ -64,7 +64,7 @@
 
             </div>
         </div>
-        <div class="form-group row" ng-if="!$root.system.config.application.setting['forbid.patient.address.county']">
+        <div class="form-group row" ng-if="$root.system.config.application.setting['forbid.patient.address.county'] != 'true'">
             <label class="col-sm-12 col-md-3 control-label"
                 ng-class="{'required': isRequired &amp;&amp; $index == 0  &amp;&amp; !$root.system.config.application.setting['optional.patient.address.county']}">{{ 'ui.model.entity.address.component.county' | i18n }} <hint-popover hint-title="ui.model.entity.address.component.county" /></label>
             <div class="col-sm-12 col-md-9" ng-switch="$root.system.config.application.setting['input.address']">
@@ -120,13 +120,13 @@
             </div>
         </div>
     </div>
-    <div class="form-group row" ng-if="!$root.system.config.application.setting['forbid.patient.address.street']">
+    <div class="form-group row" ng-if="$root.system.config.application.setting['forbid.patient.address.street'] != 'true'">
         <label class="col-sm-12 col-md-3 control-label">{{ 'ui.model.entity.address.component.street' | i18n }} <hint-popover hint-title="ui.model.entity.address.component.street" /></label>
         <div class="col-sm-12 col-md-9">
             <input autocomplete="__away" type="text" class="form-control" ng-model="addr.component.StreetAddressLine" />
         </div>
     </div>
-    <div class="form-group row" ng-if="!$root.system.config.application.setting['forbid.patient.address.postalcode']">
+    <div class="form-group row" ng-if="$root.system.config.application.setting['forbid.patient.address.postalcode'] != 'true'">
         <label class="col-sm-12 col-md-3 control-label">{{ 'ui.model.entity.address.component.postalcode' | i18n }} <hint-popover hint-title="ui.model.entity.address.component.postalcode" /></label>
         <div class="col-sm-12 col-md-9">
             <input autocomplete="__away" type="text" class="form-control" ng-model="addr.component.PostalCode" />

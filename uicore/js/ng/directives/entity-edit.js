@@ -196,6 +196,7 @@ angular.module('santedb-lib')
                 }
 
                 $scope.isComponentAllowed = function (component) {
+                    console.info(component);
                     return $scope.allowedComponents.indexOf(component) > -1;
                 }
 
