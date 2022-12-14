@@ -2495,13 +2495,13 @@ function SanteDBWrapper() {
          * @memberof SanteDBWrapper.ApplicationApi
          * @returns {Promise} The promise from the async representation
          * @param {any} settings The settings to use for the server diagnostic report
-         * @param {boolean} settings.updates When true check for updates
-         * @param {boolean} settings.remote When true check the remote server
+         * @param {boolean} settings._upstream When true check the remote server
          */
         this.getAppInfoAsync = function (settings) {
+            settings = settings || {};
             return _ami.getAsync({
                 resource: "Sherlock/me",
-                query: { _includeUpdates: (settings || {}).updates, _upstream: settings._upstream }
+                query: { _upstream: settings._upstream }
             });
         }
         /**
@@ -3984,8 +3984,8 @@ function SanteDBWrapper() {
                 try {
                     _auth.postAsync({
                         resource: "signout",
+                        contentType: 'application/x-www-form-urlencoded',
                         data: {
-                            id_token_hint: _oauthSession.access_token,
                             logout_hint: _session.username,
                             client_id: SanteDB.configuration.getClientId()
                         }

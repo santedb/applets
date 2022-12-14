@@ -66,7 +66,7 @@
           OUTC_CS,
           ACT_CS, 
           TYP_CS, 
-          datetime(EVT_UTC, 'unixepoch', 'localtime') AS EVT_UTC, 
+          EVT_UTC, 
           MNEMONIC 
         from 
           AUD_TBL 

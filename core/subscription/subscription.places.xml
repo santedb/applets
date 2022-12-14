@@ -49,7 +49,7 @@
         <guards>
           <!--<when>subscribed.address[Direct].component[County] &amp;&amp; !subscribed.address[Direct].component[State]</when>
           <when>subscribed.classConcept == 'ff34dfa7-c6d3-4f8b-bc9f-14bcdc13ba6c'</when>-->
-          <when>address[Direct].component[County]=!null&amp;address[Direct].component[State]=!null<when>
+          <when>address[Direct].component[County]=!null&amp;address[Direct].component[State]=!null</when>
           <when>classConcept=ff34dfa7-c6d3-4f8b-bc9f-14bcdc13ba6c</when>
         </guards>
         <filters>

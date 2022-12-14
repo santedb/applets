@@ -267,7 +267,7 @@ var santedbApp = angular.module('santedb', ['ngSanitize', 'ui.router', 'oc.lazyL
 
         // Watch for user request to change default language in browser
         $rootScope.$watch("system.locale", function (n, o) {
-            if (n && n != o) {
+            if (n && o && n != o) {
                 SanteDB.locale.setLocale(n);
                 $templateCache.removeAll();
                 if ($state.$current.name != "") {
