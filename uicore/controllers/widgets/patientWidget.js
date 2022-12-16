@@ -67,7 +67,7 @@ angular.module('santedb').controller('PatientDemographicsWidgetController', ['$s
     $scope.addIdentifier = function (id) {
         if (!$scope.panel.editForm.$valid) return;
         else {
-            var authority = id.authority.domainName;
+            var authority = id.domain.domainName;
             var existing = $scope.editObject.identifier[authority];
             if (!existing) // no identifiers in this domain
                 $scope.editObject.identifier[authority] = existing = [];
@@ -132,9 +132,6 @@ angular.module('santedb').controller('PatientDemographicsWidgetController', ['$s
                     if (!Array.isArray(n.identifier[key]))
                         n.identifier[key] = [n.identifier[key]];
 
-                    n.identifier[key].forEach(function (id) {
-                        id._codeUrl = `/hdsi/Patient/${n.id}/_code/${id.authority.id}` //?_sessionId=${window.sessionStorage.getItem("token")}`;
-                    })
                 });
 
 
