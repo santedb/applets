@@ -367,11 +367,11 @@ angular.module('santedb-lib')
                 }
 
                 $scope.addIdentifier = function (newId) {
-                    if ($scope.ownerForm.$invalid || !$scope.authorities[newId.authority.domainName]) return;
+                    if ($scope.ownerForm.$invalid || !$scope.authorities[newId.domainModel.domainName]) return;
 
-                    newId.authority = $scope.authorities[newId.authority.domainName];
-                    $scope.identifier[newId.authority.domainName] = [angular.copy(newId)];
-                    delete ($scope.authorities[newId.authority.domainName]);
+                    newId.domainModel = $scope.authorities[newId.domainModel.domainName];
+                    $scope.identifier[newId.domainModel.domainName] = [angular.copy(newId)];
+                    delete ($scope.authorities[newId.domainModel.domainName]);
                     delete (newId.authority);
                     delete (newId.value);
 
@@ -380,7 +380,7 @@ angular.module('santedb-lib')
                 $scope.generateId = function (idDomain) {
                     var authority = idDomain.authority;
                     if (!authority.generator)
-                        authority = $scope.authorities[idDomain.authority.domainName];
+                        authority = $scope.authorities[idDomain.domainModel.domainName];
                     try {
                         idDomain.value = authority.generator();
                     } catch (e) {

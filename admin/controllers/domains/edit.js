@@ -23,10 +23,12 @@ angular.module('santedb').controller('IdentityDomainEditController', ["$scope", 
 
 
     // Load the authority
-    async function loadAuthority(id) {
+    async function loadDomain(id) {
         try {
             var domain = await SanteDB.resources.identityDomain.getAsync(id, "full");
-            $timeout(() => $scope.domain = domain);
+            $timeout(() => { 
+                $scope.domain = domain
+            });
         }
         catch (e) {
             $rootScope.errorHandler(e);
@@ -35,7 +37,7 @@ angular.module('santedb').controller('IdentityDomainEditController', ["$scope", 
 
     // Load or create?
     if ($stateParams.id)
-        loadAuthority($stateParams);
+        loadDomain($stateParams.id);
     else
         $scope.domain = new IdentityDomain();
 
@@ -71,7 +73,7 @@ angular.module('santedb').controller('IdentityDomainEditController', ["$scope", 
         }
     }
 
-    $scope.reactivateAuthority = async function() {
+    $scope.reactivateDomain  = async function() {
         if(!confirm(SanteDB.locale.getString("ui.admin.domain.reactivate.confirm")))
             return;
         

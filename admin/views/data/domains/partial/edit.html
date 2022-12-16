@@ -1,6 +1,6 @@
 <div xmlns="http://www.w3.org/1999/xhtml" class="container-fluid">
     <form class="form" ng-submit="saveDomain(targetForm)" name="targetForm" novalidate="novalidate">
-        <div class="row" ng-if="!authority">
+        <div class="row" ng-if="!domain">
             <div class="col">
                 <p class="m-auto"><i class="fas fa-circle-notch fa-spin"></i> {{ 'ui.wait' | i18n }}</p>
             </div>
@@ -24,8 +24,8 @@
                                 for="sid">{{ 'ui.model.identityDomain.id' | i18n }}</label>
                             <div class="col-sm-12 col-md-10 input-group">
                                 <input name="sid" readonly="readonly" type="text" class="form-control"
-                                    ng-model="authority.id" />
-                                <input-copy-button class="btn btn-outline-secondary" source="authority.id" />
+                                    ng-model="domain.id" />
+                                <input-copy-button class="btn btn-outline-secondary" source="domain.id" />
                             </div>
                         </div>
                         <div class="form-group row">
@@ -33,7 +33,7 @@
                                 for="domainName">{{ 'ui.model.identityDomain.domainName' | i18n }}</label>
                             <div class="col-sm-12 col-md-10 input-group">
                                 <input name="domainName" type="text" class="form-control"
-                                    ng-model="authority.domainName" pattern="^[A-Za-z_\-0-9]{3,}$"
+                                    ng-model="domain.domainName" pattern="^[A-Za-z_\-0-9]{3,}$"
                                     required="required" /></div>
                             <div class="col-sm-12 col-md-10 offset-md-2">
                                 <div ng-show="targetForm.domainName.$error['duplicate']" class="alert-danger">
@@ -55,7 +55,7 @@
                             <label class="control-label col-sm-12 col-md-2 required"
                                 for="oid">{{ 'ui.model.identityDomain.oid' | i18n }}</label>
                             <div class="col-sm-12 col-md-10 input-group">
-                                <input name="oid" type="text" class="form-control" ng-model="authority.oid"
+                                <input name="oid" type="text" class="form-control" ng-model="domain.oid"
                                     pattern="^[0-9]*?[0-9\.]*$" required="required" /> </div>
                             <div class="col-sm-12 col-md-10 offset-md-2">
                                 <div ng-show="targetForm.oid.$error['duplicate']" class="alert-danger">
@@ -76,7 +76,7 @@
                             <label class="control-label col-sm-12 col-md-2 required"
                                 for="url">{{ 'ui.model.identityDomain.url' | i18n }}</label>
                             <div class="col-sm-12 col-md-10 input-group">
-                                <input name="url" type="url" class="form-control" ng-model="authority.url" /> </div>
+                                <input name="url" type="url" class="form-control" ng-model="domain.url" /> </div>
                             <div class="col-sm-12 col-md-10 offset-md-2">
                                 <div ng-show="targetForm.url.$error['duplicate']" class="alert-danger">
                                     <i class="fa fa-exclamation-triangle"></i>
@@ -89,7 +89,7 @@
                             <label class="control-label col-sm-12 col-md-2 required"
                                 for="name">{{ 'ui.model.identityDomain.name' | i18n }}</label>
                             <div class="col-sm-12 col-md-10 input-group">
-                                <input name="name" type="text" class="form-control" ng-model="authority.name"
+                                <input name="name" type="text" class="form-control" ng-model="domain.name"
                                     maxlength="64" required="required" /> </div>
                             <div class="col-sm-12 col-md-10 offset-md-2">
                                 <div ng-show="targetForm.name.$error['required'] &amp;&amp; targetForm.$submitted"
@@ -103,41 +103,41 @@
                                 for="validation">{{ 'ui.model.identityDomain.validation' | i18n }}</label>
                             <div class="col-sm-12 col-md-10 input-group">
                                 <input name="validation" type="text" class="form-control"
-                                    ng-model="authority.validation" maxlength="256" /> </div>
+                                    ng-model="domain.validation" maxlength="256" /> </div>
 
                         </div>
                         <div class="form-group row">
                             <label class="control-label text-left col-sm-12 col-md-10 offset-md-2">
-                                <input type="checkbox" ng-model="authority.isUnique" />
+                                <input type="checkbox" ng-model="domain.isUnique" />
                                 {{ 'ui.model.identityDomain.isUnique' | i18n }}
                             </label>
                         </div>
-                        <div class="form-group row" ng-if="authority.createdBy">
+                        <div class="form-group row" ng-if="domain.createdBy">
                             <label
                                 class="col-sm-12 col-md-2 control-label">{{ 'ui.model.identityDomain.createdBy' | i18n }}</label>
                             <div class="col-md-10 col-sm-12">
-                                <provenance provenance-id="authority.createdBy"
-                                    provenance-time="authority.creationTime"></provenance>
-                                {{ authority.creationTime | extDate }}
+                                <provenance provenance-id="domain.createdBy"
+                                    provenance-time="domain.creationTime"></provenance>
+                                {{ domain.creationTime | extDate }}
                             </div>
                         </div>
-                        <div class="form-group row" ng-if="authority.updatedBy">
+                        <div class="form-group row" ng-if="domain.updatedBy">
                             <label
                                 class="col-sm-12 col-md-2 control-label">{{ 'ui.model.identityDomain.updatedBy' | i18n }}</label>
                             <div class="col-md-10 col-sm-12">
-                                <provenance provenance-id="authority.updatedBy" provenance-time="authority.updatedTime">
+                                <provenance provenance-id="domain.updatedBy" provenance-time="domain.updatedTime">
                                 </provenance>
-                                {{ authority.updatedTime | extDate }}
+                                {{ domain.updatedTime | extDate }}
                             </div>
                         </div>
-                        <div class="form-group row" ng-if="authority.obsoletedBy">
+                        <div class="form-group row" ng-if="domain.obsoletedBy">
                             <label
                                 class="col-sm-12 col-md-2 control-label">{{ 'ui.model.identityDomain.obsoletedBy' | i18n }}</label>
                             <div class="col-md-10 col-sm-12">
-                                <provenance provenance-id="authority.obsoletedBy"
-                                    provenance-time="authority.obsoletionTime"></provenance>
-                                {{ authority.obsoletionTime | extDate }} <button id="reactivateAuthorityButton"
-                                    ng-click="reactivateAuthority()" type="button" class="btn btn-success"><i
+                                <provenance provenance-id="domain.obsoletedBy"
+                                    provenance-time="domain.obsoletionTime"></provenance>
+                                {{ domain.obsoletionTime | extDate }} <button id="reactivateAuthorityButton"
+                                    ng-click="reactivateDomain()" type="button" class="btn btn-success"><i
                                         class="fas fa-trash-restore"></i>
                                     {{ 'ui.action.undelete' | i18n }}</button>
                             </div>
@@ -161,18 +161,9 @@
                     <div class="card-body container-fluid">
                         <div class="form-group row">
                             <label
-                                class="control-label col-sm-12 col-md-2">{{ 'ui.model.identityDomain.assigningApplication' | i18n }}</label>
-                            <div class="col-md-10 col-sm-12">
-                                <entity-search type="'SecurityApplication'"
-                                    ng-model="authority.assigningApplication" selector="'entity'"
-                                    search-field="'name'"></entity-search>
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label
                                 class="control-label col-sm-12 col-md-2">{{ 'ui.model.identityDomain.scope' | i18n }}</label>
                             <div class="col-md-10 col-sm-12">
-                                <entity-search multiple="multiple" type="'Concept'" ng-model="authority.scope"
+                                <entity-search multiple="multiple" type="'Concept'" ng-model="domain.scope"
                                     search-field="'name.value'"
                                     filter="{ 'conceptSet' : [ '62C5FDE0-A3AA-45DF-94E9-242F4451644A', '4E6DA567-0094-4F23-8555-11DA499593AF'] }">
                                 </entity-search>
@@ -183,17 +174,70 @@
                             <label
                                 class="control-label col-sm-12 col-md-2">{{ 'ui.model.identityDomain.policy' | i18n }}</label>
                             <div class="col-md-10 col-sm-12">
-                                <entity-search  type="'SecurityPolicy'" ng-model="authority.policy"
+                                <entity-search  type="'SecurityPolicy'" ng-model="domain.policy"
                                     search-field="'name'">
                                 </entity-search>
-
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="mb-0">
+                        <button type="button" class="collapse-indicator btn btn-link p-0" data-toggle="collapse"
+                            data-target="#assigningApp" aria-expanded="true">
+                            <i class="fa fa-hospitals"></i> {{ 'ui.admin.domain.edit.authority.title' | i18n }}
+                            <i class="fa fa-chevron-right"></i>
+                        </button>
+                    </h5>
+                </div>
+                <div class="collapse show" id="assigningApp">
+                    <div class="card-body container-fluid">
+                        <div class="form-group row" ng-repeat="assigner in domain.assigningAuthority track by $index">
+                            <label
+                                class="control-label col-sm-12 col-md-2">{{ 'ui.model.identityDomain.assigningAuthority.assigningApplication' | i18n }}
+                                </label>
+                            <div class="col-md-6 col-sm-12">
+                                <entity-search type="'SecurityApplication'" ng-model="assigner.assigningApplication"
+                                    search-field="'name'">
+                                </entity-search>
+                            </div>
+                            <label class="col-md-2 col-sm-12">
+                                <input type="checkbox" ng-model="assigner.reliability" ng-true-value="1" ng-false-value="2" />
+                                {{ 'ui.model.identityDomain.assigningAuthority.authoritative' | i18n }}</label>
+                            <div class="col-md-2 col-sm-12">
+                                <div class="float-right">
+                                    <button type="button" ng-click="domain.assigningAuthority.splice($index, 1)" 
+                                        class="btn btn-danger"><i class="fas fa-times"></i> {{ 'ui.action.remove' | i18n }}</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label
+                                class="control-label col-sm-12 col-md-2">{{ 'ui.model.identityDomain.assigningAuthority.assigningApplication' | i18n }}
+                                <hint-popover hint-title="ui.model.identityDomain.assigningAuthority.assigningApplication" /></label>
+                            <div class="col-md-6 col-sm-12">
+                                <entity-search type="'SecurityApplication'" ng-model="newAssigner.assigningApplication"
+                                    search-field="'name'">
+                                </entity-search>
+                            </div>
+                            <label class="col-md-2 col-sm-12">
+                                <input type="checkbox" ng-model="newAssigner.reliability" ng-true-value="1" ng-false-value="2" />
+                                {{ 'ui.model.identityDomain.assigningAuthority.authoritative' | i18n }}</label>
+                            <div class="col-md-2 col-sm-12">
+                                <div class="float-right">
+                                    <button type="button" ng-disabled="!newAssigner.assigningApplication" ng-click="domain.assigningAuthority.push(newAssigner); newAssigner = {}" 
+                                        class="btn btn-primary"><i class="fas fa-plus"></i> {{ 'ui.action.add' | i18n }}</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
         <div class="col-12">
             <div class="btn-group float-right">
                 <button type="submit" id="saveAuthorityButton" class="btn btn-primary"><i class="fa fa-check"></i>

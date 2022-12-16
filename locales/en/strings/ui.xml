@@ -232,6 +232,7 @@
       <string name="ui.table.search.field.userName">Search by user name</string>
       <string name="ui.table.search.field.user.userName">Search by user name</string>
       <string name="ui.table.search.field.actor.uname">Search by actor</string>
+      <string name="ui.table.search.field.name.value">Search by name</string>
 
       <!-- Common Operators -->
       <string name="ui.operator.eq">Equals</string>

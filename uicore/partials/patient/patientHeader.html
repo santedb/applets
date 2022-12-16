@@ -34,7 +34,7 @@
                                 }}
                                 <span class="d-none d-md-inline">
                                     <span class="badge badge-primary">{{
-                                        patient.identifier[$root.system.config.application.setting['aa.preferred']][0].authority.name
+                                        patient.identifier[$root.system.config.application.setting['aa.preferred']][0].domainModel.name
                                         }}</span>
                                 </span>
                             </h5>
@@ -75,7 +75,7 @@
                                     ng-if="id[0].value &amp;&amp; domain != $root.system.config.application.setting['aa.preferred']"
                                     ng-repeat="(domain, id) in patient.identifier track by $index">
                                     <i class="far fa-id-card"></i> {{ id[0].value }} <span class="badge badge-info">{{
-                                        id[0].authority.name }}</span>
+                                        id[0].domainModel.name }}</span>
                                 </div>
                             </div>
                         </div>

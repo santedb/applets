@@ -3923,7 +3923,8 @@ function SanteDBWrapper() {
                         data: {
                             grant_type: 'refresh_token',
                             refresh_token: refreshToken || 'cookie',
-                            scope: "*"
+                            scope: "*",
+                            client_id: SanteDB.configuration.getClientId()
                         },
                         contentType: 'application/x-www-form-urlencoded'
                     })

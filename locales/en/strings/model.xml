@@ -101,6 +101,9 @@
       <string name="ui.model.identityDomain.scope">Scope</string>
       <string name="ui.model.identityDomain.url">URL</string>
       <string name="ui.model.identityDomain.validation">Validation Regex</string>
+      <string name="ui.model.identityDomain.assigningAuthority.assigningApplication">Application</string>
+      <string name="ui.model.identityDomain.assigningAuthority.authoritative">Authoritative Source</string>
+      <string name="ui.model.identityDomain.assigningAuthority.assigningApplication.hint"><![CDATA[Whenever an identifier in this domain is registered from this application - it can be flagged as authoritative or informative. You may restrict the ability of non-authoritative applications from issuing new identifiers (which will result in a data quality warning)]]></string>
       <string name="ui.model.identityDomain.policy">Disclosure Policy</string>
       <string name="ui.model.version.sequence">Sequence</string>
       <string name="ui.model.version.createdBy">Last Changed By</string>
