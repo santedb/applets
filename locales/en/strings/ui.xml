@@ -159,6 +159,7 @@
       <string name="ui.action.create">Create</string>
       <string name="ui.action.delete">Delete</string>
       <string name="ui.action.nullify">Nullify</string>
+      <string name="ui.action.upload">Upload</string>
       <string name="ui.action.nullify.confirm">Are you sure you want to nullify this object? This cannot be undone!</string>
       <string name="ui.action.delete.confirm">Are you sure you want to delete this object?</string>
       <string name="ui.action.undelete">Un-Delete</string>
@@ -166,6 +167,7 @@
       <string name="ui.action.edit">Edit</string>
       <string name="ui.action.override">Override</string>
       <string name="ui.action.run">Run</string>
+      <string name="ui.action.runScheduled">Run Scheduled</string>
       <string name="ui.action.merge">Merge</string>
       <string name="ui.action.link">Link</string>
       <string name="ui.action.resolve">Resolve</string>
@@ -578,4 +580,22 @@
       <!-- Log Configuration -->
       <string name="ui.config.log.writer.label">Log Writers</string>
       <string name="ui.config.log.writer.help">This controls where SanteDB will collect produce log output. Each log writer can be filtered based on the event type.</string>
+
+      <!-- Foreign Data -->
+      <string name="ui.admin.alien.upload.title">Upload Data Import File</string>
+      <string name="ui.admin.alien.upload.description"><![CDATA[Use this form to upload a external data file in a supported format (example: CSV) to the SanteDB server. SanteDB will validate your submission and will process the import when the next scheduled import job runs.]]></string>
+      <string name="ui.admin.alien.upload.fileName">File</string>
+      <string name="ui.admin.alien.upload.fileName.hint">Select a compatible file from your computer to upload</string> 
+      <string name="ui.admin.alien.upload.mapping">Mapping</string>
+      <string name="ui.admin.alien.upload.mapping.hint"><![CDATA[Select the type of file you are uploading. This will instruct the SanteDB server to use a specific series of import rules for your file]]></string>
+      <string name="ui.admin.alien.upload.notes">Friendly Name</string>
+      <string name="ui.admin.alien.upload.notes.hint"><![CDATA[Add descriptive notes about this upload]]></string>
+      <string name="ui.admin.alien.upload.success">External data was uploaded successfully</string>
+      <string name="ui.admin.alien.upload.fail">Error submitting external data to server</string>
+      <string name="ui.admin.alien.delete.confirm">Are you sure you want to delete this data submission? (note: this will not remove any already imported data)</string>
+      <string name="ui.admin.alien.delete.success">Data submission deleted</string>
+      <string name="ui.admin.alien.reschedule.confirm">Are you sure you want to reschedule this import? If there are errors which have not been corrected, the import may not succeed again.</string>
+      <string name="ui.admin.alien.reschedule.success">Data submission scheduled for execution</string>
+
+      <string name="ui.admin.alien.submission.view.title">Data Import File - {name}</string>
 </resources>

@@ -461,4 +461,19 @@
   <string name="ui.model.pubsubchannel.settings">Custom Settings</string>
   <string name="ui.model.pubsubchannel.settings.hint"><![CDATA[Additional settings (key/value pairs) which are used be the dispatcher to control the flow of information. For exampe, in FHIR these equate to HTTP headers]]></string>
 
+  <!-- Foreign Data Submissions -->
+  <string name="ui.model.alien.submission.name">Filename</string>
+  <string name="ui.model.alien.submission.status">Status</string>
+  <string name="ui.model.alien.submission.status.scheduled">Scheduled (will be run next time imports are processed)</string>
+  <string name="ui.model.alien.submission.status.staged">Staged (needs to be scheduled)</string>
+  <string name="ui.model.alien.submission.status.success">Completed Successfully (all data imported)</string>
+  <string name="ui.model.alien.submission.status.withErrors">Completed with Errors (check issues and reject file)</string>
+  <string name="ui.model.alien.submission.status.running">Running (data is being imported)</string>
+  <string name="ui.model.alien.submission.status.rejected">Rejected (correct issues and re-upload)</string>
+  <string name="ui.model.alien.submission.modifiedOn">Last Modified</string>
+  <string name="ui.model.alien.submission.description">Notes</string>
+  <string name="ui.model.alien.submission.reject">Rejected Records</string>
+  <string name="ui.model.alien.submission.issues">Issues / Errors</string>
+  <string name="ui.model.alien.submission.createdBy">Created By</string>
+  <string name="ui.model.alien.submission.updatedBy">Updated By</string>
 </resources>

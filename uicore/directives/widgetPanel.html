@@ -7,17 +7,17 @@
                         <h5 class="float-left mb-0">
                             <i ng-class="panel.icon"></i> {{ panel.name | i18n }}
                         </h5>
-                        <div class="btn-group float-right" ng-if="panel.altViews &amp;&amp; panel.altViews != 'None' &amp;&amp; !noAlt">
+                        <div class="btn-group float-right" ng-if="panel.views &amp;&amp; !noAlt">
                             <button class="btn btn-danger" ng-if="panel.view" ng-click="closeView(panel)">
                                 <i class="fa fa-times"></i>
                             </button>
-                            <button class="btn btn-info" ng-click="setView(panel, 'Edit')" ng-if="panel.altViews == 'Edit' &amp;&amp; panel.view != 'Edit'">
+                            <button class="btn btn-info" ng-click="setView(panel, 'Edit')" id="pnl{{panel.id}}Edit" ng-if="::hasView(panel, 'Edit') &amp;&amp; panel.view != 'Edit'">
                                 <i class="fas fa-pencil-alt"></i>
                             </button>
                             <button class="btn btn-success" ng-click="submitEditForm(panel)" ng-if="panel.view == 'Edit'">
                                 <i class="fas fa-check"></i>
                             </button>
-                            <button class="btn btn-dark" ng-click="setView(panel, 'Setting')" ng-if="panel.altViews == 'Setting'" ng-class="{ 'active' : panel.view == 'Setting' }">
+                            <button class="btn btn-dark" ng-click="setView(panel, 'Setting')" id="pnl{{panel.id}}Setting" ng-if="::hasView(panel, 'Setting')" ng-class="{ 'active' : panel.view == 'Setting' }">
                                 <i class="fa fa-cog"></i>
                             </button>
                         </div>

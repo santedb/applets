@@ -3233,6 +3233,27 @@ function SanteDBWrapper() {
             api: _ami
         });
 
+        /**
+        * @type {ResourceWrapper}
+        * @memberOf SanteDBWrapper.resources
+        * @summary Wrapper for alien data
+        */
+        this.foreignData = new ResourceWrapper({
+            resource: "ForeignData",
+            accept: "application/json",
+            api: _ami
+        });
+
+         /**
+        * @type {ResourceWrapper}
+        * @memberOf SanteDBWrapper.resources
+        * @summary Wrapper for alien data mappings
+        */
+         this.foreignDataMap = new ResourceWrapper({
+            resource: "ForeignDataMap",
+            accept: "application/json",
+            api: _ami
+        });
     };
 
     // HACK: Wrapper pointer facility = place
@@ -3312,12 +3333,16 @@ function SanteDBWrapper() {
             */
         this.getAppSetting = function (key) {
             try {
-                if (!_masterConfig) throw new Exception("Exception", "error.invalidOperation", "You need to call configuration.getAsync() before calling getAppSetting()");
-                var _setting = _masterConfig.application.setting[key];
-                if (_setting)
-                    return _setting;
-                else
+                if(_masterConfig && _masterConfig.application && _masterConfig.application.setting) {
+                    var _setting = _masterConfig.application.setting[key];
+                    if (_setting)
+                        return _setting;
+                    else
+                        return null;
+                }
+                else {
                     return null;
+                }
             }
             catch (e) {
                 if (!e.$type)
@@ -3921,7 +3946,7 @@ function SanteDBWrapper() {
                     _auth.postAsync({
                         resource: "oauth2_token",
                         data: {
-                            grant_type: 'refresh_token',
+                            grant_type: 'x-refresh-cookie',
                             refresh_token: refreshToken || 'cookie',
                             scope: "*",
                             client_id: SanteDB.configuration.getClientId()

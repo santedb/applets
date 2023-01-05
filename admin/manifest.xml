@@ -119,6 +119,10 @@
       <icon>fas fa-hospital-alt</icon>
       <text lang="en">Facilities</text>
     </menuItem>
+    <menuItem context="org.santedb.admin" launch="santedb-admin.data.import.index" asset="/org.santedb.admin/views/data/import/index.html">
+      <icon>fas fa-file-csv</icon>
+      <text lang="en">Import</text>
+    </menuItem>
     <!--<menuItem context="org.santedb.admin" launch="santedb-admin.data.material.index" asset="/org.santedb.admin/views/data/materials/index.html">
       <icon>fas fa-pills</icon>
       <text lang="en">Materials</text>

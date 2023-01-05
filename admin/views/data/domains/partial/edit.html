@@ -23,7 +23,7 @@
                             <label class="control-label col-sm-12 col-md-2"
                                 for="sid">{{ 'ui.model.identityDomain.id' | i18n }}</label>
                             <div class="col-sm-12 col-md-10 input-group">
-                                <input name="sid" readonly="readonly" type="text" class="form-control"
+                                <input name="sid" autocomplete="__away" readonly="readonly" type="text" class="form-control"
                                     ng-model="domain.id" />
                                 <input-copy-button class="btn btn-outline-secondary" source="domain.id" />
                             </div>
@@ -32,7 +32,7 @@
                             <label class="control-label col-sm-12 col-md-2 required"
                                 for="domainName">{{ 'ui.model.identityDomain.domainName' | i18n }}</label>
                             <div class="col-sm-12 col-md-10 input-group">
-                                <input name="domainName" type="text" class="form-control"
+                                <input name="domainName" autocomplete="__away" type="text" class="form-control"
                                     ng-model="domain.domainName" pattern="^[A-Za-z_\-0-9]{3,}$"
                                     required="required" /></div>
                             <div class="col-sm-12 col-md-10 offset-md-2">
@@ -55,7 +55,7 @@
                             <label class="control-label col-sm-12 col-md-2 required"
                                 for="oid">{{ 'ui.model.identityDomain.oid' | i18n }}</label>
                             <div class="col-sm-12 col-md-10 input-group">
-                                <input name="oid" type="text" class="form-control" ng-model="domain.oid"
+                                <input name="oid" type="text" autocomplete="__away" class="form-control" ng-model="domain.oid"
                                     pattern="^[0-9]*?[0-9\.]*$" required="required" /> </div>
                             <div class="col-sm-12 col-md-10 offset-md-2">
                                 <div ng-show="targetForm.oid.$error['duplicate']" class="alert-danger">
@@ -89,7 +89,7 @@
                             <label class="control-label col-sm-12 col-md-2 required"
                                 for="name">{{ 'ui.model.identityDomain.name' | i18n }}</label>
                             <div class="col-sm-12 col-md-10 input-group">
-                                <input name="name" type="text" class="form-control" ng-model="domain.name"
+                                <input name="name" type="text"  autocomplete="__away" class="form-control" ng-model="domain.name"
                                     maxlength="64" required="required" /> </div>
                             <div class="col-sm-12 col-md-10 offset-md-2">
                                 <div ng-show="targetForm.name.$error['required'] &amp;&amp; targetForm.$submitted"
@@ -102,7 +102,7 @@
                             <label class="control-label col-sm-12 col-md-2"
                                 for="validation">{{ 'ui.model.identityDomain.validation' | i18n }}</label>
                             <div class="col-sm-12 col-md-10 input-group">
-                                <input name="validation" type="text" class="form-control"
+                                <input name="validation"  autocomplete="__away" type="text" class="form-control"
                                     ng-model="domain.validation" maxlength="256" /> </div>
 
                         </div>

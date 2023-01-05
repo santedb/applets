@@ -38,7 +38,7 @@
                         <tr ng-repeat="p in currentJob.parameters">
                             <th>{{ p.key }}</th>
                             <td ng-switch="p.type">
-                                <input ng-model="p.value" class="form-control" type="text" ng-switch-when="String" />
+                                <input ng-model="p.value" class="form-control" type="text" autocomplete="__away" ng-switch-when="String" />
                                 <input ng-model="p.value" type="checkbox" ng-switch-when="Boolean" />
                                 <input ng-model="p.value" class="form-control" type="number" ng-switch-when="Integer" />
                             </td>

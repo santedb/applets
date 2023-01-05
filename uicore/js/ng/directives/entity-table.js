@@ -349,7 +349,7 @@ angular.module('santedb-lib')
                     var bindButtons = function (element, buttonBar) {
                         dt.buttons().container().appendTo($(buttonSelector, dt.table().container()));
                         if (dt.buttons().container().length == 0) {
-                            $timeout(() => bindButtons(element, buttonBar), 100);
+                            $timeout(() => bindButtons(element, buttonBar), 200);
                         } else if (buttonBar) {
                             $(buttonBar).appendTo($(buttonSelector, dt.table().container()));
                         }

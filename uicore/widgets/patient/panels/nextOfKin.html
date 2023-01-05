@@ -1,11 +1,13 @@
 <div xmlns="http://www.w3.org/1999/xhtml" xmlns:sdb="http://santedb.org/applet" class="container-fluid"
     oc-lazy-load="{ name: 'PatientDemographicsWidgetController', files: ['/org.santedb.uicore/controllers/widgets/patientWidget.js'] }">
-    <sdb:widget order="15" name="org.santedb.widget.patient.nok" altViews="Edit" headerClass="bl-light" size="Medium"
+    <sdb:widget order="15" name="org.santedb.widget.patient.nok"  headerClass="bl-light" size="Medium"
         type="Panel" context="org.santedb.patient.demographics">
         <sdb:icon>fas fa-users</sdb:icon>
         <sdb:description lang="en">Patient Family Members</sdb:description>
+        <sdb:views>
+            <sdb:view type="Edit" />
+        </sdb:views>
     </sdb:widget>
-
     <div class="row" ng-if="!scopedObject">
         <div class="col">
             <p class="m-auto"><i class="fas fa-circle-notch fa-spin"></i> {{ 'ui.wait' | i18n }}</p>

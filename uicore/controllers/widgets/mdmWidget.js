@@ -9,7 +9,7 @@ angular.module('santedb').controller('MasterDataManagementController', ['$scope'
     // Render entity information
     $scope.renderEntityInfo = function (entity) {
 
-        return SanteDB.display.renderPatientAsString(entity, $rootScope.system.config.application.setting['aa.preferred']);
+        return SanteDB.display.renderPatientAsString(entity, SanteDB.configuration.getAppSetting('aa.preferred'));
 
     }
 

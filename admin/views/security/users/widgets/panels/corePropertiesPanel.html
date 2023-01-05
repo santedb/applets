@@ -29,7 +29,7 @@
         <div class="form-group row">
             <label class="col-sm-12 col-md-2 control-label" for="sid">{{ 'ui.model.securityUser.id' | i18n }}</label>
             <div class="col-sm-12 col-md-10 input-group">
-                <input name="sid" readonly="readonly" type="text" class="form-control"
+                <input name="sid" readonly="readonly" type="text" class="form-control" autocomplete="__away"
                     ng-model="scopedObject.entity.id" />
                 <input-copy-button class="btn btn-outline-secondary" source="scopedObject.entity.id" />
             </div>
@@ -38,7 +38,7 @@
             <label class="col-sm-12 col-md-2 control-label"
                 for="username">{{ 'ui.model.securityUser.userName' | i18n }}</label>
             <div class="col-sm-12 col-md-10 input-group">
-                <input name="username" ng-readonly="scopedObject.entity.id" type="text" class="form-control"
+                <input name="username" ng-readonly="scopedObject.entity.id" type="text" class="form-control" autocomplete="__away"
                     pattern="^[A-Za-z0-9_\.\@]{3,}" minlength="3" maxlength="32" required="required"
                     ng-model="scopedObject.entity.userName" />
                 <input-copy-button id="usernameCopyButton" class="btn btn-outline-secondary"
