@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<NotificationTemplate xmlns="http://santedb.org/notification" lang="en" id="org.santedb.notifications.mfa.sms">
+    <Subject>Your SanteDB TFA Code</Subject>
+    <![CDATA[Your SanteDB TFA Code is ${code}]]>
+</NotificationTemplate>
