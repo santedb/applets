@@ -3244,12 +3244,12 @@ function SanteDBWrapper() {
             api: _ami
         });
 
-         /**
-        * @type {ResourceWrapper}
-        * @memberOf SanteDBWrapper.resources
-        * @summary Wrapper for alien data mappings
-        */
-         this.foreignDataMap = new ResourceWrapper({
+        /**
+       * @type {ResourceWrapper}
+       * @memberOf SanteDBWrapper.resources
+       * @summary Wrapper for alien data mappings
+       */
+        this.foreignDataMap = new ResourceWrapper({
             resource: "ForeignDataMap",
             accept: "application/json",
             api: _ami
@@ -3333,7 +3333,7 @@ function SanteDBWrapper() {
             */
         this.getAppSetting = function (key) {
             try {
-                if(_masterConfig && _masterConfig.application && _masterConfig.application.setting) {
+                if (_masterConfig && _masterConfig.application && _masterConfig.application.setting) {
                     var _setting = _masterConfig.application.setting[key];
                     if (_setting)
                         return _setting;
@@ -4234,33 +4234,34 @@ function SanteDBWrapper() {
     var _magic = null;
 
     // Setup JQuery to send up authentication and cookies!
-    $.ajaxSetup({
-        cache: false,
-        beforeSend: function (data, settings) {
+    if (jQuery) {
+        $.ajaxSetup({
+            cache: false,
+            beforeSend: function (data, settings) {
 
-            if (!settings.noAuth) {
-                var elevatorToken = _elevator ? _elevator.getToken() : null;
-                if (elevatorToken) {
-                    data.setRequestHeader("Authorization", "BEARER " +
-                        elevatorToken);
+                if (!settings.noAuth) {
+                    var elevatorToken = _elevator ? _elevator.getToken() : null;
+                    if (elevatorToken) {
+                        data.setRequestHeader("Authorization", "BEARER " +
+                            elevatorToken);
+                    }
+                    // else if (window.sessionStorage.getItem('token'))
+                    //     data.setRequestHeader("Authorization", "BEARER " +
+                    //         window.sessionStorage.getItem("token"));
+                    if (!_magic)
+                        _magic = __SanteDBAppService.GetMagic();
+
                 }
-                // else if (window.sessionStorage.getItem('token'))
-                //     data.setRequestHeader("Authorization", "BEARER " +
-                //         window.sessionStorage.getItem("token"));
-                if (!_magic)
-                    _magic = __SanteDBAppService.GetMagic();
-
+                data.setRequestHeader("X-SdbLanguage", SanteDB.locale.getLocale()); // Set the UI locale
+                data.setRequestHeader("X-SdbMagic", _magic);
+            },
+            converters: {
+                "text json": function (data) {
+                    return $.parseJSON(data, true);
+                }
             }
-            data.setRequestHeader("X-SdbLanguage", SanteDB.locale.getLocale()); // Set the UI locale
-            data.setRequestHeader("X-SdbMagic", _magic);
-        },
-        converters: {
-            "text json": function (data) {
-                return $.parseJSON(data, true);
-            }
-        }
-    });
-
+        });
+    }
 };
 
 /**
