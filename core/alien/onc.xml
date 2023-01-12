@@ -41,7 +41,7 @@
                     <args>
                         <int>10000</int>
                     </args>
-                </transfrm>
+                  </transform>
             </transforms>
         </map>
         <map>

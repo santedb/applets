@@ -293,6 +293,7 @@ angular.module('santedb-lib')
                                 var cause = e;
                                 while (cause.cause)
                                     cause = cause.cause;
+                                cause.detail = cause.detail || {};
                                 scope.isRendering = false;
                                 setReportContent(`<div class='alert alert-info'><i class="fas fa-exclamation-triangle"></i> ${SanteDB.locale.getString(cause.message)} - ${cause.detail.statusText} - ${cause.detail.responseText}</div>`, true);
                             });
