@@ -58,7 +58,7 @@ angular.module('santedb').controller('ForeignDataUploadController', ["$scope", "
             },
             error: function (xhr, status, error) {
                 console.log('error');
-                toastr.error(SanteDB.locale.getString('ui.admin.alien.upload.success'));
+                toastr.error(SanteDB.locale.getString('ui.admin.alien.upload.error', { status: status, error: error }));
                 SanteDB.display.buttonWait("#btnSubmit", false);
 
             }

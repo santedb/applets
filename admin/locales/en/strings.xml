@@ -265,4 +265,7 @@
     <string name="ui.admin.pubsub.save.error">Pub-sub channel {name} failed save : {reason}</string>
 
     
+    <!-- Import -->
+    <string name="org.santedb.widget.admin.panel.data.import.file">Import Details</string>
+    <string name="org.santedb.widget.admin.panel.data.import.issues">Detected Issues</string>
 </resources>
