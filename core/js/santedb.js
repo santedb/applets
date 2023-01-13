@@ -1061,7 +1061,7 @@ function ResourceWrapper(_config) {
      * @description The patching operation is used to update a portion of the resource without subimtting the entirety of the object to the dCDR or iCDR 
      *               server ({@link https://help.santesuite.org/developers/service-apis/health-data-service-interface-hdsi/patching})
      */
-    this.patchAsync = function (id, etag, patch, upstream, force, state) {
+    this.patchAsync = function (id, etag, patch, force, upstream, state) {
         if (patch.$type !== "Patch")
             throw new Exception("ArgumentException", "error.invalidType", `Invalid type, resource wrapper expects ${_config.resource} however ${data.$type} specified`);
 
@@ -1076,6 +1076,11 @@ function ResourceWrapper(_config) {
         if (force) {
             headers['X-Patch-Force'] = true;
         }
+
+        patch.appliesTo = patch.appliesTo || {};
+        patch.appliesTo.id = patch.appliesTo.id || id;
+        patch.appliesTo.type = patch.appliesTo.type || _config.resource;
+
         // Send PUT
         return _config.api.patchAsync({
             headers: headers,
@@ -1873,6 +1878,7 @@ function SanteDBWrapper() {
 
         // JWS Pattern
         var jwsDataPattern = /^(.*?)\.(.*?)\.(.*?)$/;
+        var svrpPattern = /^svrp\:\/\/(.*)$/;
 
         /**
          * @memberof SanteDBWrapper.ApplicationApi
@@ -1966,6 +1972,9 @@ function SanteDBWrapper() {
                 var idData = JSON.parse(atob(match[2]));
                 return idData.id[0].value;
             }
+            else if(srvpPattern.test(data)) {
+
+            }
             else {
                 var idDomain = SanteDB.application.classifyIdentifier(data);
                 if (idDomain.length == 1) {
@@ -1994,6 +2003,13 @@ function SanteDBWrapper() {
                 // QR Code is a signed code
                 if (jwsDataPattern.test(qrCodeData)) {
                     var result = await SanteDB.application.ptrSearchAsync(qrCodeData, !noValidate, upstream || false);
+                    result.$novalidate = noValidate;
+                    result.$upstream = upstream;
+                    return result;
+                }
+                else if(svrpPattern.test(qrCodeData)) {
+                    var match = svrpPattern.exec(qrCodeData);
+                    var result = await SanteDB.application.ptrSearchAsync(atob(match[1]), !noValidate, upstream || false);
                     result.$novalidate = noValidate;
                     result.$upstream = upstream;
                     return result;
@@ -2658,6 +2674,9 @@ function SanteDBWrapper() {
             try {
                 var configuration = {
                     resource: "_ptr",
+                    headers: {
+                        accept: _viewModelJsonMime
+                    },
                     query: { code: jwsData, validate: validateSignature, _upstream: upstream }
                 };
                 return _hdsi.searchAsync(configuration);

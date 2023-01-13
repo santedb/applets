@@ -248,7 +248,7 @@ angular.module('santedb-lib')
 
                             query["_count"] = data.length;
                             query["_offset"] = data.start;
-
+                            query["_includeTotal"] = true;
                             if (!query._noexec) {
 
                                 // Unfortunately the data tables control passes each keystroke to the server

@@ -86,6 +86,14 @@ angular.module('santedb-lib')
                             iconography = "fa-user-md";
                             break;
                     }
+
+                    // Resolve MDM entity to proper type
+                    if(entity.$type == 'Entity' && entity.classConcept == "49328452-7e30-4dcd-94cd-fd532d111578" && entity.typeConceptModel) {
+                        entity = await SanteDB.resources[entity.typeConceptModel.mnemonic.toCamelCase()].getAsync(entity.id, "min");
+                        if(entity.$type == 'Entity') {
+                            console.warn("MDM load did not work!", entity);
+                        }
+                    }
                     if (entity.$type == "Patient") {
                         if (entity.name)
                             retVal += `\nrel${entity.id.substr(0, 8)}["<a class='mr-2 ${extraClass}' title='View Record' href='#!/mpi/patient/${entity.id}'><i class='fas fa-fw ${iconography} mr-1'></i> ${SanteDB.display.renderEntityName(entity.name)}</a>"]`;
