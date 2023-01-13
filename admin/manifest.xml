@@ -149,5 +149,7 @@
     <definition>/org.santedb.admin/model/relationship_full.xml</definition>
   </viewModel>
 
-  <strings lang="en" extern="~/locales/en/strings.xml"/>
+  <strings lang="en" extern="~/locales/en/strings.xml">
+    <string priority="0"/>
+  </strings>
 </AppletManifest>
