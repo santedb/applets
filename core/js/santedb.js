@@ -364,16 +364,29 @@ function APIWrapper(_config) {
                         if (xhr && response.getResponseHeader("etag"))
                             xhr.etag = response.getResponseHeader("etag");
                         if (fulfill) {
+                            if(xhr && configuration.state != null) 
+                            {
+                                xhr.$state = configuration.state;
+                            }
                             if (configuration.headers && configuration.headers["Accept"] == _viewModelJsonMime) {
-                                fulfill(_resolveObjectRefs(xhr), configuration.state);
+                                fulfill(_resolveObjectRefs(xhr));
                             }
                             else {
-                                fulfill(xhr, configuration.state);
+                                fulfill(xhr);
                             }
                         }
                     }
                     catch (e) {
-                        if (reject) reject(e.responseJSON || e, configuration.state);
+                        if (reject){
+                            var result = e.responseJSON || e;
+                            try {
+                                result.$state = configuration.state;
+                                reject(e.responseJSON || e);
+                            }
+                            catch (ex) {
+                                reject(e.responseJSON || e);
+                            }
+                        }
                     }
                 },
                 error: function (e, data, setting) {
@@ -386,6 +399,9 @@ function APIWrapper(_config) {
                         try { error = JSON.parse(e.responseText); }
                         catch (e) { };
 
+                    if(error && configuration.state != null) {
+                        error.$state = configuration.state;
+                    }
                     if (reject) {
                         if (error && error.error !== undefined) // oauth2
                             reject(new Exception(error.type, error.error, error.error_description, error.caused_by), configuration.state);

@@ -1,111 +1,110 @@
 <ForeignDataMap xmlns="http://santedb.org/import">
   <id>4ABA7190-B975-4623-92A2-7EF105E0C428</id>
   <name>ONC Patient Matching Challenge</name>
-  <description>Converts data from the ONC patient matching competition into SanteDB format. You must have an EID and MRN identity domain configured.</description>
+  <description>Converts data from the ONC patient matching competition into SanteDB format. You must
+    have an EID and MRN identity domain configured.</description>
   <maps>
-    <map abortOnError="false" required="true"  concurrentImport="true">
-      <resource type="Patient" />
-      <existing>
+    <map abortOnError="false" required="true" concurrentImport="true">
+      <resource type="Patient">
+        <!--<existing>
         <where>identifier[EID].value=$EnterpriseID</where>
-      </existing>
-      <maps>
-        <map required="true" replace="true">
-          <source>EnterpriseID</source>
-          <target>identifier[EID].value</target>
-        </map>
-        <map required="false" replace="true">
-          <source>SSN</source>
-          <target>identifier[SSN].value</target>
-        </map>
-        <map required="false" replace="true">
+      </existing>-->
+        <maps>
+          <map required="true" replace="true">
+            <source>EnterpriseID</source>
+            <target>identifier[EID].value</target>
+          </map>
+          <map required="false" replace="true">
+            <source>SSN</source>
+            <target>identifier[SSN].value</target>
+          </map>
+          <map required="false" replace="true">
             <source>LAST</source>
             <target>name[OfficialRecord].component[Family].value</target>
-        </map>
-        <map required="false" replace="true">
+          </map>
+          <map required="false" replace="true">
             <source>FIRST</source>
             <target>name[OfficialRecord].component[Given].value</target>
-        </map>
-        <map required="false">
+          </map>
+          <map required="false">
             <source>MIDDLE</source>
             <target>name[OfficialRecord].component[Given].value</target>
-        </map>
-        <map required="false" replace="true">
+          </map>
+          <map required="false" replace="true">
             <source>SUFFIX</source>
             <target>name[OfficialRecord].component[Suffix].value</target>
-        </map>
-        <map>
+          </map>
+          <map>
             <source>DOB</source>
+            <transform transformer="EpochToDate">
+              <args>
+                <int>10000</int>
+              </args>
+            </transform>
             <target>dateOfBirth</target>
-            <transforms>
-                <transform transformer="EpochToDate">
-                    <args>
-                        <int>10000</int>
-                    </args>
-                  </transform>
-            </transforms>
-        </map>
-        <map>
-          <fixed>Day</fixed>
-          <target>dateOfBirthPrecision</target>
-        </map>
-        <map required="true" whenTargetMissing="Warning">
-          <source>GENDER</source>
-          <target>genderConcept</target>
-          <transforms>
+          </map>
+          <map>
+            <fixed>Day</fixed>
+            <target>dateOfBirthPrecision</target>
+          </map>
+          <map required="true" whenTargetMissing="Warning">
+            <source>GENDER</source>
             <transform transformer="EntityLookup">
               <args>
                 <string>Concept</string>
                 <string>mnemonic=:(nocase)$input</string>
               </args>
             </transform>
-          </transforms>
-        </map>
-        <map required="false" replace="true">
-          <source>ADDRESS1</source>
-          <target>address[HomeAddress].component[StreetAddressLine].value</target>
-        </map>
-        <map required="false"  replace="true">
-          <source>ADDRESS2</source>
-          <target>address[HomeAddress].component[UnitDesignator].value</target>
-        </map>
-        <map required="false" replace="true">
-          <source>CITY</source>
-          <target>address[HomeAddress].component[City].value</target>
-        </map>
-        <map required="false" replace="true">
-          <source>STATE</source>
-          <target>address[HomeAddress].component[State].value</target>
-        </map>
-        <map required="false" replace="true">
-          <fixed>USA</fixed>
-          <target>address[HomeAddress].component[Country].value</target>
-        </map>
-        <map required="false" replace="true">
-          <source>ZIP</source>
-          <target>address[HomeAddress].component[PostalCode].value</target>
-        </map>
-        <map required="false" replace="true">
+            <target>genderConcept</target>
+          </map>
+          <map required="false" replace="true">
+            <source>ADDRESS1</source>
+            <target>address[HomeAddress].component[StreetAddressLine].value</target>
+          </map>
+          <map required="false" replace="true">
+            <source>ADDRESS2</source>
+            <target>address[HomeAddress].component[UnitDesignator].value</target>
+          </map>
+          <map required="false" replace="true">
+            <source>CITY</source>
+            <target>address[HomeAddress].component[City].value</target>
+          </map>
+          <map required="false" replace="true">
+            <source>STATE</source>
+            <target>address[HomeAddress].component[State].value</target>
+          </map>
+          <map required="false" replace="true">
+            <fixed>USA</fixed>
+            <target>address[HomeAddress].component[Country].value</target>
+          </map>
+          <map required="false" replace="true">
+            <source>ZIP</source>
+            <target>address[HomeAddress].component[PostalCode].value</target>
+          </map>
+          <map required="false" replace="true">
             <source>PHONE</source>
             <target>telecom[PrimaryHome].value</target>
-        </map>
-        <map required="false" replace="true">
+          </map>
+          <map required="false" replace="true">
             <source>PHONE2</source>
             <target>telecom[MobileContact].value</target>
-        </map>
-        <map required="false" replace="true">
+          </map>
+          <map required="false" replace="true">
             <source>EMAIL</source>
             <target>telecom[WorkPlace].value</target>
-        </map>
-        <map required="false" replace="true">
-          <source>ALIAS</source>
-          <target>name[Anonymous].component.value</target>
-        </map>
-        <map required="false" replace="true">
-          <source>MOTHERS_MAIDEN_NAME</source>
-          <target>relationship[Mother].target@Person.name[MaidenName].component[Family].value</target>
-        </map>
-      
-      </maps>
+          </map>
+          <map required="false" replace="true">
+            <source>ALIAS</source>
+            <target>name[Anonymous].component.value</target>
+          </map>
+          <map required="false" replace="true">
+            <source>MOTHERS_MAIDEN_NAME</source>
+            <target>relationship[Mother].target@Person.name[MaidenName].component[Family].value</target>
+          </map>
+
+        </maps>
+      </resource>
+
     </map>
   </maps>
 </ForeignDataMap>

@@ -53,7 +53,7 @@ angular.module('santedb').controller('LogIndexController', ["$scope", "$rootScop
             {
                 orderable: false,
                 render: function(d, t, r, i) {
-                    return `<a class="btn btn-primary" ui-sref="santedb-admin.system.logs.view({ id: '${r.name}' })"><i class="fas fa-eye"></i> <span
+                    return `<a class="btn btn-primary" ui-sref="santedb-admin.system.logs.view({ id: '${r.name}', _upstream: ${$scope.extern} })"><i class="fas fa-eye"></i> <span
                     class="d-sm-none d-lg-inline"> {{ 'ui.action.view' | i18n }}</span></a>`;
                 }
             }
