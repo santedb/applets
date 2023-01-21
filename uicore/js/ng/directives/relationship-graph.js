@@ -53,8 +53,15 @@ angular.module('santedb-lib')
                     entity = await SanteDB.resources.entity.getAsync(entityRelationship.holder || entityRelationship.source);
                 }
                 else if (!entity || !entity.$ref && !entity.name)
-                    entity = entityRelationship.targetModel = await SanteDB.resources.patient.getAsync(entityRelationship.target);
-    
+                {
+                    if(entity.classConceptModel && entity.$type != entity.classConceptModel.mnemonic) {
+                        entity = entityRelationship.targetModel = await SanteDB.resources[entity.classConceptModel.mnemonic.toCamelCase()].getAsync(entityRelationship.target, "full");
+                    }
+                    else {
+                        entity = entityRelationship.targetModel = await SanteDB.resources.entity.getAsync(entityRelationship.target, "full");
+                    }
+                }
+
                 var extraClass = "";
                 if (entity && entity.statusConcept != StatusKeys.Active && entity.statusConcept != StatusKeys.New) 
                 {

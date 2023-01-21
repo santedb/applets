@@ -6,9 +6,9 @@
   <maps>
     <map abortOnError="false" required="true" concurrentImport="true">
       <resource type="Patient">
-        <!--<existing>
+      <existing>
         <where>identifier[EID].value=$EnterpriseID</where>
-      </existing>-->
+      </existing>
         <maps>
           <map required="true" replace="true">
             <source>EnterpriseID</source>

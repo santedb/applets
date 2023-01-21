@@ -1,281 +1,4 @@
-// SanteDB.Core.Auditing.AuditableObject, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
-//if(!AuditableObject)
-/**
- * @class
- * @constructor
- * @public
- * @summary Identifies an object that adds context to the audit
- * @property {AuditCode} customCode Custom id type code
- * @property {AuditableObjectIdType} idType Identifies the type of identifier supplied(see: {@link AuditableObjectIdType} for values)
- * @property {AuditableObjectLifecycle} lifecycle Identifies where in the lifecycle of the object this object is currently within(see: {@link AuditableObjectLifecycle} for values)
- * @property {string} name Data associated with the object
- * @property {ObjectDataExtension} dictionary Additional object data
- * @property {string} id Identifies the object in the event
- * @property {string} queryData Data associated with the object
- * @property {AuditableObjectRole} role Identifies the role type of the object(see: {@link AuditableObjectRole} for values)
- * @property {AuditableObjectType} type Identifies the type of object being expressed(see: {@link AuditableObjectType} for values)
- * @param {AuditableObject} copyData Copy constructor (if present)
- */
-function AuditableObject (copyData) { 
-	this.$type = 'AuditableObject';
-	if(copyData) {
-	/**
-	 * @summary Identifies the type of object being expressed
-	 * @type {AuditableObjectType} 
-	 */
-	this.type = copyData.type;
-	/**
-	 * @summary Identifies the role type of the object
-	 * @type {AuditableObjectRole} 
-	 */
-	this.role = copyData.role;
-	/**
-	 * @summary Data associated with the object
-	 * @type {string} 
-	 */
-	this.queryData = copyData.queryData;
-	/**
-	 * @summary Identifies the object in the event
-	 * @type {string} 
-	 */
-	this.id = copyData.id;
-	/**
-	 * @summary Additional object data
-	 * @type {ObjectDataExtension} 
-	 */
-	this.dictionary = copyData.dictionary;
-	/**
-	 * @summary Data associated with the object
-	 * @type {string} 
-	 */
-	this.name = copyData.name;
-	/**
-	 * @summary Identifies where in the lifecycle of the object this object is currently within
-	 * @type {AuditableObjectLifecycle} 
-	 */
-	this.lifecycle = copyData.lifecycle;
-	/**
-	 * @summary Identifies the type of identifier supplied
-	 * @type {AuditableObjectIdType} 
-	 */
-	this.idType = copyData.idType;
-	/**
-	 * @summary Custom id type code
-	 * @type {AuditCode} 
-	 */
-	this.customCode = copyData.customCode;
-	}
-}  // AuditableObject 
-// SanteDB.Core.Auditing.AuditActorData, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
-//if(!AuditActorData)
-/**
- * @class
- * @constructor
- * @public
- * @summary Data related to actors that participate in the event
- * @property {AuditCode} role Identifies the role(s) that the actor has played
- * @property {string} altUid Alternative user identifier
- * @property {string} apId Identifies the network access point from which the user accessed the system
- * @property {NetworkAccessPointType} apType Identifies the type of network access point(see: {@link NetworkAccessPointType} for values)
- * @property {string} uid The unique identifier for the user in the system
- * @property {boolean} isReq True if the user is the primary requestor
- * @property {string} uname The name of the user in the system
- * @param {AuditActorData} copyData Copy constructor (if present)
- */
-function AuditActorData (copyData) { 
-	this.$type = 'AuditActorData';
-	if(copyData) {
-	/**
-	 * @summary The name of the user in the system
-	 * @type {string} 
-	 */
-	this.uname = copyData.uname;
-	/**
-	 * @summary True if the user is the primary requestor
-	 * @type {boolean} 
-	 */
-	this.isReq = copyData.isReq;
-	/**
-	 * @summary The unique identifier for the user in the system
-	 * @type {string} 
-	 */
-	this.uid = copyData.uid;
-	/**
-	 * @summary Identifies the type of network access point
-	 * @type {NetworkAccessPointType} 
-	 */
-	this.apType = copyData.apType;
-	/**
-	 * @summary Identifies the network access point from which the user accessed the system
-	 * @type {string} 
-	 */
-	this.apId = copyData.apId;
-	/**
-	 * @summary Alternative user identifier
-	 * @type {string} 
-	 */
-	this.altUid = copyData.altUid;
-	/**
-	 * @summary Identifies the role(s) that the actor has played
-	 * @type {AuditCode} 
-	 */
-	this.role = copyData.role;
-	}
-}  // AuditActorData 
-// SanteDB.Core.Auditing.AuditCode, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
-//if(!AuditCode)
-/**
- * @class
- * @constructor
- * @public
- * @summary Represents an audit code.
- * @property {string} code Gets or sets the code of the code value.
- * @property {string} system Gets or sets the system in which the code value is drawn.
- * @property {string} systemName Gets or sets the human readable name of the code system.
- * @property {string} systemVersion Gets or sets the version of the code system.
- * @property {string} display Gets or sets the display name.
- * @param {AuditCode} copyData Copy constructor (if present)
- */
-function AuditCode (copyData) { 
-	this.$type = 'AuditCode';
-	if(copyData) {
-	/**
-	 * @summary Gets or sets the display name.
-	 * @type {string} 
-	 */
-	this.display = copyData.display;
-	/**
-	 * @summary Gets or sets the version of the code system.
-	 * @type {string} 
-	 */
-	this.systemVersion = copyData.systemVersion;
-	/**
-	 * @summary Gets or sets the human readable name of the code system.
-	 * @type {string} 
-	 */
-	this.systemName = copyData.systemName;
-	/**
-	 * @summary Gets or sets the system in which the code value is drawn.
-	 * @type {string} 
-	 */
-	this.system = copyData.system;
-	/**
-	 * @summary Gets or sets the code of the code value.
-	 * @type {string} 
-	 */
-	this.code = copyData.code;
-	}
-}  // AuditCode 
-// SanteDB.Core.Auditing.AuditData, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
-//if(!AuditData)
-/**
- * @class
- * @constructor
- * @public
- * @extends IdentifiedData
- * @summary Specific information related to an audit
- * @property {ActionType} action Identifies the action code(see: {@link ActionType} for values)
- * @property {AuditActorData} actor Represents the actors within the audit event
- * @property {AuditableObject} object Represents other objects of interest
- * @property {EventIdentifierType} event Identifies the event(see: {@link EventIdentifierType} for values)
- * @property {AuditCode} type Identifies the type of event
- * @property {OutcomeIndicator} outcome Identifies the outcome of the event(see: {@link OutcomeIndicator} for values)
- * @property {Date} timestamp Event timestamp
- * @property {object} meta Metadata about the audit
- * @property {AuditMetadata} meta.classifier  where classifier is from {@link AuditMetadata} key
- * @property {Date} modifiedOn Represents the modified on
- * @property {string} id Gets or sets the primary identifying UUID of this object
- * @property {BatchOperationType} operation Gets or sets the operation(see: {@link BatchOperationType} for values)
- * @property {string} $type Gets the type registration of this object
- * @param {AuditData} copyData Copy constructor (if present)
- */
-function AuditData (copyData) { 
-	this.$type = 'AuditData';
-	if(copyData) {
-	/**
-	 * @summary Gets or sets the operation
-	 * @type {BatchOperationType} 
-	 */
-	this.operation = copyData.operation;
-	/**
-	 * @summary Gets or sets the primary identifying UUID of this object
-	 * @type {string} 
-	 */
-	this.id = copyData.id;
-	/**
-	 * @summary Represents the modified on
-	 * @type {Date} 
-	 */
-	this.modifiedOn = copyData.modifiedOn;
-	/**
-	 * @summary Metadata about the audit
-	 * @type {object} 
-	 */
-	this.meta = copyData.meta;
-	/**
-	 * @summary Event timestamp
-	 * @type {Date} 
-	 */
-	this.timestamp = copyData.timestamp;
-	/**
-	 * @summary Identifies the outcome of the event
-	 * @type {OutcomeIndicator} 
-	 */
-	this.outcome = copyData.outcome;
-	/**
-	 * @summary Identifies the type of event
-	 * @type {AuditCode} 
-	 */
-	this.type = copyData.type;
-	/**
-	 * @summary Identifies the event
-	 * @type {EventIdentifierType} 
-	 */
-	this.event = copyData.event;
-	/**
-	 * @summary Represents other objects of interest
-	 * @type {AuditableObject} 
-	 */
-	this.object = copyData.object;
-	/**
-	 * @summary Represents the actors within the audit event
-	 * @type {AuditActorData} 
-	 */
-	this.actor = copyData.actor;
-	/**
-	 * @summary Identifies the action code
-	 * @type {ActionType} 
-	 */
-	this.action = copyData.action;
-	}
-}  // AuditData 
-// SanteDB.Core.Auditing.AuditMetadata, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
-//if(!AuditMetadata)
-/**
- * @class
- * @constructor
- * @public
- * @summary Represents audit metadata such as submission time, submission sequence, etc.
- * @property {AuditMetadataKey} key Gets or sets the metadata key(see: {@link AuditMetadataKey} for values)
- * @property {string} value Gets or sets the process name
- * @param {AuditMetadata} copyData Copy constructor (if present)
- */
-function AuditMetadata (copyData) { 
-	this.$type = 'AuditMetadata';
-	if(copyData) {
-	/**
-	 * @summary Gets or sets the process name
-	 * @type {string} 
-	 */
-	this.value = copyData.value;
-	/**
-	 * @summary Gets or sets the metadata key
-	 * @type {AuditMetadataKey} 
-	 */
-	this.key = copyData.key;
-	}
-}  // AuditMetadata 
-// SanteDB.Core.Model.Association`1, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Association`1, SanteDB.Core.Model, Version=3.0.0.0, Culture=neutral, PublicKeyToken=null
 //if(!Association)
 /**
  * @class
@@ -322,7 +45,7 @@ function Association (copyData) {
 	this.modifiedOn = copyData.modifiedOn;
 	}
 }  // Association 
-// SanteDB.Core.Model.BaseEntityData, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.BaseEntityData, SanteDB.Core.Model, Version=3.0.0.0, Culture=neutral, PublicKeyToken=null
 //if(!BaseEntityData)
 /**
  * @class
@@ -331,9 +54,9 @@ function Association (copyData) {
  * @abstract
  * @extends IdentifiedData
  * @summary Represents the root of all model classes in the SanteDB Core
- * @description This abstract class is used to encapsulate the key properties of base data elements in the SanteDB
+ * @description <p>This abstract class is used to encapsulate the key properties of base data elements in the SanteDB
             model, namely it keeps track of which entities created and obsoleted a particular resource and when those
-            events occurred.
+            events occurred.</p>
  * @property {Date} creationTimeModel [Delay loaded from creationTime],  Gets or sets the time at which the data was created
  * @property {Date} creationTime Gets or sets the creation time as an ISO date format
  * @property {Date} obsoletionTimeModel [Delay loaded from obsoletionTime],  Gets or sets the time when the data is or will become invalid
@@ -404,14 +127,17 @@ function BaseEntityData (copyData) {
 	this.creationTimeModel = copyData.creationTimeModel;
 	}
 }  // BaseEntityData 
-// SanteDB.Core.Model.IdentifiedData, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.IdentifiedData, SanteDB.Core.Model, Version=3.0.0.0, Culture=neutral, PublicKeyToken=null
 //if(!IdentifiedData)
 /**
  * @class
  * @constructor
  * @public
  * @abstract
- * @summary Represents data that is identified by a key
+ * @summary A class which represent data which has a keyed identifier
+ * @description <p>The IdentifiedData class is the root of the SanteDB business object model, 
+            and is the class from which all other business object model instances are derived.
+            </p><p>This class contains </p>
  * @property {string} id Gets or sets the primary identifying UUID of this object
  * @property {BatchOperationType} operation Gets or sets the operation(see: {@link BatchOperationType} for values)
  * @property {string} $type Gets the type registration of this object
@@ -438,7 +164,7 @@ function IdentifiedData (copyData) {
 	this.id = copyData.id;
 	}
 }  // IdentifiedData 
-// SanteDB.Core.Model.NonVersionedEntityData, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.NonVersionedEntityData, SanteDB.Core.Model, Version=3.0.0.0, Culture=neutral, PublicKeyToken=null
 //if(!NonVersionedEntityData)
 /**
  * @class
@@ -446,7 +172,9 @@ function IdentifiedData (copyData) {
  * @public
  * @extends BaseEntityData
  * @summary Updateable entity data which is not versioned
- * @description Non versioned data in SanteDB means that data can be updated (modified) in the underlying data store and changes are not tracked.
+ * @description <p>In SanteDB, objects which are non-versioned don't track changes over time, and therefore provide an updated time
+            to allow the tracking of the last update to the object</p><p>Because these objects are non-versioned, updates are destructive in that data is replaced in the database
+            at a field level.</p>
  * @property {Date} updatedTime Gets or sets the time that this object was last modified in ISO format
  * @property {Date} modifiedOn Gets the time this item was modified
  * @property {SecurityProvenance} updatedByModel [Delay loaded from updatedBy],  Gets or sets the user that updated this base data
@@ -534,7 +262,7 @@ function NonVersionedEntityData (copyData) {
 	this.updatedTime = copyData.updatedTime;
 	}
 }  // NonVersionedEntityData 
-// SanteDB.Core.Model.VersionedAssociation`1, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.VersionedAssociation`1, SanteDB.Core.Model, Version=3.0.0.0, Culture=neutral, PublicKeyToken=null
 //if(!VersionedAssociation)
 /**
  * @class
@@ -543,10 +271,12 @@ function NonVersionedEntityData (copyData) {
  * @abstract
  * @extends Association
  * @summary Represents a relational class which is bound on a version boundary
- * @description <p>This association is used to link two complex objects to one another when the version 
-            of the source object at time of assoication carries meaning.</p>
- * @property {number} effectiveVersionSequence Gets or sets the version sequence of the source object when this assoication became active
- * @property {number} obsoleteVersionSequence Gets or sets the sequence identifier of the source when this association is no longer active
+ * @description <p>This association is used to link two complex objects to one another when the version
+            of the source object at time of assoication carries meaning. A versioned association has
+            an effective and obsolete version sequence indicator which allows callers to determine
+            at which version of a particular object the relationship was active (or became active)</p>
+ * @property {Int64} effectiveVersionSequence Gets or sets the version sequence of the source object when this assoication became active
+ * @property {Int64} obsoleteVersionSequence Gets or sets the sequence identifier of the source when this association is no longer active
  * @property {Date} modifiedOn
  * @property {string} source
  * @property {VersionedEntityData} sourceModel [Delay loaded from source], 
@@ -582,17 +312,17 @@ function VersionedAssociation (copyData) {
 	this.modifiedOn = copyData.modifiedOn;
 	/**
 	 * @summary Gets or sets the sequence identifier of the source when this association is no longer active
-	 * @type {number} 
+	 * @type {Int64} 
 	 */
 	this.obsoleteVersionSequence = copyData.obsoleteVersionSequence;
 	/**
 	 * @summary Gets or sets the version sequence of the source object when this assoication became active
-	 * @type {number} 
+	 * @type {Int64} 
 	 */
 	this.effectiveVersionSequence = copyData.effectiveVersionSequence;
 	}
 }  // VersionedAssociation 
-// SanteDB.Core.Model.VersionedEntityData`1, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.VersionedEntityData`1, SanteDB.Core.Model, Version=3.0.0.0, Culture=neutral, PublicKeyToken=null
 //if(!VersionedEntityData)
 /**
  * @class
@@ -601,11 +331,19 @@ function VersionedAssociation (copyData) {
  * @abstract
  * @extends BaseEntityData
  * @summary Represents versioned based data
- * @description <p>In SanteDB, certain objects are not actually updated or deleted, rather they are subsequent versions
-            of the data appended to the previous. This class represents the base class of all objects which are versioned objects</p>
+ * @description <p>In the SanteDB model, certain objects (like Concepts, Entities, and Acts) aren't ever updated or deleted. Rather, the
+            updating or deletion of an object will result in a new version</p><p>The 
+    {@link P:ObsoletionTime}
+   property is used to indicate the version of the object is obsolete, rather
+            than the object itself. This means that a series of these 
+    {@link VersionedEntityData`1}
+   compose a single logical
+            instance of the object.</p><p>The previous versions (representations of this object) can be retrieved using the 
+    {@link P:PreviousVersion}
+   property</p>
  * @property {string} previousVersion Gets or sets the UUID of the previous version of this record
  * @property {string} version Gets or sets the UUID of the current version of this object
- * @property {number} sequence The sequence number of the version (for ordering)
+ * @property {Int64} sequence The sequence number of the version (for ordering)
  * @property {Date} creationTimeModel [Delay loaded from creationTime],  Gets or sets the time at which the data was created
  * @property {Date} creationTime Gets or sets the creation time as an ISO date format
  * @property {Date} obsoletionTimeModel [Delay loaded from obsoletionTime],  Gets or sets the time when the data is or will become invalid
@@ -676,7 +414,7 @@ function VersionedEntityData (copyData) {
 	this.creationTimeModel = copyData.creationTimeModel;
 	/**
 	 * @summary The sequence number of the version (for ordering)
-	 * @type {number} 
+	 * @type {Int64} 
 	 */
 	this.sequence = copyData.sequence;
 	/**
@@ -691,232 +429,7 @@ function VersionedEntityData (copyData) {
 	this.previousVersion = copyData.previousVersion;
 	}
 }  // VersionedEntityData 
-// SanteDB.Core.Model.Warehouse.DatamartDefinition, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
-//if(!DatamartDefinition)
-/**
- * @class
- * @constructor
- * @public
- * @summary Represents a datamart definition which contains the definition of fields for a datamart
- * @property {string} id Gets or sets the identifier of the data mart
- * @property {string} name Gets or sets the name of the data mart
- * @property {Date} creationTime Gets or sets the time that the data mart was created
- * @property {DatamartSchema} schema Gets or sets the datamart schema
- * @param {DatamartDefinition} copyData Copy constructor (if present)
- */
-function DatamartDefinition (copyData) { 
-	this.$type = 'DatamartDefinition';
-	if(copyData) {
-	/**
-	 * @summary Gets or sets the datamart schema
-	 * @type {DatamartSchema} 
-	 */
-	this.schema = copyData.schema;
-	/**
-	 * @summary Gets or sets the time that the data mart was created
-	 * @type {Date} 
-	 */
-	this.creationTime = copyData.creationTime;
-	/**
-	 * @summary Gets or sets the name of the data mart
-	 * @type {string} 
-	 */
-	this.name = copyData.name;
-	/**
-	 * @summary Gets or sets the identifier of the data mart
-	 * @type {string} 
-	 */
-	this.id = copyData.id;
-	}
-}  // DatamartDefinition 
-// SanteDB.Core.Model.Warehouse.DatamartSchema, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
-//if(!DatamartSchema)
-/**
- * @class
- * @constructor
- * @public
- * @summary Represents a datamart schema which gives hints to the properties to be stored from 
-            a dynamic object
- * @property {string} id Gets or sets the unique identifier for the schema itself
- * @property {string} name Gets or sets the name of the element in the database
- * @property {DatamartSchemaProperty} property Gets or sets the property names for the schema element
- * @property {DatamartStoredQuery} sqp Gets or sets the query associated with the schema
- * @param {DatamartSchema} copyData Copy constructor (if present)
- */
-function DatamartSchema (copyData) { 
-	this.$type = 'DatamartSchema';
-	if(copyData) {
-	/**
-	 * @summary Gets or sets the query associated with the schema
-	 * @type {DatamartStoredQuery} 
-	 */
-	this.sqp = copyData.sqp;
-	/**
-	 * @summary Gets or sets the property names for the schema element
-	 * @type {DatamartSchemaProperty} 
-	 */
-	this.property = copyData.property;
-	/**
-	 * @summary Gets or sets the name of the element in the database
-	 * @type {string} 
-	 */
-	this.name = copyData.name;
-	/**
-	 * @summary Gets or sets the unique identifier for the schema itself
-	 * @type {string} 
-	 */
-	this.id = copyData.id;
-	}
-}  // DatamartSchema 
-// SanteDB.Core.Model.Warehouse.DatamartSchemaProperty, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
-//if(!DatamartSchemaProperty)
-/**
- * @class
- * @constructor
- * @public
- * @summary Represents a single property on the data mart schema
- * @property {string} id Gets or sets the identifier of the warehouse property
- * @property {string} name Gets or sets the name of the property
- * @property {SchemaPropertyType} type Gets or sets the type of property(see: {@link SchemaPropertyType} for values)
- * @property {SchemaPropertyAttributes} attributes Gets or sets the attributes associated with the property(see: {@link SchemaPropertyAttributes} for values)
- * @property {DatamartSchemaProperty} property Gets or sets the sub-properties of this property
- * @param {DatamartSchemaProperty} copyData Copy constructor (if present)
- */
-function DatamartSchemaProperty (copyData) { 
-	this.$type = 'DatamartSchemaProperty';
-	if(copyData) {
-	/**
-	 * @summary Gets or sets the sub-properties of this property
-	 * @type {DatamartSchemaProperty} 
-	 */
-	this.property = copyData.property;
-	/**
-	 * @summary Gets or sets the attributes associated with the property
-	 * @type {SchemaPropertyAttributes} 
-	 */
-	this.attributes = copyData.attributes;
-	/**
-	 * @summary Gets or sets the type of property
-	 * @type {SchemaPropertyType} 
-	 */
-	this.type = copyData.type;
-	/**
-	 * @summary Gets or sets the name of the property
-	 * @type {string} 
-	 */
-	this.name = copyData.name;
-	/**
-	 * @summary Gets or sets the identifier of the warehouse property
-	 * @type {string} 
-	 */
-	this.id = copyData.id;
-	}
-}  // DatamartSchemaProperty 
-// SanteDB.Core.Model.Warehouse.DatamartStoredQuery, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
-//if(!DatamartStoredQuery)
-/**
- * @class
- * @constructor
- * @public
- * @summary Represents a stored query creation statement
- * @property {string} connection Attachments
- * @property {string} id Gets or sets the provider identifier
- * @property {string} name Definition of the query
- * @property {DatamartSchemaProperty} property Gets or sets the property names for the schema element
- * @property {DatamartStoredQueryDefinition} select Definition of the query
- * @param {DatamartStoredQuery} copyData Copy constructor (if present)
- */
-function DatamartStoredQuery (copyData) { 
-	this.$type = 'DatamartStoredQuery';
-	if(copyData) {
-	/**
-	 * @summary Definition of the query
-	 * @type {DatamartStoredQueryDefinition} 
-	 */
-	this.select = copyData.select;
-	/**
-	 * @summary Gets or sets the property names for the schema element
-	 * @type {DatamartSchemaProperty} 
-	 */
-	this.property = copyData.property;
-	/**
-	 * @summary Definition of the query
-	 * @type {string} 
-	 */
-	this.name = copyData.name;
-	/**
-	 * @summary Gets or sets the provider identifier
-	 * @type {string} 
-	 */
-	this.id = copyData.id;
-	/**
-	 * @summary Attachments
-	 * @type {string} 
-	 */
-	this.connection = copyData.connection;
-	}
-}  // DatamartStoredQuery 
-// SanteDB.Core.Model.Warehouse.DatamartStoredQueryDefinition, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
-//if(!DatamartStoredQueryDefinition)
-/**
- * @class
- * @constructor
- * @public
- * @summary Represents the SQL for an actual query
- * @property {string} provider Provider identifier
- * @property {string} sql The SQL
- * @param {DatamartStoredQueryDefinition} copyData Copy constructor (if present)
- */
-function DatamartStoredQueryDefinition (copyData) { 
-	this.$type = 'DatamartStoredQueryDefinition';
-	if(copyData) {
-	/**
-	 * @summary The SQL
-	 * @type {string} 
-	 */
-	this.sql = copyData.sql;
-	/**
-	 * @summary Provider identifier
-	 * @type {string} 
-	 */
-	this.provider = copyData.provider;
-	}
-}  // DatamartStoredQueryDefinition 
-// SanteDB.Core.Model.Warehouse.DataWarehouseObjectPropertyValue, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
-//if(!DataWarehouseObjectPropertyValue)
-/**
- * @class
- * @constructor
- * @public
- * @summary Warehouse object property value
- * @param {DataWarehouseObjectPropertyValue} copyData Copy constructor (if present)
- */
-function DataWarehouseObjectPropertyValue (copyData) { 
-	this.$type = 'DataWarehouseObjectPropertyValue';
-	if(copyData) {
-	}
-}  // DataWarehouseObjectPropertyValue 
-// SanteDB.Core.Model.Warehouse.DataWarehouseObject, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
-//if(!DataWarehouseObject)
-/**
- * @class
- * @constructor
- * @public
- * @summary Data warehousing object wrapper
- * @property {DataWarehouseObjectPropertyValue} p Gets or sets the properties
- * @param {DataWarehouseObject} copyData Copy constructor (if present)
- */
-function DataWarehouseObject (copyData) { 
-	this.$type = 'DataWarehouseObject';
-	if(copyData) {
-	/**
-	 * @summary Gets or sets the properties
-	 * @type {DataWarehouseObjectPropertyValue} 
-	 */
-	this.p = copyData.p;
-	}
-}  // DataWarehouseObject 
-// SanteDB.Core.Model.Subscription.SubscriptionClientDefinition, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Subscription.SubscriptionClientDefinition, SanteDB.Core.Model, Version=3.0.0.0, Culture=neutral, PublicKeyToken=null
 //if(!SubscriptionClientDefinition)
 /**
  * @class
@@ -972,7 +485,7 @@ function SubscriptionClientDefinition (copyData) {
 	this.resource = copyData.resource;
 	}
 }  // SubscriptionClientDefinition 
-// SanteDB.Core.Model.Subscription.SubscriptionDefinition, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Subscription.SubscriptionDefinition, SanteDB.Core.Model, Version=3.0.0.0, Culture=neutral, PublicKeyToken=null
 //if(!SubscriptionDefinition)
 /**
  * @class
@@ -982,6 +495,7 @@ function SubscriptionClientDefinition (copyData) {
  * @summary Class which is used to define a subscription type which clients can consume
  * @property {string} uuid Gets or sets the uuid
  * @property {Date} modifiedOn Gets the time that this was modified
+ * @property {string} name Gets the name of the subscription
  * @property {SubscriptionClientDefinition} definitions Gets or sets the client side definitions
  * @property {string} id Gets or sets the primary identifying UUID of this object
  * @property {BatchOperationType} operation Gets or sets the operation(see: {@link BatchOperationType} for values)
@@ -1007,6 +521,11 @@ function SubscriptionDefinition (copyData) {
 	 */
 	this.definitions = copyData.definitions;
 	/**
+	 * @summary Gets the name of the subscription
+	 * @type {string} 
+	 */
+	this.name = copyData.name;
+	/**
 	 * @summary Gets the time that this was modified
 	 * @type {Date} 
 	 */
@@ -1018,7 +537,7 @@ function SubscriptionDefinition (copyData) {
 	this.uuid = copyData.uuid;
 	}
 }  // SubscriptionDefinition 
-// SanteDB.Core.Model.Security.SecurityApplication, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Security.SecurityApplication, SanteDB.Core.Model, Version=3.0.0.0, Culture=neutral, PublicKeyToken=null
 //if(!SecurityApplication)
 /**
  * @class
@@ -1152,7 +671,7 @@ function SecurityApplication (copyData) {
 	this.applicationSecret = copyData.applicationSecret;
 	}
 }  // SecurityApplication 
-// SanteDB.Core.Model.Security.SecurityChallenge, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Security.SecurityChallenge, SanteDB.Core.Model, Version=3.0.0.0, Culture=neutral, PublicKeyToken=null
 //if(!SecurityChallenge)
 /**
  * @class
@@ -1252,7 +771,7 @@ function SecurityChallenge (copyData) {
 	this.text = copyData.text;
 	}
 }  // SecurityChallenge 
-// SanteDB.Core.Model.Security.SecurityDevice, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Security.SecurityDevice, SanteDB.Core.Model, Version=3.0.0.0, Culture=neutral, PublicKeyToken=null
 //if(!SecurityDevice)
 /**
  * @class
@@ -1260,7 +779,8 @@ function SecurityChallenge (copyData) {
  * @public
  * @summary Represents a security device
  * @property {string} deviceSecret Gets or sets the device secret
- * @property {string} name Gets or sets the name of the security device/user/role/devie
+ * @property {string} publicKey Gets the public key of the security device
+ * @property {string} name Gets or sets the name of the security device/user/role/device
  * @property {string} lockout Gets or sets the lockout time as XML date
  * @property {Date} lockoutModel [Delay loaded from lockout],  Gets or sets the lockout
  * @property {number} invalidAuth Gets or sets the number of invalid authentication attempts
@@ -1375,10 +895,15 @@ function SecurityDevice (copyData) {
 	 */
 	this.lockout = copyData.lockout;
 	/**
-	 * @summary Gets or sets the name of the security device/user/role/devie
+	 * @summary Gets or sets the name of the security device/user/role/device
 	 * @type {string} 
 	 */
 	this.name = copyData.name;
+	/**
+	 * @summary Gets the public key of the security device
+	 * @type {string} 
+	 */
+	this.publicKey = copyData.publicKey;
 	/**
 	 * @summary Gets or sets the device secret
 	 * @type {string} 
@@ -1386,7 +911,7 @@ function SecurityDevice (copyData) {
 	this.deviceSecret = copyData.deviceSecret;
 	}
 }  // SecurityDevice 
-// SanteDB.Core.Model.Security.SecurityEntity, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Security.SecurityEntity, SanteDB.Core.Model, Version=3.0.0.0, Culture=neutral, PublicKeyToken=null
 //if(!SecurityEntity)
 /**
  * @class
@@ -1480,7 +1005,7 @@ function SecurityEntity (copyData) {
 	this.updatedTime = copyData.updatedTime;
 	}
 }  // SecurityEntity 
-// SanteDB.Core.Model.Security.SecurityPolicy, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Security.SecurityPolicy, SanteDB.Core.Model, Version=3.0.0.0, Culture=neutral, PublicKeyToken=null
 //if(!SecurityPolicy)
 /**
  * @class
@@ -1588,7 +1113,7 @@ function SecurityPolicy (copyData) {
 	this.handler = copyData.handler;
 	}
 }  // SecurityPolicy 
-// SanteDB.Core.Model.Security.SecurityPolicyInstance, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Security.SecurityPolicyInstance, SanteDB.Core.Model, Version=3.0.0.0, Culture=neutral, PublicKeyToken=null
 //if(!SecurityPolicyInstance)
 /**
  * @class
@@ -1648,7 +1173,7 @@ function SecurityPolicyInstance (copyData) {
 	this.policy = copyData.policy;
 	}
 }  // SecurityPolicyInstance 
-// SanteDB.Core.Model.Security.SecurityProvenance, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Security.SecurityProvenance, SanteDB.Core.Model, Version=3.0.0.0, Culture=neutral, PublicKeyToken=null
 //if(!SecurityProvenance)
 /**
  * @class
@@ -1744,7 +1269,7 @@ function SecurityProvenance (copyData) {
 	this.modifiedOn = copyData.modifiedOn;
 	}
 }  // SecurityProvenance 
-// SanteDB.Core.Model.Security.SecurityRole, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Security.SecurityRole, SanteDB.Core.Model, Version=3.0.0.0, Culture=neutral, PublicKeyToken=null
 //if(!SecurityRole)
 /**
  * @class
@@ -1850,7 +1375,7 @@ function SecurityRole (copyData) {
 	this.name = copyData.name;
 	}
 }  // SecurityRole 
-// SanteDB.Core.Model.Security.SecurityUser, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Security.SecurityUser, SanteDB.Core.Model, Version=3.0.0.0, Culture=neutral, PublicKeyToken=null
 //if(!SecurityUser)
 /**
  * @class
@@ -1863,7 +1388,7 @@ function SecurityRole (copyData) {
  * @property {Date} lockoutModel [Delay loaded from lockout],  Gets or sets whether the account is locked out
  * @property {string} lockout Gets or sets the creation time in XML format
  * @property {string} password Gets or sets whether the password hash is enabled
- * @property {string} securityStamp Gets or sets whether the security has is enabled
+ * @property {string} securityStamp Gets or sets a value which indicates whether the security data for the user has changed
  * @property {boolean} twoFactorEnabled Gets or sets whether two factor authentication is required
  * @property {string} userName Gets or sets the logical user name ofthe user
  * @property {Array<byte>} photo Gets or sets the binary representation of the user's photo
@@ -1874,7 +1399,7 @@ function SecurityRole (copyData) {
  * @property {string} phoneNumber Gets or sets the patient's phone number
  * @property {boolean} phoneNumberConfirmed Gets or sets whether the phone number was confirmed
  * @property {string} twoFactorMechanism Gets or sets the preferred tfa mechanism
- * @property {string} userClass Gets or sets the user class key(see: {@link UserClassKeys} for values)
+ * @property {string} userClass Gets or sets the user class key(see: {@link ActorTypeKeys} for values)
  * @property {Date} updatedTime Gets or sets the time that this object was last modified in ISO format
  * @property {Date} modifiedOn Gets the time this item was modified
  * @property {SecurityProvenance} updatedByModel [Delay loaded from updatedBy],  Gets or sets the user that updated this base data
@@ -2014,7 +1539,7 @@ function SecurityUser (copyData) {
 	 */
 	this.twoFactorEnabled = copyData.twoFactorEnabled;
 	/**
-	 * @summary Gets or sets whether the security has is enabled
+	 * @summary Gets or sets a value which indicates whether the security data for the user has changed
 	 * @type {string} 
 	 */
 	this.securityStamp = copyData.securityStamp;
@@ -2049,30 +1574,24 @@ function SecurityUser (copyData) {
 	this.email = copyData.email;
 	}
 }  // SecurityUser 
-// SanteDB.Core.Model.Roles.Patient, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Roles.Patient, SanteDB.Core.Model, Version=3.0.0.0, Culture=neutral, PublicKeyToken=null
 //if(!Patient)
 /**
  * @class
  * @constructor
  * @public
  * @summary Represents an entity which is a patient
- * @property {Date} deceasedDate Deceased date XML
- * @property {DatePrecision} deceasedDatePrecision Gets or sets the precision of the date of deceased(see: {@link DatePrecision} for values)
  * @property {number} multipleBirthOrder Gets or sets the multiple birth order of the patient
- * @property {string} vipStatus Gets or sets the VIP code
- * @property {string} maritalStatus Gets or sets the key of the marital status concept
- * @property {string} educationLevel Gets or sets the key of the education level
  * @property {string} livingArrangement Gets or sets the living arrangement
  * @property {string} religion Gets or sets the religious affiliation
- * @property {string} nationality Gets or sets the religious affiliation
- * @property {Concept} nationalityModel [Delay loaded from nationality],  Gets or sets the marital status code
- * @property {Concept} maritalStatusModel [Delay loaded from maritalStatus],  Gets or sets the marital status code
- * @property {Concept} vipStatusModel [Delay loaded from vipStatus],  Gets or sets the VIP status code
- * @property {Concept} educationLevelModel [Delay loaded from educationLevel],  Gets or sets the education level of the person
  * @property {Concept} livingArrangementModel [Delay loaded from livingArrangement],  Gets or sets the living arrangements
  * @property {Concept} religionModel [Delay loaded from religion],  Gets or sets the religious affiliation
  * @property {string} ethnicity Gets or sets the ethnicity codes
  * @property {Concept} ethnicityModel [Delay loaded from ethnicity],  Gets the ethic group concepts
+ * @property {Concept} maritalStatusModel [Delay loaded from maritalStatus],  Gets or sets the marital status code
+ * @property {Concept} educationLevelModel [Delay loaded from educationLevel],  Gets or sets the education level of the person
+ * @property {string} maritalStatus Gets or sets the key of the marital status concept
+ * @property {string} educationLevel Gets or sets the key of the education level
  * @property {DatePrecision} dateOfBirthPrecision Gets or sets the precision ofthe date of birth(see: {@link DatePrecision} for values)
  * @property {string} genderConcept Gets or sets the gender concept key
  * @property {Concept} genderConceptModel [Delay loaded from genderConcept],  Gets or sets the gender concept
@@ -2080,6 +1599,12 @@ function SecurityUser (copyData) {
  * @property {PersonLanguageCommunication} language Gets the person's languages of communication
  * @property {string} occupation Gets or sets the religious affiliation
  * @property {Concept} occupationModel [Delay loaded from occupation],  Gets or sets the marital status code
+ * @property {Date} deceasedDate Deceased date XML
+ * @property {DatePrecision} deceasedDatePrecision Gets or sets the precision of the date of deceased(see: {@link DatePrecision} for values)
+ * @property {string} vipStatus Gets or sets the VIP code
+ * @property {Concept} vipStatusModel [Delay loaded from vipStatus],  Gets or sets the VIP status code
+ * @property {string} nationality Gets or sets the religious affiliation
+ * @property {Concept} nationalityModel [Delay loaded from nationality],  Gets the nationality of the patient
  * @property {object} address Gets a list of all addresses associated with the entity
  * @property {EntityAddress} address.Alphabetic             Represents an alphabetic address used for matching             
  * @property {EntityAddress} address.BadAddress             Represents a bad address, i.e. an address which is old or invalid.            
@@ -2106,7 +1631,7 @@ function SecurityUser (copyData) {
  * @property {object} extension Gets a list of all extensions associated with the entity
  * @property {string} extension.classifier  where classifier is from {@link Extension} extensionType
  * @property {object} identifier Gets the identifiers associated with this entity
- * @property {EntityIdentifier} identifier.classifier  where classifier is from {@link IdentifierBase} authority
+ * @property {EntityIdentifier} identifier.classifier  where classifier is from {@link IdentifierBase} domain
  * @property {object} name Gets a list of all names associated with the entity
  * @property {EntityName} name.Alphabetic             The name used is an alphabetic representation of the name (ex: romaji in Japanese)            
  * @property {EntityName} name.Anonymous             The name is an anonymous name for the object (not the real name but a name used for care delivery)            
@@ -2194,7 +1719,7 @@ function SecurityUser (copyData) {
  * @property {EntityRelationship} relationship.Affiliate             The target has a business/professional relationship with the source.            
  * @property {EntityRelationship} relationship.Agent             The target is an agent or authorized to act on behalf of the source            
  * @property {EntityRelationship} relationship.Aliquot             The target is a portion of the original source            
- * @property {EntityRelationship} relationship.AssignedEntity             The target is an entity acting under the employ of the source entity            
+ * @property {EntityRelationship} relationship.AssignedEntity             The target is an entity acting under role or assignment of the source             
  * @property {EntityRelationship} relationship.Aunt             The target is the aunt of the source            
  * @property {EntityRelationship} relationship.Birthplace             The target is the birthplace of the source            
  * @property {EntityRelationship} relationship.Brother             The target is the brother of the source            
@@ -2282,7 +1807,7 @@ function SecurityUser (copyData) {
  * @property {EntityRelationship} relationship.NextOfKin             The target is the next of kin for the source            
  * @property {EntityRelationship} relationship.Niece             The niece            
  * @property {EntityRelationship} relationship.NieceNephew             The niece nephew            
- * @property {EntityRelationship} relationship.NotaryPublic             The target is a notary public acting within the source entity             
+ * @property {EntityRelationship} relationship.NotaryPublic             The target is a notary public acting within the source entity            
  * @property {EntityRelationship} relationship.OwnedEntity             The target entity is owned by the source entity            
  * @property {EntityRelationship} relationship.Parent             The target entity is the parent of the source entity            
  * @property {EntityRelationship} relationship.ParentInlaw             The parent inlaw            
@@ -2328,7 +1853,7 @@ function SecurityUser (copyData) {
  * @property {EntityRelationship} relationship.Stepsister             The stepsister            
  * @property {EntityRelationship} relationship.Stepson             The stepson            
  * @property {EntityRelationship} relationship.Student             The student            
- * @property {EntityRelationship} relationship.Subscriber             The target is a subscriber of the source, meaning the target should receive updates whenever the source changes             
+ * @property {EntityRelationship} relationship.Subscriber             The target is a subscriber of the source, meaning the target should receive updates whenever the source changes            
  * @property {EntityRelationship} relationship.TerritoryOfAuthority             The target represents another territory where the source has authority            
  * @property {EntityRelationship} relationship.TherapeuticAgent             The target represents the theraputic agent of the source            
  * @property {EntityRelationship} relationship.Uncle             The uncle            
@@ -2336,18 +1861,23 @@ function SecurityUser (copyData) {
  * @property {EntityRelationship} relationship.UsedEntity             The target represents an entity that is consumed whenever the source is consumed            
  * @property {EntityRelationship} relationship.WarrantedProduct             The target represents a product which is warranted by the source            
  * @property {EntityRelationship} relationship.Wife             The wife            
- * @property {EntityRelationship} relationship.Replaces             The source replaces the target (note: this is one relationship where the role relationship is reveresed)             
+ * @property {EntityRelationship} relationship.Replaces             The source replaces the target (note: this is one relationship where the role relationship is reveresed)            
  * @property {EntityRelationship} relationship.Instance             The target entity represents an instance of the scoper entity            
  * @property {EntityRelationship} relationship.LocatedEntity             Relates the target entity to a source location            
  * @property {EntityRelationship} relationship.Duplicate             Duplicate entity            
  * @property {EntityRelationship} relationship.Scoper             Duplicate entity            
  * @property {EntityRelationship} relationship.EquivalentEntity             Referenced entities            
+ * @property {EntityRelationship} relationship.HasIngredient             The source entity has an ingredient represented by the target            
+ * @property {EntityRelationship} relationship.HasContent             The source entity is comprised of the target. Note that this differs from PART in that content can be separated, parts cannot be separated            
+ * @property {EntityRelationship} relationship.HasGenerialization             The source entity is a specialization of the target (i.e. the target is a more general entity kind than the source)            
+ * @property {EntityRelationship} relationship.HasPart             The source entity is comprised of the target as a part (example: DTP vaccine kind has part Diptheria vaccine kind, Tetanus vaccine kind, and Pertussis vaccine kind)            
  * @property {EntityRelationship} relationship.$other Unclassified
  * @property {Concept} statusConceptModel [Delay loaded from statusConcept],  Status concept id
  * @property {string} statusConcept Status concept id(see: {@link StatusKeys} for values)
  * @property {object} tag Gets a list of all tags associated with the entity
  * @property {string} tag.classifier  where classifier is from {@link Tag} key
  * @property {object} telecom Gets a list of all telecommunications addresses associated with the entity
+ * @property {EntityTelecomAddress} telecom.PrimaryHome             Primary home            
  * @property {EntityTelecomAddress} telecom.AnsweringService             answering service            
  * @property {EntityTelecomAddress} telecom.EmergencyContact             Emergency contact            
  * @property {EntityTelecomAddress} telecom.MobileContact             Mobile phone contact            
@@ -2361,9 +1891,10 @@ function SecurityUser (copyData) {
  * @property {Concept} typeConceptModel [Delay loaded from typeConcept],  Type concept identifier
  * @property {string} typeConcept Type concept identifier
  * @property {SecurityPolicyInstance} policy Gets or sets the security policy instances associated with the entity
+ * @property {GeoTag} geo Gets or sets the geo tag
  * @property {string} previousVersion
  * @property {string} version
- * @property {number} sequence
+ * @property {Int64} sequence
  * @property {Date} creationTimeModel [Delay loaded from creationTime],  Gets or sets the time at which the data was created
  * @property {Date} creationTime Gets or sets the creation time as an ISO date format
  * @property {Date} obsoletionTimeModel [Delay loaded from obsoletionTime],  Gets or sets the time when the data is or will become invalid
@@ -2433,7 +1964,7 @@ function Patient (copyData) {
 	 */
 	this.creationTimeModel = copyData.creationTimeModel;
 	/**
-	 * @type {number} 
+	 * @type {Int64} 
 	 */
 	this.sequence = copyData.sequence;
 	/**
@@ -2444,6 +1975,11 @@ function Patient (copyData) {
 	 * @type {string} 
 	 */
 	this.previousVersion = copyData.previousVersion;
+	/**
+	 * @summary Gets or sets the geo tag
+	 * @type {GeoTag} 
+	 */
+	this.geo = copyData.geo;
 	/**
 	 * @summary Gets or sets the security policy instances associated with the entity
 	 * @type {SecurityPolicyInstance} 
@@ -2551,6 +2087,34 @@ function Patient (copyData) {
 	/**
 	 * @type {Concept} 
 	 */
+	this.nationalityModel = copyData.nationalityModel;
+	/**
+	 * @summary Gets or sets the religious affiliation
+	 * @type {string} 
+	 */
+	this.nationality = copyData.nationality;
+	/**
+	 * @type {Concept} 
+	 */
+	this.vipStatusModel = copyData.vipStatusModel;
+	/**
+	 * @summary Gets or sets the VIP status code
+	 * @type {string} 
+	 */
+	this.vipStatus = copyData.vipStatus;
+	/**
+	 * @summary Gets or sets the precision of the date of deceased
+	 * @type {DatePrecision} 
+	 */
+	this.deceasedDatePrecision = copyData.deceasedDatePrecision;
+	/**
+	 * @summary Deceased date XML
+	 * @type {Date} 
+	 */
+	this.deceasedDate = copyData.deceasedDate;
+	/**
+	 * @type {Concept} 
+	 */
 	this.occupationModel = copyData.occupationModel;
 	/**
 	 * @summary Gets or sets the religious affiliation
@@ -2582,6 +2146,24 @@ function Patient (copyData) {
 	 */
 	this.dateOfBirthPrecision = copyData.dateOfBirthPrecision;
 	/**
+	 * @summary Gets or sets the education level of the person
+	 * @type {string} 
+	 */
+	this.educationLevel = copyData.educationLevel;
+	/**
+	 * @summary Gets or sets the key of the marital status concept
+	 * @type {string} 
+	 */
+	this.maritalStatus = copyData.maritalStatus;
+	/**
+	 * @type {Concept} 
+	 */
+	this.educationLevelModel = copyData.educationLevelModel;
+	/**
+	 * @type {Concept} 
+	 */
+	this.maritalStatusModel = copyData.maritalStatusModel;
+	/**
 	 * @type {Concept} 
 	 */
 	this.ethnicityModel = copyData.ethnicityModel;
@@ -2599,27 +2181,6 @@ function Patient (copyData) {
 	 */
 	this.livingArrangementModel = copyData.livingArrangementModel;
 	/**
-	 * @type {Concept} 
-	 */
-	this.educationLevelModel = copyData.educationLevelModel;
-	/**
-	 * @type {Concept} 
-	 */
-	this.vipStatusModel = copyData.vipStatusModel;
-	/**
-	 * @type {Concept} 
-	 */
-	this.maritalStatusModel = copyData.maritalStatusModel;
-	/**
-	 * @type {Concept} 
-	 */
-	this.nationalityModel = copyData.nationalityModel;
-	/**
-	 * @summary Gets or sets the religious affiliation
-	 * @type {string} 
-	 */
-	this.nationality = copyData.nationality;
-	/**
 	 * @summary Gets or sets the religious affiliation
 	 * @type {string} 
 	 */
@@ -2630,38 +2191,13 @@ function Patient (copyData) {
 	 */
 	this.livingArrangement = copyData.livingArrangement;
 	/**
-	 * @summary Gets or sets the education level of the person
-	 * @type {string} 
-	 */
-	this.educationLevel = copyData.educationLevel;
-	/**
-	 * @summary Gets or sets the key of the marital status concept
-	 * @type {string} 
-	 */
-	this.maritalStatus = copyData.maritalStatus;
-	/**
-	 * @summary Gets or sets the VIP status code
-	 * @type {string} 
-	 */
-	this.vipStatus = copyData.vipStatus;
-	/**
 	 * @summary Gets or sets the multiple birth order of the patient
 	 * @type {number} 
 	 */
 	this.multipleBirthOrder = copyData.multipleBirthOrder;
-	/**
-	 * @summary Gets or sets the precision of the date of deceased
-	 * @type {DatePrecision} 
-	 */
-	this.deceasedDatePrecision = copyData.deceasedDatePrecision;
-	/**
-	 * @summary Deceased date XML
-	 * @type {Date} 
-	 */
-	this.deceasedDate = copyData.deceasedDate;
 	}
 }  // Patient 
-// SanteDB.Core.Model.Roles.Provider, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Roles.Provider, SanteDB.Core.Model, Version=3.0.0.0, Culture=neutral, PublicKeyToken=null
 //if(!Provider)
 /**
  * @class
@@ -2677,6 +2213,12 @@ function Patient (copyData) {
  * @property {PersonLanguageCommunication} language Gets the person's languages of communication
  * @property {string} occupation Gets or sets the religious affiliation
  * @property {Concept} occupationModel [Delay loaded from occupation],  Gets or sets the marital status code
+ * @property {Date} deceasedDate Deceased date XML
+ * @property {DatePrecision} deceasedDatePrecision Gets or sets the precision of the date of deceased(see: {@link DatePrecision} for values)
+ * @property {string} vipStatus Gets or sets the VIP code
+ * @property {Concept} vipStatusModel [Delay loaded from vipStatus],  Gets or sets the VIP status code
+ * @property {string} nationality Gets or sets the religious affiliation
+ * @property {Concept} nationalityModel [Delay loaded from nationality],  Gets the nationality of the patient
  * @property {object} address Gets a list of all addresses associated with the entity
  * @property {EntityAddress} address.Alphabetic             Represents an alphabetic address used for matching             
  * @property {EntityAddress} address.BadAddress             Represents a bad address, i.e. an address which is old or invalid.            
@@ -2703,7 +2245,7 @@ function Patient (copyData) {
  * @property {object} extension Gets a list of all extensions associated with the entity
  * @property {string} extension.classifier  where classifier is from {@link Extension} extensionType
  * @property {object} identifier Gets the identifiers associated with this entity
- * @property {EntityIdentifier} identifier.classifier  where classifier is from {@link IdentifierBase} authority
+ * @property {EntityIdentifier} identifier.classifier  where classifier is from {@link IdentifierBase} domain
  * @property {object} name Gets a list of all names associated with the entity
  * @property {EntityName} name.Alphabetic             The name used is an alphabetic representation of the name (ex: romaji in Japanese)            
  * @property {EntityName} name.Anonymous             The name is an anonymous name for the object (not the real name but a name used for care delivery)            
@@ -2791,7 +2333,7 @@ function Patient (copyData) {
  * @property {EntityRelationship} relationship.Affiliate             The target has a business/professional relationship with the source.            
  * @property {EntityRelationship} relationship.Agent             The target is an agent or authorized to act on behalf of the source            
  * @property {EntityRelationship} relationship.Aliquot             The target is a portion of the original source            
- * @property {EntityRelationship} relationship.AssignedEntity             The target is an entity acting under the employ of the source entity            
+ * @property {EntityRelationship} relationship.AssignedEntity             The target is an entity acting under role or assignment of the source             
  * @property {EntityRelationship} relationship.Aunt             The target is the aunt of the source            
  * @property {EntityRelationship} relationship.Birthplace             The target is the birthplace of the source            
  * @property {EntityRelationship} relationship.Brother             The target is the brother of the source            
@@ -2879,7 +2421,7 @@ function Patient (copyData) {
  * @property {EntityRelationship} relationship.NextOfKin             The target is the next of kin for the source            
  * @property {EntityRelationship} relationship.Niece             The niece            
  * @property {EntityRelationship} relationship.NieceNephew             The niece nephew            
- * @property {EntityRelationship} relationship.NotaryPublic             The target is a notary public acting within the source entity             
+ * @property {EntityRelationship} relationship.NotaryPublic             The target is a notary public acting within the source entity            
  * @property {EntityRelationship} relationship.OwnedEntity             The target entity is owned by the source entity            
  * @property {EntityRelationship} relationship.Parent             The target entity is the parent of the source entity            
  * @property {EntityRelationship} relationship.ParentInlaw             The parent inlaw            
@@ -2925,7 +2467,7 @@ function Patient (copyData) {
  * @property {EntityRelationship} relationship.Stepsister             The stepsister            
  * @property {EntityRelationship} relationship.Stepson             The stepson            
  * @property {EntityRelationship} relationship.Student             The student            
- * @property {EntityRelationship} relationship.Subscriber             The target is a subscriber of the source, meaning the target should receive updates whenever the source changes             
+ * @property {EntityRelationship} relationship.Subscriber             The target is a subscriber of the source, meaning the target should receive updates whenever the source changes            
  * @property {EntityRelationship} relationship.TerritoryOfAuthority             The target represents another territory where the source has authority            
  * @property {EntityRelationship} relationship.TherapeuticAgent             The target represents the theraputic agent of the source            
  * @property {EntityRelationship} relationship.Uncle             The uncle            
@@ -2933,18 +2475,23 @@ function Patient (copyData) {
  * @property {EntityRelationship} relationship.UsedEntity             The target represents an entity that is consumed whenever the source is consumed            
  * @property {EntityRelationship} relationship.WarrantedProduct             The target represents a product which is warranted by the source            
  * @property {EntityRelationship} relationship.Wife             The wife            
- * @property {EntityRelationship} relationship.Replaces             The source replaces the target (note: this is one relationship where the role relationship is reveresed)             
+ * @property {EntityRelationship} relationship.Replaces             The source replaces the target (note: this is one relationship where the role relationship is reveresed)            
  * @property {EntityRelationship} relationship.Instance             The target entity represents an instance of the scoper entity            
  * @property {EntityRelationship} relationship.LocatedEntity             Relates the target entity to a source location            
  * @property {EntityRelationship} relationship.Duplicate             Duplicate entity            
  * @property {EntityRelationship} relationship.Scoper             Duplicate entity            
  * @property {EntityRelationship} relationship.EquivalentEntity             Referenced entities            
+ * @property {EntityRelationship} relationship.HasIngredient             The source entity has an ingredient represented by the target            
+ * @property {EntityRelationship} relationship.HasContent             The source entity is comprised of the target. Note that this differs from PART in that content can be separated, parts cannot be separated            
+ * @property {EntityRelationship} relationship.HasGenerialization             The source entity is a specialization of the target (i.e. the target is a more general entity kind than the source)            
+ * @property {EntityRelationship} relationship.HasPart             The source entity is comprised of the target as a part (example: DTP vaccine kind has part Diptheria vaccine kind, Tetanus vaccine kind, and Pertussis vaccine kind)            
  * @property {EntityRelationship} relationship.$other Unclassified
  * @property {Concept} statusConceptModel [Delay loaded from statusConcept],  Status concept id
  * @property {string} statusConcept Status concept id(see: {@link StatusKeys} for values)
  * @property {object} tag Gets a list of all tags associated with the entity
  * @property {string} tag.classifier  where classifier is from {@link Tag} key
  * @property {object} telecom Gets a list of all telecommunications addresses associated with the entity
+ * @property {EntityTelecomAddress} telecom.PrimaryHome             Primary home            
  * @property {EntityTelecomAddress} telecom.AnsweringService             answering service            
  * @property {EntityTelecomAddress} telecom.EmergencyContact             Emergency contact            
  * @property {EntityTelecomAddress} telecom.MobileContact             Mobile phone contact            
@@ -2958,9 +2505,10 @@ function Patient (copyData) {
  * @property {Concept} typeConceptModel [Delay loaded from typeConcept],  Type concept identifier
  * @property {string} typeConcept Type concept identifier
  * @property {SecurityPolicyInstance} policy Gets or sets the security policy instances associated with the entity
+ * @property {GeoTag} geo Gets or sets the geo tag
  * @property {string} previousVersion
  * @property {string} version
- * @property {number} sequence
+ * @property {Int64} sequence
  * @property {Date} creationTimeModel [Delay loaded from creationTime],  Gets or sets the time at which the data was created
  * @property {Date} creationTime Gets or sets the creation time as an ISO date format
  * @property {Date} obsoletionTimeModel [Delay loaded from obsoletionTime],  Gets or sets the time when the data is or will become invalid
@@ -3030,7 +2578,7 @@ function Provider (copyData) {
 	 */
 	this.creationTimeModel = copyData.creationTimeModel;
 	/**
-	 * @type {number} 
+	 * @type {Int64} 
 	 */
 	this.sequence = copyData.sequence;
 	/**
@@ -3041,6 +2589,11 @@ function Provider (copyData) {
 	 * @type {string} 
 	 */
 	this.previousVersion = copyData.previousVersion;
+	/**
+	 * @summary Gets or sets the geo tag
+	 * @type {GeoTag} 
+	 */
+	this.geo = copyData.geo;
 	/**
 	 * @summary Gets or sets the security policy instances associated with the entity
 	 * @type {SecurityPolicyInstance} 
@@ -3148,6 +2701,34 @@ function Provider (copyData) {
 	/**
 	 * @type {Concept} 
 	 */
+	this.nationalityModel = copyData.nationalityModel;
+	/**
+	 * @summary Gets or sets the religious affiliation
+	 * @type {string} 
+	 */
+	this.nationality = copyData.nationality;
+	/**
+	 * @type {Concept} 
+	 */
+	this.vipStatusModel = copyData.vipStatusModel;
+	/**
+	 * @summary Gets or sets the VIP status code
+	 * @type {string} 
+	 */
+	this.vipStatus = copyData.vipStatus;
+	/**
+	 * @summary Gets or sets the precision of the date of deceased
+	 * @type {DatePrecision} 
+	 */
+	this.deceasedDatePrecision = copyData.deceasedDatePrecision;
+	/**
+	 * @summary Deceased date XML
+	 * @type {Date} 
+	 */
+	this.deceasedDate = copyData.deceasedDate;
+	/**
+	 * @type {Concept} 
+	 */
 	this.occupationModel = copyData.occupationModel;
 	/**
 	 * @summary Gets or sets the religious affiliation
@@ -3189,7 +2770,7 @@ function Provider (copyData) {
 	this.providerSpecialty = copyData.providerSpecialty;
 	}
 }  // Provider 
-// SanteDB.Core.Model.Patch.Patch, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Patch.Patch, SanteDB.Core.Model, Version=3.0.0.0, Culture=neutral, PublicKeyToken=null
 //if(!Patch)
 /**
  * @class
@@ -3285,7 +2866,7 @@ function Patch (copyData) {
 	this.version = copyData.version;
 	}
 }  // Patch 
-// SanteDB.Core.Model.Patch.PatchOperation, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Patch.PatchOperation, SanteDB.Core.Model, Version=3.0.0.0, Culture=neutral, PublicKeyToken=null
 //if(!PatchOperation)
 /**
  * @class
@@ -3317,7 +2898,7 @@ function PatchOperation (copyData) {
 	this.op = copyData.op;
 	}
 }  // PatchOperation 
-// SanteDB.Core.Model.Patch.PatchTarget, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Patch.PatchTarget, SanteDB.Core.Model, Version=3.0.0.0, Culture=neutral, PublicKeyToken=null
 //if(!PatchTarget)
 /**
  * @class
@@ -3355,13 +2936,67 @@ function PatchTarget (copyData) {
 	this.type = copyData.type;
 	}
 }  // PatchTarget 
-// SanteDB.Core.Model.Entities.ApplicationEntity, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Parameters.Parameter, SanteDB.Core.Model, Version=3.0.0.0, Culture=neutral, PublicKeyToken=null
+//if(!Parameter)
+/**
+ * @class
+ * @constructor
+ * @public
+ * @summary REST service fault wrapper
+ * @property {string} name Gets or sets the name of the operation
+ * @property {Object} value Gets or sets the value of the parameter
+ * @param {Parameter} copyData Copy constructor (if present)
+ */
+function Parameter (copyData) { 
+	this.$type = 'Parameter';
+	if(copyData) {
+	/**
+	 * @summary Gets or sets the value of the parameter
+	 * @type {Object} 
+	 */
+	this.value = copyData.value;
+	/**
+	 * @summary Gets or sets the name of the operation
+	 * @type {string} 
+	 */
+	this.name = copyData.name;
+	}
+}  // Parameter 
+// SanteDB.Core.Model.Parameters.ParameterCollection, SanteDB.Core.Model, Version=3.0.0.0, Culture=neutral, PublicKeyToken=null
+//if(!ParameterCollection)
+/**
+ * @class
+ * @constructor
+ * @public
+ * @summary Gets the operation invokation
+ * @property {Parameter} parameter Gets or sets the parameters
+ * @param {ParameterCollection} copyData Copy constructor (if present)
+ */
+function ParameterCollection (copyData) { 
+	this.$type = 'ParameterCollection';
+	if(copyData) {
+	/**
+	 * @summary Gets or sets the parameters
+	 * @type {Parameter} 
+	 */
+	this.parameter = copyData.parameter;
+	}
+}  // ParameterCollection 
+// SanteDB.Core.Model.Entities.ApplicationEntity, SanteDB.Core.Model, Version=3.0.0.0, Culture=neutral, PublicKeyToken=null
 //if(!ApplicationEntity)
 /**
  * @class
  * @constructor
  * @public
- * @summary An associative entity which links a SecurityApplication to an Entity
+ * @summary Represents the clinical data object for Applications
+ * @description In SanteDB's data model, all security objects (objects which may alter the state of data) are separated
+            into a security object (in this example 
+    {@link SecurityApplication}
+  ) and a clinical object (
+    {@link ApplicationEntity}
+  ).
+            This allows SanteDB to store provenance data (authoriship, origin, etc) without conflating the original
+            device, application or user with the security user, device, or application.
  * @property {SecurityApplication} securityApplicationModel [Delay loaded from securityApplication],  Gets or sets the security application
  * @property {string} securityApplication Gets or sets the security application
  * @property {string} softwareName Gets or sets the name of the software
@@ -3393,7 +3028,7 @@ function PatchTarget (copyData) {
  * @property {object} extension Gets a list of all extensions associated with the entity
  * @property {string} extension.classifier  where classifier is from {@link Extension} extensionType
  * @property {object} identifier Gets the identifiers associated with this entity
- * @property {EntityIdentifier} identifier.classifier  where classifier is from {@link IdentifierBase} authority
+ * @property {EntityIdentifier} identifier.classifier  where classifier is from {@link IdentifierBase} domain
  * @property {object} name Gets a list of all names associated with the entity
  * @property {EntityName} name.Alphabetic             The name used is an alphabetic representation of the name (ex: romaji in Japanese)            
  * @property {EntityName} name.Anonymous             The name is an anonymous name for the object (not the real name but a name used for care delivery)            
@@ -3481,7 +3116,7 @@ function PatchTarget (copyData) {
  * @property {EntityRelationship} relationship.Affiliate             The target has a business/professional relationship with the source.            
  * @property {EntityRelationship} relationship.Agent             The target is an agent or authorized to act on behalf of the source            
  * @property {EntityRelationship} relationship.Aliquot             The target is a portion of the original source            
- * @property {EntityRelationship} relationship.AssignedEntity             The target is an entity acting under the employ of the source entity            
+ * @property {EntityRelationship} relationship.AssignedEntity             The target is an entity acting under role or assignment of the source             
  * @property {EntityRelationship} relationship.Aunt             The target is the aunt of the source            
  * @property {EntityRelationship} relationship.Birthplace             The target is the birthplace of the source            
  * @property {EntityRelationship} relationship.Brother             The target is the brother of the source            
@@ -3569,7 +3204,7 @@ function PatchTarget (copyData) {
  * @property {EntityRelationship} relationship.NextOfKin             The target is the next of kin for the source            
  * @property {EntityRelationship} relationship.Niece             The niece            
  * @property {EntityRelationship} relationship.NieceNephew             The niece nephew            
- * @property {EntityRelationship} relationship.NotaryPublic             The target is a notary public acting within the source entity             
+ * @property {EntityRelationship} relationship.NotaryPublic             The target is a notary public acting within the source entity            
  * @property {EntityRelationship} relationship.OwnedEntity             The target entity is owned by the source entity            
  * @property {EntityRelationship} relationship.Parent             The target entity is the parent of the source entity            
  * @property {EntityRelationship} relationship.ParentInlaw             The parent inlaw            
@@ -3615,7 +3250,7 @@ function PatchTarget (copyData) {
  * @property {EntityRelationship} relationship.Stepsister             The stepsister            
  * @property {EntityRelationship} relationship.Stepson             The stepson            
  * @property {EntityRelationship} relationship.Student             The student            
- * @property {EntityRelationship} relationship.Subscriber             The target is a subscriber of the source, meaning the target should receive updates whenever the source changes             
+ * @property {EntityRelationship} relationship.Subscriber             The target is a subscriber of the source, meaning the target should receive updates whenever the source changes            
  * @property {EntityRelationship} relationship.TerritoryOfAuthority             The target represents another territory where the source has authority            
  * @property {EntityRelationship} relationship.TherapeuticAgent             The target represents the theraputic agent of the source            
  * @property {EntityRelationship} relationship.Uncle             The uncle            
@@ -3623,18 +3258,23 @@ function PatchTarget (copyData) {
  * @property {EntityRelationship} relationship.UsedEntity             The target represents an entity that is consumed whenever the source is consumed            
  * @property {EntityRelationship} relationship.WarrantedProduct             The target represents a product which is warranted by the source            
  * @property {EntityRelationship} relationship.Wife             The wife            
- * @property {EntityRelationship} relationship.Replaces             The source replaces the target (note: this is one relationship where the role relationship is reveresed)             
+ * @property {EntityRelationship} relationship.Replaces             The source replaces the target (note: this is one relationship where the role relationship is reveresed)            
  * @property {EntityRelationship} relationship.Instance             The target entity represents an instance of the scoper entity            
  * @property {EntityRelationship} relationship.LocatedEntity             Relates the target entity to a source location            
  * @property {EntityRelationship} relationship.Duplicate             Duplicate entity            
  * @property {EntityRelationship} relationship.Scoper             Duplicate entity            
  * @property {EntityRelationship} relationship.EquivalentEntity             Referenced entities            
+ * @property {EntityRelationship} relationship.HasIngredient             The source entity has an ingredient represented by the target            
+ * @property {EntityRelationship} relationship.HasContent             The source entity is comprised of the target. Note that this differs from PART in that content can be separated, parts cannot be separated            
+ * @property {EntityRelationship} relationship.HasGenerialization             The source entity is a specialization of the target (i.e. the target is a more general entity kind than the source)            
+ * @property {EntityRelationship} relationship.HasPart             The source entity is comprised of the target as a part (example: DTP vaccine kind has part Diptheria vaccine kind, Tetanus vaccine kind, and Pertussis vaccine kind)            
  * @property {EntityRelationship} relationship.$other Unclassified
  * @property {Concept} statusConceptModel [Delay loaded from statusConcept],  Status concept id
  * @property {string} statusConcept Status concept id(see: {@link StatusKeys} for values)
  * @property {object} tag Gets a list of all tags associated with the entity
  * @property {string} tag.classifier  where classifier is from {@link Tag} key
  * @property {object} telecom Gets a list of all telecommunications addresses associated with the entity
+ * @property {EntityTelecomAddress} telecom.PrimaryHome             Primary home            
  * @property {EntityTelecomAddress} telecom.AnsweringService             answering service            
  * @property {EntityTelecomAddress} telecom.EmergencyContact             Emergency contact            
  * @property {EntityTelecomAddress} telecom.MobileContact             Mobile phone contact            
@@ -3648,9 +3288,10 @@ function PatchTarget (copyData) {
  * @property {Concept} typeConceptModel [Delay loaded from typeConcept],  Type concept identifier
  * @property {string} typeConcept Type concept identifier
  * @property {SecurityPolicyInstance} policy Gets or sets the security policy instances associated with the entity
+ * @property {GeoTag} geo Gets or sets the geo tag
  * @property {string} previousVersion
  * @property {string} version
- * @property {number} sequence
+ * @property {Int64} sequence
  * @property {Date} creationTimeModel [Delay loaded from creationTime],  Gets or sets the time at which the data was created
  * @property {Date} creationTime Gets or sets the creation time as an ISO date format
  * @property {Date} obsoletionTimeModel [Delay loaded from obsoletionTime],  Gets or sets the time when the data is or will become invalid
@@ -3720,7 +3361,7 @@ function ApplicationEntity (copyData) {
 	 */
 	this.creationTimeModel = copyData.creationTimeModel;
 	/**
-	 * @type {number} 
+	 * @type {Int64} 
 	 */
 	this.sequence = copyData.sequence;
 	/**
@@ -3731,6 +3372,11 @@ function ApplicationEntity (copyData) {
 	 * @type {string} 
 	 */
 	this.previousVersion = copyData.previousVersion;
+	/**
+	 * @summary Gets or sets the geo tag
+	 * @type {GeoTag} 
+	 */
+	this.geo = copyData.geo;
 	/**
 	 * @summary Gets or sets the security policy instances associated with the entity
 	 * @type {SecurityPolicyInstance} 
@@ -3861,17 +3507,17 @@ function ApplicationEntity (copyData) {
 	this.securityApplicationModel = copyData.securityApplicationModel;
 	}
 }  // ApplicationEntity 
-// SanteDB.Core.Model.Entities.Container, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Entities.Container, SanteDB.Core.Model, Version=3.0.0.0, Culture=neutral, PublicKeyToken=null
 //if(!Container)
 /**
  * @class
  * @constructor
  * @public
  * @summary Represents a container.
+ * @property {string} lotNumber Gets or sets the lot number of the manufactured material
  * @property {number} capacityQuantity Gets or sets the capacity quantity. The functional capacity of the container.
  * @property {number} diameterQuantity Gets or sets the diameter quantity. The outside diameter of the container.
  * @property {number} heightQuantity Gets or sets the height quantity. The height of the container.
- * @property {string} lotNumber Gets or sets the lot number of the manufactured material
  * @property {Date} expiryDate Gets or sets the expiry date of the material
  * @property {Concept} formConceptModel [Delay loaded from formConcept],  Gets or sets the concept which dictates the form of the material (solid, liquid, capsule, injection, etc.)
  * @property {string} formConcept Gets or sets the form concept's key
@@ -3906,7 +3552,7 @@ function ApplicationEntity (copyData) {
  * @property {object} extension Gets a list of all extensions associated with the entity
  * @property {string} extension.classifier  where classifier is from {@link Extension} extensionType
  * @property {object} identifier Gets the identifiers associated with this entity
- * @property {EntityIdentifier} identifier.classifier  where classifier is from {@link IdentifierBase} authority
+ * @property {EntityIdentifier} identifier.classifier  where classifier is from {@link IdentifierBase} domain
  * @property {object} name Gets a list of all names associated with the entity
  * @property {EntityName} name.Alphabetic             The name used is an alphabetic representation of the name (ex: romaji in Japanese)            
  * @property {EntityName} name.Anonymous             The name is an anonymous name for the object (not the real name but a name used for care delivery)            
@@ -3994,7 +3640,7 @@ function ApplicationEntity (copyData) {
  * @property {EntityRelationship} relationship.Affiliate             The target has a business/professional relationship with the source.            
  * @property {EntityRelationship} relationship.Agent             The target is an agent or authorized to act on behalf of the source            
  * @property {EntityRelationship} relationship.Aliquot             The target is a portion of the original source            
- * @property {EntityRelationship} relationship.AssignedEntity             The target is an entity acting under the employ of the source entity            
+ * @property {EntityRelationship} relationship.AssignedEntity             The target is an entity acting under role or assignment of the source             
  * @property {EntityRelationship} relationship.Aunt             The target is the aunt of the source            
  * @property {EntityRelationship} relationship.Birthplace             The target is the birthplace of the source            
  * @property {EntityRelationship} relationship.Brother             The target is the brother of the source            
@@ -4082,7 +3728,7 @@ function ApplicationEntity (copyData) {
  * @property {EntityRelationship} relationship.NextOfKin             The target is the next of kin for the source            
  * @property {EntityRelationship} relationship.Niece             The niece            
  * @property {EntityRelationship} relationship.NieceNephew             The niece nephew            
- * @property {EntityRelationship} relationship.NotaryPublic             The target is a notary public acting within the source entity             
+ * @property {EntityRelationship} relationship.NotaryPublic             The target is a notary public acting within the source entity            
  * @property {EntityRelationship} relationship.OwnedEntity             The target entity is owned by the source entity            
  * @property {EntityRelationship} relationship.Parent             The target entity is the parent of the source entity            
  * @property {EntityRelationship} relationship.ParentInlaw             The parent inlaw            
@@ -4128,7 +3774,7 @@ function ApplicationEntity (copyData) {
  * @property {EntityRelationship} relationship.Stepsister             The stepsister            
  * @property {EntityRelationship} relationship.Stepson             The stepson            
  * @property {EntityRelationship} relationship.Student             The student            
- * @property {EntityRelationship} relationship.Subscriber             The target is a subscriber of the source, meaning the target should receive updates whenever the source changes             
+ * @property {EntityRelationship} relationship.Subscriber             The target is a subscriber of the source, meaning the target should receive updates whenever the source changes            
  * @property {EntityRelationship} relationship.TerritoryOfAuthority             The target represents another territory where the source has authority            
  * @property {EntityRelationship} relationship.TherapeuticAgent             The target represents the theraputic agent of the source            
  * @property {EntityRelationship} relationship.Uncle             The uncle            
@@ -4136,18 +3782,23 @@ function ApplicationEntity (copyData) {
  * @property {EntityRelationship} relationship.UsedEntity             The target represents an entity that is consumed whenever the source is consumed            
  * @property {EntityRelationship} relationship.WarrantedProduct             The target represents a product which is warranted by the source            
  * @property {EntityRelationship} relationship.Wife             The wife            
- * @property {EntityRelationship} relationship.Replaces             The source replaces the target (note: this is one relationship where the role relationship is reveresed)             
+ * @property {EntityRelationship} relationship.Replaces             The source replaces the target (note: this is one relationship where the role relationship is reveresed)            
  * @property {EntityRelationship} relationship.Instance             The target entity represents an instance of the scoper entity            
  * @property {EntityRelationship} relationship.LocatedEntity             Relates the target entity to a source location            
  * @property {EntityRelationship} relationship.Duplicate             Duplicate entity            
  * @property {EntityRelationship} relationship.Scoper             Duplicate entity            
  * @property {EntityRelationship} relationship.EquivalentEntity             Referenced entities            
+ * @property {EntityRelationship} relationship.HasIngredient             The source entity has an ingredient represented by the target            
+ * @property {EntityRelationship} relationship.HasContent             The source entity is comprised of the target. Note that this differs from PART in that content can be separated, parts cannot be separated            
+ * @property {EntityRelationship} relationship.HasGenerialization             The source entity is a specialization of the target (i.e. the target is a more general entity kind than the source)            
+ * @property {EntityRelationship} relationship.HasPart             The source entity is comprised of the target as a part (example: DTP vaccine kind has part Diptheria vaccine kind, Tetanus vaccine kind, and Pertussis vaccine kind)            
  * @property {EntityRelationship} relationship.$other Unclassified
  * @property {Concept} statusConceptModel [Delay loaded from statusConcept],  Status concept id
  * @property {string} statusConcept Status concept id(see: {@link StatusKeys} for values)
  * @property {object} tag Gets a list of all tags associated with the entity
  * @property {string} tag.classifier  where classifier is from {@link Tag} key
  * @property {object} telecom Gets a list of all telecommunications addresses associated with the entity
+ * @property {EntityTelecomAddress} telecom.PrimaryHome             Primary home            
  * @property {EntityTelecomAddress} telecom.AnsweringService             answering service            
  * @property {EntityTelecomAddress} telecom.EmergencyContact             Emergency contact            
  * @property {EntityTelecomAddress} telecom.MobileContact             Mobile phone contact            
@@ -4161,9 +3812,10 @@ function ApplicationEntity (copyData) {
  * @property {Concept} typeConceptModel [Delay loaded from typeConcept],  Type concept identifier
  * @property {string} typeConcept Type concept identifier
  * @property {SecurityPolicyInstance} policy Gets or sets the security policy instances associated with the entity
+ * @property {GeoTag} geo Gets or sets the geo tag
  * @property {string} previousVersion
  * @property {string} version
- * @property {number} sequence
+ * @property {Int64} sequence
  * @property {Date} creationTimeModel [Delay loaded from creationTime],  Gets or sets the time at which the data was created
  * @property {Date} creationTime Gets or sets the creation time as an ISO date format
  * @property {Date} obsoletionTimeModel [Delay loaded from obsoletionTime],  Gets or sets the time when the data is or will become invalid
@@ -4233,7 +3885,7 @@ function Container (copyData) {
 	 */
 	this.creationTimeModel = copyData.creationTimeModel;
 	/**
-	 * @type {number} 
+	 * @type {Int64} 
 	 */
 	this.sequence = copyData.sequence;
 	/**
@@ -4244,6 +3896,11 @@ function Container (copyData) {
 	 * @type {string} 
 	 */
 	this.previousVersion = copyData.previousVersion;
+	/**
+	 * @summary Gets or sets the geo tag
+	 * @type {GeoTag} 
+	 */
+	this.geo = copyData.geo;
 	/**
 	 * @summary Gets or sets the security policy instances associated with the entity
 	 * @type {SecurityPolicyInstance} 
@@ -4383,11 +4040,6 @@ function Container (copyData) {
 	 */
 	this.expiryDate = copyData.expiryDate;
 	/**
-	 * @summary Gets or sets the lot number of the manufactured material
-	 * @type {string} 
-	 */
-	this.lotNumber = copyData.lotNumber;
-	/**
 	 * @summary Gets or sets the height quantity. The height of the container.
 	 * @type {number} 
 	 */
@@ -4402,9 +4054,14 @@ function Container (copyData) {
 	 * @type {number} 
 	 */
 	this.capacityQuantity = copyData.capacityQuantity;
+	/**
+	 * @summary Gets or sets the lot number of the manufactured material
+	 * @type {string} 
+	 */
+	this.lotNumber = copyData.lotNumber;
 	}
 }  // Container 
-// SanteDB.Core.Model.Entities.DeviceEntity, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Entities.DeviceEntity, SanteDB.Core.Model, Version=3.0.0.0, Culture=neutral, PublicKeyToken=null
 //if(!DeviceEntity)
 /**
  * @class
@@ -4415,7 +4072,6 @@ function Container (copyData) {
  * @property {string} operatingSystemName Gets or sets the operating system name
  * @property {SecurityDevice} securityDeviceModel [Delay loaded from securityDevice],  Gets or sets the security device
  * @property {string} securityDevice Gets or sets the security device key
- * @property {GeoTag} geo Gets or sets the geo tag
  * @property {object} address Gets a list of all addresses associated with the entity
  * @property {EntityAddress} address.Alphabetic             Represents an alphabetic address used for matching             
  * @property {EntityAddress} address.BadAddress             Represents a bad address, i.e. an address which is old or invalid.            
@@ -4442,7 +4098,7 @@ function Container (copyData) {
  * @property {object} extension Gets a list of all extensions associated with the entity
  * @property {string} extension.classifier  where classifier is from {@link Extension} extensionType
  * @property {object} identifier Gets the identifiers associated with this entity
- * @property {EntityIdentifier} identifier.classifier  where classifier is from {@link IdentifierBase} authority
+ * @property {EntityIdentifier} identifier.classifier  where classifier is from {@link IdentifierBase} domain
  * @property {object} name Gets a list of all names associated with the entity
  * @property {EntityName} name.Alphabetic             The name used is an alphabetic representation of the name (ex: romaji in Japanese)            
  * @property {EntityName} name.Anonymous             The name is an anonymous name for the object (not the real name but a name used for care delivery)            
@@ -4530,7 +4186,7 @@ function Container (copyData) {
  * @property {EntityRelationship} relationship.Affiliate             The target has a business/professional relationship with the source.            
  * @property {EntityRelationship} relationship.Agent             The target is an agent or authorized to act on behalf of the source            
  * @property {EntityRelationship} relationship.Aliquot             The target is a portion of the original source            
- * @property {EntityRelationship} relationship.AssignedEntity             The target is an entity acting under the employ of the source entity            
+ * @property {EntityRelationship} relationship.AssignedEntity             The target is an entity acting under role or assignment of the source             
  * @property {EntityRelationship} relationship.Aunt             The target is the aunt of the source            
  * @property {EntityRelationship} relationship.Birthplace             The target is the birthplace of the source            
  * @property {EntityRelationship} relationship.Brother             The target is the brother of the source            
@@ -4618,7 +4274,7 @@ function Container (copyData) {
  * @property {EntityRelationship} relationship.NextOfKin             The target is the next of kin for the source            
  * @property {EntityRelationship} relationship.Niece             The niece            
  * @property {EntityRelationship} relationship.NieceNephew             The niece nephew            
- * @property {EntityRelationship} relationship.NotaryPublic             The target is a notary public acting within the source entity             
+ * @property {EntityRelationship} relationship.NotaryPublic             The target is a notary public acting within the source entity            
  * @property {EntityRelationship} relationship.OwnedEntity             The target entity is owned by the source entity            
  * @property {EntityRelationship} relationship.Parent             The target entity is the parent of the source entity            
  * @property {EntityRelationship} relationship.ParentInlaw             The parent inlaw            
@@ -4664,7 +4320,7 @@ function Container (copyData) {
  * @property {EntityRelationship} relationship.Stepsister             The stepsister            
  * @property {EntityRelationship} relationship.Stepson             The stepson            
  * @property {EntityRelationship} relationship.Student             The student            
- * @property {EntityRelationship} relationship.Subscriber             The target is a subscriber of the source, meaning the target should receive updates whenever the source changes             
+ * @property {EntityRelationship} relationship.Subscriber             The target is a subscriber of the source, meaning the target should receive updates whenever the source changes            
  * @property {EntityRelationship} relationship.TerritoryOfAuthority             The target represents another territory where the source has authority            
  * @property {EntityRelationship} relationship.TherapeuticAgent             The target represents the theraputic agent of the source            
  * @property {EntityRelationship} relationship.Uncle             The uncle            
@@ -4672,18 +4328,23 @@ function Container (copyData) {
  * @property {EntityRelationship} relationship.UsedEntity             The target represents an entity that is consumed whenever the source is consumed            
  * @property {EntityRelationship} relationship.WarrantedProduct             The target represents a product which is warranted by the source            
  * @property {EntityRelationship} relationship.Wife             The wife            
- * @property {EntityRelationship} relationship.Replaces             The source replaces the target (note: this is one relationship where the role relationship is reveresed)             
+ * @property {EntityRelationship} relationship.Replaces             The source replaces the target (note: this is one relationship where the role relationship is reveresed)            
  * @property {EntityRelationship} relationship.Instance             The target entity represents an instance of the scoper entity            
  * @property {EntityRelationship} relationship.LocatedEntity             Relates the target entity to a source location            
  * @property {EntityRelationship} relationship.Duplicate             Duplicate entity            
  * @property {EntityRelationship} relationship.Scoper             Duplicate entity            
  * @property {EntityRelationship} relationship.EquivalentEntity             Referenced entities            
+ * @property {EntityRelationship} relationship.HasIngredient             The source entity has an ingredient represented by the target            
+ * @property {EntityRelationship} relationship.HasContent             The source entity is comprised of the target. Note that this differs from PART in that content can be separated, parts cannot be separated            
+ * @property {EntityRelationship} relationship.HasGenerialization             The source entity is a specialization of the target (i.e. the target is a more general entity kind than the source)            
+ * @property {EntityRelationship} relationship.HasPart             The source entity is comprised of the target as a part (example: DTP vaccine kind has part Diptheria vaccine kind, Tetanus vaccine kind, and Pertussis vaccine kind)            
  * @property {EntityRelationship} relationship.$other Unclassified
  * @property {Concept} statusConceptModel [Delay loaded from statusConcept],  Status concept id
  * @property {string} statusConcept Status concept id(see: {@link StatusKeys} for values)
  * @property {object} tag Gets a list of all tags associated with the entity
  * @property {string} tag.classifier  where classifier is from {@link Tag} key
  * @property {object} telecom Gets a list of all telecommunications addresses associated with the entity
+ * @property {EntityTelecomAddress} telecom.PrimaryHome             Primary home            
  * @property {EntityTelecomAddress} telecom.AnsweringService             answering service            
  * @property {EntityTelecomAddress} telecom.EmergencyContact             Emergency contact            
  * @property {EntityTelecomAddress} telecom.MobileContact             Mobile phone contact            
@@ -4697,9 +4358,10 @@ function Container (copyData) {
  * @property {Concept} typeConceptModel [Delay loaded from typeConcept],  Type concept identifier
  * @property {string} typeConcept Type concept identifier
  * @property {SecurityPolicyInstance} policy Gets or sets the security policy instances associated with the entity
+ * @property {GeoTag} geo Gets or sets the geo tag
  * @property {string} previousVersion
  * @property {string} version
- * @property {number} sequence
+ * @property {Int64} sequence
  * @property {Date} creationTimeModel [Delay loaded from creationTime],  Gets or sets the time at which the data was created
  * @property {Date} creationTime Gets or sets the creation time as an ISO date format
  * @property {Date} obsoletionTimeModel [Delay loaded from obsoletionTime],  Gets or sets the time when the data is or will become invalid
@@ -4769,7 +4431,7 @@ function DeviceEntity (copyData) {
 	 */
 	this.creationTimeModel = copyData.creationTimeModel;
 	/**
-	 * @type {number} 
+	 * @type {Int64} 
 	 */
 	this.sequence = copyData.sequence;
 	/**
@@ -4780,6 +4442,11 @@ function DeviceEntity (copyData) {
 	 * @type {string} 
 	 */
 	this.previousVersion = copyData.previousVersion;
+	/**
+	 * @summary Gets or sets the geo tag
+	 * @type {GeoTag} 
+	 */
+	this.geo = copyData.geo;
 	/**
 	 * @summary Gets or sets the security policy instances associated with the entity
 	 * @type {SecurityPolicyInstance} 
@@ -4885,11 +4552,6 @@ function DeviceEntity (copyData) {
 	 */
 	this.address = copyData.address;
 	/**
-	 * @summary Gets or sets the geo tag
-	 * @type {GeoTag} 
-	 */
-	this.geo = copyData.geo;
-	/**
 	 * @summary Gets or sets the security device key
 	 * @type {string} 
 	 */
@@ -4910,7 +4572,7 @@ function DeviceEntity (copyData) {
 	this.manufacturerModelName = copyData.manufacturerModelName;
 	}
 }  // DeviceEntity 
-// SanteDB.Core.Model.Entities.Entity, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Entities.Entity, SanteDB.Core.Model, Version=3.0.0.0, Culture=neutral, PublicKeyToken=null
 //if(!Entity)
 /**
  * @class
@@ -4945,7 +4607,7 @@ function DeviceEntity (copyData) {
  * @property {object} extension Gets a list of all extensions associated with the entity
  * @property {string} extension.classifier  where classifier is from {@link Extension} extensionType
  * @property {object} identifier Gets the identifiers associated with this entity
- * @property {EntityIdentifier} identifier.classifier  where classifier is from {@link IdentifierBase} authority
+ * @property {EntityIdentifier} identifier.classifier  where classifier is from {@link IdentifierBase} domain
  * @property {object} name Gets a list of all names associated with the entity
  * @property {EntityName} name.Alphabetic             The name used is an alphabetic representation of the name (ex: romaji in Japanese)            
  * @property {EntityName} name.Anonymous             The name is an anonymous name for the object (not the real name but a name used for care delivery)            
@@ -5033,7 +4695,7 @@ function DeviceEntity (copyData) {
  * @property {EntityRelationship} relationship.Affiliate             The target has a business/professional relationship with the source.            
  * @property {EntityRelationship} relationship.Agent             The target is an agent or authorized to act on behalf of the source            
  * @property {EntityRelationship} relationship.Aliquot             The target is a portion of the original source            
- * @property {EntityRelationship} relationship.AssignedEntity             The target is an entity acting under the employ of the source entity            
+ * @property {EntityRelationship} relationship.AssignedEntity             The target is an entity acting under role or assignment of the source             
  * @property {EntityRelationship} relationship.Aunt             The target is the aunt of the source            
  * @property {EntityRelationship} relationship.Birthplace             The target is the birthplace of the source            
  * @property {EntityRelationship} relationship.Brother             The target is the brother of the source            
@@ -5121,7 +4783,7 @@ function DeviceEntity (copyData) {
  * @property {EntityRelationship} relationship.NextOfKin             The target is the next of kin for the source            
  * @property {EntityRelationship} relationship.Niece             The niece            
  * @property {EntityRelationship} relationship.NieceNephew             The niece nephew            
- * @property {EntityRelationship} relationship.NotaryPublic             The target is a notary public acting within the source entity             
+ * @property {EntityRelationship} relationship.NotaryPublic             The target is a notary public acting within the source entity            
  * @property {EntityRelationship} relationship.OwnedEntity             The target entity is owned by the source entity            
  * @property {EntityRelationship} relationship.Parent             The target entity is the parent of the source entity            
  * @property {EntityRelationship} relationship.ParentInlaw             The parent inlaw            
@@ -5167,7 +4829,7 @@ function DeviceEntity (copyData) {
  * @property {EntityRelationship} relationship.Stepsister             The stepsister            
  * @property {EntityRelationship} relationship.Stepson             The stepson            
  * @property {EntityRelationship} relationship.Student             The student            
- * @property {EntityRelationship} relationship.Subscriber             The target is a subscriber of the source, meaning the target should receive updates whenever the source changes             
+ * @property {EntityRelationship} relationship.Subscriber             The target is a subscriber of the source, meaning the target should receive updates whenever the source changes            
  * @property {EntityRelationship} relationship.TerritoryOfAuthority             The target represents another territory where the source has authority            
  * @property {EntityRelationship} relationship.TherapeuticAgent             The target represents the theraputic agent of the source            
  * @property {EntityRelationship} relationship.Uncle             The uncle            
@@ -5175,18 +4837,23 @@ function DeviceEntity (copyData) {
  * @property {EntityRelationship} relationship.UsedEntity             The target represents an entity that is consumed whenever the source is consumed            
  * @property {EntityRelationship} relationship.WarrantedProduct             The target represents a product which is warranted by the source            
  * @property {EntityRelationship} relationship.Wife             The wife            
- * @property {EntityRelationship} relationship.Replaces             The source replaces the target (note: this is one relationship where the role relationship is reveresed)             
+ * @property {EntityRelationship} relationship.Replaces             The source replaces the target (note: this is one relationship where the role relationship is reveresed)            
  * @property {EntityRelationship} relationship.Instance             The target entity represents an instance of the scoper entity            
  * @property {EntityRelationship} relationship.LocatedEntity             Relates the target entity to a source location            
  * @property {EntityRelationship} relationship.Duplicate             Duplicate entity            
  * @property {EntityRelationship} relationship.Scoper             Duplicate entity            
  * @property {EntityRelationship} relationship.EquivalentEntity             Referenced entities            
+ * @property {EntityRelationship} relationship.HasIngredient             The source entity has an ingredient represented by the target            
+ * @property {EntityRelationship} relationship.HasContent             The source entity is comprised of the target. Note that this differs from PART in that content can be separated, parts cannot be separated            
+ * @property {EntityRelationship} relationship.HasGenerialization             The source entity is a specialization of the target (i.e. the target is a more general entity kind than the source)            
+ * @property {EntityRelationship} relationship.HasPart             The source entity is comprised of the target as a part (example: DTP vaccine kind has part Diptheria vaccine kind, Tetanus vaccine kind, and Pertussis vaccine kind)            
  * @property {EntityRelationship} relationship.$other Unclassified
  * @property {Concept} statusConceptModel [Delay loaded from statusConcept],  Status concept id
  * @property {string} statusConcept Status concept id(see: {@link StatusKeys} for values)
  * @property {object} tag Gets a list of all tags associated with the entity
  * @property {string} tag.classifier  where classifier is from {@link Tag} key
  * @property {object} telecom Gets a list of all telecommunications addresses associated with the entity
+ * @property {EntityTelecomAddress} telecom.PrimaryHome             Primary home            
  * @property {EntityTelecomAddress} telecom.AnsweringService             answering service            
  * @property {EntityTelecomAddress} telecom.EmergencyContact             Emergency contact            
  * @property {EntityTelecomAddress} telecom.MobileContact             Mobile phone contact            
@@ -5200,9 +4867,10 @@ function DeviceEntity (copyData) {
  * @property {Concept} typeConceptModel [Delay loaded from typeConcept],  Type concept identifier
  * @property {string} typeConcept Type concept identifier
  * @property {SecurityPolicyInstance} policy Gets or sets the security policy instances associated with the entity
+ * @property {GeoTag} geo Gets or sets the geo tag
  * @property {string} previousVersion
  * @property {string} version
- * @property {number} sequence
+ * @property {Int64} sequence
  * @property {Date} creationTimeModel [Delay loaded from creationTime],  Gets or sets the time at which the data was created
  * @property {Date} creationTime Gets or sets the creation time as an ISO date format
  * @property {Date} obsoletionTimeModel [Delay loaded from obsoletionTime],  Gets or sets the time when the data is or will become invalid
@@ -5272,7 +4940,7 @@ function Entity (copyData) {
 	 */
 	this.creationTimeModel = copyData.creationTimeModel;
 	/**
-	 * @type {number} 
+	 * @type {Int64} 
 	 */
 	this.sequence = copyData.sequence;
 	/**
@@ -5283,6 +4951,11 @@ function Entity (copyData) {
 	 * @type {string} 
 	 */
 	this.previousVersion = copyData.previousVersion;
+	/**
+	 * @summary Gets or sets the geo tag
+	 * @type {GeoTag} 
+	 */
+	this.geo = copyData.geo;
 	/**
 	 * @summary Gets or sets the security policy instances associated with the entity
 	 * @type {SecurityPolicyInstance} 
@@ -5389,14 +5062,16 @@ function Entity (copyData) {
 	this.address = copyData.address;
 	}
 }  // Entity 
-// SanteDB.Core.Model.Entities.EntityAddress, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Entities.EntityAddress, SanteDB.Core.Model, Version=3.0.0.0, Culture=neutral, PublicKeyToken=null
 //if(!EntityAddress)
 /**
  * @class
  * @constructor
  * @public
  * @extends VersionedAssociation
- * @summary Entity address
+ * @summary A structured address for an entity
+ * @description Addresses in SanteDB are structured as a collection of components. This structure
+            ensures that addresses a flexible when they are stored, searched and reproduced
  * @property {Concept} useModel [Delay loaded from use],  Gets or sets the address use
  * @property {string} use Gets or sets the address use key(see: {@link AddressUseKeys} for values)
  * @property {object} component Gets or sets the component types
@@ -5429,8 +5104,8 @@ function Entity (copyData) {
  * @property {string} component.UnitDesignator             Identifies the type of unit (example: Suite, Apartment, Unit)            
  * @property {string} component.UnitIdentifier             The identifier of the unit (example: 820)            
  * @property {string} component.$other Unclassified
- * @property {number} effectiveVersionSequence
- * @property {number} obsoleteVersionSequence
+ * @property {Int64} effectiveVersionSequence
+ * @property {Int64} obsoleteVersionSequence
  * @property {Date} modifiedOn
  * @property {string} source
  * @property {Entity} sourceModel [Delay loaded from source], 
@@ -5465,11 +5140,11 @@ function EntityAddress (copyData) {
 	 */
 	this.modifiedOn = copyData.modifiedOn;
 	/**
-	 * @type {number} 
+	 * @type {Int64} 
 	 */
 	this.obsoleteVersionSequence = copyData.obsoleteVersionSequence;
 	/**
-	 * @type {number} 
+	 * @type {Int64} 
 	 */
 	this.effectiveVersionSequence = copyData.effectiveVersionSequence;
 	/**
@@ -5488,7 +5163,7 @@ function EntityAddress (copyData) {
 	this.useModel = copyData.useModel;
 	}
 }  // EntityAddress 
-// SanteDB.Core.Model.Entities.EntityAddressComponent, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Entities.EntityAddressComponent, SanteDB.Core.Model, Version=3.0.0.0, Culture=neutral, PublicKeyToken=null
 //if(!AddressComponent)
 /**
  * @class
@@ -5497,6 +5172,7 @@ function EntityAddress (copyData) {
  * @extends GenericComponentValues
  * @summary A single address component
  * @property {string} type Gets or sets the component type key(see: {@link AddressComponentKeys} for values)
+ * @property {Int64} sequence Gets or sets the order in which this element appears
  * @property {Concept} typeModel [Delay loaded from type], 
  * @property {string} value
  * @property {Date} modifiedOn
@@ -5541,13 +5217,18 @@ function AddressComponent (copyData) {
 	 */
 	this.typeModel = copyData.typeModel;
 	/**
+	 * @summary Gets or sets the order in which this element appears
+	 * @type {Int64} 
+	 */
+	this.sequence = copyData.sequence;
+	/**
 	 * @summary Gets or sets the component type key
 	 * @type {string} 
 	 */
 	this.type = copyData.type;
 	}
 }  // AddressComponent 
-// SanteDB.Core.Model.Entities.EntityName, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Entities.EntityName, SanteDB.Core.Model, Version=3.0.0.0, Culture=neutral, PublicKeyToken=null
 //if(!EntityName)
 /**
  * @class
@@ -5555,6 +5236,9 @@ function AddressComponent (copyData) {
  * @public
  * @extends VersionedAssociation
  * @summary Represents a name for an entity
+ * @description In SanteDB an entity name is a structured object which is made up of multiple
+            components. This allows SanteDB to store complex names without having to copy multiple
+            name components into a single field.
  * @property {object} component Gets or sets the individual component types
  * @property {string} component.Delimiter             The name component represents a delimeter in a name such as hyphen or space            
  * @property {string} component.Family             The name component represents the surname            
@@ -5565,8 +5249,8 @@ function AddressComponent (copyData) {
  * @property {string} component.$other Unclassified
  * @property {Concept} useModel [Delay loaded from use],  Gets or sets the name use
  * @property {string} use Gets or sets the name use key(see: {@link NameUseKeys} for values)
- * @property {number} effectiveVersionSequence
- * @property {number} obsoleteVersionSequence
+ * @property {Int64} effectiveVersionSequence
+ * @property {Int64} obsoleteVersionSequence
  * @property {Date} modifiedOn
  * @property {string} source
  * @property {Entity} sourceModel [Delay loaded from source], 
@@ -5601,11 +5285,11 @@ function EntityName (copyData) {
 	 */
 	this.modifiedOn = copyData.modifiedOn;
 	/**
-	 * @type {number} 
+	 * @type {Int64} 
 	 */
 	this.obsoleteVersionSequence = copyData.obsoleteVersionSequence;
 	/**
-	 * @type {number} 
+	 * @type {Int64} 
 	 */
 	this.effectiveVersionSequence = copyData.effectiveVersionSequence;
 	/**
@@ -5624,7 +5308,7 @@ function EntityName (copyData) {
 	this.component = copyData.component;
 	}
 }  // EntityName 
-// SanteDB.Core.Model.Entities.EntityNameComponent, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Entities.EntityNameComponent, SanteDB.Core.Model, Version=3.0.0.0, Culture=neutral, PublicKeyToken=null
 //if(!EntityNameComponent)
 /**
  * @class
@@ -5633,6 +5317,7 @@ function EntityName (copyData) {
  * @extends GenericComponentValues
  * @summary Represents a name component which is bound to a name
  * @property {string} type Gets or sets the component type key(see: {@link NameComponentKeys} for values)
+ * @property {Int64} sequence Gets or sets the sequence of this object in the component
  * @property {Concept} typeModel [Delay loaded from type], 
  * @property {string} value
  * @property {Date} modifiedOn
@@ -5677,13 +5362,18 @@ function EntityNameComponent (copyData) {
 	 */
 	this.typeModel = copyData.typeModel;
 	/**
+	 * @summary Gets or sets the sequence of this object in the component
+	 * @type {Int64} 
+	 */
+	this.sequence = copyData.sequence;
+	/**
 	 * @summary Gets or sets the component type key
 	 * @type {string} 
 	 */
 	this.type = copyData.type;
 	}
 }  // EntityNameComponent 
-// SanteDB.Core.Model.Entities.EntityRelationship, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Entities.EntityRelationship, SanteDB.Core.Model, Version=3.0.0.0, Culture=neutral, PublicKeyToken=null
 //if(!EntityRelationship)
 /**
  * @class
@@ -5704,8 +5394,8 @@ function EntityNameComponent (copyData) {
  * @property {string} classification Association type key(see: {@link RelationshipClassKeys} for values)
  * @property {Entity} targetModel [Delay loaded from target],  Target entity reference
  * @property {string} target The target of the association
- * @property {number} effectiveVersionSequence
- * @property {number} obsoleteVersionSequence
+ * @property {Int64} effectiveVersionSequence
+ * @property {Int64} obsoleteVersionSequence
  * @property {Date} modifiedOn
  * @property {string} source
  * @property {Entity} sourceModel [Delay loaded from source], 
@@ -5740,11 +5430,11 @@ function EntityRelationship (copyData) {
 	 */
 	this.modifiedOn = copyData.modifiedOn;
 	/**
-	 * @type {number} 
+	 * @type {Int64} 
 	 */
 	this.obsoleteVersionSequence = copyData.obsoleteVersionSequence;
 	/**
-	 * @type {number} 
+	 * @type {Int64} 
 	 */
 	this.effectiveVersionSequence = copyData.effectiveVersionSequence;
 	/**
@@ -5809,7 +5499,7 @@ function EntityRelationship (copyData) {
 	this.holderModel = copyData.holderModel;
 	}
 }  // EntityRelationship 
-// SanteDB.Core.Model.Entities.EntityTelecomAddress, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Entities.EntityTelecomAddress, SanteDB.Core.Model, Version=3.0.0.0, Culture=neutral, PublicKeyToken=null
 //if(!EntityTelecomAddress)
 /**
  * @class
@@ -5822,8 +5512,8 @@ function EntityRelationship (copyData) {
  * @property {Concept} typeModel [Delay loaded from type],  Gets or sets the name use
  * @property {string} type Gets or sets the name use key(see: {@link TelecomAddressTypeKeys} for values)
  * @property {string} value Gets or sets the value of the telecom address
- * @property {number} effectiveVersionSequence
- * @property {number} obsoleteVersionSequence
+ * @property {Int64} effectiveVersionSequence
+ * @property {Int64} obsoleteVersionSequence
  * @property {Date} modifiedOn
  * @property {string} source
  * @property {Entity} sourceModel [Delay loaded from source], 
@@ -5858,11 +5548,11 @@ function EntityTelecomAddress (copyData) {
 	 */
 	this.modifiedOn = copyData.modifiedOn;
 	/**
-	 * @type {number} 
+	 * @type {Int64} 
 	 */
 	this.obsoleteVersionSequence = copyData.obsoleteVersionSequence;
 	/**
-	 * @type {number} 
+	 * @type {Int64} 
 	 */
 	this.effectiveVersionSequence = copyData.effectiveVersionSequence;
 	/**
@@ -5890,7 +5580,7 @@ function EntityTelecomAddress (copyData) {
 	this.useModel = copyData.useModel;
 	}
 }  // EntityTelecomAddress 
-// SanteDB.Core.Model.Entities.GenericComponentValues`1, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Entities.GenericComponentValues`1, SanteDB.Core.Model, Version=3.0.0.0, Culture=neutral, PublicKeyToken=null
 //if(!GenericComponentValues)
 /**
  * @class
@@ -5951,7 +5641,7 @@ function GenericComponentValues (copyData) {
 	this.typeModel = copyData.typeModel;
 	}
 }  // GenericComponentValues 
-// SanteDB.Core.Model.Entities.ManufacturedMaterial, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Entities.ManufacturedMaterial, SanteDB.Core.Model, Version=3.0.0.0, Culture=neutral, PublicKeyToken=null
 //if(!ManufacturedMaterial)
 /**
  * @class
@@ -5995,7 +5685,7 @@ function GenericComponentValues (copyData) {
  * @property {object} extension Gets a list of all extensions associated with the entity
  * @property {string} extension.classifier  where classifier is from {@link Extension} extensionType
  * @property {object} identifier Gets the identifiers associated with this entity
- * @property {EntityIdentifier} identifier.classifier  where classifier is from {@link IdentifierBase} authority
+ * @property {EntityIdentifier} identifier.classifier  where classifier is from {@link IdentifierBase} domain
  * @property {object} name Gets a list of all names associated with the entity
  * @property {EntityName} name.Alphabetic             The name used is an alphabetic representation of the name (ex: romaji in Japanese)            
  * @property {EntityName} name.Anonymous             The name is an anonymous name for the object (not the real name but a name used for care delivery)            
@@ -6083,7 +5773,7 @@ function GenericComponentValues (copyData) {
  * @property {EntityRelationship} relationship.Affiliate             The target has a business/professional relationship with the source.            
  * @property {EntityRelationship} relationship.Agent             The target is an agent or authorized to act on behalf of the source            
  * @property {EntityRelationship} relationship.Aliquot             The target is a portion of the original source            
- * @property {EntityRelationship} relationship.AssignedEntity             The target is an entity acting under the employ of the source entity            
+ * @property {EntityRelationship} relationship.AssignedEntity             The target is an entity acting under role or assignment of the source             
  * @property {EntityRelationship} relationship.Aunt             The target is the aunt of the source            
  * @property {EntityRelationship} relationship.Birthplace             The target is the birthplace of the source            
  * @property {EntityRelationship} relationship.Brother             The target is the brother of the source            
@@ -6171,7 +5861,7 @@ function GenericComponentValues (copyData) {
  * @property {EntityRelationship} relationship.NextOfKin             The target is the next of kin for the source            
  * @property {EntityRelationship} relationship.Niece             The niece            
  * @property {EntityRelationship} relationship.NieceNephew             The niece nephew            
- * @property {EntityRelationship} relationship.NotaryPublic             The target is a notary public acting within the source entity             
+ * @property {EntityRelationship} relationship.NotaryPublic             The target is a notary public acting within the source entity            
  * @property {EntityRelationship} relationship.OwnedEntity             The target entity is owned by the source entity            
  * @property {EntityRelationship} relationship.Parent             The target entity is the parent of the source entity            
  * @property {EntityRelationship} relationship.ParentInlaw             The parent inlaw            
@@ -6217,7 +5907,7 @@ function GenericComponentValues (copyData) {
  * @property {EntityRelationship} relationship.Stepsister             The stepsister            
  * @property {EntityRelationship} relationship.Stepson             The stepson            
  * @property {EntityRelationship} relationship.Student             The student            
- * @property {EntityRelationship} relationship.Subscriber             The target is a subscriber of the source, meaning the target should receive updates whenever the source changes             
+ * @property {EntityRelationship} relationship.Subscriber             The target is a subscriber of the source, meaning the target should receive updates whenever the source changes            
  * @property {EntityRelationship} relationship.TerritoryOfAuthority             The target represents another territory where the source has authority            
  * @property {EntityRelationship} relationship.TherapeuticAgent             The target represents the theraputic agent of the source            
  * @property {EntityRelationship} relationship.Uncle             The uncle            
@@ -6225,18 +5915,23 @@ function GenericComponentValues (copyData) {
  * @property {EntityRelationship} relationship.UsedEntity             The target represents an entity that is consumed whenever the source is consumed            
  * @property {EntityRelationship} relationship.WarrantedProduct             The target represents a product which is warranted by the source            
  * @property {EntityRelationship} relationship.Wife             The wife            
- * @property {EntityRelationship} relationship.Replaces             The source replaces the target (note: this is one relationship where the role relationship is reveresed)             
+ * @property {EntityRelationship} relationship.Replaces             The source replaces the target (note: this is one relationship where the role relationship is reveresed)            
  * @property {EntityRelationship} relationship.Instance             The target entity represents an instance of the scoper entity            
  * @property {EntityRelationship} relationship.LocatedEntity             Relates the target entity to a source location            
  * @property {EntityRelationship} relationship.Duplicate             Duplicate entity            
  * @property {EntityRelationship} relationship.Scoper             Duplicate entity            
  * @property {EntityRelationship} relationship.EquivalentEntity             Referenced entities            
+ * @property {EntityRelationship} relationship.HasIngredient             The source entity has an ingredient represented by the target            
+ * @property {EntityRelationship} relationship.HasContent             The source entity is comprised of the target. Note that this differs from PART in that content can be separated, parts cannot be separated            
+ * @property {EntityRelationship} relationship.HasGenerialization             The source entity is a specialization of the target (i.e. the target is a more general entity kind than the source)            
+ * @property {EntityRelationship} relationship.HasPart             The source entity is comprised of the target as a part (example: DTP vaccine kind has part Diptheria vaccine kind, Tetanus vaccine kind, and Pertussis vaccine kind)            
  * @property {EntityRelationship} relationship.$other Unclassified
  * @property {Concept} statusConceptModel [Delay loaded from statusConcept],  Status concept id
  * @property {string} statusConcept Status concept id(see: {@link StatusKeys} for values)
  * @property {object} tag Gets a list of all tags associated with the entity
  * @property {string} tag.classifier  where classifier is from {@link Tag} key
  * @property {object} telecom Gets a list of all telecommunications addresses associated with the entity
+ * @property {EntityTelecomAddress} telecom.PrimaryHome             Primary home            
  * @property {EntityTelecomAddress} telecom.AnsweringService             answering service            
  * @property {EntityTelecomAddress} telecom.EmergencyContact             Emergency contact            
  * @property {EntityTelecomAddress} telecom.MobileContact             Mobile phone contact            
@@ -6250,9 +5945,10 @@ function GenericComponentValues (copyData) {
  * @property {Concept} typeConceptModel [Delay loaded from typeConcept],  Type concept identifier
  * @property {string} typeConcept Type concept identifier
  * @property {SecurityPolicyInstance} policy Gets or sets the security policy instances associated with the entity
+ * @property {GeoTag} geo Gets or sets the geo tag
  * @property {string} previousVersion
  * @property {string} version
- * @property {number} sequence
+ * @property {Int64} sequence
  * @property {Date} creationTimeModel [Delay loaded from creationTime],  Gets or sets the time at which the data was created
  * @property {Date} creationTime Gets or sets the creation time as an ISO date format
  * @property {Date} obsoletionTimeModel [Delay loaded from obsoletionTime],  Gets or sets the time when the data is or will become invalid
@@ -6322,7 +6018,7 @@ function ManufacturedMaterial (copyData) {
 	 */
 	this.creationTimeModel = copyData.creationTimeModel;
 	/**
-	 * @type {number} 
+	 * @type {Int64} 
 	 */
 	this.sequence = copyData.sequence;
 	/**
@@ -6333,6 +6029,11 @@ function ManufacturedMaterial (copyData) {
 	 * @type {string} 
 	 */
 	this.previousVersion = copyData.previousVersion;
+	/**
+	 * @summary Gets or sets the geo tag
+	 * @type {GeoTag} 
+	 */
+	this.geo = copyData.geo;
 	/**
 	 * @summary Gets or sets the security policy instances associated with the entity
 	 * @type {SecurityPolicyInstance} 
@@ -6478,7 +6179,7 @@ function ManufacturedMaterial (copyData) {
 	this.lotNumber = copyData.lotNumber;
 	}
 }  // ManufacturedMaterial 
-// SanteDB.Core.Model.Entities.Material, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Entities.Material, SanteDB.Core.Model, Version=3.0.0.0, Culture=neutral, PublicKeyToken=null
 //if(!Material)
 /**
  * @class
@@ -6520,7 +6221,7 @@ function ManufacturedMaterial (copyData) {
  * @property {object} extension Gets a list of all extensions associated with the entity
  * @property {string} extension.classifier  where classifier is from {@link Extension} extensionType
  * @property {object} identifier Gets the identifiers associated with this entity
- * @property {EntityIdentifier} identifier.classifier  where classifier is from {@link IdentifierBase} authority
+ * @property {EntityIdentifier} identifier.classifier  where classifier is from {@link IdentifierBase} domain
  * @property {object} name Gets a list of all names associated with the entity
  * @property {EntityName} name.Alphabetic             The name used is an alphabetic representation of the name (ex: romaji in Japanese)            
  * @property {EntityName} name.Anonymous             The name is an anonymous name for the object (not the real name but a name used for care delivery)            
@@ -6608,7 +6309,7 @@ function ManufacturedMaterial (copyData) {
  * @property {EntityRelationship} relationship.Affiliate             The target has a business/professional relationship with the source.            
  * @property {EntityRelationship} relationship.Agent             The target is an agent or authorized to act on behalf of the source            
  * @property {EntityRelationship} relationship.Aliquot             The target is a portion of the original source            
- * @property {EntityRelationship} relationship.AssignedEntity             The target is an entity acting under the employ of the source entity            
+ * @property {EntityRelationship} relationship.AssignedEntity             The target is an entity acting under role or assignment of the source             
  * @property {EntityRelationship} relationship.Aunt             The target is the aunt of the source            
  * @property {EntityRelationship} relationship.Birthplace             The target is the birthplace of the source            
  * @property {EntityRelationship} relationship.Brother             The target is the brother of the source            
@@ -6696,7 +6397,7 @@ function ManufacturedMaterial (copyData) {
  * @property {EntityRelationship} relationship.NextOfKin             The target is the next of kin for the source            
  * @property {EntityRelationship} relationship.Niece             The niece            
  * @property {EntityRelationship} relationship.NieceNephew             The niece nephew            
- * @property {EntityRelationship} relationship.NotaryPublic             The target is a notary public acting within the source entity             
+ * @property {EntityRelationship} relationship.NotaryPublic             The target is a notary public acting within the source entity            
  * @property {EntityRelationship} relationship.OwnedEntity             The target entity is owned by the source entity            
  * @property {EntityRelationship} relationship.Parent             The target entity is the parent of the source entity            
  * @property {EntityRelationship} relationship.ParentInlaw             The parent inlaw            
@@ -6742,7 +6443,7 @@ function ManufacturedMaterial (copyData) {
  * @property {EntityRelationship} relationship.Stepsister             The stepsister            
  * @property {EntityRelationship} relationship.Stepson             The stepson            
  * @property {EntityRelationship} relationship.Student             The student            
- * @property {EntityRelationship} relationship.Subscriber             The target is a subscriber of the source, meaning the target should receive updates whenever the source changes             
+ * @property {EntityRelationship} relationship.Subscriber             The target is a subscriber of the source, meaning the target should receive updates whenever the source changes            
  * @property {EntityRelationship} relationship.TerritoryOfAuthority             The target represents another territory where the source has authority            
  * @property {EntityRelationship} relationship.TherapeuticAgent             The target represents the theraputic agent of the source            
  * @property {EntityRelationship} relationship.Uncle             The uncle            
@@ -6750,18 +6451,23 @@ function ManufacturedMaterial (copyData) {
  * @property {EntityRelationship} relationship.UsedEntity             The target represents an entity that is consumed whenever the source is consumed            
  * @property {EntityRelationship} relationship.WarrantedProduct             The target represents a product which is warranted by the source            
  * @property {EntityRelationship} relationship.Wife             The wife            
- * @property {EntityRelationship} relationship.Replaces             The source replaces the target (note: this is one relationship where the role relationship is reveresed)             
+ * @property {EntityRelationship} relationship.Replaces             The source replaces the target (note: this is one relationship where the role relationship is reveresed)            
  * @property {EntityRelationship} relationship.Instance             The target entity represents an instance of the scoper entity            
  * @property {EntityRelationship} relationship.LocatedEntity             Relates the target entity to a source location            
  * @property {EntityRelationship} relationship.Duplicate             Duplicate entity            
  * @property {EntityRelationship} relationship.Scoper             Duplicate entity            
  * @property {EntityRelationship} relationship.EquivalentEntity             Referenced entities            
+ * @property {EntityRelationship} relationship.HasIngredient             The source entity has an ingredient represented by the target            
+ * @property {EntityRelationship} relationship.HasContent             The source entity is comprised of the target. Note that this differs from PART in that content can be separated, parts cannot be separated            
+ * @property {EntityRelationship} relationship.HasGenerialization             The source entity is a specialization of the target (i.e. the target is a more general entity kind than the source)            
+ * @property {EntityRelationship} relationship.HasPart             The source entity is comprised of the target as a part (example: DTP vaccine kind has part Diptheria vaccine kind, Tetanus vaccine kind, and Pertussis vaccine kind)            
  * @property {EntityRelationship} relationship.$other Unclassified
  * @property {Concept} statusConceptModel [Delay loaded from statusConcept],  Status concept id
  * @property {string} statusConcept Status concept id(see: {@link StatusKeys} for values)
  * @property {object} tag Gets a list of all tags associated with the entity
  * @property {string} tag.classifier  where classifier is from {@link Tag} key
  * @property {object} telecom Gets a list of all telecommunications addresses associated with the entity
+ * @property {EntityTelecomAddress} telecom.PrimaryHome             Primary home            
  * @property {EntityTelecomAddress} telecom.AnsweringService             answering service            
  * @property {EntityTelecomAddress} telecom.EmergencyContact             Emergency contact            
  * @property {EntityTelecomAddress} telecom.MobileContact             Mobile phone contact            
@@ -6775,9 +6481,10 @@ function ManufacturedMaterial (copyData) {
  * @property {Concept} typeConceptModel [Delay loaded from typeConcept],  Type concept identifier
  * @property {string} typeConcept Type concept identifier
  * @property {SecurityPolicyInstance} policy Gets or sets the security policy instances associated with the entity
+ * @property {GeoTag} geo Gets or sets the geo tag
  * @property {string} previousVersion
  * @property {string} version
- * @property {number} sequence
+ * @property {Int64} sequence
  * @property {Date} creationTimeModel [Delay loaded from creationTime],  Gets or sets the time at which the data was created
  * @property {Date} creationTime Gets or sets the creation time as an ISO date format
  * @property {Date} obsoletionTimeModel [Delay loaded from obsoletionTime],  Gets or sets the time when the data is or will become invalid
@@ -6847,7 +6554,7 @@ function Material (copyData) {
 	 */
 	this.creationTimeModel = copyData.creationTimeModel;
 	/**
-	 * @type {number} 
+	 * @type {Int64} 
 	 */
 	this.sequence = copyData.sequence;
 	/**
@@ -6858,6 +6565,11 @@ function Material (copyData) {
 	 * @type {string} 
 	 */
 	this.previousVersion = copyData.previousVersion;
+	/**
+	 * @summary Gets or sets the geo tag
+	 * @type {GeoTag} 
+	 */
+	this.geo = copyData.geo;
 	/**
 	 * @summary Gets or sets the security policy instances associated with the entity
 	 * @type {SecurityPolicyInstance} 
@@ -6998,15 +6710,18 @@ function Material (copyData) {
 	this.expiryDate = copyData.expiryDate;
 	}
 }  // Material 
-// SanteDB.Core.Model.Entities.Organization, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
-//if(!Organization)
+// SanteDB.Core.Model.Entities.NonPersonLivingSubject, SanteDB.Core.Model, Version=3.0.0.0, Culture=neutral, PublicKeyToken=null
+//if(!NonPersonLivingSubject)
 /**
  * @class
  * @constructor
  * @public
- * @summary Organization entity
- * @property {Concept} industryConceptModel [Delay loaded from industryConcept],  Gets or sets the industry concept key
- * @property {string} industryConcept Gets or sets the concept key which classifies the industry in which the organization operates
+ * @summary Represents an entity which is alive, but not a person
+ * @description <p>In SanteDB a non-person living subject is used to represent entities such as parasites, viruses,
+            bacteria, plants, etc. The primary use of this class is to capture information in relation
+            to infections, protections or components of other entities.</p>
+ * @property {string} strain Gets the description of the strain
+ * @property {Concept} strainModel [Delay loaded from strain],  Strain
  * @property {object} address Gets a list of all addresses associated with the entity
  * @property {EntityAddress} address.Alphabetic             Represents an alphabetic address used for matching             
  * @property {EntityAddress} address.BadAddress             Represents a bad address, i.e. an address which is old or invalid.            
@@ -7033,7 +6748,7 @@ function Material (copyData) {
  * @property {object} extension Gets a list of all extensions associated with the entity
  * @property {string} extension.classifier  where classifier is from {@link Extension} extensionType
  * @property {object} identifier Gets the identifiers associated with this entity
- * @property {EntityIdentifier} identifier.classifier  where classifier is from {@link IdentifierBase} authority
+ * @property {EntityIdentifier} identifier.classifier  where classifier is from {@link IdentifierBase} domain
  * @property {object} name Gets a list of all names associated with the entity
  * @property {EntityName} name.Alphabetic             The name used is an alphabetic representation of the name (ex: romaji in Japanese)            
  * @property {EntityName} name.Anonymous             The name is an anonymous name for the object (not the real name but a name used for care delivery)            
@@ -7121,7 +6836,7 @@ function Material (copyData) {
  * @property {EntityRelationship} relationship.Affiliate             The target has a business/professional relationship with the source.            
  * @property {EntityRelationship} relationship.Agent             The target is an agent or authorized to act on behalf of the source            
  * @property {EntityRelationship} relationship.Aliquot             The target is a portion of the original source            
- * @property {EntityRelationship} relationship.AssignedEntity             The target is an entity acting under the employ of the source entity            
+ * @property {EntityRelationship} relationship.AssignedEntity             The target is an entity acting under role or assignment of the source             
  * @property {EntityRelationship} relationship.Aunt             The target is the aunt of the source            
  * @property {EntityRelationship} relationship.Birthplace             The target is the birthplace of the source            
  * @property {EntityRelationship} relationship.Brother             The target is the brother of the source            
@@ -7209,7 +6924,7 @@ function Material (copyData) {
  * @property {EntityRelationship} relationship.NextOfKin             The target is the next of kin for the source            
  * @property {EntityRelationship} relationship.Niece             The niece            
  * @property {EntityRelationship} relationship.NieceNephew             The niece nephew            
- * @property {EntityRelationship} relationship.NotaryPublic             The target is a notary public acting within the source entity             
+ * @property {EntityRelationship} relationship.NotaryPublic             The target is a notary public acting within the source entity            
  * @property {EntityRelationship} relationship.OwnedEntity             The target entity is owned by the source entity            
  * @property {EntityRelationship} relationship.Parent             The target entity is the parent of the source entity            
  * @property {EntityRelationship} relationship.ParentInlaw             The parent inlaw            
@@ -7255,7 +6970,7 @@ function Material (copyData) {
  * @property {EntityRelationship} relationship.Stepsister             The stepsister            
  * @property {EntityRelationship} relationship.Stepson             The stepson            
  * @property {EntityRelationship} relationship.Student             The student            
- * @property {EntityRelationship} relationship.Subscriber             The target is a subscriber of the source, meaning the target should receive updates whenever the source changes             
+ * @property {EntityRelationship} relationship.Subscriber             The target is a subscriber of the source, meaning the target should receive updates whenever the source changes            
  * @property {EntityRelationship} relationship.TerritoryOfAuthority             The target represents another territory where the source has authority            
  * @property {EntityRelationship} relationship.TherapeuticAgent             The target represents the theraputic agent of the source            
  * @property {EntityRelationship} relationship.Uncle             The uncle            
@@ -7263,18 +6978,23 @@ function Material (copyData) {
  * @property {EntityRelationship} relationship.UsedEntity             The target represents an entity that is consumed whenever the source is consumed            
  * @property {EntityRelationship} relationship.WarrantedProduct             The target represents a product which is warranted by the source            
  * @property {EntityRelationship} relationship.Wife             The wife            
- * @property {EntityRelationship} relationship.Replaces             The source replaces the target (note: this is one relationship where the role relationship is reveresed)             
+ * @property {EntityRelationship} relationship.Replaces             The source replaces the target (note: this is one relationship where the role relationship is reveresed)            
  * @property {EntityRelationship} relationship.Instance             The target entity represents an instance of the scoper entity            
  * @property {EntityRelationship} relationship.LocatedEntity             Relates the target entity to a source location            
  * @property {EntityRelationship} relationship.Duplicate             Duplicate entity            
  * @property {EntityRelationship} relationship.Scoper             Duplicate entity            
  * @property {EntityRelationship} relationship.EquivalentEntity             Referenced entities            
+ * @property {EntityRelationship} relationship.HasIngredient             The source entity has an ingredient represented by the target            
+ * @property {EntityRelationship} relationship.HasContent             The source entity is comprised of the target. Note that this differs from PART in that content can be separated, parts cannot be separated            
+ * @property {EntityRelationship} relationship.HasGenerialization             The source entity is a specialization of the target (i.e. the target is a more general entity kind than the source)            
+ * @property {EntityRelationship} relationship.HasPart             The source entity is comprised of the target as a part (example: DTP vaccine kind has part Diptheria vaccine kind, Tetanus vaccine kind, and Pertussis vaccine kind)            
  * @property {EntityRelationship} relationship.$other Unclassified
  * @property {Concept} statusConceptModel [Delay loaded from statusConcept],  Status concept id
  * @property {string} statusConcept Status concept id(see: {@link StatusKeys} for values)
  * @property {object} tag Gets a list of all tags associated with the entity
  * @property {string} tag.classifier  where classifier is from {@link Tag} key
  * @property {object} telecom Gets a list of all telecommunications addresses associated with the entity
+ * @property {EntityTelecomAddress} telecom.PrimaryHome             Primary home            
  * @property {EntityTelecomAddress} telecom.AnsweringService             answering service            
  * @property {EntityTelecomAddress} telecom.EmergencyContact             Emergency contact            
  * @property {EntityTelecomAddress} telecom.MobileContact             Mobile phone contact            
@@ -7288,9 +7008,509 @@ function Material (copyData) {
  * @property {Concept} typeConceptModel [Delay loaded from typeConcept],  Type concept identifier
  * @property {string} typeConcept Type concept identifier
  * @property {SecurityPolicyInstance} policy Gets or sets the security policy instances associated with the entity
+ * @property {GeoTag} geo Gets or sets the geo tag
  * @property {string} previousVersion
  * @property {string} version
- * @property {number} sequence
+ * @property {Int64} sequence
+ * @property {Date} creationTimeModel [Delay loaded from creationTime],  Gets or sets the time at which the data was created
+ * @property {Date} creationTime Gets or sets the creation time as an ISO date format
+ * @property {Date} obsoletionTimeModel [Delay loaded from obsoletionTime],  Gets or sets the time when the data is or will become invalid
+ * @property {Date} obsoletionTime Gets or sets the time that the data is no longer valid (was deleted/obsoleted) in ISO format
+ * @property {SecurityProvenance} createdByModel [Delay loaded from createdBy],  Gets or sets the user that created this base data
+ * @property {Date} modifiedOn Gets the time that the object was last modified (from base data, default to CreationTime)
+ * @property {SecurityProvenance} obsoletedByModel [Delay loaded from obsoletedBy],  Gets or sets the user that obsoleted this base data
+ * @property {string} createdBy Gets or sets the security provenance object which represents the creation of this object
+ * @property {string} obsoletedBy Gets or sets the security provenance object which represents the obsoletion of this data
+ * @property {string} id Gets or sets the primary identifying UUID of this object
+ * @property {BatchOperationType} operation Gets or sets the operation(see: {@link BatchOperationType} for values)
+ * @property {string} $type Gets the type registration of this object
+ * @param {NonPersonLivingSubject} copyData Copy constructor (if present)
+ */
+function NonPersonLivingSubject (copyData) { 
+	this.$type = 'NonPersonLivingSubject';
+	if(copyData) {
+	/**
+	 * @summary Gets or sets the operation
+	 * @type {BatchOperationType} 
+	 */
+	this.operation = copyData.operation;
+	/**
+	 * @summary Gets or sets the primary identifying UUID of this object
+	 * @type {string} 
+	 */
+	this.id = copyData.id;
+	/**
+	 * @summary Gets or sets the security provenance object which represents the obsoletion of this data
+	 * @type {string} 
+	 */
+	this.obsoletedBy = copyData.obsoletedBy;
+	/**
+	 * @summary Gets or sets the security provenance object which represents the creation of this object
+	 * @type {string} 
+	 */
+	this.createdBy = copyData.createdBy;
+	/**
+	 * @type {SecurityProvenance} 
+	 */
+	this.obsoletedByModel = copyData.obsoletedByModel;
+	/**
+	 * @summary Gets the time that the object was last modified (from base data, default to CreationTime)
+	 * @type {Date} 
+	 */
+	this.modifiedOn = copyData.modifiedOn;
+	/**
+	 * @type {SecurityProvenance} 
+	 */
+	this.createdByModel = copyData.createdByModel;
+	/**
+	 * @summary Gets or sets the time that the data is no longer valid (was deleted/obsoleted) in ISO format
+	 * @type {Date} 
+	 */
+	this.obsoletionTime = copyData.obsoletionTime;
+	/**
+	 * @type {Date} 
+	 */
+	this.obsoletionTimeModel = copyData.obsoletionTimeModel;
+	/**
+	 * @summary Gets or sets the creation time as an ISO date format
+	 * @type {Date} 
+	 */
+	this.creationTime = copyData.creationTime;
+	/**
+	 * @type {Date} 
+	 */
+	this.creationTimeModel = copyData.creationTimeModel;
+	/**
+	 * @type {Int64} 
+	 */
+	this.sequence = copyData.sequence;
+	/**
+	 * @type {string} 
+	 */
+	this.version = copyData.version;
+	/**
+	 * @type {string} 
+	 */
+	this.previousVersion = copyData.previousVersion;
+	/**
+	 * @summary Gets or sets the geo tag
+	 * @type {GeoTag} 
+	 */
+	this.geo = copyData.geo;
+	/**
+	 * @summary Gets or sets the security policy instances associated with the entity
+	 * @type {SecurityPolicyInstance} 
+	 */
+	this.policy = copyData.policy;
+	/**
+	 * @summary Type concept identifier
+	 * @type {string} 
+	 */
+	this.typeConcept = copyData.typeConcept;
+	/**
+	 * @type {Concept} 
+	 */
+	this.typeConceptModel = copyData.typeConceptModel;
+	/**
+	 * @type {TemplateDefinition} 
+	 */
+	this.templateModel = copyData.templateModel;
+	/**
+	 * @summary Gets or sets the template definition
+	 * @type {string} 
+	 */
+	this.template = copyData.template;
+	/**
+	 * @summary Gets a list of all telecommunications addresses associated with the entity
+	 * @type {object} 
+	 */
+	this.telecom = copyData.telecom;
+	/**
+	 * @summary Gets a list of all tags associated with the entity
+	 * @type {object} 
+	 */
+	this.tag = copyData.tag;
+	/**
+	 * @summary Status concept id
+	 * @type {string} 
+	 */
+	this.statusConcept = copyData.statusConcept;
+	/**
+	 * @type {Concept} 
+	 */
+	this.statusConceptModel = copyData.statusConceptModel;
+	/**
+	 * @summary Gets a list of all associated entities for this entity
+	 * @type {object} 
+	 */
+	this.relationship = copyData.relationship;
+	/**
+	 * @summary Gets the acts in which this entity participates
+	 * @type {object} 
+	 */
+	this.participation = copyData.participation;
+	/**
+	 * @summary Gets a list of all notes associated with the entity
+	 * @type {EntityNote} 
+	 */
+	this.note = copyData.note;
+	/**
+	 * @summary Gets a list of all names associated with the entity
+	 * @type {object} 
+	 */
+	this.name = copyData.name;
+	/**
+	 * @summary Gets the identifiers associated with this entity
+	 * @type {object} 
+	 */
+	this.identifier = copyData.identifier;
+	/**
+	 * @summary Gets a list of all extensions associated with the entity
+	 * @type {object} 
+	 */
+	this.extension = copyData.extension;
+	/**
+	 * @summary Determiner concept
+	 * @type {string} 
+	 */
+	this.determinerConcept = copyData.determinerConcept;
+	/**
+	 * @type {Concept} 
+	 */
+	this.determinerConceptModel = copyData.determinerConceptModel;
+	/**
+	 * @summary Creation act reference
+	 * @type {string} 
+	 */
+	this.creationAct = copyData.creationAct;
+	/**
+	 * @type {Act} 
+	 */
+	this.creationActModel = copyData.creationActModel;
+	/**
+	 * @summary Class concept datal load property
+	 * @type {string} 
+	 */
+	this.classConcept = copyData.classConcept;
+	/**
+	 * @type {Concept} 
+	 */
+	this.classConceptModel = copyData.classConceptModel;
+	/**
+	 * @summary Gets a list of all addresses associated with the entity
+	 * @type {object} 
+	 */
+	this.address = copyData.address;
+	/**
+	 * @type {Concept} 
+	 */
+	this.strainModel = copyData.strainModel;
+	/**
+	 * @summary Gets the description of the strain
+	 * @type {string} 
+	 */
+	this.strain = copyData.strain;
+	}
+}  // NonPersonLivingSubject 
+// SanteDB.Core.Model.Entities.Organization, SanteDB.Core.Model, Version=3.0.0.0, Culture=neutral, PublicKeyToken=null
+//if(!Organization)
+/**
+ * @class
+ * @constructor
+ * @public
+ * @summary Organization entity
+ * @property {Concept} industryConceptModel [Delay loaded from industryConcept],  Gets or sets the industry concept key
+ * @property {string} industryConcept Gets or sets the concept key which classifies the industry in which the organization operates
+ * @property {object} address Gets a list of all addresses associated with the entity
+ * @property {EntityAddress} address.Alphabetic             Represents an alphabetic address used for matching             
+ * @property {EntityAddress} address.BadAddress             Represents a bad address, i.e. an address which is old or invalid.            
+ * @property {EntityAddress} address.Direct             Represents a workplace address that reaches the person directly without intermediaries.            
+ * @property {EntityAddress} address.HomeAddress             The home address            
+ * @property {EntityAddress} address.Ideographic             Represents an address expressed in an ideographic manner (example: Kanji)            
+ * @property {EntityAddress} address.Phonetic             Represents an address expressed as a phonetic spelling of an ideographic address            
+ * @property {EntityAddress} address.PhysicalVisit             The address is a physical place where visits should occur            
+ * @property {EntityAddress} address.PostalAddress             The address is a postal address used for the delivery of mail and materials            
+ * @property {EntityAddress} address.PrimaryHome             Represents a primary address to reach a contact after business hours.            
+ * @property {EntityAddress} address.Public             Represents an address that is a standard address that may be subject to a switchboard or operator prior to reaching the intended entity.            
+ * @property {EntityAddress} address.Soundex             Represents an address used for soundex matching purposes.            
+ * @property {EntityAddress} address.Syllabic             Represents a syllabic address.            
+ * @property {EntityAddress} address.TemporaryAddress             Represents a temporary address that may be good for visiting or mailing.            
+ * @property {EntityAddress} address.VacationHome             Represents a vacation home to reach a person while on vacation.            
+ * @property {EntityAddress} address.WorkPlace             Represents an office address, should be used for business communications            
+ * @property {EntityAddress} address.$other Unclassified
+ * @property {Concept} classConceptModel [Delay loaded from classConcept],  Class concept datal load property
+ * @property {string} classConcept Class concept(see: {@link EntityClassKeys} for values)
+ * @property {Act} creationActModel [Delay loaded from creationAct],  Creation act reference
+ * @property {string} creationAct Creation act reference
+ * @property {Concept} determinerConceptModel [Delay loaded from determinerConcept],  Determiner concept
+ * @property {string} determinerConcept Determiner concept(see: {@link DeterminerKeys} for values)
+ * @property {object} extension Gets a list of all extensions associated with the entity
+ * @property {string} extension.classifier  where classifier is from {@link Extension} extensionType
+ * @property {object} identifier Gets the identifiers associated with this entity
+ * @property {EntityIdentifier} identifier.classifier  where classifier is from {@link IdentifierBase} domain
+ * @property {object} name Gets a list of all names associated with the entity
+ * @property {EntityName} name.Alphabetic             The name used is an alphabetic representation of the name (ex: romaji in Japanese)            
+ * @property {EntityName} name.Anonymous             The name is an anonymous name for the object (not the real name but a name used for care delivery)            
+ * @property {EntityName} name.Artist             The name represents an artist name or stage name            
+ * @property {EntityName} name.Assigned             The name represents an assigned name (given or bestowed by an authority)            
+ * @property {EntityName} name.Ideographic             THe name represents an ideographic representation of the name            
+ * @property {EntityName} name.Indigenous             The name is an indigenous name or tribal name for the patient            
+ * @property {EntityName} name.Legal             The name represents the current legal name of an object (such as a corporate name)            
+ * @property {EntityName} name.License             The name represents a name as displayed on a license or known to a license authority            
+ * @property {EntityName} name.MaidenName             THe name is a maiden name (name of a patient before marriage)            
+ * @property {EntityName} name.OfficialRecord             The name as it appears on an official record            
+ * @property {EntityName} name.Phonetic             The name represents a phonetic representation of a name such as a SOUNDEX code            
+ * @property {EntityName} name.Pseudonym             The name is a pseudonym for the object or an synonym name            
+ * @property {EntityName} name.Religious             The name is to be used for religious purposes (such as baptismal name)            
+ * @property {EntityName} name.Search             The name is to be used in the performing of matches only            
+ * @property {EntityName} name.Soundex             The name represents the computed soundex code of a name            
+ * @property {EntityName} name.Syllabic             The name represents a syllabic name.            
+ * @property {EntityName} name.$other Unclassified
+ * @property {EntityNote} note Gets a list of all notes associated with the entity
+ * @property {object} participation Gets the acts in which this entity participates
+ * @property {ActParticipation} participation.Admitter             The player entity was the person who was responsible for admitting the patient into a facility or care scenario.            
+ * @property {ActParticipation} participation.Attender             The player entity represents the attending physician for the patient            
+ * @property {ActParticipation} participation.Authenticator             The player entity represents an entity which authenticates the provision of care            
+ * @property {ActParticipation} participation.Authororiginator             The player entity is responsible for the creation of data described in the act            
+ * @property {ActParticipation} participation.Baby             The player is a resultant person in that it was the baby             
+ * @property {ActParticipation} participation.Beneficiary             The player is a beneficiary of the act such a receiver of a financial instrument, or other good            
+ * @property {ActParticipation} participation.CallbackContact             The player entity represents something that should be contacted upon completion of the act            
+ * @property {ActParticipation} participation.CausativeAgent             The player entity is an agent which caused the act to occur            
+ * @property {ActParticipation} participation.Consultant             The player entity is acting as a consult to the carrying out of the act            
+ * @property {ActParticipation} participation.Consumable             The player entity was or is to be consumed during the process of carrying out the act.            
+ * @property {ActParticipation} participation.CoverageTarget             The player entity represents the target coverage entity of the act            
+ * @property {ActParticipation} participation.Custodian             The player entity is the data custodian of the act (is responsible for storing and securing the act)            
+ * @property {ActParticipation} participation.DataEnterer             The player entity represents the person or device which phisically entered the data at the terminal            
+ * @property {ActParticipation} participation.Destination             The player etity represents the ultimate destination of the goods/materials/services described in the act            
+ * @property {ActParticipation} participation.Device             The player entity represents the device on which the act or data from the act was acquired or recorded            
+ * @property {ActParticipation} participation.DirectTarget             The player entity represents the directed target of care provided in the act            
+ * @property {ActParticipation} participation.Discharger             The player entity represents the person who is responsible for the discharging of the patient from an encounter            
+ * @property {ActParticipation} participation.Distributor             The player entity is the source distribution point for the financial or material instruments contained in the message            
+ * @property {ActParticipation} participation.Donor             The player entity represents the donor of tissue or materials used in the act            
+ * @property {ActParticipation} participation.EntryLocation             The location where the act was entered.            
+ * @property {ActParticipation} participation.Escort             The player entity was responsible for escorting the patient during the course of the act            
+ * @property {ActParticipation} participation.Exposure             The player entity something to which the patient was exposed            
+ * @property {ActParticipation} participation.ExposureAgent             The player entity represents the agent (material) to which the patient was exposed            
+ * @property {ActParticipation} participation.ExposureSource             The player entity describes the source of the material to which the patient was exposed            
+ * @property {ActParticipation} participation.ExposureTarget             The player entity describes the target to which the agent was exposed            
+ * @property {ActParticipation} participation.GuarantorParty             The player represents a party which is used as a financial guarantor for payment in the carrying out of the act            
+ * @property {ActParticipation} participation.Holder             The player is responsible for holding the act            
+ * @property {ActParticipation} participation.IndirectTarget             The entity not directly present in the act but which will be the focust of th act.            
+ * @property {ActParticipation} participation.Informant             The player was a person or device which informed data presented in the act. (Example: A mother telling a nurse that their child had a reaction)            
+ * @property {ActParticipation} participation.InformationRecipient             The player entity represents something that should be cc'ed on the act            
+ * @property {ActParticipation} participation.LegalAuthenticator             The player entity is responsible for legally authenticating the content of the act            
+ * @property {ActParticipation} participation.Location             The location where the service was performed.            
+ * @property {ActParticipation} participation.NonreuseableDevice             The player represents a consumable that can no longer be used            
+ * @property {ActParticipation} participation.Origin             The player represents the origin of the act            
+ * @property {ActParticipation} participation.Participation             The player entity participates in the act in no particular classification            
+ * @property {ActParticipation} participation.Performer             The player entity is responsible for performing the clinical steps documented in the act            
+ * @property {ActParticipation} participation.PrimaryInformationRecipient             The player entity represents a high priority contact which should be informed or cc'ed on the act            
+ * @property {ActParticipation} participation.PrimaryPerformer             The player entity was the primary performer of the act. This is used in procedures where more than one performer is present            
+ * @property {ActParticipation} participation.Product             The player represents a product that is not necessarily consumed but informs the act            
+ * @property {ActParticipation} participation.Receiver             The player represents the entity which is the intended receiver of the act            
+ * @property {ActParticipation} participation.RecordTarget             The player represents the entity to which the act is recorded against            
+ * @property {ActParticipation} participation.ReferredBy             The player represents the entity which referred the act or caused the act to be undertaken            
+ * @property {ActParticipation} participation.ReferredTo             The player entity represents the entity which was referred to            
+ * @property {ActParticipation} participation.Referrer             The player entity represents the person who was originally the referrer.            
+ * @property {ActParticipation} participation.Remote             The player entity represents a remote portion of the act            
+ * @property {ActParticipation} participation.ResponsibleParty             The player entity is ultimately responsible for the carrying out of the act            
+ * @property {ActParticipation} participation.ReusableDevice             The player entity represents a device which can be reused in future acts            
+ * @property {ActParticipation} participation.SecondaryPerformer             The secondary performing person (support clinician).            
+ * @property {ActParticipation} participation.Specimen             The player entity represents a specimen collected for the purpose of testing and diagnosis            
+ * @property {ActParticipation} participation.Subject             The player entity is the subject of an act, but not necessarily the record target (meaning the act is about a particular entity but not to be attached to their record)            
+ * @property {ActParticipation} participation.Tracker             The player entity is responsible for tracking the progress of the act            
+ * @property {ActParticipation} participation.Transcriber             The person who transcribed data from the original act.            
+ * @property {ActParticipation} participation.UgentNotificationContact             The player entity represents a contact entity in case of an emergency occurs during the act.            
+ * @property {ActParticipation} participation.Verifier             The player entity was responsible for verifying the accuracy of the data in the act            
+ * @property {ActParticipation} participation.Via             The player entity represents an entity where the act occurred "via" this entity (i.e. in transport)            
+ * @property {ActParticipation} participation.Witness             The player entity represents a legal witness to the act occurring.            
+ * @property {ActParticipation} participation.$other Unclassified
+ * @property {object} relationship Gets a list of all associated entities for this entity
+ * @property {EntityRelationship} relationship.Access             The source entity gives access to the target entity            
+ * @property {EntityRelationship} relationship.ActiveMoiety             Active ingredient, where not the ingredient substance (player), but itaTMs active moiety is the "basis of strength"            
+ * @property {EntityRelationship} relationship.AdministerableMaterial             The source represents a meterial that is an administerable form of the target            
+ * @property {EntityRelationship} relationship.AdoptedChild             The source is an adopted child of the target            
+ * @property {EntityRelationship} relationship.AdoptedDaughter             The source is an adopted daughter of the target            
+ * @property {EntityRelationship} relationship.AdoptedSon             The source is an adopted son of the target            
+ * @property {EntityRelationship} relationship.Affiliate             The target has a business/professional relationship with the source.            
+ * @property {EntityRelationship} relationship.Agent             The target is an agent or authorized to act on behalf of the source            
+ * @property {EntityRelationship} relationship.Aliquot             The target is a portion of the original source            
+ * @property {EntityRelationship} relationship.AssignedEntity             The target is an entity acting under role or assignment of the source             
+ * @property {EntityRelationship} relationship.Aunt             The target is the aunt of the source            
+ * @property {EntityRelationship} relationship.Birthplace             The target is the birthplace of the source            
+ * @property {EntityRelationship} relationship.Brother             The target is the brother of the source            
+ * @property {EntityRelationship} relationship.Brotherinlaw             The target is the brotherinlaw of the source            
+ * @property {EntityRelationship} relationship.Caregiver             The target is the caregiver of the source            
+ * @property {EntityRelationship} relationship.CaseSubject             The the target represents a case subject of the source entity (such as a study)            
+ * @property {EntityRelationship} relationship.Child             The the target is a child of the child source            
+ * @property {EntityRelationship} relationship.ChildInlaw             The child inlaw            
+ * @property {EntityRelationship} relationship.Citizen             The target is a citizen of the source            
+ * @property {EntityRelationship} relationship.Claimant             The target is a claimant  or is making a claim in a policy (source)            
+ * @property {EntityRelationship} relationship.ClinicalResearchInvestigator             The clinical research investigator            
+ * @property {EntityRelationship} relationship.ClinicalResearchSponsor             The clinical research sponsor            
+ * @property {EntityRelationship} relationship.CommissioningParty             The commissioning party            
+ * @property {EntityRelationship} relationship.Contact             The target represents a contact of the source            
+ * @property {EntityRelationship} relationship.Cousin             The cousin            
+ * @property {EntityRelationship} relationship.CoverageSponsor             The target represents a coverage sponsor of the source            
+ * @property {EntityRelationship} relationship.CoveredParty             The target is a covered party of a source (insurance policy)            
+ * @property {EntityRelationship} relationship.Daughter             The daughter            
+ * @property {EntityRelationship} relationship.DaughterInlaw             The daughter inlaw            
+ * @property {EntityRelationship} relationship.DedicatedServiceDeliveryLocation             The target is the dedicated service delivery location for the source            
+ * @property {EntityRelationship} relationship.Dependent             The target is a dependent of the source            
+ * @property {EntityRelationship} relationship.DistributedMaterial             The target is a distributed or shippable material of the source            
+ * @property {EntityRelationship} relationship.DomesticPartner             The domestic partner            
+ * @property {EntityRelationship} relationship.EmergencyContact             The target is an emergency contact for the source            
+ * @property {EntityRelationship} relationship.Employee             The the target is an employee of the source            
+ * @property {EntityRelationship} relationship.ExposedEntity             The target represents a substance which is exposed when the source is exposed            
+ * @property {EntityRelationship} relationship.FamilyMember             The family member            
+ * @property {EntityRelationship} relationship.Father             The father            
+ * @property {EntityRelationship} relationship.Fatherinlaw             The fatherinlaw            
+ * @property {EntityRelationship} relationship.FosterChild             The foster child            
+ * @property {EntityRelationship} relationship.FosterDaughter             The foster daughter            
+ * @property {EntityRelationship} relationship.FosterSon             The foster son            
+ * @property {EntityRelationship} relationship.Grandchild             The grandchild            
+ * @property {EntityRelationship} relationship.Granddaughter             The granddaughter            
+ * @property {EntityRelationship} relationship.Grandfather             The grandfather            
+ * @property {EntityRelationship} relationship.Grandmother             The grandmother            
+ * @property {EntityRelationship} relationship.Grandparent             The grandparent            
+ * @property {EntityRelationship} relationship.Grandson             The grandson            
+ * @property {EntityRelationship} relationship.GreatGrandfather             The great grandfather            
+ * @property {EntityRelationship} relationship.GreatGrandmother             The great grandmother            
+ * @property {EntityRelationship} relationship.GreatGrandparent             The great grandparent            
+ * @property {EntityRelationship} relationship.Guarantor             The guarantor            
+ * @property {EntityRelationship} relationship.GUARD             The guard            
+ * @property {EntityRelationship} relationship.Guardian             The target is a guardian of the source            
+ * @property {EntityRelationship} relationship.Halfbrother             The halfbrother            
+ * @property {EntityRelationship} relationship.Halfsibling             The halfsibling            
+ * @property {EntityRelationship} relationship.Halfsister             The halfsister            
+ * @property {EntityRelationship} relationship.HealthcareProvider             The target is a healthcare provider for the source            
+ * @property {EntityRelationship} relationship.HealthChart             The target represents a health chart belonging to the source            
+ * @property {EntityRelationship} relationship.HeldEntity             The source holds the specified quantity of the target entity (the target entity is held by the source)            
+ * @property {EntityRelationship} relationship.Husband             The husband            
+ * @property {EntityRelationship} relationship.IdentifiedEntity             The target represents an entity for purposes of identification of the source            
+ * @property {EntityRelationship} relationship.IncidentalServiceDeliveryLocation             The target represents an incidental service delivery location related to the source entity            
+ * @property {EntityRelationship} relationship.Individual             The target represents an individual instance of the source            
+ * @property {EntityRelationship} relationship.InvestigationSubject             The investigation subject            
+ * @property {EntityRelationship} relationship.InvoicePayor             The target is the payor of an invoice for the source            
+ * @property {EntityRelationship} relationship.Isolate             The isolate            
+ * @property {EntityRelationship} relationship.LicensedEntity             The target represents an entity licensed to perform or use the source            
+ * @property {EntityRelationship} relationship.MaintainedEntity             The target entity is maintained by the source entity            
+ * @property {EntityRelationship} relationship.ManufacturedProduct             The target entity is a product which is manufactured by the source            
+ * @property {EntityRelationship} relationship.MaternalAunt             The maternal aunt            
+ * @property {EntityRelationship} relationship.MaternalCousin             The maternal cousin            
+ * @property {EntityRelationship} relationship.MaternalGrandfather             The maternal grandfather            
+ * @property {EntityRelationship} relationship.MaternalGrandmother             The maternal grandmother            
+ * @property {EntityRelationship} relationship.MaternalGrandparent             The maternal grandparent            
+ * @property {EntityRelationship} relationship.MaternalGreatgrandfather             The maternal greatgrandfather            
+ * @property {EntityRelationship} relationship.MaternalGreatgrandmother             The maternal greatgrandmother            
+ * @property {EntityRelationship} relationship.MaternalGreatgrandparent             The maternal greatgrandparent            
+ * @property {EntityRelationship} relationship.MaternalUncle             The maternal uncle            
+ * @property {EntityRelationship} relationship.MilitaryPerson             The military person            
+ * @property {EntityRelationship} relationship.Mother             The target is the mother of the source            
+ * @property {EntityRelationship} relationship.Motherinlaw             The motherinlaw            
+ * @property {EntityRelationship} relationship.NamedInsured             The target is a named insured person on the source policy            
+ * @property {EntityRelationship} relationship.NaturalBrother             The natural brother            
+ * @property {EntityRelationship} relationship.NaturalChild             The natural child            
+ * @property {EntityRelationship} relationship.NaturalDaughter             The natural daughter            
+ * @property {EntityRelationship} relationship.NaturalFather             The natural father            
+ * @property {EntityRelationship} relationship.NaturalFatherOfFetus             The target is the natural father of fetus of the identified fetus (source) or pregnant entity (source)            
+ * @property {EntityRelationship} relationship.NaturalMother             The natural mother            
+ * @property {EntityRelationship} relationship.NaturalParent             The natural parent            
+ * @property {EntityRelationship} relationship.NaturalSibling             The natural sibling            
+ * @property {EntityRelationship} relationship.NaturalSister             The natural sister            
+ * @property {EntityRelationship} relationship.NaturalSon             The natural son            
+ * @property {EntityRelationship} relationship.Nephew             The nephew            
+ * @property {EntityRelationship} relationship.NextOfKin             The target is the next of kin for the source            
+ * @property {EntityRelationship} relationship.Niece             The niece            
+ * @property {EntityRelationship} relationship.NieceNephew             The niece nephew            
+ * @property {EntityRelationship} relationship.NotaryPublic             The target is a notary public acting within the source entity            
+ * @property {EntityRelationship} relationship.OwnedEntity             The target entity is owned by the source entity            
+ * @property {EntityRelationship} relationship.Parent             The target entity is the parent of the source entity            
+ * @property {EntityRelationship} relationship.ParentInlaw             The parent inlaw            
+ * @property {EntityRelationship} relationship.Part             The target entity is a part of the source entity (source is comprised of parts)            
+ * @property {EntityRelationship} relationship.PaternalAunt             The paternal aunt            
+ * @property {EntityRelationship} relationship.PaternalCousin             The paternal cousin            
+ * @property {EntityRelationship} relationship.PaternalGrandfather             The paternal grandfather            
+ * @property {EntityRelationship} relationship.PaternalGrandmother             The paternal grandmother            
+ * @property {EntityRelationship} relationship.PaternalGrandparent             The paternal grandparent            
+ * @property {EntityRelationship} relationship.PaternalGreatgrandfather             The paternal greatgrandfather            
+ * @property {EntityRelationship} relationship.PaternalGreatgrandmother             The paternal greatgrandmother            
+ * @property {EntityRelationship} relationship.PaternalGreatgrandparent             The paternal greatgrandparent            
+ * @property {EntityRelationship} relationship.PaternalUncle             The paternal uncle            
+ * @property {EntityRelationship} relationship.Patient             The target is a patient of the source entity            
+ * @property {EntityRelationship} relationship.Payee             The targert is a payee of the source entity            
+ * @property {EntityRelationship} relationship.PersonalRelationship             The target possesses a personal relationship with the source entity            
+ * @property {EntityRelationship} relationship.PlaceOfDeath             The target entity represents the place of death of the source entity            
+ * @property {EntityRelationship} relationship.PolicyHolder             The target entity represents the policy holder of the source policy            
+ * @property {EntityRelationship} relationship.ProgramEligible             The target is an entity which is eligible for funding or participation within a program            
+ * @property {EntityRelationship} relationship.QualifiedEntity             The target represents a qualified version of the source entity            
+ * @property {EntityRelationship} relationship.RegulatedProduct             The target represents a regulated version of the source product or represents a product which is regulated within the source jurisdiction            
+ * @property {EntityRelationship} relationship.ResearchSubject             The target represents a research subject of the source study            
+ * @property {EntityRelationship} relationship.RetailedMaterial             The target represents a material which is a retailed version of the source or is sold at the particular source            
+ * @property {EntityRelationship} relationship.Roomate             The roomate            
+ * @property {EntityRelationship} relationship.ServiceDeliveryLocation             The target represents a service delivery location for the source entity            
+ * @property {EntityRelationship} relationship.Sibling             The sibling            
+ * @property {EntityRelationship} relationship.SiblingInlaw             The sibling inlaw            
+ * @property {EntityRelationship} relationship.SignificantOther             The significant other            
+ * @property {EntityRelationship} relationship.SigningAuthorityOrOfficer             The target has signing authority or is an officer of the source            
+ * @property {EntityRelationship} relationship.Sister             The sister            
+ * @property {EntityRelationship} relationship.Sisterinlaw             The sisterinlaw            
+ * @property {EntityRelationship} relationship.Son             The son            
+ * @property {EntityRelationship} relationship.SonInlaw             The son inlaw            
+ * @property {EntityRelationship} relationship.Specimen             The target represents a specimen collected from the source            
+ * @property {EntityRelationship} relationship.Spouse             The spouse            
+ * @property {EntityRelationship} relationship.Stepbrother             The stepbrother            
+ * @property {EntityRelationship} relationship.StepChild             The step child            
+ * @property {EntityRelationship} relationship.Stepdaughter             The stepdaughter            
+ * @property {EntityRelationship} relationship.Stepfather             The stepfather            
+ * @property {EntityRelationship} relationship.Stepmother             The stepmother            
+ * @property {EntityRelationship} relationship.StepParent             The step parent            
+ * @property {EntityRelationship} relationship.StepSibling             The step sibling            
+ * @property {EntityRelationship} relationship.Stepsister             The stepsister            
+ * @property {EntityRelationship} relationship.Stepson             The stepson            
+ * @property {EntityRelationship} relationship.Student             The student            
+ * @property {EntityRelationship} relationship.Subscriber             The target is a subscriber of the source, meaning the target should receive updates whenever the source changes            
+ * @property {EntityRelationship} relationship.TerritoryOfAuthority             The target represents another territory where the source has authority            
+ * @property {EntityRelationship} relationship.TherapeuticAgent             The target represents the theraputic agent of the source            
+ * @property {EntityRelationship} relationship.Uncle             The uncle            
+ * @property {EntityRelationship} relationship.Underwriter             The underwriter            
+ * @property {EntityRelationship} relationship.UsedEntity             The target represents an entity that is consumed whenever the source is consumed            
+ * @property {EntityRelationship} relationship.WarrantedProduct             The target represents a product which is warranted by the source            
+ * @property {EntityRelationship} relationship.Wife             The wife            
+ * @property {EntityRelationship} relationship.Replaces             The source replaces the target (note: this is one relationship where the role relationship is reveresed)            
+ * @property {EntityRelationship} relationship.Instance             The target entity represents an instance of the scoper entity            
+ * @property {EntityRelationship} relationship.LocatedEntity             Relates the target entity to a source location            
+ * @property {EntityRelationship} relationship.Duplicate             Duplicate entity            
+ * @property {EntityRelationship} relationship.Scoper             Duplicate entity            
+ * @property {EntityRelationship} relationship.EquivalentEntity             Referenced entities            
+ * @property {EntityRelationship} relationship.HasIngredient             The source entity has an ingredient represented by the target            
+ * @property {EntityRelationship} relationship.HasContent             The source entity is comprised of the target. Note that this differs from PART in that content can be separated, parts cannot be separated            
+ * @property {EntityRelationship} relationship.HasGenerialization             The source entity is a specialization of the target (i.e. the target is a more general entity kind than the source)            
+ * @property {EntityRelationship} relationship.HasPart             The source entity is comprised of the target as a part (example: DTP vaccine kind has part Diptheria vaccine kind, Tetanus vaccine kind, and Pertussis vaccine kind)            
+ * @property {EntityRelationship} relationship.$other Unclassified
+ * @property {Concept} statusConceptModel [Delay loaded from statusConcept],  Status concept id
+ * @property {string} statusConcept Status concept id(see: {@link StatusKeys} for values)
+ * @property {object} tag Gets a list of all tags associated with the entity
+ * @property {string} tag.classifier  where classifier is from {@link Tag} key
+ * @property {object} telecom Gets a list of all telecommunications addresses associated with the entity
+ * @property {EntityTelecomAddress} telecom.PrimaryHome             Primary home            
+ * @property {EntityTelecomAddress} telecom.AnsweringService             answering service            
+ * @property {EntityTelecomAddress} telecom.EmergencyContact             Emergency contact            
+ * @property {EntityTelecomAddress} telecom.MobileContact             Mobile phone contact            
+ * @property {EntityTelecomAddress} telecom.Pager             pager            
+ * @property {EntityTelecomAddress} telecom.Public             public (800 number example) contact            
+ * @property {EntityTelecomAddress} telecom.TemporaryAddress             temporary contact            
+ * @property {EntityTelecomAddress} telecom.WorkPlace             For use in the workplace            
+ * @property {EntityTelecomAddress} telecom.$other Unclassified
+ * @property {string} template Gets the template key
+ * @property {TemplateDefinition} templateModel [Delay loaded from template],  Gets or sets the template definition
+ * @property {Concept} typeConceptModel [Delay loaded from typeConcept],  Type concept identifier
+ * @property {string} typeConcept Type concept identifier
+ * @property {SecurityPolicyInstance} policy Gets or sets the security policy instances associated with the entity
+ * @property {GeoTag} geo Gets or sets the geo tag
+ * @property {string} previousVersion
+ * @property {string} version
+ * @property {Int64} sequence
  * @property {Date} creationTimeModel [Delay loaded from creationTime],  Gets or sets the time at which the data was created
  * @property {Date} creationTime Gets or sets the creation time as an ISO date format
  * @property {Date} obsoletionTimeModel [Delay loaded from obsoletionTime],  Gets or sets the time when the data is or will become invalid
@@ -7360,7 +7580,7 @@ function Organization (copyData) {
 	 */
 	this.creationTimeModel = copyData.creationTimeModel;
 	/**
-	 * @type {number} 
+	 * @type {Int64} 
 	 */
 	this.sequence = copyData.sequence;
 	/**
@@ -7371,6 +7591,11 @@ function Organization (copyData) {
 	 * @type {string} 
 	 */
 	this.previousVersion = copyData.previousVersion;
+	/**
+	 * @summary Gets or sets the geo tag
+	 * @type {GeoTag} 
+	 */
+	this.geo = copyData.geo;
 	/**
 	 * @summary Gets or sets the security policy instances associated with the entity
 	 * @type {SecurityPolicyInstance} 
@@ -7486,7 +7711,7 @@ function Organization (copyData) {
 	this.industryConceptModel = copyData.industryConceptModel;
 	}
 }  // Organization 
-// SanteDB.Core.Model.Entities.Person, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Entities.Person, SanteDB.Core.Model, Version=3.0.0.0, Culture=neutral, PublicKeyToken=null
 //if(!Person)
 /**
  * @class
@@ -7500,6 +7725,12 @@ function Organization (copyData) {
  * @property {PersonLanguageCommunication} language Gets the person's languages of communication
  * @property {string} occupation Gets or sets the religious affiliation
  * @property {Concept} occupationModel [Delay loaded from occupation],  Gets or sets the marital status code
+ * @property {Date} deceasedDate Deceased date XML
+ * @property {DatePrecision} deceasedDatePrecision Gets or sets the precision of the date of deceased(see: {@link DatePrecision} for values)
+ * @property {string} vipStatus Gets or sets the VIP code
+ * @property {Concept} vipStatusModel [Delay loaded from vipStatus],  Gets or sets the VIP status code
+ * @property {string} nationality Gets or sets the religious affiliation
+ * @property {Concept} nationalityModel [Delay loaded from nationality],  Gets the nationality of the patient
  * @property {object} address Gets a list of all addresses associated with the entity
  * @property {EntityAddress} address.Alphabetic             Represents an alphabetic address used for matching             
  * @property {EntityAddress} address.BadAddress             Represents a bad address, i.e. an address which is old or invalid.            
@@ -7526,7 +7757,7 @@ function Organization (copyData) {
  * @property {object} extension Gets a list of all extensions associated with the entity
  * @property {string} extension.classifier  where classifier is from {@link Extension} extensionType
  * @property {object} identifier Gets the identifiers associated with this entity
- * @property {EntityIdentifier} identifier.classifier  where classifier is from {@link IdentifierBase} authority
+ * @property {EntityIdentifier} identifier.classifier  where classifier is from {@link IdentifierBase} domain
  * @property {object} name Gets a list of all names associated with the entity
  * @property {EntityName} name.Alphabetic             The name used is an alphabetic representation of the name (ex: romaji in Japanese)            
  * @property {EntityName} name.Anonymous             The name is an anonymous name for the object (not the real name but a name used for care delivery)            
@@ -7614,7 +7845,7 @@ function Organization (copyData) {
  * @property {EntityRelationship} relationship.Affiliate             The target has a business/professional relationship with the source.            
  * @property {EntityRelationship} relationship.Agent             The target is an agent or authorized to act on behalf of the source            
  * @property {EntityRelationship} relationship.Aliquot             The target is a portion of the original source            
- * @property {EntityRelationship} relationship.AssignedEntity             The target is an entity acting under the employ of the source entity            
+ * @property {EntityRelationship} relationship.AssignedEntity             The target is an entity acting under role or assignment of the source             
  * @property {EntityRelationship} relationship.Aunt             The target is the aunt of the source            
  * @property {EntityRelationship} relationship.Birthplace             The target is the birthplace of the source            
  * @property {EntityRelationship} relationship.Brother             The target is the brother of the source            
@@ -7702,7 +7933,7 @@ function Organization (copyData) {
  * @property {EntityRelationship} relationship.NextOfKin             The target is the next of kin for the source            
  * @property {EntityRelationship} relationship.Niece             The niece            
  * @property {EntityRelationship} relationship.NieceNephew             The niece nephew            
- * @property {EntityRelationship} relationship.NotaryPublic             The target is a notary public acting within the source entity             
+ * @property {EntityRelationship} relationship.NotaryPublic             The target is a notary public acting within the source entity            
  * @property {EntityRelationship} relationship.OwnedEntity             The target entity is owned by the source entity            
  * @property {EntityRelationship} relationship.Parent             The target entity is the parent of the source entity            
  * @property {EntityRelationship} relationship.ParentInlaw             The parent inlaw            
@@ -7748,7 +7979,7 @@ function Organization (copyData) {
  * @property {EntityRelationship} relationship.Stepsister             The stepsister            
  * @property {EntityRelationship} relationship.Stepson             The stepson            
  * @property {EntityRelationship} relationship.Student             The student            
- * @property {EntityRelationship} relationship.Subscriber             The target is a subscriber of the source, meaning the target should receive updates whenever the source changes             
+ * @property {EntityRelationship} relationship.Subscriber             The target is a subscriber of the source, meaning the target should receive updates whenever the source changes            
  * @property {EntityRelationship} relationship.TerritoryOfAuthority             The target represents another territory where the source has authority            
  * @property {EntityRelationship} relationship.TherapeuticAgent             The target represents the theraputic agent of the source            
  * @property {EntityRelationship} relationship.Uncle             The uncle            
@@ -7756,18 +7987,23 @@ function Organization (copyData) {
  * @property {EntityRelationship} relationship.UsedEntity             The target represents an entity that is consumed whenever the source is consumed            
  * @property {EntityRelationship} relationship.WarrantedProduct             The target represents a product which is warranted by the source            
  * @property {EntityRelationship} relationship.Wife             The wife            
- * @property {EntityRelationship} relationship.Replaces             The source replaces the target (note: this is one relationship where the role relationship is reveresed)             
+ * @property {EntityRelationship} relationship.Replaces             The source replaces the target (note: this is one relationship where the role relationship is reveresed)            
  * @property {EntityRelationship} relationship.Instance             The target entity represents an instance of the scoper entity            
  * @property {EntityRelationship} relationship.LocatedEntity             Relates the target entity to a source location            
  * @property {EntityRelationship} relationship.Duplicate             Duplicate entity            
  * @property {EntityRelationship} relationship.Scoper             Duplicate entity            
  * @property {EntityRelationship} relationship.EquivalentEntity             Referenced entities            
+ * @property {EntityRelationship} relationship.HasIngredient             The source entity has an ingredient represented by the target            
+ * @property {EntityRelationship} relationship.HasContent             The source entity is comprised of the target. Note that this differs from PART in that content can be separated, parts cannot be separated            
+ * @property {EntityRelationship} relationship.HasGenerialization             The source entity is a specialization of the target (i.e. the target is a more general entity kind than the source)            
+ * @property {EntityRelationship} relationship.HasPart             The source entity is comprised of the target as a part (example: DTP vaccine kind has part Diptheria vaccine kind, Tetanus vaccine kind, and Pertussis vaccine kind)            
  * @property {EntityRelationship} relationship.$other Unclassified
  * @property {Concept} statusConceptModel [Delay loaded from statusConcept],  Status concept id
  * @property {string} statusConcept Status concept id(see: {@link StatusKeys} for values)
  * @property {object} tag Gets a list of all tags associated with the entity
  * @property {string} tag.classifier  where classifier is from {@link Tag} key
  * @property {object} telecom Gets a list of all telecommunications addresses associated with the entity
+ * @property {EntityTelecomAddress} telecom.PrimaryHome             Primary home            
  * @property {EntityTelecomAddress} telecom.AnsweringService             answering service            
  * @property {EntityTelecomAddress} telecom.EmergencyContact             Emergency contact            
  * @property {EntityTelecomAddress} telecom.MobileContact             Mobile phone contact            
@@ -7781,9 +8017,10 @@ function Organization (copyData) {
  * @property {Concept} typeConceptModel [Delay loaded from typeConcept],  Type concept identifier
  * @property {string} typeConcept Type concept identifier
  * @property {SecurityPolicyInstance} policy Gets or sets the security policy instances associated with the entity
+ * @property {GeoTag} geo Gets or sets the geo tag
  * @property {string} previousVersion
  * @property {string} version
- * @property {number} sequence
+ * @property {Int64} sequence
  * @property {Date} creationTimeModel [Delay loaded from creationTime],  Gets or sets the time at which the data was created
  * @property {Date} creationTime Gets or sets the creation time as an ISO date format
  * @property {Date} obsoletionTimeModel [Delay loaded from obsoletionTime],  Gets or sets the time when the data is or will become invalid
@@ -7853,7 +8090,7 @@ function Person (copyData) {
 	 */
 	this.creationTimeModel = copyData.creationTimeModel;
 	/**
-	 * @type {number} 
+	 * @type {Int64} 
 	 */
 	this.sequence = copyData.sequence;
 	/**
@@ -7864,6 +8101,11 @@ function Person (copyData) {
 	 * @type {string} 
 	 */
 	this.previousVersion = copyData.previousVersion;
+	/**
+	 * @summary Gets or sets the geo tag
+	 * @type {GeoTag} 
+	 */
+	this.geo = copyData.geo;
 	/**
 	 * @summary Gets or sets the security policy instances associated with the entity
 	 * @type {SecurityPolicyInstance} 
@@ -7971,6 +8213,34 @@ function Person (copyData) {
 	/**
 	 * @type {Concept} 
 	 */
+	this.nationalityModel = copyData.nationalityModel;
+	/**
+	 * @summary Gets or sets the religious affiliation
+	 * @type {string} 
+	 */
+	this.nationality = copyData.nationality;
+	/**
+	 * @type {Concept} 
+	 */
+	this.vipStatusModel = copyData.vipStatusModel;
+	/**
+	 * @summary Gets or sets the VIP status code
+	 * @type {string} 
+	 */
+	this.vipStatus = copyData.vipStatus;
+	/**
+	 * @summary Gets or sets the precision of the date of deceased
+	 * @type {DatePrecision} 
+	 */
+	this.deceasedDatePrecision = copyData.deceasedDatePrecision;
+	/**
+	 * @summary Deceased date XML
+	 * @type {Date} 
+	 */
+	this.deceasedDate = copyData.deceasedDate;
+	/**
+	 * @type {Concept} 
+	 */
 	this.occupationModel = copyData.occupationModel;
 	/**
 	 * @summary Gets or sets the religious affiliation
@@ -8003,7 +8273,7 @@ function Person (copyData) {
 	this.dateOfBirthPrecision = copyData.dateOfBirthPrecision;
 	}
 }  // Person 
-// SanteDB.Core.Model.Entities.PersonLanguageCommunication, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Entities.PersonLanguageCommunication, SanteDB.Core.Model, Version=3.0.0.0, Culture=neutral, PublicKeyToken=null
 //if(!PersonLanguageCommunication)
 /**
  * @class
@@ -8013,8 +8283,8 @@ function Person (copyData) {
  * @summary Represents a single preferred communication method for the entity
  * @property {boolean} isPreferred Gets or set the user's preference indicator
  * @property {string} languageCode Gets or sets the language code
- * @property {number} effectiveVersionSequence
- * @property {number} obsoleteVersionSequence
+ * @property {Int64} effectiveVersionSequence
+ * @property {Int64} obsoleteVersionSequence
  * @property {Date} modifiedOn
  * @property {string} source
  * @property {Entity} sourceModel [Delay loaded from source], 
@@ -8049,11 +8319,11 @@ function PersonLanguageCommunication (copyData) {
 	 */
 	this.modifiedOn = copyData.modifiedOn;
 	/**
-	 * @type {number} 
+	 * @type {Int64} 
 	 */
 	this.obsoleteVersionSequence = copyData.obsoleteVersionSequence;
 	/**
-	 * @type {number} 
+	 * @type {Int64} 
 	 */
 	this.effectiveVersionSequence = copyData.effectiveVersionSequence;
 	/**
@@ -8068,16 +8338,14 @@ function PersonLanguageCommunication (copyData) {
 	this.isPreferred = copyData.isPreferred;
 	}
 }  // PersonLanguageCommunication 
-// SanteDB.Core.Model.Entities.Place, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Entities.Place, SanteDB.Core.Model, Version=3.0.0.0, Culture=neutral, PublicKeyToken=null
 //if(!Place)
 /**
  * @class
  * @constructor
  * @public
  * @summary An entity which is a place where healthcare services are delivered
- * @property {string} classConcept Gets or sets the class concept key(see: {@link EntityClassKeys} for values)
  * @property {boolean} isMobile True if location is mobile
- * @property {GeoTag} geo Gets the geographic tag
  * @property {PlaceService} service Gets the services
  * @property {object} address Gets a list of all addresses associated with the entity
  * @property {EntityAddress} address.Alphabetic             Represents an alphabetic address used for matching             
@@ -8097,6 +8365,7 @@ function PersonLanguageCommunication (copyData) {
  * @property {EntityAddress} address.WorkPlace             Represents an office address, should be used for business communications            
  * @property {EntityAddress} address.$other Unclassified
  * @property {Concept} classConceptModel [Delay loaded from classConcept],  Class concept datal load property
+ * @property {string} classConcept Class concept(see: {@link EntityClassKeys} for values)
  * @property {Act} creationActModel [Delay loaded from creationAct],  Creation act reference
  * @property {string} creationAct Creation act reference
  * @property {Concept} determinerConceptModel [Delay loaded from determinerConcept],  Determiner concept
@@ -8104,7 +8373,7 @@ function PersonLanguageCommunication (copyData) {
  * @property {object} extension Gets a list of all extensions associated with the entity
  * @property {string} extension.classifier  where classifier is from {@link Extension} extensionType
  * @property {object} identifier Gets the identifiers associated with this entity
- * @property {EntityIdentifier} identifier.classifier  where classifier is from {@link IdentifierBase} authority
+ * @property {EntityIdentifier} identifier.classifier  where classifier is from {@link IdentifierBase} domain
  * @property {object} name Gets a list of all names associated with the entity
  * @property {EntityName} name.Alphabetic             The name used is an alphabetic representation of the name (ex: romaji in Japanese)            
  * @property {EntityName} name.Anonymous             The name is an anonymous name for the object (not the real name but a name used for care delivery)            
@@ -8192,7 +8461,7 @@ function PersonLanguageCommunication (copyData) {
  * @property {EntityRelationship} relationship.Affiliate             The target has a business/professional relationship with the source.            
  * @property {EntityRelationship} relationship.Agent             The target is an agent or authorized to act on behalf of the source            
  * @property {EntityRelationship} relationship.Aliquot             The target is a portion of the original source            
- * @property {EntityRelationship} relationship.AssignedEntity             The target is an entity acting under the employ of the source entity            
+ * @property {EntityRelationship} relationship.AssignedEntity             The target is an entity acting under role or assignment of the source             
  * @property {EntityRelationship} relationship.Aunt             The target is the aunt of the source            
  * @property {EntityRelationship} relationship.Birthplace             The target is the birthplace of the source            
  * @property {EntityRelationship} relationship.Brother             The target is the brother of the source            
@@ -8280,7 +8549,7 @@ function PersonLanguageCommunication (copyData) {
  * @property {EntityRelationship} relationship.NextOfKin             The target is the next of kin for the source            
  * @property {EntityRelationship} relationship.Niece             The niece            
  * @property {EntityRelationship} relationship.NieceNephew             The niece nephew            
- * @property {EntityRelationship} relationship.NotaryPublic             The target is a notary public acting within the source entity             
+ * @property {EntityRelationship} relationship.NotaryPublic             The target is a notary public acting within the source entity            
  * @property {EntityRelationship} relationship.OwnedEntity             The target entity is owned by the source entity            
  * @property {EntityRelationship} relationship.Parent             The target entity is the parent of the source entity            
  * @property {EntityRelationship} relationship.ParentInlaw             The parent inlaw            
@@ -8326,7 +8595,7 @@ function PersonLanguageCommunication (copyData) {
  * @property {EntityRelationship} relationship.Stepsister             The stepsister            
  * @property {EntityRelationship} relationship.Stepson             The stepson            
  * @property {EntityRelationship} relationship.Student             The student            
- * @property {EntityRelationship} relationship.Subscriber             The target is a subscriber of the source, meaning the target should receive updates whenever the source changes             
+ * @property {EntityRelationship} relationship.Subscriber             The target is a subscriber of the source, meaning the target should receive updates whenever the source changes            
  * @property {EntityRelationship} relationship.TerritoryOfAuthority             The target represents another territory where the source has authority            
  * @property {EntityRelationship} relationship.TherapeuticAgent             The target represents the theraputic agent of the source            
  * @property {EntityRelationship} relationship.Uncle             The uncle            
@@ -8334,18 +8603,23 @@ function PersonLanguageCommunication (copyData) {
  * @property {EntityRelationship} relationship.UsedEntity             The target represents an entity that is consumed whenever the source is consumed            
  * @property {EntityRelationship} relationship.WarrantedProduct             The target represents a product which is warranted by the source            
  * @property {EntityRelationship} relationship.Wife             The wife            
- * @property {EntityRelationship} relationship.Replaces             The source replaces the target (note: this is one relationship where the role relationship is reveresed)             
+ * @property {EntityRelationship} relationship.Replaces             The source replaces the target (note: this is one relationship where the role relationship is reveresed)            
  * @property {EntityRelationship} relationship.Instance             The target entity represents an instance of the scoper entity            
  * @property {EntityRelationship} relationship.LocatedEntity             Relates the target entity to a source location            
  * @property {EntityRelationship} relationship.Duplicate             Duplicate entity            
  * @property {EntityRelationship} relationship.Scoper             Duplicate entity            
  * @property {EntityRelationship} relationship.EquivalentEntity             Referenced entities            
+ * @property {EntityRelationship} relationship.HasIngredient             The source entity has an ingredient represented by the target            
+ * @property {EntityRelationship} relationship.HasContent             The source entity is comprised of the target. Note that this differs from PART in that content can be separated, parts cannot be separated            
+ * @property {EntityRelationship} relationship.HasGenerialization             The source entity is a specialization of the target (i.e. the target is a more general entity kind than the source)            
+ * @property {EntityRelationship} relationship.HasPart             The source entity is comprised of the target as a part (example: DTP vaccine kind has part Diptheria vaccine kind, Tetanus vaccine kind, and Pertussis vaccine kind)            
  * @property {EntityRelationship} relationship.$other Unclassified
  * @property {Concept} statusConceptModel [Delay loaded from statusConcept],  Status concept id
  * @property {string} statusConcept Status concept id(see: {@link StatusKeys} for values)
  * @property {object} tag Gets a list of all tags associated with the entity
  * @property {string} tag.classifier  where classifier is from {@link Tag} key
  * @property {object} telecom Gets a list of all telecommunications addresses associated with the entity
+ * @property {EntityTelecomAddress} telecom.PrimaryHome             Primary home            
  * @property {EntityTelecomAddress} telecom.AnsweringService             answering service            
  * @property {EntityTelecomAddress} telecom.EmergencyContact             Emergency contact            
  * @property {EntityTelecomAddress} telecom.MobileContact             Mobile phone contact            
@@ -8359,9 +8633,10 @@ function PersonLanguageCommunication (copyData) {
  * @property {Concept} typeConceptModel [Delay loaded from typeConcept],  Type concept identifier
  * @property {string} typeConcept Type concept identifier
  * @property {SecurityPolicyInstance} policy Gets or sets the security policy instances associated with the entity
+ * @property {GeoTag} geo Gets or sets the geo tag
  * @property {string} previousVersion
  * @property {string} version
- * @property {number} sequence
+ * @property {Int64} sequence
  * @property {Date} creationTimeModel [Delay loaded from creationTime],  Gets or sets the time at which the data was created
  * @property {Date} creationTime Gets or sets the creation time as an ISO date format
  * @property {Date} obsoletionTimeModel [Delay loaded from obsoletionTime],  Gets or sets the time when the data is or will become invalid
@@ -8431,7 +8706,7 @@ function Place (copyData) {
 	 */
 	this.creationTimeModel = copyData.creationTimeModel;
 	/**
-	 * @type {number} 
+	 * @type {Int64} 
 	 */
 	this.sequence = copyData.sequence;
 	/**
@@ -8442,6 +8717,11 @@ function Place (copyData) {
 	 * @type {string} 
 	 */
 	this.previousVersion = copyData.previousVersion;
+	/**
+	 * @summary Gets or sets the geo tag
+	 * @type {GeoTag} 
+	 */
+	this.geo = copyData.geo;
 	/**
 	 * @summary Gets or sets the security policy instances associated with the entity
 	 * @type {SecurityPolicyInstance} 
@@ -8533,6 +8813,11 @@ function Place (copyData) {
 	 */
 	this.creationActModel = copyData.creationActModel;
 	/**
+	 * @summary Class concept datal load property
+	 * @type {string} 
+	 */
+	this.classConcept = copyData.classConcept;
+	/**
 	 * @type {Concept} 
 	 */
 	this.classConceptModel = copyData.classConceptModel;
@@ -8547,23 +8832,13 @@ function Place (copyData) {
 	 */
 	this.service = copyData.service;
 	/**
-	 * @summary Gets the geographic tag
-	 * @type {GeoTag} 
-	 */
-	this.geo = copyData.geo;
-	/**
 	 * @summary True if location is mobile
 	 * @type {boolean} 
 	 */
 	this.isMobile = copyData.isMobile;
-	/**
-	 * @summary Gets or sets the class concept key
-	 * @type {string} 
-	 */
-	this.classConcept = copyData.classConcept;
 	}
 }  // Place 
-// SanteDB.Core.Model.Entities.PlaceService, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Entities.PlaceService, SanteDB.Core.Model, Version=3.0.0.0, Culture=neutral, PublicKeyToken=null
 //if(!PlaceService)
 /**
  * @class
@@ -8574,8 +8849,8 @@ function Place (copyData) {
  * @property {Concept} serviceConceptModel [Delay loaded from serviceConcept],  Gets or sets the service concept
  * @property {string} serviceConcept Gets or sets the service concept key
  * @property {string} serviceSchedule The schedule that the service is offered
- * @property {number} effectiveVersionSequence
- * @property {number} obsoleteVersionSequence
+ * @property {Int64} effectiveVersionSequence
+ * @property {Int64} obsoleteVersionSequence
  * @property {Date} modifiedOn
  * @property {string} source
  * @property {Entity} sourceModel [Delay loaded from source], 
@@ -8610,11 +8885,11 @@ function PlaceService (copyData) {
 	 */
 	this.modifiedOn = copyData.modifiedOn;
 	/**
-	 * @type {number} 
+	 * @type {Int64} 
 	 */
 	this.obsoleteVersionSequence = copyData.obsoleteVersionSequence;
 	/**
-	 * @type {number} 
+	 * @type {Int64} 
 	 */
 	this.effectiveVersionSequence = copyData.effectiveVersionSequence;
 	/**
@@ -8633,7 +8908,7 @@ function PlaceService (copyData) {
 	this.serviceConceptModel = copyData.serviceConceptModel;
 	}
 }  // PlaceService 
-// SanteDB.Core.Model.Entities.UserEntity, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Entities.UserEntity, SanteDB.Core.Model, Version=3.0.0.0, Culture=neutral, PublicKeyToken=null
 //if(!UserEntity)
 /**
  * @class
@@ -8651,6 +8926,12 @@ function PlaceService (copyData) {
  * @property {PersonLanguageCommunication} language Gets the person's languages of communication
  * @property {string} occupation Gets or sets the religious affiliation
  * @property {Concept} occupationModel [Delay loaded from occupation],  Gets or sets the marital status code
+ * @property {Date} deceasedDate Deceased date XML
+ * @property {DatePrecision} deceasedDatePrecision Gets or sets the precision of the date of deceased(see: {@link DatePrecision} for values)
+ * @property {string} vipStatus Gets or sets the VIP code
+ * @property {Concept} vipStatusModel [Delay loaded from vipStatus],  Gets or sets the VIP status code
+ * @property {string} nationality Gets or sets the religious affiliation
+ * @property {Concept} nationalityModel [Delay loaded from nationality],  Gets the nationality of the patient
  * @property {object} address Gets a list of all addresses associated with the entity
  * @property {EntityAddress} address.Alphabetic             Represents an alphabetic address used for matching             
  * @property {EntityAddress} address.BadAddress             Represents a bad address, i.e. an address which is old or invalid.            
@@ -8677,7 +8958,7 @@ function PlaceService (copyData) {
  * @property {object} extension Gets a list of all extensions associated with the entity
  * @property {string} extension.classifier  where classifier is from {@link Extension} extensionType
  * @property {object} identifier Gets the identifiers associated with this entity
- * @property {EntityIdentifier} identifier.classifier  where classifier is from {@link IdentifierBase} authority
+ * @property {EntityIdentifier} identifier.classifier  where classifier is from {@link IdentifierBase} domain
  * @property {object} name Gets a list of all names associated with the entity
  * @property {EntityName} name.Alphabetic             The name used is an alphabetic representation of the name (ex: romaji in Japanese)            
  * @property {EntityName} name.Anonymous             The name is an anonymous name for the object (not the real name but a name used for care delivery)            
@@ -8765,7 +9046,7 @@ function PlaceService (copyData) {
  * @property {EntityRelationship} relationship.Affiliate             The target has a business/professional relationship with the source.            
  * @property {EntityRelationship} relationship.Agent             The target is an agent or authorized to act on behalf of the source            
  * @property {EntityRelationship} relationship.Aliquot             The target is a portion of the original source            
- * @property {EntityRelationship} relationship.AssignedEntity             The target is an entity acting under the employ of the source entity            
+ * @property {EntityRelationship} relationship.AssignedEntity             The target is an entity acting under role or assignment of the source             
  * @property {EntityRelationship} relationship.Aunt             The target is the aunt of the source            
  * @property {EntityRelationship} relationship.Birthplace             The target is the birthplace of the source            
  * @property {EntityRelationship} relationship.Brother             The target is the brother of the source            
@@ -8853,7 +9134,7 @@ function PlaceService (copyData) {
  * @property {EntityRelationship} relationship.NextOfKin             The target is the next of kin for the source            
  * @property {EntityRelationship} relationship.Niece             The niece            
  * @property {EntityRelationship} relationship.NieceNephew             The niece nephew            
- * @property {EntityRelationship} relationship.NotaryPublic             The target is a notary public acting within the source entity             
+ * @property {EntityRelationship} relationship.NotaryPublic             The target is a notary public acting within the source entity            
  * @property {EntityRelationship} relationship.OwnedEntity             The target entity is owned by the source entity            
  * @property {EntityRelationship} relationship.Parent             The target entity is the parent of the source entity            
  * @property {EntityRelationship} relationship.ParentInlaw             The parent inlaw            
@@ -8899,7 +9180,7 @@ function PlaceService (copyData) {
  * @property {EntityRelationship} relationship.Stepsister             The stepsister            
  * @property {EntityRelationship} relationship.Stepson             The stepson            
  * @property {EntityRelationship} relationship.Student             The student            
- * @property {EntityRelationship} relationship.Subscriber             The target is a subscriber of the source, meaning the target should receive updates whenever the source changes             
+ * @property {EntityRelationship} relationship.Subscriber             The target is a subscriber of the source, meaning the target should receive updates whenever the source changes            
  * @property {EntityRelationship} relationship.TerritoryOfAuthority             The target represents another territory where the source has authority            
  * @property {EntityRelationship} relationship.TherapeuticAgent             The target represents the theraputic agent of the source            
  * @property {EntityRelationship} relationship.Uncle             The uncle            
@@ -8907,18 +9188,23 @@ function PlaceService (copyData) {
  * @property {EntityRelationship} relationship.UsedEntity             The target represents an entity that is consumed whenever the source is consumed            
  * @property {EntityRelationship} relationship.WarrantedProduct             The target represents a product which is warranted by the source            
  * @property {EntityRelationship} relationship.Wife             The wife            
- * @property {EntityRelationship} relationship.Replaces             The source replaces the target (note: this is one relationship where the role relationship is reveresed)             
+ * @property {EntityRelationship} relationship.Replaces             The source replaces the target (note: this is one relationship where the role relationship is reveresed)            
  * @property {EntityRelationship} relationship.Instance             The target entity represents an instance of the scoper entity            
  * @property {EntityRelationship} relationship.LocatedEntity             Relates the target entity to a source location            
  * @property {EntityRelationship} relationship.Duplicate             Duplicate entity            
  * @property {EntityRelationship} relationship.Scoper             Duplicate entity            
  * @property {EntityRelationship} relationship.EquivalentEntity             Referenced entities            
+ * @property {EntityRelationship} relationship.HasIngredient             The source entity has an ingredient represented by the target            
+ * @property {EntityRelationship} relationship.HasContent             The source entity is comprised of the target. Note that this differs from PART in that content can be separated, parts cannot be separated            
+ * @property {EntityRelationship} relationship.HasGenerialization             The source entity is a specialization of the target (i.e. the target is a more general entity kind than the source)            
+ * @property {EntityRelationship} relationship.HasPart             The source entity is comprised of the target as a part (example: DTP vaccine kind has part Diptheria vaccine kind, Tetanus vaccine kind, and Pertussis vaccine kind)            
  * @property {EntityRelationship} relationship.$other Unclassified
  * @property {Concept} statusConceptModel [Delay loaded from statusConcept],  Status concept id
  * @property {string} statusConcept Status concept id(see: {@link StatusKeys} for values)
  * @property {object} tag Gets a list of all tags associated with the entity
  * @property {string} tag.classifier  where classifier is from {@link Tag} key
  * @property {object} telecom Gets a list of all telecommunications addresses associated with the entity
+ * @property {EntityTelecomAddress} telecom.PrimaryHome             Primary home            
  * @property {EntityTelecomAddress} telecom.AnsweringService             answering service            
  * @property {EntityTelecomAddress} telecom.EmergencyContact             Emergency contact            
  * @property {EntityTelecomAddress} telecom.MobileContact             Mobile phone contact            
@@ -8932,9 +9218,10 @@ function PlaceService (copyData) {
  * @property {Concept} typeConceptModel [Delay loaded from typeConcept],  Type concept identifier
  * @property {string} typeConcept Type concept identifier
  * @property {SecurityPolicyInstance} policy Gets or sets the security policy instances associated with the entity
+ * @property {GeoTag} geo Gets or sets the geo tag
  * @property {string} previousVersion
  * @property {string} version
- * @property {number} sequence
+ * @property {Int64} sequence
  * @property {Date} creationTimeModel [Delay loaded from creationTime],  Gets or sets the time at which the data was created
  * @property {Date} creationTime Gets or sets the creation time as an ISO date format
  * @property {Date} obsoletionTimeModel [Delay loaded from obsoletionTime],  Gets or sets the time when the data is or will become invalid
@@ -9004,7 +9291,7 @@ function UserEntity (copyData) {
 	 */
 	this.creationTimeModel = copyData.creationTimeModel;
 	/**
-	 * @type {number} 
+	 * @type {Int64} 
 	 */
 	this.sequence = copyData.sequence;
 	/**
@@ -9015,6 +9302,11 @@ function UserEntity (copyData) {
 	 * @type {string} 
 	 */
 	this.previousVersion = copyData.previousVersion;
+	/**
+	 * @summary Gets or sets the geo tag
+	 * @type {GeoTag} 
+	 */
+	this.geo = copyData.geo;
 	/**
 	 * @summary Gets or sets the security policy instances associated with the entity
 	 * @type {SecurityPolicyInstance} 
@@ -9122,6 +9414,34 @@ function UserEntity (copyData) {
 	/**
 	 * @type {Concept} 
 	 */
+	this.nationalityModel = copyData.nationalityModel;
+	/**
+	 * @summary Gets or sets the religious affiliation
+	 * @type {string} 
+	 */
+	this.nationality = copyData.nationality;
+	/**
+	 * @type {Concept} 
+	 */
+	this.vipStatusModel = copyData.vipStatusModel;
+	/**
+	 * @summary Gets or sets the VIP status code
+	 * @type {string} 
+	 */
+	this.vipStatus = copyData.vipStatus;
+	/**
+	 * @summary Gets or sets the precision of the date of deceased
+	 * @type {DatePrecision} 
+	 */
+	this.deceasedDatePrecision = copyData.deceasedDatePrecision;
+	/**
+	 * @summary Deceased date XML
+	 * @type {Date} 
+	 */
+	this.deceasedDate = copyData.deceasedDate;
+	/**
+	 * @type {Concept} 
+	 */
 	this.occupationModel = copyData.occupationModel;
 	/**
 	 * @summary Gets or sets the religious affiliation
@@ -9163,47 +9483,35 @@ function UserEntity (copyData) {
 	this.securityUserModel = copyData.securityUserModel;
 	}
 }  // UserEntity 
-// SanteDB.Core.Model.DataTypes.identityDomain, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
-//if(!identityDomain)
+// SanteDB.Core.Model.DataTypes.AssigningAuthority, SanteDB.Core.Model, Version=3.0.0.0, Culture=neutral, PublicKeyToken=null
+//if(!AssigningAuthority)
 /**
  * @class
  * @constructor
  * @public
- * @summary Represents a model class which is an assigning authority
- * @property {string} name Gets or sets the name of the assigning authority
- * @property {string} domainName Gets or sets the domain name of the assigning authority
- * @property {string} description Gets or sets the description of the assigning authority
- * @property {string} oid Gets or sets the oid of the assigning authority
- * @property {string} url The URL of the assigning authority
- * @property {string} scope Represents scopes to which the authority is bound
- * @property {string} assigningApplication Assigning device identifier
- * @property {string} policyModel [Delay loaded from policy],  Gets or sets the policy
- * @property {string} policy Gets or sets the policy key associated with this assigning authority for disclosure
- * @property {string} validation Gets or sets the validation regex
- * @property {boolean} isUnique True if the assigning authority values should be unique
- * @property {string} customValidator Gets or sets the IIdentifierValidator instance to use for this solution
+ * @extends BaseEntityData
+ * @summary Indicates the reliability of an application to assign identifiers in a particular identity domain
+ * @property {string} assigningApplication Gets or sets the application which can assign identity
  * @property {SecurityApplication} assigningApplicationModel [Delay loaded from assigningApplication],  Gets or sets the assigning device
- * @property {object} scopeModel [Delay loaded from scope],  Gets concept sets to which this concept is a member
- * @property {Concept} scope.classifier  where classifier is from {@link Concept} mnemonic
- * @property {Date} updatedTime Gets or sets the time that this object was last modified in ISO format
- * @property {Date} modifiedOn Gets the time this item was modified
- * @property {SecurityProvenance} updatedByModel [Delay loaded from updatedBy],  Gets or sets the user that updated this base data
- * @property {string} updatedBy Gets or sets the provenance identifier associated with the last update of this object
+ * @property {IdentifierReliability} reliability Gets or sets the reliability of identifiers assigned by this application(see: {@link IdentifierReliability} for values)
+ * @property {string} source Gets the source entity key
+ * @property {IdentityDomain} sourceModel [Delay loaded from source],  Gets or sets the source entity
  * @property {Date} creationTimeModel [Delay loaded from creationTime],  Gets or sets the time at which the data was created
  * @property {Date} creationTime Gets or sets the creation time as an ISO date format
  * @property {Date} obsoletionTimeModel [Delay loaded from obsoletionTime],  Gets or sets the time when the data is or will become invalid
  * @property {Date} obsoletionTime Gets or sets the time that the data is no longer valid (was deleted/obsoleted) in ISO format
  * @property {SecurityProvenance} createdByModel [Delay loaded from createdBy],  Gets or sets the user that created this base data
+ * @property {Date} modifiedOn Gets the time that the object was last modified (from base data, default to CreationTime)
  * @property {SecurityProvenance} obsoletedByModel [Delay loaded from obsoletedBy],  Gets or sets the user that obsoleted this base data
  * @property {string} createdBy Gets or sets the security provenance object which represents the creation of this object
  * @property {string} obsoletedBy Gets or sets the security provenance object which represents the obsoletion of this data
  * @property {string} id Gets or sets the primary identifying UUID of this object
  * @property {BatchOperationType} operation Gets or sets the operation(see: {@link BatchOperationType} for values)
  * @property {string} $type Gets the type registration of this object
- * @param {identityDomain} copyData Copy constructor (if present)
+ * @param {AssigningAuthority} copyData Copy constructor (if present)
  */
-function IdentityDomain (copyData) { 
-	this.$type = 'IdentityDomain';
+function AssigningAuthority (copyData) { 
+	this.$type = 'AssigningAuthority';
 	if(copyData) {
 	/**
 	 * @summary Gets or sets the operation
@@ -9230,6 +9538,11 @@ function IdentityDomain (copyData) {
 	 */
 	this.obsoletedByModel = copyData.obsoletedByModel;
 	/**
+	 * @summary Gets the time that the object was last modified (from base data, default to CreationTime)
+	 * @type {Date} 
+	 */
+	this.modifiedOn = copyData.modifiedOn;
+	/**
 	 * @type {SecurityProvenance} 
 	 */
 	this.createdByModel = copyData.createdByModel;
@@ -9252,94 +9565,31 @@ function IdentityDomain (copyData) {
 	 */
 	this.creationTimeModel = copyData.creationTimeModel;
 	/**
-	 * @summary Gets or sets the provenance identifier associated with the last update of this object
+	 * @type {IdentityDomain} 
+	 */
+	this.sourceModel = copyData.sourceModel;
+	/**
+	 * @summary Gets or sets the source entity
 	 * @type {string} 
 	 */
-	this.updatedBy = copyData.updatedBy;
+	this.source = copyData.source;
 	/**
-	 * @type {SecurityProvenance} 
+	 * @summary Gets or sets the reliability of identifiers assigned by this application
+	 * @type {IdentifierReliability} 
 	 */
-	this.updatedByModel = copyData.updatedByModel;
-	/**
-	 * @summary Gets the time this item was modified
-	 * @type {Date} 
-	 */
-	this.modifiedOn = copyData.modifiedOn;
-	/**
-	 * @summary Gets or sets the time that this object was last modified in ISO format
-	 * @type {Date} 
-	 */
-	this.updatedTime = copyData.updatedTime;
-	/**
-	 * @type {object} 
-	 */
-	this.scopeModel = copyData.scopeModel;
+	this.reliability = copyData.reliability;
 	/**
 	 * @type {SecurityApplication} 
 	 */
 	this.assigningApplicationModel = copyData.assigningApplicationModel;
 	/**
-	 * @summary Gets or sets the IIdentifierValidator instance to use for this solution
-	 * @type {string} 
-	 */
-	this.customValidator = copyData.customValidator;
-	/**
-	 * @summary True if the assigning authority values should be unique
-	 * @type {boolean} 
-	 */
-	this.isUnique = copyData.isUnique;
-	/**
-	 * @summary Gets or sets the validation regex
-	 * @type {string} 
-	 */
-	this.validation = copyData.validation;
-	/**
-	 * @summary Gets or sets the policy key associated with this assigning authority for disclosure
-	 * @type {string} 
-	 */
-	this.policy = copyData.policy;
-	/**
-	 * @type {string} 
-	 */
-	this.policyModel = copyData.policyModel;
-	/**
-	 * @summary Gets or sets the assigning device
+	 * @summary Gets or sets the application which can assign identity
 	 * @type {string} 
 	 */
 	this.assigningApplication = copyData.assigningApplication;
-	/**
-	 * @summary Gets concept sets to which this concept is a member
-	 * @type {string} 
-	 */
-	this.scope = copyData.scope;
-	/**
-	 * @summary The URL of the assigning authority
-	 * @type {string} 
-	 */
-	this.url = copyData.url;
-	/**
-	 * @summary Gets or sets the oid of the assigning authority
-	 * @type {string} 
-	 */
-	this.oid = copyData.oid;
-	/**
-	 * @summary Gets or sets the description of the assigning authority
-	 * @type {string} 
-	 */
-	this.description = copyData.description;
-	/**
-	 * @summary Gets or sets the domain name of the assigning authority
-	 * @type {string} 
-	 */
-	this.domainName = copyData.domainName;
-	/**
-	 * @summary Gets or sets the name of the assigning authority
-	 * @type {string} 
-	 */
-	this.name = copyData.name;
 	}
-}  // identityDomain 
-// SanteDB.Core.Model.DataTypes.CodeSystem, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
+}  // AssigningAuthority 
+// SanteDB.Core.Model.DataTypes.CodeSystem, SanteDB.Core.Model, Version=3.0.0.0, Culture=neutral, PublicKeyToken=null
 //if(!CodeSystem)
 /**
  * @class
@@ -9475,7 +9725,7 @@ function CodeSystem (copyData) {
 	this.name = copyData.name;
 	}
 }  // CodeSystem 
-// SanteDB.Core.Model.DataTypes.Concept, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.DataTypes.Concept, SanteDB.Core.Model, Version=3.0.0.0, Culture=neutral, PublicKeyToken=null
 //if(!Concept)
 /**
  * @class
@@ -9483,7 +9733,6 @@ function CodeSystem (copyData) {
  * @public
  * @extends VersionedEntityData
  * @summary A class representing a generic concept used in the SanteDB datamodel
- * @property {boolean} isReadonly Gets or sets an indicator which dictates whether the concept is a system concept
  * @property {string} mnemonic Gets or sets the unchanging mnemonic for the concept
  * @property {string} statusConcept Gets or sets the status concept key(see: {@link StatusKeys} for values)
  * @property {Concept} statusConceptModel [Delay loaded from statusConcept],  Gets or sets the status of the concept
@@ -9506,7 +9755,7 @@ function CodeSystem (copyData) {
  * @property {ConceptSet} conceptSet.classifier  where classifier is from {@link ConceptSet} mnemonic
  * @property {string} previousVersion
  * @property {string} version
- * @property {number} sequence
+ * @property {Int64} sequence
  * @property {Date} creationTimeModel [Delay loaded from creationTime],  Gets or sets the time at which the data was created
  * @property {Date} creationTime Gets or sets the creation time as an ISO date format
  * @property {Date} obsoletionTimeModel [Delay loaded from obsoletionTime],  Gets or sets the time when the data is or will become invalid
@@ -9576,7 +9825,7 @@ function Concept (copyData) {
 	 */
 	this.creationTimeModel = copyData.creationTimeModel;
 	/**
-	 * @type {number} 
+	 * @type {Int64} 
 	 */
 	this.sequence = copyData.sequence;
 	/**
@@ -9634,14 +9883,9 @@ function Concept (copyData) {
 	 * @type {string} 
 	 */
 	this.mnemonic = copyData.mnemonic;
-	/**
-	 * @summary Gets or sets an indicator which dictates whether the concept is a system concept
-	 * @type {boolean} 
-	 */
-	this.isReadonly = copyData.isReadonly;
 	}
 }  // Concept 
-// SanteDB.Core.Model.DataTypes.ConceptClass, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.DataTypes.ConceptClass, SanteDB.Core.Model, Version=3.0.0.0, Culture=neutral, PublicKeyToken=null
 //if(!ConceptClass)
 /**
  * @class
@@ -9747,7 +9991,7 @@ function ConceptClass (copyData) {
 	this.name = copyData.name;
 	}
 }  // ConceptClass 
-// SanteDB.Core.Model.DataTypes.ConceptName, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.DataTypes.ConceptName, SanteDB.Core.Model, Version=3.0.0.0, Culture=neutral, PublicKeyToken=null
 //if(!ConceptName)
 /**
  * @class
@@ -9757,8 +10001,8 @@ function ConceptClass (copyData) {
  * @summary Represents a name (human name) that a concept may have
  * @property {string} language Gets or sets the language code of the object
  * @property {string} value Gets or sets the name of the reference term
- * @property {number} effectiveVersionSequence
- * @property {number} obsoleteVersionSequence
+ * @property {Int64} effectiveVersionSequence
+ * @property {Int64} obsoleteVersionSequence
  * @property {Date} modifiedOn
  * @property {string} source
  * @property {Concept} sourceModel [Delay loaded from source], 
@@ -9793,11 +10037,11 @@ function ConceptName (copyData) {
 	 */
 	this.modifiedOn = copyData.modifiedOn;
 	/**
-	 * @type {number} 
+	 * @type {Int64} 
 	 */
 	this.obsoleteVersionSequence = copyData.obsoleteVersionSequence;
 	/**
-	 * @type {number} 
+	 * @type {Int64} 
 	 */
 	this.effectiveVersionSequence = copyData.effectiveVersionSequence;
 	/**
@@ -9812,7 +10056,7 @@ function ConceptName (copyData) {
 	this.language = copyData.language;
 	}
 }  // ConceptName 
-// SanteDB.Core.Model.DataTypes.ConceptReferenceTerm, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.DataTypes.ConceptReferenceTerm, SanteDB.Core.Model, Version=3.0.0.0, Culture=neutral, PublicKeyToken=null
 //if(!ConceptReferenceTerm)
 /**
  * @class
@@ -9824,8 +10068,8 @@ function ConceptName (copyData) {
  * @property {ReferenceTerm} termModel [Delay loaded from term],  Gets or set the reference term
  * @property {string} relationshipType Gets or sets the relationship type identifier
  * @property {ConceptRelationshipType} relationshipTypeModel [Delay loaded from relationshipType],  Gets or sets the relationship type
- * @property {number} effectiveVersionSequence
- * @property {number} obsoleteVersionSequence
+ * @property {Int64} effectiveVersionSequence
+ * @property {Int64} obsoleteVersionSequence
  * @property {Date} modifiedOn
  * @property {string} source
  * @property {Concept} sourceModel [Delay loaded from source], 
@@ -9860,11 +10104,11 @@ function ConceptReferenceTerm (copyData) {
 	 */
 	this.modifiedOn = copyData.modifiedOn;
 	/**
-	 * @type {number} 
+	 * @type {Int64} 
 	 */
 	this.obsoleteVersionSequence = copyData.obsoleteVersionSequence;
 	/**
-	 * @type {number} 
+	 * @type {Int64} 
 	 */
 	this.effectiveVersionSequence = copyData.effectiveVersionSequence;
 	/**
@@ -9887,7 +10131,7 @@ function ConceptReferenceTerm (copyData) {
 	this.term = copyData.term;
 	}
 }  // ConceptReferenceTerm 
-// SanteDB.Core.Model.DataTypes.ConceptRelationship, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.DataTypes.ConceptRelationship, SanteDB.Core.Model, Version=3.0.0.0, Culture=neutral, PublicKeyToken=null
 //if(!ConceptRelationship)
 /**
  * @class
@@ -9899,8 +10143,8 @@ function ConceptReferenceTerm (copyData) {
  * @property {Concept} targetConceptModel [Delay loaded from targetConcept],  Gets or sets the target concept
  * @property {string} relationshipType Relationship type(see: {@link ConceptRelationshipTypeKeys} for values)
  * @property {ConceptRelationshipType} relationshipTypeModel [Delay loaded from relationshipType],  Gets or sets the relationship type
- * @property {number} effectiveVersionSequence
- * @property {number} obsoleteVersionSequence
+ * @property {Int64} effectiveVersionSequence
+ * @property {Int64} obsoleteVersionSequence
  * @property {Date} modifiedOn
  * @property {string} source
  * @property {Concept} sourceModel [Delay loaded from source], 
@@ -9935,11 +10179,11 @@ function ConceptRelationship (copyData) {
 	 */
 	this.modifiedOn = copyData.modifiedOn;
 	/**
-	 * @type {number} 
+	 * @type {Int64} 
 	 */
 	this.obsoleteVersionSequence = copyData.obsoleteVersionSequence;
 	/**
-	 * @type {number} 
+	 * @type {Int64} 
 	 */
 	this.effectiveVersionSequence = copyData.effectiveVersionSequence;
 	/**
@@ -9962,7 +10206,7 @@ function ConceptRelationship (copyData) {
 	this.targetConcept = copyData.targetConcept;
 	}
 }  // ConceptRelationship 
-// SanteDB.Core.Model.DataTypes.ConceptRelationshipType, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.DataTypes.ConceptRelationshipType, SanteDB.Core.Model, Version=3.0.0.0, Culture=neutral, PublicKeyToken=null
 //if(!ConceptRelationshipType)
 /**
  * @class
@@ -10068,7 +10312,7 @@ function ConceptRelationshipType (copyData) {
 	this.name = copyData.name;
 	}
 }  // ConceptRelationshipType 
-// SanteDB.Core.Model.DataTypes.ConceptSet, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.DataTypes.ConceptSet, SanteDB.Core.Model, Version=3.0.0.0, Culture=neutral, PublicKeyToken=null
 //if(!ConceptSet)
 /**
  * @class
@@ -10192,7 +10436,7 @@ function ConceptSet (copyData) {
 	this.name = copyData.name;
 	}
 }  // ConceptSet 
-// SanteDB.Core.Model.DataTypes.Extension`1, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.DataTypes.Extension`1, SanteDB.Core.Model, Version=3.0.0.0, Culture=neutral, PublicKeyToken=null
 //if(!Extension)
 /**
  * @class
@@ -10205,8 +10449,8 @@ function ConceptSet (copyData) {
  * @property {string} valueModel [Delay loaded from value],  Value as string of bytes
  * @property {ExtensionType} extensionTypeModel [Delay loaded from extensionType],  Gets or sets the extension type
  * @property {string} extensionType Gets or sets the extension type key
- * @property {number} effectiveVersionSequence
- * @property {number} obsoleteVersionSequence
+ * @property {Int64} effectiveVersionSequence
+ * @property {Int64} obsoleteVersionSequence
  * @property {Date} modifiedOn
  * @property {string} source
  * @property {VersionedEntityData} sourceModel [Delay loaded from source], 
@@ -10241,11 +10485,11 @@ function Extension (copyData) {
 	 */
 	this.modifiedOn = copyData.modifiedOn;
 	/**
-	 * @type {number} 
+	 * @type {Int64} 
 	 */
 	this.obsoleteVersionSequence = copyData.obsoleteVersionSequence;
 	/**
-	 * @type {number} 
+	 * @type {Int64} 
 	 */
 	this.effectiveVersionSequence = copyData.effectiveVersionSequence;
 	/**
@@ -10268,7 +10512,7 @@ function Extension (copyData) {
 	this.value = copyData.value;
 	}
 }  // Extension 
-// SanteDB.Core.Model.DataTypes.EntityExtension, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.DataTypes.EntityExtension, SanteDB.Core.Model, Version=3.0.0.0, Culture=neutral, PublicKeyToken=null
 //if(!EntityExtension)
 /**
  * @class
@@ -10280,8 +10524,8 @@ function Extension (copyData) {
  * @property {string} valueModel [Delay loaded from value], 
  * @property {ExtensionType} extensionTypeModel [Delay loaded from extensionType], 
  * @property {string} extensionType
- * @property {number} effectiveVersionSequence
- * @property {number} obsoleteVersionSequence
+ * @property {Int64} effectiveVersionSequence
+ * @property {Int64} obsoleteVersionSequence
  * @property {Date} modifiedOn
  * @property {string} source
  * @property {Entity} sourceModel [Delay loaded from source], 
@@ -10316,11 +10560,11 @@ function EntityExtension (copyData) {
 	 */
 	this.modifiedOn = copyData.modifiedOn;
 	/**
-	 * @type {number} 
+	 * @type {Int64} 
 	 */
 	this.obsoleteVersionSequence = copyData.obsoleteVersionSequence;
 	/**
-	 * @type {number} 
+	 * @type {Int64} 
 	 */
 	this.effectiveVersionSequence = copyData.effectiveVersionSequence;
 	/**
@@ -10341,7 +10585,7 @@ function EntityExtension (copyData) {
 	this.value = copyData.value;
 	}
 }  // EntityExtension 
-// SanteDB.Core.Model.DataTypes.ActExtension, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.DataTypes.ActExtension, SanteDB.Core.Model, Version=3.0.0.0, Culture=neutral, PublicKeyToken=null
 //if(!ActExtension)
 /**
  * @class
@@ -10353,8 +10597,8 @@ function EntityExtension (copyData) {
  * @property {string} valueModel [Delay loaded from value], 
  * @property {ExtensionType} extensionTypeModel [Delay loaded from extensionType], 
  * @property {string} extensionType
- * @property {number} effectiveVersionSequence
- * @property {number} obsoleteVersionSequence
+ * @property {Int64} effectiveVersionSequence
+ * @property {Int64} obsoleteVersionSequence
  * @property {Date} modifiedOn
  * @property {string} source
  * @property {Act} sourceModel [Delay loaded from source], 
@@ -10389,11 +10633,11 @@ function ActExtension (copyData) {
 	 */
 	this.modifiedOn = copyData.modifiedOn;
 	/**
-	 * @type {number} 
+	 * @type {Int64} 
 	 */
 	this.obsoleteVersionSequence = copyData.obsoleteVersionSequence;
 	/**
-	 * @type {number} 
+	 * @type {Int64} 
 	 */
 	this.effectiveVersionSequence = copyData.effectiveVersionSequence;
 	/**
@@ -10414,7 +10658,7 @@ function ActExtension (copyData) {
 	this.value = copyData.value;
 	}
 }  // ActExtension 
-// SanteDB.Core.Model.DataTypes.ExtensionType, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.DataTypes.ExtensionType, SanteDB.Core.Model, Version=3.0.0.0, Culture=neutral, PublicKeyToken=null
 //if(!ExtensionType)
 /**
  * @class
@@ -10520,7 +10764,7 @@ function ExtensionType (copyData) {
 	this.handlerClass = copyData.handlerClass;
 	}
 }  // ExtensionType 
-// SanteDB.Core.Model.DataTypes.GeoTag, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.DataTypes.GeoTag, SanteDB.Core.Model, Version=3.0.0.0, Culture=neutral, PublicKeyToken=null
 //if(!GeoTag)
 /**
  * @class
@@ -10572,7 +10816,7 @@ function GeoTag (copyData) {
 	this.modifiedOn = copyData.modifiedOn;
 	}
 }  // GeoTag 
-// SanteDB.Core.Model.DataTypes.IdentifiedDataReference, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.DataTypes.IdentifiedDataReference, SanteDB.Core.Model, Version=3.0.0.0, Culture=neutral, PublicKeyToken=null
 //if(!Reference)
 /**
  * @class
@@ -10609,7 +10853,7 @@ function Reference (copyData) {
 	this.modifiedOn = copyData.modifiedOn;
 	}
 }  // Reference 
-// SanteDB.Core.Model.DataTypes.EntityIdentifier, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.DataTypes.EntityIdentifier, SanteDB.Core.Model, Version=3.0.0.0, Culture=neutral, PublicKeyToken=null
 //if(!EntityIdentifier)
 /**
  * @class
@@ -10621,10 +10865,12 @@ function Reference (copyData) {
  * @property {Date} issued
  * @property {Date} expires
  * @property {string} checkDigit
+ * @property {string} domain
  * @property {IdentifierType} type
- * @property {identityDomain} authority
- * @property {number} effectiveVersionSequence
- * @property {number} obsoleteVersionSequence
+ * @property {IdentityDomain} domainModel [Delay loaded from domain], 
+ * @property {IdentifierReliability} reliability(see: {@link IdentifierReliability} for values)
+ * @property {Int64} effectiveVersionSequence
+ * @property {Int64} obsoleteVersionSequence
  * @property {Date} modifiedOn
  * @property {string} source
  * @property {Entity} sourceModel [Delay loaded from source], 
@@ -10659,21 +10905,29 @@ function EntityIdentifier (copyData) {
 	 */
 	this.modifiedOn = copyData.modifiedOn;
 	/**
-	 * @type {number} 
+	 * @type {Int64} 
 	 */
 	this.obsoleteVersionSequence = copyData.obsoleteVersionSequence;
 	/**
-	 * @type {number} 
+	 * @type {Int64} 
 	 */
 	this.effectiveVersionSequence = copyData.effectiveVersionSequence;
 	/**
-	 * @type {identityDomain} 
+	 * @type {IdentifierReliability} 
 	 */
-	this.authority = copyData.authority;
+	this.reliability = copyData.reliability;
+	/**
+	 * @type {IdentityDomain} 
+	 */
+	this.domainModel = copyData.domainModel;
 	/**
 	 * @type {IdentifierType} 
 	 */
 	this.type = copyData.type;
+	/**
+	 * @type {string} 
+	 */
+	this.domain = copyData.domain;
 	/**
 	 * @type {string} 
 	 */
@@ -10692,7 +10946,7 @@ function EntityIdentifier (copyData) {
 	this.value = copyData.value;
 	}
 }  // EntityIdentifier 
-// SanteDB.Core.Model.DataTypes.ActIdentifier, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.DataTypes.ActIdentifier, SanteDB.Core.Model, Version=3.0.0.0, Culture=neutral, PublicKeyToken=null
 //if(!ActIdentifier)
 /**
  * @class
@@ -10704,10 +10958,12 @@ function EntityIdentifier (copyData) {
  * @property {Date} issued
  * @property {Date} expires
  * @property {string} checkDigit
+ * @property {string} domain
  * @property {IdentifierType} type
- * @property {identityDomain} authority
- * @property {number} effectiveVersionSequence
- * @property {number} obsoleteVersionSequence
+ * @property {IdentityDomain} domainModel [Delay loaded from domain], 
+ * @property {IdentifierReliability} reliability(see: {@link IdentifierReliability} for values)
+ * @property {Int64} effectiveVersionSequence
+ * @property {Int64} obsoleteVersionSequence
  * @property {Date} modifiedOn
  * @property {string} source
  * @property {Act} sourceModel [Delay loaded from source], 
@@ -10742,21 +10998,29 @@ function ActIdentifier (copyData) {
 	 */
 	this.modifiedOn = copyData.modifiedOn;
 	/**
-	 * @type {number} 
+	 * @type {Int64} 
 	 */
 	this.obsoleteVersionSequence = copyData.obsoleteVersionSequence;
 	/**
-	 * @type {number} 
+	 * @type {Int64} 
 	 */
 	this.effectiveVersionSequence = copyData.effectiveVersionSequence;
 	/**
-	 * @type {identityDomain} 
+	 * @type {IdentifierReliability} 
 	 */
-	this.authority = copyData.authority;
+	this.reliability = copyData.reliability;
+	/**
+	 * @type {IdentityDomain} 
+	 */
+	this.domainModel = copyData.domainModel;
 	/**
 	 * @type {IdentifierType} 
 	 */
 	this.type = copyData.type;
+	/**
+	 * @type {string} 
+	 */
+	this.domain = copyData.domain;
 	/**
 	 * @type {string} 
 	 */
@@ -10775,7 +11039,7 @@ function ActIdentifier (copyData) {
 	this.value = copyData.value;
 	}
 }  // ActIdentifier 
-// SanteDB.Core.Model.DataTypes.IdentifierBase`1, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.DataTypes.IdentifierBase`1, SanteDB.Core.Model, Version=3.0.0.0, Culture=neutral, PublicKeyToken=null
 //if(!IdentifierBase)
 /**
  * @class
@@ -10788,10 +11052,12 @@ function ActIdentifier (copyData) {
  * @property {Date} issued Serialization property for issued date
  * @property {Date} expires Serialization field for expiry date
  * @property {string} checkDigit Gets or sets the check-digit if it is stored separate from the identifier
+ * @property {string} domain Gets or sets the assinging authority id
  * @property {IdentifierType} type Gets or sets the identifier type
- * @property {identityDomain} authority Gets or sets a minimal assigning authority from XML data
- * @property {number} effectiveVersionSequence
- * @property {number} obsoleteVersionSequence
+ * @property {IdentityDomain} domainModel [Delay loaded from domain],  Represents the authority information
+ * @property {IdentifierReliability} reliability Gets or sets the reliability of the identifier(see: {@link IdentifierReliability} for values)
+ * @property {Int64} effectiveVersionSequence
+ * @property {Int64} obsoleteVersionSequence
  * @property {Date} modifiedOn
  * @property {string} source
  * @property {VersionedEntityData} sourceModel [Delay loaded from source], 
@@ -10826,23 +11092,32 @@ function IdentifierBase (copyData) {
 	 */
 	this.modifiedOn = copyData.modifiedOn;
 	/**
-	 * @type {number} 
+	 * @type {Int64} 
 	 */
 	this.obsoleteVersionSequence = copyData.obsoleteVersionSequence;
 	/**
-	 * @type {number} 
+	 * @type {Int64} 
 	 */
 	this.effectiveVersionSequence = copyData.effectiveVersionSequence;
 	/**
-	 * @summary Gets or sets a minimal assigning authority from XML data
-	 * @type {identityDomain} 
+	 * @summary Gets or sets the reliability of the identifier
+	 * @type {IdentifierReliability} 
 	 */
-	this.authority = copyData.authority;
+	this.reliability = copyData.reliability;
+	/**
+	 * @type {IdentityDomain} 
+	 */
+	this.domainModel = copyData.domainModel;
 	/**
 	 * @summary Gets or sets the identifier type
 	 * @type {IdentifierType} 
 	 */
 	this.type = copyData.type;
+	/**
+	 * @summary Gets or sets the assinging authority id
+	 * @type {string} 
+	 */
+	this.domain = copyData.domain;
 	/**
 	 * @summary Gets or sets the check-digit if it is stored separate from the identifier
 	 * @type {string} 
@@ -10865,7 +11140,7 @@ function IdentifierBase (copyData) {
 	this.value = copyData.value;
 	}
 }  // IdentifierBase 
-// SanteDB.Core.Model.DataTypes.IdentifierType, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.DataTypes.IdentifierType, SanteDB.Core.Model, Version=3.0.0.0, Culture=neutral, PublicKeyToken=null
 //if(!IdentifierType)
 /**
  * @class
@@ -10965,7 +11240,178 @@ function IdentifierType (copyData) {
 	this.scopeConcept = copyData.scopeConcept;
 	}
 }  // IdentifierType 
-// SanteDB.Core.Model.DataTypes.Note`1, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.DataTypes.IdentityDomain, SanteDB.Core.Model, Version=3.0.0.0, Culture=neutral, PublicKeyToken=null
+//if(!IdentityDomain)
+/**
+ * @class
+ * @constructor
+ * @public
+ * @summary Represents a model class which is an assigning authority
+ * @property {string} name Gets or sets the name of the assigning authority
+ * @property {string} domainName Gets or sets the domain name of the assigning authority
+ * @property {string} description Gets or sets the description of the assigning authority
+ * @property {string} oid Gets or sets the oid of the assigning authority
+ * @property {string} url The URL of the assigning authority
+ * @property {string} scope Represents scopes to which the authority is bound
+ * @property {AssigningAuthority} assigningAuthority Assigning device identifier
+ * @property {string} policyModel [Delay loaded from policy],  Gets or sets the policy
+ * @property {string} policy Gets or sets the policy key associated with this assigning authority for disclosure
+ * @property {string} validation Gets or sets the validation regex
+ * @property {boolean} isUnique True if the assigning authority values should be unique
+ * @property {string} customValidator Gets or sets the IIdentifierValidator instance to use for this solution
+ * @property {object} scopeModel [Delay loaded from scope],  Gets concept sets to which this concept is a member
+ * @property {Concept} scope.classifier  where classifier is from {@link Concept} mnemonic
+ * @property {Date} updatedTime Gets or sets the time that this object was last modified in ISO format
+ * @property {Date} modifiedOn Gets the time this item was modified
+ * @property {SecurityProvenance} updatedByModel [Delay loaded from updatedBy],  Gets or sets the user that updated this base data
+ * @property {string} updatedBy Gets or sets the provenance identifier associated with the last update of this object
+ * @property {Date} creationTimeModel [Delay loaded from creationTime],  Gets or sets the time at which the data was created
+ * @property {Date} creationTime Gets or sets the creation time as an ISO date format
+ * @property {Date} obsoletionTimeModel [Delay loaded from obsoletionTime],  Gets or sets the time when the data is or will become invalid
+ * @property {Date} obsoletionTime Gets or sets the time that the data is no longer valid (was deleted/obsoleted) in ISO format
+ * @property {SecurityProvenance} createdByModel [Delay loaded from createdBy],  Gets or sets the user that created this base data
+ * @property {SecurityProvenance} obsoletedByModel [Delay loaded from obsoletedBy],  Gets or sets the user that obsoleted this base data
+ * @property {string} createdBy Gets or sets the security provenance object which represents the creation of this object
+ * @property {string} obsoletedBy Gets or sets the security provenance object which represents the obsoletion of this data
+ * @property {string} id Gets or sets the primary identifying UUID of this object
+ * @property {BatchOperationType} operation Gets or sets the operation(see: {@link BatchOperationType} for values)
+ * @property {string} $type Gets the type registration of this object
+ * @param {IdentityDomain} copyData Copy constructor (if present)
+ */
+function IdentityDomain (copyData) { 
+	this.$type = 'IdentityDomain';
+	if(copyData) {
+	/**
+	 * @summary Gets or sets the operation
+	 * @type {BatchOperationType} 
+	 */
+	this.operation = copyData.operation;
+	/**
+	 * @summary Gets or sets the primary identifying UUID of this object
+	 * @type {string} 
+	 */
+	this.id = copyData.id;
+	/**
+	 * @summary Gets or sets the security provenance object which represents the obsoletion of this data
+	 * @type {string} 
+	 */
+	this.obsoletedBy = copyData.obsoletedBy;
+	/**
+	 * @summary Gets or sets the security provenance object which represents the creation of this object
+	 * @type {string} 
+	 */
+	this.createdBy = copyData.createdBy;
+	/**
+	 * @type {SecurityProvenance} 
+	 */
+	this.obsoletedByModel = copyData.obsoletedByModel;
+	/**
+	 * @type {SecurityProvenance} 
+	 */
+	this.createdByModel = copyData.createdByModel;
+	/**
+	 * @summary Gets or sets the time that the data is no longer valid (was deleted/obsoleted) in ISO format
+	 * @type {Date} 
+	 */
+	this.obsoletionTime = copyData.obsoletionTime;
+	/**
+	 * @type {Date} 
+	 */
+	this.obsoletionTimeModel = copyData.obsoletionTimeModel;
+	/**
+	 * @summary Gets or sets the creation time as an ISO date format
+	 * @type {Date} 
+	 */
+	this.creationTime = copyData.creationTime;
+	/**
+	 * @type {Date} 
+	 */
+	this.creationTimeModel = copyData.creationTimeModel;
+	/**
+	 * @summary Gets or sets the provenance identifier associated with the last update of this object
+	 * @type {string} 
+	 */
+	this.updatedBy = copyData.updatedBy;
+	/**
+	 * @type {SecurityProvenance} 
+	 */
+	this.updatedByModel = copyData.updatedByModel;
+	/**
+	 * @summary Gets the time this item was modified
+	 * @type {Date} 
+	 */
+	this.modifiedOn = copyData.modifiedOn;
+	/**
+	 * @summary Gets or sets the time that this object was last modified in ISO format
+	 * @type {Date} 
+	 */
+	this.updatedTime = copyData.updatedTime;
+	/**
+	 * @type {object} 
+	 */
+	this.scopeModel = copyData.scopeModel;
+	/**
+	 * @summary Gets or sets the IIdentifierValidator instance to use for this solution
+	 * @type {string} 
+	 */
+	this.customValidator = copyData.customValidator;
+	/**
+	 * @summary True if the assigning authority values should be unique
+	 * @type {boolean} 
+	 */
+	this.isUnique = copyData.isUnique;
+	/**
+	 * @summary Gets or sets the validation regex
+	 * @type {string} 
+	 */
+	this.validation = copyData.validation;
+	/**
+	 * @summary Gets or sets the policy key associated with this assigning authority for disclosure
+	 * @type {string} 
+	 */
+	this.policy = copyData.policy;
+	/**
+	 * @type {string} 
+	 */
+	this.policyModel = copyData.policyModel;
+	/**
+	 * @summary Assigning device identifier
+	 * @type {AssigningAuthority} 
+	 */
+	this.assigningAuthority = copyData.assigningAuthority;
+	/**
+	 * @summary Gets concept sets to which this concept is a member
+	 * @type {string} 
+	 */
+	this.scope = copyData.scope;
+	/**
+	 * @summary The URL of the assigning authority
+	 * @type {string} 
+	 */
+	this.url = copyData.url;
+	/**
+	 * @summary Gets or sets the oid of the assigning authority
+	 * @type {string} 
+	 */
+	this.oid = copyData.oid;
+	/**
+	 * @summary Gets or sets the description of the assigning authority
+	 * @type {string} 
+	 */
+	this.description = copyData.description;
+	/**
+	 * @summary Gets or sets the domain name of the assigning authority
+	 * @type {string} 
+	 */
+	this.domainName = copyData.domainName;
+	/**
+	 * @summary Gets or sets the name of the assigning authority
+	 * @type {string} 
+	 */
+	this.name = copyData.name;
+	}
+}  // IdentityDomain 
+// SanteDB.Core.Model.DataTypes.Note`1, SanteDB.Core.Model, Version=3.0.0.0, Culture=neutral, PublicKeyToken=null
 //if(!Note)
 /**
  * @class
@@ -10977,8 +11423,8 @@ function IdentifierType (copyData) {
  * @property {string} text Gets or sets the note text
  * @property {string} author Gets or sets the author key
  * @property {Entity} authorModel [Delay loaded from author],  Gets or sets the author entity
- * @property {number} effectiveVersionSequence
- * @property {number} obsoleteVersionSequence
+ * @property {Int64} effectiveVersionSequence
+ * @property {Int64} obsoleteVersionSequence
  * @property {Date} modifiedOn
  * @property {string} source
  * @property {VersionedEntityData} sourceModel [Delay loaded from source], 
@@ -11013,11 +11459,11 @@ function Note (copyData) {
 	 */
 	this.modifiedOn = copyData.modifiedOn;
 	/**
-	 * @type {number} 
+	 * @type {Int64} 
 	 */
 	this.obsoleteVersionSequence = copyData.obsoleteVersionSequence;
 	/**
-	 * @type {number} 
+	 * @type {Int64} 
 	 */
 	this.effectiveVersionSequence = copyData.effectiveVersionSequence;
 	/**
@@ -11036,7 +11482,7 @@ function Note (copyData) {
 	this.text = copyData.text;
 	}
 }  // Note 
-// SanteDB.Core.Model.DataTypes.EntityNote, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.DataTypes.EntityNote, SanteDB.Core.Model, Version=3.0.0.0, Culture=neutral, PublicKeyToken=null
 //if(!EntityNote)
 /**
  * @class
@@ -11047,8 +11493,8 @@ function Note (copyData) {
  * @property {string} text
  * @property {string} author
  * @property {Entity} authorModel [Delay loaded from author], 
- * @property {number} effectiveVersionSequence
- * @property {number} obsoleteVersionSequence
+ * @property {Int64} effectiveVersionSequence
+ * @property {Int64} obsoleteVersionSequence
  * @property {Date} modifiedOn
  * @property {string} source
  * @property {Entity} sourceModel [Delay loaded from source], 
@@ -11083,11 +11529,11 @@ function EntityNote (copyData) {
 	 */
 	this.modifiedOn = copyData.modifiedOn;
 	/**
-	 * @type {number} 
+	 * @type {Int64} 
 	 */
 	this.obsoleteVersionSequence = copyData.obsoleteVersionSequence;
 	/**
-	 * @type {number} 
+	 * @type {Int64} 
 	 */
 	this.effectiveVersionSequence = copyData.effectiveVersionSequence;
 	/**
@@ -11104,7 +11550,7 @@ function EntityNote (copyData) {
 	this.text = copyData.text;
 	}
 }  // EntityNote 
-// SanteDB.Core.Model.DataTypes.ActNote, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.DataTypes.ActNote, SanteDB.Core.Model, Version=3.0.0.0, Culture=neutral, PublicKeyToken=null
 //if(!ActNote)
 /**
  * @class
@@ -11115,8 +11561,8 @@ function EntityNote (copyData) {
  * @property {string} text
  * @property {string} author
  * @property {Entity} authorModel [Delay loaded from author], 
- * @property {number} effectiveVersionSequence
- * @property {number} obsoleteVersionSequence
+ * @property {Int64} effectiveVersionSequence
+ * @property {Int64} obsoleteVersionSequence
  * @property {Date} modifiedOn
  * @property {string} source
  * @property {Act} sourceModel [Delay loaded from source], 
@@ -11151,11 +11597,11 @@ function ActNote (copyData) {
 	 */
 	this.modifiedOn = copyData.modifiedOn;
 	/**
-	 * @type {number} 
+	 * @type {Int64} 
 	 */
 	this.obsoleteVersionSequence = copyData.obsoleteVersionSequence;
 	/**
-	 * @type {number} 
+	 * @type {Int64} 
 	 */
 	this.effectiveVersionSequence = copyData.effectiveVersionSequence;
 	/**
@@ -11172,7 +11618,7 @@ function ActNote (copyData) {
 	this.text = copyData.text;
 	}
 }  // ActNote 
-// SanteDB.Core.Model.DataTypes.ReferenceTerm, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.DataTypes.ReferenceTerm, SanteDB.Core.Model, Version=3.0.0.0, Culture=neutral, PublicKeyToken=null
 //if(!ReferenceTerm)
 /**
  * @class
@@ -11290,7 +11736,7 @@ function ReferenceTerm (copyData) {
 	this.mnemonic = copyData.mnemonic;
 	}
 }  // ReferenceTerm 
-// SanteDB.Core.Model.DataTypes.ReferenceTermName, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.DataTypes.ReferenceTermName, SanteDB.Core.Model, Version=3.0.0.0, Culture=neutral, PublicKeyToken=null
 //if(!ReferenceTermName)
 /**
  * @class
@@ -11386,7 +11832,7 @@ function ReferenceTermName (copyData) {
 	this.language = copyData.language;
 	}
 }  // ReferenceTermName 
-// SanteDB.Core.Model.DataTypes.Tag`1, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.DataTypes.Tag`1, SanteDB.Core.Model, Version=3.0.0.0, Culture=neutral, PublicKeyToken=null
 //if(!Tag)
 /**
  * @class
@@ -11488,7 +11934,7 @@ function Tag (copyData) {
 	this.key = copyData.key;
 	}
 }  // Tag 
-// SanteDB.Core.Model.DataTypes.EntityTag, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.DataTypes.EntityTag, SanteDB.Core.Model, Version=3.0.0.0, Culture=neutral, PublicKeyToken=null
 //if(!EntityTag)
 /**
  * @class
@@ -11586,7 +12032,7 @@ function EntityTag (copyData) {
 	this.key = copyData.key;
 	}
 }  // EntityTag 
-// SanteDB.Core.Model.DataTypes.ActTag, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.DataTypes.ActTag, SanteDB.Core.Model, Version=3.0.0.0, Culture=neutral, PublicKeyToken=null
 //if(!ActTag)
 /**
  * @class
@@ -11684,13 +12130,15 @@ function ActTag (copyData) {
 	this.key = copyData.key;
 	}
 }  // ActTag 
-// SanteDB.Core.Model.DataTypes.TemplateDefinition, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.DataTypes.TemplateDefinition, SanteDB.Core.Model, Version=3.0.0.0, Culture=neutral, PublicKeyToken=null
 //if(!TemplateDefinition)
 /**
  * @class
  * @constructor
  * @public
  * @summary Represents a template definition
+ * @description A template definition specifies the registerd templates for entities and acts in SanteDB like 
+            act templates, or entity templates
  * @property {string} mnemonic Gets or sets the mnemonic
  * @property {string} name Gets or set the name
  * @property {string} oid Gets or sets the oid of the concept set
@@ -11802,7 +12250,7 @@ function TemplateDefinition (copyData) {
 	this.mnemonic = copyData.mnemonic;
 	}
 }  // TemplateDefinition 
-// SanteDB.Core.Model.Collection.Bundle, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Collection.Bundle, SanteDB.Core.Model, Version=3.0.0.0, Culture=neutral, PublicKeyToken=null
 //if(!Bundle)
 /**
  * @class
@@ -11866,7 +12314,290 @@ function Bundle (copyData) {
 	this.modifiedOn = copyData.modifiedOn;
 	}
 }  // Bundle 
-// SanteDB.Core.Model.Acts.Account, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Audit.AuditableObject, SanteDB.Core.Model, Version=3.0.0.0, Culture=neutral, PublicKeyToken=null
+//if(!AuditableObject)
+/**
+ * @class
+ * @constructor
+ * @public
+ * @summary Identifies an object that adds context to the audit
+ * @description <p>In the SanteDB audit structure, an auditable object represets an object that was actioned on (read, disclosed, updated, etc.) 
+            or represents an audit that provides context to the audit event (query performed, name of transaction, etc.)</p>
+ * @property {AuditCode} customCode Custom id type code
+ * @property {AuditableObjectIdType} idType Identifies the type of identifier supplied(see: {@link AuditableObjectIdType} for values)
+ * @property {AuditableObjectLifecycle} lifecycle Identifies where in the lifecycle of the object this object is currently within(see: {@link AuditableObjectLifecycle} for values)
+ * @property {string} name Data associated with the object
+ * @property {ObjectDataExtension} data Additional object data
+ * @property {string} id Identifies the object in the event
+ * @property {string} queryData Data associated with the object
+ * @property {AuditableObjectRole} role Identifies the role type of the object(see: {@link AuditableObjectRole} for values)
+ * @property {AuditableObjectType} type Identifies the type of object being expressed(see: {@link AuditableObjectType} for values)
+ * @param {AuditableObject} copyData Copy constructor (if present)
+ */
+function AuditableObject (copyData) { 
+	this.$type = 'AuditableObject';
+	if(copyData) {
+	/**
+	 * @summary Identifies the type of object being expressed
+	 * @type {AuditableObjectType} 
+	 */
+	this.type = copyData.type;
+	/**
+	 * @summary Identifies the role type of the object
+	 * @type {AuditableObjectRole} 
+	 */
+	this.role = copyData.role;
+	/**
+	 * @summary Data associated with the object
+	 * @type {string} 
+	 */
+	this.queryData = copyData.queryData;
+	/**
+	 * @summary Identifies the object in the event
+	 * @type {string} 
+	 */
+	this.id = copyData.id;
+	/**
+	 * @summary Additional object data
+	 * @type {ObjectDataExtension} 
+	 */
+	this.data = copyData.data;
+	/**
+	 * @summary Data associated with the object
+	 * @type {string} 
+	 */
+	this.name = copyData.name;
+	/**
+	 * @summary Identifies where in the lifecycle of the object this object is currently within
+	 * @type {AuditableObjectLifecycle} 
+	 */
+	this.lifecycle = copyData.lifecycle;
+	/**
+	 * @summary Identifies the type of identifier supplied
+	 * @type {AuditableObjectIdType} 
+	 */
+	this.idType = copyData.idType;
+	/**
+	 * @summary Custom id type code
+	 * @type {AuditCode} 
+	 */
+	this.customCode = copyData.customCode;
+	}
+}  // AuditableObject 
+// SanteDB.Core.Model.Audit.AuditActorData, SanteDB.Core.Model, Version=3.0.0.0, Culture=neutral, PublicKeyToken=null
+//if(!AuditActorData)
+/**
+ * @class
+ * @constructor
+ * @public
+ * @summary Data related to actors that participate in the event
+ * @description <p>In SanteDB an actor represents an individual participant in the action which can include a user, 
+            a system, a device, etc.</p>
+ * @property {AuditCode} role Identifies the role(s) that the actor has played
+ * @property {string} altUid Alternative user identifier
+ * @property {string} apId Identifies the network access point from which the user accessed the system
+ * @property {NetworkAccessPointType} apType Identifies the type of network access point(see: {@link NetworkAccessPointType} for values)
+ * @property {string} uid The unique identifier for the user in the system
+ * @property {boolean} isReq True if the user is the primary requestor
+ * @property {string} uname The name of the user in the system
+ * @param {AuditActorData} copyData Copy constructor (if present)
+ */
+function AuditActorData (copyData) { 
+	this.$type = 'AuditActorData';
+	if(copyData) {
+	/**
+	 * @summary The name of the user in the system
+	 * @type {string} 
+	 */
+	this.uname = copyData.uname;
+	/**
+	 * @summary True if the user is the primary requestor
+	 * @type {boolean} 
+	 */
+	this.isReq = copyData.isReq;
+	/**
+	 * @summary The unique identifier for the user in the system
+	 * @type {string} 
+	 */
+	this.uid = copyData.uid;
+	/**
+	 * @summary Identifies the type of network access point
+	 * @type {NetworkAccessPointType} 
+	 */
+	this.apType = copyData.apType;
+	/**
+	 * @summary Identifies the network access point from which the user accessed the system
+	 * @type {string} 
+	 */
+	this.apId = copyData.apId;
+	/**
+	 * @summary Alternative user identifier
+	 * @type {string} 
+	 */
+	this.altUid = copyData.altUid;
+	/**
+	 * @summary Identifies the role(s) that the actor has played
+	 * @type {AuditCode} 
+	 */
+	this.role = copyData.role;
+	}
+}  // AuditActorData 
+// SanteDB.Core.Model.Audit.AuditCode, SanteDB.Core.Model, Version=3.0.0.0, Culture=neutral, PublicKeyToken=null
+//if(!AuditCode)
+/**
+ * @class
+ * @constructor
+ * @public
+ * @summary Represents an audit code which has a code system and a value
+ * @property {string} code Gets or sets the code of the code value.
+ * @property {string} system Gets or sets the system in which the code value is drawn.
+ * @property {string} systemName Gets or sets the human readable name of the code system.
+ * @property {string} systemVersion Gets or sets the version of the code system.
+ * @property {string} display Gets or sets the display name.
+ * @param {AuditCode} copyData Copy constructor (if present)
+ */
+function AuditCode (copyData) { 
+	this.$type = 'AuditCode';
+	if(copyData) {
+	/**
+	 * @summary Gets or sets the display name.
+	 * @type {string} 
+	 */
+	this.display = copyData.display;
+	/**
+	 * @summary Gets or sets the version of the code system.
+	 * @type {string} 
+	 */
+	this.systemVersion = copyData.systemVersion;
+	/**
+	 * @summary Gets or sets the human readable name of the code system.
+	 * @type {string} 
+	 */
+	this.systemName = copyData.systemName;
+	/**
+	 * @summary Gets or sets the system in which the code value is drawn.
+	 * @type {string} 
+	 */
+	this.system = copyData.system;
+	/**
+	 * @summary Gets or sets the code of the code value.
+	 * @type {string} 
+	 */
+	this.code = copyData.code;
+	}
+}  // AuditCode 
+// SanteDB.Core.Model.Audit.AuditEventData, SanteDB.Core.Model, Version=3.0.0.0, Culture=neutral, PublicKeyToken=null
+//if(!AuditEventData)
+/**
+ * @class
+ * @constructor
+ * @public
+ * @extends IdentifiedData
+ * @summary Represents a single audit event
+ * @description <p>This class contains the information for a single audit event that occurs within the SanteDB system or 
+            to be dispatched to an upstream audit system.</p>
+ * @property {ActionType} action Gets or sets the action performed code(see: {@link ActionType} for values)
+ * @property {AuditActorData} actor Gets or sets the actors involved in the event
+ * @property {AuditableObject} object Gets or sets the objects which were actioned on
+ * @property {EventIdentifierType} event Gets or sets the classification of the event(see: {@link EventIdentifierType} for values)
+ * @property {AuditCode} type Gets or sets the custom type of event
+ * @property {OutcomeIndicator} outcome Gets or sets the value indicating the outcome of the event(see: {@link OutcomeIndicator} for values)
+ * @property {string} timestamp Gets or sets the timestamp of the audit
+ * @property {object} meta Gets or sets metadata about the audit
+ * @property {AuditMetadata} meta.classifier  where classifier is from {@link AuditMetadata} key
+ * @property {Date} modifiedOn Represents the modified on
+ * @property {string} id Gets or sets the primary identifying UUID of this object
+ * @property {BatchOperationType} operation Gets or sets the operation(see: {@link BatchOperationType} for values)
+ * @property {string} $type Gets the type registration of this object
+ * @param {AuditEventData} copyData Copy constructor (if present)
+ */
+function AuditEventData (copyData) { 
+	this.$type = 'AuditEventData';
+	if(copyData) {
+	/**
+	 * @summary Gets or sets the operation
+	 * @type {BatchOperationType} 
+	 */
+	this.operation = copyData.operation;
+	/**
+	 * @summary Gets or sets the primary identifying UUID of this object
+	 * @type {string} 
+	 */
+	this.id = copyData.id;
+	/**
+	 * @summary Represents the modified on
+	 * @type {Date} 
+	 */
+	this.modifiedOn = copyData.modifiedOn;
+	/**
+	 * @summary Gets or sets metadata about the audit
+	 * @type {object} 
+	 */
+	this.meta = copyData.meta;
+	/**
+	 * @summary Gets or sets the timestamp of the audit
+	 * @type {string} 
+	 */
+	this.timestamp = copyData.timestamp;
+	/**
+	 * @summary Gets or sets the value indicating the outcome of the event
+	 * @type {OutcomeIndicator} 
+	 */
+	this.outcome = copyData.outcome;
+	/**
+	 * @summary Gets or sets the custom type of event
+	 * @type {AuditCode} 
+	 */
+	this.type = copyData.type;
+	/**
+	 * @summary Gets or sets the classification of the event
+	 * @type {EventIdentifierType} 
+	 */
+	this.event = copyData.event;
+	/**
+	 * @summary Gets or sets the objects which were actioned on
+	 * @type {AuditableObject} 
+	 */
+	this.object = copyData.object;
+	/**
+	 * @summary Gets or sets the actors involved in the event
+	 * @type {AuditActorData} 
+	 */
+	this.actor = copyData.actor;
+	/**
+	 * @summary Gets or sets the action performed code
+	 * @type {ActionType} 
+	 */
+	this.action = copyData.action;
+	}
+}  // AuditEventData 
+// SanteDB.Core.Model.Audit.AuditMetadata, SanteDB.Core.Model, Version=3.0.0.0, Culture=neutral, PublicKeyToken=null
+//if(!AuditMetadata)
+/**
+ * @class
+ * @constructor
+ * @public
+ * @summary Represents audit metadata such as submission time, submission sequence, etc.
+ * @property {AuditMetadataKey} key Gets or sets the metadata key(see: {@link AuditMetadataKey} for values)
+ * @property {string} value Gets or sets the process name
+ * @param {AuditMetadata} copyData Copy constructor (if present)
+ */
+function AuditMetadata (copyData) { 
+	this.$type = 'AuditMetadata';
+	if(copyData) {
+	/**
+	 * @summary Gets or sets the process name
+	 * @type {string} 
+	 */
+	this.value = copyData.value;
+	/**
+	 * @summary Gets or sets the metadata key
+	 * @type {AuditMetadataKey} 
+	 */
+	this.key = copyData.key;
+	}
+}  // AuditMetadata 
+// SanteDB.Core.Model.Acts.Account, SanteDB.Core.Model, Version=3.0.0.0, Culture=neutral, PublicKeyToken=null
 //if(!Account)
 /**
  * @class
@@ -11874,31 +12605,36 @@ function Bundle (copyData) {
  * @public
  * @summary Represents an Account
  * @description An account represents a simple structure for tracking balance and one or more invoice entries
-            against a record target.
+            against a record target (the entity for which the account is owned).
  * @property {number} balance Gets or sets the balance of this account
- * @property {string} currency Gets or sets the currency concept UUID for this account
+ * @property {string} currency Gets or sets the currency concept UUID for this account(see: {@link CurrencyKeys} for values)
  * @property {Concept} currencyModel [Delay loaded from currency],  Gets or sets the currency
  * @property {number} minBalance Gets or sets the minimum balance of this account
  * @property {number} maxBalance Gets or sets the maximum balance of this account
- * @property {boolean} isNegated Gets or sets an indicator which identifies whether the act actually occurred, or
-            specifically did not occur
- * @property {string} template Gets the template UUID upon which this act is based
- * @property {TemplateDefinition} templateModel [Delay loaded from template],  Gets or sets the template definition
- * @property {Date} actTime Gets or sets the moment in time that this act occurred in ISO format
- * @property {Date} startTime Gets or sets the time when the act should or did start ocurring in ISO format
- * @property {Date} stopTime Gets or sets the time when the act should or did stop ocurring in ISO format
- * @property {string} classConcept Gets or sets the key of the concept which classifies the act.(see: {@link ActClassKeys} for values)
- * @property {string} moodConcept Gets or sets the key of the concept which specifies the mood of the act.(see: {@link ActMoodKeys} for values)
- * @property {string} reasonConcept Gets or sets the key of the concept which defines the reason why the act is or didn't occur(see: {@link ActReasonKeys} for values)
- * @property {string} statusConcept Gets or sets the key of the concept which describes the current status of the act(see: {@link StatusKeys} for values)
- * @property {string} typeConcept Gets or sets the key of the conccept which further classifies the type of act occurring
- * @property {Concept} classConceptModel [Delay loaded from classConcept],  Gets or sets the concept which classifies the type of act
- * @property {Concept} moodConceptModel [Delay loaded from moodConcept],  Gets or sets the concept which specifies the mood of the act
- * @property {Concept} reasonConceptModel [Delay loaded from reasonConcept],  Gets or sets the concept which indicates the reason of the act
- * @property {Concept} statusConceptModel [Delay loaded from statusConcept],  Gets or sets the current status concept of the act
- * @property {Concept} typeConceptModel [Delay loaded from typeConcept],  Type concept identifier
- * @property {object} identifier Gets or sets the identifiers by which this act is known as in other systems
- * @property {ActIdentifier} identifier.classifier  where classifier is from {@link IdentifierBase} authority
+ * @property {boolean} isNegated Identifies whether the act represented in this instance actually occurred
+ * @property {string} template The template on which the act is based
+ * @property {TemplateDefinition} templateModel [Delay loaded from template],  Delay load property for the template
+ * @property {Date} actTime The moment in time that this act occurred in ISO format
+ * @property {Date} startTime The time when the act should or did start ocurring in ISO format
+ * @property {Date} stopTime The time when the act should or did stop ocurring in ISO format
+ * @property {string} classConcept The classification key of the activity(see: {@link ActClassKeys} for values)
+ * @property {string} moodConcept The mood (or mode) of the Act instance(see: {@link ActMoodKeys} for values)
+ * @property {string} reasonConcept Identifies a codified reason as to why this act did (or did not, or should or should not) occur.(see: {@link ActReasonKeys} for values)
+ * @property {string} statusConcept The concept which describes the current status of the act(see: {@link StatusKeys} for values)
+ * @property {string} typeConcept Gets or sets the key of the concept which further classifies the type of act occurring
+ * @property {Concept} classConceptModel [Delay loaded from classConcept],  Gets the delay-loaded value of the 
+    {@link ClassConceptKey}
+ * @property {Concept} moodConceptModel [Delay loaded from moodConcept],  Gets the delay-loaded value of the 
+    {@link MoodConceptKey}
+   property
+ * @property {Concept} reasonConceptModel [Delay loaded from reasonConcept],  Delay loads the concept from 
+    {@link ReasonConceptKey}
+ * @property {Concept} statusConceptModel [Delay loaded from statusConcept],  Delay loads the concept represented in 
+    {@link StatusConceptKey}
+ * @property {Concept} typeConceptModel [Delay loaded from typeConcept],  Delay loads the concept represented in 
+    {@link TypeConceptKey}
+ * @property {object} identifier Identifiers by which this act is known
+ * @property {ActIdentifier} identifier.classifier  where classifier is from {@link IdentifierBase} domain
  * @property {object} relationship Gets a list of all associated acts for this act
  * @property {ActRelationship} relationship.Appends             Indicates that the source act appends information contained in the target act            
  * @property {ActRelationship} relationship.Arrival             Links the transortation act from another act            
@@ -11993,7 +12729,7 @@ function Bundle (copyData) {
  * @property {GeoTag} geo Gets or sets the geo-tag
  * @property {string} previousVersion
  * @property {string} version
- * @property {number} sequence
+ * @property {Int64} sequence
  * @property {Date} creationTimeModel [Delay loaded from creationTime],  Gets or sets the time at which the data was created
  * @property {Date} creationTime Gets or sets the creation time as an ISO date format
  * @property {Date} obsoletionTimeModel [Delay loaded from obsoletionTime],  Gets or sets the time when the data is or will become invalid
@@ -12063,7 +12799,7 @@ function Account (copyData) {
 	 */
 	this.creationTimeModel = copyData.creationTimeModel;
 	/**
-	 * @type {number} 
+	 * @type {Int64} 
 	 */
 	this.sequence = copyData.sequence;
 	/**
@@ -12115,7 +12851,7 @@ function Account (copyData) {
 	 */
 	this.relationship = copyData.relationship;
 	/**
-	 * @summary Gets or sets the identifiers by which this act is known as in other systems
+	 * @summary Identifiers by which this act is known
 	 * @type {object} 
 	 */
 	this.identifier = copyData.identifier;
@@ -12140,42 +12876,46 @@ function Account (copyData) {
 	 */
 	this.classConceptModel = copyData.classConceptModel;
 	/**
-	 * @summary Gets or sets the key of the conccept which further classifies the type of act occurring
+	 * @summary Gets or sets the key of the concept which further classifies the type of act occurring
 	 * @type {string} 
 	 */
 	this.typeConcept = copyData.typeConcept;
 	/**
-	 * @summary Gets or sets the key of the concept which describes the current status of the act
+	 * @summary Delay loads the concept represented in 
+    {@link StatusConceptKey}
 	 * @type {string} 
 	 */
 	this.statusConcept = copyData.statusConcept;
 	/**
-	 * @summary Gets or sets the key of the concept which defines the reason why the act is or didn't occur
+	 * @summary Identifies a codified reason as to why this act did (or did not, or should or should not) occur.
 	 * @type {string} 
 	 */
 	this.reasonConcept = copyData.reasonConcept;
 	/**
-	 * @summary Gets or sets the key of the concept which specifies the mood of the act.
+	 * @summary Gets the delay-loaded value of the 
+    {@link MoodConceptKey}
+   property
 	 * @type {string} 
 	 */
 	this.moodConcept = copyData.moodConcept;
 	/**
-	 * @summary Gets or sets the key of the concept which classifies the act.
+	 * @summary Gets the delay-loaded value of the 
+    {@link ClassConceptKey}
 	 * @type {string} 
 	 */
 	this.classConcept = copyData.classConcept;
 	/**
-	 * @summary Gets or sets the time when the act should or did stop ocurring in ISO format
+	 * @summary The time when the act should or did stop ocurring in ISO format
 	 * @type {Date} 
 	 */
 	this.stopTime = copyData.stopTime;
 	/**
-	 * @summary Gets or sets the time when the act should or did start ocurring in ISO format
+	 * @summary The time when the act should or did start ocurring in ISO format
 	 * @type {Date} 
 	 */
 	this.startTime = copyData.startTime;
 	/**
-	 * @summary Gets or sets the moment in time that this act occurred in ISO format
+	 * @summary The moment in time that this act occurred in ISO format
 	 * @type {Date} 
 	 */
 	this.actTime = copyData.actTime;
@@ -12184,13 +12924,12 @@ function Account (copyData) {
 	 */
 	this.templateModel = copyData.templateModel;
 	/**
-	 * @summary Gets the template UUID upon which this act is based
+	 * @summary The template on which the act is based
 	 * @type {string} 
 	 */
 	this.template = copyData.template;
 	/**
-	 * @summary Gets or sets an indicator which identifies whether the act actually occurred, or
-            specifically did not occur
+	 * @summary Identifies whether the act represented in this instance actually occurred
 	 * @type {boolean} 
 	 */
 	this.isNegated = copyData.isNegated;
@@ -12220,7 +12959,7 @@ function Account (copyData) {
 	this.balance = copyData.balance;
 	}
 }  // Account 
-// SanteDB.Core.Model.Acts.Act, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Acts.Act, SanteDB.Core.Model, Version=3.0.0.0, Culture=neutral, PublicKeyToken=null
 //if(!Act)
 /**
  * @class
@@ -12248,38 +12987,55 @@ function Account (copyData) {
       - Any other action such as supply request, or problem recordation</span></li></ul><p>
             The property which classifies what specific type of action an act represents is its 
     {@link ClassConceptKey}
-  , which dictates
-            what type an act is. Class concept keys can be found in here 
+  , which indicates whether
+            the act is an observation, substance administration, etc. Class concept keys can be found in the 
     {@link ActClassKeys}
-  .
+   constants declaration.
             </p><p>
-            This structure is used to represent events, proposals, and requests. That is to say, the Act structure can represent the request to
-            do an act, the intent to perform an act, or the actual act being performed itself. This classification of mode happens based on the
-            
+            Furthermore, the 
+    {@link Act}
+   structure is used to represent events, proposals, requests, goals, etc. That is to say, the Act structure
+            can represent the request to do an act, the intent to perform an act, or the actual act being performed itself. This classification of mode
+            happens based on the 
     {@link MoodConceptKey}
    mood concept. Mood concept keys can be found on the 
     {@link ActMoodKeys}
    structure.
+            </p><p>
+            Acts may also be further classified by their 
+    {@link TypeConceptKey}
+  . The 
+    {@link TypeConceptKey}
+   is an implementation specific value
+            which is used by implementers to determine whether a particular act (for example, a 
+    {@link Observation}
+  ) was an observation of weight,
+            of height, etc.
             </p>
- * @property {boolean} isNegated Gets or sets an indicator which identifies whether the act actually occurred, or
-            specifically did not occur
- * @property {string} template Gets the template UUID upon which this act is based
- * @property {TemplateDefinition} templateModel [Delay loaded from template],  Gets or sets the template definition
- * @property {Date} actTime Gets or sets the moment in time that this act occurred in ISO format
- * @property {Date} startTime Gets or sets the time when the act should or did start ocurring in ISO format
- * @property {Date} stopTime Gets or sets the time when the act should or did stop ocurring in ISO format
- * @property {string} classConcept Gets or sets the key of the concept which classifies the act.(see: {@link ActClassKeys} for values)
- * @property {string} moodConcept Gets or sets the key of the concept which specifies the mood of the act.(see: {@link ActMoodKeys} for values)
- * @property {string} reasonConcept Gets or sets the key of the concept which defines the reason why the act is or didn't occur(see: {@link ActReasonKeys} for values)
- * @property {string} statusConcept Gets or sets the key of the concept which describes the current status of the act(see: {@link StatusKeys} for values)
- * @property {string} typeConcept Gets or sets the key of the conccept which further classifies the type of act occurring
- * @property {Concept} classConceptModel [Delay loaded from classConcept],  Gets or sets the concept which classifies the type of act
- * @property {Concept} moodConceptModel [Delay loaded from moodConcept],  Gets or sets the concept which specifies the mood of the act
- * @property {Concept} reasonConceptModel [Delay loaded from reasonConcept],  Gets or sets the concept which indicates the reason of the act
- * @property {Concept} statusConceptModel [Delay loaded from statusConcept],  Gets or sets the current status concept of the act
- * @property {Concept} typeConceptModel [Delay loaded from typeConcept],  Type concept identifier
- * @property {object} identifier Gets or sets the identifiers by which this act is known as in other systems
- * @property {ActIdentifier} identifier.classifier  where classifier is from {@link IdentifierBase} authority
+ * @property {boolean} isNegated Identifies whether the act represented in this instance actually occurred
+ * @property {string} template The template on which the act is based
+ * @property {TemplateDefinition} templateModel [Delay loaded from template],  Delay load property for the template
+ * @property {Date} actTime The moment in time that this act occurred in ISO format
+ * @property {Date} startTime The time when the act should or did start ocurring in ISO format
+ * @property {Date} stopTime The time when the act should or did stop ocurring in ISO format
+ * @property {string} classConcept The classification key of the activity(see: {@link ActClassKeys} for values)
+ * @property {string} moodConcept The mood (or mode) of the Act instance(see: {@link ActMoodKeys} for values)
+ * @property {string} reasonConcept Identifies a codified reason as to why this act did (or did not, or should or should not) occur.(see: {@link ActReasonKeys} for values)
+ * @property {string} statusConcept The concept which describes the current status of the act(see: {@link StatusKeys} for values)
+ * @property {string} typeConcept Gets or sets the key of the concept which further classifies the type of act occurring
+ * @property {Concept} classConceptModel [Delay loaded from classConcept],  Gets the delay-loaded value of the 
+    {@link ClassConceptKey}
+ * @property {Concept} moodConceptModel [Delay loaded from moodConcept],  Gets the delay-loaded value of the 
+    {@link MoodConceptKey}
+   property
+ * @property {Concept} reasonConceptModel [Delay loaded from reasonConcept],  Delay loads the concept from 
+    {@link ReasonConceptKey}
+ * @property {Concept} statusConceptModel [Delay loaded from statusConcept],  Delay loads the concept represented in 
+    {@link StatusConceptKey}
+ * @property {Concept} typeConceptModel [Delay loaded from typeConcept],  Delay loads the concept represented in 
+    {@link TypeConceptKey}
+ * @property {object} identifier Identifiers by which this act is known
+ * @property {ActIdentifier} identifier.classifier  where classifier is from {@link IdentifierBase} domain
  * @property {object} relationship Gets a list of all associated acts for this act
  * @property {ActRelationship} relationship.Appends             Indicates that the source act appends information contained in the target act            
  * @property {ActRelationship} relationship.Arrival             Links the transortation act from another act            
@@ -12374,7 +13130,7 @@ function Account (copyData) {
  * @property {GeoTag} geo Gets or sets the geo-tag
  * @property {string} previousVersion
  * @property {string} version
- * @property {number} sequence
+ * @property {Int64} sequence
  * @property {Date} creationTimeModel [Delay loaded from creationTime],  Gets or sets the time at which the data was created
  * @property {Date} creationTime Gets or sets the creation time as an ISO date format
  * @property {Date} obsoletionTimeModel [Delay loaded from obsoletionTime],  Gets or sets the time when the data is or will become invalid
@@ -12444,7 +13200,7 @@ function Act (copyData) {
 	 */
 	this.creationTimeModel = copyData.creationTimeModel;
 	/**
-	 * @type {number} 
+	 * @type {Int64} 
 	 */
 	this.sequence = copyData.sequence;
 	/**
@@ -12496,7 +13252,7 @@ function Act (copyData) {
 	 */
 	this.relationship = copyData.relationship;
 	/**
-	 * @summary Gets or sets the identifiers by which this act is known as in other systems
+	 * @summary Identifiers by which this act is known
 	 * @type {object} 
 	 */
 	this.identifier = copyData.identifier;
@@ -12521,42 +13277,46 @@ function Act (copyData) {
 	 */
 	this.classConceptModel = copyData.classConceptModel;
 	/**
-	 * @summary Gets or sets the key of the conccept which further classifies the type of act occurring
+	 * @summary Gets or sets the key of the concept which further classifies the type of act occurring
 	 * @type {string} 
 	 */
 	this.typeConcept = copyData.typeConcept;
 	/**
-	 * @summary Gets or sets the key of the concept which describes the current status of the act
+	 * @summary Delay loads the concept represented in 
+    {@link StatusConceptKey}
 	 * @type {string} 
 	 */
 	this.statusConcept = copyData.statusConcept;
 	/**
-	 * @summary Gets or sets the key of the concept which defines the reason why the act is or didn't occur
+	 * @summary Identifies a codified reason as to why this act did (or did not, or should or should not) occur.
 	 * @type {string} 
 	 */
 	this.reasonConcept = copyData.reasonConcept;
 	/**
-	 * @summary Gets or sets the key of the concept which specifies the mood of the act.
+	 * @summary Gets the delay-loaded value of the 
+    {@link MoodConceptKey}
+   property
 	 * @type {string} 
 	 */
 	this.moodConcept = copyData.moodConcept;
 	/**
-	 * @summary Gets or sets the key of the concept which classifies the act.
+	 * @summary Gets the delay-loaded value of the 
+    {@link ClassConceptKey}
 	 * @type {string} 
 	 */
 	this.classConcept = copyData.classConcept;
 	/**
-	 * @summary Gets or sets the time when the act should or did stop ocurring in ISO format
+	 * @summary The time when the act should or did stop ocurring in ISO format
 	 * @type {Date} 
 	 */
 	this.stopTime = copyData.stopTime;
 	/**
-	 * @summary Gets or sets the time when the act should or did start ocurring in ISO format
+	 * @summary The time when the act should or did start ocurring in ISO format
 	 * @type {Date} 
 	 */
 	this.startTime = copyData.startTime;
 	/**
-	 * @summary Gets or sets the moment in time that this act occurred in ISO format
+	 * @summary The moment in time that this act occurred in ISO format
 	 * @type {Date} 
 	 */
 	this.actTime = copyData.actTime;
@@ -12565,19 +13325,18 @@ function Act (copyData) {
 	 */
 	this.templateModel = copyData.templateModel;
 	/**
-	 * @summary Gets the template UUID upon which this act is based
+	 * @summary The template on which the act is based
 	 * @type {string} 
 	 */
 	this.template = copyData.template;
 	/**
-	 * @summary Gets or sets an indicator which identifies whether the act actually occurred, or
-            specifically did not occur
+	 * @summary Identifies whether the act represented in this instance actually occurred
 	 * @type {boolean} 
 	 */
 	this.isNegated = copyData.isNegated;
 	}
 }  // Act 
-// SanteDB.Core.Model.Acts.ActParticipation, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Acts.ActParticipation, SanteDB.Core.Model, Version=3.0.0.0, Culture=neutral, PublicKeyToken=null
 //if(!ActParticipation)
 /**
  * @class
@@ -12599,22 +13358,34 @@ function Act (copyData) {
     {@link ParticipationRoleKey}
   ).
             </p><p>
-            Act participations can also be quantified. For example, if 100 doses of a particlar material (
+            Act participations can also be quantified. For example, if 100 doses of a particular material (
     {@link ManufacturedMaterial}
   ) were consumed
             as part of an act, then the quantity would be 100.
             </p>
  * @property {Concept} classificationModel [Delay loaded from classification],  Gets or sets the an additional (sub-type) of the relationship
- * @property {string} classification Association type key(see: {@link RelationshipClassKeys} for values)
- * @property {string} player Gets or sets the target entity reference
- * @property {string} participationRole Gets or sets the participation role key(see: {@link ActParticipationKey} for values)
- * @property {Entity} playerModel [Delay loaded from player],  Gets or sets the entity which participated in the act
- * @property {Concept} participationRoleModel [Delay loaded from participationRole],  Gets or sets the role that the entity played in participating in the act
- * @property {string} act The entity that this relationship targets
- * @property {Act} actModel [Delay loaded from act],  The entity that this relationship targets
- * @property {number} quantity Gets or sets the quantity of player in the act
- * @property {number} effectiveVersionSequence
- * @property {number} obsoleteVersionSequence
+ * @property {string} classification Identifies the classification of the participation.(see: {@link RelationshipClassKeys} for values)
+ * @property {string} player Identifies the entity which played the 
+    {@link ParticipationRoleKey}
+ * @property {string} participationRole Identifies the role which the 
+    {@link PlayerEntityKey}
+   performs in the 
+    {@link ActKey}(see: {@link ActParticipationKeys} for values)
+ * @property {Entity} playerModel [Delay loaded from player],  The delay-load property for 
+    {@link PlayerEntityKey}
+ * @property {Concept} participationRoleModel [Delay loaded from participationRole],  Delay load point for 
+    {@link ParticipationRoleKey}
+ * @property {string} act Identifies the 
+    {@link Act}
+   to which the participation belongs
+ * @property {Act} actModel [Delay loaded from act],  Delay load property for 
+    {@link ActKey}
+ * @property {number} quantity Identifies the number of 
+    {@link PlayerEntityKey}
+   which participates in 
+    {@link ActKey}
+ * @property {Int64} effectiveVersionSequence
+ * @property {Int64} obsoleteVersionSequence
  * @property {Date} modifiedOn
  * @property {string} source
  * @property {Act} sourceModel [Delay loaded from source], 
@@ -12649,15 +13420,18 @@ function ActParticipation (copyData) {
 	 */
 	this.modifiedOn = copyData.modifiedOn;
 	/**
-	 * @type {number} 
+	 * @type {Int64} 
 	 */
 	this.obsoleteVersionSequence = copyData.obsoleteVersionSequence;
 	/**
-	 * @type {number} 
+	 * @type {Int64} 
 	 */
 	this.effectiveVersionSequence = copyData.effectiveVersionSequence;
 	/**
-	 * @summary Gets or sets the quantity of player in the act
+	 * @summary Identifies the number of 
+    {@link PlayerEntityKey}
+   which participates in 
+    {@link ActKey}
 	 * @type {number} 
 	 */
 	this.quantity = copyData.quantity;
@@ -12666,7 +13440,9 @@ function ActParticipation (copyData) {
 	 */
 	this.actModel = copyData.actModel;
 	/**
-	 * @summary The entity that this relationship targets
+	 * @summary Identifies the 
+    {@link Act}
+   to which the participation belongs
 	 * @type {string} 
 	 */
 	this.act = copyData.act;
@@ -12679,12 +13455,16 @@ function ActParticipation (copyData) {
 	 */
 	this.playerModel = copyData.playerModel;
 	/**
-	 * @summary Gets or sets the role that the entity played in participating in the act
+	 * @summary Identifies the role which the 
+    {@link PlayerEntityKey}
+   performs in the 
+    {@link ActKey}
 	 * @type {string} 
 	 */
 	this.participationRole = copyData.participationRole;
 	/**
-	 * @summary Gets or sets the entity which participated in the act
+	 * @summary Identifies the entity which played the 
+    {@link ParticipationRoleKey}
 	 * @type {string} 
 	 */
 	this.player = copyData.player;
@@ -12699,7 +13479,7 @@ function ActParticipation (copyData) {
 	this.classificationModel = copyData.classificationModel;
 	}
 }  // ActParticipation 
-// SanteDB.Core.Model.Acts.ActProtocol, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Acts.ActProtocol, SanteDB.Core.Model, Version=3.0.0.0, Culture=neutral, PublicKeyToken=null
 //if(!ActProtocol)
 /**
  * @class
@@ -12717,6 +13497,7 @@ function ActParticipation (copyData) {
   ) to which the act belongs.
  * @property {string} protocol Gets or sets the protocol  to which this act belongs
  * @property {Protocol} protocolModel [Delay loaded from protocol],  Gets or sets the protocol data related to the protocol
+ * @property {string} version Gets the version of the protocol that was used to generate the
  * @property {number} sequence Represents the sequence of the act in the protocol
  * @property {Array<byte>} state Represents any state data related to the act / protocol link
  * @property {Date} modifiedOn
@@ -12763,6 +13544,11 @@ function ActProtocol (copyData) {
 	 */
 	this.sequence = copyData.sequence;
 	/**
+	 * @summary Gets the version of the protocol that was used to generate the
+	 * @type {string} 
+	 */
+	this.version = copyData.version;
+	/**
 	 * @type {Protocol} 
 	 */
 	this.protocolModel = copyData.protocolModel;
@@ -12773,7 +13559,7 @@ function ActProtocol (copyData) {
 	this.protocol = copyData.protocol;
 	}
 }  // ActProtocol 
-// SanteDB.Core.Model.Acts.ActRelationship, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Acts.ActRelationship, SanteDB.Core.Model, Version=3.0.0.0, Culture=neutral, PublicKeyToken=null
 //if(!ActRelationship)
 /**
  * @class
@@ -12784,10 +13570,10 @@ function ActProtocol (copyData) {
  * @description <p>
             An act relationship is used to link a source act with a target act (
     {@link TargetActKey}
-  ) in a particular type of 
+  ) in a particular type of
             relationship (
     {@link RelationshipTypeKey}
-  ). This structure is often used to link together sub-components of an 
+  ). This structure is often used to link together sub-components of an
             encounter with the encounter, but can also be used to link together chronic care episodes.
             </p>
  * @property {Concept} classificationModel [Delay loaded from classification],  Gets or sets the an additional (sub-type) of the relationship
@@ -12796,8 +13582,8 @@ function ActProtocol (copyData) {
  * @property {Act} targetModel [Delay loaded from target],  Target act reference
  * @property {string} relationshipType Association type key(see: {@link ActRelationshipTypeKeys} for values)
  * @property {Concept} relationshipTypeModel [Delay loaded from relationshipType],  Gets or sets the association type
- * @property {number} effectiveVersionSequence
- * @property {number} obsoleteVersionSequence
+ * @property {Int64} effectiveVersionSequence
+ * @property {Int64} obsoleteVersionSequence
  * @property {Date} modifiedOn
  * @property {string} source
  * @property {Act} sourceModel [Delay loaded from source], 
@@ -12832,11 +13618,11 @@ function ActRelationship (copyData) {
 	 */
 	this.modifiedOn = copyData.modifiedOn;
 	/**
-	 * @type {number} 
+	 * @type {Int64} 
 	 */
 	this.obsoleteVersionSequence = copyData.obsoleteVersionSequence;
 	/**
-	 * @type {number} 
+	 * @type {Int64} 
 	 */
 	this.effectiveVersionSequence = copyData.effectiveVersionSequence;
 	/**
@@ -12868,39 +13654,134 @@ function ActRelationship (copyData) {
 	this.classificationModel = copyData.classificationModel;
 	}
 }  // ActRelationship 
-// SanteDB.Core.Model.Acts.CarePlan, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Acts.CarePlan, SanteDB.Core.Model, Version=3.0.0.0, Culture=neutral, PublicKeyToken=null
 //if(!CarePlan)
 /**
  * @class
  * @constructor
  * @public
- * @extends BaseEntityData
  * @summary Represents a care plan
  * @description The care plan object is used to represent a collection of clinical protocols which the care planning
             engine proposes should be done as part of the patient's course of care.
- * @property {Patient} target Target of the careplan
- * @property {object} act Action to take
- * @property {Act} act.AccountManagement             The act represents generic account management such as adjudications, financial adjustments, stock counting, etc.            
- * @property {Act} act.Act             The act represents a generic act which has no special classification            
- * @property {Act} act.Battery             The act represents a simple battery of procedures/administrations/tests/etc.            
- * @property {Act} act.CareProvision             The act represents some provision of care such as the seeking out services.            
- * @property {Act} act.Condition             The act represents a problem or condition which the patient is suffering from.            
- * @property {Act} act.ControlAct             The control act event key is used to describe an infrastructural act which has no clinical meaning but can be used to wrap technical details.            
- * @property {Act} act.Encounter             The act represents an encounter such as the patient presenting for care and receiving services during a visit.            
- * @property {Act} act.Inform             The act represents an attempt to provide additional clinical information.            
- * @property {Act} act.Observation             The act represents an observation that is made about a patient such as a vital sign, an allergy, cause of death, etc..            
- * @property {Act} act.Procedure             The act represents a procedure (something done to a patient).            
- * @property {Act} act.Registration             The act represents a registration event such as the registration of a patient.            
- * @property {Act} act.SubstanceAdministration             The act represents that a substance (medication, or otherwise) was, should, or will be administered to the patient.            
- * @property {Act} act.Supply             The act represents a supply of some material or financial instrument between entities.            
- * @property {Act} act.Transport             The physical transporting of materials or people from one place to another.            
- * @property {Act} act.Contract             Represents a contract            
- * @property {Act} act.FinancialContract             Represents a financial contract            
- * @property {Act} act.Account             Represents an account for tracking financial obligations            
- * @property {Act} act.FinancialTransaction             Represents a single financial transaction            
- * @property {Act} act.InvoiceElement             Represents a single invoice element            
- * @property {Act} act.List             List            
- * @property {Act} act.$other Unclassified
+ * @property {boolean} isNegated Identifies whether the act represented in this instance actually occurred
+ * @property {string} template The template on which the act is based
+ * @property {TemplateDefinition} templateModel [Delay loaded from template],  Delay load property for the template
+ * @property {Date} actTime The moment in time that this act occurred in ISO format
+ * @property {Date} startTime The time when the act should or did start ocurring in ISO format
+ * @property {Date} stopTime The time when the act should or did stop ocurring in ISO format
+ * @property {string} classConcept The classification key of the activity(see: {@link ActClassKeys} for values)
+ * @property {string} moodConcept The mood (or mode) of the Act instance(see: {@link ActMoodKeys} for values)
+ * @property {string} reasonConcept Identifies a codified reason as to why this act did (or did not, or should or should not) occur.(see: {@link ActReasonKeys} for values)
+ * @property {string} statusConcept The concept which describes the current status of the act(see: {@link StatusKeys} for values)
+ * @property {string} typeConcept Gets or sets the key of the concept which further classifies the type of act occurring
+ * @property {Concept} classConceptModel [Delay loaded from classConcept],  Gets the delay-loaded value of the 
+    {@link ClassConceptKey}
+ * @property {Concept} moodConceptModel [Delay loaded from moodConcept],  Gets the delay-loaded value of the 
+    {@link MoodConceptKey}
+   property
+ * @property {Concept} reasonConceptModel [Delay loaded from reasonConcept],  Delay loads the concept from 
+    {@link ReasonConceptKey}
+ * @property {Concept} statusConceptModel [Delay loaded from statusConcept],  Delay loads the concept represented in 
+    {@link StatusConceptKey}
+ * @property {Concept} typeConceptModel [Delay loaded from typeConcept],  Delay loads the concept represented in 
+    {@link TypeConceptKey}
+ * @property {object} identifier Identifiers by which this act is known
+ * @property {ActIdentifier} identifier.classifier  where classifier is from {@link IdentifierBase} domain
+ * @property {object} relationship Gets a list of all associated acts for this act
+ * @property {ActRelationship} relationship.Appends             Indicates that the source act appends information contained in the target act            
+ * @property {ActRelationship} relationship.Arrival             Links the transortation act from another act            
+ * @property {ActRelationship} relationship.Departure             Links a transporation act from another act indicating departure of the subject            
+ * @property {ActRelationship} relationship.Documents             The source act documents the target act            
+ * @property {ActRelationship} relationship.EpisodeLink             Links two instances of the same act over time (example: chronic conditions)            
+ * @property {ActRelationship} relationship.Evaluates             Used to link a goal to an observation            
+ * @property {ActRelationship} relationship.Fulfills             Indicates that the source act fulfills the target act            
+ * @property {ActRelationship} relationship.HasAuthorization             Indicates that the target act authorizes the source act            
+ * @property {ActRelationship} relationship.HasComponent             Indicates that the target act is a component of the source act            
+ * @property {ActRelationship} relationship.HasControlVariable             Relationship from an act to one or more control variables (for example: device settings, or environment)            
+ * @property {ActRelationship} relationship.HasManifestation             The assertion that a new observation may be a manifestation of another            
+ * @property {ActRelationship} relationship.HasPrecondition             Indicates that the target act is a pre-condition of the source act            
+ * @property {ActRelationship} relationship.HasReason             Indicates a reasoning as to why the source act is occurring            
+ * @property {ActRelationship} relationship.HasReferenceValues             Indicates that the source act contains reference values from the target            
+ * @property {ActRelationship} relationship.HasSubject             Indicates the subject of a particular act (example: clinical act is a subject of a control act)            
+ * @property {ActRelationship} relationship.HasSupport             Indicates an existing act is suggesting evidence for a new observation.            
+ * @property {ActRelationship} relationship.IsCauseOf             Indicates that the source act is the cause of the target act            
+ * @property {ActRelationship} relationship.IsDerivedFrom             Indicates the source act is derived from information contained in the target act            
+ * @property {ActRelationship} relationship.IsExcerptOf             Indicates that the source act is an excerpt of the target act            
+ * @property {ActRelationship} relationship.RefersTo             Indicates that the source act refers to the target act            
+ * @property {ActRelationship} relationship.Replaces             The source act replaces the target act            
+ * @property {ActRelationship} relationship.StartsAfterStartOf             Indicates that the source act starts after the start of another act            
+ * @property {ActRelationship} relationship.Transforms             Indicates that the source act transforms the target act            
+ * @property {ActRelationship} relationship.Duplicate             Duplicate entity            
+ * @property {ActRelationship} relationship.$other Unclassified
+ * @property {SecurityPolicyInstance} policy Gets or sets the security policy instances associated with the act
+ * @property {object} extension Gets a list of all extensions associated with the act
+ * @property {string} extension.classifier  where classifier is from {@link Extension} extensionType
+ * @property {ActNote} note Gets a list of all notes associated with the act
+ * @property {object} tag Gets a list of all tags associated with the act
+ * @property {string} tag.classifier  where classifier is from {@link Tag} key
+ * @property {ActProtocol} protocol Identifies protocols attached to the act
+ * @property {object} participation Gets or sets the entities and participations they play in the act
+ * @property {ActParticipation} participation.Admitter             The player entity was the person who was responsible for admitting the patient into a facility or care scenario.            
+ * @property {ActParticipation} participation.Attender             The player entity represents the attending physician for the patient            
+ * @property {ActParticipation} participation.Authenticator             The player entity represents an entity which authenticates the provision of care            
+ * @property {ActParticipation} participation.Authororiginator             The player entity is responsible for the creation of data described in the act            
+ * @property {ActParticipation} participation.Baby             The player is a resultant person in that it was the baby             
+ * @property {ActParticipation} participation.Beneficiary             The player is a beneficiary of the act such a receiver of a financial instrument, or other good            
+ * @property {ActParticipation} participation.CallbackContact             The player entity represents something that should be contacted upon completion of the act            
+ * @property {ActParticipation} participation.CausativeAgent             The player entity is an agent which caused the act to occur            
+ * @property {ActParticipation} participation.Consultant             The player entity is acting as a consult to the carrying out of the act            
+ * @property {ActParticipation} participation.Consumable             The player entity was or is to be consumed during the process of carrying out the act.            
+ * @property {ActParticipation} participation.CoverageTarget             The player entity represents the target coverage entity of the act            
+ * @property {ActParticipation} participation.Custodian             The player entity is the data custodian of the act (is responsible for storing and securing the act)            
+ * @property {ActParticipation} participation.DataEnterer             The player entity represents the person or device which phisically entered the data at the terminal            
+ * @property {ActParticipation} participation.Destination             The player etity represents the ultimate destination of the goods/materials/services described in the act            
+ * @property {ActParticipation} participation.Device             The player entity represents the device on which the act or data from the act was acquired or recorded            
+ * @property {ActParticipation} participation.DirectTarget             The player entity represents the directed target of care provided in the act            
+ * @property {ActParticipation} participation.Discharger             The player entity represents the person who is responsible for the discharging of the patient from an encounter            
+ * @property {ActParticipation} participation.Distributor             The player entity is the source distribution point for the financial or material instruments contained in the message            
+ * @property {ActParticipation} participation.Donor             The player entity represents the donor of tissue or materials used in the act            
+ * @property {ActParticipation} participation.EntryLocation             The location where the act was entered.            
+ * @property {ActParticipation} participation.Escort             The player entity was responsible for escorting the patient during the course of the act            
+ * @property {ActParticipation} participation.Exposure             The player entity something to which the patient was exposed            
+ * @property {ActParticipation} participation.ExposureAgent             The player entity represents the agent (material) to which the patient was exposed            
+ * @property {ActParticipation} participation.ExposureSource             The player entity describes the source of the material to which the patient was exposed            
+ * @property {ActParticipation} participation.ExposureTarget             The player entity describes the target to which the agent was exposed            
+ * @property {ActParticipation} participation.GuarantorParty             The player represents a party which is used as a financial guarantor for payment in the carrying out of the act            
+ * @property {ActParticipation} participation.Holder             The player is responsible for holding the act            
+ * @property {ActParticipation} participation.IndirectTarget             The entity not directly present in the act but which will be the focust of th act.            
+ * @property {ActParticipation} participation.Informant             The player was a person or device which informed data presented in the act. (Example: A mother telling a nurse that their child had a reaction)            
+ * @property {ActParticipation} participation.InformationRecipient             The player entity represents something that should be cc'ed on the act            
+ * @property {ActParticipation} participation.LegalAuthenticator             The player entity is responsible for legally authenticating the content of the act            
+ * @property {ActParticipation} participation.Location             The location where the service was performed.            
+ * @property {ActParticipation} participation.NonreuseableDevice             The player represents a consumable that can no longer be used            
+ * @property {ActParticipation} participation.Origin             The player represents the origin of the act            
+ * @property {ActParticipation} participation.Participation             The player entity participates in the act in no particular classification            
+ * @property {ActParticipation} participation.Performer             The player entity is responsible for performing the clinical steps documented in the act            
+ * @property {ActParticipation} participation.PrimaryInformationRecipient             The player entity represents a high priority contact which should be informed or cc'ed on the act            
+ * @property {ActParticipation} participation.PrimaryPerformer             The player entity was the primary performer of the act. This is used in procedures where more than one performer is present            
+ * @property {ActParticipation} participation.Product             The player represents a product that is not necessarily consumed but informs the act            
+ * @property {ActParticipation} participation.Receiver             The player represents the entity which is the intended receiver of the act            
+ * @property {ActParticipation} participation.RecordTarget             The player represents the entity to which the act is recorded against            
+ * @property {ActParticipation} participation.ReferredBy             The player represents the entity which referred the act or caused the act to be undertaken            
+ * @property {ActParticipation} participation.ReferredTo             The player entity represents the entity which was referred to            
+ * @property {ActParticipation} participation.Referrer             The player entity represents the person who was originally the referrer.            
+ * @property {ActParticipation} participation.Remote             The player entity represents a remote portion of the act            
+ * @property {ActParticipation} participation.ResponsibleParty             The player entity is ultimately responsible for the carrying out of the act            
+ * @property {ActParticipation} participation.ReusableDevice             The player entity represents a device which can be reused in future acts            
+ * @property {ActParticipation} participation.SecondaryPerformer             The secondary performing person (support clinician).            
+ * @property {ActParticipation} participation.Specimen             The player entity represents a specimen collected for the purpose of testing and diagnosis            
+ * @property {ActParticipation} participation.Subject             The player entity is the subject of an act, but not necessarily the record target (meaning the act is about a particular entity but not to be attached to their record)            
+ * @property {ActParticipation} participation.Tracker             The player entity is responsible for tracking the progress of the act            
+ * @property {ActParticipation} participation.Transcriber             The person who transcribed data from the original act.            
+ * @property {ActParticipation} participation.UgentNotificationContact             The player entity represents a contact entity in case of an emergency occurs during the act.            
+ * @property {ActParticipation} participation.Verifier             The player entity was responsible for verifying the accuracy of the data in the act            
+ * @property {ActParticipation} participation.Via             The player entity represents an entity where the act occurred "via" this entity (i.e. in transport)            
+ * @property {ActParticipation} participation.Witness             The player entity represents a legal witness to the act occurring.            
+ * @property {ActParticipation} participation.$other Unclassified
+ * @property {GeoTag} geo Gets or sets the geo-tag
+ * @property {string} previousVersion
+ * @property {string} version
+ * @property {Int64} sequence
  * @property {Date} creationTimeModel [Delay loaded from creationTime],  Gets or sets the time at which the data was created
  * @property {Date} creationTime Gets or sets the creation time as an ISO date format
  * @property {Date} obsoletionTimeModel [Delay loaded from obsoletionTime],  Gets or sets the time when the data is or will become invalid
@@ -12970,43 +13851,176 @@ function CarePlan (copyData) {
 	 */
 	this.creationTimeModel = copyData.creationTimeModel;
 	/**
-	 * @summary Action to take
+	 * @type {Int64} 
+	 */
+	this.sequence = copyData.sequence;
+	/**
+	 * @type {string} 
+	 */
+	this.version = copyData.version;
+	/**
+	 * @type {string} 
+	 */
+	this.previousVersion = copyData.previousVersion;
+	/**
+	 * @summary Gets or sets the geo-tag
+	 * @type {GeoTag} 
+	 */
+	this.geo = copyData.geo;
+	/**
+	 * @summary Gets or sets the entities and participations they play in the act
 	 * @type {object} 
 	 */
-	this.act = copyData.act;
+	this.participation = copyData.participation;
 	/**
-	 * @summary Target of the careplan
-	 * @type {Patient} 
+	 * @summary Identifies protocols attached to the act
+	 * @type {ActProtocol} 
 	 */
-	this.target = copyData.target;
+	this.protocol = copyData.protocol;
+	/**
+	 * @summary Gets a list of all tags associated with the act
+	 * @type {object} 
+	 */
+	this.tag = copyData.tag;
+	/**
+	 * @summary Gets a list of all notes associated with the act
+	 * @type {ActNote} 
+	 */
+	this.note = copyData.note;
+	/**
+	 * @summary Gets a list of all extensions associated with the act
+	 * @type {object} 
+	 */
+	this.extension = copyData.extension;
+	/**
+	 * @summary Gets or sets the security policy instances associated with the act
+	 * @type {SecurityPolicyInstance} 
+	 */
+	this.policy = copyData.policy;
+	/**
+	 * @summary Gets a list of all associated acts for this act
+	 * @type {object} 
+	 */
+	this.relationship = copyData.relationship;
+	/**
+	 * @summary Identifiers by which this act is known
+	 * @type {object} 
+	 */
+	this.identifier = copyData.identifier;
+	/**
+	 * @type {Concept} 
+	 */
+	this.typeConceptModel = copyData.typeConceptModel;
+	/**
+	 * @type {Concept} 
+	 */
+	this.statusConceptModel = copyData.statusConceptModel;
+	/**
+	 * @type {Concept} 
+	 */
+	this.reasonConceptModel = copyData.reasonConceptModel;
+	/**
+	 * @type {Concept} 
+	 */
+	this.moodConceptModel = copyData.moodConceptModel;
+	/**
+	 * @type {Concept} 
+	 */
+	this.classConceptModel = copyData.classConceptModel;
+	/**
+	 * @summary Gets or sets the key of the concept which further classifies the type of act occurring
+	 * @type {string} 
+	 */
+	this.typeConcept = copyData.typeConcept;
+	/**
+	 * @summary Delay loads the concept represented in 
+    {@link StatusConceptKey}
+	 * @type {string} 
+	 */
+	this.statusConcept = copyData.statusConcept;
+	/**
+	 * @summary Identifies a codified reason as to why this act did (or did not, or should or should not) occur.
+	 * @type {string} 
+	 */
+	this.reasonConcept = copyData.reasonConcept;
+	/**
+	 * @summary Gets the delay-loaded value of the 
+    {@link MoodConceptKey}
+   property
+	 * @type {string} 
+	 */
+	this.moodConcept = copyData.moodConcept;
+	/**
+	 * @summary Gets the delay-loaded value of the 
+    {@link ClassConceptKey}
+	 * @type {string} 
+	 */
+	this.classConcept = copyData.classConcept;
+	/**
+	 * @summary The time when the act should or did stop ocurring in ISO format
+	 * @type {Date} 
+	 */
+	this.stopTime = copyData.stopTime;
+	/**
+	 * @summary The time when the act should or did start ocurring in ISO format
+	 * @type {Date} 
+	 */
+	this.startTime = copyData.startTime;
+	/**
+	 * @summary The moment in time that this act occurred in ISO format
+	 * @type {Date} 
+	 */
+	this.actTime = copyData.actTime;
+	/**
+	 * @type {TemplateDefinition} 
+	 */
+	this.templateModel = copyData.templateModel;
+	/**
+	 * @summary The template on which the act is based
+	 * @type {string} 
+	 */
+	this.template = copyData.template;
+	/**
+	 * @summary Identifies whether the act represented in this instance actually occurred
+	 * @type {boolean} 
+	 */
+	this.isNegated = copyData.isNegated;
 	}
 }  // CarePlan 
-// SanteDB.Core.Model.Acts.ControlAct, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Acts.ControlAct, SanteDB.Core.Model, Version=3.0.0.0, Culture=neutral, PublicKeyToken=null
 //if(!ControlAct)
 /**
  * @class
  * @constructor
  * @public
  * @summary Represents an act which indicates why data was created/changed
- * @property {boolean} isNegated Gets or sets an indicator which identifies whether the act actually occurred, or
-            specifically did not occur
- * @property {string} template Gets the template UUID upon which this act is based
- * @property {TemplateDefinition} templateModel [Delay loaded from template],  Gets or sets the template definition
- * @property {Date} actTime Gets or sets the moment in time that this act occurred in ISO format
- * @property {Date} startTime Gets or sets the time when the act should or did start ocurring in ISO format
- * @property {Date} stopTime Gets or sets the time when the act should or did stop ocurring in ISO format
- * @property {string} classConcept Gets or sets the key of the concept which classifies the act.(see: {@link ActClassKeys} for values)
- * @property {string} moodConcept Gets or sets the key of the concept which specifies the mood of the act.(see: {@link ActMoodKeys} for values)
- * @property {string} reasonConcept Gets or sets the key of the concept which defines the reason why the act is or didn't occur(see: {@link ActReasonKeys} for values)
- * @property {string} statusConcept Gets or sets the key of the concept which describes the current status of the act(see: {@link StatusKeys} for values)
- * @property {string} typeConcept Gets or sets the key of the conccept which further classifies the type of act occurring
- * @property {Concept} classConceptModel [Delay loaded from classConcept],  Gets or sets the concept which classifies the type of act
- * @property {Concept} moodConceptModel [Delay loaded from moodConcept],  Gets or sets the concept which specifies the mood of the act
- * @property {Concept} reasonConceptModel [Delay loaded from reasonConcept],  Gets or sets the concept which indicates the reason of the act
- * @property {Concept} statusConceptModel [Delay loaded from statusConcept],  Gets or sets the current status concept of the act
- * @property {Concept} typeConceptModel [Delay loaded from typeConcept],  Type concept identifier
- * @property {object} identifier Gets or sets the identifiers by which this act is known as in other systems
- * @property {ActIdentifier} identifier.classifier  where classifier is from {@link IdentifierBase} authority
+ * @description Control acts are typically container acts which are used to illustrate an event which occurs on the system to 
+            change state, create data, or update it. The use of control acts in SanteDB are not required however may be 
+            useful in contexts where event metadata is collected (similar to the EVN segment in HL7v2).
+ * @property {boolean} isNegated Identifies whether the act represented in this instance actually occurred
+ * @property {string} template The template on which the act is based
+ * @property {TemplateDefinition} templateModel [Delay loaded from template],  Delay load property for the template
+ * @property {Date} actTime The moment in time that this act occurred in ISO format
+ * @property {Date} startTime The time when the act should or did start ocurring in ISO format
+ * @property {Date} stopTime The time when the act should or did stop ocurring in ISO format
+ * @property {string} classConcept The classification key of the activity(see: {@link ActClassKeys} for values)
+ * @property {string} moodConcept The mood (or mode) of the Act instance(see: {@link ActMoodKeys} for values)
+ * @property {string} reasonConcept Identifies a codified reason as to why this act did (or did not, or should or should not) occur.(see: {@link ActReasonKeys} for values)
+ * @property {string} statusConcept The concept which describes the current status of the act(see: {@link StatusKeys} for values)
+ * @property {string} typeConcept Gets or sets the key of the concept which further classifies the type of act occurring
+ * @property {Concept} classConceptModel [Delay loaded from classConcept],  Gets the delay-loaded value of the 
+    {@link ClassConceptKey}
+ * @property {Concept} moodConceptModel [Delay loaded from moodConcept],  Gets the delay-loaded value of the 
+    {@link MoodConceptKey}
+   property
+ * @property {Concept} reasonConceptModel [Delay loaded from reasonConcept],  Delay loads the concept from 
+    {@link ReasonConceptKey}
+ * @property {Concept} statusConceptModel [Delay loaded from statusConcept],  Delay loads the concept represented in 
+    {@link StatusConceptKey}
+ * @property {Concept} typeConceptModel [Delay loaded from typeConcept],  Delay loads the concept represented in 
+    {@link TypeConceptKey}
+ * @property {object} identifier Identifiers by which this act is known
+ * @property {ActIdentifier} identifier.classifier  where classifier is from {@link IdentifierBase} domain
  * @property {object} relationship Gets a list of all associated acts for this act
  * @property {ActRelationship} relationship.Appends             Indicates that the source act appends information contained in the target act            
  * @property {ActRelationship} relationship.Arrival             Links the transortation act from another act            
@@ -13101,7 +14115,7 @@ function CarePlan (copyData) {
  * @property {GeoTag} geo Gets or sets the geo-tag
  * @property {string} previousVersion
  * @property {string} version
- * @property {number} sequence
+ * @property {Int64} sequence
  * @property {Date} creationTimeModel [Delay loaded from creationTime],  Gets or sets the time at which the data was created
  * @property {Date} creationTime Gets or sets the creation time as an ISO date format
  * @property {Date} obsoletionTimeModel [Delay loaded from obsoletionTime],  Gets or sets the time when the data is or will become invalid
@@ -13171,7 +14185,7 @@ function ControlAct (copyData) {
 	 */
 	this.creationTimeModel = copyData.creationTimeModel;
 	/**
-	 * @type {number} 
+	 * @type {Int64} 
 	 */
 	this.sequence = copyData.sequence;
 	/**
@@ -13223,7 +14237,7 @@ function ControlAct (copyData) {
 	 */
 	this.relationship = copyData.relationship;
 	/**
-	 * @summary Gets or sets the identifiers by which this act is known as in other systems
+	 * @summary Identifiers by which this act is known
 	 * @type {object} 
 	 */
 	this.identifier = copyData.identifier;
@@ -13248,42 +14262,46 @@ function ControlAct (copyData) {
 	 */
 	this.classConceptModel = copyData.classConceptModel;
 	/**
-	 * @summary Gets or sets the key of the conccept which further classifies the type of act occurring
+	 * @summary Gets or sets the key of the concept which further classifies the type of act occurring
 	 * @type {string} 
 	 */
 	this.typeConcept = copyData.typeConcept;
 	/**
-	 * @summary Gets or sets the key of the concept which describes the current status of the act
+	 * @summary Delay loads the concept represented in 
+    {@link StatusConceptKey}
 	 * @type {string} 
 	 */
 	this.statusConcept = copyData.statusConcept;
 	/**
-	 * @summary Gets or sets the key of the concept which defines the reason why the act is or didn't occur
+	 * @summary Identifies a codified reason as to why this act did (or did not, or should or should not) occur.
 	 * @type {string} 
 	 */
 	this.reasonConcept = copyData.reasonConcept;
 	/**
-	 * @summary Gets or sets the key of the concept which specifies the mood of the act.
+	 * @summary Gets the delay-loaded value of the 
+    {@link MoodConceptKey}
+   property
 	 * @type {string} 
 	 */
 	this.moodConcept = copyData.moodConcept;
 	/**
-	 * @summary Gets or sets the key of the concept which classifies the act.
+	 * @summary Gets the delay-loaded value of the 
+    {@link ClassConceptKey}
 	 * @type {string} 
 	 */
 	this.classConcept = copyData.classConcept;
 	/**
-	 * @summary Gets or sets the time when the act should or did stop ocurring in ISO format
+	 * @summary The time when the act should or did stop ocurring in ISO format
 	 * @type {Date} 
 	 */
 	this.stopTime = copyData.stopTime;
 	/**
-	 * @summary Gets or sets the time when the act should or did start ocurring in ISO format
+	 * @summary The time when the act should or did start ocurring in ISO format
 	 * @type {Date} 
 	 */
 	this.startTime = copyData.startTime;
 	/**
-	 * @summary Gets or sets the moment in time that this act occurred in ISO format
+	 * @summary The moment in time that this act occurred in ISO format
 	 * @type {Date} 
 	 */
 	this.actTime = copyData.actTime;
@@ -13292,19 +14310,18 @@ function ControlAct (copyData) {
 	 */
 	this.templateModel = copyData.templateModel;
 	/**
-	 * @summary Gets the template UUID upon which this act is based
+	 * @summary The template on which the act is based
 	 * @type {string} 
 	 */
 	this.template = copyData.template;
 	/**
-	 * @summary Gets or sets an indicator which identifies whether the act actually occurred, or
-            specifically did not occur
+	 * @summary Identifies whether the act represented in this instance actually occurred
 	 * @type {boolean} 
 	 */
 	this.isNegated = copyData.isNegated;
 	}
 }  // ControlAct 
-// SanteDB.Core.Model.Acts.FinancialContract, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Acts.FinancialContract, SanteDB.Core.Model, Version=3.0.0.0, Culture=neutral, PublicKeyToken=null
 //if(!FinancialContract)
 /**
  * @class
@@ -13316,25 +14333,30 @@ function ControlAct (copyData) {
             or even an insurance policy
  * @property {string} paymentTerms Gets or sets the payment terms
  * @property {Concept} paymentTermsModel [Delay loaded from paymentTerms],  Gets or sets the payment terms
- * @property {boolean} isNegated Gets or sets an indicator which identifies whether the act actually occurred, or
-            specifically did not occur
- * @property {string} template Gets the template UUID upon which this act is based
- * @property {TemplateDefinition} templateModel [Delay loaded from template],  Gets or sets the template definition
- * @property {Date} actTime Gets or sets the moment in time that this act occurred in ISO format
- * @property {Date} startTime Gets or sets the time when the act should or did start ocurring in ISO format
- * @property {Date} stopTime Gets or sets the time when the act should or did stop ocurring in ISO format
- * @property {string} classConcept Gets or sets the key of the concept which classifies the act.(see: {@link ActClassKeys} for values)
- * @property {string} moodConcept Gets or sets the key of the concept which specifies the mood of the act.(see: {@link ActMoodKeys} for values)
- * @property {string} reasonConcept Gets or sets the key of the concept which defines the reason why the act is or didn't occur(see: {@link ActReasonKeys} for values)
- * @property {string} statusConcept Gets or sets the key of the concept which describes the current status of the act(see: {@link StatusKeys} for values)
- * @property {string} typeConcept Gets or sets the key of the conccept which further classifies the type of act occurring
- * @property {Concept} classConceptModel [Delay loaded from classConcept],  Gets or sets the concept which classifies the type of act
- * @property {Concept} moodConceptModel [Delay loaded from moodConcept],  Gets or sets the concept which specifies the mood of the act
- * @property {Concept} reasonConceptModel [Delay loaded from reasonConcept],  Gets or sets the concept which indicates the reason of the act
- * @property {Concept} statusConceptModel [Delay loaded from statusConcept],  Gets or sets the current status concept of the act
- * @property {Concept} typeConceptModel [Delay loaded from typeConcept],  Type concept identifier
- * @property {object} identifier Gets or sets the identifiers by which this act is known as in other systems
- * @property {ActIdentifier} identifier.classifier  where classifier is from {@link IdentifierBase} authority
+ * @property {boolean} isNegated Identifies whether the act represented in this instance actually occurred
+ * @property {string} template The template on which the act is based
+ * @property {TemplateDefinition} templateModel [Delay loaded from template],  Delay load property for the template
+ * @property {Date} actTime The moment in time that this act occurred in ISO format
+ * @property {Date} startTime The time when the act should or did start ocurring in ISO format
+ * @property {Date} stopTime The time when the act should or did stop ocurring in ISO format
+ * @property {string} classConcept The classification key of the activity(see: {@link ActClassKeys} for values)
+ * @property {string} moodConcept The mood (or mode) of the Act instance(see: {@link ActMoodKeys} for values)
+ * @property {string} reasonConcept Identifies a codified reason as to why this act did (or did not, or should or should not) occur.(see: {@link ActReasonKeys} for values)
+ * @property {string} statusConcept The concept which describes the current status of the act(see: {@link StatusKeys} for values)
+ * @property {string} typeConcept Gets or sets the key of the concept which further classifies the type of act occurring
+ * @property {Concept} classConceptModel [Delay loaded from classConcept],  Gets the delay-loaded value of the 
+    {@link ClassConceptKey}
+ * @property {Concept} moodConceptModel [Delay loaded from moodConcept],  Gets the delay-loaded value of the 
+    {@link MoodConceptKey}
+   property
+ * @property {Concept} reasonConceptModel [Delay loaded from reasonConcept],  Delay loads the concept from 
+    {@link ReasonConceptKey}
+ * @property {Concept} statusConceptModel [Delay loaded from statusConcept],  Delay loads the concept represented in 
+    {@link StatusConceptKey}
+ * @property {Concept} typeConceptModel [Delay loaded from typeConcept],  Delay loads the concept represented in 
+    {@link TypeConceptKey}
+ * @property {object} identifier Identifiers by which this act is known
+ * @property {ActIdentifier} identifier.classifier  where classifier is from {@link IdentifierBase} domain
  * @property {object} relationship Gets a list of all associated acts for this act
  * @property {ActRelationship} relationship.Appends             Indicates that the source act appends information contained in the target act            
  * @property {ActRelationship} relationship.Arrival             Links the transortation act from another act            
@@ -13429,7 +14451,7 @@ function ControlAct (copyData) {
  * @property {GeoTag} geo Gets or sets the geo-tag
  * @property {string} previousVersion
  * @property {string} version
- * @property {number} sequence
+ * @property {Int64} sequence
  * @property {Date} creationTimeModel [Delay loaded from creationTime],  Gets or sets the time at which the data was created
  * @property {Date} creationTime Gets or sets the creation time as an ISO date format
  * @property {Date} obsoletionTimeModel [Delay loaded from obsoletionTime],  Gets or sets the time when the data is or will become invalid
@@ -13499,7 +14521,7 @@ function FinancialContract (copyData) {
 	 */
 	this.creationTimeModel = copyData.creationTimeModel;
 	/**
-	 * @type {number} 
+	 * @type {Int64} 
 	 */
 	this.sequence = copyData.sequence;
 	/**
@@ -13551,7 +14573,7 @@ function FinancialContract (copyData) {
 	 */
 	this.relationship = copyData.relationship;
 	/**
-	 * @summary Gets or sets the identifiers by which this act is known as in other systems
+	 * @summary Identifiers by which this act is known
 	 * @type {object} 
 	 */
 	this.identifier = copyData.identifier;
@@ -13576,42 +14598,46 @@ function FinancialContract (copyData) {
 	 */
 	this.classConceptModel = copyData.classConceptModel;
 	/**
-	 * @summary Gets or sets the key of the conccept which further classifies the type of act occurring
+	 * @summary Gets or sets the key of the concept which further classifies the type of act occurring
 	 * @type {string} 
 	 */
 	this.typeConcept = copyData.typeConcept;
 	/**
-	 * @summary Gets or sets the key of the concept which describes the current status of the act
+	 * @summary Delay loads the concept represented in 
+    {@link StatusConceptKey}
 	 * @type {string} 
 	 */
 	this.statusConcept = copyData.statusConcept;
 	/**
-	 * @summary Gets or sets the key of the concept which defines the reason why the act is or didn't occur
+	 * @summary Identifies a codified reason as to why this act did (or did not, or should or should not) occur.
 	 * @type {string} 
 	 */
 	this.reasonConcept = copyData.reasonConcept;
 	/**
-	 * @summary Gets or sets the key of the concept which specifies the mood of the act.
+	 * @summary Gets the delay-loaded value of the 
+    {@link MoodConceptKey}
+   property
 	 * @type {string} 
 	 */
 	this.moodConcept = copyData.moodConcept;
 	/**
-	 * @summary Gets or sets the key of the concept which classifies the act.
+	 * @summary Gets the delay-loaded value of the 
+    {@link ClassConceptKey}
 	 * @type {string} 
 	 */
 	this.classConcept = copyData.classConcept;
 	/**
-	 * @summary Gets or sets the time when the act should or did stop ocurring in ISO format
+	 * @summary The time when the act should or did stop ocurring in ISO format
 	 * @type {Date} 
 	 */
 	this.stopTime = copyData.stopTime;
 	/**
-	 * @summary Gets or sets the time when the act should or did start ocurring in ISO format
+	 * @summary The time when the act should or did start ocurring in ISO format
 	 * @type {Date} 
 	 */
 	this.startTime = copyData.startTime;
 	/**
-	 * @summary Gets or sets the moment in time that this act occurred in ISO format
+	 * @summary The moment in time that this act occurred in ISO format
 	 * @type {Date} 
 	 */
 	this.actTime = copyData.actTime;
@@ -13620,13 +14646,12 @@ function FinancialContract (copyData) {
 	 */
 	this.templateModel = copyData.templateModel;
 	/**
-	 * @summary Gets the template UUID upon which this act is based
+	 * @summary The template on which the act is based
 	 * @type {string} 
 	 */
 	this.template = copyData.template;
 	/**
-	 * @summary Gets or sets an indicator which identifies whether the act actually occurred, or
-            specifically did not occur
+	 * @summary Identifies whether the act represented in this instance actually occurred
 	 * @type {boolean} 
 	 */
 	this.isNegated = copyData.isNegated;
@@ -13641,7 +14666,7 @@ function FinancialContract (copyData) {
 	this.paymentTerms = copyData.paymentTerms;
 	}
 }  // FinancialContract 
-// SanteDB.Core.Model.Acts.FinancialTransaction, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Acts.FinancialTransaction, SanteDB.Core.Model, Version=3.0.0.0, Culture=neutral, PublicKeyToken=null
 //if(!FinancialTransaction)
 /**
  * @class
@@ -13649,29 +14674,34 @@ function FinancialContract (copyData) {
  * @public
  * @summary Represents an act whereby financial devices are exchanged between accounts
  * @property {number} amount Gets or sets the amount of the financial transaction
- * @property {string} currency Gets or sets the currency key
+ * @property {string} currency Gets or sets the currency key(see: {@link CurrencyKeys} for values)
  * @property {Concept} currencyModel [Delay loaded from currency],  Gets or sets the currency
  * @property {Single} creditExchange Gets or sets the crediting exchange rate
  * @property {Single} debitExchange Gets or sets the debit exchange rate
- * @property {boolean} isNegated Gets or sets an indicator which identifies whether the act actually occurred, or
-            specifically did not occur
- * @property {string} template Gets the template UUID upon which this act is based
- * @property {TemplateDefinition} templateModel [Delay loaded from template],  Gets or sets the template definition
- * @property {Date} actTime Gets or sets the moment in time that this act occurred in ISO format
- * @property {Date} startTime Gets or sets the time when the act should or did start ocurring in ISO format
- * @property {Date} stopTime Gets or sets the time when the act should or did stop ocurring in ISO format
- * @property {string} classConcept Gets or sets the key of the concept which classifies the act.(see: {@link ActClassKeys} for values)
- * @property {string} moodConcept Gets or sets the key of the concept which specifies the mood of the act.(see: {@link ActMoodKeys} for values)
- * @property {string} reasonConcept Gets or sets the key of the concept which defines the reason why the act is or didn't occur(see: {@link ActReasonKeys} for values)
- * @property {string} statusConcept Gets or sets the key of the concept which describes the current status of the act(see: {@link StatusKeys} for values)
- * @property {string} typeConcept Gets or sets the key of the conccept which further classifies the type of act occurring
- * @property {Concept} classConceptModel [Delay loaded from classConcept],  Gets or sets the concept which classifies the type of act
- * @property {Concept} moodConceptModel [Delay loaded from moodConcept],  Gets or sets the concept which specifies the mood of the act
- * @property {Concept} reasonConceptModel [Delay loaded from reasonConcept],  Gets or sets the concept which indicates the reason of the act
- * @property {Concept} statusConceptModel [Delay loaded from statusConcept],  Gets or sets the current status concept of the act
- * @property {Concept} typeConceptModel [Delay loaded from typeConcept],  Type concept identifier
- * @property {object} identifier Gets or sets the identifiers by which this act is known as in other systems
- * @property {ActIdentifier} identifier.classifier  where classifier is from {@link IdentifierBase} authority
+ * @property {boolean} isNegated Identifies whether the act represented in this instance actually occurred
+ * @property {string} template The template on which the act is based
+ * @property {TemplateDefinition} templateModel [Delay loaded from template],  Delay load property for the template
+ * @property {Date} actTime The moment in time that this act occurred in ISO format
+ * @property {Date} startTime The time when the act should or did start ocurring in ISO format
+ * @property {Date} stopTime The time when the act should or did stop ocurring in ISO format
+ * @property {string} classConcept The classification key of the activity(see: {@link ActClassKeys} for values)
+ * @property {string} moodConcept The mood (or mode) of the Act instance(see: {@link ActMoodKeys} for values)
+ * @property {string} reasonConcept Identifies a codified reason as to why this act did (or did not, or should or should not) occur.(see: {@link ActReasonKeys} for values)
+ * @property {string} statusConcept The concept which describes the current status of the act(see: {@link StatusKeys} for values)
+ * @property {string} typeConcept Gets or sets the key of the concept which further classifies the type of act occurring
+ * @property {Concept} classConceptModel [Delay loaded from classConcept],  Gets the delay-loaded value of the 
+    {@link ClassConceptKey}
+ * @property {Concept} moodConceptModel [Delay loaded from moodConcept],  Gets the delay-loaded value of the 
+    {@link MoodConceptKey}
+   property
+ * @property {Concept} reasonConceptModel [Delay loaded from reasonConcept],  Delay loads the concept from 
+    {@link ReasonConceptKey}
+ * @property {Concept} statusConceptModel [Delay loaded from statusConcept],  Delay loads the concept represented in 
+    {@link StatusConceptKey}
+ * @property {Concept} typeConceptModel [Delay loaded from typeConcept],  Delay loads the concept represented in 
+    {@link TypeConceptKey}
+ * @property {object} identifier Identifiers by which this act is known
+ * @property {ActIdentifier} identifier.classifier  where classifier is from {@link IdentifierBase} domain
  * @property {object} relationship Gets a list of all associated acts for this act
  * @property {ActRelationship} relationship.Appends             Indicates that the source act appends information contained in the target act            
  * @property {ActRelationship} relationship.Arrival             Links the transortation act from another act            
@@ -13766,7 +14796,7 @@ function FinancialContract (copyData) {
  * @property {GeoTag} geo Gets or sets the geo-tag
  * @property {string} previousVersion
  * @property {string} version
- * @property {number} sequence
+ * @property {Int64} sequence
  * @property {Date} creationTimeModel [Delay loaded from creationTime],  Gets or sets the time at which the data was created
  * @property {Date} creationTime Gets or sets the creation time as an ISO date format
  * @property {Date} obsoletionTimeModel [Delay loaded from obsoletionTime],  Gets or sets the time when the data is or will become invalid
@@ -13836,7 +14866,7 @@ function FinancialTransaction (copyData) {
 	 */
 	this.creationTimeModel = copyData.creationTimeModel;
 	/**
-	 * @type {number} 
+	 * @type {Int64} 
 	 */
 	this.sequence = copyData.sequence;
 	/**
@@ -13888,7 +14918,7 @@ function FinancialTransaction (copyData) {
 	 */
 	this.relationship = copyData.relationship;
 	/**
-	 * @summary Gets or sets the identifiers by which this act is known as in other systems
+	 * @summary Identifiers by which this act is known
 	 * @type {object} 
 	 */
 	this.identifier = copyData.identifier;
@@ -13913,42 +14943,46 @@ function FinancialTransaction (copyData) {
 	 */
 	this.classConceptModel = copyData.classConceptModel;
 	/**
-	 * @summary Gets or sets the key of the conccept which further classifies the type of act occurring
+	 * @summary Gets or sets the key of the concept which further classifies the type of act occurring
 	 * @type {string} 
 	 */
 	this.typeConcept = copyData.typeConcept;
 	/**
-	 * @summary Gets or sets the key of the concept which describes the current status of the act
+	 * @summary Delay loads the concept represented in 
+    {@link StatusConceptKey}
 	 * @type {string} 
 	 */
 	this.statusConcept = copyData.statusConcept;
 	/**
-	 * @summary Gets or sets the key of the concept which defines the reason why the act is or didn't occur
+	 * @summary Identifies a codified reason as to why this act did (or did not, or should or should not) occur.
 	 * @type {string} 
 	 */
 	this.reasonConcept = copyData.reasonConcept;
 	/**
-	 * @summary Gets or sets the key of the concept which specifies the mood of the act.
+	 * @summary Gets the delay-loaded value of the 
+    {@link MoodConceptKey}
+   property
 	 * @type {string} 
 	 */
 	this.moodConcept = copyData.moodConcept;
 	/**
-	 * @summary Gets or sets the key of the concept which classifies the act.
+	 * @summary Gets the delay-loaded value of the 
+    {@link ClassConceptKey}
 	 * @type {string} 
 	 */
 	this.classConcept = copyData.classConcept;
 	/**
-	 * @summary Gets or sets the time when the act should or did stop ocurring in ISO format
+	 * @summary The time when the act should or did stop ocurring in ISO format
 	 * @type {Date} 
 	 */
 	this.stopTime = copyData.stopTime;
 	/**
-	 * @summary Gets or sets the time when the act should or did start ocurring in ISO format
+	 * @summary The time when the act should or did start ocurring in ISO format
 	 * @type {Date} 
 	 */
 	this.startTime = copyData.startTime;
 	/**
-	 * @summary Gets or sets the moment in time that this act occurred in ISO format
+	 * @summary The moment in time that this act occurred in ISO format
 	 * @type {Date} 
 	 */
 	this.actTime = copyData.actTime;
@@ -13957,13 +14991,12 @@ function FinancialTransaction (copyData) {
 	 */
 	this.templateModel = copyData.templateModel;
 	/**
-	 * @summary Gets the template UUID upon which this act is based
+	 * @summary The template on which the act is based
 	 * @type {string} 
 	 */
 	this.template = copyData.template;
 	/**
-	 * @summary Gets or sets an indicator which identifies whether the act actually occurred, or
-            specifically did not occur
+	 * @summary Identifies whether the act represented in this instance actually occurred
 	 * @type {boolean} 
 	 */
 	this.isNegated = copyData.isNegated;
@@ -13993,7 +15026,7 @@ function FinancialTransaction (copyData) {
 	this.amount = copyData.amount;
 	}
 }  // FinancialTransaction 
-// SanteDB.Core.Model.Acts.InvoiceElement, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Acts.InvoiceElement, SanteDB.Core.Model, Version=3.0.0.0, Culture=neutral, PublicKeyToken=null
 //if(!InvoiceElement)
 /**
  * @class
@@ -14007,28 +15040,33 @@ function FinancialTransaction (copyData) {
  * @property {number} unitQty Gets or sets the number of units included in the price
  * @property {number} unitPrice Gets or sets the price of each unit
  * @property {number} netPrice Gets or sets the net amount
- * @property {string} currency Gets or sets the currency of the invoice line item
+ * @property {string} currency Gets or sets the currency of the invoice line item(see: {@link CurrencyKeys} for values)
  * @property {Concept} currencyModel [Delay loaded from currency],  Gets or sets the currency of this transaction
  * @property {Single} factor When provided, can specify the factor to allow for different amounts to be charged based on insurance provider negotiations
- * @property {boolean} isNegated Gets or sets an indicator which identifies whether the act actually occurred, or
-            specifically did not occur
- * @property {string} template Gets the template UUID upon which this act is based
- * @property {TemplateDefinition} templateModel [Delay loaded from template],  Gets or sets the template definition
- * @property {Date} actTime Gets or sets the moment in time that this act occurred in ISO format
- * @property {Date} startTime Gets or sets the time when the act should or did start ocurring in ISO format
- * @property {Date} stopTime Gets or sets the time when the act should or did stop ocurring in ISO format
- * @property {string} classConcept Gets or sets the key of the concept which classifies the act.(see: {@link ActClassKeys} for values)
- * @property {string} moodConcept Gets or sets the key of the concept which specifies the mood of the act.(see: {@link ActMoodKeys} for values)
- * @property {string} reasonConcept Gets or sets the key of the concept which defines the reason why the act is or didn't occur(see: {@link ActReasonKeys} for values)
- * @property {string} statusConcept Gets or sets the key of the concept which describes the current status of the act(see: {@link StatusKeys} for values)
- * @property {string} typeConcept Gets or sets the key of the conccept which further classifies the type of act occurring
- * @property {Concept} classConceptModel [Delay loaded from classConcept],  Gets or sets the concept which classifies the type of act
- * @property {Concept} moodConceptModel [Delay loaded from moodConcept],  Gets or sets the concept which specifies the mood of the act
- * @property {Concept} reasonConceptModel [Delay loaded from reasonConcept],  Gets or sets the concept which indicates the reason of the act
- * @property {Concept} statusConceptModel [Delay loaded from statusConcept],  Gets or sets the current status concept of the act
- * @property {Concept} typeConceptModel [Delay loaded from typeConcept],  Type concept identifier
- * @property {object} identifier Gets or sets the identifiers by which this act is known as in other systems
- * @property {ActIdentifier} identifier.classifier  where classifier is from {@link IdentifierBase} authority
+ * @property {boolean} isNegated Identifies whether the act represented in this instance actually occurred
+ * @property {string} template The template on which the act is based
+ * @property {TemplateDefinition} templateModel [Delay loaded from template],  Delay load property for the template
+ * @property {Date} actTime The moment in time that this act occurred in ISO format
+ * @property {Date} startTime The time when the act should or did start ocurring in ISO format
+ * @property {Date} stopTime The time when the act should or did stop ocurring in ISO format
+ * @property {string} classConcept The classification key of the activity(see: {@link ActClassKeys} for values)
+ * @property {string} moodConcept The mood (or mode) of the Act instance(see: {@link ActMoodKeys} for values)
+ * @property {string} reasonConcept Identifies a codified reason as to why this act did (or did not, or should or should not) occur.(see: {@link ActReasonKeys} for values)
+ * @property {string} statusConcept The concept which describes the current status of the act(see: {@link StatusKeys} for values)
+ * @property {string} typeConcept Gets or sets the key of the concept which further classifies the type of act occurring
+ * @property {Concept} classConceptModel [Delay loaded from classConcept],  Gets the delay-loaded value of the 
+    {@link ClassConceptKey}
+ * @property {Concept} moodConceptModel [Delay loaded from moodConcept],  Gets the delay-loaded value of the 
+    {@link MoodConceptKey}
+   property
+ * @property {Concept} reasonConceptModel [Delay loaded from reasonConcept],  Delay loads the concept from 
+    {@link ReasonConceptKey}
+ * @property {Concept} statusConceptModel [Delay loaded from statusConcept],  Delay loads the concept represented in 
+    {@link StatusConceptKey}
+ * @property {Concept} typeConceptModel [Delay loaded from typeConcept],  Delay loads the concept represented in 
+    {@link TypeConceptKey}
+ * @property {object} identifier Identifiers by which this act is known
+ * @property {ActIdentifier} identifier.classifier  where classifier is from {@link IdentifierBase} domain
  * @property {object} relationship Gets a list of all associated acts for this act
  * @property {ActRelationship} relationship.Appends             Indicates that the source act appends information contained in the target act            
  * @property {ActRelationship} relationship.Arrival             Links the transortation act from another act            
@@ -14123,7 +15161,7 @@ function FinancialTransaction (copyData) {
  * @property {GeoTag} geo Gets or sets the geo-tag
  * @property {string} previousVersion
  * @property {string} version
- * @property {number} sequence
+ * @property {Int64} sequence
  * @property {Date} creationTimeModel [Delay loaded from creationTime],  Gets or sets the time at which the data was created
  * @property {Date} creationTime Gets or sets the creation time as an ISO date format
  * @property {Date} obsoletionTimeModel [Delay loaded from obsoletionTime],  Gets or sets the time when the data is or will become invalid
@@ -14193,7 +15231,7 @@ function InvoiceElement (copyData) {
 	 */
 	this.creationTimeModel = copyData.creationTimeModel;
 	/**
-	 * @type {number} 
+	 * @type {Int64} 
 	 */
 	this.sequence = copyData.sequence;
 	/**
@@ -14245,7 +15283,7 @@ function InvoiceElement (copyData) {
 	 */
 	this.relationship = copyData.relationship;
 	/**
-	 * @summary Gets or sets the identifiers by which this act is known as in other systems
+	 * @summary Identifiers by which this act is known
 	 * @type {object} 
 	 */
 	this.identifier = copyData.identifier;
@@ -14270,42 +15308,46 @@ function InvoiceElement (copyData) {
 	 */
 	this.classConceptModel = copyData.classConceptModel;
 	/**
-	 * @summary Gets or sets the key of the conccept which further classifies the type of act occurring
+	 * @summary Gets or sets the key of the concept which further classifies the type of act occurring
 	 * @type {string} 
 	 */
 	this.typeConcept = copyData.typeConcept;
 	/**
-	 * @summary Gets or sets the key of the concept which describes the current status of the act
+	 * @summary Delay loads the concept represented in 
+    {@link StatusConceptKey}
 	 * @type {string} 
 	 */
 	this.statusConcept = copyData.statusConcept;
 	/**
-	 * @summary Gets or sets the key of the concept which defines the reason why the act is or didn't occur
+	 * @summary Identifies a codified reason as to why this act did (or did not, or should or should not) occur.
 	 * @type {string} 
 	 */
 	this.reasonConcept = copyData.reasonConcept;
 	/**
-	 * @summary Gets or sets the key of the concept which specifies the mood of the act.
+	 * @summary Gets the delay-loaded value of the 
+    {@link MoodConceptKey}
+   property
 	 * @type {string} 
 	 */
 	this.moodConcept = copyData.moodConcept;
 	/**
-	 * @summary Gets or sets the key of the concept which classifies the act.
+	 * @summary Gets the delay-loaded value of the 
+    {@link ClassConceptKey}
 	 * @type {string} 
 	 */
 	this.classConcept = copyData.classConcept;
 	/**
-	 * @summary Gets or sets the time when the act should or did stop ocurring in ISO format
+	 * @summary The time when the act should or did stop ocurring in ISO format
 	 * @type {Date} 
 	 */
 	this.stopTime = copyData.stopTime;
 	/**
-	 * @summary Gets or sets the time when the act should or did start ocurring in ISO format
+	 * @summary The time when the act should or did start ocurring in ISO format
 	 * @type {Date} 
 	 */
 	this.startTime = copyData.startTime;
 	/**
-	 * @summary Gets or sets the moment in time that this act occurred in ISO format
+	 * @summary The moment in time that this act occurred in ISO format
 	 * @type {Date} 
 	 */
 	this.actTime = copyData.actTime;
@@ -14314,13 +15356,12 @@ function InvoiceElement (copyData) {
 	 */
 	this.templateModel = copyData.templateModel;
 	/**
-	 * @summary Gets the template UUID upon which this act is based
+	 * @summary The template on which the act is based
 	 * @type {string} 
 	 */
 	this.template = copyData.template;
 	/**
-	 * @summary Gets or sets an indicator which identifies whether the act actually occurred, or
-            specifically did not occur
+	 * @summary Identifies whether the act represented in this instance actually occurred
 	 * @type {boolean} 
 	 */
 	this.isNegated = copyData.isNegated;
@@ -14364,52 +15405,44 @@ function InvoiceElement (copyData) {
 	this.modifier = copyData.modifier;
 	}
 }  // InvoiceElement 
-// SanteDB.Core.Model.Acts.Observation, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
-//if(!Observation)
+// SanteDB.Core.Model.Acts.Narrative, SanteDB.Core.Model, Version=3.0.0.0, Culture=neutral, PublicKeyToken=null
+//if(!Narrative)
 /**
  * @class
  * @constructor
  * @public
- * @summary Represents a act (
-    {@link Act}
-  ) which is an observation
- * @description <p>
-            The observation class itself is an abstract class which is generically used to represent something that is observed about a patient.
-            </p><p>
-            It is not recommended to use this class directly, rather one of its sub classes based on the type of observation being made such as:
-            </p><table><thead><tr><th>Observation</th><th>Type</th><th>Description</th></tr></thead><tbody><tr><td>Coded</td><td>
-    {@link CodedObservation}
-  </td><td>Observations whose values are codified (example: blood type, presentation, etc.)</td></tr><tr><td>Quantity</td><td>
-    {@link QuantityObservation}
-  </td><td>Observations whose values are codified (example: blood type, presentation, etc.)</td></tr><tr><td>Text</td><td>
-    {@link TextObservation}
-  </td><td>Observations whose values are codified (example: blood type, presentation, etc.)</td></tr></tbody></table><p>
-            No matter what type of value an observation carries (coded, quantity, text) it is always classified by the type concept (
+ * @summary Represents a narrative object in the reference model
+ * @description <p>The narrative class allows for the composition of documents (with class code DOCCLIN) or a section
+            (with class code DOCSECT) within a broader narrative. It also allows for the generation and storage of CDA</p>
+ * @property {string} versionCode The external version number of the structured document
+ * @property {string} language The language in which the document content is written
+ * @property {string} mime Gets or sets the mime type of the narrative content
+ * @property {string} title The title of the clinical document
+ * @property {Array<byte>} text Gets or sets the text of the document
+ * @property {boolean} isNegated Identifies whether the act represented in this instance actually occurred
+ * @property {string} template The template on which the act is based
+ * @property {TemplateDefinition} templateModel [Delay loaded from template],  Delay load property for the template
+ * @property {Date} actTime The moment in time that this act occurred in ISO format
+ * @property {Date} startTime The time when the act should or did start ocurring in ISO format
+ * @property {Date} stopTime The time when the act should or did stop ocurring in ISO format
+ * @property {string} classConcept The classification key of the activity(see: {@link ActClassKeys} for values)
+ * @property {string} moodConcept The mood (or mode) of the Act instance(see: {@link ActMoodKeys} for values)
+ * @property {string} reasonConcept Identifies a codified reason as to why this act did (or did not, or should or should not) occur.(see: {@link ActReasonKeys} for values)
+ * @property {string} statusConcept The concept which describes the current status of the act(see: {@link StatusKeys} for values)
+ * @property {string} typeConcept Gets or sets the key of the concept which further classifies the type of act occurring
+ * @property {Concept} classConceptModel [Delay loaded from classConcept],  Gets the delay-loaded value of the 
+    {@link ClassConceptKey}
+ * @property {Concept} moodConceptModel [Delay loaded from moodConcept],  Gets the delay-loaded value of the 
+    {@link MoodConceptKey}
+   property
+ * @property {Concept} reasonConceptModel [Delay loaded from reasonConcept],  Delay loads the concept from 
+    {@link ReasonConceptKey}
+ * @property {Concept} statusConceptModel [Delay loaded from statusConcept],  Delay loads the concept represented in 
+    {@link StatusConceptKey}
+ * @property {Concept} typeConceptModel [Delay loaded from typeConcept],  Delay loads the concept represented in 
     {@link TypeConceptKey}
-  ).
-            </p>
- * @property {string} interpretationConcept Gets or sets the interpretation concept
- * @property {string} valueType Value type
- * @property {Concept} interpretationConceptModel [Delay loaded from interpretationConcept],  Gets or sets the concept which indicates the interpretation of the observtion
- * @property {boolean} isNegated Gets or sets an indicator which identifies whether the act actually occurred, or
-            specifically did not occur
- * @property {string} template Gets the template UUID upon which this act is based
- * @property {TemplateDefinition} templateModel [Delay loaded from template],  Gets or sets the template definition
- * @property {Date} actTime Gets or sets the moment in time that this act occurred in ISO format
- * @property {Date} startTime Gets or sets the time when the act should or did start ocurring in ISO format
- * @property {Date} stopTime Gets or sets the time when the act should or did stop ocurring in ISO format
- * @property {string} classConcept Gets or sets the key of the concept which classifies the act.(see: {@link ActClassKeys} for values)
- * @property {string} moodConcept Gets or sets the key of the concept which specifies the mood of the act.(see: {@link ActMoodKeys} for values)
- * @property {string} reasonConcept Gets or sets the key of the concept which defines the reason why the act is or didn't occur(see: {@link ActReasonKeys} for values)
- * @property {string} statusConcept Gets or sets the key of the concept which describes the current status of the act(see: {@link StatusKeys} for values)
- * @property {string} typeConcept Gets or sets the key of the conccept which further classifies the type of act occurring
- * @property {Concept} classConceptModel [Delay loaded from classConcept],  Gets or sets the concept which classifies the type of act
- * @property {Concept} moodConceptModel [Delay loaded from moodConcept],  Gets or sets the concept which specifies the mood of the act
- * @property {Concept} reasonConceptModel [Delay loaded from reasonConcept],  Gets or sets the concept which indicates the reason of the act
- * @property {Concept} statusConceptModel [Delay loaded from statusConcept],  Gets or sets the current status concept of the act
- * @property {Concept} typeConceptModel [Delay loaded from typeConcept],  Type concept identifier
- * @property {object} identifier Gets or sets the identifiers by which this act is known as in other systems
- * @property {ActIdentifier} identifier.classifier  where classifier is from {@link IdentifierBase} authority
+ * @property {object} identifier Identifiers by which this act is known
+ * @property {ActIdentifier} identifier.classifier  where classifier is from {@link IdentifierBase} domain
  * @property {object} relationship Gets a list of all associated acts for this act
  * @property {ActRelationship} relationship.Appends             Indicates that the source act appends information contained in the target act            
  * @property {ActRelationship} relationship.Arrival             Links the transortation act from another act            
@@ -14504,7 +15537,383 @@ function InvoiceElement (copyData) {
  * @property {GeoTag} geo Gets or sets the geo-tag
  * @property {string} previousVersion
  * @property {string} version
- * @property {number} sequence
+ * @property {Int64} sequence
+ * @property {Date} creationTimeModel [Delay loaded from creationTime],  Gets or sets the time at which the data was created
+ * @property {Date} creationTime Gets or sets the creation time as an ISO date format
+ * @property {Date} obsoletionTimeModel [Delay loaded from obsoletionTime],  Gets or sets the time when the data is or will become invalid
+ * @property {Date} obsoletionTime Gets or sets the time that the data is no longer valid (was deleted/obsoleted) in ISO format
+ * @property {SecurityProvenance} createdByModel [Delay loaded from createdBy],  Gets or sets the user that created this base data
+ * @property {Date} modifiedOn Gets the time that the object was last modified (from base data, default to CreationTime)
+ * @property {SecurityProvenance} obsoletedByModel [Delay loaded from obsoletedBy],  Gets or sets the user that obsoleted this base data
+ * @property {string} createdBy Gets or sets the security provenance object which represents the creation of this object
+ * @property {string} obsoletedBy Gets or sets the security provenance object which represents the obsoletion of this data
+ * @property {string} id Gets or sets the primary identifying UUID of this object
+ * @property {BatchOperationType} operation Gets or sets the operation(see: {@link BatchOperationType} for values)
+ * @property {string} $type Gets the type registration of this object
+ * @param {Narrative} copyData Copy constructor (if present)
+ */
+function Narrative (copyData) { 
+	this.$type = 'Narrative';
+	if(copyData) {
+	/**
+	 * @summary Gets or sets the operation
+	 * @type {BatchOperationType} 
+	 */
+	this.operation = copyData.operation;
+	/**
+	 * @summary Gets or sets the primary identifying UUID of this object
+	 * @type {string} 
+	 */
+	this.id = copyData.id;
+	/**
+	 * @summary Gets or sets the security provenance object which represents the obsoletion of this data
+	 * @type {string} 
+	 */
+	this.obsoletedBy = copyData.obsoletedBy;
+	/**
+	 * @summary Gets or sets the security provenance object which represents the creation of this object
+	 * @type {string} 
+	 */
+	this.createdBy = copyData.createdBy;
+	/**
+	 * @type {SecurityProvenance} 
+	 */
+	this.obsoletedByModel = copyData.obsoletedByModel;
+	/**
+	 * @summary Gets the time that the object was last modified (from base data, default to CreationTime)
+	 * @type {Date} 
+	 */
+	this.modifiedOn = copyData.modifiedOn;
+	/**
+	 * @type {SecurityProvenance} 
+	 */
+	this.createdByModel = copyData.createdByModel;
+	/**
+	 * @summary Gets or sets the time that the data is no longer valid (was deleted/obsoleted) in ISO format
+	 * @type {Date} 
+	 */
+	this.obsoletionTime = copyData.obsoletionTime;
+	/**
+	 * @type {Date} 
+	 */
+	this.obsoletionTimeModel = copyData.obsoletionTimeModel;
+	/**
+	 * @summary Gets or sets the creation time as an ISO date format
+	 * @type {Date} 
+	 */
+	this.creationTime = copyData.creationTime;
+	/**
+	 * @type {Date} 
+	 */
+	this.creationTimeModel = copyData.creationTimeModel;
+	/**
+	 * @type {Int64} 
+	 */
+	this.sequence = copyData.sequence;
+	/**
+	 * @type {string} 
+	 */
+	this.version = copyData.version;
+	/**
+	 * @type {string} 
+	 */
+	this.previousVersion = copyData.previousVersion;
+	/**
+	 * @summary Gets or sets the geo-tag
+	 * @type {GeoTag} 
+	 */
+	this.geo = copyData.geo;
+	/**
+	 * @summary Gets or sets the entities and participations they play in the act
+	 * @type {object} 
+	 */
+	this.participation = copyData.participation;
+	/**
+	 * @summary Identifies protocols attached to the act
+	 * @type {ActProtocol} 
+	 */
+	this.protocol = copyData.protocol;
+	/**
+	 * @summary Gets a list of all tags associated with the act
+	 * @type {object} 
+	 */
+	this.tag = copyData.tag;
+	/**
+	 * @summary Gets a list of all notes associated with the act
+	 * @type {ActNote} 
+	 */
+	this.note = copyData.note;
+	/**
+	 * @summary Gets a list of all extensions associated with the act
+	 * @type {object} 
+	 */
+	this.extension = copyData.extension;
+	/**
+	 * @summary Gets or sets the security policy instances associated with the act
+	 * @type {SecurityPolicyInstance} 
+	 */
+	this.policy = copyData.policy;
+	/**
+	 * @summary Gets a list of all associated acts for this act
+	 * @type {object} 
+	 */
+	this.relationship = copyData.relationship;
+	/**
+	 * @summary Identifiers by which this act is known
+	 * @type {object} 
+	 */
+	this.identifier = copyData.identifier;
+	/**
+	 * @type {Concept} 
+	 */
+	this.typeConceptModel = copyData.typeConceptModel;
+	/**
+	 * @type {Concept} 
+	 */
+	this.statusConceptModel = copyData.statusConceptModel;
+	/**
+	 * @type {Concept} 
+	 */
+	this.reasonConceptModel = copyData.reasonConceptModel;
+	/**
+	 * @type {Concept} 
+	 */
+	this.moodConceptModel = copyData.moodConceptModel;
+	/**
+	 * @type {Concept} 
+	 */
+	this.classConceptModel = copyData.classConceptModel;
+	/**
+	 * @summary Gets or sets the key of the concept which further classifies the type of act occurring
+	 * @type {string} 
+	 */
+	this.typeConcept = copyData.typeConcept;
+	/**
+	 * @summary Delay loads the concept represented in 
+    {@link StatusConceptKey}
+	 * @type {string} 
+	 */
+	this.statusConcept = copyData.statusConcept;
+	/**
+	 * @summary Identifies a codified reason as to why this act did (or did not, or should or should not) occur.
+	 * @type {string} 
+	 */
+	this.reasonConcept = copyData.reasonConcept;
+	/**
+	 * @summary Gets the delay-loaded value of the 
+    {@link MoodConceptKey}
+   property
+	 * @type {string} 
+	 */
+	this.moodConcept = copyData.moodConcept;
+	/**
+	 * @summary Gets the delay-loaded value of the 
+    {@link ClassConceptKey}
+	 * @type {string} 
+	 */
+	this.classConcept = copyData.classConcept;
+	/**
+	 * @summary The time when the act should or did stop ocurring in ISO format
+	 * @type {Date} 
+	 */
+	this.stopTime = copyData.stopTime;
+	/**
+	 * @summary The time when the act should or did start ocurring in ISO format
+	 * @type {Date} 
+	 */
+	this.startTime = copyData.startTime;
+	/**
+	 * @summary The moment in time that this act occurred in ISO format
+	 * @type {Date} 
+	 */
+	this.actTime = copyData.actTime;
+	/**
+	 * @type {TemplateDefinition} 
+	 */
+	this.templateModel = copyData.templateModel;
+	/**
+	 * @summary The template on which the act is based
+	 * @type {string} 
+	 */
+	this.template = copyData.template;
+	/**
+	 * @summary Identifies whether the act represented in this instance actually occurred
+	 * @type {boolean} 
+	 */
+	this.isNegated = copyData.isNegated;
+	/**
+	 * @summary Gets or sets the text of the document
+	 * @type {Array<byte>} 
+	 */
+	this.text = copyData.text;
+	/**
+	 * @summary The title of the clinical document
+	 * @type {string} 
+	 */
+	this.title = copyData.title;
+	/**
+	 * @summary Gets or sets the mime type of the narrative content
+	 * @type {string} 
+	 */
+	this.mime = copyData.mime;
+	/**
+	 * @summary The language in which the document content is written
+	 * @type {string} 
+	 */
+	this.language = copyData.language;
+	/**
+	 * @summary The external version number of the structured document
+	 * @type {string} 
+	 */
+	this.versionCode = copyData.versionCode;
+	}
+}  // Narrative 
+// SanteDB.Core.Model.Acts.Observation, SanteDB.Core.Model, Version=3.0.0.0, Culture=neutral, PublicKeyToken=null
+//if(!Observation)
+/**
+ * @class
+ * @constructor
+ * @public
+ * @summary Represents a act (
+    {@link Act}
+  ) which is an observation
+ * @description <p>
+            The observation class itself is an abstract class which is generically used to represent something that is observed about a patient.
+            </p><p>
+            It is not recommended to use this class directly, rather one of its sub classes based on the type of observation being made such as:
+            </p><table><thead><tr><th>Observation</th><th>Type</th><th>Description</th></tr></thead><tbody><tr><td>Coded</td><td>
+    {@link CodedObservation}
+  </td><td>Observations whose values are codified (example: blood type, presentation, etc.)</td></tr><tr><td>Quantity</td><td>
+    {@link QuantityObservation}
+  </td><td>Observations whose values are codified (example: blood type, presentation, etc.)</td></tr><tr><td>Text</td><td>
+    {@link TextObservation}
+  </td><td>Observations whose values are codified (example: blood type, presentation, etc.)</td></tr></tbody></table><p>
+            No matter what type of value an observation carries (coded, quantity, text) it is always classified by the type concept (
+    {@link TypeConceptKey}
+  ).
+            </p>
+ * @property {string} interpretationConcept Gets or sets the interpretation concept
+ * @property {string} valueType Value type
+ * @property {Concept} interpretationConceptModel [Delay loaded from interpretationConcept],  Gets or sets the concept which indicates the interpretation of the observtion
+ * @property {boolean} isNegated Identifies whether the act represented in this instance actually occurred
+ * @property {string} template The template on which the act is based
+ * @property {TemplateDefinition} templateModel [Delay loaded from template],  Delay load property for the template
+ * @property {Date} actTime The moment in time that this act occurred in ISO format
+ * @property {Date} startTime The time when the act should or did start ocurring in ISO format
+ * @property {Date} stopTime The time when the act should or did stop ocurring in ISO format
+ * @property {string} classConcept The classification key of the activity(see: {@link ActClassKeys} for values)
+ * @property {string} moodConcept The mood (or mode) of the Act instance(see: {@link ActMoodKeys} for values)
+ * @property {string} reasonConcept Identifies a codified reason as to why this act did (or did not, or should or should not) occur.(see: {@link ActReasonKeys} for values)
+ * @property {string} statusConcept The concept which describes the current status of the act(see: {@link StatusKeys} for values)
+ * @property {string} typeConcept Gets or sets the key of the concept which further classifies the type of act occurring
+ * @property {Concept} classConceptModel [Delay loaded from classConcept],  Gets the delay-loaded value of the 
+    {@link ClassConceptKey}
+ * @property {Concept} moodConceptModel [Delay loaded from moodConcept],  Gets the delay-loaded value of the 
+    {@link MoodConceptKey}
+   property
+ * @property {Concept} reasonConceptModel [Delay loaded from reasonConcept],  Delay loads the concept from 
+    {@link ReasonConceptKey}
+ * @property {Concept} statusConceptModel [Delay loaded from statusConcept],  Delay loads the concept represented in 
+    {@link StatusConceptKey}
+ * @property {Concept} typeConceptModel [Delay loaded from typeConcept],  Delay loads the concept represented in 
+    {@link TypeConceptKey}
+ * @property {object} identifier Identifiers by which this act is known
+ * @property {ActIdentifier} identifier.classifier  where classifier is from {@link IdentifierBase} domain
+ * @property {object} relationship Gets a list of all associated acts for this act
+ * @property {ActRelationship} relationship.Appends             Indicates that the source act appends information contained in the target act            
+ * @property {ActRelationship} relationship.Arrival             Links the transortation act from another act            
+ * @property {ActRelationship} relationship.Departure             Links a transporation act from another act indicating departure of the subject            
+ * @property {ActRelationship} relationship.Documents             The source act documents the target act            
+ * @property {ActRelationship} relationship.EpisodeLink             Links two instances of the same act over time (example: chronic conditions)            
+ * @property {ActRelationship} relationship.Evaluates             Used to link a goal to an observation            
+ * @property {ActRelationship} relationship.Fulfills             Indicates that the source act fulfills the target act            
+ * @property {ActRelationship} relationship.HasAuthorization             Indicates that the target act authorizes the source act            
+ * @property {ActRelationship} relationship.HasComponent             Indicates that the target act is a component of the source act            
+ * @property {ActRelationship} relationship.HasControlVariable             Relationship from an act to one or more control variables (for example: device settings, or environment)            
+ * @property {ActRelationship} relationship.HasManifestation             The assertion that a new observation may be a manifestation of another            
+ * @property {ActRelationship} relationship.HasPrecondition             Indicates that the target act is a pre-condition of the source act            
+ * @property {ActRelationship} relationship.HasReason             Indicates a reasoning as to why the source act is occurring            
+ * @property {ActRelationship} relationship.HasReferenceValues             Indicates that the source act contains reference values from the target            
+ * @property {ActRelationship} relationship.HasSubject             Indicates the subject of a particular act (example: clinical act is a subject of a control act)            
+ * @property {ActRelationship} relationship.HasSupport             Indicates an existing act is suggesting evidence for a new observation.            
+ * @property {ActRelationship} relationship.IsCauseOf             Indicates that the source act is the cause of the target act            
+ * @property {ActRelationship} relationship.IsDerivedFrom             Indicates the source act is derived from information contained in the target act            
+ * @property {ActRelationship} relationship.IsExcerptOf             Indicates that the source act is an excerpt of the target act            
+ * @property {ActRelationship} relationship.RefersTo             Indicates that the source act refers to the target act            
+ * @property {ActRelationship} relationship.Replaces             The source act replaces the target act            
+ * @property {ActRelationship} relationship.StartsAfterStartOf             Indicates that the source act starts after the start of another act            
+ * @property {ActRelationship} relationship.Transforms             Indicates that the source act transforms the target act            
+ * @property {ActRelationship} relationship.Duplicate             Duplicate entity            
+ * @property {ActRelationship} relationship.$other Unclassified
+ * @property {SecurityPolicyInstance} policy Gets or sets the security policy instances associated with the act
+ * @property {object} extension Gets a list of all extensions associated with the act
+ * @property {string} extension.classifier  where classifier is from {@link Extension} extensionType
+ * @property {ActNote} note Gets a list of all notes associated with the act
+ * @property {object} tag Gets a list of all tags associated with the act
+ * @property {string} tag.classifier  where classifier is from {@link Tag} key
+ * @property {ActProtocol} protocol Identifies protocols attached to the act
+ * @property {object} participation Gets or sets the entities and participations they play in the act
+ * @property {ActParticipation} participation.Admitter             The player entity was the person who was responsible for admitting the patient into a facility or care scenario.            
+ * @property {ActParticipation} participation.Attender             The player entity represents the attending physician for the patient            
+ * @property {ActParticipation} participation.Authenticator             The player entity represents an entity which authenticates the provision of care            
+ * @property {ActParticipation} participation.Authororiginator             The player entity is responsible for the creation of data described in the act            
+ * @property {ActParticipation} participation.Baby             The player is a resultant person in that it was the baby             
+ * @property {ActParticipation} participation.Beneficiary             The player is a beneficiary of the act such a receiver of a financial instrument, or other good            
+ * @property {ActParticipation} participation.CallbackContact             The player entity represents something that should be contacted upon completion of the act            
+ * @property {ActParticipation} participation.CausativeAgent             The player entity is an agent which caused the act to occur            
+ * @property {ActParticipation} participation.Consultant             The player entity is acting as a consult to the carrying out of the act            
+ * @property {ActParticipation} participation.Consumable             The player entity was or is to be consumed during the process of carrying out the act.            
+ * @property {ActParticipation} participation.CoverageTarget             The player entity represents the target coverage entity of the act            
+ * @property {ActParticipation} participation.Custodian             The player entity is the data custodian of the act (is responsible for storing and securing the act)            
+ * @property {ActParticipation} participation.DataEnterer             The player entity represents the person or device which phisically entered the data at the terminal            
+ * @property {ActParticipation} participation.Destination             The player etity represents the ultimate destination of the goods/materials/services described in the act            
+ * @property {ActParticipation} participation.Device             The player entity represents the device on which the act or data from the act was acquired or recorded            
+ * @property {ActParticipation} participation.DirectTarget             The player entity represents the directed target of care provided in the act            
+ * @property {ActParticipation} participation.Discharger             The player entity represents the person who is responsible for the discharging of the patient from an encounter            
+ * @property {ActParticipation} participation.Distributor             The player entity is the source distribution point for the financial or material instruments contained in the message            
+ * @property {ActParticipation} participation.Donor             The player entity represents the donor of tissue or materials used in the act            
+ * @property {ActParticipation} participation.EntryLocation             The location where the act was entered.            
+ * @property {ActParticipation} participation.Escort             The player entity was responsible for escorting the patient during the course of the act            
+ * @property {ActParticipation} participation.Exposure             The player entity something to which the patient was exposed            
+ * @property {ActParticipation} participation.ExposureAgent             The player entity represents the agent (material) to which the patient was exposed            
+ * @property {ActParticipation} participation.ExposureSource             The player entity describes the source of the material to which the patient was exposed            
+ * @property {ActParticipation} participation.ExposureTarget             The player entity describes the target to which the agent was exposed            
+ * @property {ActParticipation} participation.GuarantorParty             The player represents a party which is used as a financial guarantor for payment in the carrying out of the act            
+ * @property {ActParticipation} participation.Holder             The player is responsible for holding the act            
+ * @property {ActParticipation} participation.IndirectTarget             The entity not directly present in the act but which will be the focust of th act.            
+ * @property {ActParticipation} participation.Informant             The player was a person or device which informed data presented in the act. (Example: A mother telling a nurse that their child had a reaction)            
+ * @property {ActParticipation} participation.InformationRecipient             The player entity represents something that should be cc'ed on the act            
+ * @property {ActParticipation} participation.LegalAuthenticator             The player entity is responsible for legally authenticating the content of the act            
+ * @property {ActParticipation} participation.Location             The location where the service was performed.            
+ * @property {ActParticipation} participation.NonreuseableDevice             The player represents a consumable that can no longer be used            
+ * @property {ActParticipation} participation.Origin             The player represents the origin of the act            
+ * @property {ActParticipation} participation.Participation             The player entity participates in the act in no particular classification            
+ * @property {ActParticipation} participation.Performer             The player entity is responsible for performing the clinical steps documented in the act            
+ * @property {ActParticipation} participation.PrimaryInformationRecipient             The player entity represents a high priority contact which should be informed or cc'ed on the act            
+ * @property {ActParticipation} participation.PrimaryPerformer             The player entity was the primary performer of the act. This is used in procedures where more than one performer is present            
+ * @property {ActParticipation} participation.Product             The player represents a product that is not necessarily consumed but informs the act            
+ * @property {ActParticipation} participation.Receiver             The player represents the entity which is the intended receiver of the act            
+ * @property {ActParticipation} participation.RecordTarget             The player represents the entity to which the act is recorded against            
+ * @property {ActParticipation} participation.ReferredBy             The player represents the entity which referred the act or caused the act to be undertaken            
+ * @property {ActParticipation} participation.ReferredTo             The player entity represents the entity which was referred to            
+ * @property {ActParticipation} participation.Referrer             The player entity represents the person who was originally the referrer.            
+ * @property {ActParticipation} participation.Remote             The player entity represents a remote portion of the act            
+ * @property {ActParticipation} participation.ResponsibleParty             The player entity is ultimately responsible for the carrying out of the act            
+ * @property {ActParticipation} participation.ReusableDevice             The player entity represents a device which can be reused in future acts            
+ * @property {ActParticipation} participation.SecondaryPerformer             The secondary performing person (support clinician).            
+ * @property {ActParticipation} participation.Specimen             The player entity represents a specimen collected for the purpose of testing and diagnosis            
+ * @property {ActParticipation} participation.Subject             The player entity is the subject of an act, but not necessarily the record target (meaning the act is about a particular entity but not to be attached to their record)            
+ * @property {ActParticipation} participation.Tracker             The player entity is responsible for tracking the progress of the act            
+ * @property {ActParticipation} participation.Transcriber             The person who transcribed data from the original act.            
+ * @property {ActParticipation} participation.UgentNotificationContact             The player entity represents a contact entity in case of an emergency occurs during the act.            
+ * @property {ActParticipation} participation.Verifier             The player entity was responsible for verifying the accuracy of the data in the act            
+ * @property {ActParticipation} participation.Via             The player entity represents an entity where the act occurred "via" this entity (i.e. in transport)            
+ * @property {ActParticipation} participation.Witness             The player entity represents a legal witness to the act occurring.            
+ * @property {ActParticipation} participation.$other Unclassified
+ * @property {GeoTag} geo Gets or sets the geo-tag
+ * @property {string} previousVersion
+ * @property {string} version
+ * @property {Int64} sequence
  * @property {Date} creationTimeModel [Delay loaded from creationTime],  Gets or sets the time at which the data was created
  * @property {Date} creationTime Gets or sets the creation time as an ISO date format
  * @property {Date} obsoletionTimeModel [Delay loaded from obsoletionTime],  Gets or sets the time when the data is or will become invalid
@@ -14574,7 +15983,7 @@ function Observation (copyData) {
 	 */
 	this.creationTimeModel = copyData.creationTimeModel;
 	/**
-	 * @type {number} 
+	 * @type {Int64} 
 	 */
 	this.sequence = copyData.sequence;
 	/**
@@ -14626,7 +16035,7 @@ function Observation (copyData) {
 	 */
 	this.relationship = copyData.relationship;
 	/**
-	 * @summary Gets or sets the identifiers by which this act is known as in other systems
+	 * @summary Identifiers by which this act is known
 	 * @type {object} 
 	 */
 	this.identifier = copyData.identifier;
@@ -14651,42 +16060,46 @@ function Observation (copyData) {
 	 */
 	this.classConceptModel = copyData.classConceptModel;
 	/**
-	 * @summary Gets or sets the key of the conccept which further classifies the type of act occurring
+	 * @summary Gets or sets the key of the concept which further classifies the type of act occurring
 	 * @type {string} 
 	 */
 	this.typeConcept = copyData.typeConcept;
 	/**
-	 * @summary Gets or sets the key of the concept which describes the current status of the act
+	 * @summary Delay loads the concept represented in 
+    {@link StatusConceptKey}
 	 * @type {string} 
 	 */
 	this.statusConcept = copyData.statusConcept;
 	/**
-	 * @summary Gets or sets the key of the concept which defines the reason why the act is or didn't occur
+	 * @summary Identifies a codified reason as to why this act did (or did not, or should or should not) occur.
 	 * @type {string} 
 	 */
 	this.reasonConcept = copyData.reasonConcept;
 	/**
-	 * @summary Gets or sets the key of the concept which specifies the mood of the act.
+	 * @summary Gets the delay-loaded value of the 
+    {@link MoodConceptKey}
+   property
 	 * @type {string} 
 	 */
 	this.moodConcept = copyData.moodConcept;
 	/**
-	 * @summary Gets or sets the key of the concept which classifies the act.
+	 * @summary Gets the delay-loaded value of the 
+    {@link ClassConceptKey}
 	 * @type {string} 
 	 */
 	this.classConcept = copyData.classConcept;
 	/**
-	 * @summary Gets or sets the time when the act should or did stop ocurring in ISO format
+	 * @summary The time when the act should or did stop ocurring in ISO format
 	 * @type {Date} 
 	 */
 	this.stopTime = copyData.stopTime;
 	/**
-	 * @summary Gets or sets the time when the act should or did start ocurring in ISO format
+	 * @summary The time when the act should or did start ocurring in ISO format
 	 * @type {Date} 
 	 */
 	this.startTime = copyData.startTime;
 	/**
-	 * @summary Gets or sets the moment in time that this act occurred in ISO format
+	 * @summary The moment in time that this act occurred in ISO format
 	 * @type {Date} 
 	 */
 	this.actTime = copyData.actTime;
@@ -14695,13 +16108,12 @@ function Observation (copyData) {
 	 */
 	this.templateModel = copyData.templateModel;
 	/**
-	 * @summary Gets the template UUID upon which this act is based
+	 * @summary The template on which the act is based
 	 * @type {string} 
 	 */
 	this.template = copyData.template;
 	/**
-	 * @summary Gets or sets an indicator which identifies whether the act actually occurred, or
-            specifically did not occur
+	 * @summary Identifies whether the act represented in this instance actually occurred
 	 * @type {boolean} 
 	 */
 	this.isNegated = copyData.isNegated;
@@ -14721,7 +16133,7 @@ function Observation (copyData) {
 	this.interpretationConcept = copyData.interpretationConcept;
 	}
 }  // Observation 
-// SanteDB.Core.Model.Acts.QuantityObservation, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Acts.QuantityObservation, SanteDB.Core.Model, Version=3.0.0.0, Culture=neutral, PublicKeyToken=null
 //if(!QuantityObservation)
 /**
  * @class
@@ -14736,25 +16148,30 @@ function Observation (copyData) {
  * @property {Concept} unitOfMeasureModel [Delay loaded from unitOfMeasure],  Gets or sets the unit of measure
  * @property {string} interpretationConcept Gets or sets the interpretation concept
  * @property {Concept} interpretationConceptModel [Delay loaded from interpretationConcept],  Gets or sets the concept which indicates the interpretation of the observtion
- * @property {boolean} isNegated Gets or sets an indicator which identifies whether the act actually occurred, or
-            specifically did not occur
- * @property {string} template Gets the template UUID upon which this act is based
- * @property {TemplateDefinition} templateModel [Delay loaded from template],  Gets or sets the template definition
- * @property {Date} actTime Gets or sets the moment in time that this act occurred in ISO format
- * @property {Date} startTime Gets or sets the time when the act should or did start ocurring in ISO format
- * @property {Date} stopTime Gets or sets the time when the act should or did stop ocurring in ISO format
- * @property {string} classConcept Gets or sets the key of the concept which classifies the act.(see: {@link ActClassKeys} for values)
- * @property {string} moodConcept Gets or sets the key of the concept which specifies the mood of the act.(see: {@link ActMoodKeys} for values)
- * @property {string} reasonConcept Gets or sets the key of the concept which defines the reason why the act is or didn't occur(see: {@link ActReasonKeys} for values)
- * @property {string} statusConcept Gets or sets the key of the concept which describes the current status of the act(see: {@link StatusKeys} for values)
- * @property {string} typeConcept Gets or sets the key of the conccept which further classifies the type of act occurring
- * @property {Concept} classConceptModel [Delay loaded from classConcept],  Gets or sets the concept which classifies the type of act
- * @property {Concept} moodConceptModel [Delay loaded from moodConcept],  Gets or sets the concept which specifies the mood of the act
- * @property {Concept} reasonConceptModel [Delay loaded from reasonConcept],  Gets or sets the concept which indicates the reason of the act
- * @property {Concept} statusConceptModel [Delay loaded from statusConcept],  Gets or sets the current status concept of the act
- * @property {Concept} typeConceptModel [Delay loaded from typeConcept],  Type concept identifier
- * @property {object} identifier Gets or sets the identifiers by which this act is known as in other systems
- * @property {ActIdentifier} identifier.classifier  where classifier is from {@link IdentifierBase} authority
+ * @property {boolean} isNegated Identifies whether the act represented in this instance actually occurred
+ * @property {string} template The template on which the act is based
+ * @property {TemplateDefinition} templateModel [Delay loaded from template],  Delay load property for the template
+ * @property {Date} actTime The moment in time that this act occurred in ISO format
+ * @property {Date} startTime The time when the act should or did start ocurring in ISO format
+ * @property {Date} stopTime The time when the act should or did stop ocurring in ISO format
+ * @property {string} classConcept The classification key of the activity(see: {@link ActClassKeys} for values)
+ * @property {string} moodConcept The mood (or mode) of the Act instance(see: {@link ActMoodKeys} for values)
+ * @property {string} reasonConcept Identifies a codified reason as to why this act did (or did not, or should or should not) occur.(see: {@link ActReasonKeys} for values)
+ * @property {string} statusConcept The concept which describes the current status of the act(see: {@link StatusKeys} for values)
+ * @property {string} typeConcept Gets or sets the key of the concept which further classifies the type of act occurring
+ * @property {Concept} classConceptModel [Delay loaded from classConcept],  Gets the delay-loaded value of the 
+    {@link ClassConceptKey}
+ * @property {Concept} moodConceptModel [Delay loaded from moodConcept],  Gets the delay-loaded value of the 
+    {@link MoodConceptKey}
+   property
+ * @property {Concept} reasonConceptModel [Delay loaded from reasonConcept],  Delay loads the concept from 
+    {@link ReasonConceptKey}
+ * @property {Concept} statusConceptModel [Delay loaded from statusConcept],  Delay loads the concept represented in 
+    {@link StatusConceptKey}
+ * @property {Concept} typeConceptModel [Delay loaded from typeConcept],  Delay loads the concept represented in 
+    {@link TypeConceptKey}
+ * @property {object} identifier Identifiers by which this act is known
+ * @property {ActIdentifier} identifier.classifier  where classifier is from {@link IdentifierBase} domain
  * @property {object} relationship Gets a list of all associated acts for this act
  * @property {ActRelationship} relationship.Appends             Indicates that the source act appends information contained in the target act            
  * @property {ActRelationship} relationship.Arrival             Links the transortation act from another act            
@@ -14849,7 +16266,7 @@ function Observation (copyData) {
  * @property {GeoTag} geo Gets or sets the geo-tag
  * @property {string} previousVersion
  * @property {string} version
- * @property {number} sequence
+ * @property {Int64} sequence
  * @property {Date} creationTimeModel [Delay loaded from creationTime],  Gets or sets the time at which the data was created
  * @property {Date} creationTime Gets or sets the creation time as an ISO date format
  * @property {Date} obsoletionTimeModel [Delay loaded from obsoletionTime],  Gets or sets the time when the data is or will become invalid
@@ -14919,7 +16336,7 @@ function QuantityObservation (copyData) {
 	 */
 	this.creationTimeModel = copyData.creationTimeModel;
 	/**
-	 * @type {number} 
+	 * @type {Int64} 
 	 */
 	this.sequence = copyData.sequence;
 	/**
@@ -14971,7 +16388,7 @@ function QuantityObservation (copyData) {
 	 */
 	this.relationship = copyData.relationship;
 	/**
-	 * @summary Gets or sets the identifiers by which this act is known as in other systems
+	 * @summary Identifiers by which this act is known
 	 * @type {object} 
 	 */
 	this.identifier = copyData.identifier;
@@ -14996,42 +16413,46 @@ function QuantityObservation (copyData) {
 	 */
 	this.classConceptModel = copyData.classConceptModel;
 	/**
-	 * @summary Gets or sets the key of the conccept which further classifies the type of act occurring
+	 * @summary Gets or sets the key of the concept which further classifies the type of act occurring
 	 * @type {string} 
 	 */
 	this.typeConcept = copyData.typeConcept;
 	/**
-	 * @summary Gets or sets the key of the concept which describes the current status of the act
+	 * @summary Delay loads the concept represented in 
+    {@link StatusConceptKey}
 	 * @type {string} 
 	 */
 	this.statusConcept = copyData.statusConcept;
 	/**
-	 * @summary Gets or sets the key of the concept which defines the reason why the act is or didn't occur
+	 * @summary Identifies a codified reason as to why this act did (or did not, or should or should not) occur.
 	 * @type {string} 
 	 */
 	this.reasonConcept = copyData.reasonConcept;
 	/**
-	 * @summary Gets or sets the key of the concept which specifies the mood of the act.
+	 * @summary Gets the delay-loaded value of the 
+    {@link MoodConceptKey}
+   property
 	 * @type {string} 
 	 */
 	this.moodConcept = copyData.moodConcept;
 	/**
-	 * @summary Gets or sets the key of the concept which classifies the act.
+	 * @summary Gets the delay-loaded value of the 
+    {@link ClassConceptKey}
 	 * @type {string} 
 	 */
 	this.classConcept = copyData.classConcept;
 	/**
-	 * @summary Gets or sets the time when the act should or did stop ocurring in ISO format
+	 * @summary The time when the act should or did stop ocurring in ISO format
 	 * @type {Date} 
 	 */
 	this.stopTime = copyData.stopTime;
 	/**
-	 * @summary Gets or sets the time when the act should or did start ocurring in ISO format
+	 * @summary The time when the act should or did start ocurring in ISO format
 	 * @type {Date} 
 	 */
 	this.startTime = copyData.startTime;
 	/**
-	 * @summary Gets or sets the moment in time that this act occurred in ISO format
+	 * @summary The moment in time that this act occurred in ISO format
 	 * @type {Date} 
 	 */
 	this.actTime = copyData.actTime;
@@ -15040,13 +16461,12 @@ function QuantityObservation (copyData) {
 	 */
 	this.templateModel = copyData.templateModel;
 	/**
-	 * @summary Gets the template UUID upon which this act is based
+	 * @summary The template on which the act is based
 	 * @type {string} 
 	 */
 	this.template = copyData.template;
 	/**
-	 * @summary Gets or sets an indicator which identifies whether the act actually occurred, or
-            specifically did not occur
+	 * @summary Identifies whether the act represented in this instance actually occurred
 	 * @type {boolean} 
 	 */
 	this.isNegated = copyData.isNegated;
@@ -15080,7 +16500,7 @@ function QuantityObservation (copyData) {
 	this.value = copyData.value;
 	}
 }  // QuantityObservation 
-// SanteDB.Core.Model.Acts.TextObservation, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Acts.TextObservation, SanteDB.Core.Model, Version=3.0.0.0, Culture=neutral, PublicKeyToken=null
 //if(!TextObservation)
 /**
  * @class
@@ -15094,25 +16514,30 @@ function QuantityObservation (copyData) {
  * @property {string} value Gets or sets the textual value
  * @property {string} interpretationConcept Gets or sets the interpretation concept
  * @property {Concept} interpretationConceptModel [Delay loaded from interpretationConcept],  Gets or sets the concept which indicates the interpretation of the observtion
- * @property {boolean} isNegated Gets or sets an indicator which identifies whether the act actually occurred, or
-            specifically did not occur
- * @property {string} template Gets the template UUID upon which this act is based
- * @property {TemplateDefinition} templateModel [Delay loaded from template],  Gets or sets the template definition
- * @property {Date} actTime Gets or sets the moment in time that this act occurred in ISO format
- * @property {Date} startTime Gets or sets the time when the act should or did start ocurring in ISO format
- * @property {Date} stopTime Gets or sets the time when the act should or did stop ocurring in ISO format
- * @property {string} classConcept Gets or sets the key of the concept which classifies the act.(see: {@link ActClassKeys} for values)
- * @property {string} moodConcept Gets or sets the key of the concept which specifies the mood of the act.(see: {@link ActMoodKeys} for values)
- * @property {string} reasonConcept Gets or sets the key of the concept which defines the reason why the act is or didn't occur(see: {@link ActReasonKeys} for values)
- * @property {string} statusConcept Gets or sets the key of the concept which describes the current status of the act(see: {@link StatusKeys} for values)
- * @property {string} typeConcept Gets or sets the key of the conccept which further classifies the type of act occurring
- * @property {Concept} classConceptModel [Delay loaded from classConcept],  Gets or sets the concept which classifies the type of act
- * @property {Concept} moodConceptModel [Delay loaded from moodConcept],  Gets or sets the concept which specifies the mood of the act
- * @property {Concept} reasonConceptModel [Delay loaded from reasonConcept],  Gets or sets the concept which indicates the reason of the act
- * @property {Concept} statusConceptModel [Delay loaded from statusConcept],  Gets or sets the current status concept of the act
- * @property {Concept} typeConceptModel [Delay loaded from typeConcept],  Type concept identifier
- * @property {object} identifier Gets or sets the identifiers by which this act is known as in other systems
- * @property {ActIdentifier} identifier.classifier  where classifier is from {@link IdentifierBase} authority
+ * @property {boolean} isNegated Identifies whether the act represented in this instance actually occurred
+ * @property {string} template The template on which the act is based
+ * @property {TemplateDefinition} templateModel [Delay loaded from template],  Delay load property for the template
+ * @property {Date} actTime The moment in time that this act occurred in ISO format
+ * @property {Date} startTime The time when the act should or did start ocurring in ISO format
+ * @property {Date} stopTime The time when the act should or did stop ocurring in ISO format
+ * @property {string} classConcept The classification key of the activity(see: {@link ActClassKeys} for values)
+ * @property {string} moodConcept The mood (or mode) of the Act instance(see: {@link ActMoodKeys} for values)
+ * @property {string} reasonConcept Identifies a codified reason as to why this act did (or did not, or should or should not) occur.(see: {@link ActReasonKeys} for values)
+ * @property {string} statusConcept The concept which describes the current status of the act(see: {@link StatusKeys} for values)
+ * @property {string} typeConcept Gets or sets the key of the concept which further classifies the type of act occurring
+ * @property {Concept} classConceptModel [Delay loaded from classConcept],  Gets the delay-loaded value of the 
+    {@link ClassConceptKey}
+ * @property {Concept} moodConceptModel [Delay loaded from moodConcept],  Gets the delay-loaded value of the 
+    {@link MoodConceptKey}
+   property
+ * @property {Concept} reasonConceptModel [Delay loaded from reasonConcept],  Delay loads the concept from 
+    {@link ReasonConceptKey}
+ * @property {Concept} statusConceptModel [Delay loaded from statusConcept],  Delay loads the concept represented in 
+    {@link StatusConceptKey}
+ * @property {Concept} typeConceptModel [Delay loaded from typeConcept],  Delay loads the concept represented in 
+    {@link TypeConceptKey}
+ * @property {object} identifier Identifiers by which this act is known
+ * @property {ActIdentifier} identifier.classifier  where classifier is from {@link IdentifierBase} domain
  * @property {object} relationship Gets a list of all associated acts for this act
  * @property {ActRelationship} relationship.Appends             Indicates that the source act appends information contained in the target act            
  * @property {ActRelationship} relationship.Arrival             Links the transortation act from another act            
@@ -15207,7 +16632,7 @@ function QuantityObservation (copyData) {
  * @property {GeoTag} geo Gets or sets the geo-tag
  * @property {string} previousVersion
  * @property {string} version
- * @property {number} sequence
+ * @property {Int64} sequence
  * @property {Date} creationTimeModel [Delay loaded from creationTime],  Gets or sets the time at which the data was created
  * @property {Date} creationTime Gets or sets the creation time as an ISO date format
  * @property {Date} obsoletionTimeModel [Delay loaded from obsoletionTime],  Gets or sets the time when the data is or will become invalid
@@ -15277,7 +16702,7 @@ function TextObservation (copyData) {
 	 */
 	this.creationTimeModel = copyData.creationTimeModel;
 	/**
-	 * @type {number} 
+	 * @type {Int64} 
 	 */
 	this.sequence = copyData.sequence;
 	/**
@@ -15329,7 +16754,7 @@ function TextObservation (copyData) {
 	 */
 	this.relationship = copyData.relationship;
 	/**
-	 * @summary Gets or sets the identifiers by which this act is known as in other systems
+	 * @summary Identifiers by which this act is known
 	 * @type {object} 
 	 */
 	this.identifier = copyData.identifier;
@@ -15354,42 +16779,46 @@ function TextObservation (copyData) {
 	 */
 	this.classConceptModel = copyData.classConceptModel;
 	/**
-	 * @summary Gets or sets the key of the conccept which further classifies the type of act occurring
+	 * @summary Gets or sets the key of the concept which further classifies the type of act occurring
 	 * @type {string} 
 	 */
 	this.typeConcept = copyData.typeConcept;
 	/**
-	 * @summary Gets or sets the key of the concept which describes the current status of the act
+	 * @summary Delay loads the concept represented in 
+    {@link StatusConceptKey}
 	 * @type {string} 
 	 */
 	this.statusConcept = copyData.statusConcept;
 	/**
-	 * @summary Gets or sets the key of the concept which defines the reason why the act is or didn't occur
+	 * @summary Identifies a codified reason as to why this act did (or did not, or should or should not) occur.
 	 * @type {string} 
 	 */
 	this.reasonConcept = copyData.reasonConcept;
 	/**
-	 * @summary Gets or sets the key of the concept which specifies the mood of the act.
+	 * @summary Gets the delay-loaded value of the 
+    {@link MoodConceptKey}
+   property
 	 * @type {string} 
 	 */
 	this.moodConcept = copyData.moodConcept;
 	/**
-	 * @summary Gets or sets the key of the concept which classifies the act.
+	 * @summary Gets the delay-loaded value of the 
+    {@link ClassConceptKey}
 	 * @type {string} 
 	 */
 	this.classConcept = copyData.classConcept;
 	/**
-	 * @summary Gets or sets the time when the act should or did stop ocurring in ISO format
+	 * @summary The time when the act should or did stop ocurring in ISO format
 	 * @type {Date} 
 	 */
 	this.stopTime = copyData.stopTime;
 	/**
-	 * @summary Gets or sets the time when the act should or did start ocurring in ISO format
+	 * @summary The time when the act should or did start ocurring in ISO format
 	 * @type {Date} 
 	 */
 	this.startTime = copyData.startTime;
 	/**
-	 * @summary Gets or sets the moment in time that this act occurred in ISO format
+	 * @summary The moment in time that this act occurred in ISO format
 	 * @type {Date} 
 	 */
 	this.actTime = copyData.actTime;
@@ -15398,13 +16827,12 @@ function TextObservation (copyData) {
 	 */
 	this.templateModel = copyData.templateModel;
 	/**
-	 * @summary Gets the template UUID upon which this act is based
+	 * @summary The template on which the act is based
 	 * @type {string} 
 	 */
 	this.template = copyData.template;
 	/**
-	 * @summary Gets or sets an indicator which identifies whether the act actually occurred, or
-            specifically did not occur
+	 * @summary Identifies whether the act represented in this instance actually occurred
 	 * @type {boolean} 
 	 */
 	this.isNegated = copyData.isNegated;
@@ -15429,7 +16857,7 @@ function TextObservation (copyData) {
 	this.valueType = copyData.valueType;
 	}
 }  // TextObservation 
-// SanteDB.Core.Model.Acts.CodedObservation, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Acts.CodedObservation, SanteDB.Core.Model, Version=3.0.0.0, Culture=neutral, PublicKeyToken=null
 //if(!CodedObservation)
 /**
  * @class
@@ -15443,25 +16871,30 @@ function TextObservation (copyData) {
  * @property {Concept} valueModel [Delay loaded from value],  Gets or sets the coded value of the observation
  * @property {string} interpretationConcept Gets or sets the interpretation concept
  * @property {Concept} interpretationConceptModel [Delay loaded from interpretationConcept],  Gets or sets the concept which indicates the interpretation of the observtion
- * @property {boolean} isNegated Gets or sets an indicator which identifies whether the act actually occurred, or
-            specifically did not occur
- * @property {string} template Gets the template UUID upon which this act is based
- * @property {TemplateDefinition} templateModel [Delay loaded from template],  Gets or sets the template definition
- * @property {Date} actTime Gets or sets the moment in time that this act occurred in ISO format
- * @property {Date} startTime Gets or sets the time when the act should or did start ocurring in ISO format
- * @property {Date} stopTime Gets or sets the time when the act should or did stop ocurring in ISO format
- * @property {string} classConcept Gets or sets the key of the concept which classifies the act.(see: {@link ActClassKeys} for values)
- * @property {string} moodConcept Gets or sets the key of the concept which specifies the mood of the act.(see: {@link ActMoodKeys} for values)
- * @property {string} reasonConcept Gets or sets the key of the concept which defines the reason why the act is or didn't occur(see: {@link ActReasonKeys} for values)
- * @property {string} statusConcept Gets or sets the key of the concept which describes the current status of the act(see: {@link StatusKeys} for values)
- * @property {string} typeConcept Gets or sets the key of the conccept which further classifies the type of act occurring
- * @property {Concept} classConceptModel [Delay loaded from classConcept],  Gets or sets the concept which classifies the type of act
- * @property {Concept} moodConceptModel [Delay loaded from moodConcept],  Gets or sets the concept which specifies the mood of the act
- * @property {Concept} reasonConceptModel [Delay loaded from reasonConcept],  Gets or sets the concept which indicates the reason of the act
- * @property {Concept} statusConceptModel [Delay loaded from statusConcept],  Gets or sets the current status concept of the act
- * @property {Concept} typeConceptModel [Delay loaded from typeConcept],  Type concept identifier
- * @property {object} identifier Gets or sets the identifiers by which this act is known as in other systems
- * @property {ActIdentifier} identifier.classifier  where classifier is from {@link IdentifierBase} authority
+ * @property {boolean} isNegated Identifies whether the act represented in this instance actually occurred
+ * @property {string} template The template on which the act is based
+ * @property {TemplateDefinition} templateModel [Delay loaded from template],  Delay load property for the template
+ * @property {Date} actTime The moment in time that this act occurred in ISO format
+ * @property {Date} startTime The time when the act should or did start ocurring in ISO format
+ * @property {Date} stopTime The time when the act should or did stop ocurring in ISO format
+ * @property {string} classConcept The classification key of the activity(see: {@link ActClassKeys} for values)
+ * @property {string} moodConcept The mood (or mode) of the Act instance(see: {@link ActMoodKeys} for values)
+ * @property {string} reasonConcept Identifies a codified reason as to why this act did (or did not, or should or should not) occur.(see: {@link ActReasonKeys} for values)
+ * @property {string} statusConcept The concept which describes the current status of the act(see: {@link StatusKeys} for values)
+ * @property {string} typeConcept Gets or sets the key of the concept which further classifies the type of act occurring
+ * @property {Concept} classConceptModel [Delay loaded from classConcept],  Gets the delay-loaded value of the 
+    {@link ClassConceptKey}
+ * @property {Concept} moodConceptModel [Delay loaded from moodConcept],  Gets the delay-loaded value of the 
+    {@link MoodConceptKey}
+   property
+ * @property {Concept} reasonConceptModel [Delay loaded from reasonConcept],  Delay loads the concept from 
+    {@link ReasonConceptKey}
+ * @property {Concept} statusConceptModel [Delay loaded from statusConcept],  Delay loads the concept represented in 
+    {@link StatusConceptKey}
+ * @property {Concept} typeConceptModel [Delay loaded from typeConcept],  Delay loads the concept represented in 
+    {@link TypeConceptKey}
+ * @property {object} identifier Identifiers by which this act is known
+ * @property {ActIdentifier} identifier.classifier  where classifier is from {@link IdentifierBase} domain
  * @property {object} relationship Gets a list of all associated acts for this act
  * @property {ActRelationship} relationship.Appends             Indicates that the source act appends information contained in the target act            
  * @property {ActRelationship} relationship.Arrival             Links the transortation act from another act            
@@ -15556,7 +16989,7 @@ function TextObservation (copyData) {
  * @property {GeoTag} geo Gets or sets the geo-tag
  * @property {string} previousVersion
  * @property {string} version
- * @property {number} sequence
+ * @property {Int64} sequence
  * @property {Date} creationTimeModel [Delay loaded from creationTime],  Gets or sets the time at which the data was created
  * @property {Date} creationTime Gets or sets the creation time as an ISO date format
  * @property {Date} obsoletionTimeModel [Delay loaded from obsoletionTime],  Gets or sets the time when the data is or will become invalid
@@ -15626,7 +17059,7 @@ function CodedObservation (copyData) {
 	 */
 	this.creationTimeModel = copyData.creationTimeModel;
 	/**
-	 * @type {number} 
+	 * @type {Int64} 
 	 */
 	this.sequence = copyData.sequence;
 	/**
@@ -15678,7 +17111,7 @@ function CodedObservation (copyData) {
 	 */
 	this.relationship = copyData.relationship;
 	/**
-	 * @summary Gets or sets the identifiers by which this act is known as in other systems
+	 * @summary Identifiers by which this act is known
 	 * @type {object} 
 	 */
 	this.identifier = copyData.identifier;
@@ -15703,42 +17136,46 @@ function CodedObservation (copyData) {
 	 */
 	this.classConceptModel = copyData.classConceptModel;
 	/**
-	 * @summary Gets or sets the key of the conccept which further classifies the type of act occurring
+	 * @summary Gets or sets the key of the concept which further classifies the type of act occurring
 	 * @type {string} 
 	 */
 	this.typeConcept = copyData.typeConcept;
 	/**
-	 * @summary Gets or sets the key of the concept which describes the current status of the act
+	 * @summary Delay loads the concept represented in 
+    {@link StatusConceptKey}
 	 * @type {string} 
 	 */
 	this.statusConcept = copyData.statusConcept;
 	/**
-	 * @summary Gets or sets the key of the concept which defines the reason why the act is or didn't occur
+	 * @summary Identifies a codified reason as to why this act did (or did not, or should or should not) occur.
 	 * @type {string} 
 	 */
 	this.reasonConcept = copyData.reasonConcept;
 	/**
-	 * @summary Gets or sets the key of the concept which specifies the mood of the act.
+	 * @summary Gets the delay-loaded value of the 
+    {@link MoodConceptKey}
+   property
 	 * @type {string} 
 	 */
 	this.moodConcept = copyData.moodConcept;
 	/**
-	 * @summary Gets or sets the key of the concept which classifies the act.
+	 * @summary Gets the delay-loaded value of the 
+    {@link ClassConceptKey}
 	 * @type {string} 
 	 */
 	this.classConcept = copyData.classConcept;
 	/**
-	 * @summary Gets or sets the time when the act should or did stop ocurring in ISO format
+	 * @summary The time when the act should or did stop ocurring in ISO format
 	 * @type {Date} 
 	 */
 	this.stopTime = copyData.stopTime;
 	/**
-	 * @summary Gets or sets the time when the act should or did start ocurring in ISO format
+	 * @summary The time when the act should or did start ocurring in ISO format
 	 * @type {Date} 
 	 */
 	this.startTime = copyData.startTime;
 	/**
-	 * @summary Gets or sets the moment in time that this act occurred in ISO format
+	 * @summary The moment in time that this act occurred in ISO format
 	 * @type {Date} 
 	 */
 	this.actTime = copyData.actTime;
@@ -15747,13 +17184,12 @@ function CodedObservation (copyData) {
 	 */
 	this.templateModel = copyData.templateModel;
 	/**
-	 * @summary Gets the template UUID upon which this act is based
+	 * @summary The template on which the act is based
 	 * @type {string} 
 	 */
 	this.template = copyData.template;
 	/**
-	 * @summary Gets or sets an indicator which identifies whether the act actually occurred, or
-            specifically did not occur
+	 * @summary Identifies whether the act represented in this instance actually occurred
 	 * @type {boolean} 
 	 */
 	this.isNegated = copyData.isNegated;
@@ -15782,37 +17218,45 @@ function CodedObservation (copyData) {
 	this.valueType = copyData.valueType;
 	}
 }  // CodedObservation 
-// SanteDB.Core.Model.Acts.PatientEncounter, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Acts.PatientEncounter, SanteDB.Core.Model, Version=3.0.0.0, Culture=neutral, PublicKeyToken=null
 //if(!PatientEncounter)
 /**
  * @class
  * @constructor
  * @public
  * @summary Represents an encounter a patient has with the health system
- * @description <p>An encounter is a special type of act which represents an episode of care which a patient experiences with the health system. 
-            An encounter is used to document things like hospital visits, inpatient care encounters, or any longer running series of actions which 
+ * @description <p>An encounter is a special type of act which represents an episode of care which a patient experiences with the health system.
+            An encounter is used to document things like hospital visits, inpatient care encounters, or any longer running series of actions which
             are linked by the admit -&gt; discharge workflow.</p>
  * @property {string} dischargeDisposition Gets or sets the key of discharge disposition
+ * @property {string} admissionSource Gets or sets the admission source type
  * @property {Concept} dischargeDispositionModel [Delay loaded from dischargeDisposition],  Gets or sets the discharge disposition (how the patient left the encounter
- * @property {boolean} isNegated Gets or sets an indicator which identifies whether the act actually occurred, or
-            specifically did not occur
- * @property {string} template Gets the template UUID upon which this act is based
- * @property {TemplateDefinition} templateModel [Delay loaded from template],  Gets or sets the template definition
- * @property {Date} actTime Gets or sets the moment in time that this act occurred in ISO format
- * @property {Date} startTime Gets or sets the time when the act should or did start ocurring in ISO format
- * @property {Date} stopTime Gets or sets the time when the act should or did stop ocurring in ISO format
- * @property {string} classConcept Gets or sets the key of the concept which classifies the act.(see: {@link ActClassKeys} for values)
- * @property {string} moodConcept Gets or sets the key of the concept which specifies the mood of the act.(see: {@link ActMoodKeys} for values)
- * @property {string} reasonConcept Gets or sets the key of the concept which defines the reason why the act is or didn't occur(see: {@link ActReasonKeys} for values)
- * @property {string} statusConcept Gets or sets the key of the concept which describes the current status of the act(see: {@link StatusKeys} for values)
- * @property {string} typeConcept Gets or sets the key of the conccept which further classifies the type of act occurring
- * @property {Concept} classConceptModel [Delay loaded from classConcept],  Gets or sets the concept which classifies the type of act
- * @property {Concept} moodConceptModel [Delay loaded from moodConcept],  Gets or sets the concept which specifies the mood of the act
- * @property {Concept} reasonConceptModel [Delay loaded from reasonConcept],  Gets or sets the concept which indicates the reason of the act
- * @property {Concept} statusConceptModel [Delay loaded from statusConcept],  Gets or sets the current status concept of the act
- * @property {Concept} typeConceptModel [Delay loaded from typeConcept],  Type concept identifier
- * @property {object} identifier Gets or sets the identifiers by which this act is known as in other systems
- * @property {ActIdentifier} identifier.classifier  where classifier is from {@link IdentifierBase} authority
+ * @property {Concept} admissionSourceModel [Delay loaded from admissionSource],  Gets or sets the code indicating the type of place which was responsible for care prior to admission
+ * @property {PatientEncounterArrangement} specialArrangement A list of special arrangements which are to be made to the patient during the encounter
+ * @property {boolean} isNegated Identifies whether the act represented in this instance actually occurred
+ * @property {string} template The template on which the act is based
+ * @property {TemplateDefinition} templateModel [Delay loaded from template],  Delay load property for the template
+ * @property {Date} actTime The moment in time that this act occurred in ISO format
+ * @property {Date} startTime The time when the act should or did start ocurring in ISO format
+ * @property {Date} stopTime The time when the act should or did stop ocurring in ISO format
+ * @property {string} classConcept The classification key of the activity(see: {@link ActClassKeys} for values)
+ * @property {string} moodConcept The mood (or mode) of the Act instance(see: {@link ActMoodKeys} for values)
+ * @property {string} reasonConcept Identifies a codified reason as to why this act did (or did not, or should or should not) occur.(see: {@link ActReasonKeys} for values)
+ * @property {string} statusConcept The concept which describes the current status of the act(see: {@link StatusKeys} for values)
+ * @property {string} typeConcept Gets or sets the key of the concept which further classifies the type of act occurring
+ * @property {Concept} classConceptModel [Delay loaded from classConcept],  Gets the delay-loaded value of the 
+    {@link ClassConceptKey}
+ * @property {Concept} moodConceptModel [Delay loaded from moodConcept],  Gets the delay-loaded value of the 
+    {@link MoodConceptKey}
+   property
+ * @property {Concept} reasonConceptModel [Delay loaded from reasonConcept],  Delay loads the concept from 
+    {@link ReasonConceptKey}
+ * @property {Concept} statusConceptModel [Delay loaded from statusConcept],  Delay loads the concept represented in 
+    {@link StatusConceptKey}
+ * @property {Concept} typeConceptModel [Delay loaded from typeConcept],  Delay loads the concept represented in 
+    {@link TypeConceptKey}
+ * @property {object} identifier Identifiers by which this act is known
+ * @property {ActIdentifier} identifier.classifier  where classifier is from {@link IdentifierBase} domain
  * @property {object} relationship Gets a list of all associated acts for this act
  * @property {ActRelationship} relationship.Appends             Indicates that the source act appends information contained in the target act            
  * @property {ActRelationship} relationship.Arrival             Links the transortation act from another act            
@@ -15907,7 +17351,7 @@ function CodedObservation (copyData) {
  * @property {GeoTag} geo Gets or sets the geo-tag
  * @property {string} previousVersion
  * @property {string} version
- * @property {number} sequence
+ * @property {Int64} sequence
  * @property {Date} creationTimeModel [Delay loaded from creationTime],  Gets or sets the time at which the data was created
  * @property {Date} creationTime Gets or sets the creation time as an ISO date format
  * @property {Date} obsoletionTimeModel [Delay loaded from obsoletionTime],  Gets or sets the time when the data is or will become invalid
@@ -15977,7 +17421,7 @@ function PatientEncounter (copyData) {
 	 */
 	this.creationTimeModel = copyData.creationTimeModel;
 	/**
-	 * @type {number} 
+	 * @type {Int64} 
 	 */
 	this.sequence = copyData.sequence;
 	/**
@@ -16029,7 +17473,7 @@ function PatientEncounter (copyData) {
 	 */
 	this.relationship = copyData.relationship;
 	/**
-	 * @summary Gets or sets the identifiers by which this act is known as in other systems
+	 * @summary Identifiers by which this act is known
 	 * @type {object} 
 	 */
 	this.identifier = copyData.identifier;
@@ -16054,42 +17498,46 @@ function PatientEncounter (copyData) {
 	 */
 	this.classConceptModel = copyData.classConceptModel;
 	/**
-	 * @summary Gets or sets the key of the conccept which further classifies the type of act occurring
+	 * @summary Gets or sets the key of the concept which further classifies the type of act occurring
 	 * @type {string} 
 	 */
 	this.typeConcept = copyData.typeConcept;
 	/**
-	 * @summary Gets or sets the key of the concept which describes the current status of the act
+	 * @summary Delay loads the concept represented in 
+    {@link StatusConceptKey}
 	 * @type {string} 
 	 */
 	this.statusConcept = copyData.statusConcept;
 	/**
-	 * @summary Gets or sets the key of the concept which defines the reason why the act is or didn't occur
+	 * @summary Identifies a codified reason as to why this act did (or did not, or should or should not) occur.
 	 * @type {string} 
 	 */
 	this.reasonConcept = copyData.reasonConcept;
 	/**
-	 * @summary Gets or sets the key of the concept which specifies the mood of the act.
+	 * @summary Gets the delay-loaded value of the 
+    {@link MoodConceptKey}
+   property
 	 * @type {string} 
 	 */
 	this.moodConcept = copyData.moodConcept;
 	/**
-	 * @summary Gets or sets the key of the concept which classifies the act.
+	 * @summary Gets the delay-loaded value of the 
+    {@link ClassConceptKey}
 	 * @type {string} 
 	 */
 	this.classConcept = copyData.classConcept;
 	/**
-	 * @summary Gets or sets the time when the act should or did stop ocurring in ISO format
+	 * @summary The time when the act should or did stop ocurring in ISO format
 	 * @type {Date} 
 	 */
 	this.stopTime = copyData.stopTime;
 	/**
-	 * @summary Gets or sets the time when the act should or did start ocurring in ISO format
+	 * @summary The time when the act should or did start ocurring in ISO format
 	 * @type {Date} 
 	 */
 	this.startTime = copyData.startTime;
 	/**
-	 * @summary Gets or sets the moment in time that this act occurred in ISO format
+	 * @summary The moment in time that this act occurred in ISO format
 	 * @type {Date} 
 	 */
 	this.actTime = copyData.actTime;
@@ -16098,20 +17546,33 @@ function PatientEncounter (copyData) {
 	 */
 	this.templateModel = copyData.templateModel;
 	/**
-	 * @summary Gets the template UUID upon which this act is based
+	 * @summary The template on which the act is based
 	 * @type {string} 
 	 */
 	this.template = copyData.template;
 	/**
-	 * @summary Gets or sets an indicator which identifies whether the act actually occurred, or
-            specifically did not occur
+	 * @summary Identifies whether the act represented in this instance actually occurred
 	 * @type {boolean} 
 	 */
 	this.isNegated = copyData.isNegated;
 	/**
+	 * @summary A list of special arrangements which are to be made to the patient during the encounter
+	 * @type {PatientEncounterArrangement} 
+	 */
+	this.specialArrangement = copyData.specialArrangement;
+	/**
+	 * @type {Concept} 
+	 */
+	this.admissionSourceModel = copyData.admissionSourceModel;
+	/**
 	 * @type {Concept} 
 	 */
 	this.dischargeDispositionModel = copyData.dischargeDispositionModel;
+	/**
+	 * @summary Gets or sets the code indicating the type of place which was responsible for care prior to admission
+	 * @type {string} 
+	 */
+	this.admissionSource = copyData.admissionSource;
 	/**
 	 * @summary Gets or sets the discharge disposition (how the patient left the encounter
 	 * @type {string} 
@@ -16119,13 +17580,92 @@ function PatientEncounter (copyData) {
 	this.dischargeDisposition = copyData.dischargeDisposition;
 	}
 }  // PatientEncounter 
-// SanteDB.Core.Model.Acts.Procedure, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Acts.PatientEncounterArrangement, SanteDB.Core.Model, Version=3.0.0.0, Culture=neutral, PublicKeyToken=null
+//if(!PatientEncounterArrangement)
+/**
+ * @class
+ * @constructor
+ * @public
+ * @extends VersionedAssociation
+ * @summary Links a 
+    {@link PatientEncounter}
+   with one or more codes which indicate special arrangements or 
+            considerations made for a patient stay
+ * @property {string} type Gets or sets the arrangement made
+ * @property {Concept} typeModel [Delay loaded from type],  Gets or sets the type of arrangement
+ * @property {Date} startTime The time when the act should or did start ocurring in ISO format
+ * @property {Date} stopTime The time when the act should or did stop ocurring in ISO format
+ * @property {Int64} effectiveVersionSequence
+ * @property {Int64} obsoleteVersionSequence
+ * @property {Date} modifiedOn
+ * @property {string} source
+ * @property {Act} sourceModel [Delay loaded from source], 
+ * @property {string} id Gets or sets the primary identifying UUID of this object
+ * @property {BatchOperationType} operation Gets or sets the operation(see: {@link BatchOperationType} for values)
+ * @property {string} $type Gets the type registration of this object
+ * @param {PatientEncounterArrangement} copyData Copy constructor (if present)
+ */
+function PatientEncounterArrangement (copyData) { 
+	this.$type = 'PatientEncounterArrangement';
+	if(copyData) {
+	/**
+	 * @summary Gets or sets the operation
+	 * @type {BatchOperationType} 
+	 */
+	this.operation = copyData.operation;
+	/**
+	 * @summary Gets or sets the primary identifying UUID of this object
+	 * @type {string} 
+	 */
+	this.id = copyData.id;
+	/**
+	 * @type {Act} 
+	 */
+	this.sourceModel = copyData.sourceModel;
+	/**
+	 * @type {string} 
+	 */
+	this.source = copyData.source;
+	/**
+	 * @type {Date} 
+	 */
+	this.modifiedOn = copyData.modifiedOn;
+	/**
+	 * @type {Int64} 
+	 */
+	this.obsoleteVersionSequence = copyData.obsoleteVersionSequence;
+	/**
+	 * @type {Int64} 
+	 */
+	this.effectiveVersionSequence = copyData.effectiveVersionSequence;
+	/**
+	 * @summary The time when the act should or did stop ocurring in ISO format
+	 * @type {Date} 
+	 */
+	this.stopTime = copyData.stopTime;
+	/**
+	 * @summary The time when the act should or did start ocurring in ISO format
+	 * @type {Date} 
+	 */
+	this.startTime = copyData.startTime;
+	/**
+	 * @type {Concept} 
+	 */
+	this.typeModel = copyData.typeModel;
+	/**
+	 * @summary Gets or sets the type of arrangement
+	 * @type {string} 
+	 */
+	this.type = copyData.type;
+	}
+}  // PatientEncounterArrangement 
+// SanteDB.Core.Model.Acts.Procedure, SanteDB.Core.Model, Version=3.0.0.0, Culture=neutral, PublicKeyToken=null
 //if(!Procedure)
 /**
  * @class
  * @constructor
  * @public
- * @summary Represents a class which has an immediate and primary outcome and is an alteration 
+ * @summary Represents a class which has an immediate and primary outcome and is an alteration
             of the physical condition of the subject.
  * @property {string} method Gets or sets te method/technique used to perform the procedure
  * @property {string} approachSite Gets or sets the anatomical site or system through which the procedure was performed
@@ -16133,25 +17673,30 @@ function PatientEncounter (copyData) {
  * @property {Concept} methodModel [Delay loaded from method],  Gets or sets te method/technique used to perform the procedure
  * @property {Concept} approachSiteModel [Delay loaded from approachSite],  Gets or sets the anatomical site or system which is the target of the procedure
  * @property {Concept} targetSiteModel [Delay loaded from targetSite],  Gets or sets te method/technique used to perform the procedure
- * @property {boolean} isNegated Gets or sets an indicator which identifies whether the act actually occurred, or
-            specifically did not occur
- * @property {string} template Gets the template UUID upon which this act is based
- * @property {TemplateDefinition} templateModel [Delay loaded from template],  Gets or sets the template definition
- * @property {Date} actTime Gets or sets the moment in time that this act occurred in ISO format
- * @property {Date} startTime Gets or sets the time when the act should or did start ocurring in ISO format
- * @property {Date} stopTime Gets or sets the time when the act should or did stop ocurring in ISO format
- * @property {string} classConcept Gets or sets the key of the concept which classifies the act.(see: {@link ActClassKeys} for values)
- * @property {string} moodConcept Gets or sets the key of the concept which specifies the mood of the act.(see: {@link ActMoodKeys} for values)
- * @property {string} reasonConcept Gets or sets the key of the concept which defines the reason why the act is or didn't occur(see: {@link ActReasonKeys} for values)
- * @property {string} statusConcept Gets or sets the key of the concept which describes the current status of the act(see: {@link StatusKeys} for values)
- * @property {string} typeConcept Gets or sets the key of the conccept which further classifies the type of act occurring
- * @property {Concept} classConceptModel [Delay loaded from classConcept],  Gets or sets the concept which classifies the type of act
- * @property {Concept} moodConceptModel [Delay loaded from moodConcept],  Gets or sets the concept which specifies the mood of the act
- * @property {Concept} reasonConceptModel [Delay loaded from reasonConcept],  Gets or sets the concept which indicates the reason of the act
- * @property {Concept} statusConceptModel [Delay loaded from statusConcept],  Gets or sets the current status concept of the act
- * @property {Concept} typeConceptModel [Delay loaded from typeConcept],  Type concept identifier
- * @property {object} identifier Gets or sets the identifiers by which this act is known as in other systems
- * @property {ActIdentifier} identifier.classifier  where classifier is from {@link IdentifierBase} authority
+ * @property {boolean} isNegated Identifies whether the act represented in this instance actually occurred
+ * @property {string} template The template on which the act is based
+ * @property {TemplateDefinition} templateModel [Delay loaded from template],  Delay load property for the template
+ * @property {Date} actTime The moment in time that this act occurred in ISO format
+ * @property {Date} startTime The time when the act should or did start ocurring in ISO format
+ * @property {Date} stopTime The time when the act should or did stop ocurring in ISO format
+ * @property {string} classConcept The classification key of the activity(see: {@link ActClassKeys} for values)
+ * @property {string} moodConcept The mood (or mode) of the Act instance(see: {@link ActMoodKeys} for values)
+ * @property {string} reasonConcept Identifies a codified reason as to why this act did (or did not, or should or should not) occur.(see: {@link ActReasonKeys} for values)
+ * @property {string} statusConcept The concept which describes the current status of the act(see: {@link StatusKeys} for values)
+ * @property {string} typeConcept Gets or sets the key of the concept which further classifies the type of act occurring
+ * @property {Concept} classConceptModel [Delay loaded from classConcept],  Gets the delay-loaded value of the 
+    {@link ClassConceptKey}
+ * @property {Concept} moodConceptModel [Delay loaded from moodConcept],  Gets the delay-loaded value of the 
+    {@link MoodConceptKey}
+   property
+ * @property {Concept} reasonConceptModel [Delay loaded from reasonConcept],  Delay loads the concept from 
+    {@link ReasonConceptKey}
+ * @property {Concept} statusConceptModel [Delay loaded from statusConcept],  Delay loads the concept represented in 
+    {@link StatusConceptKey}
+ * @property {Concept} typeConceptModel [Delay loaded from typeConcept],  Delay loads the concept represented in 
+    {@link TypeConceptKey}
+ * @property {object} identifier Identifiers by which this act is known
+ * @property {ActIdentifier} identifier.classifier  where classifier is from {@link IdentifierBase} domain
  * @property {object} relationship Gets a list of all associated acts for this act
  * @property {ActRelationship} relationship.Appends             Indicates that the source act appends information contained in the target act            
  * @property {ActRelationship} relationship.Arrival             Links the transortation act from another act            
@@ -16246,7 +17791,7 @@ function PatientEncounter (copyData) {
  * @property {GeoTag} geo Gets or sets the geo-tag
  * @property {string} previousVersion
  * @property {string} version
- * @property {number} sequence
+ * @property {Int64} sequence
  * @property {Date} creationTimeModel [Delay loaded from creationTime],  Gets or sets the time at which the data was created
  * @property {Date} creationTime Gets or sets the creation time as an ISO date format
  * @property {Date} obsoletionTimeModel [Delay loaded from obsoletionTime],  Gets or sets the time when the data is or will become invalid
@@ -16316,7 +17861,7 @@ function Procedure (copyData) {
 	 */
 	this.creationTimeModel = copyData.creationTimeModel;
 	/**
-	 * @type {number} 
+	 * @type {Int64} 
 	 */
 	this.sequence = copyData.sequence;
 	/**
@@ -16368,7 +17913,7 @@ function Procedure (copyData) {
 	 */
 	this.relationship = copyData.relationship;
 	/**
-	 * @summary Gets or sets the identifiers by which this act is known as in other systems
+	 * @summary Identifiers by which this act is known
 	 * @type {object} 
 	 */
 	this.identifier = copyData.identifier;
@@ -16393,42 +17938,46 @@ function Procedure (copyData) {
 	 */
 	this.classConceptModel = copyData.classConceptModel;
 	/**
-	 * @summary Gets or sets the key of the conccept which further classifies the type of act occurring
+	 * @summary Gets or sets the key of the concept which further classifies the type of act occurring
 	 * @type {string} 
 	 */
 	this.typeConcept = copyData.typeConcept;
 	/**
-	 * @summary Gets or sets the key of the concept which describes the current status of the act
+	 * @summary Delay loads the concept represented in 
+    {@link StatusConceptKey}
 	 * @type {string} 
 	 */
 	this.statusConcept = copyData.statusConcept;
 	/**
-	 * @summary Gets or sets the key of the concept which defines the reason why the act is or didn't occur
+	 * @summary Identifies a codified reason as to why this act did (or did not, or should or should not) occur.
 	 * @type {string} 
 	 */
 	this.reasonConcept = copyData.reasonConcept;
 	/**
-	 * @summary Gets or sets the key of the concept which specifies the mood of the act.
+	 * @summary Gets the delay-loaded value of the 
+    {@link MoodConceptKey}
+   property
 	 * @type {string} 
 	 */
 	this.moodConcept = copyData.moodConcept;
 	/**
-	 * @summary Gets or sets the key of the concept which classifies the act.
+	 * @summary Gets the delay-loaded value of the 
+    {@link ClassConceptKey}
 	 * @type {string} 
 	 */
 	this.classConcept = copyData.classConcept;
 	/**
-	 * @summary Gets or sets the time when the act should or did stop ocurring in ISO format
+	 * @summary The time when the act should or did stop ocurring in ISO format
 	 * @type {Date} 
 	 */
 	this.stopTime = copyData.stopTime;
 	/**
-	 * @summary Gets or sets the time when the act should or did start ocurring in ISO format
+	 * @summary The time when the act should or did start ocurring in ISO format
 	 * @type {Date} 
 	 */
 	this.startTime = copyData.startTime;
 	/**
-	 * @summary Gets or sets the moment in time that this act occurred in ISO format
+	 * @summary The moment in time that this act occurred in ISO format
 	 * @type {Date} 
 	 */
 	this.actTime = copyData.actTime;
@@ -16437,13 +17986,12 @@ function Procedure (copyData) {
 	 */
 	this.templateModel = copyData.templateModel;
 	/**
-	 * @summary Gets the template UUID upon which this act is based
+	 * @summary The template on which the act is based
 	 * @type {string} 
 	 */
 	this.template = copyData.template;
 	/**
-	 * @summary Gets or sets an indicator which identifies whether the act actually occurred, or
-            specifically did not occur
+	 * @summary Identifies whether the act represented in this instance actually occurred
 	 * @type {boolean} 
 	 */
 	this.isNegated = copyData.isNegated;
@@ -16476,7 +18024,7 @@ function Procedure (copyData) {
 	this.method = copyData.method;
 	}
 }  // Procedure 
-// SanteDB.Core.Model.Acts.Protocol, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Acts.Protocol, SanteDB.Core.Model, Version=3.0.0.0, Culture=neutral, PublicKeyToken=null
 //if(!Protocol)
 /**
  * @class
@@ -16484,8 +18032,8 @@ function Procedure (copyData) {
  * @public
  * @extends BaseEntityData
  * @summary Represents the model of a clinical protocol
- * @description <p>The protocol type is used to store and retrieve the particular definition of a clinical protocol. In 
-            SanteDB, a clinical protocol represents a series of steps that *should* be taken by a clinician when caring for 
+ * @description <p>The protocol type is used to store and retrieve the particular definition of a clinical protocol. In
+            SanteDB, a clinical protocol represents a series of steps that *should* be taken by a clinician when caring for
             a patient.</p><p>
             A series of proposed steps generated by these protocol definitions are used to represent a care plan (
     {@link CarePlan}
@@ -16493,7 +18041,10 @@ function Procedure (copyData) {
             </p>
  * @property {string} name Gets or sets the name of the protocol
  * @property {string} handlerClass Gets or sets the handler class AQN
+ * @property {Array<byte>} definition Contains instructions which the handler class can understand
  * @property {string} oid Gets or sets the OID
+ * @property {string} narrative Gets the narrative information for the protocol
+ * @property {Narrative} narrativeModel [Delay loaded from narrative],  Gets or sets the narrative description of the protocol
  * @property {Date} creationTimeModel [Delay loaded from creationTime],  Gets or sets the time at which the data was created
  * @property {Date} creationTime Gets or sets the creation time as an ISO date format
  * @property {Date} obsoletionTimeModel [Delay loaded from obsoletionTime],  Gets or sets the time when the data is or will become invalid
@@ -16563,10 +18114,24 @@ function Protocol (copyData) {
 	 */
 	this.creationTimeModel = copyData.creationTimeModel;
 	/**
+	 * @type {Narrative} 
+	 */
+	this.narrativeModel = copyData.narrativeModel;
+	/**
+	 * @summary Gets or sets the narrative description of the protocol
+	 * @type {string} 
+	 */
+	this.narrative = copyData.narrative;
+	/**
 	 * @summary Gets or sets the OID
 	 * @type {string} 
 	 */
 	this.oid = copyData.oid;
+	/**
+	 * @summary Contains instructions which the handler class can understand
+	 * @type {Array<byte>} 
+	 */
+	this.definition = copyData.definition;
 	/**
 	 * @summary Gets or sets the handler class AQN
 	 * @type {string} 
@@ -16579,15 +18144,15 @@ function Protocol (copyData) {
 	this.name = copyData.name;
 	}
 }  // Protocol 
-// SanteDB.Core.Model.Acts.SubstanceAdministration, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Acts.SubstanceAdministration, SanteDB.Core.Model, Version=3.0.0.0, Culture=neutral, PublicKeyToken=null
 //if(!SubstanceAdministration)
 /**
  * @class
  * @constructor
  * @public
  * @summary Represents an act whereby a substance is administered to the patient
- * @description <p>The substance administration act is used whenever a clinician administers, plans to administer or should administer to a patient, a substance. 
-            The substance that is administered is open but should be represented as either a Consumable (something that was consumed in the act of administration 
+ * @description <p>The substance administration act is used whenever a clinician administers, plans to administer or should administer to a patient, a substance.
+            The substance that is administered is open but should be represented as either a Consumable (something that was consumed in the act of administration
             like a manufactured material (
     {@link ManufacturedMaterial}
   ) or a product (if proposing or planning)).</p><p>
@@ -16605,25 +18170,30 @@ function Protocol (copyData) {
  * @property {number} doseSequence The sequence of the dose (i.e. OPV 0 = 0 , OPV 1 = 1, etc.)
  * @property {string} site Gets or sets the site
  * @property {Concept} siteModel [Delay loaded from site],  Gets or sets a concept which indicates the site of administration
- * @property {boolean} isNegated Gets or sets an indicator which identifies whether the act actually occurred, or
-            specifically did not occur
- * @property {string} template Gets the template UUID upon which this act is based
- * @property {TemplateDefinition} templateModel [Delay loaded from template],  Gets or sets the template definition
- * @property {Date} actTime Gets or sets the moment in time that this act occurred in ISO format
- * @property {Date} startTime Gets or sets the time when the act should or did start ocurring in ISO format
- * @property {Date} stopTime Gets or sets the time when the act should or did stop ocurring in ISO format
- * @property {string} classConcept Gets or sets the key of the concept which classifies the act.(see: {@link ActClassKeys} for values)
- * @property {string} moodConcept Gets or sets the key of the concept which specifies the mood of the act.(see: {@link ActMoodKeys} for values)
- * @property {string} reasonConcept Gets or sets the key of the concept which defines the reason why the act is or didn't occur(see: {@link ActReasonKeys} for values)
- * @property {string} statusConcept Gets or sets the key of the concept which describes the current status of the act(see: {@link StatusKeys} for values)
- * @property {string} typeConcept Gets or sets the key of the conccept which further classifies the type of act occurring
- * @property {Concept} classConceptModel [Delay loaded from classConcept],  Gets or sets the concept which classifies the type of act
- * @property {Concept} moodConceptModel [Delay loaded from moodConcept],  Gets or sets the concept which specifies the mood of the act
- * @property {Concept} reasonConceptModel [Delay loaded from reasonConcept],  Gets or sets the concept which indicates the reason of the act
- * @property {Concept} statusConceptModel [Delay loaded from statusConcept],  Gets or sets the current status concept of the act
- * @property {Concept} typeConceptModel [Delay loaded from typeConcept],  Type concept identifier
- * @property {object} identifier Gets or sets the identifiers by which this act is known as in other systems
- * @property {ActIdentifier} identifier.classifier  where classifier is from {@link IdentifierBase} authority
+ * @property {boolean} isNegated Identifies whether the act represented in this instance actually occurred
+ * @property {string} template The template on which the act is based
+ * @property {TemplateDefinition} templateModel [Delay loaded from template],  Delay load property for the template
+ * @property {Date} actTime The moment in time that this act occurred in ISO format
+ * @property {Date} startTime The time when the act should or did start ocurring in ISO format
+ * @property {Date} stopTime The time when the act should or did stop ocurring in ISO format
+ * @property {string} classConcept The classification key of the activity(see: {@link ActClassKeys} for values)
+ * @property {string} moodConcept The mood (or mode) of the Act instance(see: {@link ActMoodKeys} for values)
+ * @property {string} reasonConcept Identifies a codified reason as to why this act did (or did not, or should or should not) occur.(see: {@link ActReasonKeys} for values)
+ * @property {string} statusConcept The concept which describes the current status of the act(see: {@link StatusKeys} for values)
+ * @property {string} typeConcept Gets or sets the key of the concept which further classifies the type of act occurring
+ * @property {Concept} classConceptModel [Delay loaded from classConcept],  Gets the delay-loaded value of the 
+    {@link ClassConceptKey}
+ * @property {Concept} moodConceptModel [Delay loaded from moodConcept],  Gets the delay-loaded value of the 
+    {@link MoodConceptKey}
+   property
+ * @property {Concept} reasonConceptModel [Delay loaded from reasonConcept],  Delay loads the concept from 
+    {@link ReasonConceptKey}
+ * @property {Concept} statusConceptModel [Delay loaded from statusConcept],  Delay loads the concept represented in 
+    {@link StatusConceptKey}
+ * @property {Concept} typeConceptModel [Delay loaded from typeConcept],  Delay loads the concept represented in 
+    {@link TypeConceptKey}
+ * @property {object} identifier Identifiers by which this act is known
+ * @property {ActIdentifier} identifier.classifier  where classifier is from {@link IdentifierBase} domain
  * @property {object} relationship Gets a list of all associated acts for this act
  * @property {ActRelationship} relationship.Appends             Indicates that the source act appends information contained in the target act            
  * @property {ActRelationship} relationship.Arrival             Links the transortation act from another act            
@@ -16718,7 +18288,7 @@ function Protocol (copyData) {
  * @property {GeoTag} geo Gets or sets the geo-tag
  * @property {string} previousVersion
  * @property {string} version
- * @property {number} sequence
+ * @property {Int64} sequence
  * @property {Date} creationTimeModel [Delay loaded from creationTime],  Gets or sets the time at which the data was created
  * @property {Date} creationTime Gets or sets the creation time as an ISO date format
  * @property {Date} obsoletionTimeModel [Delay loaded from obsoletionTime],  Gets or sets the time when the data is or will become invalid
@@ -16788,7 +18358,7 @@ function SubstanceAdministration (copyData) {
 	 */
 	this.creationTimeModel = copyData.creationTimeModel;
 	/**
-	 * @type {number} 
+	 * @type {Int64} 
 	 */
 	this.sequence = copyData.sequence;
 	/**
@@ -16840,7 +18410,7 @@ function SubstanceAdministration (copyData) {
 	 */
 	this.relationship = copyData.relationship;
 	/**
-	 * @summary Gets or sets the identifiers by which this act is known as in other systems
+	 * @summary Identifiers by which this act is known
 	 * @type {object} 
 	 */
 	this.identifier = copyData.identifier;
@@ -16865,42 +18435,46 @@ function SubstanceAdministration (copyData) {
 	 */
 	this.classConceptModel = copyData.classConceptModel;
 	/**
-	 * @summary Gets or sets the key of the conccept which further classifies the type of act occurring
+	 * @summary Gets or sets the key of the concept which further classifies the type of act occurring
 	 * @type {string} 
 	 */
 	this.typeConcept = copyData.typeConcept;
 	/**
-	 * @summary Gets or sets the key of the concept which describes the current status of the act
+	 * @summary Delay loads the concept represented in 
+    {@link StatusConceptKey}
 	 * @type {string} 
 	 */
 	this.statusConcept = copyData.statusConcept;
 	/**
-	 * @summary Gets or sets the key of the concept which defines the reason why the act is or didn't occur
+	 * @summary Identifies a codified reason as to why this act did (or did not, or should or should not) occur.
 	 * @type {string} 
 	 */
 	this.reasonConcept = copyData.reasonConcept;
 	/**
-	 * @summary Gets or sets the key of the concept which specifies the mood of the act.
+	 * @summary Gets the delay-loaded value of the 
+    {@link MoodConceptKey}
+   property
 	 * @type {string} 
 	 */
 	this.moodConcept = copyData.moodConcept;
 	/**
-	 * @summary Gets or sets the key of the concept which classifies the act.
+	 * @summary Gets the delay-loaded value of the 
+    {@link ClassConceptKey}
 	 * @type {string} 
 	 */
 	this.classConcept = copyData.classConcept;
 	/**
-	 * @summary Gets or sets the time when the act should or did stop ocurring in ISO format
+	 * @summary The time when the act should or did stop ocurring in ISO format
 	 * @type {Date} 
 	 */
 	this.stopTime = copyData.stopTime;
 	/**
-	 * @summary Gets or sets the time when the act should or did start ocurring in ISO format
+	 * @summary The time when the act should or did start ocurring in ISO format
 	 * @type {Date} 
 	 */
 	this.startTime = copyData.startTime;
 	/**
-	 * @summary Gets or sets the moment in time that this act occurred in ISO format
+	 * @summary The moment in time that this act occurred in ISO format
 	 * @type {Date} 
 	 */
 	this.actTime = copyData.actTime;
@@ -16909,13 +18483,12 @@ function SubstanceAdministration (copyData) {
 	 */
 	this.templateModel = copyData.templateModel;
 	/**
-	 * @summary Gets the template UUID upon which this act is based
+	 * @summary The template on which the act is based
 	 * @type {string} 
 	 */
 	this.template = copyData.template;
 	/**
-	 * @summary Gets or sets an indicator which identifies whether the act actually occurred, or
-            specifically did not occur
+	 * @summary Identifies whether the act represented in this instance actually occurred
 	 * @type {boolean} 
 	 */
 	this.isNegated = copyData.isNegated;
@@ -16958,447 +18531,7 @@ function SubstanceAdministration (copyData) {
 	this.route = copyData.route;
 	}
 }  // SubstanceAdministration 
-// SanteDB.Core.Auditing.AuditableObjectIdType, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
-// if(!AuditableObjectIdType)
-/**
- * @enum {string}
- * @public
- * @readonly
- * @summary             Classifies the type of identifier that a auditable object may have            
- */
-const AuditableObjectIdType = { 
-	/** 
-	 * 
-	 */
-	NotSpecified : 'NotSpecified',
-	/** 
-	 * 
-	 */
-	MedicalRecord : 'MedicalRecord',
-	/** 
-	 * 
-	 */
-	PatientNumber : 'PatientNumber',
-	/** 
-	 * 
-	 */
-	EncounterNumber : 'EncounterNumber',
-	/** 
-	 * 
-	 */
-	EnrolleeNumber : 'EnrolleeNumber',
-	/** 
-	 * 
-	 */
-	SocialSecurityNumber : 'SocialSecurityNumber',
-	/** 
-	 * 
-	 */
-	AccountNumber : 'AccountNumber',
-	/** 
-	 * 
-	 */
-	GuarantorNumber : 'GuarantorNumber',
-	/** 
-	 * 
-	 */
-	ReportName : 'ReportName',
-	/** 
-	 * 
-	 */
-	ReportNumber : 'ReportNumber',
-	/** 
-	 * 
-	 */
-	SearchCritereon : 'SearchCritereon',
-	/** 
-	 * 
-	 */
-	UserIdentifier : 'UserIdentifier',
-	/** 
-	 * 
-	 */
-	Uri : 'Uri',
-	/** 
-	 *             Custom code            
-	 */
-	Custom : 'Custom',
-}  // AuditableObjectIdType 
-// SanteDB.Core.Auditing.AuditableObjectLifecycle, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
-// if(!AuditableObjectLifecycle)
-/**
- * @enum {string}
- * @public
- * @readonly
- * @summary             Auditable object lifecycle            
- */
-const AuditableObjectLifecycle = { 
-	/** 
-	 *             Not set            
-	 */
-	NotSet : 'NotSet',
-	/** 
-	 *             An object was created            
-	 */
-	Creation : 'Creation',
-	/** 
-	 *             An object was imported from an external source            
-	 */
-	Import : 'Import',
-	/** 
-	 *             An object was amended (updated)            
-	 */
-	Amendment : 'Amendment',
-	/** 
-	 *             An object was verified            
-	 */
-	Verification : 'Verification',
-	/** 
-	 *             An object wsa transformed            
-	 */
-	Translation : 'Translation',
-	/** 
-	 *             An object was accessed            
-	 */
-	Access : 'Access',
-	/** 
-	 *             An object was de-identified            
-	 */
-	Deidentification : 'Deidentification',
-	/** 
-	 *             An object was aggregated with another group of objects            
-	 */
-	Aggregation : 'Aggregation',
-	/** 
-	 *             An object was reported on            
-	 */
-	Report : 'Report',
-	/** 
-	 *             An object was exported to another system            
-	 */
-	Export : 'Export',
-	/** 
-	 *             An object was disclosed to a user            
-	 */
-	Disclosure : 'Disclosure',
-	/** 
-	 *             The object was the receipt of a disclosure            
-	 */
-	ReceiptOfDisclosure : 'ReceiptOfDisclosure',
-	/** 
-	 *             The object was archived            
-	 */
-	Archiving : 'Archiving',
-	/** 
-	 *             The object was obsoleted (logically deleted)            
-	 */
-	LogicalDeletion : 'LogicalDeletion',
-	/** 
-	 *             The object was perminently deleted            
-	 */
-	PermanentErasure : 'PermanentErasure',
-}  // AuditableObjectLifecycle 
-// SanteDB.Core.Auditing.AuditableObjectRole, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
-// if(!AuditableObjectRole)
-/**
- * @enum {string}
- * @public
- * @readonly
- * @summary             Identifies roles of objects in the audit event            
- */
-const AuditableObjectRole = { 
-	/** 
-	 * 
-	 */
-	Patient : 'Patient',
-	/** 
-	 * 
-	 */
-	Location : 'Location',
-	/** 
-	 * 
-	 */
-	Report : 'Report',
-	/** 
-	 * 
-	 */
-	Resource : 'Resource',
-	/** 
-	 * 
-	 */
-	MasterFile : 'MasterFile',
-	/** 
-	 * 
-	 */
-	User : 'User',
-	/** 
-	 * 
-	 */
-	List : 'List',
-	/** 
-	 * 
-	 */
-	Doctor : 'Doctor',
-	/** 
-	 * 
-	 */
-	Subscriber : 'Subscriber',
-	/** 
-	 * 
-	 */
-	Guarantor : 'Guarantor',
-	/** 
-	 * 
-	 */
-	SecurityUser : 'SecurityUser',
-	/** 
-	 * 
-	 */
-	SecurityGroup : 'SecurityGroup',
-	/** 
-	 * 
-	 */
-	SecurityResource : 'SecurityResource',
-	/** 
-	 * 
-	 */
-	SecurityGranularityDefinition : 'SecurityGranularityDefinition',
-	/** 
-	 * 
-	 */
-	Provider : 'Provider',
-	/** 
-	 * 
-	 */
-	DataDestination : 'DataDestination',
-	/** 
-	 * 
-	 */
-	DataRepository : 'DataRepository',
-	/** 
-	 * 
-	 */
-	Schedule : 'Schedule',
-	/** 
-	 * 
-	 */
-	Customer : 'Customer',
-	/** 
-	 * 
-	 */
-	Job : 'Job',
-	/** 
-	 * 
-	 */
-	JobStream : 'JobStream',
-	/** 
-	 * 
-	 */
-	Table : 'Table',
-	/** 
-	 * 
-	 */
-	RoutingCriteria : 'RoutingCriteria',
-	/** 
-	 * 
-	 */
-	Query : 'Query',
-}  // AuditableObjectRole 
-// SanteDB.Core.Auditing.AuditableObjectType, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
-// if(!AuditableObjectType)
-/**
- * @enum {string}
- * @public
- * @readonly
- * @summary             Identifies the type of auditable objects in the system            
- */
-const AuditableObjectType = { 
-	/** 
-	 *             Not specified            
-	 */
-	NotSpecified : 'NotSpecified',
-	/** 
-	 *             Represents a person.            
-	 */
-	Person : 'Person',
-	/** 
-	 *             Represents a system object.            
-	 */
-	SystemObject : 'SystemObject',
-	/** 
-	 *             Represents an organization.            
-	 */
-	Organization : 'Organization',
-	/** 
-	 *             Represents an other object type.            
-	 */
-	Other : 'Other',
-}  // AuditableObjectType 
-// SanteDB.Core.Auditing.NetworkAccessPointType, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
-// if(!NetworkAccessPointType)
-/**
- * @enum {string}
- * @public
- * @readonly
- * @summary             Represents the type of network access point.            
- */
-const NetworkAccessPointType = { 
-	/** 
-	 *             Represents an identifier which is a machine name.            
-	 */
-	MachineName : 'MachineName',
-	/** 
-	 *             Represents an identifier which is an IP address.            
-	 */
-	IPAddress : 'IPAddress',
-	/** 
-	 *             Represents an identifier which is a telephone number.            
-	 */
-	TelephoneNumber : 'TelephoneNumber',
-}  // NetworkAccessPointType 
-// SanteDB.Core.Auditing.ActionType, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
-// if(!ActionType)
-/**
- * @enum {string}
- * @public
- * @readonly
- * @summary             Represents types of actions            
- */
-const ActionType = { 
-	/** 
-	 *             Data was created in the system            
-	 */
-	Create : 'Create',
-	/** 
-	 *             Data was viewed, printed, displayed, etc...            
-	 */
-	Read : 'Read',
-	/** 
-	 *             Data was revised in the system            
-	 */
-	Update : 'Update',
-	/** 
-	 *             Data was removed from the system            
-	 */
-	Delete : 'Delete',
-	/** 
-	 *             A system, or application function was performed            
-	 */
-	Execute : 'Execute',
-}  // ActionType 
-// SanteDB.Core.Auditing.EventIdentifierType, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
-// if(!EventIdentifierType)
-/**
- * @enum {string}
- * @public
- * @readonly
- * @summary             Represents an event identifier type.            
- */
-const EventIdentifierType = { 
-	/** 
-	 *             Represents a provisioning event.            
-	 */
-	ProvisioningEvent : 'ProvisioningEvent',
-	/** 
-	 *             Represents a medication event.            
-	 */
-	MedicationEvent : 'MedicationEvent',
-	/** 
-	 *             Represents a resource assignment.            
-	 */
-	ResourceAssignment : 'ResourceAssignment',
-	/** 
-	 *             Represents a care episode.            
-	 */
-	CareEpisode : 'CareEpisode',
-	/** 
-	 *             Represents a care protocol.            
-	 */
-	CareProtocol : 'CareProtocol',
-	/** 
-	 *             Represents a procedure record.            
-	 */
-	ProcedureRecord : 'ProcedureRecord',
-	/** 
-	 *             Represents a query.            
-	 */
-	Query : 'Query',
-	/** 
-	 *             Represents a patient record.            
-	 */
-	PatientRecord : 'PatientRecord',
-	/** 
-	 *             Represents an order record.            
-	 */
-	OrderRecord : 'OrderRecord',
-	/** 
-	 *             Represents a network entry.            
-	 */
-	NetworkActivity : 'NetworkActivity',
-	/** 
-	 *             Represents an import.            
-	 */
-	Import : 'Import',
-	/** 
-	 *             Represents an export.            
-	 */
-	Export : 'Export',
-	/** 
-	 *             Represents application activity.            
-	 */
-	ApplicationActivity : 'ApplicationActivity',
-	/** 
-	 *             Represents a security alert.            
-	 */
-	SecurityAlert : 'SecurityAlert',
-	/** 
-	 *             Represents user authentication.            
-	 */
-	UserAuthentication : 'UserAuthentication',
-	/** 
-	 *             Represents that an emergency override started.            
-	 */
-	EmergencyOverrideStarted : 'EmergencyOverrideStarted',
-	/** 
-	 *             Represents the use of a restricted function.            
-	 */
-	UseOfRestrictedFunction : 'UseOfRestrictedFunction',
-	/** 
-	 *             Represents a login.            
-	 */
-	Login : 'Login',
-	/** 
-	 *             Represents a logout.            
-	 */
-	Logout : 'Logout',
-}  // EventIdentifierType 
-// SanteDB.Core.Auditing.OutcomeIndicator, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
-// if(!OutcomeIndicator)
-/**
- * @enum {string}
- * @public
- * @readonly
- * @summary             Represents potential outcomes.            
- */
-const OutcomeIndicator = { 
-	/** 
-	 *             Successful operation.            
-	 */
-	Success : 'Success',
-	/** 
-	 *             Minor failure, action should be restarted.            
-	 */
-	MinorFail : 'MinorFail',
-	/** 
-	 *             Action was terminated.            
-	 */
-	SeriousFail : 'SeriousFail',
-	/** 
-	 *             Major failure, action is made unavailable.            
-	 */
-	EpicFail : 'EpicFail',
-}  // OutcomeIndicator 
-// SanteDB.Core.Model.DataTypes.BatchOperationType, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.DataTypes.BatchOperationType, SanteDB.Core.Model, Version=3.0.0.0, Culture=neutral, PublicKeyToken=null
 // if(!BatchOperationType)
 /**
  * @enum {string}
@@ -17424,161 +18557,15 @@ const BatchOperationType = {
 	 */
 	Update : 'Update',
 	/** 
-	 * 
+	 *             Delete the object            
 	 */
-	Obsolete : 'Obsolete',
+	Delete : 'Delete',
+	/** 
+	 *             Ignore this object - it is for reference only            
+	 */
+	Ignore : 'Ignore',
 }  // BatchOperationType 
-// SanteDB.Core.Auditing.AuditMetadataKey, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
-// if(!AuditMetadataKey)
-/**
- * @enum {string}
- * @public
- * @readonly
- * @summary             Represents metadata keys            
- */
-const AuditMetadataKey = { 
-	/** 
-	 *             The metadata represents a patient identifier            
-	 */
-	PID : 'PID',
-	/** 
-	 *             The object is a process name            
-	 */
-	ProcessName : 'ProcessName',
-	/** 
-	 *             Identifies the remote host as an IP address            
-	 */
-	RemoteHost : 'RemoteHost',
-	/** 
-	 * 
-	 */
-	RemoteEndpoint : 'RemoteEndpoint',
-	/** 
-	 *             Identifies the local endpoint            
-	 */
-	LocalEndpoint : 'LocalEndpoint',
-	/** 
-	 *             Identifies the time a batch was submitted            
-	 */
-	SubmissionTime : 'SubmissionTime',
-	/** 
-	 *             Identifies if an object was in original format            
-	 */
-	OriginalFormat : 'OriginalFormat',
-	/** 
-	 *             Identifies the status of the object            
-	 */
-	SubmissionStatus : 'SubmissionStatus',
-	/** 
-	 *             Identifies the priority of the object            
-	 */
-	Priority : 'Priority',
-	/** 
-	 *             Identifies the object classification            
-	 */
-	Classification : 'Classification',
-	/** 
-	 *             Identifies the object as a session identifier            
-	 */
-	SessionId : 'SessionId',
-	/** 
-	 *             Identifies the object as an enterprise site identifier            
-	 */
-	EnterpriseSiteID : 'EnterpriseSiteID',
-	/** 
-	 *             Identifies the object's metadata as the source            
-	 */
-	AuditSourceID : 'AuditSourceID',
-	/** 
-	 *             Identifies the source type            
-	 */
-	AuditSourceType : 'AuditSourceType',
-	/** 
-	 *             Allows the correlation of data between audits            
-	 */
-	CorrelationToken : 'CorrelationToken',
-}  // AuditMetadataKey 
-// SanteDB.Core.Model.Warehouse.SchemaPropertyType, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
-// if(!SchemaPropertyType)
-/**
- * @enum {string}
- * @public
- * @readonly
- * @summary             Identifies the type which a schema property carries            
- */
-const SchemaPropertyType = { 
-	/** 
-	 *             The object represents a string            
-	 */
-	String : 'String',
-	/** 
-	 *             The object represents an integer            
-	 */
-	Integer : 'Integer',
-	/** 
-	 *             The object represents a floating point number            
-	 */
-	Float : 'Float',
-	/** 
-	 *             Date            
-	 */
-	Date : 'Date',
-	/** 
-	 *             Identifies the column is a boolean            
-	 */
-	Boolean : 'Boolean',
-	/** 
-	 *             Identifies the column is a UUID            
-	 */
-	Uuid : 'Uuid',
-	/** 
-	 *             Identifies the column as binary            
-	 */
-	Binary : 'Binary',
-	/** 
-	 *             Decimal            
-	 */
-	Decimal : 'Decimal',
-	/** 
-	 *             Identifies the column is an object which has other data            
-	 */
-	Object : 'Object',
-	/** 
-	 *             Identifies a column has a date and a time            
-	 */
-	DateTime : 'DateTime',
-	/** 
-	 *             Represents a timestamp (with timezone)            
-	 */
-	TimeStamp : 'TimeStamp',
-}  // SchemaPropertyType 
-// SanteDB.Core.Model.Warehouse.SchemaPropertyAttributes, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
-// if(!SchemaPropertyAttributes)
-/**
- * @enum {string}
- * @public
- * @readonly
- * @summary             Identifies the type which a schema property carries            
- */
-const SchemaPropertyAttributes = { 
-	/** 
-	 *             No attributes            
-	 */
-	None : 'None',
-	/** 
-	 *             Indexed            
-	 */
-	Indexed : 'Indexed',
-	/** 
-	 *             Not null            
-	 */
-	NotNull : 'NotNull',
-	/** 
-	 *             Unique            
-	 */
-	Unique : 'Unique',
-}  // SchemaPropertyAttributes 
-// SanteDB.Core.Model.Subscription.SubscriptionModeType, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Subscription.SubscriptionModeType, SanteDB.Core.Model, Version=3.0.0.0, Culture=neutral, PublicKeyToken=null
 // if(!SubscriptionModeType)
 /**
  * @enum {string}
@@ -17590,17 +18577,17 @@ const SubscriptionModeType = {
 	/** 
 	 *             Only visible when subscription mode is selected            
 	 */
-	Subscription : 'Subscription',
+	Partial : 'Partial',
 	/** 
 	 *             Only visible when all data (no specific item) is selected            
 	 */
-	All : 'All',
+	Full : 'Full',
 	/** 
 	 *             Always visible            
 	 */
-	AllOrSubscription : 'AllOrSubscription',
+	FullOrPartial : 'FullOrPartial',
 }  // SubscriptionModeType 
-// SanteDB.Core.Model.Subscription.SubscriptionTriggerType, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Subscription.SubscriptionTriggerType, SanteDB.Core.Model, Version=3.0.0.0, Culture=neutral, PublicKeyToken=null
 // if(!SubscriptionTriggerType)
 /**
  * @enum {string}
@@ -17646,7 +18633,7 @@ const SubscriptionTriggerType = {
 	 */
 	Manual : 'Manual',
 }  // SubscriptionTriggerType 
-// SanteDB.Core.Model.Security.PolicyGrantType, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Security.PolicyGrantType, SanteDB.Core.Model, Version=3.0.0.0, Culture=neutral, PublicKeyToken=null
 // if(!PolicyGrantType)
 /**
  * @enum {string}
@@ -17668,19 +18655,19 @@ const PolicyGrantType = {
 	 */
 	Grant : 'Grant',
 }  // PolicyGrantType 
-// SanteDB.Core.Model.Constants.UserClassKeys, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
-// if(!UserClassKeys)
+// SanteDB.Core.Model.Constants.ActorTypeKeys, SanteDB.Core.Model, Version=3.0.0.0, Culture=neutral, PublicKeyToken=null
+// if(!ActorTypeKeys)
 /**
  * @enum {string}
  * @public
  * @readonly
  * @summary             Represents user classification keys            
  */
-const UserClassKeys = { 
+const ActorTypeKeys = { 
 	/** 
 	 *             Represents a user which is an application            
 	 */
-	ApplicationUser : 'e9cd4dad-2759-4022-ab07-92fcfb236a98',
+	Application : 'e9cd4dad-2759-4022-ab07-92fcfb236a98',
 	/** 
 	 *             Represents a user which is a human            
 	 */
@@ -17688,9 +18675,13 @@ const UserClassKeys = {
 	/** 
 	 *             Represents a user which is a system user            
 	 */
-	SystemUser : '9f71bb34-9691-440f-8249-9c831ea16d58',
-}  // UserClassKeys 
-// SanteDB.Core.Model.DataTypes.DatePrecision, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
+	System : '9f71bb34-9691-440f-8249-9c831ea16d58',
+	/** 
+	 *             Is a device user            
+	 */
+	Device : '5d584bec-7cfe-4d24-a6d7-efaf7f315c1f',
+}  // ActorTypeKeys 
+// SanteDB.Core.Model.DataTypes.DatePrecision, SanteDB.Core.Model, Version=3.0.0.0, Culture=neutral, PublicKeyToken=null
 // if(!DatePrecision)
 /**
  * @enum {string}
@@ -17728,7 +18719,7 @@ const DatePrecision = {
 	 */
 	Second : 'Second',
 }  // DatePrecision 
-// SanteDB.Core.Model.Constants.AddressUseKeys, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Constants.AddressUseKeys, SanteDB.Core.Model, Version=3.0.0.0, Culture=neutral, PublicKeyToken=null
 // if(!AddressUseKeys)
 /**
  * @enum {string}
@@ -17798,7 +18789,7 @@ const AddressUseKeys = {
 	 */
 	WorkPlace : 'eaa6f08e-bb8e-4457-9dc0-3a1555fadf5c',
 }  // AddressUseKeys 
-// SanteDB.Core.Model.Constants.EntityClassKeys, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Constants.EntityClassKeys, SanteDB.Core.Model, Version=3.0.0.0, Culture=neutral, PublicKeyToken=null
 // if(!EntityClassKeys)
 /**
  * @enum {string}
@@ -17891,8 +18882,12 @@ const EntityClassKeys = {
 	 *             Represents a precinct or sub-division of a city such as a burrogh            
 	 */
 	PrecinctOrBorough : 'acafe0f2-e209-43bb-8633-3665fd7c90ba',
+	/** 
+	 *             Represents a person which is a user in the system            
+	 */
+	UserEntity : '6a2b00ba-501b-4523-b57c-f96d8ae44684',
 }  // EntityClassKeys 
-// SanteDB.Core.Model.Constants.DeterminerKeys, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Constants.DeterminerKeys, SanteDB.Core.Model, Version=3.0.0.0, Culture=neutral, PublicKeyToken=null
 // if(!DeterminerKeys)
 /**
  * @enum {string}
@@ -17914,7 +18909,7 @@ const DeterminerKeys = {
 	 */
 	Specific : 'f29f08de-78a7-4a5e-aeaf-7b545ba19a09',
 }  // DeterminerKeys 
-// SanteDB.Core.Model.Constants.NameUseKeys, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Constants.NameUseKeys, SanteDB.Core.Model, Version=3.0.0.0, Culture=neutral, PublicKeyToken=null
 // if(!NameUseKeys)
 /**
  * @enum {string}
@@ -17988,15 +18983,15 @@ const NameUseKeys = {
 	 */
 	Syllabic : 'b4ca3bf0-a7fc-44f3-87d5-e126beda93ff',
 }  // NameUseKeys 
-// SanteDB.Core.Model.Constants.ActParticipationKey, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
-// if(!ActParticipationKey)
+// SanteDB.Core.Model.Constants.ActParticipationKeys, SanteDB.Core.Model, Version=3.0.0.0, Culture=neutral, PublicKeyToken=null
+// if(!ActParticipationKeys)
 /**
  * @enum {string}
  * @public
  * @readonly
  * @summary             Represents the participation concepts which an entity can participate in an act            
  */
-const ActParticipationKey = { 
+const ActParticipationKeys = { 
 	/** 
 	 *             The player entity was the person who was responsible for admitting the patient into a facility or care scenario.            
 	 */
@@ -18221,8 +19216,8 @@ const ActParticipationKey = {
 	 *             The player entity represents a legal witness to the act occurring.            
 	 */
 	Witness : '0b82357f-5ae0-4543-ab8e-a33e9b315bab',
-}  // ActParticipationKey 
-// SanteDB.Core.Model.Constants.EntityRelationshipTypeKeys, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
+}  // ActParticipationKeys 
+// SanteDB.Core.Model.Constants.EntityRelationshipTypeKeys, SanteDB.Core.Model, Version=3.0.0.0, Culture=neutral, PublicKeyToken=null
 // if(!EntityRelationshipTypeKeys)
 /**
  * @enum {string}
@@ -18268,7 +19263,7 @@ const EntityRelationshipTypeKeys = {
 	 */
 	Aliquot : 'cff670e4-965e-4288-b966-47a44479d2ad',
 	/** 
-	 *             The target is an entity acting under the employ of the source entity            
+	 *             The target is an entity acting under role or assignment of the source             
 	 */
 	AssignedEntity : '77b7a04b-c065-4faf-8ec0-2cdad4ae372b',
 	/** 
@@ -18620,7 +19615,7 @@ const EntityRelationshipTypeKeys = {
 	 */
 	NieceNephew : 'a907e4d8-d823-478f-9c5a-6facae6b4b5b',
 	/** 
-	 *             The target is a notary public acting within the source entity             
+	 *             The target is a notary public acting within the source entity            
 	 */
 	NotaryPublic : 'f1ef6c46-05eb-4482-baeb-eaf0a8e5ffef',
 	/** 
@@ -18804,7 +19799,7 @@ const EntityRelationshipTypeKeys = {
 	 */
 	Student : '0c157566-d1e9-4976-8542-473caa9ba2a4',
 	/** 
-	 *             The target is a subscriber of the source, meaning the target should receive updates whenever the source changes             
+	 *             The target is a subscriber of the source, meaning the target should receive updates whenever the source changes            
 	 */
 	Subscriber : 'f31a2a5b-ce13-47e1-a0fb-d704f31547db',
 	/** 
@@ -18836,7 +19831,7 @@ const EntityRelationshipTypeKeys = {
 	 */
 	Wife : 'a3ff423e-81d5-4571-8edf-03c295189a23',
 	/** 
-	 *             The source replaces the target (note: this is one relationship where the role relationship is reveresed)             
+	 *             The source replaces the target (note: this is one relationship where the role relationship is reveresed)            
 	 */
 	Replaces : 'd1578637-e1cb-415e-b319-4011da033813',
 	/** 
@@ -18859,8 +19854,24 @@ const EntityRelationshipTypeKeys = {
 	 *             Referenced entities            
 	 */
 	EquivalentEntity : '395f4edf-5d5d-4950-9f5e-f827f72e4b32',
-}  // EntityRelationshipTypeKeys  
-// SanteDB.Core.Model.Constants.StatusKeys, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
+	/** 
+	 *             The source entity has an ingredient represented by the target            
+	 */
+	HasIngredient : '1f7163df-bd86-436d-a14c-b225cdc630c5',
+	/** 
+	 *             The source entity is comprised of the target. Note that this differs from PART in that content can be separated, parts cannot be separated            
+	 */
+	HasContent : '9b127e8c-3703-42a9-8a7a-bbafc6ab2c00',
+	/** 
+	 *             The source entity is a specialization of the target (i.e. the target is a more general entity kind than the source)            
+	 */
+	HasGenerialization : 'bf9f929a-e7eb-4e5b-b82e-cf44384f0a3b',
+	/** 
+	 *             The source entity is comprised of the target as a part (example: DTP vaccine kind has part Diptheria vaccine kind, Tetanus vaccine kind, and Pertussis vaccine kind)            
+	 */
+	HasPart : '2220ef3f-b8d9-43a4-9bae-a2906e3c0803',
+}  // EntityRelationshipTypeKeys 
+// SanteDB.Core.Model.Constants.StatusKeys, SanteDB.Core.Model, Version=3.0.0.0, Culture=neutral, PublicKeyToken=null
 // if(!StatusKeys)
 /**
  * @enum {string}
@@ -18897,8 +19908,24 @@ const StatusKeys = {
 	 *             Indicates that the entity or act did exist at one point, however it no longer exists            
 	 */
 	Purged : '39995c08-0a5c-4549-8ba7-d187f9b3c4fd',
+	/** 
+	 *             Indicates that the entity or act did exist at one point, however it no longer exists - and the reason is unknown            
+	 */
+	Inactive : '0bbec253-21a1-49cb-b376-7fe4d0592cda',
+	/** 
+	 *             States which indicate that a record is active            
+	 */
+	ActiveStates : 'System.Guid[]',
+	/** 
+	 *             States which indicate that a record is inactive and should not be included in results            
+	 */
+	InactiveStates : 'System.Guid[]',
+	/** 
+	 *             Any status            
+	 */
+	AllStates : 'System.Guid[]',
 }  // StatusKeys 
-// SanteDB.Core.Model.Constants.TelecomAddressUseKeys, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Constants.TelecomAddressUseKeys, SanteDB.Core.Model, Version=3.0.0.0, Culture=neutral, PublicKeyToken=null
 // if(!TelecomAddressUseKeys)
 /**
  * @enum {string}
@@ -18907,6 +19934,10 @@ const StatusKeys = {
  * @summary             Telecommunications address use keys            
  */
 const TelecomAddressUseKeys = { 
+	/** 
+	 *             Primary home            
+	 */
+	PrimaryHome : 'f3132fc0-aadd-40b7-b875-961c40695389',
 	/** 
 	 *             answering service            
 	 */
@@ -18936,7 +19967,7 @@ const TelecomAddressUseKeys = {
 	 */
 	WorkPlace : 'eaa6f08e-bb8e-4457-9dc0-3a1555fadf5c',
 }  // TelecomAddressUseKeys 
-// SanteDB.Core.Model.Patch.PatchOperationType, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Patch.PatchOperationType, SanteDB.Core.Model, Version=3.0.0.0, Culture=neutral, PublicKeyToken=null
 // if(!PatchOperationType)
 /**
  * @enum {string}
@@ -18962,7 +19993,7 @@ const PatchOperationType = {
 	 */
 	Test : 'Test',
 }  // PatchOperationType 
-// SanteDB.Core.Model.Constants.AddressComponentKeys, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Constants.AddressComponentKeys, SanteDB.Core.Model, Version=3.0.0.0, Culture=neutral, PublicKeyToken=null
 // if(!AddressComponentKeys)
 /**
  * @enum {string}
@@ -19084,7 +20115,7 @@ const AddressComponentKeys = {
 	 */
 	UnitIdentifier : '908c09df-81fe-45ac-9233-0881a278a401',
 }  // AddressComponentKeys 
-// SanteDB.Core.Model.Constants.NameComponentKeys, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Constants.NameComponentKeys, SanteDB.Core.Model, Version=3.0.0.0, Culture=neutral, PublicKeyToken=null
 // if(!NameComponentKeys)
 /**
  * @enum {string}
@@ -19118,7 +20149,7 @@ const NameComponentKeys = {
 	 */
 	Title : '4386d92a-d81b-4033-b968-01e57e20d5e0',
 }  // NameComponentKeys 
-// SanteDB.Core.Model.Constants.RelationshipClassKeys, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Constants.RelationshipClassKeys, SanteDB.Core.Model, Version=3.0.0.0, Culture=neutral, PublicKeyToken=null
 // if(!RelationshipClassKeys)
 /**
  * @enum {string}
@@ -19139,8 +20170,12 @@ const RelationshipClassKeys = {
 	 *             The target is referenced by the holder by a system process and should not be disclosed on non-internal APIs            
 	 */
 	PrivateLink : 'ca3057c3-ce83-4ca5-a0c4-fa0480b7f991',
+	/** 
+	 *             The holder of the relationship plays the role of the target of the relationship            
+	 */
+	PlayedRoleLink : '8e7befbc-56d9-49f2-a758-7085ca72d03d',
 }  // RelationshipClassKeys 
-// SanteDB.Core.Model.Constants.TelecomAddressTypeKeys, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Constants.TelecomAddressTypeKeys, SanteDB.Core.Model, Version=3.0.0.0, Culture=neutral, PublicKeyToken=null
 // if(!TelecomAddressTypeKeys)
 /**
  * @enum {string}
@@ -19174,7 +20209,29 @@ const TelecomAddressTypeKeys = {
 	 */
 	Internet : 'c1c0a4e9-4238-4044-b89b-9c9798995b93',
 }  // TelecomAddressTypeKeys 
-// SanteDB.Core.Model.Constants.ConceptRelationshipTypeKeys, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.DataTypes.IdentifierReliability, SanteDB.Core.Model, Version=3.0.0.0, Culture=neutral, PublicKeyToken=null
+// if(!IdentifierReliability)
+/**
+ * @enum {string}
+ * @public
+ * @readonly
+ * @summary             Reliability of the identifier            
+ */
+const IdentifierReliability = { 
+	/** 
+	 *             Unspecified            
+	 */
+	Unspecified : 'Unspecified',
+	/** 
+	 *             Authoritative            
+	 */
+	Authoritative : 'Authoritative',
+	/** 
+	 *             Informative            
+	 */
+	Informative : 'Informative',
+}  // IdentifierReliability 
+// SanteDB.Core.Model.Constants.ConceptRelationshipTypeKeys, SanteDB.Core.Model, Version=3.0.0.0, Culture=neutral, PublicKeyToken=null
 // if(!ConceptRelationshipTypeKeys)
 /**
  * @enum {string}
@@ -19208,7 +20265,7 @@ const ConceptRelationshipTypeKeys = {
 	 */
 	WiderThan : 'ae8b4f2f-009f-4e0d-b35e-5a89555c5980',
 }  // ConceptRelationshipTypeKeys 
-// SanteDB.Core.Model.Constants.ConceptClassKeys, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Constants.ConceptClassKeys, SanteDB.Core.Model, Version=3.0.0.0, Culture=neutral, PublicKeyToken=null
 // if(!ConceptClassKeys)
 /**
  * @enum {string}
@@ -19274,7 +20331,7 @@ const ConceptClassKeys = {
 	 */
 	Language : 'ed032625-8139-4bdd-af25-c54a6960f87d',
 }  // ConceptClassKeys 
-// SanteDB.Core.Model.Constants.CodeSystemKeys, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Constants.CodeSystemKeys, SanteDB.Core.Model, Version=3.0.0.0, Culture=neutral, PublicKeyToken=null
 // if(!CodeSystemKeys)
 /**
  * @enum {string}
@@ -19332,7 +20389,607 @@ const CodeSystemKeys = {
 	 */
 	AdministrativeGender : '7a3a7139-b93e-4a99-bd54-749e30fe712a',
 }  // CodeSystemKeys 
-// SanteDB.Core.Model.Constants.ActClassKeys, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Audit.AuditableObjectIdType, SanteDB.Core.Model, Version=3.0.0.0, Culture=neutral, PublicKeyToken=null
+// if(!AuditableObjectIdType)
+/**
+ * @enum {string}
+ * @public
+ * @readonly
+ * @summary             Classifies the type of identifier that a auditable object may have            
+ */
+const AuditableObjectIdType = { 
+	/** 
+	 * 
+	 */
+	NotSpecified : 'NotSpecified',
+	/** 
+	 * 
+	 */
+	MedicalRecord : 'MedicalRecord',
+	/** 
+	 * 
+	 */
+	PatientNumber : 'PatientNumber',
+	/** 
+	 * 
+	 */
+	EncounterNumber : 'EncounterNumber',
+	/** 
+	 * 
+	 */
+	EnrolleeNumber : 'EnrolleeNumber',
+	/** 
+	 * 
+	 */
+	SocialSecurityNumber : 'SocialSecurityNumber',
+	/** 
+	 * 
+	 */
+	AccountNumber : 'AccountNumber',
+	/** 
+	 * 
+	 */
+	GuarantorNumber : 'GuarantorNumber',
+	/** 
+	 * 
+	 */
+	ReportName : 'ReportName',
+	/** 
+	 * 
+	 */
+	ReportNumber : 'ReportNumber',
+	/** 
+	 * 
+	 */
+	SearchCritereon : 'SearchCritereon',
+	/** 
+	 * 
+	 */
+	UserIdentifier : 'UserIdentifier',
+	/** 
+	 * 
+	 */
+	Uri : 'Uri',
+	/** 
+	 *             Custom code            
+	 */
+	Custom : 'Custom',
+}  // AuditableObjectIdType 
+// SanteDB.Core.Model.Audit.AuditableObjectLifecycle, SanteDB.Core.Model, Version=3.0.0.0, Culture=neutral, PublicKeyToken=null
+// if(!AuditableObjectLifecycle)
+/**
+ * @enum {string}
+ * @public
+ * @readonly
+ * @summary             Auditable object lifecycle indicates the lifecycle of the object when the audit was created            
+ */
+const AuditableObjectLifecycle = { 
+	/** 
+	 *             Not set            
+	 */
+	NotSet : 'NotSet',
+	/** 
+	 *             An object was created            
+	 */
+	Creation : 'Creation',
+	/** 
+	 *             An object was imported from an external source            
+	 */
+	Import : 'Import',
+	/** 
+	 *             An object was amended (updated)            
+	 */
+	Amendment : 'Amendment',
+	/** 
+	 *             An object was verified            
+	 */
+	Verification : 'Verification',
+	/** 
+	 *             An object wsa transformed            
+	 */
+	Translation : 'Translation',
+	/** 
+	 *             An object was accessed            
+	 */
+	Access : 'Access',
+	/** 
+	 *             An object was de-identified            
+	 */
+	Deidentification : 'Deidentification',
+	/** 
+	 *             An object was aggregated with another group of objects            
+	 */
+	Aggregation : 'Aggregation',
+	/** 
+	 *             An object was reported on            
+	 */
+	Report : 'Report',
+	/** 
+	 *             An object was exported to another system            
+	 */
+	Export : 'Export',
+	/** 
+	 *             An object was disclosed to a user            
+	 */
+	Disclosure : 'Disclosure',
+	/** 
+	 *             The object was the receipt of a disclosure            
+	 */
+	ReceiptOfDisclosure : 'ReceiptOfDisclosure',
+	/** 
+	 *             The object was archived            
+	 */
+	Archiving : 'Archiving',
+	/** 
+	 *             The object was obsoleted (logically deleted)            
+	 */
+	LogicalDeletion : 'LogicalDeletion',
+	/** 
+	 *             The object was perminently deleted            
+	 */
+	PermanentErasure : 'PermanentErasure',
+}  // AuditableObjectLifecycle 
+// SanteDB.Core.Model.Audit.AuditableObjectRole, SanteDB.Core.Model, Version=3.0.0.0, Culture=neutral, PublicKeyToken=null
+// if(!AuditableObjectRole)
+/**
+ * @enum {string}
+ * @public
+ * @readonly
+ * @summary             Identifies roles of objects in the audit event            
+ */
+const AuditableObjectRole = { 
+	/** 
+	 * 
+	 */
+	Patient : 'Patient',
+	/** 
+	 * 
+	 */
+	Location : 'Location',
+	/** 
+	 * 
+	 */
+	Report : 'Report',
+	/** 
+	 * 
+	 */
+	Resource : 'Resource',
+	/** 
+	 * 
+	 */
+	MasterFile : 'MasterFile',
+	/** 
+	 * 
+	 */
+	User : 'User',
+	/** 
+	 * 
+	 */
+	List : 'List',
+	/** 
+	 * 
+	 */
+	Doctor : 'Doctor',
+	/** 
+	 * 
+	 */
+	Subscriber : 'Subscriber',
+	/** 
+	 * 
+	 */
+	Guarantor : 'Guarantor',
+	/** 
+	 * 
+	 */
+	SecurityUser : 'SecurityUser',
+	/** 
+	 * 
+	 */
+	SecurityGroup : 'SecurityGroup',
+	/** 
+	 * 
+	 */
+	SecurityResource : 'SecurityResource',
+	/** 
+	 * 
+	 */
+	SecurityGranularityDefinition : 'SecurityGranularityDefinition',
+	/** 
+	 * 
+	 */
+	Provider : 'Provider',
+	/** 
+	 * 
+	 */
+	DataDestination : 'DataDestination',
+	/** 
+	 * 
+	 */
+	DataRepository : 'DataRepository',
+	/** 
+	 * 
+	 */
+	Schedule : 'Schedule',
+	/** 
+	 * 
+	 */
+	Customer : 'Customer',
+	/** 
+	 * 
+	 */
+	Job : 'Job',
+	/** 
+	 * 
+	 */
+	JobStream : 'JobStream',
+	/** 
+	 * 
+	 */
+	Table : 'Table',
+	/** 
+	 * 
+	 */
+	RoutingCriteria : 'RoutingCriteria',
+	/** 
+	 * 
+	 */
+	Query : 'Query',
+}  // AuditableObjectRole 
+// SanteDB.Core.Model.Audit.AuditableObjectType, SanteDB.Core.Model, Version=3.0.0.0, Culture=neutral, PublicKeyToken=null
+// if(!AuditableObjectType)
+/**
+ * @enum {string}
+ * @public
+ * @readonly
+ * @summary             Identifies the type of auditable object for context             
+ */
+const AuditableObjectType = { 
+	/** 
+	 *             Not specified            
+	 */
+	NotSpecified : 'NotSpecified',
+	/** 
+	 *             Represents a person.            
+	 */
+	Person : 'Person',
+	/** 
+	 *             Represents a system object.            
+	 */
+	SystemObject : 'SystemObject',
+	/** 
+	 *             Represents an organization.            
+	 */
+	Organization : 'Organization',
+	/** 
+	 *             Represents an other object type.            
+	 */
+	Other : 'Other',
+}  // AuditableObjectType 
+// SanteDB.Core.Model.Audit.NetworkAccessPointType, SanteDB.Core.Model, Version=3.0.0.0, Culture=neutral, PublicKeyToken=null
+// if(!NetworkAccessPointType)
+/**
+ * @enum {string}
+ * @public
+ * @readonly
+ * @summary             Represents the type of network access point.            
+ */
+const NetworkAccessPointType = { 
+	/** 
+	 *             Represents an identifier which is a machine name.            
+	 */
+	MachineName : 'MachineName',
+	/** 
+	 *             Represents an identifier which is an IP address.            
+	 */
+	IPAddress : 'IPAddress',
+	/** 
+	 *             Represents an identifier which is a telephone number.            
+	 */
+	TelephoneNumber : 'TelephoneNumber',
+}  // NetworkAccessPointType 
+// SanteDB.Core.Model.Audit.ActionType, SanteDB.Core.Model, Version=3.0.0.0, Culture=neutral, PublicKeyToken=null
+// if(!ActionType)
+/**
+ * @enum {string}
+ * @public
+ * @readonly
+ * @summary             Represents types of action that was performed which resulted in the audit being created            
+ */
+const ActionType = { 
+	/** 
+	 *             Data was created in the system            
+	 */
+	Create : 'Create',
+	/** 
+	 *             Data was viewed, printed, displayed, etc...            
+	 */
+	Read : 'Read',
+	/** 
+	 *             Data was revised in the system            
+	 */
+	Update : 'Update',
+	/** 
+	 *             Data was removed from the system            
+	 */
+	Delete : 'Delete',
+	/** 
+	 *             A system, or application function was performed            
+	 */
+	Execute : 'Execute',
+}  // ActionType 
+// SanteDB.Core.Model.Audit.EventIdentifierType, SanteDB.Core.Model, Version=3.0.0.0, Culture=neutral, PublicKeyToken=null
+// if(!EventIdentifierType)
+/**
+ * @enum {string}
+ * @public
+ * @readonly
+ * @summary             Represents an event identifier type.            
+ */
+const EventIdentifierType = { 
+	/** 
+	 *             Represents a provisioning event.            
+	 */
+	ProvisioningEvent : 'ProvisioningEvent',
+	/** 
+	 *             Represents a medication event.            
+	 */
+	MedicationEvent : 'MedicationEvent',
+	/** 
+	 *             Represents a resource assignment.            
+	 */
+	ResourceAssignment : 'ResourceAssignment',
+	/** 
+	 *             Represents a care episode.            
+	 */
+	CareEpisode : 'CareEpisode',
+	/** 
+	 *             Represents a care protocol.            
+	 */
+	CareProtocol : 'CareProtocol',
+	/** 
+	 *             Represents a procedure record.            
+	 */
+	ProcedureRecord : 'ProcedureRecord',
+	/** 
+	 *             Represents a query.            
+	 */
+	Query : 'Query',
+	/** 
+	 *             Represents a patient record.            
+	 */
+	PatientRecord : 'PatientRecord',
+	/** 
+	 *             Represents an order record.            
+	 */
+	OrderRecord : 'OrderRecord',
+	/** 
+	 *             Represents a network entry.            
+	 */
+	NetworkActivity : 'NetworkActivity',
+	/** 
+	 *             Represents an import.            
+	 */
+	Import : 'Import',
+	/** 
+	 *             Represents an export.            
+	 */
+	Export : 'Export',
+	/** 
+	 *             Represents application activity.            
+	 */
+	ApplicationActivity : 'ApplicationActivity',
+	/** 
+	 *             Represents a security alert.            
+	 */
+	SecurityAlert : 'SecurityAlert',
+	/** 
+	 *             Represents user authentication.            
+	 */
+	UserAuthentication : 'UserAuthentication',
+	/** 
+	 *             Represents that an emergency override started.            
+	 */
+	EmergencyOverrideStarted : 'EmergencyOverrideStarted',
+	/** 
+	 *             Represents the use of a restricted function.            
+	 */
+	UseOfRestrictedFunction : 'UseOfRestrictedFunction',
+	/** 
+	 *             Represents a login.            
+	 */
+	Login : 'Login',
+	/** 
+	 *             Represents a logout.            
+	 */
+	Logout : 'Logout',
+}  // EventIdentifierType 
+// SanteDB.Core.Model.Audit.OutcomeIndicator, SanteDB.Core.Model, Version=3.0.0.0, Culture=neutral, PublicKeyToken=null
+// if(!OutcomeIndicator)
+/**
+ * @enum {string}
+ * @public
+ * @readonly
+ * @summary             Represents potential outcomes.            
+ */
+const OutcomeIndicator = { 
+	/** 
+	 *             Successful operation.            
+	 */
+	Success : 'Success',
+	/** 
+	 *             Minor failure, action should be restarted.            
+	 */
+	MinorFail : 'MinorFail',
+	/** 
+	 *             Action was terminated.            
+	 */
+	SeriousFail : 'SeriousFail',
+	/** 
+	 *             Major failure, action is made unavailable.            
+	 */
+	EpicFail : 'EpicFail',
+}  // OutcomeIndicator 
+// SanteDB.Core.Model.Audit.AuditMetadataKey, SanteDB.Core.Model, Version=3.0.0.0, Culture=neutral, PublicKeyToken=null
+// if(!AuditMetadataKey)
+/**
+ * @enum {string}
+ * @public
+ * @readonly
+ * @summary             Represents metadata keys            
+ */
+const AuditMetadataKey = { 
+	/** 
+	 *             The metadata represents a patient identifier            
+	 */
+	PID : 'PID',
+	/** 
+	 *             The object is a process name            
+	 */
+	ProcessName : 'ProcessName',
+	/** 
+	 *             Identifies the remote host as an IP address            
+	 */
+	RemoteHost : 'RemoteHost',
+	/** 
+	 *             Identifies the remote endpoint            
+	 */
+	ForwardInformation : 'ForwardInformation',
+	/** 
+	 *             Identifies the local endpoint            
+	 */
+	LocalEndpoint : 'LocalEndpoint',
+	/** 
+	 *             Identifies the time a batch was submitted            
+	 */
+	SubmissionTime : 'SubmissionTime',
+	/** 
+	 *             Identifies if an object was in original format            
+	 */
+	OriginalFormat : 'OriginalFormat',
+	/** 
+	 *             Identifies the status of the object            
+	 */
+	SubmissionStatus : 'SubmissionStatus',
+	/** 
+	 *             Identifies the priority of the object            
+	 */
+	Priority : 'Priority',
+	/** 
+	 *             Identifies the object classification            
+	 */
+	Classification : 'Classification',
+	/** 
+	 *             Identifies the object as a session identifier            
+	 */
+	SessionId : 'SessionId',
+	/** 
+	 *             Identifies the object as an enterprise site identifier            
+	 */
+	EnterpriseSiteID : 'EnterpriseSiteID',
+	/** 
+	 *             Identifies the object's metadata as the source            
+	 */
+	AuditSourceID : 'AuditSourceID',
+	/** 
+	 *             Identifies the source type            
+	 */
+	AuditSourceType : 'AuditSourceType',
+	/** 
+	 *             Allows the correlation of data between audits            
+	 */
+	CorrelationToken : 'CorrelationToken',
+}  // AuditMetadataKey 
+// SanteDB.Core.Model.Constants.CurrencyKeys, SanteDB.Core.Model, Version=3.0.0.0, Culture=neutral, PublicKeyToken=null
+// if(!CurrencyKeys)
+/**
+ * @enum {string}
+ * @public
+ * @readonly
+ * @summary             Currency concepts            
+ */
+const CurrencyKeys = { 
+	/** 
+	 *             Australian Dollar            
+	 */
+	AustralianDollar : 'c3b1a717-74d0-4ae3-830c-efddcc57bb92',
+	/** 
+	 *             Canadian Dollar            
+	 */
+	CanadianDollar : '802ae6bb-31b8-401a-9d40-9ce3c3da227c',
+	/** 
+	 *             Swiss Franc            
+	 */
+	SwissFranc : '2ca49a5f-af50-402d-9263-7725071c3ed9',
+	/** 
+	 *             Chinese Yuan            
+	 */
+	YuanRenminbi : '31a56b8d-b358-453a-a3c8-b1d60ee52578',
+	/** 
+	 *             Euros            
+	 */
+	Euro : '4f509ada-d366-41ac-bd84-e0b3046a0ffc',
+	/** 
+	 *             British Pound Sterling            
+	 */
+	PoundSterling : 'd920a941-ec06-4d0d-9f60-631b790f8e0d',
+	/** 
+	 *             Israel Shekel            
+	 */
+	Shekel : 'f730f892-ebcc-43bc-8d39-bda98bc76563',
+	/** 
+	 *             Indian Rupee            
+	 */
+	IndianRupee : 'e0f40a69-0e09-44e1-bd37-080ac88661e3',
+	/** 
+	 *             Japanese Yen            
+	 */
+	Yen : 'da22b2fb-bf0b-4aa6-8dcc-cb4c4cad1ca8',
+	/** 
+	 *             Korean Won            
+	 */
+	Won : 'c898b180-dad0-4115-9200-f48329fd7771',
+	/** 
+	 *             Mexican new Peso            
+	 */
+	MexicanNuevoPeso : 'cfbed12b-ffb1-48d7-b0ab-68f898a76749',
+	/** 
+	 *             Guilders            
+	 */
+	NetherlandsGuilder : 'a5a71f07-0235-42e8-beab-adefeb357bf5',
+	/** 
+	 *             New Zealand Dollar            
+	 */
+	NewZealandDollar : '742b318f-8198-4dde-9b43-34d20d0c18e2',
+	/** 
+	 *             Philippine Peso            
+	 */
+	PhilippinePeso : 'a0d72d7c-b32f-4619-a943-f40ced704df6',
+	/** 
+	 *             Russian Ruble            
+	 */
+	RussianRuble : 'c44dd7b3-4e4e-493f-9ace-557ca3c672a7',
+	/** 
+	 *             Thai Baht            
+	 */
+	Baht : '44d04d8c-a81b-47ce-8857-c88cc92e8dfc',
+	/** 
+	 *             Turkish Lira            
+	 */
+	Lira : 'eb55fb0a-126d-4f97-a7e4-454d600c5c9a',
+	/** 
+	 *             Taiwanese Dollar            
+	 */
+	TaiwanDollar : 'd18cc00b-c339-47a5-9ff9-23c77542a5c3',
+	/** 
+	 *             US Dollars            
+	 */
+	USDollar : '65c0a364-b1bf-4b16-8c28-6d1e2fc90ad1',
+	/** 
+	 *             South African Rand            
+	 */
+	Rand : '69f1fd07-ba26-4e92-8ad0-deac7559e90f',
+}  // CurrencyKeys 
+// SanteDB.Core.Model.Constants.ActClassKeys, SanteDB.Core.Model, Version=3.0.0.0, Culture=neutral, PublicKeyToken=null
 // if(!ActClassKeys)
 /**
  * @enum {string}
@@ -19341,6 +20998,18 @@ const CodeSystemKeys = {
  * @summary             Represents a series of class keys for use on acts.            
  */
 const ActClassKeys = { 
+	/** 
+	 *             Document class key            
+	 */
+	Document : '7a6944f7-8937-4e98-ae0d-452b1d8124f4',
+	/** 
+	 *             Document section class key            
+	 */
+	DocumentSection : 'e86ea735-f243-41f4-bf33-aa78eb2e8466',
+	/** 
+	 *             Care plan class key            
+	 */
+	CarePlan : '042232b9-a694-42e0-9708-f387393a6c80',
 	/** 
 	 *             The act represents generic account management such as adjudications, financial adjustments, stock counting, etc.            
 	 */
@@ -19422,7 +21091,7 @@ const ActClassKeys = {
 	 */
 	List : 'b0323489-9a09-411a-bb55-ff283830ea1a',
 }  // ActClassKeys 
-// SanteDB.Core.Model.Constants.ActMoodKeys, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Constants.ActMoodKeys, SanteDB.Core.Model, Version=3.0.0.0, Culture=neutral, PublicKeyToken=null
 // if(!ActMoodKeys)
 /**
  * @enum {string}
@@ -19468,7 +21137,7 @@ const ActMoodKeys = {
 	 */
 	Request : 'e658ca72-3b6a-4099-ab6e-7cf6861a5b61',
 }  // ActMoodKeys 
-// SanteDB.Core.Model.Constants.ActReasonKeys, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Constants.ActReasonKeys, SanteDB.Core.Model, Version=3.0.0.0, Culture=neutral, PublicKeyToken=null
 // if(!ActReasonKeys)
 /**
  * @enum {string}
@@ -19518,7 +21187,7 @@ const ActReasonKeys = {
 	 */
 	ColdStorageFailure : '06922eac-0cae-49af-a33c-fc7096349e4a',
 }  // ActReasonKeys 
-// SanteDB.Core.Model.Constants.ActRelationshipTypeKeys, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Constants.ActRelationshipTypeKeys, SanteDB.Core.Model, Version=3.0.0.0, Culture=neutral, PublicKeyToken=null
 // if(!ActRelationshipTypeKeys)
 /**
  * @enum {string}
@@ -19624,7 +21293,7 @@ const ActRelationshipTypeKeys = {
 	 */
 	Duplicate : '2bbf068b-9121-4081-bf3c-ab62c01362ee',
 }  // ActRelationshipTypeKeys 
-// SanteDB.Core.Model.Constants.NullReasonKeys, SanteDB.Core.Model, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Constants.NullReasonKeys, SanteDB.Core.Model, Version=3.0.0.0, Culture=neutral, PublicKeyToken=null
 // if(!NullReasonKeys)
 /**
  * @enum {string}
