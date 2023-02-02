@@ -4,10 +4,10 @@
             <div class="mt-2 p-0 col" ng-repeat="panel in group.widgets" ng-if="$eval(panel.guard[0] || 'true')">
                 <div class="card">
                     <div class="card-header" ng-class="panel.headerClass">
-                        <h5 class="float-left mb-0">
+                        <h5 class="float-left mb-2">
                             <i ng-class="panel.icon"></i> {{ panel.name | i18n }}
                         </h5>
-                        <div class="btn-group float-right" ng-if="panel.views &amp;&amp; !noAlt">
+                        <div class="btn-group p-0 m-0 float-right" ng-if="panel.views &amp;&amp; !noAlt">
                             <button class="btn btn-danger" ng-if="panel.view" ng-click="closeView(panel)">
                                 <i class="fa fa-times"></i>
                             </button>

@@ -19,14 +19,14 @@
  - User: Justin Fyfe
  - Date: 2019-11-13
  -->
-<BiParameterDefinition xmlns="http://santedb.org/bi" id="org.santedb.bi.core.parameter.patient.gender" name="patient-gender" label="ui.bi.core.patient.gender" type="uuid">
+<BiParameterDefinition xmlns="http://santedb.org/bi" id="org.santedb.bi.core.parameter.common.state" name="state" label="ui.bi.core.common.state" type="string">
   <meta status="active">
     <authors>
       <add>Justin Fyfe (Fyfe Software Inc.) &lt;justin@fyfesoftware.ca></add>
     </authors>
     <annotation lang="en">
       <div xmlns="http://www.w3.org/1999/xhtml">
-        <p>This parameter defines values for patient genders</p>
+        <p>This parameter defines values for states</p>
       </div>
     </annotation>
   </meta>
@@ -38,18 +38,12 @@
       <add>
         <providers>
           <invariant>npgsql</invariant>
-          <invariant>FirebirdSQL</invariant>
+          <invariant>fbsql</invariant>
         </providers>
         <![CDATA[
-           select distinct
-            cd_id as id, UPPER(val) val
-            from cd_set_mem_assoc_tbl 
-              inner join cd_vrsn_tbl using (cd_id) 
-              left join cd_name_tbl using (cd_id) 
-            where 
-              obslt_vrsn_seq_id is null 
-              and lang_cs = COALESCE(${Context.Language}, 'en')
-              and set_id = 'e9eecd3c-7b80-47f9-9cb6-55c8d3110fb0'   
+           select distinct val as id, val from ent_addr_cmp_tbl eact
+            where typ_cd_id = '8CF4B0B0-84E5-4122-85FE-6AFA8240C218'
+            ORDER BY val
             ]]>
       </add>
       <add>
@@ -57,15 +51,10 @@
           <invariant>sqlite</invariant>
         </providers>
         <![CDATA[
-           select distinct
-            cd_id as id, UPPER(val) val 
-            from cd_set_mem_assoc_tbl 
-              inner join cd_vrsn_tbl using (cd_id) 
-              left join cd_name_tbl using (cd_id) 
-            where 
-              obslt_vrsn_seq_id is null 
-              and lang_cs = COALESCE(${Context.Language}, 'en')
-              and set_id = X'3CCDEEE9807BF9479CB655C8D3110FB0'
+        select distinct val as id, val from ent_addr_cmp_tbl eact
+         where typ_cd_id = X'B0B0F48CE584224185FE6AFA8240C218'
+         ORDER BY val
+
             ]]>
       </add>
     </definitions>

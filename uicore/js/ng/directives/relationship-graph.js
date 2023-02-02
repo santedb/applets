@@ -22,7 +22,7 @@
 /// <reference path="../../../../core/js/santedb.js"/>
 
 angular.module('santedb-lib')
-  
+
     /**
      * @method relationshipGraph
      * @memberof Angular
@@ -48,14 +48,16 @@ angular.module('santedb-lib')
                 if (entityRelationship && entityRelationship.source && entityRelationship.source != entity.id && entityRelationship.target == entity.id)
                     reverse = true;
                 var entity = entityRelationship.targetModel;
-    
+
                 if (reverse) {
                     entity = await SanteDB.resources.entity.getAsync(entityRelationship.holder || entityRelationship.source);
                 }
-                else if (!entity || !entity.$ref && !entity.name)
-                {
-                    if(entity.classConceptModel && entity.$type != entity.classConceptModel.mnemonic) {
-                        entity = entityRelationship.targetModel = await SanteDB.resources[entity.classConceptModel.mnemonic.toCamelCase()].getAsync(entityRelationship.target, "full");
+                else if (!entity || !entity.$ref && !entity.name) {
+                    if (entity.classConceptModel && entity.$type != entity.classConceptModel.mnemonic) {
+                        var repository = SanteDB.resources[entity.classConceptModel.mnemonic.toCamelCase()];
+                        if (repository) {
+                            entity = entityRelationship.targetModel = await repository.getAsync(entityRelationship.target, "full");
+                        }
                     }
                     else {
                         entity = entityRelationship.targetModel = await SanteDB.resources.entity.getAsync(entityRelationship.target, "full");
@@ -63,13 +65,12 @@ angular.module('santedb-lib')
                 }
 
                 var extraClass = "";
-                if (entity && entity.statusConcept != StatusKeys.Active && entity.statusConcept != StatusKeys.New) 
-                {
+                if (entity && entity.statusConcept != StatusKeys.Active && entity.statusConcept != StatusKeys.New) {
                     extraClass = "text-light";
                 }
                 var retVal = "";
                 if (entity) {
-    
+
                     // Is this a patient? Then provide a link
                     var resolver = SanteDB.display.get;
                     var iconography = "fa-circle";
@@ -95,10 +96,13 @@ angular.module('santedb-lib')
                     }
 
                     // Resolve MDM entity to proper type
-                    if(entity.$type == 'Entity' && entity.classConcept == "49328452-7e30-4dcd-94cd-fd532d111578" && entity.typeConceptModel) {
-                        entity = await SanteDB.resources[entity.typeConceptModel.mnemonic.toCamelCase()].getAsync(entity.id, "min");
-                        if(entity.$type == 'Entity') {
-                            console.warn("MDM load did not work!", entity);
+                    if (entity.$type == 'Entity' && entity.classConcept == "49328452-7e30-4dcd-94cd-fd532d111578" && entity.typeConceptModel) {
+                        var repository = SanteDB.resources[entity.typeConceptModel.mnemonic.toCamelCase()];
+                        if (repository) {
+                            entity = await repository.getAsync(entity.id, "min");
+                            if (entity.$type == 'Entity') {
+                                console.warn("MDM load did not work!", entity);
+                            }
                         }
                     }
                     if (entity.$type == "Patient") {
@@ -106,31 +110,35 @@ angular.module('santedb-lib')
                             retVal += `\nrel${entity.id.substr(0, 8)}["<a class='mr-2 ${extraClass}' title='View Record' href='#!/mpi/patient/${entity.id}'><i class='fas fa-fw ${iconography} mr-1'></i> ${SanteDB.display.renderEntityName(entity.name)}</a>"]`;
                         else if (entity.identifier)
                             retVal += `\nrel${entity.id.substr(0, 8)}["<a class='mr-2 ${extraClass}' title='View Record' href='#!/mpi/patient/${entity.id}'><i class='fas fa-fw ${iconography} mr-1'></i>${SanteDB.display.renderIdentifier(entity.identifier)}</a>"]`;
+                        else 
+                            retVal += `\nrel${entity.id.substr(0, 8)}["<a class='mr-2 ${extraClass}' title='View Record' href='#!/mpi/patient/${entity.id}'><i class='fas fa-fw ${iconography} mr-1'></i>${entity.$type}</a>"]`;
                     }
                     else {
                         if (entity.name)
                             retVal += `\nrel${entity.id.substr(0, 8)}["<span class='mr-2 ${extraClass}' title='Related ${entity.$type}'><i class='fas fa-fw ${iconography} mr-1'></i>${SanteDB.display.renderEntityName(entity.name)}</span>"]`;
                         else if (entity.identifier)
                             retVal += `\nrel${entity.id.substr(0, 8)}[<span class='mr-2 ${extraClass}' title='Related ${entity.$type}'><i class='fas fa-fw ${iconography} mr-1'></i>${entity.$type} ${SanteDB.display.renderIdentifier(entity.identifier)}</span>]`;
+                        else 
+                            retVal += `\nrel${entity.id.substr(0, 8)}[<span class='mr-2 ${extraClass}' title='Related ${entity.$type}'><i class='fas fa-fw ${iconography} mr-1'></i>${entity.$type}</span>]`;
                     }
-    
+
                     var relationshipText = SanteDB.display.renderConcept(entityRelationship.relationshipTypeModel || fallbackRelationship);
                     if (entityRelationship.relationshipRoleModel) {
                         relationshipText += ` / ${SanteDB.display.renderConcept(entityRelationship.relationshipRoleModel)}`;
                     }
                     var dashType = `-- "${relationshipText}" -->`;
-    
+
                     if (viewMode == "advanced") {
                         // To show physical relationships
                         if (entityRelationship.$type == 'EntityRelationshipMaster') {
-    
+
                             if (entityRelationship.originalTarget != entityRelationship.target) {
                                 retVal += `\nrel${entityRelationship.originalHolder.substr(0, 8)} ---- rel${entityRelationship.originalTarget.substr(0, 8)}`;
                                 retVal += `\nrel${entityRelationship.originalTarget.substr(0, 8)}("<i class='fas fa-random fa-fw' title='MDM Redirected Link'></i>") ${dashType} rel${entityRelationship.target.substr(0, 8)}`;
                             }
                             else {
                                 retVal += `\nrel${entityRelationship.originalHolder.substr(0, 8)} ${dashType} rel${entityRelationship.originalTarget.substr(0, 8)}`;
-    
+
                             }
                             dashType = `-. <span class='mr-2'>${relationshipText}</span> .->`;
                         }
@@ -151,8 +159,8 @@ angular.module('santedb-lib')
                             retVal += `\nroot ${dashType} rel${entity.id.substr(0, 8)}`;
                     }
                 }
-    
-                if (entity && entity.statusConcept != StatusKeys.Active && entity.statusConcept != StatusKeys.New) 
+
+                if (entity && entity.statusConcept != StatusKeys.Active && entity.statusConcept != StatusKeys.New)
                     retVal += `\nstyle rel${entity.id.substr(0, 8)} fill:#000,stroke:#f00,stroke-width:2px`;
                 else if (entity && entity.determinerConcept == "6b1d6764-12be-42dc-a5dc-52fc275c4935")
                     retVal += `\nstyle rel${entity.id.substr(0, 8)} fill:#ffc,stroke:#00c,stroke-width:1px`;
@@ -168,8 +176,8 @@ angular.module('santedb-lib')
                 return `\n??-- ${SanteDB.display.renderConcept(entityRelationship.relationshipTypeModel || fallbackRelationship)} ---root`;
             }
         }
-    
-        
+
+
         /**
          * @summary Draw the relationship diagram to th especified object identifier
          * @param {*} entity The entity whose relationships should be drawn
@@ -206,9 +214,9 @@ angular.module('santedb-lib')
                         var results = await Promise.all(promises);
                         results.filter((r) => graphDefinition.indexOf(r) == -1).forEach((r) => graphDefinition += r);
                     }
-                    mermaid.mermaidAPI.render(`entityNetworkDiagram${viewData._id}`, graphDefinition, (svg) => { 
+                    mermaid.mermaidAPI.render(`entityNetworkDiagram${viewData._id}`, graphDefinition, (svg) => {
                         viewData.graphs[viewData.mode] = svg;
-                        
+
                         $(`#renderSvg${viewData._id}`).html(svg);
                     });
 
@@ -224,29 +232,28 @@ angular.module('santedb-lib')
         }
 
         return {
-            scope  :{
-                'entity' : '=',
-                'excludeRelationships' : '<',
+            scope: {
+                'entity': '=',
+                'excludeRelationships': '<',
             },
             restrict: 'E',
             replace: true,
             templateUrl: './org.santedb.uicore/directives/relationshipGraph.html',
-            controller: [ '$scope', '$rootScope',
-                function($scope, $rootScope) {
+            controller: ['$scope', '$rootScope',
+                function ($scope, $rootScope) {
 
                     var drawn = false;
 
                     // Redraw the entity
-                    $scope.redraw = function() {
-                                        
+                    $scope.redraw = function () {
+
                         $(`#entityNetworkDiagram${$scope._id}`).html("<i class='fas fa-circle-notch fa-spin'></i>");
                         drawRelationships($scope.entity, $scope.viewData);
                         drawn = true;
                     }
                     // When the entity is set
-                    $scope.$watch("entity", function(n, o) {
-                        if(!o && n || n && n.sequence != o.sequence || n && !drawn)
-                        {
+                    $scope.$watch("entity", function (n, o) {
+                        if (!o && n || n && n.sequence != o.sequence || n && !drawn) {
                             drawRelationships(n, $scope.viewData);
                             drawn = true;
                         }
@@ -254,11 +261,11 @@ angular.module('santedb-lib')
                 }],
             link: {
                 pre: function (scope, element, attrs) {
-                    scope.viewData = { 
-                        _id : SanteDB.application.newGuid().substring(0, 6),
+                    scope.viewData = {
+                        _id: SanteDB.application.newGuid().substring(0, 6),
                         mode: "simple",
                         graphs: {
-                            simple: null, 
+                            simple: null,
                             advanced: null
                         }
                     };

@@ -48,20 +48,20 @@ angular.module('santedb-lib')
             replace: true,
             transclude: true,
             templateUrl: "/org.santedb.bicore/directives/reportParameter.html",
-            controller: ['$scope', '$rootScope', function ($scope, $rootScope) {
+            controller: ['$scope', '$rootScope', '$timeout', function ($scope, $rootScope, $timeout) {
 
                 $scope.refreshValueList = async function () {
 
                     if (!$scope.parameter || $scope.parameter.values.list) return;
                     try {
-                        $scope.parameter.values.list = [{ id: null, value: SanteDB.locale.getString("ui.wait") }];
-                        try { $scope.$apply(); }
-                        catch (e) { }
+                        var parameters = [{ id: null, value: SanteDB.locale.getString("ui.wait") }];
+                        $timeout(()=> $scope.parameter.values.list = parameters);
 
                         // Now fetch
                         // TODO: Add parameters list here
                         // TODO: Add fetch here
-                        $scope.parameter.values.list = await SanteDBBi.executeQueryAsync($scope.parameter.id, { _count: 1000 });
+                        parameters = await SanteDBBi.executeQueryAsync($scope.parameter.id, { _count: 1000 });
+                        $timeout(()=> $scope.parameter.values.list = parameters);
                     }
                     catch (e) {
 
@@ -91,37 +91,61 @@ angular.module('santedb-lib')
             replace: true,
             transclude: false,
             templateUrl: "/org.santedb.bicore/directives/report.html",
-            controller: ['$scope', '$rootScope', function ($scope, $rootScope) {
+            controller: ['$scope', '$rootScope', '$timeout', '$compile', function ($scope, $rootScope, $timeout, $compile) {
+
+                var dt = {};
+                $scope.parameterValues = { foo:"bar"};
+
+                function setReportContent (elementId, content) {
+
+                    if (dt[elementId]) {
+                        dt[elementId].destroy();
+                        delete dt[elementId];
+                    }
+
+                    var element = $(`#${elementId}`);
+                    element.html(content);
+
+                    // Data tables?
+                    var tableData = $("table", $(element));
+                    if (tableData.length > 0) {
+                        $(tableData).DataTable();
+                        $(tableData).addClass("table table-responsive w-100");
+                    }
+                    if ($compile)
+                        $compile($(element))($scope);
+                };
 
                 // Prints the current report with the specified parameters
                 $scope.printReport = async function (view) {
                     try {
+                        console.info(view);
                         SanteDB.display.buttonWait(`#btnPrintReport_${view}`, true);
-                        var report = await SanteDBBi.renderReportAsync($scope.reportId, view, "html", $scope.parameters);
+                        var report = await SanteDBBi.renderReportAsync($scope.reportId, view, "html", $scope.parameterValues );
 
-                        var printFn = function(printWindow) {
+                        var printFn = function (printWindow) {
                             printWindow.document.write(`<html><head><title>${SanteDB.locale.getString($scope.report.label)}</title><link rel="stylesheet" type="text/css" href="/org.santedb.bicore/css/print.css" /></head><body>`);
                             printWindow.document.write(report);
                             printWindow.document.close();
                             printWindow.focus();
-    
+
                             // HACK: Need a better way to wait for all data to complete
                             $(printWindow.document).ready(function () {
                                 setTimeout(function () {
                                     printWindow.print();
                                     printWindow.close();
                                 }, 400);
-    
+
                             });
                         };
 
                         var win = window.open('', '_blank');
 
-                        if(win.document) {
+                        if (win.document) {
                             printFn(win);
                         }
                         else {
-                            setTimeout(function() {
+                            setTimeout(function () {
                                 printFn(win);
                             }, 1000);
                         }
@@ -141,9 +165,9 @@ angular.module('santedb-lib')
                 $scope.downloadReport = async function (view, format) {
                     try {
                         SanteDB.display.buttonWait(`#btnDownloadReport_${view}`, true);
-                        var parms = jQuery.param($scope.parameters);
+                        var parms = jQuery.param($scope.parameterValues);
                         parms += `&_download=true`; //&_sessionId=${window.sessionStorage.token}`;
-                        window.location = `/bis/Report/${format}/${$scope.report.id}?${parms}`;
+                        window.location = `/bis/Report/${format}/${$scope.report.id}?${parms}&_view=${view}`;
                     }
                     catch (e) {
                         $rootScope.errorHandler(e);
@@ -153,25 +177,41 @@ angular.module('santedb-lib')
 
                     }
                 }
-                $scope.updateParameterValues = function (form) {
 
-                    // TODO: Validation
+                $scope.updateParameterValues = async function (form) {
+                    
+                    try {
+                        SanteDB.display.buttonWait("#btnApply", true);
 
-                    // Select the view
-                    if ($scope.view)
-                        $(`#${$scope.htmlId}_${$scope.view}_tab a`).click();
-                    else
-                        $(`#${$scope.htmlId}_${$scope.report.views[0].name}_tab a`).click();
+                        // Get the report rendering
+                        await Promise.all($scope.report.views.map(async v => {
+                            var parameters = $scope.parameterValues;
+                            var html = await SanteDBBi.renderReportAsync($scope.reportId, v.name, "html", parameters);
+                            setReportContent(`${$scope.htmlId}view`, html);
+                        }));
+                        // Select the view
+                        if ($scope.view)
+                            $(`#${$scope.htmlId}_${$scope.view}_tab a`).click();
+                        else
+                            $(`#${$scope.htmlId}_${$scope.report.views[0].name}_tab a`).click();
+                    }
+                    catch(e) {
+                        $rootScope.errorHandler(e);
+                    }
+                    finally {
+                        SanteDB.display.buttonWait("#btnApply", false);
+                    }
                 }
 
-            }],
-            link: function (scope, element, attrs) {
+                async function initialize() {
+                    try {
+                        var formats = await SanteDBBi.resources.format.findAsync();
+                        var report = await SanteDBBi.resources.report.getAsync($scope.reportId);
 
-                if (!scope.parameters)
-                    scope.parameters = {};
-                if (scope.report == null) {
-                    SanteDBBi.resources.report.getAsync(scope.reportId)
-                        .then(function (report) {
+                        $timeout(() => {
+
+                            $scope.formats = formats.item;
+                            $scope.report = report;
                             // Process the parameters from the result
                             var parameters = [];
                             report.dataSources.forEach(function (r) {
@@ -179,54 +219,42 @@ angular.module('santedb-lib')
                                     r.query.parameters.forEach(function (p) {
                                         if (parameters.find(function (ep) { ep.name == p.name }) == null) {
                                             if (scope.parameters)
-                                                p.value = scope.parameters[p.name];
+                                                p.value = $scope.parameters[p.name];
                                             parameters.push(p);
                                         }
                                     });
                                 else if (r.parameters)
                                     r.parameters.forEach(function (p) {
                                         if (parameters.find(function (ep) { ep.name == p.name }) == null) {
-                                            if (scope.parameters)
-                                                p.value = scope.parameters[p.name];
+                                            if ($scope.parameters)
+                                                p.value = $scope.parameters[p.name];
                                             parameters.push(p);
                                         }
                                     });
                             });
 
-                            scope.htmlId = scope.reportId.replace(/\./g, "");
-                            scope.report = report;
-                            scope.report.parameterDefinitions = parameters;
+                            $scope.htmlId = $scope.reportId.replace(/\./g, "");
+                            $scope.report = report;
+                            $scope.report.parameterDefinitions = parameters;
 
-                            scope.$apply();
-
-
-                            // Hack: We use dynamic tabs so we have to wait 
-                            $("li.nav-item", element).on("shown.bs.tab", function (o, e) {
-                                var targetElementId = ($("a:first", o.currentTarget).attr("data-target"));
-                                var targetElement = $(`${targetElementId} div.report-view-area`);
-                                if (!targetElement.hasClass("container-fluid")) {
-                                    targetElement.html(`<report-view id="id" view="viewDefinition.name" parameters="parameters"/>`);
-                                    $compile($(targetElement))(angular.element(targetElement).scope());
-                                }
-                            });
-                            $("li.nav-item", element).on("hidden.bs.tab", function (o, e) {
-                                var targetElementId = ($("a:first", o.currentTarget).attr("data-target"));
-                                var targetElement = $(`${targetElementId} div.report-view-area`);
-                                if (!targetElement.hasClass("container-fluid"))
-                                    targetElement.html('');
-                            });
-
-
-                        })
-                        .catch($rootScope.errorHandler)
+                            if($scope.report.parameterDefinitions == undefined ||
+                                $scope.report.parameterDefinitions.length == 0) {
+                                $scope.updateParameterValues();
+                            }
+                        });
+                    }
+                    catch (e) {
+                        $rootScope.errorHandler(e);
+                    }
                 }
 
-                if (!scope.formats)
-                    SanteDBBi.resources.format.findAsync()
-                        .then(function (fmt) {
-                            scope.formats = fmt.item;
-                        });
+                initialize();
 
+
+            }],
+            link: function (scope, element, attrs) {
+
+                
             }
         }
     }])

@@ -132,6 +132,7 @@ function SanteDBBusinessIntelligence() {
         if (!id || !view || !format)
             throw new Exception("ArgumentNullException", "error.bi.nullArgument");
 
+        parameters = angular.copy(parameters);
         parameters["_view"] = view;
 
         for (var p in parameters) {
@@ -147,14 +148,14 @@ function SanteDBBusinessIntelligence() {
         });
     }
 
-     /**
-     * @method renderReportAsync
-     * @memberof SanteDBBusinessIntelligence
-     * @summary Renders a query/view on the server
-     * @param id {String} Identifier of the report to run
-     * @param parameters {Any} Parameter dictionary
-     * @returns {Promise} The promise for the report rendering operation
-     */
+    /**
+    * @method renderReportAsync
+    * @memberof SanteDBBusinessIntelligence
+    * @summary Renders a query/view on the server
+    * @param id {String} Identifier of the report to run
+    * @param parameters {Any} Parameter dictionary
+    * @returns {Promise} The promise for the report rendering operation
+    */
     this.executeQueryAsync = function (id, parameters) {
 
         if (!id)

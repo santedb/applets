@@ -342,6 +342,7 @@
   <string name="ui.model.act.actTime">Timestamp</string>
   <string name="ui.model.act.startTime">Start Time</string>
   <string name="ui.model.act.stopTime">Stop Time</string>
+  <string name="ui.model.act.typeConcept">Event Type</string>
   <string name="ui.model.act.participation.Location">Location(s)</string>
   <string name="ui.model.act.participation.Authororiginator">Author / Reporter</string>
   <string name="ui.model.act.participation.Performer">Performer(s)</string>
