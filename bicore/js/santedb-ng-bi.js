@@ -167,14 +167,20 @@ angular.module('santedb-lib')
                         SanteDB.display.buttonWait(`#btnDownloadReport_${view}`, true);
                         var parms = jQuery.param($scope.parameterValues);
                         parms += `&_download=true`; //&_sessionId=${window.sessionStorage.token}`;
-                        window.location = `/bis/Report/${format}/${$scope.report.id}?${parms}&_view=${view}`;
+
+                       
+                        var win = window.open(`/bis/Report/${format}/${$scope.report.id}?${parms}&_view=${view}`, '_blank');
+                        win.onload = function (e) {
+                            win.close();
+                        };
+                       
+
                     }
                     catch (e) {
                         $rootScope.errorHandler(e);
                     }
                     finally {
                         SanteDB.display.buttonWait(`#btnDownloadReport_${view}`, false);
-
                     }
                 }
 
@@ -185,7 +191,8 @@ angular.module('santedb-lib')
 
                         // Get the report rendering
                         await Promise.all($scope.report.views.map(async v => {
-                            var parameters = $scope.parameterValues;
+                            var parameters = angular.copy($scope.parameterValues);
+                            parameters["_count"] = 1000;
                             var html = await SanteDBBi.renderReportAsync($scope.reportId, v.name, "html", parameters);
                             setReportContent(`${$scope.htmlId}view`, html);
                         }));

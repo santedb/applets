@@ -19,15 +19,15 @@
  - User: Justin Fyfe
  - Date: 2019-11-23
  -->
-<BiRenderFormatDefinition xmlns="http://santedb.org/bi" id="org.santedb.bi.format.xls" label="ui.bi.fileFormat.xls" 
-  contentType="application/msexcel" extension="xlsx" renderer="SanteDB.BI.Rendering.XlsReportRenderer, SanteDB.BI">
+<BiRenderFormatDefinition xmlns="http://santedb.org/bi" id="org.santedb.bi.format.xls.xml" label="ui.bi.fileFormat.xls.xml" 
+  contentType="application/vnd.ms-excel" extension="xls.xml" renderer="SanteDB.BI.Rendering.XlsXmlReportRenderer, SanteDB.BI">
   <meta status="active">
     <authors>
       <add>Justin Fyfe (Fyfe Software Inc.) &lt;justin@fyfesoftware.ca></add>
     </authors>
     <annotation>
       <div xmlns="http://www.w3.org/1999/xhtml">
-        <p>Renders a report in XLS format for display</p>
+        <p>Renders a report in XLS XML format for display</p>
       </div>
     </annotation>
   </meta>  
