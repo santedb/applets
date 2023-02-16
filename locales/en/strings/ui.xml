@@ -137,6 +137,7 @@
       <string name="ui.action.ok">Ok</string>
       <string name="ui.action.dismiss">Dismiss</string>
       <string name="ui.action.cancel">Cancel</string>
+      <string name="ui.action.clear">Clear</string>
       <string name="ui.action.clone">Clone</string>
       <string name="ui.action.cancel.confirm">Are you sure you want to cancel?</string>
       <string name="ui.action.save">Save</string>
@@ -554,7 +555,7 @@
 
       <!-- Notices on the UI -->
       <string name="ui.notices.privacyControls.masked">This record has been flagged and masked/altered by privacy enforcement to protect sensitive information. You may be asked to re-authenticate yourself or you may be restricted for editing the record. Additional additional security audits have been logged.</string>
-
+      <string name="ui.notices.imported">This record contains data which was imported from another source - information may be incomplete</string>
       <!-- Relationship widget -->
       <string name="ui.entity.relationship.mode">View Mode</string>
       <string name="ui.entity.relationship.mode.hint"><![CDATA[Controls the rendering of the entity relationship diagram for this entity. 

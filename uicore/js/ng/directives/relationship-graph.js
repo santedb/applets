@@ -64,6 +64,7 @@ angular.module('santedb-lib')
                     }
                 }
 
+                if(entity.obsoletionTime) return '';
                 var extraClass = "";
                 if (entity && entity.statusConcept != StatusKeys.Active && entity.statusConcept != StatusKeys.New) {
                     extraClass = "text-light";

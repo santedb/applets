@@ -19,7 +19,6 @@
  */
 angular.module('santedb').controller('UserIndexController', ["$scope", "$rootScope", "$stateParams", "$templateCache", function ($scope, $rootScope, $stateParams, $templateCache) {
 
-    $scope.UserClassKeys = UserClassKeys;
     $scope.initialFilter = $stateParams.q;
     /**
      * @summary Delete the specified user

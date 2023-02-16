@@ -165,7 +165,16 @@ angular.module('santedb-lib')
                 $scope.downloadReport = async function (view, format) {
                     try {
                         SanteDB.display.buttonWait(`#btnDownloadReport_${view}`, true);
-                        var parms = jQuery.param($scope.parameterValues);
+
+                        var parameterValues = angular.copy($scope.parameterValues);
+                        Object.keys(parameterValues).forEach(p => {
+                            if(parameterValues[p] instanceof Date)
+                            {
+                                parameterValues[p] = new moment(parameterValues[p]).format('YYYY-MM-DD')
+                            }
+                        });
+                        
+                        var parms = jQuery.param(parameterValues);
                         parms += `&_download=true`; //&_sessionId=${window.sessionStorage.token}`;
 
                        
