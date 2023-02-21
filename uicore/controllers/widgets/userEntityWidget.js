@@ -1,5 +1,5 @@
 /// <reference path="../../../core/js/santedb.js"/>
-angular.module('santedb').controller('CoreUserWidgetController', ['$scope', '$rootScope', function ($scope, $rootScope) {
+angular.module('santedb').controller('CoreUserWidgetController', ['$scope', '$rootScope', '$timeout', function ($scope, $rootScope, $timeout) {
 
 
 
@@ -8,30 +8,28 @@ angular.module('santedb').controller('CoreUserWidgetController', ['$scope', '$ro
             if (n.language) {
                 n.preferredLanguage = n.language.find(o => o.isPreferred);
             }
-            $scope.editObject = angular.copy(n);
 
-            // Get TFA
-            try {
-                if($rootScope.session.method != 'LOCAL') {
-                    var tfaData = await SanteDB.authentication.getTfaModeAsync();
-                    $scope.tfaMechanisms = tfaData.resource;
-                }
-            }
-            catch (e) {
-                console.warn(e);
-            }
+            var editObject = angular.copy(n);
+            var tfaData = await SanteDB.authentication.getTfaModeAsync();
 
             // Get challenges
             try {
                 var challenges = await SanteDB.resources.securityChallenge.findAsync();
-                $scope.challenges = challenges.resource;
                 var userChallenges = await SanteDB.resources.securityUser.findAssociatedAsync(n.securityUser, "challenge");
-                if (userChallenges.resource && userChallenges.resource.length > 0)
-                    $scope.editObject.challenges = userChallenges.resource.map(function (i) { i.challenge = i.id, i.response = "XXXXXXX"; i.configured = true; return i; });
-                else
-                    $scope.editObject.challenges = [];
-                while ($scope.editObject.challenges.length < 3)
-                    $scope.editObject.challenges.push({ challenge: null });
+
+                $timeout(() => {
+                    $scope.tfaMechanisms = tfaData.resource;
+                    $scope.editObject = editObject;
+                    $scope.challenges = challenges.resource;
+                    if (userChallenges.resource && userChallenges.resource.length > 0)
+                        $scope.editObject.challenges = userChallenges.resource.map(function (i) { i.challenge = i.id, i.response = "XXXXXXX"; i.configured = true; return i; });
+                    else
+                        $scope.editObject.challenges = [];
+                    while ($scope.editObject.challenges.length < 3)
+                        $scope.editObject.challenges.push({ challenge: null });
+
+                });
+
             }
             catch (e) {
                 console.warn(e);
@@ -82,7 +80,7 @@ angular.module('santedb').controller('CoreUserWidgetController', ['$scope', '$ro
         try {
             var userSubmission = {
                 $type: "SecurityUserInfo",
-                entity: $scope.scopedObject.securityUserModel
+                entity: $scope.editObject.securityUserModel
             };
 
             var result = await SanteDB.resources.securityUser.updateAsync(userSubmission.entity.id, userSubmission);
@@ -97,12 +95,12 @@ angular.module('santedb').controller('CoreUserWidgetController', ['$scope', '$ro
                             .filter(o => !o.configured && o.response) // Not pre-configured values
                             .map(async function (o) {
                                 if (o.challenge && o.challenge != o.id)
-                                    await SanteDB.resources.securityUser.removeAssociatedAsync(userSubmission.entity.id, "challenge", o.challenge);
+                                    await SanteDB.resources.securityUser.removeAssociatedAsync(userSubmission.entity.id, "challenge", o.challenge, true);
                                 await SanteDB.resources.securityUser.addAssociatedAsync(userSubmission.entity.id, "challenge", {
                                     $type: "SecurityUserChallengeInfo",
                                     challenge: o.id,
                                     response: o.response
-                                });
+                                }, true);
                             }));
 
                         SanteDB.authentication.setElevator(null);

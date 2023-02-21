@@ -3790,9 +3790,6 @@ function SanteDBWrapper() {
             return new Promise(function (fulfill, reject) {
                 try {
                     var headers = {};
-                    if (tfaSecret)
-                        headers["X-SanteDB-TfaSecret"] = tfaSecret;
-
                     var claims = {};
 
                     if (purposeOfUse) {
@@ -3815,6 +3812,7 @@ function SanteDBWrapper() {
                             username: userName,
                             password: password,
                             no_session: uacPrompt,
+                            x_mfa: tfaSecret,
                             grant_type: 'password',
                             scope: (scope || ["*"]).join(" ")
                         },
@@ -3859,11 +3857,11 @@ function SanteDBWrapper() {
                             client_id: SanteDB.configuration.getClientId(),
                             username: userName,
                             pin: pin,
+                            x_mfa: tfaSecret,
                             grant_type: 'pin',
                             scope: (scope || ["*"]).join(" ")
                         },
                         headers: {
-                            "X-SanteDB-TfaSecret": tfaSecret,
                             "X-SanteDBClient-Claim":
                                 btoa("urn:santedb:org:override=true;" +
                                     "urn:oasis:names:tc:xacml:2.0:action:purpose=" + purposeOfUse)

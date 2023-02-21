@@ -29,7 +29,7 @@
                     class="col-xs-12 col-md-3 control-label">{{ 'ui.model.securityUser.email' | i18n }}</label>
                 <div class="col-xs-12 col-md-9">
                     <input name="email" type="email" required="required" class="form-control"
-                        ng-model="scopedObject.securityUserModel.email" />
+                        ng-model="editObject.securityUserModel.email" />
                     <div ng-show="panel.editForm.email.$error['required'] &amp;&amp; panel.editForm.$submitted"
                         class="alert-danger">
                         <i class="fa fa-exclamation-triangle"></i> {{ 'ui.error.required' | i18n }}
@@ -41,7 +41,7 @@
                     class="col-xs-12 col-md-3 control-label">{{ 'ui.model.securityUser.phoneNumber' | i18n }}</label>
                 <div class="col-xs-12 col-md-9">
                     <input name="phoneNumber" type="tel" class="form-control"
-                        ng-model="scopedObject.securityUserModel.phoneNumber" />
+                        ng-model="editObject.securityUserModel.phoneNumber" />
 
                 </div>
             </div>
@@ -51,9 +51,10 @@
                     <div class="input-group">
                         <div class="input-group-prepend">
                             <label class="input-group-text">
-                                <input type="checkbox" ng-model="scopedObject.securityUserModel.twoFactorEnabled" />
+                                <input type="checkbox" ng-model="editObject.securityUserModel.twoFactorEnabled"
+                                ng-change="editObject.securityUserModel.twoFactorMechanism = tfaMechanisms[0].id" />
                             </label>
-                            <select class="form-control" ng-class="scopedObject.securityUserModel.twoFactorMechanism" ng-disabled="!scopedObject.securityUserModel.twoFactorEnabled">
+                            <select class="form-control" ng-class="editObject.securityUserModel.twoFactorMechanism" ng-disabled="!editObject.securityUserModel.twoFactorEnabled">
                                 <option ng-repeat="tfa in tfaMechanisms" value="{{tfa.id}}">{{ tfa.name | i18n}}</option>
                             </select>
                         </div>

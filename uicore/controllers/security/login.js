@@ -18,81 +18,70 @@
  * User: Justin Fyfe
  * Date: 2019-8-8
  */
-angular.module("santedb").controller("LoginController", ['$scope', '$rootScope', '$state', '$templateCache', '$stateParams', function ($scope, $rootScope, $state, $templateCache, $stateParams) {
+angular.module("santedb").controller("LoginController", ['$scope', '$rootScope', '$state', '$templateCache', '$stateParams', '$timeout', function ($scope, $rootScope, $state, $templateCache, $stateParams, $timeout) {
 
 
     // Send login request and then call continue with for the authentication elevator
-    $scope.doLogin = function (form) {
+    $scope.doLogin = async function (form) {
         if (form.$invalid)
             return;
 
         SanteDB.display.buttonWait("#loginButton", true);
-        // Perform login then call the elevator's continue with function
-        switch ($scope.login.grant_type) {
-            case 'password':
+        try {
 
-                var pouKey = $scope.login.purposeOfUse ? $scope.login.purposeOfUse.id : null;
-                SanteDB.authentication.passwordLoginAsync($scope.login.userName, $scope.login.password, $scope.login.tfaSecret, $scope.login.noSession, pouKey, $scope.login.scope)
-                    .then(function (d) {
+            var pouKey = $scope.login.purposeOfUse ? $scope.login.purposeOfUse.id : null;
+            var sessionResult = null;
+            switch ($scope.login.grant_type) {
+                case "password":
+                    sessionResult = await SanteDB.authentication.passwordLoginAsync($scope.login.userName, $scope.login.password, $scope.login.tfaSecret, $scope.login.noSession, pouKey, $scope.login.scope);
+                    break;
+                case "pin":
+                    sessionResult = await SanteDB.authentication.pinLoginAsync($scope.login.userName, $scope.login.password, $scope.login.tfaSecret, $scope.login.noSession, $scope.login.scope);
+                    break;
+                default:
+                    throw { "message": "ui.login.invalidMethod" };
+            }
 
-                        if ($scope.login.onLogin) {
-                            $scope.login.onLogin(d);
-                        }
-                        else {
+            if ($scope.login.onLogin) {
+                $scope.login.onLogin(sessionResult);
+            }
+            else {
+                if (!$scope.login.noSession) {
+                    $templateCache.removeAll();
+                    $rootScope.session = sessionResult;
+                }
 
-                            if (!$scope.login.noSession) {
-                                $templateCache.removeAll();
-                                $rootScope.session = d;
-                            }
+                if ($stateParams.returnState && $stateParams.returnState != "login")
+                    $state.go($stateParams.returnState);
+                else
+                    window.location.hash = "#!/";
+            }
 
-                            if ($stateParams.returnState && $stateParams.returnState != "login")
-                                $state.go($stateParams.returnState);
-                            else
-                                window.location.hash = "#!/";
-                        }
+            $("#loginModal").modal('hide');
+        }
+        catch (e) {
 
-                        SanteDB.display.buttonWait("#loginButton", false);
-                        $("#loginModal").modal('hide');
-                    })
-                    .catch(function (e) {
-                        if (e.data && e.data.error_description) {
-                            e.userMessage = e.data.error_description;
-                            e.expiry = new Date(new Date().getTime() + e.data.expires_in);
-                        }
-                        else {
-                            e.userMessage = e.message;
-                        }
-                        $rootScope.errorHandler(e);
-                        SanteDB.display.buttonWait("#loginButton", false);
-                    });
-                break;
-            case 'pin':
-                SanteDB.authentication.pinLoginAsync($scope.login.userName, $scope.login.password, $scope.login.tfaSecret, $scope.login.noSession, $scope.login.scope)
-                    .then(function (d) {
-                        if ($scope.login.onLogin) {
-                            $scope.login.onLogin(d);
-                        }
-                        else {
-
-                            if (!$scope.login.noSession) {
-                                $templateCache.removeAll();
-                                $rootScope.session = d;
-                            }
-
-                            if ($stateParams.returnState && $stateParams.returnState != "login")
-                                $state.go($stateParams.returnState);
-                            else
-                                window.location.hash = "#!/";
-                        }
-
-                        SanteDB.display.buttonWait("#loginButton", false);
-                        $("#loginModal").modal('hide');
-                    })
-                    .catch(function (e) {
-                        $rootScope.errorHandler(e);
-                        SanteDB.display.buttonWait("#loginButton", false);
-                    });
-                break;
+            if (e.data.error === "mfa_required") {
+                $timeout(() => {
+                     
+                     $scope.login.requireTfa =
+                     $scope.login._lockPassword = 
+                     $scope.login._lockUserName = true;
+                    $scope.login._mfaDetail = e.data.error_description;
+                });
+                return;
+            }
+            else if (e.data && e.data.error_description) {
+                e.userMessage = e.data.error_description;
+                e.expiry = new Date(new Date().getTime() + e.data.expires_in);
+            }
+            else {
+                e.userMessage = e.message;
+            }
+            $rootScope.errorHandler(e);
+        }
+        finally {
+            SanteDB.display.buttonWait("#loginButton", false);
         }
     }
 

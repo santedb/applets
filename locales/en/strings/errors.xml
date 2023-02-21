@@ -250,7 +250,7 @@
       <string name="error.security.session.elevatedExtension">Elevated and special sessions cannot be extended</string>
       <string name="error.security.device.delete">General error deleting device</string>
       <string name="error.data.general">General error while committing data</string>
-      <string name="error.security.user.tfaRequired">Two-Factor authentication is required</string>
+      <string name="error.security.user.tfaRequired">Multi-factor Authentication is Required - {message}</string>
       <string name="error.security.user.auth.locked">This user account is locked until {time}</string>
       <string name="error.security.user.auth.invalid">Invalid username or password</string>
       <string name="error.security.user.auth.reauthNotAllowed">Reauthorization of this principal is not permitted</string>

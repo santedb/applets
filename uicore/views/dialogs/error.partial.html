@@ -67,7 +67,7 @@
                 <p  ng-if="!$root.error.userMessage">{{ 'ui.error.contactSysAdmin' | i18n }}</p>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-info" ng-if="$root.error.fileBug" ng-click="$root.error.fileBug()"><i class="fas fa-bug"></i> {{ 'ui.action.bug' | i18n }}</button>
+                <button type="button" class="btn btn-info" ng-if="$root.error.fileBug &amp;&amp; $root.session" ng-click="$root.error.fileBug()"><i class="fas fa-bug"></i> {{ 'ui.action.bug' | i18n }}</button>
                 <button type="button" class="btn btn-primary" data-dismiss="modal">{{ 'ui.action.ok' | i18n }}</button>
             </div>
         </div>
