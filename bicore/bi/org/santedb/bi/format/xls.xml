@@ -19,7 +19,8 @@
  - User: Justin Fyfe
  - Date: 2019-11-23
  -->
-<BiRenderFormatDefinition xmlns="http://santedb.org/bi" id="org.santedb.bi.format.xls" label="ui.bi.fileFormat.xls" contentType="application/vnd.ms-excel" extension="xls.xml" renderer="SanteDB.BI.Rendering.XlsReportRenderer, SanteDB.BI">
+<BiRenderFormatDefinition xmlns="http://santedb.org/bi" id="org.santedb.bi.format.xls" label="ui.bi.fileFormat.xls" 
+  contentType="application/msexcel" extension="xlsx" renderer="SanteDB.BI.Rendering.XlsReportRenderer, SanteDB.BI">
   <meta status="active">
     <authors>
       <add>Justin Fyfe (Fyfe Software Inc.) &lt;justin@fyfesoftware.ca></add>

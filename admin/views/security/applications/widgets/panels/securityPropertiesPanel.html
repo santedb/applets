@@ -47,7 +47,7 @@
                 class="col-xs-12 col-md-2 control-label">{{ 'ui.model.securityApplication.secret' | i18n }}</label>
             <div class="col-sm-12 col-md-10 input-group"
                 ng-if="scopedObject.securityApplication.applicationSecret">
-                <input name="secret" ng-readonly="scopedObject.securityApplication.id" type="text"
+                <input name="secret" autocomplete="__away" ng-readonly="scopedObject.securityApplication.id" type="text"
                     class="form-control" minlength="3" maxlength="64" readonly="readonly"
                     ng-model="scopedObject.securityApplication.applicationSecret" />
                 <input-copy-button id="applicationsecretCopyButton" class="btn btn-outline-secondary"

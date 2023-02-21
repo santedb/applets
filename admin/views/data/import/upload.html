@@ -1,0 +1,64 @@
+<div xmlns="http://www.w3.org/1999/xhtml" xmlns:sdb="http://santedb.org/applet">
+    <sdb:script static="false">~/controllers/import/upload.js</sdb:script>
+    <sdb:state name="santedb-admin.data.import.upload" abstract="false">
+        <sdb:demand>1.3.6.1.4.1.33349.3.1.5.9.2.0.20</sdb:demand>
+        <sdb:url>/upload</sdb:url>
+        <sdb:view>
+            <sdb:controller>ForeignDataUploadController</sdb:controller>
+        </sdb:view>
+    </sdb:state>
+
+    <h2>{{ 'ui.admin.alien.upload.title' | i18n }}</h2>
+    <p><i class="fas fa-info-circle"></i> {{ 'ui.admin.alien.upload.description' | i18n }}</p>
+
+    <div ng-if="!mappings">
+        <i class="fas fa-circle-notch fa-spin"></i> {{ 'ui.wait' | i18n  }}
+    </div>
+    <form id="alienForm" class="form" name="alienForm" ng-submit="submit()" 
+        novalidate="novalidate" ng-if="mappings" >
+        <div class="form-group row">
+            <label class="control-label col-xs-12 col-md-2">{{ 'ui.admin.alien.upload.fileName' | i18n }}
+                <hint-popover hint-title="ui.admin.alien.upload.fileName" />
+            </label>
+            <div class="col-xs-12 col-md-10">
+                <input id="source-file" type="file" ng-model="submission.source" class="form-control" name="source" valid-file="valid-file" required="required" accept=".csv, .xls, .xlsx" />
+                <span class="text-danger" ng-show="alienForm.source.$error['required']">
+                    <i class="fas fa-exclamation-triangle"></i> {{ 'ui.error.required' | i18n }}
+                </span> 
+            </div>
+        </div>
+        <div class="form-group row">
+            <label class="control-label col-xs-12 col-md-2">{{ 'ui.admin.alien.upload.mapping' | i18n }}
+                <hint-popover hint-title="ui.admin.alien.mapping.fileName" />
+            </label>
+            <div class="col-xs-12 col-md-10">
+                <select ng-model="submission.map" class="form-control" name="map" required="required">
+                    <option ng-repeat="mapDef in mappings" value="{{mapDef.id}}">{{ mapDef.name }} - {{ mapDef.description }}</option>
+                </select>
+                <span class="text-danger" ng-show="alienForm.map.$error['required']">
+                    <i class="fas fa-exclamation-triangle"></i> {{ 'ui.error.required' | i18n }}
+                </span> 
+            </div>
+        </div>
+        <div class="form-group row">
+            <label class="control-label col-xs-12 col-md-2">{{ 'ui.admin.alien.upload.notes' | i18n }}
+                <hint-popover hint-title="ui.admin.alien.mapping.notes" />
+            </label>
+            <div class="col-xs-12 col-md-10">
+                <input class="form-control" autocomplete="__away" maxlength="512" ng-model="submission.description" name="description" required="required" />
+                <span class="text-danger" ng-show="alienForm.description.$error['required']">
+                    <i class="fas fa-exclamation-triangle"></i> {{ 'ui.error.required' | i18n }}
+                </span> 
+            </div>
+        </div>
+        <div class="form-group row">
+            <div class="col-12">
+                <div class="float-right btn-group">
+                    <button id="btnSubmit" type="submit" class="btn btn-primary" ng-disabled="alienForm.$invalid">
+                        <i class="fas fa-upload"></i> {{ 'ui.action.upload' | i18n }}
+                    </button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>

@@ -4,25 +4,26 @@
     </div>
     <form class="form card-body" name="reportFilterForm" ng-submit="updateParameterValues(reportFilterForm)">
         <div class="tab-content">
-            <div class="tab-pane fade show active" id="{{htmlId}}_parms">
+            <div ng-if="report.parameterDefinitions.length"  class="tab-pane show active" id="{{htmlId}}_parms">
                 <div class="container-fluid">
                     <div ng-repeat="parm in report.parameterDefinitions track by $index">
-                        <report-parameter values="parameters" parameter="parm" />
+                        <report-parameter values="parameterValues" parameter="parm" />
                     </div>
                     <div class="float-right btn-group">
-                        <button type="submit" class="btn btn-primary"><i class="fas fa-check"></i> {{ 'ui.action.apply' | i18n }}</button>
+                        <button type="submit" id="btnApply" class="btn btn-primary"><i class="fas fa-check"></i> {{ 'ui.action.apply' | i18n }}</button>
                     </div>
                 </div>
             </div>
-            <div class="tab-pane fade report-view-container"
+            <div ng-class="{ 'active show' : !report.parameterDefinitions.length }" class="tab-pane  report-view-container"
                 ng-repeat="viewDefinition in report.views" id="{{htmlId}}_{{viewDefinition.name}}">
-                <div class="report-view-area">
+                <div  id="{{htmlId}}view">
+                    <i class="fas fa-circle-notch fa-spin"></i> {{ 'ui.wait' | i18n }}
                 </div>
                 <div class="float-right btn-group dropup">
-                    <button type="button" class="btn btn-secondary dropdown-toggle" aria-haspopup="true" data-toggle="dropdown" id="btnDownloadReport_{{viewDefinition.name}}"><i class="fas fa-save"></i> {{ 'ui.action.download' | i18n }}</button>
-                    <button type="button" id="btnPrintReport_{{viewDefinition.name}}" ng-click="printReport(viewDefinition.name)" class="btn btn-primary"><i class="fas fa-print"></i> {{ 'ui.action.print' | i18n }}</button>
+                    <button type="button"  class="btn btn-secondary dropdown-toggle" aria-haspopup="true" data-toggle="dropdown" id="btnDownloadReport_{{viewDefinition.name}}"><i class="fas fa-save"></i> {{ 'ui.action.download' | i18n }}</button>
+                    <button type="button"  id="btnPrintReport_{{viewDefinition.name}}" ng-click="printReport(viewDefinition.name)" class="btn btn-primary"><i class="fas fa-print"></i> {{ 'ui.action.print' | i18n }}</button>
                     <div class="dropdown-menu" aria-labelledby="btnDownloadReport_{{viewDefinition.name}}" style="z-index:100">
-                        <button class="dropdown-item" ng-repeat="fmt in formats" ng-click="downloadReport(viewDefinition.name, fmt.extension)">{{ fmt.label | i18n }}</button>
+                        <button class="dropdown-item" type="button" ng-repeat="fmt in formats" ng-click="downloadReport(viewDefinition.name, fmt.extension)">{{ fmt.label | i18n }}</button>
                       </div>
                 </div>
             </div>
@@ -30,6 +31,10 @@
     </form>
     <div class="card-footer">
         <ul class="nav nav-pills">
+            <li ng-if="report.parameterDefinitions.length" id="{{htmlId}}_parms_tab" class="nav-item active">
+                <a class="nav-link" data-target="#{{htmlId}}_parms" data-toggle="tab"><i class="fas fa-filter"></i>
+                    {{ 'ui.bi.common.parameters' | i18n }}</a>
+            </li>
             <li id="{{htmlId}}_{{viewDefinition.name}}_tab" class="nav-item"
                 ng-repeat="viewDefinition in report.views">
                 <a class="nav-link" 
@@ -37,10 +42,7 @@
                         ng-class="{ 'fa-chart-pie' : viewDefinition.name == 'chart' , 'fa-table' : viewDefinition.name == 'tabular', 'fa-file-alt' : null }"></i>
                     {{ viewDefinition.label | i18n }}</a>
             </li>
-            <li id="{{htmlId}}_parms_tab" class="nav-item active">
-                <a class="nav-link" data-target="#{{htmlId}}_parms" data-toggle="tab"><i class="fas fa-filter"></i>
-                    {{ 'ui.bi.common.parameters' | i18n }}</a>
-            </li>
+            
         </ul>
     </div>
 </div>

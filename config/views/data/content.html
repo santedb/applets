@@ -65,7 +65,7 @@
                                         <td>{{ optKey }}</td>
                                         <td ng-switch="optType">
                                             <input ng-change="propogateDataChanges()" name="option{{optKey}}" ng-switch-when="User" type="text"
-                                                class="form-control" required="required"
+                                                class="form-control" required="required" autocomplete="__away"
                                                 ng-model="config.data.options[optKey]" pattern="^[A-Za-z0-9_]+$"
                                                 value="true"
                                                 placeholder="{{ 'ui.config.data.options.user.placeholder' | i18n }}" />
@@ -76,7 +76,7 @@
                                             <input ng-change="propogateDataChanges()" name="option{{optKey}}" ng-switch-when="Boolean" type="checkbox"
                                                 ng-model="config.data.options[optKey]" value="true" />
                                             <input ng-change="propogateDataChanges()" name="option{{optKey}}" ng-switch-when="String" type="text"
-                                                ng-model="config.data.options[optKey]" class="form-control"
+                                                ng-model="config.data.options[optKey]" class="form-control" autocomplete="__away"
                                                 placeholder="{{ 'ui.config.data.options.string.placeholder' | i18n }}" />
                                             <input ng-change="propogateDataChanges()" name="option{{optKey}}" ng-switch-when="Password" type="password"
                                                 required="required" ng-model="config.data.options[optKey]"
@@ -152,7 +152,7 @@
                                                 <td>{{ optKey }}</td>
                                                 <td ng-switch="optType">
                                                     <input name="option{{k}}{{optKey}}" ng-switch-when="User" type="text"
-                                                        class="form-control" required="required"
+                                                        class="form-control" required="required" autocomplete="__away"
                                                         ng-model="cstr.options[optKey]" pattern="^[A-Za-z0-9_]+$"
                                                         value="true"
                                                         placeholder="{{ 'ui.config.data.options.user.placeholder' | i18n }}" />
@@ -163,7 +163,7 @@
                                                     <input name="option{{k}}{{optKey}}" ng-switch-when="Boolean" type="checkbox"
                                                         ng-model="cstr.options[optKey]" value="true" />
                                                     <input name="option{{k}}{{optKey}}" ng-switch-when="String" type="text"
-                                                        ng-model="cstr.options[optKey]" class="form-control"
+                                                        ng-model="cstr.options[optKey]" class="form-control" autocomplete="__away"
                                                         placeholder="{{ 'ui.config.data.options.string.placeholder' | i18n }}" />
                                                     <input name="option{{k}}{{optKey}}" ng-switch-when="Password" type="password"
                                                         required="required" ng-model="cstr.options[optKey]"

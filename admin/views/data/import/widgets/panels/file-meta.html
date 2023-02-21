@@ -1,0 +1,47 @@
+<div xmlns="http://www.w3.org/1999/xhtml" xmlns:sdb="http://santedb.org/applet">
+    <sdb:widget order="0" name="org.santedb.widget.admin.panel.data.import.file" type="Panel"
+        context="org.santedb.data.import.file" size="Large">
+        <sdb:icon>fas fa-file-code</sdb:icon>
+        <sdb:description lang="en">Import Metadata</sdb:description>
+    </sdb:widget>
+
+    <div class="container-fluid" ng-if="scopedObject">
+        <div class="row">
+            <label class="col-xs-12 col-md-2 control-label">{{ 'ui.model.alien.submission.name' | i18n }}</label>
+            <div class="col-xs-12 col-md-10">
+                <a target="_blank" href="/ami/ForeignData/{{scopedObject.id}}/_file/source"><i class="fas fa-download"></i> {{ scopedObject.name }} ({{ 'ui.action.download' | i18n }})</a>
+            </div>
+        </div>
+        <div class="row" ng-if="scopedObject.status == 'CompletedWithErrors'">
+            <label class="col-xs-12 col-md-2 control-label">{{ 'ui.model.alien.submission.reject' | i18n }}</label>
+            <div class="col-xs-12 col-md-10">
+                <a target="_blank" href="/ami/ForeignData/{{scopedObject.id}}/_file/reject"><i class="fas fa-download"></i> {{ scopedObject.name }} ({{ 'ui.action.download' | i18n }})</a>
+            </div>
+        </div>
+        <div class="row">
+            <label class="col-xs-12 col-md-2 control-label">{{ 'ui.model.alien.submission.description' | i18n }}</label>
+            <div class="col-xs-12 col-md-10">
+                {{ scopedObject.description }}                
+            </div>
+        </div>
+        <div class="row">
+            <label class="col-xs-12 col-md-2 control-label">{{ 'ui.model.alien.submission.status' | i18n }}</label>
+            <div class="col-xs-12 col-md-10" ng-switch="scopedObject.status">
+                <span class="text-secondary" ng-switch-when="Scheduled"><i class="fas fa-clock"></i> {{ 'ui.model.alien.submission.status.scheduled' | i18n }}</span>
+                <span class="text-secondary" ng-switch-when="Staged"><i class="fas fa-question-circle"></i> {{ 'ui.model.alien.submission.status.staged' | i18n }}</span>
+                <span class="text-primary" ng-switch-when="Running"><i class="fas fa-play"></i> {{ 'ui.model.alien.submission.status.running' | i18n }}</span>
+                <span class="text-danger" ng-switch-when="Rejected"><i class="fas fa-exclamation-triangle"></i> {{ 'ui.model.alien.submission.status.rejected' | i18n }}</span>
+                <span class="text-success" ng-switch-when="CompletedSuccessfully"><i class="fas fa-check"></i> {{ 'ui.model.alien.submission.status.success' | i18n }}</span>
+                <span class="text-warning" ng-switch-when="CompletedWithErrors"><i class="fas fa-exclamation-circle"></i> {{ 'ui.model.alien.submission.status.withErrors' | i18n }}</span>
+            </div>
+        </div>
+        <div class="row">
+            <label class="col-xs-12 col-md-2 control-label">{{ 'ui.model.alien.submission.createdBy' | i18n }}</label>
+            <div class="col-xs-12 col-md-10"><provenance provenance-id="scopedObject.createdBy" provenance-time="scopedObject.creationTime" /></div>
+        </div>
+        <div class="row" ng-if="scopedObject.updatedBy">
+            <label class="col-xs-12 col-md-2 control-label">{{ 'ui.model.alien.submission.updatedBy' | i18n }}</label>
+            <div class="col-xs-12 col-md-10"><provenance provenance-id="scopedObject.updatedBy" provenance-time="scopedObject.updatedTime" /></div>
+        </div>
+    </div>
+</div>

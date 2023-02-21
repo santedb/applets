@@ -29,7 +29,7 @@
                         <label class="col-sm-12 col-md-2 control-label"
                             for="sid">{{ 'ui.model.securityPolicy.id' | i18n }}</label>
                         <div class="col-sm-12 col-md-10 input-group">
-                            <input name="sid" readonly="readonly" type="text" class="form-control"
+                            <input name="sid" readonly="readonly" type="text"  autocomplete="__away" class="form-control"
                                 ng-model="target.securityPolicy.id" />
                             <input-copy-button button-class="'btn-outline-secondary'" source="target.securityPolicy.id" />
                         </div>
@@ -38,7 +38,7 @@
                         <label class="col-sm-12 col-md-2 control-label"
                             for="policyoid">{{ 'ui.model.securityPolicy.oid' | i18n }}</label>
                         <div class="col-sm-12 col-md-10 input-group">
-                            <input name="policyoid" type="text" class="form-control"
+                            <input name="policyoid" type="text"  autocomplete="__away" class="form-control"
                                 pattern="^(\d+?\.){1,}\d+$" minlength="6" maxlength="32" required="required" ng-readonly="target.securityPolicy.id"
                                 ng-model="target.securityPolicy.oid" />
                             <input-copy-button id="policyoidCopyButton" button-class="'btn-outline-secondary'"
@@ -63,7 +63,7 @@
                         <label class="col-sm-12 col-md-2 control-label"
                             for="policyname">{{ 'ui.model.securityPolicy.name' | i18n }}</label>
                         <div class="col-sm-12 col-md-10 input-group">
-                            <input name="policyname" type="text" class="form-control" ng-readonly="target.securityPolicy.id"
+                            <input name="policyname" type="text"  autocomplete="__away" class="form-control" ng-readonly="target.securityPolicy.id"
                                 minlength="3" maxlength="32" required="required"
                                 ng-model="target.securityPolicy.name" />
                             <input-copy-button id="policynameCopyButton" button-class="'btn-outline-secondary'"
@@ -88,7 +88,7 @@
                         <label class="col-sm-12 col-md-2 control-label"
                             for="policyhandler">{{ 'ui.model.securityPolicy.handler' | i18n }}</label>
                         <div class="col-sm-12 col-md-10">
-                            <input name="policyhandler" type="text" class="form-control"
+                            <input name="policyhandler" type="text"  autocomplete="__away" class="form-control"
                                 pattern="^(\w+?\.){1,}\w+$" minlength="1" maxlength="256" ng-readonly="target.securityPolicy.id"
                                 ng-model="target.securityPolicy.handler" />
                         </div>

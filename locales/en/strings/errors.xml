@@ -12,6 +12,7 @@
       <string name="ui.error.pattern">Invalid format (please ensure input is in correct format)</string>
       <string name="ui.error.pattern.ext">Invalid format (expected: {pattern})</string>
       <string name="ui.error.duplicate">Duplicate record detected</string>
+      <string name="ui.error.policy">You don't have access to this function. Contact your administrator</string>
       <string name="error.http.403">Access Denied</string>
       <string name="error.http.403.text">Your request has been denied and audited. In order to access this resource, you must first either elevate your current session, obtain appropriate authorization, or temporary authenticate as someone else. You can attempt to elevate your session by selecting the override option below</string>
       <string name="error.http.404">The requested resource could not be found</string>
@@ -236,7 +237,7 @@
       <string name="error.security.user.roleUnAssign">Error un-assigning  {user} from {role}</string>
       <string name="error.security.role.query">Error querying for roles</string>
       <string name="error.security.role.general">General error creating role</string>
-      <string name="error.data.related.notFound">Dependent data could not be located for this object</string>
+      <string name="error.data.related.notFound">Dependent data object {source} of type {type} could not be located</string>
       <string name="error.general.notAllowed">This operation is not allowed</string>
       <string name="error.general.notFound">The requested data could not be found</string>
       <string name="error.general.nonIdentityUpdate">Attempt was made to update an object without an identifier</string>
@@ -301,4 +302,17 @@
       <string name="error.backup.policy.encryption">Configured backup policy requires backups to have encryption - but no encryption secret was provided</string>
       <string name="error.backup.gen">General error backing up this system</string>
       <string name="error.backup.restore">General error restoring this system</string>
+
+      <string name="error.foreign.map.notFound">The foreign data map for {subsetName} could not be found</string>
+      <string name="error.foreign.transform">Error applying {name} to input value</string>
+      <string name="error.foreign.map">Error applying transform on row {row}</string>
+      <string name="error.foreign.map.target">Could not apply the mapping because the map is misisng a target at {row}</string>
+      <string name="error.foreign.map.gen">General error applying the mapping at {row} because of {ex}</string>
+      <string name="error.foreign.map.required">The field {field} on row {row} is null or missing a value when one is required</string>
+      <string name="error.foreign.map.target.null">The source field {field} with value {value} could not be translated and populated on {target} - check for missing mapping data in SanteDB database (at row {row})</string>
+      <string name="error.foreign.map.transform.missing">{transform} could not be found - validate your mapping</string>
+      <string name="error.foreign.manager.gen">General error in foreign data stage manager</string>
+      <string name="error.foreign.manager.state">The foreign data is not in a valid state to perform this operation</string>
+      <string name="error.foreign.manager.map.notfound">The foreign data map {map} which is referenced in this data cannot be found</string>
+      <string name="error.foreign.manager.map.format">The data in format {format} cannot be interpreted by this instance of SanteDB (are you misisng a plugin?)</string>
 </resources>

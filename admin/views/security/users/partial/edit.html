@@ -18,7 +18,7 @@
                                 for="username">{{ 'ui.model.securityUser.userName' | i18n }}</label>
                             <div class="col-sm-12 col-md-10 input-group">
                                 <input name="username" ng-readonly="target.entity.id" type="text"
-                                    class="form-control" pattern="^[A-Za-z0-9_\.\@]{3,}" minlength="3" maxlength="32"
+                                autocomplete="__away" class="form-control" pattern="^[A-Za-z0-9_\.\@]{3,}" minlength="3" maxlength="32"
                                     required="required" ng-model="target.entity.userName" />
                                 <input-copy-button id="usernameCopyButton" button-class="'btn-outline-secondary'"
                                     source="target.entity.userName" />

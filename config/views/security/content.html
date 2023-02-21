@@ -84,7 +84,7 @@
                         <div class="form-group row">
                             <label class="control-label col-xs-12 col-md-2">{{ 'ui.config.security.signing.keyName' |
                                 i18n }}</label>
-                            <div class="col-xs-12 col-md-10"><input type="text" class="form-control"
+                            <div class="col-xs-12 col-md-10"><input type="text" autocomplete="__away" class="form-control"
                                     pattern="^[A-Za-z0-9]{1,}$" ng-model="sgn.name" ng-disabled="sgn.name == 'default'" maxlength="15" />
                             </div>
                             <label class="control-label col-xs-12 col-md-2">{{ 'ui.config.security.signing.keyType' |

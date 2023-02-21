@@ -2,9 +2,12 @@
     oc-lazy-load="{ name: 'EditDeviceCoreController', files: ['/org.santedb.admin/controllers/devices/widgets/core.js'] }" >
     
     <sdb:widget order="16" name="org.santedb.widget.admin.panel.device.extended"  headerClass="bl-light"
-        size="Large" type="Panel" context="org.santedb.securityDevice.admin" altViews="Edit">
+        size="Large" type="Panel" context="org.santedb.securityDevice.admin">
         <sdb:icon>fas fa-fa-mobile</sdb:icon>
         <sdb:description lang="en">Extended Properties</sdb:description>
+        <sdb:views>
+            <sdb:view type="Edit" />
+        </sdb:views>
     </sdb:widget>
 
     <div class="row" ng-if="!scopedObject">

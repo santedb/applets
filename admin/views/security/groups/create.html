@@ -15,7 +15,7 @@
                 <label class="col-sm-12 col-md-2 control-label"
                     for="sid">{{ 'ui.model.securityRole.id' | i18n }}</label>
                 <div class="col-sm-12 col-md-10 input-group">
-                    <input name="sid" readonly="readonly" type="text" class="form-control"
+                    <input name="sid" readonly="readonly" type="text"  autocomplete="__away" class="form-control"
                         ng-model="target.securityRole.id" />
                     <input-copy-button button-class="'btn-outline-secondary'" source="target.securityRole.id" />
                 </div>
@@ -25,7 +25,7 @@
                 <label class="col-sm-12 col-md-2 control-label"
                     for="rolename">{{ 'ui.model.securityRole.name' | i18n }}</label>
                 <div class="col-sm-12 col-md-10 input-group">
-                    <input name="rolename" ng-readonly="target.securityRole.id" type="text"
+                    <input name="rolename" ng-readonly="target.securityRole.id" type="text"  autocomplete="__away"
                         class="form-control" pattern="^[A-Za-z0-9_\.\@]{3,}" minlength="3" maxlength="32"
                         required="required" ng-model="target.securityRole.name" />
                     <input-copy-button id="rolenameCopyButton" button-class="'btn-outline-secondary'"

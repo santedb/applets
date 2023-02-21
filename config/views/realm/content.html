@@ -45,7 +45,7 @@
         <div class="form-group row">
             <label class="col-md-10 col-xs-12 offset-md-2">
                 <input  ng-disabled="config.realm.joined" type="checkbox" ng-model="config.realm.overrideClient" /> {{ 'ui.config.realm.secretOverride.label' | i18n }}
-                <input  ng-disabled="config.realm.joined" ng-if="config.realm.overrideClient" type="text" ng-required="config.realm.overrideSecret" class="form-control" ng-model="config.realm.client"/>
+                <input  ng-disabled="config.realm.joined" ng-if="config.realm.overrideClient" type="text" autocomplete="__away" ng-required="config.realm.overrideSecret" class="form-control" ng-model="config.realm.client"/>
                 <input  ng-disabled="config.realm.joined" ng-if="config.realm.overrideClient" type="password" ng-required="config.realm.overrideSecret" class="form-control" ng-model="config.realm.secret"/>
                 <span class="form-text text-muted d-inline">
                     {{ 'ui.config.realm.secretOverride.help' | i18n }}

@@ -222,7 +222,7 @@
                             <tr ng-repeat="set in subscription.channelModel.settings track by $index">
                                 <td>
                                     <input type="text" name="setting{{$index}}name" class="form-control"
-                                        ng-model="set.name" required="required" />
+                                        ng-model="set.name" required="required"  autocomplete="__away"/>
                                     <div ng-show="editForm['setting' + $index + 'name'].$error['required']"
                                         class="text-danger">
                                         <i class="fas fa-exclamation-triangle"></i> {{ 'ui.error.required' | i18n }}
@@ -230,7 +230,7 @@
                                 </td>
                                 <td>
                                     <input type="text" name="setting{{$index}}value" class="form-control"
-                                        ng-model="set.value" required="required" />
+                                        ng-model="set.value" required="required"  autocomplete="__away"/>
                                     <div ng-show="editForm['setting' + $index + 'value'].$error['required']"
                                         class="text-danger">
                                         <i class="fas fa-exclamation-triangle"></i> {{ 'ui.error.required' | i18n }}
@@ -245,13 +245,13 @@
                         </tbody>
                         <tfoot>
                             <tr>
-                                <td><input type="text" name="newsettingname" class="form-control"
+                                <td><input type="text" name="newsettingname" class="form-control" autocomplete="__away"
                                         ng-model="newsetting.name" ng-required="newsetting.value" />
                                     <div class="text-danger" ng-show="editForm.newsettingname.$error['required']">
                                         <i class="fas fa-exclamation-triangle"></i> {{ 'ui.error.required' | i18n }}
                                     </div>
                                 </td>
-                                <td><input type="text" name="newsettingvalue" class="form-control"
+                                <td><input type="text" name="newsettingvalue" class="form-control" autocomplete="__away"
                                         ng-model="newsetting.value" ng-required="newsetting.name" />
                                     <div class="text-danger" ng-show="editForm.newsettingvalue.$error['required']">
                                         <i class="fas fa-exclamation-triangle"></i> {{ 'ui.error.required' | i18n }}

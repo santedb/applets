@@ -364,16 +364,29 @@ function APIWrapper(_config) {
                         if (xhr && response.getResponseHeader("etag"))
                             xhr.etag = response.getResponseHeader("etag");
                         if (fulfill) {
+                            if(xhr && configuration.state != null) 
+                            {
+                                xhr.$state = configuration.state;
+                            }
                             if (configuration.headers && configuration.headers["Accept"] == _viewModelJsonMime) {
-                                fulfill(_resolveObjectRefs(xhr), configuration.state);
+                                fulfill(_resolveObjectRefs(xhr));
                             }
                             else {
-                                fulfill(xhr, configuration.state);
+                                fulfill(xhr);
                             }
                         }
                     }
                     catch (e) {
-                        if (reject) reject(e.responseJSON || e, configuration.state);
+                        if (reject){
+                            var result = e.responseJSON || e;
+                            try {
+                                result.$state = configuration.state;
+                                reject(e.responseJSON || e);
+                            }
+                            catch (ex) {
+                                reject(e.responseJSON || e);
+                            }
+                        }
                     }
                 },
                 error: function (e, data, setting) {
@@ -386,6 +399,9 @@ function APIWrapper(_config) {
                         try { error = JSON.parse(e.responseText); }
                         catch (e) { };
 
+                    if(error && configuration.state != null) {
+                        error.$state = configuration.state;
+                    }
                     if (reject) {
                         if (error && error.error !== undefined) // oauth2
                             reject(new Exception(error.type, error.error, error.error_description, error.caused_by), configuration.state);
@@ -1061,7 +1077,7 @@ function ResourceWrapper(_config) {
      * @description The patching operation is used to update a portion of the resource without subimtting the entirety of the object to the dCDR or iCDR 
      *               server ({@link https://help.santesuite.org/developers/service-apis/health-data-service-interface-hdsi/patching})
      */
-    this.patchAsync = function (id, etag, patch, upstream, force, state) {
+    this.patchAsync = function (id, etag, patch, force, upstream, state) {
         if (patch.$type !== "Patch")
             throw new Exception("ArgumentException", "error.invalidType", `Invalid type, resource wrapper expects ${_config.resource} however ${data.$type} specified`);
 
@@ -1076,6 +1092,11 @@ function ResourceWrapper(_config) {
         if (force) {
             headers['X-Patch-Force'] = true;
         }
+
+        patch.appliesTo = patch.appliesTo || {};
+        patch.appliesTo.id = patch.appliesTo.id || id;
+        patch.appliesTo.type = patch.appliesTo.type || _config.resource;
+
         // Send PUT
         return _config.api.patchAsync({
             headers: headers,
@@ -1873,6 +1894,7 @@ function SanteDBWrapper() {
 
         // JWS Pattern
         var jwsDataPattern = /^(.*?)\.(.*?)\.(.*?)$/;
+        var svrpPattern = /^svrp\:\/\/(.*)$/;
 
         /**
          * @memberof SanteDBWrapper.ApplicationApi
@@ -1966,6 +1988,9 @@ function SanteDBWrapper() {
                 var idData = JSON.parse(atob(match[2]));
                 return idData.id[0].value;
             }
+            else if(srvpPattern.test(data)) {
+
+            }
             else {
                 var idDomain = SanteDB.application.classifyIdentifier(data);
                 if (idDomain.length == 1) {
@@ -1994,6 +2019,13 @@ function SanteDBWrapper() {
                 // QR Code is a signed code
                 if (jwsDataPattern.test(qrCodeData)) {
                     var result = await SanteDB.application.ptrSearchAsync(qrCodeData, !noValidate, upstream || false);
+                    result.$novalidate = noValidate;
+                    result.$upstream = upstream;
+                    return result;
+                }
+                else if(svrpPattern.test(qrCodeData)) {
+                    var match = svrpPattern.exec(qrCodeData);
+                    var result = await SanteDB.application.ptrSearchAsync(atob(match[1]), !noValidate, upstream || false);
                     result.$novalidate = noValidate;
                     result.$upstream = upstream;
                     return result;
@@ -2658,6 +2690,9 @@ function SanteDBWrapper() {
             try {
                 var configuration = {
                     resource: "_ptr",
+                    headers: {
+                        accept: _viewModelJsonMime
+                    },
                     query: { code: jwsData, validate: validateSignature, _upstream: upstream }
                 };
                 return _hdsi.searchAsync(configuration);
@@ -3233,6 +3268,27 @@ function SanteDBWrapper() {
             api: _ami
         });
 
+        /**
+        * @type {ResourceWrapper}
+        * @memberOf SanteDBWrapper.resources
+        * @summary Wrapper for alien data
+        */
+        this.foreignData = new ResourceWrapper({
+            resource: "ForeignData",
+            accept: "application/json",
+            api: _ami
+        });
+
+        /**
+       * @type {ResourceWrapper}
+       * @memberOf SanteDBWrapper.resources
+       * @summary Wrapper for alien data mappings
+       */
+        this.foreignDataMap = new ResourceWrapper({
+            resource: "ForeignDataMap",
+            accept: "application/json",
+            api: _ami
+        });
     };
 
     // HACK: Wrapper pointer facility = place
@@ -3312,12 +3368,16 @@ function SanteDBWrapper() {
             */
         this.getAppSetting = function (key) {
             try {
-                if (!_masterConfig) throw new Exception("Exception", "error.invalidOperation", "You need to call configuration.getAsync() before calling getAppSetting()");
-                var _setting = _masterConfig.application.setting[key];
-                if (_setting)
-                    return _setting;
-                else
+                if (_masterConfig && _masterConfig.application && _masterConfig.application.setting) {
+                    var _setting = _masterConfig.application.setting[key];
+                    if (_setting)
+                        return _setting;
+                    else
+                        return null;
+                }
+                else {
                     return null;
+                }
             }
             catch (e) {
                 if (!e.$type)
@@ -3921,7 +3981,7 @@ function SanteDBWrapper() {
                     _auth.postAsync({
                         resource: "oauth2_token",
                         data: {
-                            grant_type: 'refresh_token',
+                            grant_type: 'x-refresh-cookie',
                             refresh_token: refreshToken || 'cookie',
                             scope: "*",
                             client_id: SanteDB.configuration.getClientId()
@@ -4209,33 +4269,34 @@ function SanteDBWrapper() {
     var _magic = null;
 
     // Setup JQuery to send up authentication and cookies!
-    $.ajaxSetup({
-        cache: false,
-        beforeSend: function (data, settings) {
+    if (jQuery) {
+        $.ajaxSetup({
+            cache: false,
+            beforeSend: function (data, settings) {
 
-            if (!settings.noAuth) {
-                var elevatorToken = _elevator ? _elevator.getToken() : null;
-                if (elevatorToken) {
-                    data.setRequestHeader("Authorization", "BEARER " +
-                        elevatorToken);
+                if (!settings.noAuth) {
+                    var elevatorToken = _elevator ? _elevator.getToken() : null;
+                    if (elevatorToken) {
+                        data.setRequestHeader("Authorization", "BEARER " +
+                            elevatorToken);
+                    }
+                    // else if (window.sessionStorage.getItem('token'))
+                    //     data.setRequestHeader("Authorization", "BEARER " +
+                    //         window.sessionStorage.getItem("token"));
+                    if (!_magic)
+                        _magic = __SanteDBAppService.GetMagic();
+
                 }
-                // else if (window.sessionStorage.getItem('token'))
-                //     data.setRequestHeader("Authorization", "BEARER " +
-                //         window.sessionStorage.getItem("token"));
-                if (!_magic)
-                    _magic = __SanteDBAppService.GetMagic();
-
+                data.setRequestHeader("X-SdbLanguage", SanteDB.locale.getLocale()); // Set the UI locale
+                data.setRequestHeader("X-SdbMagic", _magic);
+            },
+            converters: {
+                "text json": function (data) {
+                    return $.parseJSON(data, true);
+                }
             }
-            data.setRequestHeader("X-SdbLanguage", SanteDB.locale.getLocale()); // Set the UI locale
-            data.setRequestHeader("X-SdbMagic", _magic);
-        },
-        converters: {
-            "text json": function (data) {
-                return $.parseJSON(data, true);
-            }
-        }
-    });
-
+        });
+    }
 };
 
 /**

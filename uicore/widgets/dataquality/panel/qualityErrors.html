@@ -20,7 +20,7 @@
                 ng-repeat="issue in ::scopedObject.dataQualityIssues">
                 <td>
                     <span class="badge badge-pill"
-                        ng-class="{ 'badge-info' : issue.priority == 4, 'badge-warning' : issue.priority == 2, 'badge-danger' : issue.priority == 1 }">
+                        ng-class="{ 'badge-info' : issue.priority == 4 || issue.priority == 'Informational', 'badge-warning' : issue.priority == 2 || issue.priority == 'Warning', 'badge-danger' : issue.priority == 1 || issue.priority == 'Error' }">
                         <i class="fas"
                             ng-class="{ 'fa-info-circle' : issue.priority == 4, 'fa-exclamation-circle' : issue.priority == 2, 'fa-exclamation-triangle' : issue.priority == 1 }"></i>
                         {{ 'ui.dq.priority.' + issue.priority | i18n }}
@@ -33,7 +33,7 @@
                     {{ issue.id | i18n }}
                 </td>
                 <td>
-                    {{ issue.text }}
+                    {{ issue.text | i18n }}
                 </td>
 
             </tr>

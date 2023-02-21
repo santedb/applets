@@ -29,7 +29,7 @@ angular.module('santedb').controller('LogViewController', ["$scope", "$rootScope
 
         try {
             _isLoading = true;
-            var logContents = await SanteDB.application.getLogInfoAsync($stateParams.id, { _offset: offset, _count: count});
+            var logContents = await SanteDB.application.getLogInfoAsync($stateParams.id, { _upstream: $stateParams._upstream, _offset: offset, _count: count});
             size = offset + logContents.length;
             _isEof = logContents.length == 0;
             $timeout(() => {
@@ -50,7 +50,7 @@ angular.module('santedb').controller('LogViewController', ["$scope", "$rootScope
 
     // Get download link
     $scope.getDownloadLink = function () {
-        return `/ami/Log/${$stateParams.id}?_download=true`; //?_sessionId=${window.sessionStorage.getItem("token")}`;
+        return `/ami/Log/${$stateParams.id}?_download=true&_upstream=${$stateParams._upstream}`; //?_sessionId=${window.sessionStorage.getItem("token")}`;
     }
 
     // We use timeout here to wait for the DOM

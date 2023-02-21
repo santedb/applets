@@ -1,9 +1,12 @@
 <div xmlns="http://www.w3.org/1999/xhtml" xmlns:sdb="http://santedb.org/applet" 
     oc-lazy-load="{ name: 'EditApplicationController', files: ['/org.santedb.admin/controllers/applications/widgets/extended.js'] }" >
-    <sdb:widget order="16" name="org.santedb.widget.admin.panel.applications.extended" altViews="Edit"  headerClass="bl-light"
+    <sdb:widget order="16" name="org.santedb.widget.admin.panel.applications.extended" headerClass="bl-light"
         size="Large" type="Panel" context="org.santedb.securityApplications.admin">
         <sdb:icon>fas fa-mobile</sdb:icon>
         <sdb:description lang="en">Extended Properties</sdb:description>
+        <sdb:views>
+            <sdb:view type="Edit" />
+        </sdb:views>
     </sdb:widget>
 
     <div class="row" ng-if="!scopedObject">
@@ -18,7 +21,7 @@
                 <label class="col-md-2 col-sm-12 control-label"
                     for="softwareName">{{ 'ui.model.applicationEntity.softwareName' | i18n }}</label>
                 <div class="col-md-10 col-sm-12">
-                    <input ng-disabled="panel.view != 'Edit'" type="text" maxlength="256" ng-model="scopedObject.entity.softwareName"
+                    <input ng-disabled="panel.view != 'Edit'" autocomplete="__away" type="text" maxlength="256" ng-model="scopedObject.entity.softwareName"
                         name="softwareName" class="form-control" />
                 </div>
             </div>
@@ -26,7 +29,7 @@
                 <label class="col-md-2 col-sm-12 control-label"
                     for="vendorName">{{ 'ui.model.applicationEntity.vendorName' | i18n }}</label>
                 <div class="col-md-10 col-sm-12">
-                    <input ng-disabled="panel.view != 'Edit'" type="text" maxlength="256" ng-model="scopedObject.entity.vendorName" name="vendorName"
+                    <input ng-disabled="panel.view != 'Edit'" autocomplete="__away" type="text" maxlength="256" ng-model="scopedObject.entity.vendorName" name="vendorName"
                         class="form-control" />
                 </div>
             </div>
@@ -34,7 +37,7 @@
                 <label class="col-md-2 col-sm-12 control-label"
                     for="versionName">{{ 'ui.model.applicationEntity.versionName' | i18n }}</label>
                 <div class="col-md-10 col-sm-12">
-                    <input ng-disabled="panel.view != 'Edit'" type="text" maxlength="256" ng-model="scopedObject.entity.versionName"
+                    <input ng-disabled="panel.view != 'Edit'" autocomplete="__away" type="text" maxlength="256" ng-model="scopedObject.entity.versionName"
                         name="versionName" class="form-control" />
                 </div>
             </div>
