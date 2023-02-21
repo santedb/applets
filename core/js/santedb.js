@@ -2563,7 +2563,7 @@ function SanteDBWrapper() {
          * @returns {boolean} True if the HDSI is available
          */
         this.isClinicalAvailable = function () {
-            return __SanteDBAppService.IsClinicalAvailable
+            return __SanteDBAppService.IsClinicalAvailable();
         }
         /**
          * @summary Resolves the HTML input form for the specified template
