@@ -1764,6 +1764,10 @@ function SanteDBWrapper() {
 
     var _viewModelJsonMime = "application/json+sdb-viewmodel";
 
+    // JWS Pattern
+    var jwsDataPattern = /^(.*?)\.(.*?)\.(.*?)$/;
+    var svrpPattern = /^svrp\:\/\/(.*)$/;
+
     // Get the version of this API Wrapper
     this.getVersion = function () {
         return __SanteDBAppService.GetVersion();
@@ -1891,10 +1895,6 @@ function SanteDBWrapper() {
         var _idClassifiers = {};
         var _templateView = {};
         var _templateForm = {};
-
-        // JWS Pattern
-        var jwsDataPattern = /^(.*?)\.(.*?)\.(.*?)$/;
-        var svrpPattern = /^svrp\:\/\/(.*)$/;
 
         /**
          * @memberof SanteDBWrapper.ApplicationApi
@@ -3584,6 +3584,19 @@ function SanteDBWrapper() {
      */
     function AuthenticationApi() {
 
+        // Extract JWT data
+        var _extractJwtData = function(jwtData) {
+            if(jwsDataPattern.test(jwtData))
+            {
+                var match = jwsDataPattern.exec(jwtData);
+                var idData = JSON.parse(atob(match[2]));
+                return idData;
+            }
+            else {
+                throw new Exception("InvalidDataException", "Invalid JWT");
+            }
+        }
+
         // Process oauth response session data
         var _afterAuthenticate = function (oauthResponse, fulfill, reject) {
             _oauthSession = oauthResponse;
@@ -3591,7 +3604,7 @@ function SanteDBWrapper() {
             //if (oauthResponse.refresh_token) window.sessionStorage.setItem('refresh_token', oauthResponse.refresh_token);
             if (oauthResponse.id_token)
                 try {
-                    var tokenData = JSON.parse(atob(oauthResponse.id_token.split('.')[1]));
+                    var tokenData = _extractJwtData(oauthResponse.id_token);
                     // Set the locale
                     if (tokenData.lang)
                         __SanteDBAppService.SetLocale(tokenData.lang);
@@ -3629,6 +3642,14 @@ function SanteDBWrapper() {
             Elevate: 1,
             Grant: 2
         };
+        /**
+         * @method parseJwt
+         * @summary Parses a JWT token data into a JSON object
+         * @param {string} jwtData The JWT data (typically from an id_token)
+         * @returns {Object} The parsed object
+         */
+        this.parseJwt = _extractJwtData;
+
         /**
          * @method demandAsync
          * @memberof SanteDBWrapper.AuthenticationApi
@@ -3705,6 +3726,23 @@ function SanteDBWrapper() {
             });
         }
         /**
+         * @method initiateChallengeFlowAsync
+         * @sumamry Initiates a challenge reset flow (either TFA or appropriate security challenge)
+         * @param {string} userName The name of the user to initiate the flow for
+         * @param {bool} upstream When true contact the upstream
+         * @returns {Promise} The promise for the reset
+         */
+        this.initiateChallengeFlowAsync = function(userName, upstream) {
+            return _ami.postAsync({
+                resource: "SecurityUser/$reset",
+                contentType: "application/json",
+                headers: {
+                    "X-SanteDB-Upstream" : upstream
+                },
+                data: { parameter: [ { name: "userName", value: userName } ]  }
+            })
+        }
+        /**
             * @method sendTfaSecretAsync
             * @memberof SanteDBWrapper.AuthenticationApi
             * @summary Requests a two-factor authentication secret to be sent
@@ -3713,17 +3751,18 @@ function SanteDBWrapper() {
             */
         this.sendTfaSecretAsync = function (mode) {
             return _ami.postAsync({
-                resource: "Tfa",
-                data: { mode: mode }
+                resource: "SecurityUser/$tfa",
+                contentType: "application/json",
+                data: { parameter: [ { name: "mode", value: mode } ] }
             })
         }
         /**
-            * @method getTfaModeAsync
+            * @method getTfaModesAsync
             * @memberof SanteDBWrapper.AuthenticationApi
             * @summary Retrieves information about the two-factor authentication modes supported by the server
             * @returns {Promise} The promise representing the fulfillment or rejection of the get request
             */
-        this.getTfaModeAsync = function () {
+        this.getTfaModesAsync = function () {
             return _ami.getAsync({
                 resource: "Tfa"
             });
@@ -3746,6 +3785,11 @@ function SanteDBWrapper() {
                     var headers = {};
                     if (tfaSecret)
                         headers["X-SanteDB-TfaSecret"] = tfaSecret;
+                    var claims = {};
+                    claims["urn:oasis:names:tc:xacml:2.0:action:purpose"] = 'PurposeOfUse-SecurityAdmin';
+                    claims["urn:santedb:org:claim:temporary"] = "true";
+                    headers["X-SanteDBClient-Claim"] =
+                        btoa(Object.keys(claims).map(o => `${o}=${claims[o]}`).join(";"));
 
                     _auth.postAsync({
                         resource: "oauth2_token",
@@ -4013,15 +4057,19 @@ function SanteDBWrapper() {
             * @param {string} sid The security identifier of the user which is being updated
             * @param {string} userName The name of the user to set the password to
             * @param {string} passwd The password to set the currently logged in user to
+            * @param {bool} upstream True if the request should be routed to the upstream
             * @returns {Promise} The promise representing the fulfillment or rejection of the password change
             */
-        this.setPasswordAsync = function (sid, userName, passwd) {
+        this.setPasswordAsync = function (sid, userName, passwd, upstream) {
             if (!_session && !(_elevator && _elevator.getToken()))
                 throw new Exception("SecurityException", "error.security", "Can only set password with active session");
             return _ami.putAsync({
                 id: sid,
                 resource: "SecurityUser",
                 contentType: _viewModelJsonMime,
+                headers: {
+                    "X-SanteDB-Upstream" : upstream
+                },
                 data: {
                     $type: "SecurityUserInfo",
                     passwordOnly: true,

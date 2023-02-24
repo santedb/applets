@@ -10,7 +10,7 @@ angular.module('santedb').controller('CoreUserWidgetController', ['$scope', '$ro
             }
 
             var editObject = angular.copy(n);
-            var tfaData = await SanteDB.authentication.getTfaModeAsync();
+            var tfaData = await SanteDB.authentication.getTfaModesAsync();
 
             // Get challenges
             try {
