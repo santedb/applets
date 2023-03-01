@@ -18,11 +18,11 @@
                         name="id{{authority}}input"
                         ng-readonly="idValue.readonly" 
                         />
-                    <div ng-show="ownerForm['id' + authority + 'input'].$error['pattern']" class="alert-danger">
+                    <div ng-show="ownerForm['id' + authority + 'input'].$error['pattern']" class="text-danger">
                         <i class="fa fa-exclamation-triangle"></i>
                         {{ 'ui.error.pattern' | i18n }}
                     </div>
-                    <div ng-show="ownerForm['id' + authority + 'input'].$error['required']" class="alert-danger">
+                    <div ng-show="ownerForm['id' + authority + 'input'].$error['required']" class="text-danger">
                         <i class="fa fa-exclamation-triangle"></i>
                         {{ 'ui.error.required' | i18n }}
                     </div>
@@ -50,11 +50,11 @@
                         ng-required="newId.domainModel.domainName"
                         ng-disabled="!newId.domainModel.domainName"
                     />
-                    <div ng-show="ownerForm.idNewinput.$error['pattern']" class="alert-danger">
+                    <div ng-show="ownerForm.idNewinput.$error['pattern']" class="text-danger">
                         <i class="fa fa-exclamation-triangle"></i>
                         {{ 'ui.error.pattern' | i18n }}
                     </div>
-                    <div ng-show="ownerForm.idNewinput.$error['required']" class="alert-danger">
+                    <div ng-show="ownerForm.idNewinput.$error['required']" class="text-danger">
                         <i class="fa fa-exclamation-triangle"></i>
                         {{ 'ui.error.required' | i18n }}
                     </div>

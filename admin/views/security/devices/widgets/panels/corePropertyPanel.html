@@ -35,16 +35,16 @@
                         source="scopedObject.securityDevice.name" />
                 </div>
                 <div class="col-sm-12 col-md-10 offset-md-2">
-                    <div ng-show="targetForm.devicename.$error['duplicate']" class="alert-danger">
+                    <div ng-show="targetForm.devicename.$error['duplicate']" class="text-danger">
                         <i class="fa fa-exclamation-triangle"></i>
                         {{ 'ui.error.duplicate' | i18n }}
                     </div>
                     <div ng-show="targetForm.devicename.$error['required'] &amp;&amp; targetForm.$submitted"
-                        class="alert-danger">
+                        class="text-danger">
                         <i class="fa fa-exclamation-triangle"></i> {{ 'ui.error.required' | i18n }}
                     </div>
                     <div ng-show="targetForm.devicename.$error['pattern'] &amp;&amp; targetForm.$submitted"
-                        class="alert-danger">
+                        class="text-danger">
                         <i class="fa fa-exclamation-triangle"></i> {{ 'ui.error.pattern' | i18n }}
                     </div>
                 </div>

@@ -166,7 +166,7 @@
   <string name="ui.model.entity.name.component.family.hint"><![CDATA[Family names of the entity (or surname)]]></string>
   <string name="ui.model.entity.name.component.suffix">Suffix</string>
   <string name="ui.model.entity.name.component.suffix.hint"><![CDATA[Suffixes for the name such as an enumetion (William Gates <code>III</code>) a designator (Joe Smith <code>Jr.</code>) or designated title (Dr. Fran Smith <code>MD</code>)]]></string>
-  <string name="ui.model.entity.name.component.other">Other</string>
+  <string name="ui.model.entity.name.component.other">Name</string>
   <string name="ui.model.entity.name.component.other.hint"><![CDATA[Unclassified names for the entity which cannot be classified appropriately.]]></string>
   <string name="ui.model.entity.telecom">Contact Info</string>
   <string name="ui.model.entity.genderConcept">Gender</string>

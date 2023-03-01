@@ -26,7 +26,7 @@
                         ng-model="scopedObject.entity.manufacturerModelName" />
                 </div>
                 <div class="col-sm-12 col-md-10 offset-md-2"><div ng-show="scopedObject.modelName.$error['required'] &amp;&amp; scopedObject.$submitted"
-                        class="alert-danger">
+                        class="text-danger">
                         <i class="fa fa-exclamation-triangle"></i> {{ 'ui.error.required' | i18n }}
                     </div>
                     </div>
@@ -39,7 +39,7 @@
                         ng-model="scopedObject.entity.operatingSystemName" />
                 </div>
                 <div class="col-sm-12 col-md-10 offset-md-2"><div ng-show="targetForm.operatingSystemName.$error['required'] &amp;&amp; targetForm.$submitted"
-                        class="alert-danger">
+                        class="text-danger">
                         <i class="fa fa-exclamation-triangle"></i> {{ 'ui.error.required' | i18n }}
                     </div>
                     </div>

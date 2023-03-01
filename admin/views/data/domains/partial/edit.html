@@ -36,16 +36,16 @@
                                     ng-model="domain.domainName" pattern="^[A-Za-z_\-0-9]{3,}$"
                                     required="required" /></div>
                             <div class="col-sm-12 col-md-10 offset-md-2">
-                                <div ng-show="targetForm.domainName.$error['duplicate']" class="alert-danger">
+                                <div ng-show="targetForm.domainName.$error['duplicate']" class="text-danger">
                                     <i class="fa fa-exclamation-triangle"></i>
                                     {{ 'ui.error.duplicate' | i18n }}
                                 </div>
                                 <div ng-show="targetForm.domainName.$error['required'] &amp;&amp; targetForm.$submitted"
-                                    class="alert-danger">
+                                    class="text-danger">
                                     <i class="fa fa-exclamation-triangle"></i> {{ 'ui.error.required' | i18n }}
                                 </div>
                                 <div ng-show="targetForm.domainName.$error['pattern'] &amp;&amp; targetForm.domainName.$touched"
-                                    class="alert-danger">
+                                    class="text-danger">
                                     <i class="fa fa-exclamation-triangle"></i> {{ 'ui.error.pattern' | i18n }}
                                 </div>
 
@@ -58,16 +58,16 @@
                                 <input name="oid" type="text" autocomplete="__away" class="form-control" ng-model="domain.oid"
                                     pattern="^[0-9]*?[0-9\.]*$" required="required" /> </div>
                             <div class="col-sm-12 col-md-10 offset-md-2">
-                                <div ng-show="targetForm.oid.$error['duplicate']" class="alert-danger">
+                                <div ng-show="targetForm.oid.$error['duplicate']" class="text-danger">
                                     <i class="fa fa-exclamation-triangle"></i>
                                     {{ 'ui.error.duplicate' | i18n }}
                                 </div>
                                 <div ng-show="targetForm.oid.$error['required'] &amp;&amp; targetForm.$submitted"
-                                    class="alert-danger">
+                                    class="text-danger">
                                     <i class="fa fa-exclamation-triangle"></i> {{ 'ui.error.required' | i18n }}
                                 </div>
                                 <div ng-show="targetForm.oid.$error['pattern'] &amp;&amp; targetForm.oid.$touched"
-                                    class="alert-danger">
+                                    class="text-danger">
                                     <i class="fa fa-exclamation-triangle"></i> {{ 'ui.error.pattern' | i18n }}
                                 </div>
                             </div>
@@ -78,7 +78,7 @@
                             <div class="col-sm-12 col-md-10 input-group">
                                 <input name="url" type="url" class="form-control" ng-model="domain.url" /> </div>
                             <div class="col-sm-12 col-md-10 offset-md-2">
-                                <div ng-show="targetForm.url.$error['duplicate']" class="alert-danger">
+                                <div ng-show="targetForm.url.$error['duplicate']" class="text-danger">
                                     <i class="fa fa-exclamation-triangle"></i>
                                     {{ 'ui.error.duplicate' | i18n }}
                                 </div>
@@ -93,7 +93,7 @@
                                     maxlength="64" required="required" /> </div>
                             <div class="col-sm-12 col-md-10 offset-md-2">
                                 <div ng-show="targetForm.name.$error['required'] &amp;&amp; targetForm.$submitted"
-                                    class="alert-danger">
+                                    class="text-danger">
                                     <i class="fa fa-exclamation-triangle"></i> {{ 'ui.error.required' | i18n }}
                                 </div>
                             </div>

@@ -44,7 +44,6 @@ angular.module('santedb-lib')
 
                 var provControl = provControlId++;
                 $(element).attr('id', `prov${provControl}`);
-                console.info(provControl, scope.provenanceTime);
                 // correct time from string (sometimes this happens when using in a data table as the row is presented as a string)
                 if(Object.prototype.toString.call(scope.provenanceTime) == '[object String]' )
                     scope.provenanceTime = new Date(scope.provenanceTime);

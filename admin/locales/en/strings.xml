@@ -268,4 +268,7 @@
     <!-- Import -->
     <string name="org.santedb.widget.admin.panel.data.import.file">Import Details</string>
     <string name="org.santedb.widget.admin.panel.data.import.issues">Detected Issues</string>
+
+    <!-- Facility Editing -->
+    <string name="ui.admin.places.edit.profile.title">Place Properties</string>
 </resources>

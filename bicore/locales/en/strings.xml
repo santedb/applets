@@ -30,4 +30,6 @@
 
     <string name="ui.bi.core.patient.gender">Gender</string>
     <string name="ui.bi.core.common.state">State</string>
+    <string name="ui.bi.rc.name">Report Name</string>
+    <string name="ui.bi.rc.description">Report Description</string>
 </resources>

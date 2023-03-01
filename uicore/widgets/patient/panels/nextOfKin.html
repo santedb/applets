@@ -213,7 +213,7 @@
                                                 <concept-select class="form-control" required="required"
                                                     name="birthGender{{relType.mnemonic}}"
                                                     concept-set="'AdministrativeGenderCode'" ng-model="editObject.relationship[relType.mnemonic].targetModel.genderConceptModel" />
-                                                    <div class="alert alert-danger" ng-if="panel.editForm['birthGender' + relType.mnemonic].$invalid">{{ 'ui.error.required' | i18n }}</div>
+                                                    <div class="alert text-danger" ng-if="panel.editForm['birthGender' + relType.mnemonic].$invalid">{{ 'ui.error.required' | i18n }}</div>
                                             </div>
                                         </div>
                                     </div>

@@ -35,16 +35,16 @@
                                     source="target.securityApplication.name" />
                             </div>
                             <div class="col-sm-12 col-md-10 offset-md-2">
-                                <div ng-show="createForm.applicationname.$error['duplicate']" class="alert-danger">
+                                <div ng-show="createForm.applicationname.$error['duplicate']" class="text-danger">
                                     <i class="fa fa-exclamation-triangle"></i>
                                     {{ 'ui.error.duplicate' | i18n }}
                                 </div>
                                 <div ng-show="createForm.applicationname.$error['required'] &amp;&amp; createForm.$submitted"
-                                    class="alert-danger">
+                                    class="text-danger">
                                     <i class="fa fa-exclamation-triangle"></i> {{ 'ui.error.required' | i18n }}
                                 </div>
                                 <div ng-show="createForm.applicationname.$error['pattern'] &amp;&amp; createForm.$submitted"
-                                    class="alert-danger">
+                                    class="text-danger">
                                     <i class="fa fa-exclamation-triangle"></i> {{ 'ui.error.pattern' | i18n }}
                                 </div>
                             </div>
@@ -66,7 +66,7 @@
                             </div>
                             <div class="col-sm-12 col-md-10 offset-md-2">
                                 <div ng-show="createForm.softwareName.$error['required'] &amp;&amp; createForm.$submitted"
-                                    class="alert-danger">
+                                    class="text-danger">
                                     <i class="fa fa-exclamation-triangle"></i> {{ 'ui.error.required' | i18n }}
                                 </div>
                             </div>

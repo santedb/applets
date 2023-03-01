@@ -21,9 +21,7 @@
  */
 angular.module('santedb').controller('PlaceIndexController', ["$scope", "$rootScope", "$state", function ($scope, $rootScope, $state) {
 
-    const isFacility = $state.current.name.indexOf("facili") > -1;
-    $scope.isFacility = isFacility;
-
+  
     /**
     * @summary Render updated by
     */
@@ -75,7 +73,7 @@ angular.module('santedb').controller('PlaceIndexController', ["$scope", "$rootSc
 
         var data = $("#PlaceTable table").DataTable().row(index).data();
 
-        if (data.statusConcept != StatusKeys.Obsolete && confirm(SanteDB.locale.getString(isFacility ? "ui.admin.facility.confirmDelete" : "ui.admin.place.confirmDelete"))) {
+        if (data.statusConcept != StatusKeys.Obsolete && confirm(SanteDB.locale.getString("ui.admin.place.confirmDelete"))) {
             try {
                 $("#action_grp_" + index + " a").addClass("disabled");
                 $("#action_grp_" + index + " a i.fa-trash").removeClass("fa-trash").addClass("fa-circle-notch fa-spin");
@@ -90,7 +88,7 @@ angular.module('santedb').controller('PlaceIndexController', ["$scope", "$rootSc
             }
 
         }
-        else if (data.statusConcept == StatusKeys.Obsolete && confirm(SanteDB.locale.getString(isFacility ? "ui.admin.facility.confirmUnDelete" : "ui.admin.place.confirmUnDelete"))) {
+        else if (data.statusConcept == StatusKeys.Obsolete && confirm(SanteDB.locale.getString("ui.admin.place.confirmUnDelete"))) {
             $("#action_grp_" + index + " a").addClass("disabled");
             $("#action_grp_" + index + " a i.fa-trash-restore").removeClass("fa-trash-restore").addClass("fa-circle-notch fa-spin");
             try {

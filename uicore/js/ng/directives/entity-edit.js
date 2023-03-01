@@ -218,7 +218,7 @@ angular.module('santedb-lib')
                     Object.keys(scope.name).forEach(function (key) {
                         var name = scope.name[key];
 
-                        if (!name.useModel || !name.useModel.id)
+                        if ((!name.useModel || !name.useModel.id) && key != "$other")
                             SanteDB.resources.concept.findAsync({ mnemonic: key })
                                 .then(function (bundle) {
                                     if (bundle.resource && bundle.resource.length > 0)

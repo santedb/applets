@@ -55,7 +55,7 @@
                         selector="'entity'" ng-model="scopedObject.role" search-field="'name'" class="form-control"
                         multiple="multiple" required="required" />
                     <div ng-show="panel.editForm.roles.$error['required'] &amp;&amp; panel.editForm.$submitted"
-                        class="alert-danger">
+                        class="text-danger">
                         <i class="fa fa-exclamation-triangle"></i> {{ 'ui.error.required' | i18n }}
                     </div>
                 </div>
@@ -67,7 +67,7 @@
                     <input name="email" type="email" required="required" class="form-control"
                         ng-model="scopedObject.entity.email" />
                     <div ng-show="panel.editForm.email.$error['required'] &amp;&amp; panel.editForm.$submitted"
-                        class="alert-danger">
+                        class="text-danger">
                         <i class="fa fa-exclamation-triangle"></i> {{ 'ui.error.required' | i18n }}
                     </div>
                 </div>

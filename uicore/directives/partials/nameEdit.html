@@ -56,10 +56,12 @@
     <div class="form-group row" ng-if="$root.system.config.application.setting['forbid.patient.name.other'] != 'true' &amp;&amp; allowedComponents.indexOf('$other') > -1">
         <label class="col-sm-12 col-md-3 control-label">{{ 'ui.model.entity.name.component.other' | i18n }} <hint-popover hint-title="ui.model.entity.name.component.other" /></label>
         <div class="col-sm-12 col-md-9" ng-switch="$root.system.config.application.setting['input.name'] || inputStyle">
-            <tag-input ng-switch-default="" name="{{controlPrefix}}name{{$index }}$other" class="form-control"
+            <tag-input ng-required="isRequired" ng-switch-default="" name="{{controlPrefix}}name{{$index }}$other" class="form-control"
                 ng-model="name.component.$other" />
-            <input autocomplete="__away" ng-switch-when="simple" name="{{controlPrefix}}name{{$index }}$other" type="text" class="form-control"
+            <input ng-required="isRequired" autocomplete="__away" ng-switch-when="simple" name="{{controlPrefix}}name{{$index }}$other" type="text" class="form-control"
                 ng-model="name.component.$other" />
+                <div class="text-danger" ng-if="ownerForm[controlPrefix + 'name' + $index + '$other'].$invalid">
+                    <i class="fas fa-exclamation-triangle"></i> {{ 'ui.error.required' | i18n }}</div>
         </div>
     </div>
     <div class="form-group row" ng-if="nameEdit.length &gt; 1 &amp;&amp; !noAdd">

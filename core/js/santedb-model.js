@@ -18877,7 +18877,8 @@ const EntityClassKeys = {
 	/** 
 	 *             State            
 	 */
-	State : '8cf4b0b0-84e5-4122-85fe-6afa8240c218',
+	State : '4d1a5c28-deb7-411e-b75f-d524f90dfa63',
+	StateOrProvince : '4d1a5c28-deb7-411e-b75f-d524f90dfa63',
 	/** 
 	 *             Represents a precinct or sub-division of a city such as a burrogh            
 	 */

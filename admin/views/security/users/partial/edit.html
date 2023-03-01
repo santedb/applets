@@ -24,16 +24,16 @@
                                     source="target.entity.userName" />
                             </div>
                             <div class="col-sm-12 col-md-10 offset-md-2">
-                                <div ng-show="targetForm.username.$error['duplicate']" class="alert-danger">
+                                <div ng-show="targetForm.username.$error['duplicate']" class="text-danger">
                                     <i class="fa fa-exclamation-triangle"></i>
                                     {{ 'ui.error.duplicate' | i18n }}
                                 </div>
                                 <div ng-show="targetForm.username.$error['required'] &amp;&amp; targetForm.$submitted"
-                                    class="alert-danger">
+                                    class="text-danger">
                                     <i class="fa fa-exclamation-triangle"></i> {{ 'ui.error.required' | i18n }}
                                 </div>
                                 <div ng-show="targetForm.username.$error['pattern'] &amp;&amp; targetForm.$submitted"
-                                    class="alert-danger">
+                                    class="text-danger">
                                     <i class="fa fa-exclamation-triangle"></i> {{ 'ui.error.pattern' | i18n }}
                                 </div>
                             </div>
@@ -61,7 +61,7 @@
                                     key="'name'" selector="'entity'" ng-model="target.role" search-field="'name'"
                                     class="form-control" multiple="multiple" required="required" />
                             <div ng-show="targetForm.roles.$error['required'] &amp;&amp; targetForm.$submitted"
-                                    class="alert-danger">
+                                    class="text-danger">
                                     <i class="fa fa-exclamation-triangle"></i> {{ 'ui.error.required' | i18n }}
                                 </div>
                             </div>
@@ -76,11 +76,11 @@
                                     ng-class="{'is-invalid': targetForm.newPassword.$invalid &amp;&amp; targetForm.$submitted}"
                                     ng-change="targetForm.newPassword.$error['err.password.complexity'] ? targetForm.newPassword.$error['err.password.complexity']=false : null" />
                                 <div ng-show="targetForm.newPassword.$error['required'] &amp;&amp; targetForm.$submitted"
-                                    class="alert-danger">
+                                    class="text-danger">
                                     <i class="fa fa-exclamation-triangle"></i> {{ 'ui.error.required' | i18n }}
                                 </div>
                                 <div ng-show="targetForm.newPassword.$error['err.password.complexity'] &amp;&amp; targetForm.$submitted"
-                                    class="alert-danger">
+                                    class="text-danger">
                                     <i class="fa fa-exclamation-triangle"></i> {{ 'ui.password.error.complexity' | i18n }}
                                 </div>
                             </div>
@@ -95,10 +95,10 @@
                                     match-validator="newPassword"
                                     ng-class="{'is-invalid': targetForm.confirmPassword.$invalid &amp;&amp; targetForm.$submitted}" />
                                 <div ng-show="targetForm.confirmPassword.$error['required'] &amp;&amp; targetForm.$submitted"
-                                    class="alert-danger">
+                                    class="text-danger">
                                     <i class="fa fa-exclamation-triangle"></i> {{ 'ui.error.required' | i18n }}
                                 </div>
-                                <div ng-show="targetForm.confirmPassword.$error['match']" class="alert-danger">
+                                <div ng-show="targetForm.confirmPassword.$error['match']" class="text-danger">
                                     <i class="fa fa-exclamation-triangle"></i> {{ 'ui.password.error.mismatch' | i18n }}
                                 </div>
                             </div>
@@ -146,7 +146,7 @@
                                 <tag-input name="givenName" ng-model="target.userEntity.name.OfficialRecord.component.Given"
                                     required="required" class="form-control" />
                                     <div ng-show="targetForm.givenName.$error['required'] &amp;&amp; targetForm.$submitted"
-                                    class="alert-danger">
+                                    class="text-danger">
                                     <i class="fa fa-exclamation-triangle"></i> {{ 'ui.error.required' | i18n }}
                                 </div>
                             </div>
