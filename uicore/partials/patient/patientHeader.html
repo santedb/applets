@@ -98,6 +98,9 @@
             </div>
         </div>
     </div>
+    <div class="m-0 alert alert-secondary" ng-if="patient.tag['$checkoutState'] &amp;&amp; patient.tag['$checkoutState'] != $root.session.username">
+        <i ng-init="patient._readonly = true" class="fas fa-lock"></i> {{ 'ui.notices.checkout' | i18n: { user: patient.tag['$checkoutState'] } }}
+    </div>
     <div class="m-0 alert alert-dark" ng-if="patient.tag['$pep.masked'] == 'true'">
         <i class="fas fa-exclamation-circle"></i> {{ 'ui.notices.privacyControls.masked' | i18n }}
     </div>

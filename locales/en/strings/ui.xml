@@ -555,6 +555,7 @@
       <string name="ui.mdm.view.recordOfTruth">This record is a RECORD OF TRUTH. This means that this record has been validated the "official" data for a MASTER record</string>
 
       <!-- Notices on the UI -->
+      <string name="ui.notices.checkout">{user} is currently editing this record - changes can only be applied once {user} is finished editing the record</string>
       <string name="ui.notices.privacyControls.masked">This record has been flagged and masked/altered by privacy enforcement to protect sensitive information. You may be asked to re-authenticate yourself or you may be restricted for editing the record. Additional additional security audits have been logged.</string>
       <string name="ui.notices.imported">This record contains data which was imported from another source - information may be incomplete</string>
       <!-- Relationship widget -->
