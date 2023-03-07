@@ -9,27 +9,27 @@
         </thead>
         <tbody>
             <tr ng-repeat="(authority, idArr) in identifier">
-                <td>{{ idArr[0].authority.name }}</td>
+                <td>{{ idArr[0].domainModel.name }}</td>
                 <td>
                     <div ng-repeat="idValue in idArr">
-                    <input ng-pattern="idValue.authority.validation" 
+                    <input ng-pattern="idValue.domainModel.validation" 
                         ng-model="idValue.value"
                         class="form-control"
                         name="id{{authority}}input"
-                        ng-readonly="idValue.authority.assigningApplication &amp;&amp; idValue.authority.assigningApplication != $root.session.claim.appid || idValue.readonly" 
+                        ng-readonly="idValue.readonly" 
                         />
-                    <div ng-show="ownerForm['id' + authority + 'input'].$error['pattern']" class="alert-danger">
+                    <div ng-show="ownerForm['id' + authority + 'input'].$error['pattern']" class="text-danger">
                         <i class="fa fa-exclamation-triangle"></i>
                         {{ 'ui.error.pattern' | i18n }}
                     </div>
-                    <div ng-show="ownerForm['id' + authority + 'input'].$error['required']" class="alert-danger">
+                    <div ng-show="ownerForm['id' + authority + 'input'].$error['required']" class="text-danger">
                         <i class="fa fa-exclamation-triangle"></i>
                         {{ 'ui.error.required' | i18n }}
                     </div>
                     </div>
                 </td>
                 <td class="btn-group">
-                    <button ng-if="idValue.authority.generator" ng-click="generateId(idValue)"  class="fas fa-info" type="button" ><i class="fas fa-robot"></i></button>
+                    <button ng-if="idValue.domainModel.generator" ng-click="generateId(idValue)"  class="fas fa-info" type="button" ><i class="fas fa-robot"></i></button>
                     <button type="button" class="btn btn-danger" ng-click="removeIdentifier(authority)"><i class="fas fa-times"></i></button>
                 </td>
             </tr>
@@ -37,30 +37,30 @@
         <tfoot  ng-if="!noAdd">
             <tr>
                 <td>
-                    <select class="form-control" ng-model="newId.authority.domainName">
+                    <select class="form-control" ng-model="newId.domainModel.domainName">
                         <option value="" selected="selected">---</option>
                         <option ng-repeat="(k, auth) in authorities" value="{{auth.domainName}}">{{ auth.name }}</option>
                     </select>
                 </td>
                 <td>
-                    <input ng-pattern="authorities[newId.authority.domainName].validation" 
+                    <input ng-pattern="authorities[newId.domainModel.domainName].validation" 
                         ng-model="newId.value"
                         class="form-control"
                         name="idNewinput"
-                        ng-required="newId.authority.domainName"
-                        ng-disabled="!newId.authority.domainName"
+                        ng-required="newId.domainModel.domainName"
+                        ng-disabled="!newId.domainModel.domainName"
                     />
-                    <div ng-show="ownerForm.idNewinput.$error['pattern']" class="alert-danger">
+                    <div ng-show="ownerForm.idNewinput.$error['pattern']" class="text-danger">
                         <i class="fa fa-exclamation-triangle"></i>
                         {{ 'ui.error.pattern' | i18n }}
                     </div>
-                    <div ng-show="ownerForm.idNewinput.$error['required']" class="alert-danger">
+                    <div ng-show="ownerForm.idNewinput.$error['required']" class="text-danger">
                         <i class="fa fa-exclamation-triangle"></i>
                         {{ 'ui.error.required' | i18n }}
                     </div>
                 </td>
                 <td class="btn-group">
-                    <button ng-if="authorities[newId.authority.domainName].generator" ng-click="generateId(newId)" class="btn btn-light" type="button" ><i class="fas fa-robot"></i></button>
+                    <button ng-if="authorities[newId.domainModel.domainName].generator" ng-click="generateId(newId)" class="btn btn-light" type="button" ><i class="fas fa-robot"></i></button>
                     <button type="button" class="btn btn-success" ng-click="addIdentifier(newId)"><i class="fas fa-plus"></i></button>
                 </td>
             </tr>

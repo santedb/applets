@@ -38,4 +38,34 @@
                 </div>
         </div>
     </div>
+    <div class="form-group row">
+        <label for="logWriter" class="control-label col-md-2 col-xs-12">{{ 'ui.config.log.writer.label' | i18n }}</label>
+        <div class="col-md-10 col-xs-12">
+            <div class="container">
+                <div ng-repeat="w in config.log.writer" class="row">
+                    <div class="col-xs-12 col-sm-6">
+                        {{ w.name }}
+                    </div>
+                    <div class="col-xs-12 col-sm-6">
+                        <select class="form-control" ng-model="w.mode">
+                            <option value="">{{ 'ui.config.log.verbosity.disabled' | i18n }}</option>
+                            <optgroup label="{{ 'ui.config.log.verbosity.debug' | i18n }}">
+                                <option value="LogAlways">{{ 'ui.config.log.verbosity.always' | i18n }}</option>
+                                <option value="Informational">{{ 'ui.config.log.verbosity.informational' | i18n }}</option>
+                                <option value="Verbose">{{ 'ui.config.log.verbosity.verbose' | i18n }}</option>
+                            </optgroup>
+                            <optgroup label="{{ 'ui.config.log.verbosity.production' | i18n }}">
+                                <option value="Critical">{{ 'ui.config.log.verbosity.critical' | i18n }}</option>
+                                <option value="Error">{{ 'ui.config.log.verbosity.error' | i18n }}</option>
+                                <option value="Warning">{{ 'ui.config.log.verbosity.warning' | i18n }}</option>
+                            </optgroup>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xs-12 col-md-10 offset-md-2"><div class="form-text text-muted">
+            {{ 'ui.config.log.writer.help' | i18n }}
+        </div></div>
+    </div>
 </div>

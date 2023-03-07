@@ -67,25 +67,25 @@
             <invariant>sqlite</invariant>
         </providers>
         <![CDATA[
-        SELECT 
-            AUDIT.ID AS ID,
-            AUDIT_ACTOR.USER_NAME AS USER_NAME,
-            AUDIT_ACTOR_ASSOC.AP AS ACCESS_POINT,
-            AUDIT_OBJECT.LIFECYCLE AS LIFECYCLE_CODE,
-            AUDIT.OUTCOME AS OUTCOME_CODE,
-            AUDIT.ACTION AS ACTION_CODE,
-            AUDIT.TYPE AS TYPE_CODE,
-            AUDIT.EVENTTIME AS EVENT_TIME,
-            AUDIT_CODE.CODE AS CLASSIFICATION
+        SELECT DISTINCT
+          AUD_TBL.ID AS ID,
+          AUD_ACT_TBL.USR_NAME AS USER_NAME,
+          AP AS ACCESS_POINT, 
+          LCYCL_CS AS LIFECYCLE_CODE,
+          OUTC_CS AS OUTCOME_CODE,
+          ACT_CS AS ACTION_CODE, 
+          TYP_CS AS TYPE_CODE, 
+          EVT_UTC AS EVENT_TIME, 
+          MNEMONIC AS CLASSIFICATION 
         FROM 
-            AUDIT_OBJECT 
-            INNER JOIN AUDIT ON (AUDIT_OBJECT.AUDIT_ID = AUDIT.ID)
-            INNER JOIN AUDIT_ACTOR_ASSOC ON (AUDIT_ACTOR_ASSOC.AUDIT_ID = AUDIT.ID)
-            INNER JOIN AUDIT_ACTOR ON (AUDIT_ACTOR.ID = AUDIT_ACTOR_ASSOC.ACTOR_ID)
-            INNER JOIN AUDIT_CODE ON (AUDIT.CLASS = AUDIT_CODE.ID)
+            AUD_OBJ_TBL 
+            INNER JOIN AUD_TBL  ON (AUD_OBJ_TBL.AUD_ID = AUD_TBL.ID)
+            INNER JOIN AUD_ACT_ASSOC_TBL ON (AUD_ACT_ASSOC_TBL.AUD_ID = AUD_TBL.ID AND IS_RQO)
+            INNER JOIN AUD_ACT_TBL ON (AUD_ACT_ASSOC_TBL.ACT_ID = AUD_ACT_TBL.ID)
+            INNER JOIN AUD_CD_TBL AS CLS_CD ON (CLS_CD.ID = CLS_CD_ID)
         WHERE
-          ((eventTime - 621355968000000000) /  10000000) BETWEEN COALESCE(${from-date}, 0) AND COALESCE(${to-date}, 0xffffffffffff)
-          AND audit_object.obj_id = ${object-id}
+            AUD_TBL.EVT_UTC BETWEEN COALESCE(${from-date}, 0) AND COALESCE(${to-date}, 0xffffffffffff)
+            AND OBJ_ID = ${object-id}
         ]]>
     </add>
   </definitions>

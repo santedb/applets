@@ -25,7 +25,6 @@
     <property name="protocol" behavior="always"/>
     <property name="protocolModel" behavior="never"/>
   </type>
-
   <type type="EntityRelationship" all="false">
     <property name="holder" all="true"/>
     <property name="target" all="true"/>

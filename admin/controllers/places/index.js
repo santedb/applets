@@ -19,8 +19,9 @@
  * User: Justin Fyfe
  * Date: 2019-9-20
  */
-angular.module('santedb').controller('PlaceIndexController', ["$scope", "$rootScope", function ($scope, $rootScope) {
+angular.module('santedb').controller('PlaceIndexController', ["$scope", "$rootScope", "$state", function ($scope, $rootScope, $state) {
 
+  
     /**
     * @summary Render updated by
     */

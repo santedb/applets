@@ -364,16 +364,29 @@ function APIWrapper(_config) {
                         if (xhr && response.getResponseHeader("etag"))
                             xhr.etag = response.getResponseHeader("etag");
                         if (fulfill) {
+                            if(xhr && configuration.state != null) 
+                            {
+                                xhr.$state = configuration.state;
+                            }
                             if (configuration.headers && configuration.headers["Accept"] == _viewModelJsonMime) {
-                                fulfill(_resolveObjectRefs(xhr), configuration.state);
+                                fulfill(_resolveObjectRefs(xhr));
                             }
                             else {
-                                fulfill(xhr, configuration.state);
+                                fulfill(xhr);
                             }
                         }
                     }
                     catch (e) {
-                        if (reject) reject(e.responseJSON || e, configuration.state);
+                        if (reject){
+                            var result = e.responseJSON || e;
+                            try {
+                                result.$state = configuration.state;
+                                reject(e.responseJSON || e);
+                            }
+                            catch (ex) {
+                                reject(e.responseJSON || e);
+                            }
+                        }
                     }
                 },
                 error: function (e, data, setting) {
@@ -386,6 +399,9 @@ function APIWrapper(_config) {
                         try { error = JSON.parse(e.responseText); }
                         catch (e) { };
 
+                    if(error && configuration.state != null) {
+                        error.$state = configuration.state;
+                    }
                     if (reject) {
                         if (error && error.error !== undefined) // oauth2
                             reject(new Exception(error.type, error.error, error.error_description, error.caused_by), configuration.state);
@@ -877,12 +893,12 @@ function ResourceWrapper(_config) {
         else
             url = _config.resource;
 
-        if (id && id._upstream) {
+        if (id && id._upstream !== undefined) {
             headers["X-SanteDB-Upstream"] = id._upstream;
         }
 
-        if (upstream) {
-            headers["X-SanteDB-Upstream"] = true;
+        if (upstream !== undefined) {
+            headers["X-SanteDB-Upstream"] = upstream;
         }
 
         if (viewModel)
@@ -932,14 +948,19 @@ function ResourceWrapper(_config) {
         var headers = {
             Accept: _config.accept
         };
+        query = query || {};
 
         if (viewModel)
             headers["X-SanteDB-ViewModel"] = viewModel;
         else if (_config.viewModel)
             headers["X-SanteDB-ViewModel"] = _config.viewModel;
 
-        if (upstream) {
-            headers["X-SanteDB-Upstream"] = true;
+        if (upstream !== undefined) {
+            headers["X-SanteDB-Upstream"] = upstream;
+        }
+
+        if (!query._includeTotal) {
+            query._includeTotal = true;
         }
 
         return _config.api.getAsync({
@@ -1029,8 +1050,8 @@ function ResourceWrapper(_config) {
         if (data.creationTime)
             delete (data.creationTime);
 
-        if (upstream) {
-            headers["X-SanteDB-Upstream"] = true;
+        if (upstream !== undefined) {
+            headers["X-SanteDB-Upstream"] = upstream;
         }
 
         // Perform post
@@ -1056,7 +1077,7 @@ function ResourceWrapper(_config) {
      * @description The patching operation is used to update a portion of the resource without subimtting the entirety of the object to the dCDR or iCDR 
      *               server ({@link https://help.santesuite.org/developers/service-apis/health-data-service-interface-hdsi/patching})
      */
-    this.patchAsync = function (id, etag, patch, upstream, force, state) {
+    this.patchAsync = function (id, etag, patch, force, upstream, state) {
         if (patch.$type !== "Patch")
             throw new Exception("ArgumentException", "error.invalidType", `Invalid type, resource wrapper expects ${_config.resource} however ${data.$type} specified`);
 
@@ -1064,13 +1085,18 @@ function ResourceWrapper(_config) {
         if (etag)
             headers['If-Match'] = etag;
 
-        if (upstream) {
-            headers["X-SanteDB-Upstream"] = true;
+        if (upstream !== undefined) {
+            headers["X-SanteDB-Upstream"] = upstream;
         }
 
-        if(force) {
+        if (force) {
             headers['X-Patch-Force'] = true;
         }
+
+        patch.appliesTo = patch.appliesTo || {};
+        patch.appliesTo.id = patch.appliesTo.id || id;
+        patch.appliesTo.type = patch.appliesTo.type || _config.resource;
+
         // Send PUT
         return _config.api.patchAsync({
             headers: headers,
@@ -1108,8 +1134,8 @@ function ResourceWrapper(_config) {
         if (_config.viewModel)
             headers["X-SanteDB-ViewModel"] = _config.viewModel;
 
-        if (upstream) {
-            headers["X-SanteDB-Upstream"] = true;
+        if (upstream !== undefined) {
+            headers["X-SanteDB-Upstream"] = upstream;
         }
 
         // Send PUT
@@ -1140,8 +1166,8 @@ function ResourceWrapper(_config) {
         if (_config.viewModel)
             headers["X-SanteDB-ViewModel"] = _config.viewModel;
 
-        if (upstream) {
-            headers["X-SanteDB-Upstream"] = true;
+        if (upstream !== undefined) {
+            headers["X-SanteDB-Upstream"] = upstream;
         }
 
         return _config.api.deleteAsync({
@@ -1170,8 +1196,8 @@ function ResourceWrapper(_config) {
         if (_config.viewModel)
             headers["X-SanteDB-ViewModel"] = _config.viewModel;
 
-        if (upstream) {
-            headers["X-SanteDB-Upstream"] = true;
+        if (upstream !== undefined) {
+            headers["X-SanteDB-Upstream"] = upstream;
         }
 
         return _config.api.lockAsync({
@@ -1199,8 +1225,8 @@ function ResourceWrapper(_config) {
         if (_config.viewModel)
             headers["X-SanteDB-ViewModel"] = _config.viewModel;
 
-        if (upstream) {
-            headers["X-SanteDB-Upstream"] = true;
+        if (upstream !== undefined) {
+            headers["X-SanteDB-Upstream"] = upstream;
         }
 
         return _config.api.unLockAsync({
@@ -1254,8 +1280,8 @@ function ResourceWrapper(_config) {
         if (_config.viewModel)
             headers["X-SanteDB-ViewModel"] = _config.viewModel;
 
-        if (upstream) {
-            headers["X-SanteDB-Upstream"] = true;
+        if (upstream !== undefined) {
+            headers["X-SanteDB-Upstream"] = upstream;
         }
 
         return _config.api.checkoutAsync({
@@ -1283,8 +1309,8 @@ function ResourceWrapper(_config) {
         if (_config.viewModel)
             headers["X-SanteDB-ViewModel"] = _config.viewModel;
 
-        if (upstream) {
-            headers["X-SanteDB-Upstream"] = true;
+        if (upstream !== undefined) {
+            headers["X-SanteDB-Upstream"] = upstream;
         }
 
         return _config.api.checkinAsync({
@@ -1365,8 +1391,8 @@ function ResourceWrapper(_config) {
         if (_config.viewModel)
             headers["X-SanteDB-ViewModel"] = _config.viewModel;
 
-        if (upstream) {
-            headers["X-SanteDB-Upstream"] = true;
+        if (upstream !== undefined) {
+            headers["X-SanteDB-Upstream"] = upstream;
         }
 
         return _config.api.deleteAsync({
@@ -1395,8 +1421,8 @@ function ResourceWrapper(_config) {
         if (_config.viewModel)
             headers["X-SanteDB-ViewModel"] = _config.viewModel;
 
-        if (upstream) {
-            headers["X-SanteDB-Upstream"] = true;
+        if (upstream !== undefined) {
+            headers["X-SanteDB-Upstream"] = upstream;
         }
 
         return _config.api.deleteAsync({
@@ -1409,7 +1435,7 @@ function ResourceWrapper(_config) {
         });
     };
 
-    
+
     /**
         * @method cancelAsync
         * @memberof ResourceWrapper
@@ -1420,15 +1446,15 @@ function ResourceWrapper(_config) {
         * @param {any} state A unique state object which is passed back to the caller
         * @returns {Promise} The promise for the operation
         */
-     this.obsoleteAsync = function (id, upstream, state) {
+    this.obsoleteAsync = function (id, upstream, state) {
         var headers = {
             Accept: _config.accept
         };
         if (_config.viewModel)
             headers["X-SanteDB-ViewModel"] = _config.viewModel;
 
-        if (upstream) {
-            headers["X-SanteDB-Upstream"] = true;
+        if (upstream !== undefined) {
+            headers["X-SanteDB-Upstream"] = upstream;
         }
 
         return _config.api.deleteAsync({
@@ -1450,6 +1476,7 @@ function ResourceWrapper(_config) {
      * @param {string} property The property path you would like to filter on 
      * @param {any} query The query you want to execute
      * @param {boolean} upstream True if the registration should be directly submitted to the upstream iCDR server
+     * @param {string} viewModel The viewmodel asset to use to render the response
      * @returns {Promise} A promise for when the request completes
      * @description In the HDSI REST interface, an "associated" object is a sub-property or chained property on a parent resource. The resource has to support this type 
      *               of relationship, and must have a registered child property. This method will allow the JavaScript API to access these chained resources. Like the findAsync
@@ -1469,7 +1496,7 @@ function ResourceWrapper(_config) {
      * }
      * @see https://help.santesuite.org/developers/service-apis/health-data-service-interface-hdsi/http-request-verbs#associated-resources
      */
-    this.findAssociatedAsync = function (id, property, query, upstream, state) {
+    this.findAssociatedAsync = function (id, property, query, viewModel, upstream, state) {
 
         if (!property)
             throw new Exception("ArgumentNullException", "Missing scoping property");
@@ -1479,6 +1506,8 @@ function ResourceWrapper(_config) {
         };
         if (_config.viewModel)
             headers["X-SanteDB-ViewModel"] = _config.viewModel;
+        else if (viewModel)
+            headers["X-SanteDB-ViewModel"] = viewModel;
 
         // Prepare query
         var url = null;
@@ -1489,8 +1518,8 @@ function ResourceWrapper(_config) {
         else
             url = `${_config.resource}/${id}/${property}`;
 
-        if (upstream) {
-            headers["X-SanteDB-Upstream"] = true;
+        if (upstream !== undefined) {
+            headers["X-SanteDB-Upstream"] = upstream;
         }
 
         return _config.api.getAsync({
@@ -1534,8 +1563,8 @@ function ResourceWrapper(_config) {
         else
             url = `${_config.resource}/${id}/${property}`;
 
-        if (upstream) {
-            headers["X-SanteDB-Upstream"] = true;
+        if (upstream !== undefined) {
+            headers["X-SanteDB-Upstream"] = upstream;
         }
 
         return _config.api.postAsync({
@@ -1582,8 +1611,8 @@ function ResourceWrapper(_config) {
         else
             url = `${_config.resource}/${id}/${property}`;
 
-        if (upstream) {
-            headers["X-SanteDB-Upstream"] = true;
+        if (upstream !== undefined) {
+            headers["X-SanteDB-Upstream"] = upstream;
         }
 
         return _config.api.deleteAsync({
@@ -1633,8 +1662,8 @@ function ResourceWrapper(_config) {
         else
             url += `/${associatedId}`;
 
-        if (upstream) {
-            headers["X-SanteDB-Upstream"] = true;
+        if (upstream !== undefined) {
+            headers["X-SanteDB-Upstream"] = upstream;
         }
 
         return _config.api.getAsync({
@@ -1692,8 +1721,8 @@ function ResourceWrapper(_config) {
             url = `${_config.resource}/${id}/$${operation}`;
 
 
-        if (upstream) {
-            headers["X-SanteDB-Upstream"] = true;
+        if (upstream !== undefined) {
+            headers["X-SanteDB-Upstream"] = upstream;
         }
 
         // Prepare parameters object 
@@ -1735,9 +1764,39 @@ function SanteDBWrapper() {
 
     var _viewModelJsonMime = "application/json+sdb-viewmodel";
 
+    // JWS Pattern
+    var jwsDataPattern = /^(.*?)\.(.*?)\.(.*?)$/;
+    var svrpPattern = /^svrp\:\/\/(.*)$/;
+
     // Get the version of this API Wrapper
     this.getVersion = function () {
-        return "2.1.85.0";
+        return __SanteDBAppService.GetVersion();
+    }
+
+    /**
+     * @public
+     * @summary Convert an object to parameters
+     * @param {any} object The JavaScript object to convert to a parameters
+     * @return {Parameters} The parameters
+     */
+    this.convertToParameters = function (object) {
+        return { parameter: Object.keys(object).map(k => { return { name: k, value: object[k] } }) };
+    }
+
+    /**
+     * @public
+     * @summary Convert parameters to an object
+     * @param {Parameters} parms The parameters to convert
+     * @return {any} The JavaScript object 
+     */
+    this.convertFromParameters = function (parms) {
+        if (!parms.parameter) {
+            return null;
+        }
+
+        var retVal = {};
+        parms.parameter.forEach(p => retVal[p.name] = p.value);
+        return retVal;
     }
 
     /**
@@ -1750,10 +1809,11 @@ function SanteDBWrapper() {
      */
     var _globalErrorHandler = function (data, setting, err) {
         if (data.status == 401 && data.getResponseHeader("WWW-Authenticate")) {
-            if (_session && _session.exp > Date.now() // User has a session that is valid, but is still 401 hmm... elevation!!!
-                && _elevator
-                && !_elevator.getToken() ||
-                _session == null && _elevator) {
+            if (_session &&
+                _session.exp > Date.now() && // User has a session that is valid, but is still 401 hmm... elevation!!!
+                _elevator &&
+                !_elevator.getToken() ||
+                (_session == null || !_session.access_token) && _elevator) {
 
                 // Was the response a security policy exception where the back end is asking for elevation on the same user account?
                 if (data.responseJSON &&
@@ -1836,9 +1896,6 @@ function SanteDBWrapper() {
         var _templateView = {};
         var _templateForm = {};
 
-        // JWS Pattern
-        var jwsDataPattern = /^(.*?)\.(.*?)\.(.*?)$/;
-
         /**
          * @memberof SanteDBWrapper.ApplicationApi
         * @summary Wraps native printing functionality for the host operating system
@@ -1904,12 +1961,12 @@ function SanteDBWrapper() {
                             return false;
                         }
                         catch (e) {
-                            console.error(`Error filling ${rel}`);
+                            console.error(`Error filling ${rel}`, e);
                         }
                     });
                 }
                 catch (e) {
-                    console.error(`Error filling ${key}`);
+                    console.error(`Error filling ${key}`, e);
                 }
             }).flat();
             await Promise.all(promises);
@@ -1930,6 +1987,9 @@ function SanteDBWrapper() {
                 var match = jwsDataPattern.exec(data);
                 var idData = JSON.parse(atob(match[2]));
                 return idData.id[0].value;
+            }
+            else if(srvpPattern.test(data)) {
+
             }
             else {
                 var idDomain = SanteDB.application.classifyIdentifier(data);
@@ -1959,6 +2019,13 @@ function SanteDBWrapper() {
                 // QR Code is a signed code
                 if (jwsDataPattern.test(qrCodeData)) {
                     var result = await SanteDB.application.ptrSearchAsync(qrCodeData, !noValidate, upstream || false);
+                    result.$novalidate = noValidate;
+                    result.$upstream = upstream;
+                    return result;
+                }
+                else if(svrpPattern.test(qrCodeData)) {
+                    var match = svrpPattern.exec(qrCodeData);
+                    var result = await SanteDB.application.ptrSearchAsync(atob(match[1]), !noValidate, upstream || false);
                     result.$novalidate = noValidate;
                     result.$upstream = upstream;
                     return result;
@@ -2013,7 +2080,7 @@ function SanteDBWrapper() {
          * SanteDB.app.addResourceViewer("Patient", 
          *      function(state, parms) { 
          *         if(!parms.genderConcept || parms.genderConcept == NullReasonKeys.NoInformation) {
-         *              state.transitionTo("my-view.patient". parms); 
+         *              state.go("my-view.patient". parms); 
          *              return true; 
          *          }
          *          return false;
@@ -2410,12 +2477,16 @@ function SanteDBWrapper() {
          */
         this.getLogInfoAsync = function (_id, query) {
             var resource = "Log";
-            if (_id)
+            var dataType = "json";
+            if (_id) {
                 resource += "/" + _id;
+                dataType = "text";
+            }
 
             return _ami.getAsync({
                 resource: resource,
-                query: query
+                query: query,
+                dataType: dataType
             });
         }
         /**
@@ -2456,13 +2527,13 @@ function SanteDBWrapper() {
          * @memberof SanteDBWrapper.ApplicationApi
          * @returns {Promise} The promise from the async representation
          * @param {any} settings The settings to use for the server diagnostic report
-         * @param {boolean} settings.updates When true check for updates
-         * @param {boolean} settings.remote When true check the remote server
+         * @param {boolean} settings._upstream When true check the remote server
          */
         this.getAppInfoAsync = function (settings) {
+            settings = settings || {};
             return _ami.getAsync({
-                resource: "Sherlock",
-                query: { _includeUpdates: (settings || {}).updates, _upstream: (settings || {}).remote }
+                resource: "Sherlock/me",
+                query: { _upstream: settings._upstream }
             });
         }
         /**
@@ -2492,7 +2563,7 @@ function SanteDBWrapper() {
          * @returns {boolean} True if the HDSI is available
          */
         this.isClinicalAvailable = function () {
-            return __SanteDBAppService.IsClinicalAvailable
+            return __SanteDBAppService.IsClinicalAvailable();
         }
         /**
          * @summary Resolves the HTML input form for the specified template
@@ -2619,6 +2690,9 @@ function SanteDBWrapper() {
             try {
                 var configuration = {
                     resource: "_ptr",
+                    headers: {
+                        accept: _viewModelJsonMime
+                    },
                     query: { code: jwsData, validate: validateSignature, _upstream: upstream }
                 };
                 return _hdsi.searchAsync(configuration);
@@ -2641,7 +2715,7 @@ function SanteDBWrapper() {
      * @property {ResourceWrapper} bundle Functions for interacting with {@link Bundle}
      * @property {ResourceWrapper} act Functions for interacting with {@link Act}
      * @property {ResourceWrapper} applicationEntity Functions for interacting with  {@link ApplicationEntity}
-     * @property {ResourceWrapper} assigningAuthority Functions for interacting with {@link AssigningAuthority}
+     * @property {ResourceWrapper} identityDomain Functions for interacting with {@link identityDomain}
      * @property {ResourceWrapper} carePlan Functions for interacting with {@link CarePlan} 
      * @property {ResourceWrapper} codeSystem Functions for interacting with {@link CodeSystem}
      * @property {ResourceWrapper} concept Functions for interacting with {@link Concept}
@@ -2665,8 +2739,8 @@ function SanteDBWrapper() {
      * @property {ResourceWrapper} substanceAdministration Functions for interacting with {@link SubstanceAdministration}
      * @property {ResourceWrapper} task Functions for interacting with {@link Task}
      * @property {ResourceWrapper} tickle Functions for interacting with {@link Tickle}
-     * @property {ResourceWrapper} pubSubSubscription Functions for interacting with {@link SubscriptionDefinition}
-     * @property {ResourceWrapper} pubSubChannel Functions for interacting with {@link PubSubChannel}
+     * @property {ResourceWrapper} pubSubSubscriptionDefinition Functions for interacting with {@link SubscriptionDefinition}
+     * @property {ResourceWrapper} pubSubChannelDefinition Functions for interacting with {@link PubSubChannel}
      * @property {ResourceWrapper} userEntity Functions for interacting with {@link UserEntity}
      * @property {ResourceWrapper} extensionType Functions for interacting with {@link ExtensionType}
      * @property {ResourceWrapper} matchConfiguration Functions for interacting with {@link MatchConfiguration}
@@ -2733,9 +2807,9 @@ function SanteDBWrapper() {
             * @memberof SanteDBWrapper.ResourceApi
             * @summary Represents the PubSubChannel Resource
             */
-        this.pubSubChannel = new ResourceWrapper({
+        this.pubSubChannelDefinition = new ResourceWrapper({
             accept: "application/json",
-            resource: "PubSubChannel",
+            resource: "PubSubChannelDefinition",
             api: _ami
         });
 
@@ -2744,9 +2818,9 @@ function SanteDBWrapper() {
         * @memberof SanteDBWrapper.ResourceApi
         * @summary Represents the PubSubSubscription Resource
         */
-        this.pubSubSubscription = new ResourceWrapper({
+        this.pubSubSubscriptionDefinition = new ResourceWrapper({
             accept: "application/json",
-            resource: "PubSubSubscription",
+            resource: "PubSubSubscriptionDefinition",
             api: _ami
         });
 
@@ -2807,9 +2881,9 @@ function SanteDBWrapper() {
          * @summary A resource wrapper for Assigning Authorities
          * @memberof SanteDBWrapper.ResourceApi
          */
-        this.assigningAuthority = new ResourceWrapper({
+        this.identityDomain = new ResourceWrapper({
             accept: _viewModelJsonMime,
-            resource: "AssigningAuthority",
+            resource: "IdentityDomain",
             api: _ami
         });
         /**
@@ -3009,7 +3083,7 @@ function SanteDBWrapper() {
             */
         this.mail = new ResourceWrapper({
             accept: _viewModelJsonMime,
-            resource: "MailMessage",
+            resource: "Mailbox",
             api: _ami
         });
         /**
@@ -3183,6 +3257,38 @@ function SanteDBWrapper() {
             accept: _viewModelJsonMime,
             api: _app
         });
+        /**
+        * @type {ResourceWrapper}
+        * @memberOf SanteDBWrapper.resources
+        * @summary Wrapper for certificates definition API
+        */
+        this.certificates = new ResourceWrapper({
+            resource: "Certificate",
+            accept: "application/json",
+            api: _ami
+        });
+
+        /**
+        * @type {ResourceWrapper}
+        * @memberOf SanteDBWrapper.resources
+        * @summary Wrapper for alien data
+        */
+        this.foreignData = new ResourceWrapper({
+            resource: "ForeignData",
+            accept: "application/json",
+            api: _ami
+        });
+
+        /**
+       * @type {ResourceWrapper}
+       * @memberOf SanteDBWrapper.resources
+       * @summary Wrapper for alien data mappings
+       */
+        this.foreignDataMap = new ResourceWrapper({
+            resource: "ForeignDataMap",
+            accept: "application/json",
+            api: _ami
+        });
     };
 
     // HACK: Wrapper pointer facility = place
@@ -3199,6 +3305,7 @@ function SanteDBWrapper() {
      * @memberof SanteDBWrapper
      */
     function ConfigurationApi() {
+
         /**
          * @method getDataProvidersAsync
          * @memberof SanteDBWrapper.ConfigurationApi
@@ -3210,21 +3317,35 @@ function SanteDBWrapper() {
                 resource: "DataProviders"
             });
         }
+
+        /**
+         * @method getIntegrationPatternsAsync
+         * @memberof SanteDBWrapper.ConfigurationApi
+         * @return {Promise} The data integration modes
+         * @summary Gets a list of data integration modes which are supported by this server
+         */
+        this.getIntegrationPatternsAsync = function () {
+            return _app.getAsync({
+                resource: "IntegrationPatterns"
+            });
+        }
         /**
             * @method getAsync
          * @memberof SanteDBWrapper.ConfigurationApi
             * @summary Get the configuration, nb: this caches the configuration
+            * @param {bool} forceServerRefresh True if the cache should be discarded and the configuration re-fetched
             * @returns {Promise} The configuration
             */
-        this.getAsync = function () {
+        this.getAsync = function (forceServerRefresh) {
             return new Promise(function (fulfill, reject) {
                 try {
-                    if (_masterConfig)
+                    if (_masterConfig && !forceServerRefresh)
                         fulfill(_masterConfig);
                     else {
                         _resources.configuration.getAsync()
                             .then(function (d) {
-                                _masterConfig = d;
+                                _masterConfig = d.values;
+                                _masterConfig._isConfigured = d._isConfigured;
                                 if (fulfill) fulfill(_masterConfig);
                             })
                             .catch(function (e) {
@@ -3247,12 +3368,16 @@ function SanteDBWrapper() {
             */
         this.getAppSetting = function (key) {
             try {
-                if (!_masterConfig) throw new Exception("Exception", "error.invalidOperation", "You need to call configuration.getAsync() before calling getAppSetting()");
-                var _setting = _masterConfig.application.setting[key];
-                if (_setting)
-                    return _setting;
-                else
+                if (_masterConfig && _masterConfig.application && _masterConfig.application.setting) {
+                    var _setting = _masterConfig.application.setting[key];
+                    if (_setting)
+                        return _setting;
+                    else
+                        return null;
+                }
+                else {
                     return null;
+                }
             }
             catch (e) {
                 if (!e.$type)
@@ -3306,22 +3431,32 @@ function SanteDBWrapper() {
         }
 
         /**
-            * @method getRealm
+         * @method getClientId
          * @memberof SanteDBWrapper.ConfigurationApi
+         * @summary Get the OAUTH client identifier 
+         * @returns {string} The name of the client Id
+         */
+        this.getClientId = function () {
+            return __SanteDBAppService.GetClientId();
+        }
+
+        /**
+         * @method getDeviceId
+         * @memberof SanteDBWrapper.ConfigurationApi
+         * @summary Get the device identifier 
+         * @returns {string} The name of the device
+         */
+        this.getDeviceId = function () {
+            return __SanteDBAppService.GetDeviceId();
+        }
+        /**
+            * @method getRealm
+            * @memberof SanteDBWrapper.ConfigurationApi
             * @summary Gets the currently configured realm
             * @returns {string} The name of the security realm
             */
         this.getRealm = function () {
-            try {
-                if (!_masterConfig) throw new Exception("Exception", "error.invalidOperation", "You need to call configuration.getAsync() before calling getAppSetting()");
-                return _masterConfig.realmName;
-            }
-            catch (e) {
-                if (!e.$type)
-                    throw new Exception("Exception", "error.unknown", e.detail, e);
-                else
-                    throw e;
-            }
+            return __SanteDBAppService.GetRealm();
         }
 
         /**
@@ -3350,8 +3485,8 @@ function SanteDBWrapper() {
          * @memberof SanteDBWrapper.ConfigurationApi
             * @returns {Promise} The configuration file after joining the realm
             * @param {any} configData The configuration data for the realm
-            * @param {string} configData.domain The domain to which the application is to be joined
-            * @param {string} configData.deviceName The name of the device to join as
+            * @param {string} configData.address The domain to which the application is to be joined
+            * @param {string} configData.device The name of the device to join as
             * @param {boolean} configData.replaceExisting When true, instructs the application to replace an existing registration
             * @param {boolean} configData.enableTrace When true, enables log file tracing of requests
             * @param {boolean} configData.enableSSL When true, enables HTTPS
@@ -3362,25 +3497,21 @@ function SanteDBWrapper() {
         this.joinRealmAsync = function (configData, overwrite) {
             return new Promise(function (fulfill, reject) {
                 try {
+                    configData.override = overwrite;
+                    var parms = SanteDB.convertToParameters(configData);
+
                     _app.postAsync({
-                        resource: "Configuration/Realm",
+                        resource: "Realm/$join",
                         contentType: 'application/json',
-                        data: {
-                            realmUri: configData.domain,
-                            deviceName: configData.deviceName,
-                            enableTrace: configData.enableTrace || false,
-                            enableSSL: configData.enableSSL || false,
-                            port: configData.port,
-                            noTimeout: false,
-                            replaceExisting: overwrite || false,
-                            client_secret: configData.client_secret,
-                            domainSecurity: configData.domainSecurity
-                        }
+                        data: parms
                     }).then(function (d) {
-                        _masterConfig = d;
-                        if (fulfill) fulfill(d);
+                        d = SanteDB.convertFromParameters(d);
+                        if (d.joined) {
+                            __SanteDBAppService.GetStatus().then(() => fulfill(d));
+                        }
+                        else reject(d);
                     }).catch(function (e) {
-                        console.error(`Error joining realm: ${e}`);
+                        console.error(`Error joining realm: ${e}`, e);
                         if (reject) reject(e.responseJSON || e);
                     });
                 }
@@ -3420,7 +3551,7 @@ function SanteDBWrapper() {
             * @returns {Promise} A promise representing the retrieval of the user settings
             */
         this.getUserSettingsAsync = async function () {
-            return _resources.configuration.getAssociatedAsync("user", "settings", ".*");
+            return _resources.configuration.findAssociatedAsync("me", "settings");
         }
         /**
             * @method saveUserPreferencesAsync
@@ -3434,7 +3565,7 @@ function SanteDBWrapper() {
             * ]);
             */
         this.saveUserSettingsAsync = function (preferences) {
-            return _resources.configuration.addAssociatedAsync("user", "settings", preferences);
+            return _resources.configuration.addAssociatedAsync("me", "settings", preferences);
         }
     };
 
@@ -3453,6 +3584,19 @@ function SanteDBWrapper() {
      */
     function AuthenticationApi() {
 
+        // Extract JWT data
+        var _extractJwtData = function(jwtData) {
+            if(jwsDataPattern.test(jwtData))
+            {
+                var match = jwsDataPattern.exec(jwtData);
+                var idData = JSON.parse(atob(match[2]));
+                return idData;
+            }
+            else {
+                throw new Exception("InvalidDataException", "Invalid JWT");
+            }
+        }
+
         // Process oauth response session data
         var _afterAuthenticate = function (oauthResponse, fulfill, reject) {
             _oauthSession = oauthResponse;
@@ -3460,13 +3604,13 @@ function SanteDBWrapper() {
             //if (oauthResponse.refresh_token) window.sessionStorage.setItem('refresh_token', oauthResponse.refresh_token);
             if (oauthResponse.id_token)
                 try {
-                    var tokenData = JSON.parse(atob(oauthResponse.id_token.split('.')[1]));
+                    var tokenData = _extractJwtData(oauthResponse.id_token);
                     // Set the locale
                     if (tokenData.lang)
                         __SanteDBAppService.SetLocale(tokenData.lang);
-                    else if (tokenData['http://santedb.org/claims/language'])
-                        __SanteDBAppService.SetLocale(tokenData['http://santedb.org/claims/language']);
-                    else 
+                    else if (tokenData['urn:santedb:org:lang'])
+                        __SanteDBAppService.SetLocale(tokenData['urn:santedb:org:lang']);
+                    else
                         __SanteDBAppService.SetLocale(null); // default locale
 
                 }
@@ -3498,6 +3642,14 @@ function SanteDBWrapper() {
             Elevate: 1,
             Grant: 2
         };
+        /**
+         * @method parseJwt
+         * @summary Parses a JWT token data into a JSON object
+         * @param {string} jwtData The JWT data (typically from an id_token)
+         * @returns {Object} The parsed object
+         */
+        this.parseJwt = _extractJwtData;
+
         /**
          * @method demandAsync
          * @memberof SanteDBWrapper.AuthenticationApi
@@ -3548,8 +3700,8 @@ function SanteDBWrapper() {
                     fulfill(angular.copy(_session));
                 else
                     try {
-                        _auth.getAsync({
-                            resource: "session"
+                        _app.getAsync({
+                            resource: "SessionInfo"
                         })
                             .then(function (s) {
                                 _session = s;
@@ -3574,6 +3726,23 @@ function SanteDBWrapper() {
             });
         }
         /**
+         * @method initiateChallengeFlowAsync
+         * @sumamry Initiates a challenge reset flow (either TFA or appropriate security challenge)
+         * @param {string} userName The name of the user to initiate the flow for
+         * @param {bool} upstream When true contact the upstream
+         * @returns {Promise} The promise for the reset
+         */
+        this.initiateChallengeFlowAsync = function(userName, upstream) {
+            return _ami.postAsync({
+                resource: "SecurityUser/$reset",
+                contentType: "application/json",
+                headers: {
+                    "X-SanteDB-Upstream" : upstream
+                },
+                data: { parameter: [ { name: "userName", value: userName } ]  }
+            })
+        }
+        /**
             * @method sendTfaSecretAsync
             * @memberof SanteDBWrapper.AuthenticationApi
             * @summary Requests a two-factor authentication secret to be sent
@@ -3582,17 +3751,18 @@ function SanteDBWrapper() {
             */
         this.sendTfaSecretAsync = function (mode) {
             return _ami.postAsync({
-                resource: "Tfa",
-                data: { mode: mode }
+                resource: "SecurityUser/$tfa",
+                contentType: "application/json",
+                data: { parameter: [ { name: "mode", value: mode } ] }
             })
         }
         /**
-            * @method getTfaModeAsync
+            * @method getTfaModesAsync
             * @memberof SanteDBWrapper.AuthenticationApi
             * @summary Retrieves information about the two-factor authentication modes supported by the server
             * @returns {Promise} The promise representing the fulfillment or rejection of the get request
             */
-        this.getTfaModeAsync = function () {
+        this.getTfaModesAsync = function () {
             return _ami.getAsync({
                 resource: "Tfa"
             });
@@ -3615,10 +3785,16 @@ function SanteDBWrapper() {
                     var headers = {};
                     if (tfaSecret)
                         headers["X-SanteDB-TfaSecret"] = tfaSecret;
+                    var claims = {};
+                    claims["urn:oasis:names:tc:xacml:2.0:action:purpose"] = 'PurposeOfUse-SecurityAdmin';
+                    claims["urn:santedb:org:claim:temporary"] = "true";
+                    headers["X-SanteDBClient-Claim"] =
+                        btoa(Object.keys(claims).map(o => `${o}=${claims[o]}`).join(";"));
 
                     _auth.postAsync({
                         resource: "oauth2_token",
                         data: {
+                            client_id: SanteDB.configuration.getClientId(),
                             username: userName,
                             challenge: challenge,
                             response: response,
@@ -3658,18 +3834,29 @@ function SanteDBWrapper() {
             return new Promise(function (fulfill, reject) {
                 try {
                     var headers = {};
-                    if (tfaSecret)
-                        headers["X-SanteDB-TfaSecret"] = tfaSecret;
-                    if (uacPrompt && purposeOfUse)
+                    var claims = {};
+
+                    if (purposeOfUse) {
+                        claims["urn:santedb:org:claim:override"] = "true";
+                        claims["urn:oasis:names:tc:xacml:2.0:action:purpose"] = purposeOfUse;
+                    }
+                    if (uacPrompt) {
+                        claims["urn:santedb:org:claim:temporary"] = "true";
+                    }
+
+                    if (Object.keys(claims).length > 0) {
                         headers["X-SanteDBClient-Claim"] =
-                            btoa("urn:santedb:org:override=true;" +
-                                "urn:oasis:names:tc:xacml:2.0:action:purpose=" + purposeOfUse)
+                            btoa(Object.keys(claims).map(o => `${o}=${claims[o]}`).join(";"));
+                    }
 
                     _auth.postAsync({
                         resource: "oauth2_token",
                         data: {
+                            client_id: SanteDB.configuration.getClientId(),
                             username: userName,
                             password: password,
+                            no_session: uacPrompt,
+                            x_mfa: tfaSecret,
                             grant_type: 'password',
                             scope: (scope || ["*"]).join(" ")
                         },
@@ -3711,13 +3898,14 @@ function SanteDBWrapper() {
                     _auth.postAsync({
                         resource: "oauth2_token",
                         data: {
+                            client_id: SanteDB.configuration.getClientId(),
                             username: userName,
                             pin: pin,
+                            x_mfa: tfaSecret,
                             grant_type: 'pin',
                             scope: (scope || ["*"]).join(" ")
                         },
                         headers: {
-                            "X-SanteDB-TfaSecret": tfaSecret,
                             "X-SanteDBClient-Claim":
                                 btoa("urn:santedb:org:override=true;" +
                                     "urn:oasis:names:tc:xacml:2.0:action:purpose=" + purposeOfUse)
@@ -3757,6 +3945,7 @@ function SanteDBWrapper() {
                         resource: "oauth2_token",
                         data: {
                             grant_type: 'client_credentials',
+                            client_id: SanteDB.configuration.getClientId(),
                             scope: (scope || ["*"]).join(" ")
                         },
                         contentType: 'application/x-www-form-urlencoded'
@@ -3834,9 +4023,10 @@ function SanteDBWrapper() {
                     _auth.postAsync({
                         resource: "oauth2_token",
                         data: {
-                            grant_type: 'refresh_token',
+                            grant_type: 'x-refresh-cookie',
                             refresh_token: refreshToken || 'cookie',
-                            scope: "*"
+                            scope: "*",
+                            client_id: SanteDB.configuration.getClientId()
                         },
                         contentType: 'application/x-www-form-urlencoded'
                     })
@@ -3867,15 +4057,19 @@ function SanteDBWrapper() {
             * @param {string} sid The security identifier of the user which is being updated
             * @param {string} userName The name of the user to set the password to
             * @param {string} passwd The password to set the currently logged in user to
+            * @param {bool} upstream True if the request should be routed to the upstream
             * @returns {Promise} The promise representing the fulfillment or rejection of the password change
             */
-        this.setPasswordAsync = function (sid, userName, passwd) {
+        this.setPasswordAsync = function (sid, userName, passwd, upstream) {
             if (!_session && !(_elevator && _elevator.getToken()))
                 throw new Exception("SecurityException", "error.security", "Can only set password with active session");
             return _ami.putAsync({
                 id: sid,
                 resource: "SecurityUser",
                 contentType: _viewModelJsonMime,
+                headers: {
+                    "X-SanteDB-Upstream" : upstream
+                },
                 data: {
                     $type: "SecurityUserInfo",
                     passwordOnly: true,
@@ -3895,8 +4089,13 @@ function SanteDBWrapper() {
         this.logoutAsync = function () {
             return new Promise(function (fulfill, reject) {
                 try {
-                    _auth.deleteAsync({
-                        resource: "session"
+                    _auth.postAsync({
+                        resource: "signout",
+                        contentType: 'application/x-www-form-urlencoded',
+                        data: {
+                            logout_hint: _session.username,
+                            client_id: SanteDB.configuration.getClientId()
+                        }
                     })
                         .then(function (d) {
                             _oauthSession = _session = null;
@@ -3962,7 +4161,7 @@ function SanteDBWrapper() {
                 var retVal = __SanteDBAppService.GetString(stringId);
 
                 if (retVal) {
-                    retVal = retVal.replace(/(\{.*?\})/ig, function (s) {
+                    retVal = retVal.replace(/\{.*?\}/ig, function (s) {
                         if (typeof s === 'string' && parameters) {
                             return parameters[s.substring(1, s.length - 1)];
                         }
@@ -4116,33 +4315,34 @@ function SanteDBWrapper() {
     var _magic = null;
 
     // Setup JQuery to send up authentication and cookies!
-    $.ajaxSetup({
-        cache: false,
-        beforeSend: function (data, settings) {
+    if (jQuery) {
+        $.ajaxSetup({
+            cache: false,
+            beforeSend: function (data, settings) {
 
-            if (!settings.noAuth) {
-                var elevatorToken = _elevator ? _elevator.getToken() : null;
-                if (elevatorToken) {
-                    data.setRequestHeader("Authorization", "BEARER " +
-                        elevatorToken);
+                if (!settings.noAuth) {
+                    var elevatorToken = _elevator ? _elevator.getToken() : null;
+                    if (elevatorToken) {
+                        data.setRequestHeader("Authorization", "BEARER " +
+                            elevatorToken);
+                    }
+                    // else if (window.sessionStorage.getItem('token'))
+                    //     data.setRequestHeader("Authorization", "BEARER " +
+                    //         window.sessionStorage.getItem("token"));
+                    if (!_magic)
+                        _magic = __SanteDBAppService.GetMagic();
+
                 }
-                // else if (window.sessionStorage.getItem('token'))
-                //     data.setRequestHeader("Authorization", "BEARER " +
-                //         window.sessionStorage.getItem("token"));
-                if (!_magic)
-                    _magic = __SanteDBAppService.GetMagic();
-
+                data.setRequestHeader("X-SdbLanguage", SanteDB.locale.getLocale()); // Set the UI locale
+                data.setRequestHeader("X-SdbMagic", _magic);
+            },
+            converters: {
+                "text json": function (data) {
+                    return $.parseJSON(data, true);
+                }
             }
-            data.setRequestHeader("X-SdbLanguage", SanteDB.locale.getLocale()); // Set the UI locale
-            data.setRequestHeader("X-SdbMagic", _magic);
-        },
-        converters: {
-            "text json": function (data) {
-                return $.parseJSON(data, true);
-            }
-        }
-    });
-
+        });
+    }
 };
 
 /**
@@ -4151,6 +4351,15 @@ function SanteDBWrapper() {
  */
 var SanteDB = new SanteDBWrapper();
 
+/**
+ * @enum {CertificateStoreName}
+ * @memberof SanteDB
+ * @summary Certificate store names
+ */
+SanteDB.CertificateStoreName = {
+    ServiceUser: "CurrentUser",
+    EntireMachine: "LocalMachine"
+};
 
 
 /**

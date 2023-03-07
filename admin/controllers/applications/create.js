@@ -85,7 +85,7 @@ angular.module('santedb').controller('CreateApplicationController', ["$scope", "
             let r = await SanteDB.resources.applicationEntity.insertAsync($scope.target.entity);
             $scope.target.entity = r;
             toastr.success(SanteDB.locale.getString("ui.model.securityApplication.saveSuccess"));
-            $state.transitionTo("santedb-admin.security.applications.edit", { "id": u.entity.id })
+            $state.go("santedb-admin.security.applications.edit", { "id": u.entity.id })
 
 
         }

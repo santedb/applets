@@ -151,7 +151,7 @@ angular.module('santedb-lib')
                                     attr: { id: `${attrs.type}${b.name}` },
                                     action: function (e, dt, node, config) {
                                         if (b.sref)
-                                            $state.transitionTo(b.sref, b.parms);
+                                            $state.go(b.sref, b.parms);
                                         else if (b.href)
                                             window.location = b.href;
                                         else
@@ -248,7 +248,7 @@ angular.module('santedb-lib')
 
                             query["_count"] = data.length;
                             query["_offset"] = data.start;
-
+                            query["_includeTotal"] = true;
                             if (!query._noexec) {
 
                                 // Unfortunately the data tables control passes each keystroke to the server
@@ -258,10 +258,10 @@ angular.module('santedb-lib')
 
                                 if (attrs.subResource) {
                                     if (scope.subResourceHolder) {
-                                        searchPromise = SanteDB.resources[attrs.type.toCamelCase()].findAssociatedAsync(scope.subResourceHolder, attrs.subResource, query, scope.external);
+                                        searchPromise = SanteDB.resources[attrs.type.toCamelCase()].findAssociatedAsync(scope.subResourceHolder, attrs.subResource, query, null, scope.external);
                                     }
                                     else {
-                                        searchPromise = SanteDB.resources[attrs.type.toCamelCase()].findAssociatedAsync(null, attrs.subResource, query, scope.external);
+                                        searchPromise = SanteDB.resources[attrs.type.toCamelCase()].findAssociatedAsync(null, attrs.subResource, query, null, scope.external);
                                     }
                                 }
                                 else {
@@ -349,7 +349,7 @@ angular.module('santedb-lib')
                     var bindButtons = function (element, buttonBar) {
                         dt.buttons().container().appendTo($(buttonSelector, dt.table().container()));
                         if (dt.buttons().container().length == 0) {
-                            $timeout(() => bindButtons(element, buttonBar), 100);
+                            $timeout(() => bindButtons(element, buttonBar), 200);
                         } else if (buttonBar) {
                             $(buttonBar).appendTo($(buttonSelector, dt.table().container()));
                         }

@@ -23,7 +23,7 @@
                     <label class="col-sm-12 col-md-2 control-label"
                         for="sid">{{ 'ui.model.securityPolicy.id' | i18n }}</label>
                     <div class="col-sm-12 col-md-10 input-group">
-                        <input name="sid" readonly="readonly" type="text" class="form-control"
+                        <input name="sid" readonly="readonly" type="text"  autocomplete="__away" class="form-control"
                             ng-model="scopedObject.securityPolicy.id" />
                         <input-copy-button class="btn btn-outline-secondary" source="scopedObject.securityPolicy.id" />
                     </div>
@@ -32,23 +32,23 @@
                     <label class="col-sm-12 col-md-2 control-label"
                         for="policyoid">{{ 'ui.model.securityPolicy.oid' | i18n }}</label>
                     <div class="col-sm-12 col-md-10 input-group">
-                        <input name="policyoid" type="text" class="form-control"
+                        <input name="policyoid" type="text" autocomplete="__away" class="form-control"
                             pattern="^(\d+?\.){1,}\d+$" minlength="6" maxlength="32" required="required" ng-readonly="scopedObject.securityPolicy.id"
                             ng-model="scopedObject.securityPolicy.oid" />
                         <input-copy-button id="policyoidCopyButton" class="btn btn-outline-secondary"
                             source="scopedObject.securityPolicy.oid" />
                     </div>
                     <div class="col-sm-12 col-md-10 offset-md-2">
-                        <div ng-show="targetForm.policyoid.$error['duplicate']" class="alert-danger">
+                        <div ng-show="targetForm.policyoid.$error['duplicate']" class="text-danger">
                             <i class="fa fa-exclamation-triangle"></i>
                             {{ 'ui.error.duplicate' | i18n }}
                         </div>
                         <div ng-show="targetForm.policyoid.$error['required'] &amp;&amp; targetForm.$submitted"
-                            class="alert-danger">
+                            class="text-danger">
                             <i class="fa fa-exclamation-triangle"></i> {{ 'ui.error.required' | i18n }}
                         </div>
                         <div ng-show="targetForm.policyoid.$error['pattern'] &amp;&amp; targetForm.$submitted"
-                            class="alert-danger">
+                            class="text-danger">
                             <i class="fa fa-exclamation-triangle"></i> {{ 'ui.error.pattern' | i18n }}
                         </div>
                     </div>
@@ -57,23 +57,23 @@
                     <label class="col-sm-12 col-md-2 control-label"
                         for="policyname">{{ 'ui.model.securityPolicy.name' | i18n }}</label>
                     <div class="col-sm-12 col-md-10 input-group">
-                        <input name="policyname" type="text" class="form-control" ng-readonly="scopedObject.securityPolicy.id"
+                        <input name="policyname" type="text" autocomplete="__away" class="form-control" ng-readonly="scopedObject.securityPolicy.id"
                             minlength="3" maxlength="32" required="required"
                             ng-model="scopedObject.securityPolicy.name" />
                         <input-copy-button id="policynameCopyButton" class="btn btn-outline-secondary"
                             source="scopedObject.securityPolicy.name" />
                     </div>
                     <div class="col-sm-12 col-md-10 offset-md-2">
-                        <div ng-show="targetForm.policyname.$error['duplicate']" class="alert-danger">
+                        <div ng-show="targetForm.policyname.$error['duplicate']" class="text-danger">
                             <i class="fa fa-exclamation-triangle"></i>
                             {{ 'ui.error.duplicate' | i18n }}
                         </div>
                         <div ng-show="targetForm.policyname.$error['required'] &amp;&amp; targetForm.$submitted"
-                            class="alert-danger">
+                            class="text-danger">
                             <i class="fa fa-exclamation-triangle"></i> {{ 'ui.error.required' | i18n }}
                         </div>
                         <div ng-show="targetForm.policyname.$error['pattern'] &amp;&amp; targetForm.$submitted"
-                            class="alert-danger">
+                            class="text-danger">
                             <i class="fa fa-exclamation-triangle"></i> {{ 'ui.error.pattern' | i18n }}
                         </div>
                     </div>
@@ -82,7 +82,7 @@
                     <label class="col-sm-12 col-md-2 control-label"
                         for="policyhandler">{{ 'ui.model.securityPolicy.handler' | i18n }}</label>
                     <div class="col-sm-12 col-md-10">
-                        <input name="policyhandler" type="text" class="form-control"
+                        <input name="policyhandler" type="text" autocomplete="__away" class="form-control"
                             pattern="^(\w+?\.){1,}\w+$" minlength="1" maxlength="256" ng-readonly="scopedObject.securityPolicy.id"
                             ng-model="scopedObject.securityPolicy.handler" />
                     </div>

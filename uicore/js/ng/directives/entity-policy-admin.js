@@ -189,7 +189,7 @@ angular.module('santedb-lib')
                         
                         query["_count"] = data.length;
                         query["_offset"] = data.start;
-
+                        query["_includeTotal"] = true;
                         SanteDB.resources[scope.securable.$type.toCamelCase()].findAssociatedAsync(scope.securable.id, 'policy', query)
                             .then(function (res) {
                                 callback({

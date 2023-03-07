@@ -19,13 +19,13 @@
  -->
 <div xmlns="http://www.w3.org/1999/xhtml">
 
-    <div ng-if="!$root.system.config.isConfigured">
+    <div ng-if="!$root.system.config._isConfigured">
         <p>You should be redirected to the configuration page automatically. If you are not redirected, please 
             <a ui-sref="santedb-config.initial">click to configure your application</a>.
         </p>
 
     </div>
-    <div ng-if="$root.system.config.isConfigured">
+    <div ng-if="$root.system.config._isConfigured">
         <h3> <img src="/org.santedb.core/img/icon.png"/> Welcome To SanteDB!</h3>
         <p>Welcome to SanteDB Version {{$root.system.version}}. This is the default applet welcome screen. You will need to install
             one or more plugins into the SanteDB server in order for more useful screens to appear.

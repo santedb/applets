@@ -18,40 +18,178 @@
  - Date: 2019-8-8
  -->
 <div xmlns="http://www.w3.org/1999/xhtml" class="container">
-    <div class="form-group row">
-        <label for="dataProviderType" class="control-label col-md-2  col-xs-12">{{ 'ui.config.data.provider.label' | i18n }}</label>
-        <div class="col-md-10  col-xs-12">
-            <select ng-model="config.data.provider" class="form-control" size="1" required="required" name="dataProviderType">
-                <option ng-repeat="dbp in reference.dataProviders" value="{{dbp.invariant}}">{{dbp.name}} ({{ 'ui.config.dbp.help.' + dbp.name | i18n }})</option>
-            </select>
-            <div class="form-text text-muted">
-                {{ 'ui.config.data.provider.help' | i18n }}
+
+    <div class="accordion" id="databaseAccordion">
+        <div class="card">
+            <div class="card-header">
+                <h2 class="mb-0">
+                    <button type="button" class="collapse-indicator btn btn-link p-0" data-toggle="collapse"
+                        data-target="#basicDataSettings" aria-expanded="true">
+                        <i class="fas fa-database"></i> {{ 'ui.config.data.basic.title' | i18n }}
+                        <i class="fa fa-chevron-right"></i>
+                    </button>
+                </h2>
+            </div>
+            <div class="collapse show" id="basicDataSettings" data-parent="#databaseAccordion">
+                <div class="card-body">
+                    <div class="form-group row">
+                        <label for="dataProviderType" class="control-label col-md-2  col-xs-12">{{
+                            'ui.config.data.provider.label' |
+                            i18n }}</label>
+                        <div class="col-md-10  col-xs-12">
+                            <select ng-model="config.data.provider" ng-change="propogateDataChanges()" class="form-control" size="1" required="required"
+                                name="dataProviderType">
+                                <option ng-repeat="dbp in reference.dataProviders" value="{{dbp.invariant}}">
+                                    {{dbp.name}} ({{
+                                    'ui.config.dbp.help.' + dbp.name | i18n }})</option>
+                            </select>
+                            <div class="form-text text-muted">
+                                {{ 'ui.config.data.provider.help' | i18n }}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group row" ng-if="reference.providerData[config.data.provider]">
+
+                        <label class="control-label col-md-2 col-xs-12">{{ reference.providerData.name }} {{
+                            'ui.config.data.options.label' | i18n }}</label>
+                        <div class="col-md-10 col-xs-12">
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>{{ 'ui.config.data.options.setting' | i18n }}</th>
+                                        <th>{{ 'ui.config.data.options.value' | i18n }}</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="(optKey, optType) in reference.providerData[config.data.provider] track by $index">
+                                        <td>{{ optKey }}</td>
+                                        <td ng-switch="optType">
+                                            <input ng-change="propogateDataChanges()" name="option{{optKey}}" ng-switch-when="User" type="text"
+                                                class="form-control" required="required" autocomplete="__away"
+                                                ng-model="config.data.options[optKey]" pattern="^[A-Za-z0-9_]+$"
+                                                value="true"
+                                                placeholder="{{ 'ui.config.data.options.user.placeholder' | i18n }}" />
+                                            <input ng-change="propogateDataChanges()" name="option{{optKey}}" ng-switch-when="DatabaseName"
+                                                class="form-control" required="required" type="text"
+                                                pattern="^[A-Za-z0-9_\.]+$" ng-model="config.data.options[optKey]"
+                                                placeholder="{{ 'ui.config.data.options.databaseName.placeholder' | i18n }}" />
+                                            <input ng-change="propogateDataChanges()" name="option{{optKey}}" ng-switch-when="Boolean" type="checkbox"
+                                                ng-model="config.data.options[optKey]" value="true" />
+                                            <input ng-change="propogateDataChanges()" name="option{{optKey}}" ng-switch-when="String" type="text"
+                                                ng-model="config.data.options[optKey]" class="form-control" autocomplete="__away"
+                                                placeholder="{{ 'ui.config.data.options.string.placeholder' | i18n }}" />
+                                            <input ng-change="propogateDataChanges()" name="option{{optKey}}" ng-switch-when="Password" type="password"
+                                                required="required" ng-model="config.data.options[optKey]"
+                                                class="form-control" />
+                                            <input ng-change="propogateDataChanges()" name="option{{optKey}}" ng-switch-when="Numeric" type="number"
+                                                ng-model="config.data.options[optKey]" class="form-control" />
+                                            <span class="text-danger"
+                                                ng-show="configurationForm['option' + optKey].$error['pattern']">
+                                                <i class="fas fa-exclamation-triangle"></i> {{ 'ui.error.pattern' | i18n
+                                                }}
+                                            </span>
+                                            <span class="text-danger"
+                                                ng-show="configurationForm['option' + optKey].$error['required']">
+                                                <i class="fas fa-exclamation-triangle"></i> {{ 'ui.error.required' |
+                                                i18n }}
+                                            </span>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
-    </div>
-    <div class="form-group row" ng-if="reference.providerData">
-
-        <label class="control-label col-md-2 col-xs-12">{{ reference.providerData.name }} {{ 'ui.config.data.options.label' | i18n }}</label>
-        <div class="col-md-10 col-xs-12">
-            <table class="table table-striped">
-                <thead>
-                    <tr>
-                        <th>{{ 'ui.config.data.options.setting' | i18n }}</th>
-                        <th>{{ 'ui.config.data.options.value' | i18n }}</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr ng-repeat="(optKey, optType) in reference.providerData.options track by $index">
-                        <td>{{ optKey }}</td>
-                        <td ng-switch="optType">
-                            <input ng-switch-when="Boolean" type="checkbox" ng-model="config.data.options[optKey]" value="true"/>
-                            <input ng-switch-when="String" type="text" ng-model="config.data.options[optKey]" class="form-control"/>
-                            <input ng-switch-when="Password" type="password" ng-model="config.data.options[optKey]" class="form-control"/>
-                            <input ng-switch-when="Numeric" type="number" ng-model="config.data.options[optKey]" class="form-control"/>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
+        <div class="card">
+            <div class="card-header">
+                <h2 class="mb-0">
+                    <button type="button" class="collapse-indicator btn btn-link p-0" data-toggle="collapse"
+                        data-target="#advancedDataSettings" aria-expanded="false">
+                        <i class="fas fa-coins"></i> {{ 'ui.config.data.advanced.title' | i18n }}
+                        <i class="fa fa-chevron-right"></i>
+                    </button>
+                </h2>
+            </div>
+            <div class="collapse" id="advancedDataSettings" data-parent="#databaseAccordion">
+                <div class="card-body">
+                    <div class="card" ng-repeat="(k, cstr) in config.data.connections">
+                        <div class="card-header alert-info">
+                            <i class="fas fa-database"></i> {{ k | i18n }}
+                        </div>
+                        <div class="card-body">
+                            <div class="form-group row">
+                                <label for="dataProviderType" class="control-label col-md-2  col-xs-12">{{
+                                    'ui.config.data.provider.label' |
+                                    i18n }}</label>
+                                <div class="col-md-10  col-xs-12">
+                                    <select ng-model="cstr.provider" class="form-control" size="1" required="required"
+                                        name="dataProviderType">
+                                        <option ng-repeat="dbp in reference.dataProviders" value="{{dbp.invariant}}">
+                                            {{dbp.name}} ({{
+                                            'ui.config.dbp.help.' + dbp.name | i18n }})</option>
+                                    </select>
+                                    <div class="form-text text-muted">
+                                        {{ 'ui.config.data.provider.help' | i18n }}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group row" ng-if="reference.providerData[cstr.provider]">
+        
+                                <label class="control-label col-md-2 col-xs-12">{{ reference.providerData.name }} {{
+                                    'ui.config.data.options.label' | i18n }}</label>
+                                <div class="col-md-10 col-xs-12">
+                                    <table class="table table-striped">
+                                        <thead>
+                                            <tr>
+                                                <th>{{ 'ui.config.data.options.setting' | i18n }}</th>
+                                                <th>{{ 'ui.config.data.options.value' | i18n }}</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr ng-repeat="(optKey, optType) in reference.providerData[cstr.provider] track by $index">
+                                                <td>{{ optKey }}</td>
+                                                <td ng-switch="optType">
+                                                    <input name="option{{k}}{{optKey}}" ng-switch-when="User" type="text"
+                                                        class="form-control" required="required" autocomplete="__away"
+                                                        ng-model="cstr.options[optKey]" pattern="^[A-Za-z0-9_]+$"
+                                                        value="true"
+                                                        placeholder="{{ 'ui.config.data.options.user.placeholder' | i18n }}" />
+                                                    <input name="option{{k}}{{optKey}}" ng-switch-when="DatabaseName"
+                                                        class="form-control" required="required" type="text"
+                                                        pattern="^[A-Za-z0-9_\.]+$" ng-model="cstr.options[optKey]"
+                                                        placeholder="{{ 'ui.config.data.options.databaseName.placeholder' | i18n }}" />
+                                                    <input name="option{{k}}{{optKey}}" ng-switch-when="Boolean" type="checkbox"
+                                                        ng-model="cstr.options[optKey]" value="true" />
+                                                    <input name="option{{k}}{{optKey}}" ng-switch-when="String" type="text"
+                                                        ng-model="cstr.options[optKey]" class="form-control" autocomplete="__away"
+                                                        placeholder="{{ 'ui.config.data.options.string.placeholder' | i18n }}" />
+                                                    <input name="option{{k}}{{optKey}}" ng-switch-when="Password" type="password"
+                                                        required="required" ng-model="cstr.options[optKey]"
+                                                        class="form-control" />
+                                                    <input name="option{{k}}{{optKey}}" ng-switch-when="Numeric" type="number"
+                                                        ng-model="cstr.options[optKey]" class="form-control" />
+                                                    <span class="text-danger"
+                                                        ng-show="configurationForm['option' + k + optKey].$error['pattern']">
+                                                        <i class="fas fa-exclamation-triangle"></i> {{ 'ui.error.pattern' | i18n
+                                                        }}
+                                                    </span>
+                                                    <span class="text-danger"
+                                                        ng-show="configurationForm['option' + k + optKey].$error['required']">
+                                                        <i class="fas fa-exclamation-triangle"></i> {{ 'ui.error.required' |
+                                                        i18n }}
+                                                    </span>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>

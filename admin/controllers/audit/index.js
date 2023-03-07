@@ -21,7 +21,7 @@
 angular.module('santedb').controller('AuditIndexController', ["$scope", "$rootScope", "$state", "$templateCache", "$stateParams", function ($scope, $rootScope, $state, $templateCache, $stateParams) {
 
     $scope.currentFilter = {
-       
+       _orderBy: "timestamp:desc"
     };
 
     // Render the outcome

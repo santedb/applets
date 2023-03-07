@@ -10,7 +10,7 @@ angular.module('santedb').controller('DataQualityWidgetController', ['$scope', '
                 });
             }
             catch(e) {
-                console.warn("Cannot parse DQ value: " + n.extension['http://santedb.org/extensions/core/detectedIssue'].hexDecode());
+                console.warn("Cannot parse DQ value");
             }
     })
 }]);

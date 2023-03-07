@@ -45,7 +45,7 @@ angular.module('santedb').controller('EditPolicyCoreController', ["$scope", "$ro
         }
         finally {
             SanteDB.display.buttonWait("#savePolicyButton", false);
-            $state.transitionTo("santedb-admin.security.policies.index")
+            $state.go("santedb-admin.security.policies.index")
         }
     }
 

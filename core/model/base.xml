@@ -24,6 +24,7 @@
   <type type="TemplateDefinition" all="false">
     <property name="mnemonic"/>
   </type>
+
   <type type="IdentifiedData" all="true">
     <property name="etag" behavior="never"/>
   </type>
@@ -65,7 +66,8 @@
     <property name="source" behavior="always"/>
     <property name="id"/>
     <property name="value"/>
-    <property name="authority" all="false" behavior="always">
+    <property name="domain"/>
+    <property name="domainModel" all="false" behavior="always">
       <property name="name"/>
       <property name="domainName"/>
       <property name="oid"/>
@@ -75,6 +77,9 @@
   <type type="Bundle" all="true">
     <property name="item" all="true"/>
   </type>
+  <type type="AmiCollection" all="true">
+    <property name="item" all="true" />
+  </type>
 
   <!-- Concepts -->
   <type type="Concept" all="true">
@@ -82,7 +87,7 @@
     <property name="mnemonic"/>
     <property name="id"/>
   </type>
-  <type type="EntityNameComponent" all="false">
+  <type type="EntityNameComponent" all="true">
     <property name="value"/>
   </type>
   <!-- Session information -->

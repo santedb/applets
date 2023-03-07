@@ -41,6 +41,7 @@
       <providers>
         <invariant>npgsql</invariant>
         <invariant>FirebirdSQL</invariant>
+        <invariant>sqlite</invariant>
       </providers>
       <![CDATA[SELECT * 
       FROM sec_usr_tbl

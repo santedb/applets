@@ -19,7 +19,7 @@
                 <label class="col-sm-12 col-md-2 control-label"
                     for="sid">{{ 'ui.model.securityDevice.id' | i18n }}</label>
                 <div class="col-sm-12 col-md-10 input-group">
-                    <input name="sid" readonly="readonly" type="text" class="form-control"
+                    <input name="sid" readonly="readonly"  autocomplete="__away" type="text" class="form-control"
                         ng-model="scopedObject.securityDevice.id" />
                     <input-copy-button class="btn btn-outline-secondary" source="scopedObject.securityDevice.id" />
                 </div>
@@ -28,23 +28,23 @@
                 <label class="col-sm-12 col-md-2 control-label"
                     for="devicename">{{ 'ui.model.securityDevice.name' | i18n }}</label>
                 <div class="col-sm-12 col-md-10 input-group">
-                    <input name="devicename" ng-readonly="scopedObject.securityDevice.id" type="text"
+                    <input name="devicename" autocomplete="__away" ng-readonly="scopedObject.securityDevice.id" type="text"
                         class="form-control" pattern="^[A-Za-z0-9_\-\.\@\|]{3,}" minlength="3" maxlength="32"
                         required="required" ng-model="scopedObject.securityDevice.name" />
                     <input-copy-button id="devicenameCopyButton" class="btn btn-outline-secondary"
                         source="scopedObject.securityDevice.name" />
                 </div>
                 <div class="col-sm-12 col-md-10 offset-md-2">
-                    <div ng-show="targetForm.devicename.$error['duplicate']" class="alert-danger">
+                    <div ng-show="targetForm.devicename.$error['duplicate']" class="text-danger">
                         <i class="fa fa-exclamation-triangle"></i>
                         {{ 'ui.error.duplicate' | i18n }}
                     </div>
                     <div ng-show="targetForm.devicename.$error['required'] &amp;&amp; targetForm.$submitted"
-                        class="alert-danger">
+                        class="text-danger">
                         <i class="fa fa-exclamation-triangle"></i> {{ 'ui.error.required' | i18n }}
                     </div>
                     <div ng-show="targetForm.devicename.$error['pattern'] &amp;&amp; targetForm.$submitted"
-                        class="alert-danger">
+                        class="text-danger">
                         <i class="fa fa-exclamation-triangle"></i> {{ 'ui.error.pattern' | i18n }}
                     </div>
                 </div>

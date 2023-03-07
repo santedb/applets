@@ -38,7 +38,7 @@ angular.module('santedb')
                 .catch($rootScope.errorHandler);
 
             // Get the related user entity at the same time
-            SanteDB.resources.userEntity.findAsync({ securityUser: $stateParams.id, _viewModel: "full" })
+            SanteDB.resources.userEntity.findAsync({ securityUser: $stateParams.id, _viewModel: "fastview" })
                 .then(function (u) {
                     $scope.isLoading = !$scope.target;
                     $scope.target = $scope.target || {};
@@ -150,7 +150,7 @@ angular.module('santedb')
                 // Now save the user entity
                 toastr.success(SanteDB.locale.getString("ui.model.securityUser.saveSuccess"));
                 SanteDB.display.buttonWait("#saveUserButton", false);
-                $state.transitionTo("santedb-admin.security.users.index");
+                $state.go("santedb-admin.security.users.index");
             };
             var errorFn = function (e) {
                 SanteDB.display.buttonWait("#saveUserButton", false);

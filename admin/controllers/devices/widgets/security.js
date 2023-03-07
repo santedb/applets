@@ -212,7 +212,7 @@ angular.module('santedb').controller('EditDeviceSecurityController', ["$scope", 
         }
         finally {
             SanteDB.display.buttonWait("#saveDeviceButton", false);
-            $state.transitionTo("santedb-admin.security.devices.index");
+            $state.go("santedb-admin.security.devices.index");
         }
     }
 }]);

@@ -1,0 +1,32 @@
+<div xmlns="http://www.w3.org/1999/xhtml" xmlns:sdb="http://santedb.org/applet">
+    <sdb:script static="false">~/controllers/rc/index.js</sdb:script>
+    <sdb:state name="santedb-admin.reports.index" abstract="false">
+        <sdb:url>/</sdb:url>
+        <sdb:view>
+            <sdb:controller>ReportCenterController</sdb:controller>
+            <sdb:title lang="en">Report Centre</sdb:title>
+        </sdb:view>
+    </sdb:state>
+    
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>{{ 'ui.bi.rc.name' | i18n }}</th>
+                <th>{{ 'ui.bi.rc.description' | i18n }}</th>
+                <th>{{ 'ui.action' | i18n }}</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-if="!reports">
+                <td colspan="3"><i class="fas fa-circle-notch fa-spin"></i> {{ 'ui.wait' | i18n }}</td>
+            </tr>
+            <tr ng-repeat="rpt in reports track by $index">
+                <td>{{ rpt.name || rpt.label | i18n  }}</td>
+                <td ng-bind-html="rpt.meta.doc.doc"></td>
+                <td>
+                    <a ui-sref="santedb-admin.reports.view({ id: rpt.id })" class="btn btn-primary"><i class="fas fa-play"></i> {{ 'ui.action.view' | i18n }}</a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>

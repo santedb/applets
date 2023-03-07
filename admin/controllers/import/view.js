@@ -19,22 +19,24 @@
  * User: Justin Fyfe
  * Date: 2019-9-20
  */
-angular.module('santedb').controller('PlaceCreateController', ["$scope", "$rootScope", "$state", function ($scope, $rootScope, $state) {
+angular.module('santedb').controller('ForeignDataViewController', ["$scope", "$rootScope", "$timeout", "$state", "$stateParams", function ($scope, $rootScope, $timeout, $state, $stateParams) {
 
-    // Create a templated place
-    $scope.target = new Place({
-        classConcept: $state.current.name.indexOf("facili") > -1 ? EntityClassKeys.ServiceDeliveryLocation : EntityClassKeys.Place,
-        classConceptModel : { id: $state.current.name.indexOf("facili") > -1 ? EntityClassKeys.ServiceDeliveryLocation : EntityClassKeys.Place },
-        statusConcept: StatusKeys.Active,
-        name: {
-            other: [ {
-                component: {
-                    other : {
-                        value: ""
-                    }
-                },
-                useModel: { id: NameUseKeys.OfficialRecord }
-            } ]
+
+    // Initialize the view
+    async function initialize(id) {
+        try {
+            var stagedData = await SanteDB.resources.foreignData.getAsync(id);
+            $timeout(() => $scope.stagedData = stagedData);
         }
-    });
+        catch(e) {
+            $rootScope.errorHandler(e);
+        }
+    }
+
+    if($stateParams.id) {
+        initialize($stateParams.id);
+    }
+    else {
+        $stateParams.go("santedb-admin.data.import.index");
+    }
 }]);

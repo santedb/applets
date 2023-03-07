@@ -43,6 +43,7 @@
       <providers>
         <invariant>npgsql</invariant>
         <invariant>FirebirdSQL</invariant>
+        <invariant>sqlite</invariant>
       </providers>
       <materialize name="org_santedb_bi_core_query_patient">
         <![CDATA[
@@ -78,33 +79,6 @@
             birth_time between CAST(coalesce(${dob-from}, '0001-01-01') AS DATE) and CAST(coalesce(${dob-to}, current_date) AS DATE)   
             and (gndr_cd_id IS NULL OR gndr_cd_id = COALESCE(${gender}, gndr_cd_id))
         ]]>
-    </add>
-    <add>
-      <providers>
-        <invariant>sqlite</invariant>
-      </providers>
-      <![CDATA[
-      select 
-        entity.uuid as id,
-        deceasedDate as death_time,
-        birth_order as multi_birth,
-        dateOfBirth as birth_time,
-        gender.mnemonic as gender,
-        entity.creationTime as created_time,
-        marital.mnemonic as marital_status,
-        education.mnemonic as edu_level,
-        entity.uuid as master_id
-      from 
-        patient 
-        inner join person on (patient.uuid = person.uuid) 
-        inner join entity on (patient.uuid = entity.uuid) 
-        inner join concept as gender on (genderConcept = gender.uuid) 
-        left join concept as marital on (marital.uuid = marital_status) 
-        left join concept as education on (education.uuid = education_level)
-      where
-        (dateOfBirth - 621355968000000000) /  10000000  between coalesce(${dob-from},-0xfffffffffff) and coalesce(${dob-to}, 0xfffffffffff)
-        and genderConcept = COALESCE(${gender}, genderConcept)
-      ]]>
     </add>
   </definitions>
 </BiQueryDefinition>

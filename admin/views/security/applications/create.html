@@ -10,7 +10,7 @@
     </sdb:state>
 
     <form ng-submit="saveApplication(createForm)" name="createForm" novalidate="novalidate">
-        <div class="accordion" id="applicationAccordion">
+        <div class="accordion mb-2" id="applicationAccordion">
             <div class="card">
                 <div class="collapse show" id="coreapplicationProps">
                     <div class="card-body container-fluid">
@@ -18,9 +18,9 @@
                             <label class="col-sm-12 col-md-2 control-label"
                                 for="sid">{{ 'ui.model.securityApplication.id' | i18n }}</label>
                             <div class="col-sm-12 col-md-10 input-group">
-                                <input name="sid" readonly="readonly" type="text" class="form-control"
+                                <input name="sid"  autocomplete="__away" readonly="readonly" type="text" class="form-control"
                                     ng-model="target.securityApplication.id" />
-                                <input-copy-button class="btn btn-outline-secondary"
+                                <input-copy-button button-class="'btn-outline-secondary'"
                                     source="target.securityApplication.id" />
                             </div>
                         </div>
@@ -28,23 +28,23 @@
                             <label class="col-sm-12 col-md-2 control-label"
                                 for="applicationname">{{ 'ui.model.securityApplication.name' | i18n }}</label>
                             <div class="col-sm-12 col-md-10 input-group">
-                                <input name="applicationname" ng-readonly="target.securityApplication.id" type="text"
+                                <input name="applicationname"  autocomplete="__away" ng-readonly="target.securityApplication.id" type="text"
                                     class="form-control" pattern="^[A-Za-z0-9_\-\.\@]{3,}" minlength="3" maxlength="64"
                                     required="required" ng-model="target.securityApplication.name" />
-                                <input-copy-button id="applicationNameCopyButton" class="btn btn-outline-secondary"
+                                <input-copy-button id="applicationNameCopyButton" button-class="'btn-outline-secondary'"
                                     source="target.securityApplication.name" />
                             </div>
                             <div class="col-sm-12 col-md-10 offset-md-2">
-                                <div ng-show="createForm.applicationname.$error['duplicate']" class="alert-danger">
+                                <div ng-show="createForm.applicationname.$error['duplicate']" class="text-danger">
                                     <i class="fa fa-exclamation-triangle"></i>
                                     {{ 'ui.error.duplicate' | i18n }}
                                 </div>
                                 <div ng-show="createForm.applicationname.$error['required'] &amp;&amp; createForm.$submitted"
-                                    class="alert-danger">
+                                    class="text-danger">
                                     <i class="fa fa-exclamation-triangle"></i> {{ 'ui.error.required' | i18n }}
                                 </div>
                                 <div ng-show="createForm.applicationname.$error['pattern'] &amp;&amp; createForm.$submitted"
-                                    class="alert-danger">
+                                    class="text-danger">
                                     <i class="fa fa-exclamation-triangle"></i> {{ 'ui.error.pattern' | i18n }}
                                 </div>
                             </div>
@@ -61,12 +61,12 @@
                             <label class="col-md-2 col-sm-12 control-label"
                                 for="softwareName">{{ 'ui.model.applicationEntity.softwareName' | i18n }}</label>
                             <div class="col-md-10 col-sm-12">
-                                <input ng-required="true" type="text" maxlength="256" ng-model="target.entity.softwareName"
+                                <input ng-required="true"  autocomplete="__away" type="text" maxlength="256" ng-model="target.entity.softwareName"
                                     name="softwareName" class="form-control" />
                             </div>
                             <div class="col-sm-12 col-md-10 offset-md-2">
                                 <div ng-show="createForm.softwareName.$error['required'] &amp;&amp; createForm.$submitted"
-                                    class="alert-danger">
+                                    class="text-danger">
                                     <i class="fa fa-exclamation-triangle"></i> {{ 'ui.error.required' | i18n }}
                                 </div>
                             </div>
@@ -75,7 +75,7 @@
                             <label class="col-md-2 col-sm-12 control-label"
                                 for="vendorName">{{ 'ui.model.applicationEntity.vendorName' | i18n }}</label>
                             <div class="col-md-10 col-sm-12">
-                                <input type="text" maxlength="256" ng-model="target.entity.vendorName" name="vendorName"
+                                <input type="text"  autocomplete="__away" maxlength="256" ng-model="target.entity.vendorName" name="vendorName"
                                     class="form-control" />
                             </div>
                         </div>
@@ -83,7 +83,7 @@
                             <label class="col-md-2 col-sm-12 control-label"
                                 for="versionName">{{ 'ui.model.applicationEntity.versionName' | i18n }}</label>
                             <div class="col-md-10 col-sm-12">
-                                <input type="text" maxlength="256" ng-model="target.entity.versionName"
+                                <input type="text"  autocomplete="__away" maxlength="256" ng-model="target.entity.versionName"
                                     name="versionName" class="form-control" />
                             </div>
                         </div>

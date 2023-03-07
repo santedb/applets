@@ -18,7 +18,7 @@
  - User: Justin Fyfe
  - Date: 2019-8-8
  -->
-<SubscriptionDefinition xmlns="http://santedb.org/subscription" uuid="a3f5d2a4-c3ef-4349-9dec-bdd6389a7037" resource="Concept">
+<SubscriptionDefinition xmlns="http://santedb.org/subscription" name="ui.subscription.core" uuid="a3f5d2a4-c3ef-4349-9dec-bdd6389a7037" resource="IdentifiedData">
   <client>
     <definition resource="CodeSystem" name="ui.subscription.codeSystem.all" mode="*" ignoreModifiedOn="false" trigger="on-start on-x-net" />
     <definition resource="ReferenceTerm" name="ui.subscription.referenceTerm.all" mode="*" ignoreModifiedOn="false" trigger="on-start on-x-net" />
@@ -33,7 +33,7 @@
         <add>statusConcept=!CD4AA3C4-02D5-4CC9-9088-EF8F31E321C5</add>
       </filters>
     </definition>
-    <definition resource="AssigningAuthority" name="ui.subscription.assigningAuthority.all" mode="*" ignoreModifiedOn="false" trigger="on-start" />
+    <definition resource="IdentityDomain" name="ui.subscription.identityDomain.all" mode="*" ignoreModifiedOn="false" trigger="on-start" />
     <definition resource="IdentifierType" name="ui.subscription.identifierType.all" mode="*" ignoreModifiedOn="false" trigger="on-start" />
     <definition resource="TemplateDefinition" name="ui.subscription.templateDefinition.all" mode="*" ignoreModifiedOn="false" trigger="on-start" />
     <definition resource="ExtensionType" name="ui.subscription.extensionType.all" mode="*" ignoreModifiedOn="false" trigger="on-start" />

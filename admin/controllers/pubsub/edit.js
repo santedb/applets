@@ -36,8 +36,8 @@ angular.module('santedb').controller('PubSubEditController', ["$scope", "$rootSc
                 }
             }
             else {
-                subscription = await SanteDB.resources.pubSubSubscription.getAsync($stateParams.id);
-                subscription.channelModel = await SanteDB.resources.pubSubChannel.getAsync(subscription.channel);
+                subscription = await SanteDB.resources.pubSubSubscriptionDefinition.getAsync($stateParams.id);
+                subscription.channelModel = await SanteDB.resources.pubSubChannelDefinition.getAsync(subscription.channel);
 
                 // Trim off the full AQN so only the first sections (name and assembly name are present in the selection list - as versions changed between the 
                 // time that the subscription is defined and the actual version this request is made on)
@@ -49,7 +49,7 @@ angular.module('santedb').controller('PubSubEditController', ["$scope", "$rootSc
             }
 
             // Get dispatchers
-            var dispatchers = await SanteDB.resources.pubSubSubscription.invokeOperationAsync(null, "dispatcher", null, true);
+            var dispatchers = await SanteDB.resources.pubSubSubscriptionDefinition.invokeOperationAsync(null, "dispatcher", null, true);
 
             $timeout(() => {
                 $scope.subscription = subscription;
@@ -79,17 +79,17 @@ angular.module('santedb').controller('PubSubEditController', ["$scope", "$rootSc
             $scope.subscription.channelModel.name = `Channel for ${$scope.subscription.name}`;
             // Are we inserting or updating?
             if($scope.subscription.id) {
-                await SanteDB.resources.pubSubChannel.updateAsync($scope.subscription.channelModel.id, $scope.subscription.channelModel);
-                await SanteDB.resources.pubSubSubscription.updateAsync($scope.subscription.id, $scope.subscription);
+                await SanteDB.resources.pubSubChannelDefinition.updateAsync($scope.subscription.channelModel.id, $scope.subscription.channelModel);
+                await SanteDB.resources.pubSubSubscriptionDefinition.updateAsync($scope.subscription.id, $scope.subscription);
             }
             else {
-                var channel = await SanteDB.resources.pubSubChannel.insertAsync($scope.subscription.channelModel);
+                var channel = await SanteDB.resources.pubSubChannelDefinition.insertAsync($scope.subscription.channelModel);
                 $scope.subscription.channel = channel.id;
-                var subscription = await SanteDB.resources.pubSubSubscription.insertAsync($scope.subscription);
+                var subscription = await SanteDB.resources.pubSubSubscriptionDefinition.insertAsync($scope.subscription);
             }
 
             toastr.success(SanteDB.locale.getString("ui.admin.pubsub.save.success", { name: $scope.subscription.name }));
-            $state.transitionTo("santedb-admin.system.pubsub.index");
+            $state.go("santedb-admin.system.pubsub.index");
         }
         catch(e) {
             toastr.error(SanteDB.locale.getString("ui.admin.pubsub.save.error", { name: $scope.subscription.name, reason: e.message }));

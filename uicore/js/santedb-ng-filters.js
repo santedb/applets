@@ -32,6 +32,7 @@ angular.module('santedb-lib')
             return SanteDB.locale.getString(value, parmObject);
         }
     })
+   
      /**
      * @method rightEllipsis
      * @memberof Angular

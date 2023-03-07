@@ -36,7 +36,7 @@
     <property name="holder" all="true"/>
     <property name="originalTarget" all="true"/>
     <property name="originalHolder" all="true"/>
-    <property name="targetModel" all="true" ref="Entity" behavior="always"/>
+    <property name="targetModel" all="true" ref="$type"  behavior="always"/>
     <property name="relationshipType" all="true" behavior="always"/>
     <property name="holderModel" behavior="never"/>
     <property name="sourceModel" behavior="never"/>
@@ -76,7 +76,7 @@
   <type type="ActParticipation" all="false">
     <property name="source" all="true"/>
     <property name="target" all="true"/>
-    <property name="playerModel" all="true" ref="Entity" behavior="always"/>
+    <property name="playerModel" all="true" ref="$type" behavior="always"/>
     <property name="participationRole" all="true"/>
     <property name="key" all="true"/>
     <property name="quantity" all="true"/>
@@ -87,7 +87,7 @@
 	<property name="mnemonic"/>
   </type>
   
-  <type type="AssigningAuthority" all="true">
+  <type type="IdentityDomain" all="true">
     <property name="scopeModel" behavior="always" ref="Concept"/>
   </type>
   <!-- Entity Information -->
@@ -137,6 +137,38 @@
     <property name="creationTime" behavior="never"/>
     <property name="creationTimeModel" behavior="never"/>
     <property name="version" behavior="never"/>
+    <property name="occupationModel" all="true" behavior="always" ref="Concept"/>
+    <property name="nationalityModel" all="true" behavior="always" ref="Concept"/>
+    <property name="vipStatusModel" all="true" behavior="always" ref="Concept"/>
+
+    <property name="name" all="true"  behavior="always">
+      <property name="*" ref="EntityName"/>
+    </property>
+    <property name="address" all="true"  behavior="always">
+      <property name="*" ref="EntityAddress"/>
+    </property>
+    <property name="identifier" all="true"  behavior="always">
+      <property name="*" ref="EntityIdentifier"/>
+    </property>
+    <property name="telecom" all="true" behavior="always"/>
+    <property name="occupationModel" all="true" behavior="always" ref="Concept"/>
+    <property name="classConceptModel" behavior="never"/>
+    <property name="relationship" all="true" behavior="always">
+      <property name="*" ref="EntityRelationship" all="true"/>
+
+    </property>
+  </type>
+
+
+  <type type="UserEntity" all="true">
+    <property name="templateModel" behavior="always" all="false">
+      <property name="mnemonic"/>
+    </property>
+    <property name="classConcept" behavior="always"/>
+    <property name="createdBy" behavior="never"/>
+    <property name="creationTime" behavior="never"/>
+    <property name="creationTimeModel" behavior="never"/>
+    <property name="version" behavior="never"/>
     <property name="name" all="true"  behavior="always">
       <property name="*" ref="EntityName"/>
     </property>
@@ -164,14 +196,15 @@
     <property name="creationTime" behavior="always"/>
     <property name="creationTimeModel" behavior="never"/>
     <property name="version" behavior="always"/>
-    <property name="occupationModel" all="true" behavior="always" ref="Concept"/>
-    <property name="vipStatusModel" all="true" behavior="always" ref="Concept"/>
     <property name="educationLevelModel" all="true" behavior="always" ref="Concept"/>
     <property name="maritalStatusModel" all="true" behavior="always" ref="Concept"/>
     <property name="livingArrangementModel" all="true" behavior="always" ref="Concept"/>
     <property name="religionModel" all="true" behavior="always" ref="Concept"/>
     <property name="ethnicityModel" all="true" behavior="always" ref="Concept"/>
     <property name="statusConceptModel" behavior="always" ref="Concept"/>
+    <property name="occupationModel" all="true" behavior="always" ref="Concept"/>
+    <property name="nationalityModel" all="true" behavior="always" ref="Concept"/>
+    <property name="vipStatusModel" all="true" behavior="always" ref="Concept"/>
 
    
     <property name="telecom" all="true" behavior="always"/>
@@ -316,7 +349,10 @@
     <property name="name" all="true" behavior="always">
       <property name="*" ref="EntityName" />
     </property>
-    <property name="address" all="true" ref="EntityAddress" behavior="always"/>
+    <!--<property name="address" all="true" ref="EntityAddress" behavior="always"/>-->
+    <property name="address" all="true" behavior="always">
+      <property name="*" ref="EntityAddress" />
+    </property>
     <property name="classConceptModel" behavior="always" ref="Concept"/>
     <property name="classConcept" behavior="always"/>
     <property name="determinerConceptModel" behavior="never"/>
@@ -516,14 +552,7 @@
           <property name="name" ref="EntityName"/>
         </property>
       </property>
-      <property name="*" all="false">
-        <property name="actModel" behavior="never"/>
-        <property name="sourceModel" behavior="never"/>
-        <property name="act" all="true"/>
-        <property name="participationRoleModel" behavior="never"/>
-        <property name="player" all="true"/>
-        <property name="playerModel" all="true" behavior="always" ref="Entity"/>
-      </property>
+      <property name="*" ref="ActParticipation" all="true" />
     </property>
   </type>
 

@@ -17,7 +17,7 @@
             <label class="col-sm-12 col-md-2 control-label"
                 for="sid">{{ 'ui.model.securityApplication.id' | i18n }}</label>
             <div class="col-sm-12 col-md-10 input-group">
-                <input name="sid" readonly="readonly" type="text" class="form-control"
+                <input name="sid" readonly="readonly" autocomplete="__away" type="text" class="form-control"
                     ng-model="scopedObject.securityApplication.id" />
                 <input-copy-button class="btn btn-outline-secondary"
                     source="scopedObject.securityApplication.id" />
@@ -27,23 +27,23 @@
             <label class="col-sm-12 col-md-2 control-label"
                 for="applicationname">{{ 'ui.model.securityApplication.name' | i18n }}</label>
             <div class="col-sm-12 col-md-10 input-group">
-                <input name="applicationname" ng-readonly="scopedObject.securityApplication.id" type="text"
+                <input name="applicationname" autocomplete="__away" ng-readonly="scopedObject.securityApplication.id" type="text"
                     class="form-control" pattern="^[A-Za-z0-9_\-\.\@]{3,}" minlength="3" maxlength="64"
                     required="required" ng-model="scopedObject.securityApplication.name" />
                 <input-copy-button id="applicationNameCopyButton" class="btn btn-outline-secondary"
                     source="scopedObject.securityApplication.name" />
             </div>
             <div class="col-sm-12 col-md-10 offset-md-2">
-                <div ng-show="scopedObject.applicationname.$error['duplicate']" class="alert-danger">
+                <div ng-show="scopedObject.applicationname.$error['duplicate']" class="text-danger">
                     <i class="fa fa-exclamation-triangle"></i>
                     {{ 'ui.error.duplicate' | i18n }}
                 </div>
                 <div ng-show="scopedObject.applicationname.$error['required'] &amp;&amp; scopedObject.$submitted"
-                    class="alert-danger">
+                    class="text-danger">
                     <i class="fa fa-exclamation-triangle"></i> {{ 'ui.error.required' | i18n }}
                 </div>
                 <div ng-show="scopedObject.applicationname.$error['pattern'] &amp;&amp; scopedObject.$submitted"
-                    class="alert-danger">
+                    class="text-danger">
                     <i class="fa fa-exclamation-triangle"></i> {{ 'ui.error.pattern' | i18n }}
                 </div>
             </div>

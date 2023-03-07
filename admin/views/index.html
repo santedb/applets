@@ -47,18 +47,18 @@
                         <a class="nav-link" href="javascript:"><i class="fas fa-circle-notch fa-spin"></i> {{ 'ui.wait' | i18n }}</a>
                     </li>
                     <li ng-repeat="m in menuItems track by $index" class="nav-item">
-                        <a class="nav-link" ng-if="!m.menu" ui-sref="{{ ::m.action }}" data-toggle="collapse"
+                        <a class="nav-link" ng-if="!m.menu || m.menu.length == 0" ui-sref="{{ ::m.action }}" data-toggle="collapse"
                             data-target=".navbar-collapse-small"  title="{{::c.text ||c.action | i18n}}">
                             <i class="{{m.icon}}"></i>
                             <span class="nav-link-text"> {{::m.text || m.action | i18n }}</span>
                         </a>
-                        <a ng-if="m.menu" class="nav-link nav-link-collapse" ui-sref="{{ ::m.action }}"
+                        <a ng-if="m.menu &amp;&amp; m.menu.length > 0" class="nav-link nav-link-collapse" ui-sref="{{ ::m.action }}"
                             data-toggle="collapse" data-target="#Collapse{{$index}}" role="button" aria-haspopup="true"
                             aria-expanded="false"  title="{{::c.text ||c.action | i18n}}">
                             <i class="{{m.icon}}"></i>
                             <span class="nav-link-text"> {{::m.text || m.action | i18n}}</span>
                         </a>
-                        <ul ng-if="m.menu" class="sidenav-second-level collapse" id="Collapse{{$index}}"  data-parent="#menuAccordian">
+                        <ul ng-if="m.menu &amp;&amp; m.menu.length > 0" class="sidenav-second-level collapse" id="Collapse{{$index}}"  data-parent="#menuAccordian">
                             <li ng-repeat="c in ::m.menu" title="{{c.text}}">
                                 <a ui-sref="{{ ::c.action }}" data-toggle="collapse"
                                     data-target=".navbar-collapse-small" title="{{::c.text ||c.action | i18n}}">
@@ -84,7 +84,7 @@
                     <li ng-if="'{{ $env_type }}' == 'debug'">
                         <span class="nav-link m-0 p-1 alert alert-info"><i class="fas fa-bug"></i> {{ 'ui.debug' | i18n }}</span>
                     </li>
-                    <li class="nav-item dropdown" ng-if="'{{ $env_type }}' == 'debug'">
+                    <!--<li class="nav-item dropdown" ng-if="'{{ $env_type }}' == 'debug'">
                         <a class="nav-link dropdown-toggle mr-lg-2" id="messagesDropdown" data-toggle="dropdown"
                             aria-haspopup="true" aria-expanded="false">
                             <i class="fa fa-fw fa-envelope"></i>
@@ -101,14 +101,15 @@
                             <h6 class="dropdown-header">{{ 'ui.admin.mail.new' | i18n }}:</h6>
                             <div ng-repeat="msg in mailbox">
                                 <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" ui-sref="santedb-admin.user.mail({ 'id':msg.id})">
+                                <div ng-if="!msg.targetModel"><i class="fas fa-circle-notch fa-spin"></i> {{ 'ui.wait' | i18n }}</div>
+                                <a ng-if="msg.targetModel" class="dropdown-item" ui-sref="santedb-admin.user.mail({ 'id' : msg.target})">
                                     <div class="d-flex justify-content-between">
-                                    <strong><i class="fas fa-user"></i> {{ msg.from }}</strong>
+                                    <strong><i class="fas fa-user"></i> {{ msg.targetModel.from }}</strong>
                                     <span
-                                        class="small float-right text-muted">                                    <i ng-class="{ 'fa-envelope' : msg.flags== 'None' , 'fa-exclamation' : msg.flags == 'HighPriority', 'fa-cog' : msg.flags == 'System', 'fa-flag': msg.flags == 'Alert' }" class="fas text-secondary"></i>
-                                        {{ msg.creationTime | extDate: 'M'}}</span>
+                                        class="small float-right text-muted">                                    <i ng-class="{ 'fa-envelope' : msg.targetModel.flags== 'None' , 'fa-exclamation' : msg.targetModel.flags == 'HighPriority', 'fa-cog' : msg.targetModel.flags == 'System', 'fa-flag': msg.targetModel.flags == 'Alert' }" class="fas text-secondary"></i>
+                                        {{ msg.targetModel.creationTime | extDate: 'M'}}</span>
                                     </div>
-                                    <div class="dropdown-message small"><strong>{{ msg.subject }}</strong></div>
+                                    <div class="dropdown-message small"><em>{{ msg.targetModel.subject }}</em></div>
                                 </a>
                             </div>
                             <div ng-if="mailbox.length == 0">
@@ -121,7 +122,7 @@
                             <button class="btn btn-link" type="button"
                                 ui-sref="santedb-admin.user.mail">{{ 'ui.admin.mail.all' | i18n }}</button>
                         </div>
-                    </li>
+                    </li>-->
                     <li class="nav-item dropdown ">
                         <a class="nav-link dropdown-toggle mr-lg-2" id="alertsDropdown" data-toggle="dropdown"
                             aria-haspopup="true" aria-expanded="false">

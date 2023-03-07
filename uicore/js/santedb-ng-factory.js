@@ -41,11 +41,20 @@ angular.module('santedb-lib')
             },
 
             responseError: function (response) {
+                // TODO: Authentication elevation - check the error_code for the appropriate errors
                 if (response.status === 401) {
                     var oldState = $injector.get('$state').$current.name;
                     window.sessionStorage.removeItem("token");
-                    $injector.get('$state').transitionTo('login'); 
-                    return $q.reject(response);;
+
+                    var $state = $injector.get('$state');
+
+                    // Ensure that we have a configuration for login
+                    if(SanteDB.configuration.getRealm()) {
+                        $state.go('login'); 
+                    }
+                    else {
+                        return $q.reject(response);;
+                    }
                 }
                 else if(response.status != 503) // Not ready - Resolve with not ready payload (HTML)
 				{

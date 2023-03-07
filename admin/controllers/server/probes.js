@@ -41,8 +41,8 @@ angular.module('santedb').controller('ProbeAdminController', ["$scope", "$rootSc
         for (var p in $scope.probeList) {
             var pid = $scope.probeList[p];
             SanteDB.resources.probe.getAsync(pid, null, { _upstream: $scope.source._upstream }).then(reading => {
-                if(reading.value && reading.value.$values) {
-                    reading.value.$values.forEach((v) => {
+                if(reading.value) {
+                    reading.value.forEach((v) => {
     
                         if(Number.isFinite(v.value) && v.value.toString().indexOf(".") > -1) {
                             v.value = v.value.toFixed(2);    

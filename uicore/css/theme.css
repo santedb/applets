@@ -235,3 +235,13 @@ ul.bullet-list {
   {
       overflow: auto;
   }
+
+  
+.centerscreen {
+    top:calc(50% - 1em);
+    width:100%;
+    text-align: center;
+    height:12px;
+    display:block;
+    position:absolute
+}

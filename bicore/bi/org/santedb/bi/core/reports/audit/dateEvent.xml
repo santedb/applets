@@ -45,7 +45,7 @@
             </bi:chart>
       </div>
     </add>
-    <add id="org.santedb.bi.core.reports.audit.date.chart" label="ui.bi.common.chart" name="by_hour">
+    <add id="org.santedb.bi.core.reports.audit.hour.chart" label="ui.bi.common.chart" name="by_hour">
       <div xmlns="http://www.w3.org/1999/xhtml" xmlns:bi="http://santedb.org/bi/view">
          <!-- Shows line chart with each audit event type -->
             <bi:chart source="main-date" type="line">
@@ -55,7 +55,7 @@
             </bi:chart>
       </div>
     </add>
-    <add id="org.santedb.bi.core.reports.audit.date.chart" label="ui.bi.common.chart" name="by_day">
+    <add id="org.santedb.bi.core.reports.audit.day.chart" label="ui.bi.common.chart" name="by_day">
       <div xmlns="http://www.w3.org/1999/xhtml" xmlns:bi="http://santedb.org/bi/view">
         <!-- Shows line chart with each audit event type -->
         <bi:chart source="main-date" type="radar">

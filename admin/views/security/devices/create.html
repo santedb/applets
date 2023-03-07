@@ -11,7 +11,7 @@
 
     <div xmlns="http://www.w3.org/1999/xhtml">
         <form ng-submit="saveDevice(targetForm)" name="targetForm" novalidate="novalidate">
-            <div class="accordion" id="deviceAccordion">
+            <div class="accordion mb-2" id="deviceAccordion">
                 <div class="card">
                     <div class="card-header">
                         <h2 class="mb-0">
@@ -28,32 +28,32 @@
                                 <label class="col-sm-12 col-md-2 control-label"
                                     for="sid">{{ 'ui.model.securityDevice.id' | i18n }}</label>
                                 <div class="col-sm-12 col-md-10 input-group">
-                                    <input name="sid" readonly="readonly" type="text" class="form-control"
+                                    <input name="sid"  autocomplete="__away" readonly="readonly" type="text" class="form-control"
                                         ng-model="target.securityDevice.id" />
-                                    <input-copy-button class="btn btn-outline-secondary" source="target.securityDevice.id" />
+                                    <input-copy-button button-class="'btn-outline-secondary'" source="target.securityDevice.id" />
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <label class="col-sm-12 col-md-2 control-label"
                                     for="devicename">{{ 'ui.model.securityDevice.name' | i18n }}</label>
                                 <div class="col-sm-12 col-md-10 input-group">
-                                    <input name="devicename" ng-readonly="target.securityDevice.id" type="text"
+                                    <input name="devicename" autocomplete="__away" ng-readonly="target.securityDevice.id" type="text"
                                         class="form-control" pattern="^[A-Za-z0-9_\-\.\@\|]{3,}" minlength="3" maxlength="32"
                                         required="required" ng-model="target.securityDevice.name" />
-                                    <input-copy-button id="devicenameCopyButton" class="btn btn-outline-secondary"
+                                    <input-copy-button id="devicenameCopyButton" button-class="'btn-outline-secondary'"
                                         source="target.securityDevice.name" />
                                 </div>
                                 <div class="col-sm-12 col-md-10 offset-md-2">
-                                    <div ng-show="targetForm.devicename.$error['duplicate']" class="alert-danger">
+                                    <div ng-show="targetForm.devicename.$error['duplicate']" class="text-danger">
                                         <i class="fa fa-exclamation-triangle"></i>
                                         {{ 'ui.error.duplicate' | i18n }}
                                     </div>
                                     <div ng-show="targetForm.devicename.$error['required'] &amp;&amp; targetForm.$submitted"
-                                        class="alert-danger">
+                                        class="text-danger">
                                         <i class="fa fa-exclamation-triangle"></i> {{ 'ui.error.required' | i18n }}
                                     </div>
                                     <div ng-show="targetForm.devicename.$error['pattern'] &amp;&amp; targetForm.$submitted"
-                                        class="alert-danger">
+                                        class="text-danger">
                                         <i class="fa fa-exclamation-triangle"></i> {{ 'ui.error.pattern' | i18n }}
                                     </div>
                                 </div>
@@ -79,11 +79,11 @@
                                 <label for="modelName"
                                     class="col-xs-12 col-md-2 control-label">{{ 'ui.model.deviceEntity.manufacturerModelName' | i18n }}</label>
                                 <div class="col-xs-12 col-md-10">
-                                    <input required="required" name="modelName" type="text" class="form-control" maxlength="128"
+                                    <input required="required" autocomplete="__away" name="modelName" type="text" class="form-control" maxlength="128"
                                         ng-model="target.entity.manufacturerModelName" />
                                 </div>
                                 <div class="col-sm-12 col-md-10 offset-md-2"><div ng-show="targetForm.modelName.$error['required'] &amp;&amp; targetForm.$submitted"
-                                        class="alert-danger">
+                                        class="text-danger">
                                         <i class="fa fa-exclamation-triangle"></i> {{ 'ui.error.required' | i18n }}
                                     </div>
                                     </div>
@@ -96,7 +96,7 @@
                                         ng-model="target.entity.operatingSystemName" />
                                 </div>
                                 <div class="col-sm-12 col-md-10 offset-md-2"><div ng-show="targetForm.operatingSystemName.$error['required'] &amp;&amp; targetForm.$submitted"
-                                        class="alert-danger">
+                                        class="text-danger">
                                         <i class="fa fa-exclamation-triangle"></i> {{ 'ui.error.required' | i18n }}
                                     </div>
                                     </div>

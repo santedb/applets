@@ -67,18 +67,68 @@ angular.module('santedb-lib')
             replace: true,
             transclude: false,
             templateUrl: './org.santedb.uicore/directives/widgetPanel.html',
-            controller: ['$scope', '$timeout',
-                function ($scope, $timeout) {
+            controller: ['$scope', '$timeout', '$rootScope',
+                function ($scope, $timeout, $rootScope) {
+
+                    $scope.hasView = function (panel, viewName) {
+                        if (panel.views) {
+                            var view = panel.views.find(o => o.type == viewName);
+                            if (view && view.demand && view.demand.length) {
+                                Promise.all(view.demand.map(o => SanteDB.authentication.demandAsync(o)))
+                                    .then(r => {
+                                        switch (r) {
+                                            case SanteDB.authentication.PolicyDecision.Deny: // deny
+                                                $(`#pnl${panel.id}${viewName}`).attr('disabled', 'disabled');
+                                                $(`#pnl${panel.id}${viewName}`).attr('title', SanteDB.locale.getString("ui.error.policy"));
+                                                break;
+                                            case SanteDB.authentication.PolicyDecision.Elevate: // elevate (TODO: provide unlock elevate button)
+                                            case SanteDB.authentication.PolicyDecision.Grant: // grant
+                                                $(`pnl${panel.id}${viewName}`).removeAttr('disabled');
+                                                $(`#pnl${panel.id}${viewName}`).removeAttr('title');
+                                                break;
+                                        }
+                                    })
+                                    .catch(r => {
+                                        $(`#pnl${panel.id}${viewName}`).attr('disabled', 'disabled');
+                                        $(`#pnl${panel.id}${viewName}`).attr('title', SanteDB.locale.getString("ui.error.policy"));
+                                    })
+                            }
+                            return view != null;
+                        }
+                    }
 
                     $scope.setView = async function (panel, view) {
-                        $scope.original = angular.copy($scope.scopedObject);
-                        panel.view = view;
+                        try {
+                            if($scope.scopedObject.$type) {
+                                await SanteDB.resources[$scope.scopedObject.$type.toCamelCase()].checkoutAsync($scope.scopedObject.id);
+                            }
+                            $timeout(() => {
+                                $scope.original = angular.copy($scope.scopedObject);
+                                panel.view = view;
+                            });
+                        }
+                        catch (e) {
+                            if (e.$type == "ObjectLockedException") {
+                                alert(e.message);
+                            }
+                            else {
+                                $rootScope.errorHandler(e);
+                            }
+                        }
+
                     }
 
                     $scope.closeView = async function (panel) {
                         if (panel.editForm.$pristine || confirm(SanteDB.locale.getString("ui.action.cancel.confirm")))
-                            $scope.scopedObject = $scope.original;
-                        delete (panel.view);
+                        {
+                            if($scope.scopedObject.$type) {
+                                await SanteDB.resources[$scope.scopedObject.$type.toCamelCase()].checkinAsync($scope.scopedObject.id);
+                            }
+                            $timeout(() => {
+                                $scope.scopedObject = $scope.original;
+                                delete (panel.view);
+                            })
+                        }
                     }
 
                     $scope.submitEditForm = async function (panel) {
@@ -94,8 +144,9 @@ angular.module('santedb-lib')
                             else
                                 panel.view = null;
                         }
-                        else
+                        else {
                             panel.view = 'Edit';
+                        }
                     }
 
                     // Fetch the widgets which are valid in this context
@@ -117,6 +168,7 @@ angular.module('santedb-lib')
                                         cGroup = null;
                                 }
                                 else */
+                                w.id = w.name.replaceAll(".", "_");
                                 w.view = $scope.view;
                                 widgetGroups.push({ size: w.size, widgets: [w] });
 

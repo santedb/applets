@@ -1,0 +1,62 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<!--
+ - Portions Copyright 2015-2019 Mohawk College of Applied Arts and Technology
+ - Portions Copyright 2019-2019 SanteSuite Contributors (See NOTICE)
+ - 
+ - 
+ - Licensed under the Apache License, Version 2.0 (the "License"); you 
+ - may not use this file except in compliance with the License. You may 
+ - obtain a copy of the License at 
+ - 
+ - http://www.apache.org/licenses/LICENSE-2.0 
+ - 
+ - Unless required by applicable law or agreed to in writing, software
+ - distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+ - WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the 
+ - License for the specific language governing permissions and limitations under 
+ - the License.
+ - 
+ - User: Justin Fyfe
+ - Date: 2019-11-13
+ -->
+<BiParameterDefinition xmlns="http://santedb.org/bi" id="org.santedb.bi.core.parameter.common.state" name="state" label="ui.bi.core.common.state" type="string">
+  <meta status="active">
+    <authors>
+      <add>Justin Fyfe (Fyfe Software Inc.) &lt;justin@fyfesoftware.ca></add>
+    </authors>
+    <annotation lang="en">
+      <div xmlns="http://www.w3.org/1999/xhtml">
+        <p>This parameter defines values for states</p>
+      </div>
+    </annotation>
+  </meta>
+  <query>
+    <dataSources>
+      <add ref="#org.santedb.bi.dataSource.main" name="main"/>
+    </dataSources>
+    <definitions>
+      <add>
+        <providers>
+          <invariant>npgsql</invariant>
+          <invariant>fbsql</invariant>
+        </providers>
+        <![CDATA[
+           select distinct val as id, val from ent_addr_cmp_tbl eact
+            where typ_cd_id = '8CF4B0B0-84E5-4122-85FE-6AFA8240C218'
+            ORDER BY val
+            ]]>
+      </add>
+      <add>
+        <providers>
+          <invariant>sqlite</invariant>
+        </providers>
+        <![CDATA[
+        select distinct val as id, val from ent_addr_cmp_tbl eact
+         where typ_cd_id = X'B0B0F48CE584224185FE6AFA8240C218'
+         ORDER BY val
+
+            ]]>
+      </add>
+    </definitions>
+  </query>
+</BiParameterDefinition>

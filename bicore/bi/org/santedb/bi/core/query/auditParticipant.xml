@@ -1,0 +1,84 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<!--
+ - Portions Copyright 2015-2019 Mohawk College of Applied Arts and Technology
+ - Portions Copyright 2019-2019 SanteSuite Contributors (See NOTICE)
+ - 
+ - 
+ - Licensed under the Apache License, Version 2.0 (the "License"); you 
+ - may not use this file except in compliance with the License. You may 
+ - obtain a copy of the License at 
+ - 
+ - http://www.apache.org/licenses/LICENSE-2.0 
+ - 
+ - Unless required by applicable law or agreed to in writing, software
+ - distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+ - WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the 
+ - License for the specific language governing permissions and limitations under 
+ - the License.
+ - 
+ - User: Justin Fyfe
+ - Date: 2019-12-16
+ -->
+<BiQueryDefinition xmlns="http://santedb.org/bi" id="org.santedb.bi.core.query.auditParticipant" label="ui.santedb.bi.core.query.audit.auditParticipant">
+  <meta status="active">
+    <authors>
+      <add>Justin Fyfe (Fyfe Software Inc.) &lt;justin@fyfesoftware.ca></add>
+    </authors>
+  </meta>
+  <dataSources>
+    <add ref="#org.santedb.bi.dataSource.audit"/>
+  </dataSources>
+  <parameters>
+    <add ref="#org.santedb.bi.core.parameter.common.date.from" name="from-date" type="date"/>
+    <add ref="#org.santedb.bi.core.parameter.common.date.to" name="to-date" type="date"/>
+    <add name="actor-id" label="ui.bi.core.audit.actor" type="string" required="true" />
+  </parameters>
+  <definitions>
+    <add>
+      <providers>
+        <invariant>npgsql</invariant>
+        <invariant>FirebirdSQL</invariant>
+      </providers>
+      <![CDATA[
+        SELECT 
+          AUD_TBL.ID AS ID,
+          OUTC_CS,
+          ACT_CS, 
+          TYP_CS, 
+          EVT_UTC, 
+          MNEMONIC 
+        FROM 
+          AUD_TBL 
+          INNER JOIN AUD_CD_TBL AS CLS_CD ON (CLS_CD.ID = CLS_CD_ID)
+          INNER JOIN AUD_ACT_ASSOC_TBL ON (AUD_ACT_ASSOC_TBL.AUD_ID = AUD_TBL.ID AND AUD_ACT_ASSOC_TBL.IS_RQO)
+          INNER JOIN AUD_ACT_TBL ON (AUD_ACT_ASSOC_TBL.ACT_ID = AUD_ACT_TBL.ID)
+        WHERE
+          AUD_TBL.EVT_UTC BETWEEN COALESCE(${from-date}, '0001-01-01') AND COALESCE(${to-date}, CURRENT_TIMESTAMP)
+          AND LOWER(AUD_ACT_TBL.USR_NAME) = LOWER(${actor-id})
+      ]]>
+    </add>
+    <add>
+      <providers>
+        <invariant>sqlite</invariant>
+      </providers>
+      <![CDATA[
+        SELECT 
+         AUD_TBL.ID AS ID,
+          OUTC_CS,
+          ACT_CS, 
+          TYP_CS, 
+          EVT_UTC,
+          MNEMONIC 
+        from 
+          AUD_TBL 
+          INNER JOIN AUD_CD_TBL AS CLS_CD ON (CLS_CD.ID = CLS_CD_ID)
+          INNER JOIN AUD_ACT_ASSOC_TBL ON (AUD_ACT_ASSOC_TBL.AUD_ID = AUD_TBL.ID AND AUD_ACT_ASSOC_TBL.IS_RQO)
+          INNER JOIN AUD_ACT_TBL ON (AUD_ACT_ASSOC_TBL.ACT_ID = AUD_ACT_TBL.ID)
+        WHERE
+        	EVT_UTC BETWEEN COALESCE(${from-date}, 0) AND COALESCE(${to-date}, 0xffffffffffff)
+          AND LOWER(AUD_ACT_TBL.USR_NAME) = LOWER(${actor-id})
+          
+      ]]>
+    </add>
+  </definitions>
+</BiQueryDefinition>

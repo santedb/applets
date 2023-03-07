@@ -39,7 +39,7 @@ angular.module('santedb').controller('PubSubIndexController', ["$scope", "$rootS
 
         if (confirm(SanteDB.locale.getString("ui.admin.pubsub.disable.confirm"))) {
             try {
-                await SanteDB.resources.pubSubSubscription.invokeOperationAsync(id, "activate", { "status": false });
+                await SanteDB.resources.pubSubSubscriptionDefinition.invokeOperationAsync(id, "activate", { "status": false });
                 $("#pubSubManager table").DataTable().ajax.reload();
             }
             catch (e) {
@@ -52,7 +52,7 @@ angular.module('santedb').controller('PubSubIndexController', ["$scope", "$rootS
     $scope.enableSubscription = async function (id) {
         if (confirm(SanteDB.locale.getString("ui.admin.pubsub.enable.confirm"))) {
             try {
-                await SanteDB.resources.pubSubSubscription.invokeOperationAsync(id, "activate", { "status": true });
+                await SanteDB.resources.pubSubSubscriptionDefinition.invokeOperationAsync(id, "activate", { "status": true });
                 $("#pubSubManager table").DataTable().ajax.reload();
             }
             catch (e) {
@@ -78,7 +78,7 @@ angular.module('santedb').controller('PubSubIndexController', ["$scope", "$rootS
     $scope.undeleteSubscription = async function(id) {
         try {
             
-            await SanteDB.resources.pubSubSubscription.invokeOperationAsync(id, "activate", { "status": false });
+            await SanteDB.resources.pubSubSubscriptionDefinition.invokeOperationAsync(id, "activate", { "status": false });
             $("#pubSubManager table").DataTable().ajax.reload();
 
         }
@@ -89,6 +89,6 @@ angular.module('santedb').controller('PubSubIndexController', ["$scope", "$rootS
 
     // Create subscription
     $scope.createSubscription = function() {
-        $state.transitionTo("santedb-admin.system.pubsub.edit", { id: 'new' });
+        $state.go("santedb-admin.system.pubsub.edit", { id: 'new' });
     }
 }])

@@ -18,81 +18,70 @@
  * User: Justin Fyfe
  * Date: 2019-8-8
  */
-angular.module("santedb").controller("LoginController", ['$scope', '$rootScope', '$state', '$templateCache', '$stateParams', function ($scope, $rootScope, $state, $templateCache, $stateParams) {
+angular.module("santedb").controller("LoginController", ['$scope', '$rootScope', '$state', '$templateCache', '$stateParams', '$timeout', function ($scope, $rootScope, $state, $templateCache, $stateParams, $timeout) {
 
 
     // Send login request and then call continue with for the authentication elevator
-    $scope.doLogin = function (form) {
+    $scope.doLogin = async function (form) {
         if (form.$invalid)
             return;
 
         SanteDB.display.buttonWait("#loginButton", true);
-        // Perform login then call the elevator's continue with function
-        switch ($scope.login.grant_type) {
-            case 'password':
+        try {
 
-                var pouKey = $scope.login.purposeOfUse ? $scope.login.purposeOfUse.id : null;
-                SanteDB.authentication.passwordLoginAsync($scope.login.userName, $scope.login.password, $scope.login.tfaSecret, $scope.login.noSession, pouKey, $scope.login.scope)
-                    .then(function (d) {
+            var pouKey = $scope.login.purposeOfUse ? $scope.login.purposeOfUse.id : null;
+            var sessionResult = null;
+            switch ($scope.login.grant_type) {
+                case "password":
+                    sessionResult = await SanteDB.authentication.passwordLoginAsync($scope.login.userName, $scope.login.password, $scope.login.tfaSecret, $scope.login.noSession, pouKey, $scope.login.scope);
+                    break;
+                case "pin":
+                    sessionResult = await SanteDB.authentication.pinLoginAsync($scope.login.userName, $scope.login.password, $scope.login.tfaSecret, $scope.login.noSession, $scope.login.scope);
+                    break;
+                default:
+                    throw { "message": "ui.login.invalidMethod" };
+            }
 
-                        if ($scope.login.onLogin) {
-                            $scope.login.onLogin(d);
-                        }
-                        else {
+            if ($scope.login.onLogin) {
+                $scope.login.onLogin(sessionResult);
+            }
+            else {
+                if (!$scope.login.noSession) {
+                    $templateCache.removeAll();
+                    $rootScope.session = sessionResult;
+                }
 
-                            if (!$scope.login.noSession) {
-                                $templateCache.removeAll();
-                                $rootScope.session = d;
-                            }
+                if ($stateParams.returnState && $stateParams.returnState != "login")
+                    $state.go($stateParams.returnState);
+                else
+                    window.location.hash = "#!/";
+            }
 
-                            if ($stateParams.returnState && $stateParams.returnState != "login")
-                                $state.transitionTo($stateParams.returnState);
-                            else
-                                window.location.hash = "#!/";
-                        }
+            $("#loginModal").modal('hide');
+        }
+        catch (e) {
 
-                        SanteDB.display.buttonWait("#loginButton", false);
-                        $("#loginModal").modal('hide');
-                    })
-                    .catch(function (e) {
-                        if (e.data && e.data.error_description) {
-                            e.userMessage = e.data.error_description;
-                            e.expiry = new Date(new Date().getTime() + e.data.expires_in);
-                        }
-                        else {
-                            e.userMessage = e.message;
-                        }
-                        $rootScope.errorHandler(e);
-                        SanteDB.display.buttonWait("#loginButton", false);
-                    });
-                break;
-            case 'pin':
-                SanteDB.authentication.pinLoginAsync($scope.login.userName, $scope.login.password, $scope.login.tfaSecret, $scope.login.noSession, $scope.login.scope)
-                    .then(function (d) {
-                        if ($scope.login.onLogin) {
-                            $scope.login.onLogin(d);
-                        }
-                        else {
-
-                            if (!$scope.login.noSession) {
-                                $templateCache.removeAll();
-                                $rootScope.session = d;
-                            }
-
-                            if ($stateParams.returnState && $stateParams.returnState != "login")
-                                $state.transitionTo($stateParams.returnState);
-                            else
-                                window.location.hash = "#!/";
-                        }
-
-                        SanteDB.display.buttonWait("#loginButton", false);
-                        $("#loginModal").modal('hide');
-                    })
-                    .catch(function (e) {
-                        $rootScope.errorHandler(e);
-                        SanteDB.display.buttonWait("#loginButton", false);
-                    });
-                break;
+            if (e.data.error === "mfa_required") {
+                $timeout(() => {
+                     
+                     $scope.login.requireTfa =
+                     $scope.login._lockPassword = 
+                     $scope.login._lockUserName = true;
+                    $scope.login._mfaDetail = e.data.error_description;
+                });
+                return;
+            }
+            else if (e.data && e.data.error_description) {
+                e.userMessage = e.data.error_description;
+                e.expiry = new Date(new Date().getTime() + e.data.expires_in);
+            }
+            else {
+                e.userMessage = e.message;
+            }
+            $rootScope.errorHandler(e);
+        }
+        finally {
+            SanteDB.display.buttonWait("#loginButton", false);
         }
     }
 
@@ -119,26 +108,15 @@ angular.module("santedb").controller("LoginController", ['$scope', '$rootScope',
         // Get the user information
         try {
             SanteDB.display.buttonWait("#setUserButton", true);
-            await establishClientSession();
-            var user = await SanteDB.resources.securityUser.findAsync({ userName: $scope.reset.username });
-
-            if (!user.resource || user.resource.length == 0)
-                user = await SanteDB.resources.securityUser.findAsync({ userName: $scope.reset.username, _upstream: true });
-
-            if (!user.resource || user.resource.length == 0)
-                throw new Exception("ResetPasswordException", "ui.login.resetPassword.noUser");
-
-            $scope.reset.user = user.resource[0].entity;
-            $scope.reset.onlineOnly = user.resource[0].role.find(o => o == "LOCAL_USERS") == null;
-            var challenge = await SanteDB.resources.securityUser.findAssociatedAsync($scope.reset.user.id, "challenge");
-            if (!challenge.resource || challenge.resource.length == 0)
-                throw new Exception("ResetPasswordException", "ui.login.resetPassword.noUser");
-
-            $scope.reset.challenge = challenge.resource[0]
-            try {
-                $scope.$apply();
+            var resetChallenge = null;
+            try { // try local - we can't query because we have no session so let the server reject
+                resetChallenge = await SanteDB.authentication.initiateChallengeFlowAsync($scope.reset.username);
+            } catch(e) {
+                resetChallenge = await SanteDB.authentication.initiateChallengeFlowAsync($scope.reset.username, true);
             }
-            catch (e) { }
+            $timeout(_ => {
+                $scope.reset.challenge = SanteDB.convertFromParameters(resetChallenge);
+            }); 
         }
         catch (e) {
             $rootScope.errorHandler(e);
@@ -155,19 +133,21 @@ angular.module("santedb").controller("LoginController", ['$scope', '$rootScope',
     $scope.challengeLogin = async function () {
         try {
             SanteDB.display.buttonWait("#verifyChallengeButton", true);
-            var session = await SanteDB.authentication.challengeLoginAsync($scope.reset.username, $scope.reset.challenge.id, $scope.reset.challengeResponse, null);
+            var session = await SanteDB.authentication.challengeLoginAsync($scope.reset.username, $scope.reset.challenge.challenge, $scope.reset.challengeResponse, null);
             SanteDB.authentication.setElevator({ getToken: function () { return session.access_token; } });
-            $scope.reset.challengeResponse = "XXXX";
-            $scope.reset.password = {};
 
             $scope.$watch("reset.password.password", function (n, o) {
                 if (n)
                     $scope.strength = SanteDB.application.calculatePasswordStrength(n);
             });
-            try {
-                $scope.$apply();
-            }
-            catch (e) { }
+
+            $timeout (_ => {
+                $scope.reset.challengeResponse = "XXXX";
+                $scope.reset.password = {};
+                $scope.reset.user = SanteDB.authentication.parseJwt(session.id_token);
+
+                
+            });
         }
         catch (e) {
             $rootScope.errorHandler(e);
@@ -184,7 +164,12 @@ angular.module("santedb").controller("LoginController", ['$scope', '$rootScope',
 
         try {
             SanteDB.display.buttonWait("#submitButton", true);
-            await SanteDB.authentication.setPasswordAsync($scope.reset.user.id, $scope.reset.username, $scope.reset.password.password);
+            var sid = $scope.reset.user["urn:santedb:org:claim:usrid"];
+            if(!sid) {
+                sid = $scope.reset.user.sub[0];
+            }
+
+            await SanteDB.authentication.setPasswordAsync(sid, $scope.reset.username, $scope.reset.password.password, $scope.reset.user.realm !== undefined);
             toastr.success(SanteDB.locale.getString("ui.login.resetPassword.success"));
             $scope.cancelReset(form);
         }
@@ -204,6 +189,7 @@ angular.module("santedb").controller("LoginController", ['$scope', '$rootScope',
 
         }
     }
+
     // Cancel reset
     $scope.cancelReset = function (form) {
         SanteDB.authentication.setElevator(null);

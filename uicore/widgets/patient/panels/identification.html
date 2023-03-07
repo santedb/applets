@@ -1,9 +1,14 @@
 <div xmlns="http://www.w3.org/1999/xhtml" xmlns:sdb="http://santedb.org/applet" class="container-fluid"
     oc-lazy-load="{ name: 'PatientDemographicsWidgetController', files: ['/org.santedb.uicore/controllers/widgets/patientWidget.js'] }">
-    <sdb:widget order="10" name="org.santedb.widget.patient.identity" altViews="Edit" headerClass="alert-info"
+    <sdb:widget order="10" name="org.santedb.widget.patient.identity" headerClass="alert-info"
         size="Medium" type="Panel" context="org.santedb.patient.demographics">
         <sdb:icon>fas fa-id-card</sdb:icon>
         <sdb:description lang="en">Patient Identity</sdb:description>
+        <sdb:views>
+            <sdb:view type="Edit">
+                <sdb:demand>1.3.6.1.4.1.33349.3.1.5.9.2.6.4</sdb:demand>
+            </sdb:view>
+        </sdb:views>
     </sdb:widget>
     <div class="row" ng-if="!scopedObject">
         <div class="col">
@@ -22,7 +27,7 @@
                 <tbody>
                     <tr ng-repeat="(domain, idArray) in scopedObject.identifier">
                         <td>
-                            <span class="badge badge-info"><i class="fas fa-book"></i> {{ idArray[0].authority.name }}</span>
+                            <span class="badge badge-info"><i class="fas fa-book"></i> {{ idArray[0].domainModel.name }}</span>
                         </td>
                         <td>
                             <span ng-repeat="identifier in idArray">

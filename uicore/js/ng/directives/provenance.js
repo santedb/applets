@@ -20,7 +20,7 @@
 
 /// <reference path="../../santedb-ui.js"/>
 /// <reference path="../../../../core/js/santedb.js"/>
-
+var provControlId = 0;
 angular.module('santedb-lib')
     /**
      * @method provenance
@@ -42,6 +42,8 @@ angular.module('santedb-lib')
             },
             link: function (scope, element, attrs) {
 
+                var provControl = provControlId++;
+                $(element).attr('id', `prov${provControl}`);
                 // correct time from string (sometimes this happens when using in a data table as the row is presented as a string)
                 if(Object.prototype.toString.call(scope.provenanceTime) == '[object String]' )
                     scope.provenanceTime = new Date(scope.provenanceTime);
@@ -52,7 +54,7 @@ angular.module('santedb-lib')
                     alreadyFetching.push(scope.provenanceId);
 
                     // Fetch provenance
-                    SanteDB.resources.securityProvenance.getAsync(scope.provenanceId)
+                    SanteDB.resources.securityProvenance.getAsync(scope.provenanceId, null, null, null, provControl)
                         .then(function (provData) {
                             alreadyFetching.splice(alreadyFetching.indexOf(provData.id), 1);
                             scope.isLoading = false;
@@ -69,11 +71,11 @@ angular.module('santedb-lib')
                             if (provData.session)
                                 extraInfo += `<br/><b><i class='fas fa-asterisk'></i>  ${SanteDB.locale.getString('ui.provenance.session')}:</b> ${provData.session.substring(0, 8)}`;
                             extraInfo = extraInfo.substring(5);
-
-                            scope.$apply();
+                            
+                            //scope.$apply();
                             $timeout(function () {
-                                $('button:first', element).attr('data-content', extraInfo);
-                                $('button:first', element).popover({ html: true });
+                                $(`#prov${provData.$state} button:first`).attr('data-content', extraInfo);
+                                $(`#prov${provData.$state} button:first`).popover({ html: true });
                             });
 
                             // Set the scope of all elements

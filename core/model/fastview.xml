@@ -29,12 +29,16 @@
       <property name="definition" behavior="never"/>
     </property>
   </type>
-
+  <type type="Concept" all="false">
+    <property name="mnemonic" />
+    <property name="name" all="true" />
+  </type>
   <type type="EntityRelationship" all="false">
     <property name="source" all="true"/>
     <property name="target" all="true"/>
     <property name="holder" all="true"/>
-    <property name="targetModel" all="true" behavior="always" ref="Entity"/>
+    <property name="targetModel" all="true" behavior="always">
+    </property>
     <property name="relationshipType" all="true" behavior="always"/>
     <property name="holderModel" behavior="never"/>
     <property name="sourceModel" behavior="never"/>
@@ -220,6 +224,39 @@
         <property name="participationRoleModel" behavior="never"/>
       </property>
     </property>
+  </type>
+
+  <type type="UserEntity" all="true">
+    <property name="templateModel" behavior="always" all="false">
+      <property name="mnemonic"/>
+    </property>
+
+    <property name="createdBy" behavior="never"/>
+    <property name="creationTime" behavior="never"/>
+    <property name="creationTimeModel" behavior="never"/>
+    <property name="version" behavior="never"/>
+    <property name="name" all="true" behavior="always">
+      <property name="*" ref="EntityName" />
+    </property>
+    <property name="address" all="true" behavior="always">
+      <property name="*" ref="EntityAddress" />
+    </property>
+    <property name="identifier" all="true" behavior="always">
+      <property name="*" ref="EntityIdentifier"/>
+    </property>
+    <property name="telecom" all="true" behavior="always"/>
+
+    <property name="relationship" all="true">
+      <property name="DedicatedServiceDeliveryLocation" all="true">
+        <property name="targetModel" all="true" ref="Place" behavior="always"/>
+      </property>
+      <property name="Employee" all="true" >
+        <property name="targetModel" all="true" ref="Organization" behavior="always"/>
+      </property>
+    </property>
+    <property name="classConceptModel" behavior="always"/>
+    <property name="classConcept" behavior="always"/>
+    <property name="determinerConceptModel" behavior="never"/>
   </type>
 
   <type type="Material" all="true">

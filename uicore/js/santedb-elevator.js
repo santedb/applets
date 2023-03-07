@@ -35,7 +35,7 @@ function SanteDBElevator(continueWith, purposeOfUse) {
     $("#loginModal").on("shown.bs.modal", function() { _focusFunction(); });
     $("#loginModal").on("hidden.bs.modal", function() {
         if(_onCloseFunction)
-            _onCloseFunction();
+            _onCloseFunction(_token != null);
         $("#loginModal").off("shown.bs.modal");
         $("#loginModal").off("hidden.bs.modal");
     });
@@ -63,6 +63,7 @@ function SanteDBElevator(continueWith, purposeOfUse) {
      * @param {any} useSession The current session, passed when and if a pou is required and not a change of login
      */
     this.elevate = function(sessionToUse, scope) {
+
         angular.element("#loginModal").scope().login = {
             userName: sessionToUse ? sessionToUse.user.userName : null,
             enablePin: sessionToUse != null,
@@ -85,8 +86,11 @@ function SanteDBElevator(continueWith, purposeOfUse) {
         catch (e) {
 
         }
-        $("#loginModal").modal({
-            backdrop:'static'
+
+        __SanteDBAppService.GetStatus().then(o=>{
+            $("#loginModal").modal({
+                backdrop:'static'
+            });
         });
 
         _focusFunction = function() {

@@ -119,11 +119,16 @@
       <icon>fas fa-hospital-alt</icon>
       <text lang="en">Facilities</text>
     </menuItem>
+    <menuItem context="org.santedb.admin" launch="santedb-admin.data.import.index" asset="/org.santedb.admin/views/data/import/index.html">
+      <icon>fas fa-file-csv</icon>
+      <text lang="en">Import</text>
+    </menuItem>
     <!--<menuItem context="org.santedb.admin" launch="santedb-admin.data.material.index" asset="/org.santedb.admin/views/data/materials/index.html">
       <icon>fas fa-pills</icon>
       <text lang="en">Materials</text>
     </menuItem>-->
   </menuItem>
+
   <!--<menuItem context="org.santedb.admin" launch="santedb-admin.concept.index" asset="/org.santedb.admin/views/concept/index.html">
     <icon>fas fa-book-medical</icon>
     <text lang="en">Concept Dictionary</text>
@@ -145,5 +150,7 @@
     <definition>/org.santedb.admin/model/relationship_full.xml</definition>
   </viewModel>
 
-  <strings lang="en" extern="~/locales/en/strings.xml"/>
+  <strings lang="en" extern="~/locales/en/strings.xml">
+    <string priority="0"/>
+  </strings>
 </AppletManifest>

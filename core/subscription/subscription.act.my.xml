@@ -18,7 +18,7 @@
  - User: Justin Fyfe
  - Date: 2019-8-8
  -->
-<SubscriptionDefinition xmlns="http://santedb.org/subscription" uuid="decad40c-a232-482f-b93d-317b25c1ef0d" resource="Act">
+<SubscriptionDefinition xmlns="http://santedb.org/subscription" name="ui.subscription.act.my" uuid="decad40c-a232-482f-b93d-317b25c1ef0d" resource="Act">
   <server>
     <definition invariant="npgsql">
       <![CDATA[
@@ -50,11 +50,13 @@
   <client>
     <definition resource="Act" name="ui.subscription.act.my" mode="subscription" ignoreModifiedOn="false" trigger="always">
       <guards>
-        <when>subscribed.classConcept == 'ff34dfa7-c6d3-4f8b-bc9f-14bcdc13ba6c'</when>
-        <when>subscribed.id</when>
+        <!--<when>subscribed.classConcept == 'ff34dfa7-c6d3-4f8b-bc9f-14bcdc13ba6c'</when>
+        <when>subscribed.id</when>-->
+        <when>classConcept=ff34dfa7-c6d3-4f8b-bc9f-14bcdc13ba6c</when>
+        <when>id=!null</when>
       </guards>
        <filters>
-        <add>_subscription=decad40c-a232-482f-b93d-317b25c1ef0d&amp;_placeid=$subscribed.id$&amp;_expand=relationship&amp;_expand=participation</add>
+        <add>_subscription=decad40c-a232-482f-b93d-317b25c1ef0d&amp;_placeid=$subscribed.id&amp;_expand=relationship&amp;_expand=participation</add>
       </filters>
     </definition>
     <definition resource="Act" name="ui.subscription.act.all" mode="all" ignoreModifiedOn="false" trigger="always">

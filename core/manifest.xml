@@ -17,7 +17,8 @@
  - User: Justin Fyfe
  - Date: 2019-8-8
  -->
-<AppletManifest xmlns="http://santedb.org/applet">
+<AppletManifest  xmlns="http://santedb.org/applet">
+  
   <info id="org.santedb.core" version="2.1.113.0">
     <icon>/org.santedb.core/img/icon.png</icon>
     <name lang="en">SanteDB Core Applet</name>

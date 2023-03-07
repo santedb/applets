@@ -19,14 +19,16 @@
  * User: Justin Fyfe
  * Date: 2019-9-20
  */
-angular.module('santedb').controller('IdentityDomainEditController', ["$scope", "$rootScope", "$stateParams", "$state", function ($scope, $rootScope, $stateParams, $state) {
+angular.module('santedb').controller('IdentityDomainEditController', ["$scope", "$rootScope", "$stateParams", "$state", "$timeout", function ($scope, $rootScope, $stateParams, $state, $timeout) {
 
 
     // Load the authority
-    async function loadAuthority(id) {
+    async function loadDomain(id) {
         try {
-            $scope.authority = await SanteDB.resources.assigningAuthority.getAsync(id, "full");
-            $scope.$apply();
+            var domain = await SanteDB.resources.identityDomain.getAsync(id, "full");
+            $timeout(() => { 
+                $scope.domain = domain
+            });
         }
         catch (e) {
             $rootScope.errorHandler(e);
@@ -35,29 +37,29 @@ angular.module('santedb').controller('IdentityDomainEditController', ["$scope", 
 
     // Load or create?
     if ($stateParams.id)
-        loadAuthority($stateParams);
+        loadDomain($stateParams.id);
     else
-        $scope.authority = new AssigningAuthority();
+        $scope.domain = new IdentityDomain();
 
     // Validate the form data
     async function validateForm() {
         try {
-            if ($scope.authority.oid) {
-                if ((await SanteDB.resources.assigningAuthority.findAsync({ oid: $scope.authority.oid, id: `!${$scope.authority.id || EmptyGuid}`, _count: 0 })).size > 0)
+            if ($scope.domain.oid) {
+                if ((await SanteDB.resources.identityDomain.findAsync({ oid: $scope.domain.oid, id: `!${$scope.domain.id || EmptyGuid}`, _count: 0 })).size > 0)
                     $scope.targetForm.oid.$setValidity('duplicate', false);
                 else
                     $scope.targetForm.oid.$setValidity('duplicate', true);
             }
 
-            if ($scope.authority.domainName) {
-                if ((await SanteDB.resources.assigningAuthority.findAsync({ domainName: $scope.authority.domainName, id: `!${$scope.authority.id || EmptyGuid}`, _count: 0 })).size > 0)
+            if ($scope.domain.domainName) {
+                if ((await SanteDB.resources.identityDomain.findAsync({ domainName: $scope.domain.domainName, id: `!${$scope.domain.id || EmptyGuid}`, _count: 0 })).size > 0)
                     $scope.targetForm.domainName.$setValidity('duplicate', false);
                 else
                     $scope.targetForm.domainName.$setValidity('duplicate', true);
             }
 
-            if ($scope.authority.url) {
-                if ((await SanteDB.resources.assigningAuthority.findAsync({ url: $scope.authority.url, id: `!${$scope.authority.id || EmptyGuid}`, _count: 0 })).size > 0)
+            if ($scope.domain.url) {
+                if ((await SanteDB.resources.identityDomain.findAsync({ url: $scope.domain.url, id: `!${$scope.domain.id || EmptyGuid}`, _count: 0 })).size > 0)
                     $scope.targetForm.url.$setValidity('duplicate', false);
                 else
                     $scope.targetForm.url.$setValidity('duplicate', true);
@@ -71,7 +73,7 @@ angular.module('santedb').controller('IdentityDomainEditController', ["$scope", 
         }
     }
 
-    $scope.reactivateAuthority = async function() {
+    $scope.reactivateDomain  = async function() {
         if(!confirm(SanteDB.locale.getString("ui.admin.domain.reactivate.confirm")))
             return;
         
@@ -93,10 +95,12 @@ angular.module('santedb').controller('IdentityDomainEditController', ["$scope", 
         // Send the patch
         try {
             SanteDB.display.buttonWait("#reactivateAuthorityButton", true);
-            await SanteDB.resources.assigningAuthority.patchAsync($stateParams.id, $scope.authority.etag, patch);
-            $scope.authority.obsoletionTime = null;
-            $scope.authority.obsoletedBy = null;
-            $scope.$apply();
+            await SanteDB.resources.identityDomain.patchAsync($stateParams.id, $scope.domain.etag, patch);
+            $timeout(() => {
+                $scope.domain.obsoletionTime = null;
+                $scope.domain.obsoletedBy = null;
+    
+            })
         }
         catch(e) {
             $rootScope.errorHandler(e); 
@@ -114,15 +118,15 @@ angular.module('santedb').controller('IdentityDomainEditController', ["$scope", 
             if (!await validateForm() || !form.$valid)
                 return;
 
-            if(!$scope.authority.id) {
-                $scope.authority = await SanteDB.resources.assigningAuthority.insertAsync($scope.authority);
-                toastr.success(SanteDB.locale.getString("ui.model.assigningAuthority.saveSuccess"));
-                $state.transitionTo('santedb-admin.data.domain.edit', {id: $scope.authority.id});
+            if(!$scope.domain.id) {
+                var domain = await SanteDB.resources.identityDomain.insertAsync($scope.domain);
+                toastr.success(SanteDB.locale.getString("ui.model.identityDomain.saveSuccess"));
+                $state.go('santedb-admin.data.domain.edit', {id: domain.id});
             }
             else {
-                $scope.authority = await SanteDB.resources.assigningAuthority.updateAsync($stateParams.id, $scope.authority);
-                toastr.success(SanteDB.locale.getString("ui.admin.assigningAuthority.saveSuccess"));
-                $state.transitionTo('santedb-admin.data.domain.index', {id: $scope.authority.id});
+                var domain = await SanteDB.resources.identityDomain.updateAsync($stateParams.id, $scope.domain);
+                toastr.success(SanteDB.locale.getString("ui.admin.identityDomain.saveSuccess"));
+                $state.go('santedb-admin.data.domain.index', {id: domain.id});
 
             }
         }

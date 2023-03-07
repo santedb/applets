@@ -1,0 +1,37 @@
+<div xmlns="http://www.w3.org/1999/xhtml">
+    <label class="control-label d-block text-center">{{ 'ui.model.service.schedule' | i18n }}</label>
+    <div class="row row-cols-4 small">
+        <div class="col mb-3 text-right font-weight-bold">Day</div>
+        <div class="col mb-3 font-weight-bold">Open Time</div>
+        <div class="col mb-3 font-weight-bold">Close Time</div>
+        <div class="col mb-3 font-weight-bold">Capacity</div>
+        <div class="col mb-2 font-weight-bold text-right">{{ 'ui.date.day.sunday' | i18n }}</div>
+        <div class="col mb-2"><input type="time" class="form-control form-control-sm" ng-model="model.sunday.start" /></div>
+        <div class="col mb-2"><input type="time" class="form-control form-control-sm" ng-model="model.sunday.stop" /></div>
+        <div class="col mb-2"><input type="number" class="form-control form-control-sm" ng-model="model.sunday.capacity" /></div>
+        <div class="col mb-2 font-weight-bold text-right">{{ 'ui.date.day.monday' | i18n }}</div>
+        <div class="col mb-2"><input type="time" class="form-control form-control-sm" ng-model="model.monday.start" /></div>
+        <div class="col mb-2"><input type="time" class="form-control form-control-sm" ng-model="model.monday.stop" /></div>
+        <div class="col mb-2"><input type="number" class="form-control form-control-sm" ng-model="model.monday.capacity" /></div>
+        <div class="col mb-2 font-weight-bold text-right">{{ 'ui.date.day.tuesday' | i18n }}</div>
+        <div class="col mb-2"><input type="time" class="form-control form-control-sm" ng-model="model.tuesday.start" /></div>
+        <div class="col mb-2"><input type="time" class="form-control form-control-sm" ng-model="model.tuesday.stop" /></div>
+        <div class="col mb-2"><input type="number" class="form-control form-control-sm" ng-model="model.tuesday.capacity" /></div>
+        <div class="col mb-2 font-weight-bold text-right">{{ 'ui.date.day.wednesday' | i18n }}</div>
+        <div class="col mb-2"><input type="time" class="form-control form-control-sm" ng-model="model.wednesday.start" /></div>
+        <div class="col mb-2"><input type="time" class="form-control form-control-sm" ng-model="model.wednesday.stop" /></div>
+        <div class="col mb-2"><input type="number" class="form-control form-control-sm" ng-model="model.wednesday.capacity" /></div>
+        <div class="col mb-2 font-weight-bold text-right">{{ 'ui.date.day.thursday' | i18n }}</div>
+        <div class="col mb-2"><input type="time" class="form-control form-control-sm" ng-model="model.thursday.start" /></div>
+        <div class="col mb-2"><input type="time" class="form-control form-control-sm" ng-model="model.thursday.stop" /></div>
+        <div class="col mb-2"><input type="number" class="form-control form-control-sm" ng-model="model.thursday.capacity" /></div>
+        <div class="col mb-2 font-weight-bold text-right">{{ 'ui.date.day.friday' | i18n }}</div>
+        <div class="col mb-2"><input type="time" class="form-control form-control-sm" ng-model="model.friday.start" /></div>
+        <div class="col mb-2"><input type="time" class="form-control form-control-sm" ng-model="model.friday.stop" /></div>
+        <div class="col mb-2"><input type="number" class="form-control form-control-sm" ng-model="model.friday.capacity" /></div>
+        <div class="col mb-2 font-weight-bold text-right">{{ 'ui.date.day.saturday' | i18n }}</div>
+        <div class="col mb-2"><input type="time" class="form-control form-control-sm" ng-model="model.saturday.start" /></div>
+        <div class="col mb-2"><input type="time" class="form-control form-control-sm" ng-model="model.saturday.stop" /></div>
+        <div class="col mb-2"><input type="number" class="form-control form-control-sm" ng-model="model.saturday.capacity"/></div>
+    </div>
+</div>

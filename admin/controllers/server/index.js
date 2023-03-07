@@ -25,7 +25,7 @@ angular.module('santedb').controller('SystemInfoController', ["$scope", "$rootSc
     $scope.isLocalLoading = true;
 
     // Get application information
-    SanteDB.application.getAppInfoAsync({ updates: false })
+    SanteDB.application.getAppInfoAsync({ updates: false, _upstream: false })
         .then(function(d) {
             $scope.info = d;
             $scope.isLocalLoading = false;
@@ -34,7 +34,7 @@ angular.module('santedb').controller('SystemInfoController', ["$scope", "$rootSc
         .catch($rootScope.errorHandler);
 
     // Get application information
-    SanteDB.application.getAppInfoAsync({ remote: true })
+    SanteDB.application.getAppInfoAsync({ remote: true, _upstream: true })
     .then(function(d) {
         $scope.server = d;
         $scope.isRemoteLoading = false;

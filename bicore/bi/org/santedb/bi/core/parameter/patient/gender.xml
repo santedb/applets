@@ -41,15 +41,31 @@
           <invariant>FirebirdSQL</invariant>
         </providers>
         <![CDATA[
-           select 
-            cd_id as id, val 
+           select distinct
+            cd_id as id, UPPER(val) val
             from cd_set_mem_assoc_tbl 
               inner join cd_vrsn_tbl using (cd_id) 
               left join cd_name_tbl using (cd_id) 
             where 
               obslt_vrsn_seq_id is null 
               and lang_cs = COALESCE(${Context.Language}, 'en')
-              and set_id = 'e9eecd3c-7b80-47f9-9cb6-55c8d3110fb0';        
+              and set_id = 'e9eecd3c-7b80-47f9-9cb6-55c8d3110fb0'   
+            ]]>
+      </add>
+      <add>
+        <providers>
+          <invariant>sqlite</invariant>
+        </providers>
+        <![CDATA[
+           select distinct
+            cd_id as id, UPPER(val) val 
+            from cd_set_mem_assoc_tbl 
+              inner join cd_vrsn_tbl using (cd_id) 
+              left join cd_name_tbl using (cd_id) 
+            where 
+              obslt_vrsn_seq_id is null 
+              and lang_cs = COALESCE(${Context.Language}, 'en')
+              and set_id = X'3CCDEEE9807BF9479CB655C8D3110FB0'
             ]]>
       </add>
     </definitions>

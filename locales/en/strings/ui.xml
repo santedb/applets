@@ -11,10 +11,11 @@
       <!-- Login Translations -->
       <string name="ui.login.input.username">Username</string>
       <string name="ui.login.input.password">Password</string>
+      <string name="ui.login.input.tfa">MFA Code</string>
       <string name="ui.login.input.pin">PIN #</string>
       <string name="ui.login.title.elevate">User Elevation</string>
       <string name="ui.login.input.purpose">Reason</string>
-      <string name="ui.login.realm">Enter security details for realm</string>
+      <string name="ui.login.realm">Enter security details for upstream realm</string>
       <string name="ui.login.title">Login To SanteDB</string>
       <string name="ui.login.message">Welcome to SanteDB</string>
       <string name="ui.elevate">You are attempting to access a function with a heightened security risk. Please re-authenticate yourself.</string>
@@ -137,6 +138,7 @@
       <string name="ui.action.ok">Ok</string>
       <string name="ui.action.dismiss">Dismiss</string>
       <string name="ui.action.cancel">Cancel</string>
+      <string name="ui.action.clear">Clear</string>
       <string name="ui.action.clone">Clone</string>
       <string name="ui.action.cancel.confirm">Are you sure you want to cancel?</string>
       <string name="ui.action.save">Save</string>
@@ -159,6 +161,7 @@
       <string name="ui.action.create">Create</string>
       <string name="ui.action.delete">Delete</string>
       <string name="ui.action.nullify">Nullify</string>
+      <string name="ui.action.upload">Upload</string>
       <string name="ui.action.nullify.confirm">Are you sure you want to nullify this object? This cannot be undone!</string>
       <string name="ui.action.delete.confirm">Are you sure you want to delete this object?</string>
       <string name="ui.action.undelete">Un-Delete</string>
@@ -166,6 +169,7 @@
       <string name="ui.action.edit">Edit</string>
       <string name="ui.action.override">Override</string>
       <string name="ui.action.run">Run</string>
+      <string name="ui.action.runScheduled">Run Scheduled</string>
       <string name="ui.action.merge">Merge</string>
       <string name="ui.action.link">Link</string>
       <string name="ui.action.resolve">Resolve</string>
@@ -232,6 +236,7 @@
       <string name="ui.table.search.field.userName">Search by user name</string>
       <string name="ui.table.search.field.user.userName">Search by user name</string>
       <string name="ui.table.search.field.actor.uname">Search by actor</string>
+      <string name="ui.table.search.field.name.value">Search by name</string>
 
       <!-- Common Operators -->
       <string name="ui.operator.eq">Equals</string>
@@ -242,6 +247,11 @@
       <string name="ui.operator.gte">Greater or Equal</string>
       <string name="ui.operator.lte">Less or Equal</string>
       <!-- Subscription Type Translations -->
+      <string name="ui.subscription.definitions">{num} subscribed types</string>
+      <string name="ui.subscription.act.my">My Acts &amp; Events</string>
+      <string name="ui.subscription.entity.my">My Patients, Providers, Places &amp; Materials</string>
+      <string name="ui.subscription.core">Core Subscriptions (recommended)</string>
+      <string name="ui.subscription.act.out">Out of Catchment Acts &amp; Events</string>
       <string name="ui.subscription.person.all">All Persons</string>
       <string name="ui.subscription.act.all">All Acts</string>
       <string name="ui.subscription.place.all">All places in my country (not-recommended)</string>
@@ -255,7 +265,7 @@
       <string name="ui.subscription.quantityObservation.all">All quantified observations (weight, height, etc.)</string>
       <string name="ui.subscription.conceptSet.all">All concept sets (recommended)</string>
       <string name="ui.subscription.concept.all">All concepts (recommended)</string>
-      <string name="ui.subscription.assigningAuthority.all">All assinging authorities (recommended)</string>
+      <string name="ui.subscription.identityDomain.all">All assinging authorities (recommended)</string>
       <string name="ui.subscription.identifierType.all">All identifier types (recommended)</string>
       <string name="ui.subscription.templateDefinition.all">All clinical templates (recommended)</string>
       <string name="ui.subscription.extensionType.all">All extension types (recommended)</string>
@@ -285,33 +295,41 @@
       <string name="ui.subscription.act.PatientEncounter.me">Only patient encounters performed at my facility</string>
 
       <!-- Configuration Translations -->
-      <string name="ui.config.subscribe.type.label">Subscription Type</string>
-      <string name="ui.config.subscribe.authority.label">Assigning Authority</string>
-      <string name="ui.config.subscribe.authority.help">Use this option to subscribe to patients with a particular identifier</string>
-      <string name="ui.config.realm.title">Domain</string>
-      <string name="ui.config.realm.description">This SanteDB client application needs to contact a centralized instanced called a &quot;domain&quot;. This screen will allow you to configure the specific details of how this mobile device will contact the domain.</string>
+      <string name="ui.config.network.clientCert.label">Client Certificate</string>
+      <string name="ui.config.network.clientCert.help">If your upstream requires the use of PKI authentication you may specify the certificate to present to the upstream here. PKI authentication uses encryption to authenticate your SanteDB node with the upstream using strong public key encryption</string>
+      <string name="ui.config.subscribe.type.label">Selectively Replicate</string>
+      <string name="ui.config.subscribe.authority.label">Identity Domains</string>
+      <string name="ui.config.subscribe.authority.help">Use this option to subscribe to patients with a particular identifier issued within an identity domain</string>
+      <string name="ui.config.realm.title">Upstream</string>
+      <string name="ui.config.realm.description">This SanteDB client application needs to contact a centralized instanced called an &quot;upstream realm&quot;. This screen will allow you to configure the specific details of how this mobile device will contact the realm's administrative management service.</string>
       <string name="ui.config.realm.deviceName.label">Device ID</string>
       <string name="ui.config.realm.deviceName.help">A name for this device. For example: \'GoodHealthTablet1\'</string>
-      <string name="ui.config.realm.name.label">Domain</string>
-      <string name="ui.config.realm.name.help">The IP address or host name of the domain controller</string>
+      <string name="ui.config.realm.name.label">Upstream Realm</string>
+      <string name="ui.config.realm.name.help">The IP address or host name of the upstream realm controller</string>
       <string name="ui.config.realm.trace.label">Enable Tracing</string>
       <string name="ui.config.realm.trace.help">- Log all requests to the server</string>
       <string name="ui.config.realm.port.label">Port</string>
-      <string name="ui.config.realm.port.help">The port to contact the domain on (default: 8080 or 8443)</string>
+      <string name="ui.config.realm.port.help">The port to contact the upstream on (default: 8080 or 8443)</string>
       <string name="ui.config.realm.ssl.label">Use SSL/TLS</string>
       <string name="ui.config.realm.ssl.help">- Force the use of encryption for communication</string>
       <string name="ui.config.realm.authMode.label">Secret Mode</string>
       <string name="ui.config.realm.authMode.help">By default, SanteDB iCDR uses HTTP BASIC headers to express client identity, use this setting if your OAUTH2 server requires client_id in the body of the OAUTH2 request</string>
       <string name="ui.config.realm.secretOverride.label">Override Application Secret</string>
       <string name="ui.config.realm.secretOverride.help">If your environment has modified the default application secret for this app then use this option to override the default</string>
-      <string name="ui.config.realm.success">Welcome to the domain!</string>
-      <string name="ui.config.realm.error.duplicate">This device name has already been registered with the domain. If you replace the device any currently registered neither device will be able to synchronize. Are you sure you want to replace this registration?</string>
-      <string name="ui.config.sync.title">Synchronization</string>
-      <string name="ui.config.sync.description">The SanteDB client application synchronizes data with the centalized server to get the most up to date information. This screen will allow you to configure the behavior of the SanteDB synchronization process</string>
+      <string name="ui.config.realm.success">Welcome to the upstream realm {realm}!</string>
+      <string name="ui.config.realm.error.duplicate">This device name has already been registered with the realm. If you replace the device any currently registered neither device will be able to synchronize. Are you sure you want to replace this registration?</string>
+      <string name="ui.config.integration.title">Integration</string>
+      <string name="ui.config.integration.description">Configure the manner in which this SanteDB instance will interact with the configured upstream service.</string>
+      <string name="ui.config.integration.mode.label">Integration Mode</string>
+      <string name="ui.config.integration.mode.online">Online Only</string>
+      <string name="ui.config.integration.mode.online.help">This dCDR will act as a relay for all requests to the upstream iCDR. The dCDR will have no offline functionality and will serve as a web-portal to the iCDR</string>
+      <string name="ui.config.integration.mode.synchronize">Synchronize</string>
+      <string name="ui.config.integration.mode.synchronize.help">This dCDR will synchornize its data with the upstream iCDR and will provide this information to clients (and the user interface) even if the system is offline</string>
       <string name="ui.config.sync.mode.label">Mode</string>
       <string name="ui.config.sync.mode.help">Use this option to set the mode in which this application behaves</string>
       <string name="ui.config.sync.mode.online">Online Only (No disconnected use)</string>
-      <string name="ui.config.sync.mode.sync">Synchronized</string>
+      <string name="ui.config.sync.mode.sync">Selective Replication</string>
+      <string name="ui.config.sync.mode.all">Full Replication</string>
       <string name="ui.config.sync.trigger.label">Triggers</string>
       <string name="ui.config.sync.trigger.help">Use this option to specify when a forced synchronization should occur</string>
       <string name="ui.config.sync.trigger.onstart">When the application starts</string>
@@ -324,6 +342,9 @@
       <string name="ui.config.sync.interval.15">Every 15 minutes</string>
       <string name="ui.config.sync.interval.30">Every 30 minutes</string>
       <string name="ui.config.sync.interval.60">Every hour</string>
+      <string name="ui.config.sync.overwriteServer">Auto-resolve conflicts by forcing my updates over the server</string>
+      <string name="ui.config.sync.bigBundles">Instruct the server to send back larger bundles (faster synchronization, however may result in timeouts on slow networks)</string>
+      <string name="ui.config.sync.usePatches">Send partial update messages to the server (PATCH option)</string>
       <string name="ui.config.sync.interval.help">Use this option to control how often automatic polling occurs</string>
       <string name="ui.config.sync.safePatchOnly">Do not auto-merge conflicts on server</string>
       <string name="ui.config.alreadyConfigured">Your instance of SanteDB is already configured!</string>
@@ -332,9 +353,9 @@
       <string name="ui.config.subscribe.mode.label">Subscription Mode</string>
       <string name="ui.config.subscribe.mode.all.label">Subscribe to all data (very large downloads)</string>
       <string name="ui.config.subscribe.mode.specific.label">Subscribe to a particular place (region, district, facility, etc.)</string>
-      <string name="ui.config.subscribe.place.label">Place</string>
+      <string name="ui.config.subscribe.place.label">Places (Villages, Cities, Towns, etc.)</string>
       <string name="ui.config.subscribe.place.help">Enter one or more places you wish this tablet to subscribe to.</string>
-      <string name="ui.config.subscribe.facility.label">Facility</string>
+      <string name="ui.config.subscribe.facility.label">Facilities (Clinics, Hospitals, etc.)</string>
       <string name="ui.config.subscribe.facility.help">One or more facilities that you are subscribing to</string>
       <string name="ui.config.subscribe.objects.label">Subscriptions</string>
       <string name="ui.config.data.title">Database</string>
@@ -345,10 +366,13 @@
       <string name="ui.config.data.options.label">Options</string>
       <string name="ui.config.data.options.setting">Setting</string>
       <string name="ui.config.data.options.value">Value</string>
+      <string name="ui.config.data.basic.title">Basic Configuration</string>
+      <string name="ui.config.data.advanced.title">Advanced Configuration</string>
       <string name="ui.config.log.title">Logging</string>
       <string name="ui.config.log.description">SanteDB disconnected clients keep logs about the activities that occur on the mobile. While these are helpful for debugging and bug reports, they may impact performance or take up a lot of space. Use this panel to adjust the loggin levels</string>
       <string name="ui.config.log.verbosity.label">Log Detail</string>
       <string name="ui.config.log.verbosity.help">Use this setting to control how verbose the logs that SanteDB produces are. Note that these are not security audits or security logs, rather these are programmatic and application logs used for debugging. The higher the log verbosity, the slower this application will run.</string>
+      <string name="ui.config.log.verbosity.disabled">Disabled</string>
       <string name="ui.config.log.verbosity.debug">Debug Logging</string>
       <string name="ui.config.log.verbosity.always">Log Everything (slow, large log files)</string>
       <string name="ui.config.log.verbosity.informational">Informational</string>
@@ -360,6 +384,10 @@
       <string name="ui.config.security.title">Security</string>
       <string name="ui.config.security.description">SanteDB disconnected client keeps several security logs and audits of user activity on this device. This is helpful if this device will be offline for extended periods of time. Here you can control various security settings for this device</string>
       <string name="ui.config.security.password.label">Passwords</string>
+      <string name="ui.config.security.signing">Digital Signatures</string>
+      <string name="ui.config.security.signing.keyType">Signature Type</string>
+      <string name="ui.config.security.signing.keyName">Key Name</string>
+      <string name="ui.config.security.signing.key">Key</string>
       <string name="ui.config.security.password.help">Use this setting to modify the password hashing strength. Note: You should only use SHA1 hashing in legacy mode, SHA256 is the recommended setting</string>
       <string name="ui.config.security.password.sha256">SHA256 Password Hashing</string>
       <string name="ui.config.security.password.sha1">SHA1 Password Hashin</string>
@@ -382,20 +410,32 @@
       <string name="ui.config.network.description">SanteDB can optimize the bandwidth that this device will use when communicating with the central instance, which can be set here. You can also setup any proxy information required for your local network</string>
       <string name="ui.config.network.optimize.label">Optimization</string>
       <string name="ui.config.network.optimize.help">SanteDB can optimize the bandwidth used by this device by compressing data</string>
-      <string name="ui.config.network.optimize.lzma">Slow (2g / dial-up / satellite)</string>
-      <string name="ui.config.network.optimize.bzip2">Moderate (3g / ISDN / DSL)</string>
-      <string name="ui.config.network.optimize.gzip">Fast (4g / LTE / DSL)</string>
-      <string name="ui.config.network.optimize.deflate">Very Fast (5g / Broadband / Wi-Fi)</string>
-      <string name="ui.config.network.optimize.none">Local Network (Do not optimize traffic)</string>
+      <string name="ui.config.network.optimize.Lzma">LZMA (recommended for 2g/dial-up/satellite)</string>
+      <string name="ui.config.network.optimize.Lzma.help">LZMA compression uses more computing resources to compress payloads, however results in much less network use</string>
+      <string name="ui.config.network.optimize.Bzip2">BZ2 (recommended for 3g/ISDN/DSL)</string>
+      <string name="ui.config.network.optimize.Bzip2.help">SanteDB uses BZ2/9 (highest compression), this uses less computing resources than LZMA however the payload sizes are larger</string>
+      <string name="ui.config.network.optimize.Gzip">GZIP (recommended for 4g/LTE/DSL)</string>
+      <string name="ui.config.network.optimize.Gzip.help">GZIP compression represents a good balance of computing resources at the expense of larger payload sizes</string>
+      <string name="ui.config.network.optimize.Deflate">Deflate (recommended for 5g/Broadband/Wi-Fi)</string>
+      <string name="ui.config.network.optimize.Deflate.help">Deflate compression uses ver little computing resources, however the level of compression may result in larger payloads with the server</string>
+      <string name="ui.config.network.optimize.None">None (recommended for LAN)</string>
+      <string name="ui.config.network.optimize.None.help">This option turns off compression in SanteDB between this server and the upstream. This saves on computing resources however the payload sizes are much larger</string>
       <string name="ui.config.network.useProxy">Use a proxy to access the server</string>
+      <string name="ui.config.network.clientCert.none">Do not present a client certificate</string>
+      <string name="ui.config.network.clientCert.none">Do not present a client certificate</string>
+      <string name="ui.config.network.basic.title">Easy Configuration</string>
+      <string name="ui.config.network.advanced.title">Advanced Configuration</string>
+      <string name="ui.config.network.proxy.title">Proxy Configuration</string>
+      <string name="ui.config.network.optimize.requests">Compress data submitted to the server</string> 
       <string name="ui.config.network.proxyAddress.label">Address</string>
       <string name="ui.config.network.proxyAddress.help">Use this setting to configure the address of your HTTP proxy</string>
       <string name="ui.config.other.title">Other Settings</string>
       <string name="ui.config.other.description">SanteDB allows you to set additional settings on this page to further control the behavior of this instance</string>
       <string name="ui.config.other.setting">Application Setting</string>
       <string name="ui.config.other.value">Value</string>
-      <string name="ui.config.action.realm.join">Join Domain</string>
-      <string name="ui.config.action.realm.leave">Leave Domain</string>
+      <string name="ui.config.action.realm.join">Join Upstream</string>
+      <string name="ui.config.action.realm.leave">Leave Upstream</string>
+      <string name="ui.config.action.realm.leave.confirm">Are you sure you want to leave the upstream {realm} realm? You will no longer be able to access it.</string>
       <string name="ui.config.complete">You have successfully configured your instance of the SanteDB client services! If you are seeing this message, please restart the application</string>
       <string name="ui.config.role.title">Applets</string>
       <string name="ui.config.role.description">This application can operate in one of many roles on your server. This screen will allow you to configure which role you would like this application to take on within your SanteDB deployment.</string>
@@ -414,6 +454,9 @@
       <string name="ui.provenance.application">App</string>
       <string name="ui.provenance.session">Session</string>
 
+      <string name="ui.config.data.options.string.placeholder">Example: localhost, host.database.com</string>
+      <string name="ui.config.data.options.databaseName.placeholder">Example: mydatabase or mydatabase.sqlite</string>
+      <string name="ui.config.data.options.user.placeholder">Example: postgres, SYSDBA</string>
       <!-- Authentication Issues -->
       <string name="AUTH_LCK">Your account is locked. Please try logging in at a later time, or contacting support</string>
       <string name="AUTH_INV">Invalid Username and/or Password. Please check the details you entered and try again</string>
@@ -512,8 +555,9 @@
       <string name="ui.mdm.view.recordOfTruth">This record is a RECORD OF TRUTH. This means that this record has been validated the "official" data for a MASTER record</string>
 
       <!-- Notices on the UI -->
+      <string name="ui.notices.checkout">{user} is currently editing this record - changes can only be applied once {user} is finished editing the record</string>
       <string name="ui.notices.privacyControls.masked">This record has been flagged and masked/altered by privacy enforcement to protect sensitive information. You may be asked to re-authenticate yourself or you may be restricted for editing the record. Additional additional security audits have been logged.</string>
-
+      <string name="ui.notices.imported">This record contains data which was imported from another source - information may be incomplete</string>
       <!-- Relationship widget -->
       <string name="ui.entity.relationship.mode">View Mode</string>
       <string name="ui.entity.relationship.mode.hint"><![CDATA[Controls the rendering of the entity relationship diagram for this entity. 
@@ -535,4 +579,26 @@
       </ul>]]></string>
       <string name="ui.entity.relationship.mode.simple">Simple Relationship Graph</string>
       <string name="ui.entity.relationship.mode.advanced">Advanced Relationship Graph</string>
+
+      <!-- Log Configuration -->
+      <string name="ui.config.log.writer.label">Log Writers</string>
+      <string name="ui.config.log.writer.help">This controls where SanteDB will collect produce log output. Each log writer can be filtered based on the event type.</string>
+
+      <!-- Foreign Data -->
+      <string name="ui.admin.alien.upload.title">Upload Data Import File</string>
+      <string name="ui.admin.alien.upload.description"><![CDATA[Use this form to upload a external data file in a supported format (example: CSV) to the SanteDB server. SanteDB will validate your submission and will process the import when the next scheduled import job runs.]]></string>
+      <string name="ui.admin.alien.upload.fileName">File</string>
+      <string name="ui.admin.alien.upload.fileName.hint">Select a compatible file from your computer to upload</string> 
+      <string name="ui.admin.alien.upload.mapping">Mapping</string>
+      <string name="ui.admin.alien.upload.mapping.hint"><![CDATA[Select the type of file you are uploading. This will instruct the SanteDB server to use a specific series of import rules for your file]]></string>
+      <string name="ui.admin.alien.upload.notes">Friendly Name</string>
+      <string name="ui.admin.alien.upload.notes.hint"><![CDATA[Add descriptive notes about this upload]]></string>
+      <string name="ui.admin.alien.upload.success">External data was uploaded successfully</string>
+      <string name="ui.admin.alien.upload.fail">Error submitting external data to server</string>
+      <string name="ui.admin.alien.delete.confirm">Are you sure you want to delete this data submission? (note: this will not remove any already imported data)</string>
+      <string name="ui.admin.alien.delete.success">Data submission deleted</string>
+      <string name="ui.admin.alien.reschedule.confirm">Are you sure you want to reschedule this import? If there are errors which have not been corrected, the import may not succeed again.</string>
+      <string name="ui.admin.alien.reschedule.success">Data submission scheduled for execution</string>
+
+      <string name="ui.admin.alien.submission.view.title">Data Import File - {name}</string>
 </resources>

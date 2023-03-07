@@ -29,7 +29,7 @@
     <div class="form-group row">
         <label for="loginUserName" class="col-sm-3 control-label">{{ 'ui.login.input.username' | i18n }}</label>
         <div class="col-sm-9">
-            <input type="text" required="required" id="authUserNameInput" autocapitalize="off" autocomplete="__away"
+            <input type="text"  required="required" id="authUserNameInput" autocapitalize="off" autocomplete="__away"
                 ng-model="login.userName" ng-readonly="login._lockUserName" name="loginUserName" class="form-control" />
         </div>
     </div>
@@ -37,14 +37,15 @@
         <label for="loginPassword" class="col-sm-3 control-label">{{ 'ui.login.input.password' | i18n }}</label>
         <div class="col-sm-9">
             <input type="password" id="{{scopeId}}authUserPasswordInput" ng-required="login.grant_type == 'password'"
-                ng-model="login.password" name="loginPassword" class="form-control" />
+                ng-model="login.password" name="loginPassword" class="form-control" ng-readonly="login._lockPassword" />
         </div>
     </div>
     <div class="form-group row" ng-if="login.grant_type != 'password'">
         <label for="loginPin" class="col-sm-3 control-label">{{ 'ui.login.input.pin' | i18n }}</label>
         <div class="col-sm-9">
             <input type="password" id="{{scopeId}}authUserPinInput" minlength="4" maxlength="8" pattern="[0-9]{4,8}"
-                ng-required="login.grant_type != 'password'" inputmode="numeric" ng-model="login.pin" name="loginPin"
+                ng-required="login.grant_type != 'password'" inputmode="numeric"  ng-readonly="login._lockPassword"
+                ng-model="login.pin" name="loginPin"
                 class="form-control" />
         </div>
     </div>
@@ -52,6 +53,15 @@
         <label for="loginPou" class="col-sm-3 control-label">{{ 'ui.login.input.purpose' | i18n }}</label>
         <div class="col-sm-9">
             <concept-select concept-set="'PurposeOfUse'" class="form-control" ng-model="login.purposeOfUse" ng-required="login.requirePou"/>
+        </div>
+    </div>
+    <div class="form-group row" ng-if="login.requireTfa">
+        <div class="col-12 alert-primary p-1 m-2">
+            <i class="fas fa-info-circle"></i> {{ login._mfaDetail }}
+        </div>
+        <label for="loginPou" class="col-sm-3 control-label">{{ 'ui.login.input.tfa' | i18n }}</label>
+        <div class="col-sm-9">
+            <input type="text" pattern="^\d{4,}$" maxlength="10" class="form-control" ng-model="login.tfaSecret" ng-required="login.requireTfa"/>
         </div>
     </div>
     <div class="form-group row" ng-if="login.scope">

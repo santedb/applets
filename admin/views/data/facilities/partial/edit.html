@@ -1,0 +1,65 @@
+<div xmlns="http://www.w3.org/1999/xhtml" class="container-fluid">
+    <form ng-submit="savePlace(targetForm)" name="targetForm" novalidate="novalidate">
+        <div class="card mb-3">
+            <div class="card-header">
+                <h5 class="card-title mb-0">
+                    <i class="fas fa-hospital fa-fw"></i>
+                    {{ 'ui.admin.facilities.create.core.title' | i18n }}
+                </h5>
+            </div>
+            <div class="card-body container-fluid">
+                <div class="form-group row" ng-if="target.classConcept != 'ff34dfa7-c6d3-4f8b-bc9f-14bcdc13ba6c'">
+                    <label class="col-sm-12 col-md-2 control-label">
+                        {{ 'ui.model.place.classConcept' | i18n }}
+                    </label>
+                    <div class="col-sm-12 col-md-10">
+                        <concept-select class="form-control" required="required" concept-set="'PlaceClass'"
+                            ng-model="target.classConcept" />
+                    </div>
+                </div>
+                <div class="form-group row" ng-if="target.classConcept == 'ff34dfa7-c6d3-4f8b-bc9f-14bcdc13ba6c'">
+                    <label class="col-sm-12 col-md-2 control-label mb-md-0">
+                        {{ 'ui.model.place.typeConcept' | i18n }}
+                    </label>
+                    <div class="col-sm-12 col-md-10">
+                        <concept-select class="form-control" required="required" concept-set="'PlaceTypeConcept'"
+                            ng-model="target.typeConcept" />
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-12 col-md-2 control-label" for="name">{{ 'ui.model.place.name' | i18n
+                        }}</label>
+                    <div class="col-sm-12 col-md-10 input-group">
+                        <div class="container-fluid m-0 p-0">
+                            <div class="row" ng-repeat="name in target.name.$other track by $index">
+                                <div class="col-4">
+                                    <concept-select class="form-control" ng-required="$index > 0"
+                                        concept-set="'NameUse'" ng-model="name.use" />
+                                </div>
+                                <div class="col-8">
+                                    <input class="form-control" ng-model="name.component.$other.value"
+                                        required="required" type="text" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--<name-edit name="target.name" owner-form="targetForm"></name-edit>-->
+                <div class="form-group row">
+                    <label class="col-sm-12 col-md-2 control-label" for="name">{{ 'ui.model.place.relationship.Parent' |
+                        i18n }}</label>
+                    <div class="col-sm-12 col-md-10 input-group">
+                        <entity-search type="'Place'" group-by="'address.Direct.component.State'"
+                            ng-model="target.relationship.Parent.target" search-field="'name.component.value'"
+                            filter="{ statusConcept: StatusKeys.Active, classConcept: 'ff34dfa7-c6d3-4f8b-bc9f-14bcdc13ba6c' }">
+                        </entity-search>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="btn-group float-right">
+            <button type="submit" id="saveUserButton" class="btn btn-primary"><i class="fa fa-check"></i>
+                {{ 'ui.action.save' | i18n }}</button>
+        </div>
+    </form>
+</div>

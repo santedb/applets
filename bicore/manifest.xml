@@ -26,5 +26,9 @@
 
   </info>
 
+  <menuItem context="org.santedb.admin" launch="santedb-admin.reports.index" asset="/org.santedb.bicore/views/rc/index.html" order="10000">
+    <icon>fas fa-chart-line</icon>
+      <text lang="en">Report Centre</text>
+  </menuItem>
   <strings lang="en" extern="locales/en/strings.xml" />
 </AppletManifest>

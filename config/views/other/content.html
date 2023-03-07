@@ -29,15 +29,15 @@
             <tr ng-repeat="set in config.application.setting track by $index">
                 <td>{{set.key}}</td>
                 <td colspan="2">
-                    <input type="text" class="form-control" ng-model="set.value" required="required" />
+                    <input type="text" class="form-control" ng-model="set.value" required="required" autocomplete="__away" />
                 </td>
             </tr>
             <tr>
                 <td>
-                    <input type="text" ng-class="{ 'is-invalid' : newItem.keyMissingError }" class="form-control" ng-model="newItem.key" />
+                    <input type="text" autocomplete="__away" ng-class="{ 'is-invalid' : newItem.keyMissingError }" class="form-control" ng-model="newItem.key" />
                 </td>
                 <td>
-                    <input type="text" class="form-control" ng-model="newItem.value" />
+                    <input type="text" autocomplete="__away" class="form-control" ng-model="newItem.value" />
                 </td>
                 <td>
                     <button type="button" ng-click="addOtherSetting(newItem)" class="btn btn-lg btn-success">

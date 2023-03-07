@@ -74,6 +74,166 @@ var santedbApp = angular.module('santedb', ['ngSanitize', 'ui.router', 'oc.lazyL
     }])
     .run(['$rootScope', '$state', '$templateCache', '$transitions', '$ocLazyLoad', '$interval', '$timeout', function ($rootScope, $state, $templateCache, $transitions, $ocLazyLoad, $interval, $timeout) {
 
+        async function _setLocaleData() {
+            try {
+                var localeData = await SanteDB.resources.locale.findAsync();
+
+                $timeout(() => {
+                    $rootScope.system.locales = Object.keys(localeData);
+
+                    var localeAsset = localeData[SanteDB.locale.getLocale()];
+                    if (localeAsset)
+                        localeAsset.forEach(function (l) {
+                            $.getScript(l);
+                        });
+                });
+            }
+            catch (e) {
+
+            }
+        }
+
+        // Initialization functions
+        var initialize = async function () {
+            // Get configuration
+            console.info("Initializing Root View");
+            try {
+                await __SanteDBAppService.GetStatus();
+
+                _setLocaleData();
+                var session = await SanteDB.authentication.getSessionInfoAsync();
+                var configuration = {};
+                if (session) {
+                    configuration = await SanteDB.configuration.getAsync();
+                } else {
+                    configuration._isConfigured = SanteDB.configuration.getRealm() != null;
+                }
+
+                // Extended attributes
+                if (session != null && session.entity != null) {
+                    session.entity.telecom = session.entity.telecom || {};
+                    if (Object.keys(session.entity.telecom).length == 0) {
+                        session.entity.telecom.MobilePhone = { value: "" };
+                    }
+                }
+
+                // Get user preferences and set them in this view 
+                if (session) {
+                    var prefs = await SanteDB.configuration.getUserSettingsAsync();
+                    if (Array.isArray(prefs)) {
+                        prefs.forEach(o => SanteDB.configuration.setAppSetting(o.key, o.value));
+                    }
+                }
+
+                $timeout(() => {
+                    console.info("Populating root context");
+                    $rootScope.session = session;
+
+
+                    var realmName = SanteDB.configuration.getRealm();
+                    $rootScope.system = $rootScope.system || {};
+                    $rootScope.system.version = SanteDB.application.getVersion();
+                    $rootScope.system.locale = SanteDB.locale.getLocale();
+                    $rootScope.system.config = configuration;
+                    $rootScope.system.config.realmName = realmName;
+                    $rootScope.system.config.deviceName = SanteDB.configuration.getDeviceId();
+                    // Make app settings easier to handle
+                    var appSettings = {};
+                    if (configuration.application) {
+                        configuration.application.setting.forEach((k) => appSettings[k.key] = k.value);
+                        $rootScope.system.config.application.setting = appSettings;
+                    }
+                    // Is there a branding environment variable
+                    if ((!realmName || configuration && !configuration._isConfigured) && $state.$current.name != 'santedb-config.initial') {
+                        $state.go('santedb-config.initial');
+                    }
+                });
+            }
+            catch (e) {
+                $rootScope.errorHandler(e);
+            }
+        };
+
+
+        // The online interval to check online state
+        var ivlFn = function () {
+            $rootScope.system = $rootScope.system || {};
+
+
+            if ($rootScope.system && $rootScope.system.config && $rootScope.system.config.sync && $rootScope.system.config.sync.mode == 'sync')
+                $rootScope.system.online = SanteDB.application.getOnlineState();
+            else
+                $rootScope.system.online = true;
+
+            $rootScope.system.serviceState = {
+                network: $rootScope.system.online,
+                ami: SanteDB.application.isAdminAvailable(),
+                hdsi: SanteDB.application.isClinicalAvailable()
+            };
+            // Page information
+            $rootScope.page = {
+                currentTime: new Date(),
+                maxEventTime: new Date().tomorrow().trunc().addSeconds(-1),
+                minEventTime: $rootScope.page.minEventTime || new Date().yesterday()
+            };
+
+            // Session for expiry?
+            if ($rootScope.session && $rootScope.session.exp && ($rootScope.session.exp - Date.now() < 120000)) {
+                var expiresIn = Math.round(($rootScope.session.exp - Date.now()) / 1000);
+                var mins = Math.trunc(expiresIn / 60), secs = expiresIn % 60;
+                if (("" + secs).length < 2)
+                    secs = "0" + secs;
+                var messageStr = `${SanteDB.locale.getString("ui.session.aboutToExpire")} ${mins}:${secs} ${SanteDB.locale.getString("ui.session.action.extend")}`;
+
+                if (expiresIn < 0) // already expired
+                {
+                    var refreshFn = () => {
+                        $templateCache.removeAll();
+                        $rootScope.session = null;
+                        delete ($rootScope.session);
+                        toastr.clear();
+                        $state.reload();
+                    };
+
+                    SanteDB.authentication.getSessionInfoAsync(true)
+                        .then(s => {
+                            if (s == null) {
+                                refreshFn();
+                            }
+                        }).catch(refreshFn)
+
+                }
+                else if (!_extendToast) {
+                    _extendToast = toastr.warning(messageStr, null, {
+                        closeButton: false,
+                        preventDuplicates: true,
+                        onclick: function () {
+                            SanteDB.authentication.refreshLoginAsync().then(function (s) {
+                                $timeout(_ => {
+                                    $rootScope.session = s;
+                                    _extendToast = null;
+                                    toastr.clear();
+                                });
+                            }).catch($rootScope.errorHandler);
+                        },
+                        positionClass: "toast-bottom-center",
+                        showDuration: "0",
+                        hideDuration: "0",
+                        timeOut: "0",
+                        extendedTimeOut: "0"
+                    });
+                }
+                else {
+                    $(_extendToast).children('.toast-message').html(messageStr);
+                }
+            }
+            else
+                toastr.clear();
+
+        };
+
+        // Setup scope
+        $rootScope.system = {};
 
         /**
          * Register the reload button
@@ -103,65 +263,16 @@ var santedbApp = angular.module('santedb', ['ngSanitize', 'ui.router', 'oc.lazyL
         // Extend toast information
         var _extendToast = null;
 
-        var _setLocaleData = async function () {
-            // Get locales
-            try {
-                var localeData = await SanteDB.resources.locale.findAsync();
-                var localeAsset = localeData[SanteDB.locale.getLocale()];
-                $rootScope.system.locales = Object.keys(localeData);
-
-                if (localeAsset)
-                    localeAsset.forEach(function (l) {
-                        $.getScript(l);
-                    });
-            }
-            catch (e) {
-                $rootScope.errorHandler(e);
-            }
-        }
-
-        var initialize = async function () {
-            $rootScope.system = $rootScope.system || {};
-            $rootScope.system.locale = SanteDB.locale.getLocale();
-
-            _setLocaleData();
-            // Get configuration
-            try {
-                var configuration = await SanteDB.configuration.getAsync();
-                $rootScope.system = $rootScope.system || {};
-                $rootScope.system.config = configuration;
-                $rootScope.system.version = SanteDB.application.getVersion();
-
-                // Make app settings easier to handle
-                var appSettings = {};
-                configuration.application.setting.forEach((k) => appSettings[k.key] = k.value);
-                $rootScope.system.config.application.setting = appSettings;
-
-                // Is there a branding environment variable
-                if (!$rootScope.system.config.isConfigured && $state.$current.name != 'santedb-config.initial')
-                    $state.transitionTo('santedb-config.initial');
-
-            }
-            catch (e) {
-                $rootScope.errorHandler(e);
-            }
-        };
-
-        initialize().then(function () {
-            try {
-                $rootScope.$apply();
-            }
-            catch (e) {
-                console.error(e);
-            }
-        });
+        initialize();
 
         // Watch for user request to change default language in browser
         $rootScope.$watch("system.locale", function (n, o) {
-            if (n && n != o) {
+            if (n && o && n != o) {
                 SanteDB.locale.setLocale(n);
                 $templateCache.removeAll();
-                $state.reload();
+                if ($state.$current.name != "") {
+                    $state.reload();
+                }
             }
         });
 
@@ -191,6 +302,7 @@ var santedbApp = angular.module('santedb', ['ngSanitize', 'ui.router', 'oc.lazyL
             if (transition._targetState._definition.self.name != transition._targetState._definition.self.name != $state.$current.name)
                 $("#pageTransitioner").show();
         });
+
         $transitions.onSuccess({}, function (transition) {
             $(".modal").modal('hide');
             $('.popover').popover('hide');
@@ -211,6 +323,7 @@ var santedbApp = angular.module('santedb', ['ngSanitize', 'ui.router', 'oc.lazyL
             $("#navbarResponsive").collapse('hide');
             delete ($rootScope._transition);
         });
+
         $transitions.onError({}, function (transition) {
 
             $(".modal").modal('hide');
@@ -218,31 +331,12 @@ var santedbApp = angular.module('santedb', ['ngSanitize', 'ui.router', 'oc.lazyL
             $("#pageTransitioner").hide();
             delete ($rootScope._transition);
 
+            // HACK: The user tried to nav to a screen when we wanted to go to a config page
+            if(transition._targetState._identifier == "santedb-config.initial") {
+                window.location = "#!/config/initialSettings";
+            }
+
         });
-
-        // Get session
-        SanteDB.authentication.getSessionInfoAsync().then(function (s) {
-            $rootScope.session = s;
-            // Extended attributes
-            if (s != null && s.entity != null) {
-                s.entity.telecom = s.entity.telecom || {};
-                if (Object.keys(s.entity.telecom).length == 0)
-                    s.entity.telecom.MobilePhone = { value: "" };
-            }
-
-            try {
-                $rootScope.$apply();
-            }
-            catch (e) { }
-            // User preferences
-            if (s) {
-                SanteDB.configuration.getUserSettingsAsync().then(function (prefs) {
-                    if (Array.isArray(prefs))
-                        prefs.forEach(o => SanteDB.configuration.setAppSetting(o.key, o.value));
-                    $rootScope.$apply();
-                }).catch(function (e) { });
-            }
-        }).catch(function (e) { $rootScope.errorHandler(e); });
 
 
         /**
@@ -306,66 +400,6 @@ var santedbApp = angular.module('santedb', ['ngSanitize', 'ui.router', 'oc.lazyL
             minEventTime: new Date().yesterday()
         };
 
-        // The online interval to check online state
-        var ivlFn = function () {
-            $rootScope.system = $rootScope.system || {};
-
-
-            if ($rootScope.system && $rootScope.system.config && $rootScope.system.config.sync && $rootScope.system.config.sync.mode == 'sync')
-                $rootScope.system.online = SanteDB.application.getOnlineState();
-            else
-                $rootScope.system.online = true;
-
-            $rootScope.system.serviceState = {
-                network: $rootScope.system.online,
-                ami: SanteDB.application.isAdminAvailable(),
-                hdsi: SanteDB.application.isClinicalAvailable()
-            };
-            // Page information
-            $rootScope.page = {
-                currentTime: new Date(),
-                maxEventTime: new Date().tomorrow().trunc().addSeconds(-1),
-                minEventTime: $rootScope.page.minEventTime || new Date().yesterday()
-            };
-
-            // Session for expiry?
-            if ($rootScope.session && $rootScope.session.exp && ($rootScope.session.exp - Date.now() < 120000)) {
-                var expiresIn = Math.round(($rootScope.session.exp - Date.now()) / 1000);
-                var mins = Math.trunc(expiresIn / 60), secs = expiresIn % 60;
-                if (("" + secs).length < 2)
-                    secs = "0" + secs;
-                var messageStr = `${SanteDB.locale.getString("ui.session.aboutToExpire")} ${mins}:${secs} ${SanteDB.locale.getString("ui.session.action.extend")}`;
-
-                if (expiresIn < 0) // already expired
-                {
-                    $rootScope.session = null;
-                    $templateCache.removeAll();
-                    delete ($rootScope.session);
-                    toastr.clear();
-                    $state.reload();
-                }
-                else if (!_extendToast) {
-                    _extendToast = toastr.warning(messageStr, null, {
-                        closeButton: false,
-                        preventDuplicates: true,
-                        onclick: function () {
-                            SanteDB.authentication.refreshLoginAsync().then(function (s) { $rootScope.session = s; _extendToast = null; toastr.clear(); }).catch($rootScope.errorHandler);
-                        },
-                        positionClass: "toast-bottom-center",
-                        showDuration: "0",
-                        hideDuration: "0",
-                        timeOut: "0",
-                        extendedTimeOut: "0"
-                    });
-                }
-                else {
-                    $(_extendToast).children('.toast-message').html(messageStr);
-                }
-            }
-            else
-                toastr.clear();
-
-        };
         $interval(ivlFn, 15000);
 
 

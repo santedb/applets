@@ -62,17 +62,18 @@
       </providers>
       <![CDATA[
         SELECT 
-          audit.id as id,
-          outcome as outc_cs, 
-          action as act_cs, 
-          type as typ_cs, 
-          eventTime as evt_utc, 
-          code as mnemonic 
+         AUD_TBL.ID AS ID,
+          OUTC_CS,
+          ACT_CS, 
+          TYP_CS, 
+          EVT_UTC, 
+          MNEMONIC 
         from 
-          audit inner join audit_code on (audit_code.id = class)
+          AUD_TBL 
+          INNER JOIN AUD_CD_TBL AS CLS_CD ON (CLS_CD.ID = CLS_CD_ID)
         WHERE
-          ((eventTime - 621355968000000000) /  10000000) BETWEEN COALESCE(${from-date}, 0) AND COALESCE(${to-date}, 0xffffffffffff)
-          AND code = COALESCE(${type}, code)
+        	EVT_UTC BETWEEN COALESCE(${from-date}, 0) AND COALESCE(${to-date}, 0xffffffffffff)
+          AND MNEMONIC = COALESCE(${type},MNEMONIC)
           
       ]]>
     </add>

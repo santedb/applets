@@ -76,7 +76,7 @@ angular.module('santedb-lib')
                 case "Entity":
                     retVal += "<i class='fa fa-share-alt'></i> ";
                     break;
-                case "AssigningAuthority":
+                case "IdentityDomain":
                     retVal += "<i class='fa fa-id-card'></i> ";
                     break;
                 case "SecurityRole":
@@ -170,6 +170,8 @@ angular.module('santedb-lib')
                 function ($scope, $rootScope) {
 
                     $scope.setValue = (selectControl, resource, value) => {
+
+
                         if (!value || Array.isArray(value) && value.length == 0) {
                             $(selectControl).find('option').remove();
                             $(selectControl).trigger('change.select2');
@@ -208,7 +210,7 @@ angular.module('santedb-lib')
                                         }
                                     }
                                     else {
-                                        var res = await api.getAsync({ id: v, viewModel: "dropdown" });
+                                        var res = await api.getAsync({ id: v && v.id ? v.id : v, viewModel: "dropdown" });
                                         if ($(selectControl).find(`option[value='${v}']`).length == 0) {
                                             var obj = res;
                                             if ($scope.selector)
@@ -468,7 +470,9 @@ angular.module('santedb-lib')
 
                     // HACK: Screw Select2 , it is so random
                     if (ngModel.$viewValue)
+                    {
                         scope.setValue(element, modelType, ngModel.$viewValue);
+                    }
 
                 });
             }

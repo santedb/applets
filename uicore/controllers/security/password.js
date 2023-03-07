@@ -25,75 +25,58 @@ angular.module("santedb").controller("PasswordController", ['$scope', '$rootScop
     /**
      * Clear any server side errors
      */
-    $scope.clearServerErrors = function(inputControl) {
+    $scope.clearServerErrors = function (inputControl) {
 
-        if(inputControl.$error)
-            Object.keys(inputControl.$error).forEach((k)=> {
-                if(k.startsWith("err.")) delete(inputControl.$error[k]);
+        if (inputControl.$error)
+            Object.keys(inputControl.$error).forEach((k) => {
+                if (k.startsWith("err.")) delete (inputControl.$error[k]);
             });
     }
-    
+
     /**
      * @summary Perform the password reset function
      */
-    $scope.doReset = function (form) {
+    $scope.doReset = async function (form) {
         if (form.$invalid) {
             return;
         }
 
-        // Reset password function
-        var resetFn = function() {
-            SanteDB.authentication.setPasswordAsync($scope.password.entity.id, $scope.password.entity.userName, $scope.password.entity.password)
-                .then(function(result) {
-                    $scope.closeForm(form);
-                    toastr.success(SanteDB.locale.getString("ui.password.notification.success"));
-
-                })
-                .catch(function(e) {
-                    SanteDB.display.buttonWait("#passwordButton", false);
-                    if(e.$type == "DetectedIssueException") {// Error with password
-                        form.newPassword.$error = {};
-                        e.rules.filter(function(d) { return d.priority == "Error"; }).forEach(function(d) {
-                            form.newPassword.$error[d.id] = true;
-                        });
-                        $scope.$apply();
-                    }
-                    else 
-                        $rootScope.errorHandler(e);
-                })
-        }
-
         SanteDB.display.buttonWait("#passwordButton", true);
-        // First we should authenticate ourselves to reset the password if we're resetting our own
-        if($scope.password.entity.userName == $rootScope.session.username) {
-            // Verify current password
-            SanteDB.authentication.passwordLoginAsync($scope.password.entity.userName, $scope.password.entity.existingPassword, undefined, true, undefined, undefined)
-                .then(function(session) {
-                    resetFn();
-                })
-                .catch(function(e) {
-                    SanteDB.display.buttonWait("#passwordButton", false);
-                    if(e.data && e.data.length > 0 && e.data[0].error_description) 
-                        e.userMessage = e.data[0].error_description;
-                    else switch(e.message) {
-                        case "invalid_grant":
-                            e.userMessage = 'error.login.invalidPassword';
-                            break;
-                        default: 
-                            e.userMessage = e.message;
-                            break;
-                    }
-                    $rootScope.errorHandler(e);
-                });
+        try {
+            if ($scope.password.entity.userName == $rootScope.session.username) {
+                await SanteDB.authentication.passwordLoginAsync($scope.password.entity.userName, $scope.password.entity.existingPassword, undefined, true, undefined, undefined);
+            }
+            var result = await SanteDB.authentication.setPasswordAsync($scope.password.entity.id, $scope.password.entity.userName, $scope.password.entity.password);
+            if ($scope.password.entity.userName == $rootScope.session.username) { // we are logged out - so we want to reauthenticate to start a new session
+                await SanteDB.authentication.passwordLoginAsync($scope.password.entity.userName, $scope.password.entity.existingPassword, undefined, false, undefined, undefined);
+            }
+            toastr.success(SanteDB.locale.getString("ui.password.notification.success"));
+            $scope.closeForm(form);
+
         }
-        else 
-            resetFn();
+        catch (e) {
+            if (e.data && e.data.length > 0 && e.data[0].error_description)
+                e.userMessage = e.data[0].error_description;
+            else switch (e.message) {
+                case "invalid_grant":
+                    e.userMessage = 'error.login.invalidPassword';
+                    break;
+                default:
+                    e.userMessage = e.message;
+                    break;
+            }
+            $rootScope.errorHandler(e);
+        }
+        finally {
+            SanteDB.display.buttonWait("#passwordButton", false);
+        }
+
     }
 
     /**
      * @summary Cancels the form submission
      */
-    $scope.closeForm = function(form) {
+    $scope.closeForm = function (form) {
         SanteDB.display.buttonWait("#passwordButton", false);
         form.$setPristine();
         form.$setUntouched();
@@ -104,7 +87,7 @@ angular.module("santedb").controller("PasswordController", ['$scope', '$rootScop
      * @summary Watch for password changes
      */
     $scope.$watch("password.entity.password", function (n, o) {
-        if(n) 
+        if (n)
             $scope.strength = SanteDB.application.calculatePasswordStrength(n);
     });
 }]);

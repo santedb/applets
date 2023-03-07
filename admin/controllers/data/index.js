@@ -26,7 +26,7 @@ angular.module('santedb').controller('ReferenceDataIndexController', ["$scope", 
     // Get stats
     async function getStats() {
         try {
-            $scope.dashboard.domains = (await SanteDB.resources.assigningAuthority.findAsync({_count:0})).size;
+            $scope.dashboard.domains = (await SanteDB.resources.identityDomain.findAsync({_count:0})).size;
             $scope.dashboard.places = (await SanteDB.resources.place.findAsync({ classConcept: "!" + EntityClassKeys.ServiceDeliveryLocation, statusConcept: StatusKeys.Active,  _count:0})).totalResults;
             $scope.dashboard.facilities = (await SanteDB.resources.place.findAsync({ classConcept: EntityClassKeys.ServiceDeliveryLocation, statusConcept: StatusKeys.Active, _count:0})).totalResults;
             $scope.dashboard.materials = (await SanteDB.resources.material.findAsync({_count:0})).totalResults;

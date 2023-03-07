@@ -17,7 +17,7 @@ angular.module('santedb').controller('SubmitBugController', ["$scope", "$rootSco
         try {
             var logs = await SanteDB.application.getLogInfoAsync();
             if(logs.resource) {
-                var log = logs.resource.find(o=>o.name == "SanteDB.log");
+                var log = logs.resource[0];
                 $scope.info.logSize = Math.round(log.size / 1024);
             }
             $scope.report.lastError = angular.copy($rootScope.error);
@@ -68,7 +68,7 @@ angular.module('santedb').controller('SubmitBugController', ["$scope", "$rootSco
             }                
             var result = await SanteDB.application.submitBugReportAsync(submission);
             toastr.info(`${SanteDB.locale.getString("ui.admin.bug.success")} #${result.ticketId}`, null, { preventDuplicates: true });
-            $state.transitionTo("santedb-admin.dashboard");
+            $state.go("santedb-admin.dashboard");
         }
         catch(e) {
             $rootScope.errorHandler(e);
