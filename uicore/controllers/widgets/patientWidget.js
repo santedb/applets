@@ -213,6 +213,12 @@ angular.module('santedb').controller('PatientDemographicsWidgetController', ['$s
                     }
                 }
             }
+
+            // Correct the relationships
+            if($scope.editObject.relationship && 
+                !$scope.editObject.relationship.Birthplace) {
+                    $scope.editObject.relationship.Birthplace = [ new EntityRelationship({ relationshipType: EntityRelationshipTypeKeys.Birthplace }) ];
+                }
         }
     });
 

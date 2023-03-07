@@ -237,7 +237,7 @@
                                 class="col-sm-12 col-md-3 control-label">{{ 'ui.model.patient.birthplace' | i18n }}</label>
                             <div class="col-sm-12 col-md-9">
                                 <entity-search type="'Place'" group-by="'address.Direct.component.State'"
-                                    ng-model="editObject.relationship.Birthplace.target" search-field="'name.component.value'"
+                                    ng-model="editObject.relationship.Birthplace[0].target" search-field="'name.component.value'"
                                     filter="{ 'statusConcept': 'c8064cbd-fa06-4530-b430-1a52f1530c27' }" />
                             </div>
                         </div>

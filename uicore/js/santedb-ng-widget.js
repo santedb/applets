@@ -67,8 +67,8 @@ angular.module('santedb-lib')
             replace: true,
             transclude: false,
             templateUrl: './org.santedb.uicore/directives/widgetPanel.html',
-            controller: ['$scope', '$timeout',
-                function ($scope, $timeout) {
+            controller: ['$scope', '$timeout', '$rootScope',
+                function ($scope, $timeout, $rootScope) {
 
                     $scope.hasView = function (panel, viewName) {
                         if (panel.views) {
@@ -111,6 +111,9 @@ angular.module('santedb-lib')
                             if (e.$type == "ObjectLockedException") {
                                 alert(e.message);
                             }
+                            else {
+                                $rootScope.errorHandler(e);
+                            }
                         }
 
                     }
@@ -128,7 +131,7 @@ angular.module('santedb-lib')
                         }
                     }
 
-                    $scope.submitEditForm = function (panel) {
+                    $scope.submitEditForm = async function (panel) {
 
                         if (panel.view == 'Edit') {
                             if (panel.editForm) {
