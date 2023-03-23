@@ -44,6 +44,31 @@ angular.module('santedb-lib')
     // TODO: CLEAN THIS UP PLEASE!
     .directive('entitySearch', function ($timeout) {
 
+        function renderTitle(selection) {
+
+            var retVal = "";
+            if (selection.name != null)
+                retVal = SanteDB.display.renderEntityName(selection.name);
+            else if (selection.name != null && selection.name[SanteDB.locale.getLocale()])
+                retVal = selection.name[SanteDB.locale.getLocale()];
+            else if (selection.name != null)
+                retVal = selection.name;
+            else if (selection.userName)
+                retVal = selection.userName;
+            else if (selection.mnemonic)
+                retVal = SanteDB.locale.getString(selection.mnemonic);
+            else if (selection.entity)
+                retVal = (selection.entity.name || selection.entity.userName);
+            else if (selection.element !== undefined)
+                retVal = selection.element.innerText.trim();
+            else if (selection.text)
+                retVal = selection.text;
+
+            if(selection.$type) {
+                retVal += " (" + selection.$type + ")";
+            }
+            return retVal;
+        }
 
         function renderObject(selection, minRender) {
 
@@ -206,7 +231,9 @@ angular.module('santedb-lib')
                                             var obj = res.resource[0];
                                             if ($scope.selector)
                                                 obj = obj[$scope.selector] || obj;
-                                            $(selectControl)[0].add(new Option(renderObject(res.resource[0], $scope.minRender), v, false, true));
+                                            var option = new Option(renderObject(res.resource[0], $scope.minRender), v, false, true);
+                                            option.title = renderTitle(res.resource[0]);
+                                            $(selectControl)[0].add(option);
                                         }
                                     }
                                     else {
@@ -215,7 +242,9 @@ angular.module('santedb-lib')
                                             var obj = res;
                                             if ($scope.selector)
                                                 obj = obj[$scope.selector] || obj;
-                                            $(selectControl)[0].add(new Option(renderObject(obj, $scope.minRender), v, false, true));
+                                            var option = new Option(renderObject(obj, $scope.minRender), v, false, true);
+                                            option.title = renderTitle(obj);
+                                            $(selectControl)[0].add(option);
                                         }
                                     }
                                 }
@@ -339,6 +368,7 @@ angular.module('santedb-lib')
                                                 text = renderObject(o, scope.minRender);
                                             }
                                             o.text = o.text || text;
+                                            o.title = renderTitle(o);
                                             o.id = extractProperty(o, resultProperty) || o.id;
                                             return o;
                                         }));
@@ -358,6 +388,7 @@ angular.module('santedb-lib')
                                                 text = renderObject(o, scope.minRender);
                                             }
                                             o.text = o.text || text;
+                                            o.title = renderTitle(o);
                                             o.id = extractProperty(o, resultProperty) || o.id;
                                             return o;
                                         });
