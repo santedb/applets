@@ -33,10 +33,11 @@
                 ng-class="{'required': isRequired &amp;&amp; $index == 0  &amp;&amp; !$root.system.config.application.setting['optional.patient.address.country']}">{{ 'ui.model.entity.address.component.country' | i18n }} <hint-popover hint-title="ui.model.entity.address.component.country" /></label>
             <div class="col-sm-12 col-md-9" >
                     <entity-search ng-required="isRequired &amp;&amp; $index == 0 &amp;&amp; !$root.system.config.application.setting['optional.patient.address.country']" type="'Place'"
-                         ng-model="addr.component.Country"
+                        ng-model="addr.component.Country"
                         search-field="'name.component.value'" ng-change="addr.component.State = null"
                         name="{{controlPrefix}}address{{$index}}country" key="'identifier[ISO3166].value'"
                         value-selector="'identifier.ISO3166[0].value'"
+                        
                         change-clear="{ 'scope': addr.component, values: [ 'State', 'County', 'City', 'Precinct' ] }"
                         filter="{ 'classConcept': '48b2ffb3-07db-47ba-ad73-fc8fb8502471', 'statusConcept': 'c8064cbd-fa06-4530-b430-1a52f1530c27' }" />
                         
@@ -54,7 +55,7 @@
                         search-field="'name.component.value'" ng-change="addr.component.County = null"
                         name="{{controlPrefix}}address{{$index}}state" key="'name[OfficialRecord].component.value'"
                         change-clear="{ 'scope': addr.component, values: [ 'County', 'City', 'Precinct' ] }"
-                        filter="{ 'classConcept': '8cf4b0b0-84e5-4122-85fe-6afa8240c218', 'address[Direct].component[Country].value': addr.component.Country, 'statusConcept': 'c8064cbd-fa06-4530-b430-1a52f1530c27' }" />
+                        filter="{ 'classConcept': '4d1a5c28-deb7-411e-b75f-d524f90dfa63', 'address[Direct].component[Country].value': addr.component.Country, 'statusConcept': 'c8064cbd-fa06-4530-b430-1a52f1530c27' }" />
                 </div>
                 <input autocomplete="__away" name="{{controlPrefix}}address{{$index}}state" ng-switch-default=""
                     type="text" class="form-control" ng-model="addr.component.State"
@@ -76,7 +77,7 @@
                         key="'name[OfficialRecord].component.value'"
                         change-clear="{ 'scope': addr.component, values: [ 'City', 'Precinct' ] }"
 
-                        filter="{ 'classConcept': 'd9489d56-ddac-4596-b5c6-8f41d73d8dc5', 'address[Direct].component[State].value': addr.component.State, 'statusConcept': 'c8064cbd-fa06-4530-b430-1a52f1530c27' }" />
+                        filter="{ 'classConcept': '6eefee7d-dff5-46d3-a6a7-171ef93879c7', 'address[Direct].component[State].value': addr.component.State, 'statusConcept': 'c8064cbd-fa06-4530-b430-1a52f1530c27' }" />
                 </div>
                 <input ng-switch-default="" autocomplete="__away"  ng-required="isRequired &amp;&amp; $index == 0  &amp;&amp; !$root.system.config.application.setting['optional.patient.address.county']"
                     name="{{controlPrefix}}address{{$index}}county" type="text" class="form-control"

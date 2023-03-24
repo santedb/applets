@@ -1,11 +1,11 @@
 <div xmlns="http://www.w3.org/1999/xhtml" xmlns:sdb="http://santedb.org/applet">
-    <sdb:script static="false">~/controllers/places/edit.js</sdb:script>
-    <sdb:state name="santedb-admin.data.facility.edit">
+    <sdb:script static="false">~/controllers/places/facility.js</sdb:script>
+    <sdb:state name="santedb-admin.data.facility.view">
         <sdb:demand>1.3.6.1.4.1.33349.3.1.5.9.2.4</sdb:demand>
         <sdb:url>/{id}</sdb:url>
         <sdb:view>
-            <sdb:controller>PlaceEditController</sdb:controller>
-            <sdb:title lang="en">Edit Facility</sdb:title>
+            <sdb:controller>FacilityEditController</sdb:controller>
+            <sdb:title lang="en">View Facility</sdb:title>
         </sdb:view>
     </sdb:state>
     <form name="targetForm" ng-submit="savePlace(targetForm)" novalidate="novalidate">

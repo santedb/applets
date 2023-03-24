@@ -3,10 +3,13 @@
     <string name="ui.admin.brand.title"><![CDATA[<img src="/org.santedb.core/img/icon.png" height="24px"/> SanteDB Admin]]></string>
     <string name="ui.admin.tickleError">Error fetching application alerts</string>
     <string name="ui.admin.mailError">Error retrieving mail</string>
-    <string name="ui.admin.syncMode.warning">Your device is operating in synchronized mode, these settings will not be propogated to the central server and may not represent the entire dataset. Any changes you make here will be local changes only and may be overwritten upon synchronization. For more information please see the SanteDB documentation.</string>
+    <string name="ui.admin.syncMode.warning">Your device is operating in synchronized mode, these
+        settings will not be propogated to the central server and may not represent the entire
+        dataset. Any changes you make here will be local changes only and may be overwritten upon
+        synchronization. For more information please see the SanteDB documentation.</string>
     <!-- History -->
     <string name="ui.admin.history.title">Version History</string>
-    <!-- User Screen Translations --> 
+    <!-- User Screen Translations -->
     <string name="ui.action.resetPassword">Reset Pwd</string>
     <string name="ui.admin.users.userName">User Name</string>
     <string name="ui.admin.users.lastLoginTime">Last Login</string>
@@ -17,8 +20,10 @@
     <string name="ui.admin.users.confirmLock">Are you sure you want to lock this user account?</string>
     <string name="ui.admin.users.confirmUnlock">Are you sure you want to unlock this user account?</string>
     <string name="ui.admin.users.systemUser">This action cannot be performed on a system user</string>
-    <string name="ui.admin.users.reactivate.confirm">Are you sure you want to reactivate this user account?</string>
-    <string name="ui.admin.users.invalidLogin.reset">Are you sure you want to reset this user's invalid login count?</string>
+    <string name="ui.admin.users.reactivate.confirm">Are you sure you want to reactivate this user
+        account?</string>
+    <string name="ui.admin.users.invalidLogin.reset">Are you sure you want to reset this user's
+        invalid login count?</string>
     <string name="ui.admin.users.duplicateUser">Username is already taken by another user</string>
 
 
@@ -39,7 +44,7 @@
     <string name="ui.admin.devices.edit.demographics.title">Extended Properties</string>
     <string name="ui.admin.devices.edit.security.neverLoggedIn">Never Authenticated</string>
     <string name="ui.admin.devices.edit.policy.title">Assigned Policies</string>
-    
+
     <!-- Strings for Groups -->
     <string name="ui.admin.groups.name">Role Name</string>
     <string name="ui.admin.groups.description">Description</string>
@@ -47,39 +52,49 @@
     <string name="ui.admin.groups.updatedBy">Last Update</string>
     <string name="ui.admin.groups.confirmDelete">Are you sure you want to delete this group?</string>
     <string name="ui.admin.groups.confirmUnDelete">Are you sure you want to reactivate this group?</string>
-    
+
     <!-- Strings for policy -->
     <string name="ui.admin.policy.oid">OID</string>
     <string name="ui.admin.policy.name">Policy Name</string>
     <string name="ui.admin.policy.updatedBy">Last Update</string>
     <string name="ui.admin.policy.state">Status</string>
-    <string name="ui.admin.policy.confirmDelete">Are you sure you want to delete this policy? Note that the policy will continue to be applied on any existing objects which are associated with it.</string>
+    <string name="ui.admin.policy.confirmDelete">Are you sure you want to delete this policy? Note
+        that the policy will continue to be applied on any existing objects which are associated
+        with it.</string>
     <string name="ui.admin.policy.confirmUnDelete">Are you sure you want to reactivate this policy?</string>
     <string name="ui.admin.policy.edit.core.title">Core Properties</string>
-    <string name="ui.admin.policy.edit.readonly">Once saved, your policy cannot be edited. This is to ensure the consistency of audits</string>
+    <string name="ui.admin.policy.edit.readonly">Once saved, your policy cannot be edited. This is
+        to ensure the consistency of audits</string>
     <!-- Strings for Devices -->
     <string name="ui.admin.devices.name">Device Name</string>
     <string name="ui.admin.devices.lastAuthenticationTime">Last Auth</string>
     <string name="ui.admin.devices.state">Status</string>
     <string name="ui.admin.devices.updatedBy">Last Update</string>
-    <string name="ui.admin.devices.secret.reset">Are you sure you want to set this device's secret? (the device may need to be re-configured after this action)</string>
-    <string name="ui.admin.devices.confirmUnlock">Are you sure you wish to unlock this device account?</string>
+    <string name="ui.admin.devices.secret.reset">Are you sure you want to set this device's secret?
+        (the device may need to be re-configured after this action)</string>
+    <string name="ui.admin.devices.confirmUnlock">Are you sure you wish to unlock this device
+        account?</string>
     <string name="ui.admin.devices.confirmLock">Are you sure you wish to lock this device account?</string>
-    <string name="ui.admin.devices.invalidLogin.reset">Are you sure you wish to reset this device invalid login attempts counter?</string>
+    <string name="ui.admin.devices.invalidLogin.reset">Are you sure you wish to reset this device
+        invalid login attempts counter?</string>
     <!-- Strings for Applications -->
     <string name="ui.admin.applications.name">Application Name</string>
     <string name="ui.admin.applications.lastAuthenticationTime">Last Auth</string>
     <string name="ui.admin.applications.state">Status</string>
     <string name="ui.admin.applications.updatedBy">Last Update</string>
-    <string name="ui.admin.applications.secret.reset">Are you sure you want to set this applications's secret? (the device may need to be re-configured after this action)</string>
+    <string name="ui.admin.applications.secret.reset">Are you sure you want to set this
+        applications's secret? (the device may need to be re-configured after this action)</string>
     <string name="ui.admin.applications.edit.core.title">Core Application Properties</string>
     <string name="ui.admin.applications.edit.security.title">Security Properties</string>
     <string name="ui.admin.applications.edit.policy.title">Associated Policies</string>
     <string name="ui.admin.applications.edit.demographics.title">Extended Properties</string>
     <string name="ui.admin.applications.edit.security.neverLoggedIn">Never Authenticated</string>
-    <string name="ui.admin.applications.confirmLock">Are you sure you want to lock out this application?</string>
-    <string name="ui.admin.applications.confirmUnlock">Are you sure you want to unlock this application?</string>
-    <string name="ui.admin.applications.invalidLogin.reset">Are you sure you want to reset the invalid authentications for this application?</string>
+    <string name="ui.admin.applications.confirmLock">Are you sure you want to lock out this
+        application?</string>
+    <string name="ui.admin.applications.confirmUnlock">Are you sure you want to unlock this
+        application?</string>
+    <string name="ui.admin.applications.invalidLogin.reset">Are you sure you want to reset the
+        invalid authentications for this application?</string>
 
     <!-- Strings for Facilities -->
     <string name="ui.admin.facilities.create.core.title">Facility Profile</string>
@@ -127,10 +142,13 @@
     <string name="ui.admin.system.logs.show">Show Logs From</string>
     <string name="ui.admin.system.logs.local">Local Service</string>
     <string name="ui.admin.system.logs.remote">Realm Service</string>
-    <string name="ui.admin.system.confirm.disableService">Are you sure you want to disable this service?</string>
-    <string name="ui.admin.system.confirm.enableService">Are you sure you want to enable this service?</string>
-    <string name="ui.admin.system.confirm.serviceChange">The specified service change has been made. You may need to restart the gateway for this change to take effect.</string>
-    
+    <string name="ui.admin.system.confirm.disableService">Are you sure you want to disable this
+        service?</string>
+    <string name="ui.admin.system.confirm.enableService">Are you sure you want to enable this
+        service?</string>
+    <string name="ui.admin.system.confirm.serviceChange">The specified service change has been made.
+        You may need to restart the gateway for this change to take effect.</string>
+
     <string name="ui.admin.system.probe.show">Show Probes From</string>
 
     <!-- Mail  -->
@@ -199,7 +217,7 @@
     <string name="org.santedb.widget.admin.panel.place.profile.type">Type</string>
     <string name="org.santedb.widget.admin.panel.place.profile.location">Location</string>
     <string name="org.santedb.widget.admin.panel.place.profile.parent">Parent</string>
-    
+
 
     <!-- Edit Identity Domain -->
     <string name="ui.admin.domain.edit.core.title">Identity Domain Properties</string>
@@ -241,9 +259,11 @@
     <!-- Bug Reporting -->
     <string name="ui.admin.bug.user">Submitter</string>
     <string name="ui.admin.bug.description">Description</string>
-    <string name="ui.admin.bug.description.help">Enter a brief description of the bug you've encountered.</string>
+    <string name="ui.admin.bug.description.help">Enter a brief description of the bug you've
+        encountered.</string>
     <string name="ui.admin.bug.reproduce">Steps to Reproduce</string>
-    <string name="ui.admin.bug.reproduce.help">Enter the discrete steps you took before the error appeared</string>
+    <string name="ui.admin.bug.reproduce.help">Enter the discrete steps you took before the error
+        appeared</string>
     <string name="ui.admin.bug.attachments">Attachments</string>
     <string name="ui.admin.bug.attach.log">Attach my log file (if you get an error un-check this)</string>
     <string name="ui.admin.bug.attach.config">Attach my configuration file</string>
@@ -252,23 +272,62 @@
     <string name="ui.admin.bug.onlineOnly">You must be online to submit a bug</string>
 
     <!-- Queue Management -->
-    <string name="ui.admin.queue.resubmit.confirm">Are you sure you want to resubmit all objects in {queue} for re-dispatch?</string>
-    <string name="ui.admin.queue.purge.confirm">Are you sure you want to PURGE all objects in {queue}? These messages will be erased forever.</string>
+    <string name="ui.admin.queue.resubmit.confirm">Are you sure you want to resubmit all objects in
+        {queue} for re-dispatch?</string>
+    <string name="ui.admin.queue.purge.confirm">Are you sure you want to PURGE all objects in
+        {queue}? These messages will be erased forever.</string>
     <string name="ui.admin.queue.contents.name">Queue Path</string>
     <string name="ui.admin.queue.contents.size">Waiting Messages</string>
 
     <!-- Pub/Sub Management -->
-    <string name="ui.admin.pubsub.disable.confirm">Are you sure you want to disable this subscription? The remote endpoint will stop receiving notifications from this instance of SanteDB</string>
-    <string name="ui.admin.pubsub.enable.confirm">Are you sure you want to enable this subscription? The remote endpoint will begin receiving notifications from this instance of SanteDB</string>
+    <string name="ui.admin.pubsub.disable.confirm">Are you sure you want to disable this
+        subscription? The remote endpoint will stop receiving notifications from this instance of
+        SanteDB</string>
+    <string name="ui.admin.pubsub.enable.confirm">Are you sure you want to enable this subscription?
+        The remote endpoint will begin receiving notifications from this instance of SanteDB</string>
     <string name="ui.admin.pubsub.delete.confirm">Are you sure you want to delete this subscription?</string>
     <string name="ui.admin.pubsub.save.success">Pub-sub channel {name} was saved successfully</string>
     <string name="ui.admin.pubsub.save.error">Pub-sub channel {name} failed save : {reason}</string>
 
-    
+
     <!-- Import -->
     <string name="org.santedb.widget.admin.panel.data.import.file">Import Details</string>
     <string name="org.santedb.widget.admin.panel.data.import.issues">Detected Issues</string>
 
     <!-- Facility Editing -->
-    <string name="ui.admin.places.edit.profile.title">Place Properties</string>
+
+
+    <!-- Foreign Data -->
+    <string name="ui.admin.alien.upload.title">Upload Data Import File</string>
+    <string name="ui.admin.alien.upload.description"><![CDATA[Use this form to upload a external data file in a supported format (example: CSV) to the SanteDB server. SanteDB will validate your submission and will process the import when the next scheduled import job runs.]]></string>
+    <string name="ui.admin.alien.upload.fileName">File</string>
+    <string name="ui.admin.alien.upload.fileName.hint">Select a compatible file from your computer
+        to upload</string>
+    <string name="ui.admin.alien.upload.mapping">Mapping</string>
+    <string name="ui.admin.alien.upload.mapping.hint"><![CDATA[Select the type of file you are uploading. This will instruct the SanteDB server to use a specific series of import rules for your file]]></string>
+    <string name="ui.admin.alien.upload.notes">Friendly Name</string>
+    <string name="ui.admin.alien.upload.notes.hint"><![CDATA[Add descriptive notes about this upload]]></string>
+    <string name="ui.admin.alien.upload.success">External data was uploaded successfully</string>
+    <string name="ui.admin.alien.upload.fail">Error submitting external data to server</string>
+    <string name="ui.admin.alien.delete.confirm">Are you sure you want to delete this data
+        submission? (note: this will not remove any already imported data)</string>
+    <string name="ui.admin.alien.delete.success">Data submission deleted</string>
+    <string name="ui.admin.alien.reschedule.confirm">Are you sure you want to reschedule this
+        import? If there are errors which have not been corrected, the import may not succeed again.</string>
+    <string name="ui.admin.alien.reschedule.success">Data submission scheduled for execution</string>
+    <string name="ui.admin.alien.submission.view.title">Data Import File - {name}</string>
+
+    <!-- Place Editing -->
+    <string name="org.santedb.widget.admin.panel.place.facilities">Service Facilities</string>
+    <string name="org.santedb.widget.admin.panel.place.profile">Place Properties</string>
+    <string name="org.santedb.widget.admin.panel.place.relationships">Relationships</string>
+    <string name="ui.admin.place.edit.profile.title">Place Properties</string>
+    <string name="ui.admin.place.edit.associate.title">Associate Facility</string>
+    <string name="ui.admin.place.edit.associate.new">Associate a New Facility</string>
+    <string name="ui.admin.place.edit.associate.existing">Associate an Existing Facility</string>
+    <string name="ui.admin.place.edit.associate.success">Association successfully created</string>
+    <string name="ui.admin.place.edit.associate.failure">Association was not created: {e}</string>
+    <string name="ui.admin.place.edit.associate.remove.confirm">Are you sure you want to remove the association between this place and {id}?</string>
+    <string name="ui.admin.place.edit.associate.remove.succes">Place association successfully removed</string>
+    <string name="ui.admin.place.edit.associate.remove.failure">Erorr removing the place association - {e}</string>
 </resources>

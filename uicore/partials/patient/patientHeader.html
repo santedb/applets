@@ -41,20 +41,32 @@
                     </div>
                     <div class="col-6">
 
-                        <div class="p-2 flex-grow-1 float-right"
-                            ng-if="$root.system.config.application.setting['aa.preferred'] &amp;&amp; patient.identifier[$root.system.config.application.setting['aa.preferred']]">
-                            <h5 class="m-0 p-0"><i class="fas fa-id-card"></i>
-                                {{ patient.identifier[$root.system.config.application.setting['aa.preferred']][0].value
-                                }}
-                                <span class="d-none d-md-inline">
-                                    <span class="badge badge-primary">{{
-                                        patient.identifier[$root.system.config.application.setting['aa.preferred']][0].domainModel.name
-                                        }}</span>
-                                </span>
+                        <div class="p-2 flex-grow-1 float-right">
+                            <h5 class="m-0 p-0">
+                                <div
+                                    ng-if="$root.system.config.application.setting['aa.preferred'] &amp;&amp; patient.identifier[$root.system.config.application.setting['aa.preferred']]">
+                                    <i class="fas fa-id-card"></i>
+                                    {{
+                                    patient.identifier[$root.system.config.application.setting['aa.preferred']][0].value
+                                    }}
+                                    <span class="d-none d-md-inline">
+                                        <span class="badge badge-primary">{{
+                                            patient.identifier[$root.system.config.application.setting['aa.place.preferred']][0].domainModel.name
+                                            }}</span>
+                                    </span>
+                                </div>
+                                <div ng-if="!$root.system.config.application.setting['aa.preferred'] || !patient.identifier[$root.system.config.application.setting['aa.preferred']]">
+                                        <div class="p-2"
+                                            ng-if="id[0].value &amp;&amp; domain != $root.system.config.application.setting['aa.preferred']"
+                                            ng-repeat="(domain, id) in patient.identifier track by $index">
+                                            <i class="far fa-id-card"></i> {{ id[0].value }} <span class="badge badge-info">{{
+                                                id[0].domainModel.name }}</span>
+                                        </div>
+                                </div>
                             </h5>
                         </div>
                     </div>
-                    <div class="col-md-10 col-sm-12">
+                    <div class="col-sm-12">
                         <div class="d-flex flex-wrap justify-content-between">
                             <div class="p-2"><i class="fas"
                                     ng-class="{ 'fa-male' : patient.genderConceptModel.mnemonic == 'Male' , 'fa-female' :  patient.genderConceptModel.mnemonic == 'Female' }"></i>
@@ -68,32 +80,11 @@
                                     class="badge badge-dark" ng-if="patient.deceasedDate">{{
                                     'ui.model.patient.deceasedIndicator' | i18n }}</span>
                                 {{ patient.dateOfBirth | age: 'y':patient.deceasedDate }} )</div>
+                                <div class="p-2" ng-if="patient.address"><i class="fas fa-home"></i> {{ patient.address | address }}</div>
+                            <div class="p-2" ng-if="patient.telecom"><i class="fas fa-home"></i> {{ patient.telecom | telecom }}</div>
                         </div>
                     </div>
-                    <div class="col-md-2 d-none d-md-block">
-                        <div class="p-2 float-right">
-                            <button type="button" class="btn btn-link collapse-indicator" data-toggle="collapse"
-                                data-target="#additionalDemographics"><i class="fa fa-chevron-right"></i></button>
-                        </div>
-                    </div>
-                </div>
-                <div class="collapse" id="additionalDemographics">
-                    <div class="row">
-                        <div class="col-4">
-                            <div class="p-2 flex-grow-1"><i class="fas fa-home"></i> {{ patient.address | address }}
-                            </div>
-                        </div>
-                        <div class="col-6">
-                            <div class="d-flex flex-wrap justify-content-end">
-                                <div class="p-2"
-                                    ng-if="id[0].value &amp;&amp; domain != $root.system.config.application.setting['aa.preferred']"
-                                    ng-repeat="(domain, id) in patient.identifier track by $index">
-                                    <i class="far fa-id-card"></i> {{ id[0].value }} <span class="badge badge-info">{{
-                                        id[0].domainModel.name }}</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                   
                 </div>
             </div>
         </div>

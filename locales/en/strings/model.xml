@@ -108,12 +108,17 @@
   <string name="ui.model.version.changed">Changed Properties</string>
   <string name="ui.model.version.initial">Initial Version</string>
   <string name="ui.model.entity.id">UUID</string>
+  <string name="ui.model.entity.typeConcept">Type</string>
   <string name="ui.model.entity.relationship.hasA">HAS A</string>
   <string name="ui.model.entity.relationship.isA">IS A</string>
   <string name="ui.model.entity.relationship.Caregiver">Caregiver(s)</string>
   <string name="ui.model.entity.relationship.Citizen">Citizenship(s)</string>
   <string name="ui.model.entity.relationship.CoverageSponsor">Coverage/Sponsor</string>
   <string name="ui.model.entity.relationship.DedicatedServiceDeliveryLocation">Facilities</string>
+  <string name="ui.model.entity.relationship.Parent">Parent</string>
+  <string name="ui.model.entity.relationship.Parent.hint">Select the direct parent of this entity in the entity hierarchy</string>
+  <string name="ui.model.entity.relationship.Child">Child</string>
+  <string name="ui.model.entity.relationship.Children">Children</string>
   <string name="ui.model.entity.relationship.Employee">Employer</string>
   <string name="ui.model.entity.relationship.Location">Location</string>
   <string name="ui.model.entity.relationship.Guarantor">Guarantor</string>
@@ -240,7 +245,9 @@
   <string name="ui.model.patient.summary">Patient Summary</string>
   <string name="ui.model.place.name">Name</string>
   <string name="ui.model.place.classConcept">Classification</string>
+  <string name="ui.model.place.classConcept.hint">Select the SanteDB classification of the place which is being created</string>
   <string name="ui.model.place.typeConcept">Type</string>
+  <string name="ui.model.place.typeConcept.hint">Select the sub-classification of the place which you're creating (for example: Ward, Community Hospital, etc.)</string>
   <string name="ui.model.place.address">Address</string>
   <string name="ui.model.place.updatedBy">Last Update</string>
   <string name="ui.model.place.statusConcept">Status</string>
@@ -248,6 +255,7 @@
   <string name="ui.model.person.saveSuccess">Related person updated successfully</string>
   <string name="ui.model.place.saveSuccess">Place updated successfully</string>
   <string name="ui.model.place.name.component.other">Name</string>
+  <string name="ui.model.place.name.component.other.hint">Enter the official name of the place</string>
   <string name="ui.model.material.saveSuccess">Material updated successfully</string>
   <string name="ui.model.userEntity.saveSuccess">User updated successfully</string>
   <string name="ui.model.securityUser.saveSuccess">User updated successfully</string>
@@ -263,7 +271,6 @@
   <string name="ui.model.material.formConcept">Form</string>
   <string name="ui.model.material.statusConcept">Status</string>
   <string name="ui.model.material.updatedBy">Last Update</string>
-  <string name="ui.model.place.relationship.Parent">Parent</string>
   <string name="ui.admin.facilities.edit.core.title">Facility</string>
   <string name="ui.model.facility.id">Unique Identifier</string>
   <string name="org.santedb.widget.admin.tab.facility.profile">Facility Profile</string>

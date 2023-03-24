@@ -1,0 +1,13 @@
+<div  xmlns="http://www.w3.org/1999/xhtml" xmlns:sdb="http://santedb.org/applet">
+    <sdb:script static="false">~/controllers/places/place.js</sdb:script>
+    <sdb:state name="santedb-admin.data.place.view">
+        <sdb:demand>1.3.6.1.4.1.33349.3.1.5.9.2.4</sdb:demand>
+        <sdb:url>/{id}</sdb:url>
+        <sdb:view>
+            <sdb:controller>PlaceEditController</sdb:controller>
+            <sdb:title lang="en">View Place</sdb:title>
+        </sdb:view>
+    </sdb:state>
+    <!-- #include virtual="/org.santedb.uicore/partials/entity/entityHeader.html"-->
+    <widget-tabs context-name="'org.santedb.place.admin'" scoped-object="target" class="mb-2"></widget-tabs>
+</div>

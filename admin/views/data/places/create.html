@@ -7,5 +7,75 @@
             <sdb:controller>PlaceEditController</sdb:controller>
         </sdb:view>
     </sdb:state>
-    <!-- #include virtual="~/views/data/places/partial/edit.html" -->
+
+    <form ng-submit="savePlace(targetForm)" name="targetForm" novalidate="novalidate">
+        <div class="accordion mb-2" id="placeAccordion">
+            <div class="card">
+                <div class="card-header">
+                    <h2 class="mb-0">
+                        <button type="button" class="collapse-indicator btn btn-link p-0" data-toggle="collapse"
+                            data-target="#placeProfile" aria-expanded="true">
+                            <i class="fa"
+                                ng-class="{ 'fa-hospital' : target.classConcept == 'ff34dfa7-c6d3-4f8b-bc9f-14bcdc13ba6c', 'fa-map' : target.classConcept != 'ff34dfa7-c6d3-4f8b-bc9f-14bcdc13ba6c' }"></i>
+                            {{ 'ui.admin.places.edit.profile.title' | i18n }}
+                            <i class="fa fa-chevron-right"></i>
+                        </button>
+                    </h2>
+                </div>
+                <div class="collapse show" id="placeProfile">
+                    <div class="card-body container-fluid">
+                        <div class="form-group row"><!-- ng-if="target.classConcept != 'ff34dfa7-c6d3-4f8b-bc9f-14bcdc13ba6c'">-->
+                            <label class="col-sm-12 col-md-3 control-label required">
+                                {{ 'ui.model.place.classConcept' | i18n }}  <hint-popover hint-title="ui.model.place.classConcept" />
+                            </label>
+                            <div class="col-sm-12 col-md-9">
+                                <concept-select class="form-control" required="required" name="classInput" concept-set="'PlaceClass'" ng-model="target.classConcept"/>
+                                <div class="text-danger" ng-if="targetForm.classInput.$error['required']">
+                                    <i class="fa fa-exclamation-triangle"></i> {{ 'ui.error.required' | i18n }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group row"><!--ng-if="target.classConcept == 'ff34dfa7-c6d3-4f8b-bc9f-14bcdc13ba6c'">-->
+                            <label class="col-sm-12 col-md-3 control-label">
+                                {{ 'ui.model.place.typeConcept' | i18n }}  <hint-popover hint-title="ui.model.place.typeConcept" />
+                            </label>
+                            <div class="col-sm-12 col-md-9">
+                                <concept-select class="form-control" name="typeInput" concept-set="'PlaceTypeConcept'" ng-model="target.typeConcept"/>
+                                <div class="text-danger" ng-if="targetForm.typeInput.$error['required']">
+                                    <i class="fa fa-exclamation-triangle"></i> {{ 'ui.error.required' | i18n }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-sm-12 col-md-3 control-label required">
+                                {{'ui.model.place.name.component.other' | i18n }}  <hint-popover hint-title="ui.model.place.name.component.other" />
+                            </label>
+                            <div class="col-sm-12 col-md-9">
+                                <input class="form-control" type="text" required="required" autocomplete="__away" name="nameInput" ng-model="target.name.OfficialRecord[0].component.$other[0]" />
+                                <div class="text-danger" ng-if="targetForm.nameInput.$error['required']">
+                                    <i class="fa fa-exclamation-triangle"></i> {{ 'ui.error.required' | i18n }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-sm-12 col-md-3 control-label"
+                                for="name">{{ 'ui.model.entity.relationship.Parent' | i18n }}  <hint-popover hint-title="ui.model.entity.relationship.Parent" /></label>
+                            <div class="col-sm-12 col-md-9 input-group">
+                                <entity-search type="'Place'"
+                                    group-by="'address.Direct.component.State'" 
+                                    ng-model="target.relationship.Parent[0].target"
+                                    search-field="'name.component.value'"
+                                    filter="parentQuery"
+                                ></entity-search>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="btn-group float-right">
+            <button type="submit" id="saveUserButton" class="btn btn-primary"><i class="fa fa-check"></i>
+                {{ 'ui.action.save' | i18n }}</button>
+        </div>
+    </form>
 </div>

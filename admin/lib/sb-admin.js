@@ -75,3 +75,5 @@ SanteDB.application.addResourceViewer("SecurityApplicationInfo", function(state,
 SanteDB.application.addResourceViewer("SecurityApplication", function(state, parms) { state.go("santedb-admin.security.applications.edit", parms); return true; });
 SanteDB.application.addResourceViewer("SecurityDeviceInfo", function(state, parms) { state.go("santedb-admin.security.devices.edit", parms); return true; });
 SanteDB.application.addResourceViewer("SecurityDevice", function(state, parms) { state.go("santedb-admin.security.devices.edit", parms); return true; });
+SanteDB.application.addResourceViewer("Place", function(state, parms) { state.go("santedb-admin.data.place.view", parms); return true; });
+SanteDB.application.addResourceViewer("DiagnosticReport", function (state, parms) { state.go("santedb-admin.system.bug"); return true; });

@@ -171,5 +171,9 @@ angular.module('santedb').controller('AdminLayoutController', ["$scope", "$rootS
                 $state.go("santedb-admin.dashboard");
             }
         }
-    })
+    });
+
+    
+
 }]);
+

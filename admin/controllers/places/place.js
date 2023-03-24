@@ -30,14 +30,20 @@ angular.module('santedb').controller('PlaceEditController', ["$scope", "$rootSco
                 place.isMobile = false;
             }
 
-            if (typeof place.relationship === undefined) {
+            if (place.relationship === undefined) {
                 place.relationship = {
                     Parent: [
                         {
-
                         }
                     ]
                 };
+            }
+
+            // Is this the correct viewer?
+            // Get all child places
+            var children = await SanteDB.resources.place.findAsync({ 'relationship[bfcbb345-86db-43ba-b47e-e7411276ac7c].target': place.id }, "fastView");
+            if (children.resource) {
+                place.relationship.$child = children.resource.map(o => new EntityRelationship({ source: o.id, target: place.id, relationshipType: EntityRelationshipTypeKeys.Parent, holder: o.id, holderModel: o }));
             }
             return place;
         }
@@ -47,9 +53,16 @@ angular.module('santedb').controller('PlaceEditController', ["$scope", "$rootSco
         }
     }
 
-    if ($stateParams.id) {
+    if ($scope.$parent.scopedObject) // Prevent duplicate loading of this object
+    {
+        return;
+    }
+    else if ($stateParams.id) {
         initialize($stateParams.id).then((place) => {
-            $timeout(() => { $scope.target = place; });
+            $timeout(() => {
+                $scope.target = place;
+                $scope.editObject = angular.copy(place);
+            });
         });
     }
     else {
@@ -95,29 +108,29 @@ angular.module('santedb').controller('PlaceEditController', ["$scope", "$rootSco
 
 
                 // Fetch the parent
-                var parent = await SanteDB.resources.place.getAsync(place.relationship.Parent[0].target);
+                var parent = await SanteDB.resources.place.getAsync(place.relationship.Parent[0].target, "fastview");
                 var address = parent.address.Direct ||
                     parent.address.PhysicalVisit; // Grab the direct address of the parent
-                
+                delete (address[0].id); // we don't w|ant to update the address
                 switch (place.classConcept) {
 
                     case EntityClassKeys.Country:
-                        address[0].component.Country = [ place.name.OfficialRecord[0].component.$other[0] ];
+                        address[0].component.Country = [place.name.OfficialRecord[0].component.$other[0]];
                         break;
                     case EntityClassKeys.State:
-                        address[0].component.State = [ place.name.OfficialRecord[0].component.$other[0] ];
+                        address[0].component.State = [place.name.OfficialRecord[0].component.$other[0]];
                         break;
                     case EntityClassKeys.CountyOrParish:
-                        address[0].component.County = [ place.name.OfficialRecord[0].component.$other[0] ];
+                        address[0].component.County = [place.name.OfficialRecord[0].component.$other[0]];
                         break;
                     case EntityClassKeys.CityOrTown:
-                        address[0].component.City = [ place.name.OfficialRecord[0].component.$other[0] ];
+                        address[0].component.City = [place.name.OfficialRecord[0].component.$other[0]];
                         break;
                     case EntityClassKeys.PrecinctOrBorough:
-                        address[0].component.Precinct = [ place.name.OfficialRecord[0].component.$other[0] ];
+                        address[0].component.Precinct = [place.name.OfficialRecord[0].component.$other[0]];
                         break;
                 }
-                place.address = { Direct : address };
+                place.address = { Direct: address };
             }
 
             if (!$stateParams.id) {
@@ -129,7 +142,7 @@ angular.module('santedb').controller('PlaceEditController', ["$scope", "$rootSco
                 toastr.success(SanteDB.locale.getString("ui.admin.place.saveSuccess"));
             }
 
-            $state.go('santedb-admin.data.place.edit', { id: place.id });
+            $state.go('santedb-admin.data.place.view', { id: place.id });
         }
         catch (e) {
             $rootScope.errorHandler(e);

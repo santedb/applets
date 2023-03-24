@@ -289,7 +289,7 @@ var santedbApp = angular.module('santedb', ['ngSanitize', 'ui.router', 'oc.lazyL
 
         // Transitions
         $transitions.onBefore({}, function (transition) {
-            console.info(`Transitioned to ${transition._targetState._definition.self.name}`);
+            console.info(`Transitioning to ${transition._targetState._definition.self.name}`);
 
             if (Object.keys(transition._targetState.params).length == 0)
                 $rootScope._transition = transition._targetState._definition.self.name; //HACK: Used for transition back to this page when there is an ELEVATE on the auth interceptor
