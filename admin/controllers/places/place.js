@@ -39,12 +39,7 @@ angular.module('santedb').controller('PlaceEditController', ["$scope", "$rootSco
                 };
             }
 
-            // Is this the correct viewer?
-            // Get all child places
-            var children = await SanteDB.resources.place.findAsync({ 'relationship[bfcbb345-86db-43ba-b47e-e7411276ac7c].target': place.id }, "fastView");
-            if (children.resource) {
-                place.relationship.$child = children.resource.map(o => new EntityRelationship({ source: o.id, target: place.id, relationshipType: EntityRelationshipTypeKeys.Parent, holder: o.id, holderModel: o }));
-            }
+           
             return place;
         }
         catch (e) {
@@ -61,7 +56,6 @@ angular.module('santedb').controller('PlaceEditController', ["$scope", "$rootSco
         initialize($stateParams.id).then((place) => {
             $timeout(() => {
                 $scope.target = place;
-                $scope.editObject = angular.copy(place);
             });
         });
     }
@@ -84,12 +78,6 @@ angular.module('santedb').controller('PlaceEditController', ["$scope", "$rootSco
             }
         });
     }
-
-    // Initialize the query controls
-    $scope.parentQuery = {
-        classConcept: `!${EntityClassKeys.ServiceDeliveryLocation}`,
-        statusConcept: StatusKeys.Active
-    };
 
     $scope.savePlace = async function (form) {
 
@@ -152,34 +140,4 @@ angular.module('santedb').controller('PlaceEditController', ["$scope", "$rootSco
         }
     }
 
-    $scope.$watch("target.classConcept", function (n, o) {
-
-        if (n) {
-            switch (n) {
-                case EntityClassKeys.ServiceDeliveryLocation:
-                    $scope.parentQuery.classConcept == EntityClassKeys.ServiceDeliveryLocation;
-                    break;
-                case EntityClassKeys.Place:
-                    $scope.parentQuery.classConcept == '!ff34dfa7-c6d3-4f8b-bc9f-14bcdc13ba6c';
-                    break;
-                case EntityClassKeys.Country:
-                    $scope.parentQuery.classConcept == EmptyGuid;
-                    break;
-                case EntityClassKeys.State:
-                    $scope.parentQuery.classConcept = EntityClassKeys.Country;
-                    break;
-                case EntityClassKeys.CountyOrParish:
-                    $scope.parentQuery.classConcept = EntityClassKeys.State;
-                    break;
-                case EntityClassKeys.CityOrTown:
-                    $scope.parentQuery.classConcept = [EntityClassKeys.CountyOrParish, EntityClassKeys.State];
-                    break;
-                case EntityClassKeys.PrecinctOrBorough:
-                    $scope.parentQuery.classConcept = EntityClassKeys.CityOrTown;
-                    break;
-            }
-
-
-        }
-    });
 }]);

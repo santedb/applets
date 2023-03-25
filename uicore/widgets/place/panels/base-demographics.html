@@ -4,5 +4,113 @@
     </div>
     <form ng-if="panel.view == 'Edit'" ng-submit="savePlace(editForm)" name="panel.editForm">
 
+        <ul class="nav nav-tabs" role="tablist" id="placeEditForms">
+            <li class="active nav-item active" role="presentation">
+                <a class="nav-link active" href="javascript:void(0)" data-target="#placePropertiesTab"
+                    data-toggle="tab">
+                    <i class="fa fa-edit"></i> {{ 'ui.model.place.properties' | i18n }}
+                    <i class="text-danger fas fa-exclamation-circle"
+                        ng-if="panel.editForm.$error.required[0].$name.indexOf('birth') == 0"></i>
+                </a>
+            </li>
+            <li class="nav-item" role="presentation">
+                <a class="nav-link" href="javascript:void(0)" data-target="#placeNamesTab" data-toggle="tab">
+                    <i class="fa fa-globe-africa"></i> {{ 'ui.model.place.names' | i18n }}
+                    <i class="text-danger fas fa-exclamation-circle"
+                        ng-if="panel.editForm.$error.required[0].$name.indexOf('name') == 0"></i>
+                </a>
+            </li>
+            <li class="nav-item" role="presentation">
+                <a class="nav-link" href="javascript:void(0)"
+                    ng-if="scopedObject.classConcept == 'ff34dfa7-c6d3-4f8b-bc9f-14bcdc13ba6c'"
+                    data-target="#placeAddressTab" data-toggle="tab">
+                    <i class="fa fa-map-marked"></i> {{ 'ui.model.place.addresses' | i18n }}
+                    <i class="text-danger fas fa-exclamation-circle"
+                        ng-if="panel.editForm.$error.required[0].$name.indexOf('address') == 0"></i></a>
+            </li>
+            <li class="nav-item" role="presentation">
+                <a class="nav-link" href="javascript:void(0)"
+                    ng-if="scopedObject.classConcept == 'ff34dfa7-c6d3-4f8b-bc9f-14bcdc13ba6c'"
+                    data-target="#placeTelecomTab" data-toggle="tab">
+                    <i class="fa fa-phone"></i> {{ 'ui.model.place.telecoms' | i18n }}
+                </a>
+            </li>
+           
+        </ul>
+        <div class="tab-content">
+            <div role="tabpanel" class="tab-pane show active p-2" id="placePropertiesTab">
+                <div class="container-fluid">
+                    <div class="form-group row">
+                        <label class="control-label col-md-3 col-sm-12 required">{{ 'ui.model.place.classConcept' | i18n
+                            }} <hint-popover hint-title="ui.model.place.classConcept" /></label>
+                        <div class="col-md-9 col-sm-12">
+                            <concept-select class="form-control" required="required" name="classInput"
+                                concept-set="'PlaceClass'" ng-model="editObject.classConcept" />
+                            <div class="text-danger" ng-if="panel.editForm.classInput.$error['required']">
+                                <i class="fa fa-exclamation-triangle"></i> {{ 'ui.error.required' | i18n }}
+                            </div>
+                            <div class="text-warning" ng-if="!panel.editForm.classInput.$pristine">
+                                <i class="fa fa-info-circle"></i> {{ 'ui.model.place.classConcept.changeWarning' | i18n
+                                }}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-12 col-md-3 control-label required">
+                            {{ 'ui.model.place.typeConcept' | i18n }} <hint-popover
+                                hint-title="ui.model.place.typeConcept" />
+                        </label>
+                        <div class="col-sm-12 col-md-9">
+                            <concept-select
+                                ng-required="scopedObject.classConcept == 'ff34dfa7-c6d3-4f8b-bc9f-14bcdc13ba6c'"
+                                is-required="true" class="form-control" name="typeInput"
+                                concept-set="'PlaceTypeConcept'" ng-model="editObject.typeConcept" />
+                            <div class="text-danger" ng-if="panel.editForm.typeInput.$error['required']">
+                                <i class="fa fa-exclamation-triangle"></i> {{ 'ui.error.required' |
+                                i18n }}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-12 col-md-3 control-label required">
+                            {{'ui.model.place.name.component.other' | i18n }} <hint-popover
+                                hint-title="ui.model.place.name.component.other" />
+                        </label>
+                        <div class="col-sm-12 col-md-9">
+                            <input class="form-control" type="text" required="required" autocomplete="__away"
+                                name="nameInput" ng-model="editObject.name.OfficialRecord[0].component.$other[0]" />
+                            <div class="text-danger" ng-if="panel.editForm.nameInput.$error['required']">
+                                <i class="fa fa-exclamation-triangle"></i> {{ 'ui.error.required' |
+                                i18n }}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row form-group"
+                        ng-if="scopedObject.classConcept == 'ff34dfa7-c6d3-4f8b-bc9f-14bcdc13ba6c'">
+                        <label class="control-label col-sm-12 col-md-3">{{ 'ui.model.place.isMobile' | i18n
+                            }} <hint-popover hint-title="ui.model.place.isMobile" /></label>
+                        <div class="col-sm-12 col-md-9">
+                            <div class="custom-control custom-checkbox">
+                                <input type="checkbox" class="custom-control-input" id="isMobile"
+                                    ng-model="editObject.isMobile" />
+                                <label for="isMobile" class="custom-control-label"></label>
+                            </div>
+                        </div>
+                        <geo-edit owner-form="panel.editForm" geo="editObject.geo"></geo-edit>
+
+                    </div>
+                </div>
+            </div>
+            <div role="tabpanel" class="tab-pane p-2" id="placeNamesTab">
+                <name-edit name="editObject.name" no-add="false" no-type="false" simple-entry="true"
+                    owner-form="panel.editForm" allowed-components="'$other'" input-style="'simple'"></name-edit>
+            </div>
+            <div role="tabpanel" class="tab-pane p-2" id="placeAddressTab">
+            </div>
+            <div role="tabpanel" class="tab-pane p-2" id="placeTelecomTab">
+            </div>
+
+        </div>
+
     </form>
 </div>

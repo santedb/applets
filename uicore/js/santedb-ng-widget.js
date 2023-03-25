@@ -99,8 +99,14 @@ angular.module('santedb-lib')
 
                     $scope.setView = async function (panel, view) {
                         try {
-                            if($scope.scopedObject.$type) {
+                            if($scope.scopedObject.$type && view == 'Edit') {
+                                // lock the object for our user
                                 await SanteDB.resources[$scope.scopedObject.$type.toCamelCase()].checkoutAsync($scope.scopedObject.id);
+                                // Isolate the editing object
+                                if(!$scope.$parent.editObject)
+                                {
+                                    $scope.editObject = angular.copy($scope.scopedObject);
+                                }
                             }
                             $timeout(() => {
                                 $scope.original = angular.copy($scope.scopedObject);
@@ -123,6 +129,7 @@ angular.module('santedb-lib')
                         {
                             if($scope.scopedObject.$type) {
                                 await SanteDB.resources[$scope.scopedObject.$type.toCamelCase()].checkinAsync($scope.scopedObject.id);
+                                delete($scope.editObject);
                             }
                             $timeout(() => {
                                 $scope.scopedObject = $scope.original;

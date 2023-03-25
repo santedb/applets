@@ -1,5 +1,6 @@
 <div  xmlns="http://www.w3.org/1999/xhtml">
   
+    <hr ng-if="$index > 0"/>
     <div class="form-group row" ng-if="!noType">
         <label class="col-sm-12 col-md-3 control-label" ng-class="{'required': isRequired  &amp;&amp; $index == 0 || !noType &amp;&amp; (name.component.Given  || name.component.Family)}">{{ 'ui.model.entity.name.use' | i18n }} <hint-popover hint-title="ui.model.entity.name.use" /> </label>
         <div class="col-sm-12 col-md-9">
@@ -16,7 +17,7 @@
             <tag-input  ng-switch-default="" name="{{controlPrefix}}name{{$index }}prefix" class="form-control"
                 ng-model="name.component.Prefix" />
             <input autocomplete="__away"   ng-switch-when="simple" name="{{controlPrefix}}name{{$index }}prefix" type="text" class="form-control"
-                ng-model="name.component.Prefix"/>
+                ng-model="name.component.Prefix[0]"/>
         </div>
     </div>
     <div class="form-group row" ng-if="$root.system.config.application.setting['forbid.patient.name.given'] != 'true' &amp;&amp; allowedComponents.indexOf('given') > -1">
@@ -26,7 +27,7 @@
             <tag-input ng-required="isRequired" ng-switch-default="" name="{{controlPrefix}}name{{$index }}given" class="form-control"
                 ng-model="name.component.Given"  />
             <input autocomplete="__away"  ng-required="isRequired &amp;&amp; !$root.system.config.application.setting['optional.patient.name.given']" ng-switch-when="simple" name="{{controlPrefix}}name{{$index }}given" type="text" class="form-control"
-                ng-model="name.component.Given" />
+                ng-model="name.component.Given[0]" />
             <div class="text-danger" ng-if="ownerForm[controlPrefix + 'name' + $index  + 'given'].$invalid">
                 <i class="fas fa-exclamation-triangle"></i> {{ 'ui.error.required' | i18n }}</div>
         </div>
@@ -38,7 +39,7 @@
             <tag-input ng-required="isRequired" ng-switch-default="" name="{{controlPrefix}}name{{ $index }}family" class="form-control"
                 ng-model="name.component.Family"  />
             <input autocomplete="__away" ng-required="isRequired &amp;&amp; !$root.system.config.application.setting['optional.patient.name.family']" ng-switch-when="simple" name="{{controlPrefix}}name{{ $index }}family" type="text" class="form-control"
-                ng-model="name.component.Family" />
+                ng-model="name.component.Family[0]" />
             <div class="text-danger" ng-if="ownerForm[controlPrefix + 'name' + $index + 'family'].$invalid">
                 <i class="fas fa-exclamation-triangle"></i> {{ 'ui.error.required' | i18n }}</div>
         </div>
@@ -50,7 +51,7 @@
                 <tag-input ng-switch-default="" name="{{controlPrefix}}name{{$index }}suffix" class="form-control"
                     ng-model="name.component.Suffix"  />
                 <input autocomplete="__away"   ng-switch-when="simple" name="{{controlPrefix}}name{{$index }}suffix" type="text" class="form-control"
-                    ng-model="name.component.Suffix"  />
+                    ng-model="name.component.Suffix[0]"  />
             </div>
     </div>
     <div class="form-group row" ng-if="$root.system.config.application.setting['forbid.patient.name.other'] != 'true' &amp;&amp; allowedComponents.indexOf('$other') > -1">
@@ -59,7 +60,7 @@
             <tag-input ng-required="isRequired" ng-switch-default="" name="{{controlPrefix}}name{{$index }}$other" class="form-control"
                 ng-model="name.component.$other" />
             <input ng-required="isRequired" autocomplete="__away" ng-switch-when="simple" name="{{controlPrefix}}name{{$index }}$other" type="text" class="form-control"
-                ng-model="name.component.$other" />
+                ng-model="name.component.$other[0]" />
                 <div class="text-danger" ng-if="ownerForm[controlPrefix + 'name' + $index + '$other'].$invalid">
                     <i class="fas fa-exclamation-triangle"></i> {{ 'ui.error.required' | i18n }}</div>
         </div>

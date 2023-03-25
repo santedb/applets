@@ -105,25 +105,5 @@
         </div>
     </div>
 
-    <div class="row" ng-if="scopedObject.relationship.Parent[0].target">
-        <label class="col-md-3 col-sm-12 control-label">{{ 'ui.model.entity.relationship.Parent' | i18n }}</label>
-        <div class="col-md-9 col-sm-12">
-            <a ui-sref=".({id: scopedObject.relationship.Parent[0].target})"><i class="fas fa-map-pin"></i> {{
-                scopedObject.relationship.Parent[0].targetModel.name | name }} <span class="badge badge-light">{{
-                    scopedObject.relationship.Parent[0].targetModel.classConceptModel | concept }}</span></a>
-        </div>
-    </div>
-
-    <div class="row" ng-if="scopedObject.relationship.$child">
-        <label class="col-md-3 col-sm-12 control-label">{{ 'ui.model.entity.relationship.Children' | i18n }}</label>
-        <div class="col-md-9 col-sm-12">
-            <ui class="list-group">
-                <li ng-repeat="child in scopedObject.relationship.$child track by $index">
-                    <a ui-sref=".({id: child.holder})"><i class="fas fa-map-pin"></i> {{ child.holderModel.name | name
-                        }} <span class="badge badge-light">{{ child.holderModel.classConceptModel | concept
-                            }}</span></a>
-                </li>
-            </ui>
-        </div>
-    </div>
+    
 </div>

@@ -1,7 +1,7 @@
 <div xmlns="http://www.w3.org/1999/xhtml" xmlns:sdb="http://santedb.org/applet"
     oc-lazy-load="{name:'PlaceFacilityWidgetController', files: ['/org.santedb.admin/controllers/places/placeFacilityWidgetController.js'] }">
     <sdb:widget name="org.santedb.widget.admin.panel.place.facilities" type="Panel"
-        context="org.santedb.place.admin.profile" size="Medium" order="0">
+        context="org.santedb.place.admin.profile" size="Medium" order="20">
         <sdb:icon>fas fa-fw fa-hospital</sdb:icon>
         <sdb:description lang="en">Facilities</sdb:description>
     </sdb:widget>
@@ -109,7 +109,6 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            
                                         </div>
                                         <geo-edit owner-form="associateForm" geo="association.targetModel.geo"></geo-edit>
                                         <hr />

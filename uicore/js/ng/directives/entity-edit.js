@@ -192,6 +192,8 @@ angular.module('santedb-lib')
                 }
 
                 $scope.addName = function () {
+                    var newName = new EntityName({ component: { } });
+
                     $scope.nameEdit.push(new EntityName());
                 }
 
@@ -235,7 +237,7 @@ angular.module('santedb-lib')
                         flatNameList = [flatNameList[0]]; // simple entry, only edit first name
 
                     scope.nameEdit = flatNameList;
-                    scope.name = { "$other": flatNameList };
+                    //scope.name = { "$other": flatNameList };
 
                 }
 
@@ -257,7 +259,8 @@ angular.module('santedb-lib')
                     if (n && !n.$other) {
                         flattenName();
                     }
-                })
+                });
+                
             }
         }
     }])

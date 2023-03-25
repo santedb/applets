@@ -1,0 +1,66 @@
+<div xmlns="http://www.w3.org/1999/xhtml" xmlns:sdb="http://santedb.org/applet"
+    oc-lazy-load="{name:'PlaceHierarchyController', files: ['/org.santedb.admin/controllers/places/placeHierarchyController.js'] }">
+    <sdb:widget name="org.santedb.widget.admin.panel.place.hierarchy" type="Panel"
+        context="org.santedb.place.admin.profile" size="Medium" order="10">
+        <sdb:icon>fas fa-fw fa-sitemap</sdb:icon>
+        <sdb:description lang="en">Hierarchy</sdb:description>
+        <sdb:views>
+            <sdb:view type="Edit">
+                <sdb:demand>1.3.6.1.4.1.33349.3.1.5.9.2.4.2.0</sdb:demand>
+            </sdb:view>
+        </sdb:views>
+    </sdb:widget>
+
+    <div ng-if="!scopedObject">
+        <i class="fas fa-spin fa-circle-notch"></i> {{ 'ui.wait' | i18n }}
+    </div>
+    <div ng-if="scopedObject" ng-controller="PlaceHierarchyController" class="container-fluid">
+
+        <form name="panel.editForm" ng-submit="saveHierarchy(panel.editForm)">
+            <div class="form-group row">
+                <label class="col-12 font-weight-bold" for="parent">{{
+                    'ui.model.entity.relationship.Parent' | i18n }} <hint-popover
+                        hint-title="ui.model.entity.relationship.Parent" /></label>
+                <div class="col-12">
+                    <entity-search type="'Place'" ng-disabled="panel.view != 'Edit'"
+                        group-by="'address.Direct.component.State'" ng-model="scopedObject.relationship.Parent[0].target"
+                        search-field="'name.component.value'"
+                        for-relationship-type="'bfcbb345-86db-43ba-b47e-e7411276ac7c'"
+                        with-relationship-source-class="scopedObject.classConcept"></entity-search>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-12 font-weight-bold">
+                    {{ 'ui.model.entity.relationship.Children' | i18n }} <hint-popover
+                        hint-title="ui.model.entity.relationship.Children" />
+                </label>
+                <div class="col-12">
+                    <entity-table id="placeHierarchyTable" type="Place" search-field="name.component.value"
+                        stateless="true"
+                        can-filter="false"
+                        default-query="{ 'obsoletionTime' : 'null', _viewModel: 'fastView', 'relationship[Parent].target' : scopedObject.id }"
+                        render="{ name: 'renderName', classConcept: 'renderClass' }"
+                        i18n-prefix="'ui.model.entity.'"
+                        item-actions="[ { name: 'view', sref: 'santedb-admin.data.place.view', demand: '1.3.6.1.4.1.33349.3.1.5.9.2.4', className: 'btn-info', icon: 'fa fa-eye' }, { name: 'remove', action: 'removeChildPlace', demand: '1.3.6.1.4.1.33349.3.1.5.9.2.4.2.0', className: 'btn-danger', icon: 'fa fa-times' } ]"
+                        properties="[ 'name', 'classConcept' ]" button-bar="'#addChildHeader'" />
+                </div>
+
+                <div id="addChildHeader">
+                    <div class="input-group" ng-show="panel.view == 'Edit'">
+                        <entity-search type="'Place'" ng-disabled="panel.view != 'Edit'" style="width:75%"
+                            group-by="'address.Direct.component.State'" ng-model="newChild"
+                            search-field="'name.component.value'"
+                            for-relationship-type="'bfcbb345-86db-43ba-b47e-e7411276ac7c'"
+                            with-relationship-target-class="editObject.classConcept"></entity-search>
+                            <div class=" input-group-append">
+                        <button type="button" class="btn btn-primary input-group-btn" ng-click="addChildPlace(child)"><i
+                                class="fas fa-plus-circle"></i> {{ 'ui.action.add' | i18n }}</button>
+                            </div>
+                    </div>
+
+                </div>
+            </div>
+        </form>
+    </div>
+
+</div>

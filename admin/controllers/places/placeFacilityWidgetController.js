@@ -47,6 +47,7 @@ angular.module('santedb').controller('PlaceFacilityWidgetController', ["$scope",
         delete (newAddress.id);
         $scope.associationTemplate.targetModel.address.PhysicalVisit = newAddress;
     }
+
     $scope.association = angular.copy($scope.associationTemplate);
 
     $scope.renderName = function (plc) {
@@ -82,7 +83,7 @@ angular.module('santedb').controller('PlaceFacilityWidgetController', ["$scope",
                 toastr.success(SanteDB.locale.getString("ui.admin.place.edit.associate.remove.success"));
                 $("#facilityAssociationTable table").DataTable().ajax.reload();
             }
-            catch(e) {
+            catch (e) {
                 toastr.success(SanteDB.locale.getString("ui.admin.place.edit.associate.remove.fail", { e: e.message || e }));
                 $rootScope.errorHandler(e);
             }
@@ -156,4 +157,5 @@ angular.module('santedb').controller('PlaceFacilityWidgetController', ["$scope",
 
         }
     }
+
 }]);

@@ -321,6 +321,7 @@
     <string name="org.santedb.widget.admin.panel.place.facilities">Service Facilities</string>
     <string name="org.santedb.widget.admin.panel.place.profile">Place Properties</string>
     <string name="org.santedb.widget.admin.panel.place.relationships">Relationships</string>
+    <string name="org.santedb.widget.admin.panel.place.hierarchy">Hierarchy</string>
     <string name="ui.admin.place.edit.profile.title">Place Properties</string>
     <string name="ui.admin.place.edit.associate.title">Associate Facility</string>
     <string name="ui.admin.place.edit.associate.new">Associate a New Facility</string>
@@ -330,4 +331,5 @@
     <string name="ui.admin.place.edit.associate.remove.confirm">Are you sure you want to remove the association between this place and {id}?</string>
     <string name="ui.admin.place.edit.associate.remove.succes">Place association successfully removed</string>
     <string name="ui.admin.place.edit.associate.remove.failure">Erorr removing the place association - {e}</string>
+    <string name="ui.admin.place.edit.parent.change">Editing the parent of a place after it is created may have unintended consequences for other data element which use this information. You will also need to correct any addressing information on this place - are you sure you want to change the parent of this place?</string>
 </resources>

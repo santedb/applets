@@ -184,7 +184,10 @@ angular.module('santedb-lib')
                 copyNulls: '<', // 
                 minRender: '<', // The minimum number of results to fetch
                 changeClear: '<', // When the object is selected, these are the dependent fields to clear
-                isRequired: '=' // True if the selector is required
+                isRequired: '=', // True if the selector is required
+                forRelationshipType: '=', // If this is the target of the relationship then the default query can be auto-populated with this information
+                withRelationshipSourceClass: '=', // The class concept of the source object
+                withRelationshipTargetClass: '=' // The class concept of the target object
             },
             restrict: 'E',
             require: 'ngModel',
@@ -263,6 +266,7 @@ angular.module('santedb-lib')
             ],
             link: function (scope, element, attrs, ngModel) {
 
+                
                 // Extract property
                 function extractProperty(object, path) {
                     var r = object;
@@ -290,6 +294,7 @@ angular.module('santedb-lib')
                     var resultProperty = scope.valueSelector || scope.key || "id";
                     var selector = scope.selector;
                     var valueProperty = scope.valueProperty;
+                    var lastRuleCheck = null;
 
                     if (!searchProperty) {
                         switch (modelType) {
@@ -312,9 +317,35 @@ angular.module('santedb-lib')
                     $(element).find('option[value="? undefined:undefined ?"]').remove();
 
                     scope.$watch('filter', function (n, o) {
-                        if (n != o && n)
+                        if (n != o && n) {
                             filter = n;
+                        }
                     });
+
+                    // Is this part of a relationship? 
+                    if(scope.forRelationshipType) {
+                        scope.$watch(s=>s.forRelationshipType + (s.withRelationshipSourceClass || s.withRelationshipTargetClass), async function(n, o) {
+                            // We want to set the filter based on allowable types
+                            if(n && lastRuleCheck != n) {
+                                lastRuleCheck = n;
+                                filter = filter || { statusConcept: StatusKeys.Active };
+
+                                var serverRules = (await SanteDB.resources.entityRelationship.findAssociatedAsync(null, '_relationshipRule', {
+                                    sourceClass: scope.withRelationshipSourceClass,
+                                    targetClass: scope.withRelationshipTargetClass,
+                                    relationshipType: scope.forRelationshipType
+                                })).resource;
+                                if(serverRules.length > 0) {
+                                    
+                                    filter.classConcept = serverRules.map(o=>scope.withRelationshipSourceClass ? o.targetClass : o.sourceClass);
+                                }
+                                else {
+                                    filter.classConcept = EmptyGuid;
+                                }
+                            }
+                        });
+                    }
+
                     // Bind select 2 search
                     var select2 = $(element).select2({
                         language: {

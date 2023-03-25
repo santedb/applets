@@ -18564,6 +18564,30 @@ const BatchOperationType = {
 	 *             Ignore this object - it is for reference only            
 	 */
 	Ignore : 'Ignore',
+	/** 
+	 *             Automatically decide             
+	 */
+	AutoInt : 0,
+	/** 
+	 *             Insert the object only            
+	 */
+	InsertInt : 1,
+	/** 
+	 *             Insert the object or update it            
+	 */
+	InsertOrUpdateInt : 2,
+	/** 
+	 *             Update the object only            
+	 */
+	UpdateInt : 3,
+	/** 
+	 *             Delete the object            
+	 */
+	DeleteInt : 4,
+	/** 
+	 *             Ignore this object - it is for reference only            
+	 */
+	IgnoreInt : 5,
 }  // BatchOperationType 
 // SanteDB.Core.Model.Subscription.SubscriptionModeType, SanteDB.Core.Model, Version=3.0.0.0, Culture=neutral, PublicKeyToken=null
 // if(!SubscriptionModeType)

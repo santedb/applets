@@ -341,12 +341,13 @@ var santedbApp = angular.module('santedb', ['ngSanitize', 'ui.router', 'oc.lazyL
 
         /**
          * @summary Global Error Handler
+         * TODO: Move this over to a service
          */
         $rootScope.errorHandler = function (e) {
 
             // HACK: Angular JS - We want to have the error display update on digest
             $timeout(_ => {
-                $rootScope.error = $rootScope.prepareErrorForDisplay(e);
+                $rootScope.error = prepareErrorForDisplay(e);
                 var bugCallList = SanteDB.application.getResourceViewer("DiagnosticReport");
                 if (bugCallList)
                     $rootScope.error.fileBug = function () {
@@ -361,7 +362,7 @@ var santedbApp = angular.module('santedb', ['ngSanitize', 'ui.router', 'oc.lazyL
             })
         }
 
-        $rootScope.prepareErrorForDisplay = function (e) {
+        function prepareErrorForDisplay(e) {
             var userMessageKey = `error.type.${e.$type}.userMessage`;
             var userMessage = SanteDB.locale.getString(userMessageKey);
             if (userMessage == userMessageKey) // no special user message - show default
