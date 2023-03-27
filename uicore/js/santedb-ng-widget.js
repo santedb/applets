@@ -73,7 +73,14 @@ angular.module('santedb-lib')
                     $scope.hasView = function (panel, viewName) {
                         if (panel.views) {
                             var view = panel.views.find(o => o.type == viewName);
-                            if (view && view.demand && view.demand.length) {
+                            return view != null;
+                        }
+                    }
+
+                    $scope.disableView = function (panel, viewName) {
+                        if (panel.views) {
+                            var view = panel.views.find(o => o.type == viewName);
+                            if (view && view.demand && view.demand.length && view._demandSuccess === undefined) {
                                 Promise.all(view.demand.map(o => SanteDB.authentication.demandAsync(o)))
                                     .then(r => {
                                         switch (r) {
@@ -93,24 +100,23 @@ angular.module('santedb-lib')
                                         $(`#pnl${panel.id}${viewName}`).attr('title', SanteDB.locale.getString("ui.error.policy"));
                                     })
                             }
-                            return view != null;
                         }
                     }
 
                     $scope.setView = async function (panel, view) {
                         try {
-                            if($scope.scopedObject.$type && view == 'Edit') {
+                            if ($scope.scopedObject.$type && view == 'Edit') {
                                 // lock the object for our user
                                 await SanteDB.resources[$scope.scopedObject.$type.toCamelCase()].checkoutAsync($scope.scopedObject.id);
                                 // Isolate the editing object
-                                if(!$scope.$parent.editObject)
-                                {
+                                if (!$scope.$parent.editObject) {
                                     $scope.editObject = angular.copy($scope.scopedObject);
                                 }
                             }
                             $timeout(() => {
                                 $scope.original = angular.copy($scope.scopedObject);
                                 panel.view = view;
+                                $scope.altView = true;
                             });
                         }
                         catch (e) {
@@ -125,15 +131,16 @@ angular.module('santedb-lib')
                     }
 
                     $scope.closeView = async function (panel) {
-                        if (panel.editForm.$pristine || confirm(SanteDB.locale.getString("ui.action.cancel.confirm")))
-                        {
-                            if($scope.scopedObject.$type) {
+                        if (panel.editForm.$pristine || confirm(SanteDB.locale.getString("ui.action.cancel.confirm"))) {
+                            if ($scope.scopedObject.$type) {
                                 await SanteDB.resources[$scope.scopedObject.$type.toCamelCase()].checkinAsync($scope.scopedObject.id);
-                                delete($scope.editObject);
+                                delete ($scope.editObject);
                             }
                             $timeout(() => {
                                 $scope.scopedObject = $scope.original;
                                 delete (panel.view);
+                                $scope.altView = false;
+
                             })
                         }
                     }
@@ -142,11 +149,15 @@ angular.module('santedb-lib')
 
                         if (panel.view == 'Edit') {
                             if (panel.editForm) {
-                                $timeout(() => {
-                                    panel.editForm.$$element.submit();
-                                    if (panel.editForm.$valid)
+                                if (panel.editForm.$valid) {
+                                    $timeout(() => {
+                                        var formElement = panel.editForm.$$element;
+                                        formElement.submit();
                                         panel.view = null;
-                                }, 50);
+                                        $scope.altView = false;
+                                    });
+
+                                }
                             }
                             else
                                 panel.view = null;

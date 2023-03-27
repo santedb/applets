@@ -285,7 +285,7 @@ angular.module('santedb-lib')
 
                 $timeout(function () {
                     var modelType = scope.type;
-                    var filter = scope.filter || {};
+                    var filter = scope.filter || { statusConcept: StatusKeys.Active };;
                     var displayString = scope.display;
                     var searchProperty = scope.searchField;
                     var defaultResults = scope.defaultResults;
@@ -328,8 +328,6 @@ angular.module('santedb-lib')
                             // We want to set the filter based on allowable types
                             if(n && lastRuleCheck != n) {
                                 lastRuleCheck = n;
-                                filter = filter || { statusConcept: StatusKeys.Active };
-
                                 var serverRules = (await SanteDB.resources.entityRelationship.findAssociatedAsync(null, '_relationshipRule', {
                                     sourceClass: scope.withRelationshipSourceClass,
                                     targetClass: scope.withRelationshipTargetClass,
@@ -499,7 +497,10 @@ angular.module('santedb-lib')
 
                         }
                         if (scope.changeClear && val != ngModel.$viewValue && scope.changeClear.scope) {
-                            scope.changeClear.values.forEach(o => scope.changeClear.scope[o] = null);
+                            scope.changeClear.values.forEach(o => {
+                                console.info(scope.changeClear.resetTo);
+                                scope.changeClear.scope[o] = angular.copy(scope.changeClear.resetTo);
+                            });
                         }
                         //e.currentTarget.options.selectedIndex = e.currentTarget.options.length - 1;
                         if (valueProperty) {

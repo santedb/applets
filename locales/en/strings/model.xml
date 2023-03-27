@@ -107,6 +107,7 @@
   <string name="ui.model.version.replaces">Replaces Version</string>
   <string name="ui.model.version.changed">Changed Properties</string>
   <string name="ui.model.version.initial">Initial Version</string>
+  <string name="ui.model.entity.properties">Properties</string>
   <string name="ui.model.entity.id">UUID</string>
   <string name="ui.model.entity.classConcept">Classification</string>
   <string name="ui.model.entity.typeConcept">Type</string>
@@ -133,9 +134,10 @@
   <string name="ui.model.entity.relationship.structured">This entity is a proper record. To edit it, you\'ll need to visit the object\'s detail page</string>
   <string name="ui.model.entity.relationship.Student">School</string>
   <string name="ui.model.entity.relationship.MDMDuplicate">Duplicates</string>
-  <string name="ui.model.entity.address">Address</string>
+  <string name="ui.model.entity.address">Addresses</string>
   <string name="ui.model.entity.address.title">Address Registration</string>
   <string name="ui.model.entity.address.use">Address Type</string>
+  <string name="ui.model.entity.statusConcept">Status</string>
   <string name="ui.model.entity.address.use.hint"><![CDATA[Indicates the intended use of the address such as <code>PhysicalVisit</string> for a physical address, or <code>WorkPlace</code>, etc.]]></string>
   <string name="ui.model.entity.address.component.state">State/Province</string>
   <string name="ui.model.entity.address.component.state.hint"><![CDATA[A partition of a country (also known as a Region, Territory, Zone, etc.)]]></string>
@@ -289,6 +291,7 @@
   <string name="org.santedb.widget.admin.panel.facility.profile.services">Services</string>
   <string name="ui.model.place.isMobile">Is Mobile</string>
   <string name="ui.model.place.isMobile.hint">Check this box to indicate that the facility is not fixed (for example: a portable facility, vehicle or bus) as opposed to a building</string>
+  <string name="ui.model.geo.supplied">Known Geolocation</string>
   <string name="ui.model.geo.lat">Latitude</string>
   <string name="ui.model.geo.lng">Longitude</string>
   <string name="ui.model.job.name">Job Name</string>

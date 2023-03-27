@@ -1,34 +1,34 @@
 <div xmlns="http://www.w3.org/1999/xhtml">
     <div scroll-sticky="true">
         <div class="card shadow">
-            <div class="card-body" ng-if="!target">
+            <div class="card-body" ng-if="!entity">
                 <i class="fas fa-circle-notch fa-spin"></i> {{ 'ui.wait' | i18n }}
             </div>
-            <div class="card-body container-fluid p-2" ng-if="target">
+            <div class="card-body container-fluid p-2" ng-if="entity">
                 <div class="row">
                     <div class="col-6">
                         <div class="p-2 flex-grow-1">
-                            <h5 class="m-0">{{ target.name | name }} <span class="badge badge-info mr-2">{{
-                                    target.classConceptModel | concept }}</span>
+                            <h5 class="m-0">{{ entity.name | name }} <span class="badge badge-info mr-2">{{
+                                    entity.classConceptModel | concept }}</span>
                                 <div class="d-inline"><button id="btnSetState" type="button" data-toggle="dropdown"
                                         class="p-2 btn btn-sm"
-                                        ng-class="{ 'btn-primary' : target.statusConcept == 'c8064cbd-fa06-4530-b430-1a52f1530c27' , 'btn-success' : target.statusConcept == 'c34fcbf1-e0fe-4989-90fd-0dc49e1b9685' , 'btn-warning' : target.statusConcept == '0bbec253-21a1-49cb-b376-7fe4d0592cda', 'btn-danger' : target.statusConcept == 'cd4aa3c4-02d5-4cc9-9088-ef8f31e321c5', 'btn-dark' : target.statusConcept == 'bdef5f90-5497-4f26-956c-8f818cce2bd2' }">
-                                        {{ target.statusConceptModel | concept }}
+                                        ng-class="{ 'btn-primary' : entity.statusConcept == 'c8064cbd-fa06-4530-b430-1a52f1530c27' , 'btn-success' : entity.statusConcept == 'c34fcbf1-e0fe-4989-90fd-0dc49e1b9685' , 'btn-warning' : entity.statusConcept == '0bbec253-21a1-49cb-b376-7fe4d0592cda', 'btn-danger' : entity.statusConcept == 'cd4aa3c4-02d5-4cc9-9088-ef8f31e321c5', 'btn-dark' : entity.statusConcept == 'bdef5f90-5497-4f26-956c-8f818cce2bd2' }">
+                                        {{ entity.statusConceptModel | concept }}
                                         <div class="dropdown-menu">
                                             <a class="btn btn-link dropdown-item"
-                                                ng-if="target.statusConcept != 'c8064cbd-fa06-4530-b430-1a52f1530c27'"
+                                                ng-if="entity.statusConcept != 'c8064cbd-fa06-4530-b430-1a52f1530c27'"
                                                 ng-click="setState('c8064cbd-fa06-4530-b430-1a52f1530c27')"><i
                                                     class="fas fa-circle text-primary"></i> Activate</a>
                                             <a class="btn btn-link dropdown-item"
-                                                ng-if="target.statusConcept != '0bbec253-21a1-49cb-b376-7fe4d0592cda'"
+                                                ng-if="entity.statusConcept != '0bbec253-21a1-49cb-b376-7fe4d0592cda'"
                                                 ng-click="setState('0bbec253-21a1-49cb-b376-7fe4d0592cda')"><i
                                                     class="fas fa-circle text-warning"></i> Inactivate</a>
                                             <a class="btn btn-link dropdown-item"
-                                                ng-if="target.statusConcept != 'bdef5f90-5497-4f26-956c-8f818cce2bd2'"
+                                                ng-if="entity.statusConcept != 'bdef5f90-5497-4f26-956c-8f818cce2bd2'"
                                                 ng-click="setState('bdef5f90-5497-4f26-956c-8f818cce2bd2')"><i
                                                     class="fas fa-circle text-dark"></i> Obsolete</a>
                                             <a class="btn btn-link dropdown-item"
-                                                ng-if="target.statusConcept != 'cd4aa3c4-02d5-4cc9-9088-ef8f31e321c5'"
+                                                ng-if="entity.statusConcept != 'cd4aa3c4-02d5-4cc9-9088-ef8f31e321c5'"
                                                 ng-click="setState('cd4aa3c4-02d5-4cc9-9088-ef8f31e321c5')"><i
                                                     class="fas fa-circle text-danger"></i> Nullify</a>
                                         </div>
@@ -42,21 +42,21 @@
                         <div class="p-2 flex-grow-1 float-right">
                             <h5 class="m-0 p-0">
                                 <div
-                                    ng-if="$root.system.config.application.setting['aa.preferred'] &amp;&amp; target.identifier[$root.system.config.application.setting['aa.preferred']]">
+                                    ng-if="$root.system.config.application.setting['aa.preferred'] &amp;&amp; entity.identifier[$root.system.config.application.setting['aa.preferred']]">
                                     <i class="fas fa-id-card"></i>
                                     {{
-                                    target.identifier[$root.system.config.application.setting['aa.preferred']][0].value
+                                    entity.identifier[$root.system.config.application.setting['aa.preferred']][0].value
                                     }}
                                     <span class="d-none d-md-inline">
                                         <span class="badge badge-primary">{{
-                                            target.identifier[$root.system.config.application.setting['aa.place.preferred']][0].domainModel.name
+                                            entity.identifier[$root.system.config.application.setting['aa.place.preferred']][0].domainModel.name
                                             }}</span>
                                     </span>
                                 </div>
-                                <div ng-if="!$root.system.config.application.setting['aa.preferred'] || !target.identifier[$root.system.config.application.setting['aa.preferred']]">
+                                <div ng-if="!$root.system.config.application.setting['aa.preferred'] || !entity.identifier[$root.system.config.application.setting['aa.preferred']]">
                                         <div class="p-2"
                                             ng-if="id[0].value &amp;&amp; domain != $root.system.config.application.setting['aa.preferred']"
-                                            ng-repeat="(domain, id) in target.identifier track by $index">
+                                            ng-repeat="(domain, id) in entity.identifier track by $index">
                                             <i class="far fa-id-card"></i> {{ id[0].value }} <span class="badge badge-info">{{
                                                 id[0].domainModel.name }}</span>
                                         </div>
@@ -66,8 +66,8 @@
                     </div>
                     <div class="col-sm-12">
                         <div class="d-flex flex-wrap justify-content-between">
-                            <div class="p-2" ng-if="target.address"><i class="fas fa-home"></i> {{ target.address | address }}</div>
-                            <div class="p-2" ng-if="target.telecom"><i class="fas fa-home"></i> {{ target.telecom | telecom }}</div>
+                            <div class="p-2" ng-if="entity.address"><i class="fas fa-home"></i> {{ entity.address | address }}</div>
+                            <div class="p-2" ng-if="entity.telecom"><i class="fas fa-home"></i> {{ entity.telecom | telecom }}</div>
                         </div>
                     </div>
                 </div>
@@ -76,14 +76,14 @@
         </div>
     </div>
     <div class="m-0 alert alert-secondary"
-        ng-if="target.tag['$checkoutState'] &amp;&amp; target.tag['$checkoutState'] != $root.session.username">
-        <i ng-init="target._readonly = true" class="fas fa-lock"></i> {{ 'ui.notices.checkout' | i18n: { user:
-        target.tag['$checkoutState'] } }}
+        ng-if="entity.tag['$checkoutState'] &amp;&amp; entity.tag['$checkoutState'] != $root.session.username">
+        <i ng-init="entity._readonly = true" class="fas fa-lock"></i> {{ 'ui.notices.checkout' | i18n: { user:
+        entity.tag['$checkoutState'] } }}
     </div>
-    <div class="m-0 alert alert-dark" ng-if="target.tag['$pep.masked'] == 'true'">
+    <div class="m-0 alert alert-dark" ng-if="entity.tag['$pep.masked'] == 'true'">
         <i class="fas fa-exclamation-circle"></i> {{ 'ui.notices.privacyControls.masked' | i18n }}
     </div>
-    <div class="m-0 alert alert-warning" ng-if="target._upstream">
+    <div class="m-0 alert alert-warning" ng-if="entity._upstream">
         <span>
             <i class="fas fa-cloud"></i>
             {{ 'ui.view.upstream' | i18n }}
@@ -93,15 +93,15 @@
             {{ 'ui.action.download' | i18n }}
         </a>
     </div>
-    <div ng-if="target.obsoletionTime || target.statusConcept == '0bbec253-21a1-49cb-b376-7fe4d0592cda' || target.statusConcept == 'cd4aa3c4-02d5-4cc9-9088-ef8f31e321c5' || target.statusConcept == 'bdef5f90-5497-4f26-956c-8f818cce2bd2'"
-        ng-init="target._readonly=true">
+    <div ng-if="entity.obsoletionTime || entity.statusConcept == '0bbec253-21a1-49cb-b376-7fe4d0592cda' || entity.statusConcept == 'cd4aa3c4-02d5-4cc9-9088-ef8f31e321c5' || entity.statusConcept == 'bdef5f90-5497-4f26-956c-8f818cce2bd2'"
+        >
         <div class=" alert alert-dark">
-            <i class="fas fa-trash"></i>
+            <i class="fas fa-trash" ng-init="entity._readonly=true"></i>
             {{ 'ui.view.deletedRecord' | i18n }}
         </div>
     </div>
     <!-- Imported -->
-    <div class="m-0 alert alert-info" ng-if="target.tag['imported'] == 'true'">
+    <div class="m-0 alert alert-info" ng-if="entity.tag['imported'] == 'true'">
         <div class="d-flex justify-content-between">
             <div>
                 <i class="fas fa-file-import"></i> {{ 'ui.notices.imported' | i18n }}

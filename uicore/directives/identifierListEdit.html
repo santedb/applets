@@ -10,14 +10,27 @@
         <tbody>
             <tr ng-repeat="(authority, idArr) in identifier">
                 <td>{{ idArr[0].domainModel.name }}</td>
-                <td>
-                    <div ng-repeat="idValue in idArr">
-                    <input ng-pattern="idValue.domainModel.validation" 
-                        ng-model="idValue.value"
-                        class="form-control"
-                        name="id{{authority}}input"
-                        ng-readonly="idValue.readonly" 
-                        />
+                <td colspan="2">
+                    <div ng-repeat="idValue in idArr" class="w-100">
+                        <div class="input-group">
+                            <input ng-pattern="idValue.domainModel.validation" ng-model="idValue.value"
+                                class="form-control" name="id{{authority}}input" ng-readonly="idValue.readonly" 
+                                autocomplete="__away" autocapitalize="false"
+                                ng-if="idValue.operation != 'Delete'" />
+                            <div class="input-group-append">
+                                <span ng-if="idValue.operation == 'Delete'" class="input-group-text text-secondary"
+                                    style="text-decoration: line-through;">{{ idValue.value }}</span>
+                            </div>
+                            <div class="input-group-append btn-group">
+                                <button ng-if="idValue.domainModel.generator" ng-click="generateId(idValue)"
+                                    class="fas fa-info" type="button"><i class="fas fa-robot"></i></button>
+                                <button ng-if="idValue.operation != 'Delete'" type="button" class="btn btn-danger" ng-click="idValue.operation = 'Delete'"><i
+                                        class="fas fa-times"></i></button>
+                                        <button ng-if="idValue.operation == 'Delete'" type="button" class="btn btn-info" ng-click="idValue.operation = 'InsertOrUpdate'"><i
+                                            class="fas fa-undo"></i></button>
+                                </div>
+                        </div>
+                    </div>
                     <div ng-show="ownerForm['id' + authority + 'input'].$error['pattern']" class="text-danger">
                         <i class="fa fa-exclamation-triangle"></i>
                         {{ 'ui.error.pattern' | i18n }}
@@ -26,30 +39,23 @@
                         <i class="fa fa-exclamation-triangle"></i>
                         {{ 'ui.error.required' | i18n }}
                     </div>
-                    </div>
                 </td>
-                <td class="btn-group">
-                    <button ng-if="idValue.domainModel.generator" ng-click="generateId(idValue)"  class="fas fa-info" type="button" ><i class="fas fa-robot"></i></button>
-                    <button type="button" class="btn btn-danger" ng-click="removeIdentifier(authority)"><i class="fas fa-times"></i></button>
-                </td>
+
             </tr>
         </tbody>
-        <tfoot  ng-if="!noAdd">
+        <tfoot ng-if="!noAdd">
             <tr>
                 <td>
                     <select class="form-control" ng-model="newId.domainModel.domainName">
                         <option value="" selected="selected">---</option>
-                        <option ng-repeat="(k, auth) in authorities" value="{{auth.domainName}}">{{ auth.name }}</option>
+                        <option ng-repeat="(k, auth) in authorities" value="{{auth.domainName}}">{{ auth.name }}
+                        </option>
                     </select>
                 </td>
                 <td>
-                    <input ng-pattern="authorities[newId.domainModel.domainName].validation" 
-                        ng-model="newId.value"
-                        class="form-control"
-                        name="idNewinput"
-                        ng-required="newId.domainModel.domainName"
-                        ng-disabled="!newId.domainModel.domainName"
-                    />
+                    <input ng-pattern="authorities[newId.domainModel.domainName].validation" ng-model="newId.value"
+                        class="form-control" name="idNewinput" ng-required="newId.domainModel.domainName"
+                        ng-disabled="!newId.domainModel.domainName" />
                     <div ng-show="ownerForm.idNewinput.$error['pattern']" class="text-danger">
                         <i class="fa fa-exclamation-triangle"></i>
                         {{ 'ui.error.pattern' | i18n }}
@@ -60,8 +66,10 @@
                     </div>
                 </td>
                 <td class="btn-group">
-                    <button ng-if="authorities[newId.domainModel.domainName].generator" ng-click="generateId(newId)" class="btn btn-light" type="button" ><i class="fas fa-robot"></i></button>
-                    <button type="button" class="btn btn-success" ng-click="addIdentifier(newId)"><i class="fas fa-plus"></i></button>
+                    <button ng-if="authorities[newId.domainModel.domainName].generator" ng-click="generateId(newId)"
+                        class="btn btn-light" type="button"><i class="fas fa-robot"></i></button>
+                    <button type="button" class="btn btn-success" ng-click="addIdentifier(newId)"><i
+                            class="fas fa-plus"></i></button>
                 </td>
             </tr>
         </tfoot>

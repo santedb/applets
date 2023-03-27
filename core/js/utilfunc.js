@@ -226,8 +226,8 @@ if (!String.prototype.startsWith)
         return this.indexOf(start) == 0;
     };
 
-if(!Array.prototype.flat)
-    Array.prototype.flat = function() {
+if (!Array.prototype.flat)
+    Array.prototype.flat = function () {
         return this.reduce((acc, val) => acc.concat(val), []);
     }
 
@@ -251,7 +251,7 @@ String.prototype.toCamelCase = function () {
 String.prototype.pad = function (char, len) {
     var pad = char.repeat(len);
     return (pad + this).slice(-len);
-}    
+}
 
 /** 
  * @summary Copy object data stripping out identifiers
@@ -261,14 +261,14 @@ String.prototype.pad = function (char, len) {
  */
 function copyObject(fromObject, deepCopy) {
 
-    if(fromObject && typeof(fromObject) !== "string") {
+    if (fromObject && typeof (fromObject) !== "string") {
         var obj = angular.copy(fromObject);
-        delete(obj.id);
-        delete(obj.versionId);
-        
-        if(deepCopy)
-            Object.keys(obj).forEach(function(k) {
-                if(obj[k])
+        delete (obj.id);
+        delete (obj.versionId);
+
+        if (deepCopy)
+            Object.keys(obj).forEach(function (k) {
+                if (obj[k])
                     obj[k] = copyObject(obj[k]);
             });
         return obj;
@@ -338,7 +338,7 @@ async function prepareEntityForSubmission(entity) {
     // Update the address - Correcting any linked addresses to the strong addresses
     // TODO: 
     if (entity.address) {
-        var addressList = [];
+        var addressList = entity.address.$other || [];
         var promises = Object.keys(entity.address).map(async function (k) {
             try {
                 var addr = entity.address[k];
@@ -346,12 +346,15 @@ async function prepareEntityForSubmission(entity) {
                     addr = [addr];
 
                 var intlPromises = addr.map(async function (addrItem) {
-                    if(addrItem.useModel) // have to load use
+                    if (addrItem.useModel) // have to load use
                         addrItem.use = addrItem.useModel.id;
-                    if(!addrItem.use) 
+                    if (!addrItem.use)
                         addrItem.use = AddressUseKeys[k]
                     addrItem.component = addrItem.component || {};
-                    
+
+                    if(addrItem.component) {
+                        Object.keys(addrItem.component).forEach(o=> addrItem.component[o] = Array.isArray(addrItem.component[o]) ? addrItem.component[o] : [addrItem.component[o]]);
+                    }
 
                     delete (addrItem.useModel);
                     addressList.push(addrItem);
@@ -365,7 +368,7 @@ async function prepareEntityForSubmission(entity) {
         entity.address = { "$other": addressList };
     }
     if (entity.name) {
-        var nameList = [];
+        var nameList = entity.name.$other || [];
         Object.keys(entity.name).forEach(function (k) {
 
             var name = entity.name[k];
@@ -373,11 +376,14 @@ async function prepareEntityForSubmission(entity) {
                 name = [name];
 
             name.forEach(function (nameItem) {
-                if(nameItem.useModel) // have to load use
+                if (nameItem.useModel) // have to load use
                     nameItem.use = nameItem.useModel.id;
-                if(!nameItem.use) 
+                if (!nameItem.use)
                     nameItem.use = NameUseKeys[k]
 
+                if(nameItem.component) {
+                    Object.keys(nameItem.component).forEach(o=>nameItem.component[o] = Array.isArray(nameItem.component[o]) ? nameItem.component[o] : [nameItem.component[o]]);
+                }
                 delete (nameItem.useModel);
                 nameList.push(nameItem);
             })
@@ -385,20 +391,19 @@ async function prepareEntityForSubmission(entity) {
         });
         entity.name = { "$other": nameList };
     }
-    
+
     // Clear out the relationships of their MDM keys
-    if(entity.relationship) {
+    if (entity.relationship) {
         Object.keys(entity.relationship).forEach((k) => {
-            if(!Array.isArray(entity.relationship[k]))
-            {
-                entity.relationship[k] = [ entity.relationship[k] ];
+            if (!Array.isArray(entity.relationship[k])) {
+                entity.relationship[k] = [entity.relationship[k]];
             }
             entity.relationship[k] = entity.relationship[k].map((r) => {
-                if(r.targetModel && r.targetModel.id) {
+                if (r.targetModel && r.targetModel.id) {
                     r.target = r.targetModel.id;
                     delete r.targetModel;
                 }
-                if(r.holderModel && r.holderModel.id) {
+                if (r.holderModel && r.holderModel.id) {
                     r.holder = r.holderModel.id;
                     delete r.holderModel;
                 }
@@ -410,9 +415,9 @@ async function prepareEntityForSubmission(entity) {
         });
 
     }
-    
+
     // Remove any MDM keys
-    if(entity.relationship) {
+    if (entity.relationship) {
         delete entity.relationship['MDM-Duplicate'];
         delete entity.relationship['MDM-Master'];
         delete entity.relationship['MDM-Ignore'];
@@ -420,4 +425,43 @@ async function prepareEntityForSubmission(entity) {
         delete entity.relationship['Replaces'];
     }
 
+    return entity;
+}
+
+/**
+ * 
+ * @param {Guid} entityId The id of the entity to set the tag on
+ * @param {String} tagName The name of the tag
+ * @param {String} tagValue The value of the tag
+ */
+async function setEntityTag(entityId, tagName, tagValue) {
+
+    var parameters = {};
+    parameters[tagName] = tagValue;
+    return await SanteDB.resources.entity.invokeOperationAsync(entityId, "tag", parameters);
+
+}
+
+/**
+ * Set the status of the entity
+ * @param {Guid} entityId The identifier of the entity
+ * @param {Guid} newStatus The identifier of the state to set
+ * @param {String} entityTag The ETAG of the object which this method is attempting to patch
+ */
+async function setEntityState(entityId, entityTag, newStatus) {
+
+    // Set the status and update
+    var patch = new Patch({
+        appliesTo: new PatchTarget({
+            id: entityId
+        }),
+        change: [
+            new PatchOperation({
+                op: PatchOperationType.Replace,
+                path: "statusConcept",
+                value: newStatus
+            })
+        ]
+    });
+    await SanteDB.resources.entity.patchAsync(entityId, entityTag, patch);
 }

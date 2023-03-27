@@ -41,7 +41,7 @@ angular.module('santedb').controller('PlaceFacilityWidgetController', ["$scope",
 
     // Copy data from the parent scoped object
     if ($scope.$parent.scopedObject.address) {
-        var parentAddress = $scope.$parent.scopedObject.address.Direct || $scope.$parent.scopedObject.PhysicalVisit || [{}];
+        var parentAddress = $scope.$parent.scopedObject.address.PhysicalVisit || $scope.$parent.scopedObject.address.Direct;
         var newAddress = angular.copy(parentAddress[0]);
         newAddress.use = AddressUseKeys.PhysicalVisit;
         delete (newAddress.id);
@@ -59,6 +59,10 @@ angular.module('santedb').controller('PlaceFacilityWidgetController', ["$scope",
     $scope.renderType = function (plc) {
         return SanteDB.display.renderConcept(plc.typeConceptModel);
     }
+    $scope.renderStatusConcept = function (place) {
+        return SanteDB.display.renderStatus(place.statusConcept);
+    }
+
 
     // Add an associated facility popup
     $scope.addAssociatedFacility = async function () {

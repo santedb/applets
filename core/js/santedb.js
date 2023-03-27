@@ -3584,6 +3584,9 @@ function SanteDBWrapper() {
      */
     function AuthenticationApi() {
 
+        // Demands that are cached
+        var _cacheDemand = {};
+        setInterval(() => _cacheDemand = {}, 15000); // clear the cache every 10 seconds
         // Extract JWT data
         var _extractJwtData = function(jwtData) {
             if(jwsDataPattern.test(jwtData))
@@ -3660,16 +3663,27 @@ function SanteDBWrapper() {
         this.demandAsync = function (policy) {
             return new Promise(function (fulfill, reject) {
                 try {
+                    if(_cacheDemand[policy] !== undefined) {
+                        fulfill(_cacheDemand[policy]);
+                    }
+                    else {
                     _auth.getAsync({
                         resource: `pdp/${policy}`
                     })
-                        .then(function () { fulfill(_authentication.PolicyDecision.Grant); }) // fulfillment for the PDP means grant success
+                        .then(function () { 
+                            _cacheDemand[policy] = _authentication.PolicyDecision.Grant;
+                            fulfill(_authentication.PolicyDecision.Grant); 
+                        }) // fulfillment for the PDP means grant success
                         .catch(function (e) {
                             if (e.policyOutcome)
+                            {
+                                _cacheDemand[policy] = e.policyOutcome;
                                 fulfill(_authentication.PolicyDecision[e.policyOutcome]);
+                            }
                             else
                                 reject(e);
                         });
+                    }
                 }
                 catch (e) {
                     reject(e);

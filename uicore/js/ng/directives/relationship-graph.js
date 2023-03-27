@@ -49,7 +49,7 @@ angular.module('santedb-lib')
          */
         async function renderRelationship(entity, entityRelationship, fallbackRelationship, reverse, viewMode) {
             try {
-                if (!entityRelationship)
+                if (!entityRelationship || (!entityRelationship.target && !entityRelationship.targetModel))
                     return;
                 if (entityRelationship && entityRelationship.source && entityRelationship.source != entity.id && entityRelationship.target == entity.id)
                     reverse = true;
@@ -59,7 +59,7 @@ angular.module('santedb-lib')
                     entity = await SanteDB.resources.entity.getAsync(entityRelationship.holder || entityRelationship.source);
                 }
                 else if (!entity || !entity.$ref && !entity.name) {
-                    if (entity.classConceptModel && entity.$type != entity.classConceptModel.mnemonic) {
+                    if (entity && entity.classConceptModel && entity.$type != entity.classConceptModel.mnemonic) {
                         var repository = SanteDB.resources[entity.classConceptModel.mnemonic.toCamelCase()];
                         if (repository) {
                             entity = entityRelationship.targetModel = await repository.getAsync(entityRelationship.target, "full");

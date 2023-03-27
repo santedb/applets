@@ -316,8 +316,9 @@
         import? If there are errors which have not been corrected, the import may not succeed again.</string>
     <string name="ui.admin.alien.reschedule.success">Data submission scheduled for execution</string>
     <string name="ui.admin.alien.submission.view.title">Data Import File - {name}</string>
-
+    <string name="ui.admin.alien.upload.error">Error uploading external import file - {error}</string>
     <!-- Place Editing -->
+    <string name="ui.admin.places.edit.profile.title">Place Properties</string>
     <string name="org.santedb.widget.admin.panel.place.facilities">Service Facilities</string>
     <string name="org.santedb.widget.admin.panel.place.profile">Place Properties</string>
     <string name="org.santedb.widget.admin.panel.place.relationships">Relationships</string>
@@ -330,6 +331,12 @@
     <string name="ui.admin.place.edit.associate.failure">Association was not created: {e}</string>
     <string name="ui.admin.place.edit.associate.remove.confirm">Are you sure you want to remove the association between this place and {id}?</string>
     <string name="ui.admin.place.edit.associate.remove.succes">Place association successfully removed</string>
-    <string name="ui.admin.place.edit.associate.remove.failure">Erorr removing the place association - {e}</string>
+    <string name="ui.admin.place.edit.associate.remove.failure">Error removing the place association - {e}</string>
+    <string name="ui.admin.place.edit.child.add.confirm">The place you are attempting to add to this place already has a Parent. Do you want to reassign this place to a new parent?</string>
+    <string name="ui.admin.place.edit.child.add.success">Child place successfully associated</string>
+    <string name="ui.admin.place.edit.child.add.failure">Child place could not be associated with this place - {e}</string>
     <string name="ui.admin.place.edit.parent.change">Editing the parent of a place after it is created may have unintended consequences for other data element which use this information. You will also need to correct any addressing information on this place - are you sure you want to change the parent of this place?</string>
+    <string name="ui.admin.place.confirmDelete">Are you sure you want to delete this place?</string>
+    <string name="ui.admin.place.confirmPurge">Are you sure you want to purge this place?</string>
+    <string name="ui.admin.place.confirmUnDelete">Are you sure you want to un-delete this place?</string>
 </resources>

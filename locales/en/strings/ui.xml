@@ -62,12 +62,12 @@
       <string name="ui.state.new">New</string>
       <string name="ui.state.notrun">Not Yet Run</string>
       <string name="ui.state.running">Running</string>
-      <string name="ui.state.obsolete">Obsolete</string>
+      <string name="ui.state.obsolete">Obsolete </string>
       <string name="ui.state.cancelled">Cancelled</string>
       <string name="ui.state.complete">Complete</string>
       <string name="ui.state.abort">Aborted</string>
       <string name="ui.state.stop">Stopped</string>
-      <string name="ui.state.nullified">Entered in Error</string>
+      <string name="ui.state.nullified">Nullified/Entered in Error</string>
       <string name="ui.state.locked">Locked</string>
       <string name="ui.state.readonly">Readonly</string>
       <string name="ui.state.offline">Offline</string>
@@ -216,6 +216,8 @@
       <string name="ui.action.purge">Purge</string>
       <string name="ui.action.resubmit">Resubmit</string>
       <string name="ui.action.redirecting">Redirecting to appropriate page</string>
+      <string name="ui.action.export">Export</string>
+      <string name="ui.action.export.confirm">You are about to export potentially sensitive data from the CDR in XML format. Extra audits will be generated and your actions may be reviewed by an administrator. Do you want to continue?</string>
       <!-- Data Tables -->
       <string name="ui.table.empty">No Results Returned</string>
       <string name="ui.table.info">Showing _START_ to _END_ of _TOTAL_ results</string>
@@ -466,7 +468,7 @@
       <!-- Model Descriptions -->
       <string name="ui.view.upstream">This record is sourced from an external system. Actions for this record may be disabled until you download a local copy</string>
       <!-- Patient is deleted -->
-      <string name="ui.view.deletedRecord">This record is deleted and is kept for historical reference only. It cannot be updated or changed</string>
+      <string name="ui.view.deletedRecord">This record is deleted and/or marked as inactive and is kept for referential integrity and reference only.</string>
       <!-- Default applications -->
       <string name="org.santedb.debug">SanteDB SDK</string>
       <string name="org.santedb.administration">SanteDB Admin Console</string>

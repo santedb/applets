@@ -1,4 +1,4 @@
-<div  xmlns="http://www.w3.org/1999/xhtml">
+<div  xmlns="http://www.w3.org/1999/xhtml" ng-if="name.operation != 'Delete'">
   
     <hr ng-if="$index > 0"/>
     <div class="form-group row" ng-if="!noType">
@@ -68,7 +68,7 @@
     <div class="form-group row" ng-if="nameEdit.length &gt; 1 &amp;&amp; !noAdd">
         <div class="col">
             <div class="btn-group float-right">
-                <button type="button" ng-click="removeName($index)" class="btn btn-danger"><i
+                <button type="button" ng-click="removeName(name)" class="btn btn-danger"><i
                         class="fas fa-times"></i> {{ 'ui.action.remove' | i18n }}</button>
             </div>
         </div>

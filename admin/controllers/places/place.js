@@ -55,13 +55,13 @@ angular.module('santedb').controller('PlaceEditController', ["$scope", "$rootSco
     else if ($stateParams.id) {
         initialize($stateParams.id).then((place) => {
             $timeout(() => {
-                $scope.target = place;
+                $scope.entity = place;
             });
         });
     }
     else {
         // Create a templated place
-        $scope.target = new Place({
+        $scope.entity = new Place({
             classConcept: EntityClassKeys.Place,
             statusConcept: StatusKeys.Active,
             isMobile: false,
@@ -86,7 +86,7 @@ angular.module('santedb').controller('PlaceEditController', ["$scope", "$rootSco
         try {
             SanteDB.display.buttonWait("#savePlaceButton", true);
 
-            var place = $scope.target;
+            var place = angular.copy($scope.entity);
 
             // Correct the address information based on the type and parent
             if (!place.address &&
@@ -97,8 +97,7 @@ angular.module('santedb').controller('PlaceEditController', ["$scope", "$rootSco
 
                 // Fetch the parent
                 var parent = await SanteDB.resources.place.getAsync(place.relationship.Parent[0].target, "fastview");
-                var address = parent.address.Direct ||
-                    parent.address.PhysicalVisit; // Grab the direct address of the parent
+                var address = parent.address.PhysicalVisit; // Grab the direct address of the parent
                 delete (address[0].id); // we don't w|ant to update the address
                 switch (place.classConcept) {
 
@@ -118,8 +117,10 @@ angular.module('santedb').controller('PlaceEditController', ["$scope", "$rootSco
                         address[0].component.Precinct = [place.name.OfficialRecord[0].component.$other[0]];
                         break;
                 }
-                place.address = { Direct: address };
+                place.address = { PhysicalVisit: address };
             }
+
+            place = await prepareEntityForSubmission(place);
 
             if (!$stateParams.id) {
                 place = await SanteDB.resources.place.insertAsync(place);
@@ -137,6 +138,40 @@ angular.module('santedb').controller('PlaceEditController', ["$scope", "$rootSco
         }
         finally {
             SanteDB.display.buttonWait("#savePlaceButton", false);
+        }
+    }
+
+    
+    // Set the active state
+    $scope.setState = async function (status) {
+        try {
+            SanteDB.display.buttonWait("#btnSetState", true);
+            await setEntityState($scope.entity.id, $scope.entity.etag, status);
+            toastr.info(SanteDB.locale.getString("ui.model.place.saveSuccess"));
+            $state.reload();
+
+        }
+        catch (e) {
+            $rootScope.errorHandler(e);
+        }
+        finally {
+            SanteDB.display.buttonWait("#btnSetState", false);
+        }
+    }
+
+    
+    // Set the active state
+    $scope.setTag = async function (tagName, tagValue) {
+        try {
+            SanteDB.display.buttonWait("#btnClearTag", true);
+            await setEntityTag($stateParams.id, tagName, tagValue);
+            toastr.info(SanteDB.locale.getString("ui.model.place.saveSuccess"));
+        }
+        catch (e) {
+            $rootScope.errorHandler(e);
+        }
+        finally {
+            SanteDB.display.buttonWait("#btnClearTag", false);
         }
     }
 
