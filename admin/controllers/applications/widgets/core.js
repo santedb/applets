@@ -15,13 +15,13 @@
  * License for the specific language governing permissions and limitations under 
  * the License.
  */
-angular.module('santedb').controller('EditApplicationCoreController', ["$scope", "$rootScope", "$state", "$templateCache", "$stateParams", function ($scope, $rootScope, $state, $templateCache, $stateParams) {
-   
+angular.module('santedb').controller('EditApplicationCoreController', ["$scope", "$rootScope", "$state", "$templateCache", "$stateParams", "$timeout", function ($scope, $rootScope, $state, $templateCache, $stateParams, $timeout) {
+
     /**
      * @summary Reactivate Inactive device
      */
-     $scope.reactivateApplication = async function(application) {
-        if(!confirm(SanteDB.locale.getString("ui.admin.applications.reactivate.confirm")))
+    $scope.reactivateApplication = async function (application) {
+        if (!confirm(SanteDB.locale.getString("ui.admin.applications.reactivate.confirm")))
             return;
 
         try {
@@ -42,21 +42,19 @@ angular.module('santedb').controller('EditApplicationCoreController', ["$scope",
 
             // Send the patch
             SanteDB.display.buttonWait("#reactivateApplicationButton", true);
-            await  SanteDB.resources.securityApplication.patchAsync($stateParams.id, application.securityApplication.etag, patch)
-            application.securityApplication.obsoletionTime = null;
-            application.securityApplication.obsoletedBy = null;
-            try {
-                $scope.$apply();
-            }
-            catch(e) {}
+            await SanteDB.resources.securityApplication.patchAsync($stateParams.id, application.securityApplication.etag, patch)
+            $timeout(() => {
+                application.securityApplication.obsoletionTime = null;
+                application.securityApplication.obsoletedBy = null;
+            });
         }
         catch (e) {
-            $rootScope.errorHandler(e); 
+            $rootScope.errorHandler(e);
             SanteDB.display.buttonWait("#reactivateApplicationButton", false);
         }
         finally {
             SanteDB.display.buttonWait("#reactivateApplicationButton", false);
         }
     }
-  
+
 }]);

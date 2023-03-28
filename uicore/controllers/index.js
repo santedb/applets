@@ -413,4 +413,6 @@ var santedbApp = angular.module('santedb', ['ngSanitize', 'ui.router', 'oc.lazyL
                 $('body').addClass('modal-open');
         });
 
+        // Cascade an object across all scopes
+        
     }]);

@@ -1,12 +1,88 @@
 <div xmlns="http://www.w3.org/1999/xhtml" xmlns:sdb="http://santedb.org/applet">
-    <sdb:script static="false">~/controllers/places/edit.js</sdb:script>
+    <sdb:script static="false">~/controllers/places/facility.js</sdb:script>
     <sdb:state name="santedb-admin.data.facility.create">
         <sdb:demand>1.3.6.1.4.1.33349.3.1.5.9.2.4.2.0</sdb:demand>
         <sdb:url>/</sdb:url>
         <sdb:view>
-            <sdb:controller>PlaceEditController</sdb:controller>
+            <sdb:controller>FacilityEditController</sdb:controller>
             <sdb:title lang="en">New Facility</sdb:title>
         </sdb:view>
     </sdb:state>
-    <!-- #include virtual="~/views/data/facilities/partial/edit.html" -->
+    <form ng-submit="savePlace(targetForm)" name="targetForm" novalidate="novalidate">
+        <div class="accordion mb-2" id="placeAccordion">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="mb-0 card-title">
+                        <i class="fa fa-hospital"></i>
+                        {{ 'ui.admin.facility.edit.profile.title' | i18n }}
+                    </h5>
+                </div>
+                <div class="collapse show" id="placeProfile">
+                    <div class="card-body container-fluid">
+                        <div class="form-group row">
+                            <label class="col-sm-12 col-md-3 control-label required">
+                                {{ 'ui.model.place.typeConcept' | i18n }} <hint-popover
+                                    hint-title="ui.model.place.typeConcept" />
+                            </label>
+                            <div class="col-sm-12 col-md-9">
+                                <concept-select class="form-control" required="required" name="typeInput" concept-set="'PlaceTypeConcept'"
+                                    ng-model="entity.typeConcept" />
+                                <div class="text-danger" ng-if="targetForm.typeInput.$error['required']">
+                                    <i class="fa fa-exclamation-triangle"></i> {{ 'ui.error.required' | i18n }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-sm-12 col-md-3 control-label required">
+                                {{'ui.model.place.name.component.other' | i18n }} <hint-popover
+                                    hint-title="ui.model.place.name.component.other" />
+                            </label>
+                            <div class="col-sm-12 col-md-9">
+                                <input class="form-control" type="text" required="required" autocomplete="__away"
+                                    name="nameInput" ng-model="entity.name.OfficialRecord[0].component.$other[0]" />
+                                <div class="text-danger" ng-if="targetForm.nameInput.$error['required']">
+                                    <i class="fa fa-exclamation-triangle"></i> {{ 'ui.error.required' | i18n }}
+                                </div>
+                            </div>
+                        </div>
+                        <address-edit is-required="true" owner-form="targetForm"
+                            address="entity.address" simple-entry="true" no-type="true" no-add="true">
+                        </address-edit>
+                        <hr />
+                        <div class="mb-2">
+                            <div class="row form-group">
+                                <label class="control-label col-sm-12 col-md-3">{{ 'ui.model.place.isMobile' | i18n
+                                    }} <hint-popover hint-title="ui.model.place.isMobile" /></label>
+                                <div class="col-sm-12 col-md-9">
+                                    <div class="custom-control custom-checkbox">
+                                        <input type="checkbox" class="custom-control-input" id="isMobile"
+                                            ng-model="entity.isMobile" />
+                                        <label for="isMobile" class="custom-control-label"></label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <geo-edit owner-form="targetForm" geo="entity.geo"></geo-edit>
+                        <hr />
+                        <div class="form-group row">
+                            <label class="col-sm-12 col-md-3 control-label" for="name">{{
+                                'ui.model.entity.relationship.Parent' | i18n }} <hint-popover
+                                    hint-title="ui.model.entity.relationship.Parent" /></label>
+                            <div class="col-sm-12 col-md-9 input-group">
+                                <entity-search type="'Place'" group-by="'address.PhysicalVisit.component.State'"
+                                    ng-model="entity.relationship.Parent[0].target"
+                                    search-field="'name.component.value'"
+                                    for-relationship-type="'bfcbb345-86db-43ba-b47e-e7411276ac7c'"
+                                    with-relationship-source-class="entity.classConcept"></entity-search>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="btn-group float-right">
+            <button type="submit" id="saveUserButton" class="btn btn-primary"><i class="fa fa-check"></i>
+                {{ 'ui.action.save' | i18n }}</button>
+        </div>
+    </form>
 </div>

@@ -9,8 +9,14 @@ angular.module('santedb').controller('PlaceHierarchyController', ["$scope", "$ro
     $scope.renderName = function (plc) {
         return SanteDB.display.renderEntityName(plc.name);
     }
+    $scope.renderAddress = function (plc) {
+        return SanteDB.display.renderEntityAddress(plc.address);
+    }
     $scope.renderClass = function (plc) {
         return SanteDB.display.renderConcept(plc.classConceptModel);
+    }
+    $scope.renderType = function (plc) {
+        return SanteDB.display.renderConcept(plc.typeConceptModel);
     }
 
     $scope.renderStatusConcept = function (place) {
@@ -116,9 +122,11 @@ angular.module('santedb').controller('PlaceHierarchyController', ["$scope", "$ro
                 var result = await SanteDB.resources.bundle.insertAsync(submissionBundle);
                 toastr.success(SanteDB.locale.getString("ui.admin.place.edit.parent.change.success"));
 
-                // Refresh the selection 
+                var updated = await SanteDB.resources.place.getAsync($scope.scopedObject.id, "full"); // re-fetch the place
+         
                 $timeout(() => {
                     $scope.scopedObject.relationship.Parent[0] = result.resource.find(o => o.$type == "EntityRelationship" && o.operation == BatchOperationType.Insert || o.operation == BatchOperationType.InsertInt);
+                    SanteDB.display.cascadeScopeObject(SanteDB.display.getRootScope($scope), ['scopedObject', 'entity'], updated);
                 });
             }
             catch (e) {

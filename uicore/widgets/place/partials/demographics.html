@@ -35,7 +35,7 @@
     </div>
     <div class="row" ng-if="scopedObject.identifier">
         <label class="col-md-3 col-sm-12 control-label">{{ 'ui.model.entity.identifier' | i18n }}</label>
-        <div class="col-sm-9 col-xs-12">
+        <div class="col-md-9 col-xs-12">
             <div ng-if="scopedObject.identifier">
                 <ul class="list-group">
                     <li class="d-flex align-items-center" ng-repeat="(n, identifier) in scopedObject.identifier">
@@ -57,9 +57,21 @@
         </div>
     </div>
 
+    <div class="row alert-info" ng-if="scopedObject.isMobile">
+        <label class="col-md-3 col-sm-12 control-label">{{ 'ui.model.place.isMobile' | i18n }}</label>
+        <div class="col-md-9 col-sm-12">
+            <i class="fas fa-ambulance"></i> {{ 'ui.model.place.isMobile.on' | i18n }}
+        </div>
+    </div>
+    <div class="row" ng-if="scopedObject.geo">
+        <label class="col-md-3 col-sm-12 control-label">{{ 'ui.model.entity.geo' | i18n }}</label>
+        <div class="col-md-9 col-sm-12">
+            <a target="_blank" href="https://www.bing.com/maps?sp=point.{{scopedObject.geo.lat}}_{{scopedObject.geo.lng}}_{{scopedObject.name | name}}&amp;query={{scopedObject.geo.lat}},{{scopedObject.geo.lng}}#"><i class="fas fa-satellite"></i> {{ scopedObject.geo | geo }}</a>
+        </div>
+    </div>
     <div class="row">
         <label class="col-md-3 col-sm-12 control-label">{{ 'ui.model.place.address' | i18n }}</label>
-        <div class="col-sm-9 col-xs-12">
+        <div class="col-md-9 col-sm-12">
             <div ng-if="scopedObject.address">
                 <ul class="list-group">
                     <li class="d-flex align-items-center" ng-repeat="(n, address) in scopedObject.address">
@@ -81,8 +93,8 @@
         </div>
     </div>
     <div class="row">
-        <label class="col-sm-3 col-xs-12 control-label">{{ 'ui.model.place.telecom' | i18n }}</label>
-        <div class="col-sm-9 col-xs-12">
+        <label class="col-md-3 col-xs-12 control-label">{{ 'ui.model.place.telecom' | i18n }}</label>
+        <div class="col-md-9 col-xs-12">
             <div ng-if="scopedObject.telecom">
                 <ul class="list-group">
                     <li class="d-flex align-items-center" ng-repeat="(n, telecom) in scopedObject.telecom">

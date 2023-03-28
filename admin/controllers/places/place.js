@@ -26,19 +26,18 @@ angular.module('santedb').controller('PlaceEditController', ["$scope", "$rootSco
         try {
             var place = await SanteDB.resources.place.getAsync(id, "full");
 
-            if (typeof place.isMobile === undefined) {
+            if(place.classConcept == EntityClassKeys.ServiceDeliveryLocation) {
+                $state.go("santedb-admin.data.facility.view", {id: id});
+            }
+            if (place.isMobile === undefined) {
                 place.isMobile = false;
             }
-
-            if (place.relationship === undefined) {
-                place.relationship = {
-                    Parent: [
-                        {
-                        }
-                    ]
-                };
+            place.relationship = place.relationship || {};
+            if(!place.relationship.Parent) {
+                place.relationship.Parent = [{}]
             }
 
+            document.title = document.title + " - " + SanteDB.display.renderEntityName(place.name);
            
             return place;
         }
@@ -140,7 +139,6 @@ angular.module('santedb').controller('PlaceEditController', ["$scope", "$rootSco
             SanteDB.display.buttonWait("#savePlaceButton", false);
         }
     }
-
     
     // Set the active state
     $scope.setState = async function (status) {
@@ -158,7 +156,6 @@ angular.module('santedb').controller('PlaceEditController', ["$scope", "$rootSco
             SanteDB.display.buttonWait("#btnSetState", false);
         }
     }
-
     
     // Set the active state
     $scope.setTag = async function (tagName, tagValue) {

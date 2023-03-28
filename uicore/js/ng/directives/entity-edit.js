@@ -71,7 +71,10 @@ angular.module('santedb-lib')
                             County: [],
                             Precinct: [],
                             StreetAddressLine: [],
-                            PostalCode: []
+                            PostalCode: [],
+                            PostBox: [],
+                            CareOf: [],
+                            UnitIdentifier: []
                         }
                     });
                     $scope.addressEdit.push(newAddr);
@@ -149,6 +152,11 @@ angular.module('santedb-lib')
             },
             controller: ['$scope', '$rootScope', function ($scope, $rootScope) {
 
+                $scope.$watch((s)=>s.geo.lat + s.geo.lng, function(n,o) {
+                    if(n!=o && n && o) {
+                        delete($scope.geo.id); // force a change
+                    }
+                })
             }],
             link: function (scope, element, attrs) {
 
@@ -156,11 +164,15 @@ angular.module('santedb-lib')
                 if (!scope.controlPrefix)
                     scope.controlPrefix = '';
 
+                
                 if (!scope.geo) {
                     scope.geo = new GeoTag({
                         lat: 0,
                         lng: 0
                     });
+                }
+                else {
+                    scope.geo._supplied = true;
                 }
 
             }

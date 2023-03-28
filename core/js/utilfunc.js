@@ -338,7 +338,7 @@ async function prepareEntityForSubmission(entity) {
     // Update the address - Correcting any linked addresses to the strong addresses
     // TODO: 
     if (entity.address) {
-        var addressList = entity.address.$other || [];
+        var addressList = [];
         var promises = Object.keys(entity.address).map(async function (k) {
             try {
                 var addr = entity.address[k];
@@ -353,7 +353,22 @@ async function prepareEntityForSubmission(entity) {
                     addrItem.component = addrItem.component || {};
 
                     if(addrItem.component) {
-                        Object.keys(addrItem.component).forEach(o=> addrItem.component[o] = Array.isArray(addrItem.component[o]) ? addrItem.component[o] : [addrItem.component[o]]);
+                        Object.keys(addrItem.component).forEach(o=> {
+                            if(!Array.isArray(addrItem.component[o]))
+                            {
+                                if(typeof addrItem.component[o] === 'string')
+                                {
+                                    addrItem.component[o] = [addrItem.component[o]]
+                                }
+                                else if(typeof addrItem.component[o] === 'object' || addrItem.component[o]['0']) // Sometimes AngularJS will represent new objects as an object with property 0
+                                {
+                                    addrItem.component[o] = Object.keys(addrItem.component[o]).map(k=>addrItem.component[o][k]);
+                                }
+                                else {
+                                    addrItem.component[o] = [addrItem.component[o]]
+                                }
+                            }
+                        });
                     }
 
                     delete (addrItem.useModel);
@@ -368,7 +383,7 @@ async function prepareEntityForSubmission(entity) {
         entity.address = { "$other": addressList };
     }
     if (entity.name) {
-        var nameList = entity.name.$other || [];
+        var nameList = [];
         Object.keys(entity.name).forEach(function (k) {
 
             var name = entity.name[k];
@@ -382,7 +397,22 @@ async function prepareEntityForSubmission(entity) {
                     nameItem.use = NameUseKeys[k]
 
                 if(nameItem.component) {
-                    Object.keys(nameItem.component).forEach(o=>nameItem.component[o] = Array.isArray(nameItem.component[o]) ? nameItem.component[o] : [nameItem.component[o]]);
+                    Object.keys(nameItem.component).forEach(o=> {
+                        if(!Array.isArray(nameItem.component[o]))
+                        {
+                            if(typeof nameItem.component[o] === 'string')
+                            {
+                                nameItem.component[o] = [nameItem.component[o]]
+                            }
+                            else if(typeof nameItem.component[o] === 'object' || nameItem.component[o]['0']) // Sometimes AngularJS will represent new objects as an object with property 0
+                            {
+                                nameItem.component[o] = Object.keys(nameItem.component[o]).map(k=>nameItem.component[o][k]);
+                            }
+                            else {
+                                nameItem.component[o] = [nameItem.component[o]]
+                            }
+                        }
+                    });
                 }
                 delete (nameItem.useModel);
                 nameList.push(nameItem);

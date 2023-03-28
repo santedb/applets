@@ -8,18 +8,7 @@
             <sdb:title lang="en">View Facility</sdb:title>
         </sdb:view>
     </sdb:state>
-    <form name="targetForm" ng-submit="savePlace(targetForm)" novalidate="novalidate">
-        <div class="card shadow mb-4">
-            <div class="card-body">
-                <div class="d-flex align-items-center justify-content-start">
-                    <h5 class="card-title mb-0"><i class="fas fa-hospital"></i> {{ target.name | name }}</h5>
-                    <div class="ms-3 ml-3 badge badge-info">{{ target.typeConceptModel | concept }}</div>
-                </div>
-            </div>
-        </div>
-        <widget-tabs context-name="'org.santedb.facility.admin'" scoped-object="target" class="mb-2" />
-        <div class="d-flex">
-            <button type="submit" id="saveFacilityButton" class="btn btn-primary"><i class="fa fa-check"></i> {{ 'ui.action.save' | i18n }}</button>
-        </div>
-    </form>
+    <!-- #include virtual="/org.santedb.uicore/partials/entity/entityHeader.html"-->
+    <widget-tabs context-name="'org.santedb.facility.admin'" scoped-object="entity" class="mb-2" />
+
 </div>

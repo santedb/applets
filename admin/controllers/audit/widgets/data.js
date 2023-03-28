@@ -23,4 +23,35 @@ angular.module('santedb').controller('AuditDataController', ["$scope", "$rootSco
         $scope.navPush = { state: state, params: params };
     }
 
+    $scope.navigateObject = function (code, id) {
+        var type = "IdentifiedData";
+        switch (code) {
+            case "PAT":
+            case "Patient":
+                type = "Patient";
+                break;
+            case "PLC":
+            case "Place":
+                type = "Place";
+                break;
+            case "MAT":
+            case "Material":
+            case "MMAT":
+            case "ManufacturedMaterial":
+                type = "Material";
+                break;
+            case "ORG":
+            case "Organization":
+                type = "Organization";
+                break;
+            case "PSN":
+            case "Person":
+                type = "Person";
+                break;
+            default:
+                return;
+        }
+
+        SanteDB.application.callResourceViewer(type, $state, { id: id });
+    }
 }]);

@@ -15,11 +15,11 @@
  * License for the specific language governing permissions and limitations under 
  * the License.
  */
-angular.module('santedb').controller('EditApplicationExtendedController', ["$scope", "$rootScope", "$state", "$templateCache", "$stateParams", function ($scope, $rootScope, $state, $templateCache, $stateParams) {
+angular.module('santedb').controller('EditApplicationExtendedController', ["$scope", "$rootScope", "$state", "$templateCache", "$stateParams", "$timeout", function ($scope, $rootScope, $state, $templateCache, $stateParams, $timeout) {
 
     $scope.EntityClassKeys = EntityClassKeys;
-  
-   
+
+
     /**
      * @summary Save the specified application 
      */
@@ -43,13 +43,11 @@ angular.module('santedb').controller('EditApplicationExtendedController', ["$sco
             })
             $scope.scopedObject.entity.securityApplication = u.entity.id;
             let r = await SanteDB.resources.applicationEntity.insertAsync($scope.scopedObject.entity);
-            $scope.scopedObject.entity = r;
 
             toastr.success(SanteDB.locale.getString("ui.model.securityApplication.saveSuccess"));
-            try {
-                $scope.$apply();
-            }
-            catch(e) {}
+            $timeout(() => {
+                $scope.scopedObject.entity = r;
+            });
         }
         catch (e) {
             SanteDB.display.buttonWait("#saveApplicationButton", false);

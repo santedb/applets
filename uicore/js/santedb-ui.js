@@ -25,6 +25,33 @@ SanteDBWrapper.prototype.display = new function () {
 
     var __preferredName = "OfficialRecord";
     
+    function __cascadeScopeObject(scope, objectNames, value, processList) {
+
+        // Make sure we don't double process
+        processList = processList || [];
+        if(processList.indexOf(scope.$id) > -1) {
+            return;
+        }
+        processList.push(scope.$id);
+
+        objectNames.forEach(n => {
+            if(scope[n] !== undefined) {
+                scope[n] = value;
+            }
+        });
+
+        // Traverse siblings
+        if(scope.$$nextSibling) {
+            __cascadeScopeObject(scope.$$nextSibling, objectNames, value, processList);
+        }
+
+        // Traverse children
+        if(scope.$$childHead) {
+            __cascadeScopeObject(scope.$$childHead, objectNames, value, processList);
+        }
+    }
+
+
     /**
      * @summary Sets the preferred name type for rendering names
      * @param {string} nameType The name type preferred
@@ -285,11 +312,17 @@ SanteDBWrapper.prototype.display = new function () {
                 return "";
             else if (address.component) {
                 var addrStr = "";
+                if (address.component.CareOf)
+                    addrStr += `C/O ${address.component.CareOf}, `;
+                if (address.component.PostBox)
+                    addrStr += `P.O. Box ${address.component.PostBox}, `;
                 if (address.component.AdditionalLocator)
                     addrStr += address.component.AdditionalLocator + ", ";
+                if (address.component.UnitIdentifier)
+                    addrStr += address.component.UnitIdentifier + ", ";
                 if (address.component.StreetAddressLine)
                     addrStr += address.component.StreetAddressLine + ", ";
-                else if (address.component.AddressLine)
+                if (address.component.AddressLine)
                     addrStr += address.component.AddressLine + ", ";
                 if (address.component.Precinct)
                     addrStr += address.component.Precinct + ", ";
@@ -388,6 +421,49 @@ SanteDBWrapper.prototype.display = new function () {
     
             }
         }
+
+        /**
+         * 
+         * @param {number} decimal The degrees expressed as a decimal
+         * @returns {Object} A structure with degrees, minutes, and seconds
+         */
+        this.convertToDegrees = function(decimal) {
+            return {
+                deg: 0 | (decimal < 0 ? (decimal = -decimal) : decimal),
+                min: 0 | (((decimal += 1e-9) % 1) * 60),
+                sec: (0 | (((decimal * 60) % 1) * 6000)) / 100,
+              };
+        }
+
+        /**
+         * 
+         * @param {*} scope The scope to traverse up the scope tree for
+         * @returns The root scope on the tree
+         */
+        this.getRootScope = function(scope) {
+            while(scope.$parent) {
+                scope = scope.$parent;
+            }
+            return scope;
+        }
+
+        /**
+         * @method
+         * @summary Copies an object scross scopes (useful for updating all objects)
+         * @param {*} scope The angularJS scope to cascade the object to
+         * @param {*} objectNames The names to propogate on the scope 
+         * @param {*} value The value to set on the @param objectNames
+         */
+        this.cascadeScopeObject = function(scope, objectNames, value) {
+            // Ensure objects are an array
+            if(!Array.isArray(objectNames)) {
+                objectNames = [objectNames];
+            }
+            __cascadeScopeObject(scope, objectNames, value, []);
+
+        } 
+        
+        
 };
 
 

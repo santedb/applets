@@ -11,17 +11,18 @@
             <p class="m-auto"><i class="fas fa-circle-notch fa-spin"></i> {{ 'ui.wait' | i18n }}</p>
         </div>
     </div>
-    <div ng-show="scopedObject" ng-controller="ViewAuditController">
+    <div ng-show="scopedObject" ng-controller="AuditDataController">
         <div class="card" ng-repeat="o in scopedObject.audit.object track by $index">
             <div class="card-header">
                 <h5 class="m-1 card-title" ng-switch="o.idType">
+
                     <a ng-switch-when="Uri" href="{{o.id}}"> {{ o.id }} <sup><i
                                 class="fas fa-external-link-alt"></i></sup></a>
                     <a ng-switch-when="UserIdentifier" ui-sref="santedb-admin.security.users.edit({id:o.id})">
                         <i class="fas fa-user"></i> {{ o.id }}</a>
 
                     <a ng-switch-when="PatientNumber"
-                        ng-click="navigate('santedb-admin.mpi.patients.view', { id: o.id })">
+                        ng-click="navigateObject('PAT', o.id)">
                         <i class="fas fa-hospital-user"></i> {{ o.id }}</a>
                     <span ng-switch-when="Custom" ng-switch="o.customCode.code">
                         <a ng-switch-when="SecurityRole" ui-sref="santedb-admin.security.groups.edit({id:o.id})">

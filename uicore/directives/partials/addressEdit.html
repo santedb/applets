@@ -121,6 +121,18 @@
             </div>
         </div>
     </div>
+    <div class="form-group row" ng-if="addr._showExtra &amp;&amp; $root.system.config.application.setting['forbid.patient.address.postbox'] != 'true' &amp;&amp; (addr.use != '5724a9b6-24b6-43b7-8075-7a0d61fcb814' || addr.component.PostBox.length > 0) ">
+        <label class="col-sm-12 col-md-3 control-label">{{ 'ui.model.entity.address.component.postbox' | i18n }} <hint-popover hint-title="ui.model.entity.address.component.postbox" /></label>
+        <div class="col-sm-12 col-md-9">
+            <input autocomplete="__away" type="text" class="form-control" ng-model="addr.component.PostBox[0]" />
+        </div>
+    </div>
+    <div class="form-group row" ng-if="addr._showExtra &amp;&amp; $root.system.config.application.setting['forbid.patient.address.unitidentifier'] != 'true' ">
+        <label class="col-sm-12 col-md-3 control-label">{{ 'ui.model.entity.address.component.unitidentifier' | i18n }} <hint-popover hint-title="ui.model.entity.address.component.unitidentifier" /></label>
+        <div class="col-sm-12 col-md-9">
+            <input autocomplete="__away" type="text" class="form-control" ng-model="addr.component.UnitIdentifier[0]" />
+        </div>
+    </div>
     <div class="form-group row" ng-if="$root.system.config.application.setting['forbid.patient.address.street'] != 'true'">
         <label class="col-sm-12 col-md-3 control-label">{{ 'ui.model.entity.address.component.street' | i18n }} <hint-popover hint-title="ui.model.entity.address.component.street" /></label>
         <div class="col-sm-12 col-md-9">
@@ -131,6 +143,19 @@
         <label class="col-sm-12 col-md-3 control-label">{{ 'ui.model.entity.address.component.postalcode' | i18n }} <hint-popover hint-title="ui.model.entity.address.component.postalcode" /></label>
         <div class="col-sm-12 col-md-9">
             <input autocomplete="__away" type="text" class="form-control" ng-model="addr.component.PostalCode[0]" />
+        </div>
+    </div>
+    <div class="form-group row" ng-if="addr._showExtra &amp;&amp; $root.system.config.application.setting['forbid.patient.address.careof'] != 'true' ">
+        <label class="col-sm-12 col-md-3 control-label">{{ 'ui.model.entity.address.component.careof' | i18n }} <hint-popover hint-title="ui.model.entity.address.component.careof" /></label>
+        <div class="col-sm-12 col-md-9">
+            <input autocomplete="__away" type="text" class="form-control" ng-model="addr.component.CareOf[0]" />
+        </div>
+    </div>
+    <div class="form-group row">
+        <div class="col">
+            <div class="btn-group float-right">
+                <button class="btn btn-sm btn-link" type="button" ng-click="addr._showExtra = !addr._showExtra">{{ addr._showExtra ? 'ui.model.entity.address.collapse' : 'ui.model.entity.address.expand' | i18n }}</button>
+            </div>
         </div>
     </div>
     <div class="form-group row" ng-if="$index &gt; 0">

@@ -14,16 +14,13 @@ angular.module('santedb').controller('PlaceDemographicsController', ['$scope', '
             var bundle = new Bundle({ resource: [submissionObject] });
             await SanteDB.resources.bundle.insertAsync(bundle);
             var updated = await SanteDB.resources.place.getAsync($scope.scopedObject.id, "full"); // re-fetch the place
+         
             $timeout(() => {
-                if($scope.$parent.scopedObject) {
-                    $scope.$parent.scopedObject = updated;
-                }
-                else {
-                    $scope.scopedObject = updated
-                }
+                SanteDB.display.cascadeScopeObject(SanteDB.display.getRootScope($scope), ['scopedObject', 'entity'], updated);
             });
             toastr.success(SanteDB.locale.getString("ui.model.place.saveSuccess"));
             form.$valid = true;
+
         }
         catch (e) {
             $rootScope.errorHandler(e);

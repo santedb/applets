@@ -12,15 +12,10 @@
         <div class="accordion mb-2" id="placeAccordion">
             <div class="card">
                 <div class="card-header">
-                    <h2 class="mb-0">
-                        <button type="button" class="collapse-indicator btn btn-link p-0" data-toggle="collapse"
-                            data-target="#placeProfile" aria-expanded="true">
-                            <i class="fa"
-                                ng-class="{ 'fa-hospital' : entity.classConcept == 'ff34dfa7-c6d3-4f8b-bc9f-14bcdc13ba6c', 'fa-map' : entity.classConcept != 'ff34dfa7-c6d3-4f8b-bc9f-14bcdc13ba6c' }"></i>
+                    <h5 class="mb-0 card-title">
+                            <i class="fa fa-globe-africa"></i>
                             {{ 'ui.admin.places.edit.profile.title' | i18n }}
-                            <i class="fa fa-chevron-right"></i>
-                        </button>
-                    </h2>
+                    </h5>
                 </div>
                 <div class="collapse show" id="placeProfile">
                     <div class="card-body container-fluid">

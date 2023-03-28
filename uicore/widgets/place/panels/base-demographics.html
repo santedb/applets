@@ -50,7 +50,7 @@
                 <div class="tab-content">
                     <div role="tabpanel" class="tab-pane show active p-2" id="placePropertiesTab">
                         <div class="container-fluid">
-                            <div class="form-group row">
+                            <div class="form-group row" ng-if="editObject.classConcept != 'ff34dfa7-c6d3-4f8b-bc9f-14bcdc13ba6c'">
                                 <label class="control-label col-md-3 col-sm-12 required">{{
                                     'ui.model.place.classConcept' |
                                     i18n
@@ -111,9 +111,9 @@
                                         <label for="isMobile" class="custom-control-label"></label>
                                     </div>
                                 </div>
-                                <geo-edit owner-form="panel.editForm" geo="editObject.geo"></geo-edit>
-
                             </div>
+                            <geo-edit owner-form="panel.editForm" geo="editObject.geo" ng-if="scopedObject.classConcept == 'ff34dfa7-c6d3-4f8b-bc9f-14bcdc13ba6c'"></geo-edit>
+
                         </div>
                     </div>
                     <div role="tabpanel" class="tab-pane p-2" id="placeNamesTab">

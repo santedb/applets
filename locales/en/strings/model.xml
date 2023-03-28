@@ -153,9 +153,18 @@
   <string name="ui.model.entity.address.component.postalcode.hint"><![CDATA[A codified representation of the address used for postal delivery and/or package routing, etc.]]></string>
   <string name="ui.model.entity.address.component.country">Country</string>
   <string name="ui.model.entity.address.component.country.hint"><![CDATA[The country where the address resides]]></string>
+  <string name="ui.model.entity.address.component.postbox">P.O. Box</string>
+  <string name="ui.model.entity.address.component.postbox.hint"><![CDATA[The post-office box, mailbox number, or other identification for a delivery instruction]]></string>
+  <string name="ui.model.entity.address.component.unitidentifier">Unit/Suite #</string>
+  <string name="ui.model.entity.address.component.unitidentifier.hint"><![CDATA[The unit, suite, office, or other sub-division of the building]]></string>
+  <string name="ui.model.entity.address.component.careof">C/O</string>
+  <string name="ui.model.entity.address.component.careof.hint"><![CDATA[If delivery or other mail delivered to this address carries a care-of instruction]]></string>
+  <string name="ui.model.entity.address.expand">More Fields</string>
+  <string name="ui.model.entity.address.collapse">Less Fields</string>
   <string name="ui.model.entity.name">Name</string>
   <string name="ui.model.entity.name.title">Name Registration</string>
   <string name="ui.model.entity.name.use">Name Type</string>
+  <string name="ui.model.entity.geo">Geoposition</string>
   <string name="ui.model.entity.name.use.hint"><![CDATA[The intended use for the name. For example <code>OfficialRecord</code> would indicate the name is used on official documentation.]]></string>
   <string name="ui.model.entity.name.component.prefix">Prefix</string>
   <string name="ui.model.entity.name.component.prefix.hint"><![CDATA[A prefix or honorary title used (example: <code>Sir</code>, <code>Mr.</code>, <code>Ms.</code>)]]></string>
@@ -167,6 +176,8 @@
   <string name="ui.model.entity.name.component.suffix.hint"><![CDATA[Suffixes for the name such as an enumetion (William Gates <code>III</code>) a designator (Joe Smith <code>Jr.</code>) or designated title (Dr. Fran Smith <code>MD</code>)]]></string>
   <string name="ui.model.entity.name.component.other">Name</string>
   <string name="ui.model.entity.name.component.other.hint"><![CDATA[Unclassified names for the entity which cannot be classified appropriately.]]></string>
+  <string name="ui.model.entity.name.expand">More Fields</string>
+  <string name="ui.model.entity.name.collapse">Less Fields</string>
   <string name="ui.model.entity.telecom">Contact Info</string>
   <string name="ui.model.entity.genderConcept">Gender</string>
   <string name="ui.model.entity.demographics">Additional Info</string>
@@ -291,6 +302,7 @@
   <string name="org.santedb.widget.admin.panel.facility.profile.services">Services</string>
   <string name="ui.model.place.isMobile">Is Mobile</string>
   <string name="ui.model.place.isMobile.hint">Check this box to indicate that the facility is not fixed (for example: a portable facility, vehicle or bus) as opposed to a building</string>
+  <string name="ui.model.place.isMobile.on">This facility record represents a mobile care facility (such as ambulance, mobile clinic, etc.) </string>
   <string name="ui.model.geo.supplied">Known Geolocation</string>
   <string name="ui.model.geo.lat">Latitude</string>
   <string name="ui.model.geo.lng">Longitude</string>

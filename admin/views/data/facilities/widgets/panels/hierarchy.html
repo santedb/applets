@@ -1,7 +1,7 @@
 <div xmlns="http://www.w3.org/1999/xhtml" xmlns:sdb="http://santedb.org/applet"
     oc-lazy-load="{name:'PlaceHierarchyController', files: ['/org.santedb.admin/controllers/places/placeHierarchyController.js'] }">
-    <sdb:widget name="org.santedb.widget.admin.panel.place.hierarchy" type="Panel"
-        context="org.santedb.place.admin.profile" size="Medium" order="10">
+    <sdb:widget name="org.santedb.widget.admin.panel.facility.hierarchy" type="Panel"
+        context="org.santedb.facility.admin.profile" size="Medium" order="10">
         <sdb:icon>fas fa-fw fa-sitemap</sdb:icon>
         <sdb:description lang="en">Hierarchy</sdb:description>
         <sdb:views>
@@ -44,10 +44,10 @@
                         stateless="true"
                         can-filter="true"
                         default-query="{ 'obsoletionTime' : 'null', _viewModel: 'fastView', 'relationship[Parent].target' : scopedObject.id }"
-                        render="{ name: 'renderName', classConcept: 'renderClass', statusConcept : 'renderStatusConcept' }"
+                        render="{ name: 'renderName', address: 'renderAddress', typeConcept: 'renderType', statusConcept : 'renderStatusConcept' }"
                         i18n-prefix="'ui.model.entity.'"
                         item-actions="[ { name: 'view', sref: 'santedb-admin.data.place.view', demand: '1.3.6.1.4.1.33349.3.1.5.9.2.4', className: 'btn-info', icon: 'fa fa-eye' }, { name: 'remove', action: 'removeChildPlace', demand: '1.3.6.1.4.1.33349.3.1.5.9.2.4.2.0', className: 'btn-danger', icon: 'fa fa-times' } ]"
-                        properties="[ 'name', 'classConcept', 'statusConcept' ]" button-bar="'#addChildHeader'" />
+                        properties="[ 'name', 'address', 'typeConcept', 'statusConcept' ]" button-bar="'#addChildHeader'" />
                 </div>
 
                 <div id="addChildHeader">

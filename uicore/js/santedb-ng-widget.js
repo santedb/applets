@@ -67,8 +67,8 @@ angular.module('santedb-lib')
             replace: true,
             transclude: false,
             templateUrl: './org.santedb.uicore/directives/widgetPanel.html',
-            controller: ['$scope', '$timeout', '$rootScope',
-                function ($scope, $timeout, $rootScope) {
+            controller: ['$scope', '$timeout', '$rootScope', '$state',
+                function ($scope, $timeout, $rootScope, $state) {
 
                     $scope.hasView = function (panel, viewName) {
                         if (panel.views) {
@@ -152,7 +152,7 @@ angular.module('santedb-lib')
                                 if (panel.editForm.$valid) {
                                     $timeout(() => {
                                         var formElement = panel.editForm.$$element;
-                                        formElement.submit();
+                                        var submitResult = formElement.submit();
                                         panel.view = null;
                                         $scope.altView = false;
                                     });
@@ -190,8 +190,12 @@ angular.module('santedb-lib')
                                 w.view = $scope.view;
                                 widgetGroups.push({ size: w.size, widgets: [w] });
 
-                                if ($scope.editForm && !w.editForm)
+                                if ($scope.editForm && !w.editForm) {
                                     w.editForm = $scope.editForm;
+                                }
+                                if(w.editForm) {
+                                    w.editForm.$$element.attr("action", "javascript:void(0);");
+                                }
                             });
 
                             $timeout(() => {

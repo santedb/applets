@@ -33,6 +33,8 @@ angular.module('santedb')
                     $scope.target.role = u.role;
                     $scope.target.entity = u.entity;
                     $scope.target.entity.etag = u.etag;
+                    document.title = document.title + " - " + u.entity.userName;
+
                     $scope.$apply();
                 })
                 .catch($rootScope.errorHandler);

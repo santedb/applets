@@ -59,7 +59,10 @@ angular.module('santedb').controller('PlaceFacilityWidgetController', ["$scope",
     $scope.renderType = function (plc) {
         return SanteDB.display.renderConcept(plc.typeConceptModel);
     }
-    $scope.renderStatusConcept = function (place) {
+    $scope.renderClass = function (plc) {
+        return SanteDB.display.renderConcept(plc.classConceptModel);
+    }
+    $scope.renderStatus = function (place) {
         return SanteDB.display.renderStatus(place.statusConcept);
     }
 
@@ -76,11 +79,20 @@ angular.module('santedb').controller('PlaceFacilityWidgetController', ["$scope",
     }
 
     // Remove a place from the association with this place
-    $scope.removeAssociatedFacility = async function (idOfRelatedPlace, index) {
-        if (confirm(SanteDB.locale.getString("ui.admin.place.edit.associate.remove.confirm", { id: idOfRelatedPlace }))) {
+    $scope.removeAssociatedFacility = function (idOfRelatedPlace, index) {
+        removeAssociation($stateParams.id, idOfRelatedPlace, index);
+    }
+
+    $scope.removeAssociatedPlace = function(idOfRelatedPlace, index) {
+        removeAssociation(idOfRelatedPlace, $stateParams.id, index);
+    }
+
+    // Remove association
+    async function removeAssociation(idOfSource, idOfTarget, index) {
+        if (confirm(SanteDB.locale.getString("ui.admin.place.edit.associate.remove.confirm", { id: idOfTarget }))) {
             try {
                 SanteDB.display.buttonWait(`#Placeremove${index}`, true);
-                var relationship = await SanteDB.resources.entityRelationship.findAsync({ source: $stateParams.id, target: idOfRelatedPlace, relationshipType: EntityRelationshipTypeKeys.DedicatedServiceDeliveryLocation, _count: 1 }, "min");
+                var relationship = await SanteDB.resources.entityRelationship.findAsync({ source: idOfSource, target: idOfTarget, relationshipType: EntityRelationshipTypeKeys.DedicatedServiceDeliveryLocation, _count: 1 }, "min");
                 if (relationship.resource.length == 1) {
                     await SanteDB.resources.entityRelationship.deleteAsync(relationship.resource[0].id);
                 }
@@ -151,6 +163,8 @@ angular.module('santedb').controller('PlaceFacilityWidgetController', ["$scope",
                     $("#facilityAssociationTable table").DataTable().ajax.reload();
                     break;
             }
+
+            
         }
         catch (e) {
             toastr.error(SanteDB.locale.getString('ui.admin.place.edit.associate.fail', { e: e.message || e }));

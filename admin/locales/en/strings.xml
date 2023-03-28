@@ -339,4 +339,10 @@
     <string name="ui.admin.place.confirmDelete">Are you sure you want to delete this place?</string>
     <string name="ui.admin.place.confirmPurge">Are you sure you want to purge this place?</string>
     <string name="ui.admin.place.confirmUnDelete">Are you sure you want to un-delete this place?</string>
+
+    <!-- Facility Editing -->
+    <string name="ui.admin.facility.edit.profile.title">Create Facility</string>
+    <string name="org.santedb.widget.admin.panel.facility.profile">Facility Profile</string>
+    <string name="org.santedb.widget.admin.panel.facility.hierarchy">Facility Hierarchy</string>
+    <string name="org.santedb.widget.admin.panel.facility.catchment">Service Areas</string>
 </resources>

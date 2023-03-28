@@ -248,7 +248,7 @@ angular.module('santedb-lib')
         }
     })
     /**
-     * @method exception
+     * @method exceptionDetail
      * @memberof Angular
      * @summary Renders exception details
      */
@@ -264,5 +264,20 @@ angular.module('santedb-lib')
             else 
                 return parseResult.message;
         }
-    });
+    })
+    /**
+     * @method geo
+     * @memberof Angular
+     * @summary Renders a decimal representation of a geographic coordinate as a degrees/minutes
+     */
+    .filter('geo', function () {
+        return function (geo) {
+            
+            var lat = SanteDB.display.convertToDegrees(geo.lat);
+            var lng = SanteDB.display.convertToDegrees(geo.lng);
+            
+            return `${lat.deg}\xB0 ${lat.min}' ${lat.sec}" ${geo.lat < 0 ? 'S' : 'N'} / ${lng.deg}\xB0 ${lng.min}' ${lng.sec}" ${geo.lng < 0 ? 'W' : 'E'} ` 
+        }
+    })
+    ;
     

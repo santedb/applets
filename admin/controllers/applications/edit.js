@@ -32,6 +32,8 @@ angular.module('santedb').controller('EditApplicationController', ["$scope", "$r
             $scope.target.securityApplication = u.entity;
             $scope.target.securityApplication.etag = u.etag;
             $scope.target.id = u.id;
+            document.title = document.title + " - " + u.entity.name;
+
             $scope.$apply();
         })
         .catch($rootScope.errorHandler);
