@@ -263,7 +263,7 @@ angular.module('santedb-lib')
                     // When the entity is set
                     $scope.$watch((s)=>s.entity, function (n, o) {
                         if (!o && n || n && n.sequence != o.sequence || n && !drawn) {
-                            if(n.sequence != o.sequence ) {
+                            if(!o ||  n.sequence != o.sequence ) {
                                 $scope.viewData.graphs = { simple: null, advance: null };
                             }
                             drawRelationships($scope.entity, $scope.viewData);

@@ -147,7 +147,6 @@ angular.module('santedb').controller('PlaceEditController', ["$scope", "$rootSco
             await setEntityState($scope.entity.id, $scope.entity.etag, status);
             toastr.info(SanteDB.locale.getString("ui.model.place.saveSuccess"));
             $state.reload();
-
         }
         catch (e) {
             $rootScope.errorHandler(e);
@@ -163,6 +162,11 @@ angular.module('santedb').controller('PlaceEditController', ["$scope", "$rootSco
             SanteDB.display.buttonWait("#btnClearTag", true);
             await setEntityTag($stateParams.id, tagName, tagValue);
             toastr.info(SanteDB.locale.getString("ui.model.place.saveSuccess"));
+            var updated = await SanteDB.resources.place.getAsync($stateParams.id, "full"); // re-fetch the place
+            $timeout(() => {
+                SanteDB.display.cascadeScopeObject(SanteDB.display.getRootScope($scope), ['scopedObject', 'entity'], updated);
+            });
+            
         }
         catch (e) {
             $rootScope.errorHandler(e);

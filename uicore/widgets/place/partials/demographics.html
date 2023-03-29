@@ -66,8 +66,7 @@
     <div class="row" ng-if="scopedObject.geo">
         <label class="col-md-3 col-sm-12 control-label">{{ 'ui.model.entity.geo' | i18n }}</label>
         <div class="col-md-9 col-sm-12">
-            <a target="_blank" href="https://www.bing.com/maps?sp=point.{{scopedObject.geo.lat}}_{{scopedObject.geo.lng}}_{{scopedObject.name | name}}&amp;query={{scopedObject.geo.lat}},{{scopedObject.geo.lng}}#"><i class="fas fa-satellite"></i> {{ scopedObject.geo | geo }}</a>
-        </div>
+            <a target="_blank" title="Open in Google Maps" href="https://www.google.com/maps/place/{{scopedObject.geo.lat}},{{scopedObject.geo.lng}}"><i class="fas fa-satellite"></i> {{ scopedObject.geo | geo }} <sup><i class="fas fa-external-link-alt"></i></sup></a>        </div>
     </div>
     <div class="row">
         <label class="col-md-3 col-sm-12 control-label">{{ 'ui.model.place.address' | i18n }}</label>

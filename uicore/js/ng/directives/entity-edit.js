@@ -166,10 +166,7 @@ angular.module('santedb-lib')
 
                 
                 if (!scope.geo) {
-                    scope.geo = new GeoTag({
-                        lat: 0,
-                        lng: 0
-                    });
+                    scope.geo = { _supplied : false };
                 }
                 else {
                     scope.geo._supplied = true;
