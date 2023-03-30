@@ -109,6 +109,30 @@ angular.module('santedb').controller('PlaceFacilityWidgetController', ["$scope",
         }
     }
 
+    // Associate a place to a facility
+    $scope.associatePlaceToFacility = async function(placeId) {
+
+        try {
+            SanteDB.display.buttonWait('#btn-associate-place', true);
+            await SanteDB.resources.place.checkoutAsync($scope.scopedObject.id);
+            await SanteDB.resources.entityRelationship.insertAsync(new EntityRelationship({
+                source: placeId,
+                target: $scope.scopedObject.id,
+                relationshipType: EntityRelationshipTypeKeys.DedicatedServiceDeliveryLocation
+            }));
+            await SanteDB.resources.place.checkinAsync($scope.scopedObject.id);
+            toastr.success(SanteDB.locale.getString("ui.admin.place.edit.associate.success"));
+            $("#facilityAssociationTable table").DataTable().ajax.reload();
+        }
+        catch (e) {
+            toastr.error(SanteDB.locale.getString('ui.admin.place.edit.associate.fail', { e: e.message || e }));
+            $rootScope.errorHandler(e);
+        }
+        finally {
+            SanteDB.display.buttonWait('#btn-associate-place', false);
+        }
+    }
+
     // Associate a facility to a place
     $scope.associateFacilityToPlace = async function (formData) {
 
@@ -120,6 +144,8 @@ angular.module('santedb').controller('PlaceFacilityWidgetController', ["$scope",
             SanteDB.display.buttonWait('#btn-submit-association-facility', true);
             var submission = new Bundle({ resource: [] });
             var targetPlaceId = null;
+            await SanteDB.resources.place.checkoutAsync($scope.association.holder);
+
             switch ($scope.association.type) {
                 case "existing":
                     targetPlaceId = $scope.association.target;

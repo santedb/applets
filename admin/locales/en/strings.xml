@@ -210,6 +210,9 @@
     <string name="ui.admin.data.materials.title">Materials</string>
     <string name="ui.admin.data.materials.count">Materials Management</string>
     <string name="ui.admin.data.materials.create">Create Material</string>
+    <string name="ui.admin.data.organizations.title">Organizations</string>
+    <string name="ui.admin.data.organizations.count">Organization Management</string>
+    <string name="ui.admin.data.organizations.create">Create Organization</string>
 
     <!-- Place Strings -->
     <string name="org.santedb.widget.admin.panel.place.profile.name">Name</string>
@@ -332,10 +335,6 @@
     <string name="ui.admin.place.edit.associate.remove.confirm">Are you sure you want to remove the association between this place and {id}?</string>
     <string name="ui.admin.place.edit.associate.remove.succes">Place association successfully removed</string>
     <string name="ui.admin.place.edit.associate.remove.failure">Error removing the place association - {e}</string>
-    <string name="ui.admin.place.edit.child.add.confirm">The place you are attempting to add to this place already has a Parent. Do you want to reassign this place to a new parent?</string>
-    <string name="ui.admin.place.edit.child.add.success">Child place successfully associated</string>
-    <string name="ui.admin.place.edit.child.add.failure">Child place could not be associated with this place - {e}</string>
-    <string name="ui.admin.place.edit.parent.change">Editing the parent of a place after it is created may have unintended consequences for other data element which use this information. You will also need to correct any addressing information on this place - are you sure you want to change the parent of this place?</string>
     <string name="ui.admin.place.confirmDelete">Are you sure you want to delete this place?</string>
     <string name="ui.admin.place.confirmPurge">Are you sure you want to purge this place?</string>
     <string name="ui.admin.place.confirmUnDelete">Are you sure you want to un-delete this place?</string>
@@ -345,4 +344,27 @@
     <string name="org.santedb.widget.admin.panel.facility.profile">Facility Profile</string>
     <string name="org.santedb.widget.admin.panel.facility.hierarchy">Facility Hierarchy</string>
     <string name="org.santedb.widget.admin.panel.facility.catchment">Service Areas</string>
+    <string name="org.santedb.widget.admin.panel.facility.services">Services &amp; Schedule</string>
+    <string name="ui.admin.facility.services.none">Facility Proivdes No Services</string>
+    <string name="ui.admin.facility.services.save.success">Facility services saved successfully</string>
+    <string name="ui.admin.facility.services.save.failure">Facility services save failed: {e}</string>
+
+    <!-- Organization Editing -->
+    <string name="ui.admin.organizations.edit.profile.title">Create Organization</string>
+    <string name="org.santedb.widget.admin.panel.organization.profile">Organization Profile</string>
+    <string name="org.santedb.widget.admin.panel.organization.hierarchy">Organization Hierarchy</string>
+    <string name="ui.admin.organization.confirmDelete">Are you sure you want to delete this organization?</string>
+    <string name="ui.admin.organization.confirmPurge">Are you sure you want to purge this organization?</string>
+    <string name="ui.admin.organization.confirmUnDelete">Are you sure you want to un-delete this organization?</string>
+
+    <string name="ui.admin.entity.edit.child.add.confirm">The entity you are attempting to add to this entity already has a Parent. Do you want to reassign this entity to a new parent?</string>
+    <string name="ui.admin.entity.edit.child.add.success">Child entity successfully associated</string>
+    <string name="ui.admin.entity.edit.child.add.failure">Child entity could not be associated - {e}</string>
+    <string name="ui.admin.entity.edit.child.remove.confirm">Are you sure you want to remove this child?</string>
+    <string name="ui.admin.entity.edit.child.remove.success">Child entity successfully removed</string>
+    <string name="ui.admin.entity.edit.child.remove.failure">Child entity could not be removed - {e}</string>
+    <string name="ui.admin.entity.edit.parent.change">Editing the parent of an entity after it is created may have unintended consequences for other data element which use this information. You will also need to correct any addressing information on this entity - are you sure you want to change the parent of this entity?</string>
+    <string name="ui.admin.entity.edit.parent.change.success">Entity hierarchy changes saved successfully</string>
+    <string name="ui.admin.entity.edit.parent.change.failure">Entity hierarchy changes failed: {e}</string>
+
 </resources>

@@ -352,17 +352,15 @@ async function prepareEntityForSubmission(entity) {
                         addrItem.use = AddressUseKeys[k]
                     addrItem.component = addrItem.component || {};
 
-                    if(addrItem.component) {
-                        Object.keys(addrItem.component).forEach(o=> {
-                            if(!Array.isArray(addrItem.component[o]))
-                            {
-                                if(typeof addrItem.component[o] === 'string')
-                                {
+                    if (addrItem.component) {
+                        Object.keys(addrItem.component).forEach(o => {
+                            if (!Array.isArray(addrItem.component[o])) {
+                                if (typeof addrItem.component[o] === 'string') {
                                     addrItem.component[o] = [addrItem.component[o]]
                                 }
-                                else if(typeof addrItem.component[o] === 'object' || addrItem.component[o]['0']) // Sometimes AngularJS will represent new objects as an object with property 0
+                                else if (typeof addrItem.component[o] === 'object' || addrItem.component[o]['0']) // Sometimes AngularJS will represent new objects as an object with property 0
                                 {
-                                    addrItem.component[o] = Object.keys(addrItem.component[o]).map(k=>addrItem.component[o][k]);
+                                    addrItem.component[o] = Object.keys(addrItem.component[o]).map(k => addrItem.component[o][k]);
                                 }
                                 else {
                                     addrItem.component[o] = [addrItem.component[o]]
@@ -396,17 +394,15 @@ async function prepareEntityForSubmission(entity) {
                 if (!nameItem.use)
                     nameItem.use = NameUseKeys[k]
 
-                if(nameItem.component) {
-                    Object.keys(nameItem.component).forEach(o=> {
-                        if(!Array.isArray(nameItem.component[o]))
-                        {
-                            if(typeof nameItem.component[o] === 'string')
-                            {
+                if (nameItem.component) {
+                    Object.keys(nameItem.component).forEach(o => {
+                        if (!Array.isArray(nameItem.component[o])) {
+                            if (typeof nameItem.component[o] === 'string') {
                                 nameItem.component[o] = [nameItem.component[o]]
                             }
-                            else if(typeof nameItem.component[o] === 'object' || nameItem.component[o]['0']) // Sometimes AngularJS will represent new objects as an object with property 0
+                            else if (typeof nameItem.component[o] === 'object' || nameItem.component[o]['0']) // Sometimes AngularJS will represent new objects as an object with property 0
                             {
-                                nameItem.component[o] = Object.keys(nameItem.component[o]).map(k=>nameItem.component[o][k]);
+                                nameItem.component[o] = Object.keys(nameItem.component[o]).map(k => nameItem.component[o][k]);
                             }
                             else {
                                 nameItem.component[o] = [nameItem.component[o]]
@@ -494,4 +490,24 @@ async function setEntityState(entityId, entityTag, newStatus) {
         ]
     });
     await SanteDB.resources.entity.patchAsync(entityId, entityTag, patch);
+}
+
+
+/**
+ * Remove all properties which are delay loaded models
+ * @param {Any} objectToRemove The object to remove properties from 
+ */
+function deleteModelProperties(objectToRemove) {
+
+    if (typeof objectToRemove === 'object') {
+        Object.keys(objectToRemove).forEach(p => {
+            if (p.endsWith("Model")) {
+                delete objectToRemove[p];
+            }
+            else if (Array.isArray(objectToRemove[p])) {
+                objectToRemove[p].forEach(e=>deleteModelProperties(objectToRemove[p][e]));
+            }
+        });
+    }
+
 }

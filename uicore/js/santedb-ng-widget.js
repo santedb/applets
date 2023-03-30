@@ -152,6 +152,7 @@ angular.module('santedb-lib')
                                 if (panel.editForm.$valid) {
                                     $timeout(() => {
                                         var formElement = panel.editForm.$$element;
+                                        formElement[0].action = "javascript:void(0);";
                                         var submitResult = formElement.submit();
                                         panel.view = null;
                                         $scope.altView = false;
@@ -193,9 +194,7 @@ angular.module('santedb-lib')
                                 if ($scope.editForm && !w.editForm) {
                                     w.editForm = $scope.editForm;
                                 }
-                                if(w.editForm) {
-                                    w.editForm.$$element.attr("action", "javascript:void(0);");
-                                }
+                                
                             });
 
                             $timeout(() => {

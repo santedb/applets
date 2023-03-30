@@ -191,12 +191,12 @@ angular.module('santedb-lib')
          * @summary Draw the relationship diagram to th especified object identifier
          * @param {*} entity The entity whose relationships should be drawn
          */
-        async function drawRelationships(entity, viewData) {
+        async function drawRelationships(entity, direction, viewData) {
             try {
 
                 var graphDefinition = viewData.graphs[viewData.mode];
                 if (!graphDefinition) {
-                    graphDefinition = `graph LR\nroot(("<span class='mr-2'>${SanteDB.display.renderEntityName(entity.name)}</span>"))\nstyle root fill:#afa,stroke:#0c0,stroke-width:2px`;
+                    graphDefinition = `graph ${direction || 'LR'}\nroot(["<span class='mr-2'>${SanteDB.display.renderEntityName(entity.name)}</span>"])\nstyle root fill:#afa,stroke:#0c0,stroke-width:2px`;
 
                     // Root is scoped object
                     if (entity.relationship) {
@@ -244,6 +244,7 @@ angular.module('santedb-lib')
             scope: {
                 'entity': '=',
                 'excludeRelationships': '<',
+                'direction': '<'
             },
             restrict: 'E',
             replace: true,
@@ -257,7 +258,7 @@ angular.module('santedb-lib')
                     $scope.redraw = function () {
 
                         $(`#entityNetworkDiagram${$scope._id}`).html("<i class='fas fa-circle-notch fa-spin'></i>");
-                        drawRelationships($scope.entity, $scope.viewData);
+                        drawRelationships($scope.entity, $scope.direction, $scope.viewData);
                         drawn = true;
                     }
                     // When the entity is set
@@ -266,7 +267,7 @@ angular.module('santedb-lib')
                             if(!o ||  n.sequence != o.sequence ) {
                                 $scope.viewData.graphs = { simple: null, advance: null };
                             }
-                            drawRelationships($scope.entity, $scope.viewData);
+                            drawRelationships($scope.entity, $scope.direction, $scope.viewData);
                             drawn = true;
                         }
                     })

@@ -1,0 +1,73 @@
+<div xmlns="http://www.w3.org/1999/xhtml" xmlns:sdb="http://santedb.org/applet"
+    oc-lazy-load="{name:'FacilityServiceController', files: ['/org.santedb.admin/controllers/places/faciltyServices.js'] }">
+    <sdb:widget name="org.santedb.widget.admin.panel.facility.services" type="Panel"
+        context="org.santedb.facility.admin.profile" size="Medium" order="0">
+        <sdb:icon>fas fa-fw fa-calendar</sdb:icon>
+        <sdb:description lang="en">Facility Services</sdb:description>
+        <sdb:views>
+            <sdb:view type="Edit">
+                <sdb:demand>1.3.6.1.4.1.33349.3.1.5.9.2.4.2.0</sdb:demand>
+            </sdb:view>
+        </sdb:views>
+    </sdb:widget>
+
+    <div ng-if="!scopedObject">
+        <i class="fas fa-circle-notch fa-spin"></i> {{ 'ui.wait' | i18n }}
+    </div>
+    <div ng-if="scopedObject" ng-controller="FacilityServiceController">
+        <ul class="list-group" ng-if="panel.view != 'Edit'">
+            <li class="list-group-item" ng-repeat="service in scopedObject.service track by $index">
+                <div class="row">
+                    <label class="control-label col-sm-12 col-md-3">{{ service.serviceConceptModel | concept }}</label>
+                    <div class="col-md-9 col-sm-12">
+                        {{ service.serviceSchedule | scheduleJson }}
+                    </div>
+                </div>
+            </li>
+            <li class="list-group-item bg-info text-light" ng-if="!scopedObject.service || scopedObject.service.length == 0"><i class="fas fa-exclamation-circle"></i> {{ 'ui.admin.facility.services.none' | i18n }}</li>
+        </ul>
+        <form ng-if="panel.view == 'Edit'" ng-submit="saveServiceSchedule(panel.editForm)" name="panel.editForm" novalidate="novalidate">
+            <ul class="list-group">
+                <li class="list-group-item" ng-repeat="service in editObject.service track by $index" ng-if="service.operation != 'Delete'">
+                    <div class="container-fluid">
+                        <div class="form-group row">
+                            <label class="control-label col-md-3 col-sm-12 required">{{ 'ui.model.place.service.serviceConcept' | i18n }}</label>
+                            <div class="col-sm-12 col-md-9">
+                                <entity-search class="form-control" type="'Concept'" required="required" name="serviceCodeInput{{$index}}"
+                                    filter="{statusConcept: 'c8064cbd-fa06-4530-b430-1a52f1530c27', 'conceptSet.mnemonic': 'ServiceCode'}" 
+                                    ng-model="service.serviceConcept"></entity-search>
+                                <div class="text-danger" ng-if="panel.editForm['serviceCodeInput' + $index].$error['required']">
+                                    <i class="fa fa-exclamation-triangle"></i> {{ 'ui.error.required' | i18n }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="control-label col-md-3 col-sm-12">{{ 'ui.model.place.service.serviceSchedule' | i18n }}</label>
+                            <div class="col-md-9 col-sm-12">
+                                <button class="btn btn-link collapse-indicator p-0 m-0" aria-expanded="false" type="button" data-toggle="collapse" data-target="#serviceSchedule{{$index}}">{{ 'ui.action.view' | i18n }} <i class="fas fa-chevron-right"></i></button>
+                            </div>
+                            <div class="col-12 collapse" id="serviceSchedule{{$index}}">
+                                <schedule-edit schedule-for="service"></schedule-edit>
+                            </div>
+                        </div>
+                        <div class="form-group-row">
+                            <div class="col-12">
+                                <div class="float-right btn-group">
+                                    <button type="button" ng-click="service.id ? service.operation = 'Delete' : editObject.service.splice($index,1)" class="btn btn-danger">
+                                        <i class="fas fa-times"></i> {{ 'ui.action.remove' | i18n }}
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+                <li class="list-group-item">
+                    <button type="button" class="btn btn-primary w-100" ng-click="editObject.service.push({})">
+                        <i class="fas fa-plus-circle"></i> {{ 'ui.action.add' | i18n }}
+                    </button>
+                </li>
+            </ul>
+        </form>
+    </div>
+
+</div>

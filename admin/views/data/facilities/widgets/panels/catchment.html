@@ -11,14 +11,26 @@
     </div>
 
     <div ng-controller="PlaceFacilityWidgetController" ng-if="scopedObject">
-        <entity-table id="facilityAssociationTable" type="Place" search-field="name.component.value"
-            stateless="true"
+        <entity-table id="facilityAssociationTable" type="Place" search-field="name.component.value" stateless="true"
             default-query="{ 'obsoletionTime' : 'null', _viewModel: 'fastView', 'relationship[DedicatedServiceDeliveryLocation].target' : scopedObject.id }"
             render="{ name: 'renderName', classConcept: 'renderClass', typeConcept: 'renderType', statusConcept: 'renderStatus' }"
             i18n-prefix="'ui.model.entity.'"
             item-actions="[ { name: 'view', sref: 'santedb-admin.data.place.view', demand: '1.3.6.1.4.1.33349.3.1.5.9.2.4', className: 'btn-info', icon: 'fa fa-eye' }, { name: 'remove', action: 'removeAssociatedPlace', demand: '1.3.6.1.4.1.33349.3.1.5.9.2.4.2.0', className: 'btn-danger', icon: 'fa fa-times' } ]"
-            actions="[ { name: 'add', demand: '1.3.6.1.4.1.33349.3.1.5.9.2.4.2.0', action: 'addAssociatedFacility', className: 'btn-primary', icon: 'fa fa-plus-circle' }]"
-            properties="[ 'name', 'classConcept', 'statusConcept' ]" />
-    </div>
+            properties="[ 'name', 'classConcept', 'statusConcept' ]" button-bar="'#addPlaceHeader'" />
 
+        <div id="addPlaceHeader">
+            <div class="input-group">
+                <entity-search type="'Place'" style="width:60%; height:100%"
+                    group-by="['address.PhysicalVisit[0].component.State[0]','address.Direct[0].component.State[0]']" ng-model="newPlaceId"
+                    search-field="'name.component.value'" for-relationship-type="'455f1772-f580-47e8-86bd-b5ce25d351f9'"
+                    with-relationship-target-class="'ff34dfa7-c6d3-4f8b-bc9f-14bcdc13ba6c'"></entity-search>
+                <div class=" input-group-append">
+                    <button type="button" id="btn-associate-place" class="btn btn-primary input-group-btn"
+                        ng-click="associatePlaceToFacility(newPlaceId)"><i class="fas fa-plus-circle"></i> {{
+                        'ui.action.add' | i18n }}</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
 </div>

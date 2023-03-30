@@ -1,6 +1,6 @@
 <div xmlns="http://www.w3.org/1999/xhtml" xmlns:sdb="http://santedb.org/applet">
-    <sdb:widget name="org.santedb.widget.admin.panel.place.relationships" type="Panel"
-        context="org.santedb.place.admin.profile" size="Large" order="100">
+    <sdb:widget name="org.santedb.widget.admin.panel.organization.relationships" type="Panel"
+        context="org.santedb.organization.admin.profile" size="Large" order="100">
         <sdb:icon>fas fa-fw fa-project-diagram</sdb:icon>
         <sdb:description lang="en">Relationships</sdb:description>
         
@@ -10,6 +10,6 @@
         <i class="fas fa-spin fa-circle-notch"></i> {{ 'ui.wait' | i18n }}
     </div>
 
-    <relationship-graph ng-if="scopedObject" entity="scopedObject" direction="'RL'" />
+    <relationship-graph ng-if="scopedObject" entity="scopedObject" />
 
 </div>

@@ -15,12 +15,11 @@
                         {{ name | name }} <span class=" d-none d-sm-inline"><span class="badge badge-light">{{
                                 name.useModel | concept }}</span></span>
                     </span>
-
                 </li>
             </ul>
         </div>
     </div>
-    <div class="row">
+    <div class="row" ng-if="scopedObject.classConceptModel">
         <label class="col-md-3 col-sm-12 control-label">{{ 'ui.model.place.classConcept' | i18n }}</label>
         <div class="col-md-9 col-sm-12">
             {{ scopedObject.classConceptModel | concept }}

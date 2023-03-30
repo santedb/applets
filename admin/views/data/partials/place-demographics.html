@@ -1,15 +1,15 @@
 <div xmlns="http://www.w3.org/1999/xhtml"
-    oc-lazy-load="{ name: 'PlaceDemographicsController', files: ['/org.santedb.uicore/controllers/widgets/placeWidget.js'] }">
-    <div ng-controller="PlaceDemographicsController">
+    oc-lazy-load="{ name: 'EntityDemographicsController', files: ['/org.santedb.admin/controllers/widgets/entityWidget.js'] }">
+    <div ng-controller="EntityDemographicsController">
 
         <div ng-if="panel.view != 'Edit'">
-            <!-- #include virtual="/org.santedb.uicore/widgets/place/partials/demographics.html" -->
+            <!-- #include virtual="/org.santedb.uicore/partials/entity/demographics.html" -->
         </div>
         <div ng-if="panel.view == 'Edit'">
-            <form action="javascript:void(0)" id="editPlaceDemographicsForm" ng-submit="update(panel.editForm)" novalidate="novalidate" name="panel.editForm">
-                <ul class="nav nav-tabs" role="tablist" id="placeEditForms">
+            <form action="javascript:void(0)" id="editEntityDemographicsForm" ng-submit="update(panel.editForm)" novalidate="novalidate" name="panel.editForm">
+                <ul class="nav nav-tabs" role="tablist" id="entityEditForms">
                     <li class="active nav-item active" role="presentation">
-                        <a class="nav-link active" href="javascript:void(0)" data-target="#placePropertiesTab"
+                        <a class="nav-link active" href="javascript:void(0)" data-target="#entityPropertiesTab"
                             data-toggle="tab">
                             <i class="fa fa-edit"></i> {{ 'ui.model.entity.properties' | i18n }}
                             <i class="text-danger fas fa-exclamation-circle"
@@ -17,23 +17,23 @@
                         </a>
                     </li>
                     <li class="nav-item" role="presentation">
-                        <a class="nav-link" href="javascript:void(0)" data-target="#placeNamesTab" data-toggle="tab">
+                        <a class="nav-link" href="javascript:void(0)" data-target="#entityNamesTab" data-toggle="tab">
                             <i class="fa fa-globe-africa"></i> {{ 'ui.model.entity.name' | i18n }}
                             <i class="text-danger fas fa-exclamation-circle"
                                 ng-if="panel.editForm.$error.required[0].$name.indexOf('name') == 0"></i>
                         </a>
                     </li>
                     <li class="nav-item" role="presentation">
-                        <a class="nav-link" href="javascript:void(0)" data-target="#placeIdentifierTab"
+                        <a class="nav-link" href="javascript:void(0)" data-target="#entityIdentifierTab"
                             data-toggle="tab">
                             <i class="fa fa-id-card-alt"></i> {{ 'ui.model.entity.identifier' | i18n }}
                             <i class="text-danger fas fa-exclamation-circle"
-                                ng-if="panel.editForm.$error.required[0].$name.indexOf('identifier') == 0"></i>
+                                 ng-if="panel.editForm.$error.required[0].$name.indexOf('identifier') == 0"></i>
                         </a>
                     </li>
                     <li class="nav-item" role="presentation">
                         <a class="nav-link" href="javascript:void(0)"
-                            data-target="#placeAddressTab" data-toggle="tab">
+                            data-target="#entityAddressTab" data-toggle="tab">
                             <i class="fa fa-map-marked"></i> {{ 'ui.model.entity.address' | i18n }}
                             <i class="text-danger fas fa-exclamation-circle"
                                 ng-if="panel.editForm.$error.required[0].$name.indexOf('address') == 0"></i></a>
@@ -41,28 +41,27 @@
                     <li class="nav-item" role="presentation">
                         <a class="nav-link" href="javascript:void(0)"
                             ng-if="scopedObject.classConcept == 'ff34dfa7-c6d3-4f8b-bc9f-14bcdc13ba6c'"
-                            data-target="#placeTelecomTab" data-toggle="tab">
+                            data-target="#entityTelecomTab" data-toggle="tab">
                             <i class="fa fa-phone"></i> {{ 'ui.model.entity.telecom' | i18n }}
                         </a>
                     </li>
-
                 </ul>
                 <div class="tab-content">
-                    <div role="tabpanel" class="tab-pane show active p-2" id="placePropertiesTab">
+                    <div role="tabpanel" class="tab-pane show active p-2" id="entityPropertiesTab">
                         <div class="container-fluid">
-                            <div class="form-group row" ng-if="editObject.classConcept != 'ff34dfa7-c6d3-4f8b-bc9f-14bcdc13ba6c'">
+                            <div class="form-group row" ng-if="editObject.classConcept != 'ff34dfa7-c6d3-4f8b-bc9f-14bcdc13ba6c' &amp;&amp; editObject.$type == 'Place'">
                                 <label class="control-label col-md-3 col-sm-12 required">{{
-                                    'ui.model.place.classConcept' |
+                                    'ui.model.entity.classConcept' |
                                     i18n
-                                    }} <hint-popover hint-title="ui.model.place.classConcept" /></label>
+                                    }} <hint-popover hint-title="ui.model.entity.classConcept" /></label>
                                 <div class="col-md-9 col-sm-12">
                                     <concept-select class="form-control" required="required" name="classInput"
-                                        concept-set="'PlaceClass'" ng-model="editObject.classConcept" />
+                                        concept-set="'EntityClass'" ng-model="editObject.classConcept" />
                                     <div class="text-danger" ng-if="panel.editForm.classInput.$error['required']">
                                         <i class="fa fa-exclamation-triangle"></i> {{ 'ui.error.required' | i18n }}
                                     </div>
                                     <div class="text-warning" ng-if="!panel.editForm.classInput.$pristine">
-                                        <i class="fa fa-info-circle"></i> {{ 'ui.model.place.classConcept.changeWarning'
+                                        <i class="fa fa-info-circle"></i> {{ 'ui.model.entity.classConcept.changeWarning'
                                         |
                                         i18n
                                         }}
@@ -71,8 +70,8 @@
                             </div>
                             <div class="form-group row">
                                 <label class="col-sm-12 col-md-3 control-label required">
-                                    {{ 'ui.model.place.typeConcept' | i18n }} <hint-popover
-                                        hint-title="ui.model.place.typeConcept" />
+                                    {{ 'ui.model.entity.typeConcept' | i18n }} <hint-popover
+                                        hint-title="ui.model.entity.typeConcept" />
                                 </label>
                                 <div class="col-sm-12 col-md-9">
                                     <concept-select
@@ -87,8 +86,8 @@
                             </div>
                             <div class="form-group row">
                                 <label class="col-sm-12 col-md-3 control-label required">
-                                    {{'ui.model.place.name.component.other' | i18n }} <hint-popover
-                                        hint-title="ui.model.place.name.component.other" />
+                                    {{'ui.model.entity.name.component.other' | i18n }} <hint-popover
+                                        hint-title="ui.model.entity.name.component.other" />
                                 </label>
                                 <div class="col-sm-12 col-md-9">
                                     <input class="form-control" type="text" required="required" autocomplete="__away"
@@ -116,20 +115,20 @@
 
                         </div>
                     </div>
-                    <div role="tabpanel" class="tab-pane p-2" id="placeNamesTab">
+                    <div role="tabpanel" class="tab-pane p-2" id="entityNamesTab">
                         <name-edit name="editObject.name" no-add="false" no-type="false" simple-entry="true"
                             owner-form="panel.editForm" allowed-components="'$other'"
                             input-style="'simple'"></name-edit>
                     </div>
-                    <div role="tabpanel" class="tab-pane p-2" id="placeIdentifierTab">
+                    <div role="tabpanel" class="tab-pane p-2" id="entityIdentifierTab">
                         <identifier-list-edit identifier="editObject.identifier" owner-form="panel.editForm"
                             container-class="editObject.classConcept" />
                     </div>
-                    <div role="tabpanel" class="tab-pane p-2" id="placeAddressTab">
+                    <div role="tabpanel" class="tab-pane p-2" id="entityAddressTab">
                         <address-edit address="editObject.address" no-add="false" no-type="false" 
                             owner-form="panel.editForm"></address-edit>
                     </div>
-                    <div role="tabpanel" class="tab-pane p-2" id="placeTelecomTab">
+                    <div role="tabpanel" class="tab-pane p-2" id="entityTelecomTab">
                     </div>
 
                 </div>

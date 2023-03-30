@@ -41,10 +41,7 @@ angular.module('santedb').controller('MaterialIndexController', ["$scope", "$roo
      * @summary Render class of material
      */
     $scope.renderClassConcept = function (matl) {
-        if (matl.$type == 'ManufacturedMaterial')
-            return `<i class="fas fa-prescription"></i> MMAT`;
-        else
-            return `<i class="fas fa-file"></i> MAT`;
+        return SanteDB.display.renderConcept(matl.classConceptModel);
     }
 
     /** 

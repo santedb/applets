@@ -681,8 +681,8 @@ angular.module('santedb-lib')
                     
                     if (scheduleelement && scheduleelement.length > 0) {
                         model[day] = {
-                            start: scheduleelement[0].start,
-                            stop: scheduleelement[0].stop,
+                            start: moment(scheduleelement[0].start).toDate(),
+                            stop: moment(scheduleelement[0].stop).toDate(),
                             capacity: scheduleelement[0].capacity
                         };
                     }
@@ -712,7 +712,7 @@ angular.module('santedb-lib')
             daykeys.forEach((day, idx) => {
                 let d = model[day];
 
-                if (!d || !d.start || !d.stop || !d.capacity){
+                if (!d || !d.start || !d.stop){
                     return;
                 }
 
@@ -734,16 +734,15 @@ angular.module('santedb-lib')
             replace: true,
             templateUrl: './org.santedb.uicore/directives/scheduleEdit.html',
             scope: {
-                jsonSchedule: '='
+                scheduleFor: '='
             },
             controller: ['$scope', '$rootScope', '$window', function ($scope, $rootScope, $win) {
 
             }],
             link: function (scope, element, attrs) {
-                scope.model = toInternalModel(JSON.parse(scope.jsonSchedule ? scope.jsonSchedule : "{}"));
-
-                scope.$watch((s) => s ? JSON.stringify(s.model) : "null", function(n, o){
-                    scope.jsonSchedule = JSON.stringify(toServiceSchedule(scope.model));
+                scope.model = toInternalModel(JSON.parse(scope.scheduleFor.serviceSchedule ? scope.scheduleFor.serviceSchedule : "{}"));
+                scope.$watch((s) => JSON.stringify(s.model), function(n, o){
+                    scope.scheduleFor.serviceSchedule = JSON.stringify(toServiceSchedule(scope.model));
                 });
             }
         }

@@ -93,6 +93,33 @@
                     <div class="card-body">
                         <div class="row no-gutters align-items-center">
                             <div class="col-auto">
+                                <h1 class="mb-0">{{ dashboard.organizations }}</h1>
+                            </div>
+                            <div class="col mr-2 ml-2">
+                                <a ui-sref="santedb-admin.data.organization.index"
+                                    class="text-xs font-weight-bold text-primary text-uppercase mb-1">{{ 'ui.admin.data.organizations.title' | i18n }}</a>
+                                <div class="h5 mb-0 font-weight-bold text-gray">
+                                    {{ 'ui.admin.data.organizations.count' | i18n }} </div>
+                            </div>
+                            <div class="col-auto">
+                                <i class="fas fa-people-arrows fa-2x text-gray"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-footer bg-light">
+                        <div class="text-right">
+                            <a ui-sref="santedb-admin.data.organization.create" class="btn btn-secondary"> <i
+                                    class="fas fa-plus-circle"></i>
+                                {{ 'ui.admin.data.organizations.create' | i18n }}</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-3">
+                <div class="card shadow">
+                    <div class="card-body">
+                        <div class="row no-gutters align-items-center">
+                            <div class="col-auto">
                                 <h1 class="mb-0">{{ dashboard.materials }}</h1>
                             </div>
                             <div class="col mr-2 ml-2">
@@ -117,4 +144,6 @@
             </div>
         </div>
     </div>
+    <widget-panels context-name="'org.santedb.admin.data.dashboard'" scoped-object="dashboard"/>
+
 </div>

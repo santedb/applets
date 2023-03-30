@@ -112,7 +112,22 @@ angular.module('santedb').controller('PlaceIndexController', ["$scope", "$rootSc
         if (confirm(SanteDB.locale.getString("ui.action.export.confirm"))) {
             try {
 
-                window.location = `/hdsi/Place/_export?classConcept=!ff34dfa7-c6d3-4f8b-bc9f-14bcdc13ba6c&statusConcept=${StatusKeys.Active}&statusConcept=${StatusKeys.New}`;
+                window.location = `/hdsi/Place/_export?classConcept=!ff34dfa7-c6d3-4f8b-bc9f-14bcdc13ba6c&statusConcept=${StatusKeys.Active}`;
+            }
+            catch(e) {
+                $rootScope.errorHandler(e);
+            }
+        
+        }
+    }
+
+    
+    // Download as a place
+    $scope.downloadFacilities = async function () {
+        if (confirm(SanteDB.locale.getString("ui.action.export.confirm"))) {
+            try {
+
+                window.location = `/hdsi/Place/_export?classConcept=ff34dfa7-c6d3-4f8b-bc9f-14bcdc13ba6c&statusConcept=${StatusKeys.Active}`;
             }
             catch(e) {
                 $rootScope.errorHandler(e);

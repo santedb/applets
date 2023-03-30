@@ -53,28 +53,28 @@ angular.module('santedb-lib')
                     try {
                         if (!loaded[setName]) {
                             loaded[setName] = { callme: [] };
-                            scope.setValues = (await SanteDB.resources.concept.findAsync({ "conceptSet.mnemonic": setName, "_orderBy":"mnemonic:asc", "_count":200 })).resource;
+                            
+                            scope.setValues = (await SanteDB.resources.conceptSet.invokeOperationAsync(null, "expand", { "mnemonic": setName })).resource;
 
-                            if (scope.setValues.length == 0) // Retry 
-                                $timeout(loadConceptSet(), 500);
-                            else {
-                                loaded[setName].callme.forEach((r) => r(scope.setValues));
-                                loaded[setName] = scope.setValues;
+                            // Now - is there an additional concept
+                            if (scope.addConcept) {
 
-                                // Now - is there an additional concept
-                                if (scope.addConcept) {
+                                if (!Array.isArray(scope.addConcept))
+                                    scope.addConcept = [scope.addConcept];
 
-                                    if (!Array.isArray(scope.addConcept))
-                                        scope.addConcept = [scope.addConcept];
-
-                                    await Promise.all(scope.addConcept.map(async function (o) {
-                                        if (typeof (o) === "string")
-                                            o = await SanteDB.resources.concept.getAsync(o);
-                                        loaded[setName].push(o);
-                                    }));
-                                }
-                                scope.$apply();
+                                await Promise.all(scope.addConcept.map(async function (o) {
+                                    if (typeof (o) === "string")
+                                        o = await SanteDB.resources.concept.getAsync(o);
+                                    scope.setValues.push(o);
+                                }));
                             }
+
+                            scope.setValues = scope.setValues.sort((a,b)=>a.mnemonic < b.mnemonic ? -1 : a.mnemonic > b.mnemonic ? 1 : 0);
+
+                            loaded[setName].callme.forEach((r) => r(scope.setValues));
+                            loaded[setName] = scope.setValues;
+
+                            scope.$apply();
                         }
                         else {
                             if (Array.isArray(loaded[setName])) // loaded already

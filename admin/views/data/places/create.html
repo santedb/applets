@@ -57,7 +57,7 @@
                                 for="name">{{ 'ui.model.entity.relationship.Parent' | i18n }}  <hint-popover hint-title="ui.model.entity.relationship.Parent" /></label>
                             <div class="col-sm-12 col-md-9 input-group">
                                 <entity-search type="'Place'"
-                                    group-by="'address.PhysicalVisit.component.State'" 
+                                    group-by="['address.PhysicalVisit[0].component.State[0]','address.Direct[0].component.State[0]']" 
                                     ng-model="entity.relationship.Parent[0].target"
                                     search-field="'name.component.value'"
                                     for-relationship-type="'bfcbb345-86db-43ba-b47e-e7411276ac7c'"

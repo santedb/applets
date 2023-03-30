@@ -1,5 +1,5 @@
 /// <reference path="../../../core/js/santedb.js"/>
-angular.module('santedb').controller('PlaceDemographicsController', ['$scope', '$rootScope', "$timeout", function ($scope, $rootScope, $timeout) {
+angular.module('santedb').controller('EntityDemographicsController', ['$scope', '$rootScope', "$timeout", function ($scope, $rootScope, $timeout) {
 
     $scope.update = async function (form) {
 
@@ -13,12 +13,12 @@ angular.module('santedb').controller('PlaceDemographicsController', ['$scope', '
             await prepareEntityForSubmission(submissionObject);
             var bundle = new Bundle({ resource: [submissionObject] });
             await SanteDB.resources.bundle.insertAsync(bundle);
-            var updated = await SanteDB.resources.place.getAsync($scope.scopedObject.id, "full"); // re-fetch the place
+            var updated = await SanteDB.resources[submissionObject.$type.toCamelCase()].getAsync($scope.scopedObject.id, "full"); // re-fetch the place
          
             $timeout(() => {
                 SanteDB.display.cascadeScopeObject(SanteDB.display.getRootScope($scope), ['scopedObject', 'entity'], updated);
             });
-            toastr.success(SanteDB.locale.getString("ui.model.place.saveSuccess"));
+            toastr.success(SanteDB.locale.getString("ui.model.entity.saveSuccess"));
             form.$valid = true;
 
         }

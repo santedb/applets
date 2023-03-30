@@ -1,47 +1,18 @@
 /// <reference path="../../../core/js/santedb.js"/>
 /// <reference path="../../../core/js/santedb-model.js"/>
-/*
- * Portions Copyright 2015-2019 Mohawk College of Applied Arts and Technology
- * Portions Copyright 2019-2019 SanteSuite Contributors (See NOTICE)
- * 
- * Licensed under the Apache License, Version 2.0 (the "License"); you 
- * may not use this file except in compliance with the License. You may 
- * obtain a copy of the License at 
- * 
- * http://www.apache.org/licenses/LICENSE-2.0 
- * 
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
- * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the 
- * License for the specific language governing permissions and limitations under 
- * the License.
- * 
- * User: Justin Fyfe
- * Date: 2019-9-20
- */
-angular.module('santedb').controller('FacilityEditController', ["$scope", "$rootScope", "$stateParams", "$state", "$timeout", function ($scope, $rootScope, $stateParams, $state, $timeout) {
+angular.module('santedb').controller('OrganizationViewEditController', ["$scope", "$rootScope", "$stateParams", "$state", "$timeout", function ($scope, $rootScope, $stateParams, $state, $timeout) {
 
-    // initialize the view
-    async function initialize(id) {
+
+     // initialize the view
+     async function initialize(id) {
         try {
-            var place = await SanteDB.resources.place.getAsync(id, "full");
-            if(place.classConcept != EntityClassKeys.ServiceDeliveryLocation) {
-                $state.go("santedb-admin.data.place.view", {id: id});
-            }
+            var place = await SanteDB.resources.organization.getAsync(id, "full");
 
-            if(place.isMobile === undefined) {
-                place.isMobile = true;
-            }
             place.relationship = place.relationship || {};
             if(!place.relationship.Parent) {
                 place.relationship.Parent = [{}]
             }
-            if(!place.service) {
-                place.service = [];
-            }
-
             document.title = document.title + " - " + SanteDB.display.renderEntityName(place.name);
-
             return place;
         }
         catch(e) {
@@ -62,10 +33,7 @@ angular.module('santedb').controller('FacilityEditController', ["$scope", "$root
         })
     }
     else {
-        $scope.entity = new Place({
-            classConcept: EntityClassKeys.ServiceDeliveryLocation,
-            statusConcept: StatusKeys.Active,
-            isMobile: false,
+        $scope.entity = new Organization({
             relationship: {
                 Parent: []
             },
@@ -77,8 +45,9 @@ angular.module('santedb').controller('FacilityEditController', ["$scope", "$root
                     use: NameUseKeys.OfficialRecord
                 }]
             },
+            statusConcept: StatusKeys.Active,
             address: {
-                PhysicalVisit: [
+                PostalAddress: [
                     {
                         component: {
                             City: [],
@@ -87,50 +56,53 @@ angular.module('santedb').controller('FacilityEditController', ["$scope", "$root
                             County: [],
                             Precinct: [],
                             StreetAddressLine: [],
-                            PostalCode: []
+                            PostalCode: [],
+                            PostBox: [],
+                            CareOf: []
                         },
-                        use: AddressUseKeys.PhysicalVisit
+                        use: AddressUseKeys.PostalAddress
                     }
                 ]
             }
         });
     }
 
-
-    // Save the place
-    $scope.savePlace = async function(form) {
+    
+    // Save the org
+    $scope.saveOrganization = async function(form) {
         if(!form.$valid) return;
 
         try {
-            SanteDB.display.buttonWait("#savePlaceButton", true);
+            SanteDB.display.buttonWait("#saveOrgButton", true);
             
-            var place = await prepareEntityForSubmission(angular.copy($scope.entity));
+            var organization = await prepareEntityForSubmission(angular.copy($scope.entity));
             
             if(!$stateParams.id) {
-                place = await SanteDB.resources.place.insertAsync(place);
-                toastr.success(SanteDB.locale.getString("ui.model.place.saveSuccess"));
+                organization = await SanteDB.resources.organization.insertAsync(organization);
+                toastr.success(SanteDB.locale.getString("ui.model.organization.saveSuccess"));
             }
             else {
-                place = await SanteDB.resources.place.updateAsync($stateParams.id, place);
-                toastr.success(SanteDB.locale.getString("ui.model.place.saveSuccess"));
+                organization = await SanteDB.resources.organization.updateAsync($stateParams.id, organization);
+                toastr.success(SanteDB.locale.getString("ui.model.organization.saveSuccess"));
             }
-            $state.go("santedb-admin.data.facility.view", { id: place.id });
+            $state.go("santedb-admin.data.organization.view", { id: organization.id });
 
         }
         catch(e) {
             $rootScope.errorHandler(e);
         }
         finally {
-            SanteDB.display.buttonWait("#savePlaceButton", false);
+            SanteDB.display.buttonWait("#saveOrgButton", false);
         }
     }
+
 
     // Set the active state
     $scope.setState = async function (status) {
         try {
             SanteDB.display.buttonWait("#btnSetState", true);
             await setEntityState($scope.entity.id, $scope.entity.etag, status);
-            toastr.info(SanteDB.locale.getString("ui.model.place.saveSuccess"));
+            toastr.info(SanteDB.locale.getString("ui.model.organization.saveSuccess"));
 
             $state.reload();
             
@@ -149,7 +121,7 @@ angular.module('santedb').controller('FacilityEditController', ["$scope", "$root
         try {
             SanteDB.display.buttonWait("#btnClearTag", true);
             await setEntityTag($stateParams.id, tagName, tagValue);
-            toastr.info(SanteDB.locale.getString("ui.model.place.saveSuccess"));
+            toastr.info(SanteDB.locale.getString("ui.model.organization.saveSuccess"));
             
             var updated = await SanteDB.resources.place.getAsync($stateParams.id, "full"); // re-fetch the place
             $timeout(() => {

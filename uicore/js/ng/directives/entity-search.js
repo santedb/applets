@@ -425,7 +425,13 @@ angular.module('santedb-lib')
                                         for (var itm in objs) {
                                             // parent obj
                                             try {
-                                                var groupDisplay = scope.$eval('scope.' + groupString, { scope: data[itm] });
+                                                var groupDisplay = null;
+                                                if(Array.isArray(groupString)) {
+                                                    groupDisplay = groupString.map(o=> scope.$eval('scope.' + o, { scope: data[itm] })).find(o=>o != null);
+                                                }
+                                                else {
+                                                    groupDisplay = scope.$eval('scope.' + groupString, { scope: data[itm] });
+                                                }
 
                                                 if (!groupDisplay)
                                                     retVal.results.push(data[itm]);

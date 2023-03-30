@@ -105,7 +105,7 @@
     <property name="createdBy" behavior="always" all="true" />
     <property name="creationTime" behavior="always" />
     <property name="creationTimeModel" behavior="never" />
-    <property name="version" behavior="never" />
+    <property name="version"  />
     <property name="name" all="true" behavior="always">
       <property name="*" ref="EntityName" />
     </property>
@@ -138,7 +138,7 @@
     <property name="createdBy" behavior="never" />
     <property name="creationTime" behavior="never" />
     <property name="creationTimeModel" behavior="never" />
-    <property name="version" behavior="never" />
+    <property name="version"  />
     <property name="occupationModel" all="true" behavior="always" ref="Concept" />
     <property name="nationalityModel" all="true" behavior="always" ref="Concept" />
     <property name="vipStatusModel" all="true" behavior="always" ref="Concept" />
@@ -170,7 +170,7 @@
     <property name="createdBy" behavior="never" />
     <property name="creationTime" behavior="never" />
     <property name="creationTimeModel" behavior="never" />
-    <property name="version" behavior="never" />
+    <property name="version"  />
     <property name="name" all="true" behavior="always">
       <property name="*" ref="EntityName" />
     </property>
@@ -322,12 +322,12 @@
     <property name="createdBy" behavior="never" />
     <property name="creationTime" behavior="never" />
     <property name="creationTimeModel" behavior="never" />
-    <property name="version" behavior="never" />
+    <property name="version"  />
     <property name="name" all="true" behavior="always">
       <property name="*" ref="EntityName" />
     </property>
     <property name="identifier" all="true" ref="EntityIdentifier" behavior="always" />
-    <property name="classConceptModel" behavior="never" />
+    <property name="classConceptModel" behavior="always" />
     <property name="classConcept" behavior="always" />
     <property name="determinerConceptModel" behavior="never" />
     <property name="statusConceptModel" behavior="never" />
@@ -347,7 +347,7 @@
     <property name="createdBy" behavior="always" />
     <property name="creationTime" behavior="always" />
     <property name="creationTimeModel" behavior="never" />
-    <property name="version" behavior="never" />
+    <property name="version"  />
     <property name="identifier" behavior="always">
       <property name="*" ref="EntityIdentifier" />
     </property>
@@ -394,7 +394,7 @@
         <property name="id" />
         <property name="target" />
         <property name="quantity" />
-        <property name="targetModel" behavior="always">
+        <property name="targetModel" all="true" behavior="always">
           <property name="id" />
           <property name="version" />
           <property name="lotNumber" />
@@ -414,11 +414,93 @@
         <property name="relationshipTypeModel" behavior="never" />
       </property>
     </property>
+    <property name="service" all="false" behavior="always">
+      <property name="serviceConcept" />
+      <property name="serviceSchedule" />
+      <property name="serviceConceptModel" behavior="always" ref="Concept"/>
+    </property>
     <property name="participation" all="true">
       <property name="*" all="true">
         <property name="targetAct" all="true" />
       </property>
     </property>
+    <property name="tag" all="true" />
+  </type>
+
+  
+  <type type="Organization" all="true">
+    <property name="templateModel" behavior="always" all="false">
+      <property name="mnemonic" />
+    </property>
+    <property name="createdBy" behavior="always" />
+    <property name="creationTime" behavior="always" />
+    <property name="creationTimeModel" behavior="never" />
+    <property name="version"  />
+    <property name="identifier" behavior="always">
+      <property name="*" ref="EntityIdentifier" />
+    </property>
+    <property name="name" all="true" behavior="always">
+      <property name="*" ref="EntityName" />
+    </property>
+    <property name="statusConceptModel" ref="Concept" behavior="always" />
+    <property name="address" all="true" behavior="always">
+      <property name="*" ref="EntityAddress" />
+    </property>
+    <property name="determinerConcept"  />
+    <property name="typeConceptModel" all="true" behavior="always" ref="Concept" />
+    <property name="extension" all="true" behavior="always" />
+    <property name="relationship" all="false" behavior="always">
+      <property name="Parent" all="false">
+        <property name="id" />
+        <property name="target" />
+        <property name="targetModel" behavior="always" all="false">
+          <property name="classConceptModel" behavior="always" ref="Concept" />
+          <property name="id" />
+          <property name="version" />
+          <property name="relationship" behavior="never" />
+          <property name="name" all="true" behavior="always">
+            <property name="*" ref="EntityName" />
+          </property>
+        </property>
+      </property>
+      <property name="ManufacturedProduct" all="false">
+        <property name="target" />
+        <property name="targetModel" behavior="always" all="false">
+          <property name="id" />
+          <property name="version" />
+          <property name="typeConceptModel" behavior="always" ref="Concept" />
+          <property name="identifier" all="true" />
+          <property name="name" all="true" behavior="always">
+            <property name="*" ref="EntityName" />
+          </property>
+        </property>
+      </property>
+      <property name="OwnedEntity" all="false">
+        <property name="target" />
+        <property name="quantity" />
+        <property name="targetModel" all="true" behavior="always">
+          <property name="id" />
+          <property name="version" />
+          <property name="lotNumber" />
+          <property name="expiryDate" />
+          <property name="typeConceptModel" behavior="always" ref="Concept" />
+          <property name="identifier" all="true" />
+          <property name="name" all="true" behavior="always">
+            <property name="*" ref="EntityName" />
+          </property>
+        </property>
+      </property>
+      <property name="*" all="true">
+        <property name="source" behavior="never" />
+        <property name="holder" behavior="never" />
+        <property name="holderModel" behavior="never" />
+        <property name="sourceModel" behavior="never" />
+        <property name="relationshipTypeModel" behavior="never" />
+        <property name="target" />
+    </property>
+    </property>
+    <property name="industryConcept" />
+    <property name="industryConceptModel" all="false" behavior="always" ref="Concept" />
     <property name="tag" all="true" />
   </type>
 
@@ -428,7 +510,7 @@
     <property name="createdBy" behavior="never" />
     <property name="creationTime" />
     <property name="creationTimeModel" behavior="never" />
-    <property name="version" behavior="never" />
+    <property name="version"  />
     <property name="tag" all="true" behavior="always" />
     <property name="templateModel" behavior="always" all="false">
       <property name="mnemonic" />
@@ -581,7 +663,7 @@
     <property name="creationTime" />
 
     <property name="creationTimeModel" behavior="never" />
-    <property name="version" behavior="never" />
+    <property name="version"  />
     <property name="templateModel" behavior="always" all="false">
       <property name="mnemonic" />
     </property>
@@ -680,7 +762,7 @@
     <property name="creationTime" />
 
     <property name="creationTimeModel" behavior="never" />
-    <property name="version" behavior="never" />
+    <property name="version"  />
     <property name="templateModel" behavior="always" all="false">
       <property name="mnemonic" />
     </property>
@@ -741,7 +823,7 @@
     <property name="createdBy" behavior="never" />
     <property name="creationTime" />
     <property name="creationTimeModel" behavior="never" />
-    <property name="version" behavior="never" />
+    <property name="version"  />
     <property name="templateModel" behavior="always" all="false">
       <property name="mnemonic" />
     </property>
