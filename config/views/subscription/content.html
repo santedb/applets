@@ -93,7 +93,7 @@
           multiple="multiple" />
         <entity-search ng-if="config.sync.subscribeType == 'Place'" type="'Place'" style="height:3em;"
           required="required" class="form-control" name="subscribePlace" ng-model="config.sync.subscribeTo"
-          group-by="address.Direct.component.State"
+          group-by="['address.PhysicalVisit[0].component.State[0]','address.Direct[0].component.State[0]']"
           filter="{ &quot;statusConcept.mnemonic&quot; : &quot;ACTIVE&quot;, &quot;classConcept.mnemonic&quot; : &quot;!ServiceDeliveryLocation&quot; }"
           multiple="multiple" />
         <entity-search ng-if="config.sync.subscribeType == 'IdentityDomain'" search-field="'name'"

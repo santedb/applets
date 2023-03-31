@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
   <string name="ui.model.securityProvenance.type.device">Device Principal</string>
   <string name="ui.model.securityProvenance.type.user">User Principal</string>
   <string name="ui.model.securityProvenance.type.application">Application Principal</string>
@@ -39,13 +40,10 @@
   <string name="ui.model.securityPolicy.createdBy">Created By</string>
   <string name="ui.model.securityPolicy.obsoletedBy">Deleted By</string>
   <string name="ui.model.securityPolicy.updatedBy">Updated By</string>
-  <string name="ui.model.securityPolicy.canOverride">This policy can be overridden by a user with
-    the &quot;Override&quot; policy applied to their account</string>
-  <string name="ui.model.securityPolicy.canOverride.true">The policy system will allow the user to
-    override this policy decision</string>
+  <string name="ui.model.securityPolicy.canOverride">This policy can be overridden by a user with the &quot;Override&quot; policy applied to their account</string>
+  <string name="ui.model.securityPolicy.canOverride.true">The policy system will allow the user to override this policy decision</string>
   <string name="ui.model.securityPolicy.canOverride.true.summary">Overridable</string>
-  <string name="ui.model.securityPolicy.canOverride.false">The user cannot override the policy
-    decision</string>
+  <string name="ui.model.securityPolicy.canOverride.false">The user cannot override the policy decision</string>
   <string name="ui.model.securityPolicyInstance.policy">Policy</string>
   <string name="ui.model.securityPolicyInstance.grant">Permission</string>
   <string name="ui.model.securityPolicyInstance.grant.Grant">Grant</string>
@@ -61,14 +59,11 @@
   <string name="ui.model.securityDevice.lockout">Lockout</string>
   <string name="ui.model.entityIdentifier.authority">Assigned By</string>
   <string name="ui.model.entityIdentifier.value">ID Number</string>
-
   <string name="ui.model.securityDevice.secret">Device Secret</string>
   <string name="ui.model.deviceEntity.manufacturerModelName">Model Name</string>
   <string name="ui.model.deviceEntity.operatingSystemName">Operating System</string>
-  <string name="ui.model.deviceEntity.relationship.DedicatedServiceDeliveryLocation">Designated
-    Facility</string>
+  <string name="ui.model.deviceEntity.relationship.DedicatedServiceDeliveryLocation">Designated Facility</string>
   <string name="ui.model.deviceEntity.relationship.AssignedEntity">Designated Person</string>
-
   <string name="ui.model.securityApplication.id">Security ID</string>
   <string name="ui.model.securityApplication.name">Name</string>
   <string name="ui.model.securityApplication.createdBy">Created By</string>
@@ -78,11 +73,9 @@
   <string name="ui.model.securityApplication.invalidAuth">Invalid Authentications</string>
   <string name="ui.model.securityApplication.lockout">Lockout</string>
   <string name="ui.model.securityApplication.secret">Application Secret</string>
-
   <string name="ui.model.applicationEntity.softwareName">Software Name</string>
   <string name="ui.model.applicationEntity.vendorName">Vendor</string>
   <string name="ui.model.applicationEntity.versionName">Version</string>
-
   <string name="ui.model.entityName.given">Given</string>
   <string name="ui.model.entityName.family">Family</string>
   <string name="ui.model.entityName.use">Type</string>
@@ -114,13 +107,20 @@
   <string name="ui.model.version.replaces">Replaces Version</string>
   <string name="ui.model.version.changed">Changed Properties</string>
   <string name="ui.model.version.initial">Initial Version</string>
+  <string name="ui.model.entity.properties">Properties</string>
   <string name="ui.model.entity.id">UUID</string>
+  <string name="ui.model.entity.classConcept">Classification</string>
+  <string name="ui.model.entity.typeConcept">Type</string>
   <string name="ui.model.entity.relationship.hasA">HAS A</string>
   <string name="ui.model.entity.relationship.isA">IS A</string>
   <string name="ui.model.entity.relationship.Caregiver">Caregiver(s)</string>
   <string name="ui.model.entity.relationship.Citizen">Citizenship(s)</string>
   <string name="ui.model.entity.relationship.CoverageSponsor">Coverage/Sponsor</string>
   <string name="ui.model.entity.relationship.DedicatedServiceDeliveryLocation">Facilities</string>
+  <string name="ui.model.entity.relationship.Parent">Parent</string>
+  <string name="ui.model.entity.relationship.Parent.hint">Select the direct parent of this entity in the entity hierarchy</string>
+  <string name="ui.model.entity.relationship.Child">Child</string>
+  <string name="ui.model.entity.relationship.Children">Children</string>
   <string name="ui.model.entity.relationship.Employee">Employer</string>
   <string name="ui.model.entity.relationship.Location">Location</string>
   <string name="ui.model.entity.relationship.Guarantor">Guarantor</string>
@@ -131,16 +131,14 @@
   <string name="ui.model.entity.relationship.Mother">Mother</string>
   <string name="ui.model.entity.relationship.ServiceDeliveryLocation">Registered At</string>
   <string name="ui.model.entity.relationship.SigningAuthorityOrOfficer">Power of Attorney</string>
-  <string name="ui.model.entity.relationship.structured">This entity is a proper record. To edit it,
-    you\'ll need to visit the object\'s detail page</string>
+  <string name="ui.model.entity.relationship.structured">This entity is a proper record. To edit it, you\'ll need to visit the object\'s detail page</string>
   <string name="ui.model.entity.relationship.Student">School</string>
   <string name="ui.model.entity.relationship.MDMDuplicate">Duplicates</string>
-  <string name="ui.model.entity.address">Address</string>
+  <string name="ui.model.entity.address">Addresses</string>
   <string name="ui.model.entity.address.title">Address Registration</string>
   <string name="ui.model.entity.address.use">Address Type</string>
+  <string name="ui.model.entity.statusConcept">Status</string>
   <string name="ui.model.entity.address.use.hint"><![CDATA[Indicates the intended use of the address such as <code>PhysicalVisit</string> for a physical address, or <code>WorkPlace</code>, etc.]]></string>
-
-
   <string name="ui.model.entity.address.component.state">State/Province</string>
   <string name="ui.model.entity.address.component.state.hint"><![CDATA[A partition of a country (also known as a Region, Territory, Zone, etc.)]]></string>
   <string name="ui.model.entity.address.component.county">County/District</string>
@@ -154,9 +152,19 @@
   <string name="ui.model.entity.address.component.postalcode">Postal/ZIP</string>
   <string name="ui.model.entity.address.component.postalcode.hint"><![CDATA[A codified representation of the address used for postal delivery and/or package routing, etc.]]></string>
   <string name="ui.model.entity.address.component.country">Country</string>
+  <string name="ui.model.entity.address.component.country.hint"><![CDATA[The country where the address resides]]></string>
+  <string name="ui.model.entity.address.component.postbox">P.O. Box</string>
+  <string name="ui.model.entity.address.component.postbox.hint"><![CDATA[The post-office box, mailbox number, or other identification for a delivery instruction]]></string>
+  <string name="ui.model.entity.address.component.unitidentifier">Unit/Suite #</string>
+  <string name="ui.model.entity.address.component.unitidentifier.hint"><![CDATA[The unit, suite, office, or other sub-division of the building]]></string>
+  <string name="ui.model.entity.address.component.careof">C/O</string>
+  <string name="ui.model.entity.address.component.careof.hint"><![CDATA[If delivery or other mail delivered to this address carries a care-of instruction]]></string>
+  <string name="ui.model.entity.address.expand">More Fields</string>
+  <string name="ui.model.entity.address.collapse">Less Fields</string>
   <string name="ui.model.entity.name">Name</string>
   <string name="ui.model.entity.name.title">Name Registration</string>
   <string name="ui.model.entity.name.use">Name Type</string>
+  <string name="ui.model.entity.geo">Geoposition</string>
   <string name="ui.model.entity.name.use.hint"><![CDATA[The intended use for the name. For example <code>OfficialRecord</code> would indicate the name is used on official documentation.]]></string>
   <string name="ui.model.entity.name.component.prefix">Prefix</string>
   <string name="ui.model.entity.name.component.prefix.hint"><![CDATA[A prefix or honorary title used (example: <code>Sir</code>, <code>Mr.</code>, <code>Ms.</code>)]]></string>
@@ -168,6 +176,8 @@
   <string name="ui.model.entity.name.component.suffix.hint"><![CDATA[Suffixes for the name such as an enumetion (William Gates <code>III</code>) a designator (Joe Smith <code>Jr.</code>) or designated title (Dr. Fran Smith <code>MD</code>)]]></string>
   <string name="ui.model.entity.name.component.other">Name</string>
   <string name="ui.model.entity.name.component.other.hint"><![CDATA[Unclassified names for the entity which cannot be classified appropriately.]]></string>
+  <string name="ui.model.entity.name.expand">More Fields</string>
+  <string name="ui.model.entity.name.collapse">Less Fields</string>
   <string name="ui.model.entity.telecom">Contact Info</string>
   <string name="ui.model.entity.genderConcept">Gender</string>
   <string name="ui.model.entity.demographics">Additional Info</string>
@@ -188,11 +198,9 @@
   <string name="ui.model.entity.telecom.TemporaryAddress">Temporary</string>
   <string name="ui.model.entity.telecom.WorkPlace">Work</string>
   <string name="ui.model.entity.identifier">Identifiers</string>
-  <string name="ui.model.entity.identifier.authority.remove.confirm">Are you sure you want to remove
-    this identifier from this entity?</string>
+  <string name="ui.model.entity.identifier.authority.remove.confirm">Are you sure you want to remove this identifier from this entity?</string>
   <string name="ui.model.entity.identifier.authority.noAssign">No Authority</string>
-  <string name="ui.model.entity.identifier.authority.noAssign.help">The administrative portal has no
-    authority to assign this identifier</string>
+  <string name="ui.model.entity.identifier.authority.noAssign.help">The administrative portal has no authority to assign this identifier</string>
   <string name="ui.model.entity.identifier.authority">Domain</string>
   <string name="ui.model.patient.administrativeInfo">Extra</string>
   <string name="ui.model.patient.demographics">Demographics</string>
@@ -208,7 +216,6 @@
   <string name="ui.model.patient.addresses">Addresses</string>
   <string name="ui.model.patient.address">Address</string>
   <string name="ui.model.patient.address.use">Use</string>
-
   <string name="ui.model.patient.address.component.country">Country</string>
   <string name="ui.model.patient.address.component.state">State/Province</string>
   <string name="ui.model.patient.address.component.county">County/District</string>
@@ -218,8 +225,7 @@
   <string name="ui.model.patient.address.component.postalcode">Zip/Postal Code</string>
   <string name="ui.model.patient.dateOfBirth">DOB</string>
   <string name="ui.model.patient.dateOfBirth.approx">Approx.</string>
-  <string name="ui.model.patient.dateOfBirth.required">A date of birth and gender are required for
-    this operation to be completed</string>
+  <string name="ui.model.patient.dateOfBirth.required">A date of birth and gender are required for this operation to be completed</string>
   <string name="ui.model.patient.genderConcept">Gender</string>
   <string name="ui.model.patient.identifier">Identifier(s)</string>
   <string name="ui.model.patient.creationTime">Timestamp</string>
@@ -252,14 +258,39 @@
   <string name="ui.model.person.vipStatus">VIP Status</string>
   <string name="ui.model.patient.summary">Patient Summary</string>
   <string name="ui.model.place.name">Name</string>
+  <string name="ui.model.place.names">Other Name(s)</string>
   <string name="ui.model.place.classConcept">Classification</string>
+  <string name="ui.model.place.classConcept.hint">Select the SanteDB classification of the place which is being created</string>
+  <string name="ui.model.place.classConcept.changeWarning">Chaning the class concept may invalidate data already present in your database. You should only change this if there are no relationships established with this place</string>
   <string name="ui.model.place.typeConcept">Type</string>
+  <string name="ui.model.place.typeConcept.hint">Select the sub-classification of the place which you're creating (for example: Ward, Community Hospital, etc.)</string>
+  <string name="ui.model.place.properties">Properties</string>
   <string name="ui.model.place.address">Address</string>
+  <string name="ui.model.place.telecom">Telecom</string>
+  <string name="ui.model.place.telecoms">Telecom(s)</string>
+  <string name="ui.model.place.hierarchy">Hierarchy</string>
+  <string name="ui.model.place.addresses">Address(es)</string>
   <string name="ui.model.place.updatedBy">Last Update</string>
   <string name="ui.model.place.statusConcept">Status</string>
+  <string name="ui.model.place.service.serviceConcept">Type of Service</string>
+  <string name="ui.model.place.service.serviceSchedule">Schedule</string>
   <string name="ui.model.patient.saveSuccess">Patient updated successfully</string>
   <string name="ui.model.person.saveSuccess">Related person updated successfully</string>
   <string name="ui.model.place.saveSuccess">Place updated successfully</string>
+  <string name="ui.model.place.name.component.other">Official Name</string>
+  <string name="ui.model.place.name.component.other.hint">Enter the official name of the place</string>
+  <string name="ui.model.organization.name">Name</string>
+  <string name="ui.model.organization.typeConcept">Type</string>
+  <string name="ui.model.organization.typeConcept.hint"><![CDATA[The primary classification or type of organization that this entry represents]]></string>
+  <string name="ui.model.organization.statusConcept">Status</string>
+  <string name="ui.model.organization.address">Address</string>
+  <string name="ui.model.organization.address.hint">The legal mailing/contact address of the organization</string>
+  <string name="ui.model.organization.industryConcept">Focus Industry</string>
+  <string name="ui.model.organization.industryConcept.hint">The industry that this organization operates within</string>
+  <string name="ui.model.organization.updatedBy">Last Update</string>
+  <string name="ui.model.organization.name.component.other">Official Name</string>
+  <string name="ui.model.organization.name.component.other.hint">The official/legal name of the organization</string>
+  <string name="ui.model.organization.saveSuccess">Organization updated successfully</string>
   <string name="ui.model.material.saveSuccess">Material updated successfully</string>
   <string name="ui.model.userEntity.saveSuccess">User updated successfully</string>
   <string name="ui.model.securityUser.saveSuccess">User updated successfully</string>
@@ -275,9 +306,6 @@
   <string name="ui.model.material.formConcept">Form</string>
   <string name="ui.model.material.statusConcept">Status</string>
   <string name="ui.model.material.updatedBy">Last Update</string>
-
-  <string name="ui.model.place.relationship.Parent">Parent</string>
-
   <string name="ui.admin.facilities.edit.core.title">Facility</string>
   <string name="ui.model.facility.id">Unique Identifier</string>
   <string name="org.santedb.widget.admin.tab.facility.profile">Facility Profile</string>
@@ -287,12 +315,11 @@
   <string name="org.santedb.widget.admin.panel.facility.profile.telecom">Telecom</string>
   <string name="org.santedb.widget.admin.panel.facility.profile.services">Services</string>
   <string name="ui.model.place.isMobile">Is Mobile</string>
-  <string name="ui.model.place.isMobile.hint">Check this box to indicate that the facility is not
-    fixed (for example: a portable facility, vehicle or bus) as opposed to a building</string>
+  <string name="ui.model.place.isMobile.hint">Check this box to indicate that the facility is not fixed (for example: a portable facility, vehicle or bus) as opposed to a building</string>
+  <string name="ui.model.place.isMobile.on">This facility record represents a mobile care facility (such as ambulance, mobile clinic, etc.) </string>
+  <string name="ui.model.geo.supplied">Known Geolocation</string>
   <string name="ui.model.geo.lat">Latitude</string>
   <string name="ui.model.geo.lng">Longitude</string>
-
-
   <string name="ui.model.job.name">Job Name</string>
   <string name="ui.model.job.tag">Version</string>
   <string name="ui.model.job.state">Current State</string>
@@ -305,16 +332,12 @@
           <li><code>Calendar Schedule</code> - The job will start on the specified date, at the specified time, on the specified days</li>
           <li><code>Regular Interval</code> - The job will run every X hours, minutes, or days </li>
         </ul>]]></string>
-  <string name="ui.model.job.schedule.type.never.help">This job is not scheduled to run
-    automatically. It will only run when initiated by a user</string>
+  <string name="ui.model.job.schedule.type.never.help">This job is not scheduled to run automatically. It will only run when initiated by a user</string>
   <string name="ui.model.job.schedule.type.never">No Schedule</string>
   <string name="ui.model.job.schedule.type.interval">Regular Interval</string>
-  <string name="ui.model.job.schedule.type.interval.help">This job is scheduled to run on an
-    interval. Interval jobs are run every X seconds/minutes/hours regardless of the day or time</string>
+  <string name="ui.model.job.schedule.type.interval.help">This job is scheduled to run on an interval. Interval jobs are run every X seconds/minutes/hours regardless of the day or time</string>
   <string name="ui.model.job.schedule.type.scheduled">Calendar Schedule</string>
-  <string name="ui.model.job.schedule.type.scheduled.help">This job is set on a calendar schedule.
-    Calendar schedule jobs will run on the specified days from the specified start date at the
-    specified time</string>
+  <string name="ui.model.job.schedule.type.scheduled.help">This job is set on a calendar schedule. Calendar schedule jobs will run on the specified days from the specified start date at the specified time</string>
   <string name="ui.model.job.schedule.start">Start On</string>
   <string name="ui.model.job.schedule.start.hint">This schedule will start on the specified date</string>
   <string name="ui.model.job.schedule.time">At Time</string>
@@ -331,12 +354,11 @@
   <string name="ui.model.job.schedule.interval.6h">6 hours (4 times daily)</string>
   <string name="ui.model.job.schedule.interval.4h">4 hours (6 times daily)</string>
   <string name="ui.model.job.schedule.interval.3h">3 hours (8 times daily)</string>
-  <string name="ui.model.job.schedule.interval.2h">2 hours (12 times daily))</string>
+  <string name="ui.model.job.schedule.interval.2h">2 hours (12 times daily)</string>
   <string name="ui.model.job.schedule.interval.1h">60 minutes (once per hour)</string>
   <string name="ui.model.job.schedule.interval.30m">30 minutes</string>
   <string name="ui.model.job.schedule.interval.15m">15 minutes</string>
   <string name="ui.model.job.schedule.interval.05m">5 minutes</string>
-
   <string name="ui.model.act.template">Template</string>
   <string name="ui.model.act.typeConcept">Type</string>
   <string name="ui.model.act.actTime">Timestamp</string>
@@ -348,23 +370,17 @@
   <string name="ui.model.act.participation.Performer">Performer(s)</string>
   <string name="ui.model.act.participation.Attender">Attending Physician</string>
 
-
   <!-- Help Text -->
   <string name="ui.model.act.template.help">Identifies the type of event</string>
   <string name="ui.model.act.typeConcept.help">Identifies the classification of the event</string>
   <string name="ui.model.act.actTime.help">Identifies the time when this event occurred</string>
-  <string name="ui.model.act.participation.Location.help">Identifies the location where this event
-    is being recorded/occurred</string>
-  <string name="ui.model.act.participation.Authororiginator.help">The person/people who were
-    responsible for recording/reporting the event</string>
-  <string name="ui.model.act.participation.Baby.dateOfBirth.help">The date on which the newborn was
-    born</string>
-  <string name="ui.model.act.participation.Baby.genderConcept.help">The established gender of the
-    newborn</string>
-  <string name="ui.model.act.participation.Baby.multipleBirthIndicator.help">If this newborn was
-    part of a multiple birth (twin, triplet, etc.)</string>
-  <string name="ui.model.act.participation.Baby.birthplace.help">The place (hospital, township,
-    etc.) where the newborn was born</string>
+  <string name="ui.model.act.participation.Location.help">Identifies the location where this event is being recorded/occurred</string>
+  <string name="ui.model.act.participation.Authororiginator.help">The person/people who were responsible for recording/reporting the event</string>
+  <string name="ui.model.act.participation.Baby.dateOfBirth.help">The date on which the newborn was born</string>
+  <string name="ui.model.act.participation.Baby.genderConcept.help">The established gender of the newborn</string>
+  <string name="ui.model.act.participation.Baby.multipleBirthIndicator.help">If this newborn was part of a multiple birth (twin, triplet, etc.)</string>
+  <string name="ui.model.act.participation.Baby.birthplace.help">The place (hospital, township, etc.) where the newborn was born</string>
+
   <!-- Audit Logs -->
   <string name="ui.model.audit.action">Action</string>
   <string name="ui.model.audit.event">Event</string>
@@ -398,28 +414,22 @@
   <string name="ui.model.matchConfiguration.meta.updatedTime">Updated Time</string>
   <string name="ui.model.matchConfiguration.meta.updatedBy">Updated By</string>
   <string name="ui.model.matchConfiguration.id">ID</string>
-  <string name="ui.model.matchConfiguration.id.hint">The unique identifier for this matching
-    configuration file.</string>
+  <string name="ui.model.matchConfiguration.id.hint">The unique identifier for this matching configuration file.</string>
   <string name="ui.model.matchConfiguration.meta.version">Version</string>
   <string name="ui.model.matchConfiguration.target">Resource(s)</string>
   <string name="ui.model.matchConfiguration.target.hint"><![CDATA[The resource types (like <code>Patient</code>, <code>Person</code>, etc.) which this match configuration can be used for. The Master Data Management layer will use this information to determine which matching configurations to use]]></string>
   <string name="ui.model.matchConfiguration.meta.tags">Tags</string>
   <string name="ui.model.matchConfiguration.meta.tags.hint"><![CDATA[Optional tags which are used by the SanteDB iCDR and other plugins to determine how to handle matches of this configuration. Common tags are <ul><li><code>$mdm.auto-link</code> - Instruct MDM to automatically link the matches which meet the Match threshold without human intervention</li></ul>]]></string>
   <string name="ui.model.matchConfiguration.description">Description</string>
-  <string name="ui.model.matchConfiguration.description.hint">Enter a description for your match
-    configuration</string>
+  <string name="ui.model.matchConfiguration.description.hint">Enter a description for your match configuration</string>
   <string name="ui.model.matchConfiguration.evaluationMode">Evaluation Mode</string>
   <string name="ui.model.matchConfiguration.classification">Classification Ranges</string>
-  <string name="ui.model.matchConfiguration.evaluationMode.AbsoluteScore.hint">When classifying the
-    result - the absolute scores will be used for classification</string>
-  <string name="ui.model.matchConfiguration.evaluationMode.Percentage.hint">When classifying the
-    result - the relative % score will be used for classification</string>
+  <string name="ui.model.matchConfiguration.evaluationMode.AbsoluteScore.hint">When classifying the result - the absolute scores will be used for classification</string>
+  <string name="ui.model.matchConfiguration.evaluationMode.Percentage.hint">When classifying the result - the relative % score will be used for classification</string>
   <string name="ui.model.matchConfiguration.blocking.maxResults">Batch Size</string>
   <string name="ui.model.matchConfiguration.blocking.maxResults.description">{recs} per query</string>
-  <string name="ui.model.matchConfiguration.blocking.maxResults.hint">Indicates the maximum number
-    of records to load into memory from the database before matching commences.</string>
-  <string name="ui.model.matchConfiguration.blocking.maxResults.inputHelp">The lower this number is,
-    the more round-trips to the database are required</string>
+  <string name="ui.model.matchConfiguration.blocking.maxResults.hint">Indicates the maximum number of records to load into memory from the database before matching commences.</string>
+  <string name="ui.model.matchConfiguration.blocking.maxResults.inputHelp">The lower this number is, the more round-trips to the database are required</string>
   <string name="ui.model.matchConfiguration.blocking.op">Set Operation</string>
   <string name="ui.model.matchConfiguration.blocking.op.AndAlso">INTERSECT WITH</string>
   <string name="ui.model.matchConfiguration.blocking.op.OrElse">UNION WITH</string>
@@ -427,8 +437,7 @@
   <string name="ui.model.matchConfiguration.blocking.filters">Block Filters</string>
   <string name="ui.model.matchConfiguration.blocking.filters.hint"><![CDATA[Indicates the query statements which will be sent to the database or other physical store. These are in <a href=" https://help.santesuite.org/santedb/extending-santedb/service-apis/health-data-service-interface-hdsi/hdsi-query-syntax" target="_blank">HDSI format</a>]]></string>
   <string name="ui.model.matchConfiguration.scoring.id">Attribute ID</string>
-  <string name="ui.model.matchConfiguration.scoring.id.hint">A refernce identifier which this
-    scoring attribute can be referenced by (recommended)</string>
+  <string name="ui.model.matchConfiguration.scoring.id.hint">A refernce identifier which this scoring attribute can be referenced by (recommended)</string>
   <string name="ui.model.matchConfiguration.scoring.property">Property List</string>
   <string name="ui.model.matchConfiguration.scoring.property.hint"><![CDATA[The access properties which are used to retrieve data from the <em>$input</em> and blocked record. These are in <a href=" https://help.santesuite.org/santedb/extending-santedb/service-apis/health-data-service-interface-hdsi/hdsi-query-syntax" target="_blank">HDSI format</a>]]></string>
   <string name="ui.model.matchConfiguration.scoring.M">M Value</string>
@@ -441,23 +450,16 @@
   <string name="ui.model.matchConfiguration.scoring.nonMatchWeight.hint"><![CDATA[The non-match weight is a computed weighting for this attribute which is added to the candidate\'s score when the assertions disagree (fail). The value is derived from <code>ln((1 - m) / (1 - u)) / ln(2.0)</code>]]></string>
   <string name="ui.model.matchConfiguration.scoring.whenNull">When Null</string>
   <string name="ui.model.matchConfiguration.scoring.whenNull.hint"><![CDATA[Indicates the action which should be taken when the <code>input</code> or <code>blocked</code> record do not have a value populated at <code>property</code>]]></string>
-  <string name="ui.model.matchConfiguration.scoring.whenNull.Disqualify">The entire candidate match
-    pair is disqualified from consideration as a match</string>
-  <string name="ui.model.matchConfiguration.scoring.whenNull.Ignore">The attribute is removed from
-    consideration (note: this reduces the total possible score)</string>
-  <string name="ui.model.matchConfiguration.scoring.whenNull.Match">The attribute is scored as
-    though the missing recrd would have matched</string>
-  <string name="ui.model.matchConfiguration.scoring.whenNull.NonMatch">The attribute is scored as
-    though the missing record would not have matched</string>
-  <string name="ui.model.matchConfiguration.scoring.whenNull.None">The attribute assertions continue
-    to be executed (most likely this results in a non-match score)</string>
-  <string name="ui.model.matchConfiguration.scoring.whenNull.Zero">The attribute is scored as 0
-    rather than the non-match score</string>
+  <string name="ui.model.matchConfiguration.scoring.whenNull.Disqualify">The entire candidate match pair is disqualified from consideration as a match</string>
+  <string name="ui.model.matchConfiguration.scoring.whenNull.Ignore">The attribute is removed from consideration (note: this reduces the total possible score)</string>
+  <string name="ui.model.matchConfiguration.scoring.whenNull.Match">The attribute is scored as though the missing recrd would have matched</string>
+  <string name="ui.model.matchConfiguration.scoring.whenNull.NonMatch">The attribute is scored as though the missing record would not have matched</string>
+  <string name="ui.model.matchConfiguration.scoring.whenNull.None">The attribute assertions continue to be executed (most likely this results in a non-match score)</string>
+  <string name="ui.model.matchConfiguration.scoring.whenNull.Zero">The attribute is scored as 0 rather than the non-match score</string>
   <string name="ui.model.matchConfiguration.scoring.when">Evaluation Guard</string>
   <string name="ui.model.matchConfiguration.scoring.when.hint"><![CDATA[When the attribute specifies an evaluation guard the guard attributes must <ul><li>Have been evaluated successfully</li><li>Match the criteria specified</li></ul> Otherwise the <code>whenNull</code> action is taken.]]></string>
   <string name="ui.model.matchConfiguration.scoring.description">Notes</string>
-  <string name="ui.model.matchConfiguration.scoring.description.hint">These are comments/notes by
-    the author of the match configuration which provide context to this scoring block</string>
+  <string name="ui.model.matchConfiguration.scoring.description.hint">These are comments/notes by the author of the match configuration which provide context to this scoring block</string>
   <string name="ui.model.matchConfiguration.scoring.assert">Evaluation</string>
   <string name="ui.model.matchConfiguration.scoring.assert.hint"><![CDATA[The assertions to make on this object - before running the data can be transformed using one or more transformation attributes. Transforms are: <ul><li><strong>Unary</strong> - Applied against the <code>$input</code> and <code>$blocked</code> resulting in new <code>$input</code> and <code>$blocked</code> records (like soundex, levenshtein, etc.)</li><li><strong>Binary</strong> - Applied against the <code>$input</code> and <code>$blocked</code> and return a single <code>result</code></li></ul>]]></string>
   <string name="ui.model.matchConfiguration.scoring.partialWeight">Partial Weight</string>
@@ -468,45 +470,33 @@
   <string name="ui.model.pubsubsubscription.name.hint"><![CDATA[Provide a unique name for the subscription. The name is used internally to identify the subscription data]]></string>
   <string name="ui.model.pubsubsubscription.description">Description</string>
   <string name="ui.model.pubsubsubscription.description.hint"><![CDATA[Provide a brief description of the subscription. Include information such as what the subscription does, what is its purpose, etc. For example: <code>Send deceased patient demographics to CRVS system</code>]]></string>
-
   <string name="ui.model.pubsubsubscription.resource">Applies To</string>
   <string name="ui.model.pubsubsubscription.resource.hint"><![CDATA[Select the type of resource (RIM resource) that this subscription operates on]]></string>
-
   <string name="ui.model.pubsubsubscription.event">Event(s)</string>
   <string name="ui.model.pubsubsubscription.event.hint"><![CDATA[Select one or more events (which occur on the <code>Applies To</code> resource) when the notification should be sent]]></string>
-
   <string name="ui.model.pubsubsubscription.active">Current State</string>
-
   <string name="ui.model.pubsubsubscription.support">Support / Contact</string>
   <string name="ui.model.pubsubsubscription.support.hint"><![CDATA[Provide a support contact (telephone, e-mail, etc.) for this subscription. This can be used for diagnosing connectivity]]></string>
-
   <string name="ui.model.pubsubsubscription.when">When Criteria</string>
   <string name="ui.model.pubsubsubscription.when.hint"><![CDATA[Provide one or more filter criteria (which evaluate to true) when this subscription should be triggered (i.e. when should SanteDB send the notification to the remote endpoint)]]></string>
-
   <string name="ui.model.pubsubsubscription.notBefore">Not Before</string>
   <string name="ui.model.pubsubsubscription.notBefore.hint"><![CDATA[Indicates a date/time when this subscription will become active]]></string>
-
   <string name="ui.model.pubsubsubscription.notAfter">Not After</string>
   <string name="ui.model.pubsubsubscription.notAfter.hint"><![CDATA[Indicates a date/time when this subscription will cease to be active]]></string>
-
   <string name="ui.model.pubsubchannel.endpoint">Endpoint</string>
   <string name="ui.model.pubsubchannel.endpoint.hint"><![CDATA[The remote endpoint where notifications for this subscription should be sent. If selecting <strong>OTHER</strong> as the dispatcher type, the scheme of the URL is used, samples: <ul><li><code>sms://</code> - use the SMS dispatcher</li><li><code>mailto:</code> - use the e-mail dispatcher</li><li><code>llp://</code> - use the HL7v2 dispacher</li></ul>]]></string>
-
   <string name="ui.model.pubsubchannel.dispatcher">Dispatcher</string>
   <string name="ui.model.pubsubchannel.dispatcher.hint"><![CDATA[Identifies the type of messaging format to be used to send the notification (for example: FHIR messages, FHIR rest hook, HL7v2, etc.). <strong>OTHER</strong> is used when the iCDR has a dispatcher not listed here]]></string>
-
   <string name="ui.model.pubsubchannel.settings">Custom Settings</string>
   <string name="ui.model.pubsubchannel.settings.hint"><![CDATA[Additional settings (key/value pairs) which are used be the dispatcher to control the flow of information. For exampe, in FHIR these equate to HTTP headers]]></string>
 
   <!-- Foreign Data Submissions -->
   <string name="ui.model.alien.submission.name">Filename</string>
   <string name="ui.model.alien.submission.status">Status</string>
-  <string name="ui.model.alien.submission.status.scheduled">Scheduled (will be run next time imports
-    are processed)</string>
+  <string name="ui.model.alien.submission.status.scheduled">Scheduled (will be run next time imports are processed)</string>
   <string name="ui.model.alien.submission.status.staged">Staged (needs to be scheduled)</string>
   <string name="ui.model.alien.submission.status.success">Completed Successfully (all data imported)</string>
-  <string name="ui.model.alien.submission.status.withErrors">Completed with Errors (check issues and
-    reject file)</string>
+  <string name="ui.model.alien.submission.status.withErrors">Completed with Errors (check issues and reject file)</string>
   <string name="ui.model.alien.submission.status.running">Running (data is being imported)</string>
   <string name="ui.model.alien.submission.status.rejected">Rejected (correct issues and re-upload)</string>
   <string name="ui.model.alien.submission.modifiedOn">Last Modified</string>
@@ -515,4 +505,5 @@
   <string name="ui.model.alien.submission.issues">Issues / Errors</string>
   <string name="ui.model.alien.submission.createdBy">Created By</string>
   <string name="ui.model.alien.submission.updatedBy">Updated By</string>
+  
 </resources>

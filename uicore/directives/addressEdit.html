@@ -5,7 +5,7 @@
             <!-- #include virtual="/org.santedb.uicore/directives/partials/addressEdit.html" -->
         </div>
     </fieldset>
-    <div ng-if="simpleEntry &amp;&amp; $index == 0"  ng-repeat="addr in addressEdit">
+    <div ng-if="simpleEntry &amp;&amp; (!noAdd || $index == 0)" ng-repeat="addr in addressEdit">
         <!-- #include virtual="/org.santedb.uicore/directives/partials/addressEdit.html" -->
     </div>
     <div class="btn-group float-right" ng-if="!noAdd">

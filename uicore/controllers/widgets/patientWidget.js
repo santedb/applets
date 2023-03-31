@@ -13,45 +13,12 @@ angular.module('santedb').controller('PatientDemographicsWidgetController', ['$s
         // Now post the changed update object 
         try {
             var submissionObject = angular.copy($scope.editObject);
-            await prepareEntityForSubmission(submissionObject);
+            submissionObject = await prepareEntityForSubmission(submissionObject);
 
             // Bundle to be submitted
             var bundle = new Bundle({ resource: [submissionObject] });
-
-            // Now have any of our relationships changed?
-            // if (submissionObject.relationship) {
-            //     // Conver the relationship sub objects to bundle objects
-            //     await Promise.all(Object.keys(submissionObject.relationship).map(async function(k) {
-            //         // Since we can only link on this panel to existing objects we just need the target and source
-            //         var codeType = await SanteDB.resources.concept.findAsync({ 'mnemonic' : k});
-            //         var relationship = submissionObject.relationship[k];
-            //         if(codeType.totalResults == 1) {
-            //             submissionObject.relationship[k].forEach(rel => {
-            //                 if(rel.targetModel && !rel.targetModel.id)
-            //                 {
-
-            //                     bundle.resource.push(rel.targetModel);
-            //                 }
-            //                 bundle.resource.push(new EntityRelationship({
-            //                     id: rel.id, 
-            //                     holder: submissionObject.id,
-            //                     target: rel.target,
-            //                     relationshipType: codeType.resource[0].id
-            //                 }));
-            //             });
-                        
-            //         }
-            //         else {
-            //             console.warn("Skipping relationship", k, "could not find code expected 1 but got ", codeType.totalResults);
-            //         }
-            //     }));
-            //     // delete submissionObject.relationship; // don't send relationships as part of the object
-            //     // submissionObject.relationship = {};
-            // }
-
             
             await SanteDB.resources.bundle.insertAsync(bundle);
-
             var updated = await SanteDB.resources.patient.getAsync($scope.scopedObject.id, "full"); // re-fetch the patient
             $timeout(() => $scope.scopedObject = updated);
             toastr.success(SanteDB.locale.getString("ui.model.patient.saveSuccess"));

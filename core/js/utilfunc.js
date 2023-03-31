@@ -226,8 +226,8 @@ if (!String.prototype.startsWith)
         return this.indexOf(start) == 0;
     };
 
-if(!Array.prototype.flat)
-    Array.prototype.flat = function() {
+if (!Array.prototype.flat)
+    Array.prototype.flat = function () {
         return this.reduce((acc, val) => acc.concat(val), []);
     }
 
@@ -251,7 +251,7 @@ String.prototype.toCamelCase = function () {
 String.prototype.pad = function (char, len) {
     var pad = char.repeat(len);
     return (pad + this).slice(-len);
-}    
+}
 
 /** 
  * @summary Copy object data stripping out identifiers
@@ -261,14 +261,14 @@ String.prototype.pad = function (char, len) {
  */
 function copyObject(fromObject, deepCopy) {
 
-    if(fromObject && typeof(fromObject) !== "string") {
+    if (fromObject && typeof (fromObject) !== "string") {
         var obj = angular.copy(fromObject);
-        delete(obj.id);
-        delete(obj.versionId);
-        
-        if(deepCopy)
-            Object.keys(obj).forEach(function(k) {
-                if(obj[k])
+        delete (obj.id);
+        delete (obj.versionId);
+
+        if (deepCopy)
+            Object.keys(obj).forEach(function (k) {
+                if (obj[k])
                     obj[k] = copyObject(obj[k]);
             });
         return obj;
@@ -346,12 +346,28 @@ async function prepareEntityForSubmission(entity) {
                     addr = [addr];
 
                 var intlPromises = addr.map(async function (addrItem) {
-                    if(addrItem.useModel) // have to load use
+                    if (addrItem.useModel) // have to load use
                         addrItem.use = addrItem.useModel.id;
-                    if(!addrItem.use) 
+                    if (!addrItem.use)
                         addrItem.use = AddressUseKeys[k]
                     addrItem.component = addrItem.component || {};
-                    
+
+                    if (addrItem.component) {
+                        Object.keys(addrItem.component).forEach(o => {
+                            if (!Array.isArray(addrItem.component[o])) {
+                                if (typeof addrItem.component[o] === 'string') {
+                                    addrItem.component[o] = [addrItem.component[o]]
+                                }
+                                else if (typeof addrItem.component[o] === 'object' || addrItem.component[o]['0']) // Sometimes AngularJS will represent new objects as an object with property 0
+                                {
+                                    addrItem.component[o] = Object.keys(addrItem.component[o]).map(k => addrItem.component[o][k]);
+                                }
+                                else {
+                                    addrItem.component[o] = [addrItem.component[o]]
+                                }
+                            }
+                        });
+                    }
 
                     delete (addrItem.useModel);
                     addressList.push(addrItem);
@@ -373,11 +389,27 @@ async function prepareEntityForSubmission(entity) {
                 name = [name];
 
             name.forEach(function (nameItem) {
-                if(nameItem.useModel) // have to load use
+                if (nameItem.useModel) // have to load use
                     nameItem.use = nameItem.useModel.id;
-                if(!nameItem.use) 
+                if (!nameItem.use)
                     nameItem.use = NameUseKeys[k]
 
+                if (nameItem.component) {
+                    Object.keys(nameItem.component).forEach(o => {
+                        if (!Array.isArray(nameItem.component[o])) {
+                            if (typeof nameItem.component[o] === 'string') {
+                                nameItem.component[o] = [nameItem.component[o]]
+                            }
+                            else if (typeof nameItem.component[o] === 'object' || nameItem.component[o]['0']) // Sometimes AngularJS will represent new objects as an object with property 0
+                            {
+                                nameItem.component[o] = Object.keys(nameItem.component[o]).map(k => nameItem.component[o][k]);
+                            }
+                            else {
+                                nameItem.component[o] = [nameItem.component[o]]
+                            }
+                        }
+                    });
+                }
                 delete (nameItem.useModel);
                 nameList.push(nameItem);
             })
@@ -385,20 +417,19 @@ async function prepareEntityForSubmission(entity) {
         });
         entity.name = { "$other": nameList };
     }
-    
+
     // Clear out the relationships of their MDM keys
-    if(entity.relationship) {
+    if (entity.relationship) {
         Object.keys(entity.relationship).forEach((k) => {
-            if(!Array.isArray(entity.relationship[k]))
-            {
-                entity.relationship[k] = [ entity.relationship[k] ];
+            if (!Array.isArray(entity.relationship[k])) {
+                entity.relationship[k] = [entity.relationship[k]];
             }
             entity.relationship[k] = entity.relationship[k].map((r) => {
-                if(r.targetModel && r.targetModel.id) {
+                if (r.targetModel && r.targetModel.id) {
                     r.target = r.targetModel.id;
                     delete r.targetModel;
                 }
-                if(r.holderModel && r.holderModel.id) {
+                if (r.holderModel && r.holderModel.id) {
                     r.holder = r.holderModel.id;
                     delete r.holderModel;
                 }
@@ -410,14 +441,73 @@ async function prepareEntityForSubmission(entity) {
         });
 
     }
-    
+
     // Remove any MDM keys
-    if(entity.relationship) {
+    if (entity.relationship) {
         delete entity.relationship['MDM-Duplicate'];
         delete entity.relationship['MDM-Master'];
         delete entity.relationship['MDM-Ignore'];
         delete entity.relationship['MDM-RecordOfTruth'];
         delete entity.relationship['Replaces'];
+    }
+
+    return entity;
+}
+
+/**
+ * 
+ * @param {Guid} entityId The id of the entity to set the tag on
+ * @param {String} tagName The name of the tag
+ * @param {String} tagValue The value of the tag
+ */
+async function setEntityTag(entityId, tagName, tagValue) {
+
+    var parameters = {};
+    parameters[tagName] = tagValue;
+    return await SanteDB.resources.entity.invokeOperationAsync(entityId, "tag", parameters);
+
+}
+
+/**
+ * Set the status of the entity
+ * @param {Guid} entityId The identifier of the entity
+ * @param {Guid} newStatus The identifier of the state to set
+ * @param {String} entityTag The ETAG of the object which this method is attempting to patch
+ */
+async function setEntityState(entityId, entityTag, newStatus) {
+
+    // Set the status and update
+    var patch = new Patch({
+        appliesTo: new PatchTarget({
+            id: entityId
+        }),
+        change: [
+            new PatchOperation({
+                op: PatchOperationType.Replace,
+                path: "statusConcept",
+                value: newStatus
+            })
+        ]
+    });
+    await SanteDB.resources.entity.patchAsync(entityId, entityTag, patch);
+}
+
+
+/**
+ * Remove all properties which are delay loaded models
+ * @param {Any} objectToRemove The object to remove properties from 
+ */
+function deleteModelProperties(objectToRemove) {
+
+    if (typeof objectToRemove === 'object') {
+        Object.keys(objectToRemove).forEach(p => {
+            if (p.endsWith("Model")) {
+                delete objectToRemove[p];
+            }
+            else if (Array.isArray(objectToRemove[p])) {
+                objectToRemove[p].forEach(e=>deleteModelProperties(objectToRemove[p][e]));
+            }
+        });
     }
 
 }

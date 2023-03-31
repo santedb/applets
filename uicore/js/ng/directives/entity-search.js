@@ -44,6 +44,31 @@ angular.module('santedb-lib')
     // TODO: CLEAN THIS UP PLEASE!
     .directive('entitySearch', function ($timeout) {
 
+        function renderTitle(selection) {
+
+            var retVal = "";
+            if (selection.name != null)
+                retVal = SanteDB.display.renderEntityName(selection.name);
+            else if (selection.name != null && selection.name[SanteDB.locale.getLocale()])
+                retVal = selection.name[SanteDB.locale.getLocale()];
+            else if (selection.name != null)
+                retVal = selection.name;
+            else if (selection.userName)
+                retVal = selection.userName;
+            else if (selection.mnemonic)
+                retVal = SanteDB.locale.getString(selection.mnemonic);
+            else if (selection.entity)
+                retVal = (selection.entity.name || selection.entity.userName);
+            else if (selection.element !== undefined)
+                retVal = selection.element.innerText.trim();
+            else if (selection.text)
+                retVal = selection.text;
+
+            if(selection.$type) {
+                retVal += " (" + selection.$type + ")";
+            }
+            return retVal;
+        }
 
         function renderObject(selection, minRender) {
 
@@ -159,7 +184,10 @@ angular.module('santedb-lib')
                 copyNulls: '<', // 
                 minRender: '<', // The minimum number of results to fetch
                 changeClear: '<', // When the object is selected, these are the dependent fields to clear
-                isRequired: '=' // True if the selector is required
+                isRequired: '=', // True if the selector is required
+                forRelationshipType: '=', // If this is the target of the relationship then the default query can be auto-populated with this information
+                withRelationshipSourceClass: '=', // The class concept of the source object
+                withRelationshipTargetClass: '=' // The class concept of the target object
             },
             restrict: 'E',
             require: 'ngModel',
@@ -206,7 +234,9 @@ angular.module('santedb-lib')
                                             var obj = res.resource[0];
                                             if ($scope.selector)
                                                 obj = obj[$scope.selector] || obj;
-                                            $(selectControl)[0].add(new Option(renderObject(res.resource[0], $scope.minRender), v, false, true));
+                                            var option = new Option(renderObject(res.resource[0], $scope.minRender), v, false, true);
+                                            option.title = renderTitle(res.resource[0]);
+                                            $(selectControl)[0].add(option);
                                         }
                                     }
                                     else {
@@ -215,7 +245,9 @@ angular.module('santedb-lib')
                                             var obj = res;
                                             if ($scope.selector)
                                                 obj = obj[$scope.selector] || obj;
-                                            $(selectControl)[0].add(new Option(renderObject(obj, $scope.minRender), v, false, true));
+                                            var option = new Option(renderObject(obj, $scope.minRender), v, false, true);
+                                            option.title = renderTitle(obj);
+                                            $(selectControl)[0].add(option);
                                         }
                                     }
                                 }
@@ -234,6 +266,7 @@ angular.module('santedb-lib')
             ],
             link: function (scope, element, attrs, ngModel) {
 
+                
                 // Extract property
                 function extractProperty(object, path) {
                     var r = object;
@@ -252,7 +285,7 @@ angular.module('santedb-lib')
 
                 $timeout(function () {
                     var modelType = scope.type;
-                    var filter = scope.filter || {};
+                    var filter = scope.filter || { statusConcept: StatusKeys.Active };;
                     var displayString = scope.display;
                     var searchProperty = scope.searchField;
                     var defaultResults = scope.defaultResults;
@@ -261,6 +294,7 @@ angular.module('santedb-lib')
                     var resultProperty = scope.valueSelector || scope.key || "id";
                     var selector = scope.selector;
                     var valueProperty = scope.valueProperty;
+                    var lastRuleCheck = null;
 
                     if (!searchProperty) {
                         switch (modelType) {
@@ -283,9 +317,33 @@ angular.module('santedb-lib')
                     $(element).find('option[value="? undefined:undefined ?"]').remove();
 
                     scope.$watch('filter', function (n, o) {
-                        if (n != o && n)
+                        if (n != o && n) {
                             filter = n;
+                        }
                     });
+
+                    // Is this part of a relationship? 
+                    if(scope.forRelationshipType) {
+                        scope.$watch(s=>s.forRelationshipType + (s.withRelationshipSourceClass || s.withRelationshipTargetClass), async function(n, o) {
+                            // We want to set the filter based on allowable types
+                            if(n && lastRuleCheck != n) {
+                                lastRuleCheck = n;
+                                var serverRules = (await SanteDB.resources.entityRelationship.findAssociatedAsync(null, '_relationshipRule', {
+                                    sourceClass: scope.withRelationshipSourceClass,
+                                    targetClass: scope.withRelationshipTargetClass,
+                                    relationshipType: scope.forRelationshipType
+                                })).resource;
+                                if(serverRules.length > 0) {
+                                    
+                                    filter.classConcept = serverRules.map(o=>scope.withRelationshipSourceClass ? o.targetClass : o.sourceClass);
+                                }
+                                else {
+                                    filter.classConcept = EmptyGuid;
+                                }
+                            }
+                        });
+                    }
+
                     // Bind select 2 search
                     var select2 = $(element).select2({
                         language: {
@@ -339,6 +397,7 @@ angular.module('santedb-lib')
                                                 text = renderObject(o, scope.minRender);
                                             }
                                             o.text = o.text || text;
+                                            o.title = renderTitle(o);
                                             o.id = extractProperty(o, resultProperty) || o.id;
                                             return o;
                                         }));
@@ -358,6 +417,7 @@ angular.module('santedb-lib')
                                                 text = renderObject(o, scope.minRender);
                                             }
                                             o.text = o.text || text;
+                                            o.title = renderTitle(o);
                                             o.id = extractProperty(o, resultProperty) || o.id;
                                             return o;
                                         });
@@ -365,7 +425,13 @@ angular.module('santedb-lib')
                                         for (var itm in objs) {
                                             // parent obj
                                             try {
-                                                var groupDisplay = scope.$eval('scope.' + groupString, { scope: data[itm] });
+                                                var groupDisplay = null;
+                                                if(Array.isArray(groupString)) {
+                                                    groupDisplay = groupString.map(o=> scope.$eval('scope.' + o, { scope: data[itm] })).find(o=>o != null);
+                                                }
+                                                else {
+                                                    groupDisplay = scope.$eval('scope.' + groupString, { scope: data[itm] });
+                                                }
 
                                                 if (!groupDisplay)
                                                     retVal.results.push(data[itm]);
@@ -437,7 +503,10 @@ angular.module('santedb-lib')
 
                         }
                         if (scope.changeClear && val != ngModel.$viewValue && scope.changeClear.scope) {
-                            scope.changeClear.values.forEach(o => scope.changeClear.scope[o] = null);
+                            scope.changeClear.values.forEach(o => {
+                                console.info(scope.changeClear.resetTo);
+                                scope.changeClear.scope[o] = angular.copy(scope.changeClear.resetTo);
+                            });
                         }
                         //e.currentTarget.options.selectedIndex = e.currentTarget.options.length - 1;
                         if (valueProperty) {

@@ -42,7 +42,7 @@ angular.module('santedb').controller('ForeignDataUploadController', ["$scope", "
         var form_data = new FormData();
         form_data.append('source', file_data);
         form_data.append('description', $scope.submission.description);
-        form_data.append('map', $scope.submission.map);
+        form_data.append('map', $scope.submission.map || '671bf90b-019d-4843-8e77-69f84ce12689');
         SanteDB.display.buttonWait("#btnSubmit", true);
         $.ajax({
             cache: false,

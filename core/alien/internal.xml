@@ -1,0 +1,18 @@
+<ForeignDataMap xmlns="http://santedb.org/import">
+  <id>671bf90b-019d-4843-8e77-69f84ce12689</id>
+  <name>Native Dataset Import</name>
+  <description>Performs no mapping - only parses datasets</description>
+  <maps>
+    <map abortOnError="false" required="true" concurrentImport="true">
+      <resource type="IdentifiedData">
+        <maps>
+          <map required="true" replace="true">
+            <source>$</source>
+            <target>.</target>
+          </map>
+        </maps>
+      </resource>
+
+    </map>
+  </maps>
+</ForeignDataMap>

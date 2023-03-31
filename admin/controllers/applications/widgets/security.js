@@ -15,7 +15,7 @@
  * License for the specific language governing permissions and limitations under 
  * the License.
  */
-angular.module('santedb').controller('EditApplicationSecurityController', ["$scope", "$rootScope", "$state", "$templateCache", "$stateParams", function ($scope, $rootScope, $state, $templateCache, $stateParams) {
+angular.module('santedb').controller('EditApplicationSecurityController', ["$scope", "$rootScope", "$state", "$templateCache", "$stateParams", "$timeout", function ($scope, $rootScope, $state, $templateCache, $stateParams, $timeout) {
 
     /**
      * @summary Reset invalid logins
@@ -37,7 +37,8 @@ angular.module('santedb').controller('EditApplicationSecurityController', ["$sco
 
             SanteDB.display.buttonWait("#resetInvalidLoginButton", true);
             await SanteDB.resources.securityApplication.patchAsync($stateParams.id, application.securityApplication.etag, patch)
-            application.securityApplication.invalidAuth = 0;
+            
+            $timeout(()=>application.securityApplication.invalidAuth = 0);
         }
         catch (e) {
             $rootScope.errorHandler(e);
@@ -59,11 +60,8 @@ angular.module('santedb').controller('EditApplicationSecurityController', ["$sco
         try {
             SanteDB.display.buttonWait("#unlockButton", true);
             await SanteDB.resources.securityApplication.unLockAsync($stateParams.id);
-            $scope.scopedObject.securityApplication.lockout = null;
 
-            try {
-                $scope.$apply();
-            } catch(e) {}
+            $timeout(() => $scope.scopedObject.securityApplication.lockout = null);
         }
         catch (e) {
             $rootScope.errorHandler(e);
@@ -96,11 +94,7 @@ angular.module('santedb').controller('EditApplicationSecurityController', ["$sco
     
                 SanteDB.display.buttonWait("#resetSecretButton", true);
                 await SanteDB.resources.securityApplication.patchAsync($stateParams.id, application.securityApplication.etag, patch);
-                application.securityApplication.applicationSecret = repl;
-
-                try {
-                    $scope.$apply();
-                } catch(e) {}
+                $timeout(() => application.securityApplication.applicationSecret = repl);
             }
             catch(e) {
                 SanteDB.display.buttonWait("#resetSecretButton", false);

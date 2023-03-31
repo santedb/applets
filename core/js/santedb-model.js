@@ -18564,6 +18564,30 @@ const BatchOperationType = {
 	 *             Ignore this object - it is for reference only            
 	 */
 	Ignore : 'Ignore',
+	/** 
+	 *             Automatically decide             
+	 */
+	AutoInt : 0,
+	/** 
+	 *             Insert the object only            
+	 */
+	InsertInt : 1,
+	/** 
+	 *             Insert the object or update it            
+	 */
+	InsertOrUpdateInt : 2,
+	/** 
+	 *             Update the object only            
+	 */
+	UpdateInt : 3,
+	/** 
+	 *             Delete the object            
+	 */
+	DeleteInt : 4,
+	/** 
+	 *             Ignore this object - it is for reference only            
+	 */
+	IgnoreInt : 5,
 }  // BatchOperationType 
 // SanteDB.Core.Model.Subscription.SubscriptionModeType, SanteDB.Core.Model, Version=3.0.0.0, Culture=neutral, PublicKeyToken=null
 // if(!SubscriptionModeType)
@@ -18821,7 +18845,7 @@ const EntityClassKeys = {
 	/** 
 	 *             County or parish            
 	 */
-	CountyOrParish : 'd9489d56-ddac-4596-b5c6-8f41d73d8dc5',
+	CountyOrParish : '6eefee7d-dff5-46d3-a6a7-171ef93879c7',
 	/** 
 	 *             Device            
 	 */

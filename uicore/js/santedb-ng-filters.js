@@ -248,7 +248,7 @@ angular.module('santedb-lib')
         }
     })
     /**
-     * @method exception
+     * @method exceptionDetail
      * @memberof Angular
      * @summary Renders exception details
      */
@@ -263,6 +263,56 @@ angular.module('santedb-lib')
                 return parseResult.rules[0].text;
             else 
                 return parseResult.message;
+        }
+    })
+    /**
+     * @method geo
+     * @memberof Angular
+     * @summary Renders a decimal representation of a geographic coordinate as a degrees/minutes
+     */
+    .filter('geo', function () {
+        return function (geo) {
+            
+            var lat = SanteDB.display.convertToDegrees(geo.lat);
+            var lng = SanteDB.display.convertToDegrees(geo.lng);
+            
+            return `${lat.deg}\xB0 ${lat.min}' ${lat.sec}" ${geo.lat < 0 ? 'S' : 'N'} / ${lng.deg}\xB0 ${lng.min}' ${lng.sec}" ${geo.lng < 0 ? 'W' : 'E'} ` 
+        }
+    })
+    /**
+     * @method scheduleJson
+     * @memberof Angular
+     * @summary Renders a structured JSON schedule into text
+     */
+    .filter('scheduleJson', function() {
+
+        var dayStrings = [
+            'ui.date.day.sunday',
+            'ui.date.day.monday',
+            'ui.date.day.tuesday',
+            'ui.date.day.wednesday',
+            'ui.date.day.thursday',
+            'ui.date.day.friday',
+            'ui.date.day.saturday'
+        ];
+
+        return function (sched) {
+            
+            if(typeof sched === 'string') 
+            {
+                sched = JSON.parse(sched);
+            }
+            
+            if(sched.schedule) {
+                sched = sched.schedule;
+            }
+
+            if(sched.length == 0) {
+                return SanteDB.locale.getString("ui.unknown");
+            }
+            else {
+                return sched.map(o=> `${SanteDB.locale.getString(dayStrings[o.days[0]])} ${moment(o.start).format('HH:mm')} - ${moment(o.stop).format('HH:mm')}` + (o.capacity ? ` (max: ${o.capacity})` : '')).join(' , ');
+            }
         }
     });
     

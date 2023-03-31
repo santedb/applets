@@ -76,7 +76,7 @@
                             <label class="control-label col-sm-12 col-md-2 required"
                                 for="url">{{ 'ui.model.identityDomain.url' | i18n }}</label>
                             <div class="col-sm-12 col-md-10 input-group">
-                                <input name="url" type="url" class="form-control" ng-model="domain.url" /> </div>
+                                <input name="url" type="url" class="form-control" ng-model="domain.url" autocomplete="__away"  /> </div>
                             <div class="col-sm-12 col-md-10 offset-md-2">
                                 <div ng-show="targetForm.url.$error['duplicate']" class="text-danger">
                                     <i class="fa fa-exclamation-triangle"></i>

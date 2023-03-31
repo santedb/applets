@@ -1,0 +1,119 @@
+<div class="container-fluid" xmlns="http://www.w3.org/1999/xhtml">
+    <div class="row">
+        <label class="col-md-3 col-sm-12 control-label">{{ 'ui.model.entity.name' | i18n }}</label>
+        <div class="col-md-9 col-sm-12">
+            <ul class="list-group">
+                <li class="d-flex" ng-repeat="(n, name) in scopedObject.name">
+                    {{$n}}
+                    <ul class="list-group" ng-if="!name.use">
+                        <li ng-repeat="r in name">
+                            {{ r | name }} <span class=" d-none d-sm-inline"><span class="badge badge-light">{{
+                                    r.useModel | concept }}</span></span>
+                        </li>
+                    </ul>
+                    <span ng-if="name.use">
+                        {{ name | name }} <span class=" d-none d-sm-inline"><span class="badge badge-light">{{
+                                name.useModel | concept }}</span></span>
+                    </span>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="row" ng-if="scopedObject.classConceptModel">
+        <label class="col-md-3 col-sm-12 control-label">{{ 'ui.model.place.classConcept' | i18n }}</label>
+        <div class="col-md-9 col-sm-12">
+            {{ scopedObject.classConceptModel | concept }}
+        </div>
+    </div>
+    <div class="row" ng-if="scopedObject.typeConceptModel">
+
+        <label class="col-md-3 col-sm-12 control-label">{{ 'ui.model.place.typeConcept' | i18n }}</label>
+        <div class="col-md-9 col-sm-12">
+            {{ scopedObject.typeConceptModel | concept }}
+        </div>
+    </div>
+    <div class="row" ng-if="scopedObject.identifier">
+        <label class="col-md-3 col-sm-12 control-label">{{ 'ui.model.entity.identifier' | i18n }}</label>
+        <div class="col-md-9 col-xs-12">
+            <div ng-if="scopedObject.identifier">
+                <ul class="list-group">
+                    <li class="d-flex align-items-center" ng-repeat="(n, identifier) in scopedObject.identifier">
+                        <ul class="list-group" ng-if="!identifier.domainModel">
+                            <li ng-repeat="r in identifier">
+                                {{ r.value }} <span class=" d-none d-sm-inline"><span class="badge badge-light">{{
+                                        r.domainModel.name }}</span></span>
+                            </li>
+                        </ul>
+                        <span ng-if="address.use">
+                            {{ identifier.value }} <span class=" d-none d-sm-inline"><span class="badge badge-light">{{
+                                    identifier.domainModel.name }}</span></span></span>
+                    </li>
+                </ul>
+            </div>
+            <div ng-if="!scopedObject.address">
+                {{ 'ui.unknown' | i18n }}
+            </div>
+        </div>
+    </div>
+
+    <div class="row alert-info" ng-if="scopedObject.isMobile">
+        <label class="col-md-3 col-sm-12 control-label">{{ 'ui.model.place.isMobile' | i18n }}</label>
+        <div class="col-md-9 col-sm-12">
+            <i class="fas fa-ambulance"></i> {{ 'ui.model.place.isMobile.on' | i18n }}
+        </div>
+    </div>
+    <div class="row" ng-if="scopedObject.geo">
+        <label class="col-md-3 col-sm-12 control-label">{{ 'ui.model.entity.geo' | i18n }}</label>
+        <div class="col-md-9 col-sm-12">
+            <a target="_blank" title="Open in Google Maps" href="https://www.google.com/maps/place/{{scopedObject.geo.lat}},{{scopedObject.geo.lng}}"><i class="fas fa-satellite"></i> {{ scopedObject.geo | geo }} <sup><i class="fas fa-external-link-alt"></i></sup></a>        </div>
+    </div>
+    <div class="row">
+        <label class="col-md-3 col-sm-12 control-label">{{ 'ui.model.place.address' | i18n }}</label>
+        <div class="col-md-9 col-sm-12">
+            <div ng-if="scopedObject.address">
+                <ul class="list-group">
+                    <li class="d-flex align-items-center" ng-repeat="(n, address) in scopedObject.address">
+                        <ul class="list-group" ng-if="!addres.use">
+                            <li ng-repeat="r in address">
+                                {{ r | address }} <span class=" d-none d-sm-inline"><span class="badge badge-light">{{
+                                        r.useModel | concept }}</span></span>
+                            </li>
+                        </ul>
+                        <span ng-if="address.use">
+                            {{ address | address }} <span class=" d-none d-sm-inline"><span class="badge badge-light">{{
+                                    address.useModel | concept }}</span></span></span>
+                    </li>
+                </ul>
+            </div>
+            <div ng-if="!scopedObject.address">
+                {{ 'ui.unknown' | i18n }}
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <label class="col-md-3 col-xs-12 control-label">{{ 'ui.model.place.telecom' | i18n }}</label>
+        <div class="col-md-9 col-xs-12">
+            <div ng-if="scopedObject.telecom">
+                <ul class="list-group">
+                    <li class="d-flex align-items-center" ng-repeat="(n, telecom) in scopedObject.telecom">
+                        <ul class="list-group" ng-if="!telecom.use">
+                            <li ng-repeat="r in telecom">
+                                <a href="{{r.value}}">{{r.value}}</a>
+                                <span class=" d-none d-sm-inline"><span class="badge badge-light">{{ r.useModel |
+                                        concept }}</span></span>
+                            </li>
+                        </ul>
+                        <span ng-if="telecom.use">
+                            <a href="{{telecom.value}}">{{telecom.value}}</a> <span class=" d-none d-sm-inline"><span
+                                    class="badge badge-light">{{ address.useModel | concept }}</span></span></span>
+                    </li>
+                </ul>
+            </div>
+            <div ng-if="!scopedObject.telecom">
+                {{ 'ui.unknown' | i18n }}
+            </div>
+        </div>
+    </div>
+
+    
+</div>

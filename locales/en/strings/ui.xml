@@ -62,12 +62,12 @@
       <string name="ui.state.new">New</string>
       <string name="ui.state.notrun">Not Yet Run</string>
       <string name="ui.state.running">Running</string>
-      <string name="ui.state.obsolete">Obsolete</string>
+      <string name="ui.state.obsolete">Obsolete </string>
       <string name="ui.state.cancelled">Cancelled</string>
       <string name="ui.state.complete">Complete</string>
       <string name="ui.state.abort">Aborted</string>
       <string name="ui.state.stop">Stopped</string>
-      <string name="ui.state.nullified">Entered in Error</string>
+      <string name="ui.state.nullified">Nullified/Entered in Error</string>
       <string name="ui.state.locked">Locked</string>
       <string name="ui.state.readonly">Readonly</string>
       <string name="ui.state.offline">Offline</string>
@@ -179,6 +179,8 @@
       <string name="ui.action.scan">Scan</string>
       <string name="ui.action.finish">Finish</string>
       <string name="ui.action.add">Add</string>
+      <string name="ui.action.add.then.new">Add &amp; Create Another</string>
+      <string name="ui.action.add.then.goto">Add &amp; Go To</string>
       <string name="ui.action.register">Register</string>
       <string name="ui.action.register.batch">Batch Registration</string>
       <string name="ui.action.remove">Remove</string>
@@ -213,7 +215,9 @@
       <string name="ui.action.report">Report</string>
       <string name="ui.action.purge">Purge</string>
       <string name="ui.action.resubmit">Resubmit</string>
-
+      <string name="ui.action.redirecting">Redirecting to appropriate page</string>
+      <string name="ui.action.export">Export</string>
+      <string name="ui.action.export.confirm">You are about to export potentially sensitive data from the CDR in XML format. Extra audits will be generated and your actions may be reviewed by an administrator. Do you want to continue?</string>
       <!-- Data Tables -->
       <string name="ui.table.empty">No Results Returned</string>
       <string name="ui.table.info">Showing _START_ to _END_ of _TOTAL_ results</string>
@@ -464,7 +468,7 @@
       <!-- Model Descriptions -->
       <string name="ui.view.upstream">This record is sourced from an external system. Actions for this record may be disabled until you download a local copy</string>
       <!-- Patient is deleted -->
-      <string name="ui.view.deletedRecord">This record is deleted and is kept for historical reference only. It cannot be updated or changed</string>
+      <string name="ui.view.deletedRecord">This record is deleted and/or marked as inactive and is kept for referential integrity and reference only.</string>
       <!-- Default applications -->
       <string name="org.santedb.debug">SanteDB SDK</string>
       <string name="org.santedb.administration">SanteDB Admin Console</string>
@@ -584,21 +588,4 @@
       <string name="ui.config.log.writer.label">Log Writers</string>
       <string name="ui.config.log.writer.help">This controls where SanteDB will collect produce log output. Each log writer can be filtered based on the event type.</string>
 
-      <!-- Foreign Data -->
-      <string name="ui.admin.alien.upload.title">Upload Data Import File</string>
-      <string name="ui.admin.alien.upload.description"><![CDATA[Use this form to upload a external data file in a supported format (example: CSV) to the SanteDB server. SanteDB will validate your submission and will process the import when the next scheduled import job runs.]]></string>
-      <string name="ui.admin.alien.upload.fileName">File</string>
-      <string name="ui.admin.alien.upload.fileName.hint">Select a compatible file from your computer to upload</string> 
-      <string name="ui.admin.alien.upload.mapping">Mapping</string>
-      <string name="ui.admin.alien.upload.mapping.hint"><![CDATA[Select the type of file you are uploading. This will instruct the SanteDB server to use a specific series of import rules for your file]]></string>
-      <string name="ui.admin.alien.upload.notes">Friendly Name</string>
-      <string name="ui.admin.alien.upload.notes.hint"><![CDATA[Add descriptive notes about this upload]]></string>
-      <string name="ui.admin.alien.upload.success">External data was uploaded successfully</string>
-      <string name="ui.admin.alien.upload.fail">Error submitting external data to server</string>
-      <string name="ui.admin.alien.delete.confirm">Are you sure you want to delete this data submission? (note: this will not remove any already imported data)</string>
-      <string name="ui.admin.alien.delete.success">Data submission deleted</string>
-      <string name="ui.admin.alien.reschedule.confirm">Are you sure you want to reschedule this import? If there are errors which have not been corrected, the import may not succeed again.</string>
-      <string name="ui.admin.alien.reschedule.success">Data submission scheduled for execution</string>
-
-      <string name="ui.admin.alien.submission.view.title">Data Import File - {name}</string>
 </resources>

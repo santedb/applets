@@ -1,0 +1,14 @@
+<div xmlns="http://www.w3.org/1999/xhtml" xmlns:sdb="http://santedb.org/applet">
+    <sdb:script static="false">~/controllers/organizations/viewEdit.js</sdb:script>
+    <sdb:state name="santedb-admin.data.organization.view">
+        <sdb:demand>1.3.6.1.4.1.33349.3.1.5.9.2.4</sdb:demand>
+        <sdb:url>/{id}</sdb:url>
+        <sdb:view>
+            <sdb:controller>OrganizationViewEditController</sdb:controller>
+            <sdb:title lang="en">View Organization</sdb:title>
+        </sdb:view>
+    </sdb:state>
+    <!-- #include virtual="/org.santedb.uicore/partials/entity/entityHeader.html"-->
+    <widget-tabs context-name="'org.santedb.organization.admin'" scoped-object="entity" class="mb-2" />
+
+</div>

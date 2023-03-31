@@ -57,24 +57,40 @@ angular.module('santedb-lib')
             controller: ['$scope', '$rootScope', function ($scope, $rootScope) {
 
 
-                $scope.removeAddress = function (index) {
-                    $scope.addressEdit.splice(index, 1);
+                $scope.removeAddress = function (addr) {
+                    addr.operation = BatchOperationType.Delete;
                 }
 
                 $scope.addAddress = function () {
-                    $scope.addressEdit.push(new EntityAddress());
+                    var newAddr = new EntityAddress({ 
+                        id: SanteDB.application.newGuid() ,
+                        component: {
+                            Country: [],
+                            State: [],
+                            City: [],
+                            County: [],
+                            Precinct: [],
+                            StreetAddressLine: [],
+                            PostalCode: [],
+                            PostBox: [],
+                            CareOf: [],
+                            UnitIdentifier: []
+                        }
+                    });
+                    $scope.addressEdit.push(newAddr);
+                    $scope.address["$other"].push(newAddr);
                 }
 
                 // Watch for structured addresses and populate the structured address' components
                 $scope.fillAddress = async function (addr) {
-                    var addrComponents = (await SanteDB.resources.place.getAsync(addr.targetId)).address.Direct.component;
-                    addr.component.Country = addrComponents.Country;
-                    addr.component.CensusTract = addrComponents.CensusTract;
-                    addr.component.County = addrComponents.County;
-                    addr.component.State = addrComponents.State;
-                    addr.component.Precinct = addrComponents.Precinct;
-                    addr.component.City = addrComponents.City;
-                    addr.component.AdditionalLocator = addrComponents.AdditionalLocator;
+                    var addrComponents = (await SanteDB.resources.place.getAsync(addr.targetId)).address.PhysicalVisit.component;
+                    addr.component.Country = addrComponents.Country || [];
+                    addr.component.CensusTract = addrComponents.CensusTract || [];
+                    addr.component.County = addrComponents.County || [];
+                    addr.component.State = addrComponents.State || [];
+                    addr.component.Precinct = addrComponents.Precinct || [];
+                    addr.component.City = addrComponents.City || [];
+                    addr.component.AdditionalLocator = addrComponents.AdditionalLocator || [];
                 }
             }],
             link: function (scope, element, attrs) {
@@ -97,7 +113,7 @@ angular.module('santedb-lib')
                         .catch(function (e) { });
                 else  // address exists so let's move everything over to $other
                 {
-                    var flatAddressList = [];
+                    var flatAddressList = scope.address.$other || [];
                     Object.keys(scope.address).forEach(function (key) {
                         var address = scope.address[key];
 
@@ -113,8 +129,9 @@ angular.module('santedb-lib')
                         else
                             flatAddressList.push(address);
                     });
-                    scope.address = { "$other": flatAddressList };
+                    //scope.address = { "$other": flatAddressList };
                     scope.addressEdit = flatAddressList;
+                    scope.address["$other"] = scope.address["$other"] || [];
                 }
             }
         }
@@ -135,6 +152,11 @@ angular.module('santedb-lib')
             },
             controller: ['$scope', '$rootScope', function ($scope, $rootScope) {
 
+                $scope.$watch((s)=>s.geo.lat + s.geo.lng, function(n,o) {
+                    if(n!=o && n && o) {
+                        delete($scope.geo.id); // force a change
+                    }
+                })
             }],
             link: function (scope, element, attrs) {
 
@@ -142,11 +164,12 @@ angular.module('santedb-lib')
                 if (!scope.controlPrefix)
                     scope.controlPrefix = '';
 
+                
                 if (!scope.geo) {
-                    scope.geo = new GeoTag({
-                        lat: 0,
-                        lng: 0
-                    });
+                    scope.geo = { _supplied : false };
+                }
+                else {
+                    scope.geo._supplied = true;
                 }
 
             }
@@ -187,12 +210,24 @@ angular.module('santedb-lib')
             },
             controller: ['$scope', '$rootScope', function ($scope, $rootScope) {
 
-                $scope.removeName = function (index) {
-                    $scope.nameEdit.splice(index, 1);
+                $scope.removeName = function (name) {
+                    name.operation = BatchOperationType.Delete;
                 }
 
                 $scope.addName = function () {
-                    $scope.nameEdit.push(new EntityName());
+                    var newName = new EntityName(
+                    { 
+                        component: {
+                            Given: [],
+                            Family: [],
+                            Prefix: [],
+                            Suffix: [],
+                            $other: []
+                        },
+                        id: SanteDB.application.newGuid()
+                    });
+                    $scope.nameEdit.push(newName);
+                    $scope.name["$other"].push(newName);
                 }
 
                 $scope.isComponentAllowed = function (component) {
@@ -221,8 +256,9 @@ angular.module('santedb-lib')
                         if ((!name.useModel || !name.useModel.id) && key != "$other")
                             SanteDB.resources.concept.findAsync({ mnemonic: key })
                                 .then(function (bundle) {
-                                    if (bundle.resource && bundle.resource.length > 0)
-                                        name.useModel = bundle.resource[0];
+                                    if (bundle.resource && bundle.resource.length > 0) {
+                                        name.forEach(n=>n.useModel = bundle.resource[0]);
+                                    }
                                 });
 
                         if (Array.isArray(name))
@@ -231,12 +267,11 @@ angular.module('santedb-lib')
                             flatNameList.push(name);
                     });
 
-                    if (scope.simpleEntry)
+                    if (scope.simpleEntry && scope.noAdd)
                         flatNameList = [flatNameList[0]]; // simple entry, only edit first name
 
                     scope.nameEdit = flatNameList;
-                    scope.name = { "$other": flatNameList };
-
+                    scope.name["$other"] = scope.name["$other"] || [];
                 }
 
                 if (!scope.name)
@@ -257,7 +292,8 @@ angular.module('santedb-lib')
                     if (n && !n.$other) {
                         flattenName();
                     }
-                })
+                });
+                
             }
         }
     }])
@@ -349,7 +385,7 @@ angular.module('santedb-lib')
     *       <identifier-list-edit identifier="scopedObject.identifier" owner-form="myForm"
     *           container-class="scopedObject.classConcept" />
     */
-    .directive('identifierListEdit', ['$rootScope', function ($rootScope) {
+    .directive('identifierListEdit', ['$rootScope', '$timeout', function ($rootScope, $timeout) {
         return {
             restrict: 'E',
             replace: true,
@@ -362,18 +398,22 @@ angular.module('santedb-lib')
             controller: ['$scope', '$rootScope', function ($scope, $rootScope) {
 
                 $scope.removeIdentifier = function (domain) {
-                    if (confirm(SanteDB.locale.getString("ui.model.entity.identifier.authority.remove.confirm")))
-                        delete ($scope.identifier[domain]);
+                    if (confirm(SanteDB.locale.getString("ui.model.entity.identifier.authority.remove.confirm", {domain: domain}))) {
+                        //delete ($scope.identifier[domain]);
+                        $scope.identifier[domain].forEach(o=> o.operation = BatchOperationType.Delete );
+                    }
                 }
 
                 $scope.addIdentifier = function (newId) {
                     if ($scope.ownerForm.$invalid || !$scope.authorities[newId.domainModel.domainName]) return;
 
                     newId.domainModel = $scope.authorities[newId.domainModel.domainName];
-                    $scope.identifier[newId.domainModel.domainName] = [angular.copy(newId)];
-                    delete ($scope.authorities[newId.domainModel.domainName]);
+                    newId.operation = BatchOperationType.Insert;
+                    $scope.identifier[newId.domainModel.domainName] = $scope.identifier[newId.domainModel.domainName] || [];
+                    $scope.identifier[newId.domainModel.domainName].push(angular.copy(newId));
                     delete (newId.authority);
                     delete (newId.value);
+                    delete (newId.domainModel);
 
                 }
 
@@ -390,16 +430,18 @@ angular.module('santedb-lib')
             }],
             link: function (scope, element, attrs) {
 
-                if (!scope.identifier)
-                    scope.identifier = {};
+                var identifier = {};
+                if (scope.identifier)
+                    identifier = scope.identifier;
 
-                scope.authorities = {};
+                scope.identifier = identifier;
+                var authorities = {};
+                scope.authorities = authorities;
 
-                Object.keys(scope.identifier).forEach(function (key) {
-                    if (!Array.isArray(scope.identifier[key]))
-                        scope.identifier[key] = [scope.identifier[key]];
-
-                    scope.identifier[key].forEach(function (v) { v.readonly = true; });
+                Object.keys(identifier).forEach(function (key) {
+                    if (!Array.isArray(identifier[key]))
+                        identifier[key] = [identifier[key]];
+                    identifier[key].forEach(function (v) { v.readonly = true; });
                 });
                 // Get a list of identity domains available for our scope and emit them to the identifier array
                 SanteDB.resources.identityDomain.findAsync()
@@ -408,20 +450,26 @@ angular.module('santedb-lib')
                             bundle.resource.filter(o => o.scope == null || o.scope.length == 0 || o.scope.indexOf(scope.containerClass) > -1).forEach(function (authority) {
 
                                 authority.generator = SanteDB.application.getIdentifierGenerator(authority.domainName);
-                                if (scope.identifier[authority.domainName]) {
-                                    scope.identifier[authority.domainName].forEach(v => v.authority = authority);
-                                    delete (scope.identifier[authority.domainName].readonly)
+                                if (identifier[authority.domainName]) {
+                                    identifier[authority.domainName].forEach(v => v.authority = authority);
                                 }
-                                else if (!authority.assigningApplication || authority.identityDomain == $rootScope.session.claim.appid)
-                                    scope.authorities[authority.domainName] = authority;
-
+                                if (!authority.assigningApplication || authority.identityDomain == $rootScope.session.claim.appid)
+                                {
+                                    authorities[authority.domainName] = authority;
+                                    if(identifier[authority.domainName]) 
+                                    {
+                                        identifier[authority.domainName].forEach(i=>i.readonly = false);
+                                    }
+                                }
 
                             });
-
                         }
 
-                        try { scope.$apply(); }
-                        catch (e) { }
+                        // $timeout(() => {
+                        //     scope.identifier = identifier;
+                        //     scope.authorities = authorities;
+                        // });
+
                     })
                     .catch(function (e) { console.error(e); });
             }
@@ -633,8 +681,8 @@ angular.module('santedb-lib')
                     
                     if (scheduleelement && scheduleelement.length > 0) {
                         model[day] = {
-                            start: scheduleelement[0].start,
-                            stop: scheduleelement[0].stop,
+                            start: moment(scheduleelement[0].start).toDate(),
+                            stop: moment(scheduleelement[0].stop).toDate(),
                             capacity: scheduleelement[0].capacity
                         };
                     }
@@ -664,7 +712,7 @@ angular.module('santedb-lib')
             daykeys.forEach((day, idx) => {
                 let d = model[day];
 
-                if (!d || !d.start || !d.stop || !d.capacity){
+                if (!d || !d.start || !d.stop){
                     return;
                 }
 
@@ -686,16 +734,15 @@ angular.module('santedb-lib')
             replace: true,
             templateUrl: './org.santedb.uicore/directives/scheduleEdit.html',
             scope: {
-                jsonSchedule: '='
+                scheduleFor: '='
             },
             controller: ['$scope', '$rootScope', '$window', function ($scope, $rootScope, $win) {
 
             }],
             link: function (scope, element, attrs) {
-                scope.model = toInternalModel(JSON.parse(scope.jsonSchedule ? scope.jsonSchedule : "{}"));
-
-                scope.$watch((s) => s ? JSON.stringify(s.model) : "null", function(n, o){
-                    scope.jsonSchedule = JSON.stringify(toServiceSchedule(scope.model));
+                scope.model = toInternalModel(JSON.parse(scope.scheduleFor.serviceSchedule ? scope.scheduleFor.serviceSchedule : "{}"));
+                scope.$watch((s) => JSON.stringify(s.model), function(n, o){
+                    scope.scheduleFor.serviceSchedule = JSON.stringify(toServiceSchedule(scope.model));
                 });
             }
         }

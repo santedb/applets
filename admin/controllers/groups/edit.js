@@ -35,6 +35,8 @@ angular.module('santedb').controller('EditGroupController', ["$scope", "$rootSco
                 $scope.target.securityRole = u.entity;
                 $scope.target.securityRole.etag = u.etag;
                 $scope.target.id = u.id;
+                document.title = document.title + " - " + u.entity.name;
+
                 $scope.$apply();
             })
             .catch($rootScope.errorHandler);

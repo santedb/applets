@@ -53,6 +53,8 @@ angular.module('santedb').controller('LogViewController', ["$scope", "$rootScope
         return `/ami/Log/${$stateParams.id}?_download=true&_upstream=${$stateParams._upstream}`; //?_sessionId=${window.sessionStorage.getItem("token")}`;
     }
 
+    document.title = document.title + " - " + $stateParams.id;
+
     // We use timeout here to wait for the DOM
     $timeout(function () {
         $("#logContent").on('scroll', function (e) {

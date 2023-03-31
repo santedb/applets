@@ -38,6 +38,7 @@ angular.module('santedb').controller('PubSubEditController', ["$scope", "$rootSc
             else {
                 subscription = await SanteDB.resources.pubSubSubscriptionDefinition.getAsync($stateParams.id);
                 subscription.channelModel = await SanteDB.resources.pubSubChannelDefinition.getAsync(subscription.channel);
+                document.title = document.title + " - " + subscription.name;
 
                 // Trim off the full AQN so only the first sections (name and assembly name are present in the selection list - as versions changed between the 
                 // time that the subscription is defined and the actual version this request is made on)
@@ -50,6 +51,7 @@ angular.module('santedb').controller('PubSubEditController', ["$scope", "$rootSc
 
             // Get dispatchers
             var dispatchers = await SanteDB.resources.pubSubSubscriptionDefinition.invokeOperationAsync(null, "dispatcher", null, true);
+
 
             $timeout(() => {
                 $scope.subscription = subscription;

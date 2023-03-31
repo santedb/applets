@@ -26,6 +26,7 @@ angular.module('santedb').controller('ForeignDataViewController', ["$scope", "$r
     async function initialize(id) {
         try {
             var stagedData = await SanteDB.resources.foreignData.getAsync(id);
+            document.title = document.title + " - " + stagedData.name;
             $timeout(() => $scope.stagedData = stagedData);
         }
         catch(e) {

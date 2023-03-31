@@ -33,6 +33,8 @@ angular.module('santedb').controller('EditDeviceController', ["$scope", "$rootSc
                 $scope.target.securityDevice = u.entity;
                 $scope.target.securityDevice.etag = u.etag;
                 $scope.target.id = u.id;
+                document.title = document.title + " - " + u.entity.name;
+
                 $scope.$apply();
             })
             .catch($rootScope.errorHandler);

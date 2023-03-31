@@ -26,8 +26,13 @@ angular.module('santedb').controller('IdentityDomainEditController', ["$scope", 
     async function loadDomain(id) {
         try {
             var domain = await SanteDB.resources.identityDomain.getAsync(id, "full");
+            document.title = document.title + " - " + domain.name;
+
             $timeout(() => { 
-                $scope.domain = domain
+                $scope.domain = domain;
+                if(!domain.assigningAuthority) {
+                    domain.assigningAuthority = [];
+                }
             });
         }
         catch (e) {

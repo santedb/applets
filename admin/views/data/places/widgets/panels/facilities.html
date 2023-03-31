@@ -1,0 +1,153 @@
+<div xmlns="http://www.w3.org/1999/xhtml" xmlns:sdb="http://santedb.org/applet"
+    oc-lazy-load="{name:'PlaceFacilityWidgetController', files: ['/org.santedb.admin/controllers/places/placeFacilityWidgetController.js'] }">
+    <sdb:widget name="org.santedb.widget.admin.panel.place.facilities" type="Panel"
+        context="org.santedb.place.admin.profile" size="Medium" order="20">
+        <sdb:icon>fas fa-fw fa-hospital</sdb:icon>
+        <sdb:description lang="en">Facilities</sdb:description>
+    </sdb:widget>
+
+    <div ng-if="!scopedObject">
+        <i class="fas fa-spin fa-circle-notch"></i> {{ 'ui.wait' | i18n }}
+    </div>
+
+    <div ng-controller="PlaceFacilityWidgetController" ng-if="scopedObject">
+        <entity-table id="facilityAssociationTable" type="Place" search-field="name.component.value"
+            stateless="true"
+            default-query="{ 'obsoletionTime' : 'null', _viewModel: 'fastView', 'relationship[DedicatedServiceDeliveryLocation].source' : scopedObject.id }"
+            render="{ name: 'renderName', typeConcept: 'renderType', address: 'renderAddress', statusConcept: 'renderStatus' }"
+            i18n-prefix="'ui.model.entity.'"
+            item-actions="[ { name: 'view', sref: 'santedb-admin.data.facility.view', demand: '1.3.6.1.4.1.33349.3.1.5.9.2.4', className: 'btn-info', icon: 'fa fa-eye' }, { name: 'remove', action: 'removeAssociatedFacility', demand: '1.3.6.1.4.1.33349.3.1.5.9.2.4.2.0', className: 'btn-danger', icon: 'fa fa-times' } ]"
+            actions="[ { name: 'add', demand: '1.3.6.1.4.1.33349.3.1.5.9.2.4.2.0', action: 'addAssociatedFacility', className: 'btn-primary', icon: 'fa fa-plus-circle' }]"
+            properties="[ 'name', 'typeConcept', 'address', 'statusConcept' ]" />
+
+        <div class="modal" id="associateFacilityToPlaceModal" data-backdrop="static" role="dialog"
+            aria-labelledby="logoutModalTitle" aria-hidden="true">
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="logoutModalTitle">
+                            <i class="fa fa-fw fa-link"></i> {{ 'ui.admin.place.edit.associate.title' | i18n }}
+                        </h5>
+                        <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">
+                                <i class="fa fa-times"></i>
+                            </span>
+                        </button>
+                    </div>
+                    <form ng-submit="associateFacilityToPlace(associateForm)" name="associateForm"
+                        novalidate="novalidate">
+                        <div class="modal-body">
+                            <ul class="list-group">
+                                <li class="list-group-item">
+                                    <label class="w-100 d-block">
+                                        <input type="radio" name="existingFacility" ng-model="association.type"
+                                            value="existing" /> {{ 'ui.admin.place.edit.associate.existing' | i18n }}
+                                    </label>
+                                    <div class="w-100" ng-if="association.type == 'existing'">
+                                        <entity-search class="form-control" is-required="true" required="required"
+                                            name="existingPlaceAssociate" type="'Place'"
+                                            filter="{classConcept: 'ff34dfa7-c6d3-4f8b-bc9f-14bcdc13ba6c', statusConcept: 'c8064cbd-fa06-4530-b430-1a52f1530c27' }"
+                                            search-field="'name.component.value'"
+                                            ng-model="association.target"></entity-search>
+                                        <div class="text-danger"
+                                            ng-if="associateForm.existingPlaceAssociate.$error['required']">
+                                            <i class="fa fa-exclamation-triangle"></i> {{ 'ui.error.required' | i18n }}
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="list-group-item">
+                                    <label class="w-100 d-block">
+                                        <input type="radio" name="existingFacility" ng-model="association.type"
+                                            value="new" /> {{ 'ui.admin.place.edit.associate.new' | i18n }}
+                                    </label>
+                                    <div class="w-100 container-fluid" ng-if="association.type == 'new'">
+                                        <div class="form-group row">
+                                            <!--ng-if="target.classConcept == 'ff34dfa7-c6d3-4f8b-bc9f-14bcdc13ba6c'">-->
+                                            <label class="col-sm-12 col-md-3 control-label required">
+                                                {{ 'ui.model.place.typeConcept' | i18n }} <hint-popover hint-title="ui.model.place.typeConcept" />
+                                            </label>
+                                            <div class="col-sm-12 col-md-9">
+                                                <concept-select required="required" is-required="true"
+                                                    class="form-control" name="typeInput"
+                                                    concept-set="'PlaceTypeConcept'"
+                                                    ng-model="association.targetModel.typeConcept" />
+                                                <div class="text-danger"
+                                                    ng-if="associateForm.typeInput.$error['required']">
+                                                    <i class="fa fa-exclamation-triangle"></i> {{ 'ui.error.required' |
+                                                    i18n }}
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label class="col-sm-12 col-md-3 control-label required">
+                                                {{'ui.model.place.name.component.other' | i18n }}  <hint-popover hint-title="ui.model.place.name.component.other" />
+                                            </label>
+                                            <div class="col-sm-12 col-md-9">
+                                                <input class="form-control" type="text" required="required"
+                                                    autocomplete="__away" name="nameInput"
+                                                    ng-model="association.targetModel.name.OfficialRecord[0].component.$other[0]" />
+                                                <div class="text-danger"
+                                                    ng-if="associateForm.nameInput.$error['required']">
+                                                    <i class="fa fa-exclamation-triangle"></i> {{ 'ui.error.required' |
+                                                    i18n }}
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <address-edit is-required="true" owner-form="associateForm"
+                                            address="association.targetModel.address" simple-entry="true" no-type="true"
+                                            no-add="true">
+                                        </address-edit>
+                                        <hr />
+                                        <div class="mb-2">
+                                            <div class="row form-group">
+                                                <label class="control-label col-sm-12 col-md-3">{{ 'ui.model.place.isMobile' | i18n
+                                                }} <hint-popover hint-title="ui.model.place.isMobile" /></label>
+                                                <div class="col-sm-12 col-md-9">
+                                                    <div class="custom-control custom-checkbox">
+                                                        <input type="checkbox" class="custom-control-input" id="isMobile" ng-model="association.targetModel.isMobile" />
+                                                        <label for="isMobile" class="custom-control-label"></label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <geo-edit owner-form="associateForm" geo="association.targetModel.geo"></geo-edit>
+                                        <hr />
+                                        <div class="form-group row">
+                                            <label class="col-sm-12 col-md-3 control-label" for="name">{{
+                                                'ui.model.entity.relationship.Parent' | i18n }}  <hint-popover hint-title="ui.model.entity.relationship.Parent" /></label>
+                                            <div class="col-sm-12 col-md-9 input-group">
+                                                <entity-search type="'Place'"
+                                                     group-by="['address.PhysicalVisit[0].component.State[0]','address.Direct[0].component.State[0]']"
+                                                    ng-model="association.targetModel.relationship.Parent[0].target"
+                                                    search-field="'name.component.value'"
+                                                    filter="{classConcept: 'ff34dfa7-c6d3-4f8b-bc9f-14bcdc13ba6c', statusConcept: 'c8064cbd-fa06-4530-b430-1a52f1530c27' }"></entity-search>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="modal-footer">
+                            <button class="btn btn-secondary" type="button" data-dismiss="modal">
+                                <i class="fa fa-times"></i> {{ 'ui.action.cancel' | i18n }}</button>
+                            <div class="btn-group">
+                                <button type="submit" class="btn btn-primary" id="btn-submit-association-facility" ng-disabled="associateForm.$invalid">
+                                    <i class="fa fa-check"></i> {{ 'ui.action.add' | i18n }}</button>
+                                <div class="btn-group dropdown show" ng-if="association.type == 'new'">
+                                    <button type="button" class="btn btn-primary" data-toggle="dropdown" ng-disabled="associateForm.$invalid">
+                                        <i class="fas fa-chevron-down"></i> 
+                                    </button>
+                                    <div class="dropdown-menu">
+                                        <button class="dropdown-item" type="submit" ng-click="association.next = 'another'">{{ 'ui.action.add.then.new' | i18n }}</button>
+                                        <button class="dropdown-item" type="submit" ng-click="association.next = 'edit'">{{ 'ui.action.add.then.goto' | i18n }}</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

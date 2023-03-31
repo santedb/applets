@@ -1,7 +1,8 @@
 ﻿/// <reference path="./santedb-model.js"/>
 /*
+ * Copyright 2021-2023 SanteSuite Inc. and the SanteSuite Contributors (see NOTICES.md)
+ * Copyright 2019-2021 Fyfe Software Inc. and the SanteSuite Contributors
  * Copyright 2015-2019 Mohawk College of Applied Arts and Technology
- * 
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you 
  * may not use this file except in compliance with the License. You may 
@@ -3584,6 +3585,9 @@ function SanteDBWrapper() {
      */
     function AuthenticationApi() {
 
+        // Demands that are cached
+        var _cacheDemand = {};
+        setInterval(() => _cacheDemand = {}, 15000); // clear the cache every 10 seconds
         // Extract JWT data
         var _extractJwtData = function(jwtData) {
             if(jwsDataPattern.test(jwtData))
@@ -3660,16 +3664,27 @@ function SanteDBWrapper() {
         this.demandAsync = function (policy) {
             return new Promise(function (fulfill, reject) {
                 try {
+                    if(_cacheDemand[policy] !== undefined) {
+                        fulfill(_cacheDemand[policy]);
+                    }
+                    else {
                     _auth.getAsync({
                         resource: `pdp/${policy}`
                     })
-                        .then(function () { fulfill(_authentication.PolicyDecision.Grant); }) // fulfillment for the PDP means grant success
+                        .then(function () { 
+                            _cacheDemand[policy] = _authentication.PolicyDecision.Grant;
+                            fulfill(_authentication.PolicyDecision.Grant); 
+                        }) // fulfillment for the PDP means grant success
                         .catch(function (e) {
                             if (e.policyOutcome)
+                            {
+                                _cacheDemand[policy] = e.policyOutcome;
                                 fulfill(_authentication.PolicyDecision[e.policyOutcome]);
+                            }
                             else
                                 reject(e);
                         });
+                    }
                 }
                 catch (e) {
                     reject(e);

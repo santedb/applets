@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <NotificationTemplate xmlns="http://santedb.org/notification" lang="en" id="org.santedb.notifications.mfa.email">
     <subject>Your SanteDB TFA Code</subject>
-    <![CDATA[Your SanteDB TFA Code is ${code}]]>
+    <![CDATA[Your SanteDB TFA Code is ${code}. 
+    
+    Enter this code into the your application to complete your sign-in process]]>
 </NotificationTemplate>

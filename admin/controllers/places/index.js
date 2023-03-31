@@ -21,7 +21,7 @@
  */
 angular.module('santedb').controller('PlaceIndexController', ["$scope", "$rootScope", "$state", function ($scope, $rootScope, $state) {
 
-  
+
     /**
     * @summary Render updated by
     */
@@ -73,7 +73,7 @@ angular.module('santedb').controller('PlaceIndexController', ["$scope", "$rootSc
 
         var data = $("#PlaceTable table").DataTable().row(index).data();
 
-        if (data.statusConcept != StatusKeys.Obsolete && confirm(SanteDB.locale.getString("ui.admin.place.confirmDelete"))) {
+        if (data.obsoletionTime == null && confirm(SanteDB.locale.getString("ui.admin.place.confirmDelete"))) {
             try {
                 $("#action_grp_" + index + " a").addClass("disabled");
                 $("#action_grp_" + index + " a i.fa-trash").removeClass("fa-trash").addClass("fa-circle-notch fa-spin");
@@ -88,24 +88,11 @@ angular.module('santedb').controller('PlaceIndexController', ["$scope", "$rootSc
             }
 
         }
-        else if (data.statusConcept == StatusKeys.Obsolete && confirm(SanteDB.locale.getString("ui.admin.place.confirmUnDelete"))) {
+        else if (data.obsoletionTime != null && confirm(SanteDB.locale.getString("ui.admin.place.confirmUnDelete"))) {
             $("#action_grp_" + index + " a").addClass("disabled");
             $("#action_grp_" + index + " a i.fa-trash-restore").removeClass("fa-trash-restore").addClass("fa-circle-notch fa-spin");
             try {
-                var existing = await SanteDB.resources.place.getAsync(id);
-
-                // Patch the user
-                var patch = new Patch({
-                    change: [
-                        new PatchOperation({
-                            op: PatchOperationType.Replace,
-                            path: 'statusConcept',
-                            value: StatusKeys.Active
-                        })
-                    ]
-                });
-
-                await SanteDB.resources.place.patchAsync(id, existing.etag, patch);
+                await SanteDB.resources.place.touchAsync(id);
 
             }
             catch (e) {
@@ -120,18 +107,37 @@ angular.module('santedb').controller('PlaceIndexController', ["$scope", "$rootSc
 
     }
 
-    $scope.renderStatusConcept = function (place) {
-        switch (place.statusConcept) {
-            case StatusKeys.Active:
-                return `<span class="badge badge-info"><i class="fas fa-check"></i> ${SanteDB.locale.getString('ui.state.active')}</span>`;
-            case StatusKeys.Obsolete:
-                return `<span class="badge badge-danger"><i class="fas fa-trash"></i> ${SanteDB.locale.getString('ui.state.obsolete')}</span>`;
-            case StatusKeys.Nullified:
-                return `<span class="badge badge-secondary"><i class="fas fa-eraser"></i> ${SanteDB.locale.getString('ui.state.nullified')}</span>`;
-            case StatusKeys.New:
-                return `<span class="badge badge-secondary"><i class="fas fa-asterisk"></i> ${SanteDB.locale.getString('ui.state.new')}</span>`;
+    // Download as a place
+    $scope.download = async function () {
+        if (confirm(SanteDB.locale.getString("ui.action.export.confirm"))) {
+            try {
 
+                window.location = `/hdsi/Place/_export?classConcept=!ff34dfa7-c6d3-4f8b-bc9f-14bcdc13ba6c&statusConcept=${StatusKeys.Active}`;
+            }
+            catch(e) {
+                $rootScope.errorHandler(e);
+            }
+        
         }
+    }
+
+    
+    // Download as a place
+    $scope.downloadFacilities = async function () {
+        if (confirm(SanteDB.locale.getString("ui.action.export.confirm"))) {
+            try {
+
+                window.location = `/hdsi/Place/_export?classConcept=ff34dfa7-c6d3-4f8b-bc9f-14bcdc13ba6c&statusConcept=${StatusKeys.Active}`;
+            }
+            catch(e) {
+                $rootScope.errorHandler(e);
+            }
+        
+        }
+    }
+
+    $scope.renderStatusConcept = function (place) {
+        return SanteDB.display.renderStatus(place.statusConcept);
     }
 
 }]);
