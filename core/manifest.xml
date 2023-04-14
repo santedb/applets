@@ -1,3 +1,4 @@
+<?xml-model href="../.ref/schema/SanteDBApplet.xsd" type="application/xml" schematypens="http://www.w3.org/2001/XMLSchema"?>
 <!--
  - Copyright 2015-2019 Mohawk College of Applied Arts and Technology
  -
@@ -19,7 +20,7 @@
  -->
 <AppletManifest  xmlns="http://santedb.org/applet">
   
-  <info id="org.santedb.core" version="2.1.113.0">
+  <info id="org.santedb.core" version="2.1.113.0" uuid="1f5825da-8c11-400c-939a-94c3507da427">
     <icon>/org.santedb.core/img/icon.png</icon>
     <name lang="en">SanteDB Core Applet</name>
     <author>SanteSuite Community Partners (see: santesuite.org)</author>

@@ -1,4 +1,5 @@
-﻿<!--
+﻿<?xml-model href="../../.ref/schema/SanteDBApplet.xsd" type="application/xml" schematypens="http://www.w3.org/2001/XMLSchema"?>
+<!--
  - Copyright 2015-2018 Mohawk College of Applied Arts and Technology
  -
  - 
@@ -18,28 +19,28 @@
  - Date: 2018-7-23
  -->
 <AppletManifest xmlns="http://santedb.org/applet">
-  <info id="org.santedb.i18n.sw" version="2.1.113.0">
+  <info id="org.santedb.i18n.sw" version="2.1.113.0" uuid="4a80013b-6831-436b-a230-5b04759b16a9">
     <icon>/org.santedb.core/img/i18n.png</icon>
     <name lang="sw">Tafsiri kiswahili</name>
     <author>SanteSuite Community Partners (see: santesuite.org)</author>
   </info>
   <locales>
-    <locale code="sw" name="Kiswahili">
+    <locale code="sw">
       <asset>/org.santedb.i18n.sw/lib/angular/sw.js</asset>
       <asset>/org.santedb.i18n.sw/lib/fullcalendar/sw.js</asset>
       <asset>/org.santedb.i18n.sw/lib/select2/sw.js</asset>
     </locale>
-    <locale code="sw-ke" name="Kiswahili (Kenya)">
+    <locale code="sw-ke">
       <asset>/org.santedb.i18n.sw/lib/angular/sw-ke.js</asset>
       <asset>/org.santedb.i18n.sw/lib/fullcalendar/sw.js</asset>
       <asset>/org.santedb.i18n.sw/lib/select2/sw.js</asset>
     </locale>
-    <locale code="sw-tz" name="Kiswahili (Tanzania)">
+    <locale code="sw-tz">
       <asset>/org.santedb.i18n.sw/lib/angular/sw-tz.js</asset>
       <asset>/org.santedb.i18n.sw/lib/fullcalendar/sw.js</asset>
       <asset>/org.santedb.i18n.sw/lib/select2/sw.js</asset>
     </locale>
-    <locale code="sw-ug" name="Kiswahili (Uganda)">
+    <locale code="sw-ug">
       <asset>/org.santedb.i18n.sw/lib/angular/sw-ug.js</asset>
       <asset>/org.santedb.i18n.sw/lib/fullcalendar/sw.js</asset>
       <asset>/org.santedb.i18n.sw/lib/select2/sw.js</asset>

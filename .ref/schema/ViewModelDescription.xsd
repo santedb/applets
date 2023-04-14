@@ -1,0 +1,68 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!--
+ - Copyright 2021-2023 SanteSuite Contributors (See NOTICE.md for full copyright notices)
+ - Copyright (C) 2019 - 2021, Fyfe Software Inc. and the SanteSuite Contributors
+ - Portions Copyright (C) 2015-2018 Mohawk College of Applied Arts and Technology
+ - 
+ - Licensed under the Apache License, Version 2.0 (the "License"); you 
+ - may not use this file except in compliance with the License. You may 
+ - obtain a copy of the License at 
+ - 
+ - http://www.apache.org/licenses/LICENSE-2.0 
+ - 
+ - Unless required by applicable law or agreed to in writing, software
+ - distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+ - WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the 
+ - License for the specific language governing permissions and limitations under 
+ - the License.
+ - 
+ - User: fyfej
+ - Date: 2023-3-10
+ -->
+<xs:schema xmlns:tns="http://santedb.org/model/view" elementFormDefault="qualified" targetNamespace="http://santedb.org/model/view" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:complexType name="ClassifierModelDescription">
+    <xs:attribute name="classifier" type="xs:string" />
+  </xs:complexType>
+  <xs:complexType name="PropertyContainerDescription" abstract="true">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="property" type="tns:PropertyModelDescription" />
+    </xs:sequence>
+    <xs:attribute name="all" type="xs:boolean" use="required" />
+    <xs:attribute name="ref" type="xs:string" />
+  </xs:complexType>
+  <xs:complexType name="PropertyModelDescription">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:PropertyContainerDescription">
+        <xs:attribute name="name" type="xs:string" />
+        <xs:attribute name="classifier" type="xs:string" />
+        <xs:attribute name="behavior" type="tns:SerializationBehaviorType" use="required" />
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:simpleType name="SerializationBehaviorType">
+    <xs:list>
+      <xs:simpleType>
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="default" />
+          <xs:enumeration value="always" />
+          <xs:enumeration value="never" />
+        </xs:restriction>
+      </xs:simpleType>
+    </xs:list>
+  </xs:simpleType>
+  <xs:complexType name="TypeModelDescription">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:PropertyContainerDescription">
+        <xs:attribute name="type" type="xs:string" />
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="ViewModel" nillable="true" type="tns:ViewModelDescription" />
+  <xs:complexType name="ViewModelDescription">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="include" type="xs:string" />
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="type" type="tns:TypeModelDescription" />
+    </xs:sequence>
+    <xs:attribute name="name" type="xs:string" />
+  </xs:complexType>
+</xs:schema>

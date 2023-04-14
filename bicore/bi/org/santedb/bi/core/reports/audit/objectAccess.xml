@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8" ?>
+<?xml-model href="../../../../../../../../.ref/schema/BusinessIntelligence.xsd" type="application/xml" schematypens="http://www.w3.org/2001/XMLSchema"?>
 <!--
  - Portions Copyright 2015-2019 Mohawk College of Applied Arts and Technology
  - Portions Copyright 2019-2019 SanteSuite Contributors (See NOTICE)
@@ -20,7 +21,8 @@
  - Date: 2019-12-16
  -->
 <BiReportDefinition xmlns="http://santedb.org/bi" id="org.santedb.bi.core.reports.audit.object" label="ui.bi.core.report.audit.objectAccess">
-  <meta>
+  <meta status="active">
+
     <authors>
       <add>Justin Fyfe (Fyfe Software Inc.) &lt;justin@fyfesoftware.ca></add>
     </authors>
@@ -32,7 +34,7 @@
 
   </meta>
   <dataSources>
-    <view ref="org.santedb.bi.core.view.audit.object" name="main-object"/>
+    <view ref="#org.santedb.bi.core.view.audit.object" name="main-object"/>
   </dataSources>
   <views>
     <add id="org.santedb.bi.core.reports.audit.object.outcome" label="ui.bi.common.view.user" name="user">

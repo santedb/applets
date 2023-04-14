@@ -97,7 +97,7 @@ body.fixed-nav {
 #mainNav .navbar-collapse .navbar-sidenav .nav-link-collapse:after {
   float: right;
   content: '\f054';
-  font-family: 'Font Awesome\ 5 Free';
+  font-family: 'Font Awesome\ 6 Free';
   font-weight: 900
 }
 
@@ -147,7 +147,7 @@ body.fixed-nav {
   width: auto;
   content: '\f054';
   border: none;
-  font-family: 'Font Awesome\ 5 Free';
+  font-family: 'Font Awesome\ 6 Free';
   font-weight: 900;
 }
 
@@ -162,7 +162,7 @@ body.fixed-nav {
   float: right;
   width: auto;
   content: '\f078';
-  font-family: 'Font Awesome\ 5 Free';
+  font-family: 'Font Awesome\ 6 Free';
   border: none;
   font-weight: 900
 }
@@ -367,7 +367,7 @@ body.sidenav-toggled #mainNav.static-top #sidenavToggler i {
     display: inline;
     float: right;
     content: '\f054';
-    font-family: 'Font Awesome\ 5 Free';
+    font-family: 'Font Awesome\ 6 Free';
     font-weight: 900
   }
 

@@ -1,4 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
+<?xml-model href="../../../../../../../../.ref/schema/BusinessIntelligence.xsd" type="application/xml" schematypens="http://www.w3.org/2001/XMLSchema"?>
 <!--
  - Portions Copyright 2015-2019 Mohawk College of Applied Arts and Technology
  - Portions Copyright 2019-2019 SanteSuite Contributors (See NOTICE)
@@ -22,7 +23,7 @@
 <BiParameterDefinition xmlns="http://santedb.org/bi" id="org.santedb.bi.core.parameter.user.class" name="user-class" label="ui.bi.core.user.class" type="uuid" default="33932B42-6F4B-4659-8849-6ACA54139D8E">
   <meta status="active">
     <authors>
-      <add>Justin Fyfe (Fyfe Software Inc.) &lt;justin@fyfesoftware.ca></add>
+      <add>Justin Fyfe (Fyfe Software Inc.) &lt;justin@fyfesoftware.ca&gt;</add>
     </authors>
     <annotation lang="en">
       <div xmlns="http://www.w3.org/1999/xhtml">

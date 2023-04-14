@@ -1,0 +1,117 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://santedb.org/data" elementFormDefault="qualified" targetNamespace="http://santedb.org/data" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import namespace="http://santedb.org/model" schemaLocation="SanteDBModel.xsd" />
+  <xs:element name="dataset" nillable="true" type="tns:Dataset" />
+  <xs:complexType name="Dataset">
+    <xs:sequence>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element minOccurs="0" maxOccurs="1" name="insert" type="tns:DataInsert" />
+        <xs:element minOccurs="0" maxOccurs="1" name="obsolete" type="tns:DataDelete" />
+        <xs:element minOccurs="0" maxOccurs="1" name="update" type="tns:DataUpdate" />
+      </xs:choice>
+      <xs:element minOccurs="0" maxOccurs="1" name="sql" type="tns:ArrayOfDataExecuteAction" />
+      <xs:element minOccurs="0" maxOccurs="1" name="exec" type="tns:ArrayOfServiceExecuteAction" />
+    </xs:sequence>
+    <xs:attribute name="id" type="xs:string" />
+  </xs:complexType>
+  <xs:complexType name="DataInsert">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:DataInstallAction">
+        <xs:attribute name="skipIfExists" type="xs:boolean" use="required" />
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="DataInstallAction" abstract="true">
+    <xs:sequence>
+      <xs:choice minOccurs="1" maxOccurs="1">
+        <xs:element minOccurs="0" maxOccurs="1" xmlns:q1="http://santedb.org/model" ref="q1:ConceptReferenceTerm" />
+        <xs:element minOccurs="0" maxOccurs="1" xmlns:q2="http://santedb.org/model" ref="q2:ConceptName" />
+        <xs:element minOccurs="0" maxOccurs="1" xmlns:q3="http://santedb.org/model" ref="q3:EntityRelationship" />
+        <xs:element minOccurs="0" maxOccurs="1" xmlns:q4="http://santedb.org/model" ref="q4:Concept" />
+        <xs:element minOccurs="0" maxOccurs="1" xmlns:q5="http://santedb.org/model" ref="q5:ConceptSet" />
+        <xs:element minOccurs="0" maxOccurs="1" xmlns:q6="http://santedb.org/model" ref="q6:ConceptRelationship" />
+        <xs:element minOccurs="0" maxOccurs="1" xmlns:q7="http://santedb.org/model" ref="q7:AssigningAuthority" />
+        <xs:element minOccurs="0" maxOccurs="1" xmlns:q8="http://santedb.org/model" ref="q8:IdentityDomain" />
+        <xs:element minOccurs="0" maxOccurs="1" xmlns:q9="http://santedb.org/model" ref="q9:ConceptClass" />
+        <xs:element minOccurs="0" maxOccurs="1" xmlns:q10="http://santedb.org/model" ref="q10:SecurityPolicy" />
+        <xs:element minOccurs="0" maxOccurs="1" xmlns:q11="http://santedb.org/model" ref="q11:SecurityRole" />
+        <xs:element minOccurs="0" maxOccurs="1" xmlns:q12="http://santedb.org/model" ref="q12:SecurityApplication" />
+        <xs:element minOccurs="0" maxOccurs="1" xmlns:q13="http://santedb.org/model" ref="q13:ApplicationEntity" />
+        <xs:element minOccurs="0" maxOccurs="1" xmlns:q14="http://santedb.org/model" ref="q14:SecurityUser" />
+        <xs:element minOccurs="0" maxOccurs="1" xmlns:q15="http://santedb.org/model" ref="q15:ExtensionType" />
+        <xs:element minOccurs="0" maxOccurs="1" xmlns:q16="http://santedb.org/model" ref="q16:CodeSystem" />
+        <xs:element minOccurs="0" maxOccurs="1" xmlns:q17="http://santedb.org/model" ref="q17:ReferenceTerm" />
+        <xs:element minOccurs="0" maxOccurs="1" xmlns:q18="http://santedb.org/model" ref="q18:IdentifierType" />
+        <xs:element minOccurs="0" maxOccurs="1" xmlns:q19="http://santedb.org/model" ref="q19:UserEntity" />
+        <xs:element minOccurs="0" maxOccurs="1" xmlns:q20="http://santedb.org/model" ref="q20:Entity" />
+        <xs:element minOccurs="0" maxOccurs="1" xmlns:q21="http://santedb.org/model" ref="q21:Organization" />
+        <xs:element minOccurs="0" maxOccurs="1" xmlns:q22="http://santedb.org/model" ref="q22:Person" />
+        <xs:element minOccurs="0" maxOccurs="1" xmlns:q23="http://santedb.org/model" ref="q23:Provider" />
+        <xs:element minOccurs="0" maxOccurs="1" xmlns:q24="http://santedb.org/model" ref="q24:Material" />
+        <xs:element minOccurs="0" maxOccurs="1" xmlns:q25="http://santedb.org/model" ref="q25:ManufacturedMaterial" />
+        <xs:element minOccurs="0" maxOccurs="1" xmlns:q26="http://santedb.org/model" ref="q26:Patient" />
+        <xs:element minOccurs="0" maxOccurs="1" xmlns:q27="http://santedb.org/model" ref="q27:Place" />
+        <xs:element minOccurs="0" maxOccurs="1" xmlns:q28="http://santedb.org/model" ref="q28:Bundle" />
+        <xs:element minOccurs="0" maxOccurs="1" xmlns:q29="http://santedb.org/model" ref="q29:Act" />
+        <xs:element minOccurs="0" maxOccurs="1" xmlns:q30="http://santedb.org/model" ref="q30:SubstanceAdministration" />
+        <xs:element minOccurs="0" maxOccurs="1" xmlns:q31="http://santedb.org/model" ref="q31:QuantityObservation" />
+        <xs:element minOccurs="0" maxOccurs="1" xmlns:q32="http://santedb.org/model" ref="q32:CodedObservation" />
+        <xs:element minOccurs="0" maxOccurs="1" xmlns:q33="http://santedb.org/model" ref="q33:EntityIdentifier" />
+        <xs:element minOccurs="0" maxOccurs="1" xmlns:q34="http://santedb.org/model" ref="q34:TextObservation" />
+        <xs:element minOccurs="0" maxOccurs="1" xmlns:q35="http://santedb.org/model" ref="q35:PatientEncounter" />
+      </xs:choice>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="associate" type="tns:DataAssociation" />
+    </xs:sequence>
+    <xs:attribute name="skipIfError" type="xs:boolean" use="required" />
+  </xs:complexType>
+  <xs:complexType name="DataAssociation">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:DataInstallAction">
+        <xs:attribute name="property" type="xs:string" />
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="DataUpdate">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:DataInstallAction">
+        <xs:attribute name="insertIfNotExists" type="xs:boolean" use="required" />
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="DataDelete">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:DataInstallAction" />
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="ArrayOfDataExecuteAction">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="exec" nillable="true" type="tns:DataExecuteAction" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="DataExecuteAction">
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:attribute name="invariant" type="xs:string" />
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+  <xs:complexType name="ArrayOfServiceExecuteAction">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="service" nillable="true" type="tns:ServiceExecuteAction" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ServiceExecuteAction">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="1" name="args" type="tns:ArrayOfChoice1" />
+    </xs:sequence>
+    <xs:attribute name="type" type="xs:string" />
+    <xs:attribute name="method" type="xs:string" />
+  </xs:complexType>
+  <xs:complexType name="ArrayOfChoice1">
+    <xs:choice minOccurs="0" maxOccurs="unbounded">
+      <xs:element minOccurs="1" maxOccurs="1" name="string" nillable="true" type="xs:string" />
+      <xs:element minOccurs="1" maxOccurs="1" name="int" type="xs:int" />
+      <xs:element minOccurs="1" maxOccurs="1" name="bool" type="xs:boolean" />
+    </xs:choice>
+  </xs:complexType>
+</xs:schema>

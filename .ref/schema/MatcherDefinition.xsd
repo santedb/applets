@@ -1,0 +1,166 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!--
+ - Copyright 2021-2023 SanteSuite Contributors (See NOTICE.md for full copyright notices)
+ - Copyright (C) 2019 - 2021, Fyfe Software Inc. and the SanteSuite Contributors
+ - Portions Copyright (C) 2015-2018 Mohawk College of Applied Arts and Technology
+ - 
+ - Licensed under the Apache License, Version 2.0 (the "License"); you 
+ - may not use this file except in compliance with the License. You may 
+ - obtain a copy of the License at 
+ - 
+ - http://www.apache.org/licenses/LICENSE-2.0 
+ - 
+ - Unless required by applicable law or agreed to in writing, software
+ - distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+ - WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the 
+ - License for the specific language governing permissions and limitations under 
+ - the License.
+ - 
+ - User: fyfej
+ - Date: 2023-3-10
+ -->
+<xs:schema xmlns:tns="http://santedb.org/matcher" elementFormDefault="qualified" targetNamespace="http://santedb.org/matcher" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:simpleType name="BinaryOperatorType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="eq" />
+      <xs:enumeration value="lt" />
+      <xs:enumeration value="lte" />
+      <xs:enumeration value="gt" />
+      <xs:enumeration value="gte" />
+      <xs:enumeration value="ne" />
+      <xs:enumeration value="and" />
+      <xs:enumeration value="or" />
+      <xs:enumeration value="add" />
+      <xs:enumeration value="sub" />
+      <xs:enumeration value="is" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:complexType name="MatchAttribute">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="1" name="when" type="tns:ArrayOfMatchAttributeWhenCondition" />
+      <xs:element minOccurs="0" maxOccurs="1" name="assert" type="tns:MatchAttributeAssertion" />
+      <xs:element minOccurs="0" maxOccurs="1" name="partialWeight" type="tns:MatchMeasureTransform" />
+    </xs:sequence>
+    <xs:attribute name="id" type="xs:string" />
+    <xs:attribute name="m" type="xs:double" use="required" />
+    <xs:attribute name="u" type="xs:double" use="required" />
+    <xs:attribute name="matchWeight" type="xs:double" use="required" />
+    <xs:attribute name="nonMatchWeight" type="xs:double" use="required" />
+    <xs:attribute name="property">
+      <xs:simpleType>
+        <xs:list itemType="xs:string" />
+      </xs:simpleType>
+    </xs:attribute>
+    <xs:attribute name="whenNull" type="tns:MatchAttributeNullBehavior" use="required" />
+    <xs:attribute name="required" type="xs:boolean" use="required" />
+  </xs:complexType>
+  <xs:complexType name="ArrayOfMatchAttributeWhenCondition">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="attribute" nillable="true" type="tns:MatchAttributeWhenCondition" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="MatchAttributeWhenCondition">
+    <xs:attribute name="ref" type="xs:string" />
+    <xs:attribute name="op" type="tns:BinaryOperatorType" use="required" />
+    <xs:attribute name="value" type="xs:boolean" use="required" />
+  </xs:complexType>
+  <xs:complexType name="MatchAttributeAssertion">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="transform" type="tns:MatchTransform" />
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="assert" type="tns:MatchAttributeAssertion" />
+    </xs:sequence>
+    <xs:attribute name="op" type="tns:BinaryOperatorType" use="required" />
+    <xs:attribute name="value" type="xs:double" />
+  </xs:complexType>
+  <xs:complexType name="MatchTransform">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="1" name="args" type="tns:ArrayOfChoice1" />
+    </xs:sequence>
+    <xs:attribute name="name" type="xs:string" />
+  </xs:complexType>
+  <xs:complexType name="ArrayOfChoice1">
+    <xs:choice minOccurs="0" maxOccurs="unbounded">
+      <xs:element minOccurs="1" maxOccurs="1" name="boolean" type="xs:boolean" />
+      <xs:element minOccurs="1" maxOccurs="1" name="int" type="xs:int" />
+      <xs:element minOccurs="1" maxOccurs="1" name="string" nillable="true" type="xs:string" />
+      <xs:element minOccurs="1" maxOccurs="1" name="double" type="xs:double" />
+    </xs:choice>
+  </xs:complexType>
+  <xs:complexType name="MatchMeasureTransform">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:MatchTransform">
+        <xs:sequence>
+          <xs:element minOccurs="1" maxOccurs="1" name="source" type="tns:MatchMeasureSource" />
+          <xs:element minOccurs="0" maxOccurs="unbounded" name="transform" type="tns:MatchTransform" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:simpleType name="MatchMeasureSource">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="asserted" />
+      <xs:enumeration value="attribute" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="MatchAttributeNullBehavior">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="match" />
+      <xs:enumeration value="nonmatch" />
+      <xs:enumeration value="ignore" />
+      <xs:enumeration value="disqualify" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="MatchAttributeWeightType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="full" />
+      <xs:enumeration value="partial" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:complexType name="MatchBlock">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="filter" type="xs:string" />
+    </xs:sequence>
+    <xs:attribute name="op" type="tns:BinaryOperatorType" use="required" />
+    <xs:attribute name="maxResults" type="xs:int" use="required" />
+    <xs:attribute name="skipWhenNullInput" type="xs:boolean" use="required" />
+  </xs:complexType>
+  <xs:element name="MatchConfiguration" nillable="true" type="tns:MatchConfiguration" />
+  <xs:complexType name="MatchConfiguration">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="target" type="tns:MatchTarget" />
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="blocking" type="tns:MatchBlock" />
+      <xs:element minOccurs="0" maxOccurs="1" name="scoring" type="tns:ArrayOfMatchAttribute" />
+    </xs:sequence>
+    <xs:attribute name="id" type="xs:string" />
+    <xs:attribute name="nonmatchThreshold" type="xs:double" use="required" />
+    <xs:attribute name="matchThreshold" type="xs:double" use="required" />
+  </xs:complexType>
+  <xs:complexType name="MatchTarget">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="event" type="xs:string" />
+    </xs:sequence>
+    <xs:attribute name="resource" type="xs:string" />
+  </xs:complexType>
+  <xs:complexType name="ArrayOfMatchAttribute">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="attribute" nillable="true" type="tns:MatchAttribute" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="MatchConfigurationCollection" nillable="true" type="tns:MatchConfigurationCollection" />
+  <xs:complexType name="MatchConfigurationCollection">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="1" name="transformers" type="tns:ArrayOfMatchTransformConfiguration" />
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="configuration" type="tns:MatchConfiguration" />
+    </xs:sequence>
+    <xs:attribute name="id" type="xs:string" />
+  </xs:complexType>
+  <xs:complexType name="ArrayOfMatchTransformConfiguration">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="add" nillable="true" type="tns:MatchTransformConfiguration" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="MatchTransformConfiguration">
+    <xs:attribute name="name" type="xs:string" />
+    <xs:attribute name="type" type="xs:string" />
+  </xs:complexType>
+</xs:schema>

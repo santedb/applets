@@ -1,0 +1,166 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!--
+ - Copyright 2021-2023 SanteSuite Contributors (See NOTICE.md for full copyright notices)
+ - Copyright (C) 2019 - 2021, Fyfe Software Inc. and the SanteSuite Contributors
+ - Portions Copyright (C) 2015-2018 Mohawk College of Applied Arts and Technology
+ - 
+ - Licensed under the Apache License, Version 2.0 (the "License"); you 
+ - may not use this file except in compliance with the License. You may 
+ - obtain a copy of the License at 
+ - 
+ - http://www.apache.org/licenses/LICENSE-2.0 
+ - 
+ - Unless required by applicable law or agreed to in writing, software
+ - distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+ - WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the 
+ - License for the specific language governing permissions and limitations under 
+ - the License.
+ - 
+ - User: fyfej
+ - Date: 2023-3-10
+ -->
+<xs:schema xmlns:tns="http://santedb.org/import" elementFormDefault="qualified" targetNamespace="http://santedb.org/import" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import namespace="http://santedb.org/configuration" schemaLocation="Configuration.xsd"/>
+  <xs:element name="ForeignDataMap" nillable="true" type="tns:ForeignDataMap" />
+  <xs:complexType name="ForeignDataMap">
+    <xs:all>
+      <xs:element minOccurs="1" maxOccurs="1" name="id" nillable="true" xmlns:q1="http://microsoft.com/wsdl/types/" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>
+            Unique identifier of the foreign data map
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="1" maxOccurs="1" name="name" type="xs:string" >
+        <xs:annotation>
+          <xs:documentation>
+            Human readable name for the foreign data map
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="1" maxOccurs="1" name="description" type="xs:string" />
+      <xs:element minOccurs="1" maxOccurs="1" name="maps" type="tns:ArrayOfForeignDataObjectMap" />
+      <xs:element minOccurs="0" maxOccurs="1" name="tag" type="xs:string" />
+      <xs:element minOccurs="0" maxOccurs="1" name="creationTime" type="tns:DateTimeOffset" />
+    </xs:all>
+  </xs:complexType>
+  <xs:complexType name="ArrayOfForeignDataObjectMap">
+    <xs:sequence>
+      <xs:element minOccurs="1" maxOccurs="unbounded" name="map" type="tns:ForeignDataObjectMap" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ForeignDataObjectMap">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:ForeignDataMapBase">
+        <xs:sequence>
+          <xs:element minOccurs="1" maxOccurs="unbounded" name="resource" type="tns:ForeignDataElementResourceMap" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="ForeignDataMapBase" abstract="true">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="1" name="source" type="xs:string" />
+      <xs:element minOccurs="0" maxOccurs="1" name="comment" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ForeignDataElementMap">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:ForeignDataMapBase">
+        <xs:sequence>
+          <xs:element minOccurs="0" maxOccurs="unbounded" name="when" type="tns:ForeignDataMapOnlyWhenCondition" />
+          <xs:choice minOccurs="0" maxOccurs="unbounded">
+            <xs:element minOccurs="0" maxOccurs="1" name="fixed" type="tns:ForeignDataFixedValueModifier" />
+            <xs:element minOccurs="0" maxOccurs="1" name="lookup" type="tns:ForeignDataLookupValueModifier" />
+            <xs:element minOccurs="0" maxOccurs="1" name="xref" type="tns:ForeignDataOutputReferenceModifier" />
+            <xs:element minOccurs="0" maxOccurs="1" name="transform" type="tns:ForeignDataTransformValueModifier" />
+          </xs:choice>
+          <xs:element minOccurs="1" maxOccurs="1" name="target" type="xs:string" />
+        </xs:sequence>
+        <xs:attribute name="required" type="xs:boolean" use="optional" />
+        <xs:attribute name="whenTargetMissing" type="tns:DetectedIssuePriorityType" />
+        <xs:attribute name="replace" type="xs:boolean" use="optional" />
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="ForeignDataMapOnlyWhenCondition">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:ForeignDataMapBase">
+        <xs:sequence>
+          <xs:element minOccurs="1" maxOccurs="1" name="value" type="xs:string" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="ForeignDataFixedValueModifier" mixed="true">
+    <xs:complexContent mixed="true">
+      <xs:extension base="tns:ForeignDataValueModifier" />
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="ForeignDataValueModifier" abstract="true">
+    <xs:attribute name="when" type="xs:string" />
+  </xs:complexType>
+  <xs:complexType name="ForeignDataTransformValueModifier">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:ForeignDataValueModifier">
+        <xs:sequence>
+          <xs:element minOccurs="0" maxOccurs="1" name="args" type="tns:ArrayOfChoice1" />
+        </xs:sequence>
+        <xs:attribute name="transformer" type="xs:string" use="required" />
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="ArrayOfChoice1">
+    <xs:choice minOccurs="1" maxOccurs="unbounded">
+      <xs:element minOccurs="1" maxOccurs="1" name="bool" type="xs:boolean" />
+      <xs:element minOccurs="1" maxOccurs="1" name="dateTime" type="xs:dateTime" />
+      <xs:element minOccurs="1" maxOccurs="1" name="string" nillable="true" type="xs:string" />
+      <xs:element minOccurs="1" maxOccurs="1" name="int" type="xs:int" />
+    </xs:choice>
+  </xs:complexType>
+  <xs:complexType name="ForeignDataOutputReferenceModifier">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:ForeignDataValueModifier">
+        <xs:sequence>
+          <xs:element minOccurs="0" maxOccurs="1" name="previousEntry" xmlns:q2="http://santedb.org/configuration" type="q2:ResourceTypeReferenceConfiguration" />
+          <xs:element minOccurs="1" maxOccurs="1" name="expression" type="xs:string" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="ForeignDataElementResourceMap">
+    <xs:complexContent mixed="false">
+      <xs:extension xmlns:q3="http://santedb.org/configuration" base="q3:ResourceTypeReferenceConfiguration">
+        <xs:sequence>
+          <xs:element minOccurs="0" maxOccurs="unbounded" name="when" type="tns:ForeignDataMapOnlyWhenCondition" />
+          <xs:element minOccurs="1" maxOccurs="1" name="maps" type="tns:ArrayOfForeignDataElementMap" />
+          <xs:element minOccurs="0" maxOccurs="1" name="existing" type="tns:ArrayOfString" />
+          <xs:element minOccurs="0" maxOccurs="1" name="transform" type="tns:ForeignDataTransformValueModifier" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="ArrayOfForeignDataElementMap">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="map" nillable="true" type="tns:ForeignDataElementMap" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ArrayOfString">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="where" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ForeignDataLookupValueModifier" mixed="true">
+    <xs:complexContent mixed="true">
+      <xs:extension base="tns:ForeignDataValueModifier" />
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:simpleType name="DetectedIssuePriorityType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Error" />
+      <xs:enumeration value="Warning" />
+      <xs:enumeration value="Information" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:complexType name="DateTimeOffset" />
+</xs:schema>
