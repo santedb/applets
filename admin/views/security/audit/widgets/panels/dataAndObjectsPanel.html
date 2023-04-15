@@ -22,7 +22,7 @@
 
                     <button type="button" class="btn btn-link" ng-switch-when="PatientNumber"
                         ng-click="navigateObject('Patient', { id: o.id })">
-                        <i class="fas fa-hospital-user"></i> {{ o.id }}</a>
+                        <i class="fas fa-hospital-user"></i> {{ o.id }}</button>
                     <span ng-switch-when="Custom" ng-switch="o.customCode.code">
                         <a ng-switch-when="SecurityRole" ui-sref="santedb-admin.security.groups.edit({id:o.id})">
                             <i class="fas fa-users"></i> {{ o.id }}</a>
