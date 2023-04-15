@@ -1,6 +1,6 @@
 <div xmlns="http://www.w3.org/1999/xhtml">
     <form ng-submit="saveUser(targetForm)" name="targetForm" novalidate="novalidate">
-        <div class="accordion" id="userAccordion">
+        <div class="accordion mb-2" id="userAccordion">
             <div class="card">
                 <div class="card-header">
                     <h2 class="mb-0">
@@ -20,7 +20,7 @@
                                 <input name="username" ng-readonly="target.entity.id" type="text"
                                     class="form-control" pattern="^[A-Za-z0-9_\.\@]{3,}" minlength="3" maxlength="32"
                                     required="required" ng-model="target.entity.userName" />
-                                <input-copy-button id="usernameCopyButton" class="btn btn-outline-secondary"
+                                <input-copy-button id="usernameCopyButton" button-class="'btn-outline-secondary'"
                                     source="target.entity.userName" />
                             </div>
                             <div class="col-sm-12 col-md-10 offset-md-2">

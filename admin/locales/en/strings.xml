@@ -81,6 +81,9 @@
     <string name="ui.admin.applications.confirmUnlock">Are you sure you want to unlock this application?</string>
     <string name="ui.admin.applications.invalidLogin.reset">Are you sure you want to reset the invalid authentications for this application?</string>
 
+    <!-- Strings for Facilities -->
+    <string name="ui.admin.facilities.create.core.title">Facility Profile</string>
+
     <!-- Provenance Strings -->
     <string name="ui.admin.provenance.info">Primary Identity</string>
     <string name="ui.admin.provenance.creationTime">Established</string>
@@ -189,6 +192,14 @@
     <string name="ui.admin.data.materials.title">Materials</string>
     <string name="ui.admin.data.materials.count">Materials Management</string>
     <string name="ui.admin.data.materials.create">Create Material</string>
+
+    <!-- Place Strings -->
+    <string name="org.santedb.widget.admin.panel.place.profile.name">Name</string>
+    <string name="ui.model.place.id">Id</string>
+    <string name="org.santedb.widget.admin.panel.place.profile.type">Type</string>
+    <string name="org.santedb.widget.admin.panel.place.profile.location">Location</string>
+    <string name="org.santedb.widget.admin.panel.place.profile.parent">Parent</string>
+    
 
     <!-- Edit Identity Domain -->
     <string name="ui.admin.domain.edit.core.title">Identity Domain Properties</string>

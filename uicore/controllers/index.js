@@ -338,18 +338,34 @@ var santedbApp = angular.module('santedb', ['ngSanitize', 'ui.router', 'oc.lazyL
 
                 if (expiresIn < 0) // already expired
                 {
-                    $rootScope.session = null;
-                    $templateCache.removeAll();
-                    delete ($rootScope.session);
-                    toastr.clear();
-                    $state.reload();
+                    var refreshFn = ()=> {
+                        $templateCache.removeAll();
+                        $rootScope.session = null;
+                        delete ($rootScope.session);
+                        toastr.clear();
+                        $state.reload();
+                    };
+
+                    SanteDB.authentication.getSessionInfoAsync(true)
+                    .then(s => {
+                        if(s == null) {
+                            refreshFn();
+                        }
+                        }).catch(refreshFn)
+                    
                 }
                 else if (!_extendToast) {
                     _extendToast = toastr.warning(messageStr, null, {
                         closeButton: false,
                         preventDuplicates: true,
                         onclick: function () {
-                            SanteDB.authentication.refreshLoginAsync().then(function (s) { $rootScope.session = s; _extendToast = null; toastr.clear(); }).catch($rootScope.errorHandler);
+                            SanteDB.authentication.refreshLoginAsync().then(function (s) { 
+                                $timeout(_=> {
+                                    $rootScope.session = s; 
+                                    _extendToast = null; 
+                                    toastr.clear(); 
+                                });
+                            }).catch($rootScope.errorHandler);
                         },
                         positionClass: "toast-bottom-center",
                         showDuration: "0",

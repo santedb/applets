@@ -1,0 +1,13 @@
+<div xmlns="http://www.w3.org/1999/xhtml" xmlns:sdb="http://santedb.org/applet">
+    <sdb:widget order="20" name="org.santedb.widget.admin.panel.place.profile.type" type="Panel" context="org.santedb.place.admin.profile" size="Medium">
+        <sdb:icon>fas fa-fw fa-folder</sdb:icon>
+        <sdb:description lang="en">Type</sdb:description>
+    </sdb:widget>
+    <div class="form-group row">
+        <label class="col-sm-12 col-md-3 control-label">{{ 'ui.model.place.typeConcept' | i18n }}</label>
+        <div class="col-sm-12 col-md-9">
+            <concept-select concept-set="'PlaceTypeConcept'" class="form-control" ng-model="scopedObject.place.typeConcept"></concept-select>
+        </div>
+    </div>
+    
+</div>

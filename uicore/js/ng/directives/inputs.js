@@ -35,7 +35,8 @@ angular.module('santedb-lib')
             replace: true,
             templateUrl: './org.santedb.uicore/directives/inputCopy.html',
             scope: {
-                source: '='
+                source: '=',
+                buttonClass: '<'
             },
             controller: ["$scope", function ($scope) {
                 $scope.copyInput = function () {
@@ -43,7 +44,12 @@ angular.module('santedb-lib')
                         navigator.clipboard.writeText($scope.source);
 
                 }
-            }]
+            }],
+            link: function(scope, element, attrs){
+                if (typeof scope.buttonClass === 'string'){
+                    element.children().addClass(scope.buttonClass);
+                }
+            }
         }
     })
     /**

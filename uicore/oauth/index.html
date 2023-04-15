@@ -1,87 +1,59 @@
-<!--
- - Copyright 2015-2019 Mohawk College of Applied Arts and Technology
- -
- - 
- - Licensed under the Apache License, Version 2.0 (the "License"); you 
- - may not use this file except in compliance with the License. You may 
- - obtain a copy of the License at 
- - 
- - http://www.apache.org/licenses/LICENSE-2.0 
- - 
- - Unless required by applicable law or agreed to in writing, software
- - distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
- - WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the 
- - License for the specific language governing permissions and limitations under 
- - the License.
- - 
- - User: Justin Fyfe
- - Date: 2019-8-8
- -->
-<html xmlns="http://www.w3.org/1999/xhtml">
+<!DOCTYPE html>
+<html lang="en">
 
 <head>
-    <title>{{ 'ui.login.title' | i18n }}</title>
-    <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css" />
-    <meta http-equiv="cache-control" content="no-cache" />
+    <meta charset="utf-8" />
+    <title>Login to SanteDB</title>
+    <link rel="stylesheet" href="css/bootstrap.min.css" />
 </head>
 
 <body>
-    <div class="container">
+    <main class="container-md">
         <div class="row">
-            <div class="col-5 m-auto">
-                <form method="POST" action="index.html">
+            <div class="col col-md-8 offset-md-2 col-lg-6 offset-lg-3">
+                <form method="post">
                     <input type="hidden" name="client_id" value="{{ $client_id }}" />
-                    <input type="hidden" name="redirect_uri" value="{{ $redirect_uri }}" />
-                    <input type="hidden" name="dsig" value="{{ $dsig }}" />
-                    <input type="hidden" name="scope" value="{{ $scope }}" />
-                    <input type="hidden" name="state" value="{{ $state }}" />
                     <input type="hidden" name="response_type" value="{{ $response_type }}" />
-                    <input type="hidden" name="response_mode" value="{{ $response_mode }}" />
-                    <input type="hidden" name="nonce" value="{{ $nonce }}" />
-                    <div class="card shadow">
-                        <div class="card-header">
-                            <h4><img src="./img/icon.png" /> {{ 'ui.login.message' | i18n }}</h4>
+                    <input type="hidden" name="response_mode" value="{{$response_mode}}" />
+                    <input type="hidden" name="state" value="{{$state}}" />
+                    <input type="hidden" name="redirect_uri" value="{{$redirect_uri}}" />
+                    <input type="hidden" name="scope" value="{{$scope}}" />
+                    <div class="card shadow my-3">
+                        <div class="card-header d-flex align-items-center justify-content-center">
+                            <img src="img/icon.png" alt="SanteDB logo" class="me-3" />
+                            <h3 class="card-title">Welcome to SanteDB</h3>
                         </div>
                         <div class="card-body">
-                            <div class="form-group d-none" id="authError">
-                                <p class="text-danger">Error: {{ $auth_error }}</p>
+                            <div class="text-danger">
+                                {{ $error_message }}
                             </div>
-                            <div class="form-group">
-                                <label for="username">{{ 'ui.login.input.username' | i18n }}</label>
-                                <input class="form-control" type="text" name="username" required="required" />
+                            <div class="mb-2">
+                                <label for="username" class="form-label">Username</label>
+                                <input type="text" class="form-control" name="username" id="username"
+                                    value="{{ $username }}" />
                             </div>
-                            <div class="form-group">
-                                <label for="password">{{ 'ui.login.input.password' | i18n }}</label>
-                                <input class="form-control" type="password" name="password" required="required" />
+                            <div class="mb-2">
+                                <label for="password" class="form-label">Password</label>
+                                <input type="password" class="form-control" name="password" id="password" />
                             </div>
-                        </div>
-                        <div class="card-footer">
-                            <div class="btn-grp float-right">
-                                <button type="submit" class="btn btn-primary">{{ 'ui.action.login' | i18n }}</button>
-                            </div>
-                        </div>
 
+                        </div>
+                        <div class="card-footer text-end">
+                            <button type="submit" name="formaction" value="login" class="btn btn-primary">Log
+                                In</button>
+                        </div>
+                    </div>
+                    <div class="card border-0">
+                        <div class="card-body">
+                            <div class="card-text text-muted small">
+                                Request ID: {{$activity_id}}
+                            </div>
+                        </div>
                     </div>
                 </form>
             </div>
         </div>
-    </div>
-    <script type="text/javascript">
-        //<![CDATA[
-            if( '{{ $auth_error }}' != '&nbsp;') {
-                switch('{{ $auth_error }}') {
-                    case "AUTH_INV":
-                        document.getElementById("authError").innerText = "Invalid Username/Password";
-                        break;
-                    case "AUTH_LCK":
-                        document.getElementById("authError").innerText = "Account is Locked";
-                        break;
-                }
-                document.getElementById("authError").className = 'text-danger';
-            }
-        //]]>
-        </script>
-
+    </main>
 </body>
 
 </html>

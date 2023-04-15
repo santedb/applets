@@ -132,7 +132,7 @@
             <input autocomplete="__away" type="text" class="form-control" ng-model="addr.component.PostalCode" />
         </div>
     </div>
-    <div class="form-group row" ng-if="$index &gt; 0">
+    <div class="form-group row" ng-if="addressEdit.length &gt; 1 &amp;&amp; !noAdd">
         <div class="col">
             <div class="btn-group float-right">
                 <button type="button" ng-click="removeAddress($index)" class="btn btn-danger"><i

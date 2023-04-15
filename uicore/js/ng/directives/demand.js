@@ -3,7 +3,7 @@
 
 angular.module('santedb-lib')
 /**
- * @summary Directive for rendering a table of entities
+ * @summary Directive for demanding a policy permission in order to be able to view an element.
  */
 .directive('demand', [function () {
 
@@ -20,8 +20,7 @@ angular.module('santedb-lib')
                 case SanteDB.authentication.PolicyDecision.Grant: // grant
                     $(element).removeAttr('disabled');
                     break;
-        }
-            
+            }
         }
         catch(e) {
             console.info(`Policy demand failed - ${e}`);

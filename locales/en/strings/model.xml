@@ -158,6 +158,8 @@
       <string name="ui.model.entity.name.component.family.hint"><![CDATA[Family names of the entity (or surname)]]></string>
       <string name="ui.model.entity.name.component.suffix">Suffix</string>
       <string name="ui.model.entity.name.component.suffix.hint"><![CDATA[Suffixes for the name such as an enumetion (William Gates <code>III</code>) a designator (Joe Smith <code>Jr.</code>) or designated title (Dr. Fran Smith <code>MD</code>)]]></string>
+      <string name="ui.model.entity.name.component.other">Other</string>
+      <string name="ui.model.entity.name.component.other.hint"><![CDATA[Unclassified names for the entity which cannot be classified appropriately.]]></string>
       <string name="ui.model.entity.telecom">Contact Info</string>
       <string name="ui.model.entity.genderConcept">Gender</string>
       <string name="ui.model.entity.demographics">Additional Info</string>
@@ -259,6 +261,22 @@
       <string name="ui.model.material.formConcept">Form</string>
       <string name="ui.model.material.statusConcept">Status</string>
       <string name="ui.model.material.updatedBy">Last Update</string>
+
+      <string name="ui.model.place.relationship.Parent">Parent</string>
+
+      <string name="ui.admin.facilities.edit.core.title">Facility</string>
+      <string name="ui.model.facility.id">Unique Identifier</string>
+      <string name="org.santedb.widget.admin.tab.facility.profile">Facility Profile</string>
+      <string name="org.santedb.widget.admin.tab.facility.relationships">Relationships</string>
+      <string name="org.santedb.widget.admin.panel.facility.profile.name">Name</string>
+      <string name="org.santedb.widget.admin.panel.facility.profile.location">Location</string>
+      <string name="org.santedb.widget.admin.panel.facility.profile.telecom">Telecom</string>
+      <string name="org.santedb.widget.admin.panel.facility.profile.services">Services</string>
+      <string name="ui.model.place.isMobile">Is Mobile</string>
+      <string name="ui.model.place.isMobile.hint">Check this box to indicate that the facility is not fixed (for example: a portable facility, vehicle or bus) as opposed to a building</string>
+      <string name="ui.model.geo.lat">Latitude</string>
+      <string name="ui.model.geo.lng">Longitude</string>
+
 
       <string name="ui.model.job.name">Job Name</string>
       <string name="ui.model.job.tag">Version</string>
