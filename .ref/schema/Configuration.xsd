@@ -1,0 +1,238 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!--
+ - Copyright 2021-2023 SanteSuite Contributors (See NOTICE.md for full copyright notices)
+ - Copyright (C) 2019 - 2021, Fyfe Software Inc. and the SanteSuite Contributors
+ - Portions Copyright (C) 2015-2018 Mohawk College of Applied Arts and Technology
+ - 
+ - Licensed under the Apache License, Version 2.0 (the "License"); you 
+ - may not use this file except in compliance with the License. You may 
+ - obtain a copy of the License at 
+ - 
+ - http://www.apache.org/licenses/LICENSE-2.0 
+ - 
+ - Unless required by applicable law or agreed to in writing, software
+ - distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+ - WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the 
+ - License for the specific language governing permissions and limitations under 
+ - the License.
+ - 
+ - User: fyfej
+ - Date: 2023-3-10
+ -->
+<xs:schema xmlns:tns="http://santedb.org/configuration" elementFormDefault="qualified" targetNamespace="http://santedb.org/configuration" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:complexType name="ApplicationServiceContextConfigurationSection">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="1" name="serviceProviders" type="tns:ArrayOfTypeReferenceConfiguration" />
+      <xs:element minOccurs="0" maxOccurs="1" name="appSettings" type="tns:ArrayOfAppSettingKeyValuePair" />
+    </xs:sequence>
+    <xs:attribute name="allowUnsignedAssemblies" type="xs:boolean" use="required" />
+    <xs:attribute name="threadPoolSize" type="xs:int" use="required" />
+    <xs:attribute name="instanceName" type="xs:string" />
+  </xs:complexType>
+  <xs:complexType name="ArrayOfTypeReferenceConfiguration">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="add" nillable="true" type="tns:TypeReferenceConfiguration" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="TypeReferenceConfiguration">
+    <xs:attribute name="type" type="xs:string" />
+  </xs:complexType>
+  <xs:complexType name="ArrayOfAppSettingKeyValuePair">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="add" nillable="true" type="tns:AppSettingKeyValuePair" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="AppSettingKeyValuePair">
+    <xs:attribute name="key" type="xs:string" />
+    <xs:attribute name="value" type="xs:string" />
+  </xs:complexType>
+  <xs:complexType name="BackupConfigurationSection">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="1" name="private" type="xs:string" />
+      <xs:element minOccurs="0" maxOccurs="1" name="public" type="xs:string" />
+      <xs:element minOccurs="0" maxOccurs="1" name="extern" type="xs:string" />
+    </xs:sequence>
+    <xs:attribute name="requireEncryption" type="xs:boolean" use="required" />
+  </xs:complexType>
+  <xs:complexType name="ResourceManagementConfigurationSection">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="1" name="resources" type="tns:ArrayOfResourceTypeReferenceConfiguration" />
+      <xs:element minOccurs="1" maxOccurs="1" name="oldMasterRetention" type="tns:DeleteMode" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ArrayOfResourceTypeReferenceConfiguration">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="add" nillable="true" type="tns:ResourceTypeReferenceConfiguration" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ResourceTypeReferenceConfiguration">
+    <xs:attribute name="type" type="xs:string" />
+  </xs:complexType>
+  <xs:simpleType name="DeleteMode">
+    <xs:list>
+      <xs:simpleType>
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="LogicalDelete" />
+          <xs:enumeration value="PermanentDelete" />
+        </xs:restriction>
+      </xs:simpleType>
+    </xs:list>
+  </xs:simpleType>
+  <xs:element name="SanteDBConfiguration" nillable="true" type="tns:SanteDBConfiguration" />
+  <xs:complexType name="SanteDBConfiguration">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:SanteDBBaseConfiguration">
+        <xs:sequence>
+          <xs:element minOccurs="0" maxOccurs="1" name="protectedSectionKey" type="tns:X509ConfigurationElement" />
+          <xs:element minOccurs="0" maxOccurs="unbounded" name="include" type="xs:string" />
+          <xs:element minOccurs="0" maxOccurs="unbounded" name="section" />
+        </xs:sequence>
+        <xs:attribute name="eci" type="xs:base64Binary" />
+        <xs:attribute name="version" type="xs:string" />
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="SanteDBBaseConfiguration">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="1" name="sections" type="tns:ArrayOfTypeReferenceConfiguration" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="X509ConfigurationElement">
+    <xs:attribute name="findType" type="tns:X509FindType" />
+    <xs:attribute name="storeName" type="tns:StoreName" />
+    <xs:attribute name="storeLocation" type="tns:StoreLocation" />
+    <xs:attribute name="findValue" type="xs:string" />
+  </xs:complexType>
+  <xs:simpleType name="X509FindType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="FindByThumbprint" />
+      <xs:enumeration value="FindBySubjectName" />
+      <xs:enumeration value="FindBySubjectDistinguishedName" />
+      <xs:enumeration value="FindByIssuerName" />
+      <xs:enumeration value="FindByIssuerDistinguishedName" />
+      <xs:enumeration value="FindBySerialNumber" />
+      <xs:enumeration value="FindByTimeValid" />
+      <xs:enumeration value="FindByTimeNotYetValid" />
+      <xs:enumeration value="FindByTimeExpired" />
+      <xs:enumeration value="FindByTemplateName" />
+      <xs:enumeration value="FindByApplicationPolicy" />
+      <xs:enumeration value="FindByCertificatePolicy" />
+      <xs:enumeration value="FindByExtension" />
+      <xs:enumeration value="FindByKeyUsage" />
+      <xs:enumeration value="FindBySubjectKeyIdentifier" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="StoreName">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="AddressBook" />
+      <xs:enumeration value="AuthRoot" />
+      <xs:enumeration value="CertificateAuthority" />
+      <xs:enumeration value="Disallowed" />
+      <xs:enumeration value="My" />
+      <xs:enumeration value="Root" />
+      <xs:enumeration value="TrustedPeople" />
+      <xs:enumeration value="TrustedPublisher" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="StoreLocation">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="CurrentUser" />
+      <xs:enumeration value="LocalMachine" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:complexType name="RestClientConfigurationSection">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="1" name="proxyAddress" type="xs:string" />
+      <xs:element minOccurs="0" maxOccurs="1" name="clients" type="tns:ArrayOfRestClientDescriptionConfiguration" />
+      <xs:element minOccurs="0" maxOccurs="1" name="clientType" type="tns:TypeReferenceConfiguration" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ArrayOfRestClientDescriptionConfiguration">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="add" nillable="true" type="tns:RestClientDescriptionConfiguration" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="RestClientDescriptionConfiguration">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="1" name="accept" type="xs:string" />
+      <xs:element minOccurs="0" maxOccurs="1" name="endpoints" type="tns:ArrayOfRestClientEndpointConfiguration" />
+      <xs:element minOccurs="0" maxOccurs="1" name="binding" type="tns:RestClientBindingConfiguration" />
+      <xs:element minOccurs="0" maxOccurs="1" name="proxyAddress" type="xs:string" />
+      <xs:element minOccurs="1" maxOccurs="1" name="trace" type="xs:boolean" />
+    </xs:sequence>
+    <xs:attribute name="name" type="xs:string" />
+  </xs:complexType>
+  <xs:complexType name="ArrayOfRestClientEndpointConfiguration">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="add" nillable="true" type="tns:RestClientEndpointConfiguration" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="RestClientEndpointConfiguration">
+    <xs:attribute name="address" type="xs:string" />
+    <xs:attribute name="timeout" type="xs:string" />
+  </xs:complexType>
+  <xs:complexType name="RestClientBindingConfiguration">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="1" name="contentTypeMapper" type="tns:TypeReferenceConfiguration" />
+      <xs:element minOccurs="0" maxOccurs="1" name="security" type="tns:RestClientSecurityConfiguration" />
+      <xs:element minOccurs="1" maxOccurs="1" name="optimizeRequests" type="xs:boolean" />
+      <xs:element minOccurs="1" maxOccurs="1" name="compressionScheme" type="tns:HttpCompressionAlgorithm" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="RestClientSecurityConfiguration">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="1" name="certificateValidator" type="tns:TypeReferenceConfiguration" />
+      <xs:element minOccurs="0" maxOccurs="1" name="clientCertificate" type="tns:X509ConfigurationElement" />
+      <xs:element minOccurs="0" maxOccurs="1" name="credentialProvider" type="tns:TypeReferenceConfiguration" />
+      <xs:element minOccurs="0" maxOccurs="1" name="credentialSettings" type="tns:ArrayOfRestSecurityCredentialSettings" />
+    </xs:sequence>
+    <xs:attribute name="authRealm" type="xs:string" />
+    <xs:attribute name="preAuth" type="xs:boolean" use="required" />
+    <xs:attribute name="mode" type="tns:SecurityScheme" use="required" />
+  </xs:complexType>
+  <xs:complexType name="ArrayOfRestSecurityCredentialSettings">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="add" nillable="true" type="tns:RestSecurityCredentialSettings" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="RestSecurityCredentialSettings">
+    <xs:attribute name="name" type="xs:string" />
+    <xs:attribute name="value" type="xs:string" />
+  </xs:complexType>
+  <xs:simpleType name="SecurityScheme">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="None" />
+      <xs:enumeration value="Basic" />
+      <xs:enumeration value="Bearer" />
+      <xs:enumeration value="ClientCertificate" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="HttpCompressionAlgorithm">
+    <xs:list>
+      <xs:simpleType>
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="off" />
+          <xs:enumeration value="df" />
+          <xs:enumeration value="gz" />
+          <xs:enumeration value="bz2" />
+          <xs:enumeration value="7z" />
+        </xs:restriction>
+      </xs:simpleType>
+    </xs:list>
+  </xs:simpleType>
+  <xs:complexType name="DataConfigurationSection">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="1" name="connectionStrings" type="tns:ArrayOfConnectionString" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ArrayOfConnectionString">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="add" nillable="true" type="tns:ConnectionString" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ConnectionString">
+    <xs:attribute name="name" type="xs:string" />
+    <xs:attribute name="value" type="xs:string" />
+    <xs:attribute name="provider" type="xs:string" />
+  </xs:complexType>
+</xs:schema>

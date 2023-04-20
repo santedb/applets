@@ -1,0 +1,537 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<BiDatamartDefinition xmlns="http://santedb.org/bi" id="org.santedb.bi.datamart.core"
+    name="core-datamart" label="core-datamart">
+
+  
+  <meta status="active" version="3.0">
+    <authors>
+      <add>SanteSuite Inc. and the SanteSuite Contributors</add>
+    </authors>
+    <annotation>
+      <div xmlns="http://www.w3.org/1999/xhtml">
+        <p>
+          This transform definition is responsible for populating the default SanteDB data mart schema from which most default SanteDB reports and
+          informational assets are derived. You can extend this data mart by defining your own "based on" this data-mart which will re-use all the
+          tables, views and transforms contained in this definition
+        </p>
+      </div>
+    </annotation>
+    <public>false</public>
+  </meta>
+
+  <produces id="org.santedb.bi.dataSource.warehouse" name="warehouse">
+    <meta status="active">
+      <policies>
+        <!-- This requires query clinical data -->
+        <demand>1.3.6.1.4.1.33349.3.1.5.9.2.2.0</demand>
+      </policies>
+    </meta>
+  </produces>
+
+  <schema>
+
+    <table name="SEC_USR_TBL">
+      <column type="uuid" key="true" notNull="true" unique="true" name="USR_ID"/>
+      <column type="string" notNull="true" name="USERNAME" />
+      <column type="date-time" notNull="true" name="CREATED_TIME" />
+      <column type="ref" notNull="true" name="CREATED_BY">
+        <otherTable ref="SEC_USR_TBL" />
+      </column>
+      <column type="date-time" name="LAST_LOGIN" />
+      <column type="string" name="EMAIL" />
+      <column type="string" name="PHONE" />
+      <column type="date-time" name="OBSOLETE_TIME"/>
+      <column type="ref" name="OBSOLETE_BY">
+        <otherTable ref="SEC_USR_TBL" />
+      </column>
+    </table>
+    
+    
+    <table name="ENT_TBL">
+      <column type="uuid" notNull="true" unique="true" key="true" name="ENT_ID" />
+      <column type="uuid" notNull="true" unique="true" name="VERSION" />
+      <column type="string" index="true" notNull="true" name="CLASS" />
+      <column type="string" notNull="true" name="DETERMINER" />
+      <column type="string" name="TYPE" />
+      <column type="string" name="TEMPLATE" />
+      <column type="string" name="ID_VAL" />
+      <column type="string" name="ID_ISSUER" />
+      <column type="decimal" name="LAT"/>
+      <column type="decimal" name="LNG"/>
+      <column type="date-time" notNull="true" name="CREATED_TIME"/>
+      <column type="ref" notNull="true" name="CREATED_BY">
+        <otherTable ref="SEC_USR_TBL" />
+      </column>
+      <column type="date-time" name="OBSOLETE_TIME"/>
+      <column type="ref" name="OBSOLETE_BY">
+        <otherTable ref="SEC_USR_TBL" />
+      </column>
+    </table>
+
+    <table name="ORG_TBL">
+      <column type="string" name="NAME" />
+      <column type="string" name="INDUSTRY" />
+      <parent ref="ENT_TBL" />
+    </table>
+
+    <table name="MAT_TBL">
+      <column type="string" name="NAME" />
+      <parent ref="ENT_TBL" />
+    </table>
+    
+    <table name="MMAT_TBL">
+      <column type="string" name="LOT" />
+      <column type="string" name="GTIN" />
+      <column type="ref" name="MANUFACTURER">
+        <otherTable ref="ORG_TBL" />
+      </column>
+      <parent ref="MAT_TBL" />
+    </table>
+    
+    <table name="PLC_TBL">
+      <column type="string" name="NAME" />
+      <column type="string" name="ADDR_TYPE" />
+      <column type="string" name="ADDR_STREET" />
+      <column type="string" name="ADDR_PRECINCT" />
+      <column type="string" name="ADDR_CITY" />
+      <column type="string" name="ADDR_COUNTY" />
+      <column type="string" index="true" name="ADDR_STATE" />
+      <column type="string" name="ADDR_COUNTRY" />
+      <column type="string" name="ADDR_POSTAL" />
+      <column type="string" name="ADDR_CENSUS" />
+      <column type="string" name="TEL" />
+      <parent ref="ENT_TBL" />
+    </table>
+
+    <table name="PSN_TBL">
+      <column type="string" name="NAME_PREFIX" />
+      <column type="string" index="true" name="NAME_FAMILY" />
+      <column type="string" name="NAME_GIVEN" />
+      <column type="string" name="NAME_SUFFIX" />
+      <column type="string" name="ADDR_TYPE" />
+      <column type="string" name="ADDR_STREET" />
+      <column type="string" name="ADDR_PRECINCT" />
+      <column type="string" name="ADDR_CITY" />
+      <column type="string" name="ADDR_COUNTY" />
+      <column type="string" index="true" name="ADDR_STATE" />
+      <column type="string" name="ADDR_COUNTRY" />
+      <column type="string" name="ADDR_POSTAL" />
+      <column type="string" name="ADDR_CENSUS" />
+      <column type="string" name="TEL_HOME" />
+      <column type="string" name="TEL_WORK" />
+      <column type="string" name="TEL_CELL" />
+      <column type="date" index="true" name="DOB" />
+      <column type="date" name="DECEASED" />
+      <column type="string" name="GENDER" />
+      <column type="string" name="PRIMARY_LANGUAGE" />
+      <column type="string" name="OCCUPATION" />
+      <column type="string" name="VIP" />
+      <column type="string" name="NATIONALITY" />
+      <column type="ref" name="DEDICATED_FACILITY">
+        <otherTable ref="PLC_TBL" />
+      </column>
+      <parent ref="ENT_TBL" />
+    </table>
+    
+    <table name="PAT_TBL">
+      <column type="int" name="MB_ORD" />
+      <column type="string" name="LIVING_ARR" />
+      <column type="string" name="RELIGION" />
+      <column type="string" name="EHT_GROUP" />
+      <column type="string" name="EDUCATION" />
+      <column type="ref" name="MOTHER">
+        <otherTable ref="PSN_TBL" />
+      </column>
+      <column type="ref" name="FATHER">
+        <otherTable ref="PSN_TBL" />
+      </column>
+      <column type="ref" name="GUARDIAN">
+        <otherTable ref="PSN_TBL" />
+      </column>
+      <column type="ref" name="REGISTRATION_FACILITY">
+        <otherTable ref="PLC_TBL" />
+      </column>
+      <column type="ref" name="BIRTHPLACE">
+        <otherTable ref="PLC_TBL" />
+      </column>
+      <column type="ref" name="CITIZENSHIP">
+        <otherTable ref="PLC_TBL" />
+      </column>
+      <column type="ref" name="SCHOOL">
+        <otherTable ref="ORG_TBL" />
+      </column>
+      <parent ref="PSN_TBL" />
+    </table>
+
+    <table name="USR_TBL">
+      <column type="string" name="USERNAME" />
+      <parent ref="PSN_TBL" />
+    </table>
+    
+    <table name="PVD_TBL">
+      <column type="ref" name="USER">
+        <otherTable ref="USR_TBL" />
+      </column>
+      <parent ref="PSN_TBL" />
+    </table>
+
+    <table name="ACT_TBL">
+      <column type="uuid" key="true" unique="true" notNull="true" name="ACT_ID" />
+      <column type="uuid" notNull="true" unique="true" name="VERSION" />
+      <column type="string" index="true" notNull="true" name="CLASS" />
+      <column type="string" name="TEMPLATE" />
+      <column type="string" notNull="true" name="MOOD" />
+      <column type="string" notNull="true" name="STATUS" />
+      <column type="bool" notNull="true" name="NEGATED" />
+      <column type="string" name="TYPE" />
+      <column type="date-time" name="TIME" />
+      <column type="date-time" name="START" />
+      <column type="date-time" name="STOP" />
+      <column type="decimal" name="LAT"/>
+      <column type="decimal" name="LNG"/>
+      <column type="date-time" notNull="true" name="CREATED_TIME"/>
+      <column type="ref" notNull="true" name="CREATED_BY">
+        <otherTable ref="SEC_USR_TBL" />
+      </column>
+      <column type="date-time" name="OBSOLETE_TIME"/>
+      <column type="ref" name="OBSOLETE_BY">
+        <otherTable ref="SEC_USR_TBL" />
+      </column>
+    </table>
+
+    <table name="OBS_TBL">
+      <column type="string" name="INTERPRETATION"/>
+      <column type="string" name="VALUE_STR" />
+      <column type="decimal" name="VALUE_QTY" />
+      <column type="string" name="UNIT_OF_MEASURE" />
+      <parent ref="ACT_TBL" />
+    </table>
+
+    <table name="PAT_ENC_TBL">
+      <column type="string" name="DISPOSITION" />
+      <column type="string" name="ADM_SOURCE" />
+      <parent ref="ACT_TBL" />
+    </table>
+    
+    <table name="PAT_ENC_ARG_TBL">
+      <column type="uuid" key="true" unique="true" name="ARG_ID" />
+      <column type="string" name="TYPE" />
+      <column type="date-time" name="START" />
+      <column type="date-time" name="STOP" />
+      <column type="ref" name="ACT_ID">
+        <otherTable ref="PAT_ENC_TBL" />
+      </column>
+    </table>
+
+    <table name="SUB_ADM_TBL">
+      <column type="string" name="SITE" />
+      <column type="string" name="ROUTE"/>
+      <column type="decimal" name="DOSE" />
+      <column type="string" name="DOSE_UNIT"/>
+      <column type="int" name="SEQUENCE" />
+      <column type="ref" name="PRODUCT">
+        <otherTable ref="MAT_TBL"/>
+      </column>
+      <parent ref="ACT_TBL" />
+    </table>
+
+    <table name="SUB_ADM_CONS_TBL">
+      <column type="uuid" key="true" unique="true" notNull="true" name="REL_ID"/>
+      <column type="ref" name="ACT_ID">
+        <otherTable ref="SUB_ADM_TBL" />
+      </column>
+      <column type="ref" name="CONSUMED">
+        <otherTable ref="MMAT_TBL" />
+      </column>
+      <column type="int" name="QTY" />
+    </table>
+    
+  </schema>
+
+  <dataFlows>
+    <flow name="main">
+      <connection name="input">
+        <dataSource ref="#org.santedb.bi.dataSource.main" />
+      </connection>
+      <connection name="output">
+        <dataSource ref="#org.santedb.bi.dataSource.warehouse" />
+      </connection>
+      <transaction for="output" name="main_transaction">
+        <call ref="tmp_addresses">
+          <parameters>
+            <ref name="input">
+              <value ref="input" />
+            </ref>
+            <ref name="output">
+              <value ref="output" />
+            </ref>
+          </parameters>
+        </call>
+        <call ref="tmp_names">
+          <parameters>
+            <ref name="input">
+              <value ref="input" />
+            </ref>
+            <ref name="output">
+              <value ref="output" />
+            </ref>
+          </parameters>
+        </call>
+        <call ref="entities">
+          <parameters>
+            <ref name="input">
+              <value ref="input" />
+            </ref>
+            <ref name="output">
+              <value ref="output" />
+            </ref>
+          </parameters>
+        </call>
+      </transaction>
+    </flow>
+    <flow name="tmp_addresses">
+      <parameters>
+        <ref name="input" />
+        <ref name="output" />
+      </parameters>
+      <reader name="source_addresses">
+        <connection ref="input" />
+        <sql>
+          <add>
+            <providers>
+              <invariant>npgsql</invariant>
+              <invariant>FirebirdSQL</invariant>
+              <invariant>sqlite</invariant>
+            </providers>
+            <![CDATA[
+                        SELECT 
+                            ADDR_ID,
+                            ENT_ID, 
+                            ADT.MNEMONIC AS USE_TYPE,
+                            PT.MNEMONIC AS PART_TYPE,
+                            VAL
+                        FROM 
+                            ENT_ADDR_CMP_TBL
+                            INNER JOIN ENT_ADDR_TBL USING (ADDR_ID)
+                            INNER JOIN CD_VRSN_TBL PT ON (PT.CD_ID = ENT_ADDR_CMP_TBL.TYP_CD_ID) 
+                            INNER JOIN CD_VRSN_TBL ADT ON (ADT.CD_ID = ENT_ADDR_TBL.USE_CD_ID) 
+                        ORDER BY ADDR_ID, ENT_ID
+                        ]]>
+          </add>
+        </sql>
+      </reader>
+      <crosstab name="pivot_addresses">
+        <input ref="source_addresses" />
+        <pivot fn="first" key="ent_id" value="val" columnDef="part_type">
+          <columns>
+            <add>Country</add>
+            <add>State</add>
+            <add>AddressLine</add>
+            <add>Precinct</add>
+            <add>City</add>
+            <add>PostalCode</add>
+            <add>CensusTract</add>
+          </columns>
+        </pivot>
+      </crosstab>
+      <map name="map_addresses">
+        <input ref="pivot_addresses" />
+        <map>
+          <source name="ENT_ID" />
+          <target name="ENT_ID" />
+        </map>
+        <map>
+          <source name="ADDR_ID" />
+          <target name="ADDR_ID" />
+        </map>
+        <map>
+          <source name="USE_TYPE" />
+          <target name="USE_TYPE" />
+        </map>
+        <map>
+          <source name="Country" />
+          <target name="ADDR_COUNTRY" />
+        </map>
+        <map>
+          <source name="State" />
+          <target name="ADDR_STATE" />
+        </map>
+        <map>
+          <source name="County" />
+          <target name="ADDR_COUNTY" />
+        </map>
+        <map>
+          <source name="AddressLine" />
+          <target name="ADDR_STATE" />
+        </map>
+        <map>
+          <source name="Precinct" />
+          <target name="ADDR_PRECINCT" />
+        </map>
+        <map>
+          <source name="City" />
+          <target name="ADDR_CITY" />
+        </map>
+        <map>
+          <source name="PostalCode" />
+          <target name="ADDR_POSTAL" />
+        </map>
+        <map>
+          <source name="CensusTract" />
+          <target name="ADDR_CENSUS" />
+        </map>
+      </map>
+      <writer mode="insert" name="write_addresses">
+        <input ref="map_addresses" />
+        <connection ref="output" />
+        <target temporary="true" name="TMP_ADDRESS">
+          <column type="uuid" name="ADDR_ID" />
+          <column type="string" name="ADDR_TYPE" />
+          <column type="string" name="ADDR_STREET" />
+          <column type="string" name="ADDR_PRECINCT" />
+          <column type="string" name="ADDR_CITY" />
+          <column type="string" name="ADDR_COUNTY" />
+          <column type="string" name="ADDR_STATE" />
+          <column type="string" name="ADDR_COUNTRY" />
+          <column type="string" name="ADDR_POSTAL" />
+          <column type="string" name="ADDR_CENSUS" />
+        </target>
+      </writer>
+    </flow>
+    <flow name="tmp_names">
+
+      <parameters>
+        <ref name="input" />
+        <ref name="output" />
+      </parameters>
+      <reader name="source_names">
+        <connection ref="input" />
+        <sql>
+          <add>
+            <providers>
+              <invariant>npgsql</invariant>
+              <invariant>FirebirdSQL</invariant>
+              <invariant>sqlite</invariant>
+            </providers>
+            <![CDATA[
+                        SELECT 
+                            NAME_ID,
+                            ENT_ID, 
+                            NT.MNEMONIC AS USE_TYPE,
+                            COALESCE(PT.MNEMONIC, 'Other') AS PART_TYPE,
+                            VAL
+                        FROM 
+                            ENT_NAME_CMP_TBL
+                            INNER JOIN ENT_NAME_TBL USING (NAME_ID)
+                            LEFT JOIN CD_VRSN_TBL PT ON (PT.CD_ID = ENT_NAME_CMP_TBL.TYP_CD_ID) 
+                            INNER JOIN CD_VRSN_TBL NT ON (NT.CD_ID = ENT_NAME_TBL.USE_CD_ID) 
+                        ORDER BY NAME_ID, ENT_ID
+                        
+                        ]]>
+          </add>
+        </sql>
+      </reader>
+      <crosstab name="pivot_names">
+        <input ref="source_names" />
+        <pivot fn="first" key="ent_id" value="val" columnDef="part_type">
+          <columns>
+            <add>Other</add>
+            <add>Given</add>
+            <add>Family</add>
+            <add>Prefix</add>
+            <add>Suffix</add>
+          </columns>
+        </pivot>
+      </crosstab>
+      <map name="map_names">
+        <input ref="pivot_names" />
+        <map>
+          <source name="ENT_ID" />
+          <target name="ENT_ID" />
+        </map>
+        <map>
+          <source name="NAME_ID" />
+          <target name="NAME_ID" />
+        </map>
+        <map>
+          <source name="Other" />
+          <target name="NAME" />
+        </map>
+        <map>
+          <source name="Prefix" />
+          <target name="NAME_PREFIX" />
+        </map>
+        <map>
+          <source name="Suffix" />
+          <target name="NAME_SUFFIX" />
+        </map>
+        <map>
+          <source name="Given" />
+          <target name="NAME_GIVEN" />
+        </map>
+        <map>
+          <source name="Family" />
+          <target name="NAME_FAMILY" />
+        </map>
+      </map>
+      <writer mode="insert" name="write_names">
+        <input ref="map_names" />
+        <connection ref="output" />
+        <target temporary="true" name="TMP_NAMES">
+          <column type="uuid" name="ADDR_ID" />
+          <column type="string" name="ADDR_TYPE" />
+          <column type="string" name="ADDR_STREET" />
+          <column type="string" name="ADDR_PRECINCT" />
+          <column type="string" name="ADDR_CITY" />
+          <column type="string" name="ADDR_COUNTY" />
+          <column type="string" name="ADDR_STATE" />
+          <column type="string" name="ADDR_COUNTRY" />
+          <column type="string" name="ADDR_POSTAL" />
+          <column type="string" name="ADDR_CENSUS" />
+        </target>
+      </writer>
+    </flow>
+    <flow name="entities">
+      <parameters>
+        <ref name="input" />
+        <ref name="output" />
+      </parameters>
+      <reader name="source_entities">
+        <connection ref="input" />
+        <sql>
+          <add>
+            <providers>
+              <invariant>npgsql</invariant>
+              <invariant>FirebirdSQL</invariant>
+              <invariant>sqlite</invariant>
+            </providers>
+            <![CDATA[ 
+                        SELECT 
+                            ENT_VRSN_TBL.ENT_ID,
+                            ENT_VRSN_TBL.ENT_VRSN_ID AS VRSN_ID,
+                            CLS.MNEMONIC AS CLS_CD,
+                            DTR.MNEMONIC AS DTR_CD,
+                            ID_VAL,
+                            NSID AS ID_ISSUER 
+                        FROM
+                            ENT_VRSN_TBL
+                            INNER JOIN CD_VRSN_TBL CLS ON (CLS_CD_ID = CLS.CD_ID)
+                            INNER JOIN CD_VRSN_TBL DTR ON (DTR_CD_ID = DTR.CD_ID)
+                            LEFT JOIN ENT_ID_TBL ON (ENT_VRSN_TBL.ENT_ID = ENT_ID_TBL.ENT_ID AND OBSLT_VRSN_SEQ_ID IS NULL)
+                            LEFT JOIN ID_DMN_TBL ON (ENT_ID_TBL.DMN_ID = ID_DMN_TBL.DMN_ID AND ID_DMN_TBL.OBSLT_UTC IS NULL)
+                        WHERE
+                            ENT_VRSN_TBL.HEAD = TRUE
+                            AND ENT_VRSN_TBL.OBSLT_UTC IS NULL
+                        ]]>
+          </add>
+        </sql>
+      </reader>
+      <writer truncate="true" mode="insert" name="write_entities">
+        <input ref="source_entities" />
+        <connection ref="output" />
+        <target ref="ENT_TBL" />
+      </writer>
+    </flow>
+  </dataFlows>
+
+</BiDatamartDefinition>

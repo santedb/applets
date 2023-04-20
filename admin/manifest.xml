@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8" ?>
+<?xml-model href="../.ref/schema/SanteDBApplet.xsd" type="application/xml" schematypens="http://www.w3.org/2001/XMLSchema"?>
 <!--
  - Portions Copyright 2015-2019 Mohawk College of Applied Arts and Technology
  - Portions Copyright 2019-2019 SanteSuite Contributors (See NOTICE)
@@ -20,7 +21,7 @@
  - Date: 2019-8-8
  -->
 <AppletManifest xmlns="http://santedb.org/applet">
-  <info id="org.santedb.admin" version="2.1.113.0">
+  <info id="org.santedb.admin" version="2.1.113.0" uuid="62a654e0-7b40-485c-9813-36aaf88beb16">
     <icon>/org.santedb.admin/img/icon.png</icon>
     <name lang="en">SanteDB Administrative Panel</name>
     <author>SanteSuite Community Partners (see: santesuite.org)</author>
@@ -43,31 +44,31 @@
       <icon>fab fa-html5</icon>
       <text lang="en">Applets</text>
     </menuItem>-->
-    <menuItem launch="santedb-admin.system.probes" asset="/org.santedb.admin/views/system/probes.html" context="org.santedb.admin">
+    <menuItem launch="santedb-admin.system.probes" asset="/org.santedb.admin/views/system/probes.html" context="org.santedb.admin" order="10">
       <icon>fas fa-thermometer</icon>
       <text lang="en">Probes</text>
     </menuItem>
-    <menuItem launch="santedb-admin.system.jobs" asset="/org.santedb.admin/views/system/jobs.html" context="org.santedb.admin">
+    <menuItem launch="santedb-admin.system.jobs" asset="/org.santedb.admin/views/system/jobs.html" context="org.santedb.admin" order="20">
       <icon>fas fa-cogs</icon>
       <text lang="en">Jobs</text>
     </menuItem>
-    <menuItem launch="santedb-admin.system.logs.index" asset="/org.santedb.admin/views/system/logs/index.html" context="org.santedb.admin">
+    <menuItem launch="santedb-admin.system.logs.index" asset="/org.santedb.admin/views/system/logs/index.html" context="org.santedb.admin" order="30">
       <icon>far fa-list-alt</icon>
       <text lang="en">Logs</text>
     </menuItem>
-    <menuItem launch="santedb-admin.system.pubsub.index" asset="/org.santedb.admin/views/system/pubsub/index.html" context="org.santedb.admin">
+    <menuItem launch="santedb-admin.system.pubsub.index" asset="/org.santedb.admin/views/system/pubsub/index.html" context="org.santedb.admin" order="40">
       <icon>fas fa-bolt</icon>
       <text lang="en">Pub/Sub Manager</text>
     </menuItem>
-    <menuItem launch="santedb-admin.system.bug" asset="/org.santedb.admin/views/system/bug.html" context="org.santedb.admin">
+    <menuItem launch="santedb-admin.system.bug" asset="/org.santedb.admin/views/system/bug.html" context="org.santedb.admin" order="50">
       <icon>fas fa-bug</icon>
       <text lang="en">Submit Bug</text>
     </menuItem>
-    <menuItem launch="santedb-admin.system.info" asset="/org.santedb.admin/views/system/server/index.html" context="org.santedb.admin">
+    <menuItem launch="santedb-admin.system.info" asset="/org.santedb.admin/views/system/server/index.html" context="org.santedb.admin" order="60">
       <icon>fas fa-info-circle</icon>
       <text lang="en">Server Status</text>
     </menuItem>
-    <menuItem launch="santedb-admin.system.queue" asset="/org.santedb.admin/views/system/queue.html" context="org.santedb.admin">
+    <menuItem launch="santedb-admin.system.queue" asset="/org.santedb.admin/views/system/queue.html" context="org.santedb.admin"  order="70">
       <icon>fas fa-ellipsis-h</icon>
       <text lang="en">Dispatch Queue</text>
     </menuItem>
@@ -75,31 +76,31 @@
   <menuItem context="org.santedb.admin" launch="santedb-admin.security.index" asset="/org.santedb.admin/views/security/index.html" order="-25">
     <icon>fas fa-shield-alt</icon>
     <text lang="en">Security</text>
-    <menuItem launch="santedb-admin.security.users.index" asset="/org.santedb.admin/views/security/users/index.html" context="org.santedb.admin">
+    <menuItem launch="santedb-admin.security.users.index" asset="/org.santedb.admin/views/security/users/index.html" context="org.santedb.admin" order="0">
       <icon>fas fa-user</icon>
       <text lang="en">Users</text>
     </menuItem>
-    <menuItem launch="santedb-admin.security.groups.index" asset="/org.santedb.admin/views/security/groups/index.html" context="org.santedb.admin">
+    <menuItem launch="santedb-admin.security.groups.index" asset="/org.santedb.admin/views/security/groups/index.html" context="org.santedb.admin" order="10">
       <icon>fas fa-users</icon>
       <text lang="en">Groups</text>
     </menuItem>
-    <menuItem launch="santedb-admin.security.policies.index" asset="/org.santedb.admin/views/security/policies/index.html" context="org.santedb.admin">
+    <menuItem launch="santedb-admin.security.policies.index" asset="/org.santedb.admin/views/security/policies/index.html" context="org.santedb.admin" order="20">
       <icon>fas fa-certificate</icon>
       <text lang="en">Policies</text>
     </menuItem>
-    <menuItem launch="santedb-admin.security.devices.index" asset="/org.santedb.admin/views/security/devices/index.html" context="org.santedb.admin">
+    <menuItem launch="santedb-admin.security.devices.index" asset="/org.santedb.admin/views/security/devices/index.html" context="org.santedb.admin" order="30">
       <icon>fas fa-tablet-alt</icon>
       <text lang="en">Devices</text>
     </menuItem>
-    <menuItem launch="santedb-admin.security.applications.index" asset="/org.santedb.admin/views/security/applications/index.html" context="org.santedb.admin">
+    <menuItem launch="santedb-admin.security.applications.index" asset="/org.santedb.admin/views/security/applications/index.html" context="org.santedb.admin" order="40">
       <icon>far fa-window-maximize</icon>
       <text lang="en">Applications</text>
     </menuItem>
-    <menuItem launch="santedb-admin.security.provenance.index" asset="/org.santedb.admin/views/security/provenance/index.html" context="org.santedb.admin">
+    <menuItem launch="santedb-admin.security.provenance.index" asset="/org.santedb.admin/views/security/provenance/index.html" context="org.santedb.admin" order="50">
       <icon>fas fa-user-shield</icon>
       <text lang="en">Provenance</text>
     </menuItem>
-    <menuItem launch="santedb-admin.security.audit.index" asset="/org.santedb.admin/views/security/audit/index.html" context="org.santedb.admin">
+    <menuItem launch="santedb-admin.security.audit.index" asset="/org.santedb.admin/views/security/audit/index.html" context="org.santedb.admin" order="60">
       <icon>fas fa-search-plus</icon>
       <text lang="en">Audit Repository</text>
     </menuItem>
@@ -107,27 +108,27 @@
   <menuItem context="org.santedb.admin" launch="santedb-admin.data.index" asset="/org.santedb.admin/views/data/index.html" order="0">
     <icon>fas fa-database</icon>
     <text lang="en">Reference Data</text>
-    <menuItem context="org.santedb.admin" launch="santedb-admin.data.domain.index" asset="/org.santedb.admin/views/data/domains/index.html">
+    <menuItem context="org.santedb.admin" launch="santedb-admin.data.domain.index" asset="/org.santedb.admin/views/data/domains/index.html" order="0">
       <icon>fas fa-id-badge</icon>
       <text lang="en">Identity Domains</text>
     </menuItem>
-    <menuItem context="org.santedb.admin" launch="santedb-admin.data.place.index" asset="/org.santedb.admin/views/data/places/index.html">
+    <menuItem context="org.santedb.admin" launch="santedb-admin.data.place.index" asset="/org.santedb.admin/views/data/places/index.html" order="10">
       <icon>fas fa-map</icon>
       <text lang="en">Places</text>
     </menuItem>
-    <menuItem context="org.santedb.admin" launch="santedb-admin.data.facility.index" asset="/org.santedb.admin/views/data/facilities/index.html">
+    <menuItem context="org.santedb.admin" launch="santedb-admin.data.facility.index" asset="/org.santedb.admin/views/data/facilities/index.html" order="20">
       <icon>fas fa-hospital-alt</icon>
       <text lang="en">Facilities</text>
     </menuItem>
-    <menuItem context="org.santedb.admin" launch="santedb-admin.data.organization.index" asset="/org.santedb.admin/views/data/organizations/index.html">
+    <menuItem context="org.santedb.admin" launch="santedb-admin.data.organization.index" asset="/org.santedb.admin/views/data/organizations/index.html" order="30">
       <icon>fas fa-people-arrows</icon>
       <text lang="en">Organizations</text>
     </menuItem>
-        <menuItem context="org.santedb.admin" launch="santedb-admin.data.material.index" asset="/org.santedb.admin/views/data/materials/index.html">
+        <menuItem context="org.santedb.admin" launch="santedb-admin.data.material.index" asset="/org.santedb.admin/views/data/materials/index.html" order="40">
       <icon>fas fa-pills</icon>
       <text lang="en">Materials</text>
     </menuItem>
-    <menuItem context="org.santedb.admin" launch="santedb-admin.data.import.index" asset="/org.santedb.admin/views/data/import/index.html">
+    <menuItem context="org.santedb.admin" launch="santedb-admin.data.import.index" asset="/org.santedb.admin/views/data/import/index.html" order="50">
       <icon>fas fa-file-csv</icon>
       <text lang="en">Import</text>
     </menuItem>

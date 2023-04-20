@@ -1,4 +1,5 @@
-﻿<!--
+﻿<?xml-model href="../../.ref/schema/SanteDBApplet.xsd" type="application/xml" schematypens="http://www.w3.org/2001/XMLSchema"?>
+<!--
  - Copyright 2015-2018 Mohawk College of Applied Arts and Technology
  -
  - 
@@ -18,7 +19,7 @@
  - Date: 2018-7-23
  -->
 <AppletManifest xmlns="http://santedb.org/applet">
-  <info id="org.santedb.i18n.es" version="2.1.113.0">
+  <info id="org.santedb.i18n.es" version="2.1.113.0" uuid="ef04fd3d-8bdd-48a1-94ff-cc8912481da3">
     <icon>/org.santedb.core/img/i18n.png</icon>
     <name lang="es">Apoyo español</name>
     <author>SanteSuite Community Partners (see: santesuite.org)</author>
