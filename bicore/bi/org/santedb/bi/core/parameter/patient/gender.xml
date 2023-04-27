@@ -21,7 +21,7 @@
  - Date: 2019-11-13
  -->
 <BiParameterDefinition xmlns="http://santedb.org/bi" id="org.santedb.bi.core.parameter.patient.gender" name="patient-gender" label="ui.bi.core.patient.gender" type="uuid">
-  <meta status="active">
+  <meta>
     <authors>
       <add>Justin Fyfe (Fyfe Software Inc.) &lt;justin@fyfesoftware.ca></add>
     </authors>

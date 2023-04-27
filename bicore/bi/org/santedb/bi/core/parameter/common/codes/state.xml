@@ -20,8 +20,8 @@
  - User: Justin Fyfe
  - Date: 2019-11-13
  -->
-<BiParameterDefinition xmlns="http://santedb.org/bi" id="org.santedb.bi.core.parameter.common.state" name="state" label="ui.bi.core.common.state" type="string">
-  <meta status="active">
+<BiParameterDefinition xmlns="http://santedb.org/bi" id="org.santedb.bi.core.parameter.common.state" name="state" label="ui.bi.core.common.state" type="string" status="active">
+  <meta>
     <authors>
       <add>Justin Fyfe (Fyfe Software Inc.) &lt;justin@fyfesoftware.ca></add>
     </authors>

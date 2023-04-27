@@ -27,13 +27,21 @@
 
   </info>
 
-  <menuItem context="org.santedb.admin" launch="santedb-admin.bi.index" asset="/org.santedb.bicore/views/wrap.html" order="10000">
+  <menuItem context="org.santedb.admin" launch="santedb-admin.bi.index"
+    asset="/org.santedb.bicore/views/wrap.html" order="10000">
     <icon>fas fa-brain</icon>
     <text lang="en">Business Intelligence</text>
-    <menuItem context="org.santedb.admin" launch="santedb-admin.bi.reports.index" asset="/org.santedb.bicore/views/reports/index.html" order="0">
+    <menuItem context="org.santedb.admin" launch="santedb-admin.bi.reports.index"
+      asset="/org.santedb.bicore/views/reports/index.html" order="0">
       <icon>fas fa-chart-simple</icon>
       <text lang="en">Reports</text>
-      </menuItem>
+    </menuItem>
+    <menuItem context="org.santedb.admin" launch="santedb-admin.bi.warehouse.index" 
+      asset="/org.satnedb.bicore/views/warehouse/index.html" 
+      order="10">
+      <icon>fas fa-boxes</icon>
+      <text lang="en">Data Warehouse</text>
+    </menuItem>
   </menuItem>
   <strings lang="en" extern="locales/en/strings.xml" />
 </AppletManifest>

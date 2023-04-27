@@ -32,4 +32,23 @@
     <string name="ui.bi.core.common.state">State</string>
     <string name="ui.bi.rc.name">Report Name</string>
     <string name="ui.bi.rc.description">Report Description</string>
+    <string name="ui.bi.reports.name">Report Name</string>
+    <string name="ui.bi.reports.description">Description</string>
+    <string name="ui.bi.reports.author">Author(s)</string>
+
+    <string name="ui.bi.marts.name">Datamart</string>
+    <string name="ui.bi.marts.description">Description</string>
+    <string name="ui.bi.marts.author">Author(s)</string>
+    <string name="ui.bi.marts.registration">Status</string>
+    <string name="ui.bi.marts.register">Register</string>
+    <string name="ui.bi.marts.unregister">Unregister</string>
+    <string name="ui.bi.marts.unregister.success">Datamart {id} was removed successfully</string>
+    <string name="ui.bi.marts.unregister.fail">Datamart {id} was not removed: {e}</string>
+    <string name="ui.bi.marts.register.success">Datamart {id} was registered successfully</string>
+    <string name="ui.bi.marts.register.fail">Datamart {id} was not registered: {e}</string>
+    <string name="ui.bi.marts.registered">Registered</string>
+    <string name="ui.bi.marts.unregistered">Not Registered</string>
+    <string name="ui.bi.marts.register.confirm">Are you sure you want to register the data-mart {id} with the data warehouse manager?</string>
+    <string name="ui.bi.marts.unregister.confirm">Are you sure you want to un-register the data-mart {id} with the data warehouse manager? Any reports which use this report will no longer work</string>
+
 </resources>

@@ -3,19 +3,18 @@
 
 angular.module('santedb').controller('ReportCenterController', ["$scope", "$rootScope", "$state", "$timeout", function ($scope, $rootScope, $state, $timeout) {
 
-    // Initialize the controller
-    async function initialize() {
-        try {
-            
-            var reports = await SanteDBBi.resources.report.findAsync({ "meta.public": true });
-            $timeout(() => $scope.reports = reports.item);
-
-        }
-        catch(e) {
-            $rootScope.errorHandler(e);
+  
+    $scope.renderDescription = function(r) {
+        if(r.meta && r.meta.doc) 
+        {
+            return r.meta.doc.doc;
         }
     }
-
-    initialize();
    
+    
+    $scope.renderAuthor = function(r) {
+        if(r.meta && r.meta.authors) {
+            return r.meta.authors.join(",");
+        }
+    }
 }]);

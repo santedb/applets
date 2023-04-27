@@ -20,8 +20,8 @@
  - User: Justin Fyfe
  - Date: 2019-11-23
  -->
-<BiRenderFormatDefinition xmlns="http://santedb.org/bi" id="org.santedb.bi.format.csv" label="ui.bi.fileFormat.csv" contentType="text/csv" extension="csv" renderer="SanteDB.BI.Rendering.CsvReportRenderer, SanteDB.BI">
-  <meta status="active">
+<BiRenderFormatDefinition xmlns="http://santedb.org/bi" id="org.santedb.bi.format.csv" label="ui.bi.fileFormat.csv" contentType="text/csv" extension="csv" renderer="SanteDB.BI.Rendering.CsvReportRenderer, SanteDB.BI" status="active">
+  <meta>
     <authors>
       <add>Justin Fyfe (Fyfe Software Inc.) &lt;justin@fyfesoftware.ca&gt;</add>
     </authors>

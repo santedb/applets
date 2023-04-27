@@ -21,8 +21,8 @@
  - Date: 2019-11-23
  -->
 <BiRenderFormatDefinition xmlns="http://santedb.org/bi" id="org.santedb.bi.format.xls.xml" label="ui.bi.fileFormat.xls.xml" 
-  contentType="application/vnd.ms-excel" extension="xls.xml" renderer="SanteDB.BI.Rendering.XlsXmlReportRenderer, SanteDB.BI">
-  <meta status="active">
+  contentType="application/vnd.ms-excel" extension="xls.xml" renderer="SanteDB.BI.Rendering.XlsXmlReportRenderer, SanteDB.BI" status="active">
+  <meta>
     <authors>
       <add>Justin Fyfe (Fyfe Software Inc.) &lt;justin@fyfesoftware.ca&gt;</add>
     </authors>

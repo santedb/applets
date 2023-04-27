@@ -1,0 +1,150 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<BiDataFlowDefinition xmlns="http://santedb.org/bi" id="org.santedb.bi.datamart.core.acts">
+  <parameters>
+    <ref name="input" />
+    <ref name="output" />
+  </parameters>
+  <pipeline>
+    <log name="log_start" priority="Verbose">Start Acts {{input}}</log>
+    <reader name="source_acts">
+      <connection ref="input" />
+      <sql>
+        <add>
+          <providers>
+            <invariant>npgsql</invariant>
+          </providers>
+          <![CDATA[ 
+            SELECT 
+                ACT_VRSN_TBL.ACT_ID,
+                ACT_VRSN_TBL.ACT_VRSN_ID AS VERSION,
+                CLS.MNEMONIC AS CLASS,
+                MOOD.MNEMONIC AS MOOD,
+                TYP.MNEMONIC AS TYPE,
+                TPL_DEF_TBL.MNEMONIC AS TEMPLATE,
+                STS.MNEMONIC AS STATUS,
+                ACT_VRSN_TBL.NEG_IND AS NEGATED,
+                ACT_VRSN_TBL.ACT_UTC AS ACT_TIME,
+                ACT_VRSN_TBL.ACT_START_UTC AS START_TIME,
+                ACT_VRSN_TBL.ACT_STOP_UTC AS STOP_TIME,
+                GEO_TBL.LAT,
+                GEO_TBL.LNG,
+                ACT_VRSN_TBL.CRT_UTC AS CREATED_TIME,
+                CRT_PROV_TBL.USR_ID AS CREATED_BY,
+                ACT_VRSN_TBL.OBSLT_UTC AS OBSOLETE_TIME,
+                OBS_PROV_TBL.USR_ID AS OBSOLETE_BY,
+                AUT.ENT_ID AS AUTHOR,
+                PRF.ENT_ID AS PERFORMER,
+				        RCT.ENT_ID AS RECORD_TARGET 
+            FROM
+                ACT_VRSN_TBL
+                INNER JOIN CD_VRSN_TBL CLS ON (ACT_VRSN_TBL.CLS_CD_ID = CLS.CD_ID AND CLS.OBSLT_UTC IS NULL)
+                INNER JOIN CD_VRSN_TBL MOOD ON (MOD_CD_ID = MOOD.CD_ID AND MOOD.OBSLT_UTC IS NULL)
+                INNER JOIN CD_VRSN_TBL STS ON (ACT_VRSN_TBL.STS_CD_ID = STS.CD_ID AND STS.OBSLT_UTC IS NULL)
+                INNER JOIN SEC_PROV_TBL CRT_PROV_TBL ON (ACT_VRSN_TBL.CRT_PROV_ID = CRT_PROV_TBL.PROV_ID)
+                INNER JOIN ACT_PTCPT_TBL RCT ON (ACT_VRSN_TBL.ACT_ID = RCT.ACT_ID AND RCT.ROL_CD_ID = '3F92DBEE-A65E-434F-98CE-841FEEB02E3F' AND RCT.OBSLT_VRSN_SEQ_ID IS NULL)
+                LEFT JOIN ACT_PTCPT_TBL AUT ON (ACT_VRSN_TBL.ACT_ID = AUT.ACT_ID AND AUT.ROL_CD_ID = 'F0CB3FAF-435D-4704-9217-B884F757BC14' AND AUT.OBSLT_VRSN_SEQ_ID IS NULL)
+                LEFT JOIN ACT_PTCPT_TBL PRF ON (ACT_VRSN_TBL.ACT_ID = PRF.ACT_ID AND PRF.ROL_CD_ID = 'FA5E70A4-A46E-4665-8A20-94D4D7B86FC8' AND PRF.OBSLT_VRSN_SEQ_ID IS NULL)
+                LEFT JOIN SEC_PROV_TBL OBS_PROV_TBL ON (ACT_VRSN_TBL.OBSLT_PROV_ID = OBS_PROV_TBL.PROV_ID)
+                LEFT JOIN CD_VRSN_TBL TYP ON (TYP_CD_ID = TYP.CD_ID AND TYP.OBSLT_UTC IS NULL)
+                LEFT JOIN GEO_TBL ON (GEO_TBL.GEO_ID = ACT_VRSN_TBL.GEO_ID)
+                LEFT JOIN TPL_DEF_TBL ON (TPL_DEF_TBL.TPL_ID = ACT_VRSN_TBL.TPL_ID)
+            WHERE
+                ACT_VRSN_TBL.HEAD = TRUE
+                        ]]>
+        </add>
+        <add>
+          <providers>
+            <invariant>sqlite</invariant>
+          </providers>
+          <![CDATA[ 
+            SELECT 
+                ACT_VRSN_TBL.ACT_ID,
+                ACT_VRSN_TBL.ACT_VRSN_ID AS VERSION,
+                CLS.MNEMONIC AS CLASS,
+                MOOD.MNEMONIC AS MOOD,
+                TYP.MNEMONIC AS TYPE,
+                TPL_DEF_TBL.MNEMONIC AS TEMPLATE,
+                STS.MNEMONIC AS STATUS,
+                ACT_VRSN_TBL.NEG_IND AS NEGATED,
+                ACT_VRSN_TBL.ACT_UTC AS ACT_TIME,
+                ACT_VRSN_TBL.ACT_START_UTC AS START_TIME,
+                ACT_VRSN_TBL.ACT_STOP_UTC AS STOP_TIME,
+                GEO_TBL.LAT,
+                GEO_TBL.LNG,
+                ACT_VRSN_TBL.CRT_UTC AS CREATED_TIME,
+                CRT_PROV_TBL.USR_ID AS CREATED_BY,
+                ACT_VRSN_TBL.OBSLT_UTC AS OBSOLETE_TIME,
+                OBS_PROV_TBL.USR_ID AS OBSOLETE_BY,
+                AUT.ENT_ID AS AUTHOR,
+				        RCT.ENT_ID AS RECORD_TARGET,
+				        PRF.ENT_ID AS PERFORMER
+            FROM
+                ACT_VRSN_TBL
+                INNER JOIN CD_VRSN_TBL CLS ON (ACT_VRSN_TBL.CLS_CD_ID = CLS.CD_ID AND CLS.HEAD = TRUE)
+                INNER JOIN CD_VRSN_TBL MOOD ON (MOD_CD_ID = MOOD.CD_ID AND MOOD.HEAD = TRUE)
+                INNER JOIN CD_VRSN_TBL STS ON (ACT_VRSN_TBL.STS_CD_ID = STS.CD_ID AND STS.HEAD = TRUE)
+                INNER JOIN SEC_PROV_TBL CRT_PROV_TBL ON (ACT_VRSN_TBL.CRT_PROV_ID = CRT_PROV_TBL.PROV_ID)
+                INNER JOIN ACT_PTCPT_TBL RCT ON (ACT_VRSN_TBL.ACT_ID = RCT.ACT_ID AND RCT.ROL_CD_ID = X'EEDB923F5EA64F4398CE841FEEB02E3F' AND RCT.OBSLT_VRSN_SEQ_ID IS NULL)
+                LEFT JOIN ACT_PTCPT_TBL AUT ON (ACT_VRSN_TBL.ACT_ID = AUT.ACT_ID AND AUT.ROL_CD_ID = X'AF3FCBF05D4304479217B884F757BC14' AND AUT.OBSLT_VRSN_SEQ_ID IS NULL)
+                LEFT JOIN ACT_PTCPT_TBL PRF ON (ACT_VRSN_TBL.ACT_ID = PRF.ACT_ID AND PRF.ROL_CD_ID = X'A4705EFA6EA465468A2094D4D7B86FC8' AND PRF.OBSLT_VRSN_SEQ_ID IS NULL)
+                LEFT JOIN SEC_PROV_TBL OBS_PROV_TBL ON (ACT_VRSN_TBL.OBSLT_PROV_ID = OBS_PROV_TBL.PROV_ID)
+                LEFT JOIN CD_VRSN_TBL TYP ON (TYP_CD_ID = TYP.CD_ID AND TYP.HEAD = TRUE)
+                LEFT JOIN GEO_TBL ON (GEO_TBL.GEO_ID = ACT_VRSN_TBL.GEO_ID)
+                LEFT JOIN TPL_DEF_TBL ON (TPL_DEF_TBL.TPL_ID = ACT_VRSN_TBL.TPL_ID)
+            WHERE
+                ACT_VRSN_TBL.HEAD = TRUE
+                        ]]>
+        </add>
+      </sql>
+    </reader>
+    <reader name="source_comps">
+      <connection ref="input" />
+      <sql>
+        <add>
+          <providers>
+            <invariant>npgsql</invariant>
+            <invariant>sqlite</invariant>
+            <invariant>FirebirdSQL</invariant>
+          </providers>
+          <![CDATA[
+            SELECT REL_ID,
+              CD_VRSN_TBL.MNEMONIC AS RELATION,
+              SRC_ACT_ID AS ACT_ID,
+              TRG_ACT_ID AS COMPONENT
+            FROM 
+              ACT_REL_TBL
+              INNER JOIN CD_VRSN_TBL ON (REL_TYP_CD_ID = CD_ID AND HEAD = TRUE)
+            WHERE 
+              ACT_REL_TBL.OBSLT_VRSN_SEQ_ID IS NULL
+          ]]>
+        </add>
+      </sql>
+    </reader>
+    <writer truncate="true" mode="insert" name="write_acts">
+      <input ref="source_acts" />
+      <connection ref="output" />
+      <target ref="ACT_TBL" />
+    </writer>
+    <writer truncate="true" mode="insert" name="write_components">
+      <input ref="source_comps" />
+      <connection ref="output" />
+      <target ref="ACT_COMP_TBL" />
+    </writer>
+    <union name="union_rejects">
+      <input ref="write_acts" />
+      <with ref="write_components" />
+    </union>
+    <filter name="filter_rejects">
+      <input ref="union_rejects" />
+      <all>
+        <when field="$reject" op="eq">
+          <bool>true</bool>
+        </when>
+      </all>
+    </filter>
+    <halt name="halt_rejects">
+      <input ref="filter_rejects" />
+      Halting execution - {{ act_id }} rejected {{ $reject.reason }}
+    </halt>
+  </pipeline>
+</BiDataFlowDefinition>

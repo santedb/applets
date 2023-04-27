@@ -20,8 +20,8 @@
  - User: Justin Fyfe
  - Date: 2019-11-13
  -->
-<BiParameterDefinition xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="from-date" id="org.santedb.bi.core.parameter.common.date.from" label="ui.bi.core.date.from" type="date" max="to-date" xmlns="http://santedb.org/bi">
-  <meta version="1.0" status="active">
+<BiParameterDefinition xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="from-date" id="org.santedb.bi.core.parameter.common.date.from" status="active" label="ui.bi.core.date.from" type="date" max="to-date" xmlns="http://santedb.org/bi">
+  <meta version="1.0">
     <authors>
       <add>Justin Fyfe (Fyfe Software Inc.) &lt;justin@fyfesoftware.ca&gt;</add>
     </authors>
