@@ -123,12 +123,6 @@
 
     <!-- Organization Registration Table -->
     <table name="ORG_TBL">
-      <column type="ref" name="NAME">
-        <otherTable ref="ENT_NAME_TBL" />
-      </column>
-      <column type="ref" name="ADDR">
-        <otherTable ref="ENT_ADDR_TBL" />
-      </column>
       <column type="string" name="TEL" />
       <column type="ref" name="PARENT" >
         <otherTable ref="ORG_TBL" />
@@ -139,7 +133,11 @@
 
     <!-- Materials Table storing all generic and manufactured material attributes -->
     <table name="MAT_TBL">
-      <column type="string" name="NAME" />
+      <column type="string" name="TYPE" />
+      <column type="date" name="EXPIRY" />
+      <column type="int" name="QTY" />
+      <column type="string" name="UNIT_OF_MEASURE" />
+      <column type="string" name="FORM" />
       <parent ref="ENT_TBL" />
     </table>
 
@@ -149,6 +147,9 @@
       <column type="string" name="GTIN" />
       <column type="ref" name="MANUFACTURER">
         <otherTable ref="ORG_TBL" />
+      </column>
+      <column type="ref" name="PRODUCT">
+        <otherTable ref="MAT_TBL" />
       </column>
       <parent ref="MAT_TBL" />
     </table>
@@ -373,6 +374,7 @@
     <flow name="acts" ref="#org.santedb.bi.datamart.core.acts" />
     <flow name="orgs" ref="#org.santedb.bi.datamart.core.orgs" />
     <flow name="places" ref="#org.santedb.bi.datamart.core.places" />
+    <flow name="mats" ref="#org.santedb.bi.datamart.core.mats" />
 
     <flow name="main">
       <pipeline>
@@ -465,6 +467,18 @@
                 </ref>
               </args>
             </call>
+            <call>
+              <dataFlow ref="mats" />
+              <args>
+                <ref name="input">
+                  <value ref="mainDatabase" />
+                </ref>
+                <ref name="output">
+                  <value ref="warehouseDatabase" />
+                </ref>
+              </args>
+            </call>
+
             <call>
               <dataFlow ref="places" />
               <args>
