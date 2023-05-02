@@ -129,6 +129,10 @@
       <column type="ref" name="ADDR">
         <otherTable ref="ENT_ADDR_TBL" />
       </column>
+      <column type="string" name="TEL" />
+      <column type="ref" name="PARENT" >
+        <otherTable ref="ORG_TBL" />
+      </column>
       <column type="string" name="INDUSTRY" />
       <parent ref="ENT_TBL" />
     </table>
@@ -138,7 +142,7 @@
       <column type="string" name="NAME" />
       <parent ref="ENT_TBL" />
     </table>
-    
+
     <!-- Manufactured materials table storing only those materials which are manufactured by an organization -->
     <table name="MMAT_TBL">
       <column type="string" name="LOT" />
@@ -161,6 +165,9 @@
       <column type="ref" name="PARENT" >
         <otherTable ref="PLC_TBL" />
       </column>
+      <column type="ref" name="OWNER">
+        <otherTable ref="ORG_TBL" />
+      </column>
       <column type="bool" name="IS_MOBILE" />
       <parent ref="ENT_TBL" />
     </table>
@@ -170,12 +177,12 @@
       <column type="uuid" key="true" notNull="true" name="REL_ID" />
       <column type="ref" name="FAC_ID" notNull="true">
         <otherTable ref="PLC_TBL" />
-      </column> 
+      </column>
       <column type="ref" name="PLC_ID" notNull="true">
         <otherTable ref="PLC_TBL" />
       </column>
     </table>
-    
+
     <!-- Persons table storing all persons (user entities, patients, relatives, providers, etc.) -->
     <table name="PSN_TBL">
       <column type="ref" name="NAME">
@@ -292,7 +299,7 @@
       <column type="date" name="ISSUED" />
       <column type="date" name="EXPIRY" />
     </table>
-    
+
     <!-- Observations made in the CDR -->
     <table name="OBS_TBL">
       <column type="string" name="INTERPRETATION"/>
@@ -320,7 +327,7 @@
         <otherTable ref="ACT_TBL" />
       </column>
     </table>
-    
+
     <!-- Patient encounter arrangement table -->
     <table name="PAT_ENC_ARG_TBL">
       <column type="uuid" key="true" unique="true" name="ARG_ID" />
@@ -364,6 +371,7 @@
     <flow name="identifiers" ref="#org.santedb.bi.datamart.core.identifiers" />
     <flow name="entities" ref="#org.santedb.bi.datamart.core.entities" />
     <flow name="acts" ref="#org.santedb.bi.datamart.core.acts" />
+    <flow name="orgs" ref="#org.santedb.bi.datamart.core.orgs" />
     <flow name="places" ref="#org.santedb.bi.datamart.core.places" />
 
     <flow name="main">
@@ -446,7 +454,18 @@
                 </ref>
               </args>
             </call>
-          <call>
+            <call>
+              <dataFlow ref="orgs" />
+              <args>
+                <ref name="input">
+                  <value ref="mainDatabase" />
+                </ref>
+                <ref name="output">
+                  <value ref="warehouseDatabase" />
+                </ref>
+              </args>
+            </call>
+            <call>
               <dataFlow ref="places" />
               <args>
                 <ref name="input">
@@ -461,7 +480,7 @@
         </transaction>
       </pipeline>
     </flow>
-    
+
   </dataFlows>
 
 </BiDatamartDefinition>
