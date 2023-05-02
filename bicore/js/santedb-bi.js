@@ -49,6 +49,8 @@ function SanteDBBusinessIntelligence() {
      * @property {ResourceWrapper} report Access to reports API
      * @property {ResourceWrapper} view Access to the stored data views on the BI Server
      * @property {ResourceWrapper} format Access to report format definitions
+     * @property {ResourceWrapper} datamart Access to datamart definitions
+     * @property {ResourceWrapper} warehouse Access to data marts in the warehouse
      */
     function ResourceApi() {
         /**
@@ -107,6 +109,23 @@ function SanteDBBusinessIntelligence() {
             resource: "BiRenderFormatDefinition",
             api: _bis
         });
+        /**
+        * @type {ResourceWrapper}
+         * @private
+        */
+        this.datamart = new ResourceWrapper({
+            resource: "BiDatamartDefinition",
+            api: _bis
+        });
+        /**
+         * @type {ResourceWrapper}
+        * @private
+        */
+        this.warehouse = new ResourceWrapper({
+            resource: "DatamartInfo",
+            api: _bis
+        });
+
     };
 
     /**
@@ -115,6 +134,11 @@ function SanteDBBusinessIntelligence() {
         * @summary Provides access to resource handlers
         */
     this.resources = new ResourceApi();
+
+    // Attach to SanteDB API
+    SanteDB.resources.biDatamartDefinition = this.resources.datamart;
+    SanteDB.resources.biReportDefinition = this.resources.report;
+    SanteDB.resources.datamartInfo = this.resources.warehouse;
 
 
     /**

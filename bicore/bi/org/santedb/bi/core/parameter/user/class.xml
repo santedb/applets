@@ -20,8 +20,8 @@
  - User: Justin Fyfe
  - Date: 2019-11-13
  -->
-<BiParameterDefinition xmlns="http://santedb.org/bi" id="org.santedb.bi.core.parameter.user.class" name="user-class" label="ui.bi.core.user.class" type="uuid" default="33932B42-6F4B-4659-8849-6ACA54139D8E">
-  <meta status="active">
+<BiParameterDefinition xmlns="http://santedb.org/bi" id="org.santedb.bi.core.parameter.user.class" name="user-class" label="ui.bi.core.user.class" type="uuid" default="33932B42-6F4B-4659-8849-6ACA54139D8E" status="active">
+  <meta>
     <authors>
       <add>Justin Fyfe (Fyfe Software Inc.) &lt;justin@fyfesoftware.ca&gt;</add>
     </authors>

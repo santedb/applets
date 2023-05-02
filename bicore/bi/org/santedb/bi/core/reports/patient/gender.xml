@@ -20,8 +20,8 @@
  - User: Justin Fyfe
  - Date: 2019-12-16
  -->
-<BiReportDefinition xmlns="http://santedb.org/bi" id="org.santedb.bi.core.reports.patient.gender" label="ui.bi.core.report.patient.regDate">
-  <meta status="active">
+<BiReportDefinition xmlns="http://santedb.org/bi" id="org.santedb.bi.core.reports.patient.gender" label="ui.bi.core.report.patient.regDate" status="active">
+  <meta>
     <authors>
       <add>Justin Fyfe (Fyfe Software Inc.) &lt;justin@fyfesoftware.ca></add>
     </authors>

@@ -1,0 +1,99 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<BiDataFlowDefinition xmlns="http://santedb.org/bi" id="org.santedb.bi.datamart.core.orgs">
+  <parameters>
+    <ref name="input" />
+    <ref name="output" />
+  </parameters>
+  <pipeline>
+    <log name="log_start" priority="Verbose">Start Orgs {{input}}</log>
+    <reader name="input_orgs">
+      <connection ref="input" />
+      <sql>
+        <add>
+          <providers>
+            <invariant>npgsql</invariant>
+          </providers>
+          <![CDATA[
+            SELECT ENT_VRSN_TBL.ENT_ID, 
+              ENT_TEL_TBL.TEL_VAL AS TEL,
+              ENT_REL_TBL.TRG_ENT_ID AS PARENT,
+              CD_VRSN_TBL.MNEMONIC AS INDUSTRY
+            FROM
+              ORG_TBL 
+              INNER JOIN ENT_VRSN_TBL USING (ENT_VRSN_ID)
+              LEFT JOIN ENT_REL_TBL ON (ENT_VRSN_TBL.ENT_ID = ENT_REL_TBL.SRC_ENT_ID AND REL_TYP_CD_ID = 'BFCBB345-86DB-43BA-B47E-E7411276AC7C' AND ENT_REL_TBL.OBSLT_VRSN_SEQ_ID IS NULL)
+              LEFT JOIN ENT_TEL_TBL ON (ENT_VRSN_TBL.ENT_ID = ENT_TEL_TBL.ENT_ID AND ENT_TEL_TBL.USE_CD_ID = 'EC35EA7C-55D2-4619-A56B-F7A986412F7F')
+              LEFT JOIN CD_VRSN_TBL ON (CD_VRSN_TBL.CD_ID = ORG_TBL.IND_CD_ID AND CD_VRSN_TBL.HEAD)
+            WHERE ENT_VRSN_TBL.HEAD
+            ORDER BY ENT_VRSN_TBL.VRSN_SEQ_ID ASC
+          ]]>
+        </add>
+        <add>
+          <providers>
+            <invariant>sqlite</invariant>
+          </providers>
+          <![CDATA[
+              SELECT ENT_VRSN_TBL.ENT_ID, 
+                  ENT_TEL_TBL.TEL_VAL AS TEL,
+                  ENT_REL_TBL.TRG_ENT_ID AS PARENT,
+                  CD_VRSN_TBL.MNEMONIC AS INDUSTRY
+              FROM
+                ORG_TBL 
+                INNER JOIN ENT_VRSN_TBL USING (ENT_VRSN_ID)
+                LEFT JOIN ENT_REL_TBL ON (ENT_VRSN_TBL.ENT_ID = ENT_REL_TBL.SRC_ENT_ID AND REL_TYP_CD_ID = X'45B3CBBFDB86BA43B47EE7411276AC7C' AND ENT_REL_TBL.OBSLT_VRSN_SEQ_ID IS NULL)
+                LEFT JOIN ENT_TEL_TBL ON (ENT_VRSN_TBL.ENT_ID = ENT_TEL_TBL.ENT_ID AND ENT_TEL_TBL.USE_CD_ID = X'7CEA35ECD2551946A56BF7A986412F7F')
+                LEFT JOIN CD_VRSN_TBL ON (CD_VRSN_TBL.CD_ID = ORG_TBL.IND_CD_ID AND CD_VRSN_TBL.HEAD = 1)
+              WHERE ENT_VRSN_TBL.HEAD = 1
+              ORDER BY ENT_VRSN_TBL.VRSN_SEQ_ID ASC
+        ]]>
+        </add>
+      </sql>
+    </reader>
+    <writer truncate="true" mode="insert" name="write_orgs">
+      <input ref="input_orgs" />
+      <connection ref="output" />
+      <target ref="ORG_TBL" />
+    </writer>
+    <filter name="filter_rejects">
+      <input ref="write_orgs" />
+      <all>
+        <when field="$reject" op="eq">
+          <bool>true</bool>
+        </when>
+      </all>
+    </filter>
+    <transform name="transform_rejects">
+      <input ref="filter_rejects" />
+      <map>
+        <source name="ENT_ID" />
+        <target name="RECORD_ID" />
+      </map>
+      <map>
+        <source>
+          <fixed>ORG_TBL</fixed>
+        </source>
+        <target name="TYPE" />
+      </map>
+      <map>
+        <source name="$reject.reason" />
+        <target name="REASON" />
+      </map>
+    </transform>
+    <writer mode="insertUpdate" truncate="false" name="write_rejects">
+      <input ref="transform_rejects" />
+      <connection ref="output" />
+      <target ref="REJECT_TBL" />
+    </writer>
+    <filter name="filter_rejects2">
+      <input ref="write_rejects" />
+      <all>
+        <when field="$reject" op="eq">
+          <bool>true</bool>
+        </when>
+      </all>
+    </filter>
+    <halt name="halt_rejects">
+      <input ref="filter_rejects2" />
+    </halt>
+  </pipeline>
+</BiDataFlowDefinition>

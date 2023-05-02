@@ -1,0 +1,123 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<BiDataFlowDefinition xmlns="http://santedb.org/bi" id="org.santedb.bi.datamart.core.identifiers">
+  <parameters>
+    <ref name="input" />
+    <ref name="output" />
+  </parameters>
+  <pipeline>
+    <log name="log_start" priority="Verbose">Start Identifiers {{input}}</log>
+    <reader name="source_ent_id">
+      <connection ref="input" />
+      <schema ref="ENT_ID_TBL"/>
+      <sql>
+        <add>
+          <providers>
+            <invariant>npgsql</invariant>
+            <invariant>FirebirdSQL</invariant>
+            <invariant>sqlite</invariant>
+          </providers>
+          <![CDATA[ 
+                        SELECT 
+                            ENT_ID_TBL.ENT_ID_ID AS ID_ID,
+                            ENT_ID_TBL.ENT_ID,
+                            ID_VAL AS VALUE,
+                            ID_DMN_TBL.NSID AS ISSUER,
+                            CHK_DGT AS CHECK_DIGIT,
+                            ISS_DT AS ISSUED,
+                            EXP_DT AS EXPIRY
+                        FROM
+                            ENT_ID_TBL
+                            INNER JOIN ID_DMN_TBL USING (DMN_ID)
+                        WHERE
+                            ENT_ID_TBL.OBSLT_VRSN_SEQ_ID IS NULL
+                            AND ID_DMN_TBL.OBSLT_UTC IS NULL
+                        ]]>
+        </add>
+      </sql>
+    </reader>
+    <reader name="source_act_id">
+      <connection ref="input" />
+      <schema ref="ACT_ID_TBL"/>
+      <sql>
+        <add>
+          <providers>
+            <invariant>npgsql</invariant>
+            <invariant>FirebirdSQL</invariant>
+            <invariant>sqlite</invariant>
+          </providers>
+          <![CDATA[ 
+              SELECT 
+                  ACt_ID_TBL.ACT_ID_ID AS ID_ID,
+                  ACT_ID_TBL.ACT_ID,
+                  ID_VAL AS VALUE,
+                  ID_DMN_TBL.NSID AS ISSUER,
+                  CHK_DGT AS CHECK_DIGIT,
+                  ISS_DT AS ISSUED,
+                  EXP_DT AS EXPIRY
+              FROM
+                  ACT_ID_TBL
+                  INNER JOIN ID_DMN_TBL USING (DMN_ID)
+              WHERE
+                  ACT_ID_TBL.OBSLT_VRSN_SEQ_ID IS NULL
+                  AND ID_DMN_TBL.OBSLT_UTC IS NULL
+          ]]>
+        </add>
+      </sql>
+    </reader>
+    <writer truncate="true" mode="insert" name="write_ent_ids">
+      <input ref="source_ent_id" />
+      <connection ref="output" />
+      <target ref="ENT_ID_TBL" />
+    </writer>
+    <writer truncate="true" mode="insert" name="write_act_ids">
+      <input ref="source_act_id" />
+      <connection ref="output" />
+      <target ref="ACT_ID_TBL" />
+    </writer>
+    <union name="union_rejects">
+      <input ref="write_ent_ids" />
+      <with ref="write_act_ids" />
+    </union>
+    <filter name="filter_rejects">
+      <input ref="union_rejects" />
+      <all>
+        <when field="$reject" op="eq">
+          <bool>true</bool>
+        </when>
+      </all>
+    </filter>
+    <transform name="transform_rejects">
+      <input ref="filter_rejects" />
+      <map>
+        <source name="ID_ID" />
+        <target name="RECORD_ID" />
+      </map>
+      <map>
+        <source>
+          <fixed>ENT_ID_TBL OR ACT_ID_TBL</fixed>
+        </source>
+        <target name="TYPE" />
+      </map>
+      <map>
+        <source name="$reject.reason" />
+        <target name="REASON" />
+      </map>
+    </transform>
+    <writer mode="insertUpdate" truncate="false" name="write_rejects">
+      <input ref="transform_rejects" />
+      <connection ref="output" />
+      <target ref="REJECT_TBL" />
+    </writer>
+    <filter name="filter_rejects2">
+      <input ref="write_rejects" />
+      <all>
+        <when field="$reject" op="eq">
+          <bool>true</bool>
+        </when>
+      </all>
+    </filter>
+    <halt name="halt_rejects">
+      <input ref="filter_rejects2" />
+    </halt>
+  </pipeline>
+</BiDataFlowDefinition>

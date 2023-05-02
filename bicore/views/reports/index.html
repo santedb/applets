@@ -8,25 +8,13 @@
         </sdb:view>
     </sdb:state>
     
-    <table class="table table-striped">
-        <thead>
-            <tr>
-                <th>{{ 'ui.bi.rc.name' | i18n }}</th>
-                <th>{{ 'ui.bi.rc.description' | i18n }}</th>
-                <th>{{ 'ui.action' | i18n }}</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr ng-if="!reports">
-                <td colspan="3"><i class="fas fa-circle-notch fa-spin"></i> {{ 'ui.wait' | i18n }}</td>
-            </tr>
-            <tr ng-repeat="rpt in reports track by $index">
-                <td>{{ rpt.name || rpt.label | i18n  }}</td>
-                <td ng-bind-html="rpt.meta.doc.doc"></td>
-                <td>
-                    <a ui-sref="santedb-admin.bi.reports.view({ id: rpt.id })" class="btn btn-primary"><i class="fas fa-play"></i> {{ 'ui.action.view' | i18n }}</a>
-                </td>
-            </tr>
-        </tbody>
-    </table>
+    <entity-table id="biReportTable"
+        type="BiReportDefinition"
+        properties="[ 'name', 'description', 'author' ]"
+        render="{ 'description': 'renderDescription', 'author': 'renderAuthor' }"
+        search-field="name" 
+        default-query="{ 'meta.public' : 'true' }"
+        i18n-prefix="'ui.bi.reports.'"
+        item-actions="[ { name: 'view', sref: 'santedb-admin.bi.reports.view', icon: 'fas fa-play', className: 'btn btn-primary' } ]" />
+
 </div>

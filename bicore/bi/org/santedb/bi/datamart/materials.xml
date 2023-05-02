@@ -1,0 +1,139 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<BiDataFlowDefinition xmlns="http://santedb.org/bi" id="org.santedb.bi.datamart.core.mats">
+  <parameters>
+    <ref name="input" />
+    <ref name="output" />
+  </parameters>
+  <pipeline>
+    <log name="log_start" priority="Verbose">Start Materials {{input}}</log>
+    <reader name="input_mats">
+      <connection ref="input" />
+      <sql>
+        <add>
+          <providers>
+            <invariant>npgsql</invariant>
+            <invariant>sqlite</invariant>
+            <invariant>FirebirdSQL</invariant>
+          </providers>
+          <![CDATA[
+          SELECT 
+            ENT_ID, 
+            TYP.MNEMONIC AS TYPE,
+            EXP_UTC AS EXPIRY, 
+            QTY, 
+            UOM.MNEMONIC AS UNIT_OF_MEASURE, 
+            FRM.MNEMONIC AS FORM  
+          FROM 
+	          MAT_TBL
+	          INNER JOIN ENT_VRSN_TBL USING (ENT_VRSN_ID)
+	          LEFT JOIN CD_VRSN_TBL UOM ON (MAT_TBL.QTY_CD_ID = UOM.CD_ID AND UOM.HEAD = 1)
+	          LEFT JOIN CD_VRSN_TBL FRM ON (MAT_TBL.FRM_CD_ID = FRM.CD_ID AND FRM.HEAD = 1)
+            LEFT JOIN CD_VRSN_TBL TYP ON (ENT_VRSN_TBL.TYP_CD_ID = TYP.CD_ID AND TYP.HEAD = 1)
+          ]]>
+        </add>
+      </sql>
+    </reader>
+    <reader name="input_mmats">
+      <connection ref="input" />
+      <sql>
+        <add>
+          <providers>
+            <invariant>npgsql</invariant>
+          </providers>
+          <![CDATA[
+          SELECT DISTINCT
+	          ENT_VRSN_TBL.ENT_ID AS ENT_ID, 
+	          LOT_NO AS LOT,
+	          ENT_ID_TBL.ID_VAL AS GTIN,
+	          PROD.SRC_ENT_ID AS PRODUCT,
+	          MANUF.SRC_ENT_ID AS MANUFACTURER
+          FROM 
+	          MMAT_TBL
+	          INNER JOIN ENT_VRSN_TBL USING (ENT_VRSN_ID)
+	          LEFT JOIN ENT_ID_TBL ON (ENT_ID_TBL.ENT_ID = ENT_VRSN_TBL.ENT_ID AND ENT_ID_TBL.DMN_ID = 'ce5990db-2e2a-467d-a376-2a7b53481e84' AND ENT_ID_TBL.OBSLT_VRSN_SEQ_ID IS NULL)
+	          LEFT JOIN ENT_REL_TBL PROD ON (PROD.TRG_ENT_ID = ENT_VRSN_TBL.ENT_ID AND PROD.OBSLT_VRSN_SEQ_ID IS NULL AND PROD.REL_TYP_CD_ID = '6780DF3B-AFBD-44A3-8627-CBB3DC2F02F6')
+	          LEFT JOIN ENT_REL_TBL MANUF ON (MANUF.TRG_ENT_ID = ENT_VRSN_TBL.ENT_ID AND MANUF.OBSLT_VRSN_SEQ_ID IS NULL AND MANUF.REL_TYP_CD_ID = 'AC45A740-B0C7-4425-84D8-B3F8A41FEF9F')
+          WHERE 
+	          ENT_VRSN_TBL.HEAD = 1
+          ]]>
+        </add>
+        <add>
+          <providers>
+            <invariant>sqlite</invariant>
+          </providers>
+          <![CDATA[
+          SELECT DISTINCT
+	          ENT_VRSN_TBL.ENT_ID AS ENT_ID, 
+	          LOT_NO AS LOT,
+	          ENT_ID_TBL.ID_VAL AS GTIN,
+	          PROD.SRC_ENT_ID AS PRODUCT,
+	          MANUF.SRC_ENT_ID AS MANUFACTURER
+          FROM 
+	          MMAT_TBL
+	          INNER JOIN ENT_VRSN_TBL USING (ENT_VRSN_ID)
+	          LEFT JOIN ENT_ID_TBL ON (ENT_ID_TBL.ENT_ID = ENT_VRSN_TBL.ENT_ID AND ENT_ID_TBL.DMN_ID = X'DB9059CE2A2E7D46A3762A7B53481E84' AND ENT_ID_TBL.OBSLT_VRSN_SEQ_ID IS NULL)
+	          LEFT JOIN ENT_REL_TBL PROD ON (PROD.TRG_ENT_ID = ENT_VRSN_TBL.ENT_ID AND PROD.OBSLT_VRSN_SEQ_ID IS NULL AND PROD.REL_TYP_CD_ID = X'40A745ACC7B0254484D8B3F8A41FEF9F')
+	          LEFT JOIN ENT_REL_TBL MANUF ON (MANUF.TRG_ENT_ID = ENT_VRSN_TBL.ENT_ID AND MANUF.OBSLT_VRSN_SEQ_ID IS NULL AND MANUF.REL_TYP_CD_ID = X'3BDF8067BDAFA3448627CBB3DC2F02F6')
+          WHERE 
+	          ENT_VRSN_TBL.HEAD = 1
+          ]]>
+        </add>
+      </sql>
+    </reader>
+    <writer truncate="true" mode="insert" name="write_mats">
+      <input ref="input_mats" />
+      <connection ref="output" />
+      <target ref="MAT_TBL" />
+    </writer>
+    <writer truncate="true" mode="insert" name="write_mmats">
+      <input ref="input_mmats" />
+      <connection ref="output" />
+      <target ref="MMAT_TBL" />
+    </writer>
+    <union name="union_rejects">
+      <input ref="write_mats" />
+      <with ref="write_mmats" />
+    </union>
+    <filter name="filter_rejects">
+      <input ref="union_rejects" />
+      <all>
+        <when field="$reject" op="eq">
+          <bool>true</bool>
+        </when>
+      </all>
+    </filter>
+    <transform name="transform_rejects">
+      <input ref="filter_rejects" />
+      <map>
+        <source name="ENT_ID" />
+        <target name="RECORD_ID" />
+      </map>
+      <map>
+        <source>
+          <fixed>MAT_TBL</fixed>
+        </source>
+        <target name="TYPE" />
+      </map>
+      <map>
+        <source name="$reject.reason" />
+        <target name="REASON" />
+      </map>
+    </transform>
+    <writer mode="insertUpdate" truncate="false" name="write_rejects">
+      <input ref="transform_rejects" />
+      <connection ref="output" />
+      <target ref="REJECT_TBL" />
+    </writer>
+    <filter name="filter_rejects2">
+      <input ref="write_rejects" />
+      <all>
+        <when field="$reject" op="eq">
+          <bool>true</bool>
+        </when>
+      </all>
+    </filter>
+    <halt name="halt_rejects">
+      <input ref="filter_rejects2" />
+    </halt>
+  </pipeline>
+</BiDataFlowDefinition>

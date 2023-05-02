@@ -20,8 +20,8 @@
  - User: Justin Fyfe
  - Date: 2019-12-16
  -->
-<BiViewDefinition xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="by-date" id="org.santedb.bi.core.view.audit.date" xmlns="http://santedb.org/bi">
-  <meta status="active">
+<BiViewDefinition xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="by-date" id="org.santedb.bi.core.view.audit.date" xmlns="http://santedb.org/bi" status="active">
+  <meta>
     <authors>
       <add>Justin Fyfe (Fyfe Software Inc.) &lt;justin@fyfesoftware.ca&gt;</add>
     </authors>

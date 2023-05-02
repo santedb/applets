@@ -1,0 +1,150 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<BiDataFlowDefinition xmlns="http://santedb.org/bi" id="org.santedb.bi.datamart.core.places">
+  <parameters>
+    <ref name="input" />
+    <ref name="output" />
+  </parameters>
+  <pipeline>
+    <log name="log_start" priority="Verbose">Start Places {{input}}</log>
+    <reader name="input_places">
+      <connection ref="input" />
+      <sql>
+        <add>
+          <providers>
+            <invariant>npgsql</invariant>
+          </providers>
+          <![CDATA[
+            SELECT ENT_VRSN_TBL.ENT_ID, 
+              ENT_TEL_TBL.TEL_VAL AS TEL,
+              PARENT.TRG_ENT_ID AS PARENT,
+              MOB_IND AS IS_MOBILE,
+              OWNER.SRC_ENT_ID AS OWNER
+            FROM
+              PLC_TBL 
+              INNER JOIN ENT_VRSN_TBL USING (ENT_VRSN_ID)
+              LEFT JOIN ENT_REL_TBL PARENT ON (ENT_VRSN_TBL.ENT_ID = PARENT.SRC_ENT_ID AND PARENT.REL_TYP_CD_ID = 'BFCBB345-86DB-43BA-B47E-E7411276AC7C' AND PARENT.OBSLT_VRSN_SEQ_ID IS NULL)
+              LEFT JOIN ENT_TEL_TBL ON (ENT_VRSN_TBL.ENT_ID = ENT_TEL_TBL.ENT_ID AND ENT_TEL_TBL.USE_CD_ID = 'EC35EA7C-55D2-4619-A56B-F7A986412F7F')
+              LEFT JOIN ENT_REL_TBL OWNER ON (OWNER.TRG_ENT_ID = ENT_VRSN_TBL.ENT_ID AND OWNER.OBSLT_VRSN_SEQ_ID IS NULL AND OWNER.REL_TYP_CD_ID = '117DA15C-0864-4F00-A987-9B9854CBA44E')
+            WHERE ENT_VRSN_TBL.HEAD
+            ORDER BY ENT_VRSN_TBL.VRSN_SEQ_ID ASC
+              ]]>
+        </add>
+        <add>
+          <providers>
+            <invariant>sqlite</invariant>
+          </providers>
+          <![CDATA[
+              SELECT ENT_VRSN_TBL.ENT_ID AS ENT_ID, 
+                ENT_TEL_TBL.TEL_VAL AS TEL,
+                PARENT.TRG_ENT_ID AS PARENT,
+                PLC_TBL.MOB_IND AS IS_MOBILE,
+                OWNER.SRC_ENT_ID AS OWNER
+              FROM
+                PLC_TBL 
+                INNER JOIN ENT_VRSN_TBL USING (ENT_VRSN_ID)
+                LEFT JOIN ENT_REL_TBL AS PARENT ON (ENT_VRSN_TBL.ENT_ID = PARENT.SRC_ENT_ID AND PARENT.REL_TYP_CD_ID = X'45B3CBBFDB86BA43B47EE7411276AC7C' AND PARENT.OBSLT_VRSN_SEQ_ID IS NULL)
+                LEFT JOIN ENT_TEL_TBL ON (ENT_VRSN_TBL.ENT_ID = ENT_TEL_TBL.ENT_ID AND ENT_TEL_TBL.USE_CD_ID = X'7CEA35ECD2551946A56BF7A986412F7F')
+                LEFT JOIN ENT_REL_TBL OWNER ON (OWNER.TRG_ENT_ID = ENT_VRSN_TBL.ENT_ID AND OWNER.OBSLT_VRSN_SEQ_ID IS NULL AND OWNER.REL_TYP_CD_ID = X'5CA17D116408004FA9879B9854CBA44E')
+              WHERE ENT_VRSN_TBL.HEAD = 1
+              ORDER BY ENT_VRSN_TBL.VRSN_SEQ_ID ASC
+        ]]>
+        </add>
+      </sql>
+    </reader>
+    <reader name="input_service_areas">
+      <connection ref="input" />
+      <sql>
+        <add>
+          <providers>
+            <invariant>npgsql</invariant>
+          </providers>
+          <![CDATA[
+            SELECT ENT_REL_ID AS REL_ID,
+              TRG_ENT_ID AS FAC_ID,
+              SRC_ENT_ID AS PLC_ID
+             FROM ENT_REL_TBL
+              INNER JOIN ENT_VRSN_TBL A ON (SRC_ENT_ID = A.ENT_ID AND A.HEAD)
+              INNER JOIN ENT_VRSN_TBL B ON (TRG_ENT_ID = B.ENT_ID AND B.HEAD)
+             WHERE 
+                OBSLT_VRSN_SEQ_ID IS NULL AND 
+                REL_TYP_CD_ID = '455F1772-F580-47E8-86BD-B5CE25D351F9'
+                AND EXISTS(SELECT 1 FROM PLC_TBL WHERE A.ENT_VRSN_ID = PLC_TBL.ENT_VRSN_ID)
+                AND EXISTS(SELECT 1 FROM PLC_TBL WHERE B.ENT_VRSN_ID = PLC_TBL.ENT_VRSN_ID)
+                        ]]>
+        </add>
+        <add>
+          <providers>
+            <invariant>sqlite</invariant>
+          </providers>
+          <![CDATA[
+              SELECT ENT_REL_ID AS REL_ID,
+              TRG_ENT_ID AS FAC_ID,
+              SRC_ENT_ID AS PLC_ID
+             FROM ENT_REL_TBL
+               INNER JOIN ENT_VRSN_TBL A ON (SRC_ENT_ID = A.ENT_ID AND A.HEAD = 1)
+              INNER JOIN ENT_VRSN_TBL B ON (TRG_ENT_ID = B.ENT_ID AND B.HEAD = 1)
+             WHERE OBSLT_VRSN_SEQ_ID IS NULL AND 
+                REL_TYP_CD_ID = X'72175F4580F5E84786BDB5CE25D351F9'
+                AND EXISTS(SELECT 1 FROM PLC_TBL WHERE A.ENT_VRSN_ID = PLC_TBL.ENT_VRSN_ID)
+                AND EXISTS(SELECT 1 FROM PLC_TBL WHERE B.ENT_VRSN_ID = PLC_TBL.ENT_VRSN_ID)
+        ]]>
+        </add>
+      </sql>
+    </reader>
+    <writer truncate="true" mode="insert" name="write_places">
+      <input ref="input_places" />
+      <connection ref="output" />
+      <target ref="PLC_TBL" />
+    </writer>
+    <writer truncate="true" mode="insert" name="write_service_areas">
+      <input ref="input_service_areas" />
+      <connection ref="output" />
+      <target ref="PLC_SRV_AREA_TBL" />
+    </writer>
+    <union name="union_rejects">
+      <input ref="write_places" />
+      <with ref="write_service_areas" />
+    </union>
+    <filter name="filter_rejects">
+      <input ref="union_rejects" />
+      <all>
+        <when field="$reject" op="eq">
+          <bool>true</bool>
+        </when>
+      </all>
+    </filter>
+    <transform name="transform_rejects">
+      <input ref="filter_rejects" />
+      <map>
+        <source name="ENT_ID" />
+        <target name="RECORD_ID" />
+      </map>
+      <map>
+        <source>
+          <fixed>PLC_TBL</fixed>
+        </source>
+        <target name="TYPE" />
+      </map>
+      <map>
+        <source name="$reject.reason" />
+        <target name="REASON" />
+      </map>
+    </transform>
+    <writer mode="insertUpdate" truncate="false" name="write_rejects">
+      <input ref="transform_rejects" />
+      <connection ref="output" />
+      <target ref="REJECT_TBL" />
+    </writer>
+    <filter name="filter_rejects2">
+      <input ref="write_rejects" />
+      <all>
+        <when field="$reject" op="eq">
+          <bool>true</bool>
+        </when>
+      </all>
+    </filter>
+    <halt name="halt_rejects">
+      <input ref="filter_rejects2" />
+    </halt>
+  </pipeline>
+</BiDataFlowDefinition>

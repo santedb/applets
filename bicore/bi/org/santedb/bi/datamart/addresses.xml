@@ -1,0 +1,148 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<BiDataFlowDefinition id="org.santedb.bi.datamart.core.addresses" xmlns="http://santedb.org/bi">
+  <meta version="3.0">
+    <public>false</public>
+  </meta>
+  <parameters>
+    <ref name="input" />
+    <ref name="output" />
+  </parameters>
+  <pipeline>
+    <log name="log_start" priority="Verbose">Start Pivot Addresses {{input}}</log>
+    <reader name="source_addresses">
+      <connection ref="input" />
+      <sql>
+        <add>
+          <providers>
+            <invariant>npgsql</invariant>
+            <invariant>FirebirdSQL</invariant>
+            <invariant>sqlite</invariant>
+          </providers>
+          <![CDATA[
+                        SELECT 
+                            ADDR_ID,
+                            ENT_ID, 
+                            ADT.MNEMONIC AS USE_TYPE,
+                            PT.MNEMONIC AS PART_TYPE,
+                            VAL
+                        FROM 
+                            ENT_ADDR_CMP_TBL
+                            INNER JOIN ENT_ADDR_TBL USING (ADDR_ID)
+                            INNER JOIN CD_VRSN_TBL PT ON (PT.CD_ID = ENT_ADDR_CMP_TBL.TYP_CD_ID) 
+                            INNER JOIN CD_VRSN_TBL ADT ON (ADT.CD_ID = ENT_ADDR_TBL.USE_CD_ID) 
+                        WHERE
+                          ENT_ADDR_TBL.OBSLT_VRSN_SEQ_ID IS NULL
+                        ORDER BY ADDR_ID, ENT_ID
+                        ]]>
+        </add>
+      </sql>
+    </reader>
+    <crosstab name="pivot_addresses">
+      <input ref="source_addresses" />
+      <pivot fn="first" key="ent_id" value="val" columnDef="part_type">
+        <columns>
+          <add>Country</add>
+          <add>State</add>
+          <add>AddressLine</add>
+          <add>Precinct</add>
+          <add>City</add>
+          <add>PostalCode</add>
+          <add>CensusTract</add>
+        </columns>
+      </pivot>
+    </crosstab>
+    <transform name="map_addresses">
+      <input ref="pivot_addresses" />
+      <map>
+        <source name="ADDR_ID" />
+        <target name="ADDR_ID" />
+      </map>
+      <map>
+        <source name="ENT_ID" />
+        <target name="ENT_ID" />
+      </map>
+      <map>
+        <source name="USE_TYPE" />
+        <target name="USE_TYPE" />
+      </map>
+      <map>
+        <source name="Country" />
+        <target name="ADDR_COUNTRY" />
+      </map>
+      <map>
+        <source name="State" />
+        <target name="ADDR_STATE" />
+      </map>
+      <map>
+        <source name="County" />
+        <target name="ADDR_COUNTY" />
+      </map>
+      <map>
+        <source name="AddressLine" />
+        <target name="ADDR_STATE" />
+      </map>
+      <map>
+        <source name="Precinct" />
+        <target name="ADDR_PRECINCT" />
+      </map>
+      <map>
+        <source name="City" />
+        <target name="ADDR_CITY" />
+      </map>
+      <map>
+        <source name="PostalCode" />
+        <target name="ADDR_POSTAL" />
+      </map>
+      <map>
+        <source name="CensusTract" />
+        <target name="ADDR_CENSUS" />
+      </map>
+    </transform>
+    <writer mode="insert" truncate="true" name="write_addresses">
+      <input ref="map_addresses" />
+      <connection ref="output" />
+      <target ref="ENT_ADDR_TBL" />
+    </writer>
+    <filter name="filter_rejects">
+      <input ref="write_addresses" />
+      <all>
+        <when field="$reject" op="eq">
+          <bool>true</bool>
+        </when>
+      </all>
+    </filter>
+    <transform name="transform_rejects">
+      <input ref="filter_rejects" />
+      <map>
+        <source name="ADDR_ID" />
+        <target name="RECORD_ID" />
+      </map>
+      <map>
+        <source>
+          <fixed>ENT_ADDR_TBL</fixed>
+        </source>
+        <target name="TYPE" />
+      </map>
+      <map>
+        <source name="$reject.reason" />
+        <target name="REASON" />
+      </map>
+    </transform>
+    <writer mode="insertUpdate" truncate="false" name="write_rejects">
+      <input ref="transform_rejects" />
+      <connection ref="output" />
+      <target ref="REJECT_TBL" />
+    </writer>
+    <filter name="filter_rejects2">
+      <input ref="write_rejects" />
+      <all>
+        <when field="$reject" op="eq">
+          <bool>true</bool>
+        </when>
+      </all>
+    </filter>
+    <halt name="halt_rejects">
+      <input ref="filter_rejects2" />
+    </halt>
+  </pipeline>
+</BiDataFlowDefinition>

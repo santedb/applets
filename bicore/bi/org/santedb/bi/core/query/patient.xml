@@ -20,8 +20,8 @@
  - User: Justin Fyfe
  - Date: 2019-12-16
  -->
-<BiQueryDefinition xmlns="http://santedb.org/bi" id="org.santedb.bi.core.query.patient" label="ui.santedb.bi.core.query.patient">
-  <meta status="active">
+<BiQueryDefinition xmlns="http://santedb.org/bi" id="org.santedb.bi.core.query.patient" label="ui.santedb.bi.core.query.patient" status="active">
+  <meta>
     <authors>
       <add>Justin Fyfe (Fyfe Software Inc.) &lt;justin@fyfesoftware.ca&gt;</add>
     </authors>

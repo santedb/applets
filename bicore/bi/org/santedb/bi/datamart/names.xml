@@ -1,0 +1,132 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<BiDataFlowDefinition xmlns="http://santedb.org/bi" id="org.santedb.bi.datamart.core.names">
+  <parameters>
+    <ref name="input" />
+    <ref name="output" />
+  </parameters>
+  <pipeline>
+    <log name="log_start" priority="Verbose">Start Pivot Names {{input}}</log>
+    <reader name="source_names">
+      <connection ref="input" />
+      <sql>
+        <add>
+          <providers>
+            <invariant>npgsql</invariant>
+            <invariant>FirebirdSQL</invariant>
+            <invariant>sqlite</invariant>
+          </providers>
+          <![CDATA[
+                        SELECT 
+                            NAME_ID,
+                            ENT_ID, 
+                            NT.MNEMONIC AS USE_TYPE,
+                            COALESCE(PT.MNEMONIC, 'Other') AS PART_TYPE,
+                            VAL
+                        FROM 
+                            ENT_NAME_CMP_TBL
+                            INNER JOIN ENT_NAME_TBL USING (NAME_ID)
+                            LEFT JOIN CD_VRSN_TBL PT ON (PT.CD_ID = ENT_NAME_CMP_TBL.TYP_CD_ID) 
+                            INNER JOIN CD_VRSN_TBL NT ON (NT.CD_ID = ENT_NAME_TBL.USE_CD_ID) 
+                        WHERE
+                          ENT_NAME_TBL.OBSLT_VRSN_SEQ_ID IS NULL
+                        ORDER BY NAME_ID, ENT_ID
+                        
+                        ]]>
+        </add>
+      </sql>
+    </reader>
+    <crosstab name="pivot_names">
+      <input ref="source_names" />
+      <pivot fn="first" key="ent_id" value="val" columnDef="part_type">
+        <columns>
+          <add>Other</add>
+          <add>Given</add>
+          <add>Family</add>
+          <add>Prefix</add>
+          <add>Suffix</add>
+        </columns>
+      </pivot>
+    </crosstab>
+    <transform name="map_names">
+      <input ref="pivot_names" />
+      <map>
+        <source name="ENT_ID" />
+        <target name="ENT_ID" />
+      </map>
+      <map>
+        <source name="NAME_ID" />
+        <target name="NAME_ID" />
+      </map>
+      <map>
+        <source name="USE_TYPE" />
+        <target name="USE_TYPE" />
+      </map>
+      <map>
+        <source name="Other" />
+        <target name="NAME" />
+      </map>
+      <map>
+        <source name="Prefix" />
+        <target name="NAME_PREFIX" />
+      </map>
+      <map>
+        <source name="Suffix" />
+        <target name="NAME_SUFFIX" />
+      </map>
+      <map>
+        <source name="Given" />
+        <target name="NAME_GIVEN" />
+      </map>
+      <map>
+        <source name="Family" />
+        <target name="NAME_FAMILY" />
+      </map>
+    </transform>
+    <writer truncate="true" mode="insert" name="write_names">
+      <input ref="map_names" />
+      <connection ref="output" />
+      <target ref="ENT_NAME_TBL" />
+    </writer>
+    <filter name="filter_rejects">
+      <input ref="write_names" />
+      <all>
+        <when field="$reject" op="eq">
+          <bool>true</bool>
+        </when>
+      </all>
+    </filter>
+    <transform name="transform_rejects">
+      <input ref="filter_rejects" />
+      <map>
+        <source name="NAME_ID" />
+        <target name="RECORD_ID" />
+      </map>
+      <map>
+        <source>
+          <fixed>ENT_NAME_TBL</fixed>
+        </source>
+        <target name="TYPE" />
+      </map>
+      <map>
+        <source name="$reject.reason" />
+        <target name="REASON" />
+      </map>
+    </transform>
+    <writer mode="insertUpdate" truncate="false" name="write_rejects">
+      <input ref="transform_rejects" />
+      <connection ref="output" />
+      <target ref="REJECT_TBL" />
+    </writer>
+    <filter name="filter_rejects2">
+      <input ref="write_rejects" />
+      <all>
+        <when field="$reject" op="eq">
+          <bool>true</bool>
+        </when>
+      </all>
+    </filter>
+    <halt name="halt_rejects">
+      <input ref="filter_rejects2" />
+    </halt>
+  </pipeline>
+</BiDataFlowDefinition>

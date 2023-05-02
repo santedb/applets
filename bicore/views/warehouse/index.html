@@ -1,0 +1,22 @@
+<div xmlns="http://www.w3.org/1999/xhtml" xmlns:sdb="http://santedb.org/applet">
+    <sdb:script static="false">~/controllers/warehouse/index.js</sdb:script>
+    <sdb:state name="santedb-admin.bi.warehouse.index" abstract="false">
+        <sdb:url>/</sdb:url>
+        <sdb:view>
+            <sdb:demand>1.3.6.1.4.1.33349.3.1.5.9.2.0.10</sdb:demand>
+            <sdb:controller>WarehouseController</sdb:controller>
+            <sdb:title lang="en">Data Marts</sdb:title>
+        </sdb:view>
+    </sdb:state>
+
+    <entity-table id="dataMartTable"
+        type="BiDatamartDefinition"
+        render="{ 'description': renderDescription, 'author': renderAuthor, 'registration' : renderRegistrationControl  }"
+        search-field="name" 
+        default-query="{ 'meta.public' : 'true' }"
+        i18n-prefix="'ui.bi.marts.'"
+        no-buttons="true"
+        item-supplement="[ fetchMartState ]"
+        item-actions="[ { name: 'view', sref: 'santedb-admin.bi.marts.view', icon: 'fas fa-eye', className: 'btn btn-primary' }, { name: 'register', action: 'register', icon: 'fas fa-arrow-up', className: 'btn btn-success', when: '!r.deployed' } , { name: 'unregister', action: 'unregister', icon: 'fas fa-arrow-down', className: 'btn btn-warning', when: 'r.deployed'} ]"
+        properties="[ 'name', 'description', 'registration', 'author' ]" />
+</div>

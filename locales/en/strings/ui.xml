@@ -178,10 +178,13 @@
       <string name="ui.action.schedule">Schedue</string>
       <string name="ui.action.scan">Scan</string>
       <string name="ui.action.finish">Finish</string>
+      <string name="ui.action.refresh">Refresh</string>
+      <string name="ui.action.build">Build</string>
       <string name="ui.action.add">Add</string>
       <string name="ui.action.add.then.new">Add &amp; Create Another</string>
       <string name="ui.action.add.then.goto">Add &amp; Go To</string>
       <string name="ui.action.register">Register</string>
+      <string name="ui.action.unregister">Un-Register</string>
       <string name="ui.action.register.batch">Batch Registration</string>
       <string name="ui.action.remove">Remove</string>
       <string name="ui.action.selectAll">Select All</string>

@@ -45,7 +45,8 @@ angular.module('santedb-lib')
                 itemClass: "<",
                 stateless: "<",
                 subResourceHolder: "=",
-                keyProperty: "<"
+                keyProperty: "<",
+                itemSupplement: "<"
             },
             restrict: 'E',
             replace: true,
@@ -252,6 +253,16 @@ angular.module('santedb-lib')
                                     var res = await searchPromise;
 
                                     res.resource = res.resource || [];
+
+                                    // Is there supplemental information required for each item?
+                                    if(Array.isArray(scope.itemSupplement)) {
+                                        res.resource = await Promise.all(res.resource.map(async res=> {
+                                            for(var s in scope.itemSupplement) {
+                                                res = await scope.itemSupplement[s](res);
+                                            }
+                                            return res;
+                                        }))
+                                    }
 
                                     // Ensure types 
                                     for (var c in columns) {

@@ -1,9 +1,11 @@
-<?xml version="1.0" encoding="UTF-8"?>
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<?xml-model href="../../../../../../.ref/schema/BusinessIntelligence.xsd" type="application/xml" schematypens="http://www.w3.org/2001/XMLSchema"?>
 <BiDatamartDefinition xmlns="http://santedb.org/bi" id="org.santedb.bi.datamart.core"
+    status="active"
     name="core-datamart" label="core-datamart">
 
-  
-  <meta status="active" version="3.0">
+
+  <meta version="3.0">
     <authors>
       <add>SanteSuite Inc. and the SanteSuite Contributors</add>
     </authors>
@@ -16,11 +18,12 @@
         </p>
       </div>
     </annotation>
-    <public>false</public>
+    <public>true</public>
   </meta>
 
-  <produces id="org.santedb.bi.dataSource.warehouse" name="warehouse">
-    <meta status="active">
+
+  <produces id="org.santedb.bi.dataSource.warehouse" name="warehouse"  status="active">
+    <meta>
       <policies>
         <!-- This requires query clinical data -->
         <demand>1.3.6.1.4.1.33349.3.1.5.9.2.2.0</demand>
@@ -28,16 +31,23 @@
     </meta>
   </produces>
 
+
   <schema>
 
+    <!-- The REJECT_TBL stores all records that were rejected during the run of the ETL -->
+    <table name="REJECT_TBL">
+      <column type="uuid" key="true" notNull="true" unique="true" name="RECORD_ID"/>
+      <column type="string" name="TYPE" />
+      <column type="string" name="REASON" />
+    </table>
+
+    <!-- Security User Reporting Table -->
     <table name="SEC_USR_TBL">
       <column type="uuid" key="true" notNull="true" unique="true" name="USR_ID"/>
       <column type="string" notNull="true" name="USERNAME" />
       <column type="date-time" notNull="true" name="CREATED_TIME" />
-      <column type="ref" notNull="true" name="CREATED_BY">
-        <otherTable ref="SEC_USR_TBL" />
-      </column>
-      <column type="date-time" name="LAST_LOGIN" />
+      <column type="uuid" notNull="true" name="CREATED_BY" />
+      <column type="date-time" name="LAST_LOGIN_DATE" />
       <column type="string" name="EMAIL" />
       <column type="string" name="PHONE" />
       <column type="date-time" name="OBSOLETE_TIME"/>
@@ -45,8 +55,8 @@
         <otherTable ref="SEC_USR_TBL" />
       </column>
     </table>
-    
-    
+
+    <!-- All entities will have an entry in the ENT_TBL - this is the base of the ENT hierarchy -->
     <table name="ENT_TBL">
       <column type="uuid" notNull="true" unique="true" key="true" name="ENT_ID" />
       <column type="uuid" notNull="true" unique="true" name="VERSION" />
@@ -54,10 +64,8 @@
       <column type="string" notNull="true" name="DETERMINER" />
       <column type="string" name="TYPE" />
       <column type="string" name="TEMPLATE" />
-      <column type="string" name="ID_VAL" />
-      <column type="string" name="ID_ISSUER" />
-      <column type="decimal" name="LAT"/>
-      <column type="decimal" name="LNG"/>
+      <column type="float" name="LAT"/>
+      <column type="float" name="LNG"/>
       <column type="date-time" notNull="true" name="CREATED_TIME"/>
       <column type="ref" notNull="true" name="CREATED_BY">
         <otherTable ref="SEC_USR_TBL" />
@@ -68,55 +76,122 @@
       </column>
     </table>
 
-    <table name="ORG_TBL">
+    <!-- Entity Identifiers Table storing ID value and issuer -->
+    <table name="ENT_ID_TBL">
+      <column type="uuid" key="true" name="ID_ID" />
+      <column type="ref" index="true" name="ENT_ID">
+        <otherTable ref="ENT_TBL"/>
+      </column>
+      <column type="string" notNull="true" name="ISSUER" />
+      <column type="string" notNull="true" name="VALUE" />
+      <column type="string" name="CHECK_DIGIT" />
+      <column type="date" name="ISSUED" />
+      <column type="date" name="EXPIRY" />
+    </table>
+
+    <!-- Entity Addresses that have been Pivoted -->
+    <table name="ENT_ADDR_TBL">
+      <column type="uuid" key="true" name="ADDR_ID" />
+      <column type="ref" index="true" name="ENT_ID">
+        <otherTable ref="ENT_TBL"/>
+      </column>
+      <column type="string" name="USE_TYPE" />
+      <column type="string" name="ADDR_TYPE" />
+      <column type="string" name="ADDR_STREET" />
+      <column type="string" name="ADDR_PRECINCT" />
+      <column type="string" name="ADDR_CITY" />
+      <column type="string" name="ADDR_COUNTY" />
+      <column type="string" name="ADDR_STATE" />
+      <column type="string" name="ADDR_COUNTRY" />
+      <column type="string" name="ADDR_POSTAL" />
+      <column type="string" name="ADDR_CENSUS" />
+    </table>
+
+    <!-- Entity Names that have been pivoted -->
+    <table name="ENT_NAME_TBL">
+      <column type="uuid" key="true" name="NAME_ID" />
+      <column type="ref" index="true" name="ENT_ID">
+        <otherTable ref="ENT_TBL"/>
+      </column>
+      <column type="string" notNull="true" name="USE_TYPE" />
       <column type="string" name="NAME" />
+      <column type="string" name="NAME_PREFIX" />
+      <column type="string" name="NAME_GIVEN" />
+      <column type="string" name="NAME_SUFFIX" />
+      <column type="string" name="NAME_FAMILY" />
+    </table>
+
+    <!-- Organization Registration Table -->
+    <table name="ORG_TBL">
+      <column type="string" name="TEL" />
+      <column type="ref" name="PARENT" >
+        <otherTable ref="ORG_TBL" />
+      </column>
       <column type="string" name="INDUSTRY" />
       <parent ref="ENT_TBL" />
     </table>
 
+    <!-- Materials Table storing all generic and manufactured material attributes -->
     <table name="MAT_TBL">
-      <column type="string" name="NAME" />
+      <column type="string" name="TYPE" />
+      <column type="date" name="EXPIRY" />
+      <column type="int" name="QTY" />
+      <column type="string" name="UNIT_OF_MEASURE" />
+      <column type="string" name="FORM" />
       <parent ref="ENT_TBL" />
     </table>
-    
+
+    <!-- Manufactured materials table storing only those materials which are manufactured by an organization -->
     <table name="MMAT_TBL">
       <column type="string" name="LOT" />
       <column type="string" name="GTIN" />
       <column type="ref" name="MANUFACTURER">
         <otherTable ref="ORG_TBL" />
       </column>
+      <column type="ref" name="PRODUCT">
+        <otherTable ref="MAT_TBL" />
+      </column>
       <parent ref="MAT_TBL" />
     </table>
-    
+
+    <!-- All Places (Facilities, Buildings, Provinces, States, Cities, etc. -->
     <table name="PLC_TBL">
-      <column type="string" name="NAME" />
-      <column type="string" name="ADDR_TYPE" />
-      <column type="string" name="ADDR_STREET" />
-      <column type="string" name="ADDR_PRECINCT" />
-      <column type="string" name="ADDR_CITY" />
-      <column type="string" name="ADDR_COUNTY" />
-      <column type="string" index="true" name="ADDR_STATE" />
-      <column type="string" name="ADDR_COUNTRY" />
-      <column type="string" name="ADDR_POSTAL" />
-      <column type="string" name="ADDR_CENSUS" />
+      <column type="ref" name="NAME">
+        <otherTable ref="ENT_NAME_TBL" />
+      </column>
+      <column type="ref" name="ADDR">
+        <otherTable ref="ENT_ADDR_TBL" />
+      </column>
       <column type="string" name="TEL" />
+      <column type="ref" name="PARENT" >
+        <otherTable ref="PLC_TBL" />
+      </column>
+      <column type="ref" name="OWNER">
+        <otherTable ref="ORG_TBL" />
+      </column>
+      <column type="bool" name="IS_MOBILE" />
       <parent ref="ENT_TBL" />
     </table>
 
+    <!-- Association between the facilities in the PLC_TBL with those places that the facility serves (catchment) -->
+    <table name="PLC_SRV_AREA_TBL">
+      <column type="uuid" key="true" notNull="true" name="REL_ID" />
+      <column type="ref" name="FAC_ID" notNull="true">
+        <otherTable ref="PLC_TBL" />
+      </column>
+      <column type="ref" name="PLC_ID" notNull="true">
+        <otherTable ref="PLC_TBL" />
+      </column>
+    </table>
+
+    <!-- Persons table storing all persons (user entities, patients, relatives, providers, etc.) -->
     <table name="PSN_TBL">
-      <column type="string" name="NAME_PREFIX" />
-      <column type="string" index="true" name="NAME_FAMILY" />
-      <column type="string" name="NAME_GIVEN" />
-      <column type="string" name="NAME_SUFFIX" />
-      <column type="string" name="ADDR_TYPE" />
-      <column type="string" name="ADDR_STREET" />
-      <column type="string" name="ADDR_PRECINCT" />
-      <column type="string" name="ADDR_CITY" />
-      <column type="string" name="ADDR_COUNTY" />
-      <column type="string" index="true" name="ADDR_STATE" />
-      <column type="string" name="ADDR_COUNTRY" />
-      <column type="string" name="ADDR_POSTAL" />
-      <column type="string" name="ADDR_CENSUS" />
+      <column type="ref" name="NAME">
+        <otherTable ref="ENT_NAME_TBL" />
+      </column>
+      <column type="ref" name="ADDR">
+        <otherTable ref="ENT_ADDR_TBL" />
+      </column>
       <column type="string" name="TEL_HOME" />
       <column type="string" name="TEL_WORK" />
       <column type="string" name="TEL_CELL" />
@@ -132,7 +207,8 @@
       </column>
       <parent ref="ENT_TBL" />
     </table>
-    
+
+    <!-- Patient attributes are stored in the patient table -->
     <table name="PAT_TBL">
       <column type="int" name="MB_ORD" />
       <column type="string" name="LIVING_ARR" />
@@ -163,18 +239,22 @@
       <parent ref="PSN_TBL" />
     </table>
 
+    <!-- User Entity Table -->
     <table name="USR_TBL">
       <column type="string" name="USERNAME" />
       <parent ref="PSN_TBL" />
     </table>
-    
+
+    <!-- Provider Entity table -->
     <table name="PVD_TBL">
-      <column type="ref" name="USER">
+      <column type="ref" name="USR_ID">
         <otherTable ref="USR_TBL" />
       </column>
+      <column type="string" name="SPECIALTY" />
       <parent ref="PSN_TBL" />
     </table>
 
+    <!-- All acts base table -->
     <table name="ACT_TBL">
       <column type="uuid" key="true" unique="true" notNull="true" name="ACT_ID" />
       <column type="uuid" notNull="true" unique="true" name="VERSION" />
@@ -184,11 +264,11 @@
       <column type="string" notNull="true" name="STATUS" />
       <column type="bool" notNull="true" name="NEGATED" />
       <column type="string" name="TYPE" />
-      <column type="date-time" name="TIME" />
-      <column type="date-time" name="START" />
-      <column type="date-time" name="STOP" />
-      <column type="decimal" name="LAT"/>
-      <column type="decimal" name="LNG"/>
+      <column type="date-time" name="ACT_TIME" />
+      <column type="date-time" name="START_TIME" />
+      <column type="date-time" name="STOP_TIME" />
+      <column type="float" name="LAT"/>
+      <column type="float" name="LNG"/>
       <column type="date-time" notNull="true" name="CREATED_TIME"/>
       <column type="ref" notNull="true" name="CREATED_BY">
         <otherTable ref="SEC_USR_TBL" />
@@ -197,8 +277,31 @@
       <column type="ref" name="OBSOLETE_BY">
         <otherTable ref="SEC_USR_TBL" />
       </column>
+      <column type="ref" notNull="true" name="RECORD_TARGET">
+        <otherTable ref="ENT_TBL" />
+      </column>
+      <column type="ref" name="AUTHOR">
+        <otherTable ref="ENT_TBL" />
+      </column>
+      <column type="ref" name="PERFORMER">
+        <otherTable ref="ENT_TBL" />
+      </column>
     </table>
 
+    <!-- Act External Identifier table with issuer and identifier value -->
+    <table name="ACT_ID_TBL">
+      <column type="uuid" key="true" name="ID_ID" />
+      <column type="ref" index="true" name="ACT_ID">
+        <otherTable ref="ACT_TBL"/>
+      </column>
+      <column type="string" notNull="true" name="ISSUER" />
+      <column type="string" notNull="true" name="VALUE" />
+      <column type="string" name="CHECK_DIGIT" />
+      <column type="date" name="ISSUED" />
+      <column type="date" name="EXPIRY" />
+    </table>
+
+    <!-- Observations made in the CDR -->
     <table name="OBS_TBL">
       <column type="string" name="INTERPRETATION"/>
       <column type="string" name="VALUE_STR" />
@@ -207,12 +310,26 @@
       <parent ref="ACT_TBL" />
     </table>
 
+    <!-- Encounters in the CDR -->
     <table name="PAT_ENC_TBL">
       <column type="string" name="DISPOSITION" />
       <column type="string" name="ADM_SOURCE" />
       <parent ref="ACT_TBL" />
     </table>
-    
+
+    <!-- Patient Encounter to the acts which they contain -->
+    <table name="ACT_COMP_TBL">
+      <column type="uuid" key="true" notNull="true" name="REL_ID" />
+      <column type="string" name="RELATION" notNull="true" />
+      <column type="ref" name="ACT_ID" notNull="true">
+        <otherTable ref="ACT_TBL" />
+      </column>
+      <column type="ref" name="COMPONENT" notNull="true">
+        <otherTable ref="ACT_TBL" />
+      </column>
+    </table>
+
+    <!-- Patient encounter arrangement table -->
     <table name="PAT_ENC_ARG_TBL">
       <column type="uuid" key="true" unique="true" name="ARG_ID" />
       <column type="string" name="TYPE" />
@@ -235,303 +352,149 @@
       <parent ref="ACT_TBL" />
     </table>
 
-    <table name="SUB_ADM_CONS_TBL">
+    <table name="ACT_CONS_TBL">
       <column type="uuid" key="true" unique="true" notNull="true" name="REL_ID"/>
       <column type="ref" name="ACT_ID">
-        <otherTable ref="SUB_ADM_TBL" />
+        <otherTable ref="ACT_TBL" />
       </column>
       <column type="ref" name="CONSUMED">
         <otherTable ref="MMAT_TBL" />
       </column>
       <column type="int" name="QTY" />
     </table>
-    
+
   </schema>
 
   <dataFlows>
-    <flow name="main">
-      <connection name="input">
-        <dataSource ref="#org.santedb.bi.dataSource.main" />
-      </connection>
-      <connection name="output">
-        <dataSource ref="#org.santedb.bi.dataSource.warehouse" />
-      </connection>
-      <transaction for="output" name="main_transaction">
-        <call ref="tmp_addresses">
-          <parameters>
-            <ref name="input">
-              <value ref="input" />
-            </ref>
-            <ref name="output">
-              <value ref="output" />
-            </ref>
-          </parameters>
-        </call>
-        <call ref="tmp_names">
-          <parameters>
-            <ref name="input">
-              <value ref="input" />
-            </ref>
-            <ref name="output">
-              <value ref="output" />
-            </ref>
-          </parameters>
-        </call>
-        <call ref="entities">
-          <parameters>
-            <ref name="input">
-              <value ref="input" />
-            </ref>
-            <ref name="output">
-              <value ref="output" />
-            </ref>
-          </parameters>
-        </call>
-      </transaction>
-    </flow>
-    <flow name="tmp_addresses">
-      <parameters>
-        <ref name="input" />
-        <ref name="output" />
-      </parameters>
-      <reader name="source_addresses">
-        <connection ref="input" />
-        <sql>
-          <add>
-            <providers>
-              <invariant>npgsql</invariant>
-              <invariant>FirebirdSQL</invariant>
-              <invariant>sqlite</invariant>
-            </providers>
-            <![CDATA[
-                        SELECT 
-                            ADDR_ID,
-                            ENT_ID, 
-                            ADT.MNEMONIC AS USE_TYPE,
-                            PT.MNEMONIC AS PART_TYPE,
-                            VAL
-                        FROM 
-                            ENT_ADDR_CMP_TBL
-                            INNER JOIN ENT_ADDR_TBL USING (ADDR_ID)
-                            INNER JOIN CD_VRSN_TBL PT ON (PT.CD_ID = ENT_ADDR_CMP_TBL.TYP_CD_ID) 
-                            INNER JOIN CD_VRSN_TBL ADT ON (ADT.CD_ID = ENT_ADDR_TBL.USE_CD_ID) 
-                        ORDER BY ADDR_ID, ENT_ID
-                        ]]>
-          </add>
-        </sql>
-      </reader>
-      <crosstab name="pivot_addresses">
-        <input ref="source_addresses" />
-        <pivot fn="first" key="ent_id" value="val" columnDef="part_type">
-          <columns>
-            <add>Country</add>
-            <add>State</add>
-            <add>AddressLine</add>
-            <add>Precinct</add>
-            <add>City</add>
-            <add>PostalCode</add>
-            <add>CensusTract</add>
-          </columns>
-        </pivot>
-      </crosstab>
-      <map name="map_addresses">
-        <input ref="pivot_addresses" />
-        <map>
-          <source name="ENT_ID" />
-          <target name="ENT_ID" />
-        </map>
-        <map>
-          <source name="ADDR_ID" />
-          <target name="ADDR_ID" />
-        </map>
-        <map>
-          <source name="USE_TYPE" />
-          <target name="USE_TYPE" />
-        </map>
-        <map>
-          <source name="Country" />
-          <target name="ADDR_COUNTRY" />
-        </map>
-        <map>
-          <source name="State" />
-          <target name="ADDR_STATE" />
-        </map>
-        <map>
-          <source name="County" />
-          <target name="ADDR_COUNTY" />
-        </map>
-        <map>
-          <source name="AddressLine" />
-          <target name="ADDR_STATE" />
-        </map>
-        <map>
-          <source name="Precinct" />
-          <target name="ADDR_PRECINCT" />
-        </map>
-        <map>
-          <source name="City" />
-          <target name="ADDR_CITY" />
-        </map>
-        <map>
-          <source name="PostalCode" />
-          <target name="ADDR_POSTAL" />
-        </map>
-        <map>
-          <source name="CensusTract" />
-          <target name="ADDR_CENSUS" />
-        </map>
-      </map>
-      <writer mode="insert" name="write_addresses">
-        <input ref="map_addresses" />
-        <connection ref="output" />
-        <target temporary="true" name="TMP_ADDRESS">
-          <column type="uuid" name="ADDR_ID" />
-          <column type="string" name="ADDR_TYPE" />
-          <column type="string" name="ADDR_STREET" />
-          <column type="string" name="ADDR_PRECINCT" />
-          <column type="string" name="ADDR_CITY" />
-          <column type="string" name="ADDR_COUNTY" />
-          <column type="string" name="ADDR_STATE" />
-          <column type="string" name="ADDR_COUNTRY" />
-          <column type="string" name="ADDR_POSTAL" />
-          <column type="string" name="ADDR_CENSUS" />
-        </target>
-      </writer>
-    </flow>
-    <flow name="tmp_names">
+    <flow name="users" ref="#org.santedb.bi.datamart.core.users" />
+    <flow name="addresses" ref="#org.santedb.bi.datamart.core.addresses" />
+    <flow name="names" ref="#org.santedb.bi.datamart.core.names" />
+    <flow name="identifiers" ref="#org.santedb.bi.datamart.core.identifiers" />
+    <flow name="entities" ref="#org.santedb.bi.datamart.core.entities" />
+    <flow name="acts" ref="#org.santedb.bi.datamart.core.acts" />
+    <flow name="orgs" ref="#org.santedb.bi.datamart.core.orgs" />
+    <flow name="places" ref="#org.santedb.bi.datamart.core.places" />
+    <flow name="mats" ref="#org.santedb.bi.datamart.core.mats" />
 
-      <parameters>
-        <ref name="input" />
-        <ref name="output" />
-      </parameters>
-      <reader name="source_names">
-        <connection ref="input" />
-        <sql>
-          <add>
-            <providers>
-              <invariant>npgsql</invariant>
-              <invariant>FirebirdSQL</invariant>
-              <invariant>sqlite</invariant>
-            </providers>
-            <![CDATA[
-                        SELECT 
-                            NAME_ID,
-                            ENT_ID, 
-                            NT.MNEMONIC AS USE_TYPE,
-                            COALESCE(PT.MNEMONIC, 'Other') AS PART_TYPE,
-                            VAL
-                        FROM 
-                            ENT_NAME_CMP_TBL
-                            INNER JOIN ENT_NAME_TBL USING (NAME_ID)
-                            LEFT JOIN CD_VRSN_TBL PT ON (PT.CD_ID = ENT_NAME_CMP_TBL.TYP_CD_ID) 
-                            INNER JOIN CD_VRSN_TBL NT ON (NT.CD_ID = ENT_NAME_TBL.USE_CD_ID) 
-                        ORDER BY NAME_ID, ENT_ID
-                        
-                        ]]>
-          </add>
-        </sql>
-      </reader>
-      <crosstab name="pivot_names">
-        <input ref="source_names" />
-        <pivot fn="first" key="ent_id" value="val" columnDef="part_type">
-          <columns>
-            <add>Other</add>
-            <add>Given</add>
-            <add>Family</add>
-            <add>Prefix</add>
-            <add>Suffix</add>
-          </columns>
-        </pivot>
-      </crosstab>
-      <map name="map_names">
-        <input ref="pivot_names" />
-        <map>
-          <source name="ENT_ID" />
-          <target name="ENT_ID" />
-        </map>
-        <map>
-          <source name="NAME_ID" />
-          <target name="NAME_ID" />
-        </map>
-        <map>
-          <source name="Other" />
-          <target name="NAME" />
-        </map>
-        <map>
-          <source name="Prefix" />
-          <target name="NAME_PREFIX" />
-        </map>
-        <map>
-          <source name="Suffix" />
-          <target name="NAME_SUFFIX" />
-        </map>
-        <map>
-          <source name="Given" />
-          <target name="NAME_GIVEN" />
-        </map>
-        <map>
-          <source name="Family" />
-          <target name="NAME_FAMILY" />
-        </map>
-      </map>
-      <writer mode="insert" name="write_names">
-        <input ref="map_names" />
-        <connection ref="output" />
-        <target temporary="true" name="TMP_NAMES">
-          <column type="uuid" name="ADDR_ID" />
-          <column type="string" name="ADDR_TYPE" />
-          <column type="string" name="ADDR_STREET" />
-          <column type="string" name="ADDR_PRECINCT" />
-          <column type="string" name="ADDR_CITY" />
-          <column type="string" name="ADDR_COUNTY" />
-          <column type="string" name="ADDR_STATE" />
-          <column type="string" name="ADDR_COUNTRY" />
-          <column type="string" name="ADDR_POSTAL" />
-          <column type="string" name="ADDR_CENSUS" />
-        </target>
-      </writer>
+    <flow name="main">
+      <pipeline>
+        <log name="log_hello" priority="Informational">
+          {{$principal}} is refreshing {{$targetMart}}
+        </log>
+        <connection name="warehouseDatabase" mode="read-write">
+          <dataSource ref="#org.santedb.bi.dataSource.warehouse" />
+        </connection>
+        <connection name="mainDatabase" mode="read-only">
+          <dataSource ref="#org.santedb.bi.dataSource.main" />
+        </connection>
+        <transaction name="main_transaction">
+          <connection ref="warehouseDatabase" />
+          <pipeline>
+            <call>
+              <dataFlow ref="users" />
+              <args>
+                <ref name="input">
+                  <value ref="mainDatabase" />
+                </ref>
+                <ref name="output">
+                  <value ref="warehouseDatabase" />
+                </ref>
+              </args>
+            </call>
+            <call>
+              <dataFlow ref="entities" />
+              <args>
+                <ref name="input">
+                  <value ref="mainDatabase" />
+                </ref>
+                <ref name="output">
+                  <value ref="warehouseDatabase" />
+                </ref>
+              </args>
+            </call>
+            <call>
+              <dataFlow ref="acts" />
+              <args>
+                <ref name="input">
+                  <value ref="mainDatabase" />
+                </ref>
+                <ref name="output">
+                  <value ref="warehouseDatabase" />
+                </ref>
+              </args>
+            </call>
+            <call>
+              <dataFlow ref="identifiers" />
+              <args>
+                <ref name="input">
+                  <value ref="mainDatabase" />
+                </ref>
+                <ref name="output">
+                  <value ref="warehouseDatabase" />
+                </ref>
+              </args>
+            </call>
+            <call>
+              <dataFlow ref="addresses" />
+              <args>
+                <ref name="input">
+                  <value ref="mainDatabase" />
+                </ref>
+                <ref name="output">
+                  <value ref="warehouseDatabase" />
+                </ref>
+              </args>
+            </call>
+            <call>
+              <dataFlow ref="names" />
+              <args>
+                <ref name="input">
+                  <value ref="mainDatabase" />
+                </ref>
+                <ref name="output">
+                  <value ref="warehouseDatabase" />
+                </ref>
+              </args>
+            </call>
+            <call>
+              <dataFlow ref="orgs" />
+              <args>
+                <ref name="input">
+                  <value ref="mainDatabase" />
+                </ref>
+                <ref name="output">
+                  <value ref="warehouseDatabase" />
+                </ref>
+              </args>
+            </call>
+            <call>
+              <dataFlow ref="mats" />
+              <args>
+                <ref name="input">
+                  <value ref="mainDatabase" />
+                </ref>
+                <ref name="output">
+                  <value ref="warehouseDatabase" />
+                </ref>
+              </args>
+            </call>
+
+            <call>
+              <dataFlow ref="places" />
+              <args>
+                <ref name="input">
+                  <value ref="mainDatabase" />
+                </ref>
+                <ref name="output">
+                  <value ref="warehouseDatabase" />
+                </ref>
+              </args>
+            </call>
+          </pipeline>
+        </transaction>
+      </pipeline>
     </flow>
-    <flow name="entities">
-      <parameters>
-        <ref name="input" />
-        <ref name="output" />
-      </parameters>
-      <reader name="source_entities">
-        <connection ref="input" />
-        <sql>
-          <add>
-            <providers>
-              <invariant>npgsql</invariant>
-              <invariant>FirebirdSQL</invariant>
-              <invariant>sqlite</invariant>
-            </providers>
-            <![CDATA[ 
-                        SELECT 
-                            ENT_VRSN_TBL.ENT_ID,
-                            ENT_VRSN_TBL.ENT_VRSN_ID AS VRSN_ID,
-                            CLS.MNEMONIC AS CLS_CD,
-                            DTR.MNEMONIC AS DTR_CD,
-                            ID_VAL,
-                            NSID AS ID_ISSUER 
-                        FROM
-                            ENT_VRSN_TBL
-                            INNER JOIN CD_VRSN_TBL CLS ON (CLS_CD_ID = CLS.CD_ID)
-                            INNER JOIN CD_VRSN_TBL DTR ON (DTR_CD_ID = DTR.CD_ID)
-                            LEFT JOIN ENT_ID_TBL ON (ENT_VRSN_TBL.ENT_ID = ENT_ID_TBL.ENT_ID AND OBSLT_VRSN_SEQ_ID IS NULL)
-                            LEFT JOIN ID_DMN_TBL ON (ENT_ID_TBL.DMN_ID = ID_DMN_TBL.DMN_ID AND ID_DMN_TBL.OBSLT_UTC IS NULL)
-                        WHERE
-                            ENT_VRSN_TBL.HEAD = TRUE
-                            AND ENT_VRSN_TBL.OBSLT_UTC IS NULL
-                        ]]>
-          </add>
-        </sql>
-      </reader>
-      <writer truncate="true" mode="insert" name="write_entities">
-        <input ref="source_entities" />
-        <connection ref="output" />
-        <target ref="ENT_TBL" />
-      </writer>
-    </flow>
+
   </dataFlows>
 
 </BiDatamartDefinition>

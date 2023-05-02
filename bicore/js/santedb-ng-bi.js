@@ -226,7 +226,7 @@ angular.module('santedb-lib')
 
                         $timeout(() => {
 
-                            $scope.formats = formats.item;
+                            $scope.formats = formats.resource;
                             $scope.report = report;
                             // Process the parameters from the result
                             var parameters = [];
