@@ -96,7 +96,7 @@
         <source>
           <fixed>ENT_ID_TBL OR ACT_ID_TBL</fixed>
         </source>
-        <target name="TYPE" />
+        <target name="RECORD_TYP" />
       </map>
       <map>
         <source name="$reject.reason" />

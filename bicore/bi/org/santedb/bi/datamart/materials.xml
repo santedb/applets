@@ -16,7 +16,7 @@
             <invariant>FirebirdSQL</invariant>
           </providers>
           <![CDATA[
-          SELECT 
+          SELECT DISTINCT
             ENT_ID, 
             TYP.MNEMONIC AS TYPE,
             EXP_UTC AS EXPIRY, 
@@ -112,7 +112,7 @@
         <source>
           <fixed>MAT_TBL</fixed>
         </source>
-        <target name="TYPE" />
+        <target name="RECORD_TYP" />
       </map>
       <map>
         <source name="$reject.reason" />

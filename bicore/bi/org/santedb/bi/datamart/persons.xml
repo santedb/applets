@@ -1,0 +1,196 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<BiDataFlowDefinition xmlns="http://santedb.org/bi" id="org.santedb.bi.datamart.core.persons">
+  <parameters>
+    <ref name="input" />
+    <ref name="output" />
+  </parameters>
+  <pipeline>
+    <log name="log_start" priority="Verbose">Start Persons {{input}}</log>
+    <reader name="input_psns">
+      <connection ref="input" />
+      <sql>
+        <add>
+          <providers>
+            <invariant>sqlite</invariant>
+          </providers>
+          <![CDATA[
+          SELECT DISTINCT
+	          ent_vrsn_tbl.ent_id,
+	          home.TEL_VAL AS tell_home,
+	          cell.TEL_VAL AS tell_cell,
+	          wrk.TEL_VAL AS tell_work,
+	          psn_tbl.DOB,
+	          psn_tbl.DCSD_UTC,
+	          gndr.MNEMONIC AS gender,
+	          plt.LNG_CS AS primary_language,
+	          occ.MNEMONIC AS occupation,
+	          vip.MNEMONIC AS vip,
+	          nat.MNEMONIC AS nationality,
+	          dsdl.TRG_ENT_ID AS dedicated_facility
+          FROM 
+	          psn_tbl 
+	          INNER JOIN ent_vrsn_tbl USING (ent_vrsn_id)
+	          LEFT JOIN CD_VRSN_TBL gndr ON (GNDR.cd_id = psn_tbl.GNDR_CD_ID AND gndr.HEAD = 1)
+	          LEFT JOIN cd_vrsn_tbl occ ON (occ.CD_ID = psn_tbl.OCC_CD_ID AND occ.HEAD = 1)
+	          LEFT JOIN cd_vrsn_tbl vip ON (vip.CD_ID = psn_tbl.VIP_STS_CD_ID AND vip.HEAD = 1)
+	          LEFT JOIN cd_vrsn_tbl nat ON (nat.CD_ID = psn_tbl.NAT_CD_ID AND nat.HEAD = 1)
+	          LEFT JOIN ent_rel_tbl dsdl ON (dsdl.SRC_ENT_ID = ENT_VRSN_tbl.ENT_ID AND dsdl.REL_TYP_CD_ID = x'72175F4580F5E84786BDB5CE25D351F9' AND dsdl.OBSLT_VRSN_SEQ_ID IS NULL)
+	          LEFT JOIN ent_tel_tbl home ON (home.ent_id = ENT_VRSN_tbl.ENT_ID AND home.OBSLT_VRSN_SEQ_ID IS NULL AND home.USE_CD_ID = x'D8AFFAC490FC30438B4BE4E64C86B87B')
+	          LEFT JOIN ent_tel_tbl cell ON (cell.ent_id = ENT_VRSN_TBL.ent_id AND cell.OBSLT_VRSN_SEQ_ID IS NULL AND cell.TYP_CD_ID  = x'E9A4C0C138424440B89B9C9798995B90' OR cell.USE_CD_ID = x'0EF961E139590E43861AF8E885CC353D')
+	          LEFT JOIN ent_tel_tbl wrk ON (wrk.ENT_ID = ENT_VRSN_TBL.ENT_ID AND wrk.OBSLT_VRSN_SEQ_ID IS NULL AND wrk.USE_CD_ID = x'8EF0A6EA8EBB57449DC03A1555FADF5C')
+	          LEFT JOIN PSN_LNG_TBL PLT ON (plt.ent_id = ent_vrsn_tbl.ENT_ID AND plt.obslt_vrsn_Seq_id IS NULL AND plt.PREF_IND = 1)
+          GROUP BY ent_vrsn_tbl.ent_id -- HACK: Use grouping to get distinct on first of the rels (multi-facility persons)
+	           ]]>
+        </add>
+        <add>
+          <providers>
+            <invariant>npgsql</invariant>
+          </providers>
+          <![CDATA[
+          SELECT DISTINCT
+	          ent_vrsn_tbl.ent_id,
+	          home.TEL_VAL AS tell_home,
+	          cell.TEL_VAL AS tell_cell,
+	          wrk.TEL_VAL AS tell_work,
+	          psn_tbl.DOB,
+	          psn_tbl.DCSD_UTC,
+	          gndr.MNEMONIC AS gender,
+	          plt.LNG_CS AS primary_language,
+	          occ.MNEMONIC AS occupation,
+	          vip.MNEMONIC AS vip,
+	          nat.MNEMONIC AS nationality,
+	          dsdl.TRG_ENT_ID AS dedicated_facility
+          FROM 
+	          psn_tbl 
+	          INNER JOIN ent_vrsn_tbl USING (ent_vrsn_id)
+	          LEFT JOIN CD_VRSN_TBL gndr ON (GNDR.cd_id = psn_tbl.GNDR_CD_ID AND gndr.HEAD)
+	          LEFT JOIN cd_vrsn_tbl occ ON (occ.CD_ID = psn_tbl.OCC_CD_ID AND occ.HEAD)
+	          LEFT JOIN cd_vrsn_tbl vip ON (vip.CD_ID = psn_tbl.VIP_STS_CD_ID AND vip.HEAD)
+	          LEFT JOIN cd_vrsn_tbl nat ON (nat.CD_ID = psn_tbl.NAT_CD_ID AND nat.HEAD)
+	          LEFT JOIN ent_rel_tbl dsdl ON (dsdl.SRC_ENT_ID = ENT_VRSN_tbl.ENT_ID AND dsdl.REL_TYP_CD_ID = '455F1772-F580-47E8-86BD-B5CE25D351F9' AND dsdl.OBSLT_VRSN_SEQ_ID IS NULL)
+	          LEFT JOIN ent_tel_tbl home ON (home.ent_id = ENT_VRSN_tbl.ENT_ID AND home.OBSLT_VRSN_SEQ_ID IS NULL AND home.USE_CD_ID = 'f3132fc0-aadd-40b7-b875-961c40695389')
+	          LEFT JOIN ent_tel_tbl cell ON (cell.ent_id = ENT_VRSN_TBL.ent_id AND cell.OBSLT_VRSN_SEQ_ID IS NULL AND cell.TYP_CD_ID  = 'c1c0a4e9-4238-4044-b89b-9c9798995b90' OR cell.USE_CD_ID = 'E161F90E-5939-430E-861A-F8E885CC353D')
+	          LEFT JOIN ent_tel_tbl wrk ON (wrk.ENT_ID = ENT_VRSN_TBL.ENT_ID AND wrk.OBSLT_VRSN_SEQ_ID IS NULL AND wrk.USE_CD_ID = 'EAA6F08E-BB8E-4457-9DC0-3A1555FADF5C')
+	          LEFT JOIN PSN_LNG_TBL PLT ON (plt.ent_id = ent_vrsn_tbl.ENT_ID AND plt.obslt_vrsn_Seq_id IS NULL AND plt.PREF_IND)
+          ]]>
+        </add>
+      </sql>
+    </reader>
+    <reader name="input_uents">
+      <connection ref="input" />
+      <sql>
+        <add>
+          <providers>
+            <invariant>npgsql</invariant>
+            <invariant>sqlite</invariant>
+          </providers>
+          <![CDATA[
+            SELECT DISTINCT ENT_VRSN_TBL.ENT_ID,
+	            sec_usr_tbl.USR_NAME AS USERNAME
+            FROM
+	            usr_ent_tbl
+	            INNER JOIN ent_vrsn_tbl USING (ent_vrsn_id)
+	            INNER JOIN sec_usr_tbl ON (sec_usr_id = usr_id)
+          ]]>
+        </add>
+      </sql>
+    </reader>
+    <reader name="input_pvdr">
+      <connection ref="input" />
+      <sql>
+        <add>
+          <providers>
+            <invariant>sqlite</invariant>
+          </providers>
+          <![CDATA[
+            SELECT DISTINCT ent_id,
+	            cd_vrsn_tbl.mnemonic AS specialty,
+	            CASE WHEN ent_rel_tbl.SRC_ENT_ID = ent_id THEN ent_rel_tbl.trg_ent_id ELSE ent_rel_tbl.src_ent_id END AS usr_id
+            FROM 
+	            PVDR_TBL
+	            INNER JOIN ent_vrsn_tbl USING (ent_vrsn_id)
+	            LEFT JOIN CD_VRSN_TBL ON (cd_vrsn_tbl.cd_id = pvdr_tbl.SPEC_CD_ID AND cd_vrsn_tbl.HEAD)
+	            LEFT JOIN ent_rel_tbl ON (ent_rel_tbl.REL_TYP_CD_ID = x'DF4E5F395D5D50499F5EF827F72E4B32' AND ent_rel_tbl.CLS_CD_ID = x'BCEF7B8ED956F249A7587085CA72D03D' AND (src_ent_id = ent_vrsn_Tbl.ent_id OR trg_ent_id = ent_Vrsn_tbl.ent_id))    
+            ]]>
+        </add>
+        <add>
+          <providers>
+            <invariant>npgsql</invariant>
+          </providers>
+        <![CDATA[
+            SELECT DISTINCT ent_id,
+	            cd_vrsn_tbl.mnemonic AS specialty,
+	            CASE WHEN ent_rel_tbl.SRC_ENT_ID = ent_id THEN ent_rel_tbl.trg_ent_id ELSE ent_rel_tbl.src_ent_id END AS usr_id
+            FROM 
+	            PVDR_TBL
+	            INNER JOIN ent_vrsn_tbl USING (ent_vrsn_id)
+	            LEFT JOIN CD_VRSN_TBL ON (cd_vrsn_tbl.cd_id = pvdr_tbl.SPEC_CD_ID AND cd_vrsn_tbl.HEAD)
+	            LEFT JOIN ent_rel_tbl ON (ent_rel_tbl.REL_TYP_CD_ID = '395F4EDF-5D5D-4950-9F5E-F827F72E4B32' AND ent_rel_tbl.CLS_CD_ID = '8E7BEFBC-56D9-49F2-A758-7085CA72D03D' AND (src_ent_id = ent_vrsn_Tbl.ent_id OR trg_ent_id = ent_Vrsn_tbl.ent_id))    
+            ]]>
+        </add>
+      </sql>
+    </reader>
+    <writer name="output_psns" truncate="true" mode="insert">
+      <input ref="input_psns" />
+      <connection ref="output" />
+      <target ref="PSN_TBL" />
+    </writer>
+    <writer name="output_uents" truncate="true" mode="insert">
+      <input ref="input_uents" />
+      <connection ref="output" />
+      <target ref="USR_TBL" />
+    </writer>
+    <writer name="output_pvd" truncate="true" mode="insert">
+      <input ref="input_pvdr" />
+      <connection ref="output"/>
+      <target ref="PVD_TBL" />
+    </writer>
+    <union name="union_psns">
+      <input ref="output_psns" />
+      <with ref="output_uents" />
+      <with ref="output_pvd" />
+    </union>
+    <filter name="filter_rejects">
+      <input ref="union_psns" />
+      <all>
+        <when field="$reject" op="eq">
+          <bool>true</bool>
+        </when>
+      </all>
+    </filter>
+    <transform name="transform_rejects">
+      <input ref="filter_rejects"/>
+      <map>
+        <source name="ENT_ID" />
+        <target name="RECORD_ID"/>
+      </map>
+      <map>
+        <source>
+          <fixed>PSN_TBL</fixed>
+        </source>
+        <target name="RECORD_TYP"/>
+      </map>
+      <map>
+        <source name="$reject.reason" />
+        <target name="REASON"/>
+      </map>
+    </transform>
+    <writer name="write_rejects" truncate="false" mode="insertUpdate">
+      <input ref="transform_rejects"/>
+      <connection ref="output" />
+      <target ref="REJECT_TBL" />
+    </writer>
+    <filter name="filter_rejects2">
+      <input ref="write_rejects" />
+      <all>
+        <when field="$reject" op="eq">
+          <bool>true</bool>
+        </when>
+      </all>
+    </filter>
+    <halt name="halt_rejects">
+      <input ref="filter_rejects2" />
+    </halt>
+  </pipeline>
+  
+</BiDataFlowDefinition>
