@@ -17,6 +17,6 @@
         i18n-prefix="'ui.bi.marts.'"
         no-buttons="true"
         item-supplement="[ fetchMartState ]"
-        item-actions="[ { name: 'view', sref: 'santedb-admin.bi.marts.view', icon: 'fas fa-eye', className: 'btn btn-primary' }, { name: 'register', action: 'register', icon: 'fas fa-arrow-up', className: 'btn btn-success', when: '!r.deployed' } , { name: 'unregister', action: 'unregister', icon: 'fas fa-arrow-down', className: 'btn btn-warning', when: 'r.deployed'} ]"
+        item-actions="[ { name: 'view', sref: 'santedb-admin.bi.marts.view', icon: 'fas fa-eye', className: 'btn btn-primary', when: 'r.deployed' }, { name: 'register', action: 'register', icon: 'fas fa-arrow-up', className: 'btn btn-success', when: '!r.deployed' } , { name: 'unregister', action: 'unregister', icon: 'fas fa-arrow-down', className: 'btn btn-warning', when: 'r.deployed'} ]"
         properties="[ 'name', 'description', 'registration', 'author' ]" />
 </div>

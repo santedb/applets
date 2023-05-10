@@ -100,7 +100,7 @@
                             <div class="col-xs-12 col-md-10">
                                 <input ng-if="sgn.type == 'HS256'" name="signValue{{$index}}" type="password" ng-model="sgn.value" class="form-control" required="required" />
                                 <select ng-if="sgn.type != 'HS256'" name="signValue{{$index}}" class="form-control" ng-model="sgn.value" required="required">
-                                    <option ng-repeat="cert in reference.certificates.resource" value="cert.thumbprint">{{ cert.sub }}
+                                    <option ng-repeat="cert in reference.certificates.resource" value="{{cert.thumbprint}}">{{ cert.sub }}
                                     </option>
                                 </select>
                                 <span class="text-danger" ng-show="configurationForm['signValue' + $index].$error['pattern']">

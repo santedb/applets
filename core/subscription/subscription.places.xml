@@ -19,11 +19,6 @@
  -->
 <SubscriptionDefinition xmlns="http://santedb.org/subscription" name="ui.subscription.places" uuid="a3f5d2a4-c3ef-4349-9dec-bdd6389a7037" resource="Place">
     <client>
-      <definition resource="Place" name="ui.subscription.place.all" mode="all" ignoreModifiedOn="false" trigger="on-start on-x-net">
-        <filters>
-          <add>statusConcept=!CD4AA3C4-02D5-4CC9-9088-EF8F31E321C5</add>
-        </filters>
-      </definition>
       <definition resource="Place" name="ui.subscription.place.me" mode="subscription" ignoreModifiedOn="true" trigger="always">
         <guards>
           <!--<when>subscribed.classConcept == 'ff34dfa7-c6d3-4f8b-bc9f-14bcdc13ba6c'</when>-->

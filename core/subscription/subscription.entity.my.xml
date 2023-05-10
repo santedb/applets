@@ -89,8 +89,6 @@
   <client>
     <definition resource="Entity" name="ui.subscription.entity.my" mode="subscription" ignoreModifiedOn="false" trigger="always">
       <guards>
-        <!--<when>subscribed.classConcept == 'ff34dfa7-c6d3-4f8b-bc9f-14bcdc13ba6c'</when>
-        <when>subscribed.id</when>-->
 		<when>classConcept=ff34dfa7-c6d3-4f8b-bc9f-14bcdc13ba6c</when>
 		<when>id=!null</when>
       </guards>
@@ -98,7 +96,7 @@
         <add>_subscription=81b65812-c14e-4bb4-b7a1-ca7bcee83dbc&amp;_placeid=$subscribed.id&amp;_expand=relationship&amp;_expand=participation</add>
       </filters>
     </definition>
-    <definition resource="Patient" name="ui.subscription.patient.all" mode="all" ignoreModifiedOn="false" trigger="always"/>
+
 
   </client>
 </SubscriptionDefinition>

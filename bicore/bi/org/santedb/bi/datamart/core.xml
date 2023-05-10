@@ -133,9 +133,8 @@
 
     <!-- Materials Table storing all generic and manufactured material attributes -->
     <table name="MAT_TBL">
-      <column type="string" name="TYPE" />
       <column type="date" name="EXPIRY" />
-      <column type="int" name="QTY" />
+      <column type="decimal" name="QTY" />
       <column type="string" name="UNIT_OF_MEASURE" />
       <column type="string" name="FORM" />
       <parent ref="ENT_TBL" />
