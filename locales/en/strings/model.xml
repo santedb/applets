@@ -506,4 +506,10 @@
   <string name="ui.model.alien.submission.createdBy">Created By</string>
   <string name="ui.model.alien.submission.updatedBy">Updated By</string>
   
+  <!-- Validation Rules -->
+  <string name="ui.model.validationRule.sourceClass">Source Class</string>
+  <string name="ui.model.validationRule.targetClass">Target Class</string>
+  <string name="ui.model.validationRule.appliesTo">Applies To</string>
+  <string name="ui.model.validationRule.relationshipType">Relationship</string>
+  <string name="ui.model.validationRule.description">Description</string>
 </resources>

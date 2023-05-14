@@ -30,6 +30,7 @@
     </property>
   </type>
 
+
   <type type="EntityRelationship" all="false">
     <property name="source" all="true" />
     <property name="target" all="true" />

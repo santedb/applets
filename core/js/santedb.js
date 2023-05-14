@@ -3290,6 +3290,17 @@ function SanteDBWrapper() {
             accept: "application/json",
             api: _ami
         });
+
+         /**
+       * @type {ResourceWrapper}
+       * @memberOf SanteDBWrapper.resources
+       * @summary Wrapper for relationship validation rules
+       */
+      this.validationRule = new ResourceWrapper({
+            resource: "RelationshipValidationRule",
+            accept: "application/json",
+            api: _ami
+        })
     };
 
     // HACK: Wrapper pointer facility = place
