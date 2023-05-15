@@ -20,7 +20,6 @@
  -->
 <SubscriptionDefinition xmlns="http://santedb.org/subscription" name="ui.subscription.core" uuid="a3f5d2a4-c3ef-4349-9dec-bdd6389a7037" resource="IdentifiedData" order="-1000">
   <client>
-    <definition resource="RelationshipValidationRule" name="ui.subscription.validation.all" mode="*" ignoreModifiedOn="false" trigger="on-start" />
     <!-- All Code Systems Should be Downloaded -->
     <definition resource="CodeSystem" name="ui.subscription.codeSystem.all" mode="*" ignoreModifiedOn="false" trigger="on-start on-x-net" />
     <!-- All Reference Terms Should be Downloaded -->
@@ -37,6 +36,8 @@
         <add>statusConcept=!CD4AA3C4-02D5-4CC9-9088-EF8F31E321C5</add>
       </filters>
     </definition>
+    <!-- Ensure all relationships are synchronized -->
+    <definition resource="RelationshipValidationRule" name="ui.subscription.validation.all" mode="*" ignoreModifiedOn="false" trigger="on-start" />
     <!-- All Identity Domains Should be Downloaded -->
     <definition resource="IdentityDomain" name="ui.subscription.identityDomain.all" mode="*" ignoreModifiedOn="false" trigger="on-start" />
     <!-- All Template Definitions Should be Downloaded -->
