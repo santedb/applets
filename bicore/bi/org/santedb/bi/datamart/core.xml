@@ -37,7 +37,7 @@
     <!-- The REJECT_TBL stores all records that were rejected during the run of the ETL -->
     <table name="REJECT_TBL">
       <column type="uuid" key="true" notNull="true" unique="true" name="RECORD_ID"/>
-      <column type="string" name="TYPE" />
+      <column type="string" name="RECORD_TYP" />
       <column type="string" name="REASON" />
     </table>
 
@@ -133,9 +133,8 @@
 
     <!-- Materials Table storing all generic and manufactured material attributes -->
     <table name="MAT_TBL">
-      <column type="string" name="TYPE" />
       <column type="date" name="EXPIRY" />
-      <column type="int" name="QTY" />
+      <column type="decimal" name="QTY" />
       <column type="string" name="UNIT_OF_MEASURE" />
       <column type="string" name="FORM" />
       <parent ref="ENT_TBL" />
@@ -186,12 +185,6 @@
 
     <!-- Persons table storing all persons (user entities, patients, relatives, providers, etc.) -->
     <table name="PSN_TBL">
-      <column type="ref" name="NAME">
-        <otherTable ref="ENT_NAME_TBL" />
-      </column>
-      <column type="ref" name="ADDR">
-        <otherTable ref="ENT_ADDR_TBL" />
-      </column>
       <column type="string" name="TEL_HOME" />
       <column type="string" name="TEL_WORK" />
       <column type="string" name="TEL_CELL" />
@@ -375,7 +368,8 @@
     <flow name="orgs" ref="#org.santedb.bi.datamart.core.orgs" />
     <flow name="places" ref="#org.santedb.bi.datamart.core.places" />
     <flow name="mats" ref="#org.santedb.bi.datamart.core.mats" />
-
+    <flow name="persons" ref="#org.santedb.bi.datamart.core.persons" />
+    
     <flow name="main">
       <pipeline>
         <log name="log_hello" priority="Informational">
@@ -481,6 +475,18 @@
 
             <call>
               <dataFlow ref="places" />
+              <args>
+                <ref name="input">
+                  <value ref="mainDatabase" />
+                </ref>
+                <ref name="output">
+                  <value ref="warehouseDatabase" />
+                </ref>
+              </args>
+            </call>
+
+            <call>
+              <dataFlow ref="persons" />
               <args>
                 <ref name="input">
                   <value ref="mainDatabase" />

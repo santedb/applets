@@ -72,7 +72,7 @@
         <source>
           <fixed>ORG_TBL</fixed>
         </source>
-        <target name="TYPE" />
+        <target name="RECORD_TYP" />
       </map>
       <map>
         <source name="$reject.reason" />

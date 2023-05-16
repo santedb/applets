@@ -49,7 +49,8 @@ angular.module('santedb').controller('WarehouseController', ["$scope", "$rootSco
                         break;
                 }
 
-                retVal += ` @ ${SanteDB.display.renderDate(moment(r.deployed.exec[0].finished || r.deployed.exec[0].started))}`
+                retVal += ` @ ${SanteDB.display.renderDate(moment(r.deployed.exec[0].finished || r.deployed.exec[0].started))}`;
+
             }
             else {
                 retVal = `{{ 'ui.bi.marts.registered' | i18n }}`;

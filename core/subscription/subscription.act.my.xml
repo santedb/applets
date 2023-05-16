@@ -59,7 +59,5 @@
         <add>_subscription=decad40c-a232-482f-b93d-317b25c1ef0d&amp;_placeid=$subscribed.id&amp;_expand=relationship&amp;_expand=participation</add>
       </filters>
     </definition>
-    <definition resource="Act" name="ui.subscription.act.all" mode="all" ignoreModifiedOn="false" trigger="always">
-    </definition>
   </client>
 </SubscriptionDefinition>
