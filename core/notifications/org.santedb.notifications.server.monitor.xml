@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<NotificationTemplate xmlns="http://santedb.org/notification" lang="en" id="org.santedb.notifications.server.monitor">
+    <subject>SanteDB Server Event on ${sourceHost} - ${event}</subject>
+    <![CDATA[
+    The SanteDB server running on ${sourceMachine} has raised an event ${event}:
+
+    Service: ${sender}
+    Event Type: ${type}
+    Summary: ${summary}
+    ]]>
+</NotificationTemplate>
