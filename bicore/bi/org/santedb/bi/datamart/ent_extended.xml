@@ -1,0 +1,115 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<BiDataFlowDefinition xmlns="http://santedb.org/bi" id="org.santedb.bi.datamart.core.entities.ext">
+  <parameters>
+    <ref name="input" />
+    <ref name="output" />
+  </parameters>
+  <pipeline>
+    <log name="log_start" priority="Verbose">Start Entitie Tags {{input}}</log>
+    <reader name="source_tags">
+      <connection ref="input" />
+      <sql>
+        <add>
+          <providers>
+            <invariant>npgsql</invariant>
+            <invariant>FirebirdSQL</invariant>
+            <invariant>sqlite</invariant>
+          </providers>
+          <![CDATA[ 
+            SELECT 
+              TAG_ID AS ENT_TAG_ID, 
+              TAG_NAME AS KEY, 
+              TAG_VALUE AS VALUE, 
+              ENT_ID,
+              TAG_ID AS ID_OF_RECORD,
+              'ENT_TAG' AS TYP_OF_RECORD
+            FROM 
+	            ENT_TAG_TBL 
+            WHERE 
+	            OBSLT_UTC IS NULL;
+            ]]>
+        </add>
+      </sql>
+    </reader>
+    <writer truncate="true" mode="insert" name="write_tags">
+      <input ref="source_tags" />
+      <connection ref="output" />
+      <target ref="ENT_TAG_TBL" />
+    </writer>
+    <reader name="source_exts">
+      <connection ref="input" />
+      <sql>
+        <add>
+          <providers>
+            <invariant>npgsql</invariant>
+            <invariant>sqlite</invariant>
+            <invariant>FirebirdSQL</invariant>
+          </providers>
+          <![CDATA[
+          SELECT 
+	          ENT_EXT_ID,
+	          EXT_TYP_TBL.EXT_NAME AS URI,
+	          HDLR_CLS AS TYP,
+	          EXT_VAL AS VALUE,
+	          ENT_ID,
+            ENT_EXT_ID AS ID_OF_RECORD,
+            'ENT_EXT' AS TYP_OF_RECORD
+          FROM 
+	          ENT_EXT_TBL
+	          INNER JOIN EXT_TYP_TBL USING (EXT_TYP_ID)
+          WHERE 
+            OBSLT_VRSN_SEQ_ID IS NULL
+        ]]>
+        </add>
+      </sql>
+    </reader>
+    <writer truncate="true" mode="insert" name="write_exts">
+      <input ref="source_exts" />
+      <connection ref="output" />
+      <target ref="ENT_EXT_TBL" />
+    </writer>
+    <union name="union_write">
+      <input ref="write_tags" />
+      <with ref="write_exts" />
+    </union>
+    <filter name="filter_rejects">
+      <input ref="union_write" />
+      <all>
+        <when field="$reject" op="eq">
+          <bool>true</bool>
+        </when>
+      </all>
+    </filter>
+    <transform name="transform_rejects">
+      <input ref="filter_rejects" />
+      <map>
+        <source name="ID_OF_RECORD" />
+        <target name="RECORD_ID" />
+      </map>
+      <map>
+        <source name="TYP_OF_RECORD" />
+        <target name="RECORD_TYP" />
+      </map>
+      <map>
+        <source name="$reject.reason" />
+        <target name="REASON" />
+      </map>
+    </transform>
+    <writer mode="insertUpdate" truncate="false" name="write_rejects">
+      <input ref="transform_rejects" />
+      <connection ref="output" />
+      <target ref="REJECT_TBL" />
+    </writer>
+    <filter name="filter_rejects2">
+      <input ref="write_rejects" />
+      <all>
+        <when field="$reject" op="eq">
+          <bool>true</bool>
+        </when>
+      </all>
+    </filter>
+    <halt name="halt_rejects">
+      <input ref="filter_rejects2" />
+    </halt>
+  </pipeline>
+</BiDataFlowDefinition>
