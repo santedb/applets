@@ -11,19 +11,18 @@
             <p class="m-auto"><i class="fas fa-circle-notch fa-spin"></i> {{ 'ui.wait' | i18n }}</p>
         </div>
     </div>
-    <div ng-show="scopedObject" ng-controller="AuditDataController">
+    <div ng-show="scopedObject" ng-controller="ViewAuditController">
         <div class="card" ng-repeat="o in scopedObject.audit.object track by $index">
             <div class="card-header">
                 <h5 class="m-1 card-title" ng-switch="o.idType">
-
                     <a ng-switch-when="Uri" href="{{o.id}}"> {{ o.id }} <sup><i
                                 class="fas fa-external-link-alt"></i></sup></a>
                     <a ng-switch-when="UserIdentifier" ui-sref="santedb-admin.security.users.edit({id:o.id})">
                         <i class="fas fa-user"></i> {{ o.id }}</a>
 
-                    <a ng-switch-when="PatientNumber"
-                        ng-click="navigateObject('PAT', o.id)">
-                        <i class="fas fa-hospital-user"></i> {{ o.id }}</a>
+                    <button type="button" class="btn btn-link" ng-switch-when="PatientNumber"
+                        ng-click="navigateObject('Patient', { id: o.id })">
+                        <i class="fas fa-hospital-user"></i> {{ o.id }}</button>
                     <span ng-switch-when="Custom" ng-switch="o.customCode.code">
                         <a ng-switch-when="SecurityRole" ui-sref="santedb-admin.security.groups.edit({id:o.id})">
                             <i class="fas fa-users"></i> {{ o.id }}</a>
@@ -93,7 +92,7 @@
                         </div>
 
                     </div>
-                    <div class="row" ng-if="o.data.length">
+                    <div class="row" ng-if="o.dictionary.length">
                         <label class="control-label col-sm-2 col-xs-12">{{ 'ui.admin.audit.data' | i18n }}</label>
                         <div class="col-sm-10 col-xs-12">
                             <table class="table table-striped">
@@ -104,7 +103,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr ng-repeat="v in o.data">
+                                    <tr ng-repeat="v in o.dictionary">
                                         <td>{{ v.key }}</td>
                                         <td>{{ v.value | base64decode }}</td>
                                     </tr>

@@ -1,5 +1,5 @@
 <div xmlns="http://www.w3.org/1999/xhtml">
-    <fieldset ng-repeat="addr in addressEdit" class="m-2" ng-if="!simpleEntry">
+    <fieldset ng-repeat="addr in addressEdit track by $index" class="m-2" ng-if="!simpleEntry">
         <legend>{{ addr.useModel | concept }}</legend>
         <div class="container-fluid">
             <!-- #include virtual="/org.santedb.uicore/directives/partials/addressEdit.html" -->

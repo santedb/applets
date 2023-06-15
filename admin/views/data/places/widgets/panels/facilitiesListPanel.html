@@ -1,0 +1,54 @@
+<div xmlns="http://www.w3.org/1999/xhtml" xmlns:sdb="http://santedb.org/applet">
+    <sdb:widget order="10" name="org.santedb.widget.admin.panel.place.facilities.list" type="Panel"
+        context="org.santedb.place.admin.facilities" size="Large">
+        <sdb:icon>fas fa-fw fa-hospital</sdb:icon>
+        <sdb:description lang="en">Facilities</sdb:description>
+    </sdb:widget>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col mb-2">
+                <div class="d-flex align-items-end">
+                    <div class="flex-grow-1">
+                        Add Facility:
+                        <entity-search type="'Place'" search-field="'name.component.value'" name="facility"
+                            ng-model="scopedObject.newFacility"
+                            filter="{'classConcept': 'ff34dfa7-c6d3-4f8b-bc9f-14bcdc13ba6c', 'statusConcept': 'c8064cbd-fa06-4530-b430-1a52f1530c27' }"
+                            class="form-control"></entity-search>
+                    </div>
+                    <div class="ms-2 ml-2">
+                        <button type="button" name="addFacilityButton" id="addFacilityButton"
+                            ng-click="scopedObject.parentScope.addNewFacility()" class="btn btn-primary">{{
+                            'ui.action.add' | i18n }}</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col mb-2">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Name</th>
+                            <th>Type</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr
+                            ng-repeat="facility in scopedObject.place.relationship.DedicatedServiceDeliveryLocation track by facility.$id">
+                            <td>{{ facility.target }}</td>
+                            <td>{{ facility.targetModel.name | name:'OfficialRecord' }}</td>
+                            <td>{{ facility.targetModel.typeConceptModel.mnemonic }}</td>
+                            <td>
+                                <button type="button"
+                                    ng-click="scopedObject.parentScope.removeFacility(facility.target)"
+                                    class="btn btn-danger">{{'ui.action.remove' | i18n }}</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

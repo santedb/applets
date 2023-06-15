@@ -27,7 +27,7 @@
                     </span>
                 </td>
                 <td>
-                    {{ issue.typeModel }}
+                    {{ issue.typeModel || detectedIssueTypes[issue.type] | concept }}
                 </td>
                 <td>
                     {{ issue.id | i18n }}
