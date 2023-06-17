@@ -121,6 +121,26 @@
       <column type="string" name="NAME_FAMILY" />
     </table>
 
+    <!-- Tags for entities -->
+    <table name="ENT_TAG_TBL">
+      <column type="uuid" notNull="true" key="true" name="ENT_TAG_ID"/>
+      <column type="string" notNull="true" index="true" name="KEY"/>
+      <column type="string" notNull="true" name="VALUE" />
+      <column type="ref" name="ENT_ID">
+        <otherTable ref="ENT_TBL" />
+      </column>
+    </table>
+    
+    <table name="ENT_EXT_TBL">
+      <column type="uuid" notNull="true" key="true" name="ENT_EXT_ID"/>
+      <column type="string" notNull="true" index="true" name="URI" />
+      <column type="string" notNull="true" name="TYP" />
+      <column type="blob" name="VALUE" />
+      <column type="ref" name="ENT_ID">
+        <otherTable ref="ENT_TBL"/>
+      </column>
+    </table>
+    
     <!-- Organization Registration Table -->
     <table name="ORG_TBL">
       <column type="string" name="TEL" />
@@ -133,8 +153,9 @@
 
     <!-- Materials Table storing all generic and manufactured material attributes -->
     <table name="MAT_TBL">
+      <column type="string" name="TYPE" />
       <column type="date" name="EXPIRY" />
-      <column type="decimal" name="QTY" />
+      <column type="int" name="QTY" />
       <column type="string" name="UNIT_OF_MEASURE" />
       <column type="string" name="FORM" />
       <parent ref="ENT_TBL" />
@@ -201,13 +222,30 @@
       <parent ref="ENT_TBL" />
     </table>
 
+    <!-- User Entity Table -->
+    <table name="USR_TBL">
+      <column type="string" name="USERNAME" />
+      <parent ref="PSN_TBL" />
+    </table>
+
+    <!-- Provider Entity table -->
+    <table name="PVD_TBL">
+      <column type="ref" name="USR_ID">
+        <otherTable ref="USR_TBL" />
+      </column>
+      <column type="string" name="SPECIALTY" />
+      <parent ref="PSN_TBL" />
+    </table>
+
+
     <!-- Patient attributes are stored in the patient table -->
     <table name="PAT_TBL">
       <column type="int" name="MB_ORD" />
       <column type="string" name="LIVING_ARR" />
       <column type="string" name="RELIGION" />
-      <column type="string" name="EHT_GROUP" />
+      <column type="string" name="ETHNICITY" />
       <column type="string" name="EDUCATION" />
+      <column type="string" name="MARITAL_STS" />
       <column type="ref" name="MOTHER">
         <otherTable ref="PSN_TBL" />
       </column>
@@ -229,21 +267,12 @@
       <column type="ref" name="SCHOOL">
         <otherTable ref="ORG_TBL" />
       </column>
-      <parent ref="PSN_TBL" />
-    </table>
-
-    <!-- User Entity Table -->
-    <table name="USR_TBL">
-      <column type="string" name="USERNAME" />
-      <parent ref="PSN_TBL" />
-    </table>
-
-    <!-- Provider Entity table -->
-    <table name="PVD_TBL">
-      <column type="ref" name="USR_ID">
-        <otherTable ref="USR_TBL" />
+      <column type="ref" name="PROVIDER">
+        <otherTable ref="PVD_TBL" />
       </column>
-      <column type="string" name="SPECIALTY" />
+      <column type="ref" name="SCOPER">
+        <otherTable ref="ORG_TBL" />
+      </column>
       <parent ref="PSN_TBL" />
     </table>
 
@@ -356,6 +385,28 @@
       <column type="int" name="QTY" />
     </table>
 
+
+    <!-- Tags for entities -->
+    <table name="ACT_TAG_TBL">
+      <column type="uuid" notNull="true" key="true" name="ACT_TAG_ID"/>
+      <column type="string" notNull="true" index="true" name="KEY"/>
+      <column type="string" notNull="true" name="VALUE" />
+      <column type="ref" name="ACT_ID">
+        <otherTable ref="ACT_TBL" />
+      </column>
+    </table>
+
+    <table name="ACT_EXT_TBL">
+      <column type="uuid" notNull="true" key="true" name="ACT_EXT_ID"/>
+      <column type="string" notNull="true" index="true" name="URI" />
+      <column type="string" notNull="true" name="TYP" />
+      <column type="blob" name="VALUE" />
+      <column type="ref" name="ACT_ID">
+        <otherTable ref="ACT_TBL"/>
+      </column>
+    </table>
+
+
   </schema>
 
   <dataFlows>
@@ -369,7 +420,9 @@
     <flow name="places" ref="#org.santedb.bi.datamart.core.places" />
     <flow name="mats" ref="#org.santedb.bi.datamart.core.mats" />
     <flow name="persons" ref="#org.santedb.bi.datamart.core.persons" />
-    
+    <flow name="entity_ext" ref="#org.santedb.bi.datamart.core.entities.ext" />
+    <flow name="act_ext" ref="#org.santedb.bi.datamart.core.acts.ext" />
+    <flow name="patients" ref="#org.santedb.bi.datamart.core.patients" />
     <flow name="main">
       <pipeline>
         <log name="log_hello" priority="Informational">
@@ -408,6 +461,28 @@
             </call>
             <call>
               <dataFlow ref="acts" />
+              <args>
+                <ref name="input">
+                  <value ref="mainDatabase" />
+                </ref>
+                <ref name="output">
+                  <value ref="warehouseDatabase" />
+                </ref>
+              </args>
+            </call>
+            <call>
+              <dataFlow ref="entity_ext"/>
+              <args>
+                <ref name="input">
+                  <value ref="mainDatabase" />
+                </ref>
+                <ref name="output">
+                  <value ref="warehouseDatabase" />
+                </ref>
+              </args>
+            </call>
+            <call>
+              <dataFlow ref="act_ext"/>
               <args>
                 <ref name="input">
                   <value ref="mainDatabase" />
@@ -487,6 +562,18 @@
 
             <call>
               <dataFlow ref="persons" />
+              <args>
+                <ref name="input">
+                  <value ref="mainDatabase" />
+                </ref>
+                <ref name="output">
+                  <value ref="warehouseDatabase" />
+                </ref>
+              </args>
+            </call>
+
+            <call>
+              <dataFlow ref="patients" />
               <args>
                 <ref name="input">
                   <value ref="mainDatabase" />

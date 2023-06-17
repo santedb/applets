@@ -1,0 +1,148 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<BiDataFlowDefinition xmlns="http://santedb.org/bi" id="org.santedb.bi.datamart.core.patients">
+  <parameters>
+    <ref name="input"/>
+    <ref name="output"/>
+  </parameters>
+  <pipeline>
+    <log name="log_start" priority="Verbose">Start Patients on {{input}}</log>
+    <reader name="source_patients">
+      <connection ref="input" />
+      <schema ref="PAT_TBL"/>
+      <sql>
+        <add>
+          <providers>
+            <invariant>sqlite</invariant>
+          </providers>
+          <![CDATA[ 
+            SELECT DISTINCT
+	            ENT_VRSN_TBL.ENT_ID, 
+	            PAT_TBL.MB_ORD ,
+	            LVNR.MNEMONIC AS LIVING_ARR,
+	            RLGN.MNEMONIC AS RELIGION,
+	            ETHG.MNEMONIC AS ETHNICITY,
+	            EDUC.MNEMONIC AS EDUCATION,
+	            MRTL.MNEMONIC AS MARITAL_STS,
+	            MOTHER.TRG_ENT_ID AS MOTHER,
+	            FATHER.TRG_ENT_ID AS FATHER,
+	            GUARD.TRG_ENT_ID AS GUARDIAN,
+	            SDL.TRG_ENT_ID AS REGISTRATION_FACILITY,
+	            BIRTH.TRG_ENT_ID AS BIRTHPLACE,
+	            CIT.TRG_ENT_ID AS CITIZENSHIP,
+	            STU.TRG_ENT_ID AS SCHOOL,
+	            HP.TRG_ENT_ID AS PROVIDER,
+	            SCP.TRG_ENT_ID AS SCOPER
+            FROM 
+	            pat_tbl 
+	            INNER JOIN ent_vrsn_tbl USING (ent_vrsn_id)
+	            LEFT JOIN cd_vrsn_tbl RLGN ON (RLGN_CD_ID = rlgn.cd_id AND RLGN.OBSLT_UTC IS NULL)
+	            LEFT JOIN cd_vrsn_tbl LVNR ON (LVNR.CD_ID = LVN_ARG_CD_ID AND LVNR.OBSLT_UTC IS NULL)
+	            LEFT JOIN cd_vrsn_tbl ETHG ON (ETH_GRP_CD_ID = ETHG.CD_ID AND ETHG.OBSLT_UTC IS NULL)
+	            LEFT JOIN cd_vrsn_tbl EDUC ON (EDUC.CD_ID = EDU_LVL_CD_ID AND EDUC.OBSLT_UTC IS NULL)
+	            LEFT JOIN cd_vrsn_tbl MRTL ON (MRTL.CD_ID = MRTL_STS_CD_ID  AND MRTL.OBSLT_UTC IS NULL)
+	            LEFT JOIN ENT_REL_TBL MOTHER ON (MOTHER.SRC_ENT_ID = ENT_VRSN_ID AND MOTHER.REL_TYP_CD_ID = X'E564FF2964B51A4192C76818C02A9E48' AND MOTHER.OBSLT_VRSN_SEQ_ID IS NULL)
+	            LEFT JOIN ENT_REL_TBL FATHER ON (FATHER.SRC_ENT_ID = ENT_VRSN_ID AND FATHER.REL_TYP_CD_ID = X'CC8ED140F88F034E8E5897A980F04060' AND FATHER.OBSLT_VRSN_SEQ_ID IS NULL)
+	            LEFT JOIN ENT_REL_TBL GUARD ON (GUARD.SRC_ENT_ID = ENT_VRSN_ID AND GUARD.REL_TYP_CD_ID = X'34238E3BCC4C244F8AAE37341EA03D3E' AND GUARD.OBSLT_VRSN_SEQ_ID IS NULL)
+	            LEFT JOIN ENT_REL_TBL BIRTH ON (BIRTH.SRC_ENT_ID = ENT_VRSN_ID AND BIRTH.REL_TYP_CD_ID = X'487EEFF3B7D83040B431AFF7E0E1CB76' AND BIRTH.OBSLT_VRSN_SEQ_ID IS NULL)
+	            LEFT JOIN ENT_REL_TBL CIT ON (CIT.SRC_ENT_ID = ENT_VRSN_ID AND CIT.REL_TYP_CD_ID = X'5231B1353CE4CB4B8649A9E83BEE33A2' AND CIT.OBSLT_VRSN_SEQ_ID IS NULL)
+	            LEFT JOIN ENT_REL_TBL SDL ON (SDL.SRC_ENT_ID = ENT_VRSN_ID AND SDL.REL_TYP_CD_ID = X'A7DF34FFD3C68B4FBC9F14BCDC13BA6C' AND SDL.OBSLT_VRSN_SEQ_ID IS NULL)
+	            LEFT JOIN ENT_REL_TBL STU ON (STU.SRC_ENT_ID = ENT_VRSN_ID AND STU.REL_TYP_CD_ID = X'6675150CE9D176498542473CAA9BA2A4' AND STU.OBSLT_VRSN_SEQ_ID IS NULL)
+	            LEFT JOIN ENT_REL_TBL HP ON (HP.SRC_ENT_ID = ENT_VRSN_ID AND HP.REL_TYP_CD_ID = X'D8FE046B64C19C46910BF824C2BDA4F0' AND HP.OBSLT_VRSN_SEQ_ID IS NULL)
+	            LEFT JOIN ENT_REL_TBL SCP ON (SCP.SRC_ENT_ID = ENT_VRSN_ID AND SCP.REL_TYP_CD_ID = X'5979D3FCC25BDB48BBB536AFD9EDF19A' AND SCP.OBSLT_VRSN_SEQ_ID IS NULL)
+          WHERE 
+            ENT_VRSN_TBL.OBSLT_UTC IS NULL
+            ]]>
+        </add>
+        <add>
+          <providers>
+            <invariant>npgsql</invariant>
+          </providers>
+          <![CDATA[
+            SELECT DISTINCT
+	            ENT_VRSN_TBL.ENT_ID, 
+	            PAT_TBL.MB_ORD ,
+	            LVNR.MNEMONIC AS LIVING_ARR,
+	            RLGN.MNEMONIC AS RELIGION,
+	            ETHG.MNEMONIC AS ETHNICITY,
+	            EDUC.MNEMONIC AS EDUCATION,
+	            MRTL.MNEMONIC AS MARITAL_STS,
+	            MOTHER.TRG_ENT_ID AS MOTHER,
+	            FATHER.TRG_ENT_ID AS FATHER,
+	            GUARD.TRG_ENT_ID AS GUARDIAN,
+	            SDL.TRG_ENT_ID AS REGISTRATION_FACILITY,
+	            BIRTH.TRG_ENT_ID AS BIRTHPLACE,
+	            CIT.TRG_ENT_ID AS CITIZENSHIP,
+	            STU.TRG_ENT_ID AS SCHOOL,
+	            HP.TRG_ENT_ID AS PROVIDER,
+	            SCP.TRG_ENT_ID AS SCOPER
+            FROM 
+	            pat_tbl 
+	            INNER JOIN ent_vrsn_tbl USING (ent_vrsn_id)
+	            LEFT JOIN cd_vrsn_tbl RLGN ON (RLGN_CD_ID = rlgn.cd_id AND RLGN.OBSLT_UTC IS NULL)
+	            LEFT JOIN cd_vrsn_tbl LVNR ON (LVNR.CD_ID = LVN_ARG_CD_ID AND LVNR.OBSLT_UTC IS NULL)
+	            LEFT JOIN cd_vrsn_tbl ETHG ON (ETH_GRP_CD_ID = ETHG.CD_ID AND ETHG.OBSLT_UTC IS NULL)
+	            LEFT JOIN cd_vrsn_tbl EDUC ON (EDUC.CD_ID = EDU_LVL_CD_ID AND EDUC.OBSLT_UTC IS NULL)
+	            LEFT JOIN cd_vrsn_tbl MRTL ON (MRTL.CD_ID = MRTL_STS_CD_ID  AND MRTL.OBSLT_UTC IS NULL)
+	            LEFT JOIN ENT_REL_TBL MOTHER ON (MOTHER.SRC_ENT_ID = ENT_VRSN_ID AND MOTHER.REL_TYP_CD_ID = '29ff64e5-b564-411a-92c7-6818c02a9e48' AND MOTHER.OBSLT_VRSN_SEQ_ID IS NULL)
+	            LEFT JOIN ENT_REL_TBL FATHER ON (FATHER.SRC_ENT_ID = ENT_VRSN_ID AND FATHER.REL_TYP_CD_ID = '40d18ecc-8ff8-4e03-8e58-97a980f04060' AND FATHER.OBSLT_VRSN_SEQ_ID IS NULL)
+	            LEFT JOIN ENT_REL_TBL GUARD ON (GUARD.SRC_ENT_ID = ENT_VRSN_ID AND GUARD.REL_TYP_CD_ID = '3b8e2334-4ccc-4f24-8aae-37341ea03d3e' AND GUARD.OBSLT_VRSN_SEQ_ID IS NULL)
+	            LEFT JOIN ENT_REL_TBL BIRTH ON (BIRTH.SRC_ENT_ID = ENT_VRSN_ID AND BIRTH.REL_TYP_CD_ID = 'f3ef7e48-d8b7-4030-b431-aff7e0e1cb76' AND BIRTH.OBSLT_VRSN_SEQ_ID IS NULL)
+	            LEFT JOIN ENT_REL_TBL CIT ON (CIT.SRC_ENT_ID = ENT_VRSN_ID AND CIT.REL_TYP_CD_ID = '35b13152-e43c-4bcb-8649-a9e83bee33a2' AND CIT.OBSLT_VRSN_SEQ_ID IS NULL)
+	            LEFT JOIN ENT_REL_TBL SDL ON (SDL.SRC_ENT_ID = ENT_VRSN_ID AND SDL.REL_TYP_CD_ID = 'ff34dfa7-c6d3-4f8b-bc9f-14bcdc13ba6c' AND SDL.OBSLT_VRSN_SEQ_ID IS NULL)
+	            LEFT JOIN ENT_REL_TBL STU ON (STU.SRC_ENT_ID = ENT_VRSN_ID AND STU.REL_TYP_CD_ID = '0c157566-d1e9-4976-8542-473caa9ba2a4' AND STU.OBSLT_VRSN_SEQ_ID IS NULL)
+	            LEFT JOIN ENT_REL_TBL HP ON (HP.SRC_ENT_ID = ENT_VRSN_ID AND HP.REL_TYP_CD_ID = '6b04fed8-c164-469c-910b-f824c2bda4f0' AND HP.OBSLT_VRSN_SEQ_ID IS NULL)
+	            LEFT JOIN ENT_REL_TBL SCP ON (SCP.SRC_ENT_ID = ENT_VRSN_ID AND SCP.REL_TYP_CD_ID = 'fcd37959-5bc2-48db-bbb5-36afd9edf19a' AND SCP.OBSLT_VRSN_SEQ_ID IS NULL)
+          WHERE 
+            ENT_VRSN_TBL.OBSLT_UTC IS NULL
+          ]]>
+        </add>
+      </sql>
+    </reader>
+    <writer truncate="true" mode="insert" name="write_patients">
+      <input ref="source_patients"/>
+      <connection ref="output" />
+      <target ref="PAT_TBL" />
+    </writer>
+    <filter name="filter_rejects">
+      <input ref="write_patients" />
+      <all>
+        <when field="$reject" op="eq">
+          <bool>true</bool>
+        </when>
+      </all>
+    </filter>
+    <transform name="transform_rejects">
+      <input ref="filter_rejects" />
+      <map>
+        <source name="ENT_ID" />
+        <target name="RECORD_ID" />
+      </map>
+      <map>
+        <source>
+          <fixed>PAT_TBL</fixed>
+        </source>
+        <target name="RECORD_TYP" />
+      </map>
+      <map>
+        <source name="$reject.reason" />
+        <target name="REASON" />
+      </map>
+    </transform>
+    <writer mode="insertUpdate" truncate="false" name="write_rejects">
+      <input ref="transform_rejects" />
+      <connection ref="output" />
+      <target ref="REJECT_TBL" />
+    </writer>
+    <filter name="filter_rejects2">
+      <input ref="write_rejects" />
+      <all>
+        <when field="$reject" op="eq">
+          <bool>true</bool>
+        </when>
+      </all>
+    </filter>
+    <halt name="halt_rejects">
+      <input ref="filter_rejects2" />
+    </halt>
+  </pipeline>
+</BiDataFlowDefinition>
