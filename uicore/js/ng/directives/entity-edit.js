@@ -422,7 +422,9 @@ angular.module('santedb-lib')
                     if (!authority.generator)
                         authority = $scope.authorities[idDomain.domainModel.domainName];
                     try {
-                        idDomain.value = authority.generator();
+                        var generated = authority.generator();
+                        idDomain.value = generated.value;
+                        idDomain.checkDigit = generated.checkDigit;
                     } catch (e) {
                         $rootScope.errorHandler(e);
                     }
@@ -510,7 +512,7 @@ angular.module('santedb-lib')
                 noScan: '<',
                 noLabel: '<'
             },
-            controller: ['$scope', '$rootScope', function ($scope, $rootScope) {
+            controller: ['$scope', '$rootScope', '$timeout', function ($scope, $rootScope, $timeout) {
 
                 $scope.generateId = function () {
                     var authority = $scope.identifier.authority;
@@ -531,9 +533,17 @@ angular.module('santedb-lib')
                         var parser = SanteDB.application.getIdentifierParser($scope.identifier.authority.domainName);
                         if (parser)
                             data = parser(data);
-                        $scope.identifier.value = data;
-                        try { $scope.$apply(); }
-                        catch (e) { }
+
+                        $timeout(()=>{
+                            if(data.value) 
+                            {
+                                $scope.identifier.value = data.value;
+                                $scope.identifier.checkDigit = data.checkDigit;
+                            }
+                            else {
+                                $scope.identifier.value = data;
+                            }
+                        });
                     }
                     catch (e) {
                         $rootScope.errorHandler(e);

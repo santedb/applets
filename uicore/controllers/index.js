@@ -107,6 +107,11 @@ var santedbApp = angular.module('santedb', ['ngSanitize', 'ui.router', 'oc.lazyL
                     configuration = await SanteDB.configuration.getAsync();
                 } else {
                     configuration._isConfigured = SanteDB.configuration.getRealm() != null;
+                    $rootScope.$watch("session", async function(n,o) {
+                        if(n && !o) {
+                            initialize();
+                        }
+                    })
                 }
 
                 // Extended attributes

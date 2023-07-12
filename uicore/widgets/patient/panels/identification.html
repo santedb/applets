@@ -31,7 +31,7 @@
                         </td>
                         <td>
                             <span ng-repeat="identifier in idArray">
-                            {{ identifier.value }}<br/>
+                            {{ identifier.value }} <span ng-if="identifier.checkDigit">({{identifier.checkDigit}})</span><br/>
                             </span>
                         </td>
                     </tr>
@@ -49,7 +49,6 @@
             </div>
             <div class="alert alert-warning" ng-if="scopedObject.tag['$mdm.type'] == 'L'"><i
                     class="fas fa-exclamation-triangle"></i> {{ 'ui.mdm.edit.local' | i18n }}</div>
-
             <identifier-list-edit identifier="editObject.identifier" container-class="editObject.classConcept" owner-form="panel.editForm" />
         </form>
     </div>
