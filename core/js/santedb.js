@@ -2038,7 +2038,20 @@ function SanteDBWrapper() {
                         var parser = SanteDB.application.getIdentifierParser(idDomain[0]);
                         if (parser) qrCodeData = parser(qrCodeData);
                     }
-                    var result = await SanteDB.resources.entity.findAsync({ "identifier.value": qrCodeData });
+
+                    var query = {};
+                    if(qrCodeData.value) {
+                        query = {
+                            "identifier.value" : qrCodeData.value,
+                            "identifier.checkDigit" : qrCodeData.checkDigit
+                        };
+                    }
+                    else {
+                        query = {
+                            "identifier.value" : qrCodeData
+                        }
+                    }
+                    var result = await SanteDB.resources.entity.findAsync(query);
                     result.$search = qrCodeData;
                     return result;
                 }

@@ -49,6 +49,9 @@
                                     {{
                                     patient.identifier[$root.system.config.application.setting['aa.preferred']][0].value
                                     }}
+                                    <span ng-if="entity.identifier[$root.system.config.application.setting['aa.preferred']][0].checkDigit">
+                                        ({{entity.identifier[$root.system.config.application.setting['aa.preferred']][0].checkDigit}})
+                                    </span>
                                     <span class="d-none d-md-inline">
                                         <span class="badge badge-primary">{{
                                             patient.identifier[$root.system.config.application.setting['aa.place.preferred']][0].domainModel.name
@@ -59,7 +62,9 @@
                                         <div class="p-2"
                                             ng-if="id[0].value &amp;&amp; domain != $root.system.config.application.setting['aa.preferred']"
                                             ng-repeat="(domain, id) in patient.identifier track by $index">
-                                            <i class="far fa-id-card"></i> {{ id[0].value }} <span class="badge badge-info">{{
+                                            <i class="far fa-id-card"></i> {{ id[0].value }} 
+                                            <span ng-if="id[0].checkDigit">({{id[0].checkDigit}})</span> 
+                                            <span class="badge badge-info">{{
                                                 id[0].domainModel.name }}</span>
                                         </div>
                                 </div>
