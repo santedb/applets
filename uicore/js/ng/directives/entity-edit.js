@@ -114,10 +114,10 @@ angular.module('santedb-lib')
                 else  // address exists so let's move everything over to $other
                 {
                     var flatAddressList = scope.address.$other || [];
-                    Object.keys(scope.address).forEach(function (key) {
+                    Object.keys(scope.address).filter(key=>key != "$other").forEach(function (key) {
                         var address = scope.address[key];
 
-                        if (!address.useModel || !address.useModel.id)
+                        if ((!address.useModel || !address.useModel.id) && key != '$other')
                             SanteDB.resources.concept.findAsync({ mnemonic: key })
                                 .then(function (bundle) {
                                     if (bundle.resource && bundle.resource.length > 0)
@@ -249,8 +249,8 @@ angular.module('santedb-lib')
                 // Flatten name
                 var flattenName = function () {
                     bound = true;
-                    var flatNameList = [];
-                    Object.keys(scope.name).forEach(function (key) {
+                    var flatNameList = scope.name.$other || [];
+                    Object.keys(scope.name).filter(key=>key != "$other").forEach(function (key) {
                         var name = scope.name[key];
 
                         if ((!name.useModel || !name.useModel.id) && key != "$other")

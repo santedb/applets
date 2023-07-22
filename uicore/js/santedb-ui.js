@@ -469,11 +469,17 @@ SanteDBWrapper.prototype.display = new function () {
 
 // Initialize the MermaidAPI
 mermaid.mermaidAPI.initialize({
-    "theme": "default",
+    "theme": "neutral",
     flowchart: {
         width: '100%',
         useMaxWidth: false,
         htmlLabels: true    
+    },
+    erDiagram: {
+        width: '100%',
+        useMaxWidth: false,
+        htmlLabels: true    
+
     },
     securityLevel: 'loose'
 });
