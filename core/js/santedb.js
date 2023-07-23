@@ -3304,7 +3304,7 @@ function SanteDBWrapper() {
             api: _ami
         });
 
-         /**
+      /**
        * @type {ResourceWrapper}
        * @memberOf SanteDBWrapper.resources
        * @summary Wrapper for relationship validation rules
@@ -3313,7 +3313,30 @@ function SanteDBWrapper() {
             resource: "RelationshipValidationRule",
             accept: "application/json",
             api: _ami
-        })
+        });
+
+      /**
+       * @type {ResourceWrapper}
+       * @memberOf SanteDBWrapper.resources
+       * @summary Wrapper for applets 
+       */
+      this.applet = new ResourceWrapper({
+            resource: "Applet",
+            accept: "application/json",
+            api: _ami
+        });
+
+      /**
+       * @type {ResourceWrapper}
+       * @memberOf SanteDBWrapper.resources
+       * @summary Wrapper for appletSolution 
+       */
+      this.appletSolution = new ResourceWrapper({
+            resource: "AppletSolution",
+            accept: "application/json",
+            api: _ami
+        });
+
     };
 
     // HACK: Wrapper pointer facility = place
