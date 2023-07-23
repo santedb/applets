@@ -384,4 +384,17 @@
     <string name="ui.admin.securityEntity.certificate.auth.hint"><![CDATA[Assigning one or more authentication certificates will allow this application, uesr or device to authenticate over HTTPS by presenting one of the valid certificates in this list. You can assign an authentication certificate by selecting a certificate file and uploading it]]></string>
     <string name="ui.admin.securityEntity.certificate.sign">Signing Certificates</string>
     <string name="ui.admin.securityEntity.certificate.sign.hint"><![CDATA[Assigning one or more signing certificates allows SanteDB to validate digital signatures provided by this authenticated device/user/application. These digital signatures may appear on FHIR resources via provenance headers, SanteDB VRP QR codes, or other places. You can assign a signing certificate by selecting a certificate file and uploading it]]></string>
+
+    <!-- Concepts -->
+    <string name="ui.admin.concept.codeSystem.title">Code Systems</string>
+    <string name="ui.admin.concept.codeSystem.count">reference terminology management</string>
+    <string name="ui.admin.concept.codeSystem.create">Create Code System</string>
+    <string name="ui.admin.concept.conceptSet.title">Concept Sets</string>
+    <string name="ui.admin.concept.conceptSet.count">concept group management</string>
+    <string name="ui.admin.concept.conceptSet.create">Create Concept Set</string>
+    <string name="ui.admin.concept.concepts.title">Concepts</string>
+    <string name="ui.admin.concept.concepts.count">clinical concept management</string>
+    <string name="ui.admin.concept.concepts.create">Create Concept</string>
+    <string name="ui.admin.concept.dashboard">Concept Dictionary Management</string>
+
 </resources>

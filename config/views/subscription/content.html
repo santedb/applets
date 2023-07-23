@@ -22,6 +22,8 @@
     <label class="col-md-2 col-xs-12 control-label" for="syncMode">{{ 'ui.config.sync.mode.label' | i18n }}</label>
     <div class="col-md-10 col-xs-12">
       <select class="form-control" ng-model="config.sync.mode" name="syncMode">
+        <option ng-if="reference.dataProviders.length > 0" value="None">{{ 'ui.config.sync.mode.online' | i18n }}
+        </option>
         <option ng-if="reference.dataProviders.length > 0" value="Partial">{{ 'ui.config.sync.mode.sync' | i18n }}
         </option>
         <option ng-if="reference.dataProviders.length > 0" value="Full">{{ 'ui.config.sync.mode.all' | i18n }}</option>

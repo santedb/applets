@@ -167,27 +167,26 @@
     </menuItem>
   </menuItem>
 
-  <!--<menuItem
-  context="org.santedb.admin" launch="santedb-admin.concept.index"
-  asset="/org.santedb.admin/views/concept/index.html">
+  <menuItem context="org.santedb.admin" launch="santedb-admin.concept.dashboard"
+  asset="/org.santedb.admin/views/concepts/index.html" order="10">
     <icon>fas fa-book-medical</icon>
     <text lang="en">Concept Dictionary</text>
-    <menuItem context="org.santedb.admin" launch="santedb-admin.concept.refTerms.index"
-  asset="/org.santedb.admin/views/concept/refterms/index.html">
-      <icon>fas fa-code</icon>
+    <menuItem order="0" context="org.santedb.admin" launch="santedb-admin.concept.codeSystems.index"
+      asset="/org.santedb.admin/views/concepts/codesystem/index.html">
+      <icon>fas fa-language</icon>
       <text lang="en">Code Systems</text>
     </menuItem>
-    <menuItem context="org.santedb.admin" launch="santedb-admin.concept.sets.index"
-  asset="/org.santedb.admin/views/concept/sets/index.html">
-      <icon>fas fa-project-diagram</icon>
+    <menuItem order="20" context="org.santedb.admin" launch="santedb-admin.concept.sets.index"
+      asset="/org.santedb.admin/views/concepts/sets/index.html">
+      <icon>fas fa-viruses</icon>
       <text lang="en">Concept Sets</text>
     </menuItem>
-    <menuItem context="org.santedb.admin" launch="santedb-admin.concept.concepts.index"
-  asset="/org.santedb.admin/views/concept/concepts/index.html">
-      <icon>fas fa-stethoscope</icon>
+    <menuItem order="30" context="org.santedb.admin" launch="santedb-admin.concept.concepts.index"
+      asset="/org.santedb.admin/views/concepts/concepts/index.html">
+      <icon>fas fa-disease</icon>
       <text lang="en">Concepts</text>
     </menuItem>
-  </menuItem>-->
+  </menuItem>
 
   <viewModel key="relationship_full">
     <definition>/org.santedb.admin/model/relationship_full.xml</definition>

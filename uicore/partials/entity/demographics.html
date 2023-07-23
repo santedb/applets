@@ -32,6 +32,13 @@
             {{ scopedObject.typeConceptModel | concept }}
         </div>
     </div>
+    <div class="row" ng-if="scopedObject.industryConceptModel">
+
+        <label class="col-md-3 col-sm-12 control-label">{{ 'ui.model.organization.industryConcept' | i18n }}</label>
+        <div class="col-md-9 col-sm-12">
+            {{ scopedObject.industryConceptModel | concept }}
+        </div>
+    </div>
     <div class="row" ng-if="scopedObject.identifier">
         <label class="col-md-3 col-sm-12 control-label">{{ 'ui.model.entity.identifier' | i18n }}</label>
         <div class="col-md-9 col-xs-12">
