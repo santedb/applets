@@ -17,6 +17,7 @@
  */
 angular.module('santedb').controller('EditApplicationSecurityController', ["$scope", "$rootScope", "$state", "$templateCache", "$stateParams", "$timeout", function ($scope, $rootScope, $state, $templateCache, $stateParams, $timeout) {
 
+
     /**
      * @summary Reset invalid logins
      */

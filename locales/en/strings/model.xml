@@ -512,4 +512,12 @@
   <string name="ui.model.validationRule.appliesTo">Applies To</string>
   <string name="ui.model.validationRule.relationshipType">Relationship</string>
   <string name="ui.model.validationRule.description">Description</string>
+
+  <!-- Certificates -->
+  <string name="ui.model.certificateInfo.sub">Subject</string>
+  <string name="ui.model.certificateInfo.iss">Issuer</string>
+  <string name="ui.model.certificateInfo.exp">Expires</string>
+  <string name="ui.model.certificateInfo.nbf">Not Before</string>
+  <string name="ui.model.certificateInfo.publicKey">Public Key</string>
+  <string name="ui.model.certificateInfo.thumbprint">Thumbprint</string>
 </resources>

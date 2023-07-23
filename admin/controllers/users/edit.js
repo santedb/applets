@@ -19,36 +19,28 @@
  * Date: 2019-8-8
  */
 angular.module('santedb')
-    .controller('EditUserController', ["$scope", "$rootScope", "$state", "$templateCache", "$stateParams", function ($scope, $rootScope, $state, $templateCache, $stateParams) {
+    .controller('EditUserController', ["$scope", "$rootScope", "$state", "$templateCache", "$stateParams", "$timeout", function ($scope, $rootScope, $state, $templateCache, $stateParams, $timeout) {
 
         $scope.EntityClassKeys = EntityClassKeys;
 
-        // Get the specified user
-        if ($stateParams.id) {
-            $scope.isLoading = true;
-            SanteDB.resources.securityUser.getAsync($stateParams.id)
-                .then(function (u) {
-                    $scope.isLoading = !$scope.target;
+        async function initializeView(id) {
+
+            try {
+                var securityUser = await SanteDB.resources.securityUser.getAsync(id);
+                var userEntity = await SanteDB.resources.userEntity.findAsync({ securityUser: id, _viewModel: 'fastview' });
+                $timeout(()=> {
+                    $scope.isLoading = false;
                     $scope.target = $scope.target || {};
-                    $scope.target.role = u.role;
-                    $scope.target.entity = u.entity;
-                    $scope.target.entity.etag = u.etag;
-                    document.title = document.title + " - " + u.entity.userName;
+                    $scope.target.role = securityUser.role;
+                    $scope.target.id = securityUser.id;
+                    $scope.target.entity = securityUser.entity;
+                    $scope.target.entity.etag = securityUSer.etag;
+                    document.title = document.title + " - " + securityUser.entity.userName;
 
-                    $scope.$apply();
-                })
-                .catch($rootScope.errorHandler);
-
-            // Get the related user entity at the same time
-            SanteDB.resources.userEntity.findAsync({ securityUser: $stateParams.id, _viewModel: "fastview" })
-                .then(function (u) {
-                    $scope.isLoading = !$scope.target;
-                    $scope.target = $scope.target || {};
-
-                    if (u.resource && u.resource.length > 0) {
-                        $scope.target.userEntity = u.resource[0];
-                    }
-                    else
+                    if(userEntity.resource) {
+                        $scope.target.userEntity = userEntity.resource[0];
+                    } 
+                    else {
                         $scope.target.userEntity = new UserEntity({
                             language: [
                                 {
@@ -58,6 +50,7 @@ angular.module('santedb')
                             ],
                             securityUser: $stateParams.id
                         });
+                    }
 
                     // Set language
                     if (!$scope.target.userEntity.language)
@@ -70,10 +63,17 @@ angular.module('santedb')
                             lng = { "languageCode": SanteDB.locale.getLanguage() };
                         $scope.target.preferredLanguage = lng.languageCode;
                     }
+                });
+            }
+            catch(e) {
+                $rootScope.errorHandler(e);
+            }
+        }
 
-                    $scope.$apply();
-                })
-                .catch($rootScope.errorHandler);
+        // Get the specified user
+        if ($stateParams.id) {
+            $scope.isLoading = true;
+            initializeView($stateParams.id)
         }
         else  // New user
         {
