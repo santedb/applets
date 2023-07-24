@@ -247,6 +247,11 @@
       <string name="ui.table.search.field.sub">Search by subject</string>
       <string name="ui.table.search.field.mnemonic">Search by mnemonic</string>
       <string name="ui.table.search.field.authority">Search by authority</string>
+
+      <!-- Common --> 
+      <string name="ui.common.interop.hl7v2">HL7v2</string>
+      <string name="ui.common.interop.hl7v3">HL7v3/CDA</string>
+      <string name="ui.common.interop.fhir">FHIR</string>
       <!-- Common Operators -->
       <string name="ui.operator.eq">Equals</string>
       <string name="ui.operator.ne">Not Equal</string>
