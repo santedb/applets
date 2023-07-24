@@ -396,5 +396,5 @@
     <string name="ui.admin.concept.concepts.count">clinical concept management</string>
     <string name="ui.admin.concept.concepts.create">Create Concept</string>
     <string name="ui.admin.concept.dashboard">Concept Dictionary Management</string>
-
+    <string name="ui.admin.concept.codeSystem.edit.profile.title">Reference Term Code System Properties</string>
 </resources>

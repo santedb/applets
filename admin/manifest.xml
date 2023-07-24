@@ -171,8 +171,8 @@
   asset="/org.santedb.admin/views/concepts/index.html" order="10">
     <icon>fas fa-book-medical</icon>
     <text lang="en">Concept Dictionary</text>
-    <menuItem order="0" context="org.santedb.admin" launch="santedb-admin.concept.codeSystems.index"
-      asset="/org.santedb.admin/views/concepts/codesystem/index.html">
+    <menuItem order="0" context="org.santedb.admin" launch="santedb-admin.concept.codeSystem.index"
+      asset="/org.santedb.admin/views/concepts/codeSystems/index.html">
       <icon>fas fa-language</icon>
       <text lang="en">Code Systems</text>
     </menuItem>
