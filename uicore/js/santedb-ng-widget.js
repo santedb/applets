@@ -107,7 +107,12 @@ angular.module('santedb-lib')
                         try {
                             if ($scope.scopedObject.$type && view == 'Edit') {
                                 // lock the object for our user
-                                await SanteDB.resources[$scope.scopedObject.$type.toCamelCase()].checkoutAsync($scope.scopedObject.id);
+                                try {
+                                    await SanteDB.resources[$scope.scopedObject.$type.toCamelCase()].checkoutAsync($scope.scopedObject.id);
+                                }
+                                catch(e) {
+                                    console.warn(e.message);
+                                }
                                 // Isolate the editing object
                                 if (!$scope.$parent.editObject) {
                                     $scope.editObject = angular.copy($scope.scopedObject);
@@ -133,7 +138,12 @@ angular.module('santedb-lib')
                     $scope.closeView = async function (panel) {
                         if (panel.editForm.$pristine || confirm(SanteDB.locale.getString("ui.action.cancel.confirm"))) {
                             if ($scope.scopedObject.$type) {
-                                await SanteDB.resources[$scope.scopedObject.$type.toCamelCase()].checkinAsync($scope.scopedObject.id);
+                                try {
+                                    await SanteDB.resources[$scope.scopedObject.$type.toCamelCase()].checkinAsync($scope.scopedObject.id);
+                                }
+                                catch(e) {
+                                    console.warn(e.message);
+                                }
                                 delete ($scope.editObject);
                             }
                             $timeout(() => {
