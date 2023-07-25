@@ -37,7 +37,9 @@ angular.module('santedb-lib')
                         }
                     }
 
-                    getWidgets($scope.contextName);
+                    if ($scope.contextName) {
+                        getWidgets($scope.contextName);
+                    }
                 }
             ],
             link: function (scope, element, attrs) {
@@ -204,7 +206,7 @@ angular.module('santedb-lib')
                                 if ($scope.editForm && !w.editForm) {
                                     w.editForm = $scope.editForm;
                                 }
-                                
+
                             });
 
                             $timeout(() => {
@@ -217,7 +219,9 @@ angular.module('santedb-lib')
                         }
                     }
 
-                    getWidgets($scope.contextName);
+                    if($scope.contextName) {
+                        getWidgets($scope.contextName);
+                    }
                 }
             ],
             link: function (scope, element, attrs) {

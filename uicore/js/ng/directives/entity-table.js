@@ -46,7 +46,8 @@ angular.module('santedb-lib')
                 stateless: "<",
                 subResourceHolder: "=",
                 keyProperty: "<",
-                itemSupplement: "<"
+                itemSupplement: "<",
+                noDeleted: "<"
             },
             restrict: 'E',
             replace: true,
@@ -167,25 +168,27 @@ angular.module('santedb-lib')
                         );
 
                         // Add a show obsolete button
-                        buttons.push({
-                            text: "<i class='fas fa-trash'></i> " + SanteDB.locale.getString("ui.action.showDeleted"),
-                            className: "btn btn-light",
-                            action: function (e, dt, node, config) {
+                        if (!scope.noDeleted) {
+                            buttons.push({
+                                text: "<i class='fas fa-trash'></i> " + SanteDB.locale.getString("ui.action.showDeleted"),
+                                className: "btn btn-light",
+                                action: function (e, dt, node, config) {
 
-                                var btn = $("button.btn-light:has(i.fa-trash)", element);
-                                if (btn.hasClass("active")) { // active to inactive
-                                    scope.defaultQuery.obsoletionTime = 'null';
-                                    btn.removeClass("active");
+                                    var btn = $("button.btn-light:has(i.fa-trash)", element);
+                                    if (btn.hasClass("active")) { // active to inactive
+                                        scope.defaultQuery.obsoletionTime = 'null';
+                                        btn.removeClass("active");
+                                    }
+                                    else {
+                                        scope.defaultQuery.obsoletionTime = '!null';
+                                        btn.addClass("active");
+                                    }
+
+                                    dt.ajax.reload();
+
                                 }
-                                else {
-                                    scope.defaultQuery.obsoletionTime = '!null';
-                                    btn.addClass("active");
-                                }
-
-                                dt.ajax.reload();
-
-                            }
-                        });
+                            });
+                        }
                     }
 
                     // Default is true
@@ -255,9 +258,9 @@ angular.module('santedb-lib')
                                     res.resource = res.resource || [];
 
                                     // Is there supplemental information required for each item?
-                                    if(Array.isArray(scope.itemSupplement)) {
-                                        res.resource = await Promise.all(res.resource.map(async res=> {
-                                            for(var s in scope.itemSupplement) {
+                                    if (Array.isArray(scope.itemSupplement)) {
+                                        res.resource = await Promise.all(res.resource.map(async res => {
+                                            for (var s in scope.itemSupplement) {
                                                 res = await scope.itemSupplement[s](res);
                                             }
                                             return res;

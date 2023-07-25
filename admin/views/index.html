@@ -78,7 +78,7 @@
                     </li>
                 </ul>
                 <ul class="navbar-nav ml-auto">
-                    <li ng-if="$root.system.config.sync.mode != 'Sync'">
+                    <li ng-if="$root.system.config.sync.mode == 'None'">
                         <span class="nav-link m-0 p-1 alert alert-primary"><i class="fas fa-server"></i> {{ 'ui.directConnect' | i18n }}</span>
                     </li>
                     <li ng-if="'{{ $env_type }}' == 'debug'">
@@ -181,7 +181,7 @@
                                 </span>
                             </a>
                         </li>
-                        <li class="nav-item indicator-container" ng-if="$root.system.config.sync.mode == 'Sync'">
+                        <li class="nav-item indicator-container" ng-if="$root.system.config.sync.mode.subscribeType == 'Sync'">
                                 <a ui-sref="santedb-admin.sync" class="nav-link mr-lg-2" ng-disabled="!$root.system.online">
                                     <i class="fa fa-fw fa-sync-alt"></i>
                                     <span class="d-lg-none">{{ 'ui.sync' | i18n }} 
@@ -265,6 +265,7 @@
                         <div>
                             <breadcrumbs />
                         </div>
+
                     </div>
                 </div>
                 <div class="row">
@@ -280,6 +281,7 @@
             
         </div>
     </div>
+    
     <footer class="sticky-footer">
         <div class="container">
             <div class="text-center">

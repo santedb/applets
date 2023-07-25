@@ -244,7 +244,14 @@
       <string name="ui.table.search.field.user.userName">Search by user name</string>
       <string name="ui.table.search.field.actor.uname">Search by actor</string>
       <string name="ui.table.search.field.name.value">Search by name</string>
+      <string name="ui.table.search.field.sub">Search by subject</string>
+      <string name="ui.table.search.field.mnemonic">Search by mnemonic</string>
+      <string name="ui.table.search.field.authority">Search by authority</string>
 
+      <!-- Common --> 
+      <string name="ui.common.interop.hl7v2">HL7v2</string>
+      <string name="ui.common.interop.hl7v3">HL7v3/CDA</string>
+      <string name="ui.common.interop.fhir">FHIR</string>
       <!-- Common Operators -->
       <string name="ui.operator.eq">Equals</string>
       <string name="ui.operator.ne">Not Equal</string>
@@ -305,6 +312,7 @@
       <string name="ui.config.network.clientCert.label">Client Certificate</string>
       <string name="ui.config.network.clientCert.help">If your upstream requires the use of PKI authentication you may specify the certificate to present to the upstream here. PKI authentication uses encryption to authenticate your SanteDB node with the upstream using strong public key encryption</string>
       <string name="ui.config.subscribe.type.label">Selectively Replicate</string>
+      <string name="ui.config.sync.subscribe.type.help">The type of object to replicate data for on this dCDR</string>
       <string name="ui.config.subscribe.authority.label">Identity Domains</string>
       <string name="ui.config.subscribe.authority.help">Use this option to subscribe to patients with a particular identifier issued within an identity domain</string>
       <string name="ui.config.realm.title">Upstream</string>

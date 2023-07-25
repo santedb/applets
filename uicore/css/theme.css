@@ -245,3 +245,7 @@ ul.bullet-list {
     display:block;
     position:absolute
 }
+
+svg.mermaidNoScale {
+    max-width: none !important;
+}

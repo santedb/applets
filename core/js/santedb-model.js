@@ -1,4 +1,4 @@
-// SanteDB.Core.Model.Association`1, SanteDB.Core.Model, Version=3.0.0.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Association`1, SanteDB.Core.Model, Version=3.0.920.0, Culture=neutral, PublicKeyToken=null
 //if(!Association)
 /**
  * @class
@@ -45,7 +45,7 @@ function Association (copyData) {
 	this.modifiedOn = copyData.modifiedOn;
 	}
 }  // Association 
-// SanteDB.Core.Model.BaseEntityData, SanteDB.Core.Model, Version=3.0.0.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.BaseEntityData, SanteDB.Core.Model, Version=3.0.920.0, Culture=neutral, PublicKeyToken=null
 //if(!BaseEntityData)
 /**
  * @class
@@ -127,7 +127,7 @@ function BaseEntityData (copyData) {
 	this.creationTimeModel = copyData.creationTimeModel;
 	}
 }  // BaseEntityData 
-// SanteDB.Core.Model.IdentifiedData, SanteDB.Core.Model, Version=3.0.0.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.IdentifiedData, SanteDB.Core.Model, Version=3.0.920.0, Culture=neutral, PublicKeyToken=null
 //if(!IdentifiedData)
 /**
  * @class
@@ -164,7 +164,7 @@ function IdentifiedData (copyData) {
 	this.id = copyData.id;
 	}
 }  // IdentifiedData 
-// SanteDB.Core.Model.NonVersionedEntityData, SanteDB.Core.Model, Version=3.0.0.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.NonVersionedEntityData, SanteDB.Core.Model, Version=3.0.920.0, Culture=neutral, PublicKeyToken=null
 //if(!NonVersionedEntityData)
 /**
  * @class
@@ -262,7 +262,7 @@ function NonVersionedEntityData (copyData) {
 	this.updatedTime = copyData.updatedTime;
 	}
 }  // NonVersionedEntityData 
-// SanteDB.Core.Model.VersionedAssociation`1, SanteDB.Core.Model, Version=3.0.0.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.VersionedAssociation`1, SanteDB.Core.Model, Version=3.0.920.0, Culture=neutral, PublicKeyToken=null
 //if(!VersionedAssociation)
 /**
  * @class
@@ -322,7 +322,7 @@ function VersionedAssociation (copyData) {
 	this.effectiveVersionSequence = copyData.effectiveVersionSequence;
 	}
 }  // VersionedAssociation 
-// SanteDB.Core.Model.VersionedEntityData`1, SanteDB.Core.Model, Version=3.0.0.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.VersionedEntityData`1, SanteDB.Core.Model, Version=3.0.920.0, Culture=neutral, PublicKeyToken=null
 //if(!VersionedEntityData)
 /**
  * @class
@@ -429,7 +429,7 @@ function VersionedEntityData (copyData) {
 	this.previousVersion = copyData.previousVersion;
 	}
 }  // VersionedEntityData 
-// SanteDB.Core.Model.Subscription.SubscriptionClientDefinition, SanteDB.Core.Model, Version=3.0.0.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Subscription.SubscriptionClientDefinition, SanteDB.Core.Model, Version=3.0.920.0, Culture=neutral, PublicKeyToken=null
 //if(!SubscriptionClientDefinition)
 /**
  * @class
@@ -485,7 +485,7 @@ function SubscriptionClientDefinition (copyData) {
 	this.resource = copyData.resource;
 	}
 }  // SubscriptionClientDefinition 
-// SanteDB.Core.Model.Subscription.SubscriptionDefinition, SanteDB.Core.Model, Version=3.0.0.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Subscription.SubscriptionDefinition, SanteDB.Core.Model, Version=3.0.920.0, Culture=neutral, PublicKeyToken=null
 //if(!SubscriptionDefinition)
 /**
  * @class
@@ -496,6 +496,7 @@ function SubscriptionClientDefinition (copyData) {
  * @property {string} uuid Gets or sets the uuid
  * @property {Date} modifiedOn Gets the time that this was modified
  * @property {string} name Gets the name of the subscription
+ * @property {number} order Gets the order of synchronization
  * @property {SubscriptionClientDefinition} definitions Gets or sets the client side definitions
  * @property {string} id Gets or sets the primary identifying UUID of this object
  * @property {BatchOperationType} operation Gets or sets the operation(see: {@link BatchOperationType} for values)
@@ -521,6 +522,11 @@ function SubscriptionDefinition (copyData) {
 	 */
 	this.definitions = copyData.definitions;
 	/**
+	 * @summary Gets the order of synchronization
+	 * @type {number} 
+	 */
+	this.order = copyData.order;
+	/**
 	 * @summary Gets the name of the subscription
 	 * @type {string} 
 	 */
@@ -537,7 +543,7 @@ function SubscriptionDefinition (copyData) {
 	this.uuid = copyData.uuid;
 	}
 }  // SubscriptionDefinition 
-// SanteDB.Core.Model.Security.SecurityApplication, SanteDB.Core.Model, Version=3.0.0.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Security.SecurityApplication, SanteDB.Core.Model, Version=3.0.920.0, Culture=neutral, PublicKeyToken=null
 //if(!SecurityApplication)
 /**
  * @class
@@ -671,7 +677,7 @@ function SecurityApplication (copyData) {
 	this.applicationSecret = copyData.applicationSecret;
 	}
 }  // SecurityApplication 
-// SanteDB.Core.Model.Security.SecurityChallenge, SanteDB.Core.Model, Version=3.0.0.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Security.SecurityChallenge, SanteDB.Core.Model, Version=3.0.920.0, Culture=neutral, PublicKeyToken=null
 //if(!SecurityChallenge)
 /**
  * @class
@@ -771,7 +777,7 @@ function SecurityChallenge (copyData) {
 	this.text = copyData.text;
 	}
 }  // SecurityChallenge 
-// SanteDB.Core.Model.Security.SecurityDevice, SanteDB.Core.Model, Version=3.0.0.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Security.SecurityDevice, SanteDB.Core.Model, Version=3.0.920.0, Culture=neutral, PublicKeyToken=null
 //if(!SecurityDevice)
 /**
  * @class
@@ -911,7 +917,7 @@ function SecurityDevice (copyData) {
 	this.deviceSecret = copyData.deviceSecret;
 	}
 }  // SecurityDevice 
-// SanteDB.Core.Model.Security.SecurityEntity, SanteDB.Core.Model, Version=3.0.0.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Security.SecurityEntity, SanteDB.Core.Model, Version=3.0.920.0, Culture=neutral, PublicKeyToken=null
 //if(!SecurityEntity)
 /**
  * @class
@@ -1005,7 +1011,7 @@ function SecurityEntity (copyData) {
 	this.updatedTime = copyData.updatedTime;
 	}
 }  // SecurityEntity 
-// SanteDB.Core.Model.Security.SecurityPolicy, SanteDB.Core.Model, Version=3.0.0.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Security.SecurityPolicy, SanteDB.Core.Model, Version=3.0.920.0, Culture=neutral, PublicKeyToken=null
 //if(!SecurityPolicy)
 /**
  * @class
@@ -1113,7 +1119,7 @@ function SecurityPolicy (copyData) {
 	this.handler = copyData.handler;
 	}
 }  // SecurityPolicy 
-// SanteDB.Core.Model.Security.SecurityPolicyInstance, SanteDB.Core.Model, Version=3.0.0.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Security.SecurityPolicyInstance, SanteDB.Core.Model, Version=3.0.920.0, Culture=neutral, PublicKeyToken=null
 //if(!SecurityPolicyInstance)
 /**
  * @class
@@ -1173,7 +1179,7 @@ function SecurityPolicyInstance (copyData) {
 	this.policy = copyData.policy;
 	}
 }  // SecurityPolicyInstance 
-// SanteDB.Core.Model.Security.SecurityProvenance, SanteDB.Core.Model, Version=3.0.0.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Security.SecurityProvenance, SanteDB.Core.Model, Version=3.0.920.0, Culture=neutral, PublicKeyToken=null
 //if(!SecurityProvenance)
 /**
  * @class
@@ -1269,7 +1275,7 @@ function SecurityProvenance (copyData) {
 	this.modifiedOn = copyData.modifiedOn;
 	}
 }  // SecurityProvenance 
-// SanteDB.Core.Model.Security.SecurityRole, SanteDB.Core.Model, Version=3.0.0.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Security.SecurityRole, SanteDB.Core.Model, Version=3.0.920.0, Culture=neutral, PublicKeyToken=null
 //if(!SecurityRole)
 /**
  * @class
@@ -1375,7 +1381,7 @@ function SecurityRole (copyData) {
 	this.name = copyData.name;
 	}
 }  // SecurityRole 
-// SanteDB.Core.Model.Security.SecurityUser, SanteDB.Core.Model, Version=3.0.0.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Security.SecurityUser, SanteDB.Core.Model, Version=3.0.920.0, Culture=neutral, PublicKeyToken=null
 //if(!SecurityUser)
 /**
  * @class
@@ -1574,7 +1580,7 @@ function SecurityUser (copyData) {
 	this.email = copyData.email;
 	}
 }  // SecurityUser 
-// SanteDB.Core.Model.Roles.Patient, SanteDB.Core.Model, Version=3.0.0.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Roles.Patient, SanteDB.Core.Model, Version=3.0.920.0, Culture=neutral, PublicKeyToken=null
 //if(!Patient)
 /**
  * @class
@@ -1629,7 +1635,7 @@ function SecurityUser (copyData) {
  * @property {Concept} determinerConceptModel [Delay loaded from determinerConcept],  Determiner concept
  * @property {string} determinerConcept Determiner concept(see: {@link DeterminerKeys} for values)
  * @property {object} extension Gets a list of all extensions associated with the entity
- * @property {string} extension.classifier  where classifier is from {@link Extension} extensionType
+ * @property {Array<byte>} extension.classifier  where classifier is from {@link Extension} extensionType
  * @property {object} identifier Gets the identifiers associated with this entity
  * @property {EntityIdentifier} identifier.classifier  where classifier is from {@link IdentifierBase} domain
  * @property {object} name Gets a list of all names associated with the entity
@@ -2197,7 +2203,7 @@ function Patient (copyData) {
 	this.multipleBirthOrder = copyData.multipleBirthOrder;
 	}
 }  // Patient 
-// SanteDB.Core.Model.Roles.Provider, SanteDB.Core.Model, Version=3.0.0.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Roles.Provider, SanteDB.Core.Model, Version=3.0.920.0, Culture=neutral, PublicKeyToken=null
 //if(!Provider)
 /**
  * @class
@@ -2243,7 +2249,7 @@ function Patient (copyData) {
  * @property {Concept} determinerConceptModel [Delay loaded from determinerConcept],  Determiner concept
  * @property {string} determinerConcept Determiner concept(see: {@link DeterminerKeys} for values)
  * @property {object} extension Gets a list of all extensions associated with the entity
- * @property {string} extension.classifier  where classifier is from {@link Extension} extensionType
+ * @property {Array<byte>} extension.classifier  where classifier is from {@link Extension} extensionType
  * @property {object} identifier Gets the identifiers associated with this entity
  * @property {EntityIdentifier} identifier.classifier  where classifier is from {@link IdentifierBase} domain
  * @property {object} name Gets a list of all names associated with the entity
@@ -2770,7 +2776,7 @@ function Provider (copyData) {
 	this.providerSpecialty = copyData.providerSpecialty;
 	}
 }  // Provider 
-// SanteDB.Core.Model.Patch.Patch, SanteDB.Core.Model, Version=3.0.0.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Patch.Patch, SanteDB.Core.Model, Version=3.0.920.0, Culture=neutral, PublicKeyToken=null
 //if(!Patch)
 /**
  * @class
@@ -2866,7 +2872,7 @@ function Patch (copyData) {
 	this.version = copyData.version;
 	}
 }  // Patch 
-// SanteDB.Core.Model.Patch.PatchOperation, SanteDB.Core.Model, Version=3.0.0.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Patch.PatchOperation, SanteDB.Core.Model, Version=3.0.920.0, Culture=neutral, PublicKeyToken=null
 //if(!PatchOperation)
 /**
  * @class
@@ -2898,7 +2904,7 @@ function PatchOperation (copyData) {
 	this.op = copyData.op;
 	}
 }  // PatchOperation 
-// SanteDB.Core.Model.Patch.PatchTarget, SanteDB.Core.Model, Version=3.0.0.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Patch.PatchTarget, SanteDB.Core.Model, Version=3.0.920.0, Culture=neutral, PublicKeyToken=null
 //if(!PatchTarget)
 /**
  * @class
@@ -2936,7 +2942,7 @@ function PatchTarget (copyData) {
 	this.type = copyData.type;
 	}
 }  // PatchTarget 
-// SanteDB.Core.Model.Parameters.Parameter, SanteDB.Core.Model, Version=3.0.0.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Parameters.Parameter, SanteDB.Core.Model, Version=3.0.920.0, Culture=neutral, PublicKeyToken=null
 //if(!Parameter)
 /**
  * @class
@@ -2962,7 +2968,7 @@ function Parameter (copyData) {
 	this.name = copyData.name;
 	}
 }  // Parameter 
-// SanteDB.Core.Model.Parameters.ParameterCollection, SanteDB.Core.Model, Version=3.0.0.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Parameters.ParameterCollection, SanteDB.Core.Model, Version=3.0.920.0, Culture=neutral, PublicKeyToken=null
 //if(!ParameterCollection)
 /**
  * @class
@@ -2982,7 +2988,7 @@ function ParameterCollection (copyData) {
 	this.parameter = copyData.parameter;
 	}
 }  // ParameterCollection 
-// SanteDB.Core.Model.Entities.ApplicationEntity, SanteDB.Core.Model, Version=3.0.0.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Entities.ApplicationEntity, SanteDB.Core.Model, Version=3.0.920.0, Culture=neutral, PublicKeyToken=null
 //if(!ApplicationEntity)
 /**
  * @class
@@ -3026,7 +3032,7 @@ function ParameterCollection (copyData) {
  * @property {Concept} determinerConceptModel [Delay loaded from determinerConcept],  Determiner concept
  * @property {string} determinerConcept Determiner concept(see: {@link DeterminerKeys} for values)
  * @property {object} extension Gets a list of all extensions associated with the entity
- * @property {string} extension.classifier  where classifier is from {@link Extension} extensionType
+ * @property {Array<byte>} extension.classifier  where classifier is from {@link Extension} extensionType
  * @property {object} identifier Gets the identifiers associated with this entity
  * @property {EntityIdentifier} identifier.classifier  where classifier is from {@link IdentifierBase} domain
  * @property {object} name Gets a list of all names associated with the entity
@@ -3507,7 +3513,7 @@ function ApplicationEntity (copyData) {
 	this.securityApplicationModel = copyData.securityApplicationModel;
 	}
 }  // ApplicationEntity 
-// SanteDB.Core.Model.Entities.Container, SanteDB.Core.Model, Version=3.0.0.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Entities.Container, SanteDB.Core.Model, Version=3.0.920.0, Culture=neutral, PublicKeyToken=null
 //if(!Container)
 /**
  * @class
@@ -3550,7 +3556,7 @@ function ApplicationEntity (copyData) {
  * @property {Concept} determinerConceptModel [Delay loaded from determinerConcept],  Determiner concept
  * @property {string} determinerConcept Determiner concept(see: {@link DeterminerKeys} for values)
  * @property {object} extension Gets a list of all extensions associated with the entity
- * @property {string} extension.classifier  where classifier is from {@link Extension} extensionType
+ * @property {Array<byte>} extension.classifier  where classifier is from {@link Extension} extensionType
  * @property {object} identifier Gets the identifiers associated with this entity
  * @property {EntityIdentifier} identifier.classifier  where classifier is from {@link IdentifierBase} domain
  * @property {object} name Gets a list of all names associated with the entity
@@ -4061,7 +4067,7 @@ function Container (copyData) {
 	this.lotNumber = copyData.lotNumber;
 	}
 }  // Container 
-// SanteDB.Core.Model.Entities.DeviceEntity, SanteDB.Core.Model, Version=3.0.0.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Entities.DeviceEntity, SanteDB.Core.Model, Version=3.0.920.0, Culture=neutral, PublicKeyToken=null
 //if(!DeviceEntity)
 /**
  * @class
@@ -4096,7 +4102,7 @@ function Container (copyData) {
  * @property {Concept} determinerConceptModel [Delay loaded from determinerConcept],  Determiner concept
  * @property {string} determinerConcept Determiner concept(see: {@link DeterminerKeys} for values)
  * @property {object} extension Gets a list of all extensions associated with the entity
- * @property {string} extension.classifier  where classifier is from {@link Extension} extensionType
+ * @property {Array<byte>} extension.classifier  where classifier is from {@link Extension} extensionType
  * @property {object} identifier Gets the identifiers associated with this entity
  * @property {EntityIdentifier} identifier.classifier  where classifier is from {@link IdentifierBase} domain
  * @property {object} name Gets a list of all names associated with the entity
@@ -4572,7 +4578,7 @@ function DeviceEntity (copyData) {
 	this.manufacturerModelName = copyData.manufacturerModelName;
 	}
 }  // DeviceEntity 
-// SanteDB.Core.Model.Entities.Entity, SanteDB.Core.Model, Version=3.0.0.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Entities.Entity, SanteDB.Core.Model, Version=3.0.920.0, Culture=neutral, PublicKeyToken=null
 //if(!Entity)
 /**
  * @class
@@ -4605,7 +4611,7 @@ function DeviceEntity (copyData) {
  * @property {Concept} determinerConceptModel [Delay loaded from determinerConcept],  Determiner concept
  * @property {string} determinerConcept Determiner concept(see: {@link DeterminerKeys} for values)
  * @property {object} extension Gets a list of all extensions associated with the entity
- * @property {string} extension.classifier  where classifier is from {@link Extension} extensionType
+ * @property {Array<byte>} extension.classifier  where classifier is from {@link Extension} extensionType
  * @property {object} identifier Gets the identifiers associated with this entity
  * @property {EntityIdentifier} identifier.classifier  where classifier is from {@link IdentifierBase} domain
  * @property {object} name Gets a list of all names associated with the entity
@@ -5062,7 +5068,7 @@ function Entity (copyData) {
 	this.address = copyData.address;
 	}
 }  // Entity 
-// SanteDB.Core.Model.Entities.EntityAddress, SanteDB.Core.Model, Version=3.0.0.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Entities.EntityAddress, SanteDB.Core.Model, Version=3.0.920.0, Culture=neutral, PublicKeyToken=null
 //if(!EntityAddress)
 /**
  * @class
@@ -5073,6 +5079,7 @@ function Entity (copyData) {
  * @description Addresses in SanteDB are structured as a collection of components. This structure
             ensures that addresses a flexible when they are stored, searched and reproduced
  * @property {Concept} useModel [Delay loaded from use],  Gets or sets the address use
+ * @property {string} externId Gets or sets the external key for the object
  * @property {string} use Gets or sets the address use key(see: {@link AddressUseKeys} for values)
  * @property {object} component Gets or sets the component types
  * @property {string} component.AdditionalLocator             An additional locator (example: Beside the red barn).            
@@ -5158,12 +5165,17 @@ function EntityAddress (copyData) {
 	 */
 	this.use = copyData.use;
 	/**
+	 * @summary Gets or sets the external key for the object
+	 * @type {string} 
+	 */
+	this.externId = copyData.externId;
+	/**
 	 * @type {Concept} 
 	 */
 	this.useModel = copyData.useModel;
 	}
 }  // EntityAddress 
-// SanteDB.Core.Model.Entities.EntityAddressComponent, SanteDB.Core.Model, Version=3.0.0.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Entities.EntityAddressComponent, SanteDB.Core.Model, Version=3.0.920.0, Culture=neutral, PublicKeyToken=null
 //if(!AddressComponent)
 /**
  * @class
@@ -5228,7 +5240,7 @@ function AddressComponent (copyData) {
 	this.type = copyData.type;
 	}
 }  // AddressComponent 
-// SanteDB.Core.Model.Entities.EntityName, SanteDB.Core.Model, Version=3.0.0.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Entities.EntityName, SanteDB.Core.Model, Version=3.0.920.0, Culture=neutral, PublicKeyToken=null
 //if(!EntityName)
 /**
  * @class
@@ -5239,6 +5251,7 @@ function AddressComponent (copyData) {
  * @description In SanteDB an entity name is a structured object which is made up of multiple
             components. This allows SanteDB to store complex names without having to copy multiple
             name components into a single field.
+ * @property {string} externId Gets or sets the external key for the object
  * @property {object} component Gets or sets the individual component types
  * @property {string} component.Delimiter             The name component represents a delimeter in a name such as hyphen or space            
  * @property {string} component.Family             The name component represents the surname            
@@ -5306,9 +5319,14 @@ function EntityName (copyData) {
 	 * @type {object} 
 	 */
 	this.component = copyData.component;
+	/**
+	 * @summary Gets or sets the external key for the object
+	 * @type {string} 
+	 */
+	this.externId = copyData.externId;
 	}
 }  // EntityName 
-// SanteDB.Core.Model.Entities.EntityNameComponent, SanteDB.Core.Model, Version=3.0.0.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Entities.EntityNameComponent, SanteDB.Core.Model, Version=3.0.920.0, Culture=neutral, PublicKeyToken=null
 //if(!EntityNameComponent)
 /**
  * @class
@@ -5373,7 +5391,7 @@ function EntityNameComponent (copyData) {
 	this.type = copyData.type;
 	}
 }  // EntityNameComponent 
-// SanteDB.Core.Model.Entities.EntityRelationship, SanteDB.Core.Model, Version=3.0.0.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Entities.EntityRelationship, SanteDB.Core.Model, Version=3.0.920.0, Culture=neutral, PublicKeyToken=null
 //if(!EntityRelationship)
 /**
  * @class
@@ -5382,6 +5400,7 @@ function EntityNameComponent (copyData) {
  * @extends VersionedAssociation
  * @summary Represents an association between two entities
  * @property {Entity} holderModel [Delay loaded from holder],  The entity that this relationship targets
+ * @property {string} externId Gets or sets the external key for the object
  * @property {string} holder The entity that this relationship targets
  * @property {boolean} inversionInd The inversion indicator
  * @property {Double} strength The strength (confidence) of the relationship between source and target
@@ -5494,12 +5513,17 @@ function EntityRelationship (copyData) {
 	 */
 	this.holder = copyData.holder;
 	/**
+	 * @summary Gets or sets the external key for the object
+	 * @type {string} 
+	 */
+	this.externId = copyData.externId;
+	/**
 	 * @type {Entity} 
 	 */
 	this.holderModel = copyData.holderModel;
 	}
 }  // EntityRelationship 
-// SanteDB.Core.Model.Entities.EntityTelecomAddress, SanteDB.Core.Model, Version=3.0.0.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Entities.EntityTelecomAddress, SanteDB.Core.Model, Version=3.0.920.0, Culture=neutral, PublicKeyToken=null
 //if(!EntityTelecomAddress)
 /**
  * @class
@@ -5508,6 +5532,7 @@ function EntityRelationship (copyData) {
  * @extends VersionedAssociation
  * @summary Represents an entity telecom address
  * @property {Concept} useModel [Delay loaded from use],  Gets or sets the name use
+ * @property {string} externId Gets or sets the external key for the object
  * @property {string} use Gets or sets the name use key(see: {@link TelecomAddressUseKeys} for values)
  * @property {Concept} typeModel [Delay loaded from type],  Gets or sets the name use
  * @property {string} type Gets or sets the name use key(see: {@link TelecomAddressTypeKeys} for values)
@@ -5575,12 +5600,17 @@ function EntityTelecomAddress (copyData) {
 	 */
 	this.use = copyData.use;
 	/**
+	 * @summary Gets or sets the external key for the object
+	 * @type {string} 
+	 */
+	this.externId = copyData.externId;
+	/**
 	 * @type {Concept} 
 	 */
 	this.useModel = copyData.useModel;
 	}
 }  // EntityTelecomAddress 
-// SanteDB.Core.Model.Entities.GenericComponentValues`1, SanteDB.Core.Model, Version=3.0.0.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Entities.GenericComponentValues`1, SanteDB.Core.Model, Version=3.0.920.0, Culture=neutral, PublicKeyToken=null
 //if(!GenericComponentValues)
 /**
  * @class
@@ -5641,7 +5671,7 @@ function GenericComponentValues (copyData) {
 	this.typeModel = copyData.typeModel;
 	}
 }  // GenericComponentValues 
-// SanteDB.Core.Model.Entities.ManufacturedMaterial, SanteDB.Core.Model, Version=3.0.0.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Entities.ManufacturedMaterial, SanteDB.Core.Model, Version=3.0.920.0, Culture=neutral, PublicKeyToken=null
 //if(!ManufacturedMaterial)
 /**
  * @class
@@ -5683,7 +5713,7 @@ function GenericComponentValues (copyData) {
  * @property {Concept} determinerConceptModel [Delay loaded from determinerConcept],  Determiner concept
  * @property {string} determinerConcept Determiner concept(see: {@link DeterminerKeys} for values)
  * @property {object} extension Gets a list of all extensions associated with the entity
- * @property {string} extension.classifier  where classifier is from {@link Extension} extensionType
+ * @property {Array<byte>} extension.classifier  where classifier is from {@link Extension} extensionType
  * @property {object} identifier Gets the identifiers associated with this entity
  * @property {EntityIdentifier} identifier.classifier  where classifier is from {@link IdentifierBase} domain
  * @property {object} name Gets a list of all names associated with the entity
@@ -6179,7 +6209,7 @@ function ManufacturedMaterial (copyData) {
 	this.lotNumber = copyData.lotNumber;
 	}
 }  // ManufacturedMaterial 
-// SanteDB.Core.Model.Entities.Material, SanteDB.Core.Model, Version=3.0.0.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Entities.Material, SanteDB.Core.Model, Version=3.0.920.0, Culture=neutral, PublicKeyToken=null
 //if(!Material)
 /**
  * @class
@@ -6219,7 +6249,7 @@ function ManufacturedMaterial (copyData) {
  * @property {Concept} determinerConceptModel [Delay loaded from determinerConcept],  Determiner concept
  * @property {string} determinerConcept Determiner concept(see: {@link DeterminerKeys} for values)
  * @property {object} extension Gets a list of all extensions associated with the entity
- * @property {string} extension.classifier  where classifier is from {@link Extension} extensionType
+ * @property {Array<byte>} extension.classifier  where classifier is from {@link Extension} extensionType
  * @property {object} identifier Gets the identifiers associated with this entity
  * @property {EntityIdentifier} identifier.classifier  where classifier is from {@link IdentifierBase} domain
  * @property {object} name Gets a list of all names associated with the entity
@@ -6710,7 +6740,7 @@ function Material (copyData) {
 	this.expiryDate = copyData.expiryDate;
 	}
 }  // Material 
-// SanteDB.Core.Model.Entities.NonPersonLivingSubject, SanteDB.Core.Model, Version=3.0.0.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Entities.NonPersonLivingSubject, SanteDB.Core.Model, Version=3.0.920.0, Culture=neutral, PublicKeyToken=null
 //if(!NonPersonLivingSubject)
 /**
  * @class
@@ -6746,7 +6776,7 @@ function Material (copyData) {
  * @property {Concept} determinerConceptModel [Delay loaded from determinerConcept],  Determiner concept
  * @property {string} determinerConcept Determiner concept(see: {@link DeterminerKeys} for values)
  * @property {object} extension Gets a list of all extensions associated with the entity
- * @property {string} extension.classifier  where classifier is from {@link Extension} extensionType
+ * @property {Array<byte>} extension.classifier  where classifier is from {@link Extension} extensionType
  * @property {object} identifier Gets the identifiers associated with this entity
  * @property {EntityIdentifier} identifier.classifier  where classifier is from {@link IdentifierBase} domain
  * @property {object} name Gets a list of all names associated with the entity
@@ -7212,7 +7242,7 @@ function NonPersonLivingSubject (copyData) {
 	this.strain = copyData.strain;
 	}
 }  // NonPersonLivingSubject 
-// SanteDB.Core.Model.Entities.Organization, SanteDB.Core.Model, Version=3.0.0.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Entities.Organization, SanteDB.Core.Model, Version=3.0.920.0, Culture=neutral, PublicKeyToken=null
 //if(!Organization)
 /**
  * @class
@@ -7245,7 +7275,7 @@ function NonPersonLivingSubject (copyData) {
  * @property {Concept} determinerConceptModel [Delay loaded from determinerConcept],  Determiner concept
  * @property {string} determinerConcept Determiner concept(see: {@link DeterminerKeys} for values)
  * @property {object} extension Gets a list of all extensions associated with the entity
- * @property {string} extension.classifier  where classifier is from {@link Extension} extensionType
+ * @property {Array<byte>} extension.classifier  where classifier is from {@link Extension} extensionType
  * @property {object} identifier Gets the identifiers associated with this entity
  * @property {EntityIdentifier} identifier.classifier  where classifier is from {@link IdentifierBase} domain
  * @property {object} name Gets a list of all names associated with the entity
@@ -7711,7 +7741,7 @@ function Organization (copyData) {
 	this.industryConceptModel = copyData.industryConceptModel;
 	}
 }  // Organization 
-// SanteDB.Core.Model.Entities.Person, SanteDB.Core.Model, Version=3.0.0.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Entities.Person, SanteDB.Core.Model, Version=3.0.920.0, Culture=neutral, PublicKeyToken=null
 //if(!Person)
 /**
  * @class
@@ -7755,7 +7785,7 @@ function Organization (copyData) {
  * @property {Concept} determinerConceptModel [Delay loaded from determinerConcept],  Determiner concept
  * @property {string} determinerConcept Determiner concept(see: {@link DeterminerKeys} for values)
  * @property {object} extension Gets a list of all extensions associated with the entity
- * @property {string} extension.classifier  where classifier is from {@link Extension} extensionType
+ * @property {Array<byte>} extension.classifier  where classifier is from {@link Extension} extensionType
  * @property {object} identifier Gets the identifiers associated with this entity
  * @property {EntityIdentifier} identifier.classifier  where classifier is from {@link IdentifierBase} domain
  * @property {object} name Gets a list of all names associated with the entity
@@ -8273,7 +8303,7 @@ function Person (copyData) {
 	this.dateOfBirthPrecision = copyData.dateOfBirthPrecision;
 	}
 }  // Person 
-// SanteDB.Core.Model.Entities.PersonLanguageCommunication, SanteDB.Core.Model, Version=3.0.0.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Entities.PersonLanguageCommunication, SanteDB.Core.Model, Version=3.0.920.0, Culture=neutral, PublicKeyToken=null
 //if(!PersonLanguageCommunication)
 /**
  * @class
@@ -8281,6 +8311,7 @@ function Person (copyData) {
  * @public
  * @extends VersionedAssociation
  * @summary Represents a single preferred communication method for the entity
+ * @property {string} externId Gets or sets the external key for the object
  * @property {boolean} isPreferred Gets or set the user's preference indicator
  * @property {string} languageCode Gets or sets the language code
  * @property {Int64} effectiveVersionSequence
@@ -8336,9 +8367,14 @@ function PersonLanguageCommunication (copyData) {
 	 * @type {boolean} 
 	 */
 	this.isPreferred = copyData.isPreferred;
+	/**
+	 * @summary Gets or sets the external key for the object
+	 * @type {string} 
+	 */
+	this.externId = copyData.externId;
 	}
 }  // PersonLanguageCommunication 
-// SanteDB.Core.Model.Entities.Place, SanteDB.Core.Model, Version=3.0.0.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Entities.Place, SanteDB.Core.Model, Version=3.0.920.0, Culture=neutral, PublicKeyToken=null
 //if(!Place)
 /**
  * @class
@@ -8371,7 +8407,7 @@ function PersonLanguageCommunication (copyData) {
  * @property {Concept} determinerConceptModel [Delay loaded from determinerConcept],  Determiner concept
  * @property {string} determinerConcept Determiner concept(see: {@link DeterminerKeys} for values)
  * @property {object} extension Gets a list of all extensions associated with the entity
- * @property {string} extension.classifier  where classifier is from {@link Extension} extensionType
+ * @property {Array<byte>} extension.classifier  where classifier is from {@link Extension} extensionType
  * @property {object} identifier Gets the identifiers associated with this entity
  * @property {EntityIdentifier} identifier.classifier  where classifier is from {@link IdentifierBase} domain
  * @property {object} name Gets a list of all names associated with the entity
@@ -8838,7 +8874,7 @@ function Place (copyData) {
 	this.isMobile = copyData.isMobile;
 	}
 }  // Place 
-// SanteDB.Core.Model.Entities.PlaceService, SanteDB.Core.Model, Version=3.0.0.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Entities.PlaceService, SanteDB.Core.Model, Version=3.0.920.0, Culture=neutral, PublicKeyToken=null
 //if(!PlaceService)
 /**
  * @class
@@ -8847,6 +8883,7 @@ function Place (copyData) {
  * @extends VersionedAssociation
  * @summary Represents a service for a place
  * @property {Concept} serviceConceptModel [Delay loaded from serviceConcept],  Gets or sets the service concept
+ * @property {string} externId Gets or sets the external key for the object
  * @property {string} serviceConcept Gets or sets the service concept key
  * @property {string} serviceSchedule The schedule that the service is offered
  * @property {Int64} effectiveVersionSequence
@@ -8903,12 +8940,17 @@ function PlaceService (copyData) {
 	 */
 	this.serviceConcept = copyData.serviceConcept;
 	/**
+	 * @summary Gets or sets the external key for the object
+	 * @type {string} 
+	 */
+	this.externId = copyData.externId;
+	/**
 	 * @type {Concept} 
 	 */
 	this.serviceConceptModel = copyData.serviceConceptModel;
 	}
 }  // PlaceService 
-// SanteDB.Core.Model.Entities.UserEntity, SanteDB.Core.Model, Version=3.0.0.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Entities.UserEntity, SanteDB.Core.Model, Version=3.0.920.0, Culture=neutral, PublicKeyToken=null
 //if(!UserEntity)
 /**
  * @class
@@ -8956,7 +8998,7 @@ function PlaceService (copyData) {
  * @property {Concept} determinerConceptModel [Delay loaded from determinerConcept],  Determiner concept
  * @property {string} determinerConcept Determiner concept(see: {@link DeterminerKeys} for values)
  * @property {object} extension Gets a list of all extensions associated with the entity
- * @property {string} extension.classifier  where classifier is from {@link Extension} extensionType
+ * @property {Array<byte>} extension.classifier  where classifier is from {@link Extension} extensionType
  * @property {object} identifier Gets the identifiers associated with this entity
  * @property {EntityIdentifier} identifier.classifier  where classifier is from {@link IdentifierBase} domain
  * @property {object} name Gets a list of all names associated with the entity
@@ -9483,7 +9525,7 @@ function UserEntity (copyData) {
 	this.securityUserModel = copyData.securityUserModel;
 	}
 }  // UserEntity 
-// SanteDB.Core.Model.DataTypes.AssigningAuthority, SanteDB.Core.Model, Version=3.0.0.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.DataTypes.AssigningAuthority, SanteDB.Core.Model, Version=3.0.920.0, Culture=neutral, PublicKeyToken=null
 //if(!AssigningAuthority)
 /**
  * @class
@@ -9589,7 +9631,7 @@ function AssigningAuthority (copyData) {
 	this.assigningApplication = copyData.assigningApplication;
 	}
 }  // AssigningAuthority 
-// SanteDB.Core.Model.DataTypes.CodeSystem, SanteDB.Core.Model, Version=3.0.0.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.DataTypes.CodeSystem, SanteDB.Core.Model, Version=3.0.920.0, Culture=neutral, PublicKeyToken=null
 //if(!CodeSystem)
 /**
  * @class
@@ -9725,7 +9767,7 @@ function CodeSystem (copyData) {
 	this.name = copyData.name;
 	}
 }  // CodeSystem 
-// SanteDB.Core.Model.DataTypes.Concept, SanteDB.Core.Model, Version=3.0.0.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.DataTypes.Concept, SanteDB.Core.Model, Version=3.0.920.0, Culture=neutral, PublicKeyToken=null
 //if(!Concept)
 /**
  * @class
@@ -9885,7 +9927,7 @@ function Concept (copyData) {
 	this.mnemonic = copyData.mnemonic;
 	}
 }  // Concept 
-// SanteDB.Core.Model.DataTypes.ConceptClass, SanteDB.Core.Model, Version=3.0.0.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.DataTypes.ConceptClass, SanteDB.Core.Model, Version=3.0.920.0, Culture=neutral, PublicKeyToken=null
 //if(!ConceptClass)
 /**
  * @class
@@ -9991,7 +10033,7 @@ function ConceptClass (copyData) {
 	this.name = copyData.name;
 	}
 }  // ConceptClass 
-// SanteDB.Core.Model.DataTypes.ConceptName, SanteDB.Core.Model, Version=3.0.0.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.DataTypes.ConceptName, SanteDB.Core.Model, Version=3.0.920.0, Culture=neutral, PublicKeyToken=null
 //if(!ConceptName)
 /**
  * @class
@@ -10056,7 +10098,7 @@ function ConceptName (copyData) {
 	this.language = copyData.language;
 	}
 }  // ConceptName 
-// SanteDB.Core.Model.DataTypes.ConceptReferenceTerm, SanteDB.Core.Model, Version=3.0.0.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.DataTypes.ConceptReferenceTerm, SanteDB.Core.Model, Version=3.0.920.0, Culture=neutral, PublicKeyToken=null
 //if(!ConceptReferenceTerm)
 /**
  * @class
@@ -10131,7 +10173,7 @@ function ConceptReferenceTerm (copyData) {
 	this.term = copyData.term;
 	}
 }  // ConceptReferenceTerm 
-// SanteDB.Core.Model.DataTypes.ConceptRelationship, SanteDB.Core.Model, Version=3.0.0.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.DataTypes.ConceptRelationship, SanteDB.Core.Model, Version=3.0.920.0, Culture=neutral, PublicKeyToken=null
 //if(!ConceptRelationship)
 /**
  * @class
@@ -10206,7 +10248,7 @@ function ConceptRelationship (copyData) {
 	this.targetConcept = copyData.targetConcept;
 	}
 }  // ConceptRelationship 
-// SanteDB.Core.Model.DataTypes.ConceptRelationshipType, SanteDB.Core.Model, Version=3.0.0.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.DataTypes.ConceptRelationshipType, SanteDB.Core.Model, Version=3.0.920.0, Culture=neutral, PublicKeyToken=null
 //if(!ConceptRelationshipType)
 /**
  * @class
@@ -10312,7 +10354,7 @@ function ConceptRelationshipType (copyData) {
 	this.name = copyData.name;
 	}
 }  // ConceptRelationshipType 
-// SanteDB.Core.Model.DataTypes.ConceptSet, SanteDB.Core.Model, Version=3.0.0.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.DataTypes.ConceptSet, SanteDB.Core.Model, Version=3.0.920.0, Culture=neutral, PublicKeyToken=null
 //if(!ConceptSet)
 /**
  * @class
@@ -10324,6 +10366,8 @@ function ConceptRelationshipType (copyData) {
  * @property {string} oid Gets or sets the oid of the concept set
  * @property {string} url Gets or sets the url of the concept set
  * @property {string} concept Concepts as identifiers for XML purposes only
+ * @property {object} compose If the concept set is composed of other concept sets
+ * @property {ConceptSetComposition} compose.classifier  where classifier is from {@link ConceptSetComposition} instruction
  * @property {Date} updatedTime Gets or sets the time that this object was last modified in ISO format
  * @property {Date} modifiedOn Gets the time this item was modified
  * @property {SecurityProvenance} updatedByModel [Delay loaded from updatedBy],  Gets or sets the user that updated this base data
@@ -10410,6 +10454,11 @@ function ConceptSet (copyData) {
 	 */
 	this.updatedTime = copyData.updatedTime;
 	/**
+	 * @summary If the concept set is composed of other concept sets
+	 * @type {object} 
+	 */
+	this.compose = copyData.compose;
+	/**
 	 * @summary Concepts as identifiers for XML purposes only
 	 * @type {string} 
 	 */
@@ -10436,7 +10485,67 @@ function ConceptSet (copyData) {
 	this.name = copyData.name;
 	}
 }  // ConceptSet 
-// SanteDB.Core.Model.DataTypes.Extension`1, SanteDB.Core.Model, Version=3.0.0.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.DataTypes.ConceptSetComposition, SanteDB.Core.Model, Version=3.0.920.0, Culture=neutral, PublicKeyToken=null
+//if(!ConceptSetComposition)
+/**
+ * @class
+ * @constructor
+ * @public
+ * @extends Association
+ * @summary Represents a reference between two different concept sets
+ * @property {ConceptSetCompositionOperation} instruction The composition operation(see: {@link ConceptSetCompositionOperation} for values)
+ * @property {string} targetConceptSet Gets the target of the composition
+ * @property {ConceptSet} targetConceptSetModel [Delay loaded from targetConceptSet],  Gets or sets the target key
+ * @property {Date} modifiedOn
+ * @property {string} source
+ * @property {ConceptSet} sourceModel [Delay loaded from source], 
+ * @property {string} id Gets or sets the primary identifying UUID of this object
+ * @property {BatchOperationType} operation Gets or sets the operation(see: {@link BatchOperationType} for values)
+ * @property {string} $type Gets the type registration of this object
+ * @param {ConceptSetComposition} copyData Copy constructor (if present)
+ */
+function ConceptSetComposition (copyData) { 
+	this.$type = 'ConceptSetComposition';
+	if(copyData) {
+	/**
+	 * @summary Gets or sets the operation
+	 * @type {BatchOperationType} 
+	 */
+	this.operation = copyData.operation;
+	/**
+	 * @summary Gets or sets the primary identifying UUID of this object
+	 * @type {string} 
+	 */
+	this.id = copyData.id;
+	/**
+	 * @type {ConceptSet} 
+	 */
+	this.sourceModel = copyData.sourceModel;
+	/**
+	 * @type {string} 
+	 */
+	this.source = copyData.source;
+	/**
+	 * @type {Date} 
+	 */
+	this.modifiedOn = copyData.modifiedOn;
+	/**
+	 * @type {ConceptSet} 
+	 */
+	this.targetConceptSetModel = copyData.targetConceptSetModel;
+	/**
+	 * @summary Gets the target of the composition
+	 * @type {string} 
+	 */
+	this.targetConceptSet = copyData.targetConceptSet;
+	/**
+	 * @summary The composition operation
+	 * @type {ConceptSetCompositionOperation} 
+	 */
+	this.instruction = copyData.instruction;
+	}
+}  // ConceptSetComposition 
+// SanteDB.Core.Model.DataTypes.Extension`1, SanteDB.Core.Model, Version=3.0.920.0, Culture=neutral, PublicKeyToken=null
 //if(!Extension)
 /**
  * @class
@@ -10446,6 +10555,7 @@ function ConceptSet (copyData) {
  * @extends VersionedAssociation
  * @summary Represents a base entity extension
  * @property {Array<byte>} value Gets or sets the value of the extension
+ * @property {string} externId Gets or sets the external key for the object
  * @property {string} valueModel [Delay loaded from value],  Value as string of bytes
  * @property {ExtensionType} extensionTypeModel [Delay loaded from extensionType],  Gets or sets the extension type
  * @property {string} extensionType Gets or sets the extension type key
@@ -10506,13 +10616,18 @@ function Extension (copyData) {
 	 */
 	this.valueModel = copyData.valueModel;
 	/**
+	 * @summary Gets or sets the external key for the object
+	 * @type {string} 
+	 */
+	this.externId = copyData.externId;
+	/**
 	 * @summary Gets or sets the value of the extension
 	 * @type {Array<byte>} 
 	 */
 	this.value = copyData.value;
 	}
 }  // Extension 
-// SanteDB.Core.Model.DataTypes.EntityExtension, SanteDB.Core.Model, Version=3.0.0.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.DataTypes.EntityExtension, SanteDB.Core.Model, Version=3.0.920.0, Culture=neutral, PublicKeyToken=null
 //if(!EntityExtension)
 /**
  * @class
@@ -10521,6 +10636,7 @@ function Extension (copyData) {
  * @extends Extension
  * @summary Extension bound to entity
  * @property {Array<byte>} value
+ * @property {string} externId
  * @property {string} valueModel [Delay loaded from value], 
  * @property {ExtensionType} extensionTypeModel [Delay loaded from extensionType], 
  * @property {string} extensionType
@@ -10580,12 +10696,16 @@ function EntityExtension (copyData) {
 	 */
 	this.valueModel = copyData.valueModel;
 	/**
+	 * @type {string} 
+	 */
+	this.externId = copyData.externId;
+	/**
 	 * @type {Array<byte>} 
 	 */
 	this.value = copyData.value;
 	}
 }  // EntityExtension 
-// SanteDB.Core.Model.DataTypes.ActExtension, SanteDB.Core.Model, Version=3.0.0.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.DataTypes.ActExtension, SanteDB.Core.Model, Version=3.0.920.0, Culture=neutral, PublicKeyToken=null
 //if(!ActExtension)
 /**
  * @class
@@ -10594,6 +10714,7 @@ function EntityExtension (copyData) {
  * @extends Extension
  * @summary Act extension
  * @property {Array<byte>} value
+ * @property {string} externId
  * @property {string} valueModel [Delay loaded from value], 
  * @property {ExtensionType} extensionTypeModel [Delay loaded from extensionType], 
  * @property {string} extensionType
@@ -10653,12 +10774,16 @@ function ActExtension (copyData) {
 	 */
 	this.valueModel = copyData.valueModel;
 	/**
+	 * @type {string} 
+	 */
+	this.externId = copyData.externId;
+	/**
 	 * @type {Array<byte>} 
 	 */
 	this.value = copyData.value;
 	}
 }  // ActExtension 
-// SanteDB.Core.Model.DataTypes.ExtensionType, SanteDB.Core.Model, Version=3.0.0.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.DataTypes.ExtensionType, SanteDB.Core.Model, Version=3.0.920.0, Culture=neutral, PublicKeyToken=null
 //if(!ExtensionType)
 /**
  * @class
@@ -10764,7 +10889,7 @@ function ExtensionType (copyData) {
 	this.handlerClass = copyData.handlerClass;
 	}
 }  // ExtensionType 
-// SanteDB.Core.Model.DataTypes.GeoTag, SanteDB.Core.Model, Version=3.0.0.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.DataTypes.GeoTag, SanteDB.Core.Model, Version=3.0.920.0, Culture=neutral, PublicKeyToken=null
 //if(!GeoTag)
 /**
  * @class
@@ -10816,7 +10941,7 @@ function GeoTag (copyData) {
 	this.modifiedOn = copyData.modifiedOn;
 	}
 }  // GeoTag 
-// SanteDB.Core.Model.DataTypes.IdentifiedDataReference, SanteDB.Core.Model, Version=3.0.0.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.DataTypes.IdentifiedDataReference, SanteDB.Core.Model, Version=3.0.920.0, Culture=neutral, PublicKeyToken=null
 //if(!Reference)
 /**
  * @class
@@ -10853,7 +10978,7 @@ function Reference (copyData) {
 	this.modifiedOn = copyData.modifiedOn;
 	}
 }  // Reference 
-// SanteDB.Core.Model.DataTypes.EntityIdentifier, SanteDB.Core.Model, Version=3.0.0.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.DataTypes.EntityIdentifier, SanteDB.Core.Model, Version=3.0.920.0, Culture=neutral, PublicKeyToken=null
 //if(!EntityIdentifier)
 /**
  * @class
@@ -10862,11 +10987,13 @@ function Reference (copyData) {
  * @extends IdentifierBase
  * @summary Entity identifiers
  * @property {string} value
+ * @property {string} externId
  * @property {Date} issued
  * @property {Date} expires
  * @property {string} checkDigit
  * @property {string} domain
- * @property {IdentifierType} type
+ * @property {string} type
+ * @property {Concept} typeModel [Delay loaded from type], 
  * @property {IdentityDomain} domainModel [Delay loaded from domain], 
  * @property {IdentifierReliability} reliability(see: {@link IdentifierReliability} for values)
  * @property {Int64} effectiveVersionSequence
@@ -10921,7 +11048,11 @@ function EntityIdentifier (copyData) {
 	 */
 	this.domainModel = copyData.domainModel;
 	/**
-	 * @type {IdentifierType} 
+	 * @type {Concept} 
+	 */
+	this.typeModel = copyData.typeModel;
+	/**
+	 * @type {string} 
 	 */
 	this.type = copyData.type;
 	/**
@@ -10943,10 +11074,14 @@ function EntityIdentifier (copyData) {
 	/**
 	 * @type {string} 
 	 */
+	this.externId = copyData.externId;
+	/**
+	 * @type {string} 
+	 */
 	this.value = copyData.value;
 	}
 }  // EntityIdentifier 
-// SanteDB.Core.Model.DataTypes.ActIdentifier, SanteDB.Core.Model, Version=3.0.0.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.DataTypes.ActIdentifier, SanteDB.Core.Model, Version=3.0.920.0, Culture=neutral, PublicKeyToken=null
 //if(!ActIdentifier)
 /**
  * @class
@@ -10955,11 +11090,13 @@ function EntityIdentifier (copyData) {
  * @extends IdentifierBase
  * @summary Act identifier
  * @property {string} value
+ * @property {string} externId
  * @property {Date} issued
  * @property {Date} expires
  * @property {string} checkDigit
  * @property {string} domain
- * @property {IdentifierType} type
+ * @property {string} type
+ * @property {Concept} typeModel [Delay loaded from type], 
  * @property {IdentityDomain} domainModel [Delay loaded from domain], 
  * @property {IdentifierReliability} reliability(see: {@link IdentifierReliability} for values)
  * @property {Int64} effectiveVersionSequence
@@ -11014,7 +11151,11 @@ function ActIdentifier (copyData) {
 	 */
 	this.domainModel = copyData.domainModel;
 	/**
-	 * @type {IdentifierType} 
+	 * @type {Concept} 
+	 */
+	this.typeModel = copyData.typeModel;
+	/**
+	 * @type {string} 
 	 */
 	this.type = copyData.type;
 	/**
@@ -11036,10 +11177,14 @@ function ActIdentifier (copyData) {
 	/**
 	 * @type {string} 
 	 */
+	this.externId = copyData.externId;
+	/**
+	 * @type {string} 
+	 */
 	this.value = copyData.value;
 	}
 }  // ActIdentifier 
-// SanteDB.Core.Model.DataTypes.IdentifierBase`1, SanteDB.Core.Model, Version=3.0.0.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.DataTypes.IdentifierBase`1, SanteDB.Core.Model, Version=3.0.920.0, Culture=neutral, PublicKeyToken=null
 //if(!IdentifierBase)
 /**
  * @class
@@ -11049,11 +11194,13 @@ function ActIdentifier (copyData) {
  * @extends VersionedAssociation
  * @summary Represents an external assigned identifier
  * @property {string} value Gets or sets the value of the identifier
+ * @property {string} externId Gets or sets the external key for the object
  * @property {Date} issued Serialization property for issued date
  * @property {Date} expires Serialization field for expiry date
  * @property {string} checkDigit Gets or sets the check-digit if it is stored separate from the identifier
  * @property {string} domain Gets or sets the assinging authority id
- * @property {IdentifierType} type Gets or sets the identifier type
+ * @property {string} type Gets or sets the type identifier
+ * @property {Concept} typeModel [Delay loaded from type],  Gets or sets the identifier type
  * @property {IdentityDomain} domainModel [Delay loaded from domain],  Represents the authority information
  * @property {IdentifierReliability} reliability Gets or sets the reliability of the identifier(see: {@link IdentifierReliability} for values)
  * @property {Int64} effectiveVersionSequence
@@ -11109,8 +11256,12 @@ function IdentifierBase (copyData) {
 	 */
 	this.domainModel = copyData.domainModel;
 	/**
-	 * @summary Gets or sets the identifier type
-	 * @type {IdentifierType} 
+	 * @type {Concept} 
+	 */
+	this.typeModel = copyData.typeModel;
+	/**
+	 * @summary Gets or sets the type identifier
+	 * @type {string} 
 	 */
 	this.type = copyData.type;
 	/**
@@ -11134,113 +11285,18 @@ function IdentifierBase (copyData) {
 	 */
 	this.issued = copyData.issued;
 	/**
+	 * @summary Gets or sets the external key for the object
+	 * @type {string} 
+	 */
+	this.externId = copyData.externId;
+	/**
 	 * @summary Gets or sets the value of the identifier
 	 * @type {string} 
 	 */
 	this.value = copyData.value;
 	}
 }  // IdentifierBase 
-// SanteDB.Core.Model.DataTypes.IdentifierType, SanteDB.Core.Model, Version=3.0.0.0, Culture=neutral, PublicKeyToken=null
-//if(!IdentifierType)
-/**
- * @class
- * @constructor
- * @public
- * @extends BaseEntityData
- * @summary Represents a basic information class which classifies the use of an identifier
- * @property {string} scopeConcept Gets or sets the id of the scope concept
- * @property {string} typeConcept Gets or sets the concept which identifies the type
- * @property {Concept} typeConceptModel [Delay loaded from typeConcept],  Type concept
- * @property {Concept} scopeConceptModel [Delay loaded from scopeConcept],  Gets the scope of the identifier
- * @property {Date} creationTimeModel [Delay loaded from creationTime],  Gets or sets the time at which the data was created
- * @property {Date} creationTime Gets or sets the creation time as an ISO date format
- * @property {Date} obsoletionTimeModel [Delay loaded from obsoletionTime],  Gets or sets the time when the data is or will become invalid
- * @property {Date} obsoletionTime Gets or sets the time that the data is no longer valid (was deleted/obsoleted) in ISO format
- * @property {SecurityProvenance} createdByModel [Delay loaded from createdBy],  Gets or sets the user that created this base data
- * @property {Date} modifiedOn Gets the time that the object was last modified (from base data, default to CreationTime)
- * @property {SecurityProvenance} obsoletedByModel [Delay loaded from obsoletedBy],  Gets or sets the user that obsoleted this base data
- * @property {string} createdBy Gets or sets the security provenance object which represents the creation of this object
- * @property {string} obsoletedBy Gets or sets the security provenance object which represents the obsoletion of this data
- * @property {string} id Gets or sets the primary identifying UUID of this object
- * @property {BatchOperationType} operation Gets or sets the operation(see: {@link BatchOperationType} for values)
- * @property {string} $type Gets the type registration of this object
- * @param {IdentifierType} copyData Copy constructor (if present)
- */
-function IdentifierType (copyData) { 
-	this.$type = 'IdentifierType';
-	if(copyData) {
-	/**
-	 * @summary Gets or sets the operation
-	 * @type {BatchOperationType} 
-	 */
-	this.operation = copyData.operation;
-	/**
-	 * @summary Gets or sets the primary identifying UUID of this object
-	 * @type {string} 
-	 */
-	this.id = copyData.id;
-	/**
-	 * @summary Gets or sets the security provenance object which represents the obsoletion of this data
-	 * @type {string} 
-	 */
-	this.obsoletedBy = copyData.obsoletedBy;
-	/**
-	 * @summary Gets or sets the security provenance object which represents the creation of this object
-	 * @type {string} 
-	 */
-	this.createdBy = copyData.createdBy;
-	/**
-	 * @type {SecurityProvenance} 
-	 */
-	this.obsoletedByModel = copyData.obsoletedByModel;
-	/**
-	 * @summary Gets the time that the object was last modified (from base data, default to CreationTime)
-	 * @type {Date} 
-	 */
-	this.modifiedOn = copyData.modifiedOn;
-	/**
-	 * @type {SecurityProvenance} 
-	 */
-	this.createdByModel = copyData.createdByModel;
-	/**
-	 * @summary Gets or sets the time that the data is no longer valid (was deleted/obsoleted) in ISO format
-	 * @type {Date} 
-	 */
-	this.obsoletionTime = copyData.obsoletionTime;
-	/**
-	 * @type {Date} 
-	 */
-	this.obsoletionTimeModel = copyData.obsoletionTimeModel;
-	/**
-	 * @summary Gets or sets the creation time as an ISO date format
-	 * @type {Date} 
-	 */
-	this.creationTime = copyData.creationTime;
-	/**
-	 * @type {Date} 
-	 */
-	this.creationTimeModel = copyData.creationTimeModel;
-	/**
-	 * @type {Concept} 
-	 */
-	this.scopeConceptModel = copyData.scopeConceptModel;
-	/**
-	 * @type {Concept} 
-	 */
-	this.typeConceptModel = copyData.typeConceptModel;
-	/**
-	 * @summary Gets or sets the concept which identifies the type
-	 * @type {string} 
-	 */
-	this.typeConcept = copyData.typeConcept;
-	/**
-	 * @summary Gets or sets the id of the scope concept
-	 * @type {string} 
-	 */
-	this.scopeConcept = copyData.scopeConcept;
-	}
-}  // IdentifierType 
-// SanteDB.Core.Model.DataTypes.IdentityDomain, SanteDB.Core.Model, Version=3.0.0.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.DataTypes.IdentityDomain, SanteDB.Core.Model, Version=3.0.920.0, Culture=neutral, PublicKeyToken=null
 //if(!IdentityDomain)
 /**
  * @class
@@ -11411,7 +11467,7 @@ function IdentityDomain (copyData) {
 	this.name = copyData.name;
 	}
 }  // IdentityDomain 
-// SanteDB.Core.Model.DataTypes.Note`1, SanteDB.Core.Model, Version=3.0.0.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.DataTypes.Note`1, SanteDB.Core.Model, Version=3.0.920.0, Culture=neutral, PublicKeyToken=null
 //if(!Note)
 /**
  * @class
@@ -11482,7 +11538,7 @@ function Note (copyData) {
 	this.text = copyData.text;
 	}
 }  // Note 
-// SanteDB.Core.Model.DataTypes.EntityNote, SanteDB.Core.Model, Version=3.0.0.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.DataTypes.EntityNote, SanteDB.Core.Model, Version=3.0.920.0, Culture=neutral, PublicKeyToken=null
 //if(!EntityNote)
 /**
  * @class
@@ -11550,7 +11606,7 @@ function EntityNote (copyData) {
 	this.text = copyData.text;
 	}
 }  // EntityNote 
-// SanteDB.Core.Model.DataTypes.ActNote, SanteDB.Core.Model, Version=3.0.0.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.DataTypes.ActNote, SanteDB.Core.Model, Version=3.0.920.0, Culture=neutral, PublicKeyToken=null
 //if(!ActNote)
 /**
  * @class
@@ -11618,7 +11674,7 @@ function ActNote (copyData) {
 	this.text = copyData.text;
 	}
 }  // ActNote 
-// SanteDB.Core.Model.DataTypes.ReferenceTerm, SanteDB.Core.Model, Version=3.0.0.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.DataTypes.ReferenceTerm, SanteDB.Core.Model, Version=3.0.920.0, Culture=neutral, PublicKeyToken=null
 //if(!ReferenceTerm)
 /**
  * @class
@@ -11736,7 +11792,7 @@ function ReferenceTerm (copyData) {
 	this.mnemonic = copyData.mnemonic;
 	}
 }  // ReferenceTerm 
-// SanteDB.Core.Model.DataTypes.ReferenceTermName, SanteDB.Core.Model, Version=3.0.0.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.DataTypes.ReferenceTermName, SanteDB.Core.Model, Version=3.0.920.0, Culture=neutral, PublicKeyToken=null
 //if(!ReferenceTermName)
 /**
  * @class
@@ -11832,7 +11888,137 @@ function ReferenceTermName (copyData) {
 	this.language = copyData.language;
 	}
 }  // ReferenceTermName 
-// SanteDB.Core.Model.DataTypes.Tag`1, SanteDB.Core.Model, Version=3.0.0.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.DataTypes.RelationshipValidationRule, SanteDB.Core.Model, Version=3.0.920.0, Culture=neutral, PublicKeyToken=null
+//if(!RelationshipValidationRule)
+/**
+ * @class
+ * @constructor
+ * @public
+ * @extends BaseEntityData
+ * @summary Represents a relationship validation rule between two 
+    {@link ITargetedAssociation}
+ * @property {Date} modifiedOn Gets the time that the validation rule was modified on
+ * @property {string} sourceClass Gets the classification key of the source object to which this classification applies
+ * @property {Concept} sourceClassModel [Delay loaded from sourceClass],  Gets the source class
+ * @property {string} targetClass Get the target class key
+ * @property {Concept} targetClassModel [Delay loaded from targetClass],  Gets the target classification delay load property
+ * @property {string} relationshipType Gets the relationship type between the 
+    {@link SourceClassKey}
+   and 
+    {@link TargetClassKey}
+ * @property {Concept} relationshipTypeModel [Delay loaded from relationshipType],  Gets the target classification delay load property
+ * @property {string} appliesTo Gets or sets the application class for XML
+ * @property {string} description Gets the description for the validation
+ * @property {Date} creationTimeModel [Delay loaded from creationTime],  Gets or sets the time at which the data was created
+ * @property {Date} creationTime Gets or sets the creation time as an ISO date format
+ * @property {Date} obsoletionTimeModel [Delay loaded from obsoletionTime],  Gets or sets the time when the data is or will become invalid
+ * @property {Date} obsoletionTime Gets or sets the time that the data is no longer valid (was deleted/obsoleted) in ISO format
+ * @property {SecurityProvenance} createdByModel [Delay loaded from createdBy],  Gets or sets the user that created this base data
+ * @property {SecurityProvenance} obsoletedByModel [Delay loaded from obsoletedBy],  Gets or sets the user that obsoleted this base data
+ * @property {string} createdBy Gets or sets the security provenance object which represents the creation of this object
+ * @property {string} obsoletedBy Gets or sets the security provenance object which represents the obsoletion of this data
+ * @property {string} id Gets or sets the primary identifying UUID of this object
+ * @property {BatchOperationType} operation Gets or sets the operation(see: {@link BatchOperationType} for values)
+ * @property {string} $type Gets the type registration of this object
+ * @param {RelationshipValidationRule} copyData Copy constructor (if present)
+ */
+function RelationshipValidationRule (copyData) { 
+	this.$type = 'RelationshipValidationRule';
+	if(copyData) {
+	/**
+	 * @summary Gets or sets the operation
+	 * @type {BatchOperationType} 
+	 */
+	this.operation = copyData.operation;
+	/**
+	 * @summary Gets or sets the primary identifying UUID of this object
+	 * @type {string} 
+	 */
+	this.id = copyData.id;
+	/**
+	 * @summary Gets or sets the security provenance object which represents the obsoletion of this data
+	 * @type {string} 
+	 */
+	this.obsoletedBy = copyData.obsoletedBy;
+	/**
+	 * @summary Gets or sets the security provenance object which represents the creation of this object
+	 * @type {string} 
+	 */
+	this.createdBy = copyData.createdBy;
+	/**
+	 * @type {SecurityProvenance} 
+	 */
+	this.obsoletedByModel = copyData.obsoletedByModel;
+	/**
+	 * @type {SecurityProvenance} 
+	 */
+	this.createdByModel = copyData.createdByModel;
+	/**
+	 * @summary Gets or sets the time that the data is no longer valid (was deleted/obsoleted) in ISO format
+	 * @type {Date} 
+	 */
+	this.obsoletionTime = copyData.obsoletionTime;
+	/**
+	 * @type {Date} 
+	 */
+	this.obsoletionTimeModel = copyData.obsoletionTimeModel;
+	/**
+	 * @summary Gets or sets the creation time as an ISO date format
+	 * @type {Date} 
+	 */
+	this.creationTime = copyData.creationTime;
+	/**
+	 * @type {Date} 
+	 */
+	this.creationTimeModel = copyData.creationTimeModel;
+	/**
+	 * @summary Gets the description for the validation
+	 * @type {string} 
+	 */
+	this.description = copyData.description;
+	/**
+	 * @summary Gets or sets the application class for XML
+	 * @type {string} 
+	 */
+	this.appliesTo = copyData.appliesTo;
+	/**
+	 * @type {Concept} 
+	 */
+	this.relationshipTypeModel = copyData.relationshipTypeModel;
+	/**
+	 * @summary Gets the relationship type between the 
+    {@link SourceClassKey}
+   and 
+    {@link TargetClassKey}
+	 * @type {string} 
+	 */
+	this.relationshipType = copyData.relationshipType;
+	/**
+	 * @type {Concept} 
+	 */
+	this.targetClassModel = copyData.targetClassModel;
+	/**
+	 * @summary Gets the target classification delay load property
+	 * @type {string} 
+	 */
+	this.targetClass = copyData.targetClass;
+	/**
+	 * @type {Concept} 
+	 */
+	this.sourceClassModel = copyData.sourceClassModel;
+	/**
+	 * @summary Gets the classification key of the source object to which this classification applies
+	 * @type {string} 
+	 */
+	this.sourceClass = copyData.sourceClass;
+	/**
+	 * @summary Gets the time that the validation rule was modified on
+	 * @type {Date} 
+	 */
+	this.modifiedOn = copyData.modifiedOn;
+	}
+}  // RelationshipValidationRule 
+// SanteDB.Core.Model.DataTypes.Tag`1, SanteDB.Core.Model, Version=3.0.920.0, Culture=neutral, PublicKeyToken=null
 //if(!Tag)
 /**
  * @class
@@ -11934,7 +12120,7 @@ function Tag (copyData) {
 	this.key = copyData.key;
 	}
 }  // Tag 
-// SanteDB.Core.Model.DataTypes.EntityTag, SanteDB.Core.Model, Version=3.0.0.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.DataTypes.EntityTag, SanteDB.Core.Model, Version=3.0.920.0, Culture=neutral, PublicKeyToken=null
 //if(!EntityTag)
 /**
  * @class
@@ -12032,7 +12218,7 @@ function EntityTag (copyData) {
 	this.key = copyData.key;
 	}
 }  // EntityTag 
-// SanteDB.Core.Model.DataTypes.ActTag, SanteDB.Core.Model, Version=3.0.0.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.DataTypes.ActTag, SanteDB.Core.Model, Version=3.0.920.0, Culture=neutral, PublicKeyToken=null
 //if(!ActTag)
 /**
  * @class
@@ -12130,7 +12316,7 @@ function ActTag (copyData) {
 	this.key = copyData.key;
 	}
 }  // ActTag 
-// SanteDB.Core.Model.DataTypes.TemplateDefinition, SanteDB.Core.Model, Version=3.0.0.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.DataTypes.TemplateDefinition, SanteDB.Core.Model, Version=3.0.920.0, Culture=neutral, PublicKeyToken=null
 //if(!TemplateDefinition)
 /**
  * @class
@@ -12250,7 +12436,7 @@ function TemplateDefinition (copyData) {
 	this.mnemonic = copyData.mnemonic;
 	}
 }  // TemplateDefinition 
-// SanteDB.Core.Model.Collection.Bundle, SanteDB.Core.Model, Version=3.0.0.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Collection.Bundle, SanteDB.Core.Model, Version=3.0.920.0, Culture=neutral, PublicKeyToken=null
 //if(!Bundle)
 /**
  * @class
@@ -12314,7 +12500,7 @@ function Bundle (copyData) {
 	this.modifiedOn = copyData.modifiedOn;
 	}
 }  // Bundle 
-// SanteDB.Core.Model.Audit.AuditableObject, SanteDB.Core.Model, Version=3.0.0.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Audit.AuditableObject, SanteDB.Core.Model, Version=3.0.920.0, Culture=neutral, PublicKeyToken=null
 //if(!AuditableObject)
 /**
  * @class
@@ -12384,7 +12570,7 @@ function AuditableObject (copyData) {
 	this.customCode = copyData.customCode;
 	}
 }  // AuditableObject 
-// SanteDB.Core.Model.Audit.AuditActorData, SanteDB.Core.Model, Version=3.0.0.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Audit.AuditActorData, SanteDB.Core.Model, Version=3.0.920.0, Culture=neutral, PublicKeyToken=null
 //if(!AuditActorData)
 /**
  * @class
@@ -12442,7 +12628,7 @@ function AuditActorData (copyData) {
 	this.role = copyData.role;
 	}
 }  // AuditActorData 
-// SanteDB.Core.Model.Audit.AuditCode, SanteDB.Core.Model, Version=3.0.0.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Audit.AuditCode, SanteDB.Core.Model, Version=3.0.920.0, Culture=neutral, PublicKeyToken=null
 //if(!AuditCode)
 /**
  * @class
@@ -12486,7 +12672,7 @@ function AuditCode (copyData) {
 	this.code = copyData.code;
 	}
 }  // AuditCode 
-// SanteDB.Core.Model.Audit.AuditEventData, SanteDB.Core.Model, Version=3.0.0.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Audit.AuditEventData, SanteDB.Core.Model, Version=3.0.920.0, Culture=neutral, PublicKeyToken=null
 //if(!AuditEventData)
 /**
  * @class
@@ -12571,7 +12757,7 @@ function AuditEventData (copyData) {
 	this.action = copyData.action;
 	}
 }  // AuditEventData 
-// SanteDB.Core.Model.Audit.AuditMetadata, SanteDB.Core.Model, Version=3.0.0.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Audit.AuditMetadata, SanteDB.Core.Model, Version=3.0.920.0, Culture=neutral, PublicKeyToken=null
 //if(!AuditMetadata)
 /**
  * @class
@@ -12597,7 +12783,7 @@ function AuditMetadata (copyData) {
 	this.key = copyData.key;
 	}
 }  // AuditMetadata 
-// SanteDB.Core.Model.Acts.Account, SanteDB.Core.Model, Version=3.0.0.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Acts.Account, SanteDB.Core.Model, Version=3.0.920.0, Culture=neutral, PublicKeyToken=null
 //if(!Account)
 /**
  * @class
@@ -12663,7 +12849,7 @@ function AuditMetadata (copyData) {
  * @property {ActRelationship} relationship.$other Unclassified
  * @property {SecurityPolicyInstance} policy Gets or sets the security policy instances associated with the act
  * @property {object} extension Gets a list of all extensions associated with the act
- * @property {string} extension.classifier  where classifier is from {@link Extension} extensionType
+ * @property {Array<byte>} extension.classifier  where classifier is from {@link Extension} extensionType
  * @property {ActNote} note Gets a list of all notes associated with the act
  * @property {object} tag Gets a list of all tags associated with the act
  * @property {string} tag.classifier  where classifier is from {@link Tag} key
@@ -12959,7 +13145,7 @@ function Account (copyData) {
 	this.balance = copyData.balance;
 	}
 }  // Account 
-// SanteDB.Core.Model.Acts.Act, SanteDB.Core.Model, Version=3.0.0.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Acts.Act, SanteDB.Core.Model, Version=3.0.920.0, Culture=neutral, PublicKeyToken=null
 //if(!Act)
 /**
  * @class
@@ -13064,7 +13250,7 @@ function Account (copyData) {
  * @property {ActRelationship} relationship.$other Unclassified
  * @property {SecurityPolicyInstance} policy Gets or sets the security policy instances associated with the act
  * @property {object} extension Gets a list of all extensions associated with the act
- * @property {string} extension.classifier  where classifier is from {@link Extension} extensionType
+ * @property {Array<byte>} extension.classifier  where classifier is from {@link Extension} extensionType
  * @property {ActNote} note Gets a list of all notes associated with the act
  * @property {object} tag Gets a list of all tags associated with the act
  * @property {string} tag.classifier  where classifier is from {@link Tag} key
@@ -13336,7 +13522,7 @@ function Act (copyData) {
 	this.isNegated = copyData.isNegated;
 	}
 }  // Act 
-// SanteDB.Core.Model.Acts.ActParticipation, SanteDB.Core.Model, Version=3.0.0.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Acts.ActParticipation, SanteDB.Core.Model, Version=3.0.920.0, Culture=neutral, PublicKeyToken=null
 //if(!ActParticipation)
 /**
  * @class
@@ -13364,6 +13550,7 @@ function Act (copyData) {
             as part of an act, then the quantity would be 100.
             </p>
  * @property {Concept} classificationModel [Delay loaded from classification],  Gets or sets the an additional (sub-type) of the relationship
+ * @property {string} externId Gets or sets the external key for the object
  * @property {string} classification Identifies the classification of the participation.(see: {@link RelationshipClassKeys} for values)
  * @property {string} player Identifies the entity which played the 
     {@link ParticipationRoleKey}
@@ -13474,12 +13661,17 @@ function ActParticipation (copyData) {
 	 */
 	this.classification = copyData.classification;
 	/**
+	 * @summary Gets or sets the external key for the object
+	 * @type {string} 
+	 */
+	this.externId = copyData.externId;
+	/**
 	 * @type {Concept} 
 	 */
 	this.classificationModel = copyData.classificationModel;
 	}
 }  // ActParticipation 
-// SanteDB.Core.Model.Acts.ActProtocol, SanteDB.Core.Model, Version=3.0.0.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Acts.ActProtocol, SanteDB.Core.Model, Version=3.0.920.0, Culture=neutral, PublicKeyToken=null
 //if(!ActProtocol)
 /**
  * @class
@@ -13559,7 +13751,7 @@ function ActProtocol (copyData) {
 	this.protocol = copyData.protocol;
 	}
 }  // ActProtocol 
-// SanteDB.Core.Model.Acts.ActRelationship, SanteDB.Core.Model, Version=3.0.0.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Acts.ActRelationship, SanteDB.Core.Model, Version=3.0.920.0, Culture=neutral, PublicKeyToken=null
 //if(!ActRelationship)
 /**
  * @class
@@ -13577,6 +13769,7 @@ function ActProtocol (copyData) {
             encounter with the encounter, but can also be used to link together chronic care episodes.
             </p>
  * @property {Concept} classificationModel [Delay loaded from classification],  Gets or sets the an additional (sub-type) of the relationship
+ * @property {string} externId Gets or sets the external key for the object
  * @property {string} classification Association type key(see: {@link RelationshipClassKeys} for values)
  * @property {string} target The target of the association
  * @property {Act} targetModel [Delay loaded from target],  Target act reference
@@ -13649,12 +13842,17 @@ function ActRelationship (copyData) {
 	 */
 	this.classification = copyData.classification;
 	/**
+	 * @summary Gets or sets the external key for the object
+	 * @type {string} 
+	 */
+	this.externId = copyData.externId;
+	/**
 	 * @type {Concept} 
 	 */
 	this.classificationModel = copyData.classificationModel;
 	}
 }  // ActRelationship 
-// SanteDB.Core.Model.Acts.CarePlan, SanteDB.Core.Model, Version=3.0.0.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Acts.CarePlan, SanteDB.Core.Model, Version=3.0.920.0, Culture=neutral, PublicKeyToken=null
 //if(!CarePlan)
 /**
  * @class
@@ -13715,7 +13913,7 @@ function ActRelationship (copyData) {
  * @property {ActRelationship} relationship.$other Unclassified
  * @property {SecurityPolicyInstance} policy Gets or sets the security policy instances associated with the act
  * @property {object} extension Gets a list of all extensions associated with the act
- * @property {string} extension.classifier  where classifier is from {@link Extension} extensionType
+ * @property {Array<byte>} extension.classifier  where classifier is from {@link Extension} extensionType
  * @property {ActNote} note Gets a list of all notes associated with the act
  * @property {object} tag Gets a list of all tags associated with the act
  * @property {string} tag.classifier  where classifier is from {@link Tag} key
@@ -13987,7 +14185,7 @@ function CarePlan (copyData) {
 	this.isNegated = copyData.isNegated;
 	}
 }  // CarePlan 
-// SanteDB.Core.Model.Acts.ControlAct, SanteDB.Core.Model, Version=3.0.0.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Acts.ControlAct, SanteDB.Core.Model, Version=3.0.920.0, Culture=neutral, PublicKeyToken=null
 //if(!ControlAct)
 /**
  * @class
@@ -14049,7 +14247,7 @@ function CarePlan (copyData) {
  * @property {ActRelationship} relationship.$other Unclassified
  * @property {SecurityPolicyInstance} policy Gets or sets the security policy instances associated with the act
  * @property {object} extension Gets a list of all extensions associated with the act
- * @property {string} extension.classifier  where classifier is from {@link Extension} extensionType
+ * @property {Array<byte>} extension.classifier  where classifier is from {@link Extension} extensionType
  * @property {ActNote} note Gets a list of all notes associated with the act
  * @property {object} tag Gets a list of all tags associated with the act
  * @property {string} tag.classifier  where classifier is from {@link Tag} key
@@ -14321,7 +14519,7 @@ function ControlAct (copyData) {
 	this.isNegated = copyData.isNegated;
 	}
 }  // ControlAct 
-// SanteDB.Core.Model.Acts.FinancialContract, SanteDB.Core.Model, Version=3.0.0.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Acts.FinancialContract, SanteDB.Core.Model, Version=3.0.920.0, Culture=neutral, PublicKeyToken=null
 //if(!FinancialContract)
 /**
  * @class
@@ -14385,7 +14583,7 @@ function ControlAct (copyData) {
  * @property {ActRelationship} relationship.$other Unclassified
  * @property {SecurityPolicyInstance} policy Gets or sets the security policy instances associated with the act
  * @property {object} extension Gets a list of all extensions associated with the act
- * @property {string} extension.classifier  where classifier is from {@link Extension} extensionType
+ * @property {Array<byte>} extension.classifier  where classifier is from {@link Extension} extensionType
  * @property {ActNote} note Gets a list of all notes associated with the act
  * @property {object} tag Gets a list of all tags associated with the act
  * @property {string} tag.classifier  where classifier is from {@link Tag} key
@@ -14666,7 +14864,7 @@ function FinancialContract (copyData) {
 	this.paymentTerms = copyData.paymentTerms;
 	}
 }  // FinancialContract 
-// SanteDB.Core.Model.Acts.FinancialTransaction, SanteDB.Core.Model, Version=3.0.0.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Acts.FinancialTransaction, SanteDB.Core.Model, Version=3.0.920.0, Culture=neutral, PublicKeyToken=null
 //if(!FinancialTransaction)
 /**
  * @class
@@ -14730,7 +14928,7 @@ function FinancialContract (copyData) {
  * @property {ActRelationship} relationship.$other Unclassified
  * @property {SecurityPolicyInstance} policy Gets or sets the security policy instances associated with the act
  * @property {object} extension Gets a list of all extensions associated with the act
- * @property {string} extension.classifier  where classifier is from {@link Extension} extensionType
+ * @property {Array<byte>} extension.classifier  where classifier is from {@link Extension} extensionType
  * @property {ActNote} note Gets a list of all notes associated with the act
  * @property {object} tag Gets a list of all tags associated with the act
  * @property {string} tag.classifier  where classifier is from {@link Tag} key
@@ -15026,7 +15224,7 @@ function FinancialTransaction (copyData) {
 	this.amount = copyData.amount;
 	}
 }  // FinancialTransaction 
-// SanteDB.Core.Model.Acts.InvoiceElement, SanteDB.Core.Model, Version=3.0.0.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Acts.InvoiceElement, SanteDB.Core.Model, Version=3.0.920.0, Culture=neutral, PublicKeyToken=null
 //if(!InvoiceElement)
 /**
  * @class
@@ -15095,7 +15293,7 @@ function FinancialTransaction (copyData) {
  * @property {ActRelationship} relationship.$other Unclassified
  * @property {SecurityPolicyInstance} policy Gets or sets the security policy instances associated with the act
  * @property {object} extension Gets a list of all extensions associated with the act
- * @property {string} extension.classifier  where classifier is from {@link Extension} extensionType
+ * @property {Array<byte>} extension.classifier  where classifier is from {@link Extension} extensionType
  * @property {ActNote} note Gets a list of all notes associated with the act
  * @property {object} tag Gets a list of all tags associated with the act
  * @property {string} tag.classifier  where classifier is from {@link Tag} key
@@ -15405,7 +15603,7 @@ function InvoiceElement (copyData) {
 	this.modifier = copyData.modifier;
 	}
 }  // InvoiceElement 
-// SanteDB.Core.Model.Acts.Narrative, SanteDB.Core.Model, Version=3.0.0.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Acts.Narrative, SanteDB.Core.Model, Version=3.0.920.0, Culture=neutral, PublicKeyToken=null
 //if(!Narrative)
 /**
  * @class
@@ -15471,7 +15669,7 @@ function InvoiceElement (copyData) {
  * @property {ActRelationship} relationship.$other Unclassified
  * @property {SecurityPolicyInstance} policy Gets or sets the security policy instances associated with the act
  * @property {object} extension Gets a list of all extensions associated with the act
- * @property {string} extension.classifier  where classifier is from {@link Extension} extensionType
+ * @property {Array<byte>} extension.classifier  where classifier is from {@link Extension} extensionType
  * @property {ActNote} note Gets a list of all notes associated with the act
  * @property {object} tag Gets a list of all tags associated with the act
  * @property {string} tag.classifier  where classifier is from {@link Tag} key
@@ -15768,7 +15966,7 @@ function Narrative (copyData) {
 	this.versionCode = copyData.versionCode;
 	}
 }  // Narrative 
-// SanteDB.Core.Model.Acts.Observation, SanteDB.Core.Model, Version=3.0.0.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Acts.Observation, SanteDB.Core.Model, Version=3.0.920.0, Culture=neutral, PublicKeyToken=null
 //if(!Observation)
 /**
  * @class
@@ -15847,7 +16045,7 @@ function Narrative (copyData) {
  * @property {ActRelationship} relationship.$other Unclassified
  * @property {SecurityPolicyInstance} policy Gets or sets the security policy instances associated with the act
  * @property {object} extension Gets a list of all extensions associated with the act
- * @property {string} extension.classifier  where classifier is from {@link Extension} extensionType
+ * @property {Array<byte>} extension.classifier  where classifier is from {@link Extension} extensionType
  * @property {ActNote} note Gets a list of all notes associated with the act
  * @property {object} tag Gets a list of all tags associated with the act
  * @property {string} tag.classifier  where classifier is from {@link Tag} key
@@ -16133,7 +16331,7 @@ function Observation (copyData) {
 	this.interpretationConcept = copyData.interpretationConcept;
 	}
 }  // Observation 
-// SanteDB.Core.Model.Acts.QuantityObservation, SanteDB.Core.Model, Version=3.0.0.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Acts.QuantityObservation, SanteDB.Core.Model, Version=3.0.920.0, Culture=neutral, PublicKeyToken=null
 //if(!QuantityObservation)
 /**
  * @class
@@ -16200,7 +16398,7 @@ function Observation (copyData) {
  * @property {ActRelationship} relationship.$other Unclassified
  * @property {SecurityPolicyInstance} policy Gets or sets the security policy instances associated with the act
  * @property {object} extension Gets a list of all extensions associated with the act
- * @property {string} extension.classifier  where classifier is from {@link Extension} extensionType
+ * @property {Array<byte>} extension.classifier  where classifier is from {@link Extension} extensionType
  * @property {ActNote} note Gets a list of all notes associated with the act
  * @property {object} tag Gets a list of all tags associated with the act
  * @property {string} tag.classifier  where classifier is from {@link Tag} key
@@ -16500,7 +16698,7 @@ function QuantityObservation (copyData) {
 	this.value = copyData.value;
 	}
 }  // QuantityObservation 
-// SanteDB.Core.Model.Acts.TextObservation, SanteDB.Core.Model, Version=3.0.0.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Acts.TextObservation, SanteDB.Core.Model, Version=3.0.920.0, Culture=neutral, PublicKeyToken=null
 //if(!TextObservation)
 /**
  * @class
@@ -16566,7 +16764,7 @@ function QuantityObservation (copyData) {
  * @property {ActRelationship} relationship.$other Unclassified
  * @property {SecurityPolicyInstance} policy Gets or sets the security policy instances associated with the act
  * @property {object} extension Gets a list of all extensions associated with the act
- * @property {string} extension.classifier  where classifier is from {@link Extension} extensionType
+ * @property {Array<byte>} extension.classifier  where classifier is from {@link Extension} extensionType
  * @property {ActNote} note Gets a list of all notes associated with the act
  * @property {object} tag Gets a list of all tags associated with the act
  * @property {string} tag.classifier  where classifier is from {@link Tag} key
@@ -16857,7 +17055,7 @@ function TextObservation (copyData) {
 	this.valueType = copyData.valueType;
 	}
 }  // TextObservation 
-// SanteDB.Core.Model.Acts.CodedObservation, SanteDB.Core.Model, Version=3.0.0.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Acts.CodedObservation, SanteDB.Core.Model, Version=3.0.920.0, Culture=neutral, PublicKeyToken=null
 //if(!CodedObservation)
 /**
  * @class
@@ -16923,7 +17121,7 @@ function TextObservation (copyData) {
  * @property {ActRelationship} relationship.$other Unclassified
  * @property {SecurityPolicyInstance} policy Gets or sets the security policy instances associated with the act
  * @property {object} extension Gets a list of all extensions associated with the act
- * @property {string} extension.classifier  where classifier is from {@link Extension} extensionType
+ * @property {Array<byte>} extension.classifier  where classifier is from {@link Extension} extensionType
  * @property {ActNote} note Gets a list of all notes associated with the act
  * @property {object} tag Gets a list of all tags associated with the act
  * @property {string} tag.classifier  where classifier is from {@link Tag} key
@@ -17218,7 +17416,7 @@ function CodedObservation (copyData) {
 	this.valueType = copyData.valueType;
 	}
 }  // CodedObservation 
-// SanteDB.Core.Model.Acts.PatientEncounter, SanteDB.Core.Model, Version=3.0.0.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Acts.PatientEncounter, SanteDB.Core.Model, Version=3.0.920.0, Culture=neutral, PublicKeyToken=null
 //if(!PatientEncounter)
 /**
  * @class
@@ -17285,7 +17483,7 @@ function CodedObservation (copyData) {
  * @property {ActRelationship} relationship.$other Unclassified
  * @property {SecurityPolicyInstance} policy Gets or sets the security policy instances associated with the act
  * @property {object} extension Gets a list of all extensions associated with the act
- * @property {string} extension.classifier  where classifier is from {@link Extension} extensionType
+ * @property {Array<byte>} extension.classifier  where classifier is from {@link Extension} extensionType
  * @property {ActNote} note Gets a list of all notes associated with the act
  * @property {object} tag Gets a list of all tags associated with the act
  * @property {string} tag.classifier  where classifier is from {@link Tag} key
@@ -17580,7 +17778,7 @@ function PatientEncounter (copyData) {
 	this.dischargeDisposition = copyData.dischargeDisposition;
 	}
 }  // PatientEncounter 
-// SanteDB.Core.Model.Acts.PatientEncounterArrangement, SanteDB.Core.Model, Version=3.0.0.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Acts.PatientEncounterArrangement, SanteDB.Core.Model, Version=3.0.920.0, Culture=neutral, PublicKeyToken=null
 //if(!PatientEncounterArrangement)
 /**
  * @class
@@ -17659,7 +17857,7 @@ function PatientEncounterArrangement (copyData) {
 	this.type = copyData.type;
 	}
 }  // PatientEncounterArrangement 
-// SanteDB.Core.Model.Acts.Procedure, SanteDB.Core.Model, Version=3.0.0.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Acts.Procedure, SanteDB.Core.Model, Version=3.0.920.0, Culture=neutral, PublicKeyToken=null
 //if(!Procedure)
 /**
  * @class
@@ -17725,7 +17923,7 @@ function PatientEncounterArrangement (copyData) {
  * @property {ActRelationship} relationship.$other Unclassified
  * @property {SecurityPolicyInstance} policy Gets or sets the security policy instances associated with the act
  * @property {object} extension Gets a list of all extensions associated with the act
- * @property {string} extension.classifier  where classifier is from {@link Extension} extensionType
+ * @property {Array<byte>} extension.classifier  where classifier is from {@link Extension} extensionType
  * @property {ActNote} note Gets a list of all notes associated with the act
  * @property {object} tag Gets a list of all tags associated with the act
  * @property {string} tag.classifier  where classifier is from {@link Tag} key
@@ -18024,7 +18222,7 @@ function Procedure (copyData) {
 	this.method = copyData.method;
 	}
 }  // Procedure 
-// SanteDB.Core.Model.Acts.Protocol, SanteDB.Core.Model, Version=3.0.0.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Acts.Protocol, SanteDB.Core.Model, Version=3.0.920.0, Culture=neutral, PublicKeyToken=null
 //if(!Protocol)
 /**
  * @class
@@ -18040,6 +18238,7 @@ function Procedure (copyData) {
   ).
             </p>
  * @property {string} name Gets or sets the name of the protocol
+ * @property {string} groupId Gets or sets the group id
  * @property {string} handlerClass Gets or sets the handler class AQN
  * @property {Array<byte>} definition Contains instructions which the handler class can understand
  * @property {string} oid Gets or sets the OID
@@ -18138,13 +18337,18 @@ function Protocol (copyData) {
 	 */
 	this.handlerClass = copyData.handlerClass;
 	/**
+	 * @summary Gets or sets the group id
+	 * @type {string} 
+	 */
+	this.groupId = copyData.groupId;
+	/**
 	 * @summary Gets or sets the name of the protocol
 	 * @type {string} 
 	 */
 	this.name = copyData.name;
 	}
 }  // Protocol 
-// SanteDB.Core.Model.Acts.SubstanceAdministration, SanteDB.Core.Model, Version=3.0.0.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Acts.SubstanceAdministration, SanteDB.Core.Model, Version=3.0.920.0, Culture=neutral, PublicKeyToken=null
 //if(!SubstanceAdministration)
 /**
  * @class
@@ -18222,7 +18426,7 @@ function Protocol (copyData) {
  * @property {ActRelationship} relationship.$other Unclassified
  * @property {SecurityPolicyInstance} policy Gets or sets the security policy instances associated with the act
  * @property {object} extension Gets a list of all extensions associated with the act
- * @property {string} extension.classifier  where classifier is from {@link Extension} extensionType
+ * @property {Array<byte>} extension.classifier  where classifier is from {@link Extension} extensionType
  * @property {ActNote} note Gets a list of all notes associated with the act
  * @property {object} tag Gets a list of all tags associated with the act
  * @property {string} tag.classifier  where classifier is from {@link Tag} key
@@ -18531,7 +18735,7 @@ function SubstanceAdministration (copyData) {
 	this.route = copyData.route;
 	}
 }  // SubstanceAdministration 
-// SanteDB.Core.Model.DataTypes.BatchOperationType, SanteDB.Core.Model, Version=3.0.0.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.DataTypes.BatchOperationType, SanteDB.Core.Model, Version=3.0.920.0, Culture=neutral, PublicKeyToken=null
 // if(!BatchOperationType)
 /**
  * @enum {string}
@@ -18544,52 +18748,34 @@ const BatchOperationType = {
 	 *             Automatically decide             
 	 */
 	Auto : 'Auto',
+	AutoInt : '0',
 	/** 
 	 *             Insert the object only            
 	 */
 	Insert : 'Insert',
+	InsertInt : '1',
 	/** 
 	 *             Insert the object or update it            
 	 */
 	InsertOrUpdate : 'InsertOrUpdate',
+	InsertOrUpdateInt : '2',
 	/** 
 	 *             Update the object only            
 	 */
 	Update : 'Update',
+	UpdateInt : '3',
 	/** 
 	 *             Delete the object            
 	 */
 	Delete : 'Delete',
+	DeleteInt : '4',
 	/** 
 	 *             Ignore this object - it is for reference only            
 	 */
 	Ignore : 'Ignore',
-	/** 
-	 *             Automatically decide             
-	 */
-	AutoInt : 0,
-	/** 
-	 *             Insert the object only            
-	 */
-	InsertInt : 1,
-	/** 
-	 *             Insert the object or update it            
-	 */
-	InsertOrUpdateInt : 2,
-	/** 
-	 *             Update the object only            
-	 */
-	UpdateInt : 3,
-	/** 
-	 *             Delete the object            
-	 */
-	DeleteInt : 4,
-	/** 
-	 *             Ignore this object - it is for reference only            
-	 */
-	IgnoreInt : 5,
+	IgnoreInt : '5',
 }  // BatchOperationType 
-// SanteDB.Core.Model.Subscription.SubscriptionModeType, SanteDB.Core.Model, Version=3.0.0.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Subscription.SubscriptionModeType, SanteDB.Core.Model, Version=3.0.920.0, Culture=neutral, PublicKeyToken=null
 // if(!SubscriptionModeType)
 /**
  * @enum {string}
@@ -18602,16 +18788,19 @@ const SubscriptionModeType = {
 	 *             Only visible when subscription mode is selected            
 	 */
 	Partial : 'Partial',
+	PartialInt : '1',
 	/** 
 	 *             Only visible when all data (no specific item) is selected            
 	 */
 	Full : 'Full',
+	FullInt : '2',
 	/** 
 	 *             Always visible            
 	 */
 	FullOrPartial : 'FullOrPartial',
+	FullOrPartialInt : '3',
 }  // SubscriptionModeType 
-// SanteDB.Core.Model.Subscription.SubscriptionTriggerType, SanteDB.Core.Model, Version=3.0.0.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Subscription.SubscriptionTriggerType, SanteDB.Core.Model, Version=3.0.920.0, Culture=neutral, PublicKeyToken=null
 // if(!SubscriptionTriggerType)
 /**
  * @enum {string}
@@ -18624,40 +18813,49 @@ const SubscriptionTriggerType = {
 	 *             Never execute the trigger            
 	 */
 	Never : 'Never',
+	NeverInt : '0',
 	/** 
 	 *             Always execute the trigger            
 	 */
 	Always : 'Always',
+	AlwaysInt : '63',
 	/** 
 	 *             Only on start            
 	 */
 	OnStart : 'OnStart',
+	OnStartInt : '1',
 	/** 
 	 *             Only on commit            
 	 */
 	OnCommit : 'OnCommit',
+	OnCommitInt : '2',
 	/** 
 	 *             Only on stop            
 	 */
 	OnStop : 'OnStop',
+	OnStopInt : '4',
 	/** 
 	 *             Only on push of data            
 	 */
 	OnPush : 'OnPush',
+	OnPushInt : '8',
 	/** 
 	 *             Only when the network changes            
 	 */
 	OnNetworkChange : 'OnNetworkChange',
+	OnNetworkChangeInt : '16',
 	/** 
 	 *             Periodically poll            
 	 */
 	PeriodicPoll : 'PeriodicPoll',
+	PeriodicPollInt : '32',
 	/** 
 	 *             Only when manually pulling            
 	 */
 	Manual : 'Manual',
+	ManualInt : '64',
 }  // SubscriptionTriggerType 
-// SanteDB.Core.Model.Security.PolicyGrantType, SanteDB.Core.Model, Version=3.0.0.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Security.PolicyGrantType, SanteDB.Core.Model, Version=3.0.920.0, Culture=neutral, PublicKeyToken=null
 // if(!PolicyGrantType)
 /**
  * @enum {string}
@@ -18670,16 +18868,19 @@ const PolicyGrantType = {
 	 *             Represents a policy grant type of deny.            
 	 */
 	Deny : 'Deny',
+	DenyInt : '0',
 	/** 
 	 *             Represnts a policy grant type of elevate.            
 	 */
 	Elevate : 'Elevate',
+	ElevateInt : '1',
 	/** 
 	 *             Represents a policy grant type of grant.            
 	 */
 	Grant : 'Grant',
+	GrantInt : '2',
 }  // PolicyGrantType 
-// SanteDB.Core.Model.Constants.ActorTypeKeys, SanteDB.Core.Model, Version=3.0.0.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Constants.ActorTypeKeys, SanteDB.Core.Model, Version=3.0.920.0, Culture=neutral, PublicKeyToken=null
 // if(!ActorTypeKeys)
 /**
  * @enum {string}
@@ -18705,7 +18906,7 @@ const ActorTypeKeys = {
 	 */
 	Device : '5d584bec-7cfe-4d24-a6d7-efaf7f315c1f',
 }  // ActorTypeKeys 
-// SanteDB.Core.Model.DataTypes.DatePrecision, SanteDB.Core.Model, Version=3.0.0.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.DataTypes.DatePrecision, SanteDB.Core.Model, Version=3.0.920.0, Culture=neutral, PublicKeyToken=null
 // if(!DatePrecision)
 /**
  * @enum {string}
@@ -18718,32 +18919,39 @@ const DatePrecision = {
 	 *             Represents full date precision.            
 	 */
 	Full : 'Full',
+	FullInt : '0',
 	/** 
 	 *             Represents year date precision.            
 	 */
 	Year : 'Year',
+	YearInt : '1',
 	/** 
 	 *             Represents month date precision.            
 	 */
 	Month : 'Month',
+	MonthInt : '2',
 	/** 
 	 *             Represents day date precision.            
 	 */
 	Day : 'Day',
+	DayInt : '3',
 	/** 
 	 *             Represents hour date precision.            
 	 */
 	Hour : 'Hour',
+	HourInt : '4',
 	/** 
 	 *             Represents minute date precision.            
 	 */
 	Minute : 'Minute',
+	MinuteInt : '5',
 	/** 
 	 *             Represents second date precision.            
 	 */
 	Second : 'Second',
+	SecondInt : '6',
 }  // DatePrecision 
-// SanteDB.Core.Model.Constants.AddressUseKeys, SanteDB.Core.Model, Version=3.0.0.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Constants.AddressUseKeys, SanteDB.Core.Model, Version=3.0.920.0, Culture=neutral, PublicKeyToken=null
 // if(!AddressUseKeys)
 /**
  * @enum {string}
@@ -18813,7 +19021,7 @@ const AddressUseKeys = {
 	 */
 	WorkPlace : 'eaa6f08e-bb8e-4457-9dc0-3a1555fadf5c',
 }  // AddressUseKeys 
-// SanteDB.Core.Model.Constants.EntityClassKeys, SanteDB.Core.Model, Version=3.0.0.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Constants.EntityClassKeys, SanteDB.Core.Model, Version=3.0.920.0, Culture=neutral, PublicKeyToken=null
 // if(!EntityClassKeys)
 /**
  * @enum {string}
@@ -18901,7 +19109,6 @@ const EntityClassKeys = {
 	/** 
 	 *             State            
 	 */
-	State : '4d1a5c28-deb7-411e-b75f-d524f90dfa63',
 	StateOrProvince : '4d1a5c28-deb7-411e-b75f-d524f90dfa63',
 	/** 
 	 *             Represents a precinct or sub-division of a city such as a burrogh            
@@ -18912,7 +19119,7 @@ const EntityClassKeys = {
 	 */
 	UserEntity : '6a2b00ba-501b-4523-b57c-f96d8ae44684',
 }  // EntityClassKeys 
-// SanteDB.Core.Model.Constants.DeterminerKeys, SanteDB.Core.Model, Version=3.0.0.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Constants.DeterminerKeys, SanteDB.Core.Model, Version=3.0.920.0, Culture=neutral, PublicKeyToken=null
 // if(!DeterminerKeys)
 /**
  * @enum {string}
@@ -18934,7 +19141,7 @@ const DeterminerKeys = {
 	 */
 	Specific : 'f29f08de-78a7-4a5e-aeaf-7b545ba19a09',
 }  // DeterminerKeys 
-// SanteDB.Core.Model.Constants.NameUseKeys, SanteDB.Core.Model, Version=3.0.0.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Constants.NameUseKeys, SanteDB.Core.Model, Version=3.0.920.0, Culture=neutral, PublicKeyToken=null
 // if(!NameUseKeys)
 /**
  * @enum {string}
@@ -19008,7 +19215,7 @@ const NameUseKeys = {
 	 */
 	Syllabic : 'b4ca3bf0-a7fc-44f3-87d5-e126beda93ff',
 }  // NameUseKeys 
-// SanteDB.Core.Model.Constants.ActParticipationKeys, SanteDB.Core.Model, Version=3.0.0.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Constants.ActParticipationKeys, SanteDB.Core.Model, Version=3.0.920.0, Culture=neutral, PublicKeyToken=null
 // if(!ActParticipationKeys)
 /**
  * @enum {string}
@@ -19242,7 +19449,7 @@ const ActParticipationKeys = {
 	 */
 	Witness : '0b82357f-5ae0-4543-ab8e-a33e9b315bab',
 }  // ActParticipationKeys 
-// SanteDB.Core.Model.Constants.EntityRelationshipTypeKeys, SanteDB.Core.Model, Version=3.0.0.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Constants.EntityRelationshipTypeKeys, SanteDB.Core.Model, Version=3.0.920.0, Culture=neutral, PublicKeyToken=null
 // if(!EntityRelationshipTypeKeys)
 /**
  * @enum {string}
@@ -19896,7 +20103,7 @@ const EntityRelationshipTypeKeys = {
 	 */
 	HasPart : '2220ef3f-b8d9-43a4-9bae-a2906e3c0803',
 }  // EntityRelationshipTypeKeys 
-// SanteDB.Core.Model.Constants.StatusKeys, SanteDB.Core.Model, Version=3.0.0.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Constants.StatusKeys, SanteDB.Core.Model, Version=3.0.920.0, Culture=neutral, PublicKeyToken=null
 // if(!StatusKeys)
 /**
  * @enum {string}
@@ -19950,7 +20157,7 @@ const StatusKeys = {
 	 */
 	AllStates : 'System.Guid[]',
 }  // StatusKeys 
-// SanteDB.Core.Model.Constants.TelecomAddressUseKeys, SanteDB.Core.Model, Version=3.0.0.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Constants.TelecomAddressUseKeys, SanteDB.Core.Model, Version=3.0.920.0, Culture=neutral, PublicKeyToken=null
 // if(!TelecomAddressUseKeys)
 /**
  * @enum {string}
@@ -19992,7 +20199,7 @@ const TelecomAddressUseKeys = {
 	 */
 	WorkPlace : 'eaa6f08e-bb8e-4457-9dc0-3a1555fadf5c',
 }  // TelecomAddressUseKeys 
-// SanteDB.Core.Model.Patch.PatchOperationType, SanteDB.Core.Model, Version=3.0.0.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Patch.PatchOperationType, SanteDB.Core.Model, Version=3.0.920.0, Culture=neutral, PublicKeyToken=null
 // if(!PatchOperationType)
 /**
  * @enum {string}
@@ -20005,20 +20212,24 @@ const PatchOperationType = {
 	 *             Patch operation adds the specified value to the array            
 	 */
 	Add : 'Add',
+	AddInt : '0',
 	/** 
 	 *             Patch operation removes the specified value from the array            
 	 */
 	Remove : 'Remove',
+	RemoveInt : '1',
 	/** 
 	 *             Patch operation replaces the specified item at the path             
 	 */
 	Replace : 'Replace',
+	ReplaceInt : '2',
 	/** 
 	 *             Patch should test value before proceeding            
 	 */
 	Test : 'Test',
+	TestInt : '3',
 }  // PatchOperationType 
-// SanteDB.Core.Model.Constants.AddressComponentKeys, SanteDB.Core.Model, Version=3.0.0.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Constants.AddressComponentKeys, SanteDB.Core.Model, Version=3.0.920.0, Culture=neutral, PublicKeyToken=null
 // if(!AddressComponentKeys)
 /**
  * @enum {string}
@@ -20140,7 +20351,7 @@ const AddressComponentKeys = {
 	 */
 	UnitIdentifier : '908c09df-81fe-45ac-9233-0881a278a401',
 }  // AddressComponentKeys 
-// SanteDB.Core.Model.Constants.NameComponentKeys, SanteDB.Core.Model, Version=3.0.0.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Constants.NameComponentKeys, SanteDB.Core.Model, Version=3.0.920.0, Culture=neutral, PublicKeyToken=null
 // if(!NameComponentKeys)
 /**
  * @enum {string}
@@ -20174,7 +20385,7 @@ const NameComponentKeys = {
 	 */
 	Title : '4386d92a-d81b-4033-b968-01e57e20d5e0',
 }  // NameComponentKeys 
-// SanteDB.Core.Model.Constants.RelationshipClassKeys, SanteDB.Core.Model, Version=3.0.0.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Constants.RelationshipClassKeys, SanteDB.Core.Model, Version=3.0.920.0, Culture=neutral, PublicKeyToken=null
 // if(!RelationshipClassKeys)
 /**
  * @enum {string}
@@ -20200,7 +20411,7 @@ const RelationshipClassKeys = {
 	 */
 	PlayedRoleLink : '8e7befbc-56d9-49f2-a758-7085ca72d03d',
 }  // RelationshipClassKeys 
-// SanteDB.Core.Model.Constants.TelecomAddressTypeKeys, SanteDB.Core.Model, Version=3.0.0.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Constants.TelecomAddressTypeKeys, SanteDB.Core.Model, Version=3.0.920.0, Culture=neutral, PublicKeyToken=null
 // if(!TelecomAddressTypeKeys)
 /**
  * @enum {string}
@@ -20234,7 +20445,7 @@ const TelecomAddressTypeKeys = {
 	 */
 	Internet : 'c1c0a4e9-4238-4044-b89b-9c9798995b93',
 }  // TelecomAddressTypeKeys 
-// SanteDB.Core.Model.DataTypes.IdentifierReliability, SanteDB.Core.Model, Version=3.0.0.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.DataTypes.IdentifierReliability, SanteDB.Core.Model, Version=3.0.920.0, Culture=neutral, PublicKeyToken=null
 // if(!IdentifierReliability)
 /**
  * @enum {string}
@@ -20247,16 +20458,19 @@ const IdentifierReliability = {
 	 *             Unspecified            
 	 */
 	Unspecified : 'Unspecified',
+	UnspecifiedInt : '0',
 	/** 
 	 *             Authoritative            
 	 */
 	Authoritative : 'Authoritative',
+	AuthoritativeInt : '1',
 	/** 
 	 *             Informative            
 	 */
 	Informative : 'Informative',
+	InformativeInt : '2',
 }  // IdentifierReliability 
-// SanteDB.Core.Model.Constants.ConceptRelationshipTypeKeys, SanteDB.Core.Model, Version=3.0.0.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Constants.ConceptRelationshipTypeKeys, SanteDB.Core.Model, Version=3.0.920.0, Culture=neutral, PublicKeyToken=null
 // if(!ConceptRelationshipTypeKeys)
 /**
  * @enum {string}
@@ -20290,7 +20504,7 @@ const ConceptRelationshipTypeKeys = {
 	 */
 	WiderThan : 'ae8b4f2f-009f-4e0d-b35e-5a89555c5980',
 }  // ConceptRelationshipTypeKeys 
-// SanteDB.Core.Model.Constants.ConceptClassKeys, SanteDB.Core.Model, Version=3.0.0.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Constants.ConceptClassKeys, SanteDB.Core.Model, Version=3.0.920.0, Culture=neutral, PublicKeyToken=null
 // if(!ConceptClassKeys)
 /**
  * @enum {string}
@@ -20356,7 +20570,27 @@ const ConceptClassKeys = {
 	 */
 	Language : 'ed032625-8139-4bdd-af25-c54a6960f87d',
 }  // ConceptClassKeys 
-// SanteDB.Core.Model.Constants.CodeSystemKeys, SanteDB.Core.Model, Version=3.0.0.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.DataTypes.ConceptSetCompositionOperation, SanteDB.Core.Model, Version=3.0.920.0, Culture=neutral, PublicKeyToken=null
+// if(!ConceptSetCompositionOperation)
+/**
+ * @enum {string}
+ * @public
+ * @readonly
+ * @summary             Concept set reference role            
+ */
+const ConceptSetCompositionOperation = { 
+	/** 
+	 *             Source Includes Target            
+	 */
+	Include : 'Include',
+	IncludeInt : '1',
+	/** 
+	 *             Source Excludes Target            
+	 */
+	Exclude : 'Exclude',
+	ExcludeInt : '2',
+}  // ConceptSetCompositionOperation 
+// SanteDB.Core.Model.Constants.CodeSystemKeys, SanteDB.Core.Model, Version=3.0.920.0, Culture=neutral, PublicKeyToken=null
 // if(!CodeSystemKeys)
 /**
  * @enum {string}
@@ -20414,7 +20648,7 @@ const CodeSystemKeys = {
 	 */
 	AdministrativeGender : '7a3a7139-b93e-4a99-bd54-749e30fe712a',
 }  // CodeSystemKeys 
-// SanteDB.Core.Model.Audit.AuditableObjectIdType, SanteDB.Core.Model, Version=3.0.0.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Audit.AuditableObjectIdType, SanteDB.Core.Model, Version=3.0.920.0, Culture=neutral, PublicKeyToken=null
 // if(!AuditableObjectIdType)
 /**
  * @enum {string}
@@ -20427,60 +20661,74 @@ const AuditableObjectIdType = {
 	 * 
 	 */
 	NotSpecified : 'NotSpecified',
+	NotSpecifiedInt : '0',
 	/** 
 	 * 
 	 */
 	MedicalRecord : 'MedicalRecord',
+	MedicalRecordInt : '1',
 	/** 
 	 * 
 	 */
 	PatientNumber : 'PatientNumber',
+	PatientNumberInt : '2',
 	/** 
 	 * 
 	 */
 	EncounterNumber : 'EncounterNumber',
+	EncounterNumberInt : '3',
 	/** 
 	 * 
 	 */
 	EnrolleeNumber : 'EnrolleeNumber',
+	EnrolleeNumberInt : '4',
 	/** 
 	 * 
 	 */
 	SocialSecurityNumber : 'SocialSecurityNumber',
+	SocialSecurityNumberInt : '5',
 	/** 
 	 * 
 	 */
 	AccountNumber : 'AccountNumber',
+	AccountNumberInt : '6',
 	/** 
 	 * 
 	 */
 	GuarantorNumber : 'GuarantorNumber',
+	GuarantorNumberInt : '7',
 	/** 
 	 * 
 	 */
 	ReportName : 'ReportName',
+	ReportNameInt : '8',
 	/** 
 	 * 
 	 */
 	ReportNumber : 'ReportNumber',
+	ReportNumberInt : '9',
 	/** 
 	 * 
 	 */
 	SearchCritereon : 'SearchCritereon',
+	SearchCritereonInt : '10',
 	/** 
 	 * 
 	 */
 	UserIdentifier : 'UserIdentifier',
+	UserIdentifierInt : '11',
 	/** 
 	 * 
 	 */
 	Uri : 'Uri',
+	UriInt : '12',
 	/** 
 	 *             Custom code            
 	 */
 	Custom : 'Custom',
+	CustomInt : '13',
 }  // AuditableObjectIdType 
-// SanteDB.Core.Model.Audit.AuditableObjectLifecycle, SanteDB.Core.Model, Version=3.0.0.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Audit.AuditableObjectLifecycle, SanteDB.Core.Model, Version=3.0.920.0, Culture=neutral, PublicKeyToken=null
 // if(!AuditableObjectLifecycle)
 /**
  * @enum {string}
@@ -20493,68 +20741,84 @@ const AuditableObjectLifecycle = {
 	 *             Not set            
 	 */
 	NotSet : 'NotSet',
+	NotSetInt : '0',
 	/** 
 	 *             An object was created            
 	 */
 	Creation : 'Creation',
+	CreationInt : '1',
 	/** 
 	 *             An object was imported from an external source            
 	 */
 	Import : 'Import',
+	ImportInt : '2',
 	/** 
 	 *             An object was amended (updated)            
 	 */
 	Amendment : 'Amendment',
+	AmendmentInt : '3',
 	/** 
 	 *             An object was verified            
 	 */
 	Verification : 'Verification',
+	VerificationInt : '4',
 	/** 
 	 *             An object wsa transformed            
 	 */
 	Translation : 'Translation',
+	TranslationInt : '5',
 	/** 
 	 *             An object was accessed            
 	 */
 	Access : 'Access',
+	AccessInt : '6',
 	/** 
 	 *             An object was de-identified            
 	 */
 	Deidentification : 'Deidentification',
+	DeidentificationInt : '7',
 	/** 
 	 *             An object was aggregated with another group of objects            
 	 */
 	Aggregation : 'Aggregation',
+	AggregationInt : '8',
 	/** 
 	 *             An object was reported on            
 	 */
 	Report : 'Report',
+	ReportInt : '9',
 	/** 
 	 *             An object was exported to another system            
 	 */
 	Export : 'Export',
+	ExportInt : '10',
 	/** 
 	 *             An object was disclosed to a user            
 	 */
 	Disclosure : 'Disclosure',
+	DisclosureInt : '11',
 	/** 
 	 *             The object was the receipt of a disclosure            
 	 */
 	ReceiptOfDisclosure : 'ReceiptOfDisclosure',
+	ReceiptOfDisclosureInt : '12',
 	/** 
 	 *             The object was archived            
 	 */
 	Archiving : 'Archiving',
+	ArchivingInt : '13',
 	/** 
 	 *             The object was obsoleted (logically deleted)            
 	 */
 	LogicalDeletion : 'LogicalDeletion',
+	LogicalDeletionInt : '14',
 	/** 
 	 *             The object was perminently deleted            
 	 */
 	PermanentErasure : 'PermanentErasure',
+	PermanentErasureInt : '15',
 }  // AuditableObjectLifecycle 
-// SanteDB.Core.Model.Audit.AuditableObjectRole, SanteDB.Core.Model, Version=3.0.0.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Audit.AuditableObjectRole, SanteDB.Core.Model, Version=3.0.920.0, Culture=neutral, PublicKeyToken=null
 // if(!AuditableObjectRole)
 /**
  * @enum {string}
@@ -20567,100 +20831,124 @@ const AuditableObjectRole = {
 	 * 
 	 */
 	Patient : 'Patient',
+	PatientInt : '1',
 	/** 
 	 * 
 	 */
 	Location : 'Location',
+	LocationInt : '2',
 	/** 
 	 * 
 	 */
 	Report : 'Report',
+	ReportInt : '3',
 	/** 
 	 * 
 	 */
 	Resource : 'Resource',
+	ResourceInt : '4',
 	/** 
 	 * 
 	 */
 	MasterFile : 'MasterFile',
+	MasterFileInt : '5',
 	/** 
 	 * 
 	 */
 	User : 'User',
+	UserInt : '6',
 	/** 
 	 * 
 	 */
 	List : 'List',
+	ListInt : '7',
 	/** 
 	 * 
 	 */
 	Doctor : 'Doctor',
+	DoctorInt : '8',
 	/** 
 	 * 
 	 */
 	Subscriber : 'Subscriber',
+	SubscriberInt : '9',
 	/** 
 	 * 
 	 */
 	Guarantor : 'Guarantor',
+	GuarantorInt : '10',
 	/** 
 	 * 
 	 */
 	SecurityUser : 'SecurityUser',
+	SecurityUserInt : '11',
 	/** 
 	 * 
 	 */
 	SecurityGroup : 'SecurityGroup',
+	SecurityGroupInt : '12',
 	/** 
 	 * 
 	 */
 	SecurityResource : 'SecurityResource',
+	SecurityResourceInt : '13',
 	/** 
 	 * 
 	 */
 	SecurityGranularityDefinition : 'SecurityGranularityDefinition',
+	SecurityGranularityDefinitionInt : '14',
 	/** 
 	 * 
 	 */
 	Provider : 'Provider',
+	ProviderInt : '15',
 	/** 
 	 * 
 	 */
 	DataDestination : 'DataDestination',
+	DataDestinationInt : '16',
 	/** 
 	 * 
 	 */
 	DataRepository : 'DataRepository',
+	DataRepositoryInt : '17',
 	/** 
 	 * 
 	 */
 	Schedule : 'Schedule',
+	ScheduleInt : '18',
 	/** 
 	 * 
 	 */
 	Customer : 'Customer',
+	CustomerInt : '19',
 	/** 
 	 * 
 	 */
 	Job : 'Job',
+	JobInt : '20',
 	/** 
 	 * 
 	 */
 	JobStream : 'JobStream',
+	JobStreamInt : '21',
 	/** 
 	 * 
 	 */
 	Table : 'Table',
+	TableInt : '22',
 	/** 
 	 * 
 	 */
 	RoutingCriteria : 'RoutingCriteria',
+	RoutingCriteriaInt : '23',
 	/** 
 	 * 
 	 */
 	Query : 'Query',
+	QueryInt : '24',
 }  // AuditableObjectRole 
-// SanteDB.Core.Model.Audit.AuditableObjectType, SanteDB.Core.Model, Version=3.0.0.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Audit.AuditableObjectType, SanteDB.Core.Model, Version=3.0.920.0, Culture=neutral, PublicKeyToken=null
 // if(!AuditableObjectType)
 /**
  * @enum {string}
@@ -20673,24 +20961,29 @@ const AuditableObjectType = {
 	 *             Not specified            
 	 */
 	NotSpecified : 'NotSpecified',
+	NotSpecifiedInt : '0',
 	/** 
 	 *             Represents a person.            
 	 */
 	Person : 'Person',
+	PersonInt : '1',
 	/** 
 	 *             Represents a system object.            
 	 */
 	SystemObject : 'SystemObject',
+	SystemObjectInt : '2',
 	/** 
 	 *             Represents an organization.            
 	 */
 	Organization : 'Organization',
+	OrganizationInt : '3',
 	/** 
 	 *             Represents an other object type.            
 	 */
 	Other : 'Other',
+	OtherInt : '4',
 }  // AuditableObjectType 
-// SanteDB.Core.Model.Audit.NetworkAccessPointType, SanteDB.Core.Model, Version=3.0.0.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Audit.NetworkAccessPointType, SanteDB.Core.Model, Version=3.0.920.0, Culture=neutral, PublicKeyToken=null
 // if(!NetworkAccessPointType)
 /**
  * @enum {string}
@@ -20703,16 +20996,19 @@ const NetworkAccessPointType = {
 	 *             Represents an identifier which is a machine name.            
 	 */
 	MachineName : 'MachineName',
+	MachineNameInt : '1',
 	/** 
 	 *             Represents an identifier which is an IP address.            
 	 */
 	IPAddress : 'IPAddress',
+	IPAddressInt : '2',
 	/** 
 	 *             Represents an identifier which is a telephone number.            
 	 */
 	TelephoneNumber : 'TelephoneNumber',
+	TelephoneNumberInt : '3',
 }  // NetworkAccessPointType 
-// SanteDB.Core.Model.Audit.ActionType, SanteDB.Core.Model, Version=3.0.0.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Audit.ActionType, SanteDB.Core.Model, Version=3.0.920.0, Culture=neutral, PublicKeyToken=null
 // if(!ActionType)
 /**
  * @enum {string}
@@ -20725,24 +21021,29 @@ const ActionType = {
 	 *             Data was created in the system            
 	 */
 	Create : 'Create',
+	CreateInt : '1',
 	/** 
 	 *             Data was viewed, printed, displayed, etc...            
 	 */
 	Read : 'Read',
+	ReadInt : '2',
 	/** 
 	 *             Data was revised in the system            
 	 */
 	Update : 'Update',
+	UpdateInt : '4',
 	/** 
 	 *             Data was removed from the system            
 	 */
 	Delete : 'Delete',
+	DeleteInt : '8',
 	/** 
 	 *             A system, or application function was performed            
 	 */
 	Execute : 'Execute',
+	ExecuteInt : '16',
 }  // ActionType 
-// SanteDB.Core.Model.Audit.EventIdentifierType, SanteDB.Core.Model, Version=3.0.0.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Audit.EventIdentifierType, SanteDB.Core.Model, Version=3.0.920.0, Culture=neutral, PublicKeyToken=null
 // if(!EventIdentifierType)
 /**
  * @enum {string}
@@ -20755,80 +21056,99 @@ const EventIdentifierType = {
 	 *             Represents a provisioning event.            
 	 */
 	ProvisioningEvent : 'ProvisioningEvent',
+	ProvisioningEventInt : '1',
 	/** 
 	 *             Represents a medication event.            
 	 */
 	MedicationEvent : 'MedicationEvent',
+	MedicationEventInt : '2',
 	/** 
 	 *             Represents a resource assignment.            
 	 */
 	ResourceAssignment : 'ResourceAssignment',
+	ResourceAssignmentInt : '4',
 	/** 
 	 *             Represents a care episode.            
 	 */
 	CareEpisode : 'CareEpisode',
+	CareEpisodeInt : '8',
 	/** 
 	 *             Represents a care protocol.            
 	 */
 	CareProtocol : 'CareProtocol',
+	CareProtocolInt : '16',
 	/** 
 	 *             Represents a procedure record.            
 	 */
 	ProcedureRecord : 'ProcedureRecord',
+	ProcedureRecordInt : '32',
 	/** 
 	 *             Represents a query.            
 	 */
 	Query : 'Query',
+	QueryInt : '64',
 	/** 
 	 *             Represents a patient record.            
 	 */
 	PatientRecord : 'PatientRecord',
+	PatientRecordInt : '128',
 	/** 
 	 *             Represents an order record.            
 	 */
 	OrderRecord : 'OrderRecord',
+	OrderRecordInt : '256',
 	/** 
 	 *             Represents a network entry.            
 	 */
 	NetworkActivity : 'NetworkActivity',
+	NetworkActivityInt : '512',
 	/** 
 	 *             Represents an import.            
 	 */
 	Import : 'Import',
+	ImportInt : '1024',
 	/** 
 	 *             Represents an export.            
 	 */
 	Export : 'Export',
+	ExportInt : '2048',
 	/** 
 	 *             Represents application activity.            
 	 */
 	ApplicationActivity : 'ApplicationActivity',
+	ApplicationActivityInt : '4096',
 	/** 
 	 *             Represents a security alert.            
 	 */
 	SecurityAlert : 'SecurityAlert',
+	SecurityAlertInt : '8192',
 	/** 
 	 *             Represents user authentication.            
 	 */
 	UserAuthentication : 'UserAuthentication',
+	UserAuthenticationInt : '16384',
 	/** 
 	 *             Represents that an emergency override started.            
 	 */
 	EmergencyOverrideStarted : 'EmergencyOverrideStarted',
+	EmergencyOverrideStartedInt : '32768',
 	/** 
 	 *             Represents the use of a restricted function.            
 	 */
 	UseOfRestrictedFunction : 'UseOfRestrictedFunction',
+	UseOfRestrictedFunctionInt : '65536',
 	/** 
 	 *             Represents a login.            
 	 */
 	Login : 'Login',
+	LoginInt : '131072',
 	/** 
 	 *             Represents a logout.            
 	 */
 	Logout : 'Logout',
+	LogoutInt : '262144',
 }  // EventIdentifierType 
-// SanteDB.Core.Model.Audit.OutcomeIndicator, SanteDB.Core.Model, Version=3.0.0.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Audit.OutcomeIndicator, SanteDB.Core.Model, Version=3.0.920.0, Culture=neutral, PublicKeyToken=null
 // if(!OutcomeIndicator)
 /**
  * @enum {string}
@@ -20841,20 +21161,24 @@ const OutcomeIndicator = {
 	 *             Successful operation.            
 	 */
 	Success : 'Success',
+	SuccessInt : '1',
 	/** 
 	 *             Minor failure, action should be restarted.            
 	 */
 	MinorFail : 'MinorFail',
+	MinorFailInt : '2',
 	/** 
 	 *             Action was terminated.            
 	 */
 	SeriousFail : 'SeriousFail',
+	SeriousFailInt : '4',
 	/** 
 	 *             Major failure, action is made unavailable.            
 	 */
 	EpicFail : 'EpicFail',
+	EpicFailInt : '8',
 }  // OutcomeIndicator 
-// SanteDB.Core.Model.Audit.AuditMetadataKey, SanteDB.Core.Model, Version=3.0.0.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Audit.AuditMetadataKey, SanteDB.Core.Model, Version=3.0.920.0, Culture=neutral, PublicKeyToken=null
 // if(!AuditMetadataKey)
 /**
  * @enum {string}
@@ -20867,64 +21191,79 @@ const AuditMetadataKey = {
 	 *             The metadata represents a patient identifier            
 	 */
 	PID : 'PID',
+	PIDInt : '0',
 	/** 
 	 *             The object is a process name            
 	 */
 	ProcessName : 'ProcessName',
+	ProcessNameInt : '1',
 	/** 
 	 *             Identifies the remote host as an IP address            
 	 */
 	RemoteHost : 'RemoteHost',
+	RemoteHostInt : '2',
 	/** 
 	 *             Identifies the remote endpoint            
 	 */
 	ForwardInformation : 'ForwardInformation',
+	ForwardInformationInt : '3',
 	/** 
 	 *             Identifies the local endpoint            
 	 */
 	LocalEndpoint : 'LocalEndpoint',
+	LocalEndpointInt : '4',
 	/** 
 	 *             Identifies the time a batch was submitted            
 	 */
 	SubmissionTime : 'SubmissionTime',
+	SubmissionTimeInt : '5',
 	/** 
 	 *             Identifies if an object was in original format            
 	 */
 	OriginalFormat : 'OriginalFormat',
+	OriginalFormatInt : '6',
 	/** 
 	 *             Identifies the status of the object            
 	 */
 	SubmissionStatus : 'SubmissionStatus',
+	SubmissionStatusInt : '7',
 	/** 
 	 *             Identifies the priority of the object            
 	 */
 	Priority : 'Priority',
+	PriorityInt : '8',
 	/** 
 	 *             Identifies the object classification            
 	 */
 	Classification : 'Classification',
+	ClassificationInt : '9',
 	/** 
 	 *             Identifies the object as a session identifier            
 	 */
 	SessionId : 'SessionId',
+	SessionIdInt : '10',
 	/** 
 	 *             Identifies the object as an enterprise site identifier            
 	 */
 	EnterpriseSiteID : 'EnterpriseSiteID',
+	EnterpriseSiteIDInt : '11',
 	/** 
 	 *             Identifies the object's metadata as the source            
 	 */
 	AuditSourceID : 'AuditSourceID',
+	AuditSourceIDInt : '12',
 	/** 
 	 *             Identifies the source type            
 	 */
 	AuditSourceType : 'AuditSourceType',
+	AuditSourceTypeInt : '13',
 	/** 
 	 *             Allows the correlation of data between audits            
 	 */
 	CorrelationToken : 'CorrelationToken',
+	CorrelationTokenInt : '14',
 }  // AuditMetadataKey 
-// SanteDB.Core.Model.Constants.CurrencyKeys, SanteDB.Core.Model, Version=3.0.0.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Constants.CurrencyKeys, SanteDB.Core.Model, Version=3.0.920.0, Culture=neutral, PublicKeyToken=null
 // if(!CurrencyKeys)
 /**
  * @enum {string}
@@ -21014,7 +21353,7 @@ const CurrencyKeys = {
 	 */
 	Rand : '69f1fd07-ba26-4e92-8ad0-deac7559e90f',
 }  // CurrencyKeys 
-// SanteDB.Core.Model.Constants.ActClassKeys, SanteDB.Core.Model, Version=3.0.0.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Constants.ActClassKeys, SanteDB.Core.Model, Version=3.0.920.0, Culture=neutral, PublicKeyToken=null
 // if(!ActClassKeys)
 /**
  * @enum {string}
@@ -21116,7 +21455,7 @@ const ActClassKeys = {
 	 */
 	List : 'b0323489-9a09-411a-bb55-ff283830ea1a',
 }  // ActClassKeys 
-// SanteDB.Core.Model.Constants.ActMoodKeys, SanteDB.Core.Model, Version=3.0.0.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Constants.ActMoodKeys, SanteDB.Core.Model, Version=3.0.920.0, Culture=neutral, PublicKeyToken=null
 // if(!ActMoodKeys)
 /**
  * @enum {string}
@@ -21162,7 +21501,7 @@ const ActMoodKeys = {
 	 */
 	Request : 'e658ca72-3b6a-4099-ab6e-7cf6861a5b61',
 }  // ActMoodKeys 
-// SanteDB.Core.Model.Constants.ActReasonKeys, SanteDB.Core.Model, Version=3.0.0.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Constants.ActReasonKeys, SanteDB.Core.Model, Version=3.0.920.0, Culture=neutral, PublicKeyToken=null
 // if(!ActReasonKeys)
 /**
  * @enum {string}
@@ -21212,7 +21551,7 @@ const ActReasonKeys = {
 	 */
 	ColdStorageFailure : '06922eac-0cae-49af-a33c-fc7096349e4a',
 }  // ActReasonKeys 
-// SanteDB.Core.Model.Constants.ActRelationshipTypeKeys, SanteDB.Core.Model, Version=3.0.0.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Constants.ActRelationshipTypeKeys, SanteDB.Core.Model, Version=3.0.920.0, Culture=neutral, PublicKeyToken=null
 // if(!ActRelationshipTypeKeys)
 /**
  * @enum {string}
@@ -21318,7 +21657,7 @@ const ActRelationshipTypeKeys = {
 	 */
 	Duplicate : '2bbf068b-9121-4081-bf3c-ab62c01362ee',
 }  // ActRelationshipTypeKeys 
-// SanteDB.Core.Model.Constants.NullReasonKeys, SanteDB.Core.Model, Version=3.0.0.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Constants.NullReasonKeys, SanteDB.Core.Model, Version=3.0.920.0, Culture=neutral, PublicKeyToken=null
 // if(!NullReasonKeys)
 /**
  * @enum {string}
@@ -21388,6 +21727,1515 @@ const NullReasonKeys = {
 	 */
 	Masked : '9b16bf12-073e-4ea4-b6c5-e1b93e8fd490',
 }  // NullReasonKeys 
+// SanteDB.Core.Security.OAuth.OpenIdConnectDiscoveryDocument, SanteDB.Core.Api, Version=3.0.920.0, Culture=neutral, PublicKeyToken=null
+//if(!OpenIdConnectDiscoveryDocument)
+/**
+ * @class
+ * @constructor
+ * @public
+ * @summary Represents a well-formed openid configuration discovery document. OIDC Discovery protocol servers typically expose this at {server}/.well-known/openid-configuration.
+ * @property {string} issuer Gets or sets the issuer of the token
+ * @property {string} authorization_endpoint Gets or sets the auth endont
+ * @property {string} token_endpoint Gets or sets the token endpoint
+ * @property {string} userinfo_endpoint Get the user information endpoint
+ * @property {string} jwks_uri The JWKS URI
+ * @property {string} scopes_supported Gets the scopes supported
+ * @property {string} response_types_supported Gets or sets the response types supported
+ * @property {string} grant_types_supported Grant types supported
+ * @property {string} subject_types_supported Gets the subject types supported
+ * @property {string} id_token_signing_alg_values_supported Gets the signing algorithms
+ * @property {string} end_session_endpoint Gets or sets the endpoint that is used to sign out of the currently established session.
+ * @param {OpenIdConnectDiscoveryDocument} copyData Copy constructor (if present)
+ */
+function OpenIdConnectDiscoveryDocument (copyData) { 
+	this.$type = 'OpenIdConnectDiscoveryDocument';
+	if(copyData) {
+	/**
+	 * @summary Gets or sets the endpoint that is used to sign out of the currently established session.
+	 * @type {string} 
+	 */
+	this.end_session_endpoint = copyData.end_session_endpoint;
+	/**
+	 * @summary Gets the signing algorithms
+	 * @type {string} 
+	 */
+	this.id_token_signing_alg_values_supported = copyData.id_token_signing_alg_values_supported;
+	/**
+	 * @summary Gets the subject types supported
+	 * @type {string} 
+	 */
+	this.subject_types_supported = copyData.subject_types_supported;
+	/**
+	 * @summary Grant types supported
+	 * @type {string} 
+	 */
+	this.grant_types_supported = copyData.grant_types_supported;
+	/**
+	 * @summary Gets or sets the response types supported
+	 * @type {string} 
+	 */
+	this.response_types_supported = copyData.response_types_supported;
+	/**
+	 * @summary Gets the scopes supported
+	 * @type {string} 
+	 */
+	this.scopes_supported = copyData.scopes_supported;
+	/**
+	 * @summary The JWKS URI
+	 * @type {string} 
+	 */
+	this.jwks_uri = copyData.jwks_uri;
+	/**
+	 * @summary Get the user information endpoint
+	 * @type {string} 
+	 */
+	this.userinfo_endpoint = copyData.userinfo_endpoint;
+	/**
+	 * @summary Gets or sets the token endpoint
+	 * @type {string} 
+	 */
+	this.token_endpoint = copyData.token_endpoint;
+	/**
+	 * @summary Gets or sets the auth endont
+	 * @type {string} 
+	 */
+	this.authorization_endpoint = copyData.authorization_endpoint;
+	/**
+	 * @summary Gets or sets the issuer of the token
+	 * @type {string} 
+	 */
+	this.issuer = copyData.issuer;
+	}
+}  // OpenIdConnectDiscoveryDocument 
+// SanteDB.Core.PubSub.PubSubChannelDefinition, SanteDB.Core.Api, Version=3.0.920.0, Culture=neutral, PublicKeyToken=null
+//if(!)
+/**
+ * @class
+ * @constructor
+ * @public
+ * @summary Identifies a single channel in the pub-sub manager
+ * @property {string} name Gets or sets the name
+ * @property {boolean} active Gets or sets whether the channel is active
+ * @property {string} endpoint Gets or sets the endpoint
+ * @property {} settings Gets or sets the settings on this channel
+ * @property {string} dispatcherFactoryId Gets the dispatcher factory scheme
+ * @property {Date} updatedTime
+ * @property {Date} modifiedOn
+ * @property {SecurityProvenance} updatedByModel [Delay loaded from updatedBy], 
+ * @property {string} updatedBy
+ * @property {Date} creationTimeModel [Delay loaded from creationTime], 
+ * @property {Date} creationTime
+ * @property {Date} obsoletionTimeModel [Delay loaded from obsoletionTime], 
+ * @property {Date} obsoletionTime
+ * @property {SecurityProvenance} createdByModel [Delay loaded from createdBy], 
+ * @property {SecurityProvenance} obsoletedByModel [Delay loaded from obsoletedBy], 
+ * @property {string} createdBy
+ * @property {string} obsoletedBy
+ * @property {string} id
+ * @property {BatchOperationType} operation(see: {@link BatchOperationType} for values)
+ * @property {string} $type
+ * @param {} copyData Copy constructor (if present)
+ */
+function PubSubChannelDefinition (copyData) { 
+	this.$type = '';
+	if(copyData) {
+	/**
+	 * @type {BatchOperationType} 
+	 */
+	this.operation = copyData.operation;
+	/**
+	 * @type {string} 
+	 */
+	this.id = copyData.id;
+	/**
+	 * @type {string} 
+	 */
+	this.obsoletedBy = copyData.obsoletedBy;
+	/**
+	 * @type {string} 
+	 */
+	this.createdBy = copyData.createdBy;
+	/**
+	 * @type {SecurityProvenance} 
+	 */
+	this.obsoletedByModel = copyData.obsoletedByModel;
+	/**
+	 * @type {SecurityProvenance} 
+	 */
+	this.createdByModel = copyData.createdByModel;
+	/**
+	 * @type {Date} 
+	 */
+	this.obsoletionTime = copyData.obsoletionTime;
+	/**
+	 * @type {Date} 
+	 */
+	this.obsoletionTimeModel = copyData.obsoletionTimeModel;
+	/**
+	 * @type {Date} 
+	 */
+	this.creationTime = copyData.creationTime;
+	/**
+	 * @type {Date} 
+	 */
+	this.creationTimeModel = copyData.creationTimeModel;
+	/**
+	 * @type {string} 
+	 */
+	this.updatedBy = copyData.updatedBy;
+	/**
+	 * @type {SecurityProvenance} 
+	 */
+	this.updatedByModel = copyData.updatedByModel;
+	/**
+	 * @type {Date} 
+	 */
+	this.modifiedOn = copyData.modifiedOn;
+	/**
+	 * @type {Date} 
+	 */
+	this.updatedTime = copyData.updatedTime;
+	/**
+	 * @summary Gets the dispatcher factory scheme
+	 * @type {string} 
+	 */
+	this.dispatcherFactoryId = copyData.dispatcherFactoryId;
+	/**
+	 * @summary Gets or sets the settings on this channel
+	 * @type {} 
+	 */
+	this.settings = copyData.settings;
+	/**
+	 * @summary Gets or sets the endpoint
+	 * @type {string} 
+	 */
+	this.endpoint = copyData.endpoint;
+	/**
+	 * @summary Gets or sets whether the channel is active
+	 * @type {boolean} 
+	 */
+	this.active = copyData.active;
+	/**
+	 * @summary Gets or sets the name
+	 * @type {string} 
+	 */
+	this.name = copyData.name;
+	}
+}  //  
+// SanteDB.Core.PubSub.PubSubChannelSetting, SanteDB.Core.Api, Version=3.0.920.0, Culture=neutral, PublicKeyToken=null
+//if(!)
+/**
+ * @class
+ * @constructor
+ * @public
+ * @summary A single pub-sub channel setting
+ * @property {string} name Gets the name of the setting
+ * @property {string} value Gets or sets the value
+ * @param {} copyData Copy constructor (if present)
+ */
+function PubSubChannelSetting (copyData) { 
+	this.$type = '';
+	if(copyData) {
+	/**
+	 * @summary Gets or sets the value
+	 * @type {string} 
+	 */
+	this.value = copyData.value;
+	/**
+	 * @summary Gets the name of the setting
+	 * @type {string} 
+	 */
+	this.name = copyData.name;
+	}
+}  //  
+// SanteDB.Core.PubSub.PubSubSubscriptionDefinition, SanteDB.Core.Api, Version=3.0.920.0, Culture=neutral, PublicKeyToken=null
+//if(!)
+/**
+ * @class
+ * @constructor
+ * @public
+ * @summary Represents a configuration / definition for a pub-sub subscription
+ * @property {string} name Gets or sets the name
+ * @property {boolean} active True if is active
+ * @property {string} resource Gets or sets the resource type
+ * @property {PubSubEventType} event Gets or sets the event(see: {@link PubSubEventType} for values)
+ * @property {string} when Gets or sets the filters
+ * @property {Date} notBefore Starts when
+ * @property {Date} notAfter Not after
+ * @property {string} channel Gets or sets the channel
+ * @property {string} description Gets the description of the subscription
+ * @property {string} support Gets the support contact
+ * @property {Date} updatedTime
+ * @property {Date} modifiedOn
+ * @property {SecurityProvenance} updatedByModel [Delay loaded from updatedBy], 
+ * @property {string} updatedBy
+ * @property {Date} creationTimeModel [Delay loaded from creationTime], 
+ * @property {Date} creationTime
+ * @property {Date} obsoletionTimeModel [Delay loaded from obsoletionTime], 
+ * @property {Date} obsoletionTime
+ * @property {SecurityProvenance} createdByModel [Delay loaded from createdBy], 
+ * @property {SecurityProvenance} obsoletedByModel [Delay loaded from obsoletedBy], 
+ * @property {string} createdBy
+ * @property {string} obsoletedBy
+ * @property {string} id
+ * @property {BatchOperationType} operation(see: {@link BatchOperationType} for values)
+ * @property {string} $type
+ * @param {} copyData Copy constructor (if present)
+ */
+function PubSubSubscriptionDefinition (copyData) { 
+	this.$type = '';
+	if(copyData) {
+	/**
+	 * @type {BatchOperationType} 
+	 */
+	this.operation = copyData.operation;
+	/**
+	 * @type {string} 
+	 */
+	this.id = copyData.id;
+	/**
+	 * @type {string} 
+	 */
+	this.obsoletedBy = copyData.obsoletedBy;
+	/**
+	 * @type {string} 
+	 */
+	this.createdBy = copyData.createdBy;
+	/**
+	 * @type {SecurityProvenance} 
+	 */
+	this.obsoletedByModel = copyData.obsoletedByModel;
+	/**
+	 * @type {SecurityProvenance} 
+	 */
+	this.createdByModel = copyData.createdByModel;
+	/**
+	 * @type {Date} 
+	 */
+	this.obsoletionTime = copyData.obsoletionTime;
+	/**
+	 * @type {Date} 
+	 */
+	this.obsoletionTimeModel = copyData.obsoletionTimeModel;
+	/**
+	 * @type {Date} 
+	 */
+	this.creationTime = copyData.creationTime;
+	/**
+	 * @type {Date} 
+	 */
+	this.creationTimeModel = copyData.creationTimeModel;
+	/**
+	 * @type {string} 
+	 */
+	this.updatedBy = copyData.updatedBy;
+	/**
+	 * @type {SecurityProvenance} 
+	 */
+	this.updatedByModel = copyData.updatedByModel;
+	/**
+	 * @type {Date} 
+	 */
+	this.modifiedOn = copyData.modifiedOn;
+	/**
+	 * @type {Date} 
+	 */
+	this.updatedTime = copyData.updatedTime;
+	/**
+	 * @summary Gets the support contact
+	 * @type {string} 
+	 */
+	this.support = copyData.support;
+	/**
+	 * @summary Gets the description of the subscription
+	 * @type {string} 
+	 */
+	this.description = copyData.description;
+	/**
+	 * @summary Gets or sets the channel
+	 * @type {string} 
+	 */
+	this.channel = copyData.channel;
+	/**
+	 * @summary Not after
+	 * @type {Date} 
+	 */
+	this.notAfter = copyData.notAfter;
+	/**
+	 * @summary Starts when
+	 * @type {Date} 
+	 */
+	this.notBefore = copyData.notBefore;
+	/**
+	 * @summary Gets or sets the filters
+	 * @type {string} 
+	 */
+	this.when = copyData.when;
+	/**
+	 * @summary Gets or sets the event
+	 * @type {PubSubEventType} 
+	 */
+	this.event = copyData.event;
+	/**
+	 * @summary Gets or sets the resource type
+	 * @type {string} 
+	 */
+	this.resource = copyData.resource;
+	/**
+	 * @summary True if is active
+	 * @type {boolean} 
+	 */
+	this.active = copyData.active;
+	/**
+	 * @summary Gets or sets the name
+	 * @type {string} 
+	 */
+	this.name = copyData.name;
+	}
+}  //  
+// SanteDB.Core.Notifications.NotificationTemplate, SanteDB.Core.Api, Version=3.0.920.0, Culture=neutral, PublicKeyToken=null
+//if(!)
+/**
+ * @class
+ * @constructor
+ * @public
+ * @summary Represents a notification template source
+ * @property {string} lang Gets or sets the language of the template
+ * @property {string} id Gets or sets the identifier
+ * @property {string} subject Gets or sets the subject
+ * @property {string} text Gets or sets the body of the templates
+ * @param {} copyData Copy constructor (if present)
+ */
+function NotificationTemplate (copyData) { 
+	this.$type = '';
+	if(copyData) {
+	/**
+	 * @summary Gets or sets the body of the templates
+	 * @type {string} 
+	 */
+	this.text = copyData.text;
+	/**
+	 * @summary Gets or sets the subject
+	 * @type {string} 
+	 */
+	this.subject = copyData.subject;
+	/**
+	 * @summary Gets or sets the identifier
+	 * @type {string} 
+	 */
+	this.id = copyData.id;
+	/**
+	 * @summary Gets or sets the language of the template
+	 * @type {string} 
+	 */
+	this.lang = copyData.lang;
+	}
+}  //  
+// SanteDB.Core.Mail.Mailbox, SanteDB.Core.Api, Version=3.0.920.0, Culture=neutral, PublicKeyToken=null
+//if(!Mailbox)
+/**
+ * @class
+ * @constructor
+ * @public
+ * @extends BaseEntityData
+ * @summary Represents a mailbox - a particular folder or place which holds 
+    {@link MailMessage}
+   instances
+ * @property {string} owner Gets or sets the user which owns this mailbox
+ * @property {SecurityUser} ownerModel [Delay loaded from owner],  Gets or sets the user which owns the mailbox
+ * @property {string} name Gets or sets the name of the mailbox
+ * @property {MailboxMailMessage} messages Gets the messages for this mailbox
+ * @property {Date} creationTimeModel [Delay loaded from creationTime], 
+ * @property {Date} creationTime
+ * @property {Date} obsoletionTimeModel [Delay loaded from obsoletionTime], 
+ * @property {Date} obsoletionTime
+ * @property {SecurityProvenance} createdByModel [Delay loaded from createdBy], 
+ * @property {Date} modifiedOn
+ * @property {SecurityProvenance} obsoletedByModel [Delay loaded from obsoletedBy], 
+ * @property {string} createdBy
+ * @property {string} obsoletedBy
+ * @property {string} id
+ * @property {BatchOperationType} operation(see: {@link BatchOperationType} for values)
+ * @property {string} $type
+ * @param {Mailbox} copyData Copy constructor (if present)
+ */
+function Mailbox (copyData) { 
+	this.$type = 'Mailbox';
+	if(copyData) {
+	/**
+	 * @type {BatchOperationType} 
+	 */
+	this.operation = copyData.operation;
+	/**
+	 * @type {string} 
+	 */
+	this.id = copyData.id;
+	/**
+	 * @type {string} 
+	 */
+	this.obsoletedBy = copyData.obsoletedBy;
+	/**
+	 * @type {string} 
+	 */
+	this.createdBy = copyData.createdBy;
+	/**
+	 * @type {SecurityProvenance} 
+	 */
+	this.obsoletedByModel = copyData.obsoletedByModel;
+	/**
+	 * @type {Date} 
+	 */
+	this.modifiedOn = copyData.modifiedOn;
+	/**
+	 * @type {SecurityProvenance} 
+	 */
+	this.createdByModel = copyData.createdByModel;
+	/**
+	 * @type {Date} 
+	 */
+	this.obsoletionTime = copyData.obsoletionTime;
+	/**
+	 * @type {Date} 
+	 */
+	this.obsoletionTimeModel = copyData.obsoletionTimeModel;
+	/**
+	 * @type {Date} 
+	 */
+	this.creationTime = copyData.creationTime;
+	/**
+	 * @type {Date} 
+	 */
+	this.creationTimeModel = copyData.creationTimeModel;
+	/**
+	 * @summary Gets the messages for this mailbox
+	 * @type {MailboxMailMessage} 
+	 */
+	this.messages = copyData.messages;
+	/**
+	 * @summary Gets or sets the name of the mailbox
+	 * @type {string} 
+	 */
+	this.name = copyData.name;
+	/**
+	 * @type {SecurityUser} 
+	 */
+	this.ownerModel = copyData.ownerModel;
+	/**
+	 * @summary Gets or sets the user which owns this mailbox
+	 * @type {string} 
+	 */
+	this.owner = copyData.owner;
+	}
+}  // Mailbox 
+// SanteDB.Core.Mail.MailboxMailMessage, SanteDB.Core.Api, Version=3.0.920.0, Culture=neutral, PublicKeyToken=null
+//if(!MailboxMailMessage)
+/**
+ * @class
+ * @constructor
+ * @public
+ * @extends Association
+ * @summary Associates a 
+    {@link MailMessage}
+   with a 
+    {@link Mailbox}
+ * @property {string} target Gets the target of the association
+ * @property {MailStatusFlags} flags Gets or sets the flags(see: {@link MailStatusFlags} for values)
+ * @property {MailMessage} targetModel [Delay loaded from target],  Gets the target of the relationship
+ * @property {Date} modifiedOn
+ * @property {string} source
+ * @property {Mailbox} sourceModel [Delay loaded from source], 
+ * @property {string} id
+ * @property {BatchOperationType} operation(see: {@link BatchOperationType} for values)
+ * @property {string} $type
+ * @param {MailboxMailMessage} copyData Copy constructor (if present)
+ */
+function MailboxMailMessage (copyData) { 
+	this.$type = 'MailboxMailMessage';
+	if(copyData) {
+	/**
+	 * @type {BatchOperationType} 
+	 */
+	this.operation = copyData.operation;
+	/**
+	 * @type {string} 
+	 */
+	this.id = copyData.id;
+	/**
+	 * @type {Mailbox} 
+	 */
+	this.sourceModel = copyData.sourceModel;
+	/**
+	 * @type {string} 
+	 */
+	this.source = copyData.source;
+	/**
+	 * @type {Date} 
+	 */
+	this.modifiedOn = copyData.modifiedOn;
+	/**
+	 * @type {MailMessage} 
+	 */
+	this.targetModel = copyData.targetModel;
+	/**
+	 * @summary Gets or sets the flags
+	 * @type {MailStatusFlags} 
+	 */
+	this.flags = copyData.flags;
+	/**
+	 * @summary Gets the target of the relationship
+	 * @type {string} 
+	 */
+	this.target = copyData.target;
+	}
+}  // MailboxMailMessage 
+// SanteDB.Core.Mail.MailMessage, SanteDB.Core.Api, Version=3.0.920.0, Culture=neutral, PublicKeyToken=null
+//if(!MailMessage)
+/**
+ * @class
+ * @constructor
+ * @public
+ * @summary Represents an alert message.
+ * @property {string} body Gets or sets the alert body of the alert.
+ * @property {Date} time Gets or sets the time of the alert.
+ * @property {MailMessageFlags} flags Gets or sets the status of the alert.(see: {@link MailMessageFlags} for values)
+ * @property {string} from Gets or sets the "from" subject if it is a human based message of the alert.
+ * @property {Date} modifiedOn Gets or sets the time this was modified on
+ * @property {string} rcpt The recipient users used for query
+ * @property {SecurityUser} rcptModel [Delay loaded from rcpt],  Receipt to
+ * @property {string} subject Gets or sets the subject of the alert.
+ * @property {string} to Gets or sets the recipient of the alert in a human readable form
+ * @property {Date} updatedTime
+ * @property {SecurityProvenance} updatedByModel [Delay loaded from updatedBy], 
+ * @property {string} updatedBy
+ * @property {Date} creationTimeModel [Delay loaded from creationTime], 
+ * @property {Date} creationTime
+ * @property {Date} obsoletionTimeModel [Delay loaded from obsoletionTime], 
+ * @property {Date} obsoletionTime
+ * @property {SecurityProvenance} createdByModel [Delay loaded from createdBy], 
+ * @property {SecurityProvenance} obsoletedByModel [Delay loaded from obsoletedBy], 
+ * @property {string} createdBy
+ * @property {string} obsoletedBy
+ * @property {string} id
+ * @property {BatchOperationType} operation(see: {@link BatchOperationType} for values)
+ * @property {string} $type
+ * @param {MailMessage} copyData Copy constructor (if present)
+ */
+function MailMessage (copyData) { 
+	this.$type = 'MailMessage';
+	if(copyData) {
+	/**
+	 * @type {BatchOperationType} 
+	 */
+	this.operation = copyData.operation;
+	/**
+	 * @type {string} 
+	 */
+	this.id = copyData.id;
+	/**
+	 * @type {string} 
+	 */
+	this.obsoletedBy = copyData.obsoletedBy;
+	/**
+	 * @type {string} 
+	 */
+	this.createdBy = copyData.createdBy;
+	/**
+	 * @type {SecurityProvenance} 
+	 */
+	this.obsoletedByModel = copyData.obsoletedByModel;
+	/**
+	 * @type {SecurityProvenance} 
+	 */
+	this.createdByModel = copyData.createdByModel;
+	/**
+	 * @type {Date} 
+	 */
+	this.obsoletionTime = copyData.obsoletionTime;
+	/**
+	 * @type {Date} 
+	 */
+	this.obsoletionTimeModel = copyData.obsoletionTimeModel;
+	/**
+	 * @type {Date} 
+	 */
+	this.creationTime = copyData.creationTime;
+	/**
+	 * @type {Date} 
+	 */
+	this.creationTimeModel = copyData.creationTimeModel;
+	/**
+	 * @type {string} 
+	 */
+	this.updatedBy = copyData.updatedBy;
+	/**
+	 * @type {SecurityProvenance} 
+	 */
+	this.updatedByModel = copyData.updatedByModel;
+	/**
+	 * @type {Date} 
+	 */
+	this.updatedTime = copyData.updatedTime;
+	/**
+	 * @summary Gets or sets the recipient of the alert in a human readable form
+	 * @type {string} 
+	 */
+	this.to = copyData.to;
+	/**
+	 * @summary Gets or sets the subject of the alert.
+	 * @type {string} 
+	 */
+	this.subject = copyData.subject;
+	/**
+	 * @type {SecurityUser} 
+	 */
+	this.rcptModel = copyData.rcptModel;
+	/**
+	 * @summary The recipient users used for query
+	 * @type {string} 
+	 */
+	this.rcpt = copyData.rcpt;
+	/**
+	 * @summary Gets or sets the time this was modified on
+	 * @type {Date} 
+	 */
+	this.modifiedOn = copyData.modifiedOn;
+	/**
+	 * @summary Gets or sets the "from" subject if it is a human based message of the alert.
+	 * @type {string} 
+	 */
+	this.from = copyData.from;
+	/**
+	 * @summary Gets or sets the status of the alert.
+	 * @type {MailMessageFlags} 
+	 */
+	this.flags = copyData.flags;
+	/**
+	 * @summary Gets or sets the time of the alert.
+	 * @type {Date} 
+	 */
+	this.time = copyData.time;
+	/**
+	 * @summary Gets or sets the alert body of the alert.
+	 * @type {string} 
+	 */
+	this.body = copyData.body;
+	}
+}  // MailMessage 
+// SanteDB.Core.Interop.ServiceEndpointOptions, SanteDB.Core.Api, Version=3.0.920.0, Culture=neutral, PublicKeyToken=null
+//if(!ServiceEndpointOptions)
+/**
+ * @class
+ * @constructor
+ * @public
+ * @summary Service endpoint options
+ * @property {ServiceEndpointType} type Gets or sets the service endpoint type(see: {@link ServiceEndpointType} for values)
+ * @property {ServiceEndpointCapabilities} cap Capabilities(see: {@link ServiceEndpointCapabilities} for values)
+ * @property {SecurityScheme} security Security scheme(see: {@link SecurityScheme} for values)
+ * @property {String[]} url Base URL type
+ * @property {TypeReferenceConfiguration[]} contract Gets or sets the contract
+ * @property {TypeReferenceConfiguration} behavior Gets or sets the behaviors(see: {@link IRestApiContractImplementation} for values)
+ * @param {ServiceEndpointOptions} copyData Copy constructor (if present)
+ */
+function ServiceEndpointOptions (copyData) { 
+	this.$type = 'ServiceEndpointOptions';
+	if(copyData) {
+	/**
+	 * @summary Gets or sets the behaviors
+	 * @type {TypeReferenceConfiguration} 
+	 */
+	this.behavior = copyData.behavior;
+	/**
+	 * @summary Gets or sets the contract
+	 * @type {TypeReferenceConfiguration[]} 
+	 */
+	this.contract = copyData.contract;
+	/**
+	 * @summary Base URL type
+	 * @type {String[]} 
+	 */
+	this.url = copyData.url;
+	/**
+	 * @summary Security scheme
+	 * @type {SecurityScheme} 
+	 */
+	this.security = copyData.security;
+	/**
+	 * @summary Capabilities
+	 * @type {ServiceEndpointCapabilities} 
+	 */
+	this.cap = copyData.cap;
+	/**
+	 * @summary Gets or sets the service endpoint type
+	 * @type {ServiceEndpointType} 
+	 */
+	this.type = copyData.type;
+	}
+}  // ServiceEndpointOptions 
+// SanteDB.Core.Interop.ServiceOptions, SanteDB.Core.Api, Version=3.0.920.0, Culture=neutral, PublicKeyToken=null
+//if(!ServiceOptions)
+/**
+ * @class
+ * @constructor
+ * @public
+ * @extends IdentifiedData
+ * @summary Service options
+ * @property {string} version Gets or sets the version of the service interface
+ * @property {string} server Gets the server informational version
+ * @property {ServiceResourceOptions} resource Gets the service resource options
+ * @property {ServiceEndpointOptions} endpoint Gets or sets the endpoint options
+ * @property {AppSettingKeyValuePair} settings Gets or sets the flags on the service
+ * @property {Date} modifiedOn Gets or sets the modified on date time of the service options.
+ * @property {string} id
+ * @property {BatchOperationType} operation(see: {@link BatchOperationType} for values)
+ * @property {string} $type
+ * @param {ServiceOptions} copyData Copy constructor (if present)
+ */
+function ServiceOptions (copyData) { 
+	this.$type = 'ServiceOptions';
+	if(copyData) {
+	/**
+	 * @type {BatchOperationType} 
+	 */
+	this.operation = copyData.operation;
+	/**
+	 * @type {string} 
+	 */
+	this.id = copyData.id;
+	/**
+	 * @summary Gets or sets the modified on date time of the service options.
+	 * @type {Date} 
+	 */
+	this.modifiedOn = copyData.modifiedOn;
+	/**
+	 * @summary Gets or sets the flags on the service
+	 * @type {AppSettingKeyValuePair} 
+	 */
+	this.settings = copyData.settings;
+	/**
+	 * @summary Gets or sets the endpoint options
+	 * @type {ServiceEndpointOptions} 
+	 */
+	this.endpoint = copyData.endpoint;
+	/**
+	 * @summary Gets the service resource options
+	 * @type {ServiceResourceOptions} 
+	 */
+	this.resource = copyData.resource;
+	/**
+	 * @summary Gets the server informational version
+	 * @type {string} 
+	 */
+	this.server = copyData.server;
+	/**
+	 * @summary Gets or sets the version of the service interface
+	 * @type {string} 
+	 */
+	this.version = copyData.version;
+	}
+}  // ServiceOptions 
+// SanteDB.Core.Interop.ServiceResourceCapability, SanteDB.Core.Api, Version=3.0.920.0, Culture=neutral, PublicKeyToken=null
+//if(!ServiceResourceCapability)
+/**
+ * @class
+ * @constructor
+ * @public
+ * @summary Service resource options
+ * @property {ResourceCapabilityType} cap Gets or sets the capabilities(see: {@link ResourceCapabilityType} for values)
+ * @property {String[]} demand Gets or sets the demand
+ * @param {ServiceResourceCapability} copyData Copy constructor (if present)
+ */
+function ServiceResourceCapability (copyData) { 
+	this.$type = 'ServiceResourceCapability';
+	if(copyData) {
+	/**
+	 * @summary Gets or sets the demand
+	 * @type {String[]} 
+	 */
+	this.demand = copyData.demand;
+	/**
+	 * @summary Gets or sets the capabilities
+	 * @type {ResourceCapabilityType} 
+	 */
+	this.cap = copyData.cap;
+	}
+}  // ServiceResourceCapability 
+// SanteDB.Core.Interop.ServiceResourceOptions, SanteDB.Core.Api, Version=3.0.920.0, Culture=neutral, PublicKeyToken=null
+//if(!ServiceResourceOptions)
+/**
+ * @class
+ * @constructor
+ * @public
+ * @summary Service resource options
+ * @property {string} resource Gets the name of the resource
+ * @property {ServiceResourceCapability} cap Gets or sets the operations supported by this resource
+ * @property {ChildServiceResourceOptions} children Gets the resources which are associated with this resource (sub-resources)
+ * @param {ServiceResourceOptions} copyData Copy constructor (if present)
+ */
+function ServiceResourceOptions (copyData) { 
+	this.$type = 'ServiceResourceOptions';
+	if(copyData) {
+	/**
+	 * @summary Gets the resources which are associated with this resource (sub-resources)
+	 * @type {ChildServiceResourceOptions} 
+	 */
+	this.children = copyData.children;
+	/**
+	 * @summary Gets or sets the operations supported by this resource
+	 * @type {ServiceResourceCapability} 
+	 */
+	this.cap = copyData.cap;
+	/**
+	 * @summary Gets the name of the resource
+	 * @type {string} 
+	 */
+	this.resource = copyData.resource;
+	}
+}  // ServiceResourceOptions 
+// SanteDB.Core.Interop.ChildServiceResourceOptions, SanteDB.Core.Api, Version=3.0.920.0, Culture=neutral, PublicKeyToken=null
+//if(!ChildServiceResourceOptions)
+/**
+ * @class
+ * @constructor
+ * @public
+ * @summary Child service resource options
+ * @property {ChildObjectScopeBinding} scope Gets or sets the scope of this object.(see: {@link ChildObjectScopeBinding} for values)
+ * @property {ChildObjectClassification} classification Gets or sets the classification of this object(see: {@link ChildObjectClassification} for values)
+ * @property {string} resource Gets the name of the resource
+ * @property {ServiceResourceCapability} cap Gets or sets the operations supported by this resource
+ * @property {ChildServiceResourceOptions} children Gets the resources which are associated with this resource (sub-resources)
+ * @param {ChildServiceResourceOptions} copyData Copy constructor (if present)
+ */
+function ChildServiceResourceOptions (copyData) { 
+	this.$type = 'ChildServiceResourceOptions';
+	if(copyData) {
+	/**
+	 * @summary Gets the resources which are associated with this resource (sub-resources)
+	 * @type {ChildServiceResourceOptions} 
+	 */
+	this.children = copyData.children;
+	/**
+	 * @summary Gets or sets the operations supported by this resource
+	 * @type {ServiceResourceCapability} 
+	 */
+	this.cap = copyData.cap;
+	/**
+	 * @summary Gets the name of the resource
+	 * @type {string} 
+	 */
+	this.resource = copyData.resource;
+	/**
+	 * @summary Gets or sets the classification of this object
+	 * @type {ChildObjectClassification} 
+	 */
+	this.classification = copyData.classification;
+	/**
+	 * @summary Gets or sets the scope of this object.
+	 * @type {ChildObjectScopeBinding} 
+	 */
+	this.scope = copyData.scope;
+	}
+}  // ChildServiceResourceOptions 
+// SanteDB.Core.Data.Import.Definition.ForeignDataMap, SanteDB.Core.Api, Version=3.0.920.0, Culture=neutral, PublicKeyToken=null
+//if(!ForeignDataMap)
+/**
+ * @class
+ * @constructor
+ * @public
+ * @summary Represents a definition of how to transform from a source 
+    {@link IForeignDataFormat}
+ * @property {string} id Gets or sets the unique identifier for the element
+ * @property {string} name Gets or sets the name of the element
+ * @property {string} description Gets or sets the description of the map
+ * @property {ForeignDataObjectMap} maps Gets or sets the data maps
+ * @property {string} tag Get the tags for the map
+ * @property {Date} creationTime Gets or sets the creation time
+ * @param {ForeignDataMap} copyData Copy constructor (if present)
+ */
+function ForeignDataMap (copyData) { 
+	this.$type = 'ForeignDataMap';
+	if(copyData) {
+	/**
+	 * @summary Gets or sets the creation time
+	 * @type {Date} 
+	 */
+	this.creationTime = copyData.creationTime;
+	/**
+	 * @summary Get the tags for the map
+	 * @type {string} 
+	 */
+	this.tag = copyData.tag;
+	/**
+	 * @summary Gets or sets the data maps
+	 * @type {ForeignDataObjectMap} 
+	 */
+	this.maps = copyData.maps;
+	/**
+	 * @summary Gets or sets the description of the map
+	 * @type {string} 
+	 */
+	this.description = copyData.description;
+	/**
+	 * @summary Gets or sets the name of the element
+	 * @type {string} 
+	 */
+	this.name = copyData.name;
+	/**
+	 * @summary Gets or sets the unique identifier for the element
+	 * @type {string} 
+	 */
+	this.id = copyData.id;
+	}
+}  // ForeignDataMap 
+// SanteDB.Core.Configuration.Http.RestClientConfigurationSection, SanteDB.Core.Api, Version=3.0.920.0, Culture=neutral, PublicKeyToken=null
+//if(!RestClientConfigurationSection)
+/**
+ * @class
+ * @constructor
+ * @public
+ * @summary Configuration section which is used for the configuration of all HTTP clients which use the 
+    {@link RestClient}
+ * @property {string} proxyAddress Gets or sets the proxy address.
+ * @property {RestClientDescriptionConfiguration} clients Represents a service client
+ * @property {TypeReferenceConfiguration} clientType Gets or sets the rest client implementation
+ * @param {RestClientConfigurationSection} copyData Copy constructor (if present)
+ */
+function RestClientConfigurationSection (copyData) { 
+	this.$type = 'RestClientConfigurationSection';
+	if(copyData) {
+	/**
+	 * @summary Gets or sets the rest client implementation
+	 * @type {TypeReferenceConfiguration} 
+	 */
+	this.clientType = copyData.clientType;
+	/**
+	 * @summary Represents a service client
+	 * @type {RestClientDescriptionConfiguration} 
+	 */
+	this.clients = copyData.clients;
+	/**
+	 * @summary Gets or sets the proxy address.
+	 * @type {string} 
+	 */
+	this.proxyAddress = copyData.proxyAddress;
+	}
+}  // RestClientConfigurationSection 
+// SanteDB.Core.BusinessRules.DetectedIssue, SanteDB.Core.Api, Version=3.0.920.0, Culture=neutral, PublicKeyToken=null
+//if(!DetectedIssue)
+/**
+ * @class
+ * @constructor
+ * @public
+ * @summary An issue raised by CDSS, Business Rules, or the persistence layer representing a constraint on the object
+ * @description <p>In SanteDB, a detected issue is used to represent a business constraint violation (opposed to a software exception)
+            which has impacted the ability of the SanteDB server software to process the requested action. Examples of detected issues can include:</p><ul><li>Assigning an incorrect / unbound code to a field </li><li>Adding an inapporpriate relationship type (i.e. Mother linking an Organization to a Person)</li><li>Inappropriately assigning an identifier out of scope (i.e. a GLN on a Person)</li><li>Business rules trigger violations</li></ul><p>In SanteDB any plugin can throw a 
+    {@link DetectedIssueException}
+   wrapping a collection of issues, in the core iCDR and dCDR services, detected issues are commonly raised by:</p><ul><li>The persistence layer (validating relationship types, identifier scopes, etc.)</li><li>The data quality business rules trigger (validating in-country minimum data sets, etc.)</li><li>The JavaScript business rules service (whenever a business rule validate() or trigger event throws an exception)</li><li>The Clinical Decision Support / CarePlanner (when raised by a protocol)</li></ul>
+ * @property {string} id Gets or sets the identifier of the detected issue
+ * @property {DetectedIssuePriorityType} priority Represents a detected issue priority(see: {@link DetectedIssuePriorityType} for values)
+ * @property {string} text Gets or sets the textual description of the detected issue.
+ * @property {string} type The type of detected issue (a concept key) which can be used to classify the detected issue(see: {@link DetectedIssueKeys} for values)
+ * @param {DetectedIssue} copyData Copy constructor (if present)
+ */
+function DetectedIssue (copyData) { 
+	this.$type = 'DetectedIssue';
+	if(copyData) {
+	/**
+	 * @summary The type of detected issue (a concept key) which can be used to classify the detected issue
+	 * @type {string} 
+	 */
+	this.type = copyData.type;
+	/**
+	 * @summary Gets or sets the textual description of the detected issue.
+	 * @type {string} 
+	 */
+	this.text = copyData.text;
+	/**
+	 * @summary Represents a detected issue priority
+	 * @type {DetectedIssuePriorityType} 
+	 */
+	this.priority = copyData.priority;
+	/**
+	 * @summary Gets or sets the identifier of the detected issue
+	 * @type {string} 
+	 */
+	this.id = copyData.id;
+	}
+}  // DetectedIssue 
+// SanteDB.Core.Model.DataTypes.BatchOperationType, SanteDB.Core.Model, Version=3.0.920.0, Culture=neutral, PublicKeyToken=null
+
+// SanteDB.Core.PubSub.PubSubEventType, SanteDB.Core.Api, Version=3.0.920.0, Culture=neutral, PublicKeyToken=null
+// if(!PubSubEventType)
+/**
+ * @enum {string}
+ * @public
+ * @readonly
+ * @summary             Identifies the type of events on the pub-sub layer            
+ */
+const PubSubEventType = { 
+	/** 
+	 *             Record is created            
+	 */
+	Create : 'Create',
+	CreateInt : '1',
+	/** 
+	 *             Record is updated            
+	 */
+	Update : 'Update',
+	UpdateInt : '2',
+	/** 
+	 *             Record is deleted            
+	 */
+	Delete : 'Delete',
+	DeleteInt : '4',
+	/** 
+	 *             Record was merged            
+	 */
+	Merge : 'Merge',
+	MergeInt : '8',
+	/** 
+	 *             Record was un-merged            
+	 */
+	UnMerge : 'UnMerge',
+	UnMergeInt : '16',
+	/** 
+	 *             Record was linked            
+	 */
+	Link : 'Link',
+	LinkInt : '32',
+	/** 
+	 *             Record was un-linked                
+	 */
+	UnLink : 'UnLink',
+	UnLinkInt : '64',
+}  // PubSubEventType 
+// SanteDB.Core.Mail.MailStatusFlags, SanteDB.Core.Api, Version=3.0.920.0, Culture=neutral, PublicKeyToken=null
+// if(!MailStatusFlags)
+/**
+ * @enum {string}
+ * @public
+ * @readonly
+ * @summary             Flags for a mailbox message in a folder            
+ */
+const MailStatusFlags = { 
+	/** 
+	 *             Identifies a mail message as unread            
+	 */
+	Unread : 'Unread',
+	UnreadInt : '0',
+	/** 
+	 *             Identifies a mail message a read            
+	 */
+	Read : 'Read',
+	ReadInt : '1',
+	/** 
+	 *             Identifies a mail message as flagged            
+	 */
+	Flagged : 'Flagged',
+	FlaggedInt : '2',
+	/** 
+	 *             Identifies the mail message has been marked as complete            
+	 */
+	Complete : 'Complete',
+	CompleteInt : '4',
+}  // MailStatusFlags 
+// SanteDB.Core.Mail.MailMessageFlags, SanteDB.Core.Api, Version=3.0.920.0, Culture=neutral, PublicKeyToken=null
+// if(!MailMessageFlags)
+/**
+ * @enum {string}
+ * @public
+ * @readonly
+ * @summary             Represents a flag for an alert message.            
+ */
+const MailMessageFlags = { 
+	/** 
+	 *             Just a normal alert            
+	 */
+	None : 'None',
+	NoneInt : '0',
+	/** 
+	 *             Indicates the message requires some immediate action!            
+	 */
+	Alert : 'Alert',
+	AlertInt : '1',
+	/** 
+	 *             Indicates whether the mail is low priority            
+	 */
+	LowPriority : 'LowPriority',
+	LowPriorityInt : '2',
+	/** 
+	 *             Indicates the alert is high priority but doesn't require immediate action            
+	 */
+	HighPriority : 'HighPriority',
+	HighPriorityInt : '4',
+	/** 
+	 *             Indicates the alert is a system alert            
+	 */
+	System : 'System',
+	SystemInt : '8',
+	/** 
+	 *             Indicates the alert is transient and shouldn't be persisted            
+	 */
+	Transient : 'Transient',
+	TransientInt : '16',
+	/** 
+	 *             Indicates a high priority alert.            
+	 */
+	HighPriorityAlert : 'HighPriorityAlert',
+	HighPriorityAlertInt : '5',
+}  // MailMessageFlags 
+// SanteDB.Core.Interop.ServiceEndpointType, SanteDB.Core.Api, Version=3.0.920.0, Culture=neutral, PublicKeyToken=null
+// if(!ServiceEndpointType)
+/**
+ * @enum {string}
+ * @public
+ * @readonly
+ * @summary             Service endpoint type            
+ */
+const ServiceEndpointType = { 
+	/** 
+	 *             The service endpoint is the HDSI            
+	 */
+	HealthDataService : 'HealthDataService',
+	HealthDataServiceInt : '0',
+	/** 
+	 *             The service endpoint is the RISI            
+	 */
+	ReportIntegrationService : 'ReportIntegrationService',
+	ReportIntegrationServiceInt : '1',
+	/** 
+	 *             The service endpoint is the AMI            
+	 */
+	AdministrationIntegrationService : 'AdministrationIntegrationService',
+	AdministrationIntegrationServiceInt : '2',
+	/** 
+	 *             The service endpoint is a PIX/PDQ interface            
+	 */
+	IhePixPdqInterface : 'IhePixPdqInterface',
+	IhePixPdqInterfaceInt : '3',
+	/** 
+	 *             The service endpoint is a FHIR interface            
+	 */
+	Hl7FhirInterface : 'Hl7FhirInterface',
+	Hl7FhirInterfaceInt : '4',
+	/** 
+	 *             The service endpoint is the v2 service            
+	 */
+	Hl7v2Interface : 'Hl7v2Interface',
+	Hl7v2InterfaceInt : '5',
+	/** 
+	 *             The service endpoint is a GS1 interface            
+	 */
+	Gs1StockInterface : 'Gs1StockInterface',
+	Gs1StockInterfaceInt : '6',
+	/** 
+	 *             The service endpoint is the ACS            
+	 */
+	AuthenticationService : 'AuthenticationService',
+	AuthenticationServiceInt : '7',
+	/** 
+	 *             The service endpoint represents API            
+	 */
+	Metadata : 'Metadata',
+	MetadataInt : '8',
+	/** 
+	 *             The service endpoint represents the BIS            
+	 */
+	BusinessIntelligenceService : 'BusinessIntelligenceService',
+	BusinessIntelligenceServiceInt : '9',
+	/** 
+	 *             The service is som other sort of service            
+	 */
+	Other : 'Other',
+	OtherInt : '10',
+	/** 
+	 *             The application control service for interacting with the SanteDB web app framework.            
+	 */
+	ApplicationControlService : 'ApplicationControlService',
+	ApplicationControlServiceInt : '11',
+	/** 
+	 *             The user interface service            
+	 */
+	WebUserInterfaceService : 'WebUserInterfaceService',
+	WebUserInterfaceServiceInt : '12',
+}  // ServiceEndpointType 
+// SanteDB.Core.Interop.ServiceEndpointCapabilities, SanteDB.Core.Api, Version=3.0.920.0, Culture=neutral, PublicKeyToken=null
+// if(!ServiceEndpointCapabilities)
+/**
+ * @enum {string}
+ * @public
+ * @readonly
+ * @summary             Represents service capabilities            
+ */
+const ServiceEndpointCapabilities = { 
+	/** 
+	 *             No options            
+	 */
+	None : 'None',
+	NoneInt : '0',
+	/** 
+	 *             Basic auth            
+	 */
+	BasicAuth : 'BasicAuth',
+	BasicAuthInt : '2',
+	/** 
+	 *             Bearer auth            
+	 */
+	BearerAuth : 'BearerAuth',
+	BearerAuthInt : '4',
+	/** 
+	 *             Endpoint supports compression            
+	 */
+	Compression : 'Compression',
+	CompressionInt : '1',
+	/** 
+	 *             Node authentication            
+	 */
+	CertificateAuth : 'CertificateAuth',
+	CertificateAuthInt : '8',
+	/** 
+	 *             Service has CORS            
+	 */
+	Cors : 'Cors',
+	CorsInt : '16',
+	/** 
+	 *             Service can produce view model objects            
+	 */
+	ViewModel : 'ViewModel',
+	ViewModelInt : '32',
+	/** 
+	 *             Standards based API based on REST            
+	 */
+	StandardsBasedApi : 'InternalApi',
+	StandardsBasedApiInt : '37',
+	/** 
+	 *             Standards based API with REST and CORS            
+	 */
+	StandardsBasedCorsApi : 'StandardsBasedCorsApi',
+	StandardsBasedCorsApiInt : '53',
+	/** 
+	 *             Internal API            
+	 */
+	InternalApi : 'InternalApi',
+	InternalApiInt : '37',
+	/** 
+	 *             IdP API            
+	 */
+	IdpApi : 'IdpApi',
+	IdpApiInt : '3',
+}  // ServiceEndpointCapabilities 
+// SanteDB.Core.Http.Description.SecurityScheme, SanteDB.Core.Api, Version=3.0.920.0, Culture=neutral, PublicKeyToken=null
+// if(!SecurityScheme)
+/**
+ * @enum {string}
+ * @public
+ * @readonly
+ * @summary             Security scheme            
+ */
+const SecurityScheme = { 
+	/** 
+	 *             The HTTP endpoint uses no security            
+	 */
+	None : 'None',
+	NoneInt : '0',
+	/** 
+	 *             The HTTP endpoint requires BASIC security            
+	 */
+	Basic : 'Basic',
+	BasicInt : '1',
+	/** 
+	 *             The HTTP endpoint requires BEARER token security            
+	 */
+	Bearer : 'Bearer',
+	BearerInt : '2',
+	/** 
+	 *             Use client certificates            
+	 */
+	ClientCertificate : 'ClientCertificate',
+	ClientCertificateInt : '4',
+}  // SecurityScheme 
+// SanteDB.Rest.Common.IRestApiContractImplementation, SanteDB.Rest.Common, Version=3.0.920.0, Culture=neutral, PublicKeyToken=null
+// if(!IRestApiContractImplementation)
+/**
+ * @enum {string}
+ * @public
+ * @readonly
+ */
+const IRestApiContractImplementation = { 
+}  // IRestApiContractImplementation 
+// SanteDB.Core.Interop.ResourceCapabilityType, SanteDB.Core.Api, Version=3.0.920.0, Culture=neutral, PublicKeyToken=null
+// if(!ResourceCapabilityType)
+/**
+ * @enum {string}
+ * @public
+ * @readonly
+ * @summary             Service resource operations            
+ */
+const ResourceCapabilityType = { 
+	/** 
+	 *             There is no capability on this resource            
+	 */
+	None : 'None',
+	NoneInt : '0',
+	/** 
+	 *             The resource can accept CREATE operations            
+	 */
+	Create : 'Create',
+	CreateInt : '1',
+	/** 
+	 *             The resource can either CREATE or UPDATE data            
+	 */
+	CreateOrUpdate : 'CreateOrUpdate',
+	CreateOrUpdateInt : '2',
+	/** 
+	 *             The resource can be updated via PUT            
+	 */
+	Update : 'Update',
+	UpdateInt : '4',
+	/** 
+	 *             The resource can be deleted            
+	 */
+	Delete : 'Delete',
+	DeleteInt : '8',
+	/** 
+	 *             The resource can be patched            
+	 */
+	Patch : 'Patch',
+	PatchInt : '16',
+	/** 
+	 *             The resource can be retrieved by ID            
+	 */
+	Get : 'Get',
+	GetInt : '32',
+	/** 
+	 *             The resource can be retrieved and supports versioning            
+	 */
+	GetVersion : 'GetVersion',
+	GetVersionInt : '64',
+	/** 
+	 *             The resource has the history function            
+	 */
+	History : 'History',
+	HistoryInt : '128',
+	/** 
+	 *             The resource can be searched            
+	 */
+	Search : 'Search',
+	SearchInt : '256',
+}  // ResourceCapabilityType 
+// SanteDB.Core.Interop.ChildObjectScopeBinding, SanteDB.Core.Api, Version=3.0.920.0, Culture=neutral, PublicKeyToken=null
+// if(!ChildObjectScopeBinding)
+/**
+ * @enum {string}
+ * @public
+ * @readonly
+ * @summary             The type of binding that the child object makes            
+ */
+const ChildObjectScopeBinding = { 
+	/** 
+	 *             The API child object is bound to an instance of the object            
+	 */
+	Instance : 'Instance',
+	InstanceInt : '1',
+	/** 
+	 *             The API child object is bound to the parent type            
+	 */
+	Class : 'Class',
+	ClassInt : '2',
+}  // ChildObjectScopeBinding 
+// SanteDB.Core.Interop.ChildObjectClassification, SanteDB.Core.Api, Version=3.0.920.0, Culture=neutral, PublicKeyToken=null
+// if(!ChildObjectClassification)
+/**
+ * @enum {string}
+ * @public
+ * @readonly
+ * @summary             The classification of the object classification            
+ */
+const ChildObjectClassification = { 
+	/** 
+	 *             The object is a resource            
+	 */
+	Resource : 'Resource',
+	ResourceInt : '1',
+	/** 
+	 *             The object is an operation            
+	 */
+	RpcOperation : 'RpcOperation',
+	RpcOperationInt : '2',
+}  // ChildObjectClassification 
+// SanteDB.Core.BusinessRules.DetectedIssuePriorityType, SanteDB.Core.Api, Version=3.0.920.0, Culture=neutral, PublicKeyToken=null
+// if(!DetectedIssuePriorityType)
+/**
+ * @enum {string}
+ * @public
+ * @readonly
+ * @summary             The priority of the detected issue            
+ */
+const DetectedIssuePriorityType = { 
+	/** 
+	 *             The issue is an error, processing cannot continue until the issue is corrected            
+	 */
+	Error : 'Error',
+	ErrorInt : '1',
+	/** 
+	 *             The issue is a warning (dismissable)            
+	 */
+	Warning : 'Warning',
+	WarningInt : '2',
+	/** 
+	 *             The issue is for information, processing will continue            
+	 */
+	Information : 'Information',
+	InformationInt : '4',
+}  // DetectedIssuePriorityType 
+// SanteDB.Core.BusinessRules.DetectedIssueKeys, SanteDB.Core.Api, Version=3.0.920.0, Culture=neutral, PublicKeyToken=null
+// if(!DetectedIssueKeys)
+/**
+ * @enum {string}
+ * @public
+ * @readonly
+ * @summary             Common detected issue type keys            
+ * @description This class holds readonly UUIDs (constants) for the built-in detected issue            types in SanteDB.
+ */
+const DetectedIssueKeys = { 
+	/** 
+	 *             The detected issue represents a security issue such as password reset violation, inappropriate access, etc.            
+	 */
+	SecurityIssue : '1a4ff454-f54f-11e8-8eb2-f2801f1b9fd1',
+	/** 
+	 *             The detected issue represents a formal constraint issues such as assignment of an inappropriate object type to a relationship            
+	 */
+	FormalConstraintIssue : '1a4ff6f2-f54f-11e8-8eb2-f2801f1b9fd1',
+	/** 
+	 *             The detected issue represents the inappropriate use of a code in a field            
+	 */
+	CodificationIssue : '1a4ff850-f54f-11e8-8eb2-f2801f1b9fd1',
+	/** 
+	 *             The detected issue represents some other, unclassified violation            
+	 */
+	OtherIssue : '1a4ff986-f54f-11e8-8eb2-f2801f1b9fd1',
+	/** 
+	 *             The action being executed was already performed, or does not need to be redone            
+	 */
+	AlreadyDoneIssue : '1a4ffab2-f54f-11e8-8eb2-f2801f1b9fd1',
+	/** 
+	 *             The action which was requested to be done had an invalid data element provided (example: last menstrual period for a male)            
+	 */
+	InvalidDataIssue : '1a4ffcec-f54f-11e8-8eb2-f2801f1b9fd1',
+	/** 
+	 *             The detected issue was raised because of a custom business rule violaton.            
+	 */
+	BusinessRuleViolationIssue : '1a4ffe40-f54f-11e8-8eb2-f2801f1b9fd1',
+	/** 
+	 *             The issue is being raised because the original action would raise a concern for patient safety            
+	 */
+	SafetyConcernIssue : '1a4fff6c-f54f-11e8-8eb2-f2801f1b9fd1',
+	/** 
+	 *             The detected issue is a patient privacy issue            
+	 */
+	PrivacyIssue : 'a799d33d-2326-4beb-aa27-6ff82bd0e217',
+}  // DetectedIssueKeys 
+// SanteDB.Core.Model.Constants.NullReasonKeys, SanteDB.Core.Model, Version=3.0.920.0, Culture=neutral, PublicKeyToken=null
+// if(!NullReasonKeys)
 
 EmptyGuid = "00000000-0000-0000-0000-000000000000";
 

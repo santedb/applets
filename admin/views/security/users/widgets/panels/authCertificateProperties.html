@@ -1,0 +1,14 @@
+<div xmlns="http://www.w3.org/1999/xhtml" xmlns:sdb="http://santedb.org/applet"
+    oc-lazy-load="{ name: 'EditSecurityCertificatesController', files: ['/org.santedb.admin/controllers/security/certificate.js'] }">
+    <sdb:widget order="0" name="org.santedb.widget.admin.panel.user.auth_certs" headerClass="alert-success"
+        size="Large" type="Panel" context="org.santedb.securityUser.admin.certs">
+        <sdb:icon>fas fa-shield-alt</sdb:icon>
+        <sdb:description lang="en">Certificates</sdb:description>
+        <sdb:demand>1.3.6.1.4.1.33349.3.1.5.9.2.0.19.3</sdb:demand>
+    </sdb:widget>
+
+    <div ng-if="scopedObject.id">
+        <div ng-init="scopedObject.$refType = 'SecurityUser'"></div>
+        <!-- #include virtual="~/partials/certificates/authCertificateManagement.html"-->
+    </div>
+</div>

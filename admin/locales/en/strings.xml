@@ -367,4 +367,34 @@
     <string name="ui.admin.entity.edit.parent.change.success">Entity hierarchy changes saved successfully</string>
     <string name="ui.admin.entity.edit.parent.change.failure">Entity hierarchy changes failed: {e}</string>
 
+    <!-- Certificate Management -->
+    <string name="org.santedb.widget.admin.panel.user.auth_certs">Authentication</string>
+    <string name="org.santedb.widget.admin.panel.user.dsig_certs">Digital Signatures</string>
+    <string name="org.santedb.widget.admin.tab.user.certs">Certificates</string>
+    <string name="org.santedb.widget.admin.panel.device.auth_certs">Authentication</string>
+    <string name="org.santedb.widget.admin.panel.device.dsig_certs">Digital Signatures</string>
+    <string name="org.santedb.widget.admin.tab.device.certs">Certificates</string>
+
+    <string name="org.santedb.widget.admin.panel.applications.auth_certs">Authentication</string>
+    <string name="org.santedb.widget.admin.panel.applications.dsig_certs">Digital Signatures</string>
+    <string name="org.santedb.widget.admin.tab.applications.certs">Certificates</string>
+    <string name="ui.admin.securityEntity.certificate.add">Add Certificate Mapping</string>
+    <string name="ui.admin.securityEntity.certificate.add.hint"><![CDATA[Select an X509 certificate file (a CER or DER encoded file) to be associated with this object]]></string>
+    <string name="ui.admin.securityEntity.certificate.auth">Authentication Certificates</string>
+    <string name="ui.admin.securityEntity.certificate.auth.hint"><![CDATA[Assigning one or more authentication certificates will allow this application, uesr or device to authenticate over HTTPS by presenting one of the valid certificates in this list. You can assign an authentication certificate by selecting a certificate file and uploading it]]></string>
+    <string name="ui.admin.securityEntity.certificate.sign">Signing Certificates</string>
+    <string name="ui.admin.securityEntity.certificate.sign.hint"><![CDATA[Assigning one or more signing certificates allows SanteDB to validate digital signatures provided by this authenticated device/user/application. These digital signatures may appear on FHIR resources via provenance headers, SanteDB VRP QR codes, or other places. You can assign a signing certificate by selecting a certificate file and uploading it]]></string>
+
+    <!-- Concepts -->
+    <string name="ui.admin.concept.codeSystem.title">Code Systems</string>
+    <string name="ui.admin.concept.codeSystem.count">reference terminology management</string>
+    <string name="ui.admin.concept.codeSystem.create">Create Code System</string>
+    <string name="ui.admin.concept.conceptSet.title">Concept Sets</string>
+    <string name="ui.admin.concept.conceptSet.count">concept group management</string>
+    <string name="ui.admin.concept.conceptSet.create">Create Concept Set</string>
+    <string name="ui.admin.concept.concepts.title">Concepts</string>
+    <string name="ui.admin.concept.concepts.count">clinical concept management</string>
+    <string name="ui.admin.concept.concepts.create">Create Concept</string>
+    <string name="ui.admin.concept.dashboard">Concept Dictionary Management</string>
+    <string name="ui.admin.concept.codeSystem.edit.profile.title">Reference Term Code System Properties</string>
 </resources>

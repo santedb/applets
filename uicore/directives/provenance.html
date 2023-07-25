@@ -20,11 +20,16 @@
 <div xmlns="http://www.w3.org/1999/xhtml" style="min-width:250px; display:inline">
     <i class="fas fa-circle-notch fa-spin" ng-if="isLoading"></i>
     <div ng-if="!isLoading" style="display:inline">
+        <span ng-if="provenanceTime">
+            <i class="fas fa-clock"></i> {{ provenanceTime | extDate: 'D'}} by 
+        </span>
         <span ng-if="provData.userModel"><i class="fas fa-user"></i> {{ provData.userModel.userName }}
-        </span><span ng-if="provData.deviceModel">
+        </span>
+        <span ng-if="provData.deviceModel">
             <i class="fas fa-desktop" ng-if="provData.deviceModel"></i> {{ provData.deviceModel.name }}
         </span>
         <span ng-if="provData.applicationModel">
+            via 
             <i class="fas fa-window-maximize" ng-if="provData.applicationModel"></i> {{ provData.applicationModel.name }}</span>
         <div class="btn-group d-inline"><button type="button" class="btn btn-link" data-toggle="popover" data-trigger="focus"
                 data-title="{{ 'ui.provenance.extraInfo' | i18n }}" data-content=""><i

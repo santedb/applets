@@ -24,10 +24,12 @@
                                 hint-title="ui.model.organization.typeConcept" />
                         </label>
                         <div class="col-sm-12 col-md-9">
-                            <concept-select class="form-control" name="typeInput" concept-set="'OrganizationTypeConcept'"
-                                add-concept="['6052712a-340e-4480-ad6b-409ba320db4f','61d8f65c-747e-4a99-982f-a42ac5437473']"
-
-                                ng-model="entity.typeConcept"  />
+                            <entity-search type="'Concept'" ng-model="entity.typeConcept"
+                                    search-field="'name.value'"
+                                    filter="{ 'conceptSet' : [ '485BC177-3E84-4A5A-9F25-466BA30E987E', '51925f69-14a3-4516-bb2c-e2280a4f3065'] }">
+                                </entity-search>
+                            <!-- <concept-select class="form-control" name="typeInput" concept-set="'OrganizationTypeConcept'"
+                                add-concept="['6052712a-340e-4480-ad6b-409ba320db4f','61d8f65c-747e-4a99-982f-a42ac5437473']" -->
                             <div class="text-danger" ng-if="targetForm.typeInput.$error['required']">
                                 <i class="fa fa-exclamation-triangle"></i> {{ 'ui.error.required' | i18n }}
                             </div>
