@@ -1,0 +1,102 @@
+<div xmlns="http://www.w3.org/1999/xhtml" xmlns:sdb="http://santedb.org/applet"
+    oc-lazy-load="{name:'CodeSystemWidgetController', files: ['/org.santedb.admin/controllers/concepts/codeSystems/widget.js'] }">
+    <sdb:widget name="org.santedb.widget.concept.codeSystem.core.quickAdd" type="Panel"
+        context="org.santedb.concept.codeSystem.core" order="0" headerClass="alert-success">
+        <sdb:icon>fas fa-bolt</sdb:icon>
+        <sdb:description lang="en">Quick Add Reference Term</sdb:description>
+    </sdb:widget>
+
+    <div ng-controller="CodeSystemWidgetController" ng-if="scopedObject">
+        <form novalidate="novalidate" class="form" ng-submit="addReferenceTerm(quickAddReferenceTermForm)"
+            name="quickAddReferenceTermForm">
+            <div class="form-group row">
+                <label class="control-label col-sm-12 col-md-3">
+                    {{ 'ui.model.referenceTerm.mnemonic' | i18n }}
+                    <hint-popover hint-title="ui.model.referenceTerm.mnemonic" />
+                </label>
+                <div class="col-sm-12 col-md-9">
+                    <input type="text" maxlength="64" class="form-control" name="mnemonicInput"
+                        ng-model="newReferenceTerm.mnemonic" required="required" />
+                    <div class="text-danger" ng-if="quickAddReferenceTermForm.mnemonicInput.$error['required']">
+                        <i class="fas fa-exclamation-triangle"></i> {{ 'ui.error.required' | i18n }}
+                    </div>
+                </div>
+                <label class="control-label col-sm-12 col-md-3">
+                    {{ 'ui.model.referenceTerm.names' | i18n }}
+                    <hint-popover hint-title="ui.model.referenceTerm.names" />
+                </label>
+                <div class="col-sm-12 col-md-9">
+                    <ul class="list-group">
+                        <li class="list-group-item" ng-repeat="name in newReferenceTerm.name.$other track by $index">
+                            <div class="input-group">
+                                <input type="text" max-length="256" ng-model="name.value" name="refTermName{{$index}}"
+                                    class="form-control" />
+                                <div class="input-group-append">
+                                    <ref-term-select class="form-control" required="required"
+                                        name="refTermNameLang{{$index}}" code-system-url="'urn:ietf:bcp:47'"
+                                        ng-model="name.language" />
+                                </div>
+                                <div class="input-group-append btn-group">
+                                    <button class="btn btn-primary" type="button"
+                                        ng-click="newReferenceTerm.name.$other.push({})">
+                                        <i class="fas fa-fw fa-plus-circle"></i>
+                                    </button>
+                                    <button class="btn btn-danger" ng-if="$index > 0" type="button"
+                                        ng-click="newReferenceTerm.name.$other.splice($index, 1)">
+                                        <i class="fas fa-fw fa-times-circle"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <label class="control-label col-sm-12 col-md-3">
+                    {{ 'ui.model.referenceTerm.concept' | i18n }}
+                    <hint-popover hint-title="ui.model.referenceTerm.concept" />
+                </label>
+                <div class="col-sm-12 col-md-9">
+                    <ul class="list-group">
+                        <li class="list-group-item" ng-repeat="conceptMap in newReferenceTerm.concepts track by $index">
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <select class="form-control" ng-model="conceptMap.relationshipType">
+                                        <option value="2c4dafc2-566a-41ae-9ebc-3097d7d22f4a">SAME_AS</option>
+                                        <option value="ad27293d-433c-4b75-88d2-b5360cd95450">INVERSE_OF</option>
+                                        <option value="ae8b4f2f-009f-4e0d-b35e-5a89555c5947">NEGATION_OF</option>
+                                        <option value="ae8b4f2f-009f-4e0d-b35e-5a89555c5980">WIDER_THAN</option>
+                                        <option value="ae8b4f2f-009f-4e0d-b35e-5a89555c5990">NARROWER_THAN</option>
+                                    </select>
+                                </div>
+                                <entity-search ng-if="!conceptMap.$newConcept" type="'Concept'" style="width:45%; height:100%"
+                                    ng-model="conceptMap.source" search-field="'name.value'"
+                                    filter="{ 'statusConcept.mnemonic' : 'ACTIVE' }"></entity-search>
+                                <input ng-if="conceptMap.$newConcept" type="text" class="form-control" maxlength="128"
+                                    ng-model="conceptMap.$newConcept" required="required"
+                                    name="newConceptMnemonic{{$index}}" />
+                                <div class="input-group-append btn-group">
+                                    <button ng-if="!conceptMap.$newConcept &amp;&amp; $index == 0" title="{{ 'ui.action.new' | i18n }}" class="btn btn-info" type="button"
+                                        ng-click="conceptMap.$newConcept = newReferenceTerm.mnemonic">
+                                        <i class="fas fa-fw fa-magic"></i>
+                                    </button>
+                                    <button ng-if="conceptMap.$newConcept &amp;&amp; $index == 0" title="{{ 'ui.action.list' | i18n }}" class="btn btn-info" type="button"
+                                        ng-click="conceptMap.$newConcept = null">
+                                        <i class="fas fa-fw fa-list"></i>
+                                    </button>
+                                    <button class="btn btn-primary" type="button"
+                                        ng-click="newReferenceTerm.concepts.push({ relationshipType: '2c4dafc2-566a-41ae-9ebc-3097d7d22f4a'})">
+                                        <i class="fas fa-fw fa-plus-circle"></i>
+                                    </button>
+                                    <button class="btn btn-danger" ng-if="$index > 0" type="button"
+                                        ng-click="newReferenceTerm.concepts.splice($index, 1)">
+                                        <i class="fas fa-fw fa-times-circle"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+        </form>
+    </div>
+</div>

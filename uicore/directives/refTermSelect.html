@@ -1,0 +1,4 @@
+<select xmlns="http://www.w3.org/1999/xhtml">
+    <option value=""></option>
+    <option ng-repeat="opt in refTerms" ng-if="!excludeTerms || excludeTerms.indexOf(opt.mnemonic) == -1" value="{{opt.mnemonic}}">{{ opt | refTerm }} ({{opt.mnemonic}})</option>
+</select>
