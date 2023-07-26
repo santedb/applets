@@ -97,6 +97,20 @@ angular.module('santedb-lib')
         }
     })
     /**
+     * @method refTerm
+     * @memberof Angular
+     * @summary Renders a model refTerm into a standard display using the term's display name
+     * @see {SanteDBModel.Concept}
+     * @example
+     *      <div class="col-md-2">Gender:</div>
+     *      <div class="col-md-2">{{ patient.genderConceptModel | refTerm }}</div>
+     */
+    .filter('refTerm', function () {
+        return function (modelValue) {
+            return SanteDB.display.renderConcept(modelValue);
+        }
+    })
+    /**
      * @method base64decode
      * @memberof Angular
      * @summary Decode 

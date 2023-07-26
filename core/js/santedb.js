@@ -3657,12 +3657,13 @@ function SanteDBWrapper() {
                 try {
                     var tokenData = _extractJwtData(oauthResponse.id_token);
                     // Set the locale
+                    console.info(tokenData);
                     if (tokenData.lang)
                         __SanteDBAppService.SetLocale(tokenData.lang);
                     else if (tokenData['urn:santedb:org:lang'])
                         __SanteDBAppService.SetLocale(tokenData['urn:santedb:org:lang']);
                     else
-                        __SanteDBAppService.SetLocale(null); // default locale
+                        __SanteDBAppService.SetLocale(navigator.language || navigator.userLanguage); // default locale
 
                 }
                 catch (e) {

@@ -51,5 +51,15 @@ angular.module('santedb').controller('CodeSystemWidgetController', ["$scope", "$
     });
 
     $scope.saveCodeSystem = saveCodeSystem;
-
+    $scope.newReferenceTerm = {
+        $type: "ReferenceTerm",
+        name: {
+            $other : [ { language: SanteDB.locale.getLanguage() } ]
+        },
+        concepts: [
+            { 
+                relationshipType: '2c4dafc2-566a-41ae-9ebc-3097d7d22f4a'
+            }
+        ]
+    };
 }]);
