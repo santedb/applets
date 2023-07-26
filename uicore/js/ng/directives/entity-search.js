@@ -285,7 +285,7 @@ angular.module('santedb-lib')
 
                 $timeout(function () {
                     var modelType = scope.type;
-                    var filter = scope.filter || { statusConcept: StatusKeys.Active };;
+                    var filter = scope.filter || { statusConcept: [ StatusKeys.Active, StatusKeys.New ] };;
                     var displayString = scope.display;
                     var searchProperty = scope.searchField;
                     var defaultResults = scope.defaultResults;

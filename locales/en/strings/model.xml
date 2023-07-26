@@ -59,6 +59,9 @@
   <string name="ui.model.securityDevice.lockout">Lockout</string>
   <string name="ui.model.entityIdentifier.authority">Assigned By</string>
   <string name="ui.model.entityIdentifier.value">ID Number</string>
+  <string name="ui.model.entityIdentifier.checkDigit">Check Digit</string>
+  <string name="ui.model.entityIdentifier.checkDigit.short">CD</string>
+  <string name="ui.model.entityIdentifier.checkDigit.hint"><![CDATA[This identifier type requires a check digit - if you are entering an existing identifier be sure to include the check digit information here]]></string>
   <string name="ui.model.securityDevice.secret">Device Secret</string>
   <string name="ui.model.deviceEntity.manufacturerModelName">Model Name</string>
   <string name="ui.model.deviceEntity.operatingSystemName">Operating System</string>

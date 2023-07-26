@@ -397,6 +397,8 @@ angular.module('santedb-lib')
             },
             controller: ['$scope', '$rootScope', function ($scope, $rootScope) {
 
+                $scope.newId = {};
+                
                 $scope.removeIdentifier = function (domain) {
                     if (confirm(SanteDB.locale.getString("ui.model.entity.identifier.authority.remove.confirm", {domain: domain}))) {
                         //delete ($scope.identifier[domain]);
@@ -418,13 +420,13 @@ angular.module('santedb-lib')
                 }
 
                 $scope.generateId = function (idDomain) {
-                    var authority = idDomain.authority;
+                    var authority = idDomain;
                     if (!authority.generator)
                         authority = $scope.authorities[idDomain.domainModel.domainName];
                     try {
                         var generated = authority.generator();
-                        idDomain.value = generated.value;
-                        idDomain.checkDigit = generated.checkDigit;
+                        $scope.newId.value = generated.value;
+                        $scope.newId.checkDigit = generated.checkDigit;
                     } catch (e) {
                         $rootScope.errorHandler(e);
                     }
@@ -467,10 +469,10 @@ angular.module('santedb-lib')
                             });
                         }
 
-                        // $timeout(() => {
-                        //     scope.identifier = identifier;
-                        //     scope.authorities = authorities;
-                        // });
+                        $timeout(() => {
+                            scope.identifier = identifier;
+                            scope.authorities = authorities;
+                        });
 
                     })
                     .catch(function (e) { console.error(e); });
@@ -519,7 +521,9 @@ angular.module('santedb-lib')
                     if (!authority.generator)
                         authority = $scope.authorities[authority.domainName];
                     try {
-                        $scope.identifier.value = authority.generator();
+                        var generated = authority.generator();
+                        $scope.identifier.value = generated.value;
+                        $scope.identifier.checkDigit = generated.checkDigit;
                     } catch (e) {
                         $rootScope.errorHandler(e);
                     }

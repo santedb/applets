@@ -2018,15 +2018,15 @@ function SanteDBWrapper() {
                     qrCodeData = await SanteDB.application.scanBarcodeAsync();
 
                 // QR Code is a signed code
-                if (jwsDataPattern.test(qrCodeData)) {
-                    var result = await SanteDB.application.ptrSearchAsync(qrCodeData, !noValidate, upstream || false);
+                if(svrpPattern.test(qrCodeData)) {
+                    var match = svrpPattern.exec(qrCodeData);
+                    var result = await SanteDB.application.ptrSearchAsync(match[1], !noValidate, upstream || false);
                     result.$novalidate = noValidate;
                     result.$upstream = upstream;
                     return result;
                 }
-                else if(svrpPattern.test(qrCodeData)) {
-                    var match = svrpPattern.exec(qrCodeData);
-                    var result = await SanteDB.application.ptrSearchAsync(atob(match[1]), !noValidate, upstream || false);
+                else if (jwsDataPattern.test(qrCodeData)) {
+                    var result = await SanteDB.application.ptrSearchAsync(qrCodeData, !noValidate, upstream || false);
                     result.$novalidate = noValidate;
                     result.$upstream = upstream;
                     return result;
