@@ -14,6 +14,12 @@
     <property name="strength" all="true"/>
   </type>
 
+  <type type="ConceptReferenceTerm" all="false">
+    <property name="source" />
+    <property name="sourceModel" behavior="always" ref="Concept" />
+    <property name="relationshipTye" />
+    <property name="relationshipTypeModel" behavior="always" ref="Concept" />
+  </type>
   <!-- Entity types -->
   <type type="Entity" all="true">
     <property name="classConcept"/>

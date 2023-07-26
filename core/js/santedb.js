@@ -2762,7 +2762,13 @@ function SanteDBWrapper() {
      * @property {ResourceWrapper} dispatcherQueue Functions for interacting with {@link DispatcherQueueInfo}
      * @property {ResourceWrapper} sessionInfo Functions for interacting with {@link SessionInfo}
      * @property {ResourceWrapper} probe Functions for interacting with {@link Probe}
-     * @property {ResourceWrapper} queue Functions for interacting with system synchronization queues
+     * @property {ResourceWrapper} dispatcherQueue Functions for interacting with system synchronization queues
+     * @property {ResourceWrapper} conceptReferenceTerm Functions for interacting with {@link ConceptReferenceTerm}
+     * @property {ResourceWrapper} foreignData Functions for interacting with foreign data uploades
+     * @property {ResourceWrapper} foreignDataMap Functions for interacting with {@link ForeignDataMap}
+     * @property {ResourceWrapper} appletSolution Functions for interacting with system applet solutions
+     * @property {ResourceWrapper} applet Functions for interacting with system applets
+     * 
      */
     function ResourceApi() {
 
@@ -3337,6 +3343,16 @@ function SanteDBWrapper() {
             api: _ami
         });
 
+        /**
+       * @type {ResourceWrapper}
+       * @memberOf SanteDBWrapper.resources
+       * @summary Wrapper for reference term <> concept mapping 
+       */
+        this.conceptReferenceTerm = new ResourceWrapper({
+            resource: 'ConceptReferenceTerm',
+            accept: _viewModelJsonMime,
+            api: _hdsi
+        })
     };
 
     // HACK: Wrapper pointer facility = place

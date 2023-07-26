@@ -397,4 +397,16 @@
     <string name="ui.admin.concept.concepts.create">Create Concept</string>
     <string name="ui.admin.concept.dashboard">Concept Dictionary Management</string>
     <string name="ui.admin.concept.codeSystem.edit.profile.title">Reference Term Code System Properties</string>
+
+    <string name="org.santedb.widget.concept.codeSystem.core.properties">Code System Properties</string>
+    <string name="org.santedb.widget.concept.codeSystem.core.quickAdd">Quick-Add Reference Term</string>
+    <string name="ui.model.referenceTerm.mnemonic">Mnemonic</string>
+    <string name="ui.model.referenceTerm.mnemonic.hint"><![CDATA[How the reference term will appear when external systems request data from this terminology. For example: <code>11019-3</code>, <code>F</code>]]></string>
+    <string name="ui.model.referenceTerm.names">Names</string>
+    <string name="ui.model.referenceTerm.names.hint"><![CDATA[Official translation(s) of this reference terminology (how it will be shown in external messages)]]></string>
+    <string name="ui.model.referenceTerm.concept">Concept(s)</string>
+    <string name="ui.model.referenceTerm.concept.hint"><![CDATA[Terms which are used in the internal SanteDB concept dictionary which this term is linked to]]></string>
+    <string name="ui.model.referenceTerm.concept.betterMnemonic"><![CDATA[Mnemonics in the SanteDB concept dictionary must be globally UNIQUE, whereas reference term mnemonics are unique within their code system. It is highly recommended administrators create a globally unique mnemonic for any new concepts]]></string>
+    <string name="org.santedb.widget.concept.codeSystem.core.referenceTerms">Reference Terms</string>
+    
 </resources>

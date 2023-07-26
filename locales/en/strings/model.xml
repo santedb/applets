@@ -539,4 +539,6 @@
   <string name="ui.model.codeSystem.description.hint">Provide detailed description of the code system (how it is used, the standards or interface, etc.)</string>
   <string name="ui.model.codeSystem.version">Version</string>
   <string name="ui.model.codeSystem.version.hint">The version of the code system in which the reference terms are held</string>
+  <string name="ui.model.referenceTerm.name">Name(s)</string>
+  <string name="ui.model.referenceTerm.mappings">Concept Mappings</string>
 </resources>
