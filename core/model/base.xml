@@ -67,6 +67,7 @@
     <property name="id"/>
     <property name="value"/>
     <property name="domain"/>
+    <property name="checkDigit" />
     <property name="domainModel" all="false" behavior="always">
       <property name="name"/>
       <property name="domainName"/>

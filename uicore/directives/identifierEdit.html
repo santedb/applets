@@ -19,9 +19,10 @@
                     class="form-control" name="identifier{{identifier.id}}" ng-required="isRequired"
                     ng-disabled="!identifier.domainModel.domainName" ng-readonly="!authorities[identifier.domainModel.domainName]"
                     placeholder="{{ authorities[identifier.domainModel.domainName].validationHint }}" />
-                    <div class="input-group-append"  ng-if="authorities[identifier.domainModel.domainName].checkDigit">
-                        <span class="input-group-text">{{ 'ui.model.entity.identifier.checkDigit' | i18n }}</span>
-                        <input class="form-control" name="identifier{{identifier.id}}cd" ng-value="identifier.checkDigit" />
+                    <div class="input-group-append"  ng-if="authorities[identifier.domainModel.domainName].checkDigitAlgorithm">
+                        <span class="input-group-text">{{ 'ui.model.entityidentifier.checkDigit.short' | i18n }}                                     <hint-popover hint-title="ui.model.entityIdentifier.checkDigit" />
+                        </span>
+                        <input class="form-control" name="identifier{{identifier.id}}cd" ng-value="identifier.checkDigitAlgorithm" />
                     </div>
                     <div class="input-group-append" ng-if="!noScan">
                         <div class="btn-group" ng-if="authorities[identifier.domainModel.domainName]">
@@ -47,9 +48,10 @@
                 class="form-control" name="identifier{{identifier.id}}" ng-required="isRequired"
                 ng-disabled="!identifier.domainModel.domainName" ng-readonly="!authorities[identifier.domainModel.domainName]"
                 placeholder="{{ authorities[identifier.domainModel.domainName].validationHint }}" />
-                <div class="input-group-append"  ng-if="authorities[identifier.domainModel.domainName].checkDigit">
-                    <span class="input-group-text">{{ 'ui.model.entity.identifier.checkDigit' | i18n }}</span>
-                    <input class="form-control" name="identifier{{identifier.id}}cd" ng-value="identifier.checkDigit" />
+                <div class="input-group-append"  ng-if="authorities[identifier.domainModel.domainName].checkDigitAlgorithm">
+                                    <hint-popover hint-title="ui.model.entityIdentifier.checkDigit" />
+                                    <span class="input-group-text">{{ 'ui.model.entityidentifier.checkDigit.short' | i18n }} </span>
+                    <input class="form-control" name="identifier{{identifier.id}}cd" ng-value="identifier.checkDigitAlgorithm" />
                 </div>
             <div class="input-group-append" ng-if="!noScan">
                     <div class="btn-group" ng-if="authorities[identifier.domainModel.domainName]">

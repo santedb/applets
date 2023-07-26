@@ -21,6 +21,20 @@
  */
 angular.module('santedb').controller('IdentityDomainEditController', ["$scope", "$rootScope", "$stateParams", "$state", "$timeout", function ($scope, $rootScope, $stateParams, $state, $timeout) {
 
+    async function initializeView()
+    {
+        try {
+            var checkDigits = await SanteDB.resources.identityDomain.getAsync("_checkDigit");
+            var validators = await SanteDB.resources.identityDomain.getAsync("_validator");
+            $timeout(() => {
+                $scope.checkDigitAlgorithms = checkDigits.resource;
+                $scope.customValidators = validators.resource;
+            });
+        }
+        catch(e) {
+            console.warn(e);
+        }
+    }
 
     // Load the authority
     async function loadDomain(id) {
@@ -45,6 +59,8 @@ angular.module('santedb').controller('IdentityDomainEditController', ["$scope", 
         loadDomain($stateParams.id);
     else
         $scope.domain = new IdentityDomain();
+
+    initializeView();
 
     // Validate the form data
     async function validateForm() {
@@ -140,8 +156,6 @@ angular.module('santedb').controller('IdentityDomainEditController', ["$scope", 
         }
         finally {
             SanteDB.display.buttonWait("#saveAuthorityButton", false);
-            try { $scope.$apply(); }
-            catch (e) {}
         }
     }
 

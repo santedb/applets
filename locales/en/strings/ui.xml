@@ -5,6 +5,7 @@
       <string name="ui.card">Card</string>
       <string name="ui.unknown">N/A</string>
       <string name="ui.confirmed">Confirmed</string>
+      <string name="ui.none">None</string>
       <!-- Common Phrases -->
       <string name="ui.common.charsRemain">characters remain</string>
       <string name="ui.search.onlineResult">Online Result</string>
