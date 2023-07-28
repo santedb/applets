@@ -38,6 +38,11 @@ angular.module('santedb').controller('ForeignDataUploadController', ["$scope", "
     $scope.$watch("submission.map", function(n,o) {
         if(n) {
             $scope.submission.selectedMapping = $scope.mappings.find(o=>o.id == n);
+            if($scope.submission.selectedMapping.parameters) {
+                $scope.submission.selectedMapping.parameters.filter(o=>o.pattern).forEach(o=>{
+                    o.placeholder = new RandExp(new RegExp(o.pattern)).gen();
+                });
+            }
         }
     });
 

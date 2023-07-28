@@ -303,6 +303,7 @@
 
     <!-- Foreign Data -->
     <string name="ui.admin.alien.upload.title">Upload Data Import File</string>
+    <string name="ui.admin.alien.mapping.parameters">Import Parameters</string>
     <string name="ui.admin.alien.upload.description"><![CDATA[Use this form to upload a external data file in a supported format (example: CSV) to the SanteDB server. SanteDB will validate your submission and will process the import when the next scheduled import job runs.]]></string>
     <string name="ui.admin.alien.upload.fileName">File</string>
     <string name="ui.admin.alien.upload.fileName.hint">Select a compatible file from your computer

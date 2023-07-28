@@ -131,22 +131,14 @@ angular.module('santedb').controller('CodeSystemWidgetController', ["$scope", "$
                         name: {
                             $other: refTerm.name.$other.map(n => new ConceptName({ language: n.language, value: n.value }))
                         },
-                        statusConcept: StatusKeys.Active,
-                        referenceTerm: [
-                            new ConceptReferenceTerm({
-                                term: refTerm.id,
-                                relationshipType: map.relationshipType
-                            })
-                        ]
+                        statusConcept: StatusKeys.Active
                     }));
                 }
-                else {
-                    submissionBundle.resource.push(new ConceptReferenceTerm({
-                        term: refTerm.id,
-                        source: map.source,
-                        relationshipType: map.relationshipType
-                    }));
-                }
+                submissionBundle.resource.push(new ConceptReferenceTerm({
+                    term: refTerm.id,
+                    source: map.source,
+                    relationshipType: map.relationshipType
+                }));
             });
 
             mappings = {};
