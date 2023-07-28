@@ -229,6 +229,7 @@
     <!-- Job Screen Page -->
     <string name="ui.admin.job.neverRun">Never Run</string>
     <string name="ui.admin.job.runJob.confirm">Are you sure you want to manually run this job?</string>
+    <string name="ui.admin.job.runJob.success">Job was successfully started</string>
     <string name="ui.admin.job.cancelJob.confirm">Are you sure you want cancel this running job? </string>
 
 
@@ -397,16 +398,38 @@
     <string name="ui.admin.concept.concepts.create">Create Concept</string>
     <string name="ui.admin.concept.dashboard">Concept Dictionary Management</string>
     <string name="ui.admin.concept.codeSystem.edit.profile.title">Reference Term Code System Properties</string>
-
+    <string name="ui.admin.concept.codeSystem.addReferenceTerm">Add Reference Term</string>
+    <string name="ui.admin.concept.codeSystem.edit.referenceTerm">Edit Reference Term</string>
+    <string name="ui.admin.concept.codeSystem.remove.referenceTerm.confirm">Are you sure you want to remove this term from this code system?</string>
+    <string name="ui.admin.concept.codeSystem.remove.referenceTerm.success"><![CDATA[Reference term <span class="badge badge-light">{mnemonic}</span> removed successfully]]></string>
+    <string name="ui.admin.concept.codeSystem.saveTerm.success"><![CDATA[Reference term <span class="badge badge-light">{authority}</span> saved successfully]]></string>
     <string name="org.santedb.widget.concept.codeSystem.core.properties">Code System Properties</string>
     <string name="org.santedb.widget.concept.codeSystem.core.quickAdd">Quick-Add Reference Term</string>
-    <string name="ui.model.referenceTerm.mnemonic">Mnemonic</string>
-    <string name="ui.model.referenceTerm.mnemonic.hint"><![CDATA[How the reference term will appear when external systems request data from this terminology. For example: <code>11019-3</code>, <code>F</code>]]></string>
-    <string name="ui.model.referenceTerm.names">Names</string>
-    <string name="ui.model.referenceTerm.names.hint"><![CDATA[Official translation(s) of this reference terminology (how it will be shown in external messages)]]></string>
-    <string name="ui.model.referenceTerm.concept">Concept(s)</string>
-    <string name="ui.model.referenceTerm.concept.hint"><![CDATA[Terms which are used in the internal SanteDB concept dictionary which this term is linked to]]></string>
-    <string name="ui.model.referenceTerm.concept.betterMnemonic"><![CDATA[Mnemonics in the SanteDB concept dictionary must be globally UNIQUE, whereas reference term mnemonics are unique within their code system. It is highly recommended administrators create a globally unique mnemonic for any new concepts]]></string>
     <string name="org.santedb.widget.concept.codeSystem.core.referenceTerms">Reference Terms</string>
+    <string name="ui.admin.concept.codeSystem.upload.file">File</string>
+    <string name="ui.admin.concept.codeSystem.upload.file.hint">Select a CSV file from your local computer</string>
+    <string name="ui.admin.concept.codeSystem.upload.language">File Language</string>
+    <string name="ui.admin.concept.codeSystem.upload.language.hint">Select the language which the description / code name appears in your file</string>
+    <string name="ui.admin.concept.codeSystem.upload">Upload Reference Terms</string>
+    <string name="ui.admin.concept.codeSystem.upload.run">Your job was successfully uploaded and scheduled for execution. Would you like to run the import now? (selecting 'no' will run the import when there are less users on this server)</string>
+    <string name="ui.admin.concept.codeSystem.upload.issue">Your file was uploaded however there are {issue} detected problems - do you want to open the detailed import log to see what these issues are?</string>
+    <string name="ui.admin.concept.codeSystem.upload.help">Uploading Reference Terms</string>
+    <string name="ui.admin.concept.codeSystem.upload.template">Download Template</string>
+        <string name="ui.admin.concept.codeSystem.upload.help.text"><![CDATA[
+        <p>You can use this function to upload a CSV file which contains a list of reference terms that you would like added to this code system.</p>
+        <p>The requirements for the uploaded file are:</p>
+        <ul>
+            <li>File must be in CSV format</li>
+            <li>First row must contain column headers with the name of each column</li>
+            <li>You can use any columns you like, but there must be present:
+                <ul>
+                    <li><code>Mnemonic</code> <strong>(required)</strong> - Containing the mnemonic of the refernece term (how it appears on the wire)</li>
+                    <li><code>Name</code> <strong>(required)</strong> - The default display name for the concept</li>
+                    <li><code>Concept</code> <em>(optional)</em> - The mnemonic of the concept in SanteDB's internal concept dictionary which should be mapped (if it exists) or created (if it does not)</li>
+                    <li><code>Mapping</code> <em>(optional)</em> - The mapping type to the concept wither <code>SameAs</code>, <code>InverseOf</code>, <code>NegationOf</code>, <code>WiderThan</code>, or <code>NarrowerThan</code></li>
+                </ul>                
+            </li>
+            <li>File must be smaller than the maximum upload size configured by your system administrator</li>
+        </ul> ]]></string>
     
 </resources>

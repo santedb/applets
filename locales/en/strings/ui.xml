@@ -247,7 +247,7 @@
       <string name="ui.table.search.field.name.value">Search by name</string>
       <string name="ui.table.search.field.sub">Search by subject</string>
       <string name="ui.table.search.field.mnemonic">Search by mnemonic</string>
-      <string name="ui.table.search.field.authority">Search by authority</string>
+      <string name="ui.table.search.field.authority">Search by domain</string>
 
       <!-- Common --> 
       <string name="ui.common.interop.hl7v2">HL7v2</string>

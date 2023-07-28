@@ -43,5 +43,11 @@
             <label class="col-xs-12 col-md-2 control-label">{{ 'ui.model.alien.submission.updatedBy' | i18n }}</label>
             <div class="col-xs-12 col-md-10"><provenance provenance-id="scopedObject.updatedBy" provenance-time="scopedObject.updatedTime" /></div>
         </div>
+        <div class="row" ng-repeat="parm in scopedObject.parameter track by $index">
+            <label class="col-xs-12 col-md-2 control-label"><i class="fas fa-align-justify"></i> {{ parm.key }}</label>
+            <div class="col-xs-12 col-md-10">
+                {{ parm.value }}
+            </div>
+        </div>
     </div>
 </div>

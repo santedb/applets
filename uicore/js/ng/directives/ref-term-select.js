@@ -72,7 +72,7 @@ angular.module('santedb-lib')
                             if (Array.isArray(loaded[codeSystemName])) // loaded already
                                 $timeout(() => scope.refTerms = loaded[codeSystemName]);
                             else // still loading
-                                loaded[codeSystemName].callme.push((r) => scope.setValues = r);
+                                loaded[codeSystemName].callme.push((r) => scope.refTerms = r);
                         }
                     }
                     catch (e) {

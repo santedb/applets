@@ -9,13 +9,276 @@
 
     <div ng-controller="CodeSystemWidgetController">
         <entity-table id="CodeSystemRefTermTable" type="ReferenceTerm" search-field="name.value"
-            i18n-prefix="'ui.model.referenceTerm.'"
-            default-query="{ 'codeSystem': scopedObject.id }" no-deleted="true"
-            button-bar="'#uploadReferenceTermList'"
-            item-actions="[ { name: 'edit', action: 'changeMapping', demand: '1.3.6.1.4.1.33349.3.1.5.9.2.0.7', className: 'btn-primary', icon: 'fa fa-pencil' }, { name: 'remove', action: 'removeConceptRefereneTerm', demand: '1.3.6.1.4.1.33349.3.1.5.9.2.0.7', className: 'btn-danger', icon: 'fa fa-trash' } ]"
+            i18n-prefix="'ui.model.referenceTerm.'" default-query="{ 'codeSystem': scopedObject.id }" no-deleted="true"
+            actions="[ { name: 'add', action: 'addReferenceTerm', demand: '1.3.6.1.4.1.33349.3.1.5.9.2.0.7', className: 'btn-primary', icon: 'fa fa-plus-circle'}, { name: 'upload', action: 'uploadReferenceTermFile', demand: '1.3.6.1.4.1.33349.3.1.5.9.2.0.7', className: 'btn-info', icon: 'fas fa-upload' } ]"
+            item-actions="[ { name: 'edit', action: 'editReferenceTerm', demand: '1.3.6.1.4.1.33349.3.1.5.9.2.0.7', className: 'btn-primary', icon: 'fa fa-pencil' }, { name: 'remove', action: 'removeConceptReferenceTerm', demand: '1.3.6.1.4.1.33349.3.1.5.9.2.0.7', className: 'btn-danger', icon: 'fa fa-times' } ]"
             render="{ name: renderName, name: renderName, mappings: renderMappings }"
-            item-supplement="[ loadReferenceTermMappings ]"
-            properties="[  'mnemonic', 'name', 'mappings' ]">
+            item-supplement="[ loadReferenceTermMappings ]" properties="[  'mnemonic', 'name', 'mappings' ]">
         </entity-table>
+
+        <!-- MODAL FOR UPLOADING REFERENCE TERM SET -->
+        <div class="modal" id="uploadTerminologyModal" data-backdrop="static" role="dialog"
+            aria-labelledby="uploadTerminologyModalTitle" aria-hidden="true">
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="uploadTerminologyModalTitle">
+                            <i class="fas fa-upload"></i> {{ 'ui.admin.concept.codeSystem.upload' | i18n }}
+                        </h5>
+                        <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">
+                                <i class="fa fa-times"></i>
+                            </span>
+                        </button>
+                    </div>
+                    <form novalidate="novalidate" class="form" ng-submit="uploadReferenceTermSheet(uploadRefTermForm)"
+                        name="uploadRefTermForm">
+                        <div class="modal-body">
+                            <div class="container-fluid">
+                                <div class="form-group row">
+                                    <div class="col-12">
+                                        <div class="alert alert-light">
+                                            <h5><i class="fas fa-info-circle"></i> {{
+                                                'ui.admin.concept.codeSystem.upload.help' | i18n }}</h5>
+                                            {{ 'ui.admin.concept.codeSystem.upload.help.text' | i18n }}
+                                        </div>
+                                        <div class="float-right">
+                                            <a href="/org.santedb.admin/content/code-system-template.csv">
+                                                <i class="fas fa-download"></i> {{ 'ui.admin.concept.codeSystem.upload.template' | i18n }}
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-sm-12 col-md-3 control-label">
+                                        {{ 'ui.admin.concept.codeSystem.upload.file' | i18n }}
+                                        <hint-popover hint-title="ui.admin.concept.codeSystem.upload.file" />
+                                    </label>
+                                    <div class="col-sm-12 col-md-9">
+                                        <input id="source-file" type="file" ng-model="uploadTerm.source"
+                                            class="form-control" name="source" valid-file="valid-file"
+                                            required="required" accept=".csv" />
+                                        <div class="text-danger" ng-if="uploadRefTermForm.source.$error['required']">
+                                            <i class="fas fa-exclamation-triangle"></i> {{ 'ui.error.required' | i18n }}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-sm-12 col-md-3 control-label">
+                                        {{ 'ui.admin.concept.codeSystem.upload.language' | i18n }}
+                                        <hint-popover hint-title="ui.admin.concept.codeSystem.upload.language" />
+                                    </label>
+                                    <div class="col-sm-12 col-md-9">
+                                        <div class="input-group">
+                                        <ref-term-select class="form-control" name="uploadLanguage"
+                                            required="required" code-system-url="'urn:ietf:bcp:47'" ng-model="uploadTerm.language">
+                                            </ref-term-select>
+                                        </div>
+                                        <div class="text-danger" ng-if="uploadRefTermForm.uploadLanguage.$error['required']">
+                                            <i class="fas fa-exclamation-triangle"></i> {{ 'ui.error.required' | i18n }}
+                                        </div>
+    
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button class="btn btn-secondary" type="button" data-dismiss="modal" data-toggle="none">
+                                <i class="fa fa-times"></i> {{ 'ui.action.cancel' | i18n }}</button>
+                            <button type="submit" class="btn btn-primary" id="uploadReferenceTermSheetButton"
+                                ng-disabled="uploadRefTermForm.$invalid">
+                                <i class="fa fa-upload"></i> {{ 'ui.action.upload' | i18n }} </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <!-- MODAL FOR ADDING NEW REFERENCE TERMS -->
+        <div class="modal" id="addReferenceTermModal" data-backdrop="static" role="dialog"
+            aria-labelledby="addReferenceTermModalTitle" aria-hidden="true">
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="addReferenceTermModalTitle">
+                            <i class="fas fa-fw fa-language"></i> {{ 'ui.admin.concept.codeSystem.' +
+                            (edit.referenceTerm.id ? 'edit.referenceTerm' : 'addReferenceTerm') | i18n }}
+                        </h5>
+                        <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">
+                                <i class="fa fa-times"></i>
+                            </span>
+                        </button>
+                    </div>
+                    <form novalidate="novalidate" class="form" ng-submit="saveReferenceTerm(quickAddReferenceTermForm)"
+                        name="quickAddReferenceTermForm">
+                        <div class="modal-body">
+                            <div class="form-group row">
+                                <label class="control-label col-sm-12 col-md-3">
+                                    {{ 'ui.model.referenceTerm.mnemonic' | i18n }}
+                                    <hint-popover hint-title="ui.model.referenceTerm.mnemonic" />
+                                </label>
+                                <div class="col-sm-12 col-md-9">
+                                    <input type="text" maxlength="64" class="form-control" name="mnemonicInput"
+                                        ng-model="edit.referenceTerm.mnemonic" required="required"
+                                        autocomplete="__away" />
+                                    <div class="text-danger"
+                                        ng-if="quickAddReferenceTermForm.mnemonicInput.$error['required']">
+                                        <i class="fas fa-exclamation-triangle"></i> {{ 'ui.error.required' | i18n }}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="control-label col-sm-12 col-md-3">
+                                    {{ 'ui.model.referenceTerm.names' | i18n }}
+                                    <hint-popover hint-title="ui.model.referenceTerm.names" />
+                                </label>
+                                <div class="col-sm-12 col-md-9">
+                                    <ul class="list-group">
+                                        <li class="list-group-item"
+                                            ng-repeat="name in edit.referenceTerm.name.$other track by $index">
+                                            <div class="input-group">
+                                                <input type="text" max-length="256" ng-model="name.value"
+                                                    name="refTermName{{$index}}" class="form-control"
+                                                    autocomplete="__away" required="required" />
+                                                <div class="input-group-append">
+                                                    <ref-term-select class="form-control"
+                                                        name="refTermNameLang{{$index}}"
+                                                        code-system-url="'urn:ietf:bcp:47'" ng-model="name.language" />
+                                                </div>
+                                                <div class="input-group-append btn-group">
+                                                    <button class="btn btn-primary" type="button"
+                                                        ng-click="edit.referenceTerm.name.$other.push({})">
+                                                        <i class="fas fa-fw fa-plus-circle"></i>
+                                                    </button>
+                                                    <button class="btn btn-danger" ng-if="$index > 0" type="button"
+                                                        ng-click="edit.referenceTerm.name.$other.splice($index, 1)">
+                                                        <i class="fas fa-fw fa-times-circle"></i>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                            <div ng-if="quickAddReferenceTermForm['refTermName' + $index].$error['required']"
+                                                class="text-danger">
+                                                <i class="fas fa-exclamation-triangle"></i> {{ 'ui.error.required' |
+                                                i18n }}
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="control-label col-sm-12 col-md-3">
+                                    {{ 'ui.model.referenceTerm.concept' | i18n }}
+                                    <hint-popover hint-title="ui.model.referenceTerm.concept" />
+                                </label>
+                                <div class="col-sm-12 col-md-9">
+                                    <ul class="list-group">
+                                        <li class="list-group-item"
+                                            ng-repeat="conceptMap in edit.referenceTerm.concepts track by $index">
+                                            <div class="input-group">
+                                                <div class="input-group-prepend">
+                                                    <select class="form-control" ng-model="conceptMap.relationshipType">
+                                                        <option value="2c4dafc2-566a-41ae-9ebc-3097d7d22f4a">SAME_AS
+                                                        </option>
+                                                        <option value="ad27293d-433c-4b75-88d2-b5360cd95450">INVERSE_OF
+                                                        </option>
+                                                        <option value="ae8b4f2f-009f-4e0d-b35e-5a89555c5947">NEGATION_OF
+                                                        </option>
+                                                        <option value="ae8b4f2f-009f-4e0d-b35e-5a89555c5980">WIDER_THAN
+                                                        </option>
+                                                        <option value="ae8b4f2f-009f-4e0d-b35e-5a89555c5990">
+                                                            NARROWER_THAN</option>
+                                                    </select>
+                                                </div>
+                                                <entity-search ng-if="!conceptMap.$newConcept" type="'Concept'"
+                                                    style="width:45%; height:100%" ng-model="conceptMap.source"
+                                                    search-field="'name.value'" is-required="true"
+                                                    owner-form="quickAddReferenceTermForm"
+                                                    filter="{ 'statusConcept.mnemonic' : 'ACTIVE' }" required="required"
+                                                    name="edit.referenceTermConcept{{$index}}"></entity-search>
+                                                <input ng-if="conceptMap.$newConcept" type="text" class="form-control"
+                                                    maxlength="128" ng-model="conceptMap.$newConcept"
+                                                    required="required" autocomplete="__away"
+                                                    name="newConceptMnemonic{{$index}}" />
+                                                <div class="input-group-append btn-group">
+                                                    <button ng-disabled="!edit.referenceTerm.mnemonic"
+                                                        ng-if="!conceptMap.$newConcept &amp;&amp; $index == 0"
+                                                        title="{{ 'ui.action.new' | i18n }}" class="btn btn-info"
+                                                        type="button"
+                                                        ng-click="conceptMap.$newConcept = edit.referenceTerm.mnemonic">
+                                                        <i class="fas fa-fw fa-magic"></i>
+                                                    </button>
+                                                    <button ng-if="conceptMap.$newConcept &amp;&amp; $index == 0"
+                                                        title="{{ 'ui.action.list' | i18n }}" class="btn btn-info"
+                                                        type="button" ng-click="conceptMap.$newConcept = null">
+                                                        <i class="fas fa-fw fa-list"></i>
+                                                    </button>
+                                                    <button class="btn btn-primary" type="button"
+                                                        ng-click="edit.referenceTerm.concepts.push({ relationshipType: '2c4dafc2-566a-41ae-9ebc-3097d7d22f4a'})">
+                                                        <i class="fas fa-fw fa-plus-circle"></i>
+                                                    </button>
+                                                    <button class="btn btn-danger" ng-if="$index > 0" type="button"
+                                                        ng-click="edit.referenceTerm.concepts.splice($index, 1)">
+                                                        <i class="fas fa-fw fa-times-circle"></i>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                            <div class="text-warning"
+                                                ng-if="conceptMap.$newConcept == edit.referenceTerm.mnemonic &amp;&amp; conceptMap.$newConcept">
+                                                <i class="fas fa-exclamation-circle"></i> {{
+                                                'ui.model.referenceTerm.concept.betterMnemonic' | i18n }}
+                                            </div>
+                                            <div ng-if="quickAddReferenceTermForm['edit.referenceTermConcept' + $index].$error['required']"
+                                                class="text-danger">
+                                                <i class="fas fa-exclamation-triangle"></i> {{ 'ui.error.required' |
+                                                i18n }}
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="form-group row" ng-if="edit.referenceTerm.createdBy">
+                                <label class="control-label col-sm-12 col-md-3">{{ 'ui.model.referenceTerm.createdBy' |
+                                    i18n }}</label>
+                                <div class="col-sm-12 col-md-9">
+                                    <provenance provenance-id="edit.referenceTerm.createdBy"
+                                        provenance-time="edit.referenceTerm.creationTime" />
+                                </div>
+                            </div>
+                            <div class="form-group row" ng-if="edit.referenceTerm.updatedBy">
+                                <label class="control-label col-sm-12 col-md-3">{{ 'ui.model.referenceTerm.updatedBy' |
+                                    i18n }}</label>
+                                <div class="col-sm-12 col-md-9">
+                                    <provenance provenance-id="edit.referenceTerm.updatedBy"
+                                        provenance-time="edit.referenceTerm.updatedTime" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer" id="addNewRefTermButtonActions">
+                            <button class="btn btn-secondary" type="button" data-dismiss="modal" data-toggle="none">
+                                <i class="fa fa-times"></i> {{ 'ui.action.cancel' | i18n }}</button>
+                            <button type="submit" ng-if="edit.referenceTerm.id" class="btn btn-primary"
+                                id="addNewRefTermButton" ng-disabled="quickAddReferenceTermForm.$invalid">
+                                <i class="fa fa-check"></i> {{ 'ui.action.save' | i18n }} </button>
+                            <div class="btn-group" ng-if="!edit.referenceTerm.id">
+                                <button type="submit" class="btn btn-primary" id="addNewRefTermButton"
+                                    ng-disabled="quickAddReferenceTermForm.$invalid">
+                                    <i class="fa fa-check"></i> {{ 'ui.action.add' | i18n }} </button>
+                                <div class="btn-group dropdown show">
+                                    <button type="button" id="addNewRefTermButtonExt" class="btn btn-primary"
+                                        data-toggle="dropdown" ng-disabled="quickAddReferenceTermForm.$invalid">
+                                        <i class="fas fa-chevron-down"></i>
+                                    </button>
+                                    <div class="dropdown-menu">
+                                        <button data-toggle="none" class="dropdown-item" id="addNewRefTermButtonThen"
+                                            type="submit" ng-click="edit.referenceTerm.$then = 'another'">{{
+                                            'ui.action.add.then.new' | i18n }}</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
