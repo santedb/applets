@@ -88,4 +88,10 @@ angular.module('santedb').controller('EditCodeSystemController', ["$scope", "$ro
     // Bind to scope
     $scope.saveCodeSystem = saveCodeSystem;
 
+    // Download code system
+    $scope.downloadCodeSystem = function(id) {
+        window.open(`/hdsi/ReferenceTerm/_export?codeSystem=${id}&_include=codeSystem`, '_blank').onload = function (e) {
+            win.close();
+        };
+    }
 }]);

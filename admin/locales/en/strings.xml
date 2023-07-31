@@ -415,6 +415,12 @@
     <string name="ui.admin.concept.codeSystem.upload.run">Your job was successfully uploaded and scheduled for execution. Would you like to run the import now? (selecting 'no' will run the import when there are less users on this server)</string>
     <string name="ui.admin.concept.codeSystem.upload.issue">Your file was uploaded however there are {issue} detected problems - do you want to open the detailed import log to see what these issues are?</string>
     <string name="ui.admin.concept.codeSystem.upload.help">Uploading Reference Terms</string>
+    <string name="ui.admin.concept.codeSystem.delete.confirm">Are you sure you want to delete the code system?</string>
+    <string name="ui.admin.concept.codeSystem.delete.success">Code system was successfully deleted</string>
+    <string name="ui.admin.concept.codeSystem.delete.error">Error deleting code system : {e}</string>
+    <string name="ui.admin.concept.codeSystem.unDelete.confirm">Are you sure you want to un-delete this code system?</string>
+    <string name="ui.admin.concept.codeSystem.unDelete.success">Code system has been restored</string>
+    <string name="ui.admin.concept.codeSystem.unDelete.error">Error un-deleting code system: {e}</string>
     <string name="ui.admin.concept.codeSystem.upload.template">Download Template</string>
         <string name="ui.admin.concept.codeSystem.upload.help.text"><![CDATA[
         <p>You can use this function to upload a CSV file which contains a list of reference terms that you would like added to this code system.</p>

@@ -206,10 +206,47 @@ angular.module('santedb').controller('CodeSystemWidgetController', ["$scope", "$
             // Update
             var codeSystem = await SanteDB.resources.codeSystem.updateAsync($scope.editObject.id, $scope.editObject);
             toastr.success(SanteDB.locale.getString("ui.admin.codeSystem.save.success"));
-            SanteDB.display.cascadeScopeObject(SanteDB.display.getRootScope($scope), ['scopedObject', 'codeSystem'], codeSystem);
+            $timeout(() => {
+                SanteDB.display.cascadeScopeObject(SanteDB.display.getRootScope($scope), ['scopedObject', 'codeSystem'], codeSystem);
+            });
         }
         catch (e) {
             $rootScope.errorHandler(e);
+        }
+    }
+
+    // Un-delete
+    async function unDelete() {
+        if(confirm(SanteDB.locale.getString("ui.admin.concept.codeSystem.unDelete.confirm"))) {
+            try {
+                // Patch the code system
+                var patch = new Patch({
+                    change: [
+                        new PatchOperation({
+                            op: PatchOperationType.Remove,
+                            path: 'obsoletionTime',
+                            value: null
+                        }),
+                        new PatchOperation({
+                            op: PatchOperationType.Remove,
+                            path: 'obsoletedBy',
+                            value: null
+                        })
+                    ]
+                });
+
+                await SanteDB.resources.codeSystem.patchAsync($scope.scopedObject.id, null, patch);
+                toastr.success(SanteDB.locale.getString("ui.admin.concept.codeSystem.unDelete.success"));
+                var codeSystem = await SanteDB.resources.codeSystem.getAsync($scope.scopedObject.id, 'full');
+
+                $timeout(() => {
+                    SanteDB.display.cascadeScopeObject(SanteDB.display.getRootScope($scope), ['scopedObject', 'codeSystem'], codeSystem);
+                });
+
+            }
+            catch(e) {
+                toastr.error(SanteDB.locale.getString("ui.admin.concept.codeSystem.unDelete.error", { e: e.message }));
+            }
         }
     }
 
@@ -239,6 +276,7 @@ angular.module('santedb').controller('CodeSystemWidgetController', ["$scope", "$
     $scope.edit = { referenceTerm: angular.copy($scope.refTermTemplate) };
     $scope.removeConceptReferenceTerm = removeConceptReferenceTerm;
     $scope.uploadReferenceTermSheet = uploadReferenceTermSheet;
+    $scope.unDelete = unDelete;
 
     $scope.uploadReferenceTermFile = function () {
         $("#uploadTerminologyModal").modal('show');
