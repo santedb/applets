@@ -438,5 +438,13 @@
             </li>
             <li>File must be smaller than the maximum upload size configured by your system administrator</li>
         </ul> ]]></string>
+
+    
+        <string name="ui.admin.concept.conceptSet.delete.success">Concept set was successfully deleted</string>
+        <string name="ui.admin.concept.conceptSet.delete.error">Error deleting concept set : {e}</string>
+        <string name="ui.admin.concept.conceptSet.delete.confirm">Deleting a concept set which is used by the SanteDB may result in drop-down selectors not functioning properly, database validation scripts failing, and plugins becoming unresponsive. You should only delete user-defined concept sets which were deleted in error. Are you sure you want to delete this concept set?</string>
+        <string name="ui.admin.concept.conceptSet.unDelete.confirm">Are you sure you want to un-delete this concept set?</string>
+        <string name="ui.admin.concept.conceptSet.unDelete.success">Concept set was successfully un-deleted</string>
+        <string name="ui.admin.concept.conceptSet.unDelete.error">Error un-deleting concept set : {e}</string>
     
 </resources>

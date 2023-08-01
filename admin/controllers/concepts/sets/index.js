@@ -1,5 +1,5 @@
 /// <reference path="../../../../core/js/santedb.js"/>
-angular.module('santedb').controller('CodeSystemIndexController', ["$scope", "$rootScope", "$timeout", function ($scope, $rootScope, $timeout) {
+angular.module('santedb').controller('ConceptSetIndexController', ["$scope", "$rootScope", "$timeout", function ($scope, $rootScope, $timeout) {
 
      /**
      * @summary Render updated by
@@ -15,20 +15,20 @@ angular.module('santedb').controller('CodeSystemIndexController', ["$scope", "$r
     }
 
     $scope.delete = async function(id, index) {
-        if(confirm(SanteDB.locale.getString("ui.admin.concept.codeSystem.delete.confirm"))) {
+        if(confirm(SanteDB.locale.getString("ui.admin.concept.conceptSet.delete.confirm"))) {
             try {
-                await SanteDB.resources.codeSystem.deleteAsync(id);
-                toastr.success(SanteDB.locale.getString("ui.admin.concept.codeSystem.delete.success"));
-                $("#CodeSystemTable table").DataTable().draw();
+                await SanteDB.resources.conceptSet.deleteAsync(id);
+                toastr.success(SanteDB.locale.getString("ui.admin.concept.conceptSet.delete.success"));
+                $("#ConceptSetTable table").DataTable().draw();
             }
             catch(e) {
-                toastr.error(SanteDB.locale.getString("ui.admin.concept.codeSystem.delete.error", { e: e.message }));
+                toastr.error(SanteDB.locale.getString("ui.admin.concept.conceptSet.delete.error", { e: e.message }));
             }
         }
     }
 
     $scope.unDelete = async function(id, index) {
-        if(confirm(SanteDB.locale.getString("ui.admin.concept.codeSystem.unDelete.confirm"))) {
+        if(confirm(SanteDB.locale.getString("ui.admin.concept.conceptSet.unDelete.confirm"))) {
             try {
                 // Patch the code system
                 var patch = new Patch({
@@ -46,12 +46,12 @@ angular.module('santedb').controller('CodeSystemIndexController', ["$scope", "$r
                     ]
                 });
 
-                await SanteDB.resources.codeSystem.patchAsync(id, null, patch);
-                toastr.success(SanteDB.locale.getString("ui.admin.concept.codeSystem.unDelete.success"));
-                $("#CodeSystemTable table").DataTable().draw();
+                await SanteDB.resources.conceptSet.patchAsync(id, null, patch);
+                toastr.success(SanteDB.locale.getString("ui.admin.concept.conceptSet.unDelete.success"));
+                $("#ConceptSetTable table").DataTable().draw();
             }
             catch(e) {
-                toastr.error(SanteDB.locale.getString("ui.admin.concept.codeSystem.unDelete.error", { e: e.message }));
+                toastr.error(SanteDB.locale.getString("ui.admin.concept.conceptSet.unDelete.error", { e: e.message }));
             }
         }
      

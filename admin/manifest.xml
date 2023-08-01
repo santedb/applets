@@ -176,7 +176,7 @@
       <icon>fas fa-language</icon>
       <text lang="en">Code Systems</text>
     </menuItem>
-    <menuItem order="20" context="org.santedb.admin" launch="santedb-admin.concept.sets.index"
+    <menuItem order="20" context="org.santedb.admin" launch="santedb-admin.concept.conceptSet.index"
       asset="/org.santedb.admin/views/concepts/sets/index.html">
       <icon>fas fa-viruses</icon>
       <text lang="en">Concept Sets</text>

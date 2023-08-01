@@ -1,0 +1,93 @@
+<div xmlns="http://www.w3.org/1999/xhtml" xmlns:sdb="http://santedb.org/applet">
+    <sdb:script static="false">~/controllers/concepts/sets/edit.js</sdb:script>
+    <sdb:state name="santedb-admin.concept.conceptSet.create">
+        <sdb:url>/</sdb:url>
+        <sdb:demand>1.3.6.1.4.1.33349.3.1.5.9.2.0.7</sdb:demand>
+        <sdb:view>
+            <sdb:controller>EditConceptSetController</sdb:controller>
+        </sdb:view>
+    </sdb:state>
+    <form class="form" ng-submit="saveConceptSet(createConceptSetForm)" name="createConceptSetForm"
+        novalidate="novalidate">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="card-title mb-0"><i class="fas fa-viruses"></i> {{
+                    'ui.admin.concept.conceptSet.edit.profile.title' | i18n }}</h5>
+            </div>
+            <div class="card-body">
+                <div class="form-group row">
+                    <label class="control-label col-sm-12 col-md-3">
+                        {{ 'ui.model.conceptSet.name' | i18n }}
+                        <hint-popover hint-title="ui.model.conceptSet.name" />
+                    </label>
+                    <div class="col-sm-12 col-md-9">
+                        <input autocomplete="__away" type="text" maxlength="128" ng-model="conceptSet.name"
+                            name="conceptSetName" required="required" class="form-control" />
+                            <div class="text-danger" ng-if="createConceptSetForm.conceptSetName.$error['required']">
+                                <i class="fas fa-exclamation-triangle"></i> {{ 'ui.error.required' | i18n }}
+                            </div>  
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-12 col-md-3 control-label">
+                        {{ 'ui.model.conceptSet.mnemonic' | i18n }}
+                        <hint-popover hint-title="ui.model.conceptSet.mnemonic" />
+                    </label>
+                    <div class="col-sm-12 col-md-9">
+                        <input autocomplete="__away" type="text" maxlength="64" ng-model="conceptSet.mnemonic" name="conceptSetMnemonic"
+                            required="required" class="form-control" pattern="^[a-zA-Z0-9_\-$" />
+                        <div class="text-danger" ng-if="createConceptSetForm.conceptSetMnemonic.$error['required']">
+                            <i class="fas fa-exclamation-triangle"></i> {{ 'ui.error.required' | i18n }}
+                        </div> 
+                        <div class="text-danger" ng-if="createConceptSetForm.conceptSetMnemonic.$error['pattern']">
+                            <i class="fas fa-exclamation-triangle"></i> {{ 'ui.error.pattern' | i18n }}
+                        </div>
+                        <div class="text-danger" ng-if="createConceptSetForm.conceptSetMnemonic.$error['duplicate']">
+                            <i class="fa fa-exclamation-triangle"></i> {{ 'ui.error.duplicate' | i18n }}
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-12 col-md-3 control-label">
+                        {{ 'ui.model.conceptSet.oid' | i18n }}
+                        <hint-popover hint-title="ui.model.conceptSet.oid" />
+                    </label>
+                    <div class="col-sm-12 col-md-9">
+                        <input autocomplete="__away" type="text" maxlength="128" ng-model="conceptSet.oid" name="conceptSetOid"
+                            required="required" pattern="^[0-9]*?[0-9\.]*$"  class="form-control"/>
+                            <div class="text-danger" ng-if="createConceptSetForm.conceptSetOid.$error['required']">
+                                <i class="fas fa-exclamation-triangle"></i> {{ 'ui.error.required' | i18n }}
+                            </div> 
+                            <div class="text-danger" ng-if="createConceptSetForm.conceptSetOid.$error['pattern']">
+                                <i class="fas fa-exclamation-triangle"></i> {{ 'ui.error.pattern' | i18n }}
+                            </div>
+                            <div class="text-danger" ng-if="createConceptSetForm.conceptSetOid.$error['duplicate']">
+                                <i class="fa fa-exclamation-triangle"></i> {{ 'ui.error.duplicate' | i18n }}
+                            </div>    
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-12 col-md-3 control-label">
+                        {{ 'ui.model.conceptSet.url' | i18n }}
+                        <hint-popover hint-title="ui.model.conceptSet.url" />
+                    </label>
+                    <div class="col-sm-12 col-md-9">
+                        <input autocomplete="__away" type="url" maxlength="256" ng-model="conceptSet.url" name="conceptSetUrl"
+                            required="required" class="form-control" />
+                            <div class="text-danger" ng-if="createConceptSetForm.conceptSetUrl.$error['required']">
+                                <i class="fas fa-exclamation-triangle"></i> {{ 'ui.error.required' | i18n }}
+                            </div> 
+                            <div class="text-danger" ng-if="createConceptSetForm.conceptSetUrl.$error['duplicate']">
+                                <i class="fa fa-exclamation-triangle"></i> {{ 'ui.error.duplicate' | i18n }}
+                            </div>    
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="float-right btn-group">
+            <button type="submit" ng-disabled="createConceptForm.$invalid" class="btn btn-primary" id="saveConceptSetButton">
+                <i class="fas fa-check"></i> {{ 'ui.action.save' | i18n }}
+            </button>
+        </div>
+    </form>
+</div>

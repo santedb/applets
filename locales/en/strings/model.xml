@@ -551,4 +551,18 @@
   <string name="ui.model.referenceTerm.concept.hint"><![CDATA[Terms which are used in the internal SanteDB concept dictionary which this term is linked to]]></string>
   <string name="ui.model.referenceTerm.concept.betterMnemonic"><![CDATA[Mnemonics in the SanteDB concept dictionary must be globally UNIQUE, whereas reference term mnemonics are unique within their code system. It is highly recommended administrators create a globally unique mnemonic for any new concepts]]></string>
 
+  <!-- Concept Set -->
+  <string name="ui.model.conceptSet.name">Name</string>
+  <string name="ui.model.conceptSet.name.hint">Provide a short, descriptive name of what this collection of concepts contains</string>
+  <string name="ui.model.conceptSet.mnemonic">Mnemonic</string>
+  <string name="ui.model.conceptSet.mnemonic.hint">Provide a unique ID for this set of concepts</string>
+  <string name="ui.model.conceptSet.url">URL</string>
+  <string name="ui.model.conceptSet.url.hint">If the concept set has an external definition, provide the unique resource pointer to that location</string>
+  <string name="ui.model.conceptSet.description">Description</string>
+  <string name="ui.model.conceptSet.description.hint">Provide a long-form description of the intended use of the concept set.</string>
+  <string name="ui.model.conceptSet.oid">OID</string>
+  <string name="ui.model.conceptSet.oid.hint"><![CDATA[Provide a unique IANA PEN, HL7 OID or use <code>2.25.XXXXXX</code> to uniquely identify this concept set]]></string>
+  <string name="ui.model.conceptSet.createdBy">Created By</string>
+  <string name="ui.model.conceptSet.updatedBy">Updated By</string>
+  <string name="ui.model.conceptSet.obsoletedBy">Obsoleted By</string>
 </resources>
