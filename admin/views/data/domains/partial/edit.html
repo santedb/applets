@@ -5,7 +5,7 @@
                 <p class="m-auto"><i class="fas fa-circle-notch fa-spin"></i> {{ 'ui.wait' | i18n }}</p>
             </div>
         </div>
-        <div class="row">
+        <div class="row" ng-if="domain">
             <div class="col-12">
                 <div class="card">
                     <div class="card-header">
@@ -81,11 +81,12 @@
                             <div class="form-group row">
                                 <label class="control-label col-sm-12 col-md-2 required" for="url">{{
                                     'ui.model.identityDomain.url' | i18n }}
-                                    <hint-popover hint-title="ui.model.identityDomain.validation" />
+                                    <hint-popover hint-title="ui.model.identityDomain.url" />
                                 </label>
                                 <div class="col-sm-12 col-md-10 input-group">
                                     <input name="url" type="text" class="form-control" ng-model="domain.url"
                                         autocomplete="__away" pattern="^(([^:/?#]+):)(//([^/?#]*))?([^?#]*)(\?([^#]*))?(#(.*))?$" />
+                                    </div>
                                 </div>
                                 <div class="col-sm-12 col-md-10 offset-md-2">
                                     <div ng-show="targetForm.url.$error['duplicate']" class="text-danger">
@@ -97,7 +98,6 @@
                                     <i class="fa fa-exclamation-triangle"></i> {{ 'ui.error.pattern' | i18n }}
                                 </div>
 
-                                </div>
                             </div>
                             <div class="form-group row">
                                 <label class="control-label col-sm-12 col-md-2 required" for="name">{{
@@ -167,10 +167,14 @@
                                     <hint-popover hint-title="ui.model.identityDomain.validation" />
                                 </label>
                                 <div class="col-sm-12 col-md-10">
-                                    <input name="validation" autocomplete="__away" type="text" class="form-control"
+                                    <div class="input-group">
+                                        <input name="validation" autocomplete="__away" type="text" class="form-control"
                                         ng-model="domain.validation" maxlength="256" />
+                                        <div class="input-group-append" ng-if="domain.validation">
+                                            <span class="input-group-text">{{ 'ui.example' | i18n }} : {{ domain._exampleId }}</span>
+                                        </div>
+                                    </div>
                                 </div>
-
                             </div>
                             <div class="form-group row">
                                 <label class="control-label col-sm-12 col-md-2">{{ 'ui.model.identityDomain.checkDigitAlgorithm' | i18n }} 
@@ -233,7 +237,7 @@
                                     i18n }}</label>
                                 <div class="col-md-10 col-sm-12">
                                     <entity-search type="'SecurityPolicy'" ng-model="domain.policy"
-                                        search-field="'name'">
+                                        search-field="'name'"  filter="{ 'obsoletionTime' : 'null' }">
                                     </entity-search>
                                 </div>
                             </div>
@@ -261,7 +265,7 @@
                                 </label>
                                 <div class="col-md-6 col-sm-12">
                                     <entity-search type="'SecurityApplication'" ng-model="assigner.assigningApplication"
-                                        search-field="'name'">
+                                        search-field="'name'" filter="{ 'obsoletionTime' : 'null' }">
                                     </entity-search>
                                 </div>
                                 <label class="col-md-2 col-sm-12">
@@ -283,7 +287,7 @@
                                         hint-title="ui.model.identityDomain.assigningAuthority.assigningApplication" /></label>
                                 <div class="col-md-6 col-sm-12">
                                     <entity-search type="'SecurityApplication'"
-                                        ng-model="newAssigner.assigningApplication" search-field="'name'">
+                                        ng-model="newAssigner.assigningApplication"  filter="{ 'obsoletionTime' : 'null' }" search-field="'name'">
                                     </entity-search>
                                 </div>
                                 <label class="col-md-2 col-sm-12">

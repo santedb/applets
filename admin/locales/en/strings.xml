@@ -226,6 +226,9 @@
     <string name="ui.admin.domain.edit.core.title">Identity Domain Properties</string>
     <string name="ui.admin.domain.edit.scope.title"><![CDATA[Authority &amp; Scope]]></string>
     <string name="ui.admin.domain.edit.authority.title">Assigning Authority</string>
+    <string name="ui.admin.domain.edit.validation.title">Validation</string>
+    <string name="ui.admin.domain.reactivate.confirm">Are you sure you want to re-activate the identity domain?</string>
+    <string name="ui.admin.domain.saveSuccess">Identity domain has been updated successfully</string>
     <!-- Job Screen Page -->
     <string name="ui.admin.job.neverRun">Never Run</string>
     <string name="ui.admin.job.runJob.confirm">Are you sure you want to manually run this job?</string>

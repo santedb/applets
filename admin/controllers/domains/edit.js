@@ -141,12 +141,12 @@ angular.module('santedb').controller('IdentityDomainEditController', ["$scope", 
 
             if(!$scope.domain.id) {
                 var domain = await SanteDB.resources.identityDomain.insertAsync($scope.domain);
-                toastr.success(SanteDB.locale.getString("ui.model.identityDomain.saveSuccess"));
+                toastr.success(SanteDB.locale.getString("ui.admin.domain.saveSuccess"));
                 $state.go('santedb-admin.data.domain.edit', {id: domain.id});
             }
             else {
                 var domain = await SanteDB.resources.identityDomain.updateAsync($stateParams.id, $scope.domain);
-                toastr.success(SanteDB.locale.getString("ui.admin.identityDomain.saveSuccess"));
+                toastr.success(SanteDB.locale.getString("ui.admin.domain.saveSuccess"));
                 $state.go('santedb-admin.data.domain.index', {id: domain.id});
 
             }
@@ -159,4 +159,9 @@ angular.module('santedb').controller('IdentityDomainEditController', ["$scope", 
         }
     }
 
+    $scope.$watch("domain.validation", function(n, o) {
+        if(n) {
+            $scope.domain._exampleId = new RandExp(new RegExp($scope.domain.validation)).gen();
+        }
+    })
 }]);
