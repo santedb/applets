@@ -156,15 +156,24 @@ angular.module('santedb-lib')
                                             $state.go(b.sref, b.parms);
                                         else if (b.href)
                                             window.location = b.href;
-                                        else
+                                        else {
                                             scope.$parent[b.action]();
+                                        }
+
                                     }
                                 }
                             });
 
                         // Add refresh button
                         buttons.push(
-                            'reload'
+                            {
+                                text: "<i class='fas fa-sync'></i> " + SanteDB.locale.getString("ui.action.reload"),
+                                className: "btn btn-success",
+                                action: function(e, dt, node, config) {
+                                    $(element).attr('newQueryId', 'true');
+                                    dt.ajax.reload();
+                                }
+                            }
                         );
 
                         // Add a show obsolete button
