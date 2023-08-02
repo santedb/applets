@@ -576,4 +576,8 @@
   <string name="ui.model.conceptSet.createdBy">Created By</string>
   <string name="ui.model.conceptSet.updatedBy">Updated By</string>
   <string name="ui.model.conceptSet.obsoletedBy">Obsoleted By</string>
+
+  <string name="ui.model.concept.mnemonic">Mnemonic</string>
+  <string name="ui.model.concept.name">Name(s)</string>
+  <string name="ui.model.concept.conceptSet">Member of Set</string>
 </resources>

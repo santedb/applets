@@ -54,7 +54,7 @@ angular.module('santedb-lib')
                         if (!loaded[setName]) {
                             loaded[setName] = { callme: [] };
                             
-                            scope.setValues = (await SanteDB.resources.conceptSet.invokeOperationAsync(null, "expand", { "mnemonic": setName })).resource;
+                            scope.setValues = (await SanteDB.resources.conceptSet.invokeOperationAsync(null, "expand", { "_mnemonic": setName })).resource;
 
                             // Now - is there an additional concept
                             if (scope.addConcept) {

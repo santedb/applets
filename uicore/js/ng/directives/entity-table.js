@@ -37,6 +37,8 @@ angular.module('santedb-lib')
                 render: "<",
                 i18nPrefix: "<",
                 sort: "<",
+                operation: "<",
+                operationScope: "<",
                 defaultFilter: "<",
                 canFilter: "<",
                 canSize: "<",
@@ -256,6 +258,9 @@ angular.module('santedb-lib')
                                     else {
                                         searchPromise = SanteDB.resources[attrs.type.toCamelCase()].findAssociatedAsync(null, attrs.subResource, query, null, scope.external);
                                     }
+                                }
+                                else if(scope.operation) {
+                                    searchPromise = SanteDB.resources[attrs.type.toCamelCase()].invokeOperationAsync(scope.operationScope, scope.operation, query, scope.external);
                                 }
                                 else {
                                     searchPromise = SanteDB.resources[attrs.type.toCamelCase()].findAsync(query, undefined, scope.external);

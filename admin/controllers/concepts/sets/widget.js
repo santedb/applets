@@ -1,6 +1,7 @@
 /// <reference path="../../../../core/js/santedb.js"/>
 angular.module('santedb').controller('ConceptSetWidgetController', ["$scope", "$rootScope", "$timeout", "$state", function ($scope, $rootScope, $timeout, $state) {
 
+    var loadedSets = {};
     $scope.uploadTerm = {
         language: SanteDB.locale.getLanguage()
     };
@@ -308,8 +309,8 @@ angular.module('santedb').controller('ConceptSetWidgetController', ["$scope", "$
             });;
             Object.keys(concept.referenceTerm).forEach(k => { concept.relationship[k].forEach(v => newTerms.push(new ConceptReferenceTerm(v))) });
             concept.name = { $other: newName };
-            concept.relationship = {$other: newRelationships};
-            concept.referenceTerm = {$other: newTerms};
+            concept.relationship = { $other: newRelationships };
+            concept.referenceTerm = { $other: newTerms };
             $timeout(() => {
                 $scope.edit.concept = concept;
                 $("#addConceptModal").modal('show');
@@ -324,5 +325,14 @@ angular.module('santedb').controller('ConceptSetWidgetController', ["$scope", "$
         return SanteDB.display.renderConcept(concept);
     }
 
-
+    $scope.renderIsMember = function (concept) {
+        if (!concept.conceptSetModel || concept.conceptSetModel[$scope.scopedObject.mnemonic]) {
+            return `<i class='fas fa-circle text-success'></i> ${$scope.scopedObject.mnemonic}`;
+            concept._canRemove = true;
+        }
+        else {
+            var firstProperty = Object.keys(concept.conceptSetModel)[0];
+            return `<a ui-sref="santedb-admin.concept.conceptSet.view({id: '${concept.conceptSetModel[firstProperty][0].id}'})" target="_blank"><i class='fas fa-circle text-secondary'></i> ${firstProperty}</a>`;
+        }
+    }
 }]);
