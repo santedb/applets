@@ -227,7 +227,8 @@
     <string name="ui.admin.domain.edit.scope.title"><![CDATA[Authority &amp; Scope]]></string>
     <string name="ui.admin.domain.edit.authority.title">Assigning Authority</string>
     <string name="ui.admin.domain.edit.validation.title">Validation</string>
-    <string name="ui.admin.domain.reactivate.confirm">Are you sure you want to re-activate the identity domain?</string>
+    <string name="ui.admin.domain.reactivate.confirm">Are you sure you want to re-activate the
+        identity domain?</string>
     <string name="ui.admin.domain.saveSuccess">Identity domain has been updated successfully</string>
     <!-- Job Screen Page -->
     <string name="ui.admin.job.neverRun">Never Run</string>
@@ -337,9 +338,12 @@
     <string name="ui.admin.place.edit.associate.existing">Associate an Existing Facility</string>
     <string name="ui.admin.place.edit.associate.success">Association successfully created</string>
     <string name="ui.admin.place.edit.associate.failure">Association was not created: {e}</string>
-    <string name="ui.admin.place.edit.associate.remove.confirm">Are you sure you want to remove the association between this place and {id}?</string>
-    <string name="ui.admin.place.edit.associate.remove.succes">Place association successfully removed</string>
-    <string name="ui.admin.place.edit.associate.remove.failure">Error removing the place association - {e}</string>
+    <string name="ui.admin.place.edit.associate.remove.confirm">Are you sure you want to remove the
+        association between this place and {id}?</string>
+    <string name="ui.admin.place.edit.associate.remove.succes">Place association successfully
+        removed</string>
+    <string name="ui.admin.place.edit.associate.remove.failure">Error removing the place association
+        - {e}</string>
     <string name="ui.admin.place.confirmDelete">Are you sure you want to delete this place?</string>
     <string name="ui.admin.place.confirmPurge">Are you sure you want to purge this place?</string>
     <string name="ui.admin.place.confirmUnDelete">Are you sure you want to un-delete this place?</string>
@@ -358,18 +362,27 @@
     <string name="ui.admin.organizations.edit.profile.title">Create Organization</string>
     <string name="org.santedb.widget.admin.panel.organization.profile">Organization Profile</string>
     <string name="org.santedb.widget.admin.panel.organization.hierarchy">Organization Hierarchy</string>
-    <string name="ui.admin.organization.confirmDelete">Are you sure you want to delete this organization?</string>
-    <string name="ui.admin.organization.confirmPurge">Are you sure you want to purge this organization?</string>
-    <string name="ui.admin.organization.confirmUnDelete">Are you sure you want to un-delete this organization?</string>
+    <string name="ui.admin.organization.confirmDelete">Are you sure you want to delete this
+        organization?</string>
+    <string name="ui.admin.organization.confirmPurge">Are you sure you want to purge this
+        organization?</string>
+    <string name="ui.admin.organization.confirmUnDelete">Are you sure you want to un-delete this
+        organization?</string>
 
-    <string name="ui.admin.entity.edit.child.add.confirm">The entity you are attempting to add to this entity already has a Parent. Do you want to reassign this entity to a new parent?</string>
+    <string name="ui.admin.entity.edit.child.add.confirm">The entity you are attempting to add to
+        this entity already has a Parent. Do you want to reassign this entity to a new parent?</string>
     <string name="ui.admin.entity.edit.child.add.success">Child entity successfully associated</string>
     <string name="ui.admin.entity.edit.child.add.failure">Child entity could not be associated - {e}</string>
-    <string name="ui.admin.entity.edit.child.remove.confirm">Are you sure you want to remove this child?</string>
+    <string name="ui.admin.entity.edit.child.remove.confirm">Are you sure you want to remove this
+        child?</string>
     <string name="ui.admin.entity.edit.child.remove.success">Child entity successfully removed</string>
     <string name="ui.admin.entity.edit.child.remove.failure">Child entity could not be removed - {e}</string>
-    <string name="ui.admin.entity.edit.parent.change">Editing the parent of an entity after it is created may have unintended consequences for other data element which use this information. You will also need to correct any addressing information on this entity - are you sure you want to change the parent of this entity?</string>
-    <string name="ui.admin.entity.edit.parent.change.success">Entity hierarchy changes saved successfully</string>
+    <string name="ui.admin.entity.edit.parent.change">Editing the parent of an entity after it is
+        created may have unintended consequences for other data element which use this information.
+        You will also need to correct any addressing information on this entity - are you sure you
+        want to change the parent of this entity?</string>
+    <string name="ui.admin.entity.edit.parent.change.success">Entity hierarchy changes saved
+        successfully</string>
     <string name="ui.admin.entity.edit.parent.change.failure">Entity hierarchy changes failed: {e}</string>
 
     <!-- Certificate Management -->
@@ -401,31 +414,41 @@
     <string name="ui.admin.concept.concepts.count">clinical concept management</string>
     <string name="ui.admin.concept.concepts.create">Create Concept</string>
     <string name="ui.admin.concept.dashboard">Concept Dictionary Management</string>
-    <string name="ui.admin.concept.codeSystem.edit.profile.title">Reference Term Code System Properties</string>
+    <string name="ui.admin.concept.codeSystem.edit.profile.title">Reference Term Code System
+        Properties</string>
     <string name="ui.admin.concept.codeSystem.addReferenceTerm">Add Reference Term</string>
     <string name="ui.admin.concept.codeSystem.edit.referenceTerm">Edit Reference Term</string>
-    <string name="ui.admin.concept.codeSystem.remove.referenceTerm.confirm">Are you sure you want to remove this term from this code system?</string>
+    <string name="ui.admin.concept.codeSystem.remove.referenceTerm.confirm">Are you sure you want to
+        remove this term from this code system?</string>
     <string name="ui.admin.concept.codeSystem.remove.referenceTerm.success"><![CDATA[Reference term <span class="badge badge-light">{mnemonic}</span> removed successfully]]></string>
     <string name="ui.admin.concept.codeSystem.saveTerm.success"><![CDATA[Reference term <span class="badge badge-light">{authority}</span> saved successfully]]></string>
     <string name="org.santedb.widget.concept.codeSystem.core.properties">Code System Properties</string>
     <string name="org.santedb.widget.concept.codeSystem.core.quickAdd">Quick-Add Reference Term</string>
     <string name="org.santedb.widget.concept.codeSystem.core.referenceTerms">Reference Terms</string>
     <string name="ui.admin.concept.codeSystem.upload.file">File</string>
-    <string name="ui.admin.concept.codeSystem.upload.file.hint">Select a CSV file from your local computer</string>
+    <string name="ui.admin.concept.codeSystem.upload.file.hint">Select a CSV file from your local
+        computer</string>
     <string name="ui.admin.concept.codeSystem.upload.language">File Language</string>
-    <string name="ui.admin.concept.codeSystem.upload.language.hint">Select the language which the description / code name appears in your file</string>
+    <string name="ui.admin.concept.codeSystem.upload.language.hint">Select the language which the
+        description / code name appears in your file</string>
     <string name="ui.admin.concept.codeSystem.upload">Upload Reference Terms</string>
-    <string name="ui.admin.concept.codeSystem.upload.run">Your job was successfully uploaded and scheduled for execution. Would you like to run the import now? (selecting 'no' will run the import when there are less users on this server)</string>
-    <string name="ui.admin.concept.codeSystem.upload.issue">Your file was uploaded however there are {issue} detected problems - do you want to open the detailed import log to see what these issues are?</string>
+    <string name="ui.admin.concept.codeSystem.upload.run">Your job was successfully uploaded and
+        scheduled for execution. Would you like to run the import now? (selecting 'no' will run the
+        import when there are less users on this server)</string>
+    <string name="ui.admin.concept.codeSystem.upload.issue">Your file was uploaded however there are
+        {issue} detected problems - do you want to open the detailed import log to see what these
+        issues are?</string>
     <string name="ui.admin.concept.codeSystem.upload.help">Uploading Reference Terms</string>
-    <string name="ui.admin.concept.codeSystem.delete.confirm">Are you sure you want to delete the code system?</string>
+    <string name="ui.admin.concept.codeSystem.delete.confirm">Are you sure you want to delete the
+        code system?</string>
     <string name="ui.admin.concept.codeSystem.delete.success">Code system was successfully deleted</string>
     <string name="ui.admin.concept.codeSystem.delete.error">Error deleting code system : {e}</string>
-    <string name="ui.admin.concept.codeSystem.unDelete.confirm">Are you sure you want to un-delete this code system?</string>
+    <string name="ui.admin.concept.codeSystem.unDelete.confirm">Are you sure you want to un-delete
+        this code system?</string>
     <string name="ui.admin.concept.codeSystem.unDelete.success">Code system has been restored</string>
     <string name="ui.admin.concept.codeSystem.unDelete.error">Error un-deleting code system: {e}</string>
     <string name="ui.admin.concept.codeSystem.upload.template">Download Template</string>
-        <string name="ui.admin.concept.codeSystem.upload.help.text"><![CDATA[
+    <string name="ui.admin.concept.codeSystem.upload.help.text"><![CDATA[
         <p>You can use this function to upload a CSV file which contains a list of reference terms that you would like added to this code system.</p>
         <p>The requirements for the uploaded file are:</p>
         <ul>
@@ -442,12 +465,34 @@
             <li>File must be smaller than the maximum upload size configured by your system administrator</li>
         </ul> ]]></string>
 
-    
-        <string name="ui.admin.concept.conceptSet.delete.success">Concept set was successfully deleted</string>
-        <string name="ui.admin.concept.conceptSet.delete.error">Error deleting concept set : {e}</string>
-        <string name="ui.admin.concept.conceptSet.delete.confirm">Deleting a concept set which is used by the SanteDB may result in drop-down selectors not functioning properly, database validation scripts failing, and plugins becoming unresponsive. You should only delete user-defined concept sets which were deleted in error. Are you sure you want to delete this concept set?</string>
-        <string name="ui.admin.concept.conceptSet.unDelete.confirm">Are you sure you want to un-delete this concept set?</string>
-        <string name="ui.admin.concept.conceptSet.unDelete.success">Concept set was successfully un-deleted</string>
-        <string name="ui.admin.concept.conceptSet.unDelete.error">Error un-deleting concept set : {e}</string>
-    
+
+    <string name="org.santedb.widget.concept.conceptSet.core.properties">Concept Set Properties</string>
+    <string name="org.santedb.widget.concept.conceptSet.core.expansion">Concept Set Expansion</string>
+    <string name="ui.admin.concept.conceptSet.delete.success">Concept set was successfully deleted</string>
+    <string name="ui.admin.concept.conceptSet.delete.error">Error deleting concept set : {e}</string>
+    <string name="ui.admin.concept.conceptSet.delete.confirm">Deleting a concept set which is used
+        by the SanteDB may result in drop-down selectors not functioning properly, database
+        validation scripts failing, and plugins becoming unresponsive. You should only delete
+        user-defined concept sets which were deleted in error. Are you sure you want to delete this
+        concept set?</string>
+    <string name="ui.admin.concept.conceptSet.unDelete.confirm">Are you sure you want to un-delete
+        this concept set?</string>
+    <string name="ui.admin.concept.conceptSet.unDelete.success">Concept set was successfully
+        un-deleted</string>
+    <string name="ui.admin.concept.conceptSet.unDelete.error">Error un-deleting concept set : {e}</string>
+    <string name="ui.admin.concept.conceptSet.composeConcept">Include or exclude concepts from
+        another concept set in this concept set</string>
+    <string name="ui.admin.concept.conceptSet.addConcept">Directly add a concept to this concept set</string>
+    <string name="ui.admin.concept.conceptSet.uploadConcept">Upload a comma-separated file (CSV) to
+        bulk populate this concept set</string>
+    <string name="ui.admin.concept.conceptSet.remove.concept.confirm.system"><![CDATA[!!!DANGER!!! This concept set appears to be created by the SanteDB SYSTEM account. Removing concepts from system concept sets may cause issues in SanteDB validation processes. Are you sure you wish to continue?]]></string>
+    <string name="ui.admin.concept.conceptSet.remove.concept.confirm"><![CDATA[Are you sure you wish to remove this concept from the concept set?]]></string>
+    <string name="ui.admin.concept.conceptSet.remove.concept.success">Concept was successfully
+        removed from the concept set</string>
+    <string name="ui.admin.concept.conceptSet.compose">Compose Concept Set</string>
+    <string name="ui.admin.concept.conceptSet.compose.help">Concept Set Compositions</string>
+    <string name="ui.admin.concept.conceptSet.compose.help.text"><![CDATA[ 
+            <p>When a concept set is composed, it means that it is derived from other concept sets in the SanteDB server. For example, <code>MaterialTypes</code> may be a union of <code>VaccineMaterialTypes</code> and <code>DrugMaterialTypes</code>, with the exclusion of <code>ForbiddenMaterialTypes</code></p>
+            <p><strong>Note:</strong> When composing sets, a <code>Exclude All</code> operation takes highest priority. Additionally, you cannot compose a set of other composed sets</p>
+            ]]></string>
 </resources>

@@ -201,6 +201,7 @@
       <string name="ui.wait">Please Wait...</string>
       <string name="ui.search">Searching</string>
       <string name="ui.action.reset">Reset</string>
+      <string name="ui.action.compose">Compose</string>
       <string name="ui.action.resetAll">Reset All</string>
       <string name="ui.action.apply">Apply</string>
       <string name="ui.action.reactivate">Re-Activate</string>

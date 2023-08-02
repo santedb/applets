@@ -30,8 +30,14 @@
     <entity-table id="SecurityPolicyTable" type="SecurityPolicy" search-field="name"
         default-query="{ 'obsoletionTime' : 'null' }" i18n-prefix="'ui.admin.policy.'"
         render="{ updatedBy: 'renderUpdatedBy', state: 'renderState' }"
-        item-actions="[ { name: 'view', sref: 'santedb-admin.security.policies.edit', demand: '1.3.6.1.4.1.33349.3.1.5.9.2.0.9', className: 'btn-info', icon: 'fa fa-eye' }, { name: 'delete', action: 'delete', demand: '1.3.6.1.4.1.33349.3.1.5.9.2.0.3', className: 'btn-danger', icon: 'fa fa-trash', when: '!r.obsoletionTime &amp;&amp; r.isPublic' }, { name: 'undelete', action: 'delete', demand: '1.3.6.1.4.1.33349.3.1.5.9.2.0.3', className: 'btn-success', icon: 'fa fa-trash-restore', when: 'r.obsoletionTime'  } ]"
-        actions="[ { name: 'create', demand: '1.3.6.1.4.1.33349.3.1.5.9.2.0.9', sref: 'santedb-admin.security.policies.create', className: 'btn-primary', icon: 'fa fa-plus-circle' }]"
+        item-actions="[ 
+            { name: 'view', sref: 'santedb-admin.security.policies.edit', demand: '1.3.6.1.4.1.33349.3.1.5.9.2.0.9', className: 'btn-info', icon: 'fa fa-eye' }, 
+            { name: 'delete', action: 'delete', demand: '1.3.6.1.4.1.33349.3.1.5.9.2.0.3', className: 'btn-danger', icon: 'fa fa-trash', when: '!r.obsoletionTime &amp;&amp; r.isPublic' },
+            { name: 'undelete', action: 'delete', demand: '1.3.6.1.4.1.33349.3.1.5.9.2.0.3', className: 'btn-success', icon: 'fa fa-trash-restore', when: 'r.obsoletionTime'  } 
+        ]"
+        actions="[ 
+            { name: 'create', demand: '1.3.6.1.4.1.33349.3.1.5.9.2.0.9', sref: 'santedb-admin.security.policies.create', className: 'btn-primary', icon: 'fa fa-plus-circle' }
+        ]"
         properties="[ 'oid', 'name', 'state', 'updatedBy' ]">
     </entity-table>
 

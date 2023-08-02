@@ -40,12 +40,19 @@ angular.module('santedb').controller('ConceptSetWidgetController', ["$scope", "$
         if (!_areEventsInitialized) {
             // User has closed the add modal so we want to reset the new
             $("#addConceptModal").on('hidden.bs.modal', function () {
-                // Check in 
-                if ($scope.edit.referenceTerm.id) {
-                    SanteDB.resources.referenceTerm.checkinAsync($scope.edit.referenceTerm.id);
-                }
                 $("#ConceptSetMemberTable table").DataTable().draw();
             });
+            $("#composeConceptSetModal").on("hidden.bs.modal", async function () {
+                try {
+                    await SanteDB.resources.conceptSet.checkinAsync($scope.scopedObject.id);
+                    $("#ConceptSetMemberTable").attr("newQueryId", true);
+                    $("#ConceptSetMemberTable table").DataTable().draw();
+
+                }
+                catch (e) {
+                    console.warn(e);
+                }
+            })
             _areEventsInitialized = true;
         }
     }
@@ -174,7 +181,7 @@ angular.module('santedb').controller('ConceptSetWidgetController', ["$scope", "$
         try {
             SanteDB.display.buttonWait(`#action_grp_${index}`, true);
 
-            if (confirm(SanteDB.locale.getString("ui.admin.concept.conceptSet.remove.concept.confirm"))) {
+            if (confirm(SanteDB.locale.getString($scope.scopedObject.createdBy == SanteDB.authentication.SYSTEM_USER ? "ui.admin.concept.conceptSet.remove.concept.confirm.system" : "ui.admin.concept.conceptSet.remove.concept.confirm"))) {
                 // Patch the refernece term
                 var patch = new Patch({
                     change: [
@@ -204,15 +211,31 @@ angular.module('santedb').controller('ConceptSetWidgetController', ["$scope", "$
         if (conceptSetForm.$invalid) return;
 
         try {
+
+            SanteDB.display.buttonWait("#saveConceptSetButton", true);
             // Update
-            var conceptSet = await SanteDB.resources.conceptSet.updateAsync($scope.editObject.id, $scope.editObject);
+            var conceptSet = $scope.editObject || $scope.scopedObject;
+            
+            // Remove any model objects 
+            delete conceptSet.conceptModel;
+            if(conceptSet.compose && conceptSet.compose.$other) {
+                conceptSet.compose.$other.forEach(o=>delete o.targetModel);
+            }
+
+            await SanteDB.resources.conceptSet.updateAsync(conceptSet.id, conceptSet);
+            conceptSet = await SanteDB.resources.conceptSet.getAsync(conceptSet.id, "full");
             toastr.success(SanteDB.locale.getString("ui.admin.conceptSet.save.success"));
             $timeout(() => {
                 SanteDB.display.cascadeScopeObject(SanteDB.display.getRootScope($scope), ['scopedObject', 'conceptSet'], conceptSet);
+                $("#composeConceptSetModal").modal('hide');
             });
         }
         catch (e) {
             $rootScope.errorHandler(e);
+        }
+        finally {
+            SanteDB.display.buttonWait("#saveConceptSetButton", false);
+
         }
     }
 
@@ -242,6 +265,7 @@ angular.module('santedb').controller('ConceptSetWidgetController', ["$scope", "$
 
                 $timeout(() => {
                     SanteDB.display.cascadeScopeObject(SanteDB.display.getRootScope($scope), ['scopedObject', 'conceptSet'], conceptSet);
+
                 });
 
             }
@@ -283,7 +307,8 @@ angular.module('santedb').controller('ConceptSetWidgetController', ["$scope", "$
         $("#uploadConceptSetModal").modal('show');
     }
 
-    $scope.addConcept = function () {
+    // Show the add concept member modal
+    $scope.addConceptMember = function () {
         initializeModalEvent();
         $timeout(() => {
             $scope.edit.concept = angular.copy($scope.conceptTemplate);
@@ -291,29 +316,24 @@ angular.module('santedb').controller('ConceptSetWidgetController', ["$scope", "$
         });
     }
 
-    $scope.editConcept = async function (id, index) {
-        try {
-            initializeModalEvent();
-            await SanteDB.resources.concept.checkoutAsync(id);
-            var concept = await SanteDB.resources.concept.getAsync(id, 'full');
+    // Show the composition dialog
+    $scope.composeConceptSet = async function () {
+        initializeModalEvent();
 
-            // Name comes in the format of { lang: [values] } so we have to normalize these to $other
-            var newName = [], newTerms = [], newRelationships = [];
-            Object.keys(concept.name).forEach(k => { concept.name[k].forEach(v => newName.push(new ConceptName({ language: k, value: v }))) });
-            Object.keys(concept.relationship).forEach(k => {
-                concept.relationship[k].forEach(v => {
-                    var newRel = new ConceptRelationship(v);
-                    newRel.relationshipType = k;
-                    newRelationships.push(newRel);
-                })
-            });;
-            Object.keys(concept.referenceTerm).forEach(k => { concept.relationship[k].forEach(v => newTerms.push(new ConceptReferenceTerm(v))) });
-            concept.name = { $other: newName };
-            concept.relationship = { $other: newRelationships };
-            concept.referenceTerm = { $other: newTerms };
+        try {
+            await SanteDB.resources.conceptSet.checkoutAsync($scope.scopedObject.id);
             $timeout(() => {
-                $scope.edit.concept = concept;
-                $("#addConceptModal").modal('show');
+                $scope.editObject = angular.copy($scope.scopedObject); // Preserve the original
+                // Fix the composition from K/V to $other
+                if ($scope.editObject.compose) {
+                    var newCompose = [];
+                    Object.keys($scope.editObject.compose).forEach(k => $scope.editObject.compose[k].forEach(i => newCompose.push(i)));
+                    $scope.editObject.compose = { $other: newCompose };
+                }
+                else {
+                    $scope.editObject.compose = { $other: [] };
+                }
+                $("#composeConceptSetModal").modal('show');
             });
         }
         catch (e) {

@@ -16,7 +16,10 @@
      can-filter="true"
      default-query="{ _upstream: extern }"
     i18n-prefix="'ui.admin.queue.contents.'"
-    item-actions="[ { name: 'resubmit', action: 'resubmitQueue', demand: '1.3.6.1.4.1.33349.3.1.5.9.2.0.16', className: 'btn-success', icon: 'fa fa-undo', when: 'r.id.indexOf(\'dead\') > -1'}, { name: 'purge', action: 'purgeQueue', demand: '1.3.6.1.4.1.33349.3.1.5.9.2.0.16', className: 'btn-danger', icon: 'fa fa-trash' } ]"
+    item-actions="[ 
+        { name: 'resubmit', action: 'resubmitQueue', demand: '1.3.6.1.4.1.33349.3.1.5.9.2.0.16', className: 'btn-success', icon: 'fa fa-undo', when: 'r.id.indexOf(\'dead\') > -1'}, 
+        { name: 'purge', action: 'purgeQueue', demand: '1.3.6.1.4.1.33349.3.1.5.9.2.0.16', className: 'btn-danger', icon: 'fa fa-trash' } 
+    ]"
     properties="[ 'name', 'size' ]"
     button-bar="'#extraControls'" />
 

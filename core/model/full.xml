@@ -106,7 +106,7 @@
     <property name="createdBy" behavior="always" all="true" />
     <property name="creationTime" behavior="always" />
     <property name="creationTimeModel" behavior="never" />
-    <property name="version"  />
+    <property name="version" />
     <property name="name" all="true" behavior="always">
       <property name="*" ref="EntityName" />
     </property>
@@ -139,7 +139,7 @@
     <property name="createdBy" behavior="never" />
     <property name="creationTime" behavior="never" />
     <property name="creationTimeModel" behavior="never" />
-    <property name="version"  />
+    <property name="version" />
     <property name="occupationModel" all="true" behavior="always" ref="Concept" />
     <property name="nationalityModel" all="true" behavior="always" ref="Concept" />
     <property name="vipStatusModel" all="true" behavior="always" ref="Concept" />
@@ -171,7 +171,7 @@
     <property name="createdBy" behavior="never" />
     <property name="creationTime" behavior="never" />
     <property name="creationTimeModel" behavior="never" />
-    <property name="version"  />
+    <property name="version" />
     <property name="name" all="true" behavior="always">
       <property name="*" ref="EntityName" />
     </property>
@@ -323,7 +323,7 @@
     <property name="createdBy" behavior="never" />
     <property name="creationTime" behavior="never" />
     <property name="creationTimeModel" behavior="never" />
-    <property name="version"  />
+    <property name="version" />
     <property name="name" all="true" behavior="always">
       <property name="*" ref="EntityName" />
     </property>
@@ -348,7 +348,7 @@
     <property name="createdBy" behavior="always" />
     <property name="creationTime" behavior="always" />
     <property name="creationTimeModel" behavior="never" />
-    <property name="version"  />
+    <property name="version" />
     <property name="identifier" behavior="always">
       <property name="*" ref="EntityIdentifier" />
     </property>
@@ -418,7 +418,7 @@
     <property name="service" all="false" behavior="always">
       <property name="serviceConcept" />
       <property name="serviceSchedule" />
-      <property name="serviceConceptModel" behavior="always" ref="Concept"/>
+      <property name="serviceConceptModel" behavior="always" ref="Concept" />
     </property>
     <property name="participation" all="true">
       <property name="*" all="true">
@@ -428,7 +428,7 @@
     <property name="tag" all="true" />
   </type>
 
-  
+
   <type type="Organization" all="true">
     <property name="templateModel" behavior="always" all="false">
       <property name="mnemonic" />
@@ -436,7 +436,7 @@
     <property name="createdBy" behavior="always" />
     <property name="creationTime" behavior="always" />
     <property name="creationTimeModel" behavior="never" />
-    <property name="version"  />
+    <property name="version" />
     <property name="identifier" behavior="always">
       <property name="*" ref="EntityIdentifier" />
     </property>
@@ -447,7 +447,7 @@
     <property name="address" all="true" behavior="always">
       <property name="*" ref="EntityAddress" />
     </property>
-    <property name="determinerConcept"  />
+    <property name="determinerConcept" />
     <property name="typeConceptModel" all="true" behavior="always" ref="Concept" />
     <property name="extension" all="true" behavior="always" />
     <property name="relationship" all="false" behavior="always">
@@ -498,7 +498,7 @@
         <property name="sourceModel" behavior="never" />
         <property name="relationshipTypeModel" behavior="never" />
         <property name="target" />
-    </property>
+      </property>
     </property>
     <property name="industryConcept" />
     <property name="industryConceptModel" all="false" behavior="always" ref="Concept" />
@@ -511,7 +511,7 @@
     <property name="createdBy" behavior="never" />
     <property name="creationTime" />
     <property name="creationTimeModel" behavior="never" />
-    <property name="version"  />
+    <property name="version" />
     <property name="tag" all="true" behavior="always" />
     <property name="templateModel" behavior="always" all="false">
       <property name="mnemonic" />
@@ -664,7 +664,7 @@
     <property name="creationTime" />
 
     <property name="creationTimeModel" behavior="never" />
-    <property name="version"  />
+    <property name="version" />
     <property name="templateModel" behavior="always" all="false">
       <property name="mnemonic" />
     </property>
@@ -763,7 +763,7 @@
     <property name="creationTime" />
 
     <property name="creationTimeModel" behavior="never" />
-    <property name="version"  />
+    <property name="version" />
     <property name="templateModel" behavior="always" all="false">
       <property name="mnemonic" />
     </property>
@@ -824,7 +824,7 @@
     <property name="createdBy" behavior="never" />
     <property name="creationTime" />
     <property name="creationTimeModel" behavior="never" />
-    <property name="version"  />
+    <property name="version" />
     <property name="templateModel" behavior="always" all="false">
       <property name="mnemonic" />
     </property>
@@ -875,5 +875,24 @@
     <property name="mnemonic" behavior="always" />
     <property name="id" behavior="always" />
   </type>
-
+  <type type="ConceptSet" all="true">
+    <property name="compose" behavior="always" all="true">
+      <property name="*" ref="ConceptSetComposition" />
+    </property>
+    <property name="conceptModel" behavior="never" />
+    <property name="concept" behavior="never" />
+  </type>
+  <type type="ConceptSetComposition" all="false">
+    <property name="id" />
+    <property name="source" />
+    <property name="target" />
+    <property name="instruction"/>
+    <property name="targetModel" behavior="always" all="false">
+      <property name="id" />
+      <property name="mnemonic" />
+      <property name="name" />
+      <property name="url" />
+      <property name="oid" />
+      </property>
+  </type>
 </ViewModel>

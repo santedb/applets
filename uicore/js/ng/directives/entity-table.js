@@ -152,7 +152,7 @@ angular.module('santedb-lib')
                                 return {
                                     text: `<i class="${b.icon}"></i> ` + SanteDB.locale.getString(b.label ? scope.i18nPrefix + b.label : 'ui.action.' + b.name),
                                     className: `btn ${b.className || 'btn-default'}`,
-                                    attr: { id: `${attrs.type}${b.name}` },
+                                    attr: { id: `${attrs.type}${b.name}`, title: SanteDB.locale.getString(b.hint || (b.label ? scope.i18nPrefix + b.label : 'ui.action.' + b.name)) },
                                     action: function (e, dt, node, config) {
                                         if (b.sref)
                                             $state.go(b.sref, b.parms);

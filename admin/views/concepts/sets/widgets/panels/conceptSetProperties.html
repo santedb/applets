@@ -25,6 +25,22 @@
                         <div class="col-sm-12 col-md-9">{{ scopedObject.oid }}</div>
                         <label class="control-label col-sm-12 col-md-3">{{'ui.model.conceptSet.url' | i18n }}</label>
                         <div class="col-sm-12 col-md-9">{{ scopedObject.url }}</div>
+                        <label ng-if="scopedObject.compose" class="control-label col-sm-12 col-md-3">{{ 'ui.model.conceptSet.compose' | i18n }}</label>
+                        <div ng-if="scopedObject.compose" class="col-sm-12 col-md-9">
+                            <ul class="list-unstyled mb-0" ng-repeat="(k,v) in scopedObject.compose">
+                                <li> 
+                                    <ul class="list-unstyled mb-0">
+                                        <li ng-repeat="comp in v track by $index">
+                                            <span class="badge" ng-class="{ 'badge-danger': comp.instruction == 2, 'badge-success' : comp.instruction == 1}">
+                                                <i class="fas" ng-class="{ 'fa-sign-out-alt': comp.instruction == 2, 'fa-sign-in-alt' : comp.instruction == 1}"></i> 
+                                                {{ comp.instruction == 1 ? 'ui.model.conceptSet.compose.include' : 'ui.model.conceptSet.compose.exclude' | i18n }}
+                                            </span>
+                                            {{ comp.targetModel.name }}
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
                         <label class="control-label col-sm-12 col-md-3">{{'ui.model.conceptSet.createdBy' | i18n
                             }}</label>
                         <div class="col-sm-12 col-md-9">

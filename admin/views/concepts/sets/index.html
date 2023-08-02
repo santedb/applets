@@ -13,9 +13,15 @@
     type="ConceptSet" 
     search-field="mnemonic" 
     default-query="{ obsoletionTime: 'null' }"
-    actions="[ { name: 'create', demand: '1.3.6.1.4.1.33349.3.1.5.9.2.0.7', sref: 'santedb-admin.concept.conceptSet.create', className: 'btn-primary', icon: 'fa fa-plus-circle' } ]"
+    actions="[ 
+        { name: 'create', demand: '1.3.6.1.4.1.33349.3.1.5.9.2.0.7', sref: 'santedb-admin.concept.conceptSet.create', className: 'btn-primary', icon: 'fa fa-plus-circle' } 
+    ]"
     render="{ updatedBy: 'renderUpdatedBy'  }"
-    item-actions="[ { name: 'view', sref: 'santedb-admin.concept.conceptSet.view', demand: '1.3.6.1.4.1.33349.3.1.5.9.2.0.7', className: 'btn-info', icon: 'fa fa-eye' }, { name: 'delete', action: 'delete', demand: '1.3.6.1.4.1.33349.3.1.5.9.2.0.7', className: 'btn-danger', icon: 'fa fa-trash', when: 'r.obsoletionTime == null' },  { name: 'undelete', action: 'unDelete', demand: '1.3.6.1.4.1.33349.3.1.5.9.2.0.7', className: 'btn-success', icon: 'fa fa-trash-restore', when: 'r.obsoletionTime != null' } ]"
+    item-actions="[ 
+        { name: 'view', sref: 'santedb-admin.concept.conceptSet.view', demand: '1.3.6.1.4.1.33349.3.1.5.9.2.0.7', className: 'btn-info', icon: 'fa fa-eye' }, 
+        { name: 'delete', action: 'delete', demand: '1.3.6.1.4.1.33349.3.1.5.9.2.0.7', className: 'btn-danger', icon: 'fa fa-trash', when: 'r.obsoletionTime == null' },  
+        { name: 'undelete', action: 'unDelete', demand: '1.3.6.1.4.1.33349.3.1.5.9.2.0.7', className: 'btn-success', icon: 'fa fa-trash-restore', when: 'r.obsoletionTime != null' } 
+    ]"
     i18n-prefix="'ui.model.conceptSet.'"
     properties="[ 'mnemonic', 'oid', 'url', 'name', 'updatedBy' ]">
 

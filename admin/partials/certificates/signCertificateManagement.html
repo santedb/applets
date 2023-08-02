@@ -4,7 +4,10 @@
     <entity-table id="SigningCertificatesTable" type="{{scopedObject.$refType}}" sub-resource="dsig_cert"
         sub-resource-holder="scopedObject.id" search-field="sub" i18n-prefix="'ui.model.certificateInfo.'"
         key-property="'thumbprint'" no-deleted="true" button-bar="'#addSigningCertificateDiv'"
-        item-actions="[ { name: 'download', action: 'downloadSigningCertificate', demand: '1.3.6.1.4.1.33349.3.1.5.9.2.0.19.3', className: 'btn-info', icon: 'fa fa-arrow-down' }, { name: 'delete', action: 'deleteSigningCert', demand: '1.3.6.1.4.1.33349.3.1.5.9.2.0.19.3', className: 'btn-danger', icon: 'fa fa-trash' } ]"
+        item-actions="[ 
+            { name: 'download', action: 'downloadSigningCertificate', demand: '1.3.6.1.4.1.33349.3.1.5.9.2.0.19.3', className: 'btn-info', icon: 'fa fa-arrow-down' }, 
+            { name: 'delete', action: 'deleteSigningCert', demand: '1.3.6.1.4.1.33349.3.1.5.9.2.0.19.3', className: 'btn-danger', icon: 'fa fa-trash' } 
+        ]"
         properties="[ 'sub', 'iss', 'nbf', 'exp' ]" sort="{ 'exp' : 'desc' }">
     </entity-table>
 

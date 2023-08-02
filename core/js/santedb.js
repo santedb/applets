@@ -3692,7 +3692,7 @@ function SanteDBWrapper() {
          * @constant
          * @memberof SanteDBWrapper.AuthenticationApi
          */
-        SYSTEM_USER: "fadca076-3690-4a6e-af9e-f1cd68e8c7e8";
+        this.SYSTEM_USER = "fadca076-3690-4a6e-af9e-f1cd68e8c7e8";
         /**
          * @summary SID for ANONYMOUS user
          * @constant

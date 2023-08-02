@@ -576,6 +576,11 @@
   <string name="ui.model.conceptSet.createdBy">Created By</string>
   <string name="ui.model.conceptSet.updatedBy">Updated By</string>
   <string name="ui.model.conceptSet.obsoletedBy">Obsoleted By</string>
+  <string name="ui.model.conceptSet.compose">Composition</string>
+  <string name="ui.model.conceptSet.compose.include">Include All</string>
+  <string name="ui.model.conceptSet.compose.exclude">Exclude All</string>
+  <string name="ui.model.conceptSet.compose.target">Concept Set</string>
+  <string name="ui.model.conceptSet.compose.instruction">Composition</string>
 
   <string name="ui.model.concept.mnemonic">Mnemonic</string>
   <string name="ui.model.concept.name">Name(s)</string>
