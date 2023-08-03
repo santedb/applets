@@ -495,4 +495,24 @@
             <p>When a concept set is composed, it means that it is derived from other concept sets in the SanteDB server. For example, <code>MaterialTypes</code> may be a union of <code>VaccineMaterialTypes</code> and <code>DrugMaterialTypes</code>, with the exclusion of <code>ForbiddenMaterialTypes</code></p>
             <p><strong>Note:</strong> When composing sets, a <code>Exclude All</code> operation takes highest priority. Additionally, you cannot compose a set of other composed sets</p>
             ]]></string>
+
+
+    <string name="ui.admin.concept.conceptSet.upload">Upload Concept Set</string>
+    <string name="ui.admin.concept.conceptSet.upload.help">Uploading Concept Set Members</string>
+    <string name="ui.admin.concept.conceptSet.upload.help.text">
+        <![CDATA[
+        <p>Select comma separated file (CSV) with the concepts (new or existing) which are to be assigned to this concept set. The CSV should have the format:</p>
+        <ul>
+            <li><code>Mnemonic</code> <strong>(Required)</strong> - The unique concept mnemonic for the concept (if the mnemonic matches an existing concept it will be used)</li>
+            <li><code>Class</code> <strong>(Required)</strong> - The general classification of the concept one of <code>Other</code>, <code>Status</code>, <code>Relationship</code>, <code>UnitOfMeasure</code>, <code>Route</code>, <code>Finding</code>, <code>Problem</code>, or <code>Form</code> (hint: <code>Other</code> is recommended for most concepts)</li>
+            <li><code>Name</code> <em>(Optional)</em> - The name of the code in the selected language on the upload</li>
+        </ul>
+        <p>Your upload can contain other columns, however they will be ignored</p>
+        ]]>
+    </string>
+    <string name="ui.admin.concept.conceptSet.upload.file">Upload File</string>
+    <string name="ui.admin.concept.conceptSet.upload.language">Language of File</string>
+    <string name="ui.admin.concept.conceptSet.upload.template">Download Sample Concept Set CSV</string>
+    <string name="ui.admin.concept.conceptSet.upload.file.hint">The comma-save (CSV) file to be imported</string>
+    <string name="ui.admin.concept.conceptSet.upload.language.hint">The language of the &lt;code&gt;Name&lt;code&gt; column in the file</string>
 </resources>

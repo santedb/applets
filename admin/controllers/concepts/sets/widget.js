@@ -72,16 +72,16 @@ angular.module('santedb').controller('ConceptSetWidgetController', ["$scope", "$
     }
 
     // Upload reference term sheet
-    function uploadConceptSheet(conceptSheetForm) {
+    function uploadConceptSetSheet(conceptSheetForm) {
 
         var file_data = conceptSheetForm.source.$$element.prop('files')[0];
         var form_data = new FormData();
         form_data.append('source', file_data);
         form_data.append('description', 'Automatically submitted via the ConceptSet management portal');
-        form_data.append('map', '');
-        form_data.append('codeSystemKey', $scope.scopedObject.id);
-        form_data.append('language', $scope.uploadConcepts.language);
-        SanteDB.display.buttonWait("#uploadConceptSetSheetButton", true);
+        form_data.append('map', '67BEFD0E-B976-FDD0-09AD-D98BCAFD30FE');
+        form_data.append('conceptSetKey', $scope.scopedObject.id);
+        form_data.append('language', $scope.uploadSet.language);
+        SanteDB.display.buttonWait("#uploadConceptSheetButton", true);
         $.ajax({
             cache: false,
             contentType: false,
@@ -95,13 +95,13 @@ angular.module('santedb').controller('ConceptSetWidgetController', ["$scope", "$
                 try {
                     if (data.issue.length == 0) {
                         toastr.success(SanteDB.locale.getString('ui.admin.alien.upload.success'));
-                        if (confirm(SanteDB.locale.getString('ui.admin.concept.codeSystem.upload.run'))) {
+                        if (confirm(SanteDB.locale.getString('ui.admin.concept.conceptSet.upload.run'))) {
 
                             SanteDB.resources.jobInfo.invokeOperationAsync("2EBF8094-6628-4CEC-93B8-3D623F227722", "start", [data.id]);
                             toastr.success(SanteDB.locale.getString("ui.admin.job.runJob.success"));
                         }
                     }
-                    else if (confirm(SanteDB.locale.getString('ui.admin.concept.codeSystem.upload.issue', { issue: data.issue.length }))) {
+                    else if (confirm(SanteDB.locale.getString('ui.admin.concept.conceptSet.upload.issue', { issue: data.issue.length }))) {
                         $state.go('santedb-admin.data.import.view', { id: data.id });
                     }
                 }
@@ -109,7 +109,7 @@ angular.module('santedb').controller('ConceptSetWidgetController', ["$scope", "$
                     console.error(e);
                 }
                 finally {
-                    SanteDB.display.buttonWait("#uploadConceptSetSheetButton", false);
+                    SanteDB.display.buttonWait("#uploadConceptSheetButton", false);
                     $("#uploadConceptSetModal").modal('hide');
                     conceptSheetForm.$setPristine();
                     conceptSheetForm.$setUntouched();
@@ -118,7 +118,7 @@ angular.module('santedb').controller('ConceptSetWidgetController', ["$scope", "$
             },
             error: function (xhr, status, error) {
                 toastr.error(SanteDB.locale.getString('ui.admin.alien.upload.error', { status: status, error: error }));
-                SanteDB.display.buttonWait("#uploadConceptSetSheetButton", false);
+                SanteDB.display.buttonWait("#uploadConceptSheetButton", false);
 
             }
         });
@@ -300,10 +300,10 @@ angular.module('santedb').controller('ConceptSetWidgetController', ["$scope", "$
     $scope.saveConcept = saveConcept;
     $scope.edit = { concept: angular.copy($scope.conceptTemplate) };
     $scope.removeConceptMember = removeConceptMember;
-    $scope.uploadConceptSheet = uploadConceptSheet;
+    $scope.uploadConceptSetSheet = uploadConceptSetSheet;
     $scope.unDelete = unDelete;
 
-    $scope.uploadConceptSheet = function () {
+    $scope.uploadConceptSet = function () {
         $("#uploadConceptSetModal").modal('show');
     }
 
