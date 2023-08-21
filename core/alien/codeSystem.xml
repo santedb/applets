@@ -1,0 +1,103 @@
+<ForeignDataMap xmlns="http://santedb.org/import">
+  <id>4a5cafe0-b975-4623-92a2-7ef105e0c428</id>
+  <name>Code System Import</name>
+  <description>Imports a flat list of reference terms into the SanteDB database for a specified code
+    system</description>
+  <parameters>
+    <add name="codeSystemKey" required="true"
+      pattern="^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$" />
+    <add name="language" required="true"
+      pattern="^[a-z]{2}$" />
+  </parameters>
+  <maps>
+    <map abortOnError="false">
+      <resource type="Concept">
+        <when>
+          <source>Concept</source>
+          <value>*</value>
+        </when>
+        <existing>
+          <where>mnemonic=$Concept</where>
+        </existing>
+        <maps>
+          <map>
+            <fixed>0d6b3439-c9be-4480-af39-eeb457c052d0</fixed>
+            <target>conceptClass</target>
+          </map>
+          <map required="true">
+            <source>Concept</source>
+            <target>mnemonic</target>
+          </map>
+          <map replace="true">
+            <source>Name</source>
+            <target>name.value</target>
+          </map>
+          <map replace="true">
+            <parameter>language</parameter>
+            <target>name.language</target>
+          </map>
+        </maps>
+      </resource>
+      <resource type="ReferenceTerm">
+        <existing>
+          <where>codeSystem=$codeSystemKey&amp;mnemonic=$Mnemonic</where>
+        </existing>
+        <maps>
+          <map required="true" replace="true">
+            <source>Mnemonic</source>
+            <target>mnemonic</target>
+          </map>
+          <map required="false" replace="true">
+            <source>Name</source>
+            <target>name.value</target>
+          </map>
+          <map replace="true">
+            <parameter>language</parameter>
+            <target>name.language</target>
+          </map>
+          <map required="false" replace="true">
+            <parameter>codeSystemKey</parameter>
+            <target>codeSystem</target>
+          </map>
+        </maps>
+      </resource>
+      <resource type="ConceptReferenceTerm">
+        <when>
+          <source>Concept</source>
+          <value>*</value>
+        </when>
+        <existing>
+          <where>source.mnemonic=$Concept&amp;term.mnemonic=$Mnemonic&amp;relationshipType.mnemonic=$Mapping</where>
+        </existing>
+        <maps>
+          <map required="true">
+            <source>Concept</source>
+            <xref>
+              <previousEntry type="Concept" />
+              <expression>mnemonic=$input</expression>
+            </xref>
+            <target>source</target>
+          </map>
+          <map>
+            <source>Mnemonic</source>
+            <xref>
+              <previousEntry type="ReferenceTerm" />
+              <expression>mnemonic=$input</expression>
+            </xref>
+            <target>term</target>
+          </map>
+          <map required="true">
+            <source>Mapping</source>
+            <transform transformer="EntityLookup">
+              <args>
+                <string>ConceptRelationshipType</string>
+                <string>mnemonic=$input</string>
+              </args>
+            </transform>
+            <target>relationshipType</target>
+          </map>
+        </maps>
+      </resource>
+    </map>
+  </maps>
+</ForeignDataMap>

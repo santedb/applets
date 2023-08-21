@@ -226,9 +226,14 @@
     <string name="ui.admin.domain.edit.core.title">Identity Domain Properties</string>
     <string name="ui.admin.domain.edit.scope.title"><![CDATA[Authority &amp; Scope]]></string>
     <string name="ui.admin.domain.edit.authority.title">Assigning Authority</string>
+    <string name="ui.admin.domain.edit.validation.title">Validation</string>
+    <string name="ui.admin.domain.reactivate.confirm">Are you sure you want to re-activate the
+        identity domain?</string>
+    <string name="ui.admin.domain.saveSuccess">Identity domain has been updated successfully</string>
     <!-- Job Screen Page -->
     <string name="ui.admin.job.neverRun">Never Run</string>
     <string name="ui.admin.job.runJob.confirm">Are you sure you want to manually run this job?</string>
+    <string name="ui.admin.job.runJob.success">Job was successfully started</string>
     <string name="ui.admin.job.cancelJob.confirm">Are you sure you want cancel this running job? </string>
 
 
@@ -302,6 +307,7 @@
 
     <!-- Foreign Data -->
     <string name="ui.admin.alien.upload.title">Upload Data Import File</string>
+    <string name="ui.admin.alien.mapping.parameters">Import Parameters</string>
     <string name="ui.admin.alien.upload.description"><![CDATA[Use this form to upload a external data file in a supported format (example: CSV) to the SanteDB server. SanteDB will validate your submission and will process the import when the next scheduled import job runs.]]></string>
     <string name="ui.admin.alien.upload.fileName">File</string>
     <string name="ui.admin.alien.upload.fileName.hint">Select a compatible file from your computer
@@ -332,9 +338,12 @@
     <string name="ui.admin.place.edit.associate.existing">Associate an Existing Facility</string>
     <string name="ui.admin.place.edit.associate.success">Association successfully created</string>
     <string name="ui.admin.place.edit.associate.failure">Association was not created: {e}</string>
-    <string name="ui.admin.place.edit.associate.remove.confirm">Are you sure you want to remove the association between this place and {id}?</string>
-    <string name="ui.admin.place.edit.associate.remove.succes">Place association successfully removed</string>
-    <string name="ui.admin.place.edit.associate.remove.failure">Error removing the place association - {e}</string>
+    <string name="ui.admin.place.edit.associate.remove.confirm">Are you sure you want to remove the
+        association between this place and {id}?</string>
+    <string name="ui.admin.place.edit.associate.remove.succes">Place association successfully
+        removed</string>
+    <string name="ui.admin.place.edit.associate.remove.failure">Error removing the place association
+        - {e}</string>
     <string name="ui.admin.place.confirmDelete">Are you sure you want to delete this place?</string>
     <string name="ui.admin.place.confirmPurge">Are you sure you want to purge this place?</string>
     <string name="ui.admin.place.confirmUnDelete">Are you sure you want to un-delete this place?</string>
@@ -353,18 +362,157 @@
     <string name="ui.admin.organizations.edit.profile.title">Create Organization</string>
     <string name="org.santedb.widget.admin.panel.organization.profile">Organization Profile</string>
     <string name="org.santedb.widget.admin.panel.organization.hierarchy">Organization Hierarchy</string>
-    <string name="ui.admin.organization.confirmDelete">Are you sure you want to delete this organization?</string>
-    <string name="ui.admin.organization.confirmPurge">Are you sure you want to purge this organization?</string>
-    <string name="ui.admin.organization.confirmUnDelete">Are you sure you want to un-delete this organization?</string>
+    <string name="ui.admin.organization.confirmDelete">Are you sure you want to delete this
+        organization?</string>
+    <string name="ui.admin.organization.confirmPurge">Are you sure you want to purge this
+        organization?</string>
+    <string name="ui.admin.organization.confirmUnDelete">Are you sure you want to un-delete this
+        organization?</string>
 
-    <string name="ui.admin.entity.edit.child.add.confirm">The entity you are attempting to add to this entity already has a Parent. Do you want to reassign this entity to a new parent?</string>
+    <string name="ui.admin.entity.edit.child.add.confirm">The entity you are attempting to add to
+        this entity already has a Parent. Do you want to reassign this entity to a new parent?</string>
     <string name="ui.admin.entity.edit.child.add.success">Child entity successfully associated</string>
     <string name="ui.admin.entity.edit.child.add.failure">Child entity could not be associated - {e}</string>
-    <string name="ui.admin.entity.edit.child.remove.confirm">Are you sure you want to remove this child?</string>
+    <string name="ui.admin.entity.edit.child.remove.confirm">Are you sure you want to remove this
+        child?</string>
     <string name="ui.admin.entity.edit.child.remove.success">Child entity successfully removed</string>
     <string name="ui.admin.entity.edit.child.remove.failure">Child entity could not be removed - {e}</string>
-    <string name="ui.admin.entity.edit.parent.change">Editing the parent of an entity after it is created may have unintended consequences for other data element which use this information. You will also need to correct any addressing information on this entity - are you sure you want to change the parent of this entity?</string>
-    <string name="ui.admin.entity.edit.parent.change.success">Entity hierarchy changes saved successfully</string>
+    <string name="ui.admin.entity.edit.parent.change">Editing the parent of an entity after it is
+        created may have unintended consequences for other data element which use this information.
+        You will also need to correct any addressing information on this entity - are you sure you
+        want to change the parent of this entity?</string>
+    <string name="ui.admin.entity.edit.parent.change.success">Entity hierarchy changes saved
+        successfully</string>
     <string name="ui.admin.entity.edit.parent.change.failure">Entity hierarchy changes failed: {e}</string>
 
+    <!-- Certificate Management -->
+    <string name="org.santedb.widget.admin.panel.user.auth_certs">Authentication</string>
+    <string name="org.santedb.widget.admin.panel.user.dsig_certs">Digital Signatures</string>
+    <string name="org.santedb.widget.admin.tab.user.certs">Certificates</string>
+    <string name="org.santedb.widget.admin.panel.device.auth_certs">Authentication</string>
+    <string name="org.santedb.widget.admin.panel.device.dsig_certs">Digital Signatures</string>
+    <string name="org.santedb.widget.admin.tab.device.certs">Certificates</string>
+
+    <string name="org.santedb.widget.admin.panel.applications.auth_certs">Authentication</string>
+    <string name="org.santedb.widget.admin.panel.applications.dsig_certs">Digital Signatures</string>
+    <string name="org.santedb.widget.admin.tab.applications.certs">Certificates</string>
+    <string name="ui.admin.securityEntity.certificate.add">Add Certificate Mapping</string>
+    <string name="ui.admin.securityEntity.certificate.add.hint"><![CDATA[Select an X509 certificate file (a CER or DER encoded file) to be associated with this object]]></string>
+    <string name="ui.admin.securityEntity.certificate.auth">Authentication Certificates</string>
+    <string name="ui.admin.securityEntity.certificate.auth.hint"><![CDATA[Assigning one or more authentication certificates will allow this application, uesr or device to authenticate over HTTPS by presenting one of the valid certificates in this list. You can assign an authentication certificate by selecting a certificate file and uploading it]]></string>
+    <string name="ui.admin.securityEntity.certificate.sign">Signing Certificates</string>
+    <string name="ui.admin.securityEntity.certificate.sign.hint"><![CDATA[Assigning one or more signing certificates allows SanteDB to validate digital signatures provided by this authenticated device/user/application. These digital signatures may appear on FHIR resources via provenance headers, SanteDB VRP QR codes, or other places. You can assign a signing certificate by selecting a certificate file and uploading it]]></string>
+
+    <!-- Concepts -->
+    <string name="ui.admin.concept.codeSystem.title">Code Systems</string>
+    <string name="ui.admin.concept.codeSystem.count">reference terminology management</string>
+    <string name="ui.admin.concept.codeSystem.create">Create Code System</string>
+    <string name="ui.admin.concept.conceptSet.title">Concept Sets</string>
+    <string name="ui.admin.concept.conceptSet.count">concept group management</string>
+    <string name="ui.admin.concept.conceptSet.create">Create Concept Set</string>
+    <string name="ui.admin.concept.concepts.title">Concepts</string>
+    <string name="ui.admin.concept.concepts.count">clinical concept management</string>
+    <string name="ui.admin.concept.concepts.create">Create Concept</string>
+    <string name="ui.admin.concept.dashboard">Concept Dictionary Management</string>
+    <string name="ui.admin.concept.codeSystem.edit.profile.title">Reference Term Code System
+        Properties</string>
+    <string name="ui.admin.concept.codeSystem.addReferenceTerm">Add Reference Term</string>
+    <string name="ui.admin.concept.codeSystem.edit.referenceTerm">Edit Reference Term</string>
+    <string name="ui.admin.concept.codeSystem.remove.referenceTerm.confirm">Are you sure you want to
+        remove this term from this code system?</string>
+    <string name="ui.admin.concept.codeSystem.remove.referenceTerm.success"><![CDATA[Reference term <span class="badge badge-light">{mnemonic}</span> removed successfully]]></string>
+    <string name="ui.admin.concept.codeSystem.saveTerm.success"><![CDATA[Reference term <span class="badge badge-light">{authority}</span> saved successfully]]></string>
+    <string name="org.santedb.widget.concept.codeSystem.core.properties">Code System Properties</string>
+    <string name="org.santedb.widget.concept.codeSystem.core.quickAdd">Quick-Add Reference Term</string>
+    <string name="org.santedb.widget.concept.codeSystem.core.referenceTerms">Reference Terms</string>
+    <string name="ui.admin.concept.codeSystem.upload.file">File</string>
+    <string name="ui.admin.concept.codeSystem.upload.file.hint">Select a CSV file from your local
+        computer</string>
+    <string name="ui.admin.concept.codeSystem.upload.language">File Language</string>
+    <string name="ui.admin.concept.codeSystem.upload.language.hint">Select the language which the
+        description / code name appears in your file</string>
+    <string name="ui.admin.concept.codeSystem.upload">Upload Reference Terms</string>
+    <string name="ui.admin.concept.codeSystem.upload.run">Your job was successfully uploaded and
+        scheduled for execution. Would you like to run the import now? (selecting 'no' will run the
+        import when there are less users on this server)</string>
+    <string name="ui.admin.concept.codeSystem.upload.issue">Your file was uploaded however there are
+        {issue} detected problems - do you want to open the detailed import log to see what these
+        issues are?</string>
+    <string name="ui.admin.concept.codeSystem.upload.help">Uploading Reference Terms</string>
+    <string name="ui.admin.concept.codeSystem.delete.confirm">Are you sure you want to delete the
+        code system?</string>
+    <string name="ui.admin.concept.codeSystem.delete.success">Code system was successfully deleted</string>
+    <string name="ui.admin.concept.codeSystem.delete.error">Error deleting code system : {e}</string>
+    <string name="ui.admin.concept.codeSystem.unDelete.confirm">Are you sure you want to un-delete
+        this code system?</string>
+    <string name="ui.admin.concept.codeSystem.unDelete.success">Code system has been restored</string>
+    <string name="ui.admin.concept.codeSystem.unDelete.error">Error un-deleting code system: {e}</string>
+    <string name="ui.admin.concept.codeSystem.upload.template">Download Template</string>
+    <string name="ui.admin.concept.codeSystem.upload.help.text"><![CDATA[
+        <p>You can use this function to upload a CSV file which contains a list of reference terms that you would like added to this code system.</p>
+        <p>The requirements for the uploaded file are:</p>
+        <ul>
+            <li>File must be in CSV format</li>
+            <li>First row must contain column headers with the name of each column</li>
+            <li>You can use any columns you like, but there must be present:
+                <ul>
+                    <li><code>Mnemonic</code> <strong>(required)</strong> - Containing the mnemonic of the refernece term (how it appears on the wire)</li>
+                    <li><code>Name</code> <strong>(required)</strong> - The default display name for the concept</li>
+                    <li><code>Concept</code> <em>(optional)</em> - The mnemonic of the concept in SanteDB's internal concept dictionary which should be mapped (if it exists) or created (if it does not)</li>
+                    <li><code>Mapping</code> <em>(optional)</em> - The mapping type to the concept wither <code>SameAs</code>, <code>InverseOf</code>, <code>NegationOf</code>, <code>WiderThan</code>, or <code>NarrowerThan</code></li>
+                </ul>                
+            </li>
+            <li>File must be smaller than the maximum upload size configured by your system administrator</li>
+        </ul> ]]></string>
+
+
+    <string name="org.santedb.widget.concept.conceptSet.core.properties">Concept Set Properties</string>
+    <string name="org.santedb.widget.concept.conceptSet.core.expansion">Concept Set Expansion</string>
+    <string name="ui.admin.concept.conceptSet.delete.success">Concept set was successfully deleted</string>
+    <string name="ui.admin.concept.conceptSet.delete.error">Error deleting concept set : {e}</string>
+    <string name="ui.admin.concept.conceptSet.delete.confirm">Deleting a concept set which is used
+        by the SanteDB may result in drop-down selectors not functioning properly, database
+        validation scripts failing, and plugins becoming unresponsive. You should only delete
+        user-defined concept sets which were deleted in error. Are you sure you want to delete this
+        concept set?</string>
+    <string name="ui.admin.concept.conceptSet.unDelete.confirm">Are you sure you want to un-delete
+        this concept set?</string>
+    <string name="ui.admin.concept.conceptSet.unDelete.success">Concept set was successfully
+        un-deleted</string>
+    <string name="ui.admin.concept.conceptSet.unDelete.error">Error un-deleting concept set : {e}</string>
+    <string name="ui.admin.concept.conceptSet.composeConcept">Include or exclude concepts from
+        another concept set in this concept set</string>
+    <string name="ui.admin.concept.conceptSet.addConcept">Directly add a concept to this concept set</string>
+    <string name="ui.admin.concept.conceptSet.uploadConcept">Upload a comma-separated file (CSV) to
+        bulk populate this concept set</string>
+    <string name="ui.admin.concept.conceptSet.remove.concept.confirm.system"><![CDATA[!!!DANGER!!! This concept set appears to be created by the SanteDB SYSTEM account. Removing concepts from system concept sets may cause issues in SanteDB validation processes. Are you sure you wish to continue?]]></string>
+    <string name="ui.admin.concept.conceptSet.remove.concept.confirm"><![CDATA[Are you sure you wish to remove this concept from the concept set?]]></string>
+    <string name="ui.admin.concept.conceptSet.remove.concept.success">Concept was successfully
+        removed from the concept set</string>
+    <string name="ui.admin.concept.conceptSet.compose">Compose Concept Set</string>
+    <string name="ui.admin.concept.conceptSet.compose.help">Concept Set Compositions</string>
+    <string name="ui.admin.concept.conceptSet.compose.help.text"><![CDATA[ 
+            <p>When a concept set is composed, it means that it is derived from other concept sets in the SanteDB server. For example, <code>MaterialTypes</code> may be a union of <code>VaccineMaterialTypes</code> and <code>DrugMaterialTypes</code>, with the exclusion of <code>ForbiddenMaterialTypes</code></p>
+            <p><strong>Note:</strong> When composing sets, a <code>Exclude All</code> operation takes highest priority. Additionally, you cannot compose a set of other composed sets</p>
+            ]]></string>
+
+
+    <string name="ui.admin.concept.conceptSet.upload">Upload Concept Set</string>
+    <string name="ui.admin.concept.conceptSet.upload.help">Uploading Concept Set Members</string>
+    <string name="ui.admin.concept.conceptSet.upload.help.text">
+        <![CDATA[
+        <p>Select comma separated file (CSV) with the concepts (new or existing) which are to be assigned to this concept set. The CSV should have the format:</p>
+        <ul>
+            <li><code>Mnemonic</code> <strong>(Required)</strong> - The unique concept mnemonic for the concept (if the mnemonic matches an existing concept it will be used)</li>
+            <li><code>Class</code> <strong>(Required)</strong> - The general classification of the concept one of <code>Other</code>, <code>Status</code>, <code>Relationship</code>, <code>UnitOfMeasure</code>, <code>Route</code>, <code>Finding</code>, <code>Problem</code>, or <code>Form</code> (hint: <code>Other</code> is recommended for most concepts)</li>
+            <li><code>Name</code> <em>(Optional)</em> - The name of the code in the selected language on the upload</li>
+        </ul>
+        <p>Your upload can contain other columns, however they will be ignored</p>
+        ]]>
+    </string>
+    <string name="ui.admin.concept.conceptSet.upload.file">Upload File</string>
+    <string name="ui.admin.concept.conceptSet.upload.language">Language of File</string>
+    <string name="ui.admin.concept.conceptSet.upload.template">Download Sample Concept Set CSV</string>
+    <string name="ui.admin.concept.conceptSet.upload.file.hint">The comma-save (CSV) file to be imported</string>
+    <string name="ui.admin.concept.conceptSet.upload.language.hint">The language of the &lt;code&gt;Name&lt;code&gt; column in the file</string>
 </resources>

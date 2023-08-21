@@ -51,4 +51,14 @@
     <string name="ui.bi.marts.register.confirm">Are you sure you want to register the data-mart {id} with the data warehouse manager?</string>
     <string name="ui.bi.marts.unregister.confirm">Are you sure you want to un-register the data-mart {id} with the data warehouse manager? Any reports which use this report will no longer work</string>
 
+    <!-- Warehouse Strings -->
+    <string name="ui.model.bi.dataMart.exec.startedBy">Ran As</string>
+    <string name="ui.model.bi.dataMart.exec.purpose">Purpose</string>
+    <string name="ui.model.bi.dataMart.exec.started">Start Time</string>
+    <string name="ui.model.bi.dataMart.exec.finished">Finish Time</string>
+    <string name="ui.model.bi.dataMart.exec.outcome">Oucome</string>
+    <string name="ui.model.bi.dataMart.produces">Target Schema:</string>
+    <string name="ui.model.bi.dataMart.policies">Policies:</string>
+    <string name="org.santedb.widget.bi.dataMart.execs">Execution Log</string>
+    <string name="org.santedb.widget.bi.dataMart.schema">Schema</string>
 </resources>

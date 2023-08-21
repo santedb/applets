@@ -21,7 +21,7 @@
  */
 angular.module('santedb').controller('ForeignDataUploadController', ["$scope", "$rootScope", "$timeout", "$state", function ($scope, $rootScope, $timeout, $state) {
 
-    $scope.submission = {};
+    $scope.submission = { parms: { }};
 
     async function initialize() {
         try {
@@ -35,6 +35,17 @@ angular.module('santedb').controller('ForeignDataUploadController', ["$scope", "
 
     initialize();
 
+    $scope.$watch("submission.map", function(n,o) {
+        if(n) {
+            $scope.submission.selectedMapping = $scope.mappings.find(o=>o.id == n);
+            if($scope.submission.selectedMapping.parameters) {
+                $scope.submission.selectedMapping.parameters.filter(o=>o.pattern).forEach(o=>{
+                    o.placeholder = new RandExp(new RegExp(o.pattern)).gen();
+                });
+            }
+        }
+    });
+
     $scope.submit = function() {
 
 
@@ -43,6 +54,7 @@ angular.module('santedb').controller('ForeignDataUploadController', ["$scope", "
         form_data.append('source', file_data);
         form_data.append('description', $scope.submission.description);
         form_data.append('map', $scope.submission.map || '671bf90b-019d-4843-8e77-69f84ce12689');
+        Object.keys($scope.submission.parms).forEach(p=>form_data.append(p, $scope.submission.parms[p]));
         SanteDB.display.buttonWait("#btnSubmit", true);
         $.ajax({
             cache: false,

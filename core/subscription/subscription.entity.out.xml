@@ -33,14 +33,39 @@
 			    FROM
 				    ENT_REL_TBL
 			    WHERE
-				    TRG_ENT_ID = $placeid$
+				    TRG_ENT_ID = ${placeid}
                     AND REL_TYP_CD_ID IN ('455f1772-f580-47e8-86bd-b5ce25d351f9', '41baf7aa-5ffd-4421-831f-42d4ab3de38a', 'ff34dfa7-c6d3-4f8b-bc9f-14bcdc13ba6c')
                     AND OBSLT_VRSN_SEQ_ID IS NULL
 		    )
 		    SELECT ENT_ID FROM 
-			    ACT_PTCPT_PART_RCT_TBL
+			    ACT_PTCPT_TBL
 		    WHERE
-			    			ACT_ID IN (SELECT ACT_ID FROM ACT_PTCPT_TBL WHERE ENT_ID = $placeid$ AND ROL_CD_ID IN ('61848557-d78d-40e5-954f-0b9c97307a04','02bb7934-76b5-4cc5-bd42-58570f15eb4d','ac05185b-5a80-47a8-b924-060deb6d0eb2'))
+			    			ACT_ID IN (SELECT ACT_ID FROM ACT_PTCPT_TBL WHERE ENT_ID = ${placeid} AND ROL_CD_ID IN ('61848557-d78d-40e5-954f-0b9c97307a04','02bb7934-76b5-4cc5-bd42-58570f15eb4d','ac05185b-5a80-47a8-b924-060deb6d0eb2'))
+			          AND ENT_ID NOT IN (SELECT SRC_ENT_ID FROM cte_ents)
+	    )
+      ]]>
+    </definition>
+    <definition invariant="sqlite">
+      <![CDATA[
+     SELECT * FROM 
+	    ENT_VRSN_TBL 
+        INNER JOIN ENT_TBL USING (ENT_ID)
+    WHERE
+	    OBSLT_UTC IS NULL 
+	    AND ENT_ID IN (
+		    WITH cte_ents AS ( -- ALL ENTITIES ASSIGNED TO MY FACILITY
+			    SELECT SRC_ENT_ID
+			    FROM
+				    ENT_REL_TBL
+			    WHERE
+				    TRG_ENT_ID = ${placeid}
+                    AND REL_TYP_CD_ID IN (x'72175F4580F5E84786BDB5CE25D351F9', x'AAF7BA41FD5F2144831F42D4AB3DE38A', x'A7DF34FFD3C68B4FBC9F14BCDC13BA6C')
+                    AND OBSLT_VRSN_SEQ_ID IS NULL
+		    )
+		    SELECT ENT_ID FROM 
+			    ACT_PTCPT_TBL
+		    WHERE
+			    			ACT_ID IN (SELECT ACT_ID FROM ACT_PTCPT_TBL WHERE ENT_ID = ${placeid} AND ROL_CD_ID IN (x'578584618DD7E540954F0B9C97307A04',x'3479BB02B576C54CBD4258570F15EB4D',x'5B1805AC805AA847B924060DEB6D0EB2'))
 			          AND ENT_ID NOT IN (SELECT SRC_ENT_ID FROM cte_ents)
 	    )
       ]]>

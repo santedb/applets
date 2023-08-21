@@ -74,8 +74,8 @@ angular.module('santedb-lib')
                             
                             //scope.$apply();
                             $timeout(function () {
-                                $(`#prov${provData.$state} button:first`).attr('data-content', extraInfo);
-                                $(`#prov${provData.$state} button:first`).popover({ html: true });
+                                $(`#prov${provData.$state || provControl} button:first`).attr('data-content', extraInfo);
+                                $(`#prov${provData.$state|| provControl} button:first`).popover({ html: true });
                             });
 
                             // Set the scope of all elements

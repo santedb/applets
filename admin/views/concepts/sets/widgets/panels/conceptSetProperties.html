@@ -1,0 +1,144 @@
+<div xmlns="http://www.w3.org/1999/xhtml" xmlns:sdb="http://santedb.org/applet"
+    oc-lazy-load="{name:'ConceptSetWidgetController', files: ['/org.santedb.admin/controllers/concepts/sets/widget.js'] }">
+    <sdb:widget name="org.santedb.widget.concept.conceptSet.core.properties" type="Panel" size="Large"
+        context="org.santedb.concept.conceptSet.core" order="0" headerClass="alert-info">
+        <sdb:icon>fas fa-bars</sdb:icon>
+        <sdb:description lang="en">Concept Set Properties</sdb:description>
+        <sdb:views>
+            <sdb:view type="Edit">
+                <sdb:demand>1.3.6.1.4.1.33349.3.1.5.9.2.0.7</sdb:demand>
+            </sdb:view>
+        </sdb:views>
+    </sdb:widget>
+
+    <div ng-if="scopedObject">
+        <div ng-controller="ConceptSetWidgetController">
+            <div ng-if="panel.view != 'Edit'">
+                <div class="container-fluid">
+                    <div class="form-group row">
+                        <label class="control-label col-sm-12 col-md-3">{{'ui.model.conceptSet.name' | i18n }}</label>
+                        <div class="col-sm-12 col-md-9">{{ scopedObject.name }}</div>
+                        <label class="control-label col-sm-12 col-md-3">{{'ui.model.conceptSet.mnemonic' | i18n
+                            }}</label>
+                        <div class="col-sm-12 col-md-9">{{ scopedObject.mnemonic }}</div>
+                        <label class="control-label col-sm-12 col-md-3">{{'ui.model.conceptSet.oid' | i18n }}</label>
+                        <div class="col-sm-12 col-md-9">{{ scopedObject.oid }}</div>
+                        <label class="control-label col-sm-12 col-md-3">{{'ui.model.conceptSet.url' | i18n }}</label>
+                        <div class="col-sm-12 col-md-9">{{ scopedObject.url }}</div>
+                        <label ng-if="scopedObject.compose" class="control-label col-sm-12 col-md-3">{{ 'ui.model.conceptSet.compose' | i18n }}</label>
+                        <div ng-if="scopedObject.compose" class="col-sm-12 col-md-9">
+                            <ul class="list-unstyled mb-0" ng-repeat="(k,v) in scopedObject.compose">
+                                <li> 
+                                    <ul class="list-unstyled mb-0">
+                                        <li ng-repeat="comp in v track by $index">
+                                            <span class="badge" ng-class="{ 'badge-danger': comp.instruction == 2, 'badge-success' : comp.instruction == 1}">
+                                                <i class="fas" ng-class="{ 'fa-sign-out-alt': comp.instruction == 2, 'fa-sign-in-alt' : comp.instruction == 1}"></i> 
+                                                {{ comp.instruction == 1 ? 'ui.model.conceptSet.compose.include' : 'ui.model.conceptSet.compose.exclude' | i18n }}
+                                            </span>
+                                            {{ comp.targetModel.name }}
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
+                        <label class="control-label col-sm-12 col-md-3">{{'ui.model.conceptSet.createdBy' | i18n
+                            }}</label>
+                        <div class="col-sm-12 col-md-9">
+                            <provenance provenance-id="scopedObject.createdBy"
+                                provenance-time="scopedObject.creationTime" />
+                        </div>
+                        <label ng-if="scopedObject.updatedBy"
+                            class="control-label col-sm-12 col-md-3">{{'ui.model.conceptSet.updatedBy' | i18n
+                            }}</label>
+                        <div ng-if="scopedObject.updatedBy" class="col-sm-12 col-md-9">
+                            <provenance provenance-id="scopedObject.updatedBy"
+                                provenance-time="scopedObject.updatedTime" />
+                        </div>
+                        <label ng-if="scopedObject.obsoletedBy"
+                            class="control-label col-sm-12 col-md-3">{{'ui.model.conceptSet.obsoletedBy' | i18n
+                            }}</label>
+                        <div ng-if="scopedObject.obsoletedBy" class="col-sm-12 col-md-9">
+                            <provenance provenance-id="scopedObject.obsoletedBy"
+                                provenance-time="scopedObject.obsoletionTime" />
+                            <button type="button" ng-click="unDelete()" class="btn btn-success"><i
+                                    class="fas fa-trash-restore"></i> {{ 'ui.action.undelete' | i18n }}</button>
+                            {{ 'ui.view.deletedRecord' | i18n }}
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <form ng-if="panel.view == 'Edit'" ng-submit="saveConceptSet(panel.editForm)" name="panel.editForm"
+                novalidate="novalidate">
+                <div class="form-group row">
+                    <label class="control-label col-sm-12 col-md-3">
+                        {{ 'ui.model.conceptSet.name' | i18n }}
+                        <hint-popover hint-title="ui.model.conceptSet.name" />
+                    </label>
+                    <div class="col-sm-12 col-md-9">
+                        <input autocomplete="__away" type="text" maxlength="128" ng-model="editObject.name"
+                            name="conceptSetName" required="required" class="form-control" />
+                        <div class="text-danger" ng-if="panel.editForm.conceptSetName.$error['required']">
+                            <i class="fas fa-exclamation-triangle"></i> {{ 'ui.error.required' | i18n }}
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-12 col-md-3 control-label">
+                        {{ 'ui.model.conceptSet.mnemonic' | i18n }}
+                        <hint-popover hint-title="ui.model.conceptSet.mnemonic" />
+                    </label>
+                    <div class="col-sm-12 col-md-9">
+                        <input autocomplete="__away" type="text" maxlength="64" ng-model="editObject.mnemonic"
+                            name="conceptSetMnemonic" required="required" class="form-control"
+                            pattern="^[a-zA-Z0-9_\-$" />
+                        <div class="text-danger" ng-if="panel.editForm.conceptSetMnemonic.$error['required']">
+                            <i class="fas fa-exclamation-triangle"></i> {{ 'ui.error.required' | i18n }}
+                        </div>
+                        <div class="text-danger" ng-if="panel.editForm.conceptSetMnemonic.$error['pattern']">
+                            <i class="fas fa-exclamation-triangle"></i> {{ 'ui.error.pattern' | i18n }}
+                        </div>
+                        <div class="text-danger" ng-if="panel.editForm.conceptSetMnemonic.$error['duplicate']">
+                            <i class="fa fa-exclamation-triangle"></i> {{ 'ui.error.duplicate' | i18n }}
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-12 col-md-3 control-label">
+                        {{ 'ui.model.conceptSet.oid' | i18n }}
+                        <hint-popover hint-title="ui.model.conceptSet.oid" />
+                    </label>
+                    <div class="col-sm-12 col-md-9">
+                        <input autocomplete="__away" type="text" maxlength="128" ng-model="editObject.oid"
+                            name="conceptSetOid" required="required" pattern="^[0-9]*?[0-9\.]*$" class="form-control" />
+                        <div class="text-danger" ng-if="panel.editForm.conceptSetOid.$error['required']">
+                            <i class="fas fa-exclamation-triangle"></i> {{ 'ui.error.required' | i18n }}
+                        </div>
+                        <div class="text-danger" ng-if="panel.editForm.conceptSetOid.$error['pattern']">
+                            <i class="fas fa-exclamation-triangle"></i> {{ 'ui.error.pattern' | i18n }}
+                        </div>
+                        <div class="text-danger" ng-if="panel.editForm.conceptSetOid.$error['duplicate']">
+                            <i class="fa fa-exclamation-triangle"></i> {{ 'ui.error.duplicate' | i18n }}
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-12 col-md-3 control-label">
+                        {{ 'ui.model.conceptSet.url' | i18n }}
+                        <hint-popover hint-title="ui.model.conceptSet.url" />
+                    </label>
+                    <div class="col-sm-12 col-md-9">
+                        <input autocomplete="__away" type="url" maxlength="256" ng-model="editObject.url"
+                            name="conceptSetUrl" required="required" class="form-control" />
+                        <div class="text-danger" ng-if="panel.editForm.conceptSetUrl.$error['required']">
+                            <i class="fas fa-exclamation-triangle"></i> {{ 'ui.error.required' | i18n }}
+                        </div>
+                        <div class="text-danger" ng-if="panel.editForm.conceptSetUrl.$error['duplicate']">
+                            <i class="fa fa-exclamation-triangle"></i> {{ 'ui.error.duplicate' | i18n }}
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

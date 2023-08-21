@@ -55,7 +55,6 @@ function SanteDBBusinessIntelligence() {
     function ResourceApi() {
         /**
          * @type {ResourceWrapper}
-         * @private
          */
         this.package = new ResourceWrapper({
             resource: "BiPackage",
@@ -63,7 +62,6 @@ function SanteDBBusinessIntelligence() {
         });
         /**
          * @type {ResourceWrapper}
-         * @private
          */
         this.dataSource = new ResourceWrapper({
             resource: "BiDataSourceDefinition",
@@ -71,7 +69,6 @@ function SanteDBBusinessIntelligence() {
         });
         /**
          * @type {ResourceWrapper}
-         * @private
          */
         this.parameter = new ResourceWrapper({
             resource: "BiParameterDefinition",
@@ -79,7 +76,6 @@ function SanteDBBusinessIntelligence() {
         });
         /**
          * @type {ResourceWrapper}
-         * @private
          */
         this.query = new ResourceWrapper({
             resource: "BiQueryDefinition",
@@ -87,7 +83,6 @@ function SanteDBBusinessIntelligence() {
         });
         /**
          * @type {ResourceWrapper}
-         * @private
          */
         this.report = new ResourceWrapper({
             resource: "BiReportDefinition",
@@ -95,7 +90,6 @@ function SanteDBBusinessIntelligence() {
         });
         /**
          * @type {ResourceWrapper}
-         * @private
          */
         this.view = new ResourceWrapper({
             resource: "BiViewDefinition",
@@ -103,7 +97,6 @@ function SanteDBBusinessIntelligence() {
         });
         /**
         * @type {ResourceWrapper}
-         * @private
         */
         this.format = new ResourceWrapper({
             resource: "BiRenderFormatDefinition",
@@ -111,7 +104,6 @@ function SanteDBBusinessIntelligence() {
         });
         /**
         * @type {ResourceWrapper}
-         * @private
         */
         this.datamart = new ResourceWrapper({
             resource: "BiDatamartDefinition",
@@ -119,7 +111,6 @@ function SanteDBBusinessIntelligence() {
         });
         /**
          * @type {ResourceWrapper}
-        * @private
         */
         this.warehouse = new ResourceWrapper({
             resource: "DatamartInfo",

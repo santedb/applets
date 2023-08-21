@@ -1,0 +1,49 @@
+<ForeignDataMap xmlns="http://santedb.org/import">
+  <id>67BEFD0E-B976-FDD0-09AD-D98BCAFD30FE</id>
+  <name>Code System Import</name>
+  <description>Imports a flat list of concepts into the SanteDB database for a specified code
+    system</description>
+  <parameters>
+    <add name="conceptSetKey" required="true"
+      pattern="^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$" />
+    <add name="language" required="true"
+      pattern="^[a-z]{2}$" />
+  </parameters>
+  <maps>
+    <map abortOnError="false">
+      <resource type="Concept">
+        <existing>
+          <where>mnemonic=$Mnemonic</where>
+        </existing>
+        <maps>
+          <map>
+            <source>Class</source>
+            <transform transformer="EntityLookup">
+              <args>
+                <string>ConceptClass</string>
+                <string>mnemonic=:(nocase)$input</string>
+              </args>
+            </transform>
+            <target>conceptClass</target>
+          </map>
+          <map required="true">
+            <source>Mnemonic</source>
+            <target>mnemonic</target>
+          </map>
+          <map replace="true">
+            <source>Name</source>
+            <target>name.value</target>
+          </map>
+          <map replace="true">
+            <parameter>language</parameter>
+            <target>name.language</target>
+          </map>
+          <map>
+            <parameter>conceptSetKey</parameter>
+            <target>conceptSet</target>
+          </map>
+        </maps>
+      </resource>
+    </map>
+  </maps>
+</ForeignDataMap>

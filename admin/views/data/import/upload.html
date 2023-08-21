@@ -51,6 +51,19 @@
                 </span> 
             </div>
         </div>
+        <fieldset ng-if="submission.selectedMapping.parameters.length">
+            <legend><i class="fas fa-align-justify"></i> {{ 'ui.admin.alien.mapping.parameters' | i18n }}</legend>
+            <div ng-repeat="parm in submission.selectedMapping.parameters track by $index" class="form-group row">
+                <label class="col-sm-12 col-md-3 control-label">{{ parm.name }} 
+                    <hint-popover ng-if="parm.hint" hint-title="{{ parm.hint }}" />
+                </label>
+                <div class="col-sm-12 col-md-9">
+                    <input placeholder="{{parm.placeholder}}" autocomplete="__away" type="text" ng-model="submission.parms[parm.name]" class="form-control" ng-required="parm.required" ng-pattern="parm.pattern" name="{{parm.name}}" />
+                    <div class="text-danger" ng-if="alienForm[parm.name].$error['required']"><i class="fas fa-exclamation-triangle"></i> {{ 'ui.error.required' | i18n }}</div>
+                    <div class="text-danger" ng-if="alienForm[parm.name].$error['pattern']"><i class="fas fa-exclamation-triangle"></i> {{ 'ui.error.pattern' | i18n }}</div>
+                </div>
+            </div>
+        </fieldset>
         <div class="form-group row">
             <div class="col-12">
                 <div class="float-right btn-group">

@@ -114,10 +114,10 @@ angular.module('santedb-lib')
                 else  // address exists so let's move everything over to $other
                 {
                     var flatAddressList = scope.address.$other || [];
-                    Object.keys(scope.address).forEach(function (key) {
+                    Object.keys(scope.address).filter(key=>key != "$other").forEach(function (key) {
                         var address = scope.address[key];
 
-                        if (!address.useModel || !address.useModel.id)
+                        if ((!address.useModel || !address.useModel.id) && key != '$other')
                             SanteDB.resources.concept.findAsync({ mnemonic: key })
                                 .then(function (bundle) {
                                     if (bundle.resource && bundle.resource.length > 0)
@@ -249,8 +249,8 @@ angular.module('santedb-lib')
                 // Flatten name
                 var flattenName = function () {
                     bound = true;
-                    var flatNameList = [];
-                    Object.keys(scope.name).forEach(function (key) {
+                    var flatNameList = scope.name.$other || [];
+                    Object.keys(scope.name).filter(key=>key != "$other").forEach(function (key) {
                         var name = scope.name[key];
 
                         if ((!name.useModel || !name.useModel.id) && key != "$other")
@@ -397,6 +397,8 @@ angular.module('santedb-lib')
             },
             controller: ['$scope', '$rootScope', function ($scope, $rootScope) {
 
+                $scope.newId = {};
+                
                 $scope.removeIdentifier = function (domain) {
                     if (confirm(SanteDB.locale.getString("ui.model.entity.identifier.authority.remove.confirm", {domain: domain}))) {
                         //delete ($scope.identifier[domain]);
@@ -418,11 +420,13 @@ angular.module('santedb-lib')
                 }
 
                 $scope.generateId = function (idDomain) {
-                    var authority = idDomain.authority;
+                    var authority = idDomain;
                     if (!authority.generator)
                         authority = $scope.authorities[idDomain.domainModel.domainName];
                     try {
-                        idDomain.value = authority.generator();
+                        var generated = authority.generator();
+                        $scope.newId.value = generated.value;
+                        $scope.newId.checkDigit = generated.checkDigit;
                     } catch (e) {
                         $rootScope.errorHandler(e);
                     }
@@ -465,10 +469,10 @@ angular.module('santedb-lib')
                             });
                         }
 
-                        // $timeout(() => {
-                        //     scope.identifier = identifier;
-                        //     scope.authorities = authorities;
-                        // });
+                        $timeout(() => {
+                            scope.identifier = identifier;
+                            scope.authorities = authorities;
+                        });
 
                     })
                     .catch(function (e) { console.error(e); });
@@ -510,14 +514,16 @@ angular.module('santedb-lib')
                 noScan: '<',
                 noLabel: '<'
             },
-            controller: ['$scope', '$rootScope', function ($scope, $rootScope) {
+            controller: ['$scope', '$rootScope', '$timeout', function ($scope, $rootScope, $timeout) {
 
                 $scope.generateId = function () {
                     var authority = $scope.identifier.authority;
                     if (!authority.generator)
                         authority = $scope.authorities[authority.domainName];
                     try {
-                        $scope.identifier.value = authority.generator();
+                        var generated = authority.generator();
+                        $scope.identifier.value = generated.value;
+                        $scope.identifier.checkDigit = generated.checkDigit;
                     } catch (e) {
                         $rootScope.errorHandler(e);
                     }
@@ -531,9 +537,17 @@ angular.module('santedb-lib')
                         var parser = SanteDB.application.getIdentifierParser($scope.identifier.authority.domainName);
                         if (parser)
                             data = parser(data);
-                        $scope.identifier.value = data;
-                        try { $scope.$apply(); }
-                        catch (e) { }
+
+                        $timeout(()=>{
+                            if(data.value) 
+                            {
+                                $scope.identifier.value = data.value;
+                                $scope.identifier.checkDigit = data.checkDigit;
+                            }
+                            else {
+                                $scope.identifier.value = data;
+                            }
+                        });
                     }
                     catch (e) {
                         $rootScope.errorHandler(e);

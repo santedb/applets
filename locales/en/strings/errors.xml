@@ -315,4 +315,23 @@
       <string name="error.foreign.manager.state">The foreign data is not in a valid state to perform this operation</string>
       <string name="error.foreign.manager.map.notfound">The foreign data map {map} which is referenced in this data cannot be found</string>
       <string name="error.foreign.manager.map.format">The data in format {format} cannot be interpreted by this instance of SanteDB (are you misisng a plugin?)</string>
+
+      <string name="error.datamart.manager.gen">General error in datamart manager</string>
+      <string name="error.datamart.drop">Error dropping data mart {id}</string>
+      <string name="error.datamart.create">Error while creating data mart {id}</string>
+      <string name="error.datamart.refresh">Error refreshing datamart {id}</string>
+      <string name="error.job.schedule.assign">Error assigning job schedule for {job}</string>
+      <string name="error.job.schedule.query">Error while querying for job schedules</string>
+      <string name="error.job.state.assign">Error while assigning job state</string>
+      <string name="error.job.state.query">Error querying job state</string>
+      <string name="error.bi.meta.query">Error executing BI metadata query</string>
+      <string name="error.bi.meta.read">Error reading BI metadata for {id}</string>
+      <string name="error.bi.meta.store">Error executing BI store operation for {id}</string>
+      <string name="error.match.config.store">Error storing match configuration {id}</string>
+      <string name="error.connection.required">This operation requires an active connection to the central server</string>
+      <string name="error.signing.cert.gen">General error interacting with signing certificate sorage</string>
+      <string name="error.signing.cert.create">Error assigning certificate {subject} to {identity}</string>
+      <string name="error.signing.cert.remove">Error removing signing certificate {subject} from {identity}</string>
+      <string name="error.signing.cert.duplicate">Signing certificate is already assigned to another device</string>
+
 </resources>

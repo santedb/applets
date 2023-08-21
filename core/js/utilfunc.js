@@ -170,6 +170,12 @@ Date.prototype.lastWeekDay = function (month, year) {
     return lastDay;
 }
 
+/**
+ * @returns The decoded base64 data as a JSON object
+ */
+String.prototype.b64DecodeJson = function() {
+    return JSON.parse(atob(this));
+}
 /** 
  * @summary Decodes a hex string
  * @method

@@ -59,6 +59,9 @@
   <string name="ui.model.securityDevice.lockout">Lockout</string>
   <string name="ui.model.entityIdentifier.authority">Assigned By</string>
   <string name="ui.model.entityIdentifier.value">ID Number</string>
+  <string name="ui.model.entityIdentifier.checkDigit">Check Digit</string>
+  <string name="ui.model.entityIdentifier.checkDigit.short">CD</string>
+  <string name="ui.model.entityIdentifier.checkDigit.hint"><![CDATA[This identifier type requires a check digit - if you are entering an existing identifier be sure to include the check digit information here]]></string>
   <string name="ui.model.securityDevice.secret">Device Secret</string>
   <string name="ui.model.deviceEntity.manufacturerModelName">Model Name</string>
   <string name="ui.model.deviceEntity.operatingSystemName">Operating System</string>
@@ -87,8 +90,11 @@
   <string name="ui.model.entityRelationship.inverse.suffix">Of</string>
   <string name="ui.model.entityRelationship.target">With</string>
   <string name="ui.model.identityDomain.oid">Universal ID</string>
+  <string name="ui.model.identityDomain.oid.hint"><![CDATA[The object identifier of the identity domain is used by HL7v3 messages and HL7v2 messages to tag an identifier with the identity domain to which the identity domain belongs. These should be: <ul><li>An IANA Private Enterprise Number</li><li>An HL7 Registered Assigning Authority</li><li>A UUID in format <code>2.25.XXXX</code></li></ul>]]></string>
   <string name="ui.model.identityDomain.domainName">Namespace ID</string>
+  <string name="ui.model.identityDomain.domainName.hint"><![CDATA[The namespace identifier is used in the HDSI and HL7v2 to identify the identifiers. These must be unique in this installation of SanteDB.]]></string>
   <string name="ui.model.identityDomain.name">Name</string>
+  <string name="ui.model.identityDomain.name.hint">The human readable name of the identity domain</string>
   <string name="ui.model.identityDomain.isUnique">Unique</string>
   <string name="ui.model.identityDomain.updatedBy">Updated By</string>
   <string name="ui.model.identityDomain.id">UUID</string>
@@ -96,12 +102,20 @@
   <string name="ui.model.identityDomain.obsoletedBy">Deleted By</string>
   <string name="ui.model.identityDomain.assigningApplication">Assigning App</string>
   <string name="ui.model.identityDomain.scope">Scope</string>
+  <string name="ui.model.identityDomain.scope.hint">If this identifier only applies to specific types of resources then select the type of resources to which this identifier can be assigned</string>
   <string name="ui.model.identityDomain.url">URL</string>
+  <string name="ui.model.identityDomain.url.hint">Enter the URL for this identity domains. URLs are used by FHIR for correlating the identity domain with the identifier when FHIR messages are received</string>
   <string name="ui.model.identityDomain.validation">Validation Regex</string>
+  <string name="ui.model.identityDomain.validation.hint">Use this field to specify the format of the identifier (the pattern that conformant identifiers need to have)</string>
   <string name="ui.model.identityDomain.assigningAuthority.assigningApplication">Application</string>
   <string name="ui.model.identityDomain.assigningAuthority.authoritative">Authoritative Source</string>
   <string name="ui.model.identityDomain.assigningAuthority.assigningApplication.hint"><![CDATA[Whenever an identifier in this domain is registered from this application - it can be flagged as authoritative or informative. You may restrict the ability of non-authoritative applications from issuing new identifiers (which will result in a data quality warning)]]></string>
   <string name="ui.model.identityDomain.policy">Disclosure Policy</string>
+  <string name="ui.model.identityDomain.policy.hint"><![CDATA[Select the policies which are required for a security principal (user, device, etc.) for identifiers in this domain to be disclosed.]]></string>
+  <string name="ui.model.identityDomain.checkDigitAlgorithm">Check Digit Type</string>
+  <string name="ui.model.identityDomain.checkDigitAlgorithm.hint"><![CDATA[If the identifier uses a separate check digit in the check digit field (or required generation), select the check digit algorithm to be used]]></string>
+  <string name="ui.model.identityDomain.customValidator">Custom Format Validator</string>
+  <string name="ui.model.identityDomain.customValidator.hint">If the identifiers in this identity domain have a specialized format (for example, check digits or computational generation) select the implementation of the validation here.</string>
   <string name="ui.model.version.sequence">Sequence</string>
   <string name="ui.model.version.createdBy">Last Changed By</string>
   <string name="ui.model.version.replaces">Replaces Version</string>
@@ -512,4 +526,63 @@
   <string name="ui.model.validationRule.appliesTo">Applies To</string>
   <string name="ui.model.validationRule.relationshipType">Relationship</string>
   <string name="ui.model.validationRule.description">Description</string>
+
+  <!-- Certificates -->
+  <string name="ui.model.certificateInfo.sub">Subject</string>
+  <string name="ui.model.certificateInfo.iss">Issuer</string>
+  <string name="ui.model.certificateInfo.exp">Expires</string>
+  <string name="ui.model.certificateInfo.nbf">Not Before</string>
+  <string name="ui.model.certificateInfo.publicKey">Public Key</string>
+  <string name="ui.model.certificateInfo.thumbprint">Thumbprint</string>
+
+  <!-- Concept Dictionary --> 
+  <string name="ui.model.codeSystem.name">Name</string>
+  <string name="ui.model.codeSystem.name.hint">Provide a short, human-readable name for the code system.</string>
+  <string name="ui.model.codeSystem.oid">OID</string>
+  <string name="ui.model.codeSystem.oid.hint"><![CDATA[Provide the code system unique object identifier. This is usually provided by the external solution consuming the reference term codes. The OID should be: <ul><li>An IANA Private Enterprise Number (<code>1.3...</code>)</li><li>A UUID in the form <code>2.25.XXXXXXXX</code></li><li>An HL7 Registered OID in form <code>2.16.xxxxx</code></li></ul>This is used in HL7v3 and CDA messages.]]></string>
+  <string name="ui.model.codeSystem.url">URL</string>
+  <string name="ui.model.codeSystem.url.hint">Provide the unique URL which the code system defines (or the URL the external trading partner recognizes). This is often used in  HL7 FHIR messages</string>
+  <string name="ui.model.codeSystem.authority">Domain</string>
+  <string name="ui.model.codeSystem.authority.hint"><![CDATA[Provide a UNIQUE domain name for the code system (or the mnemonic defined by the external trading partner). This is often used by the HL7v2 message handler.]]></string>
+  <string name="ui.model.codeSystem.createdBy">Created By</string>
+  <string name="ui.model.codeSystem.updatedBy">Last Update</string>
+  <string name="ui.model.codeSystem.description">Description</string>
+  <string name="ui.model.codeSystem.description.hint">Provide detailed description of the code system (how it is used, the standards or interface, etc.)</string>
+  <string name="ui.model.codeSystem.version">Version</string>
+  <string name="ui.model.codeSystem.version.hint">The version of the code system in which the reference terms are held</string>
+  <string name="ui.model.referenceTerm.name">Name(s)</string>
+  <string name="ui.model.referenceTerm.mappings">Concept Mappings</string>
+  <string name="ui.model.referenceTerm.mnemonic">Mnemonic</string>
+  <string name="ui.model.referenceTerm.createdBy">Created By</string>
+  <string name="ui.model.referenceTerm.updatedBy">Last Update</string>
+  <string name="ui.model.referenceTerm.mnemonic.hint"><![CDATA[How the reference term will appear when external systems request data from this terminology. For example: <code>11019-3</code>, <code>F</code>]]></string>
+  <string name="ui.model.referenceTerm.names">Names</string>
+  <string name="ui.model.referenceTerm.names.hint"><![CDATA[Official translation(s) of this reference terminology (how it will be shown in external messages)]]></string>
+  <string name="ui.model.referenceTerm.concept">Concept(s)</string>
+  <string name="ui.model.referenceTerm.concept.hint"><![CDATA[Terms which are used in the internal SanteDB concept dictionary which this term is linked to]]></string>
+  <string name="ui.model.referenceTerm.concept.betterMnemonic"><![CDATA[Mnemonics in the SanteDB concept dictionary must be globally UNIQUE, whereas reference term mnemonics are unique within their code system. It is highly recommended administrators create a globally unique mnemonic for any new concepts]]></string>
+
+  <!-- Concept Set -->
+  <string name="ui.model.conceptSet.name">Name</string>
+  <string name="ui.model.conceptSet.name.hint">Provide a short, descriptive name of what this collection of concepts contains</string>
+  <string name="ui.model.conceptSet.mnemonic">Mnemonic</string>
+  <string name="ui.model.conceptSet.mnemonic.hint">Provide a unique ID for this set of concepts</string>
+  <string name="ui.model.conceptSet.url">URL</string>
+  <string name="ui.model.conceptSet.url.hint">If the concept set has an external definition, provide the unique resource pointer to that location</string>
+  <string name="ui.model.conceptSet.description">Description</string>
+  <string name="ui.model.conceptSet.description.hint">Provide a long-form description of the intended use of the concept set.</string>
+  <string name="ui.model.conceptSet.oid">OID</string>
+  <string name="ui.model.conceptSet.oid.hint"><![CDATA[Provide a unique IANA PEN, HL7 OID or use <code>2.25.XXXXXX</code> to uniquely identify this concept set]]></string>
+  <string name="ui.model.conceptSet.createdBy">Created By</string>
+  <string name="ui.model.conceptSet.updatedBy">Updated By</string>
+  <string name="ui.model.conceptSet.obsoletedBy">Obsoleted By</string>
+  <string name="ui.model.conceptSet.compose">Composition</string>
+  <string name="ui.model.conceptSet.compose.include">Include All</string>
+  <string name="ui.model.conceptSet.compose.exclude">Exclude All</string>
+  <string name="ui.model.conceptSet.compose.target">Concept Set</string>
+  <string name="ui.model.conceptSet.compose.instruction">Composition</string>
+
+  <string name="ui.model.concept.mnemonic">Mnemonic</string>
+  <string name="ui.model.concept.name">Name(s)</string>
+  <string name="ui.model.concept.conceptSet">Member of Set</string>
 </resources>

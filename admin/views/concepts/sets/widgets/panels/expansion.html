@@ -1,0 +1,208 @@
+<div xmlns="http://www.w3.org/1999/xhtml" xmlns:sdb="http://santedb.org/applet"
+    oc-lazy-load="{name:'ConceptSetWidgetController', files: ['/org.santedb.admin/controllers/concepts/sets/widget.js'] }">
+    <sdb:widget name="org.santedb.widget.concept.conceptSet.core.expansion" type="Panel" size="Large"
+        context="org.santedb.concept.conceptSet.core" order="10" headerClass="alert-info">
+        <sdb:icon>fas fa-sitemap</sdb:icon>
+        <sdb:description lang="en">Concept Set Members</sdb:description>
+    </sdb:widget>
+
+    <div ng-controller="ConceptSetWidgetController">
+        <entity-table id="ConceptSetMemberTable" type="ConceptSet" operation="'expand'"
+            operation-scope="scopedObject.id" search-field="name.value" i18n-prefix="'ui.model.concept.'"
+            no-deleted="true" actions="[ 
+                { name: 'add', action: 'addConceptMember', className: 'btn-primary', icon: 'fas fa-plus-circle', demand: '1.3.6.1.4.1.33349.3.1.5.9.2.0.7', hint: 'ui.admin.concept.conceptSet.addConcept' }, 
+                { name: 'compose', action: 'composeConceptSet', className: 'btn-secondary', icon: 'far fa-object-group', demand: '1.3.6.1.4.1.33349.3.1.5.9.2.0.7', hint: 'ui.admin.concept.conceptSet.composeConcept' }, 
+                { name: 'upload', action: 'uploadConceptSet', className: 'btn-info', icon: 'fas fa-upload', demand: '1.3.6.1.4.1.33349.3.1.5.9.2.0.7', hint: 'ui.admin.concept.conceptSet.uploadConcept' } 
+            ]" item-actions="[ 
+                { name: 'view', sref: 'santedb-admin.concept.concept.view', className: 'btn-primary', icon: 'fa fa-eye' }, 
+                { name: 'remove', action: 'removeConceptMember', demand: '1.3.6.1.4.1.33349.3.1.5.9.2.0.7', className: 'btn-danger', icon: 'fa fa-times', when: 'r.conceptSetModel[&quot;' + scopedObject.mnemonic + '&quot;]' } 
+            ]" properties="[ 'mnemonic', 'name', 'conceptSet' ]"
+            render="{ name: renderName, conceptSet: renderIsMember }">
+        </entity-table>
+
+        <div class="modal" id="composeConceptSetModal" data-backdrop="static" role="dialog"
+            aria-labelledby="composeConceptSetModalTitle" aria-hidden="true">
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="composeConceptSetModalTitle">
+                            <i class="far fa-object-group"></i> {{ 'ui.admin.concept.conceptSet.compose' | i18n }}
+                        </h5>
+                        <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">
+                                <i class="fa fa-times"></i>
+                            </span>
+                        </button>
+                    </div>
+                    <form novalidate="novalidate" class="form" ng-submit="saveConceptSet(composeConceptSetForm)"
+                        name="composeConceptSetForm">
+                        <div class="modal-body">
+                            <div class="form-group row">
+                                <div class="col-12">
+                                    <div class="alert alert-info">
+                                        <h5><i class="fas fa-info-circle"></i> {{
+                                            'ui.admin.concept.conceptSet.compose.help' | i18n}}</h5>
+                                        {{ 'ui.admin.concept.conceptSet.compose.help.text' | i18n }}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-12">
+                                    <table class="table table-striped">
+                                        <thead>
+                                            <tr>
+                                                <th>{{ 'ui.model.conceptSet.compose.instruction' | i18n }}</th>
+                                                <th>{{ 'ui.model.conceptSet.compose.target' | i18n }}</th>
+                                                <th>{{ 'ui.action' | i18n }}</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr ng-if="compose.operation != 4"
+                                                ng-repeat="compose in editObject.compose.$other track by $index">
+                                                <td ng-switch="compose.instruction">
+                                                    <span ng-switch-when="1" class="badge badge-success"><i
+                                                            class="fas fa-sign-in-alt"></i> {{
+                                                        'ui.model.conceptSet.compose.include' | i18n }}</span>
+                                                    <span ng-switch-when="2" class="badge badge-danger"><i
+                                                            class="fas fa-sign-out-alt"></i> {{
+                                                        'ui.model.conceptSet.compose.exclude' | i18n }}</span>
+                                                </td>
+                                                <td>
+                                                    <span ng-if="compose.targetModel"><i class="fas fa-viruses"></i> {{
+                                                        compose.targetModel.mnemonic }}</span>
+                                                    <entity-search ng-if="!compose.targetModel" type="'ConceptSet'"
+                                                        class="form-control" ng-model="compose.target"
+                                                        ng-disabled="true"
+                                                        filter="{ 'obsoletionTime' : 'null' }"></entity-search>
+                                                </td>
+                                                <td>
+                                                    <button type="button" class="btn btn-danger"
+                                                        ng-click="compose.operation = 4"
+                                                        title="{{ 'ui.action.remove' | i18n }}">
+                                                        <i class="fas fa-fw fa-times"></i>
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                        <tfoot>
+                                            <tr>
+                                                <td>
+                                                    <select class="form-control" ng-model="newCompose.instruction">
+                                                        <option value="1">{{ 'ui.model.conceptSet.compose.include' |
+                                                            i18n }}</option>
+                                                        <option value="2">{{ 'ui.model.conceptSet.compose.exclude' |
+                                                            i18n }}</option>
+                                                    </select>
+                                                </td>
+                                                <td>
+                                                    <entity-search type="'ConceptSet'" class="form-control"
+                                                        ng-model="newCompose.target" search-field="'name'"
+                                                        filter="{ 'obsoletionTime' : 'null', 'compose.instruction': [ '!1', '!2' ] }"></entity-search>
+                                                </td>
+                                                <td>
+                                                    <button type="button" class="btn btn-success"
+                                                        ng-click="editObject.compose.$other.push(newCompose); newCompose = {}"
+                                                        ng-disabled="!newCompose.instruction || !newCompose.target"
+                                                        title="{{ 'ui.action.add' | i18n }}">
+                                                        <i class="fas fa-fw fa-plus"></i>
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                        </tfoot>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button class="btn btn-secondary" type="button" data-dismiss="modal" data-toggle="none">
+                                <i class="fa fa-times"></i> {{ 'ui.action.cancel' | i18n }}</button>
+                            <button type="submit" class="btn btn-primary" id="saveConceptSetButton">
+                                <i class="fa fa-check"></i> {{ 'ui.action.save' | i18n }} </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- MODAL FOR UPLOADING SET  SET -->
+        <div class="modal" id="uploadConceptSetModal" data-backdrop="static" role="dialog"
+            aria-labelledby="uploadConceptSetModalTitle" aria-hidden="true">
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="uploadConceptSetModalTitle">
+                            <i class="fas fa-upload"></i> {{ 'ui.admin.concept.conceptSet.upload' | i18n }}
+                        </h5>
+                        <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">
+                                <i class="fa fa-times"></i>
+                            </span>
+                        </button>
+                    </div>
+                    <form novalidate="novalidate" class="form" ng-submit="uploadConceptSetSheet(uploadConceptSheetForm)"
+                        name="uploadConceptSheetForm">
+                        <div class="modal-body">
+                            <div class="container-fluid">
+                                <div class="form-group row">
+                                    <div class="col-12">
+                                        <div class="alert alert-light">
+                                            <h5><i class="fas fa-info-circle"></i> {{
+                                                'ui.admin.concept.conceptSet.upload.help' | i18n }}</h5>
+                                            {{ 'ui.admin.concept.conceptSet.upload.help.text' | i18n }}
+                                        </div>
+                                        <div class="float-right">
+                                            <a href="/org.santedb.admin/content/concept-set-template.csv">
+                                                <i class="fas fa-download"></i> {{
+                                                'ui.admin.concept.conceptSet.upload.template' | i18n }}
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-sm-12 col-md-3 control-label">
+                                        {{ 'ui.admin.concept.conceptSet.upload.file' | i18n }}
+                                        <hint-popover hint-title="ui.admin.concept.conceptSet.upload.file" />
+                                    </label>
+                                    <div class="col-sm-12 col-md-9">
+                                        <input id="source-file" type="file" ng-model="uploadSet.source"
+                                            class="form-control" name="source" valid-file="valid-file"
+                                            required="required" accept=".csv" />
+                                        <div class="text-danger" ng-if="uploadConceptSheetForm.source.$error['required']">
+                                            <i class="fas fa-exclamation-triangle"></i> {{ 'ui.error.required' | i18n }}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-sm-12 col-md-3 control-label">
+                                        {{ 'ui.admin.concept.conceptSet.upload.language' | i18n }}
+                                        <hint-popover hint-title="ui.admin.concept.conceptSet.upload.language" />
+                                    </label>
+                                    <div class="col-sm-12 col-md-9">
+                                        <div class="input-group">
+                                            <ref-term-select class="form-control" name="uploadLanguage"
+                                                required="required" code-system-url="'urn:ietf:bcp:47'"
+                                                ng-model="uploadSet.language">
+                                            </ref-term-select>
+                                        </div>
+                                        <div class="text-danger"
+                                            ng-if="uploadConceptSheetForm.uploadLanguage.$error['required']">
+                                            <i class="fas fa-exclamation-triangle"></i> {{ 'ui.error.required' | i18n }}
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button class="btn btn-secondary" type="button" data-dismiss="modal" data-toggle="none">
+                                <i class="fa fa-times"></i> {{ 'ui.action.cancel' | i18n }}</button>
+                            <button type="submit" class="btn btn-primary" id="uploadConceptSheetButton"
+                                ng-disabled="uploadConceptSheetForm.$invalid">
+                                <i class="fa fa-upload"></i> {{ 'ui.action.upload' | i18n }} </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

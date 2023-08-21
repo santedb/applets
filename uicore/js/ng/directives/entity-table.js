@@ -37,6 +37,8 @@ angular.module('santedb-lib')
                 render: "<",
                 i18nPrefix: "<",
                 sort: "<",
+                operation: "<",
+                operationScope: "<",
                 defaultFilter: "<",
                 canFilter: "<",
                 canSize: "<",
@@ -46,7 +48,8 @@ angular.module('santedb-lib')
                 stateless: "<",
                 subResourceHolder: "=",
                 keyProperty: "<",
-                itemSupplement: "<"
+                itemSupplement: "<",
+                noDeleted: "<"
             },
             restrict: 'E',
             replace: true,
@@ -149,43 +152,54 @@ angular.module('santedb-lib')
                                 return {
                                     text: `<i class="${b.icon}"></i> ` + SanteDB.locale.getString(b.label ? scope.i18nPrefix + b.label : 'ui.action.' + b.name),
                                     className: `btn ${b.className || 'btn-default'}`,
-                                    attr: { id: `${attrs.type}${b.name}` },
+                                    attr: { id: `${attrs.type}${b.name}`, title: SanteDB.locale.getString(b.hint || (b.label ? scope.i18nPrefix + b.label : 'ui.action.' + b.name)) },
                                     action: function (e, dt, node, config) {
                                         if (b.sref)
                                             $state.go(b.sref, b.parms);
                                         else if (b.href)
                                             window.location = b.href;
-                                        else
+                                        else {
                                             scope.$parent[b.action]();
+                                        }
+
                                     }
                                 }
                             });
 
                         // Add refresh button
                         buttons.push(
-                            'reload'
+                            {
+                                text: "<i class='fas fa-sync'></i> " + SanteDB.locale.getString("ui.action.reload"),
+                                className: "btn btn-success",
+                                action: function(e, dt, node, config) {
+                                    $(element).attr('newQueryId', 'true');
+                                    dt.ajax.reload();
+                                }
+                            }
                         );
 
                         // Add a show obsolete button
-                        buttons.push({
-                            text: "<i class='fas fa-trash'></i> " + SanteDB.locale.getString("ui.action.showDeleted"),
-                            className: "btn btn-light",
-                            action: function (e, dt, node, config) {
+                        if (!scope.noDeleted) {
+                            buttons.push({
+                                text: "<i class='fas fa-trash'></i> " + SanteDB.locale.getString("ui.action.showDeleted"),
+                                className: "btn btn-light",
+                                action: function (e, dt, node, config) {
 
-                                var btn = $("button.btn-light:has(i.fa-trash)", element);
-                                if (btn.hasClass("active")) { // active to inactive
-                                    scope.defaultQuery.obsoletionTime = 'null';
-                                    btn.removeClass("active");
+                                    var btn = $("button.btn-light:has(i.fa-trash)", element);
+                                    if (btn.hasClass("active")) { // active to inactive
+                                        scope.defaultQuery.obsoletionTime = 'null';
+                                        btn.removeClass("active");
+                                    }
+                                    else {
+                                        scope.defaultQuery.obsoletionTime = '!null';
+                                        btn.addClass("active");
+                                    }
+
+                                    dt.ajax.reload();
+
                                 }
-                                else {
-                                    scope.defaultQuery.obsoletionTime = '!null';
-                                    btn.addClass("active");
-                                }
-
-                                dt.ajax.reload();
-
-                            }
-                        });
+                            });
+                        }
                     }
 
                     // Default is true
@@ -245,6 +259,9 @@ angular.module('santedb-lib')
                                         searchPromise = SanteDB.resources[attrs.type.toCamelCase()].findAssociatedAsync(null, attrs.subResource, query, null, scope.external);
                                     }
                                 }
+                                else if(scope.operation) {
+                                    searchPromise = SanteDB.resources[attrs.type.toCamelCase()].invokeOperationAsync(scope.operationScope, scope.operation, query, scope.external);
+                                }
                                 else {
                                     searchPromise = SanteDB.resources[attrs.type.toCamelCase()].findAsync(query, undefined, scope.external);
                                 }
@@ -255,9 +272,9 @@ angular.module('santedb-lib')
                                     res.resource = res.resource || [];
 
                                     // Is there supplemental information required for each item?
-                                    if(Array.isArray(scope.itemSupplement)) {
-                                        res.resource = await Promise.all(res.resource.map(async res=> {
-                                            for(var s in scope.itemSupplement) {
+                                    if (Array.isArray(scope.itemSupplement)) {
+                                        res.resource = await Promise.all(res.resource.map(async res => {
+                                            for (var s in scope.itemSupplement) {
                                                 res = await scope.itemSupplement[s](res);
                                             }
                                             return res;

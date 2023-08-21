@@ -73,7 +73,8 @@ angular.module('santedb').controller('InitialSettingsController', ['$scope', '$r
                 if (!retVal) return;
 
                 // Rewrite guard
-                var guardFilterRegex = new RegExp('^([\\!\\sA-Za-z\\.&|]*?)\\[([A-Za-z]*?)\\](.*)$');
+                var guardFilterRegex = /^([\!\sA-Za-z\.&|]*?)\[([A-Za-z]*?)\](.*)$/;
+                var valueRegex = /^(\w+?)\=(.*)$/;
                 var newGuard = "";
                 while (oldGuard.length > 0) {
                     var match = guardFilterRegex.exec(oldGuard);
@@ -89,6 +90,24 @@ angular.module('santedb').controller('InitialSettingsController', ['$scope', '$r
                 referenceObjects
                     .filter(function (f) { return $scope.config.sync.subscribeTo && $scope.config.sync.subscribeTo.indexOf(f.id) > -1; })
                     .forEach(function (subscribed) {
+                        var match = valueRegex.exec(newGuard);
+                        if (match) {
+                            var op = "==", value = match[2];
+                            if(value.startsWith("!")) {
+                                op = "!=";
+                                value = value.substring(1);
+                            }
+                            switch (value) {
+                                case "null":
+                                case "true":
+                                case "false":
+                                    newGuard = `subscribed.${match[1]}${op}${value}`;
+                                    break;
+                                default:
+                                    newGuard = `subscribed.${match[1]}${op}'${value}'`;
+                                    break;
+                            }
+                        }
                         var e = $scope.$eval(newGuard, { "subscribed": subscribed });
                         retVal &= (e != null) && (e !== false);
                     });

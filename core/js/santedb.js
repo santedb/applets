@@ -2018,15 +2018,15 @@ function SanteDBWrapper() {
                     qrCodeData = await SanteDB.application.scanBarcodeAsync();
 
                 // QR Code is a signed code
-                if (jwsDataPattern.test(qrCodeData)) {
-                    var result = await SanteDB.application.ptrSearchAsync(qrCodeData, !noValidate, upstream || false);
+                if(svrpPattern.test(qrCodeData)) {
+                    var match = svrpPattern.exec(qrCodeData);
+                    var result = await SanteDB.application.ptrSearchAsync(match[1], !noValidate, upstream || false);
                     result.$novalidate = noValidate;
                     result.$upstream = upstream;
                     return result;
                 }
-                else if(svrpPattern.test(qrCodeData)) {
-                    var match = svrpPattern.exec(qrCodeData);
-                    var result = await SanteDB.application.ptrSearchAsync(atob(match[1]), !noValidate, upstream || false);
+                else if (jwsDataPattern.test(qrCodeData)) {
+                    var result = await SanteDB.application.ptrSearchAsync(qrCodeData, !noValidate, upstream || false);
                     result.$novalidate = noValidate;
                     result.$upstream = upstream;
                     return result;
@@ -2038,7 +2038,20 @@ function SanteDBWrapper() {
                         var parser = SanteDB.application.getIdentifierParser(idDomain[0]);
                         if (parser) qrCodeData = parser(qrCodeData);
                     }
-                    var result = await SanteDB.resources.entity.findAsync({ "identifier.value": qrCodeData });
+
+                    var query = {};
+                    if(qrCodeData.value) {
+                        query = {
+                            "identifier.value" : qrCodeData.value,
+                            "identifier.checkDigit" : qrCodeData.checkDigit
+                        };
+                    }
+                    else {
+                        query = {
+                            "identifier.value" : qrCodeData
+                        }
+                    }
+                    var result = await SanteDB.resources.entity.findAsync(query);
                     result.$search = qrCodeData;
                     return result;
                 }
@@ -2749,7 +2762,13 @@ function SanteDBWrapper() {
      * @property {ResourceWrapper} dispatcherQueue Functions for interacting with {@link DispatcherQueueInfo}
      * @property {ResourceWrapper} sessionInfo Functions for interacting with {@link SessionInfo}
      * @property {ResourceWrapper} probe Functions for interacting with {@link Probe}
-     * @property {ResourceWrapper} queue Functions for interacting with system synchronization queues
+     * @property {ResourceWrapper} dispatcherQueue Functions for interacting with system synchronization queues
+     * @property {ResourceWrapper} conceptReferenceTerm Functions for interacting with {@link ConceptReferenceTerm}
+     * @property {ResourceWrapper} foreignData Functions for interacting with foreign data uploades
+     * @property {ResourceWrapper} foreignDataMap Functions for interacting with {@link ForeignDataMap}
+     * @property {ResourceWrapper} appletSolution Functions for interacting with system applet solutions
+     * @property {ResourceWrapper} applet Functions for interacting with system applets
+     * 
      */
     function ResourceApi() {
 
@@ -3291,7 +3310,7 @@ function SanteDBWrapper() {
             api: _ami
         });
 
-         /**
+      /**
        * @type {ResourceWrapper}
        * @memberOf SanteDBWrapper.resources
        * @summary Wrapper for relationship validation rules
@@ -3300,6 +3319,39 @@ function SanteDBWrapper() {
             resource: "RelationshipValidationRule",
             accept: "application/json",
             api: _ami
+        });
+
+      /**
+       * @type {ResourceWrapper}
+       * @memberOf SanteDBWrapper.resources
+       * @summary Wrapper for applets 
+       */
+      this.applet = new ResourceWrapper({
+            resource: "Applet",
+            accept: "application/json",
+            api: _ami
+        });
+
+      /**
+       * @type {ResourceWrapper}
+       * @memberOf SanteDBWrapper.resources
+       * @summary Wrapper for appletSolution 
+       */
+      this.appletSolution = new ResourceWrapper({
+            resource: "AppletSolution",
+            accept: "application/json",
+            api: _ami
+        });
+
+        /**
+       * @type {ResourceWrapper}
+       * @memberOf SanteDBWrapper.resources
+       * @summary Wrapper for reference term <> concept mapping 
+       */
+        this.conceptReferenceTerm = new ResourceWrapper({
+            resource: 'ConceptReferenceTerm',
+            accept: _viewModelJsonMime,
+            api: _hdsi
         })
     };
 
@@ -3621,12 +3673,13 @@ function SanteDBWrapper() {
                 try {
                     var tokenData = _extractJwtData(oauthResponse.id_token);
                     // Set the locale
+                    console.info(tokenData);
                     if (tokenData.lang)
                         __SanteDBAppService.SetLocale(tokenData.lang);
                     else if (tokenData['urn:santedb:org:lang'])
                         __SanteDBAppService.SetLocale(tokenData['urn:santedb:org:lang']);
                     else
-                        __SanteDBAppService.SetLocale(null); // default locale
+                        __SanteDBAppService.SetLocale(navigator.language || navigator.userLanguage); // default locale
 
                 }
                 catch (e) {
@@ -3639,7 +3692,7 @@ function SanteDBWrapper() {
          * @constant
          * @memberof SanteDBWrapper.AuthenticationApi
          */
-        SYSTEM_USER: "fadca076-3690-4a6e-af9e-f1cd68e8c7e8";
+        this.SYSTEM_USER = "fadca076-3690-4a6e-af9e-f1cd68e8c7e8";
         /**
          * @summary SID for ANONYMOUS user
          * @constant

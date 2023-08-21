@@ -1,0 +1,53 @@
+<div xmlns="http://www.w3.org/1999/xhtml" xmlns:sdb="http://santedb.org/applet">
+    <sdb:script static="false">~/controllers/warehouse/view.js</sdb:script>
+    <sdb:state name="santedb-admin.bi.warehouse.view" abstract="false">
+        <sdb:url>/view?{:id}</sdb:url>
+        <sdb:view>
+            <sdb:demand>1.3.6.1.4.1.33349.3.1.5.9.2.0.10</sdb:demand>
+            <sdb:controller>WarehouseViewController</sdb:controller>
+            <sdb:title lang="en">View Datamart</sdb:title>
+        </sdb:view>
+    </sdb:state>
+
+    <div ng-if="!dataMart">
+        <div class="card shadow">
+            <div class="card-body">
+                <i class="fas fa-circle-notch fa-spin"></i> {{ 'ui.wait' | i18n }}
+            </div>
+        </div>
+    </div>
+
+    <div ng-if="dataMart">
+        <div class="scroll-sticky">
+            <div class="card shadow mb-2">
+                <div class="card-body container-fluid p-2">
+                    <div class="row">
+                        <div class="col-sm-12 col-md-6">
+                            <h2 class="mr-2 d-inline">{{ dataMart.name }}</h2><span class="badge badge-info">{{ dataMart.id }}</span>
+                        </div>
+                        <div class="col-sm-12 col-md-6">
+                            <span class="float-right m-auto badge badge-dark">
+                                <i class="fas fa-code-branch"></i> v. {{dataMart.meta.version}}
+                            </span>
+                        </div>
+                        <div class="col-12">
+                            <div ng-bind-html="dataMart.meta.doc.doc"></div>
+                        </div>
+                        <div class="col-sm-12 col-md-6 bol-lg-4">
+                            <ul class="list-unstyled p-0 m-0">
+                                <li ng-repeat="aut in dataMart.meta.authors"><i class="far fa-user"></i> {{aut}}</li>
+                            </ul>
+                        </div>
+                        <div class="col-sm-12 col-md-6 col-lg-4">
+                            {{ 'ui.model.bi.dataMart.produces' | i18n }} <i class="fas fa-database"></i> {{ dataMart.produces.name }}
+                        </div>
+                        <div class="col-sm-12 col-md-6 offset-md-6 col-lg-4">
+                            {{ 'ui.model.bi.dataMart.policies' | i18n }} <span class="mr-2" ng-repeat="pol in dataMart.produces.meta.policies"><i class="fas fa-lock"></i> {{pol}}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <widget-tabs context-name="'org.santedb.bi.warehouse'" scoped-object="dataMart" />
+    </div>
+</div>

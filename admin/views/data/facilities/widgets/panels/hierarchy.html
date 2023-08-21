@@ -46,7 +46,10 @@ oc-lazy-load="{name:'HierarchyWidgetController', files: ['/org.santedb.admin/con
                         default-query="{ 'obsoletionTime' : 'null', _viewModel: 'fastView', 'relationship[Parent].target' : scopedObject.id }"
                         render="{ name: 'renderName', address: 'renderAddress', typeConcept: 'renderType', statusConcept : 'renderStatusConcept' }"
                         i18n-prefix="'ui.model.entity.'"
-                        item-actions="[ { name: 'view', sref: 'santedb-admin.data.place.view', demand: '1.3.6.1.4.1.33349.3.1.5.9.2.4', className: 'btn-info', icon: 'fa fa-eye' }, { name: 'remove', action: 'removeChild', demand: '1.3.6.1.4.1.33349.3.1.5.9.2.4.2.0', className: 'btn-danger', icon: 'fa fa-times' } ]"
+                        item-actions="[ 
+                            { name: 'view', sref: 'santedb-admin.data.place.view', demand: '1.3.6.1.4.1.33349.3.1.5.9.2.4', className: 'btn-info', icon: 'fa fa-eye' }, 
+                            { name: 'remove', action: 'removeChild', demand: '1.3.6.1.4.1.33349.3.1.5.9.2.4.2.0', className: 'btn-danger', icon: 'fa fa-times' } 
+                        ]"
                         properties="[ 'name', 'address', 'typeConcept', 'statusConcept' ]" button-bar="'#addChildHeader'" />
                 </div>
 

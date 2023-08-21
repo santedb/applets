@@ -21,6 +21,20 @@
  */
 angular.module('santedb').controller('IdentityDomainEditController', ["$scope", "$rootScope", "$stateParams", "$state", "$timeout", function ($scope, $rootScope, $stateParams, $state, $timeout) {
 
+    async function initializeView()
+    {
+        try {
+            var checkDigits = await SanteDB.resources.identityDomain.getAsync("_checkDigit");
+            var validators = await SanteDB.resources.identityDomain.getAsync("_validator");
+            $timeout(() => {
+                $scope.checkDigitAlgorithms = checkDigits.resource;
+                $scope.customValidators = validators.resource;
+            });
+        }
+        catch(e) {
+            console.warn(e);
+        }
+    }
 
     // Load the authority
     async function loadDomain(id) {
@@ -45,6 +59,8 @@ angular.module('santedb').controller('IdentityDomainEditController', ["$scope", 
         loadDomain($stateParams.id);
     else
         $scope.domain = new IdentityDomain();
+
+    initializeView();
 
     // Validate the form data
     async function validateForm() {
@@ -125,12 +141,12 @@ angular.module('santedb').controller('IdentityDomainEditController', ["$scope", 
 
             if(!$scope.domain.id) {
                 var domain = await SanteDB.resources.identityDomain.insertAsync($scope.domain);
-                toastr.success(SanteDB.locale.getString("ui.model.identityDomain.saveSuccess"));
+                toastr.success(SanteDB.locale.getString("ui.admin.domain.saveSuccess"));
                 $state.go('santedb-admin.data.domain.edit', {id: domain.id});
             }
             else {
                 var domain = await SanteDB.resources.identityDomain.updateAsync($stateParams.id, $scope.domain);
-                toastr.success(SanteDB.locale.getString("ui.admin.identityDomain.saveSuccess"));
+                toastr.success(SanteDB.locale.getString("ui.admin.domain.saveSuccess"));
                 $state.go('santedb-admin.data.domain.index', {id: domain.id});
 
             }
@@ -140,9 +156,12 @@ angular.module('santedb').controller('IdentityDomainEditController', ["$scope", 
         }
         finally {
             SanteDB.display.buttonWait("#saveAuthorityButton", false);
-            try { $scope.$apply(); }
-            catch (e) {}
         }
     }
 
+    $scope.$watch("domain.validation", function(n, o) {
+        if(n) {
+            $scope.domain._exampleId = new RandExp(new RegExp($scope.domain.validation)).gen();
+        }
+    })
 }]);
