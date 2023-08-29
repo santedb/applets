@@ -515,4 +515,5 @@
     <string name="ui.admin.concept.conceptSet.upload.template">Download Sample Concept Set CSV</string>
     <string name="ui.admin.concept.conceptSet.upload.file.hint">The comma-save (CSV) file to be imported</string>
     <string name="ui.admin.concept.conceptSet.upload.language.hint">The language of the &lt;code&gt;Name&lt;code&gt; column in the file</string>
+    <string name="ui.admin.concept.conceptSet.edit.profile.title">New Concept Set</string>
 </resources>
