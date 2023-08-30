@@ -16,20 +16,7 @@ angular.module('santedb').controller('ConceptSetWidgetController', ["$scope", "$
         },
         conceptClass: ConceptClassKeys.Other,
         conceptSet: [$scope.scopedObject.id],
-        referenceTerm: {
-            $other: [new ConceptReferenceTerm({
-                relationshipType: ConceptRelationshipTypeKeys.SameAs
-            })
-            ]
-        },
-        relationship: {
-            $other: [
-                new ConceptRelationship({
-                    relationshipType: ConceptRelationshipTypeKeys.SameAs
-                })
-            ]
-        },
-        statusConcept: StatusKeys.Active,
+        statusConcept: StatusKeys.Active
     });
 
 
@@ -124,42 +111,59 @@ angular.module('santedb').controller('ConceptSetWidgetController', ["$scope", "$
         });
     }
 
-    // Add reference term to the code system
-    async function saveConcept(newConceptForm) {
-        if (newConceptForm.$invalid) return;
+    // Add concept to the to set
+    async function associateConcept(associateConceptForm) {
+        if (associateConceptForm.$invalid) return;
 
         try {
-            SanteDB.display.buttonWait("#addNewConceptButtonActions button:not([data-toggle])", true);
+            SanteDB.display.buttonWait("#associateConceptModalButtonActions button:not([data-toggle])", true);
 
             // First - we want to prepare a submission bundle
-            var submissionBundle = new Bundle({ resource: [] });
-            var concept = angular.copy($scope.edit.concept);
-            concept.id = concept.id || SanteDB.application.newGuid();
-            submissionBundle.resource.push(concept);
-
-            // TODO: Ensure that proper entity cleanup is performed prior to submitting
-
-            mappings = {};
+            var concept = new Concept(angular.copy($scope.edit.concept));
             // Register the refenrece term
-            if (!newConceptForm.$pristine) {
-                var result = await SanteDB.resources.bundle.insertAsync(submissionBundle);
-                toastr.success(SanteDB.locale.getString("ui.admin.concept.codeSystem.saveTerm.success", { mnemonic: concept.mnemonic }));
+            if (!associateConceptForm.$pristine) {
 
-                if ($scope.edit.referenceTerm.$then == 'another') {
+                // Existing concept or a new concept?
+                if (concept.id) {
+                    var newPatch = new Patch({
+                        appliesTo: {
+                            type: "Concept",
+                            id: concept.id
+                        },
+                        change: [
+                            {
+                                op: PatchOperationType.Add,
+                                path: "conceptSet",
+                                value: $scope.scopedObject.id
+                            }
+                        ]
+                    });
+
+                    concept = await SanteDB.resources.concept.patchAsync(concept.id, null, newPatch, true);
+                }
+                else {
+                    concept.id = SanteDB.application.newGuid();
+                    concept.conceptSet = [$scope.scopedObject.id];
+                    concept = await SanteDB.resources.concept.insertAsync(concept);
+                }
+
+                toastr.success(SanteDB.locale.getString("ui.admin.concept.conceptSet.add.success"));
+
+                if ($scope.edit.concept.$then == 'another') {
                     $timeout(() => {
                         $scope.edit.concept = angular.copy($scope.conceptTemplate);
-                        newConceptForm.$setPristine();
-                        newConceptForm.$setUntouched();
-                        $scope.quickAddConceptForm.$setUntouched();
-                        $scope.quickAddConceptForm.$setPristine();
-                        $scope.quickAddConceptForm.$submitted = false;
-                        newConceptForm.$submitted = false;
-                        newConceptForm.$valid = false;
-                        newConceptForm.$invalid = true;
-
+                        associateConceptForm.$setPristine();
+                        associateConceptForm.$setUntouched();
+                        $scope.associateConceptForm.$setUntouched();
+                        $scope.associateConceptForm.$setPristine();
+                        $scope.associateConceptForm.$submitted = false;
+                        associateConceptForm.$submitted = false;
+                        associateConceptForm.$valid = false;
+                        associateConceptForm.$invalid = true;
                     });
                 }
                 else {
+                    $("#ConceptSetMemberTable table").DataTable().draw();
                     $("#addConceptModal").modal('hide');
                 }
             }
@@ -172,7 +176,7 @@ angular.module('santedb').controller('ConceptSetWidgetController', ["$scope", "$
             $rootScope.errorHandler(e);
         }
         finally {
-            SanteDB.display.buttonWait("#addNewConceptButtonActions button:not([data-toggle])", false);
+            SanteDB.display.buttonWait("#associateConceptModalButtonActions button:not([data-toggle])", false);
         }
     }
 
@@ -215,11 +219,11 @@ angular.module('santedb').controller('ConceptSetWidgetController', ["$scope", "$
             SanteDB.display.buttonWait("#saveConceptSetButton", true);
             // Update
             var conceptSet = $scope.editObject || $scope.scopedObject;
-            
+
             // Remove any model objects 
             delete conceptSet.conceptModel;
-            if(conceptSet.compose && conceptSet.compose.$other) {
-                conceptSet.compose.$other.forEach(o=>delete o.targetModel);
+            if (conceptSet.compose && conceptSet.compose.$other) {
+                conceptSet.compose.$other.forEach(o => delete o.targetModel);
             }
 
             await SanteDB.resources.conceptSet.updateAsync(conceptSet.id, conceptSet);
@@ -297,10 +301,10 @@ angular.module('santedb').controller('ConceptSetWidgetController', ["$scope", "$
     });
 
     $scope.saveConceptSet = saveConceptSet;
-    $scope.saveConcept = saveConcept;
-    $scope.edit = { concept: angular.copy($scope.conceptTemplate) };
+    $scope.edit = { concept: angular.copy($scope.conceptTemplate), mode: 'existing' };
     $scope.removeConceptMember = removeConceptMember;
     $scope.uploadConceptSetSheet = uploadConceptSetSheet;
+    $scope.associateConcept = associateConcept;
     $scope.unDelete = unDelete;
 
     $scope.uploadConceptSet = function () {
@@ -344,6 +348,15 @@ angular.module('santedb').controller('ConceptSetWidgetController', ["$scope", "$
     $scope.renderName = function (concept) {
         return SanteDB.display.renderConcept(concept);
     }
+
+    $scope.$watch("edit.concept.mnemonic", async function(n, o) {
+        if(n && o) {
+            var existing = await SanteDB.resources.concept.findAsync({ mnemonic: n, _count: 0, _includeTotal: true });
+            $timeout(()=> {
+                $scope.associateConceptForm.mnemonicInput.$setValidity('duplicate', existing.totalResults == 0);
+            });
+        }
+    })
 
     $scope.renderIsMember = function (concept) {
         if (!concept.conceptSetModel || concept.conceptSetModel[$scope.scopedObject.mnemonic]) {

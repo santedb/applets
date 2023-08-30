@@ -516,4 +516,8 @@
     <string name="ui.admin.concept.conceptSet.upload.file.hint">The comma-save (CSV) file to be imported</string>
     <string name="ui.admin.concept.conceptSet.upload.language.hint">The language of the &lt;code&gt;Name&lt;code&gt; column in the file</string>
     <string name="ui.admin.concept.conceptSet.edit.profile.title">New Concept Set</string>
+    <string name="ui.admin.concept.conceptSet.assign">Assign Concept to Set</string>
+    <string name="ui.admin.concept.conceptSet.assign.existing">Assign an existing concept</string>
+    <string name="ui.admin.concept.conceptSet.assign.new">Assign a new concept</string>
+    <string name="ui.admin.concept.conceptSet.assign.existing.search">Assign Concept</string>
 </resources>
