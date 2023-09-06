@@ -299,7 +299,9 @@ angular.module('santedb').controller('CodeSystemWidgetController', ["$scope", "$
 
             // Name comes in the format of { lang: [values] } so we have to normalize these to $other
             var newName = [];
-            Object.keys(refTerm.name).forEach(k => { refTerm.name[k].forEach(v => newName.push(new ReferenceTermName({ language: k, value: v }))) });
+            if(refTerm.name) {
+                Object.keys(refTerm.name).forEach(k => { refTerm.name[k].forEach(v => newName.push(new ReferenceTermName({ language: k, value: v }))) });
+            }
             refTerm.name = { $other: newName };
             refTerm.concepts = mappings.resource || [ { relationshipType: '2c4dafc2-566a-41ae-9ebc-3097d7d22f4a' } ];
             refTerm._originalConcepts = angular.copy(mappings.resource);

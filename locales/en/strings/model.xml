@@ -583,6 +583,19 @@
   <string name="ui.model.conceptSet.compose.instruction">Composition</string>
 
   <string name="ui.model.concept.mnemonic">Mnemonic</string>
+  <string name="ui.model.concept.mnemonic.hint"><![CDATA[The concept <code>mnemonic</code> is a unique, human readable name for the concept. These must be unique in the entire SanteDB instance. Try to use a consistent pattern such as <code>type-concept</code> for example <code>Gender-Female</code>]]></string>
+  <string name="ui.model.concept.conceptClass">Classification</string>
+  <string name="ui.model.concept.conceptClass.hint">The classification allows SanteDB to understand the broad use or meaning of the concept</string>
   <string name="ui.model.concept.name">Name(s)</string>
+  <string name="ui.model.concept.name.hint">The name which will appear in the user interfaces</string>
   <string name="ui.model.concept.conceptSet">Member of Set</string>
+  <string name="ui.model.concept.conceptSet.hint">The groupings of sets to which this concept belongs.</string>
+  <string name="ui.model.concept.referenceTerm">Reference Term(s)</string>
+  <string name="ui.model.concept.referenceTerm.hint">The wire-level terms which should be used for this concept</string>
+  <string name="ui.model.concept.updatedBy">Updated By</string>
+  <string name="ui.model.concept.createdBy">Created By</string>
+  <string name="ui.admin.concept.concept.delete.confirm">Are you sure you want to delete the identified concept?</string>
+  <string name="ui.admin.concept.concept.delete.success">Concept deleted successfully</string>
+  <string name="ui.admin.concept.concept.unDelete.confirm">Are you sure you want to un-delete this concept?</string>
+  <string name="ui.admin.concept.concept.unDelete.success">Concept un-deleted successfully</string>
 </resources>

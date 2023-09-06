@@ -520,4 +520,6 @@
     <string name="ui.admin.concept.conceptSet.assign.existing">Assign an existing concept</string>
     <string name="ui.admin.concept.conceptSet.assign.new">Assign a new concept</string>
     <string name="ui.admin.concept.conceptSet.assign.existing.search">Assign Concept</string>
+    <string name="ui.admin.concept.concept.edit.profile.title">Concept Properties</string>
+    <string name="ui.admin.concept.save.success">Concept saved successfully</string>
 </resources>

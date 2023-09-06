@@ -1,5 +1,6 @@
 label.control-label {
     text-align: left;
+    vertical-align: middle;
     font-weight: bold;
 }
 
@@ -13,7 +14,8 @@ label.control-label {
 }
 @media only screen and (min-width:576px) {
     label.control-label {
-        text-align: right
+        text-align: right;
+        vertical-align: middle;
     }
 }
 @media only screen and (max-width:768px) {

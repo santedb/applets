@@ -320,8 +320,8 @@
       <property name="mnemonic" />
     </property>
 
-    <property name="createdBy" behavior="never" />
-    <property name="creationTime" behavior="never" />
+    <property name="createdBy" />
+    <property name="creationTime" />
     <property name="creationTimeModel" behavior="never" />
     <property name="version" />
     <property name="name" all="true" behavior="always">
@@ -874,6 +874,17 @@
     <property name="name" behavior="always" all="true" />
     <property name="mnemonic" behavior="always" />
     <property name="id" behavior="always" />
+    <property name="statusConcept" />
+    <property name="statusConceptModel" behavior="always">
+      <property name="mnemonic" />
+    </property>
+    <property name="referenceTerm" behavior="always" all="true">
+      <property name="*" all="false">
+        <property name="relationshipType"/>
+        <property name="term" behavior="always"/>
+        <property name="termModel" behavior="always" ref="ReferenceTerm" />
+      </property>
+    </property>
   </type>
   <type type="ConceptSet" all="true">
     <property name="compose" behavior="always" all="true">
@@ -886,13 +897,13 @@
     <property name="id" />
     <property name="source" />
     <property name="target" />
-    <property name="instruction"/>
+    <property name="instruction" />
     <property name="targetModel" behavior="always" all="false">
       <property name="id" />
       <property name="mnemonic" />
       <property name="name" />
       <property name="url" />
       <property name="oid" />
-      </property>
+    </property>
   </type>
 </ViewModel>

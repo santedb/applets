@@ -2926,6 +2926,40 @@ function SanteDBWrapper() {
             resource: "Observation",
             api: _hdsi
         });
+
+        /**
+            * @type {ResourceWrapper}
+            * @memberof SanteDBWrapper.ResourceApi
+            * @summary Represents the CodedObservation Resource
+            */
+        this.codedObservation = new ResourceWrapper({
+            accept: _viewModelJsonMime,
+            resource: "CodedObservation",
+            api: _hdsi
+        });
+
+        /**
+            * @type {ResourceWrapper}
+            * @memberof SanteDBWrapper.ResourceApi
+            * @summary Represents the quantity observation Resource
+            */
+        this.quantityObservation = new ResourceWrapper({
+            accept: _viewModelJsonMime,
+            resource: "QuantityObservation",
+            api: _hdsi
+        });
+
+        /**
+            * @type {ResourceWrapper}
+            * @memberof SanteDBWrapper.ResourceApi
+            * @summary Represents the TextObservation Resource
+            */
+        this.textObservation = new ResourceWrapper({
+            accept: _viewModelJsonMime,
+            resource: "TextObservation",
+            api: _hdsi
+        });
+
         /**
             * @type {ResourceWrapper}
             * @memberof SanteDBWrapper.ResourceApi
@@ -2994,6 +3028,16 @@ function SanteDBWrapper() {
         this.concept = new ResourceWrapper({
             accept: _viewModelJsonMime,
             resource: "Concept",
+            api: _hdsi
+        });
+        /**
+            * @type {ResourceWrapper}
+            * @memberof SanteDBWrapper.ResourceApi
+            * @summary Represents the ConceptClass Resource
+            */
+        this.conceptClass = new ResourceWrapper({
+            accept: _viewModelJsonMime,
+            resource: "ConceptClass",
             api: _hdsi
         });
         /**

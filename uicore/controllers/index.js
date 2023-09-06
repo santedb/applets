@@ -350,6 +350,7 @@ var santedbApp = angular.module('santedb', ['ngSanitize', 'ui.router', 'oc.lazyL
          */
         $rootScope.errorHandler = function (e) {
 
+            console.error(e);
             // HACK: Angular JS - We want to have the error display update on digest
             $timeout(_ => {
                 $rootScope.error = prepareErrorForDisplay(e);
