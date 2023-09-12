@@ -1,0 +1,12 @@
+<ViewModel xmlns="http://santedb.org/model/view">
+    <include>base</include>
+
+    <type type="Concept" all="true">
+        <property name="createdBy" />
+        <property name="creationTime" />
+        <property name="obsoletedBy" />
+        <property name="obsoletionTime" />
+        <property name="mnemonic" />
+        <property name="sequence" />
+    </type>
+</ViewModel>

@@ -321,7 +321,7 @@ angular.module('santedb').controller('CodeSystemWidgetController', ["$scope", "$
     $scope.renderMappings = function (term) {
         try {
             if (term.concepts) {
-                return term.concepts.map(map => `<span class="badge badge-info">${map.relationshipTypeModel.name}</span> ${map.sourceModel.mnemonic}`).join(', ');
+                return term.concepts.map(map => `<span class="badge badge-info">${map.relationshipTypeModel.name}</span> <a ui-sref="santedb-admin.concept.concepts.view({id: '${map.source}'})"> ${map.sourceModel.mnemonic}</a>`).join(', ');
             }
             else {
                 return SanteDB.locale.getString("ui.none");

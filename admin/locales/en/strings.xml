@@ -522,4 +522,12 @@
     <string name="ui.admin.concept.conceptSet.assign.existing.search">Assign Concept</string>
     <string name="ui.admin.concept.concept.edit.profile.title">Concept Properties</string>
     <string name="ui.admin.concept.save.success">Concept saved successfully</string>
+    <string name="ui.admin.concept.concept.delete.confirm">Are you sure you want to delete the identified concept?</string>
+    <string name="ui.admin.concept.concept.delete.success">Concept deleted successfully</string>
+    <string name="ui.admin.concept.concept.unDelete.confirm">Are you sure you want to un-delete this concept?</string>
+    <string name="ui.admin.concept.concept.unDelete.success">Concept un-deleted successfully</string>
+    <string name="org.santedb.widget.concept.concepts.core.terms">Reference Terms</string>
+    <string name="org.santedb.widget.concept.concepts.core.sets">Concept Sets</string>
+    <string name="org.santedb.widget.concept.concepts.core.properties">Concept Properties</string>
+    <string name="org.santedb.widget.concept.concepts.core.versions">Version History</string>
 </resources>

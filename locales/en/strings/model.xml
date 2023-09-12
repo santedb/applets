@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+  <string name="ui.model.version.current">Current Version</string>
   <string name="ui.model.securityProvenance.type.device">Device Principal</string>
   <string name="ui.model.securityProvenance.type.user">User Principal</string>
   <string name="ui.model.securityProvenance.type.application">Application Principal</string>
@@ -561,7 +562,8 @@
   <string name="ui.model.referenceTerm.concept">Concept(s)</string>
   <string name="ui.model.referenceTerm.concept.hint"><![CDATA[Terms which are used in the internal SanteDB concept dictionary which this term is linked to]]></string>
   <string name="ui.model.referenceTerm.concept.betterMnemonic"><![CDATA[Mnemonics in the SanteDB concept dictionary must be globally UNIQUE, whereas reference term mnemonics are unique within their code system. It is highly recommended administrators create a globally unique mnemonic for any new concepts]]></string>
-
+  <string name="ui.model.referenceTerm.codeSystem">Code System</string>
+  <string name="ui.model.referenceTerm.relationshipType">Relationship</string>
   <!-- Concept Set -->
   <string name="ui.model.conceptSet.name">Name</string>
   <string name="ui.model.conceptSet.name.hint">Provide a short, descriptive name of what this collection of concepts contains</string>
@@ -594,8 +596,5 @@
   <string name="ui.model.concept.referenceTerm.hint">The wire-level terms which should be used for this concept</string>
   <string name="ui.model.concept.updatedBy">Updated By</string>
   <string name="ui.model.concept.createdBy">Created By</string>
-  <string name="ui.admin.concept.concept.delete.confirm">Are you sure you want to delete the identified concept?</string>
-  <string name="ui.admin.concept.concept.delete.success">Concept deleted successfully</string>
-  <string name="ui.admin.concept.concept.unDelete.confirm">Are you sure you want to un-delete this concept?</string>
-  <string name="ui.admin.concept.concept.unDelete.success">Concept un-deleted successfully</string>
+  <string name="ui.model.concept.conceptSet.add">Add Concept Set</string>
 </resources>
