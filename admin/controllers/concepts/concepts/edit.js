@@ -89,6 +89,38 @@ angular.module('santedb').controller('EditConceptController', ["$scope", "$rootS
     // Bind to scope
     $scope.saveConcept = saveConcept;
 
+    
+    // Set the active state
+    $scope.setState = async function (newStatus) {
+        try {
+            SanteDB.display.buttonWait("#btnSetState", true);
+            // Set the status and update
+            var patch = new Patch({
+                appliesTo: new PatchTarget({
+                    id: $scope.concept.id
+                }),
+                change: [
+                    new PatchOperation({
+                        op: PatchOperationType.Replace,
+                        path: "statusConcept",
+                        value: newStatus
+                    })
+                ]
+            });
+            await SanteDB.resources.concept.patchAsync($scope.concept.id, $scope.concept.etag, patch);            
+            toastr.success(SanteDB.locale.getString("ui.model.concept.saveSuccess"));
+
+            $state.reload();
+            
+        }
+        catch (e) {
+            $rootScope.errorHandler(e);
+        }
+        finally {
+            SanteDB.display.buttonWait("#btnSetState", false);
+        }
+    }
+
     // Download code system
     $scope.downloadConcept = function(id) {
 

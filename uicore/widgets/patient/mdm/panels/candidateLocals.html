@@ -9,7 +9,7 @@
 
     <entity-table stateless="true" id="CandidateEntityTable" type="Patient" sub-resource="mdm-candidate" sub-resource-holder="scopedObject.id" 
         search-field="name.component.value"
-        external="true" can-filter="false"
+        upstream="true" can-filter="false"
         default-query="{  _viewModel: 'smpi.reverseRelationship', _noexec: scopedObject.id == undefined }"
         render="{ recordInfo: 'renderEntityInfo', strength: 'renderStrength', createdBy: 'renderCreatedBy' }"
         i18n-prefix="'ui.santedb.widget.mdm.duplicates.'"

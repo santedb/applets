@@ -22,7 +22,7 @@
                         <label class="control-label col-sm-12 col-md-3">{{'ui.model.concept.conceptClass' | i18n
                             }}</label>
                         <div class="col-sm-12 col-md-9">{{ scopedObject.conceptClassModel.name }}</div>
-                        <label class="control-label col-sm-12 col-md-3">{{'ui.model.codeSystem.name' | i18n }}</label>
+                        <label class="control-label col-sm-12 col-md-3">{{'ui.model.concept.name' | i18n }}</label>
                         <div class="col-sm-12 col-md-9">
                             <ul class="list-unstyled mb-0">
                                 <li ng-repeat="(lang, vals) in scopedObject.name">
@@ -30,6 +30,14 @@
                                     <ul class="mb-0 mr-1">
                                         <li ng-repeat="v in vals">{{v}}</li>
                                     </ul>
+                                </li>
+                            </ul>
+                        </div>
+                        <label class="control-label col-sm-12 col-md-3">{{'ui.model.concept.conceptSet' | i18n }}</label>
+                        <div class="col-sm-12 col-md-9">
+                            <ul class="list-unstyled mb-0">
+                                <li ng-repeat="(aut, set) in scopedObject.conceptSetModel">
+                                    <a ui-sref="santedb-admin.concept.conceptSet.view({id : set[0].id})" target="_blank">{{ aut }} - {{ set[0].name }}</a>
                                 </li>
                             </ul>
                         </div>
@@ -61,96 +69,105 @@
                 novalidate="novalidate">
 
                 <div class="form-group row">
-                    <label class="control-label col-sm-12 col-md-3">
-                        {{ 'ui.model.codeSystem.name' | i18n }}
-                        <hint-popover hint-title="ui.model.codeSystem.name" />
+                    <label class="col-sm-12 col-md-3 control-label">
+                        {{ 'ui.model.concept.mnemonic' | i18n }}
+                        <hint-popover hint-title="ui.model.concept.mnemonic" />
                     </label>
                     <div class="col-sm-12 col-md-9">
-                        <input autocomplete="__away" class="form-control" type="text" required="required"
-                            ng-model="editObject.name" name="codeSystemName" maxlength="64" />
-                        <div class="text-danger" ng-if="panel.editForm.codeSystemName.$error['required']">
-                            <i class="fa fa-exclamation-triangle"></i> {{ 'ui.error.required' | i18n }}
+                        <input autocomplete="__away" type="text" maxlength="64" ng-model="editObject.mnemonic"
+                            name="conceptMnemonic" required="required" class="form-control"
+                            pattern="^[a-zA-Z0-9_\-]{2,}$" />
+                        <div class="text-danger" ng-if="panel.editForm.conceptMnemonic.$error['required']">
+                            <i class="fas fa-exclamation-triangle"></i> {{ 'ui.error.required' | i18n }}
                         </div>
-                    </div>
-                </div>
-                <div class="form-group row">
-                    <label class="control-label col-sm-12 col-md-3">
-                        {{ 'ui.model.codeSystem.authority' | i18n }}
-                        <hint-popover hint-title="ui.model.codeSystem.authority" />
-                    </label>
-                    <div class="col-sm-12 col-md-9">
-                        <input autocomplete="__away" class="form-control" type="text" required="required"
-                            ng-model="editObject.authority" name="codeSystemAuthority" maxlength="64"
-                            pattern="^[A-Za-z0-9\s_\-]{1,}$" />
-                        <div class="text-danger" ng-if="panel.editForm.codeSystemAuthority.$error['required']">
-                            <i class="fa fa-exclamation-triangle"></i> {{ 'ui.error.required' | i18n }}
+                        <div class="text-danger" ng-if="panel.editForm.conceptMnemonic.$error['pattern']">
+                            <i class="fas fa-exclamation-triangle"></i> {{ 'ui.error.pattern' | i18n }}
                         </div>
-                        <div class="text-danger" ng-if="panel.editForm.codeSystemAuthority.$error['pattern']">
-                            <i class="fa fa-exclamation-triangle"></i> {{ 'ui.error.pattern' | i18n }}
-                        </div>
-                        <div class="text-danger" ng-if="panel.editForm.codeSystemAuthority.$error['duplicate']">
+                        <div class="text-danger" ng-if="panel.editForm.conceptMnemonic.$error['duplicate']">
                             <i class="fa fa-exclamation-triangle"></i> {{ 'ui.error.duplicate' | i18n }}
                         </div>
                     </div>
                 </div>
                 <div class="form-group row">
-                    <label class="control-label col-sm-12 col-md-3">
-                        {{ 'ui.model.codeSystem.oid' | i18n }}
-                        <hint-popover hint-title="ui.model.codeSystem.oid" />
+                    <label class="col-sm-12 col-md-3 control-label">{{ 'ui.model.concept.conceptClass' | i18n }}
+                        <hint-popover hint-title="ui.model.concept.conceptClass" />
                     </label>
                     <div class="col-sm-12 col-md-9">
-                        <input autocomplete="__away" class="form-control" type="text" required="required"
-                            ng-model="editObject.oid" name="codeSystemOid" maxlength="256"
-                            pattern="^[0-9]*?[0-9\.]*$" />
-                        <div class="text-danger" ng-if="panel.editForm.codeSystemOid.$error['required']">
-                            <i class="fa fa-exclamation-triangle"></i> {{ 'ui.error.required' | i18n }}
-                        </div>
-                        <div class="text-danger" ng-if="panel.editForm.codeSystemOid.$error['pattern']">
-                            <i class="fa fa-exclamation-triangle"></i> {{ 'ui.error.pattern' | i18n }}
-                        </div>
-                        <div class="text-danger" ng-if="panel.editForm.codeSystemOid.$error['duplicate']">
-                            <i class="fa fa-exclamation-triangle"></i> {{ 'ui.error.duplicate' | i18n }}
-                        </div>
+                        <entity-select ng-model="editObject.conceptClass" entity-type="'ConceptClass'"
+                            class="form-control" />
                     </div>
                 </div>
                 <div class="form-group row">
                     <label class="control-label col-sm-12 col-md-3">
-                        {{ 'ui.model.codeSystem.url' | i18n }}
-                        <hint-popover hint-title="ui.model.codeSystem.url" />
+                        <hint-popover hint-title="ui.model.concept.name" />
                     </label>
                     <div class="col-sm-12 col-md-9">
-                        <input autocomplete="__away" class="form-control" type="url" required="required"
-                            ng-model="editObject.url" name="codeSystemUrl" />
-                        <div class="text-danger" ng-if="panel.editForm.codeSystemUrl.$error['required']">
-                            <i class="fa fa-exclamation-triangle"></i> {{ 'ui.error.required' | i18n }}
-                        </div>
-                        <div class="text-danger" ng-if="panel.editForm.codeSystemUrl.$error['duplicate']">
-                            <i class="fa fa-exclamation-triangle"></i> {{ 'ui.error.duplicate' | i18n }}
-                        </div>
+                        <ul class="list-group">
+                            <li class="list-group-item" ng-repeat="name in editObject.name.$other track by $index">
+                                <div class="input-group">
+                                    <input type="text" max-length="256" ng-model="name.value"
+                                        name="conceptName{{$index}}" class="form-control" autocomplete="__away"
+                                        required="required" />
+                                    <div class="input-group-append">
+                                        <ref-term-select class="form-control" name="conceptNameLang{{$index}}"
+                                            code-system-url="'urn:ietf:bcp:47'" ng-model="name.language" />
+                                    </div>
+                                    <div class="input-group-append btn-group">
+                                        <button class="btn btn-primary" type="button"
+                                        ng-click="editObject.name.$other.push({})">
+                                        <i class="fas fa-fw fa-plus-circle"></i> {{ 'ui.action.add' | i18n }}
+                                        </button>
+                                        <button class="btn btn-danger" ng-if="concept.name.$other.length &gt; 1" type="button"
+                                            ng-click="editObject.name.$other.splice($index, 1)">
+                                            <i class="fas fa-fw fa-times-circle"></i>  {{ 'ui.action.remove' | i18n }}
+                                        </button>
+                                    </div>
+                                </div>
+                                <div ng-if="panel.editForm['conceptName' + $index].$error['required']"
+                                    class="text-danger">
+                                    <i class="fas fa-exclamation-triangle"></i> {{ 'ui.error.required' |
+                                    i18n }}
+                                </div>
+                            </li>
+                        </ul>
                     </div>
                 </div>
                 <div class="form-group row">
-                    <label class="control-label col-sm-12 col-md-3">
-                        {{ 'ui.model.codeSystem.version' | i18n }}
-                        <hint-popover hint-title="ui.model.codeSystem.version" />
+                    <label class="col-sm-12 col-md-3 control-label">{{ 'ui.model.concept.conceptSet' | i18n }}
+                        <hint-popover hint-title="ui.model.concept.conceptSet" />
                     </label>
                     <div class="col-sm-12 col-md-9">
-                        <input autocomplete="__away" class="form-control" type="text" ng-model="editObject.version"
-                            name="codeSystemVersion" />
-                    </div>
-                </div>
-                <div class="form-group row">
-                    <label class="control-label col-sm-12 col-md-3">
-                        {{ 'ui.model.codeSystem.description' | i18n }}
-                        <hint-popover hint-title="ui.model.codeSystem.description" />
-                    </label>
-                    <div class="col-sm-12 col-md-9">
-                        <textarea ng-model="editObject.description" maxlength="1024" class="form-control"
-                            name="codeSystemDescription">
-                    </textarea>
-                        <span class="float-right">{{ 1024 - codeSystem.description.length }} {{ 'ui.common.charsRemain'
-                            | i18n
-                            }}</span>
+                        <ul class="list-group">
+                            <li class="list-group-item" ng-repeat="set in editObject.conceptSet track by $index">
+                                <div class="input-group">
+                                    <div class="w-50">
+                                        <entity-search type="'ConceptSet'" class="form-control" ng-model="set"
+                                            readonly="readonly" disabled="disabled" search-field="'name'"
+                                            filter="{ 'obsoletionTime' : 'null' }"></entity-search>
+                                    </div>
+                                    <div class="input-group-append btn-group">
+                                        <button type="button" class="btn btn-danger"
+                                            ng-click="editObject.conceptSet.splice($index, 1)">
+                                            <i class="fas fa-fw fa-times-circle"></i>  {{ 'ui.action.remove' | i18n }}
+                                        </button>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="list-group-item">
+                                <div class="input-group">
+                                <div class="w-50">
+                                    <entity-search type="'ConceptSet'" class="form-control w-50" ng-model="newSet"
+                                        search-field="'name'" filter="{ 'obsoletionTime' : 'null' }"></entity-search>
+                                </div>
+                                <div class="input-group-append btn-group">
+                                    <button type="button" class="btn btn-primary"
+                                        ng-click="editObject.conceptSet.push(newSet); newSet = null;">
+                                        <i class="fas fa-fw fa-plus-circle"></i> {{ 'ui.action.add' | i18n }}
+                                    </button>
+                                </div>
+                            </div>
+                            </li>
+                        </ul>
                     </div>
                 </div>
 

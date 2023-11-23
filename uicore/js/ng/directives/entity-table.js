@@ -30,7 +30,7 @@ angular.module('santedb-lib')
         return {
             scope: {
                 properties: "<",
-                external: "<",
+                upstream: "<",
                 defaultQuery: "=",
                 itemActions: "<",
                 actions: "<",
@@ -40,6 +40,7 @@ angular.module('santedb-lib')
                 operation: "<",
                 operationScope: "<",
                 defaultFilter: "<",
+                defaultSort: "<",
                 canFilter: "<",
                 canSize: "<",
                 noButtons: "<",
@@ -228,6 +229,11 @@ angular.module('santedb-lib')
 
                                 query["_orderBy"] = `${orderExpr}:${data.order[0].dir}`;
                             }
+                            else if(scope.defaultSort) {
+                                var defaultSortCol = Object.keys(scope.defaultSort)[0];
+                                query["_orderBy"] = `${defaultSortCol}:${scope.defaultSort[defaultSortCol]}`;
+                            }
+                            
 
                             var thisQuery = JSON.stringify(query);
 
@@ -253,17 +259,17 @@ angular.module('santedb-lib')
 
                                 if (attrs.subResource) {
                                     if (scope.subResourceHolder) {
-                                        searchPromise = SanteDB.resources[attrs.type.toCamelCase()].findAssociatedAsync(scope.subResourceHolder, attrs.subResource, query, null, scope.external);
+                                        searchPromise = SanteDB.resources[attrs.type.toCamelCase()].findAssociatedAsync(scope.subResourceHolder, attrs.subResource, query, null, scope.upstream);
                                     }
                                     else {
-                                        searchPromise = SanteDB.resources[attrs.type.toCamelCase()].findAssociatedAsync(null, attrs.subResource, query, null, scope.external);
+                                        searchPromise = SanteDB.resources[attrs.type.toCamelCase()].findAssociatedAsync(null, attrs.subResource, query, null, scope.upstream);
                                     }
                                 }
                                 else if(scope.operation) {
-                                    searchPromise = SanteDB.resources[attrs.type.toCamelCase()].invokeOperationAsync(scope.operationScope, scope.operation, query, scope.external);
+                                    searchPromise = SanteDB.resources[attrs.type.toCamelCase()].invokeOperationAsync(scope.operationScope, scope.operation, query, scope.upstream);
                                 }
                                 else {
-                                    searchPromise = SanteDB.resources[attrs.type.toCamelCase()].findAsync(query, undefined, scope.external);
+                                    searchPromise = SanteDB.resources[attrs.type.toCamelCase()].findAsync(query, undefined, scope.upstream);
                                 }
 
                                 try {

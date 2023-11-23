@@ -20,29 +20,23 @@ Portions Copyright (C) 2015-2018 Mohawk College of Applied Arts and Technology
  - Date: 2018-11-14
  -->
 <div xmlns="http://www.w3.org/1999/xhtml" xmlns:sdb="http://santedb.org/applet">
-    <sdb:script static="false">~/controllers/validation/index.js</sdb:script>
-    <sdb:state name="santedb-admin.data.validationRule.index" abstract="false">
+    <sdb:state name="santedb-admin.cdss" abstract="true">
         <sdb:demand>1.3.6.1.4.1.33349.3.1.5.9.2.0.15</sdb:demand>
-        <sdb:url></sdb:url>
+        <sdb:url>cdss</sdb:url>
         <sdb:view>
-            <sdb:controller>ValidationRuleIndexController</sdb:controller>
+            <sdb:title lang="en">Decision Support</sdb:title>
         </sdb:view>
     </sdb:state>
-    <entity-table 
-        id="ValidationRuleTable"
-        type="ValidationRule" 
-        button-bar="'#relationshipFilterHeader'"
-        upstream="true" 
-        can-filter="true"
-        search-field="description"
-        sort="{}"
-        can-size="true"
-        item-supplement="[ loadProperties ]"
-        default-query="{ _viewModel: 'full' }"
-        i18n-prefix="'ui.model.validationRule.'"
-        render="{ sourceClass: renderSourceClass, targetClass: renderTargetClass, relationshipType: renderRelationshipType }"
-        properties="[ 'appliesTo', 'sourceClass', 'relationshipType', 'targetClass', 'description' ]">
-
-    </entity-table>
-
+    <div class="container-fluid">
+        <div class="row" ng-if="$root.system.config.sync.mode == 'Sync'">
+            <div class="col alert alert-warning">
+                <i class="fas fa-exclamation-triangle"></i> {{ 'ui.admin.syncMode.warning' | i18n}}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <ui-view></ui-view>
+            </div>
+        </div>
+    </div>
 </div>

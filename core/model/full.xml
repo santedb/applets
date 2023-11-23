@@ -882,6 +882,7 @@
     
     <property name="conceptClassModel" behavior="always" ref="Concept" />
     <property name="conceptSet" />
+    <property name="conceptSetModel" behavior="always" ref="ConceptSet" />
     <property name="relationship" behavior="always">
       <property name="*" all="true">
         <property name="relationshipTypeModel" behavior="always"/>

@@ -28,7 +28,7 @@
   </info>
 
   <menuItem context="org.santedb.admin" launch="santedb-admin.bi.index"
-    asset="/org.santedb.bicore/views/wrap.html" order="10000">
+    asset="/org.santedb.bicore/views/wrap.html" order="50">
     <icon>fas fa-brain</icon>
     <text lang="en">Business Intelligence</text>
     <menuItem context="org.santedb.admin" launch="santedb-admin.bi.reports.index"

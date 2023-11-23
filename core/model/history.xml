@@ -8,5 +8,6 @@
         <property name="obsoletionTime" />
         <property name="mnemonic" />
         <property name="sequence" />
+        <property name="statusConceptModel" behavior="always" />
     </type>
 </ViewModel>

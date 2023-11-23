@@ -174,6 +174,9 @@
   <string name="ui.model.entity.address.component.unitidentifier.hint"><![CDATA[The unit, suite, office, or other sub-division of the building]]></string>
   <string name="ui.model.entity.address.component.careof">C/O</string>
   <string name="ui.model.entity.address.component.careof.hint"><![CDATA[If delivery or other mail delivered to this address carries a care-of instruction]]></string>
+  <string name="ui.model.entity.address.component.additionalLocator">Additional</string>
+  <string name="ui.model.entity.address.component.additionalLocator.hint"><![CDATA[A location which assists in the locating of the address (i.e. closes intersection, ward, etc.)]]></string>
+
   <string name="ui.model.entity.address.expand">More Fields</string>
   <string name="ui.model.entity.address.collapse">Less Fields</string>
   <string name="ui.model.entity.name">Name</string>
@@ -256,6 +259,7 @@
   <string name="ui.model.patient.dedicatedServiceDeliveryLocation">Facilities</string>
   <string name="ui.model.patient.placeOfDeath">Place of Death</string>
   <string name="ui.model.patient.multipleBirthOrder">Twin/Triplet/Etc.</string>
+  <string name="ui.model.patient.multipleBirthOrder.-1">Unknown (of a multiple-birth)</string>
   <string name="ui.model.patient.multipleBirthOrder.0">Unknown (of a multiple-birth)</string>
   <string name="ui.model.patient.multipleBirthOrder.1">1st of multiple-birth</string>
   <string name="ui.model.patient.multipleBirthOrder.2">2nd of multiple-birth</string>
@@ -597,4 +601,22 @@
   <string name="ui.model.concept.updatedBy">Updated By</string>
   <string name="ui.model.concept.createdBy">Created By</string>
   <string name="ui.model.concept.conceptSet.add">Add Concept Set</string>
+
+  <string name="ui.model.cdssLibraryDefinition.name">Name</string>
+  <string name="ui.model.cdssLibraryDefinition.name.hint">A descriptive name which also serves as an identifier for the library in the master CDSS library</string>
+  <string name="ui.model.cdssLibraryDefinition.id">Identifier</string>
+  <string name="ui.model.cdssLibraryDefinition.id.hint">Enter a dotted identifier which serves as a universally unique identification for the library when referenced by other libraries in the master CDSS solution</string>
+  <string name="ui.model.cdssLibraryDefinition.oid">OID</string>
+  <string name="ui.model.cdssLibraryDefinition.oid.hint">The dotted object identifier (OID) for the library which is used when this CDSS library is referenced by external systems</string>
+  <string name="ui.model.cdssLibraryDefinition.uuid">UUID</string>
+  <string name="ui.model.cdssLibraryDefinition.documentation">Description</string>
+  <string name="ui.model.cdssLibraryDefinition.version">Version</string>
+  <string name="ui.model.cdssLibraryDefinition.meta.documentation.">Description</string>
+  <string name="ui.model.cdssLibraryDefinition.modifiedOn">Last Modified</string>
+  <string name="ui.model.cdssLibraryDefinition.metadata.version">Version</string>
+  <string name="ui.model.cdssLibraryDefinition.metadata.version.hint"><![CDATA[The business version (informational version) for the library contents. This must be a semantic version in the format <c>major.minor.revision[-special]</c>]]></string>
+  <string name="ui.model.cdssLibraryDefinition.metadata.author">Author(s)</string>
+  <string name="ui.model.cdssLibraryDefinition.metadata.author.hint">The name of the primary author (or a copyright statement)</string>
+  <string name="ui.model.cdssLibraryDefinition.metadata.documentation">Description</string>
+  <string name="ui.model.cdssLibraryDefinition.metadata.documentation.hint">A long-form description of the contents of the CDSS library including its purpose, what it contains, etc.</string>
 </resources>

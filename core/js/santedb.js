@@ -3396,7 +3396,18 @@ function SanteDBWrapper() {
             resource: 'ConceptReferenceTerm',
             accept: _viewModelJsonMime,
             api: _hdsi
-        })
+        });
+
+        /** 
+         * @type {ResourceWrapper}
+         * @memberOf SanteDBWrapper.resources
+         * @summary Wrapper for CDSS Library Definitions
+         */
+        this.cdssLibraryDefinition = new ResourceWrapper({
+            resource: "CdssLibraryDefinition",
+            accept: "application/json",
+            api: _ami
+        });
     };
 
     // HACK: Wrapper pointer facility = place
