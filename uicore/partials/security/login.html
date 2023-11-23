@@ -72,7 +72,8 @@
             </ul>
         </div>
     </div>
-    <div class="form-group row" ng-if="!login.forbidPin">
+    <!-- TODO: When a PIN authentication is enabled in the backend then enable this-->
+    <div class="form-group row" ng-if="!login.forbidPin &amp;&amp; false">
         <div class="btn-group btn-group-toggle mx-auto">
             <label class="btn btn-info" ng-class="{ 'active' : login.grant_type == 'password' }">
                 <input type="radio" name="loginMode" ng-model="login.grant_type" value="password"
