@@ -619,4 +619,6 @@
   <string name="ui.model.cdssLibraryDefinition.metadata.author.hint">The name of the primary author (or a copyright statement)</string>
   <string name="ui.model.cdssLibraryDefinition.metadata.documentation">Description</string>
   <string name="ui.model.cdssLibraryDefinition.metadata.documentation.hint">A long-form description of the contents of the CDSS library including its purpose, what it contains, etc.</string>
+  <string name="ui.model.cdssLibraryDefinition.definitions.data.name">Dataset Name</string>
+  <string name="ui.model.cdssLibraryDefinition.definitions.data.id">Dataset ID</string>
 </resources>

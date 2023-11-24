@@ -531,17 +531,4 @@
     <string name="org.santedb.widget.concept.concepts.core.properties">Concept Properties</string>
     <string name="org.santedb.widget.concept.concepts.core.versions">Version History</string>
 
-    <!-- Administration for CDSS rules -->
-    <string name="ui.admin.cdss.master.title">Master CDSS Library</string>
-    <string name="ui.admin.cdss.master.help"><![CDATA[
-    This page shows the master list of all registered Clinical Decision Support (CDSS) libraries in your installation of SanteDB. These libraries form the basis of any
-    clinical protocols, decision support rules, and facts. Please be sure to read the <a href="https://help.santesuite.org/developers/applets/cdss-protocols" target="_blank">CDSS Documentation on the SanteSuite Wiki</a>
-    before modifying these rules, as they may have an adverse impact on patient care.
-    ]]></string>
-    <string name="ui.admin.cdss.create.title">New CDSS Library</string>
-    <string name="ui.admin.cdss.create.upload.option">Upload a CDSS Library File</string>
-    <string name="ui.admin.cdss.create.manual.option">Manually Create a CDSS Library</string>
-    <string name="ui.admin.cdss.create.upload.file">CDSS Library File</string>
-    <string name="ui.admin.cdss.create.upload.file.hint"><![CDATA[Select a CDSS library definition file from your hard drive to import into the SanteDB instance. If you upload a file with an identifier or UUID matching an existing library, this will 
-    update the existing file, otherwise the library will be imported]]></string>
 </resources>
