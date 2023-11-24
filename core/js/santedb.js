@@ -1659,9 +1659,9 @@ function ResourceWrapper(_config) {
             url = `${_config.resource}/${id}/${property}`;
 
         if (associatedId.id)
-            url += `/${associatedId.id}`;
+            url += `/${encodeURI(associatedId.id)}`;
         else
-            url += `/${associatedId}`;
+            url += `/${encodeURI(associatedId)}`;
 
         if (upstream !== undefined) {
             headers["X-SanteDB-Upstream"] = upstream;

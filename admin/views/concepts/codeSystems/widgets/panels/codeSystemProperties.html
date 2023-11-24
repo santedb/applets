@@ -37,21 +37,24 @@
                             <provenance provenance-id="scopedObject.createdBy"
                                 provenance-time="scopedObject.creationTime" />
                         </div>
-                        <label ng-if="scopedObject.updatedBy" class="control-label col-sm-12 col-md-3">{{'ui.model.codeSystem.updatedBy' | i18n
+                        <label ng-if="scopedObject.updatedBy"
+                            class="control-label col-sm-12 col-md-3">{{'ui.model.codeSystem.updatedBy' | i18n
                             }}</label>
-                        <div  ng-if="scopedObject.updatedBy" class="col-sm-12 col-md-9">
+                        <div ng-if="scopedObject.updatedBy" class="col-sm-12 col-md-9">
                             <provenance provenance-id="scopedObject.updatedBy"
-                            provenance-time="scopedObject.updatedTime" />
+                                provenance-time="scopedObject.updatedTime" />
                         </div>
-                        <label ng-if="scopedObject.obsoletedBy" class="control-label col-sm-12 col-md-3">{{'ui.model.codeSystem.obsoletedBy' | i18n
-                        }}</label>
-                    <div  ng-if="scopedObject.obsoletedBy" class="col-sm-12 col-md-9">
-                        <provenance provenance-id="scopedObject.obsoletedBy"
-                            provenance-time="scopedObject.obsoletionTime" />
-                        <button type="button" ng-click="unDelete()" class="btn btn-success"><i class="fas fa-trash-restore"></i> {{ 'ui.action.undelete' | i18n }}</button>
-                        {{ 'ui.view.deletedRecord' | i18n }}
+                        <label ng-if="scopedObject.obsoletedBy"
+                            class="control-label col-sm-12 col-md-3">{{'ui.model.codeSystem.obsoletedBy' | i18n
+                            }}</label>
+                        <div ng-if="scopedObject.obsoletedBy" class="col-sm-12 col-md-9">
+                            <provenance provenance-id="scopedObject.obsoletedBy"
+                                provenance-time="scopedObject.obsoletionTime" />
+                            <button type="button" ng-click="unDelete()" class="btn btn-success"><i
+                                    class="fas fa-trash-restore"></i> {{ 'ui.action.undelete' | i18n }}</button>
+                            {{ 'ui.view.deletedRecord' | i18n }}
+                        </div>
                     </div>
-                </div>
 
                 </div>
             </div>

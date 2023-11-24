@@ -610,10 +610,10 @@
   <string name="ui.model.cdssLibraryDefinition.oid.hint">The dotted object identifier (OID) for the library which is used when this CDSS library is referenced by external systems</string>
   <string name="ui.model.cdssLibraryDefinition.uuid">UUID</string>
   <string name="ui.model.cdssLibraryDefinition.documentation">Description</string>
-  <string name="ui.model.cdssLibraryDefinition.version">Version</string>
+  <string name="ui.model.cdssLibraryDefinition.version">Info Version</string>
   <string name="ui.model.cdssLibraryDefinition.meta.documentation.">Description</string>
   <string name="ui.model.cdssLibraryDefinition.modifiedOn">Last Modified</string>
-  <string name="ui.model.cdssLibraryDefinition.metadata.version">Version</string>
+  <string name="ui.model.cdssLibraryDefinition.metadata.version">Stated Version</string>
   <string name="ui.model.cdssLibraryDefinition.metadata.version.hint"><![CDATA[The business version (informational version) for the library contents. This must be a semantic version in the format <c>major.minor.revision[-special]</c>]]></string>
   <string name="ui.model.cdssLibraryDefinition.metadata.author">Author(s)</string>
   <string name="ui.model.cdssLibraryDefinition.metadata.author.hint">The name of the primary author (or a copyright statement)</string>
@@ -621,4 +621,22 @@
   <string name="ui.model.cdssLibraryDefinition.metadata.documentation.hint">A long-form description of the contents of the CDSS library including its purpose, what it contains, etc.</string>
   <string name="ui.model.cdssLibraryDefinition.definitions.data.name">Dataset Name</string>
   <string name="ui.model.cdssLibraryDefinition.definitions.data.id">Dataset ID</string>
+  <string name="ui.model.cdssLibraryDefinition.versionSequence">Version #</string>
+  <string name="ui.model.cdssLibraryDefinition.creationTime">Created</string>
+  <string name="ui.model.cdssLibraryDefinition.define.fact">Fact</string>
+  <string name="ui.model.cdssLibraryDefinition.define.rule">Rule</string>
+  <string name="ui.model.cdssLibraryDefinition.define.protocol">Protocol</string>
+  <string name="ui.model.cdssLibraryDefinition.define.model">Model</string>
+  <string name="ui.model.cdssLibraryDefinition.then.raise.text">Issue Text</string>
+  <string name="ui.model.cdssLibraryDefinition.then.raise.priority">Issue Priority</string>
+  <string name="ui.model.cdssLibraryDefinition.then">Then Perform Actions</string>
+  <string name="ui.model.cdssLibraryDefinition.when">When Condition</string>
+  <string name="ui.model.cdssLibraryDefinition.then.propose">Propose Action</string>
+  <string name="ui.model.cdssLibraryDefinition.then.raise">Raise Issue</string>
+  <string name="ui.model.cdssLibraryDefinition.then.propose.assign">Assign Value To Property</string>
+  <string name="ui.model.cdssLibraryDefinition.then.propose.model">Use Model</string>
+  <string name="ui.model.cdssLibraryDefinition.context">Context</string>
+  <string name="ui.model.cdssLibraryDefinition.logic">Fact Definition</string>
+  <string name="ui.model.cdssLibraryDefinition.modifier">Modifier(s)</string>
+  <string name="ui.model.cdssLibraryDefinition.normalize">Normalization(s)</string>
 </resources>

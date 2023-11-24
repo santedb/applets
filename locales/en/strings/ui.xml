@@ -11,6 +11,8 @@
       <string name="ui.common.charsRemain">characters remain</string>
       <string name="ui.common.version">Version</string>
       <string name="ui.common.rows">Rows</string>
+      <string name="ui.common.size">Size</string>
+      <string name="ui.common.kilobytes">Kb</string>
       <string name="ui.search.onlineResult">Online Result</string>
       <!-- Login Translations -->
       <string name="ui.login.input.username">Username</string>
