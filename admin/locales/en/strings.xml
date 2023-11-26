@@ -235,7 +235,12 @@
     <string name="ui.admin.job.runJob.confirm">Are you sure you want to manually run this job?</string>
     <string name="ui.admin.job.runJob.success">Job was successfully started</string>
     <string name="ui.admin.job.cancelJob.confirm">Are you sure you want cancel this running job? </string>
-
+    <string name="ui.admin.job.register.title">Register Job</string>
+    <string name="ui.admin.job.register.help"><![CDATA[This modal allows you to register or activate a SanteDB background job which was not otherwise activated on application startup. The
+    SanteDB iCDR or dCDR will attempt to register the job and will update your configuration.]]></string>
+    <string name="ui.admin.job.register.confirm">Are you sure you want to register {job} with this instance of SanteDB?</string>
+    <string name="ui.admin.job.register.success">Job {job} was successfully registered</string>
+    <string name="ui.admin.job.register.error">Error registering job instance {error}</string>
 
     <!-- Security Widgets -->
     <string name="org.santedb.widget.admin.tab.user.profile">User Profile</string>
@@ -530,5 +535,6 @@
     <string name="org.santedb.widget.concept.concepts.core.sets">Concept Sets</string>
     <string name="org.santedb.widget.concept.concepts.core.properties">Concept Properties</string>
     <string name="org.santedb.widget.concept.concepts.core.versions">Version History</string>
+
 
 </resources>
