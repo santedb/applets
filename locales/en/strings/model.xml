@@ -639,4 +639,5 @@
   <string name="ui.model.cdssLibraryDefinition.logic">Fact Definition</string>
   <string name="ui.model.cdssLibraryDefinition.modifier">Modifier(s)</string>
   <string name="ui.model.cdssLibraryDefinition.normalize">Normalization(s)</string>
+  <string name="ui.model.cdssLibraryDefinition.include">Include(s)</string>
 </resources>
