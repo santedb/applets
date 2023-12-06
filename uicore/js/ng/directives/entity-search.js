@@ -175,7 +175,7 @@ angular.module('santedb-lib')
 
         return {
             scope: {
-                type: '<', // The type of object to be searched
+                type: '=', // The type of object to be searched
                 display: '<', // The expression which dictates the display
                 searchField: '<', // The field on the server to search results for
                 defaultResults: '<', // The default results to show
@@ -295,7 +295,6 @@ angular.module('santedb-lib')
                 }
 
                 $timeout(function () {
-                    var modelType = scope.type;
                     var filter = scope.filter || { statusConcept: [StatusKeys.Active, StatusKeys.New] };;
                     var displayString = scope.display;
                     var searchProperty = scope.searchField;
@@ -308,7 +307,7 @@ angular.module('santedb-lib')
                     var lastRuleCheck = null;
 
                     if (!searchProperty) {
-                        switch (modelType) {
+                        switch (scope.type) {
                             case "Entity":
                             case "Patient":
                             case "Person":
@@ -322,6 +321,8 @@ angular.module('santedb-lib')
                             case "Concept":
                                 searchProperty = "name.value";
                                 break;
+                            default:
+                                searchProperty = 'identifier.value';
                         }
                     }
 
@@ -363,7 +364,7 @@ angular.module('santedb-lib')
                         dataAdapter: $.fn.select2.amd.require('select2/data/extended-ajax'),
                         ajax: {
 
-                            url: SanteDB.resources[modelType.toCamelCase()].getUrl(), //((modelType == "SecurityUser" || modelType == "SecurityRole" || modelType == "SecurityPolicy") ? "/ami/" : "/hdsi/") + modelType,
+                            url: () => SanteDB.resources[scope.type.toCamelCase()].getUrl(), //((modelType == "SecurityUser" || modelType == "SecurityRole" || modelType == "SecurityPolicy") ? "/ami/" : "/hdsi/") + modelType,
                             dataType: 'json',
                             delay: 500,
                             method: "GET",
@@ -522,17 +523,17 @@ angular.module('santedb-lib')
                     ngModel.$render = function () {
                         if (valueProperty) {
                             if (Array.isArray(ngModel.$viewValue))
-                                scope.setValue(element, modelType, ngModel.$viewValue.map(function (e) { return e[valueProperty]; }));
+                                scope.setValue(element, scope.type, ngModel.$viewValue.map(function (e) { return e[valueProperty]; }));
                             else
-                                scope.setValue(element, modelType, ngModel.$viewValue[valueProperty]);
+                                scope.setValue(element, scope.type, ngModel.$viewValue[valueProperty]);
                         }
                         else
-                            scope.setValue(element, modelType, ngModel.$viewValue);
+                            scope.setValue(element, scope.type, ngModel.$viewValue);
                     };
 
                     // HACK: Screw Select2 , it is so random
                     if (ngModel.$viewValue) {
-                        scope.setValue(element, modelType, ngModel.$viewValue);
+                        scope.setValue(element, scope.type, ngModel.$viewValue);
                     }
 
                 });

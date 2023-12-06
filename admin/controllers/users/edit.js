@@ -34,7 +34,7 @@ angular.module('santedb')
                     $scope.target.role = securityUser.role;
                     $scope.target.id = securityUser.id;
                     $scope.target.entity = securityUser.entity;
-                    $scope.target.entity.etag = securityUSer.etag;
+                    $scope.target.entity.etag = securityUser.etag;
                     document.title = document.title + " - " + securityUser.entity.userName;
 
                     if(userEntity.resource) {

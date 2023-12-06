@@ -69,8 +69,34 @@ angular.module('santedb-lib')
             replace: true,
             transclude: false,
             templateUrl: './org.santedb.uicore/directives/widgetPanel.html',
-            controller: ['$scope', '$timeout', '$rootScope', '$state',
-                function ($scope, $timeout, $rootScope, $state) {
+            controller: ['$scope', '$timeout', '$rootScope', '$state', '$transitions',
+                function ($scope, $timeout, $rootScope, $state, $transitions) {
+
+                    function checkNavigateAway(e) {
+                            if($scope.widgetGroups) {
+                                $scope.widgetGroups.forEach((group) => {
+                                    if(group.widgets) {
+                                        group.widgets.forEach((panel) => {
+                                            if(panel.view == 'Edit' && panel.editForm && !panel.editForm.$pristine) {
+                                                e.returnValue = SanteDB.locale.getString("ui.action.abandon.confirm");
+                                            }
+                                        });
+                                    }
+                                })
+                            }
+                            return e.returnValue;
+                    }
+
+                    window.addEventListener("beforeunload", checkNavigateAway);
+
+                    // Transitions
+                    $transitions.onBefore({}, function (transition) {
+                        var navMessage = checkNavigateAway({})
+                        if(navMessage && !confirm(navMessage)) {
+                            $("#pageTransitioner").hide();
+                            transition.abort();
+                        }
+                    });
 
                     $scope.hasView = function (panel, viewName) {
                         if (panel.views) {
@@ -138,7 +164,7 @@ angular.module('santedb-lib')
                     }
 
                     $scope.closeView = async function (panel) {
-                        if (panel.editForm.$pristine || confirm(SanteDB.locale.getString("ui.action.cancel.confirm"))) {
+                        if (panel.editForm.$pristine || confirm(SanteDB.locale.getString("ui.action.abandon.confirm"))) {
                             if ($scope.scopedObject.$type) {
                                 try {
                                     await SanteDB.resources[$scope.scopedObject.$type.toCamelCase()].checkinAsync($scope.scopedObject.id);
