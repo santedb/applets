@@ -1,32 +1,90 @@
-<div xmlns="http://www.w3.org/1999/xhtml" xmlns:sdb="http://santedb.org/applet">
+<div xmlns="http://www.w3.org/1999/xhtml" xmlns:sdb="http://santedb.org/applet"
+    oc-lazy-load="{name:'DataMartExecutionController', files: ['/org.santedb.bicore/controllers/warehouse/widgets/exe.js'] }">
+    >
     <sdb:widget name="org.santedb.widget.bi.dataMart.execs" type="Tab" context="org.santedb.bi.warehouse" order="0">
         <sdb:icon>fas fa-list</sdb:icon>
         <sdb:description lang="en">Executions</sdb:description>
     </sdb:widget>
 
 
-    <table class="table table-striped">
-        <thead>
-            <tr>
-                <th>{{ 'ui.model.bi.dataMart.exec.startedBy' | i18n }}</th>
-                <th>{{ 'ui.model.bi.dataMart.exec.purpose' | i18n }}</th>
-                <th>{{ 'ui.model.bi.dataMart.exec.started' | i18n }}</th>
-                <th>{{ 'ui.model.bi.dataMart.exec.finished' | i18n }}</th>
-                <th>{{ 'ui.model.bi.dataMart.exec.outcome' | i18n }}</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr ng-repeat="exec in scopedObject.warehouse.exec track by $index">
-                <td>
-                    <a ui-sref="santedb-admin.security.users.edit({id: exec.startedBy})" target="_blank">
-                        {{ exec.startedBy }}
-                    </a>
-                </td>
-                <td>{{ exec.purpose }}</td>
-                <td>{{ exec.started | extDate }}</td>
-                <td>{{ exec.finished | extDate }}</td>
-                <td>{{ exec.outcome }}</td>
-            </tr>
-        </tbody>
-    </table>
+    <div ng-controller="DataMartExecutionController">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>{{ 'ui.model.bi.dataMart.exec.startedBy' | i18n }}</th>
+                    <th>{{ 'ui.model.bi.dataMart.exec.purpose' | i18n }}</th>
+                    <th>{{ 'ui.model.bi.dataMart.exec.started' | i18n }}</th>
+                    <th>{{ 'ui.model.bi.dataMart.exec.finished' | i18n }}</th>
+                    <th>{{ 'ui.model.bi.dataMart.exec.outcome' | i18n }}</th>
+                    <th>{{ 'ui.action' | i18n }}</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="exec in scopedObject.warehouse.exec track by $index">
+                    <td>
+                        <a ui-sref="santedb-admin.security.users.edit({id: exec.startedBy})" target="_blank">
+                            {{ exec.startedBy }}
+                        </a>
+                    </td>
+                    <td>{{ exec.purpose }}</td>
+                    <td>{{ exec.started | extDate }}</td>
+                    <td>{{ exec.finished | extDate }}</td>
+                    <td>{{ exec.outcome }}</td>
+                    <td><button type="button" id="btnViewExec{{$index}}" class="btn btn-primary" ng-click="openDetail(exec.id, $index)"><i
+                                class="fas fa-fw fa-eye"></i> {{ 'ui.action.view' | i18n }}</button></td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="modal" id="viewExecutionModal" tabindex="-1" role="dialog" aria-labelledby="viewExecutionModalTitle"
+            aria-hidden="true">
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="viewExecutionModalTitle">
+                            <i class="fa fa-fw fa-eye"></i> {{ 'ui.model.bi.datamart.exec' | i18n }}
+                        </h5>
+                        <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">
+                                <i class="fa fa-times"></i>
+                            </span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="container-fluid">
+                            <div class="row">
+                                <label class="col-sm-12 col-md-2 control-label">{{ 'ui.model.bi.dataMart.exec.startedBy' | i18n }}</label>
+                                <div class="col-sm-12 col-md-4">{{ executionDetail.startedByModel.entity.userName }} @ {{ executionDetail.started | extDate }}</div>
+                                <label class="col-sm-12 col-md-2 control-label">{{ 'ui.model.bi.dataMart.exec.finished' | i18n }}</label>
+                                <div class="col-sm-12 col-md-4">{{ executionDetail.finished | extDate }}s</div>
+                                <label class="col-sm-12 col-md-2 control-label">{{ 'ui.model.bi.dataMart.exec.outcome' | i18n }}</label>
+                                <div class="col-sm-12 col-md-4"><i class="fas fa-circle fa-fw" ng-class="{ 'text-danger' : executionDetail.outcome == 'Fail', 'text-warning' : executionDetail.outcome == 'Unknown', 'text-success' : executionDetail.outcome == 'Success'}"></i> {{ executionDetail.outcome }}</div>
+                                <label class="col-sm-12 col-md-2 control-label">{{ 'ui.model.bi.dataMart.exec.purpose' | i18n }}</label>
+                                <div class="col-sm-12 col-md-4">
+                                    <ul class="list-unstyled">
+                                        <li ng-repeat="p in executionDetail.purpose.split(',')">{{p}}</li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col" style="height: 50vh; overflow-y: scroll">
+                                    <table class="table-striped table">
+                                        <tr ng-repeat="l in executionDetail.log">
+                                            <td><i class="fas fa-fw" ng-class="{ 'fa-info-circle text-primary' : l.priority == 'Informational', 'fa-exclamation-triangle text-warning' : l.priority == 'Warning', 'fa-times-square text-danger' : l.priority == 'Error' }"></i> {{ l.priority }}</td>
+                                            <td>{{ l.timestamp | extDate }}</td>
+                                            <td>{{ l.text }}</td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-secondary" type="button" data-dismiss="modal">
+                            <i class="fa fa-times"></i> {{ 'ui.action.close' | i18n }}</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
