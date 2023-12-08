@@ -59,6 +59,7 @@
     <string name="ui.model.bi.dataMart.exec.outcome">Oucome</string>
     <string name="ui.model.bi.dataMart.produces">Target Schema:</string>
     <string name="ui.model.bi.dataMart.policies">Policies:</string>
+    <string name="ui.model.bi.datamart.exec">Datamart Refresh Executions</string>
     <string name="org.santedb.widget.bi.dataMart.execs">Execution Log</string>
     <string name="org.santedb.widget.bi.dataMart.schema">Schema</string>
 </resources>

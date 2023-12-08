@@ -154,7 +154,7 @@
     <!-- Materials Table storing all generic and manufactured material attributes -->
     <table name="MAT_TBL">
       <column type="date" name="EXPIRY" />
-      <column type="int" name="QTY" />
+      <column type="decimal" name="QTY" />
       <column type="string" name="UNIT_OF_MEASURE" />
       <column type="string" name="FORM" />
       <parent ref="ENT_TBL" />
@@ -381,7 +381,7 @@
       <column type="ref" name="CONSUMED">
         <otherTable ref="MMAT_TBL" />
       </column>
-      <column type="int" name="QTY" />
+      <column type="decimal" name="QTY" />
     </table>
 
 

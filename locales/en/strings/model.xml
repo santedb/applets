@@ -640,4 +640,5 @@
   <string name="ui.model.cdssLibraryDefinition.modifier">Modifier(s)</string>
   <string name="ui.model.cdssLibraryDefinition.normalize">Normalization(s)</string>
   <string name="ui.model.cdssLibraryDefinition.include">Include(s)</string>
+  <string name="ui.model.cdssLibraryDefinition.status">Status</string>
 </resources>
