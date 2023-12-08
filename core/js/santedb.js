@@ -2937,7 +2937,16 @@ function SanteDBWrapper() {
             resource: "CodedObservation",
             api: _hdsi
         });
-
+        /**
+            * @type {ResourceWrapper}
+            * @memberof SanteDBWrapper.ResourceApi
+            * @summary Represents the procedure Resource
+            */
+        this.procedure = new ResourceWrapper({
+            accept: _viewModelJsonMime,
+            resource: "Procedure",
+            api: _hdsi
+        });
         /**
             * @type {ResourceWrapper}
             * @memberof SanteDBWrapper.ResourceApi
@@ -3408,6 +3417,7 @@ function SanteDBWrapper() {
             accept: "application/json",
             api: _ami
         });
+
     };
 
     // HACK: Wrapper pointer facility = place
