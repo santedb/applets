@@ -16,8 +16,8 @@
                 </div>
                 <h2 ng-if="log" class="mb-0">{{ log.name }} </h2>
             </div>
-            <div class="card-body">
-                <pre style="height: 25em" id="logContent">{{ log.content }}</pre>
+            <div class="card-body p-0">
+                <pre style="height: 25rem" class="mb-0 p-2" id="logContent">{{ log.content }}</pre>
             </div>
             <div class="card-footer text-right">
                 <a id="downloadLog" class="btn btn-primary" href="{{getDownloadLink()}}" target="_blank"><i class="fas fa-file-download"></i> {{ 'ui.action.download' | i18n }}</a>

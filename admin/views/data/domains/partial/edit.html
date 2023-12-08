@@ -6,7 +6,7 @@
             </div>
         </div>
         <div class="row" ng-if="domain">
-            <div class="col-12">
+            <div class="col-12 mb-2">
                 <div class="card">
                     <div class="card-header">
                         <h5 class="mb-0">
@@ -25,7 +25,7 @@
                                 <div class="col-sm-12 col-md-10 input-group">
                                     <input name="sid" autocomplete="__away" readonly="readonly" type="text"
                                         class="form-control" ng-model="domain.id" />
-                                    <input-copy-button class="btn btn-outline-secondary" source="domain.id" />
+                                    <input-copy-button button-class="'btn-outline-secondary'" source="domain.id" />
                                 </div>
                             </div>
                             <div class="form-group row">
@@ -147,7 +147,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-12">
+            <div class="col-12 mb-2">
                 <div class="card">
                     <div class="card-header">
                         <h5 class="mb-0">
@@ -208,7 +208,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-12">
+            <div class="col-12 mb-2">
                 <div class="card">
                     <div class="card-header">
                         <h5 class="mb-0">
@@ -245,13 +245,13 @@
                     </div>
                 </div>
             </div>
-            <div class="col-12">
+            <div class="col-12 mb-2">
                 <div class="card">
                     <div class="card-header">
                         <h5 class="mb-0">
                             <button type="button" class="collapse-indicator btn btn-link p-0" data-toggle="collapse"
                                 data-target="#assigningApp" aria-expanded="true">
-                                <i class="fa fa-hospitals"></i> {{ 'ui.admin.domain.edit.authority.title' | i18n }}
+                                <i class="fa fa-hospital"></i> {{ 'ui.admin.domain.edit.authority.title' | i18n }}
                                 <i class="fa fa-chevron-right"></i>
                             </button>
                         </h5>
@@ -290,10 +290,13 @@
                                         ng-model="newAssigner.assigningApplication"  filter="{ 'obsoletionTime' : 'null' }" search-field="'name'">
                                     </entity-search>
                                 </div>
-                                <label class="col-md-2 col-sm-12">
-                                    <input type="checkbox" ng-model="newAssigner.reliability" ng-true-value="1"
-                                        ng-false-value="2" />
-                                    {{ 'ui.model.identityDomain.assigningAuthority.authoritative' | i18n }}</label>
+                                <div class="col-md-2 col-sm-12">
+                                    <div class="custom-control custom-checkbox">
+                                        <input type="checkbox" class="custom-control-input" ng-model="newAssigner.reliability" ng-true-value="1"
+                                        ng-false-value="2" id="assigningAuthorityAuthoritative" />
+                                        <label class="custom-control-label" for="assigningAuthorityAuthoritative">{{ 'ui.model.identityDomain.assigningAuthority.authoritative' | i18n }}</label>
+                                    </div>
+                                </div>
                                 <div class="col-md-2 col-sm-12">
                                     <div class="float-right">
                                         <button type="button" ng-disabled="!newAssigner.assigningApplication"
@@ -307,7 +310,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-12">
+            <div class="col-12 mb-2">
                 <div class="btn-group float-right">
                     <button type="submit" id="saveAuthorityButton" class="btn btn-primary"><i class="fa fa-check"></i>
                         {{ 'ui.action.save' | i18n }}</button>

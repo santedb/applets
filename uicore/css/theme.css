@@ -1,7 +1,20 @@
 label.control-label {
     text-align: left;
-    vertical-align: middle;
     font-weight: bold;
+    font-size: inherit;
+    line-height: 1.5;
+    margin-bottom: 0;
+    padding-top: calc(.375rem + 1px);
+    padding-bottom: calc(.375rem + 1px);
+
+}
+
+.control-value {
+    font-size: inherit;
+    line-height: 1.5;
+    margin-bottom: 0;
+    padding-top: calc(.375rem + 1px);
+    padding-bottom: calc(.375rem + 1px);
 }
 
 
@@ -15,7 +28,6 @@ label.control-label {
 @media only screen and (min-width:576px) {
     label.control-label {
         text-align: right;
-        vertical-align: middle;
     }
 }
 @media only screen and (max-width:768px) {
