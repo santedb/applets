@@ -17,15 +17,15 @@
     <div ng-if="scopedObject" ng-controller="SecurityUserWidgetController">
         <div class="form-group row">
             <label class="col-xs-12 col-md-3 control-label">{{ 'ui.model.securityUser.lastLoginTime' | i18n }}</label>
-            <div class="col-xs-12 col-md-9" ng-if="scopedObject.entity.lastLoginTime">
+            <div class="col-xs-12 col-md-9 control-value" ng-if="scopedObject.entity.lastLoginTime">
                 {{ scopedObject.entity.lastLoginTime | extDate: 'F' }}</div>
-            <div class="col-xs-12 col-md-9" ng-if="!scopedObject.entity.lastLoginTime">
+            <div class="col-xs-12 col-md-9 control-value" ng-if="!scopedObject.entity.lastLoginTime">
                 {{ 'ui.admin.users.edit.security.neverLoggedIn' | i18n }}</div>
         </div>
         <div class="form-group row">
             <label
                 class="col-xs-12 col-md-3 control-label">{{ 'ui.model.securityUser.invalidLoginAttempts' | i18n }}</label>
-            <div class="col-xs-12 col-md-9">
+            <div class="col-xs-12 col-md-9 control-value">
                 {{ scopedObject.entity.invalidLoginAttempts }}
                 <button ng-show="panel.view == 'Edit'" ng-click="resetInvalidLogins(scopedObject.entity)"
                     id="resetInvalidLoginsButton" type="button" class="btn btn-info">
@@ -36,7 +36,7 @@
         <div class="form-group row" ng-if="scopedObject.entity.lockout > $root.page.currentTime">
             <label for="lockout"
                 class="col-xs-12 col-md-3 control-label">{{ 'ui.model.securityUser.lockout' | i18n }}</label>
-            <div class="col-xs-12 col-md-9">
+            <div class="col-xs-12 col-md-9 control-value">
                 {{ scopedObject.entity.lockout | extDate: 'F' }}
                 <button ng-show="panel.view == 'Edit'" ng-click="unlock(scopedObject.entity)" id="unlockButton"
                     class="btn btn-info" type="button">
@@ -85,35 +85,35 @@
         <div ng-if="panel.view != 'Edit'">
             <div class="form-group row">
                 <label class="col-xs-12 col-md-3 control-label">{{ 'ui.model.securityRole.title' | i18n }}</label>
-                <div class="col-xs-12 col-md-9">
+                <div class="col-xs-12 col-md-9 control-value">
                     <span ng-repeat="rol in scopedObject.role">
                         <i class="fas fa-users"></i> {{ rol }} </span>
                 </div>
             </div>
             <div class="form-group row" ng-if="scopedObject.entity.email">
                 <label class="col-xs-12 col-md-3 control-label">{{ 'ui.model.securityUser.email' | i18n }}</label>
-                <div class="col-xs-12 col-md-9">
+                <div class="col-xs-12 col-md-9 control-value">
                     <a href="mailto:{{scopedObject.entity.email}}">{{scopedObject.entity.email}}</a>
                     <span class="badge badge-success" ng-if="scopedObject.entity.emailConfirmed"><i class="fas fa-check"></i> {{ 'ui.confirmed' | i18n }}</span>
                 </div>
             </div>
             <div class="form-group row" ng-if="scopedObject.entity.phoneNumber">
                 <label class="col-xs-12 col-md-3 control-label">{{ 'ui.model.securityUser.phoneNumber' | i18n }}</label>
-                <div class="col-xs-12 col-md-9">
+                <div class="col-xs-12 col-md-9 control-value">
                     <a href="tel:{{scopedObject.entity.phoneNumber}}">{{scopedObject.entity.phoneNumber}}</a>
                     <span class="badge badge-success" ng-if="scopedObject.entity.phoneNumberConfirmed"><i class="fas fa-check"></i> {{ 'ui.confirmed' | i18n }}</span>
                 </div>
             </div>
             <div class="form-group row">
                 <label class="col-xs-12 col-md-3 control-label">{{ 'ui.model.securityUser.twoFactorEnabled' | i18n }}</label>
-                <div class="col-xs-12 col-md-9">
+                <div class="col-xs-12 col-md-9 control-value">
                     <span class="badge" ng-class="{ 'badge-success' : scopedObject.entity.twoFactorEnabled, 'badge-warning' : !scopedObject.entity.twoFactorEnabled }">{{ 'ui.model.securityUser.twoFactorEnabled.' + scopedObject.entity.twoFactorEnabled  | i18n }}</span>
                 </div>
             </div>
         </div>
         <div class="form-group row" ng-show="panel.view == 'Edit'">
             <label class="col-xs-12 col-md-3 control-label">{{ 'ui.model.securityUser.password' | i18n }}</label>
-            <div class="col-xs-12 col-md-9">
+            <div class="col-xs-12 col-md-9 control-value">
                 <span ng-if="scopedObject.entity.passwordExpiry">{{ 'ui.model.securityUser.passwordExpiry' | i18n }}
                     {{ scopedObject.entity.passwordExpiry | extDate: 'D' }} </span>
                 <button ng-click="resetPassword(scopedObject.entity)" id="resetPasswordButton" class="btn btn-info"

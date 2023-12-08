@@ -20,12 +20,17 @@
                         <hint-popover hint-title="ui.admin.securityEntity.certificate.auth" />
                     </span>
                 </div>
-                <input type="file" class="form-control" name="uploadCert" valid-file="valid-file"
-                    ng-model="newCertificate" required="required" accept=".cer, .cert, .der" />
-                <button type="submit" id="btnSubmitAuthenticationCert"
-                    ng-disabled="addAuthenticationCertificateForm.$invalid" class="btn btn-primary"><i
-                        class="fas fa-arrow-up"></i> {{ 'ui.action.upload'
-                    | i18n }}</button>
+                <div class="custom-file">
+                    <input type="file" class="custom-file-input" name="uploadCert" valid-file="valid-file" 
+                    ng-model="newCertificate" required="required" accept=".cer, .cert, .der" id="file-new-certificate-auth" />    
+                    <label class="custom-file-label" for="file-new-certificate-auth">{{ 'ui.admin.securityEntity.certificate.uploadlabel' | i18n }}</label>
+                </div>
+                <div class="input-group-append">
+                    <button type="submit" id="btnSubmitAuthenticationCert"
+                        ng-disabled="addAuthenticationCertificateForm.$invalid" class="btn btn-primary">
+                        <i class="fas fa-arrow-up"></i> {{ 'ui.action.upload' | i18n }}
+                    </button>
+                </div>
             </div>
         </form>
     </div>

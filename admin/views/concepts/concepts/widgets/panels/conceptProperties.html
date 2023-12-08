@@ -18,12 +18,12 @@
                 <div class="container-fluid">
                     <div class="form-group row">
                         <label class="control-label col-sm-12 col-md-3">{{'ui.model.concept.mnemonic' | i18n }}</label>
-                        <div class="col-sm-12 col-md-9">{{ scopedObject.mnemonic }}</div>
+                        <div class="col-sm-12 col-md-9 control-value">{{ scopedObject.mnemonic }}</div>
                         <label class="control-label col-sm-12 col-md-3">{{'ui.model.concept.conceptClass' | i18n
                             }}</label>
-                        <div class="col-sm-12 col-md-9">{{ scopedObject.conceptClassModel.name }}</div>
+                        <div class="col-sm-12 col-md-9 control-value">{{ scopedObject.conceptClassModel.name }}</div>
                         <label class="control-label col-sm-12 col-md-3">{{'ui.model.concept.name' | i18n }}</label>
-                        <div class="col-sm-12 col-md-9">
+                        <div class="col-sm-12 col-md-9 control-value">
                             <ul class="list-unstyled mb-0">
                                 <li ng-repeat="(lang, vals) in scopedObject.name">
                                     {{ "ui.locale." + lang | i18n }} ({{lang}}):
@@ -33,35 +33,40 @@
                                 </li>
                             </ul>
                         </div>
-                        <label class="control-label col-sm-12 col-md-3">{{'ui.model.concept.conceptSet' | i18n }}</label>
-                        <div class="col-sm-12 col-md-9">
+                        <label class="control-label col-sm-12 col-md-3">{{'ui.model.concept.conceptSet' | i18n
+                            }}</label>
+                        <div class="col-sm-12 col-md-9 control-value">
                             <ul class="list-unstyled mb-0">
                                 <li ng-repeat="(aut, set) in scopedObject.conceptSetModel">
-                                    <a ui-sref="santedb-admin.concept.conceptSet.view({id : set[0].id})" target="_blank">{{ aut }} - {{ set[0].name }}</a>
+                                    <a ui-sref="santedb-admin.concept.conceptSet.view({id : set[0].id})"
+                                        target="_blank">{{ aut }} - {{ set[0].name }}</a>
                                 </li>
                             </ul>
                         </div>
                         <label class="control-label col-sm-12 col-md-3">{{'ui.model.codeSystem.createdBy' | i18n
                             }}</label>
-                        <div class="col-sm-12 col-md-9">
+                        <div class="col-sm-12 col-md-9 control-value">
                             <provenance provenance-id="scopedObject.createdBy"
                                 provenance-time="scopedObject.creationTime" />
                         </div>
-                        <label ng-if="scopedObject.updatedBy" class="control-label col-sm-12 col-md-3">{{'ui.model.codeSystem.updatedBy' | i18n
+                        <label ng-if="scopedObject.updatedBy"
+                            class="control-label col-sm-12 col-md-3">{{'ui.model.codeSystem.updatedBy' | i18n
                             }}</label>
-                        <div  ng-if="scopedObject.updatedBy" class="col-sm-12 col-md-9">
+                        <div ng-if="scopedObject.updatedBy" class="col-sm-12 col-md-9 control-value">
                             <provenance provenance-id="scopedObject.updatedBy"
-                            provenance-time="scopedObject.updatedTime" />
+                                provenance-time="scopedObject.updatedTime" />
                         </div>
-                        <label ng-if="scopedObject.obsoletedBy" class="control-label col-sm-12 col-md-3">{{'ui.model.codeSystem.obsoletedBy' | i18n
-                        }}</label>
-                    <div  ng-if="scopedObject.obsoletedBy" class="col-sm-12 col-md-9">
-                        <provenance provenance-id="scopedObject.obsoletedBy"
-                            provenance-time="scopedObject.obsoletionTime" />
-                        <button type="button" ng-click="unDelete()" class="btn btn-success"><i class="fas fa-trash-restore"></i> {{ 'ui.action.undelete' | i18n }}</button>
-                        {{ 'ui.view.deletedRecord' | i18n }}
+                        <label ng-if="scopedObject.obsoletedBy"
+                            class="control-label col-sm-12 col-md-3">{{'ui.model.codeSystem.obsoletedBy' | i18n
+                            }}</label>
+                        <div ng-if="scopedObject.obsoletedBy" class="col-sm-12 col-md-9 control-value">
+                            <provenance provenance-id="scopedObject.obsoletedBy"
+                                provenance-time="scopedObject.obsoletionTime" />
+                            <button type="button" ng-click="unDelete()" class="btn btn-success"><i
+                                    class="fas fa-trash-restore"></i> {{ 'ui.action.undelete' | i18n }}</button>
+                            {{ 'ui.view.deletedRecord' | i18n }}
+                        </div>
                     </div>
-                </div>
 
                 </div>
             </div>
@@ -114,12 +119,12 @@
                                     </div>
                                     <div class="input-group-append btn-group">
                                         <button class="btn btn-primary" type="button"
-                                        ng-click="editObject.name.$other.push({})">
-                                        <i class="fas fa-fw fa-plus-circle"></i> {{ 'ui.action.add' | i18n }}
+                                            ng-click="editObject.name.$other.push({})">
+                                            <i class="fas fa-fw fa-plus-circle"></i> {{ 'ui.action.add' | i18n }}
                                         </button>
-                                        <button class="btn btn-danger" ng-if="concept.name.$other.length &gt; 1" type="button"
-                                            ng-click="editObject.name.$other.splice($index, 1)">
-                                            <i class="fas fa-fw fa-times-circle"></i>  {{ 'ui.action.remove' | i18n }}
+                                        <button class="btn btn-danger" ng-if="concept.name.$other.length &gt; 1"
+                                            type="button" ng-click="editObject.name.$other.splice($index, 1)">
+                                            <i class="fas fa-fw fa-times-circle"></i> {{ 'ui.action.remove' | i18n }}
                                         </button>
                                     </div>
                                 </div>
@@ -148,24 +153,25 @@
                                     <div class="input-group-append btn-group">
                                         <button type="button" class="btn btn-danger"
                                             ng-click="editObject.conceptSet.splice($index, 1)">
-                                            <i class="fas fa-fw fa-times-circle"></i>  {{ 'ui.action.remove' | i18n }}
+                                            <i class="fas fa-fw fa-times-circle"></i> {{ 'ui.action.remove' | i18n }}
                                         </button>
                                     </div>
                                 </div>
                             </li>
                             <li class="list-group-item">
                                 <div class="input-group">
-                                <div class="w-50">
-                                    <entity-search type="'ConceptSet'" class="form-control w-50" ng-model="newSet"
-                                        search-field="'name'" filter="{ 'obsoletionTime' : 'null' }"></entity-search>
+                                    <div class="w-50">
+                                        <entity-search type="'ConceptSet'" class="form-control w-50" ng-model="newSet"
+                                            search-field="'name'"
+                                            filter="{ 'obsoletionTime' : 'null' }"></entity-search>
+                                    </div>
+                                    <div class="input-group-append btn-group">
+                                        <button type="button" class="btn btn-primary"
+                                            ng-click="editObject.conceptSet.push(newSet); newSet = null;">
+                                            <i class="fas fa-fw fa-plus-circle"></i> {{ 'ui.action.add' | i18n }}
+                                        </button>
+                                    </div>
                                 </div>
-                                <div class="input-group-append btn-group">
-                                    <button type="button" class="btn btn-primary"
-                                        ng-click="editObject.conceptSet.push(newSet); newSet = null;">
-                                        <i class="fas fa-fw fa-plus-circle"></i> {{ 'ui.action.add' | i18n }}
-                                    </button>
-                                </div>
-                            </div>
                             </li>
                         </ul>
                     </div>

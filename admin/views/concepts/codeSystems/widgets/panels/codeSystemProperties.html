@@ -17,37 +17,37 @@
                 <div class="container-fluid">
                     <div class="form-group row">
                         <label class="control-label col-sm-12 col-md-3">{{'ui.model.codeSystem.name' | i18n }}</label>
-                        <div class="col-sm-12 col-md-9">{{ scopedObject.name }}</div>
+                        <div class="col-sm-12 col-md-9 control-value">{{ scopedObject.name }}</div>
                         <label class="control-label col-sm-12 col-md-3">{{'ui.model.codeSystem.authority' | i18n
                             }}</label>
-                        <div class="col-sm-12 col-md-9">{{ scopedObject.authority }}</div>
+                        <div class="col-sm-12 col-md-9 control-value">{{ scopedObject.authority }}</div>
                         <label class="control-label col-sm-12 col-md-3">{{'ui.model.codeSystem.oid' | i18n }}</label>
-                        <div class="col-sm-12 col-md-9">{{ scopedObject.oid }}</div>
+                        <div class="col-sm-12 col-md-9 control-value">{{ scopedObject.oid }}</div>
                         <label class="control-label col-sm-12 col-md-3">{{'ui.model.codeSystem.url' | i18n }}</label>
-                        <div class="col-sm-12 col-md-9">{{ scopedObject.url }}</div>
+                        <div class="col-sm-12 col-md-9 control-value">{{ scopedObject.url }}</div>
                         <label class="control-label col-sm-12 col-md-3">{{'ui.model.codeSystem.version' | i18n
                             }}</label>
-                        <div class="col-sm-12 col-md-9">{{ scopedObject.version }}</div>
+                        <div class="col-sm-12 col-md-9 control-value">{{ scopedObject.version }}</div>
                         <label class="control-label col-sm-12 col-md-3">{{'ui.model.codeSystem.description' | i18n
                             }}</label>
-                        <div class="col-sm-12 col-md-9">{{ scopedObject.description }}</div>
+                        <div class="col-sm-12 col-md-9 control-value">{{ scopedObject.description }}</div>
                         <label class="control-label col-sm-12 col-md-3">{{'ui.model.codeSystem.createdBy' | i18n
                             }}</label>
-                        <div class="col-sm-12 col-md-9">
+                        <div class="col-sm-12 col-md-9 control-value">
                             <provenance provenance-id="scopedObject.createdBy"
                                 provenance-time="scopedObject.creationTime" />
                         </div>
                         <label ng-if="scopedObject.updatedBy"
                             class="control-label col-sm-12 col-md-3">{{'ui.model.codeSystem.updatedBy' | i18n
                             }}</label>
-                        <div ng-if="scopedObject.updatedBy" class="col-sm-12 col-md-9">
+                        <div ng-if="scopedObject.updatedBy" class="col-sm-12 col-md-9 control-value">
                             <provenance provenance-id="scopedObject.updatedBy"
                                 provenance-time="scopedObject.updatedTime" />
                         </div>
                         <label ng-if="scopedObject.obsoletedBy"
                             class="control-label col-sm-12 col-md-3">{{'ui.model.codeSystem.obsoletedBy' | i18n
                             }}</label>
-                        <div ng-if="scopedObject.obsoletedBy" class="col-sm-12 col-md-9">
+                        <div ng-if="scopedObject.obsoletedBy" class="col-sm-12 col-md-9 control-value">
                             <provenance provenance-id="scopedObject.obsoletedBy"
                                 provenance-time="scopedObject.obsoletionTime" />
                             <button type="button" ng-click="unDelete()" class="btn btn-success"><i

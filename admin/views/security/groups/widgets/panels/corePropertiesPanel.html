@@ -24,7 +24,7 @@
                 <div class="col-sm-12 col-md-10 input-group">
                     <input name="sid" readonly="readonly" type="text"  autocomplete="__away" class="form-control"
                         ng-model="scopedObject.securityRole.id" />
-                    <input-copy-button class="btn btn-outline-secondary" source="scopedObject.securityRole.id" />
+                    <input-copy-button button-class="'btn-outline-secondary'" source="scopedObject.securityRole.id" />
                 </div>
             </div>
 
@@ -35,7 +35,7 @@
                     <input name="rolename" ng-readonly="scopedObject.securityRole.id" type="text"  autocomplete="__away"
                         class="form-control" pattern="^[A-Za-z0-9_\.\@]{3,}" minlength="3" maxlength="32"
                         required="required" ng-model="scopedObject.securityRole.name" />
-                    <input-copy-button id="rolenameCopyButton" class="btn btn-outline-secondary"
+                    <input-copy-button id="rolenameCopyButton" button-class="'btn-outline-secondary'"
                         source="scopedObject.securityRole.name" />
                 </div>
                 <div class="col-sm-12 col-md-10 offset-md-2">
@@ -57,7 +57,7 @@
             <div class="form-group row" ng-if="scopedObject.securityRole.createdBy">
                 <label
                     class="col-sm-12 col-md-2 control-label">{{ 'ui.model.securityRole.createdBy' | i18n }}</label>
-                <div class="col-md-10 col-sm-12">
+                <div class="col-md-10 col-sm-12 control-value">
                     <provenance provenance-id="scopedObject.securityRole.createdBy"
                         provenance-time="scopedObject.securityRole.creationTime"></provenance>
                     {{ scopedObject.securityRole.creationTime | extDate }}
