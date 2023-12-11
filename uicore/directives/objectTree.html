@@ -1,0 +1,20 @@
+<div xmlns="http://www.w3.org/1999/xhtml">
+    <span ng-if="::object.$type">[<strong>TYPE</strong> {{ object.$type }}]</span>
+    <ul class="list-unstyled ml-2">
+        <li ng-repeat="(prop, val) in object">
+            <div ng-if="::isExpandible(val)">
+                <a class="btn btn-link collapse-indicator p-0 m-0" data-toggle="collapse" data-target="#{{scoper}}_{{prop}}" aria-controls="{{scoper}}_{{prop}}" aria-expanded="false">
+                    <i class="fas fa-fw fa-chevron-right"></i> {{ prop }}
+                </a>
+                <div id="{{scoper}}_{{prop}}" class="collapse">
+                    <object-tree depth="depth + 1" object="::val" scoper="scoper + '_' + prop" />
+                </div>
+            </div>
+            <div ng-if="::!isExpandible(val)">
+                <strong><i class="fas fa-circle"></i> {{ prop }}</strong> = {{ val }}
+            </div>
+
+
+        </li>
+    </ul>
+</div>

@@ -188,6 +188,7 @@
     </menuItem>
   </menuItem>
 
+
   <viewModel key="relationship_full">
     <definition>/org.santedb.admin/model/relationship_full.xml</definition>
   </viewModel>

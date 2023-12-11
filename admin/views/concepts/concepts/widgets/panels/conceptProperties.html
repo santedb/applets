@@ -1,0 +1,183 @@
+<div xmlns="http://www.w3.org/1999/xhtml" xmlns:sdb="http://santedb.org/applet"
+    oc-lazy-load="{name:'ConceptWidgetController', files: ['/org.santedb.admin/controllers/concepts/concepts/widget.js'] }">
+    <sdb:widget name="org.santedb.widget.concept.concepts.core.properties" type="Panel" size="Medium"
+        context="org.santedb.concept.concepts.core" order="0" headerClass="alert-info">
+        <sdb:icon>fas fa-virus</sdb:icon>
+        <sdb:description lang="en">Concept Properties</sdb:description>
+        <sdb:demand>1.3.6.1.4.1.33349.3.1.5.9.2.0.7</sdb:demand>
+        <sdb:views>
+            <sdb:view type="Edit">
+                <sdb:demand>1.3.6.1.4.1.33349.3.1.5.9.2.0.7</sdb:demand>
+            </sdb:view>
+        </sdb:views>
+    </sdb:widget>
+
+    <div ng-if="scopedObject">
+        <div ng-controller="ConceptWidgetController">
+            <div ng-if="panel.view != 'Edit'">
+                <div class="container-fluid">
+                    <div class="form-group row">
+                        <label class="control-label col-sm-12 col-md-3">{{'ui.model.concept.mnemonic' | i18n }}</label>
+                        <div class="col-sm-12 col-md-9 control-value">{{ scopedObject.mnemonic }}</div>
+                        <label class="control-label col-sm-12 col-md-3">{{'ui.model.concept.conceptClass' | i18n
+                            }}</label>
+                        <div class="col-sm-12 col-md-9 control-value">{{ scopedObject.conceptClassModel.name }}</div>
+                        <label class="control-label col-sm-12 col-md-3">{{'ui.model.concept.name' | i18n }}</label>
+                        <div class="col-sm-12 col-md-9 control-value">
+                            <ul class="list-unstyled mb-0">
+                                <li ng-repeat="(lang, vals) in scopedObject.name">
+                                    {{ "ui.locale." + lang | i18n }} ({{lang}}):
+                                    <ul class="mb-0 mr-1">
+                                        <li ng-repeat="v in vals">{{v}}</li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
+                        <label class="control-label col-sm-12 col-md-3">{{'ui.model.concept.conceptSet' | i18n
+                            }}</label>
+                        <div class="col-sm-12 col-md-9 control-value">
+                            <ul class="list-unstyled mb-0">
+                                <li ng-repeat="(aut, set) in scopedObject.conceptSetModel">
+                                    <a ui-sref="santedb-admin.concept.conceptSet.view({id : set[0].id})"
+                                        target="_blank">{{ aut }} - {{ set[0].name }}</a>
+                                </li>
+                            </ul>
+                        </div>
+                        <label class="control-label col-sm-12 col-md-3">{{'ui.model.codeSystem.createdBy' | i18n
+                            }}</label>
+                        <div class="col-sm-12 col-md-9 control-value">
+                            <provenance provenance-id="scopedObject.createdBy"
+                                provenance-time="scopedObject.creationTime" />
+                        </div>
+                        <label ng-if="scopedObject.updatedBy"
+                            class="control-label col-sm-12 col-md-3">{{'ui.model.codeSystem.updatedBy' | i18n
+                            }}</label>
+                        <div ng-if="scopedObject.updatedBy" class="col-sm-12 col-md-9 control-value">
+                            <provenance provenance-id="scopedObject.updatedBy"
+                                provenance-time="scopedObject.updatedTime" />
+                        </div>
+                        <label ng-if="scopedObject.obsoletedBy"
+                            class="control-label col-sm-12 col-md-3">{{'ui.model.codeSystem.obsoletedBy' | i18n
+                            }}</label>
+                        <div ng-if="scopedObject.obsoletedBy" class="col-sm-12 col-md-9 control-value">
+                            <provenance provenance-id="scopedObject.obsoletedBy"
+                                provenance-time="scopedObject.obsoletionTime" />
+                            <button type="button" ng-click="unDelete()" class="btn btn-success"><i
+                                    class="fas fa-trash-restore"></i> {{ 'ui.action.undelete' | i18n }}</button>
+                            {{ 'ui.view.deletedRecord' | i18n }}
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <form ng-if="panel.view == 'Edit'" ng-submit="saveConcept(panel.editForm)" name="panel.editForm"
+                novalidate="novalidate">
+
+                <div class="form-group row">
+                    <label class="col-sm-12 col-md-3 control-label">
+                        {{ 'ui.model.concept.mnemonic' | i18n }}
+                        <hint-popover hint-title="ui.model.concept.mnemonic" />
+                    </label>
+                    <div class="col-sm-12 col-md-9">
+                        <input autocomplete="__away" type="text" maxlength="64" ng-model="editObject.mnemonic"
+                            name="conceptMnemonic" required="required" class="form-control"
+                            pattern="^[a-zA-Z0-9_\-]{2,}$" />
+                        <div class="text-danger" ng-if="panel.editForm.conceptMnemonic.$error['required']">
+                            <i class="fas fa-exclamation-triangle"></i> {{ 'ui.error.required' | i18n }}
+                        </div>
+                        <div class="text-danger" ng-if="panel.editForm.conceptMnemonic.$error['pattern']">
+                            <i class="fas fa-exclamation-triangle"></i> {{ 'ui.error.pattern' | i18n }}
+                        </div>
+                        <div class="text-danger" ng-if="panel.editForm.conceptMnemonic.$error['duplicate']">
+                            <i class="fa fa-exclamation-triangle"></i> {{ 'ui.error.duplicate' | i18n }}
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-12 col-md-3 control-label">{{ 'ui.model.concept.conceptClass' | i18n }}
+                        <hint-popover hint-title="ui.model.concept.conceptClass" />
+                    </label>
+                    <div class="col-sm-12 col-md-9">
+                        <entity-select ng-model="editObject.conceptClass" entity-type="'ConceptClass'"
+                            class="form-control" />
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="control-label col-sm-12 col-md-3">
+                        <hint-popover hint-title="ui.model.concept.name" />
+                    </label>
+                    <div class="col-sm-12 col-md-9">
+                        <ul class="list-group">
+                            <li class="list-group-item" ng-repeat="name in editObject.name.$other track by $index">
+                                <div class="input-group">
+                                    <input type="text" max-length="256" ng-model="name.value"
+                                        name="conceptName{{$index}}" class="form-control" autocomplete="__away"
+                                        required="required" />
+                                    <div class="input-group-append">
+                                        <ref-term-select class="form-control" name="conceptNameLang{{$index}}"
+                                            code-system-url="'urn:ietf:bcp:47'" ng-model="name.language" />
+                                    </div>
+                                    <div class="input-group-append btn-group">
+                                        <button class="btn btn-primary" type="button"
+                                            ng-click="editObject.name.$other.push({})">
+                                            <i class="fas fa-fw fa-plus-circle"></i> {{ 'ui.action.add' | i18n }}
+                                        </button>
+                                        <button class="btn btn-danger" ng-if="concept.name.$other.length &gt; 1"
+                                            type="button" ng-click="editObject.name.$other.splice($index, 1)">
+                                            <i class="fas fa-fw fa-times-circle"></i> {{ 'ui.action.remove' | i18n }}
+                                        </button>
+                                    </div>
+                                </div>
+                                <div ng-if="panel.editForm['conceptName' + $index].$error['required']"
+                                    class="text-danger">
+                                    <i class="fas fa-exclamation-triangle"></i> {{ 'ui.error.required' |
+                                    i18n }}
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-12 col-md-3 control-label">{{ 'ui.model.concept.conceptSet' | i18n }}
+                        <hint-popover hint-title="ui.model.concept.conceptSet" />
+                    </label>
+                    <div class="col-sm-12 col-md-9">
+                        <ul class="list-group">
+                            <li class="list-group-item" ng-repeat="set in editObject.conceptSet track by $index">
+                                <div class="input-group">
+                                    <div class="w-50">
+                                        <entity-search type="'ConceptSet'" class="form-control" ng-model="set"
+                                            readonly="readonly" disabled="disabled" search-field="'name'"
+                                            filter="{ 'obsoletionTime' : 'null' }"></entity-search>
+                                    </div>
+                                    <div class="input-group-append btn-group">
+                                        <button type="button" class="btn btn-danger"
+                                            ng-click="editObject.conceptSet.splice($index, 1)">
+                                            <i class="fas fa-fw fa-times-circle"></i> {{ 'ui.action.remove' | i18n }}
+                                        </button>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="list-group-item">
+                                <div class="input-group">
+                                    <div class="w-50">
+                                        <entity-search type="'ConceptSet'" class="form-control w-50" ng-model="newSet"
+                                            search-field="'name'"
+                                            filter="{ 'obsoletionTime' : 'null' }"></entity-search>
+                                    </div>
+                                    <div class="input-group-append btn-group">
+                                        <button type="button" class="btn btn-primary"
+                                            ng-click="editObject.conceptSet.push(newSet); newSet = null;">
+                                            <i class="fas fa-fw fa-plus-circle"></i> {{ 'ui.action.add' | i18n }}
+                                        </button>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+            </form>
+        </div>
+    </div>
+</div>

@@ -18,7 +18,7 @@
  - Date: 2019-8-8
  -->
 <div xmlns="http://www.w3.org/1999/xhtml" class="container-fluid">
-    <div class="row">
+    <div class="row mb-2">
         <div class="col-sm-12 text-center" ng-if="!login.scope">
             {{ login.welcomeMessage || 'ui.login.realm' | i18n }} : <strong>{{ $root.system.config.realmName }}</strong>
         </div>
@@ -72,7 +72,8 @@
             </ul>
         </div>
     </div>
-    <div class="form-group row" ng-if="!login.forbidPin">
+    <!-- TODO: When a PIN authentication is enabled in the backend then enable this-->
+    <div class="form-group row" ng-if="!login.forbidPin &amp;&amp; false">
         <div class="btn-group btn-group-toggle mx-auto">
             <label class="btn btn-info" ng-class="{ 'active' : login.grant_type == 'password' }">
                 <input type="radio" name="loginMode" ng-model="login.grant_type" value="password"

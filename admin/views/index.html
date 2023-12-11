@@ -1,5 +1,7 @@
 <!--
- - Copyright 2015-2018 Mohawk College of Applied Arts and Technology
+ - Copyright (C) 2021-2023 SanteSuite Inc and the SanteSuite Contributors (see NOTICES)
+Portions Copyright (C) 2019-2021 Fyfe Software Inc.
+Portions Copyright (C) 2015-2018 Mohawk College of Applied Arts and Technology
  - 
  - 
  - Licensed under the Apache License, Version 2.0 (the "License"); you 
@@ -44,21 +46,25 @@
                 ng-class="{'navbar-collapse-small' : windowSize &lt; 1100}">
                 <ul class="navbar-nav navbar-sidenav" id="menuAccordian">
                     <li ng-if="!menuItems" class="nav-item">
-                        <a class="nav-link" href="javascript:"><i class="fas fa-circle-notch fa-spin"></i> {{ 'ui.wait' | i18n }}</a>
+                        <a class="nav-link" href="javascript:"><i class="fas fa-circle-notch fa-spin"></i> {{ 'ui.wait'
+                            | i18n }}</a>
                     </li>
                     <li ng-repeat="m in menuItems track by $index" class="nav-item">
-                        <a class="nav-link" ng-if="!m.menu || m.menu.length == 0" ui-sref="{{ ::m.action }}" data-toggle="collapse"
-                            data-target=".navbar-collapse-small"  title="{{::c.text ||c.action | i18n}}">
+                        <a class="nav-link" ng-if="!m.menu || m.menu.length == 0" ui-sref="{{ ::m.action }}"
+                            data-toggle="collapse" data-target=".navbar-collapse-small"
+                            title="{{::c.text ||c.action | i18n}}">
                             <i class="{{m.icon}}"></i>
                             <span class="nav-link-text"> {{::m.text || m.action | i18n }}</span>
                         </a>
-                        <a ng-if="m.menu &amp;&amp; m.menu.length > 0" class="nav-link nav-link-collapse" ui-sref="{{ ::m.action }}"
-                            data-toggle="collapse" data-target="#Collapse{{$index}}" role="button" aria-haspopup="true"
-                            aria-expanded="false"  title="{{::c.text ||c.action | i18n}}">
+                        <a ng-if="m.menu &amp;&amp; m.menu.length > 0" class="nav-link nav-link-collapse"
+                            ui-sref="{{ ::m.action }}" data-toggle="collapse" data-target="#Collapse{{$index}}"
+                            role="button" aria-haspopup="true" aria-expanded="false"
+                            title="{{::c.text ||c.action | i18n}}">
                             <i class="{{m.icon}}"></i>
                             <span class="nav-link-text"> {{::m.text || m.action | i18n}}</span>
                         </a>
-                        <ul ng-if="m.menu &amp;&amp; m.menu.length > 0" class="sidenav-second-level collapse" id="Collapse{{$index}}"  data-parent="#menuAccordian">
+                        <ul ng-if="m.menu &amp;&amp; m.menu.length > 0" class="sidenav-second-level collapse"
+                            id="Collapse{{$index}}" data-parent="#menuAccordian">
                             <li ng-repeat="c in ::m.menu" title="{{c.text}}">
                                 <a ui-sref="{{ ::c.action }}" data-toggle="collapse"
                                     data-target=".navbar-collapse-small" title="{{::c.text ||c.action | i18n}}">
@@ -79,10 +85,12 @@
                 </ul>
                 <ul class="navbar-nav ml-auto">
                     <li ng-if="$root.system.config.sync.mode == 'None'">
-                        <span class="nav-link m-0 p-1 alert alert-primary"><i class="fas fa-server"></i> {{ 'ui.directConnect' | i18n }}</span>
+                        <span class="nav-link m-0 p-1 alert alert-primary"><i class="fas fa-server"></i> {{
+                            'ui.directConnect' | i18n }}</span>
                     </li>
                     <li ng-if="'{{ $env_type }}' == 'debug'">
-                        <span class="nav-link m-0 p-1 alert alert-info"><i class="fas fa-bug"></i> {{ 'ui.debug' | i18n }}</span>
+                        <span class="nav-link m-0 p-1 alert alert-info"><i class="fas fa-bug"></i> {{ 'ui.debug' | i18n
+                            }}</span>
                     </li>
                     <!--<li class="nav-item dropdown" ng-if="'{{ $env_type }}' == 'debug'">
                         <a class="nav-link dropdown-toggle mr-lg-2" id="messagesDropdown" data-toggle="dropdown"
@@ -128,9 +136,13 @@
                             aria-haspopup="true" aria-expanded="false">
                             <i class="fa fa-fw fa-bell"></i>
                             <span class="d-lg-none" ng-if="tickles.length > 0">{{ 'ui.admin.alerts' | i18n}}
-                                <span class="badge badge-pill" ng-class="{ 'badge-warning' : tickles.alert, 'badge-success' : !tickles.alert }">{{ tickles.length }}</span>
+                                <span class="badge badge-pill"
+                                    ng-class="{ 'badge-warning' : tickles.alert, 'badge-success' : !tickles.alert }">{{
+                                    tickles.length }}</span>
                             </span>
-                            <span class="indicator d-none d-lg-block"  ng-class="{ 'text-warning' : tickles.alert, 'text-success' : !tickles.alert }" ng-if="tickles.length > 0">
+                            <span class="indicator d-none d-lg-block"
+                                ng-class="{ 'text-warning' : tickles.alert, 'text-success' : !tickles.alert }"
+                                ng-if="tickles.length > 0">
                                 <i class="fa fa-fw fa-circle"></i>
                             </span>
                         </a>
@@ -139,7 +151,8 @@
                             <div ng-repeat="t in tickles">
                                 <div class="dropdown-divider"></div>
                                 <a class="dropdown-item" href="#">
-                                    <span ng-class="{'text-danger' : t.type == 'Danger' , ' text-success' : t.type != 'Danger' }">
+                                    <span
+                                        ng-class="{'text-danger' : t.type == 'Danger' , ' text-success' : t.type != 'Danger' }">
                                         <strong ng-if="t.type == 'Danger'">
                                             <i class="fa fa-exclamation-triangle fa-fw"></i>
                                             {{ 'ui.priority.error' | i18n }}
@@ -148,8 +161,8 @@
                                             <i class="fa fa-info-circle fa-fw"></i> {{ 'ui.priority.info' | i18n }}
                                         </strong>
                                     </span>
-                                    <span
-                                        class="small float-right text-muted">{{ t.creationTime | date: 'HH:mm' }}</span>
+                                    <span class="small float-right text-muted">{{ t.creationTime | date: 'HH:mm'
+                                        }}</span>
                                     <div class="dropdown-message small">{{ t.text }}</div>
                                 </a>
                             </div>
@@ -158,46 +171,52 @@
                                 <a class="dropdown-item" href="#">{{ 'ui.admin.alerts.none' | i18n }}</a>
                             </div>
                             <div class="dropdown-divider"></div>
-                            <button class="btn btn-link" type="button" ng-click="clearTickles()">{{ 'ui.action.dismiss' | i18n }}</button>
+                            <button class="btn btn-link" type="button" ng-click="clearTickles()">{{ 'ui.action.dismiss'
+                                | i18n }}</button>
                         </div>
                     </li>
                     <li class="nav-item indicator-container">
-                            <a class="nav-link mr-lg-2">
-                                <i class="fa fa-fw fa-wifi"></i>
-                                <span class="d-lg-none">{{ 'ui.state' | i18n }}
-                                    <span class="badge badge-pill badge-success" ng-if="$root.system.online &amp;&amp; $root.system.serviceState.hdsi &amp;&amp; $root.system.serviceState.ami">
-                                        {{ 'ui.state.online' | i18n }}
-                                    </span>
-                                    <span class="badge badge-pill badge-warning" ng-if="!$root.system.serviceState.hdsi || !$root.system.serviceState.ami">
-                                        {{ 'ui.state.degraded' | i18n }}
-                                    </span>
-                                    <span class="badge badge-pill badge-danger" ng-if="!$root.system.online">
-                                        {{ 'ui.state.offline' | i18n }}
-                                    </span>
+                        <a class="nav-link mr-lg-2">
+                            <i class="fa fa-fw fa-wifi"></i>
+                            <span class="d-lg-none">{{ 'ui.state' | i18n }}
+                                <span class="badge badge-pill badge-success"
+                                    ng-if="$root.system.online &amp;&amp; $root.system.serviceState.hdsi &amp;&amp; $root.system.serviceState.ami">
+                                    {{ 'ui.state.online' | i18n }}
                                 </span>
-                                <span class="indicator d-none d-lg-block"
-                                    ng-class="{ 'text-success' : $root.system.online &amp;&amp; $root.system.serviceState.hdsi &amp;&amp; $root.system.serviceState.ami, 'text-warning': $root.system.online &amp;&amp; (!$root.system.serviceState.hdsi || !$root.system.serviceState.ami) , 'text-danger' : !$root.system.online }">
-                                    <i class="fa fa-fw fa-circle"></i>
+                                <span class="badge badge-pill badge-warning"
+                                    ng-if="!$root.system.serviceState.hdsi || !$root.system.serviceState.ami">
+                                    {{ 'ui.state.degraded' | i18n }}
                                 </span>
-                            </a>
-                        </li>
-                        <li class="nav-item indicator-container" ng-if="$root.system.config.sync.mode.subscribeType == 'Sync'">
-                                <a ui-sref="santedb-admin.sync" class="nav-link mr-lg-2" ng-disabled="!$root.system.online">
-                                    <i class="fa fa-fw fa-sync-alt"></i>
-                                    <span class="d-lg-none">{{ 'ui.sync' | i18n }} 
-                                        <span class="badge badge-pill badge-success" ng-show="queue.dead == 0">
-                                            <i class="fas fa-check-circle"></i> {{ 'ui.sync.clear' | i18n }}
-                                        </span>
-                                        <span class="badge badge-pill badge-danger" ng-show="queue.dead > 0">
-                                                <i class="fas fa-exclamation-circle"></i> {{ deadletterQueue }} {{ 'ui.sync.conflict' | i18n }}
-                                        </span>
-                                    </span>
-                                    <span class="indicator d-none d-lg-block"
-                                        ng-class="{ 'text-danger' : queue.dead > 0, 'text-success' : queue.dead == 0 }">
-                                        <i class="fa fa-fw" ng-class="{ 'fa-exclamation-circle' : queue.dead > 0, 'fa-check-circle' : queue.dead == 0 }"></i>
-                                    </span>
-                                </a>
-                            </li>
+                                <span class="badge badge-pill badge-danger" ng-if="!$root.system.online">
+                                    {{ 'ui.state.offline' | i18n }}
+                                </span>
+                            </span>
+                            <span class="indicator d-none d-lg-block"
+                                ng-class="{ 'text-success' : $root.system.online &amp;&amp; $root.system.serviceState.hdsi &amp;&amp; $root.system.serviceState.ami, 'text-warning': $root.system.online &amp;&amp; (!$root.system.serviceState.hdsi || !$root.system.serviceState.ami) , 'text-danger' : !$root.system.online }">
+                                <i class="fa fa-fw fa-circle"></i>
+                            </span>
+                        </a>
+                    </li>
+                    <li class="nav-item indicator-container"
+                        ng-if="$root.system.config.sync.mode.subscribeType == 'Sync'">
+                        <a ui-sref="santedb-admin.sync" class="nav-link mr-lg-2" ng-disabled="!$root.system.online">
+                            <i class="fa fa-fw fa-sync-alt"></i>
+                            <span class="d-lg-none">{{ 'ui.sync' | i18n }}
+                                <span class="badge badge-pill badge-success" ng-show="queue.dead == 0">
+                                    <i class="fas fa-check-circle"></i> {{ 'ui.sync.clear' | i18n }}
+                                </span>
+                                <span class="badge badge-pill badge-danger" ng-show="queue.dead > 0">
+                                    <i class="fas fa-exclamation-circle"></i> {{ deadletterQueue }} {{
+                                    'ui.sync.conflict' | i18n }}
+                                </span>
+                            </span>
+                            <span class="indicator d-none d-lg-block"
+                                ng-class="{ 'text-danger' : queue.dead > 0, 'text-success' : queue.dead == 0 }">
+                                <i class="fa fa-fw"
+                                    ng-class="{ 'fa-exclamation-circle' : queue.dead > 0, 'fa-check-circle' : queue.dead == 0 }"></i>
+                            </span>
+                        </a>
+                    </li>
                     <li class="nav-item">
                         <!-- <form class="form-inline my-2 my-lg-0 mr-lg-2">
                             <div class="input-group">
@@ -229,10 +248,11 @@
                                 <strong>
                                     <i class="fa fa-user-circle"></i> {{ 'ui.admin.profile' | i18n }} </strong>
                             </a>
-                            <button class="dropdown-item btn btn-link" data-toggle="modal" type="button" data-target="#logoutModal">
+                            <button class="dropdown-item btn btn-link" data-toggle="modal" type="button"
+                                data-target="#logoutModal">
                                 <strong>
                                     <i class="fa fa-sign-out-alt"></i>{{ 'ui.action.logout' | i18n }}</strong>
-                                </button>
+                            </button>
                         </div>
                     </li>
                 </ul>
@@ -242,35 +262,42 @@
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-md-12">
-                        <!-- success -->
-                        <div class="alert alert-success" ng-repeat="succ in $root.success track by $index">
-                            <i class="fa fa-check"></i>
-                            <span ng-bind-html="succ"></span>
-                            <button type="button" class="close" aria-label="Close" ng-click="removeSuccess($index)">
-                                <span aria-hidden="true">
-                                    <i class="fa fa-times"></i>
-                                </span>
-                            </button>
+                        <div class="w-100 mx-auto px-0">
+                            <div class="row">
+                                <div class="col">
+                                    <!-- success -->
+                                    <div class="alert alert-success" ng-repeat="succ in $root.success track by $index">
+                                        <i class="fa fa-check"></i>
+                                        <span ng-bind-html="succ"></span>
+                                        <button type="button" class="close" aria-label="Close"
+                                            ng-click="removeSuccess($index)">
+                                            <span aria-hidden="true">
+                                                <i class="fa fa-times"></i>
+                                            </span>
+                                        </button>
+                                    </div>
+                                    <!-- alert-->
+                                    <div class="alert alert-danger" ng-repeat="err in $root.errors track by $index">
+                                        <i class="fa fa-exclamation-triangle"></i>
+                                        <span ng-bind-html="err"></span>
+                                        <button type="button" class="close" aria-label="Close"
+                                            ng-click="removeAlert($index)">
+                                            <span aria-hidden="true">
+                                                <i class="fa fa-times"></i>
+                                            </span>
+                                        </button>
+                                    </div>
+                                    <div>
+                                        <breadcrumbs />
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                        <!-- alert-->
-                        <div class="alert alert-danger" ng-repeat="err in $root.errors track by $index">
-                            <i class="fa fa-exclamation-triangle"></i>
-                            <span ng-bind-html="err"></span>
-                            <button type="button" class="close" aria-label="Close" ng-click="removeAlert($index)">
-                                <span aria-hidden="true">
-                                    <i class="fa fa-times"></i>
-                                </span>
-                            </button>
-                        </div>
-                        <div>
-                            <breadcrumbs />
-                        </div>
-
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-md-12">
-                        <div class="container-fluid">
+                        <div class="w-100 mx-auto px-0">
                             <ui-view />
                         </div>
                     </div>
@@ -278,10 +305,10 @@
             </div>
             <!-- /.container-fluid-->
             <!-- /.content-wrapper-->
-            
+
         </div>
     </div>
-    
+
     <footer class="sticky-footer">
         <div class="container">
             <div class="text-center">
@@ -295,7 +322,8 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="logoutModalTitle">
-                        <i class="fa fa-fw fa-sign-out-alt"></i> {{ 'ui.logout' | i18n }}</h5>
+                        <i class="fa fa-fw fa-sign-out-alt"></i> {{ 'ui.logout' | i18n }}
+                    </h5>
                     <button class="close" type="button" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">
                             <i class="fa fa-times"></i>

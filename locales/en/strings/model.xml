@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+  <string name="ui.model.version.current">Current Version</string>
   <string name="ui.model.securityProvenance.type.device">Device Principal</string>
   <string name="ui.model.securityProvenance.type.user">User Principal</string>
   <string name="ui.model.securityProvenance.type.application">Application Principal</string>
@@ -173,6 +174,9 @@
   <string name="ui.model.entity.address.component.unitidentifier.hint"><![CDATA[The unit, suite, office, or other sub-division of the building]]></string>
   <string name="ui.model.entity.address.component.careof">C/O</string>
   <string name="ui.model.entity.address.component.careof.hint"><![CDATA[If delivery or other mail delivered to this address carries a care-of instruction]]></string>
+  <string name="ui.model.entity.address.component.additionalLocator">Additional</string>
+  <string name="ui.model.entity.address.component.additionalLocator.hint"><![CDATA[A location which assists in the locating of the address (i.e. closes intersection, ward, etc.)]]></string>
+
   <string name="ui.model.entity.address.expand">More Fields</string>
   <string name="ui.model.entity.address.collapse">Less Fields</string>
   <string name="ui.model.entity.name">Name</string>
@@ -255,6 +259,7 @@
   <string name="ui.model.patient.dedicatedServiceDeliveryLocation">Facilities</string>
   <string name="ui.model.patient.placeOfDeath">Place of Death</string>
   <string name="ui.model.patient.multipleBirthOrder">Twin/Triplet/Etc.</string>
+  <string name="ui.model.patient.multipleBirthOrder.-1">Unknown (of a multiple-birth)</string>
   <string name="ui.model.patient.multipleBirthOrder.0">Unknown (of a multiple-birth)</string>
   <string name="ui.model.patient.multipleBirthOrder.1">1st of multiple-birth</string>
   <string name="ui.model.patient.multipleBirthOrder.2">2nd of multiple-birth</string>
@@ -561,7 +566,8 @@
   <string name="ui.model.referenceTerm.concept">Concept(s)</string>
   <string name="ui.model.referenceTerm.concept.hint"><![CDATA[Terms which are used in the internal SanteDB concept dictionary which this term is linked to]]></string>
   <string name="ui.model.referenceTerm.concept.betterMnemonic"><![CDATA[Mnemonics in the SanteDB concept dictionary must be globally UNIQUE, whereas reference term mnemonics are unique within their code system. It is highly recommended administrators create a globally unique mnemonic for any new concepts]]></string>
-
+  <string name="ui.model.referenceTerm.codeSystem">Code System</string>
+  <string name="ui.model.referenceTerm.relationshipType">Relationship</string>
   <!-- Concept Set -->
   <string name="ui.model.conceptSet.name">Name</string>
   <string name="ui.model.conceptSet.name.hint">Provide a short, descriptive name of what this collection of concepts contains</string>
@@ -583,6 +589,56 @@
   <string name="ui.model.conceptSet.compose.instruction">Composition</string>
 
   <string name="ui.model.concept.mnemonic">Mnemonic</string>
+  <string name="ui.model.concept.mnemonic.hint"><![CDATA[The concept <code>mnemonic</code> is a unique, human readable name for the concept. These must be unique in the entire SanteDB instance. Try to use a consistent pattern such as <code>type-concept</code> for example <code>Gender-Female</code>]]></string>
+  <string name="ui.model.concept.conceptClass">Classification</string>
+  <string name="ui.model.concept.conceptClass.hint">The classification allows SanteDB to understand the broad use or meaning of the concept</string>
   <string name="ui.model.concept.name">Name(s)</string>
+  <string name="ui.model.concept.name.hint">The name which will appear in the user interfaces</string>
   <string name="ui.model.concept.conceptSet">Member of Set</string>
+  <string name="ui.model.concept.conceptSet.hint">The groupings of sets to which this concept belongs.</string>
+  <string name="ui.model.concept.referenceTerm">Reference Term(s)</string>
+  <string name="ui.model.concept.referenceTerm.hint">The wire-level terms which should be used for this concept</string>
+  <string name="ui.model.concept.updatedBy">Updated By</string>
+  <string name="ui.model.concept.createdBy">Created By</string>
+  <string name="ui.model.concept.conceptSet.add">Add Concept Set</string>
+
+  <string name="ui.model.cdssLibraryDefinition.name">Name</string>
+  <string name="ui.model.cdssLibraryDefinition.name.hint">A descriptive name which also serves as an identifier for the library in the master CDSS library</string>
+  <string name="ui.model.cdssLibraryDefinition.id">Identifier</string>
+  <string name="ui.model.cdssLibraryDefinition.id.hint">Enter a dotted identifier which serves as a universally unique identification for the library when referenced by other libraries in the master CDSS solution</string>
+  <string name="ui.model.cdssLibraryDefinition.oid">OID</string>
+  <string name="ui.model.cdssLibraryDefinition.oid.hint">The dotted object identifier (OID) for the library which is used when this CDSS library is referenced by external systems</string>
+  <string name="ui.model.cdssLibraryDefinition.uuid">UUID</string>
+  <string name="ui.model.cdssLibraryDefinition.documentation">Description</string>
+  <string name="ui.model.cdssLibraryDefinition.version">Info Version</string>
+  <string name="ui.model.cdssLibraryDefinition.meta.documentation.">Description</string>
+  <string name="ui.model.cdssLibraryDefinition.modifiedOn">Last Modified</string>
+  <string name="ui.model.cdssLibraryDefinition.metadata.version">Stated Version</string>
+  <string name="ui.model.cdssLibraryDefinition.metadata.version.hint"><![CDATA[The business version (informational version) for the library contents. This must be a semantic version in the format <c>major.minor.revision[-special]</c>]]></string>
+  <string name="ui.model.cdssLibraryDefinition.metadata.author">Author(s)</string>
+  <string name="ui.model.cdssLibraryDefinition.metadata.author.hint">The name of the primary author (or a copyright statement)</string>
+  <string name="ui.model.cdssLibraryDefinition.metadata.documentation">Description</string>
+  <string name="ui.model.cdssLibraryDefinition.metadata.documentation.hint">A long-form description of the contents of the CDSS library including its purpose, what it contains, etc.</string>
+  <string name="ui.model.cdssLibraryDefinition.definitions.data.name">Dataset Name</string>
+  <string name="ui.model.cdssLibraryDefinition.definitions.data.id">Dataset ID</string>
+  <string name="ui.model.cdssLibraryDefinition.versionSequence">Version #</string>
+  <string name="ui.model.cdssLibraryDefinition.creationTime">Created</string>
+  <string name="ui.model.cdssLibraryDefinition.define.fact">Fact</string>
+  <string name="ui.model.cdssLibraryDefinition.define.rule">Rule</string>
+  <string name="ui.model.cdssLibraryDefinition.define.protocol">Protocol</string>
+  <string name="ui.model.cdssLibraryDefinition.define.model">Model</string>
+  <string name="ui.model.cdssLibraryDefinition.then.raise.text">Issue Text</string>
+  <string name="ui.model.cdssLibraryDefinition.then.raise.priority">Issue Priority</string>
+  <string name="ui.model.cdssLibraryDefinition.then">Then Perform Actions</string>
+  <string name="ui.model.cdssLibraryDefinition.when">When Condition</string>
+  <string name="ui.model.cdssLibraryDefinition.then.propose">Propose Action</string>
+  <string name="ui.model.cdssLibraryDefinition.then.raise">Raise Issue</string>
+  <string name="ui.model.cdssLibraryDefinition.then.propose.assign">Assign Value To Property</string>
+  <string name="ui.model.cdssLibraryDefinition.then.propose.model">Use Model</string>
+  <string name="ui.model.cdssLibraryDefinition.context">Context</string>
+  <string name="ui.model.cdssLibraryDefinition.logic">Fact Definition</string>
+  <string name="ui.model.cdssLibraryDefinition.modifier">Modifier(s)</string>
+  <string name="ui.model.cdssLibraryDefinition.normalize">Normalization(s)</string>
+  <string name="ui.model.cdssLibraryDefinition.include">Include(s)</string>
+  <string name="ui.model.cdssLibraryDefinition.status">Status</string>
 </resources>

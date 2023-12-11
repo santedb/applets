@@ -14,12 +14,12 @@
     <div ng-if="panel.view != 'Create'">
         <div class="row">
             <label class="col-sm-12 col-md-2 control-label" for="sid">{{ 'ui.model.securityUser.id' | i18n }}</label>
-            <div class="col-sm-12 col-md-9">
+            <div class="col-sm-12 col-md-9 control-value">
                 {{ scopedObject.entity.id }}
             </div>
             <label class="col-sm-12 col-md-2 control-label"
                 for="username">{{ 'ui.model.securityUser.userName' | i18n }}</label>
-            <div class="col-sm-12 col-md-9">
+            <div class="col-sm-12 col-md-9 control-value">
                 {{ scopedObject.entity.userName }}
             </div>
             
@@ -62,7 +62,7 @@
     </div>
         <div class="form-group row" ng-if="scopedObject.entity.createdBy">
             <label class="col-sm-12 col-md-2 control-label">{{ 'ui.model.securityUser.createdBy' | i18n }}</label>
-            <div class="col-md-10 col-sm-12">
+            <div class="col-md-10 col-sm-12 control-value">
                 <provenance provenance-id="scopedObject.entity.createdBy"
                     provenance-time="scopedObject.entity.creationTime"></provenance>
                 {{ scopedObject.entity.creationTime | extDate }}
@@ -70,7 +70,7 @@
         </div>
         <div class="form-group row" ng-if="scopedObject.entity.updatedBy">
             <label class="col-sm-12 col-md-2 control-label">{{ 'ui.model.securityUser.updatedBy' | i18n }}</label>
-            <div class="col-md-10 col-sm-12">
+            <div class="col-md-10 col-sm-12 control-value">
                 <provenance provenance-id="scopedObject.entity.updatedBy"
                     provenance-time="scopedObject.entity.updatedTime"></provenance>
                 {{ scopedObject.entity.updatedTime | extDate }}
@@ -78,7 +78,7 @@
         </div>
         <div class="form-group row" ng-if="scopedObject.entity.obsoletedBy">
             <label class="col-sm-12 col-md-2 control-label">{{ 'ui.model.securityUser.obsoletedBy' | i18n }}</label>
-            <div class="col-md-10 col-sm-12">
+            <div class="col-md-10 col-sm-12 control-value">
                 <provenance provenance-id="scopedObject.entity.obsoletedBy"
                     provenance-time="scopedObject.entity.obsoletionTime"></provenance>
                 {{ scopedObject.entity.obsoletionTime | extDate }} <button id="reactivateUserButton"

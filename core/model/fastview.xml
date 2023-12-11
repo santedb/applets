@@ -21,6 +21,19 @@
 <ViewModel xmlns="http://santedb.org/model/view">
   <include>base</include>
 
+  <type type="ConceptReferenceTerm" all="false">
+    <property name="relationshipTypeModel" behavior="always" all="true" />
+    <property name="termModel" behavior="always" all="false">
+      <property name="mnemonic" />
+      <property name="codeSystem" />
+      <property name="codeSystemModel" behavior="always">
+        <property name="name" />
+        <property name="authority" />
+        <property name="domain" />
+        <property name="oid" />
+      </property>
+    </property>
+  </type>
   <type type="ActProtocol" all="false">
     <property name="protocol" behavior="always"/>
     <property name="protocolModel" behavior="always" all="false">

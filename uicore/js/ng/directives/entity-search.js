@@ -64,7 +64,7 @@ angular.module('santedb-lib')
             else if (selection.text)
                 retVal = selection.text;
 
-            if(selection.$type) {
+            if (selection.$type) {
                 retVal += " (" + selection.$type + ")";
             }
             return retVal;
@@ -115,6 +115,7 @@ angular.module('santedb-lib')
                     retVal += "<i class='fa fa-user'></i>";
                     break;
                 case "Concept":
+                case "CodeSystem":
                     retVal += "<i class='fa fa-book-medical'></i>";
                     break;
                 case "SecurityPolicy":
@@ -139,6 +140,10 @@ angular.module('santedb-lib')
                 retVal += selection.userName;
             else if (selection.mnemonic)
                 retVal += SanteDB.locale.getString(selection.mnemonic);
+            else if(selection.authority) {
+                retVal += SanteDB.locale.getString(selection.authority);
+
+            }
             else if (selection.entity)
                 retVal += (selection.entity.name || selection.entity.userName);
             else if (selection.element !== undefined)
@@ -152,6 +157,8 @@ angular.module('santedb-lib')
                     retVal += "<small class='d-none d-sm-inline'> - (<i class='fa fa-map-marker'></i> " + SanteDB.display.renderEntityAddress(selection.address) + ")</small>";
                 else if (selection.oid)
                     retVal += "<small class='d-none d-sm-inline'> - (<i class='fa fa-cogs'></i> " + selection.oid + ")</small>";
+                else if(selection.mnemonic)
+                    retVal += `<small class='d-none d-sm-inline'>(${selection.mnemonic})</small>`;
             }
             if (selection.classConceptModel && !selection.typeConceptModel)
                 retVal += ` <span class='badge badge-secondary'>${SanteDB.display.renderConcept(selection.classConceptModel)}</span>`;
@@ -168,7 +175,7 @@ angular.module('santedb-lib')
 
         return {
             scope: {
-                type: '<', // The type of object to be searched
+                type: '=', // The type of object to be searched
                 display: '<', // The expression which dictates the display
                 searchField: '<', // The field on the server to search results for
                 defaultResults: '<', // The default results to show
@@ -266,7 +273,11 @@ angular.module('santedb-lib')
             ],
             link: function (scope, element, attrs, ngModel) {
 
-                
+                if(!$(element).attr('id'))
+                {
+                    $(element).attr('id', SanteDB.application.newGuid().replace(/\-/g,'_'));
+                }
+
                 // Extract property
                 function extractProperty(object, path) {
                     var r = object;
@@ -284,8 +295,7 @@ angular.module('santedb-lib')
                 }
 
                 $timeout(function () {
-                    var modelType = scope.type;
-                    var filter = scope.filter || { statusConcept: [ StatusKeys.Active, StatusKeys.New ] };;
+                    var filter = scope.filter || { statusConcept: [StatusKeys.Active, StatusKeys.New] };;
                     var displayString = scope.display;
                     var searchProperty = scope.searchField;
                     var defaultResults = scope.defaultResults;
@@ -297,7 +307,7 @@ angular.module('santedb-lib')
                     var lastRuleCheck = null;
 
                     if (!searchProperty) {
-                        switch (modelType) {
+                        switch (scope.type) {
                             case "Entity":
                             case "Patient":
                             case "Person":
@@ -311,6 +321,8 @@ angular.module('santedb-lib')
                             case "Concept":
                                 searchProperty = "name.value";
                                 break;
+                            default:
+                                searchProperty = 'identifier.value';
                         }
                     }
 
@@ -323,19 +335,19 @@ angular.module('santedb-lib')
                     });
 
                     // Is this part of a relationship? 
-                    if(scope.forRelationshipType) {
-                        scope.$watch(s=>s.forRelationshipType + (s.withRelationshipSourceClass || s.withRelationshipTargetClass), async function(n, o) {
+                    if (scope.forRelationshipType) {
+                        scope.$watch(s => s.forRelationshipType + (s.withRelationshipSourceClass || s.withRelationshipTargetClass), async function (n, o) {
                             // We want to set the filter based on allowable types
-                            if(n && lastRuleCheck != n) {
+                            if (n && lastRuleCheck != n) {
                                 lastRuleCheck = n;
                                 var serverRules = (await SanteDB.resources.entityRelationship.findAssociatedAsync(null, '_relationshipRule', {
                                     sourceClass: scope.withRelationshipSourceClass,
                                     targetClass: scope.withRelationshipTargetClass,
                                     relationshipType: scope.forRelationshipType
                                 })).resource;
-                                if(serverRules.length > 0) {
-                                    
-                                    filter.classConcept = serverRules.map(o=>scope.withRelationshipSourceClass ? o.targetClass : o.sourceClass);
+                                if (serverRules.length > 0) {
+
+                                    filter.classConcept = serverRules.map(o => scope.withRelationshipSourceClass ? o.targetClass : o.sourceClass);
                                 }
                                 else {
                                     filter.classConcept = EmptyGuid;
@@ -352,7 +364,7 @@ angular.module('santedb-lib')
                         dataAdapter: $.fn.select2.amd.require('select2/data/extended-ajax'),
                         ajax: {
 
-                            url: SanteDB.resources[modelType.toCamelCase()].getUrl(), //((modelType == "SecurityUser" || modelType == "SecurityRole" || modelType == "SecurityPolicy") ? "/ami/" : "/hdsi/") + modelType,
+                            url: () => SanteDB.resources[scope.type.toCamelCase()].getUrl(), //((modelType == "SecurityUser" || modelType == "SecurityRole" || modelType == "SecurityPolicy") ? "/ami/" : "/hdsi/") + modelType,
                             dataType: 'json',
                             delay: 500,
                             method: "GET",
@@ -426,8 +438,8 @@ angular.module('santedb-lib')
                                             // parent obj
                                             try {
                                                 var groupDisplay = null;
-                                                if(Array.isArray(groupString)) {
-                                                    groupDisplay = groupString.map(o=> scope.$eval('scope.' + o, { scope: data[itm] })).find(o=>o != null);
+                                                if (Array.isArray(groupString)) {
+                                                    groupDisplay = groupString.map(o => scope.$eval('scope.' + o, { scope: data[itm] })).find(o => o != null);
                                                 }
                                                 else {
                                                     groupDisplay = scope.$eval('scope.' + groupString, { scope: data[itm] });
@@ -465,26 +477,8 @@ angular.module('santedb-lib')
                         placeholder: SanteDB.locale.getString(`ui.table.search.field.${searchProperty}`)
                     });
 
-                    // // on first focus (bubbles up to document), open the menu
-                    $(element).parent().on('focusin', '.select2-selection.select2-selection--single', function (e) {
-                        $(this).closest(".select2-container").siblings('select:enabled').select2('open');
-                    });
-
-                    //   // steal focus during close - only capture once and stop propogation
-                    if (scope.autoTabNext)
-                        $($(element).parent(), 'select.select2').on('select2:close', function (e) {
-                            $(element).trigger("focusout");
-
-                            // HACK: Focus the next form-control on close
-                            var controls = $('.form-control');
-                            var eindex = -1;
-                            controls.each(function (i, e) { if (e.name == element[0].name) eindex = i; });
-                            if (eindex > -1) {
-                                var nextControl = controls[eindex + 1].name;
-                                e.stopPropagation();
-                                $(`[name=${nextControl}]`).focus();
-                            }
-                        });
+                   
+                    
                     // On change
                     element.on('change', function (e) {
                         var val = $(element).select2("val");
@@ -529,18 +523,17 @@ angular.module('santedb-lib')
                     ngModel.$render = function () {
                         if (valueProperty) {
                             if (Array.isArray(ngModel.$viewValue))
-                                scope.setValue(element, modelType, ngModel.$viewValue.map(function (e) { return e[valueProperty]; }));
+                                scope.setValue(element, scope.type, ngModel.$viewValue.map(function (e) { return e[valueProperty]; }));
                             else
-                                scope.setValue(element, modelType, ngModel.$viewValue[valueProperty]);
+                                scope.setValue(element, scope.type, ngModel.$viewValue[valueProperty]);
                         }
                         else
-                            scope.setValue(element, modelType, ngModel.$viewValue);
+                            scope.setValue(element, scope.type, ngModel.$viewValue);
                     };
 
                     // HACK: Screw Select2 , it is so random
-                    if (ngModel.$viewValue)
-                    {
-                        scope.setValue(element, modelType, ngModel.$viewValue);
+                    if (ngModel.$viewValue) {
+                        scope.setValue(element, scope.type, ngModel.$viewValue);
                     }
 
                 });

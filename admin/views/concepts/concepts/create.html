@@ -1,0 +1,191 @@
+<div xmlns="http://www.w3.org/1999/xhtml" xmlns:sdb="http://santedb.org/applet">
+    <sdb:script static="false">~/controllers/concepts/concepts/edit.js</sdb:script>
+    <sdb:state name="santedb-admin.concept.concepts.create">
+        <sdb:url>/</sdb:url>
+        <sdb:demand>1.3.6.1.4.1.33349.3.1.5.9.2.0.7</sdb:demand>
+        <sdb:view>
+            <sdb:controller>EditConceptController</sdb:controller>
+        </sdb:view>
+    </sdb:state>
+    <form class="form" ng-submit="saveConcept(createConceptForm)" name="createConceptForm" novalidate="novalidate">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="card-title mb-0"><i class="fas fa-viruses"></i> {{
+                    'ui.admin.concept.concept.edit.profile.title' | i18n }}</h5>
+            </div>
+            <div class="card-body">
+                <div class="form-group row">
+                    <label class="col-sm-12 col-md-3 control-label">
+                        {{ 'ui.model.concept.mnemonic' | i18n }}
+                        <hint-popover hint-title="ui.model.concept.mnemonic" />
+                    </label>
+                    <div class="col-sm-12 col-md-9">
+                        <input autocomplete="__away" type="text" maxlength="64" ng-model="concept.mnemonic"
+                            name="conceptMnemonic" required="required" class="form-control"
+                            pattern="^[a-zA-Z0-9_\-]{2,}$" />
+                        <div class="text-danger" ng-if="createConceptForm.conceptMnemonic.$error['required']">
+                            <i class="fas fa-exclamation-triangle"></i> {{ 'ui.error.required' | i18n }}
+                        </div>
+                        <div class="text-danger" ng-if="createConceptForm.conceptMnemonic.$error['pattern']">
+                            <i class="fas fa-exclamation-triangle"></i> {{ 'ui.error.pattern' | i18n }}
+                        </div>
+                        <div class="text-danger" ng-if="createConceptForm.conceptMnemonic.$error['duplicate']">
+                            <i class="fa fa-exclamation-triangle"></i> {{ 'ui.error.duplicate' | i18n }}
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-12 col-md-3 control-label">{{ 'ui.model.concept.conceptClass' | i18n }}
+                        <hint-popover hint-title="ui.model.concept.conceptClass" />
+                    </label>
+                    <div class="col-sm-12 col-md-9">
+                        <entity-select ng-model="concept.conceptClass" entity-type="'ConceptClass'"
+                            class="form-control" />
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="control-label col-sm-12 col-md-3">
+                        {{ 'ui.model.concept.name' | i18n }}
+                        <hint-popover hint-title="ui.model.concept.name" />
+                    </label>
+                    <div class="col-sm-12 col-md-9">
+                        <ul class="list-group">
+                            <li class="list-group-item" ng-repeat="name in concept.name.$other track by $index">
+                                <div class="input-group">
+                                    <input type="text" max-length="256" ng-model="name.value"
+                                        name="conceptName{{$index}}" class="form-control" autocomplete="__away"
+                                        required="required" />
+                                    <div class="input-group-append">
+                                        <ref-term-select class="form-control" name="conceptNameLang{{$index}}"
+                                            code-system-url="'urn:ietf:bcp:47'" ng-model="name.language" />
+                                    </div>
+                                    <div class="input-group-append btn-group">
+                                        <button class="btn btn-primary" type="button"
+                                        ng-click="concept.name.$other.push({})">
+                                        <i class="fas fa-fw fa-plus-circle"></i> {{ 'ui.action.add' | i18n }}
+                                        </button>
+                                        <button class="btn btn-danger" ng-if="concept.name.$other.length &gt; 1" type="button"
+                                            ng-click="concept.name.$other.splice($index, 1)">
+                                            <i class="fas fa-fw fa-times-circle"></i>  {{ 'ui.action.remove' | i18n }}
+                                        </button>
+                                    </div>
+                                </div>
+                                <div ng-if="createConceptForm['conceptName' + $index].$error['required']"
+                                    class="text-danger">
+                                    <i class="fas fa-exclamation-triangle"></i> {{ 'ui.error.required' |
+                                    i18n }}
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-12 col-md-3 control-label">{{ 'ui.model.concept.conceptSet' | i18n }}
+                        <hint-popover hint-title="ui.model.concept.conceptSet" />
+                    </label>
+                    <div class="col-sm-12 col-md-9">
+                        <ul class="list-group">
+                            <li class="list-group-item" ng-repeat="set in concept.conceptSet track by $index">
+                                <div class="input-group">
+                                    <div class="w-50">
+                                        <entity-search type="'ConceptSet'" class="form-control" ng-model="set"
+                                            readonly="readonly" disabled="disabled" search-field="'name'"
+                                            filter="{ 'obsoletionTime' : 'null' }"></entity-search>
+                                    </div>
+                                    <div class="input-group-append btn-group">
+                                        <button type="button" class="btn btn-danger"
+                                            ng-click="concept.conceptSet.splice($index, 1)">
+                                            <i class="fas fa-fw fa-times-circle"></i>  {{ 'ui.action.remove' | i18n }}
+                                        </button>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="list-group-item">
+                                <div class="input-group">
+                                <div class="w-50">
+                                    <entity-search type="'ConceptSet'" class="form-control w-50" ng-model="newSet"
+                                        search-field="'name'" filter="{ 'obsoletionTime' : 'null' }"></entity-search>
+                                </div>
+                                <div class="input-group-append btn-group">
+                                    <button type="button" class="btn btn-primary"
+                                        ng-click="concept.conceptSet.push(newSet); newSet = null;">
+                                        <i class="fas fa-fw fa-plus-circle"></i> {{ 'ui.action.add' | i18n }}
+                                    </button>
+                                </div>
+                            </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="control-label col-sm-12 col-md-3">
+                        {{ 'ui.model.concept.referenceTerm' | i18n }}
+                        <hint-popover hint-title="ui.model.concept.referenceTerm" />
+                    </label>
+                    <div class="col-sm-12 col-md-9">
+                        <ul class="list-group">
+                            <li class="list-group-item"
+                                ng-repeat="conceptMap in concept.referenceTerm track by $index">
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <select class="form-control" ng-model="conceptMap.relationshipType">
+                                            <option value="2c4dafc2-566a-41ae-9ebc-3097d7d22f4a">SAME_AS
+                                            </option>
+                                            <option value="ad27293d-433c-4b75-88d2-b5360cd95450">INVERSE_OF
+                                            </option>
+                                            <option value="ae8b4f2f-009f-4e0d-b35e-5a89555c5947">NEGATION_OF
+                                            </option>
+                                            <option value="ae8b4f2f-009f-4e0d-b35e-5a89555c5980">WIDER_THAN
+                                            </option>
+                                            <option value="ae8b4f2f-009f-4e0d-b35e-5a89555c5990">
+                                                NARROWER_THAN</option>
+                                        </select>
+                                    </div>
+                                    <entity-search type="'CodeSystem'" ng-model="conceptMap.targetModel.codeSystem"
+                                        search-field="'authority'" owner-form="createConceptForm" 
+                                        filter="{obsoletionTime: 'null'}" required="required" auto-tab-next="true"
+                                        style="width:30%;"></entity-search>
+                                    <entity-search type="'ReferenceTerm'"
+                                        style="width:30%;" ng-model="conceptMap.targetModel.id"
+                                        search-field="'mnemonic'" is-required="true"
+                                        owner-form="createConceptForm"
+                                        auto-tab-next="false"
+                                        filter="{ 'codeSystem': conceptMap.targetModel.codeSystem }" 
+                                        required="required" ng-disabled="!conceptMap.targetModel.codeSystem"
+                                        name="edit.referenceTermConcept{{$index}}"></entity-search>
+                                    <div class="input-group-append btn-group">
+                                        <button type="button" class="btn btn-primary"
+                                            ng-click="concept.referenceTerm.push({ relationshipType: '2c4dafc2-566a-41ae-9ebc-3097d7d22f4a'})">
+                                            <i class="fas fa-fw fa-plus-circle" ></i>  {{ 'ui.action.add' | i18n }}
+                                        </button>
+                                            <button class="btn btn-danger" type="button"
+                                            ng-click="concept.referenceTerm.splice($index, 1)">
+                                            <i class="fas fa-fw fa-times-circle"></i>  {{ 'ui.action.remove' | i18n }}
+                                        </button>
+                                    </div>
+                                </div>
+                                <div ng-if="createConceptForm['edit.referenceTermConcept' + $index].$error['required']"
+                                    class="text-danger">
+                                    <i class="fas fa-exclamation-triangle"></i> {{ 'ui.error.required' |
+                                    i18n }}
+                                </div>
+                            </li>
+                            <li class="list-group-item" ng-if="concept.referenceTerm.length == 0">
+                                <button type="button" class="btn btn-primary"
+                                    ng-click="concept.referenceTerm.push({ relationshipType: '2c4dafc2-566a-41ae-9ebc-3097d7d22f4a'})">
+                                    <i class="fas fa-fw fa-plus-circle" ></i> {{ 'ui.action.add' | i18n }}
+                                </button>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="float-right btn-group">
+            <button type="submit" ng-disabled="createConceptForm.$invalid" class="btn btn-primary"
+                id="saveConceptButton">
+                <i class="fas fa-check"></i> {{ 'ui.action.save' | i18n }}
+            </button>
+        </div>
+    </form>
+</div>

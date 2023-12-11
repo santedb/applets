@@ -139,6 +139,12 @@
             <input autocomplete="__away" type="text" class="form-control" ng-model="addr.component.StreetAddressLine[0]" />
         </div>
     </div>
+    <div class="form-group row" ng-if="addr._showExtra &amp;&amp; $root.system.config.application.setting['forbid.patient.address.additionalLocator'] != 'true'">
+        <label class="col-sm-12 col-md-3 control-label">{{ 'ui.model.entity.address.component.additionalLocator' | i18n }} <hint-popover hint-title="ui.model.entity.address.component.additionalLocator" /></label>
+        <div class="col-sm-12 col-md-9">
+            <input autocomplete="__away" type="text" class="form-control" ng-model="addr.component.AdditionalLocator[0]" />
+        </div>
+    </div>
     <div class="form-group row" ng-if="$root.system.config.application.setting['forbid.patient.address.postalcode'] != 'true'">
         <label class="col-sm-12 col-md-3 control-label">{{ 'ui.model.entity.address.component.postalcode' | i18n }} <hint-popover hint-title="ui.model.entity.address.component.postalcode" /></label>
         <div class="col-sm-12 col-md-9">

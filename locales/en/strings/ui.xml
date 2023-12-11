@@ -9,6 +9,10 @@
       <string name="ui.example">Example</string>
       <!-- Common Phrases -->
       <string name="ui.common.charsRemain">characters remain</string>
+      <string name="ui.common.version">Version</string>
+      <string name="ui.common.rows">Rows</string>
+      <string name="ui.common.size">Size</string>
+      <string name="ui.common.kilobytes">Kb</string>
       <string name="ui.search.onlineResult">Online Result</string>
       <!-- Login Translations -->
       <string name="ui.login.input.username">Username</string>
@@ -143,6 +147,7 @@
       <string name="ui.action.clear">Clear</string>
       <string name="ui.action.clone">Clone</string>
       <string name="ui.action.cancel.confirm">Are you sure you want to cancel?</string>
+      <string name="ui.action.abandon.confirm">You have unsaved changes on this page. Are you sure you want to abandon them?</string>
       <string name="ui.action.save">Save</string>
       <string name="ui.action.submit">Submit</string>
       <string name="ui.action.search">Search</string>
@@ -184,6 +189,7 @@
       <string name="ui.action.build">Build</string>
       <string name="ui.action.add">Add</string>
       <string name="ui.action.add.then.new">Add &amp; Create Another</string>
+      <string name="ui.action.add.then.another">Add &amp; Enter Another</string>
       <string name="ui.action.add.then.goto">Add &amp; Go To</string>
       <string name="ui.action.register">Register</string>
       <string name="ui.action.unregister">Un-Register</string>

@@ -235,7 +235,12 @@
     <string name="ui.admin.job.runJob.confirm">Are you sure you want to manually run this job?</string>
     <string name="ui.admin.job.runJob.success">Job was successfully started</string>
     <string name="ui.admin.job.cancelJob.confirm">Are you sure you want cancel this running job? </string>
-
+    <string name="ui.admin.job.register.title">Register Job</string>
+    <string name="ui.admin.job.register.help"><![CDATA[This modal allows you to register or activate a SanteDB background job which was not otherwise activated on application startup. The
+    SanteDB iCDR or dCDR will attempt to register the job and will update your configuration.]]></string>
+    <string name="ui.admin.job.register.confirm">Are you sure you want to register {job} with this instance of SanteDB?</string>
+    <string name="ui.admin.job.register.success">Job {job} was successfully registered</string>
+    <string name="ui.admin.job.register.error">Error registering job instance {error}</string>
 
     <!-- Security Widgets -->
     <string name="org.santedb.widget.admin.tab.user.profile">User Profile</string>
@@ -515,4 +520,21 @@
     <string name="ui.admin.concept.conceptSet.upload.template">Download Sample Concept Set CSV</string>
     <string name="ui.admin.concept.conceptSet.upload.file.hint">The comma-save (CSV) file to be imported</string>
     <string name="ui.admin.concept.conceptSet.upload.language.hint">The language of the &lt;code&gt;Name&lt;code&gt; column in the file</string>
+    <string name="ui.admin.concept.conceptSet.edit.profile.title">New Concept Set</string>
+    <string name="ui.admin.concept.conceptSet.assign">Assign Concept to Set</string>
+    <string name="ui.admin.concept.conceptSet.assign.existing">Assign an existing concept</string>
+    <string name="ui.admin.concept.conceptSet.assign.new">Assign a new concept</string>
+    <string name="ui.admin.concept.conceptSet.assign.existing.search">Assign Concept</string>
+    <string name="ui.admin.concept.concept.edit.profile.title">Concept Properties</string>
+    <string name="ui.admin.concept.save.success">Concept saved successfully</string>
+    <string name="ui.admin.concept.concept.delete.confirm">Are you sure you want to delete the identified concept?</string>
+    <string name="ui.admin.concept.concept.delete.success">Concept deleted successfully</string>
+    <string name="ui.admin.concept.concept.unDelete.confirm">Are you sure you want to un-delete this concept?</string>
+    <string name="ui.admin.concept.concept.unDelete.success">Concept un-deleted successfully</string>
+    <string name="org.santedb.widget.concept.concepts.core.terms">Reference Terms</string>
+    <string name="org.santedb.widget.concept.concepts.core.sets">Concept Sets</string>
+    <string name="org.santedb.widget.concept.concepts.core.properties">Concept Properties</string>
+    <string name="org.santedb.widget.concept.concepts.core.versions">Version History</string>
+
+
 </resources>

@@ -40,6 +40,7 @@ angular.module('santedb').controller('CodeSystemWidgetController', ["$scope", "$
         try {
             query._count = 0;
             query._includeTotal = true;
+            query.id = `!${$scope.scopedObject.id}`;
             var duplicate = await SanteDB.resources.codeSystem.findAsync(query);
             return duplicate.totalResults > 0;
         }
@@ -251,23 +252,32 @@ angular.module('santedb').controller('CodeSystemWidgetController', ["$scope", "$
     }
 
     $scope.$watch("editObject.authority", async function (n, o) {
-        if (n != o && n && n.length > 1) {
-            var valid = !await checkDuplicate({ authority: n, id: `!${$scope.editObject.id}` });
-            $timeout(() => $scope.panel.editForm.codeSystemAuthority.$setValidity('duplicate', valid));
+        if (n != o && n && n.length > 1 && n && o) {
+            var valid = !await checkDuplicate({ authority: n  });
+            $timeout(() =>{
+                if($scope.panel.editForm) // HACK: Since this controller is used in multiple panels
+                    $scope.panel.editForm.codeSystemAuthority.$setValidity('duplicate', valid);
+            });
         }
     });
 
     $scope.$watch("editObject.oid", async function (n, o) {
-        if (n != o && n && n.length > 1) {
-            var valid = !await checkDuplicate({ oid: n, id: `!${$scope.editObject.id}` });
-            $timeout(() => $scope.panel.editForm.codeSystemOid.$setValidity('duplicate', valid));
+        if (n != o && n && n.length > 1 && n && o) {
+            var valid = !await checkDuplicate({ oid: n });
+            $timeout(() =>{
+                if($scope.panel.editForm) // HACK: Since this controller is used in multiple panels
+                    $scope.panel.editForm.codeSystemOid.$setValidity('duplicate', valid);
+            });
         }
     });
 
     $scope.$watch("editObject.url", async function (n, o) {
-        if (n != o && n && n.length > 1) {
-            var valid = !await checkDuplicate({ url: n, id: `!${$scope.editObject.id}` });
-            $timeout(() => $scope.panel.editForm.codeSystemUrl.$setValidity('duplicate', valid));
+        if (n != o && n && n.length > 1 && n && o) {
+            var valid = !await checkDuplicate({ url: n });
+            $timeout(() =>{
+                if($scope.panel.editForm) // HACK: Since this controller is used in multiple panels
+                    $scope.panel.editForm.codeSystemUrl.$setValidity('duplicate', valid);
+            });
         }
     });
 
@@ -299,7 +309,9 @@ angular.module('santedb').controller('CodeSystemWidgetController', ["$scope", "$
 
             // Name comes in the format of { lang: [values] } so we have to normalize these to $other
             var newName = [];
-            Object.keys(refTerm.name).forEach(k => { refTerm.name[k].forEach(v => newName.push(new ReferenceTermName({ language: k, value: v }))) });
+            if(refTerm.name) {
+                Object.keys(refTerm.name).forEach(k => { refTerm.name[k].forEach(v => newName.push(new ReferenceTermName({ language: k, value: v }))) });
+            }
             refTerm.name = { $other: newName };
             refTerm.concepts = mappings.resource || [ { relationshipType: '2c4dafc2-566a-41ae-9ebc-3097d7d22f4a' } ];
             refTerm._originalConcepts = angular.copy(mappings.resource);
@@ -319,7 +331,7 @@ angular.module('santedb').controller('CodeSystemWidgetController', ["$scope", "$
     $scope.renderMappings = function (term) {
         try {
             if (term.concepts) {
-                return term.concepts.map(map => `<span class="badge badge-info">${map.relationshipTypeModel.name}</span> ${map.sourceModel.mnemonic}`).join(', ');
+                return term.concepts.map(map => `<span class="badge badge-info">${map.relationshipTypeModel.name}</span> <a ui-sref="santedb-admin.concept.concepts.view({id: '${map.source}'})"> ${map.sourceModel.mnemonic}</a>`).join(', ');
             }
             else {
                 return SanteDB.locale.getString("ui.none");

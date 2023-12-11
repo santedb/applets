@@ -90,7 +90,8 @@ angular.module('santedb').controller('EditCodeSystemController', ["$scope", "$ro
 
     // Download code system
     $scope.downloadCodeSystem = function(id) {
-        window.open(`/hdsi/CodeSystem/${id}/_export?_include=ReferenceTerm:codeSystem%3d${id}&_include=Concept:referenceTerm.term.codeSystem%3d${id}%26_exclude=relationship%26_exclude=conceptSet%26_exclude=referenceTerm&_include=ConceptReferenceTerm:term.codeSystem%3d${id}`, '_blank').onload = function (e) {
+        var win = window.open(`/hdsi/CodeSystem/${id}/_export?_include=ReferenceTerm:codeSystem%3d${id}&_include=Concept:referenceTerm.term.codeSystem%3d${id}%26_exclude=relationship%26_exclude=conceptSet%26_exclude=referenceTerm&_include=ConceptReferenceTerm:term.codeSystem%3d${id}`, '_blank');
+        win.onload = function (e) {
             win.close();
         };
     }

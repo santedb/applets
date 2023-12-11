@@ -17,6 +17,7 @@
         { name: 'create', demand: '1.3.6.1.4.1.33349.3.1.5.9.2.0.7', sref: 'santedb-admin.concept.codeSystem.create', className: 'btn-primary', icon: 'fa fa-plus-circle' } 
     ]"
     render="{ updatedBy: 'renderUpdatedBy'  }"
+    sort="{ 'updatedBy' : 'modifiedOn' }"
     item-actions="[ 
         { name: 'view', sref: 'santedb-admin.concept.codeSystem.view', demand: '1.3.6.1.4.1.33349.3.1.5.9.2.0.7', className: 'btn-info', icon: 'fa fa-eye' }, 
         { name: 'delete', action: 'delete', demand: '1.3.6.1.4.1.33349.3.1.5.9.2.0.7', className: 'btn-danger', icon: 'fa fa-trash', when: 'r.obsoletionTime == null' },  

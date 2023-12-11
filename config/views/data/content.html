@@ -85,13 +85,11 @@
                                                 ng-model="config.data.options[optKey]" class="form-control" />
                                             <span class="text-danger"
                                                 ng-show="configurationForm['option' + optKey].$error['pattern']">
-                                                <i class="fas fa-exclamation-triangle"></i> {{ 'ui.error.pattern' | i18n
-                                                }}
+                                                <i class="fas fa-exclamation-triangle"></i> {{ 'ui.error.pattern' | i18n }}
                                             </span>
                                             <span class="text-danger"
                                                 ng-show="configurationForm['option' + optKey].$error['required']">
-                                                <i class="fas fa-exclamation-triangle"></i> {{ 'ui.error.required' |
-                                                i18n }}
+                                                <i class="fas fa-exclamation-triangle"></i> {{ 'ui.error.required' | i18n }}
                                             </span>
                                         </td>
                                     </tr>

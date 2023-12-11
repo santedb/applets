@@ -1,0 +1,71 @@
+<div xmlns="http://www.w3.org/1999/xhtml" xmlns:sdb="http://santedb.org/applet">
+    <sdb:script static="false">~/controllers/concepts/concepts/edit.js</sdb:script>
+    <sdb:state name="santedb-admin.concept.concepts.view">
+        <sdb:url>/{id}</sdb:url>
+        <sdb:demand>1.3.6.1.4.1.33349.3.1.5.9.2.0.7</sdb:demand>
+        <sdb:view>
+            <sdb:controller>EditConceptController</sdb:controller>
+            <sdb:title lang="en">View Concept</sdb:title>
+        </sdb:view>
+    </sdb:state>
+
+
+    <div ng-if="!concept">
+        <div class="card shadow">
+            <div class="card-body">
+                <i class="fas fa-circle-notch fa-spin"></i> {{ 'ui.wait' | i18n }}
+            </div>
+        </div>
+    </div>
+
+    <div ng-if="concept">
+        <div class="scroll-sticky">
+            <div class="card shadow mb-2">
+                <div class="card-body container-fluid p-2">
+                    <div class="row">
+                        <div class="col-sm-12 col-md-6">
+                            <h2 class="mr-2 d-inline"><i class="fas fa-viruses fa-fw"></i> {{ concept.mnemonic }}
+                                <div class="d-inline"><button id="btnSetState" type="button" data-toggle="dropdown"
+                                    class="p-2 btn btn-sm"
+                                    ng-class="{ 'btn-primary' : concept.statusConcept == 'c8064cbd-fa06-4530-b430-1a52f1530c27' , 'btn-success' : concept.statusConcept == 'c34fcbf1-e0fe-4989-90fd-0dc49e1b9685' , 'btn-warning' : concept.statusConcept == '0bbec253-21a1-49cb-b376-7fe4d0592cda', 'btn-danger' : concept.statusConcept == 'cd4aa3c4-02d5-4cc9-9088-ef8f31e321c5', 'btn-dark' : concept.statusConcept == 'bdef5f90-5497-4f26-956c-8f818cce2bd2' }">
+                                    {{ concept.statusConceptModel | concept }}
+                                    <div class="dropdown-menu">
+                                        <a class="btn btn-link dropdown-item"
+                                            ng-if="concept.statusConcept != 'c8064cbd-fa06-4530-b430-1a52f1530c27'"
+                                            ng-click="setState('c8064cbd-fa06-4530-b430-1a52f1530c27')"><i
+                                                class="fas fa-circle text-primary"></i> Activate</a>
+                                        <a class="btn btn-link dropdown-item"
+                                            ng-if="concept.statusConcept != '0bbec253-21a1-49cb-b376-7fe4d0592cda'"
+                                            ng-click="setState('0bbec253-21a1-49cb-b376-7fe4d0592cda')"><i
+                                                class="fas fa-circle text-warning"></i> Inactivate</a>
+                                        <a class="btn btn-link dropdown-item"
+                                            ng-if="concept.statusConcept != 'bdef5f90-5497-4f26-956c-8f818cce2bd2'"
+                                            ng-click="setState('bdef5f90-5497-4f26-956c-8f818cce2bd2')"><i
+                                                class="fas fa-circle text-dark"></i> Obsolete</a>
+                                        <a class="btn btn-link dropdown-item"
+                                            ng-if="concept.statusConcept != 'cd4aa3c4-02d5-4cc9-9088-ef8f31e321c5'"
+                                            ng-click="setState('cd4aa3c4-02d5-4cc9-9088-ef8f31e321c5')"><i
+                                                class="fas fa-circle text-danger"></i> Nullify</a>
+                                    </div>
+                                </button>
+                            </div>
+                            </h2>
+                        </div>
+                        <div class="col-sm-12 col-md-6">
+                            <button type="button" demand="1.3.6.1.4.1.33349.3.1.5.9.2.500" ng-click="downloadConcept(concept.id)" class="float-right m-auto btn btn-sm btn-info"><i class="fas fa-download"></i> {{ 'ui.action.download' | i18n }}</button>
+                        </div>
+                        <div class="col-12">
+                            <ul class="list-group flex-md-row">
+                                <li class="list-group-item p-1 m-1" ng-repeat="(lang, name) in concept.name track by $index">
+                                    <span class="badge badge-light">{{lang}}</span> {{ name[0] }}
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <widget-tabs context-name="'org.santedb.concept.concepts'" scoped-object="concept" class="mb-2" />
+    </div>
+
+</div>

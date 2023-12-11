@@ -90,7 +90,8 @@ angular.module('santedb').controller('EditConceptSetController', ["$scope", "$ro
 
     // Download code system
     $scope.downloadConceptSet = function(id) {
-        window.open(`/hdsi/ConceptSet/${id}/_export?_include=Concept:conceptSet%3d${id}%26_exclude=conceptSet%26_exclude=referenceTerm&_includesFirst=true&_include=ConceptSet:compose.source=${id}%26_exclude=concept`, '_blank').onload = function (e) {
+        var win = window.open(`/hdsi/ConceptSet/${id}/_export?_include=Concept:conceptSet%3d${id}%26_exclude=conceptSet%26_exclude=referenceTerm&_includesFirst=true&_include=ConceptSet:compose.source=${id}%26_exclude=concept`, '_blank');
+        win.onload = function (e) {
             win.close();
         };
     }

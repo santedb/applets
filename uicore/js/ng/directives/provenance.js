@@ -48,6 +48,7 @@ angular.module('santedb-lib')
                 if(Object.prototype.toString.call(scope.provenanceTime) == '[object String]' )
                     scope.provenanceTime = new Date(scope.provenanceTime);
 
+                
                 if (alreadyFetching.indexOf(scope.provenanceId) == -1) // Not yet fetching
                 {
                     scope.isLoading = true;

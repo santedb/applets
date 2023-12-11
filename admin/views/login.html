@@ -1,5 +1,7 @@
 <!--
- - Copyright 2015-2018 Mohawk College of Applied Arts and Technology
+ - Copyright (C) 2021-2023 SanteSuite Inc and the SanteSuite Contributors (see NOTICES)
+Portions Copyright (C) 2019-2021 Fyfe Software Inc.
+Portions Copyright (C) 2015-2018 Mohawk College of Applied Arts and Technology
  - 
  - 
  - Licensed under the Apache License, Version 2.0 (the "License"); you 
@@ -26,7 +28,8 @@
         <sdb:url>/login</sdb:url>
         <sdb:view>
         </sdb:view>
-    </sdb:state><s></s>
+    </sdb:state>
+    <div class="mb-2"></div>
     <div class="logo-centered"></div>
     <form class="form" ng-submit="doLogin(loginForm)" name="loginForm">
         <!-- #include virtual="/org.santedb.uicore/partials/security/login.html" -->
@@ -37,7 +40,6 @@
                 <i class="fa fa-check"></i> {{ 'ui.action.login' | i18n }}</button>
         </div>
     </form>
-
     <!-- Forgot Password -->
     <!-- #include virtual="/org.santedb.uicore/partials/security/forgotPassword.html" -->
     

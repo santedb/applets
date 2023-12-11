@@ -201,4 +201,39 @@ angular.module('santedb').controller('JobAdminController', ["$scope", "$rootScop
             }
         }
     }
+
+    $scope.registerJob = async function(jobType) {
+
+        if(jobType) {
+            // register job
+            if(confirm(SanteDB.locale.getString("ui.admin.job.register.confirm", { job: jobType.type }))) {
+                try {
+                    var ji = {
+                        $type: "JobInfo",
+                        jobType: jobType.type
+                    };
+                    await SanteDB.resources.jobInfo.insertAsync(ji);
+                    toastr.success("ui.admin.job.register.success", {job: jobType.type });
+                    $("#jobsTable table").DataTable().ajax.reload();
+
+                }
+                catch(e) {
+                    $rootScope.errorHandler(e);
+                    toastr.error("ui.admin.job.register.error", { error: e.message, job: jobType.type });
+
+                }
+                finally {
+                    $("#addJobDialog").modal('hide');
+                }
+            }
+        }
+        else {
+            var unconfiguredJobs = await SanteDB.resources.jobInfo.findAsync({ _unconfigured: true });
+            $timeout(() => {
+                $scope.unregisteredJobs = unconfiguredJobs.resource;
+                $("#addJobDialog").modal('show');
+            });
+        }
+
+    }
 }]);
