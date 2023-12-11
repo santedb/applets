@@ -25,7 +25,7 @@
                     <div class="col-sm-12 col-md-10 input-group">
                         <input name="sid" readonly="readonly" type="text"  autocomplete="__away" class="form-control"
                             ng-model="scopedObject.securityPolicy.id" />
-                        <input-copy-button class="btn btn-outline-secondary" source="scopedObject.securityPolicy.id" />
+                        <input-copy-button button-class="'btn-outline-secondary'" source="scopedObject.securityPolicy.id" />
                     </div>
                 </div>
                 <div class="form-group row">
@@ -35,7 +35,7 @@
                         <input name="policyoid" type="text" autocomplete="__away" class="form-control"
                             pattern="^(\d+?\.){1,}\d+$" minlength="6" maxlength="32" required="required" ng-readonly="scopedObject.securityPolicy.id"
                             ng-model="scopedObject.securityPolicy.oid" />
-                        <input-copy-button id="policyoidCopyButton" class="btn btn-outline-secondary"
+                        <input-copy-button id="policyoidCopyButton" button-class="'btn-outline-secondary'"
                             source="scopedObject.securityPolicy.oid" />
                     </div>
                     <div class="col-sm-12 col-md-10 offset-md-2">
@@ -60,7 +60,7 @@
                         <input name="policyname" type="text" autocomplete="__away" class="form-control" ng-readonly="scopedObject.securityPolicy.id"
                             minlength="3" maxlength="32" required="required"
                             ng-model="scopedObject.securityPolicy.name" />
-                        <input-copy-button id="policynameCopyButton" class="btn btn-outline-secondary"
+                        <input-copy-button id="policynameCopyButton" button-class="'btn-outline-secondary'"
                             source="scopedObject.securityPolicy.name" />
                     </div>
                     <div class="col-sm-12 col-md-10 offset-md-2">
@@ -98,7 +98,7 @@
                 <div class="form-group row" ng-if="scopedObject.securityPolicy.createdBy">
                     <label
                         class="col-sm-12 col-md-2 control-label">{{ 'ui.model.securityPolicy.createdBy' | i18n }}</label>
-                    <div class="col-md-10 col-sm-12">
+                    <div class="col-md-10 col-sm-12 control-value">
                         <provenance provenance-id="scopedObject.securityPolicy.createdBy"
                             provenance-time="scopedObject.securityPolicy.creationTime"></provenance>
                         {{ scopedObject.securityPolicy.creationTime | extDate }}
@@ -107,7 +107,7 @@
                 <div class="form-group row" ng-if="scopedObject.securityPolicy.updatedBy">
                     <label
                         class="col-sm-12 col-md-2 control-label">{{ 'ui.model.securityPolicy.updatedBy' | i18n }}</label>
-                    <div class="col-md-10 col-sm-12">
+                    <div class="col-md-10 col-sm-12 control-value">
                         <provenance provenance-id="scopedObject.securityPolicy.updatedBy"
                             provenance-time="scopedObject.securityPolicy.updatedTime"></provenance>
                         {{ scopedObject.securityPolicy.updatedTime | extDate }}
@@ -116,7 +116,7 @@
                 <div class="form-group row" ng-if="scopedObject.securityPolicy.obsoletedBy">
                     <label
                         class="col-sm-12 col-md-2 control-label">{{ 'ui.model.securityPolicy.obsoletedBy' | i18n }}</label>
-                    <div class="col-md-10 col-sm-12">
+                    <div class="col-md-10 col-sm-12 control-value">
                         <provenance provenance-id="scopedObject.securityPolicy.obsoletedBy"
                             provenance-time="scopedObject.securityPolicy.obsoletionTime"></provenance>
 

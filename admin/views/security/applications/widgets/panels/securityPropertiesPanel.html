@@ -16,9 +16,9 @@
         <div class="form-group row">
             <label
                 class="col-xs-12 col-md-4 control-label">{{ 'ui.model.securityApplication.lastAuthenticationTime' | i18n }}</label>
-            <div class="col-xs-12 col-md-8" ng-if="scopedObject.securityApplication.lastAuthenticationTime">
+            <div class="col-xs-12 col-md-8 control-value" ng-if="scopedObject.securityApplication.lastAuthenticationTime">
                 {{ scopedObject.securityApplication.lastAuthenticationTime | extDate: 'F' }}</div>
-            <div class="col-xs-12 col-md-8" ng-if="!scopedObject.securityApplication.lastAuthenticationTime">
+            <div class="col-xs-12 col-md-8 control-value" ng-if="!scopedObject.securityApplication.lastAuthenticationTime">
                 {{ 'ui.admin.applications.edit.security.neverLoggedIn' | i18n }}</div>
         </div>
         <div class="form-group row" ng-if="scopedObject.securityApplication.id">
@@ -32,11 +32,11 @@
                 </button>
             </div>
         </div>
-        <div class="form-group row" ng-if="scopedObject.securityApplication.lockout > $root.page.currentTime">
+        <div class="form-group row align-items-center" ng-if="scopedObject.securityApplication.lockout > $root.page.currentTime">
             <label for="lockout"
                 class="col-xs-12 col-md-4 control-label">{{ 'ui.model.securityApplication.lockout' | i18n }}</label>
-            <div class="col-xs-12 col-md-8">
-                {{ scopedObject.securityApplication.lockout | extDate: 'F' }}
+            <div class="col-xs-12 col-md-8 d-flex align-items-center">
+                <span class="me-2 mr-2">{{ scopedObject.securityApplication.lockout | extDate: 'F' }}</span>
                 <button ng-click="unlock()" id="unlockButton" class="btn btn-info" type="button">
                     <i class="fa fa-lock-open"></i> {{ 'ui.action.unlock' | i18n }}
                 </button>

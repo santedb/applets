@@ -128,7 +128,7 @@ angular.module('santedb-lib')
 
 
                 var dt = $('table', element).DataTable({
-                    bLengthChange: false,
+                    lengthChange: false,
                     searching: true,
                     serverSide: true,
                     columnDefs: [

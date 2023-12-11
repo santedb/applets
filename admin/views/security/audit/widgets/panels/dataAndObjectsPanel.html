@@ -48,23 +48,23 @@
                     <div class="row">
 
                         <label class="control-label col-md-2">{{ 'ui.admin.audit.object.type' | i18n }}</label>
-                        <div class="col-md-4"><i class="fas"
+                        <div class="col-md-4 control-value"><i class="fas"
                                 ng-class="{ 'fa-user' : o.type == 'Person', 'fa-cog' : o.type == 'SystemObject', 'fa-building' : o.type == 'Organization', 'fa-question' : o.type == 'Other' }"></i>
                             {{ o.type }}</div>
                         <label class="control-label col-md-2">{{ 'ui.admin.audit.object.lifecycle' | i18n }}</label>
-                        <div class="col-md-4"><i class="fas"
+                        <div class="col-md-4 control-value"><i class="fas"
                                 ng-class="{ 'fa-plus' : o.lifecycle == 'Creation', 'fa-file-import' : o.lifecycle == 'Import', 'fa-pencil-alt' : o.lifecycle == 'Amendment','fa-random' : o.lifecycle == 'Translation', 'fa-search' : o.lifecycle == 'Access', 'fa-object-group' : o.lifecycle == 'Aggregation', 'fa-file-export' : o.lifecycle == 'Export', 'fa-comment-medical' : o.lifecycle == 'Disclosure', 'fa-file-archive' : o.lifecycle == 'Archiving', 'fa-trash' : o.lifecycle == 'PermanentErasure', 'fa-recycle' : o.lifecycle == 'LogicalDeletion' }"></i>
 
                             {{ o.lifecycle }}</div>
                         <label class="control-label col-md-2">{{ 'ui.admin.audit.object.role' | i18n }}</label>
-                        <div class="col-md-4">
+                        <div class="col-md-4 control-value">
                             <i class="fas"
                                 ng-class="{ 'fa-user-nurse' : o.role == 'Provider', 'fa-user-md' : o.role == 'Doctor', 'fa-shield-alt' : o.role == 'SecurityResource', 'fa-user' : o.role == 'SecurityUser', 'fa-database': o.role == 'DataRepository', 'fa-table': o.role == 'Table', 'fa-search' : o.role == 'Query', 'fa-bed' : o.role == 'Patient', 'fa-building' : o.role == 'Location', 'fa-file' : o.role == 'Report', 'fa-files' : o.role == 'MasterFile' }"></i>
 
                             {{ o.role }}
                         </div>
                         <label class="control-label col-md-2">{{ 'ui.admin.audit.object.idType' | i18n }}</label>
-                        <div class="col-md-4">
+                        <div class="col-md-4 control-value">
                             <i class="fas"
                                 ng-class="{ 'fa-question-circle' : o.idType == 'Custom', 'fa-filter' : o.idType == 'SearchCritereon' }"></i>
 
@@ -77,18 +77,12 @@
                     <div class="row" ng-if="o.name">
                         <label class="control-label col-sm-2 col-xs-12">{{ 'ui.admin.audit.name' | i18n
                             }}</label>
-                        <div class="col-sm-10 col-xs-12">
-
-
-                            {{ o.name }}
-                        </div>
+                        <div class="col-sm-10 col-xs-12 control-value">{{ o.name }}</div>
                     </div>
                     <div class="row" ng-if="o.queryData">
                         <label class="control-label col-sm-2 col-xs-12">{{ 'ui.admin.audit.query' | i18n
                             }}</label>
-                        <div class="col-sm-10 col-xs-12">
-
-
+                        <div class="col-sm-10 col-xs-12 control-value">
                             <code>{{ o.queryData }}</code>
                         </div>
 

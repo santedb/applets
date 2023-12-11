@@ -19,7 +19,7 @@
             <div class="col-sm-12 col-md-10 input-group">
                 <input name="sid" readonly="readonly" autocomplete="__away" type="text" class="form-control"
                     ng-model="scopedObject.securityApplication.id" />
-                <input-copy-button class="btn btn-outline-secondary"
+                <input-copy-button button-class="'btn-outline-secondary'"
                     source="scopedObject.securityApplication.id" />
             </div>
         </div>
@@ -30,7 +30,7 @@
                 <input name="applicationname" autocomplete="__away" ng-readonly="scopedObject.securityApplication.id" type="text"
                     class="form-control" pattern="^[A-Za-z0-9_\-\.\@]{3,}" minlength="3" maxlength="64"
                     required="required" ng-model="scopedObject.securityApplication.name" />
-                <input-copy-button id="applicationNameCopyButton" class="btn btn-outline-secondary"
+                <input-copy-button id="applicationNameCopyButton" button-class="'btn-outline-secondary'"
                     source="scopedObject.securityApplication.name" />
             </div>
             <div class="col-sm-12 col-md-10 offset-md-2">
@@ -51,7 +51,7 @@
         <div class="form-group row" ng-if="scopedObject.securityApplication.createdBy">
             <label
                 class="col-sm-12 col-md-2 control-label">{{ 'ui.model.securityApplication.createdBy' | i18n }}</label>
-            <div class="col-md-10 col-sm-12">
+            <div class="col-md-10 col-sm-12 control-value">
                 <provenance provenance-id="scopedObject.securityApplication.createdBy"
                     provenance-time="scopedObject.securityApplication.creationTime"></provenance>
                 {{ scopedObject.securityApplication.creationTime | extDate }}
@@ -60,7 +60,7 @@
         <div class="form-group row" ng-if="scopedObject.securityApplication.updatedBy">
             <label
                 class="col-sm-12 col-md-2 control-label">{{ 'ui.model.securityApplication.updatedBy' | i18n }}</label>
-            <div class="col-md-10 col-sm-12">
+            <div class="col-md-10 col-sm-12 control-value">
                 <provenance provenance-id="scopedObject.securityApplication.updatedBy"
                     provenance-time="scopedObject.securityApplication.updatedTime"></provenance>
                 {{ scopedObject.securityApplication.updatedTime | extDate }}
@@ -69,7 +69,7 @@
         <div class="form-group row" ng-if="scopedObject.securityApplication.obsoletedBy">
             <label
                 class="col-sm-12 col-md-2 control-label">{{ 'ui.model.securityApplication.obsoletedBy' | i18n }}</label>
-            <div class="col-md-10 col-sm-12">
+            <div class="col-md-10 col-sm-12 control-value">
                 <provenance provenance-id="scopedObject.securityApplication.obsoletedBy"
                     provenance-time="scopedObject.securityApplication.obsoletionTime"></provenance>
                 {{ scopedObject.securityApplication.obsoletionTime | extDate }} <button

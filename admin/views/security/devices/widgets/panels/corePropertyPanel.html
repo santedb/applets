@@ -1,8 +1,8 @@
-<div xmlns="http://www.w3.org/1999/xhtml" xmlns:sdb="http://santedb.org/applet" 
-    oc-lazy-load="{ name: 'EditDeviceCoreController', files: ['/org.santedb.admin/controllers/devices/widgets/core.js'] }" >
+<div xmlns="http://www.w3.org/1999/xhtml" xmlns:sdb="http://santedb.org/applet"
+    oc-lazy-load="{ name: 'EditDeviceCoreController', files: ['/org.santedb.admin/controllers/devices/widgets/core.js'] }">
 
-    <sdb:widget order="14" name="org.santedb.widget.admin.panel.device.core"  headerClass="bl-light"
-        size="Large" type="Panel" context="org.santedb.securityDevice.admin">
+    <sdb:widget order="14" name="org.santedb.widget.admin.panel.device.core" headerClass="bl-light" size="Large"
+        type="Panel" context="org.santedb.securityDevice.admin">
         <sdb:icon>fas fa-window-maximize</sdb:icon>
         <sdb:description lang="en">Core Properties</sdb:description>
     </sdb:widget>
@@ -12,69 +12,66 @@
             <p class="m-auto"><i class="fas fa-circle-notch fa-spin"></i> {{ 'ui.wait' | i18n }}</p>
         </div>
     </div>
-    
+
     <div class="collapse show" id="coreDeviceProps" ng-controller="EditDeviceCoreController">
-        <div class="card-body container-fluid">
-            <div class="form-group row">
-                <label class="col-sm-12 col-md-2 control-label"
-                    for="sid">{{ 'ui.model.securityDevice.id' | i18n }}</label>
-                <div class="col-sm-12 col-md-10 input-group">
-                    <input name="sid" readonly="readonly"  autocomplete="__away" type="text" class="form-control"
-                        ng-model="scopedObject.securityDevice.id" />
-                    <input-copy-button class="btn btn-outline-secondary" source="scopedObject.securityDevice.id" />
+        <div class="form-group row">
+            <label class="col-sm-12 col-md-2 control-label" for="sid">{{ 'ui.model.securityDevice.id' | i18n }}</label>
+            <div class="col-sm-12 col-md-10 input-group">
+                <input name="sid" readonly="readonly" autocomplete="__away" type="text" class="form-control"
+                    ng-model="scopedObject.securityDevice.id" />
+                <input-copy-button button-class="'btn-outline-secondary'" source="scopedObject.securityDevice.id" />
+            </div>
+        </div>
+        <div class="form-group row">
+            <label class="col-sm-12 col-md-2 control-label" for="devicename">{{ 'ui.model.securityDevice.name' | i18n
+                }}</label>
+            <div class="col-sm-12 col-md-10 input-group">
+                <input name="devicename" autocomplete="__away" ng-readonly="scopedObject.securityDevice.id" type="text"
+                    class="form-control" pattern="^[A-Za-z0-9_\-\.\@\|]{3,}" minlength="3" maxlength="32"
+                    required="required" ng-model="scopedObject.securityDevice.name" />
+                <input-copy-button id="devicenameCopyButton" button-class="'btn-outline-secondary'"
+                    source="scopedObject.securityDevice.name" />
+            </div>
+            <div class="col-sm-12 col-md-10 offset-md-2">
+                <div ng-show="targetForm.devicename.$error['duplicate']" class="text-danger">
+                    <i class="fa fa-exclamation-triangle"></i>
+                    {{ 'ui.error.duplicate' | i18n }}
+                </div>
+                <div ng-show="targetForm.devicename.$error['required'] &amp;&amp; targetForm.$submitted"
+                    class="text-danger">
+                    <i class="fa fa-exclamation-triangle"></i> {{ 'ui.error.required' | i18n }}
+                </div>
+                <div ng-show="targetForm.devicename.$error['pattern'] &amp;&amp; targetForm.$submitted"
+                    class="text-danger">
+                    <i class="fa fa-exclamation-triangle"></i> {{ 'ui.error.pattern' | i18n }}
                 </div>
             </div>
-            <div class="form-group row">
-                <label class="col-sm-12 col-md-2 control-label"
-                    for="devicename">{{ 'ui.model.securityDevice.name' | i18n }}</label>
-                <div class="col-sm-12 col-md-10 input-group">
-                    <input name="devicename" autocomplete="__away" ng-readonly="scopedObject.securityDevice.id" type="text"
-                        class="form-control" pattern="^[A-Za-z0-9_\-\.\@\|]{3,}" minlength="3" maxlength="32"
-                        required="required" ng-model="scopedObject.securityDevice.name" />
-                    <input-copy-button id="devicenameCopyButton" class="btn btn-outline-secondary"
-                        source="scopedObject.securityDevice.name" />
-                </div>
-                <div class="col-sm-12 col-md-10 offset-md-2">
-                    <div ng-show="targetForm.devicename.$error['duplicate']" class="text-danger">
-                        <i class="fa fa-exclamation-triangle"></i>
-                        {{ 'ui.error.duplicate' | i18n }}
-                    </div>
-                    <div ng-show="targetForm.devicename.$error['required'] &amp;&amp; targetForm.$submitted"
-                        class="text-danger">
-                        <i class="fa fa-exclamation-triangle"></i> {{ 'ui.error.required' | i18n }}
-                    </div>
-                    <div ng-show="targetForm.devicename.$error['pattern'] &amp;&amp; targetForm.$submitted"
-                        class="text-danger">
-                        <i class="fa fa-exclamation-triangle"></i> {{ 'ui.error.pattern' | i18n }}
-                    </div>
-                </div>
+        </div>
+        <div class="form-group row" ng-if="scopedObject.securityDevice.createdBy">
+            <label class="col-sm-12 col-md-2 control-label">{{ 'ui.model.securityDevice.createdBy' | i18n }}</label>
+            <div class="col-md-10 col-sm-12 control-value">
+                <provenance provenance-id="scopedObject.securityDevice.createdBy"
+                    provenance-time="scopedObject.securityDevice.creationTime"></provenance>
+                {{ scopedObject.securityDevice.creationTime | extDate }}
             </div>
-            <div class="form-group row" ng-if="scopedObject.securityDevice.createdBy">
-                <label
-                    class="col-sm-12 col-md-2 control-label">{{ 'ui.model.securityDevice.createdBy' | i18n }}</label>
-                <div class="col-md-10 col-sm-12">
-                        <provenance provenance-id="scopedObject.securityDevice.createdBy" provenance-time="scopedObject.securityDevice.creationTime"></provenance>
-                    {{ scopedObject.securityDevice.creationTime | extDate }}
-                </div>
+        </div>
+        <div class="form-group row" ng-if="scopedObject.securityDevice.updatedBy">
+            <label class="col-sm-12 col-md-2 control-label">{{ 'ui.model.securityDevice.updatedBy' | i18n }}</label>
+            <div class="col-md-10 col-sm-12 control-value">
+                <provenance provenance-id="scopedObject.securityDevice.updatedBy"
+                    provenance-time="scopedObject.securityDevice.updatedTime"></provenance>
+                {{ scopedObject.securityDevice.updatedTime | extDate }}
             </div>
-            <div class="form-group row" ng-if="scopedObject.securityDevice.updatedBy">
-                <label
-                    class="col-sm-12 col-md-2 control-label">{{ 'ui.model.securityDevice.updatedBy' | i18n }}</label>
-                <div class="col-md-10 col-sm-12">
-                        <provenance provenance-id="scopedObject.securityDevice.updatedBy" provenance-time="scopedObject.securityDevice.updatedTime"></provenance>
-                    {{ scopedObject.securityDevice.updatedTime | extDate }}
-                </div>
-            </div>
-            <div class="form-group row" ng-if="scopedObject.securityDevice.obsoletedBy">
-                <label
-                    class="col-sm-12 col-md-2 control-label">{{ 'ui.model.securityDevice.obsoletedBy' | i18n }}</label>
-                <div class="col-md-10 col-sm-12">
-                        <provenance provenance-id="scopedObject.securityDevice.obsoletedBy" provenance-time="scopedObject.securityDevice.obsoletionTime"></provenance>
-                    {{ scopedObject.securityDevice.obsoletionTime | extDate }} <button id="reactivateDeviceButton"
-                        ng-click="reactivateDevice()" type="button" class="btn btn-success"><i
-                            class="fas fa-trash-restore"></i>
-                        {{ 'ui.action.undelete' | i18n }}</button>
-                </div>
+        </div>
+        <div class="form-group row" ng-if="scopedObject.securityDevice.obsoletedBy">
+            <label class="col-sm-12 col-md-2 control-label">{{ 'ui.model.securityDevice.obsoletedBy' | i18n }}</label>
+            <div class="col-md-10 col-sm-12 control-value">
+                <provenance provenance-id="scopedObject.securityDevice.obsoletedBy"
+                    provenance-time="scopedObject.securityDevice.obsoletionTime"></provenance>
+                {{ scopedObject.securityDevice.obsoletionTime | extDate }} <button id="reactivateDeviceButton"
+                    ng-click="reactivateDevice()" type="button" class="btn btn-success"><i
+                        class="fas fa-trash-restore"></i>
+                    {{ 'ui.action.undelete' | i18n }}</button>
             </div>
         </div>
     </div>
