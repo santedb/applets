@@ -119,7 +119,7 @@
                             <div class="form-group row" ng-if="domain.createdBy">
                                 <label class="col-sm-12 col-md-2 control-label">{{ 'ui.model.identityDomain.createdBy' |
                                     i18n }}</label>
-                                <div class="col-md-10 col-sm-12">
+                                <div class="col-md-10 col-sm-12 control-value">
                                     <provenance provenance-id="domain.createdBy" provenance-time="domain.creationTime">
                                     </provenance>
                                 </div>
@@ -127,7 +127,7 @@
                             <div class="form-group row" ng-if="domain.updatedBy">
                                 <label class="col-sm-12 col-md-2 control-label">{{ 'ui.model.identityDomain.updatedBy' |
                                     i18n }}</label>
-                                <div class="col-md-10 col-sm-12">
+                                <div class="col-md-10 col-sm-12 control-value">
                                     <provenance provenance-id="domain.updatedBy" provenance-time="domain.updatedTime">
                                     </provenance>
                                 </div>
@@ -135,7 +135,7 @@
                             <div class="form-group row" ng-if="domain.obsoletedBy">
                                 <label class="col-sm-12 col-md-2 control-label">{{ 'ui.model.identityDomain.obsoletedBy'
                                     | i18n }}</label>
-                                <div class="col-md-10 col-sm-12">
+                                <div class="col-md-10 col-sm-12 control-value">
                                     <provenance provenance-id="domain.obsoletedBy"
                                         provenance-time="domain.obsoletionTime"></provenance>
                                     <button id="reactivateAuthorityButton" ng-click="reactivateDomain()" type="button"

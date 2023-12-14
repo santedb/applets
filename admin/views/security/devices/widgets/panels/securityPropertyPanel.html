@@ -16,15 +16,15 @@
         <div class="form-group row">
             <label class="col-xs-12 col-md-2 control-label">{{ 'ui.model.securityDevice.lastAuthenticationTime' | i18n
                 }}</label>
-            <div class="col-xs-12 col-md-10" ng-if="scopedObject.securityDevice.lastAuthenticationTime">
+            <div class="col-xs-12 col-md-10 control-value" ng-if="scopedObject.securityDevice.lastAuthenticationTime">
                 {{ scopedObject.securityDevice.lastAuthenticationTime | extDate: 'F' }}</div>
-            <div class="col-xs-12 col-md-10" ng-if="!scopedObject.securityDevice.lastAuthenticationTime">
+            <div class="col-xs-12 col-md-10 control-value" ng-if="!scopedObject.securityDevice.lastAuthenticationTime">
                 {{ 'ui.admin.devices.edit.security.neverLoggedIn' | i18n }}</div>
         </div>
-        <div class="form-group row" ng-if="scopedObject.securityDevice.id">
+        <div class="form-group row align-items-center" ng-if="scopedObject.securityDevice.id">
             <label class="col-xs-12 col-md-2 control-label">{{ 'ui.model.securityDevice.invalidAuth' | i18n }}</label>
-            <div class="col-xs-12 col-md-10">
-                {{ scopedObject.securityDevice.invalidAuth || 0 }}
+            <div class="col-xs-12 col-md-10 d-flex align-items-center">
+                <span class="mr-2 me-2">{{ scopedObject.securityDevice.invalidAuth || 0 }}</span>
                 <button ng-click="resetInvalidLogins()" id="resetInvalidLoginsButton" type="button"
                     class="btn btn-info">
                     <i class="fas fa-undo"></i> {{ 'ui.action.reset' | i18n }}
@@ -34,7 +34,7 @@
         <div class="form-group row" ng-if="scopedObject.securityDevice.lockout > $root.page.currentTime">
             <label for="lockout" class="col-xs-12 col-md-2 control-label">{{ 'ui.model.securityDevice.lockout' | i18n
                 }}</label>
-            <div class="col-xs-12 col-md-10">
+            <div class="col-xs-12 col-md-10 control-value">
                 {{ scopedObject.securityDevice.lockout | extDate: 'F' }}
                 <button ng-click="unlock()" id="unlockButton" class="btn btn-info" type="button">
                     <i class="fa fa-lock-open"></i> {{ 'ui.action.unlock' | i18n }}
@@ -44,27 +44,30 @@
         <div class="form-group row" ng-if="scopedObject.securityDevice.id">
             <label class="col-xs-12 col-md-2 control-label">{{ 'ui.model.securityDevice.secret' | i18n }}</label>
             <div class="col-xs-12 col-md-8">
-                <div class="input-group">
+                <div class="d-flex">
                     <input name="secret"
-                        ng-readonly="!scopedObject._manualSecret &amp;&amp; scopedObject.securityDevice.id" type="{{ scopedObject._manualSecret ? 'password' : 'text' }}"
+                        ng-readonly="!scopedObject._manualSecret &amp;&amp; scopedObject.securityDevice.id"
+                        type="{{ scopedObject._manualSecret ? 'password' : 'text' }}"
                         ng-if="scopedObject._manualSecret || scopedObject.securityDevice.deviceSecret"
-                        class="form-control" minlength="3" maxlength="64" readonly="readonly"
+                        class="form-control flex-grow-1" minlength="3" maxlength="64" readonly="readonly"
                         ng-model="scopedObject.securityDevice.deviceSecret" />
-                    
-                        <div class="input-group-append">
-                    <button ng-click="scopedObject._manualSecret = true" ng-if="!scopedObject._manualSecret &amp;&amp; !scopedObject.securityDevice.deviceSecret" id="manualSecret" class="btn btn-primary"
-                        type="button">
-                        <i class="fa fa-pencil-alt"></i> {{ 'ui.action.edit' | i18n }}
-                    </button>
-                    <button ng-if="scopedObject._manualSecret"
-                        ng-click="resetSecret(scopedObject.securityDevice.deviceSecret)" class="btn btn-success"
-                        type="button">
-                        <i class="fa fa-check"></i> {{ 'ui.action.save' | i18n }}
-                    </button>
-                    <button ng-click="resetSecret()" ng-if="!scopedObject._manualSecret" id="resetSecretButton" class="btn btn-info" type="button">
-                        <i class="fa fa-asterisk"></i> {{ 'ui.action.reset' | i18n }}
-                    </button>
-                </div>
+
+                    <div class="btn-group">
+                        <button ng-click="scopedObject._manualSecret = true"
+                            ng-if="!scopedObject._manualSecret &amp;&amp; !scopedObject.securityDevice.deviceSecret"
+                            id="manualSecret" class="btn btn-primary" type="button">
+                            <i class="fa fa-pencil-alt"></i> {{ 'ui.action.edit' | i18n }}
+                        </button>
+                        <button ng-if="scopedObject._manualSecret"
+                            ng-click="resetSecret(scopedObject.securityDevice.deviceSecret)" class="btn btn-success"
+                            type="button">
+                            <i class="fa fa-check"></i> {{ 'ui.action.save' | i18n }}
+                        </button>
+                        <button ng-click="resetSecret()" ng-if="!scopedObject._manualSecret" id="resetSecretButton"
+                            class="btn btn-info" type="button">
+                            <i class="fa fa-asterisk"></i> {{ 'ui.action.reset' | i18n }}
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
