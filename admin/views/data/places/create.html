@@ -23,7 +23,7 @@
                             <label class="col-sm-12 col-md-3 control-label required">
                                 {{ 'ui.model.place.classConcept' | i18n }}  <hint-popover hint-title="ui.model.place.classConcept" />
                             </label>
-                            <div class="col-sm-12 col-md-9">
+                            <div class="col-sm-12 col-md-9 control-value">
                                 <concept-select class="form-control" required="required" name="classInput" concept-set="'PlaceClass'" ng-model="entity.classConcept"/>
                                 <div class="text-danger" ng-if="targetForm.classInput.$error['required']">
                                     <i class="fa fa-exclamation-triangle"></i> {{ 'ui.error.required' | i18n }}
@@ -34,7 +34,7 @@
                             <label class="col-sm-12 col-md-3 control-label">
                                 {{ 'ui.model.place.typeConcept' | i18n }}  <hint-popover hint-title="ui.model.place.typeConcept" />
                             </label>
-                            <div class="col-sm-12 col-md-9">
+                            <div class="col-sm-12 col-md-9 control-value">
                                 <concept-select class="form-control" name="typeInput" concept-set="'PlaceTypeConcept'" ng-model="entity.typeConcept"/>
                                 <div class="text-danger" ng-if="targetForm.typeInput.$error['required']">
                                     <i class="fa fa-exclamation-triangle"></i> {{ 'ui.error.required' | i18n }}
@@ -45,7 +45,7 @@
                             <label class="col-sm-12 col-md-3 control-label required">
                                 {{'ui.model.place.name.component.other' | i18n }}  <hint-popover hint-title="ui.model.place.name.component.other" />
                             </label>
-                            <div class="col-sm-12 col-md-9">
+                            <div class="col-sm-12 col-md-9 control-value">
                                 <input class="form-control" type="text" required="required" autocomplete="__away" name="nameInput" ng-model="entity.name.OfficialRecord[0].component.$other[0]" />
                                 <div class="text-danger" ng-if="targetForm.nameInput.$error['required']">
                                     <i class="fa fa-exclamation-triangle"></i> {{ 'ui.error.required' | i18n }}

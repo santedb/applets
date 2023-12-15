@@ -48,7 +48,7 @@
                 </ul>
                 <div class="tab-content">
                     <div role="tabpanel" class="tab-pane show active p-2" id="entityPropertiesTab">
-                        <div class="container-fluid">
+                        <div class="container-fluid mt-2">
                             <div class="form-group row" ng-if="editObject.classConcept != 'ff34dfa7-c6d3-4f8b-bc9f-14bcdc13ba6c' &amp;&amp; editObject.$type == 'Place'">
                                 <label class="control-label col-md-3 col-sm-12 required">{{
                                     'ui.model.entity.classConcept' |
@@ -103,7 +103,7 @@
                                 ng-if="scopedObject.classConcept == 'ff34dfa7-c6d3-4f8b-bc9f-14bcdc13ba6c'">
                                 <label class="control-label col-sm-12 col-md-3">{{ 'ui.model.place.isMobile' | i18n
                                     }} <hint-popover hint-title="ui.model.place.isMobile" /></label>
-                                <div class="col-sm-12 col-md-9">
+                                <div class="col-sm-12 col-md-9 control-value">
                                     <div class="custom-control custom-checkbox">
                                         <input type="checkbox" class="custom-control-input" id="isMobile"
                                             ng-model="editObject.isMobile" />

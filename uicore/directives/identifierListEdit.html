@@ -89,8 +89,8 @@
                 <td class="btn-group">
                     <button ng-if="authorities[newId.domainModel.domainName].generator" title="Auto-Generate" ng-click="generateId(newId)"
                         class="btn btn-light" type="button"><i class="fas fa-robot"></i></button>
-                    <button ng-disabled="ownerForm.idNewinput.$error['required'] || ownerForm.idNewcheck.$error['required'] || ownerForm.idNewinput.$error['pattern']" type="button" class="btn btn-success" ng-click="addIdentifier(newId)"><i
-                            class="fas fa-plus"></i></button>
+                    <button ng-disabled="ownerForm.idNewinput.$error['required'] || ownerForm.idNewcheck.$error['required'] || ownerForm.idNewinput.$error['pattern']" type="button" class="btn btn-primary" ng-click="addIdentifier(newId)"><i
+                            class="fas fa-circle-plus"></i> {{ 'ui.action.add' | i18n}}</button>
                 </td>
             </tr>
         </tfoot>

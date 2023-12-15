@@ -40,9 +40,9 @@
     </div>
     <div class="form-group row">
         <label for="logWriter" class="control-label col-md-2 col-xs-12">{{ 'ui.config.log.writer.label' | i18n }}</label>
-        <div class="col-md-10 col-xs-12">
+        <div class="col-md-10 col-xs-12 control-value">
             <div class="container">
-                <div ng-repeat="w in config.log.writer" class="row">
+                <div ng-repeat="w in config.log.writer" class="row mb-2">
                     <div class="col-xs-12 col-sm-6">
                         {{ w.name }}
                     </div>

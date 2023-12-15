@@ -105,7 +105,7 @@
                                             <div class="row form-group">
                                                 <label class="control-label col-sm-12 col-md-3">{{ 'ui.model.place.isMobile' | i18n
                                                 }} <hint-popover hint-title="ui.model.place.isMobile" /></label>
-                                                <div class="col-sm-12 col-md-9">
+                                                <div class="col-sm-12 col-md-9 control-value">
                                                     <div class="custom-control custom-checkbox">
                                                         <input type="checkbox" class="custom-control-input" id="isMobile" ng-model="association.targetModel.isMobile" />
                                                         <label for="isMobile" class="custom-control-label"></label>
@@ -118,7 +118,7 @@
                                         <div class="form-group row">
                                             <label class="col-sm-12 col-md-3 control-label" for="name">{{
                                                 'ui.model.entity.relationship.Parent' | i18n }}  <hint-popover hint-title="ui.model.entity.relationship.Parent" /></label>
-                                            <div class="col-sm-12 col-md-9 input-group">
+                                            <div class="col-sm-12 col-md-9 input-group control-value">
                                                 <entity-search type="'Place'"
                                                      group-by="['address.PhysicalVisit[0].component.State[0]','address.Direct[0].component.State[0]']"
                                                     ng-model="association.targetModel.relationship.Parent[0].target"

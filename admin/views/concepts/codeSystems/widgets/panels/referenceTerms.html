@@ -13,13 +13,11 @@
             actions="[ 
                 { name: 'add', action: 'addReferenceTerm', demand: '1.3.6.1.4.1.33349.3.1.5.9.2.0.7', className: 'btn-primary', icon: 'fa fa-plus-circle'}, 
                 { name: 'upload', action: 'uploadReferenceTermFile', demand: '1.3.6.1.4.1.33349.3.1.5.9.2.0.7', className: 'btn-info', icon: 'fas fa-upload' } 
-            ]"
-            item-actions="[ 
+            ]" item-actions="[ 
                 { name: 'edit', action: 'editReferenceTerm', demand: '1.3.6.1.4.1.33349.3.1.5.9.2.0.7', className: 'btn-primary', icon: 'fa fa-pencil' }, 
                 { name: 'remove', action: 'removeConceptReferenceTerm', demand: '1.3.6.1.4.1.33349.3.1.5.9.2.0.7', className: 'btn-danger', icon: 'fa fa-times' } 
-            ]"
-            render="{ name: renderName, mappings: renderMappings }"
-            item-supplement="[ loadReferenceTermMappings ]" properties="[  'mnemonic', 'name', 'mappings' ]">
+            ]" render="{ name: renderName, mappings: renderMappings }" item-supplement="[ loadReferenceTermMappings ]"
+            properties="[  'mnemonic', 'name', 'mappings' ]">
         </entity-table>
 
         <!-- MODAL FOR UPLOADING REFERENCE TERM SET -->
@@ -50,7 +48,8 @@
                                         </div>
                                         <div class="float-right">
                                             <a href="/org.santedb.admin/content/code-system-template.csv">
-                                                <i class="fas fa-download"></i> {{ 'ui.admin.concept.codeSystem.upload.template' | i18n }}
+                                                <i class="fas fa-download"></i> {{
+                                                'ui.admin.concept.codeSystem.upload.template' | i18n }}
                                             </a>
                                         </div>
                                     </div>
@@ -76,14 +75,16 @@
                                     </label>
                                     <div class="col-sm-12 col-md-9">
                                         <div class="input-group">
-                                        <ref-term-select class="form-control" name="uploadLanguage"
-                                            required="required" code-system-url="'urn:ietf:bcp:47'" ng-model="uploadTerm.language">
+                                            <ref-term-select class="form-control" name="uploadLanguage"
+                                                required="required" code-system-url="'urn:ietf:bcp:47'"
+                                                ng-model="uploadTerm.language">
                                             </ref-term-select>
                                         </div>
-                                        <div class="text-danger" ng-if="uploadRefTermForm.uploadLanguage.$error['required']">
+                                        <div class="text-danger"
+                                            ng-if="uploadRefTermForm.uploadLanguage.$error['required']">
                                             <i class="fas fa-exclamation-triangle"></i> {{ 'ui.error.required' | i18n }}
                                         </div>
-    
+
                                     </div>
                                 </div>
                             </div>
@@ -133,7 +134,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="form-group row">
+                            <div class="form-group row align-items-baseline">
                                 <label class="control-label col-sm-12 col-md-3">
                                     {{ 'ui.model.referenceTerm.names' | i18n }}
                                     <hint-popover hint-title="ui.model.referenceTerm.names" />
@@ -147,18 +148,18 @@
                                                     name="refTermName{{$index}}" class="form-control"
                                                     autocomplete="__away" required="required" />
                                                 <div class="input-group-append">
-                                                    <ref-term-select class="form-control"
+                                                    <ref-term-select class="custom-select"
                                                         name="refTermNameLang{{$index}}"
                                                         code-system-url="'urn:ietf:bcp:47'" ng-model="name.language" />
                                                 </div>
                                                 <div class="input-group-append btn-group">
                                                     <button class="btn btn-primary" type="button"
                                                         ng-click="edit.referenceTerm.name.$other.push({})">
-                                                        <i class="fas fa-fw fa-plus-circle"></i>  
+                                                        <i class="fas fa-fw fa-plus-circle"></i>
                                                     </button>
                                                     <button class="btn btn-danger" ng-if="$index > 0" type="button"
                                                         ng-click="edit.referenceTerm.name.$other.splice($index, 1)">
-                                                        <i class="fas fa-fw fa-times-circle"></i> 
+                                                        <i class="fas fa-fw fa-times-circle"></i>
                                                     </button>
                                                 </div>
                                             </div>
@@ -171,7 +172,7 @@
                                     </ul>
                                 </div>
                             </div>
-                            <div class="form-group row">
+                            <div class="form-group row align-items-baseline">
                                 <label class="control-label col-sm-12 col-md-3">
                                     {{ 'ui.model.referenceTerm.concept' | i18n }}
                                     <hint-popover hint-title="ui.model.referenceTerm.concept" />
@@ -220,11 +221,12 @@
                                                     </button>
                                                     <button class="btn btn-primary" type="button"
                                                         ng-click="edit.referenceTerm.concepts.push({ relationshipType: '2c4dafc2-566a-41ae-9ebc-3097d7d22f4a'})">
-                                                        <i class="fas fa-fw fa-plus-circle"></i>  
+                                                        <i class="fas fa-fw fa-plus-circle"></i>
                                                     </button>
-                                                    <button class="btn btn-danger" ng-if="edit.referenceTerm.concepts.length &gt; 1" type="button"
+                                                    <button class="btn btn-danger"
+                                                        ng-if="edit.referenceTerm.concepts.length &gt; 1" type="button"
                                                         ng-click="edit.referenceTerm.concepts.splice($index, 1)">
-                                                        <i class="fas fa-fw fa-times-circle"></i> 
+                                                        <i class="fas fa-fw fa-times-circle"></i>
                                                     </button>
                                                 </div>
                                             </div>
@@ -245,7 +247,7 @@
                             <div class="form-group row" ng-if="edit.referenceTerm.createdBy">
                                 <label class="control-label col-sm-12 col-md-3">{{ 'ui.model.referenceTerm.createdBy' |
                                     i18n }}</label>
-                                <div class="col-sm-12 col-md-9">
+                                <div class="col-sm-12 col-md-9 control-value">
                                     <provenance provenance-id="edit.referenceTerm.createdBy"
                                         provenance-time="edit.referenceTerm.creationTime" />
                                 </div>
@@ -253,7 +255,7 @@
                             <div class="form-group row" ng-if="edit.referenceTerm.updatedBy">
                                 <label class="control-label col-sm-12 col-md-3">{{ 'ui.model.referenceTerm.updatedBy' |
                                     i18n }}</label>
-                                <div class="col-sm-12 col-md-9">
+                                <div class="col-sm-12 col-md-9 control-value">
                                     <provenance provenance-id="edit.referenceTerm.updatedBy"
                                         provenance-time="edit.referenceTerm.updatedTime" />
                                 </div>
@@ -269,16 +271,13 @@
                                 <button type="submit" class="btn btn-primary" id="addNewRefTermButton"
                                     ng-disabled="quickAddReferenceTermForm.$invalid">
                                     <i class="fa fa-check"></i> {{ 'ui.action.add' | i18n }} </button>
-                                <div class="btn-group dropdown show">
-                                    <button type="button" id="addNewRefTermButtonExt" class="btn btn-primary"
-                                        data-toggle="dropdown" ng-disabled="quickAddReferenceTermForm.$invalid">
-                                        <i class="fas fa-chevron-down"></i>
-                                    </button>
-                                    <div class="dropdown-menu">
-                                        <button data-toggle="none" class="dropdown-item" id="addNewRefTermButtonThen"
-                                            type="submit" ng-click="edit.referenceTerm.$then = 'another'">{{
-                                            'ui.action.add.then.new' | i18n }}</button>
-                                    </div>
+                                <button type="button" id="addNewRefTermButtonExt" class="btn btn-primary dropdown-toggle dropdown-toggle-split"
+                                    data-toggle="dropdown" ng-disabled="quickAddReferenceTermForm.$invalid">
+                                </button>
+                                <div class="dropdown-menu">
+                                    <button data-toggle="none" class="dropdown-item" id="addNewRefTermButtonThen"
+                                        type="submit" ng-click="edit.referenceTerm.$then = 'another'">{{
+                                        'ui.action.add.then.new' | i18n }}</button>
                                 </div>
                             </div>
                         </div>
