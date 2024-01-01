@@ -134,7 +134,6 @@ var santedbApp = angular.module('santedb', ['ngSanitize', 'ui.router', 'oc.lazyL
                     console.info("Populating root context");
                     $rootScope.session = session;
 
-
                     var realmName = SanteDB.configuration.getRealm();
                     $rootScope.system = $rootScope.system || {};
                     $rootScope.system.version = SanteDB.application.getVersion();

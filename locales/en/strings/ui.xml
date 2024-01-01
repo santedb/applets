@@ -318,6 +318,8 @@
       <string name="ui.subscription.act.PatientEncounter.me">Only patient encounters performed at my facility</string>
 
       <!-- Configuration Translations -->
+      <string name="ui.config.advancedMode.active">The configuration tooling has been placed into advanced mode. Additional options are now available</string>
+      <string name="ui.config.advancedMode.count">You are {away} taps away from entering advanced mode</string>
       <string name="ui.config.network.clientCert.label">Client Certificate</string>
       <string name="ui.config.network.clientCert.help">If your upstream requires the use of PKI authentication you may specify the certificate to present to the upstream here. PKI authentication uses encryption to authenticate your SanteDB node with the upstream using strong public key encryption</string>
       <string name="ui.config.subscribe.type.label">Selectively Replicate</string>
@@ -418,9 +420,9 @@
       <string name="ui.config.security.password.plain">Plaintext (not recommended)</string>
       <string name="ui.config.security.audit.label">AR Store</string>
       <string name="ui.config.security.owner.title">Maintainer</string>
-      <string name="ui.config.security.owner.help">Select one or more users that will be using this tablet. These people may be contacted from time to time to perform maintenance.</string>
+      <string name="ui.config.security.owner.help">Select one or more users that are responsible for the maintenance of this device. These people may be contacted from time to time to perform maintenance, diagnose issues.</string>
       <string name="ui.config.security.facility.title">Assigned Facility</string>
-      <string name="ui.config.security.facility.help">Select one or more facilities which this gateway services</string>
+      <string name="ui.config.security.facility.help">Select one or more facilities which this device services</string>
       <string name="ui.config.security.audit.help">Use this setting to configure how long audits are retained on this device. Depending on internet availability and legal/policy requirements this setting may need to be changed.</string>
       <string name="ui.config.security.audit.none">Do not store security audits locally (not recommended)</string>
       <string name="ui.config.security.audit.48hr">Retain for 48 hrs</string>

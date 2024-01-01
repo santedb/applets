@@ -365,8 +365,7 @@ function APIWrapper(_config) {
                         if (xhr && response.getResponseHeader("etag"))
                             xhr.etag = response.getResponseHeader("etag");
                         if (fulfill) {
-                            if(xhr && configuration.state != null) 
-                            {
+                            if (xhr && configuration.state != null) {
                                 xhr.$state = configuration.state;
                             }
                             if (configuration.headers && configuration.headers["Accept"] == _viewModelJsonMime) {
@@ -378,7 +377,7 @@ function APIWrapper(_config) {
                         }
                     }
                     catch (e) {
-                        if (reject){
+                        if (reject) {
                             var result = e.responseJSON || e;
                             try {
                                 result.$state = configuration.state;
@@ -400,7 +399,7 @@ function APIWrapper(_config) {
                         try { error = JSON.parse(e.responseText); }
                         catch (e) { };
 
-                    if(error && configuration.state != null) {
+                    if (error && configuration.state != null) {
                         error.$state = configuration.state;
                     }
                     if (reject) {
@@ -1989,7 +1988,7 @@ function SanteDBWrapper() {
                 var idData = JSON.parse(atob(match[2]));
                 return idData.id[0].value;
             }
-            else if(srvpPattern.test(data)) {
+            else if (srvpPattern.test(data)) {
 
             }
             else {
@@ -2018,7 +2017,7 @@ function SanteDBWrapper() {
                     qrCodeData = await SanteDB.application.scanBarcodeAsync();
 
                 // QR Code is a signed code
-                if(svrpPattern.test(qrCodeData)) {
+                if (svrpPattern.test(qrCodeData)) {
                     var match = svrpPattern.exec(qrCodeData);
                     var result = await SanteDB.application.ptrSearchAsync(match[1], !noValidate, upstream || false);
                     result.$novalidate = noValidate;
@@ -2040,15 +2039,15 @@ function SanteDBWrapper() {
                     }
 
                     var query = {};
-                    if(qrCodeData.value) {
+                    if (qrCodeData.value) {
                         query = {
-                            "identifier.value" : qrCodeData.value,
-                            "identifier.checkDigit" : qrCodeData.checkDigit
+                            "identifier.value": qrCodeData.value,
+                            "identifier.checkDigit": qrCodeData.checkDigit
                         };
                     }
                     else {
                         query = {
-                            "identifier.value" : qrCodeData
+                            "identifier.value": qrCodeData
                         }
                     }
                     var result = await SanteDB.resources.entity.findAsync(query);
@@ -3363,34 +3362,34 @@ function SanteDBWrapper() {
             api: _ami
         });
 
-      /**
-       * @type {ResourceWrapper}
-       * @memberOf SanteDBWrapper.resources
-       * @summary Wrapper for relationship validation rules
-       */
-      this.validationRule = new ResourceWrapper({
+        /**
+         * @type {ResourceWrapper}
+         * @memberOf SanteDBWrapper.resources
+         * @summary Wrapper for relationship validation rules
+         */
+        this.validationRule = new ResourceWrapper({
             resource: "RelationshipValidationRule",
             accept: "application/json",
             api: _ami
         });
 
-      /**
-       * @type {ResourceWrapper}
-       * @memberOf SanteDBWrapper.resources
-       * @summary Wrapper for applets 
-       */
-      this.applet = new ResourceWrapper({
+        /**
+         * @type {ResourceWrapper}
+         * @memberOf SanteDBWrapper.resources
+         * @summary Wrapper for applets 
+         */
+        this.applet = new ResourceWrapper({
             resource: "Applet",
             accept: "application/json",
             api: _ami
         });
 
-      /**
-       * @type {ResourceWrapper}
-       * @memberOf SanteDBWrapper.resources
-       * @summary Wrapper for appletSolution 
-       */
-      this.appletSolution = new ResourceWrapper({
+        /**
+         * @type {ResourceWrapper}
+         * @memberOf SanteDBWrapper.resources
+         * @summary Wrapper for appletSolution 
+         */
+        this.appletSolution = new ResourceWrapper({
             resource: "AppletSolution",
             accept: "application/json",
             api: _ami
@@ -3434,6 +3433,59 @@ function SanteDBWrapper() {
      * @memberof SanteDBWrapper
      */
     function ConfigurationApi() {
+
+        // Check whether a guard is applicable to the reference objects
+        function _checkGuard(filter, referenceObjects) {
+
+            if (!referenceObjects || referenceObjects.length == 0) {
+                return false;
+            }
+
+            var retVal = true;
+            filter.guards.forEach(function (oldGuard) {
+                if (!retVal) return;
+
+                // Rewrite guard
+                var guardFilterRegex = /^([\!\sA-Za-z\.&|]*?)\[([A-Za-z]*?)\](.*)$/;
+                var valueRegex = /^(\w+?)\=(.*)$/;
+                var newGuard = "";
+                while (oldGuard.length > 0) {
+                    var match = guardFilterRegex.exec(oldGuard);
+                    if (!match) {
+                        newGuard += oldGuard;
+                        break;
+                    }
+                    else {
+                        newGuard += `${match[1]}.${match[2]}`;
+                        oldGuard = match[3];
+                    }
+                }
+                referenceObjects
+                    .forEach(function (subscribed) {
+                        var match = valueRegex.exec(newGuard);
+                        if (match) {
+                            var op = "==", value = match[2];
+                            if (value.startsWith("!")) {
+                                op = "!=";
+                                value = value.substring(1);
+                            }
+                            switch (value) {
+                                case "null":
+                                case "true":
+                                case "false":
+                                    newGuard = `subscribed.${match[1]}${op}${value}`;
+                                    break;
+                                default:
+                                    newGuard = `subscribed.${match[1]}${op}'${value}'`;
+                                    break;
+                            }
+                        }
+                        var e = angular.element('body').scope().$eval(newGuard, { "subscribed": subscribed });
+                        retVal &= (e != null) && (e !== false);
+                    });
+            });
+            return retVal
+        }
 
         /**
          * @method getDataProvidersAsync
@@ -3609,20 +3661,20 @@ function SanteDBWrapper() {
         }
 
         /**
-            * @method joinRealmAsync
-            * @summary Instructs the current system to join a realm
-         * @memberof SanteDBWrapper.ConfigurationApi
-            * @returns {Promise} The configuration file after joining the realm
-            * @param {any} configData The configuration data for the realm
-            * @param {string} configData.address The domain to which the application is to be joined
-            * @param {string} configData.device The name of the device to join as
-            * @param {boolean} configData.replaceExisting When true, instructs the application to replace an existing registration
-            * @param {boolean} configData.enableTrace When true, enables log file tracing of requests
-            * @param {boolean} configData.enableSSL When true, enables HTTPS
-            * @param {boolean} configData.noTimeout When true, removes all timeouts from the configuration
-            * @param {number} configData.port The port number to connect to the realm on
-            * @param {boolean} overwrite Overwrites the existing configuration if needed
-            */
+        * @method joinRealmAsync
+        * @summary Instructs the current system to join a realm
+        * @memberof SanteDBWrapper.ConfigurationApi
+        * @returns {Promise} The configuration file after joining the realm
+        * @param {any} configData The configuration data for the realm
+        * @param {string} configData.address The domain to which the application is to be joined
+        * @param {string} configData.device The name of the device to join as
+        * @param {boolean} configData.replaceExisting When true, instructs the application to replace an existing registration
+        * @param {boolean} configData.enableTrace When true, enables log file tracing of requests
+        * @param {boolean} configData.enableSSL When true, enables HTTPS
+        * @param {boolean} configData.noTimeout When true, removes all timeouts from the configuration
+        * @param {number} configData.port The port number to connect to the realm on
+        * @param {boolean} overwrite Overwrites the existing configuration if needed
+        */
         this.joinRealmAsync = function (configData, overwrite) {
             return new Promise(function (fulfill, reject) {
                 try {
@@ -3696,6 +3748,19 @@ function SanteDBWrapper() {
         this.saveUserSettingsAsync = function (preferences) {
             return _resources.configuration.addAssociatedAsync("me", "settings", preferences);
         }
+
+        /** 
+         * @method canSelectSubscription
+         * @memberof SanteDBWrapper.ConfigurationApi
+         * @summary Determines whether the subscription definition can be selected based on the subscribed objects
+         * @returns {boolean} True if the subscription definition can be selected
+         * @param {SubscriptionDefinition} subscriptionDefinition  The subscription definition
+         * @param {object} subscribedObjects The objects for which the subscription check is being performed
+         */
+        this.canSelectSubscription = function (subscriptionDefinition, subscribedObjects, syncMode) {
+            return subscriptionDefinition.definitions.find(filter => (!filter.guards || filter.guards.length == 0 || _checkGuard(filter, subscribedObjects)) && (syncMode == filter.mode || filter.mode == 'FullOrPartial'));
+        }
+
     };
 
     // Session and auth data
@@ -3717,9 +3782,8 @@ function SanteDBWrapper() {
         var _cacheDemand = {};
         setInterval(() => _cacheDemand = {}, 15000); // clear the cache every 10 seconds
         // Extract JWT data
-        var _extractJwtData = function(jwtData) {
-            if(jwsDataPattern.test(jwtData))
-            {
+        var _extractJwtData = function (jwtData) {
+            if (jwsDataPattern.test(jwtData)) {
                 var match = jwsDataPattern.exec(jwtData);
                 var idData = JSON.parse(atob(match[2]));
                 return idData;
@@ -3793,26 +3857,25 @@ function SanteDBWrapper() {
         this.demandAsync = function (policy) {
             return new Promise(function (fulfill, reject) {
                 try {
-                    if(_cacheDemand[policy] !== undefined) {
+                    if (_cacheDemand[policy] !== undefined) {
                         fulfill(_cacheDemand[policy]);
                     }
                     else {
-                    _auth.getAsync({
-                        resource: `pdp/${policy}`
-                    })
-                        .then(function () { 
-                            _cacheDemand[policy] = _authentication.PolicyDecision.Grant;
-                            fulfill(_authentication.PolicyDecision.Grant); 
-                        }) // fulfillment for the PDP means grant success
-                        .catch(function (e) {
-                            if (e.policyOutcome)
-                            {
-                                _cacheDemand[policy] = e.policyOutcome;
-                                fulfill(_authentication.PolicyDecision[e.policyOutcome]);
-                            }
-                            else
-                                reject(e);
-                        });
+                        _auth.getAsync({
+                            resource: `pdp/${policy}`
+                        })
+                            .then(function () {
+                                _cacheDemand[policy] = _authentication.PolicyDecision.Grant;
+                                fulfill(_authentication.PolicyDecision.Grant);
+                            }) // fulfillment for the PDP means grant success
+                            .catch(function (e) {
+                                if (e.policyOutcome) {
+                                    _cacheDemand[policy] = e.policyOutcome;
+                                    fulfill(_authentication.PolicyDecision[e.policyOutcome]);
+                                }
+                                else
+                                    reject(e);
+                            });
                     }
                 }
                 catch (e) {
@@ -3876,14 +3939,14 @@ function SanteDBWrapper() {
          * @param {bool} upstream When true contact the upstream
          * @returns {Promise} The promise for the reset
          */
-        this.initiateChallengeFlowAsync = function(userName, upstream) {
+        this.initiateChallengeFlowAsync = function (userName, upstream) {
             return _ami.postAsync({
                 resource: "SecurityUser/$reset",
                 contentType: "application/json",
                 headers: {
-                    "X-SanteDB-Upstream" : upstream
+                    "X-SanteDB-Upstream": upstream
                 },
-                data: { parameter: [ { name: "userName", value: userName } ]  }
+                data: { parameter: [{ name: "userName", value: userName }] }
             })
         }
         /**
@@ -3897,7 +3960,7 @@ function SanteDBWrapper() {
             return _ami.postAsync({
                 resource: "SecurityUser/$tfa",
                 contentType: "application/json",
-                data: { parameter: [ { name: "mode", value: mode } ] }
+                data: { parameter: [{ name: "mode", value: mode }] }
             })
         }
         /**
@@ -4212,7 +4275,7 @@ function SanteDBWrapper() {
                 resource: "SecurityUser",
                 contentType: _viewModelJsonMime,
                 headers: {
-                    "X-SanteDB-Upstream" : upstream
+                    "X-SanteDB-Upstream": upstream
                 },
                 data: {
                     $type: "SecurityUserInfo",
