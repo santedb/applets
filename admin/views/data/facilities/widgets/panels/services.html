@@ -19,7 +19,7 @@
             <li class="list-group-item" ng-repeat="service in scopedObject.service track by $index">
                 <div class="row">
                     <label class="control-label col-sm-12 col-md-3">{{ service.serviceConceptModel | concept }}</label>
-                    <div class="col-md-9 col-sm-12">
+                    <div class="col-md-9 col-sm-12 control-value">
                         {{ service.serviceSchedule | scheduleJson }}
                     </div>
                 </div>
@@ -32,7 +32,7 @@
                     <div class="container-fluid">
                         <div class="form-group row">
                             <label class="control-label col-md-3 col-sm-12 required">{{ 'ui.model.place.service.serviceConcept' | i18n }}</label>
-                            <div class="col-sm-12 col-md-9">
+                            <div class="col-sm-12 col-md-9 control-value">
                                 <entity-search class="form-control" type="'Concept'" required="required" name="serviceCodeInput{{$index}}"
                                     filter="{statusConcept: 'c8064cbd-fa06-4530-b430-1a52f1530c27', 'conceptSet.mnemonic': 'ServiceCode'}" 
                                     ng-model="service.serviceConcept"></entity-search>
@@ -43,7 +43,7 @@
                         </div>
                         <div class="form-group row">
                             <label class="control-label col-md-3 col-sm-12">{{ 'ui.model.place.service.serviceSchedule' | i18n }}</label>
-                            <div class="col-md-9 col-sm-12">
+                            <div class="col-md-9 col-sm-12 control-value">
                                 <button class="btn btn-link collapse-indicator p-0 m-0" aria-expanded="false" type="button" data-toggle="collapse" data-target="#serviceSchedule{{$index}}">{{ 'ui.action.view' | i18n }} <i class="fas fa-chevron-right"></i></button>
                             </div>
                             <div class="col-12 collapse" id="serviceSchedule{{$index}}">
