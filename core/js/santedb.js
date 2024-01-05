@@ -3376,6 +3376,17 @@ function SanteDBWrapper() {
         /**
          * @type {ResourceWrapper}
          * @memberOf SanteDBWrapper.resources
+         * @summary Wrapper for relationship validation rules
+         */
+        this.dataQuality = new ResourceWrapper({
+            resource: "DataQualityRulesetConfiguration",
+            accept: "application/json",
+            api: _ami
+        });
+
+        /**
+         * @type {ResourceWrapper}
+         * @memberOf SanteDBWrapper.resources
          * @summary Wrapper for applets 
          */
         this.applet = new ResourceWrapper({

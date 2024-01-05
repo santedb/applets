@@ -20,29 +20,35 @@ Portions Copyright (C) 2015-2018 Mohawk College of Applied Arts and Technology
  - Date: 2018-11-14
  -->
 <div xmlns="http://www.w3.org/1999/xhtml" xmlns:sdb="http://santedb.org/applet">
-    <sdb:script static="false">~/controllers/validation/index.js</sdb:script>
-    <sdb:state name="santedb-admin.data.validationRule.index" abstract="false">
+    <sdb:script static="false">~/controllers/quality/index.js</sdb:script>
+    <sdb:state name="santedb-admin.cdr.quality.index" abstract="false">
         <sdb:demand>1.3.6.1.4.1.33349.3.1.5.9.2.0.15</sdb:demand>
         <sdb:url></sdb:url>
         <sdb:view>
-            <sdb:controller>ValidationRuleIndexController</sdb:controller>
+            <sdb:controller>DataQualityIndexController</sdb:controller>
         </sdb:view>
     </sdb:state>
     <entity-table 
-        id="ValidationRuleTable"
-        type="ValidationRule" 
-        button-bar="'#relationshipFilterHeader'"
+        id="DataQualityRuleTable"
+        type="DataQuality" 
         upstream="true" 
+        no-deleted="true"
         can-filter="true"
-        search-field="description"
-        sort="{}"
+        stateless="true"
+        search-field="name"
         can-size="true"
-        item-supplement="[ loadProperties ]"
-        default-query="{ _viewModel: 'full' }"
-        i18n-prefix="'ui.model.validationRule.'"
-        render="{ sourceClass: renderSourceClass, targetClass: renderTargetClass, relationshipType: renderRelationshipType }"
-        properties="[ 'appliesTo', 'sourceClass', 'relationshipType', 'targetClass', 'description' ]">
-
+        i18n-prefix="'ui.model.dataQuality.'"
+        render="{ enabled: renderEnabled, resources: renderResources }"
+        properties="[  'id', 'name', 'enabled', 'resources' ]"
+        item-actions="[
+            { sref: 'santedb-admin.cdr.quality.edit', name: 'edit', className: 'btn btn-primary', icon: 'fas fa-pencil', demand: '1.3.6.1.4.1.33349.3.1.5.9.2.0.15' },
+            { action: 'delete', name: 'delete', className: 'btn btn-danger', icon: 'fas fa-trash', demand: '1.3.6.1.4.1.33349.3.1.5.9.2.0.15' }
+        ]"
+        actions="[
+            { sref: 'santedb-admin.cdr.quality.create', name: 'create', className: 'btn btn-primary', icon: 'fas fa-asterisk', demand: '1.3.6.1.4.1.33349.3.1.5.9.2.0.15' }
+        ]"
+        >
+        
     </entity-table>
 
 </div>

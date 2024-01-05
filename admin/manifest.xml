@@ -126,6 +126,25 @@
       <text lang="en">Audit Repository</text>
     </menuItem>
   </menuItem>
+  <menuItem context="org.santedb.admin" asset="/org.santedb.admin/views/cdr/index.html" order="-10">
+    <icon>fas fa-shapes</icon>
+    <text lang="en">CDR Administration</text>
+    <menuItem context="org.santedb.admin" launch="santedb-admin.cdr.import.index"
+      asset="/org.santedb.admin/views/cdr/import/index.html" order="50">
+      <icon>fas fa-file-csv</icon>
+      <text lang="en">Import Data</text>
+    </menuItem>
+    <menuItem context="org.santedb.admin" launch="santedb-admin.cdr.validationRule.index"
+      asset="/org.santedb.admin/views/cdr/validation/index.html" order="60">
+      <icon>fas fa-check</icon>
+      <text lang="en">Relationship Types</text>
+    </menuItem>
+    <menuItem context="org.santedb.admin" launch="santedb-admin.cdr.quality.index"
+      asset="/org.santedb.admin/views/cdr/quality/index.html" order="70">
+      <icon>fas fa-tasks</icon>
+      <text lang="en">Data Quality Rules</text>
+    </menuItem>
+  </menuItem>
   <menuItem context="org.santedb.admin" launch="santedb-admin.data.index"
     asset="/org.santedb.admin/views/data/index.html" order="0">
     <icon>fas fa-database</icon>
@@ -155,16 +174,7 @@
       <icon>fas fa-pills</icon>
       <text lang="en">Materials</text>
     </menuItem>
-    <menuItem context="org.santedb.admin" launch="santedb-admin.data.import.index"
-      asset="/org.santedb.admin/views/data/import/index.html" order="50">
-      <icon>fas fa-file-csv</icon>
-      <text lang="en">Import</text>
-    </menuItem>
-    <menuItem context="org.santedb.admin" launch="santedb-admin.data.validationRule.index"
-      asset="/org.santedb.admin/views/data/validation/index.html" order="60">
-      <icon>fas fa-check</icon>
-      <text lang="en">Validation</text>
-    </menuItem>
+
   </menuItem>
 
   <menuItem context="org.santedb.admin" launch="santedb-admin.concept.dashboard"

@@ -38,6 +38,6 @@ angular.module('santedb').controller('ForeignDataViewController', ["$scope", "$r
         initialize($stateParams.id);
     }
     else {
-        $stateParams.go("santedb-admin.data.import.index");
+        $stateParams.go("santedb-admin.cdr.import.index");
     }
 }]);
