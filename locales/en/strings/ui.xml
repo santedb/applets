@@ -319,7 +319,7 @@
 
       <!-- Configuration Translations -->
       <string name="ui.config.advancedMode.active">The configuration tooling has been placed into advanced mode. Additional options are now available</string>
-      <string name="ui.config.advancedMode.count">You are {away} taps away from entering advanced mode</string>
+      <string name="ui.config.advancedMode.count">Tap this option {away} more times to enter advanced mode</string>
       <string name="ui.config.network.clientCert.label">Client Certificate</string>
       <string name="ui.config.network.clientCert.help">If your upstream requires the use of PKI authentication you may specify the certificate to present to the upstream here. PKI authentication uses encryption to authenticate your SanteDB node with the upstream using strong public key encryption</string>
       <string name="ui.config.subscribe.type.label">Selectively Replicate</string>
