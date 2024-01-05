@@ -121,6 +121,7 @@
       <string name="ui.sync.patch.actions">Actions to be applied</string>
       <string name="ui.sync.log.none">Nothing Synchronized Yet</string>
       <string name="ui.sync.queue.error">Error</string>
+      <string name="ui.sync.investigate">View Object</string>
       <string name="ui.sync.dead.ignoreConfirm">Are you sure you want to ignore this conflict? YOUR CHANGES WILL NOT BE SENT TO CENTRAL SERVER!</string>
       <string name="ui.sync.resetConfirm">Are you sure you want to reset the synchronization log for this type?</string>
 

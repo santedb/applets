@@ -60,14 +60,14 @@ angular.module("santedb").controller("SyncController", ['$scope', '$rootScope', 
                     }
 
                 if(!remoteFilter)
-                    remoteFilter = "_upstream=true&_count=0";
+                    remoteFilter = "_upstream=true&_count=0&_includeTotal=true";
                 else 
-                    remoteFilter += "&_upstream=true&_count=0";
+                    remoteFilter += "&_upstream=true&_count=0&_includeTotal=true";
 
                 if(!filter)
-                    filter = "_count=0";
+                    filter = "_count=0&_includeTotal=true";
                 else 
-                    filter += "&_count=0";
+                    filter += "&_count=0&_includeTotal=true";
 
                 if(filter.indexOf("_subscription") > -1)
                     s.local = "-";
@@ -110,6 +110,10 @@ angular.module("santedb").controller("SyncController", ['$scope', '$rootScope', 
 
     $("#queueModal").on("hidden.bs.modal", function() {
         $scope.currentQueue = null;
+    });
+
+    $("#currentItemModal").on("hidden.bs.modal", function() {
+        $scope.currentObject = null;
     });
     
     // Open a queue

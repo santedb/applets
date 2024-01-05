@@ -27,10 +27,10 @@
                     <div class="card-body">
                         <div class="row no-gutters align-items-center">
                             <div class="col-auto">
-                                <h1 class="mb-0">{{ queue.outbound }}</h1>
+                                <h1 class="mb-0">{{ queue.out }}</h1>
                             </div>
                             <div class="col ml-2 mr-2">
-                                <button ng-click="openQueue('outbound')"
+                                <button ng-click="openQueue('out')"
                                     class="p-0 btn btn-link text-xs font-weight-bold text-primary text-uppercase">{{ 'ui.sync.outbound' | i18n }}</button>
                                 <div class="h5 mb-0 font-weight-bold text-gray">
                                     {{ 'ui.sync.outbound.text' | i18n }} </div>
@@ -47,10 +47,10 @@
                     <div class="card-body">
                         <div class="row no-gutters align-items-center">
                             <div class="col-auto">
-                                <h1 class="mb-0">{{ queue.inbound }}</h1>
+                                <h1 class="mb-0">{{ queue.in }}</h1>
                             </div>
                             <div class="col ml-2 mr-2">
-                                <button ng-click="openQueue('inbound')"
+                                <button ng-click="openQueue('in')"
                                     class="btn btn-link text-xs font-weight-bold text-primary text-uppercase p-0 ">{{ 'ui.sync.inbound' | i18n }}</button>
                                 <div class="h5 mb-0 font-weight-bold text-gray">
                                     {{ 'ui.sync.inbound.text' | i18n }} </div>
@@ -87,10 +87,10 @@
                     <div class="card-body">
                         <div class="row no-gutters align-items-center">
                             <div class="col-auto">
-                                <h1 class="mb-0">{{ queue.dead }}</h1>
+                                <h1 class="mb-0">{{ queue.deadletter }}</h1>
                             </div>
                             <div class="col ml-2 mr-2">
-                                <button ng-click="openQueue('dead')"
+                                <button ng-click="openQueue('deadletter')"
                                     class="btn btn-link text-xs font-weight-bold text-primary text-uppercase p-0 ">{{ 'ui.sync.dead' | i18n }}</button>
                                 <div class="h5 mb-0 font-weight-bold text-gray">
                                     {{ 'ui.sync.dead.text' | i18n }} </div>
@@ -268,7 +268,7 @@
                     <div class="modal-header">
                         <h5 class="modal-title">
                             <i class="fas fa-search-plus"></i>
-                            {{ currentObject.$type | i18n }} - {{ currentObject.id }}
+                            {{ 'ui.sync.investigate' | i18n }} {{ currentObject.$type | i18n }} - {{ currentObject.id }}
                         </h5><button class="close" type="button" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">
                                 <i class="fa fa-times"></i>
@@ -314,6 +314,11 @@
                             <div class="col" ng-if="currentObject.$type != 'Patch'">
                                 <div class="container-fluid">
                                     <div class="row">
+                                        <div class="col">
+                                            <object-tree object="currentObject" depth="3" />
+                                        </div>
+                                    </div>
+                                    <!-- <div class="row">
                                         <div class="col-6" ng-repeat="(k,v) in currentObject" ng-if="v &amp;&amp; k != 'tag'">
                                             <strong>{{ k }} :</strong> {{ v | rawValueSummary }}
                                         </div>
@@ -323,7 +328,7 @@
                                             <strong>{{ 'ui.error' | i18n }}</strong>
                                             <pre>{{ currentObject.tag | exceptionDetail}}</pre>
                                         </div>
-                                    </div>
+                                    </div> -->
                                 </div>
                             </div>
                         </div>
