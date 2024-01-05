@@ -641,4 +641,31 @@
   <string name="ui.model.cdssLibraryDefinition.normalize">Normalization(s)</string>
   <string name="ui.model.cdssLibraryDefinition.include">Include(s)</string>
   <string name="ui.model.cdssLibraryDefinition.status">Status</string>
+
+  <!-- Data Quality -->
+  <string name="ui.model.dataQualityRule">Rule Properties</string>
+  <string name="ui.model.dataQualityRule.resources">Rule Resources</string>
+  <string name="ui.model.dataQualityRule.id">Identifier</string>
+  <string name="ui.model.dataQualityRule.id.placeholder">my.rule.identifier</string>
+  <string name="ui.model.dataQualityRule.id.hint">A unique identifier for the data quality rule - this is a system mnemonic for the rule</string>
+  <string name="ui.model.dataQualityRule.name">Name</string>
+  <string name="ui.model.dataQualityRule.name.placeholder">My Data Quality Rule</string>
+  <string name="ui.model.dataQualityRule.name.hint">A human-readable name for the data quality rule</string>
+  <string name="ui.model.dataQualityRule.enabled">Rule is Active</string>
+  <string name="ui.model.dataQualityRule.enabled.hint">When a rule is active, all incoming resources specified in the rule are validated using the assertions specified</string>
+  <string name="ui.model.dataQualityRule.resources.resource">Resource Type</string>
+  <string name="ui.model.dataQualityRule.resources.resource.hint">Select the type fo resource to which this rule set applies. To change the resource type, all assertions must be removed</string>
+  <string name="ui.model.dataQualityRule.resources.assert.id">Assertion ID</string>
+  <string name="ui.model.dataQualityRule.resources.assert.id.placeholder">my.rule.assertion.addressRequired</string>
+  <string name="ui.model.dataQualityRule.resources.assert.id.hint"><![CDATA[Provide a unique identifier for this assertion. When this assertion fails, this identifier will be placed on the <code>DetectedIssue.id</code> field]]></string>
+  <string name="ui.model.dataQualityRule.resources.assert.name">Assertion Text</string>
+  <string name="ui.model.dataQualityRule.resources.assert.name.placeholder">Patient Must Have An Address</string>
+  
+  <string name="ui.model.dataQualityRule.resources.assert.name.hint"><![CDATA[Human readable text for the assertion. When this assertion fails, this text will be placed on the <code>DetectedIssue.text</code> field]]></string>
+  <string name="ui.model.dataQualityRule.resources.assert.priority">Priority</string>
+  <string name="ui.model.dataQualityRule.resources.assert.priority.hint"><![CDATA[Indicates the severity of the detected issue that is raised when the assertion fails. <ul><li><code>Error</code>: The detected issue will result in a rejected resource/failed operation</li><li><code>Warning</code>:: The detected issue will result in a warning. The resource may still be processed</li><li><code>Information</code>: The detected issue will be displayed/conveyed as an informational message</li></ul>]]></string>
+  <string name="ui.model.dataQualityRule.resources.assert.expression">Expression(s)</string>
+  <string name="ui.model.dataQualityRule.resources.assert.expression.hint"><![CDATA[Provide the HDSI expressions which will trigger this detected issue to be raised. The evaluation of multiple HDSI expressions is controlled by the selection of <code>all-of, any-of, none-of</code> representing logical <code>and, or, not</code> respectively]]></string>
+  <string name="ui.model.dataQualityRule.assertion.add">Add Assertion</string>
+
 </resources>

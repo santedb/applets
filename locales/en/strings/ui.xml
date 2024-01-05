@@ -611,4 +611,6 @@
       <string name="ui.config.log.writer.label">Log Writers</string>
       <string name="ui.config.log.writer.help">This controls where SanteDB will collect produce log output. Each log writer can be filtered based on the event type.</string>
 
+      <!-- Job Execution -->
+      <string name="ui.job.run">Running job {jobName}</string>
 </resources>

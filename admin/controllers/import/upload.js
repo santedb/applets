@@ -66,7 +66,7 @@ angular.module('santedb').controller('ForeignDataUploadController', ["$scope", "
             success: function (data) {
                 console.log('Success');
                 toastr.success(SanteDB.locale.getString('ui.admin.alien.upload.success'));
-                $state.go('santedb-admin.data.import.index');
+                $state.go('santedb-admin.cdr.import.index');
             },
             error: function (xhr, status, error) {
                 console.log('error');
