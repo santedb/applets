@@ -112,7 +112,7 @@ label.control-label.required:after {
 }
 
 @media (min-width:1100px){.modal-xl{max-width:1000px}}
-
+@media(min-width:1400px){ .modal-xl{max-width:1350px}}
 div.pseudo-input {
     border: solid #ced4da 1px;
     display: block;
@@ -263,3 +263,5 @@ ul.bullet-list {
 svg.mermaidNoScale {
     max-width: none !important;
 }
+
+.fa-rotate-45{-webkit-transform:rotate(45deg);transform:rotate(45deg)}

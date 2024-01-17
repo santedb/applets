@@ -20,7 +20,7 @@
 <div xmlns="http://www.w3.org/1999/xhtml" xmlns:sdb="http://santedb.org/applet">
     <sdb:script static="false">~/controllers/sync/index.js</sdb:script>
 
-    <div ng-controller="SyncController" class="container-fluid" >
+    <div ng-controller="SyncController" class="container-fluid">
         <div class="row">
             <div class="col-md-6 col-lg-3">
                 <div class="card shadow">
@@ -31,9 +31,10 @@
                             </div>
                             <div class="col ml-2 mr-2">
                                 <button ng-click="openQueue('out')"
-                                    class="p-0 btn btn-link text-xs font-weight-bold text-primary text-uppercase">{{ 'ui.sync.outbound' | i18n }}</button>
+                                    class="p-0 btn btn-link text-xs font-weight-bold text-primary text-uppercase">{{
+                                    'ui.sync.out' | i18n }}</button>
                                 <div class="h5 mb-0 font-weight-bold text-gray">
-                                    {{ 'ui.sync.outbound.text' | i18n }} </div>
+                                    {{ 'ui.sync.out.text' | i18n }} </div>
                             </div>
                             <div class="col-auto">
                                 <i class="fas fa-upload fa-2x text-gray"></i>
@@ -51,9 +52,10 @@
                             </div>
                             <div class="col ml-2 mr-2">
                                 <button ng-click="openQueue('in')"
-                                    class="btn btn-link text-xs font-weight-bold text-primary text-uppercase p-0 ">{{ 'ui.sync.inbound' | i18n }}</button>
+                                    class="btn btn-link text-xs font-weight-bold text-primary text-uppercase p-0 ">{{
+                                    'ui.sync.in' | i18n }}</button>
                                 <div class="h5 mb-0 font-weight-bold text-gray">
-                                    {{ 'ui.sync.inbound.text' | i18n }} </div>
+                                    {{ 'ui.sync.in.text' | i18n }} </div>
                             </div>
                             <div class="col-auto">
                                 <i class="fas fa-download fa-2x text-gray"></i>
@@ -71,7 +73,8 @@
                             </div>
                             <div class="col ml-2 mr-2">
                                 <button ng-click="openQueue('admin')"
-                                    class="btn btn-link text-xs font-weight-bold text-primary text-uppercase p-0 ">{{ 'ui.sync.admin' | i18n }}</button>
+                                    class="btn btn-link text-xs font-weight-bold text-primary text-uppercase p-0 ">{{
+                                    'ui.sync.admin' | i18n }}</button>
                                 <div class="h5 mb-0 font-weight-bold text-gray">
                                     {{ 'ui.sync.admin.text' | i18n }} </div>
                             </div>
@@ -91,9 +94,10 @@
                             </div>
                             <div class="col ml-2 mr-2">
                                 <button ng-click="openQueue('deadletter')"
-                                    class="btn btn-link text-xs font-weight-bold text-primary text-uppercase p-0 ">{{ 'ui.sync.dead' | i18n }}</button>
+                                    class="btn btn-link text-xs font-weight-bold text-primary text-uppercase p-0 ">{{
+                                    'ui.sync.deadletter' | i18n }}</button>
                                 <div class="h5 mb-0 font-weight-bold text-gray">
-                                    {{ 'ui.sync.dead.text' | i18n }} </div>
+                                    {{ 'ui.sync.deadletter.text' | i18n }} </div>
                             </div>
                             <div class="col-auto">
                                 <i class="fas fa-code-branch fa-2x text-gray"></i>
@@ -113,7 +117,7 @@
                 </div>
             </div>
         </div>
-        <div class="row mt-2" >
+        <div class="row mt-2">
             <div class="col-12">
                 <h3>{{ 'ui.sync.log' | i18n }}</h3>
                 <table class="table table-striped" id="syncCenterTable">
@@ -139,16 +143,21 @@
                         </tr>
                         <tr ng-repeat="log in syncLog">
                             <td>{{ log.ResourceType | i18n }} <br /><small><i class="fas fa-filter"></i>
-                                    <span class="d-none d-lg-inline">{{ ::(log.Filter || "ALL").substring(0, 100) }}</span></small></td>
+                                    <span class="d-none d-lg-inline">{{ ::(log.Filter || "ALL").substring(0, 100)
+                                        }}</span></small></td>
                             <td class="d-none d-lg-table-cell">
                                 <i class="fas fa-spin fa-circle-notch" ng-if="log.local == undefined"></i>
-                                {{ log.local }}</td>
-                                <td class="d-none d-lg-table-cell">
-                                    <i class="fas fa-spin fa-circle-notch" ng-if="log.remote == undefined"></i>
-                                    {{ log.remote }}</td>    
+                                {{ log.local }}
+                            </td>
+                            <td class="d-none d-lg-table-cell">
+                                <i class="fas fa-spin fa-circle-notch" ng-if="log.remote == undefined"></i>
+                                {{ log.remote }}
+                            </td>
                             <td>{{ log.LastSync | extDate: 'f' }}</td>
-                            <td> 
-                                <button type="button" demand="1.3.6.1.4.1.33349.3.1.5.9.2.10" ng-click="resetSyncLog(log.ResourceType, log.Filter)" class="btn btn-danger"><i class="fas fa-cloud-meatball"></i> {{ 'ui.action.reset' | i18n }}</button>
+                            <td>
+                                <button type="button" demand="1.3.6.1.4.1.33349.3.1.5.9.2.10"
+                                    ng-click="resetSyncLog(log.ResourceType, log.Filter)" class="btn btn-danger"><i
+                                        class="fas fa-cloud-meatball"></i> {{ 'ui.action.reset' | i18n }}</button>
                             </td>
                         </tr>
                     </tbody>
@@ -158,7 +167,9 @@
         <div class="row mt-2">
             <div class="col-12">
                 <div class="float-right btn-group">
-                    <button type="button" id="resetAllButton" demand="1.3.6.1.4.1.33349.3.1.5.9.2.10" ng-click="resetSyncLog()" class="btn btn-danger"><i class="fas fa-cloud-meatball"></i> {{ 'ui.action.resetAll' | i18n }}</button>
+                    <button type="button" id="resetAllButton" demand="1.3.6.1.4.1.33349.3.1.5.9.2.10"
+                        ng-click="resetSyncLog()" class="btn btn-danger"><i class="fas fa-cloud-meatball"></i> {{
+                        'ui.action.resetAll' | i18n }}</button>
                 </div>
             </div>
         </div>
@@ -181,7 +192,7 @@
                     </div>
                     <div class="modal-body">
                         <div class="container-fluid">
-                            <div class="col" ng-if="!currentQueue.content">
+                            <div class="col" ng-if="!currentQueue.content.resource">
                                 <p class="m-auto"><i class="fas fa-circle-notch fa-spin"></i> {{ 'ui.wait' | i18n }}</p>
                             </div>
                             <div class="col" ng-if="currentQueue.content"
@@ -190,61 +201,64 @@
                                     <thead>
                                         <tr>
                                             <th>{{ 'ui.sync.queue.id' | i18n }}</th>
-                                            <th>{{ 'ui.sync.queue.action' | i18n }}</th>
-                                            <th>{{ 'ui.sync.queue.data' | i18n }}</th>
-                                            <th>{{ 'ui.sync.queue.state' | i18n }}</th>
-                                            <th ng-if="currentQueue.name == 'dead'">{{ 'ui.sync.queue.error' | i18n }}</th>
-                                            <th>{{ 'ui.sync.queue.originalDate' | i18n }}</th>
+                                            <th class="d-none d-xl-table-cell">{{ 'ui.sync.queue.state' | i18n }}</th>
+                                            <th ng-if="currentQueue.name == 'deadletter'">{{ 'ui.sync.queue.original' |
+                                                i18n }}</th>
+                                            <th class="d-none d-xl-table-cell">{{ 'ui.sync.queue.originalDate' | i18n }}
+                                            </th>
                                             <th></th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr ng-repeat="q in currentQueue.content">
+                                        <tr ng-repeat="q in currentQueue.content.resource">
                                             <td>{{ q.id }}</td>
-                                            <td>{{ q.operation }}</td>
-                                            <td>{{ q.type | dotNetType }}</td>
-                                            <td ng-if="currentQueue.name != 'dead'">
+                                            <td class="d-none d-xl-table-cell"
+                                                ng-if="currentQueue.name != 'deadletter'">
                                                 <span class="badge"
                                                     ng-class="{ 'badge-success' : !q.isRetry , 'badge-warning' : q.isRetry }">
                                                     <i class="fas"
                                                         ng-class="{ 'fa-sort' : q.isRetry, 'fa-plus' : !q.isRetry }"></i>
-                                                    <span ng-if="q.isRetry"> {{ q.retryCount }}
-                                                        {{ 'ui.sync.retries' | i18n }}</span>
+                                                    <span ng-if="q.isRetry"> {{ 'ui.sync.retried' | i18n }}</span>
                                                     <span ng-if="!q.isRetry"> {{ 'ui.sync.new' | i18n }}</span>
                                                 </span>
                                             </td>
-                                            <td ng-if="currentQueue.name == 'dead'">
+                                            <td class="d-none d-xl-table-cell"
+                                                ng-if="currentQueue.name == 'deadletter'">
                                                 <span class="badge badge-danger">
                                                     <i class="fas fa-exclamation-triangle"></i>
                                                     {{ 'ui.sync.conflict' | i18n }}
                                                 </span>
+                                                {{ q.reason | exceptionType }}
+
                                             </td>
-                                            <td ng-if="currentQueue.name == 'dead'">
-                                                {{ q.tag | exceptionType }}
+                                            <td ng-if="currentQueue.name == 'deadletter'">
+                                                {{ 'ui.sync.' + q.originalQueue | i18n }}
                                             </td>
-                                            
+                                            <td class="d-none d-xl-table-cell">
+                                                {{ q.creationTime | extDate: 'M' }}
+                                            </td>
                                             <td>
-                                                {{ q.creationTime | extDate }}
-                                            </td>
-                                            <td>
-                                                <div class="btn-group" ng-if="currentQueue.name == 'dead'">
+                                                <div class="btn-group" ng-if="currentQueue.name == 'deadletter'">
                                                     <button class="btn btn-primary" ng-click="viewObject(q.id, q.tag)"
                                                         title="{{ 'ui.action.view' | i18n }}"><i
-                                                            class="fas fa-file"></i></button>
-                                                    <button class="btn btn-warning" ng-click="resubmitObject(q.id)"
-                                                        title="{{ 'ui.sync.queue.resubmit' | i18n }}"><i
-                                                            class="fas fa-upload"></i></button>
-                                                    <button class="btn btn-success" ng-disabled="!$root.system.online" ng-click="resolveObject(q.id)"
+                                                            class="fas fa-fw fa-eye"></i></button>
+                                                    <button class="btn btn-success" ng-if="q.originalQueue == 'out'" ng-disabled="!$root.system.online"
+                                                        ng-click="resolveObject(q.id)"
                                                         title="{{ 'ui.sync.queue.resolve' | i18n }}"><i
-                                                            class="fas fa-compress-arrows-alt"></i></button>
+                                                            class="fas fa-compress-alt fa-rotate-45"></i></button>
+
+                                                        <button class="btn btn-warning" ng-click="resubmitObject(q.id)"
+                                                        title="{{ 'ui.sync.queue.resubmit' | i18n }}"><i
+                                                            class="fas fa-fw fa-random fa-rotate-270"></i></button>
+
                                                     <button class="btn btn-danger" ng-click="ignoreObject(q.id)"
                                                         title="{{ 'ui.sync.queue.ignore' | i18n }}"><i
-                                                            class="fas fa-trash"></i></button>
+                                                            class="fas fa-fw  fa-times"></i></button>
                                                 </div>
-                                                <div class="btn-group" ng-if="currentQueue.name != 'dead'">
+                                                <div class="btn-group" ng-if="currentQueue.name != 'deadletter'">
                                                     <button class="btn btn-primary" ng-click="viewObject(q.id)"
                                                         title="{{ 'ui.action.view' | i18n }}"><i
-                                                            class="fas fa-file"></i></button>
+                                                            class="fas fa-fw  fa-view"></i></button>
                                                 </div>
                                             </td>
                                         </tr>
@@ -318,17 +332,6 @@
                                             <object-tree object="currentObject" depth="3" />
                                         </div>
                                     </div>
-                                    <!-- <div class="row">
-                                        <div class="col-6" ng-repeat="(k,v) in currentObject" ng-if="v &amp;&amp; k != 'tag'">
-                                            <strong>{{ k }} :</strong> {{ v | rawValueSummary }}
-                                        </div>
-                                    </div>
-                                    <div class="row" ng-if="currentObject.tag">
-                                        <div class="col-12">
-                                            <strong>{{ 'ui.error' | i18n }}</strong>
-                                            <pre>{{ currentObject.tag | exceptionDetail}}</pre>
-                                        </div>
-                                    </div> -->
                                 </div>
                             </div>
                         </div>

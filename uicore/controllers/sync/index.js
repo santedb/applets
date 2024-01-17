@@ -18,7 +18,7 @@
  * User: Justin Fyfe
  * Date: 2019-12-16
  */
-angular.module("santedb").controller("SyncController", ['$scope', '$rootScope', '$interval', function ($scope, $rootScope, $interval) {
+angular.module("santedb").controller("SyncController", ['$scope', '$rootScope', '$interval', '$timeout', function ($scope, $rootScope, $interval, $timeout) {
 
     /**
      * @summary Refreshes queues
@@ -26,12 +26,8 @@ angular.module("santedb").controller("SyncController", ['$scope', '$rootScope', 
     async function refreshQueues() { 
         // Fetch the queues from the server
         try {
-            $scope.queue = await SanteDB.resources.queue.findAsync();
-
-            if($scope.currentQueue) {
-                await $scope.openQueue($scope.currentQueue.name);
-            }
-            await $scope.$applyAsync();
+            var queue = await SanteDB.resources.queue.findAsync();
+            $timeout(() => $scope.queue = queue);
         }
         catch(e) {
             $rootScope.errorHandler(e);
@@ -73,6 +69,7 @@ angular.module("santedb").controller("SyncController", ['$scope', '$rootScope', 
                     s.local = "-";
                 else
                     SanteDB.resources[resource].findAsync(filter, null, s).then(r=>s.local= r.totalResults !== undefined ? r.totalResults : r.size).catch(r=>s.local = '?');
+                
                 SanteDB.resources[resource].findAsync(remoteFilter, null, s).then(r=>s.remote= r.totalResults !== undefined ? r.totalResults : r.size).catch(r=>s.remote = '?');
             });
 
@@ -117,12 +114,12 @@ angular.module("santedb").controller("SyncController", ['$scope', '$rootScope', 
     });
     
     // Open a queue
-    $scope.openQueue= async function(queueName) {
+    $scope.openQueue = async function(queueName) {
         try {
             $scope.currentQueue = { name: queueName };
             $("#queueModal").modal('show');
-            $scope.currentQueue.content = await SanteDB.resources.queue.getAsync(queueName);
-            $scope.$apply();
+            var queueContents = await SanteDB.resources.queue.getAsync(queueName, null, { _count: 10, _includeTotal: true});
+            $timeout(() => $scope.currentQueue.content = queueContents);
         }
         catch(e) {
             $rootScope.errorHandler(e);
@@ -133,9 +130,8 @@ angular.module("santedb").controller("SyncController", ['$scope', '$rootScope', 
     $scope.viewObject = async function(id, tag) {
         try {
             $("#currentItemModal").modal({ 'backdrop' : 'static' });
-            $scope.currentObject = await SanteDB.resources.queue.getAsync(`${$scope.currentQueue.name}/${id}`);
-            $scope.currentObject.tag = tag; 
-            $scope.$apply();
+            var currentObject = await SanteDB.resources.queue.getAsync(`${$scope.currentQueue.name}/${id}`);
+            $timeout(() => $scope.currentObject = currentObject);
         }
         catch(e) {
             $rootScope.errorHandler(e);
@@ -153,21 +149,21 @@ angular.module("santedb").controller("SyncController", ['$scope', '$rootScope', 
             $rootScope.errorHandler(e);
         }
         finally {
-            $scope.openQueue("dead");
+            $scope.openQueue("deadletter");
         }
     }
 
     // Ignore the queue object
     $scope.ignoreObject = async function(id) {
         try {
-            if(confirm(SanteDB.locale.getString("ui.sync.dead.ignoreConfirm")))
+            if(confirm(SanteDB.locale.getString("ui.sync.deadletter.ignoreConfirm")))
                 SanteDB.resources.queue.removeAssociatedAsync("dead", "confirm", id);
         }
         catch(e) {
             $rootScope.errorHandler(e);
         }
         finally {
-            $scope.openQueue("dead");
+            $scope.openQueue("deadletter");
         }
     }
 

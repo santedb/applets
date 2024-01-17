@@ -251,9 +251,8 @@ angular.module('santedb-lib')
     .filter('exceptionType', function () {
         return function (v) {
             
-            var rawValue = atob(v);
             // Is there a server exception?
-            var parseResult = SanteDB.application.parseException(rawValue);
+            var parseResult = SanteDB.application.parseException(v);
 
             if(parseResult.rules && parseResult.rules.length > 0)
                 return parseResult.rules[0].text;
