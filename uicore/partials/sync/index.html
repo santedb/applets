@@ -200,11 +200,12 @@
                                 <table class="table table-striped">
                                     <thead>
                                         <tr>
-                                            <th>{{ 'ui.sync.queue.id' | i18n }}</th>
-                                            <th class="d-none d-xl-table-cell">{{ 'ui.sync.queue.state' | i18n }}</th>
-                                            <th ng-if="currentQueue.name == 'deadletter'">{{ 'ui.sync.queue.original' |
+                                            <th>{{ 'ui.model.syncQueue.id' | i18n }}</th>
+                                            <th class="d-none d-md-table-cell">{{ 'ui.model.syncQueue.resourceType' | i18n }}</th>
+                                            <th class="d-none d-xl-table-cell">{{ 'ui.model.syncQueue.status' | i18n }}</th>
+                                            <th ng-if="currentQueue.name == 'deadletter'">{{ 'ui.model.syncQueue.originalQueue' |
                                                 i18n }}</th>
-                                            <th class="d-none d-xl-table-cell">{{ 'ui.sync.queue.originalDate' | i18n }}
+                                            <th class="d-none d-xl-table-cell">{{ 'ui.model.syncQueue.creationTime' | i18n }}
                                             </th>
                                             <th></th>
                                         </tr>
@@ -212,6 +213,7 @@
                                     <tbody>
                                         <tr ng-repeat="q in currentQueue.content.resource">
                                             <td>{{ q.id }}</td>
+                                            <td class="d-none d-md-table-cell">{{ q.resourceType }}</td>
                                             <td class="d-none d-xl-table-cell"
                                                 ng-if="currentQueue.name != 'deadletter'">
                                                 <span class="badge"
@@ -232,7 +234,7 @@
 
                                             </td>
                                             <td ng-if="currentQueue.name == 'deadletter'">
-                                                {{ 'ui.sync.' + q.originalQueue | i18n }}
+                                                {{ 'ui.sync.' + q.originalQueue.name | i18n }}
                                             </td>
                                             <td class="d-none d-xl-table-cell">
                                                 {{ q.creationTime | extDate: 'M' }}
@@ -242,12 +244,14 @@
                                                     <button class="btn btn-primary" ng-click="viewObject(q.id, q.tag)"
                                                         title="{{ 'ui.action.view' | i18n }}"><i
                                                             class="fas fa-fw fa-eye"></i></button>
-                                                    <button class="btn btn-success" ng-if="q.originalQueue == 'out'" ng-disabled="!$root.system.online"
+                                                    <button class="btn btn-success"
+                                                        ng-if="q.originalQueue.name == 'out'"
+                                                        ng-disabled="!$root.system.online"
                                                         ng-click="resolveObject(q.id)"
                                                         title="{{ 'ui.sync.queue.resolve' | i18n }}"><i
                                                             class="fas fa-compress-alt fa-rotate-45"></i></button>
 
-                                                        <button class="btn btn-warning" ng-click="resubmitObject(q.id)"
+                                                    <button class="btn btn-warning" ng-click="resubmitObject(q.id)"
                                                         title="{{ 'ui.sync.queue.resubmit' | i18n }}"><i
                                                             class="fas fa-fw fa-random fa-rotate-270"></i></button>
 
@@ -282,7 +286,8 @@
                     <div class="modal-header">
                         <h5 class="modal-title">
                             <i class="fas fa-search-plus"></i>
-                            {{ 'ui.sync.investigate' | i18n }} {{ currentObject.$type | i18n }} - {{ currentObject.id }}
+                            {{ 'ui.sync.investigate' | i18n }}- {{ currentObject.id }} ( {{ currentObject.data.$type |
+                            i18n }} )
                         </h5><button class="close" type="button" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">
                                 <i class="fa fa-times"></i>
@@ -291,45 +296,115 @@
                     </div>
                     <div class="modal-body">
                         <div class="container-fluid">
-                            <div class="col" ng-if="!currentObject">
-                                <p class="m-auto"><i class="fas fa-circle-notch fa-spin"></i> {{ 'ui.wait' | i18n }}</p>
-                            </div>
-                            <div class="col" ng-if="currentObject.$type == 'Patch'">
-                                <div class="container-fluid">
-                                    <div class="row">
-                                        <label class="control-label col-2">{{ 'ui.sync.patch.applyTo' | i18n }}</label>
-                                        <div class="col-4">{{ currentObject.appliesTo.type | dotNetType }}</div>
-                                        <label class="control-label col-2">{{ 'ui.sync.patch.version' | i18n }}</label>
-                                        <div class="col-4">{{ currentObject.appliesTo.etag }}</div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col">
-                                            <table class="table table-striped">
-                                                <caption>{{ 'ui.sync.patch.actions' | i18n }}</caption>
-                                                <thead>
-                                                    <tr>
-                                                        <th>{{ 'ui.sync.patch.actions.operation' | i18n }}</th>
-                                                        <th>{{ 'ui.sync.patch.actions.path' | i18n }}</th>
-                                                        <th>{{ 'ui.sync.patch.actions.value' | i18n }}</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    <tr ng-repeat="a in currentObject.change">
-                                                        <td>{{ a.op }}</td>
-                                                        <td>{{ a.path }}</td>
-                                                        <td>{{ a.value | rawValueSummary }}</td>
-                                                    </tr>
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                    </div>
+                            <div class="row">
+                                <div class="col-12" ng-if="!currentObject">
+                                    <p class="m-auto"><i class="fas fa-circle-notch fa-spin"></i> {{ 'ui.wait' | i18n }}
+                                    </p>
                                 </div>
-                            </div>
-                            <div class="col" ng-if="currentObject.$type != 'Patch'">
-                                <div class="container-fluid">
-                                    <div class="row">
-                                        <div class="col">
-                                            <object-tree object="currentObject" depth="3" />
+                                <div class="col-12">
+                                    <ul class="nav nav-tabs">
+                                        <li class="nav-item active">
+                                            <a class="nav-link active" data-target="#itemSummary" data-toggle="tab">
+                                                {{ 'ui.sync.investigate.summary' | i18n }}
+                                            </a>
+                                        </li>
+                                        <li class="nav-item"> <a class="nav-link" data-target="#itemDetail"
+                                                data-toggle="tab">
+                                                {{ 'ui.sync.investigate.detail' | i18n }}
+                                            </a>
+                                        </li>
+                                    </ul>
+                                    <div class="tab-content">
+                                        <div role="tabpanel" class="tab-pane show active p-2" id="itemSummary">
+                                            <div class="container-fluid">
+                                                <div class="row">
+                                                    <label class="col-sm-12 col-md-3 control-label">{{
+                                                        'ui.model.syncQueue.correlationKey' | i18n }}</label>
+                                                    <div class="p-2 col-sm-12 col-md-9">{{ currentObject.correlationKey }}
+                                                    </div>
+                                                    <label class="col-sm-12 col-md-3 control-label">{{
+                                                        'ui.model.syncQueue.creationTime' | i18n }}</label>
+                                                    <div class="p-2 col-sm-12 col-md-9">{{ currentObject.creationTime |
+                                                        extDate }}</div>
+                                                    <label class="col-sm-12 col-md-3 control-label">{{
+                                                        'ui.model.syncQueue.dataFile' | i18n }}</label>
+                                                    <div class="p-2 col-sm-12 col-md-9">{{ currentObject.dataFile }}</div>
+                                                    <label class="col-sm-12 col-md-3 control-label">{{
+                                                        'ui.model.syncQueue.operation' | i18n }}</label>
+                                                    <div class="p-2 col-sm-12 col-md-9">{{ currentObject.operation }}</div>
+                                                    <label class="col-sm-12 col-md-3 control-label">{{
+                                                        'ui.model.syncQueue.originalQueue' | i18n }}</label>
+                                                    <div class="p-2 col-sm-12 col-md-9">{{ currentObject.originalQueue.name
+                                                        }} ({{ currentObject.originalQueue.pattern }})</div>
+                                                    <label class="col-sm-12 col-md-3 control-label">{{
+                                                        'ui.model.syncQueue.queue' | i18n }}</label>
+                                                    <div class="p-2 col-sm-12 col-md-9">{{ currentObject.queue.name }} ({{
+                                                        currentObject.queue.pattern }})</div>
+                                                    <label class="col-sm-12 col-md-3 control-label">{{
+                                                        'ui.model.syncQueue.resourceType' | i18n }}</label>
+                                                    <div class="p-2 col-sm-12 col-md-9">{{ currentObject.resourceType }}
+                                                    </div>
+                                                    <label class="col-sm-12 col-md-3 control-label">{{
+                                                        'ui.model.syncQueue.retry' | i18n }}</label>
+                                                    <div class="p-2 col-sm-12 col-md-9">{{ currentObject.retry }}</div>
+                                                    <label class="col-3 control-label">{{ 'ui.model.syncQueue.reason' |
+                                                        i18n }}</label>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="p-2 col-12">
+                                                        <pre>{{ currentObject.reason }}</pre>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div role="tabpanel" class="tab-pane p-2" id="itemDetail">
+                                            <div ng-if="currentObject.data.$type == 'Patch'">
+                                                <div class="container-fluid">
+                                                    <div class="row">
+                                                        <label class="control-label col-2">{{ 'ui.sync.patch.applyTo' |
+                                                            i18n }}</label>
+                                                        <div class="col-4">{{ currentObject.data.appliesTo.type |
+                                                            dotNetType }}</div>
+                                                        <label class="control-label col-2">{{ 'ui.sync.patch.version' |
+                                                            i18n }}</label>
+                                                        <div class="col-4">{{ currentObject.data.appliesTo.etag }}</div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-12">
+                                                            <table class="table table-striped">
+                                                                <caption>{{ 'ui.sync.patch.actions' | i18n }}</caption>
+                                                                <thead>
+                                                                    <tr>
+                                                                        <th>{{ 'ui.sync.patch.actions.operation' | i18n
+                                                                            }}</th>
+                                                                        <th>{{ 'ui.sync.patch.actions.path' | i18n }}
+                                                                        </th>
+                                                                        <th>{{ 'ui.sync.patch.actions.value' | i18n }}
+                                                                        </th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    <tr ng-repeat="a in currentObjectdata..change">
+                                                                        <td>{{ a.op }}</td>
+                                                                        <td>{{ a.path }}</td>
+                                                                        <td>{{ a.value | rawValueSummary }}</td>
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div ng-if="currentObject.data.$type != 'Patch'">
+                                                <div class="container-fluid">
+                                                    <div class="row">
+                                                        <div class="col-12">
+                                                            <object-tree object="currentObject.data" depth="3" />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>

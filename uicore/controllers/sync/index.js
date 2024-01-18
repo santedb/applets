@@ -86,7 +86,8 @@ angular.module("santedb").controller("SyncController", ['$scope', '$rootScope', 
     }
 
     $scope.retryAll = retryAll;
-
+    $scope.filter = {};
+    
     // Synchronize all now
     async function syncNow() {
         SanteDB.display.buttonWait("#btnSync", true);
@@ -131,7 +132,12 @@ angular.module("santedb").controller("SyncController", ['$scope', '$rootScope', 
         try {
             $("#currentItemModal").modal({ 'backdrop' : 'static' });
             var currentObject = await SanteDB.resources.queue.getAsync(`${$scope.currentQueue.name}/${id}`);
-            $timeout(() => $scope.currentObject = currentObject);
+
+            var queueObject = $scope.currentQueue.content.resource.find(o=>o.id == id);
+            $timeout(() => {
+                $scope.currentObject = queueObject;
+                $scope.currentObject.data = currentObject;
+            });
         }
         catch(e) {
             $rootScope.errorHandler(e);

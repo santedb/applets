@@ -668,4 +668,22 @@
   <string name="ui.model.dataQualityRule.resources.assert.expression.hint"><![CDATA[Provide the HDSI expressions which will trigger this detected issue to be raised. The evaluation of multiple HDSI expressions is controlled by the selection of <code>all-of, any-of, none-of</code> representing logical <code>and, or, not</code> respectively]]></string>
   <string name="ui.model.dataQualityRule.assertion.add">Add Assertion</string>
 
+  <!-- Synchronization Queue -->
+  <string name="ui.model.syncQueue.status">State</string>
+  <string name="ui.model.syncQueue.id">Sequence ID</string>
+  <string name="ui.model.syncQueue.correlationKey">Correlation Key</string>
+  <string name="ui.model.syncQueue.creationTime">Enqueue Time</string>
+  <string name="ui.model.syncQueue.dataFile">Data Stream ID</string>
+  <string name="ui.model.syncQueue.operation">Operation</string>
+  <string name="ui.model.syncQueue.operation.Sync">Synchronization (download from server)</string>
+  <string name="ui.model.syncQueue.operation.Insert">Create (upload to server)</string>
+  <string name="ui.model.syncQueue.operation.Update">Update (change on server)</string>
+  <string name="ui.model.syncQueue.operation.Patch">Patch (difference)</string>
+  <string name="ui.model.syncQueue.operation.Delete">Delete (remove from server)</string>
+  <string name="ui.model.syncQueue.originalQueue">Original Queue</string>
+  <string name="ui.model.syncQueue.queue">Current Queue</string>
+  <string name="ui.model.syncQueue.resourceType">Resource Type</string>
+  <string name="ui.model.syncQueue.retry">Retry Count</string>
+  <string name="ui.model.syncQueue.reason">Error/Issue</string>
+
 </resources>

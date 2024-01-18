@@ -2275,7 +2275,7 @@ function SanteDBWrapper() {
                     return JSON.parse(result[1]);
                 }
                 else {
-                    exceptionRegex = new RegExp("(\\w*?Exception)\\:(.*)", "gs");
+                    exceptionRegex = new RegExp("(\\w*?Exception)\\s*?\\:(.*)", "gs");
                     var result = exceptionRegex.exec(exceptionString);
                     return new Exception(result[1], result[2]);
                 }
