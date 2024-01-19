@@ -85,9 +85,10 @@ angular.module('santedb').controller('AdminLayoutController', ["$scope", "$rootS
     // Check for new tickles
     var checkTickles = async function () {
         try {
-            var tickles = await SanteDB.resources.tickle.findAsync({});
+            var sourceTickles = await SanteDB.resources.tickle.findAsync({});
+            var tickles = [];
             var hasAlert = false;
-            tickles.forEach(function (t) {
+            sourceTickles.forEach(function (t) {
 
                 if (!t.type) return;
 
@@ -102,6 +103,8 @@ angular.module('santedb').controller('AdminLayoutController', ["$scope", "$rootS
 
                     SanteDB.resources.tickle.deleteAsync(t.id);
                 }
+
+                tickles.push(t);
             });
             $timeout(() => $scope.tickles = tickles);
         }
@@ -133,6 +136,7 @@ angular.module('santedb').controller('AdminLayoutController', ["$scope", "$rootS
             await Promise.all($scope.tickles.map(async function (t) {
                 try {
                     await SanteDB.resources.tickle.deleteAsync(t.id);
+                    checkTickles();
                 }
                 catch(e) {
                     toastr.warning(SanteDB.locale.getString("ui.admin.tickleError"));
