@@ -86,7 +86,7 @@ angular.module("santedb").controller("SyncController", ['$scope', '$rootScope', 
     }
 
     $scope.retryAll = retryAll;
-    $scope.filter = {};
+    $scope.filter = { _count: 10, _includeTotal: true };
     
     // Synchronize all now
     async function syncNow() {
@@ -119,13 +119,20 @@ angular.module("santedb").controller("SyncController", ['$scope', '$rootScope', 
         try {
             $scope.currentQueue = { name: queueName };
             $("#queueModal").modal('show');
-            var queueContents = await SanteDB.resources.queue.getAsync(queueName, null, { _count: 10, _includeTotal: true});
+            var queueContents = await SanteDB.resources.queue.getAsync(queueName, null, $scope.filter);
             $timeout(() => $scope.currentQueue.content = queueContents);
         }
         catch(e) {
             $rootScope.errorHandler(e);
         }
     }
+
+    $scope.$watch("filter._offset", async function(n,o) {
+        if(n !== undefined && $scope.currentQueue && $scope.currentQueue.name) {
+            var queueContents = await SanteDB.resources.queue.getAsync($scope.currentQueue.name, null, $scope.filter);
+            $timeout(() => $scope.currentQueue.content = queueContents);
+        }
+    })
 
     // View object
     $scope.viewObject = async function(id, tag) {

@@ -196,7 +196,7 @@
                                 <p class="m-auto"><i class="fas fa-circle-notch fa-spin"></i> {{ 'ui.wait' | i18n }}</p>
                             </div>
                             <div class="col" ng-if="currentQueue.content"
-                                style="max-height:500px; overflow-y: auto; overflow-x:auto">
+                                style="max-height:80vh; overflow-y: auto; overflow-x:auto">
                                 <table class="table table-striped">
                                     <thead>
                                         <tr>
@@ -267,6 +267,21 @@
                                             </td>
                                         </tr>
                                     </tbody>
+                                    <tfoot>
+                                        <tr>
+                                            <td colspan="3">
+                                                {{ filter._offset + 1 }} .. {{ filter._count + filter._offset }} of {{ currentQueue.content.size }}
+                                            </td>
+                                            <td colspan="{{ currentQueue.name == 'deadletter' ? 4 : 3 }}">
+                                                <div class="btn-group float-right">
+                                                    <button type="button" class="btn btn-sm btn-primary" ng-click="filter._offset = filter._offset - 10" 
+                                                    ng-disabled="filter._offset &lt; 10"><i class="fas fa-fw fa-chevron-left"></i></button>
+                                                    <button type="button" class="btn btn-sm btn-primary" ng-click="filter._offset = filter._offset + 10" 
+                                                    ng-disabled="filter._offset &gt; currentQueue.content.size - 10"><i class="fas fa-fw fa-chevron-right"></i></button>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </tfoot>
                                 </table>
                             </div>
 
