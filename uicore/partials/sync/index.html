@@ -110,7 +110,7 @@
         <div class="row mt-2">
             <div class="col-12">
                 <div class="btn-group float-right">
-                    <button type="button" ng-click="retryAll()" class="btn btn-warning indicator-container"><i
+                    <button type="button" ng-click="retryAll()" id="btnRetryQueue" class="btn btn-warning indicator-container"><i
                             class="fas fa-fw fa-random fa-rotate-270"></i>{{ 'ui.sync.retry' | i18n }}</button>
                     <button type="button" id="btnSync" ng-click="syncNow()" class="btn btn-primary"><i
                             class="fas fa-fw fa-sync-alt"></i> {{ 'ui.sync.now' | i18n }}</button>
@@ -125,7 +125,7 @@
                         <tr>
                             <th>{{ 'ui.sync.log.resource' | i18n }}</th>
                             <th class="d-none d-lg-table-cell">{{ 'ui.sync.log.local' | i18n }}</th>
-                            <th class="d-none d-lg-table-cell">{{ 'ui.sync.log.remote' | i18n }}</th>
+                            <th class="d-none d-lg-table-cell" ng-if="showRemoteCounts">{{ 'ui.sync.log.remote' | i18n }}</th>
                             <th>{{ 'ui.sync.log.date' | i18n }}</th>
                             <th></th>
                         </tr>
@@ -149,7 +149,7 @@
                                 <i class="fas fa-spin fa-circle-notch" ng-if="log.local == undefined"></i>
                                 {{ log.local }}
                             </td>
-                            <td class="d-none d-lg-table-cell">
+                            <td class="d-none d-lg-table-cell" ng-if="showRemoteCounts">
                                 <i class="fas fa-spin fa-circle-notch" ng-if="log.remote == undefined"></i>
                                 {{ log.remote }}
                             </td>
@@ -167,6 +167,9 @@
         <div class="row mt-2">
             <div class="col-12">
                 <div class="float-right btn-group">
+                    <button type="button" ng-click="showRemoteCounts = true" class="btn btn-info">
+                        <i class="fas fa-hashtag fa-fw"></i> {{ 'ui.sync.countRemote' | i18n }}
+                    </button>
                     <button type="button" id="resetAllButton" demand="1.3.6.1.4.1.33349.3.1.5.9.2.10"
                         ng-click="resetSyncLog()" class="btn btn-danger"><i class="fas fa-cloud-meatball"></i> {{
                         'ui.action.resetAll' | i18n }}</button>
@@ -201,11 +204,15 @@
                                     <thead>
                                         <tr>
                                             <th>{{ 'ui.model.syncQueue.id' | i18n }}</th>
-                                            <th class="d-none d-md-table-cell">{{ 'ui.model.syncQueue.resourceType' | i18n }}</th>
-                                            <th class="d-none d-xl-table-cell">{{ 'ui.model.syncQueue.status' | i18n }}</th>
-                                            <th ng-if="currentQueue.name == 'deadletter'">{{ 'ui.model.syncQueue.originalQueue' |
+                                            <th class="d-none d-md-table-cell">{{ 'ui.model.syncQueue.resourceType' |
                                                 i18n }}</th>
-                                            <th class="d-none d-xl-table-cell">{{ 'ui.model.syncQueue.creationTime' | i18n }}
+                                            <th class="d-none d-xl-table-cell">{{ 'ui.model.syncQueue.status' | i18n }}
+                                            </th>
+                                            <th ng-if="currentQueue.name == 'deadletter'">{{
+                                                'ui.model.syncQueue.originalQueue' |
+                                                i18n }}</th>
+                                            <th class="d-none d-xl-table-cell">{{ 'ui.model.syncQueue.creationTime' |
+                                                i18n }}
                                             </th>
                                             <th></th>
                                         </tr>
@@ -270,14 +277,19 @@
                                     <tfoot>
                                         <tr>
                                             <td colspan="3">
-                                                {{ filter._offset + 1 }} .. {{ filter._count + filter._offset }} of {{ currentQueue.content.size }}
+                                                {{ filter._offset + 1 }} .. {{ filter._count + filter._offset }} of {{
+                                                currentQueue.content.size }}
                                             </td>
                                             <td colspan="{{ currentQueue.name == 'deadletter' ? 4 : 3 }}">
                                                 <div class="btn-group float-right">
-                                                    <button type="button" class="btn btn-sm btn-primary" ng-click="filter._offset = filter._offset - 10" 
-                                                    ng-disabled="filter._offset &lt; 10"><i class="fas fa-fw fa-chevron-left"></i></button>
-                                                    <button type="button" class="btn btn-sm btn-primary" ng-click="filter._offset = filter._offset + 10" 
-                                                    ng-disabled="filter._offset &gt; currentQueue.content.size - 10"><i class="fas fa-fw fa-chevron-right"></i></button>
+                                                    <button type="button" class="btn btn-sm btn-primary"
+                                                        ng-click="filter._offset = filter._offset - 10"
+                                                        ng-disabled="filter._offset &lt; 10"><i
+                                                            class="fas fa-fw fa-chevron-left"></i></button>
+                                                    <button type="button" class="btn btn-sm btn-primary"
+                                                        ng-click="filter._offset = filter._offset + 10"
+                                                        ng-disabled="filter._offset &gt; currentQueue.content.size - 10"><i
+                                                            class="fas fa-fw fa-chevron-right"></i></button>
                                                 </div>
                                             </td>
                                         </tr>
@@ -335,7 +347,8 @@
                                                 <div class="row">
                                                     <label class="col-sm-12 col-md-3 control-label">{{
                                                         'ui.model.syncQueue.correlationKey' | i18n }}</label>
-                                                    <div class="p-2 col-sm-12 col-md-9">{{ currentObject.correlationKey }}
+                                                    <div class="p-2 col-sm-12 col-md-9">{{ currentObject.correlationKey
+                                                        }}
                                                     </div>
                                                     <label class="col-sm-12 col-md-3 control-label">{{
                                                         'ui.model.syncQueue.creationTime' | i18n }}</label>
@@ -343,17 +356,21 @@
                                                         extDate }}</div>
                                                     <label class="col-sm-12 col-md-3 control-label">{{
                                                         'ui.model.syncQueue.dataFile' | i18n }}</label>
-                                                    <div class="p-2 col-sm-12 col-md-9">{{ currentObject.dataFile }}</div>
+                                                    <div class="p-2 col-sm-12 col-md-9">{{ currentObject.dataFile }}
+                                                    </div>
                                                     <label class="col-sm-12 col-md-3 control-label">{{
                                                         'ui.model.syncQueue.operation' | i18n }}</label>
-                                                    <div class="p-2 col-sm-12 col-md-9">{{ currentObject.operation }}</div>
+                                                    <div class="p-2 col-sm-12 col-md-9">{{ currentObject.operation }}
+                                                    </div>
                                                     <label class="col-sm-12 col-md-3 control-label">{{
                                                         'ui.model.syncQueue.originalQueue' | i18n }}</label>
-                                                    <div class="p-2 col-sm-12 col-md-9">{{ currentObject.originalQueue.name
+                                                    <div class="p-2 col-sm-12 col-md-9">{{
+                                                        currentObject.originalQueue.name
                                                         }} ({{ currentObject.originalQueue.pattern }})</div>
                                                     <label class="col-sm-12 col-md-3 control-label">{{
                                                         'ui.model.syncQueue.queue' | i18n }}</label>
-                                                    <div class="p-2 col-sm-12 col-md-9">{{ currentObject.queue.name }} ({{
+                                                    <div class="p-2 col-sm-12 col-md-9">{{ currentObject.queue.name }}
+                                                        ({{
                                                         currentObject.queue.pattern }})</div>
                                                     <label class="col-sm-12 col-md-3 control-label">{{
                                                         'ui.model.syncQueue.resourceType' | i18n }}</label>
@@ -427,8 +444,18 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button class="btn btn-secondary" type="button" data-dismiss="modal">
-                            <i class="fa fa-times"></i> {{ 'ui.action.close' | i18n }}</button>
+                        <div class="btn-group">
+                            <button ng-if="currentQueue.name == 'deadletter'" class="btn btn-warning" ng-click="resubmitObject(currentObject.id)"
+                                title="{{ 'ui.sync.queue.resubmit' | i18n }}"><i
+                                    class="fas fa-fw fa-random fa-rotate-270"></i> {{ 'ui.sync.queue.resubmit' | i18n
+                                }}</button>
+
+                            <button ng-if="currentQueue.name == 'deadletter'" class="btn btn-danger" ng-click="ignoreObject(currentObject.id)"
+                                title="{{ 'ui.sync.queue.ignore' | i18n }}"><i class="fas fa-fw  fa-times"></i> {{
+                                'ui.sync.queue.ignore' | i18n }}</button>
+                            <button class="btn btn-secondary" type="button" data-dismiss="modal">
+                                <i class="fa fa-times"></i> {{ 'ui.action.close' | i18n }}</button>
+                        </div>
                     </div>
                 </div>
             </div>

@@ -125,7 +125,12 @@
       <string name="ui.sync.investigate">View Object</string>
       <string name="ui.sync.investigate.summary">Queue Metadata</string>
       <string name="ui.sync.investigate.detail">Queued Object</string>
-      <string name="ui.sync.dead.ignoreConfirm">Are you sure you want to ignore this conflict? YOUR CHANGES WILL NOT BE SENT TO CENTRAL SERVER!</string>
+      <string name="ui.sync.countRemote">Count Remotes</string>
+      <string name="ui.sync.deadletter.requeue.success">Object has been re-submitted for re-processing</string>
+      <string name="ui.sync.deadletter.ignore.confirm">Are you sure you want to ignore this conflict? The data will not be processed.</string>
+      <string name="ui.sync.deadletter.ignore.success">Queue object has been successfully ignored.</string>
+      <string name="ui.sync.deadletter.retryAll.confirm">Are you sure you want to retry all the failed synchronization messages?</string>
+      <string name="ui.sync.deadletter.retryAll.success">All conflicts have been re-submitted for retry</string>
       <string name="ui.sync.resetConfirm">Are you sure you want to reset the synchronization log for this type?</string>
 
       <!-- Common Date -->
