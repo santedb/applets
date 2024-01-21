@@ -20,14 +20,20 @@
  */
 angular.module("santedb").controller("SyncController", ['$scope', '$rootScope', '$interval', '$timeout', function ($scope, $rootScope, $interval, $timeout) {
 
+    const SYNC_JOB_ID = "E511689A-98E1-47CD-8933-6A8CEF8AE014";
+
     /**
      * @summary Refreshes queues
      */
-    async function refreshQueues() {
+    async function refreshState() {
         // Fetch the queues from the server
         try {
             var queue = await SanteDB.resources.queue.findAsync();
-            $timeout(() => $scope.queue = queue);
+            var jobState = await SanteDB.resources.jobInfo.getAsync(SYNC_JOB_ID);
+            $timeout(() => {
+                $scope.queue = queue;
+                $scope.queue.isSynchronizing = jobState.state == "Running";
+            });
         }
         catch (e) {
             $rootScope.errorHandler(e);
@@ -39,25 +45,23 @@ angular.module("santedb").controller("SyncController", ['$scope', '$rootScope', 
      */
     async function getLog() {
         try {
-            $scope.syncLog = await SanteDB.resources.sync.findAsync();
-
-            $scope.syncLog.forEach(function (s) {
+            var syncLog = await SanteDB.resources.sync.findAsync();
+            await Promise.all(syncLog.map(async function (s) {
                 var resource = s.ResourceType.toCamelCase();
+                switch (resource) {
+                    case "relationshipValidationRule":
+                        resource = "validationRule";
+                        break;
+                }
                 if (s.Filter)
                     s.Filter = decodeURI(s.Filter);
-                var filter = remoteFilter = s.Filter;
-
+                var filter = s.Filter;
 
                 if (!SanteDB.resources[resource]) {
                     s.local = "-";
                     s.remote = "-";
                     return;
                 }
-
-                if (!remoteFilter)
-                    remoteFilter = "_upstream=true&_count=0&_includeTotal=true";
-                else
-                    remoteFilter += "&_upstream=true&_count=0&_includeTotal=true";
 
                 if (!filter)
                     filter = "_count=0&_includeTotal=true";
@@ -66,14 +70,28 @@ angular.module("santedb").controller("SyncController", ['$scope', '$rootScope', 
 
                 if (filter.indexOf("_subscription") > -1)
                     s.local = "-";
-                else
-                    SanteDB.resources[resource].findAsync(filter, null, s).then(r => s.local = r.totalResults !== undefined ? r.totalResults : r.size).catch(r => s.local = '?');
+                else {
+                    try {
+                        var localCount = await SanteDB.resources[resource].findAsync(filter, null, null, s);
+                        s.local = localCount.totalResults === undefined ? localCount.size : localCount.totalResults;
+                    }
+                    catch (e) {
+                        s.local = '-';
+                    }
+                }
 
                 if ($scope.showRemoteCounts) {
-                    SanteDB.resources[resource].findAsync(remoteFilter, null, s).then(r => s.remote = r.totalResults !== undefined ? r.totalResults : r.size).catch(r => s.remote = '?');
+                    try {
+                        var remoteCount = await SanteDB.resources[resource].findAsync(filter, null, true, s);
+                        s.remote = remoteCount.totalResults === undefined ? remoteCount.size : remoteCount.totalResults;
+                    }
+                    catch (e) {
+                        s.remote = '-';
+                    }
                 }
-            });
+            }));
 
+            $timeout(() => $scope.syncLog = syncLog);
         }
         catch (e) {
             $rootScope.errorHandler(e);
@@ -86,7 +104,7 @@ angular.module("santedb").controller("SyncController", ['$scope', '$rootScope', 
             try {
                 SanteDB.display.buttonWait("#btnRetryQueue", true);
                 await SanteDB.resources.queue.invokeOperationAsync("deadletter", "retry", { all: true });
-                await refreshQueues();
+                await refreshState();
                 toastr.success(SanteDB.locale.getString("ui.sync.deadletter.retryAll.success"));
             }
             catch (e) {
@@ -104,16 +122,22 @@ angular.module("santedb").controller("SyncController", ['$scope', '$rootScope', 
 
     // Synchronize all now
     async function syncNow() {
-        SanteDB.display.buttonWait("#btnSync", true);
-        await SanteDB.resources.sync.insertAsync({ $type: "Sync" });
-        SanteDB.display.buttonWait("#btnSync", false);
+        try {
+            await SanteDB.resources.jobInfo.invokeOperationAsync(SYNC_JOB_ID, "start", { "mode": "Manual", "push": true });
+            await refreshState();
+        }
+        catch (e) {
+            $rootScope.errorHandler(e);
+        }
     }
 
     $scope.syncNow = syncNow;
 
-    // Refresh queues on 30s intervals
-    refreshQueues().then(() => $scope.$apply());
-    var refreshPromise = $interval(refreshQueues, 10000);
+    // Refresh queues on 10s intervals
+    refreshState();
+    getLog();
+
+    var refreshPromise = $interval(refreshState, 5000);
 
     $scope.$on('$destroy', function () {
         if (refreshPromise)
@@ -150,8 +174,8 @@ angular.module("santedb").controller("SyncController", ['$scope', '$rootScope', 
         }
     });
 
-    $scope.$watch("showRemoteCounts", function(n,o) {
-        if(n) getLog();
+    $scope.$watch("showRemoteCounts", function (n, o) {
+        if (n) getLog();
     });
 
     // View object
@@ -170,7 +194,6 @@ angular.module("santedb").controller("SyncController", ['$scope', '$rootScope', 
             $rootScope.errorHandler(e);
         }
     }
-    getLog().then(() => $scope.$apply());
 
     // Resubmit object to queue
     $scope.resubmitObject = async function (id) {
@@ -207,15 +230,15 @@ angular.module("santedb").controller("SyncController", ['$scope', '$rootScope', 
     }
 
     // Reset the sync log
-    $scope.resetSyncLog = async function (type) {
+    $scope.resetSyncLog = async function (key) {
         if (confirm(SanteDB.locale.getString("ui.sync.resetConfirm"))) {
             try {
                 SanteDB.display.buttonWait("#syncCenterTable button", true);
                 SanteDB.display.buttonWait("#resetAllButton", true);
-                if (type === undefined)
-                    await SanteDB.resources.queue.deleteAsync();
+                if (key === undefined)
+                    await SanteDB.resources.sync.invokeOperationAsync(null, "reset");
                 else {
-                    await SanteDB.resources.queue.deleteAsync(type);
+                    await SanteDB.resources.sync.invokeOperationAsync(key, "reset");
                 }
 
                 await getLog();

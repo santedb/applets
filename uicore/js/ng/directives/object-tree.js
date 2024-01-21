@@ -44,7 +44,7 @@ angular.module('santedb-lib')
             ],
             link: function (scope, element, attrs, ngModel) {
                 scope.depth = scope.depth || 0;
-                if(scope.object.$type) {
+                if(scope.object && scope.object.$type) {
 
                     Object.keys(scope.object).forEach(k => {
                         if(scope.object[k].$type == "Concept") {

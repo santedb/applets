@@ -112,8 +112,8 @@
                 <div class="btn-group float-right">
                     <button type="button" ng-click="retryAll()" id="btnRetryQueue" class="btn btn-warning indicator-container"><i
                             class="fas fa-fw fa-random fa-rotate-270"></i>{{ 'ui.sync.retry' | i18n }}</button>
-                    <button type="button" id="btnSync" ng-click="syncNow()" class="btn btn-primary"><i
-                            class="fas fa-fw fa-sync-alt"></i> {{ 'ui.sync.now' | i18n }}</button>
+                    <button type="button" id="btnSync" ng-disabled="queue.isSynchronizing" ng-click="syncNow()" class="btn btn-primary"><i
+                            ng-class="{ 'fa-spin': queue.isSynchronizing }" class="fas fa-fw fa-sync-alt"></i> {{ 'ui.sync.now' | i18n }}</button>
                 </div>
             </div>
         </div>
@@ -156,7 +156,7 @@
                             <td>{{ log.LastSync | extDate: 'f' }}</td>
                             <td>
                                 <button type="button" demand="1.3.6.1.4.1.33349.3.1.5.9.2.10"
-                                    ng-click="resetSyncLog(log.ResourceType, log.Filter)" class="btn btn-danger"><i
+                                    ng-click="resetSyncLog(log.Key)" class="btn btn-danger"><i
                                         class="fas fa-cloud-meatball"></i> {{ 'ui.action.reset' | i18n }}</button>
                             </td>
                         </tr>
