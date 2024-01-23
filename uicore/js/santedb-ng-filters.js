@@ -216,7 +216,7 @@ angular.module('santedb-lib')
                 return '';
             else 
             {
-                var aqmPattern = /^([A-Za-z0-9\.]*?),\s?([A-Za-z0-9\.]*?),\s?.*$/i;
+                var aqmPattern = /^([A-Za-z0-9\.]*?),\s?([A-Za-z0-9\.]*?),?\s?.*$/i;
                 var aqmMatch = aqmPattern.exec(aqm);
                 if(aqmMatch !== null)
                     aqm = aqmMatch[1]; // Get full name
