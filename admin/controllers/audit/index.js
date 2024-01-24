@@ -66,11 +66,6 @@ angular.module('santedb').controller('AuditIndexController', ["$scope", "$rootSc
         return retVal;
     }
 
-    // Transition
-    $scope.navigate = function (state, params) {
-        $scope.navPush = { state: state, params: params };
-    }
-
     // Render the event column
     $scope.renderEvent = function (audit) {
 

@@ -15,7 +15,7 @@
  * License for the specific language governing permissions and limitations under 
  * the License.
  */
-angular.module('santedb').controller('AuditNetworkController', ["$scope", "$rootScope", "$state", "$templateCache", "$stateParams", "$compile", '$timeout', function ($scope, $rootScope, $state, $templateCache, $stateParams, $compile, $timeout) {
+angular.module('santedb').controller('AuditNetworkController', ["$scope", function ($scope) {
 
     // Render the action column
     $scope.renderAction = function (audit) {

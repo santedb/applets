@@ -15,7 +15,7 @@
  * License for the specific language governing permissions and limitations under 
  * the License.
  */
-angular.module('santedb').controller('AuditEventInformationController', ["$scope", "$rootScope", "$state", "$templateCache", "$stateParams", "$compile", '$timeout', function ($scope, $rootScope, $state, $templateCache, $stateParams, $compile, $timeout) {
+angular.module('santedb').controller('AuditEventInformationController', ["$scope", function ($scope) {
 
     // Render the outcome
     $scope.renderOutcome = function (audit) {

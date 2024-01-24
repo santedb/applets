@@ -15,7 +15,7 @@
  * License for the specific language governing permissions and limitations under 
  * the License.
  */
-angular.module('santedb').controller('ViewAuditController', ["$scope", "$rootScope", "$state", "$templateCache", "$stateParams", "$compile", '$timeout', function ($scope, $rootScope, $state, $templateCache, $stateParams, $compile, $timeout) {
+angular.module('santedb').controller('ViewAuditController', ["$scope", "$rootScope", "$state", "$stateParams", function ($scope, $rootScope, $state, $stateParams) {
 
     if ($stateParams.id) {
         SanteDB.resources.audit.getAsync($stateParams.id)
@@ -55,11 +55,6 @@ angular.module('santedb').controller('ViewAuditController', ["$scope", "$rootSco
         }
     };
     
-    // Transition
-    $scope.navigate = function (state, params) {
-        $scope.navPush = { state: state, params: params };
-    }
-
     // Render the event column
     $scope.renderEvent = function (audit) {
 
@@ -112,10 +107,6 @@ angular.module('santedb').controller('ViewAuditController', ["$scope", "$rootSco
         }
 
         return `<span class='badge ${color}'><i class='fas ${icon}'></i> ${audit.event}</span> ${audit.type.display || audit.type.code}`
-    }
-
-    $scope.renderType = function (audit) {
-        return "todo";
     }
 
     $scope.navigateObject = function(type, id) {

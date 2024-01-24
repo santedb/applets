@@ -26,8 +26,7 @@ angular.module('santedb').controller('JobAdminController', ["$scope", "$rootScop
         if (job.schedule) {
             return "<ul class='p-0 m-0 list-unstyled'>" + job.schedule.map(o => {
                 if (o.type == "Scheduled") {
-                    return `<li><i class='fas fa-calendar'></i> ${o.repeat.map(d => d.substring(0, 2)).join(",")} @ ${moment(o.start).format("HH:mm")} starting ${moment(o.start).format("YYYY-MM-DD")}</li>`;
-
+                    return `<li><i class='fas fa-calendar'></i> ${o.repeat.map(d => d.substring(0, 2)).join(",")} <br/>@ ${moment(o.start).format("HH:mm")}<br/>starting ${moment(o.start).format("YYYY-MM-DD")}</li>`;
                 }
                 else {
                     return `<li><i class='fas fa-clock'></i> repeat ${moment.duration(o.interval).humanize(true)}</li>`;
@@ -43,7 +42,7 @@ angular.module('santedb').controller('JobAdminController', ["$scope", "$rootScop
                 return `<span class="badge badge-success badge-pill"><i class="fas fa-check"></i> ${SanteDB.locale.getString("ui.state.complete")}</span>`;
             case "Running":
                 if (job.status) {
-                    return `<div  style="min-width:20vw"><span class="badge badge-primary badge-pill"><i class="fas fa-play"></i> ${SanteDB.locale.getString("ui.state.running")} (${Math.round(job.progress * 100)}%)</span> - ${job.status}</div>`;
+                    return `<span class="badge badge-primary badge-pill"><i class="fas fa-play"></i> ${SanteDB.locale.getString("ui.state.running")} (${Math.round(job.progress * 100)}%)</span><br/><small>${job.status}</small>`;
                 }
                 else {
                     return `<span class="badge badge-primary badge-pill"><i class="fas fa-play"></i> ${SanteDB.locale.getString("ui.state.running")}</span>`;
@@ -105,7 +104,6 @@ angular.module('santedb').controller('JobAdminController', ["$scope", "$rootScop
         }
     }
 
-
     $scope.saveJob = async function(form) {
 
         if(!form.$valid) { return; }
@@ -150,6 +148,7 @@ angular.module('santedb').controller('JobAdminController', ["$scope", "$rootScop
         }
 
     }
+
     // Render run
     $scope.runJob = async function (id, index, jobParameters) {
 

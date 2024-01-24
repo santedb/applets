@@ -123,7 +123,7 @@ angular.module("santedb").controller("SyncController", ['$scope', '$rootScope', 
     // Synchronize all now
     async function syncNow() {
         try {
-            await SanteDB.resources.jobInfo.invokeOperationAsync(SYNC_JOB_ID, "start", { "mode": "Manual", "push": true });
+            await SanteDB.resources.jobInfo.invokeOperationAsync(SYNC_JOB_ID, "start", { "mode": "All", "push": true });
             await refreshState();
         }
         catch (e) {

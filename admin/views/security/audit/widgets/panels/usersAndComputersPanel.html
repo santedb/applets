@@ -1,5 +1,4 @@
-<div xmlns="http://www.w3.org/1999/xhtml" xmlns:sdb="http://santedb.org/applet" 
-    oc-lazy-load="{ name: 'AuditUserController', files: ['/org.santedb.admin/controllers/audit/widgets/users.js'] }" >
+<div xmlns="http://www.w3.org/1999/xhtml" xmlns:sdb="http://santedb.org/applet" >
     <sdb:widget order="15" name="org.santedb.widget.admin.panel.audit.usersAndComputers" headerClass="bl-light"
         size="Large" type="Panel" context="org.santedb.securityAudit.admin">
         <sdb:icon>fas fa-id-badge</sdb:icon>
@@ -12,7 +11,7 @@
         </div>
     </div>
 
-    <div ng-if="scopedObject" ng-controller="AuditUserController">
+    <div ng-if="scopedObject">
         <table class="table table-striped">
             <thead>
                 <tr>
@@ -25,10 +24,10 @@
             <tbody>
                 <tr ng-repeat="a in scopedObject.audit.actor">
                     <td>
-                        <button class="btn btn-link p-0" ng-if="a.isReq"
-                            ng-click="$parent.navigate('santedb-admin.security.users.index',{ q: a.uname })">{{ a.uname }}</button>
-                        <button class="btn btn-link p-0" ng-if="!a.isReq"
-                            ng-click="$parent.navigate('santedb-admin.security.devices.index',{ q: a.uname })">{{ a.uname }}</button>
+                        <a  class="btn btn-link p-0" ng-if="a.isReq"
+                            ui-sref="santedb-admin.security.users.index({ q: a.uname })">{{ a.uname }}</a>
+                        <a class="btn btn-link p-0" ng-if="!a.isReq"
+                            ng-sref="santedb-admin.security.devices.index({ q: a.uname })">{{ a.uname }}</a>
                     </td>
                     <td>
                         {{a.apId}}
