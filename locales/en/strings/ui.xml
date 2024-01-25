@@ -132,6 +132,8 @@
       <string name="ui.sync.deadletter.retryAll.confirm">Are you sure you want to retry all the failed synchronization messages?</string>
       <string name="ui.sync.deadletter.retryAll.success">All conflicts have been re-submitted for retry</string>
       <string name="ui.sync.resetConfirm">Are you sure you want to reset the synchronization log for this type?</string>
+      <string name="ui.sync.onStart.begin">Synchronization has started, access to data may be slow and/or adversely impacted during this process</string>
+      <string name="ui.sync.onStart.complete">Synchronization has completed - data services are restored</string>
 
       <!-- Common Date -->
       <string name="ui.date.day.monday">Monday</string>

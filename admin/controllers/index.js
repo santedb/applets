@@ -21,6 +21,7 @@
  */
 angular.module('santedb').controller('AdminLayoutController', ["$scope", "$rootScope", "$state", "$templateCache", "$interval", "$timeout", function ($scope, $rootScope, $state, $templateCache, $interval, $timeout) {
 
+    var _lastTickle = null;
     initializeSideNavTriggers();
 
     // Shows the elevation dialog, elevates and then refreshes the state
@@ -105,7 +106,18 @@ angular.module('santedb').controller('AdminLayoutController', ["$scope", "$rootS
                 }
 
                 tickles.push(t);
+
             });
+            
+            var lastTickle = tickles.length > 0 ? tickles[tickles.length - 1].id : null;
+            if (!lastTickle) {
+                _lastTickle = null;
+            }
+            else if(lastTickle != _lastTickle) {
+                _lastTickle = lastTickle;
+                toastr.info(SanteDB.locale.getString("ui.emr.alerts.new"), null, { preventDuplicates: true });
+            }
+
             $timeout(() => $scope.tickles = tickles);
         }
         catch (e) {
