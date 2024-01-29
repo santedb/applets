@@ -180,6 +180,8 @@
       <string name="ui.action.delete">Delete</string>
       <string name="ui.action.nullify">Nullify</string>
       <string name="ui.action.upload">Upload</string>
+      <string name="ui.action.backup">Backup Now</string>
+      <string name="ui.action.restore">Restore</string>
       <string name="ui.action.nullify.confirm">Are you sure you want to nullify this object? This cannot be undone!</string>
       <string name="ui.action.delete.confirm">Are you sure you want to delete this object?</string>
       <string name="ui.action.undelete">Un-Delete</string>
@@ -267,6 +269,7 @@
       <string name="ui.table.search.field.sub">Search by subject</string>
       <string name="ui.table.search.field.mnemonic">Search by mnemonic</string>
       <string name="ui.table.search.field.authority">Search by domain</string>
+      <string name="ui.table.search.field.label">Search by label</string>
       <string name="ui.table.search.field.description">Search by description</string>
       <!-- Common --> 
       <string name="ui.common.interop.hl7v2">HL7v2</string>
@@ -623,4 +626,8 @@
 
       <!-- Job Execution -->
       <string name="ui.job.run">Running job {jobName}</string>
+
+      <!-- Backup -->
+      <string name="ui.app.backup.complete">System backup is completed successfully</string>
+      <string name="ui.app.backup.error">There was an error backing up system files</string>
 </resources>

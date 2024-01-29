@@ -3428,6 +3428,17 @@ function SanteDBWrapper() {
             api: _ami
         });
 
+        /** 
+         * @type {ResourceWrapper}
+         * @memberOf SanteDBWrapper.resources
+         * @summary Wrapper for backup media
+         */
+        this.backup = new ResourceWrapper({
+            resource: "Backup",
+            accept: "application/json",
+            api: _ami
+        });
+
     };
 
     // HACK: Wrapper pointer facility = place

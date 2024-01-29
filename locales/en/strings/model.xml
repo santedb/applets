@@ -686,4 +686,22 @@
   <string name="ui.model.syncQueue.retry">Retry Count</string>
   <string name="ui.model.syncQueue.reason">Error/Issue</string>
 
+  <!-- Backups -->
+  <string name="ui.model.backup.label">Label/ID</string>
+  <string name="ui.model.backup.timestamp">Timestamp</string>
+  <string name="ui.model.backup.size">Size</string>
+  <string name="ui.model.backup.createdBy">Created By</string>
+  <string name="ui.model.backup.media">Location</string>
+  <string name="ui.model.backup.media.hint"><![CDATA[ 
+    <p>The backup location where this backup resides:</p>
+    <ul><li><c>Private</c> - Private storage (usually within the app's own data storage)</li>
+      <li><c>Public</c> - A public location on the primary disk of this device</li>
+      <li><c>External Public</c> - A public location on the first removable media device (usually the SD card slot)</li>
+    </ul>
+    ]]></string>
+  <string name="ui.model.backup.encrypted">Encrypted</string>
+  <string name="ui.model.backup.encrypt">Encrypt this backup</string>
+  <string name="ui.model.backup.encrypt.hint">Select this option if you would like to encrypt this backup file</string>
+  <string name="ui.model.backup.password">Passphrase</string>
+  <string name="ui.model.backup.password.hint">The passphrase for the backup. This passphrase will need to be entered to restore the backup</string>
 </resources>
