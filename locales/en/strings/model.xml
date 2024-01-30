@@ -704,4 +704,6 @@
   <string name="ui.model.backup.encrypt.hint">Select this option if you would like to encrypt this backup file</string>
   <string name="ui.model.backup.password">Passphrase</string>
   <string name="ui.model.backup.password.hint">The passphrase for the backup. This passphrase will need to be entered to restore the backup</string>
+  <string name="ui.model.backup.asset.name">Name</string>
+  <string name="ui.model.backup.asset.classId">Classification/Owner</string>
 </resources>
