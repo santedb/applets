@@ -668,6 +668,11 @@
   <string name="ui.model.dataQualityRule.resources.assert.expression.hint"><![CDATA[Provide the HDSI expressions which will trigger this detected issue to be raised. The evaluation of multiple HDSI expressions is controlled by the selection of <code>all-of, any-of, none-of</code> representing logical <code>and, or, not</code> respectively]]></string>
   <string name="ui.model.dataQualityRule.assertion.add">Add Assertion</string>
 
+  <!-- Data Quality -->
+  <string name="ui.model.dataQuality.id">ID</string>
+  <string name="ui.model.dataQuality.name">Name</string>
+  <string name="ui.model.dataQuality.enabled">Status</string>
+  <string name="ui.model.dataQuality.resources">Applies To</string>
   <!-- Synchronization Queue -->
   <string name="ui.model.syncQueue.status">State</string>
   <string name="ui.model.syncQueue.id">Sequence ID</string>
