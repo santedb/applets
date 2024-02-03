@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <!--
- - Copyright 2021-2023 SanteSuite Contributors (See NOTICE.md for full copyright notices)
+ - Copyright 2021-2024 SanteSuite Contributors (See NOTICE.md for full copyright notices)
  - Copyright (C) 2019 - 2021, Fyfe Software Inc. and the SanteSuite Contributors
  - Portions Copyright (C) 2015-2018 Mohawk College of Applied Arts and Technology
  - 
@@ -17,7 +17,7 @@
  - the License.
  - 
  - User: fyfej
- - Date: 2023-3-10
+ - Date: 2023-5-19
  -->
 <xs:schema xmlns:tns="http://santedb.org/configuration" elementFormDefault="qualified" targetNamespace="http://santedb.org/configuration" xmlns:xs="http://www.w3.org/2001/XMLSchema">
   <xs:complexType name="ApplicationServiceContextConfigurationSection">
