@@ -35,12 +35,18 @@ angular.module('santedb').controller('AdminLayoutController', ["$scope", "$rootS
     }
 
     // abandon session
-    $scope.abandonSession = function () {
-        SanteDB.authentication.logoutAsync().then(function () {
+    $scope.abandonSession = async function () {
+        try {
+            await SanteDB.authentication.logoutAsync();
             $("#logoutModal").modal('hide');
-            $templateCache.removeAll();
-            $state.go('login');
-        });
+            $timeout(() => {
+                $templateCache.removeAll();
+                $state.go('login');
+            });
+        }
+        catch (e) {
+            $rootScope.errorHandler(e);
+        }
     }
 
     // Load menus for the current user

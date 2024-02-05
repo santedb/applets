@@ -160,7 +160,7 @@ var santedbApp = angular.module('santedb', ['ngSanitize', 'ui.router', 'oc.lazyL
 
 
         // The online interval to check online state
-        var ivlFn = function () {
+        var ivlFn = async function () {
             $rootScope.system = $rootScope.system || {};
 
 
@@ -191,34 +191,36 @@ var santedbApp = angular.module('santedb', ['ngSanitize', 'ui.router', 'oc.lazyL
 
                 if (expiresIn < 0) // already expired
                 {
-                    var refreshFn = () => {
-                        $templateCache.removeAll();
-                        $rootScope.session = null;
-                        delete ($rootScope.session);
-                        toastr.clear();
-                        $state.reload();
-                    };
+                    var serverSession = null;
+                    try {
+                        serverSession = await SanteDB.authentication.getSessionInfoAsync(true);
+                    }
+                    catch(e) {
+                        console.info(e);
+                    }
 
-                    SanteDB.authentication.getSessionInfoAsync(true)
-                        .then(s => {
-                            if (s == null) {
-                                refreshFn();
-                            }
-                        }).catch(refreshFn)
+                    if(serverSession == null) {
+                        $timeout(() => {
+                            $templateCache.removeAll();
+                            $rootScope.session = null;
+                            delete($rootScope.session);
+                            toastr.clear();
+                            $state.reload();
+                        });
+                    }
 
                 }
                 else if (!_extendToast) {
                     _extendToast = toastr.warning(messageStr, null, {
                         closeButton: false,
                         preventDuplicates: true,
-                        onclick: function () {
-                            SanteDB.authentication.refreshLoginAsync().then(function (s) {
-                                $timeout(_ => {
-                                    $rootScope.session = s;
-                                    _extendToast = null;
-                                    toastr.clear();
-                                });
-                            }).catch($rootScope.errorHandler);
+                        onclick: async function () {
+                            try {
+                                var session = await SanteDB.authentication.refreshLoginAsync();
+                                _extendToast = null;
+                                toastr.clear();
+                                $timeout(() => $rootScope.session = session);
+                            } catch(e) { $rootScope.errorHandler(e) };
                         },
                         positionClass: "toast-bottom-center",
                         showDuration: "0",

@@ -629,5 +629,5 @@
 
       <!-- Backup -->
       <string name="ui.app.backup.complete">System backup is completed successfully</string>
-      <string name="ui.app.backup.error">There was an error backing up system files</string>
+      <string name="ui.app.backup.error">There was an error backing up system files :" {error}</string>
 </resources>

@@ -130,7 +130,7 @@ angular.module('santedb-lib')
                                         retVal += `<i class="${b.icon || 'fas fas-eye-open'}"></i>&nbsp;`;
 
                                         if (b.name)
-                                            retVal += `<span class="d-none d-xl-inline">${SanteDB.locale.getString(b.label ? scope.i18nPrefix + b.label : 'ui.action.' + b.name)}</span>`;
+                                            retVal += `<span class="d-none d-xl-inline">${SanteDB.locale.getString(b.label ? b.label : 'ui.action.' + b.name)}</span>`;
                                         retVal += "</a>";
                                     }
                                 });
