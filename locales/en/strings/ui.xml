@@ -335,6 +335,7 @@
       <string name="ui.subscription.patient.liveInCounty">Patients who live in my county</string>
       <string name="ui.subscription.codeSystem.liveInState">Patients who live in my state</string>
       <string name="ui.subscription.referenceTerm.all">All Reference Terms (recommended)</string>
+      <string name="ui.subscription.places">All Places</string>
       <string name="ui.subscription.place.county">All places in my county/district</string>
       <string name="ui.subscription.place.outOfState">All places out of my state/province (background after start)</string>
       <string name="ui.subscription.place.outOfCounty">All places out of my county/district (background after start)</string>
@@ -650,4 +651,7 @@
       <!-- Backup -->
       <string name="ui.app.backup.complete">System backup is completed successfully</string>
       <string name="ui.app.backup.error">There was an error backing up system files :" {error}</string>
+
+      <!-- Resubmit Deadletter on start -->
+      <string name="ui.start.deadLetter.resubmit">There are data objects downloaded that could not be processed, would you like to retry them?</string>
 </resources>

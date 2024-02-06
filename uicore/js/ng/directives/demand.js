@@ -50,7 +50,9 @@ angular.module('santedb-lib')
     return {
         restrict: 'A',
         link: function (scope, element, attrs, ngModel) {
-            setElementState(element, attrs.demand);
+            if(attrs.demand && attrs.demand != "") {
+                setElementState(element, attrs.demand);
+            }
         }
     }
 }]);

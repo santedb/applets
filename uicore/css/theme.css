@@ -265,3 +265,18 @@ svg.mermaidNoScale {
 }
 
 .fa-rotate-45{-webkit-transform:rotate(45deg);transform:rotate(45deg)}
+
+.entity-list-waiter {
+    max-width: 200px;
+    width: 200px;
+    margin: auto;
+    text-align: center;
+    border: solid 2px var(--gray);
+    padding: 1rem;
+    border-radius: calc(.25rem - 1px);
+    position: absolute;
+    top: calc(50% - 3rem);
+    left: calc(50% - 200px);
+    z-index: 100;
+    background: var(--white);
+}

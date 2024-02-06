@@ -19,7 +19,6 @@
  * Date: 2023-5-19
  */
 
-// ^(\w+)((?:\[\w+\|?[\w\|]+?)\]|(?:@\w+)|\??\.?)(.*)$
 // Read capture group 
 // Last capture group is the next statement to be processed
 
