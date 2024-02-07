@@ -58,10 +58,10 @@
     <!-- The following is used as a template for each of the list items 
         xg-* is replaced with ng-* when injecting the HTML into the template-->
     <div class="d-none" id="listTemplate">
-        <div class="card {{itemClass}} my-0" 
+        <div class="card $itemClass my-0" 
             xg-class="::{ 'col-sm-12 col-md-6 col-xl-4' : display != 'list', 'col-12' : display == 'list' }"
             xg-repeat="item in results.resource">
-            _template
+            $template
             <div class="card-footer" xg-if="itemActions">
                 <div class="btn-group float-right">
                     <button xg-repeat="action in itemActions track by $index" 

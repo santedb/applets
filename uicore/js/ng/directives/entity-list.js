@@ -72,7 +72,6 @@ angular.module('santedb-lib')
 
         var _type = undefined,
             _noActions = undefined,
-            _upstream = undefined,
             _keyProperty = undefined,
             _orderBy = undefined,
             _itemTemplate = undefined,
@@ -81,6 +80,8 @@ angular.module('santedb-lib')
             _scid = undefined,
             _queryId = undefined,
             _id = undefined,
+            _operation = undefined,
+            _subResource = undefined,
             _throttleGuard = 0;
 
         async function refreshItems(scope, filter) {
@@ -103,7 +104,15 @@ angular.module('santedb-lib')
                     query._orderBy = _orderBy;
                 }
 
-                var results = await _sourceApi.findAsync(query);
+                var results = null;
+                if(_operation) {
+                    results = await _sourceApi.invokeOperationAsync(scope.operationScope, _operation, query, scope.upstream == true);
+                } else if(_subResource) {
+                    results = await _sourceApi.findAssociatedAsync(scope.subResourceScope, _subResource, query, full, scope.upstream == true);
+                }
+                else {
+                    results = await _sourceApi.findAsync(query, 'full', scope.upstream == true);
+                }
 
                 if (Array.isArray(scope.itemSupplement)) {
                     results.resource = await Promise.all(results.resource.map(async res => {
@@ -150,12 +159,8 @@ angular.module('santedb-lib')
                 actions: '<',
                 itemActions: '<',
                 operationScope: '=',
-                operation: '<',
                 subResourceScope: '=',
-                subResource: '<',
-                itemSupplement: '<',
-                itemClass: '<',
-                display: '<'
+                itemSupplement: '<'
             },
             restrict: 'E',
             replace: true,
@@ -198,6 +203,11 @@ angular.module('santedb-lib')
                     }
                 });
 
+                $scope.$watch("upstream", function(n,o) {
+                    if(n && o && n != o) {
+                        refreshItems($scope);
+                    }
+                })
                 $scope.filterAction = function (action, record) {
                     if (action.when) {
                         return $scope.$eval(action.when, { r: record });
@@ -211,15 +221,16 @@ angular.module('santedb-lib')
             link: function (scope, element, attrs) {
                 _type = attrs.type;
                 _noActions = attrs.noActions;
-                _upstream = attrs._upstream == 'true';
-                scope.display = scope.display || 'list';
-                _keyProperty = attrs.keyProperty;
+                scope.display = attrs.display || 'list';
+                _keyProperty = attrs.keyProperty || 'id';
                 _orderBy = attrs.orderBy || 'creationTime:asc';
+                _operaation = attrs.operation;
+                _subResource = attrs.subResource;
                 _id = attrs.id;
                 _scid = scope.scid = SanteDB.application.newGuid().substring(0, 8);
                 _sourceApi = SanteDB.resources[_type.toCamelCase()];
                 _itemTemplate = $("div[ng-transclude]", element).html();
-                _listTemplate = $("#listTemplate", element).html().replaceAll(" xg-", " ng-").replace("_template", _itemTemplate);
+                _listTemplate = $("#listTemplate", element).html().replaceAll(" xg-", " ng-").replace("$template", _itemTemplate).replace("$itemClass", attrs.itemClass);
                 $("#listContainer", element).html(_listTemplate);
                 $compile(angular.element("#listContainer"))(scope);
                 console.info(_listTemplate);
