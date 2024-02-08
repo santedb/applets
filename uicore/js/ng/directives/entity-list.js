@@ -105,9 +105,9 @@ angular.module('santedb-lib')
                 }
 
                 var results = null;
-                if(_operation) {
+                if (_operation) {
                     results = await _sourceApi.invokeOperationAsync(scope.operationScope, _operation, query, scope.upstream == true);
-                } else if(_subResource) {
+                } else if (_subResource) {
                     results = await _sourceApi.findAssociatedAsync(scope.subResourceScope, _subResource, query, full, scope.upstream == true);
                 }
                 else {
@@ -166,7 +166,7 @@ angular.module('santedb-lib')
             replace: true,
             transclude: true,
             templateUrl: '/org.santedb.uicore/directives/entityList.html',
-            controller: ['$scope', function ($scope) {
+            controller: ['$scope', "$state", function ($scope, $state) {
 
                 $scope.$watch("queryControl.filter", function (n, o) {
                     if (n != o) {
@@ -203,11 +203,12 @@ angular.module('santedb-lib')
                     }
                 });
 
-                $scope.$watch("upstream", function(n,o) {
-                    if(n && o && n != o) {
+                $scope.$watch("upstream", function (n, o) {
+                    if (n && o && n != o) {
                         refreshItems($scope);
                     }
-                })
+                });
+
                 $scope.filterAction = function (action, record) {
                     if (action.when) {
                         return $scope.$eval(action.when, { r: record });
@@ -215,13 +216,41 @@ angular.module('santedb-lib')
                     else {
                         return true;
                     }
+                };
+
+                $scope.doAction = function (action, record) {
+                    if (action.sref) {
+                        if (record) {
+                            $state.go(action.sref, { id: record[_keyProperty] });
+                        }
+                        else {
+                            $state.go(action.sref);
+                        }
+                    }
+                    else if (typeof (action.action) === "string") {
+                        if (record) {
+                            $scope.$parent[action.action](record[_keyProperty], record);
+                        }
+                        else {
+                            $scope.$parent[action.action]();
+                        }
+                    }
+                    else if (action.action) {
+                        if (record) {
+                            action.action(record[_keyProperty], record);
+                        }
+                        else {
+                            action.action();
+                        }
+                    }
                 }
 
             }],
             link: function (scope, element, attrs) {
                 _type = attrs.type;
                 _noActions = attrs.noActions;
-                scope.display = attrs.display || 'list';
+                scope._display = attrs.display || 'list';
+
                 _keyProperty = attrs.keyProperty || 'id';
                 _orderBy = attrs.orderBy || 'creationTime:asc';
                 _operaation = attrs.operation;
@@ -236,10 +265,20 @@ angular.module('santedb-lib')
                 console.info(_listTemplate);
                 $(".entity-list-waiter", element).attr("id", `${_id}_${_scid}`);
 
+                if (attrs.canChangeView == "true") {
+                    $(".viewChange", element).removeClass("d-none");
+                }
+                if (attrs.canSize == "true") {
+                    $(".resultSize", element).removeClass("d-none");
+                }
+                if(attrs.canFilter == "true") {
+                    $(".filter", element).removeClass("d-none");
+                }
+
                 scope.queryControl = {
                     currentPage: 1,
                     filter: null,
-                    resultsPerPage: scope.display == 'list' ? 5 : 9
+                    resultsPerPage: scope.display == 'list' ? 5 : 9,
                 }
 
                 if (attrs.stateless !== "true") {

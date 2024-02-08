@@ -2,28 +2,56 @@
     <div class="entity-list-waiter d-none">
         <i class="fas fa-fw fa-circle-notch fa-spin"></i> {{ 'ui.wait' | i18n }}
     </div>
-    <div class="row" ng-if="actions || searchField">
-        <div class="col-6" ng-if="actions">
-            <button ng-repeat="action in actions track by $index"
-                class="btn"
-                ng-class="action.className"
-                ng-click="doAction(action)"
-                demand="{{action.demand}}"
-            >   
-                <i class="fas fa-fw" ng-class="action.icon"></i>
-                {{ action.label || 'ui.action.' + action.name | i18n }}
-            </button>
+    <div class="row">
+        <div class="col-6">
+            <div class="d-flex flex-row">
+                <div class="m-1">
+                    <div class="btn-group" ng-if="actions">
+                        <button ng-repeat="action in actions track by $index" class="btn" ng-class="action.className"
+                            ng-click="doAction(action)" demand="{{action.demand}}">
+                            <i class="fas fa-fw" ng-class="action.icon"></i>
+                            {{ action.label || 'ui.action.' + action.name | i18n }}
+                        </button>
+                    </div>
+                </div>
+                <div class="m-1 resultSize d-none">
+                    <div class="d-flex flex-row">
+                    <span class="mt-1 px-2">{{ 'ui.common.show' | i18n }}</span>
+                    <select class="form-control d-inline" style="min-width:2em;"
+                        ng-model="queryControl.resultsPerPage" name="scresultsize">
+                        <option value="9" ng-if="_display == 'grid'">9</option>
+                        <option value="18" ng-if="_display == 'grid'">18</option>
+                        <option value="27" ng-if="_display == 'grid'">27</option>
+                        <option value="5" ng-if="_display == 'list'">5</option>
+                        <option value="10" ng-if="_display == 'list'">10</option>
+                        <option value="15" ng-if="_display == 'list'">15</option>
+                    </select>
+                    </div>
+                </div>
+                <div class="m-1 viewChange d-none">
+                    <div class="btn-group">
+                        <button class="btn btn-info" ng-class="{ 'active' : _display == 'list'}"
+                            ng-click="_display = 'list'; queryControl.resultsPerPage = 5"><i
+                                class="fas fa-fw fa-th-list"></i></button>
+                        <button class="btn btn-info" ng-class="{ 'active' : _display == 'grid'}"
+                            ng-click="_display = 'grid'; queryControl.resultsPerPage = 9"><i
+                                class="fas fa-fw fa-th"></i></button>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div class="col-6" ng-if="searchField" ng-class="{'offset-6' : !actions}">
-            <input 
-                class="form-control w-50 d-inline float-right" 
-                placeholder="{{ 'ui.table.search.field.' + searchField | i18n }}" 
-                ng-model="queryControl.filter" />
-            <div class="w-25 text-right my-1 mt-2 mx-2 float-right">{{ 'ui.action.search' | i18n }}:</div>
+        <div class="col-6 filter d-none">
+            <div class="float-right w-50">
+                {{ 'ui.action.search' | i18n }}:
+                <input class="form-control w-75 d-inline"
+                    placeholder="{{ 'ui.table.search.field.' + searchField | i18n }}" ng-model="queryControl.filter" />
+            </div>
         </div>
     </div>
     <div class="row">
-        <div class="col"><hr/></div>
+        <div class="col">
+            <hr />
+        </div>
     </div>
     <div id="listContainer" class="row">
 
@@ -34,44 +62,59 @@
         </div>
     </div>
     <div class="row">
-        <div class="col"><hr/></div>
+        <div class="col">
+            <hr />
+        </div>
     </div>
     <div class="row">
         <div class="col-6">
-            {{ results.offset &gt; 0 ? results.offset + 1 : 0 }} .. {{ results.offset + results.resource.length }} of {{ results.size || results.totalResults }}
+            {{ results.totalResults &gt; 0 ? results.offset + 1 : 0 }} .. {{ results.offset + results.resource.length }}
+            of {{ results.size || results.totalResults }}
         </div>
         <div class="col-6">
             <nav class="float-right">
                 <ul class="pagination">
-                  <li class="page-item"><button class="page-link" ng-click="queryControl.currentPage = queryControl.currentPage - 1" ng-disabled="queryControl.currentPage == 1">{{ 'ui.action.prev' | i18n }}</button></li>
-                  <li class="page-item" ng-if="queryControl._maxPages &gt; 0" ng-class="{'active' : queryControl.currentPage == 1}"><button class="page-link" ng-click="queryControl.currentPage = 1">1</button></li>
-                  <li class="page-item" ng-if="queryControl.currentPage &gt; 3"><span class="page-link">...</span></li>
-                  <li class="page-item" ng-repeat="n in queryControl._paginationVals" ng-class="{'active' : queryControl.currentPage == n}"><button class="page-link" ng-click="queryControl.currentPage = n">{{n}}</button></li>
-                  <li class="page-item" ng-if="queryControl.currentPage &lt; queryControl._maxPages - 2"><span class="page-link">...</span></li>
-                  <li class="page-item" ng-if="queryControl._maxPages &gt; 1" ng-class="{'active' : queryControl.currentPage == queryControl._maxPages }"><button class="page-link" ng-click="queryControl.currentPage = queryControl._maxPages ">{{queryControl._maxPages }}</button></li>
-                  <li class="page-item"><button class="page-link" ng-click="queryControl.currentPage = queryControl.currentPage + 1" ng-disabled="queryControl.currentPage == queryControl._maxPages">{{ 'ui.action.next' | i18n }}</button></li>
+                    <li class="page-item"><button class="page-link"
+                            ng-click="queryControl.currentPage = queryControl.currentPage - 1"
+                            ng-disabled="queryControl.currentPage == 1">{{ 'ui.action.prev' | i18n }}</button></li>
+                    <li class="page-item" ng-if="queryControl._maxPages &gt; 0"
+                        ng-class="{'active' : queryControl.currentPage == 1}"><button class="page-link"
+                            ng-click="queryControl.currentPage = 1">1</button></li>
+                    <li class="page-item" ng-if="queryControl.currentPage &gt; 3"><span class="page-link">...</span>
+                    </li>
+                    <li class="page-item" ng-repeat="n in queryControl._paginationVals"
+                        ng-class="{'active' : queryControl.currentPage == n}"><button class="page-link"
+                            ng-click="queryControl.currentPage = n">{{n}}</button></li>
+                    <li class="page-item" ng-if="queryControl.currentPage &lt; queryControl._maxPages - 2"><span
+                            class="page-link">...</span></li>
+                    <li class="page-item" ng-if="queryControl._maxPages &gt; 1"
+                        ng-class="{'active' : queryControl.currentPage == queryControl._maxPages }"><button
+                            class="page-link"
+                            ng-click="queryControl.currentPage = queryControl._maxPages ">{{queryControl._maxPages
+                            }}</button></li>
+                    <li class="page-item"><button class="page-link"
+                            ng-click="queryControl.currentPage = queryControl.currentPage + 1"
+                            ng-disabled="queryControl.currentPage == queryControl._maxPages">{{ 'ui.action.next' | i18n
+                            }}</button></li>
                 </ul>
-              </nav>
+            </nav>
         </div>
     </div>
 
     <!-- The following is used as a template for each of the list items 
         xg-* is replaced with ng-* when injecting the HTML into the template-->
     <div class="d-none" id="listTemplate">
-        <div class="card $itemClass my-0" 
-            xg-class="::{ 'col-sm-12 col-md-6 col-xl-4' : display != 'list', 'col-12' : display == 'list' }"
+        <div class="card $itemClass my-0"
+            xg-class="::{ 'col-sm-12 col-md-6 col-xl-4' : _display != 'list', 'col-12' : _display == 'list' }"
             xg-repeat="item in results.resource">
             $template
             <div class="card-footer" xg-if="itemActions">
                 <div class="btn-group float-right">
-                    <button xg-repeat="action in itemActions track by $index" 
-                        class="btn {{ action.className }}"
-                        xg-click="doAction(item)"
-                        xg-if="filterAction(action, item)"
-                        demand="{{ action.demand }}">
+                    <button xg-repeat="action in itemActions track by $index" class="btn {{ action.className }}"
+                        xg-click="doAction(action, item)" xg-if="filterAction(action, item)" demand="{{ action.demand }}">
                         <i class="fas fa-fw {{action.icon}}"></i>
                         {{ action.label || 'ui.action.' + action.name | i18n }}
-                </button>
+                    </button>
                 </div>
             </div>
         </div>

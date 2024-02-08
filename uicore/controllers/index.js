@@ -165,7 +165,7 @@ var santedbApp = angular.module('santedb', ['ngSanitize', 'ui.router', 'oc.lazyL
             $rootScope.system = $rootScope.system || {};
 
 
-            if ($rootScope.system && $rootScope.system.config && $rootScope.system.config.sync && $rootScope.system.config.sync.mode == 'sync')
+            if ($rootScope.system && $rootScope.system.config && $rootScope.system.config.integration && $rootScope.system.config.integration.mode == 'synchronize')
                 $rootScope.system.online = SanteDB.application.getOnlineState();
             else
                 $rootScope.system.online = true;
@@ -206,7 +206,7 @@ var santedbApp = angular.module('santedb', ['ngSanitize', 'ui.router', 'oc.lazyL
                             $rootScope.session = null;
                             delete($rootScope.session);
                             toastr.clear();
-                            $state.reload();
+                            $state.go("login");
                         });
                     }
 
