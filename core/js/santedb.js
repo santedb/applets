@@ -51,34 +51,47 @@ function APIWrapper(_config) {
      * @summary Resolves all $ref in the object with the $id data ensuring the model is ready for display
      * @param {any} object The object which should be resolved
      */
-    function _resolveObjectRefs(object, referenceDictionary) {
+    function _resolveObjectRefs(object, referenceDictionary, resolveStack) {
 
         referenceDictionary = referenceDictionary || {};
+        resolveStack = resolveStack || [];
+        if (object.$id) {
+            resolveStack.push(object.$id);
+        }
 
-        // This is not really an object but a reference to an object
-        if (object == null) {
-            return null;
-        }
-        else if (object.$ref !== undefined) {
-            return referenceDictionary[object.$ref];
-        }
-        else if (Array.isArray(object)) {
-            return object.map(o => _resolveObjectRefs(o, referenceDictionary));
-        }
-        else if (typeof (object) == 'object' &&
-            !(object instanceof Date)) {
-            if (object.$id !== undefined) {
-                referenceDictionary[`#${object.$id}`] = object;
+        try {
+            // This is not really an object but a reference to an object
+            if (object == null) {
+                return null;
             }
-            Object.keys(object).forEach(p => {
-                object[p] = _resolveObjectRefs(object[p], referenceDictionary);
-            });
-            return object;
-        }
-        else {
-            return object;
-        }
+            else if (object.$ref !== undefined) {
+                if (!resolveStack.indexOf(object.$ref)) {
+                    return referenceDictionary[object.$ref];
+                } 
+            }
+            else if (Array.isArray(object)) {
+                return object.map(o => _resolveObjectRefs(o, referenceDictionary));
+            }
+            else if (typeof (object) == 'object' &&
+                !(object instanceof Date)) {
+                if (object.$id !== undefined) {
+                    referenceDictionary[`#${object.$id}`] = object;
+                }
 
+                Object.keys(object).forEach(p => {
+                    object[p] = _resolveObjectRefs(object[p], referenceDictionary);
+                });
+                return object;
+            }
+            else {
+                return object;
+            }
+        }
+        finally {
+            if(object.$id) {
+                resolveStack.splice(resolveStack.length, 1);
+            }
+        }
     }
 
     /**
@@ -3972,27 +3985,36 @@ function SanteDBWrapper() {
             })
         }
         /**
-            * @method sendTfaSecretAsync
+            * @method setupTfaSecretAsync
             * @memberof SanteDBWrapper.AuthenticationApi
-            * @summary Requests a two-factor authentication secret to be sent
-            * @param {string} mode The mode of two-factor authentication (email, sms, etc.)
+            * @summary Initiates the setup of a TFA secret for the current user
+            * @param {string} mechanism The mode of two-factor authentication (email, sms, etc.)
+            * @param {boolean} upstream True if the request should be executed upstream
             * @returns {Promise} A promise representing the outcome of the TFA secret send
             */
-        this.sendTfaSecretAsync = function (mode) {
+        this.setupTfaSecretAsync = function (mechanism, upstream) {
+
             return _ami.postAsync({
-                resource: "SecurityUser/$tfa",
-                contentType: "application/json",
-                data: { parameter: [{ name: "mode", value: mode }] }
+                resource: `Tfa/${mechanism}/$register`,
+                headers: {
+                    "X-SanteDB-Upstream": upstream
+                },
+                contentType: "image/png",
+                data: {}
             })
         }
         /**
             * @method getTfaModesAsync
             * @memberof SanteDBWrapper.AuthenticationApi
+            * @param {boolean} upstream True if the request should be forwarded to the upstream
             * @summary Retrieves information about the two-factor authentication modes supported by the server
             * @returns {Promise} The promise representing the fulfillment or rejection of the get request
             */
-        this.getTfaModesAsync = function () {
+        this.getTfaModesAsync = function (upstream) {
             return _ami.getAsync({
+                headers: {
+                    "X-SanteDB-Upstream": upstream
+                },
                 resource: "Tfa"
             });
         }
