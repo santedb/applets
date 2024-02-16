@@ -55,7 +55,7 @@ function APIWrapper(_config) {
 
         referenceDictionary = referenceDictionary || {};
         resolveStack = resolveStack || [];
-        if (object.$id) {
+        if (object && object.$id) {
             resolveStack.push(object.$id);
         }
 
@@ -88,7 +88,7 @@ function APIWrapper(_config) {
             }
         }
         finally {
-            if(object.$id) {
+            if(object && object.$id) {
                 resolveStack.splice(resolveStack.length, 1);
             }
         }
@@ -3989,18 +3989,23 @@ function SanteDBWrapper() {
             * @memberof SanteDBWrapper.AuthenticationApi
             * @summary Initiates the setup of a TFA secret for the current user
             * @param {string} mechanism The mode of two-factor authentication (email, sms, etc.)
+            * @param {string} code When specified, the validation code to complete the setup
             * @param {boolean} upstream True if the request should be executed upstream
             * @returns {Promise} A promise representing the outcome of the TFA secret send
             */
-        this.setupTfaSecretAsync = function (mechanism, upstream) {
+        this.setupTfaSecretAsync = function (mechanism, code, upstream) {
 
             return _ami.postAsync({
-                resource: `Tfa/${mechanism}/$register`,
+                resource: `Tfa/${mechanism}/$setup`,
                 headers: {
                     "X-SanteDB-Upstream": upstream
                 },
-                contentType: "image/png",
-                data: {}
+                contentType: "application/json",
+                data: {
+                    "parameter" : [
+                        { name: "code", value: code }
+                    ]
+                }
             })
         }
         /**

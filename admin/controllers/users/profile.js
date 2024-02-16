@@ -20,18 +20,18 @@
  */
 
 /// <reference path="../../../core/js/santedb.js"/>
-angular.module('santedb').controller('UserProfileController', ["$scope", "$rootScope", "$stateParams", function ($scope, $rootScope, $stateParams) {
+angular.module('santedb').controller('UserProfileController', ["$scope", "$rootScope", "$stateParams", "$timeout", function ($scope, $rootScope, $stateParams, $timeout) {
 
     // Initialize the view
     var initializeView = async function() {
-
         try {
             var sessionInfo = await SanteDB.authentication.getSessionInfoAsync();
+            var userEntity = null;
 
             if(sessionInfo.entity && sessionInfo.entity.id)
-                $scope.userEntity = await SanteDB.resources.userEntity.getAsync(sessionInfo.entity.id, "full");
+                userEntity = await SanteDB.resources.userEntity.getAsync(sessionInfo.entity.id, "full");
             else 
-                $scope.userEntity = new UserEntity({
+                userEntity = new UserEntity({
                     securityUser: sessionInfo.user.id,
                     language: [
                         {
@@ -41,10 +41,14 @@ angular.module('santedb').controller('UserProfileController', ["$scope", "$rootS
                     ]
                 }) ;
 
+
             var userInfo = await SanteDB.resources.securityUser.getAsync(sessionInfo.user.id);
 
-            $scope.userEntity.securityUserModel = userInfo.entity;
-            $scope.userEntity.securityUserModel.role = userInfo.role;
+            $timeout(() => {
+                $scope.userEntity = userEntity;
+                $scope.userEntity.securityUserModel = userInfo.entity;
+                $scope.userEntity.securityUserModel.role = userInfo.role;
+            });
 
         }
         catch(e) {
@@ -52,6 +56,6 @@ angular.module('santedb').controller('UserProfileController', ["$scope", "$rootS
         }
     }
 
-    initializeView().then(()=>$scope.$apply()).catch($rootScope.errorHandler);
+    initializeView();
 }]);
 

@@ -58,7 +58,7 @@
     </div>
     <div class="form-group row" ng-if="login.requireTfa">
         <div class="col-12 alert-primary p-1 m-2">
-            <i class="fas fa-info-circle"></i> {{ login._mfaDetail }}
+            <i class="fas fa-info-circle"></i> {{ login._mfaDetail | i18n  }}
         </div>
         <label for="loginPou" class="col-sm-3 control-label">{{ 'ui.login.input.tfa' | i18n }}</label>
         <div class="col-sm-9">

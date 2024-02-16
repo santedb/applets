@@ -55,7 +55,12 @@
       <string name="ui.login.resetPassword.introduction">This tool will help you reset your password. You will need to have setup a password recovery question in your user profile prior to using this tool</string>
       <string name="ui.login.resetPassword.onlineRequired">You have entered a user which requires internet connectivity to reset their password. Please connect to the internet to complete your password reset</string>
       <string name="ui.login.resetPassword.success">Password successfully changed. You can now login with your new password</string>
+      <string name="ui.tfa.setup.title">Setup TFA</string>
+      <string name="org.santedb.tfa.authenticator">Authenticator App</string>
+      <string name="org.santedb.tfa.authenticator.scan">Open your authenticator app and enter the secret generated</string>
+      <string name="org.santedb.tfa.authenticator.help"><![CDATA[Open your authenticator application (examples: Google Authenticator, Microsoft Authenticator) and scan this QR code. Then enter the generated code into the area below to validate your configuration when complete.]]></string>
       <string name="org.santedb.tfa.email">Send an E-Mail</string>
+      <string name="org.santedb.tfa.email.setup"><![CDATA[An e-mail with a validation code will be sent to your registered e-mail address (noted below). When you receive this e-mail enter the provided code below to validate your TFA setup]]></string>
       <string name="org.santedb.tfa.sms">Send an SMS message</string>
       <string name="ui.logout">Logout</string>
       <string name="ui.logout.confirm">Are you sure you want to end your session?</string>
@@ -177,6 +182,7 @@
       <string name="ui.action.dismiss">Dismiss</string>
       <string name="ui.action.cancel">Cancel</string>
       <string name="ui.action.clear">Clear</string>
+      <string name="ui.action.complete">Complete</string>
       <string name="ui.action.clone">Clone</string>
       <string name="ui.action.cancel.confirm">Are you sure you want to cancel?</string>
       <string name="ui.action.abandon.confirm">You have unsaved changes on this page. Are you sure you want to abandon them?</string>
