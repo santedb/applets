@@ -3761,7 +3761,7 @@ function SanteDBWrapper() {
             return _resources.configuration.insertAsync(configuration || _masterConfig);
         }
         /**
-            * @method getUserPreferencesAsync
+            * @method getUserSettingsAsync
             * @memberof SanteDBWrapper.ConfigurationApi
             * @summary Gets the user specific preferences
             * @returns {Promise} A promise representing the retrieval of the user settings
@@ -3769,6 +3769,7 @@ function SanteDBWrapper() {
         this.getUserSettingsAsync = async function () {
             return _resources.configuration.findAssociatedAsync("me", "settings");
         }
+        
         /**
             * @method saveUserPreferencesAsync
          * @memberof SanteDBWrapper.ConfigurationApi

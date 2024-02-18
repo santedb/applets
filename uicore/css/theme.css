@@ -280,3 +280,10 @@ svg.mermaidNoScale {
     z-index: 100;
     background: var(--white);
 }
+
+.customizeViewBar {
+    position: absolute;
+    top: -0.5em;
+    right: 1em;
+    background-color: rgba(00,00,00,00);
+}

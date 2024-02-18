@@ -32,6 +32,9 @@
       <string name="ui.common.version">Version</string>
       <string name="ui.common.rows">Rows</string>
       <string name="ui.common.size">Size</string>
+      <string name="ui.common.size.large">Large</string>
+      <string name="ui.common.size.medium">Medium</string>
+      <string name="ui.common.size.small">Small</string>
       <string name="ui.common.kilobytes">Kb</string>
       <string name="ui.common.show">Show:</string>
       <string name="ui.search.onlineResult">Online Result</string>
@@ -183,6 +186,7 @@
       <string name="ui.action.cancel">Cancel</string>
       <string name="ui.action.clear">Clear</string>
       <string name="ui.action.complete">Complete</string>
+      <string name="ui.action.customize">Customize</string>
       <string name="ui.action.clone">Clone</string>
       <string name="ui.action.cancel.confirm">Are you sure you want to cancel?</string>
       <string name="ui.action.abandon.confirm">You have unsaved changes on this page. Are you sure you want to abandon them?</string>

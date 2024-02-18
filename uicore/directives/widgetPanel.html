@@ -18,12 +18,14 @@
  - User: fyfej
  - Date: 2023-5-19
  -->
-<div xmlns="http://www.w3.org/1999/xhtml" >
+<div xmlns="http://www.w3.org/1999/xhtml">
     <div class="row">
-        <div class="col" ng-repeat="group in widgetGroups"  ng-class="{ 'col-12' : !renderSize &amp;&amp; group.size == 'Large' || renderSize == 'Large', 'col-sm-12 col-lg-6' : !renderSize &amp;&amp; group.size == 'Medium' || renderSize == 'Medium', 'col-sm-6 col-lg-3': !renderSize &amp;&amp; group.size == 'Small' || renderSize == 'Small' }">
+        <div class="col" ng-repeat="group in widgetGroups"
+            ng-class="{ 'col-12' : !renderSize &amp;&amp; group.size == 'Large' || renderSize == 'Large', 'col-sm-12 col-lg-6' : !renderSize &amp;&amp; group.size == 'Medium' || renderSize == 'Medium', 'col-sm-6 col-lg-3': !renderSize &amp;&amp; group.size == 'Small' || renderSize == 'Small' }">
             <div class="mt-2 p-0 col" ng-repeat="panel in group.widgets" ng-if="$eval(panel.guard[0] || 'true')">
                 <div class="card">
-                    <div class="card-header d-flex align-items-center justify-content-between" ng-class="panel.headerClass">
+                    <div class="card-header d-flex align-items-center justify-content-between"
+                        ng-class="panel.headerClass">
                         <h5 class="mb-0">
                             <i ng-class="panel.icon"></i> {{ panel.name | i18n }}
                         </h5>
@@ -31,14 +33,20 @@
                             <button class="btn btn-danger" type="button" ng-if="panel.view" ng-click="closeView(panel)">
                                 <i class="fa fa-times"></i>
                             </button>
-                            <button class="btn btn-info" type="button" ng-click="setView(panel, 'Edit')" id="pnl{{panel.id}}Edit" ng-if="panel.view != 'Edit' &amp;&amp; !altView &amp;&amp; hasView(panel, 'Edit')"
+                            <button class="btn btn-info" type="button" ng-click="setView(panel, 'Edit')"
+                                id="pnl{{panel.id}}Edit"
+                                ng-if="panel.view != 'Edit' &amp;&amp; !altView &amp;&amp; hasView(panel, 'Edit')"
                                 ng-init="::disableView(panel, 'Edit')">
                                 <i class="fas fa-pencil-alt"></i>
                             </button>
-                            <button class="btn btn-success" type="button" ng-click="submitEditForm(panel)" ng-if="panel.view == 'Edit'">
+                            <button class="btn btn-success" type="button" ng-click="submitEditForm(panel)"
+                                ng-if="panel.view == 'Edit'">
                                 <i class="fas fa-check"></i>
                             </button>
-                            <button class="btn btn-dark" type="button" ng-init="disableView(panel, 'Edit')" ng-click="setView(panel, 'Setting')" id="pnl{{panel.id}}Setting" ng-if="hasView(panel, 'Setting') &amp;&amp; !altView" ng-class="{ 'active' : panel.view == 'Setting' }">
+                            <button class="btn btn-dark" type="button" ng-init="disableView(panel, 'Edit')"
+                                ng-click="setView(panel, 'Setting')" id="pnl{{panel.id}}Setting"
+                                ng-if="hasView(panel, 'Setting') &amp;&amp; !altView"
+                                ng-class="{ 'active' : panel.view == 'Setting' }">
                                 <i class="fa fa-cog"></i>
                             </button>
                         </div>
@@ -49,6 +57,59 @@
                 </div>
             </div>
         </div>
-        
+
+    </div>
+    <div class="customizeViewBar d-none ">
+        <button class="btn btn-light d-block p-2" type="button" data-toggle="modal" data-target="#customizeViewModal">
+            <i class="far fa-fw fa-window-restore"></i> {{ 'ui.action.customize' | i18n }}
+        </button>
+
+        <div class="modal" id="customizeViewModal" tabindex="-1" role="dialog" aria-labelledby="customizeViewModalTitle"
+            aria-hidden="true">
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="customizeViewModalTitle">
+                            <i class="fa fa-fw fa-sign-out-alt"></i> {{ 'ui.action.customize.view' | i18n }}
+                        </h5>
+                        <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">
+                                <i class="fa fa-times"></i>
+                            </span>
+                        </button>
+                    </div>
+                    <form name="customizePanelForm" ng-submit="customizePanels(customizePanelForm)">
+                        <div class="modal-body">
+                            <ul class="list-group">
+                                <li class="list-group-item" ng-repeat="widget in availableWidgets track by $index">
+                                    <label class="d-flex">
+                                        <input class="m-2" type="checkbox" ng-model="widget.isVisible" /> 
+                                        <div class="flex-grow-1"><h5 class="card-title">{{ widget.name | i18n }}</h5><small>{{ widget.description[0].value }}</small></div>
+                                        <div class="w-15">
+                                            <select class="form-control h-100" ng-model="widget.size">
+                                                <option value="Small">{{ 'ui.common.size.small' | i18n }}</option>
+                                                <option value="Medium">{{ 'ui.common.size.medium' | i18n }}</option>
+                                                <option value="Large">{{ 'ui.common.size.large' | i18n }}</option>
+                                            </select>
+                                        </div>
+                                        <div class="btn-group">
+                                            <button type="button" ng-disabled="$index == 0" ng-click="availableWidgets.splice($index, 1); availableWidgets.splice($index - 1, 0, widget)" class="btn btn-sm btn-primary"><i class="fas fa-chevron-up fa-fw"></i></button>
+                                            <button type="button" ng-disabled="$index == availableWidgets.length- 1" ng-click="availableWidgets.splice($index, 1); availableWidgets.splice($index + 1, 0, widget)" class="btn btn-sm btn-info"><i class="fas fa-chevron-down fa-fw"></i></button>
+                                        </div>
+                                    </label>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="modal-footer">
+                            <button class="btn btn-secondary" type="button" data-dismiss="modal">
+                                <i class="fa fa-times"></i> {{ 'ui.action.cancel' | i18n }}</button>
+                            <button type="submit" class="btn btn-primary" id="btnSaveView">
+                                <i class="fa fa-check"></i> {{ 'ui.action.save' | i18n }}</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
     </div>
 </div>

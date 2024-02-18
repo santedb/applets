@@ -125,10 +125,7 @@ var santedbApp = angular.module('santedb', ['ngSanitize', 'ui.router', 'oc.lazyL
 
                 // Get user preferences and set them in this view 
                 if (session) {
-                    var prefs = await SanteDB.configuration.getUserSettingsAsync();
-                    if (Array.isArray(prefs)) {
-                        prefs.forEach(o => SanteDB.configuration.setAppSetting(o.key, o.value));
-                    }
+                    session.userSettings = await SanteDB.configuration.getUserSettingsAsync();
                 }
 
                 $timeout(() => {
