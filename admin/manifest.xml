@@ -164,6 +164,10 @@
       <icon>fas fa-tasks</icon>
       <text lang="en">Data Quality Rules</text>
     </menuItem>
+     <menuItem context="org.santedb.admin" launch="santedb-admin.cdr.match.index" asset="/org.santedb.admin/views/cdr/match/index.html">
+        <icon>fas fa-users-cog</icon>
+        <text lang="en">Match Configuration</text>
+      </menuItem>
   </menuItem>
   <menuItem context="org.santedb.admin" launch="santedb-admin.data.index"
     asset="/org.santedb.admin/views/data/index.html" order="0">

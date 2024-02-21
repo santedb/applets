@@ -77,7 +77,8 @@ angular.module('santedb-lib')
             try {
                 var widgets = await SanteDB.application.getWidgetsAsync(context, "Panel");
                 var userSettings  = _canCustomize ?
-                    scope.$root.session ? scope.$root.session.userSettings : await SanteDB.configuration.getUserSettingsAsync() : [];
+                    (scope.$root.session ? scope.$root.session.userSettings : await SanteDB.configuration.getUserSettingsAsync()) : [] 
+                    || [];
                 var widgetPreferences = userSettings.find(o=>o.key == "widgets") || { value:"{}" };
                 _userPreferences = JSON.parse(widgetPreferences.value);
                 var thisWidgetConfig = _userPreferences[_contextName];

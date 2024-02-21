@@ -63,7 +63,7 @@ angular.module('santedb').controller('MasterDataManagementController', ['$scope'
                 $("#candidateDetailModal").modal('show');
             });
             delete ($scope.candidateObject);
-            var matchReport = await SanteDB.resources.patient.getAssociatedAsync($scope.scopedObject.id, "mdm-candidate", id, { _upstream: true });
+            var matchReport = await SanteDB.resources.patient.getAssociatedAsync($scope.scopedObject.id, "match-candidate", id, { _upstream: true });
 
             $timeout(_ => {
                 $scope.scopedObject.candidateObject = {
@@ -156,11 +156,11 @@ angular.module('santedb').controller('MasterDataManagementController', ['$scope'
         try {
             SanteDB.display.buttonWait('#Patientrematch', true);
 
-            if (!confirm(SanteDB.locale.getString("ui.mpi.matches.rematch.confirm"))) {
+            if (!confirm(SanteDB.locale.getString("ui.admin.matches.rematch.confirm"))) {
                 return;
             }
 
-            var result = await SanteDB.resources.patient.invokeOperationAsync($scope.scopedObject.id, "mdm-rematch", { clear: true }, true);
+            var result = await SanteDB.resources.patient.invokeOperationAsync($scope.scopedObject.id, "match", { clear: true }, true);
 
             $("div[type=Patient] table").DataTable().ajax.reload()
 

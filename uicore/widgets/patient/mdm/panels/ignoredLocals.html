@@ -27,7 +27,7 @@
     </sdb:widget>
 
 
-    <entity-table stateless="true" id="IgnoreEntityTable" type="Patient" sub-resource="mdm-ignore" sub-resource-holder="scopedObject.id" 
+    <entity-table stateless="true" id="IgnoreEntityTable" type="Patient" sub-resource="match-ignore" sub-resource-holder="scopedObject.id" 
         search-field="name.component.value"
         upstream="true" can-filter="false"
         default-query="{  _viewModel: 'reverseRelationship', _noexec: scopedObject.id == undefined }"
