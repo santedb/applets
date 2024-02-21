@@ -1,0 +1,158 @@
+<!--
+ - Copyright (C) 2021-2023 SanteSuite Inc and the SanteSuite Contributors (see NOTICES)
+Portions Copyright (C) 2019-2021 Fyfe Software Inc.
+Portions Copyright (C) 2015-2018 Mohawk College of Applied Arts and Technology
+ - 
+ - 
+ - Licensed under the Apache License, Version 2.0 (the "License"); you 
+ - may not use this file except in compliance with the License. You may 
+ - obtain a copy of the License at 
+ - 
+ - http://www.apache.org/licenses/LICENSE-2.0 
+ - 
+ - Unless required by applicable law or agreed to in writing, software
+ - distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+ - WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the 
+ - License for the specific language governing permissions and limitations under 
+ - the License.
+ - 
+ - User: justin
+ - Date: 2018-11-14
+ -->
+ <div xmlns="http://www.w3.org/1999/xhtml" xmlns:sdb="http://santedb.org/applet">
+    <sdb:script static="false">~/controllers/cdss/edit.js</sdb:script>
+    <sdb:state name="santedb-admin.cdr.cdss.create">
+        <sdb:demand>1.3.6.1.4.1.33349.3.1.5.9.2.0.15.2.0</sdb:demand>
+        <sdb:url>/new</sdb:url>
+        <sdb:view>
+            <sdb:title lang="en">New CDSS Library</sdb:title>
+            <sdb:controller>CdssEditController</sdb:controller>
+        </sdb:view>
+    </sdb:state>
+
+    <h3><i class="fas fa-lightbulb fa-fw"></i> {{ 'ui.admin.cdss.create.title' | i18n }}</h3>
+    <form name="saveCdssLibraryForm" ng-submit="saveCdssLibrary(saveCdssLibraryForm)" novalidate="novalidate">
+    <ul class="list-group">
+        <li class="list-group-item">
+            <label class="w-100 d-block">
+                <input type="radio" name="creationMode" ng-model="cdssLibrary._mode"
+                    value="upload" /> {{ 'ui.admin.cdss.create.upload.option' | i18n }}
+            </label>
+            <div class="w-100 container-fluid" ng-if="cdssLibrary._mode == 'upload'">
+                <div class="form-group row">
+                    <label class="col-sm-12 col-md-3 control-label">
+                        {{ 'ui.admin.cdss.create.upload.file' | i18n }}
+                        <hint-popover hint-title="ui.admin.cdss.create.upload.file" />
+                    </label>
+                    <div class="col-sm-12 col-md-9">
+                        <input id="source-file" type="file" ng-model="cdssLibrary._sourceFile"
+                            class="form-control" name="source" valid-file="valid-file"
+                            required="required" accept=".cdss,.xml" />
+                        <div class="text-danger" ng-if="saveCdssLibraryForm.source.$error['required']">
+                            <i class="fas fa-exclamation-triangle"></i> {{ 'ui.error.required' | i18n }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </li>
+        <li class="list-group-item">
+            <label class="w-100 d-block">
+                <input type="radio" name="creationMode" ng-model="cdssLibrary._mode"
+                    value="manual" /> {{ 'ui.admin.cdss.create.manual.option' | i18n }}
+            </label>
+            <div class="w-100 container-fluid" ng-if="cdssLibrary._mode == 'manual'">
+                <div class="form-group row">
+                    <label class="col-sm-12 col-md-3 control-label" for="libraryName">
+                        {{ 'ui.model.cdssLibraryDefinition.name' | i18n }}
+                        <hint-popover hint-title="ui.model.cdssLibraryDefinition.name" />
+                    </label>
+                    <div class="col-sm-12 col-md-9">
+                        <input class="form-control" type="text" autocomplete="_away" maxlength="128" ng-model="cdssLibrary.library.name"
+                            required="required" name="libraryName" />
+                        <div class="text-danger" ng-if="saveCdssLibraryForm.libraryName.$error['required']">
+                            <i class="fas fa-exclamation-triangle"></i> {{ 'ui.error.required' | i18n }}
+                        </div>
+                        <div class="text-danger" ng-if="saveCdssLibraryForm.libraryName.$error['duplicate']">
+                            <i class="fas fa-exclamation-triangle"></i> {{ 'ui.error.duplicate' | i18n }}
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-12 col-md-3 control-label" for="libraryId">
+                        {{ 'ui.model.cdssLibraryDefinition.id' | i18n }}
+                        <hint-popover hint-title="ui.model.cdssLibraryDefinition.id" />
+                    </label>
+                    <div class="col-sm-12 col-md-9">
+                        <input class="form-control" type="text" autocomplete="_away" 
+                            maxlength="256" ng-model="cdssLibrary.library.id"
+                            required="required" name="libraryId" pattern="[\w\d]+(\.[\w\d]+)*" />
+                        <div class="text-danger" ng-if="saveCdssLibraryForm.libraryId.$error['required']">
+                            <i class="fas fa-exclamation-triangle"></i> {{ 'ui.error.required' | i18n }}
+                        </div>
+                        <div class="text-danger" ng-if="saveCdssLibraryForm.libraryId.$error['pattern']">
+                            <i class="fas fa-exclamation-triangle"></i> {{ 'ui.error.pattern' | i18n }}
+                        </div>
+                        <div class="text-danger" ng-if="saveCdssLibraryForm.libraryId.$error['duplicate']">
+                            <i class="fas fa-exclamation-triangle"></i> {{ 'ui.error.duplicate' | i18n }}
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-12 col-md-3 control-label" for="libraryOid">
+                        {{ 'ui.model.cdssLibraryDefinition.oid' | i18n }}
+                        <hint-popover hint-title="ui.model.cdssLibraryDefinition.oid" />
+                    </label>
+                    <div class="col-sm-12 col-md-9">
+                        <input class="form-control" type="text" autocomplete="_away" maxlength="256" ng-model="cdssLibrary.library.oid"
+                            name="libraryOid" pattern="^[0-9]*?[0-9\.]*$" />
+                        <div class="text-danger" ng-if="saveCdssLibraryForm.libraryOid.$error['pattern']">
+                            <i class="fas fa-exclamation-triangle"></i> {{ 'ui.error.pattern' | i18n }}
+                        </div>
+                        <div class="text-danger" ng-if="saveCdssLibraryForm.libraryOid.$error['duplicate']">
+                            <i class="fas fa-exclamation-triangle"></i> {{ 'ui.error.duplicate' | i18n }}
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-12 col-md-3 control-label" for="libraryVersion">
+                        {{ 'ui.model.cdssLibraryDefinition.metadata.version' | i18n }}
+                        <hint-popover hint-title="ui.model.cdssLibraryDefinition.metadata.version" />
+                    </label>
+                    <div class="col-sm-12 col-md-9">
+                        <input class="form-control" type="text" autocomplete="_away" maxlength="256" ng-model="cdssLibrary.library.meta.version"
+                             name="libraryVersion" pattern="^[0-9]+?(\.[0-9]+){0,3}(-\w+)?$" />
+                        <div class="text-danger" ng-if="saveCdssLibraryForm.libraryVersion.$error['pattern']">
+                            <i class="fas fa-exclamation-triangle"></i> {{ 'ui.error.pattern' | i18n }}
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-12 col-md-3 control-label" for="libraryAuthor">
+                        {{ 'ui.model.cdssLibraryDefinition.metadata.author' | i18n }}
+                        <hint-popover hint-title="ui.model.cdssLibraryDefinition.metadata.author" />
+                    </label>
+                    <div class="col-sm-12 col-md-9">
+                        <input class="form-control" type="text" autocomplete="_away" maxlength="256" ng-model="cdssLibrary.library.meta.author"
+                            name="libraryAuthor" />
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-12 col-md-3 control-label" for="libraryDocumentation">
+                        {{ 'ui.model.cdssLibraryDefinition.metadata.documentation' | i18n }}
+                        <hint-popover hint-title="ui.model.cdssLibraryDefinition.metadata.documentation" />
+                    </label>
+                    <div class="col-sm-12 col-md-9">
+                        <textarea class="form-control" maxlength="4096" ng-model="cdssLibrary.library.meta.documentation" 
+                            name="libraryDocumentation"></textarea>
+                            <span class="float-right">{{ 4096 - cdssLibrary.library.metadata.documentation.length }} {{ 'ui.common.charsRemain' | i18n
+                            }}</span>
+                    </div>
+                </div>
+            </div>
+        </li>
+    </ul>
+    <div class="btn-group float-right">
+        <button type="submit" class="btn btn-primary" id="btnSaveLibrary"><i class="fas fa-fw fa-check"></i> {{ 'ui.action.create' | i18n }}</button>
+    </div>
+    </form>
+</div>

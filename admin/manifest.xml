@@ -168,6 +168,10 @@
         <icon>fas fa-users-cog</icon>
         <text lang="en">Match Configuration</text>
       </menuItem>
+      <menuItem context="org.santedb.admin" launch="santedb-admin.cdr.cdss.dashboard" asset="/org.santedb.admin/views/cds/cdss/index.html">
+        <icon>fas fa-swatchbook</icon>
+        <text lang="en">Decision Support</text>
+      </menuItem>
   </menuItem>
   <menuItem context="org.santedb.admin" launch="santedb-admin.data.index"
     asset="/org.santedb.admin/views/data/index.html" order="0">

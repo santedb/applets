@@ -1,0 +1,47 @@
+<div xmlns="http://www.w3.org/1999/xhtml" xmlns:sdb="http://santedb.org/applet"
+    oc-lazy-load="{name:'CdssWidgetController', files: ['/org.santedb.admin/controllers/cdss/widget.js'] }">
+    <sdb:widget name="org.santedb.widget.cdr.cdssLibrary.data.define" type="Panel"
+        context="org.santedb.emr.cdssLibrary.data" order="0" size="Large" headerClass="alert-primary">
+        <sdb:icon>fas fa-table</sdb:icon>
+        <sdb:description lang="en">Data Definitions</sdb:description>
+    </sdb:widget>
+
+    <div ng-controller="CdssWidgetController">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>
+                        {{ 'ui.model.cdssLibraryDefinition.definitions.data.name' | i18n  }}
+                    </th>
+                    <th>
+                        {{ 'ui.model.cdssLibraryDefinition.definitions.data.id' | i18n  }}
+                    </th>
+                    <th>
+                        {{ 'ui.common.size' | i18n  }}
+                    </th>
+                    <th>
+                        
+                    </th>
+                </tr>
+            </thead>
+            <tr  ng-repeat="dat in ::scopedObject.library.definitions.filter(filterDatasets) track by $index">
+                <td class="col-3">
+                    {{ dat.name }}
+                </td>
+                <td class="col-3">
+                    {{ dat.id }}
+                </td>
+                <td class="col-3">
+                    {{ getDatasetSize(dat) / 1024 | number: 1 }} {{ 'ui.common.kilobytes' | i18n }}
+                </td>
+                <td class="col-3">
+                    <div class="btn-group">
+                    <button type="button" class="btn btn-dark" ng-click="downloadCsv(dat.name)">
+                        <i class="fas fa-download"></i> {{ 'ui.action.download' | i18n }}
+                    </button>
+                </div>
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>

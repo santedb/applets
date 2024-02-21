@@ -48,7 +48,7 @@ angular.module('santedb-lib')
                 if(scope.object && scope.object.$type) {
 
                     Object.keys(scope.object).forEach(k => {
-                        if(scope.object[k].$type == "Concept") {
+                        if(scope.object[k] && scope.object[k].$type == "Concept") {
                             scope.object[k] = {
                                 $type:"Concept",
                                 mnemonic: scope.object[k].mnemonic,

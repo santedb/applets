@@ -1,0 +1,4 @@
+<span ng-if="activity.defn || activity.factRef" class="m-1 badge badge-info p-1" xmlns="http://www.w3.org/1999/xhtml">
+    <i class="fas fa-fw fa-file-code"></i> {{ activity.defn.name || activity.factRef.name }} 
+    <a class="text-white"  ng-if="activity.defn.source.start || activity.factRef.source.start" ng-click="navigateSource(activity.defn.source.start || activity.factRef.source.start)">@ {{ activity.defn.source.start || activity.factRef.source.start }}</a>
+</span>

@@ -648,4 +648,74 @@
     <string name="ui.model.matchConfiguration.blocking.useLowerLayer.false">REPOSITORY LAYER - Blocking occurs against the repository layer using the data management pattern configured</string>
     <string name="ui.model.matchConfiguration.blocking.useLowerLayer.set">Use PERSISTENCE LAYER blocking. This may result in better performance however generated properties or combined properties of the master may not be considered</string>
 
+    <!-- CDSS Editing-->
+    <!-- Administration for CDSS rules -->
+    <string name="ui.admin.cdss.master.title">CDSS Library</string>
+    <string name="ui.admin.cdss.master.help"><![CDATA[
+    This page shows the master list of all registered Clinical Decision Support (CDSS) libraries in your installation of SanteDB. These libraries form the basis of any
+    clinical protocols, decision support rules, and facts. Please be sure to read the <a href="https://help.santesuite.org/developers/applets/cdss-protocols" target="_blank">CDSS Documentation on the SanteSuite Wiki</a>
+    before modifying these rules, as they may have an adverse impact on patient care.
+    ]]></string>
+    <string name="ui.admin.cdss.create.title">New CDSS Library</string>
+    <string name="ui.admin.cdss.create.upload.option">Upload a CDSS Library File</string>
+    <string name="ui.admin.cdss.create.manual.option">Manually Create a CDSS Library</string>
+    <string name="ui.admin.cdss.create.upload.file">CDSS Library File</string>
+    <string name="ui.admin.cdss.create.upload.file.hint"><![CDATA[Select a CDSS library definition file from your hard drive to import into the SanteDB instance. If you upload a file with an identifier or UUID matching an existing library, this will 
+    update the existing file, otherwise the library will be imported]]></string>
+    <string name="ui.admin.cdss.edit.upload">Upload Library</string>
+    <string name="ui.admin.cdss.edit.upload.help">New Version of CDSS Library</string>
+    <string name="ui.admin.cdss.edit.upload.help.text">
+            <![CDATA[ 
+            This tool is used to upload a new version of this CDSS library using a raw definition file. This option is useful if you are authoring your CDSS rules using the CDSS XML library format or the CDSS text format. This method of maintaining
+            a CDSS library is preferred, since it provides complete access to the CDSS engine's functionality. Before continuing, please consult the 
+            <a href="https://help.santesuite.org/developers/applets/cdss-protocols" target="_blank">CDSS Documentation on the SanteSuite Wiki</a> for more information about these formats.
+            ]]>
+    </string>
+
+    <string name="ui.admin.cdss.publish.invalid">Cannot publish an invalid CDSS file. Please ensure all validation errors are corrected</string>
+    <string name="ui.admin.cdss.publish.confirm">Are you sure you want to publish this CDSS definition? Note: If your CDSS definition lists a state of ACTIVE it will apply to all patient encounters on this system</string>
+    <string name="ui.admin.cdss.publish.success">CDSS definition has been published successfully to the server</string>
+    <string name="ui.admin.cdss.edit.source">Source</string>
+    <string name="ui.admin.cdss.edit.source.hint"><![CDATA[
+        <p>Use the source editor to change the CDSS definition. Shortcuts:</p>
+        <ul class="list-unstyled">
+            <li><code>CTRL+F</code>: Find</li>
+            <li><code>CTRL+H</code>: Find/Replace</li>
+            <li><code>CTRL+S</code>: Save/Publish</li>
+            <li><code>F9</code>: Run/Test Library</li>
+            <li><code>CTRL+U</code>: Convert text to upper case</li>
+            <li><code>CTRL+SHIFT+U</code>: Convert text to lower case</li>
+        </ul>
+        ]]></string>
+        
+    <string name="ui.admin.cdss.edit.test">Test Rules</string>
+    <string name="ui.admin.cdss.edit.test.object">Object Type</string>
+    <string name="ui.admin.cdss.edit.test.object.hint">Select the type of object against which the rules will tested</string>
+    <string name="ui.admin.cdss.edit.test.source">Object Source</string>
+    <string name="ui.admin.cdss.edit.test.source.hint">Select whether the test object will be an arbitrary object (specified by you) or an existing record from the database</string>
+    <string name="ui.admin.cdss.edit.test.source.new">Specify An Object</string>
+    <string name="ui.admin.cdss.edit.test.source.db">Find from Database</string>
+    <string name="ui.admin.cdss.edit.test.parms">Parameters</string>
+    <string name="ui.admin.cdss.edit.test.parms.hint">CDSS libraries, rules and protocols can obtain interactive data from the evaludation session via parameters. Use this area to input any parameters that your CDSS library may use.</string>
+    <string name="ui.admin.cdss.edit.test.result.target">Output Target (with modification)</string>
+    <string name="ui.admin.cdss.edit.test.results">Outputs</string>
+    <string name="ui.admin.cdss.edit.test.result.issue">Raised Issues</string>
+    <string name="ui.admin.cdss.edit.test.result.debug">Debug Trace</string>
+    <string name="ui.admin.cdss.edit.test.result.proposal">Proposals</string>
+    <string name="ui.admin.cdss.edit.test.result.proposal.computed">computed proposals shown below. Please reduce the output of your library, or include more restrictive inputs</string>
+    <string name="ui.admin.cdss.edit.test.debug.set">Set Variable</string>
+    <string name="ui.admin.cdss.edit.test.debug.read">Read Variable</string>
+    <string name="ui.admin.cdss.edit.test.debug.assign">Assign Property</string>
+    <string name="ui.admin.cdss.edit.test.debug.fact">Compute Fact</string>
+    <string name="ui.admin.cdss.edit.test.debug.propose">Propose Action</string>
+    <string name="ui.admin.cdss.edit.test.debug.raise">Raise Issue</string>
+    <string name="ui.admin.cdss.edit.test.debug.exception">Fault Thrown</string>
+    <string name="ui.admin.cdss.edit.errorList">Errors/Issues</string>
+    <string name="org.santedb.widget.cdr.cdssLibrary.logic">Logic</string>
+    <string name="org.santedb.widget.cdr.cdssLibrary.data">Reference Data</string>
+    <string name="org.santedb.widget.cdr.cdssLibrary.main">Library</string>
+    <string name="org.santedb.widget.cdr.cdssLibrary.main.attribute">Library Properties</string>
+    <string name="org.santedb.widget.cdr.cdssLibrary.logic.define">Logic Definitions</string>
+    <string name="org.santedb.widget.cdr.cdssLibrary.data.define">Reference Sets</string>
+    <string name="org.santedb.widget.cdr.cdssLibrary.main.history">Version History</string>
 </resources>
