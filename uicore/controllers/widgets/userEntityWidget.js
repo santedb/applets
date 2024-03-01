@@ -62,6 +62,7 @@ angular.module('santedb').controller('UserProfileWidgetController', ['$scope', '
 }]).controller("UserSecurityWidgetController", ['$scope', '$rootScope', '$timeout', function ($scope, $rootScope, $timeout) {
 
     $scope.$watch("editObject.id", async function (n, o) {
+        console.info(n);
         if (n && n != o && !o) {
             if ($scope.editObject.language) {
                 $scope.editObject.preferredLanguage = $scope.editObject.language.find(o => o.isPreferred);

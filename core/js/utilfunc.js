@@ -517,3 +517,51 @@ function deleteModelProperties(objectToRemove) {
     }
 
 }
+
+/**
+ * Bundle all related properties into a new Bundle
+ * @param {Any} object The object which is to be bundled
+ */
+async function bundleRelatedObjects(object) {
+    
+    var retVal = new Bundle({ resource: [ await prepareEntityForSubmission(angular.copy(object)) ], focal: [ object.id ]});
+
+    if(object.relationship) {
+
+        await Promise.all(Object.keys(object.relationship).map(async function(relationshipType) {
+            var relationships = object.relationship[relationshipType];
+            if(!Array.isArray(relationships)) {
+                relationships = [relationships];
+            }
+            await Promise.all(relationships
+                .filter(o => o && o.targetModel)
+                .map(async function(rel) {
+                    var entity = await prepareEntityForSubmission(angular.copy(rel.targetModel));
+                    rel.target = entity.id = SanteDB.application.newGuid();
+                    retVal.resource.push(entity);
+                    delete rel.targetModel;
+                }));
+            relationships.forEach(rel => {
+                rel.holder = object.id;
+                delete rel.holderModel;
+                delete rel.targetModel;
+            });
+        }));
+    }
+
+    if(object.participation) {
+        await Promise.all(Object.keys(object.participation).map(async function(participationType) {
+            var participations = object.participation[participationType];
+            if(!Array.isArray(participations)) {
+                participations = [participations];
+            }
+            participations.forEach(ptcpt => {
+                rel.act = object.id;
+                delete rel.playerModel;
+            })
+        }))
+    }
+
+    retVal.resource.forEach(res => deleteModelProperties(res));
+    return retVal;
+}

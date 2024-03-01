@@ -168,6 +168,14 @@ angular.module('santedb-lib')
             templateUrl: '/org.santedb.uicore/directives/entityList.html',
             controller: ['$scope', "$state", function ($scope, $state) {
 
+                $scope.$watch("defaultQuery", function(n, o) {
+                    if(n && n != o) {
+                        if (_queryId !== undefined) {
+                            _queryId = SanteDB.application.newGuid();
+                        }
+                        refreshItems($scope);
+                    }
+                })
                 $scope.$watch("queryControl.filter", function (n, o) {
                     if (n != o) {
                         if (_queryId !== undefined) {
