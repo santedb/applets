@@ -33,9 +33,10 @@ Portions Copyright (C) 2015-2018 Mohawk College of Applied Arts and Technology
     <p class="text-subtle">{{ 'ui.admin.cdss.master.help' | i18n }}</p>
 
     <entity-table id="CdssLibraryDefinitionTable" type="CdssLibraryDefinition" 
-        search-field="name" i18n-prefix="'ui.model.cdssLibraryDefinition.'"
+        search-field="name" 
+        i18n-prefix="'ui.model.cdssLibraryDefinition.'"
         upstream="true"
-         no-deleted="true" 
+        no-deleted="true" 
         item-actions="[ 
             { name: 'view', sref: 'santedb-admin.cdr.cdss.view', demand: '1.3.6.1.4.1.33349.3.1.5.9.2.0.15.2', className: 'btn-primary', icon: 'fas fa-eye' }, 
             { name: 'edit', sref: 'santedb-admin.cdr.cdss.edit', demand: '1.3.6.1.4.1.33349.3.1.5.9.2.0.15.2.1', className: 'btn-secondary', icon: 'fas fa-pencil' }, 
@@ -46,7 +47,7 @@ Portions Copyright (C) 2015-2018 Mohawk College of Applied Arts and Technology
             { name: 'create', sref: 'santedb-admin.cdr.cdss.create', demand: '1.3.6.1.4.1.33349.3.1.5.9.2.0.15.2.0', className: 'btn-primary', icon: 'fas fa-asterisk' }
         ]"
         render="{ 'modifiedOn' : 'renderModifiedOn', 'status': renderStatus, version: renderVersion, name: renderName }"
-    properties="[  'name', 'version', 'status', 'modifiedOn' ]">
-</entity-table>
+        properties="[  'name', 'version', 'status', 'modifiedOn' ]">
+    </entity-table>
 
 </div>

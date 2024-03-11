@@ -61,9 +61,29 @@
       <column type="string" name="REASON" />
     </table>
 
+    <!-- Security Object Table -->
+    <table name="SEC_OBJ_TBL">
+      <column type="uuid" key="true" notNull="true" unique="true" name="SEC_OBJ_ID" />
+      <column type="string" notNull="true" name="CLS" />
+    </table>
+    <table name="SEC_DEV_TBL">
+      <column type="ref" key="true" notNull="true" name="DEV_ID">
+        <otherTable ref="SEC_OBJ_TBL" />
+      </column>
+      <column type="string" notNull="true" name="NAME" />
+      <column type="date-time" notNull="true" name="CREATED_TIME" />
+      <column type="uuid" notNull="true" name="CREATED_BY" />
+      <column type="date-time" name="LAST_AUTH_DATE" />
+      <column type="date-time" name="OBSOLETE_TIME"/>
+      <column type="ref" name="OBSOLETE_BY">
+        <otherTable ref="SEC_OBJ_TBL" />
+      </column>
+    </table>
     <!-- Security User Reporting Table -->
     <table name="SEC_USR_TBL">
-      <column type="uuid" key="true" notNull="true" unique="true" name="USR_ID"/>
+      <column type="ref" key="true" notNull="true" name="USR_ID">
+        <otherTable ref="SEC_OBJ_TBL" />
+      </column>
       <column type="string" notNull="true" name="USERNAME" />
       <column type="date-time" notNull="true" name="CREATED_TIME" />
       <column type="uuid" notNull="true" name="CREATED_BY" />
@@ -72,7 +92,7 @@
       <column type="string" name="PHONE" />
       <column type="date-time" name="OBSOLETE_TIME"/>
       <column type="ref" name="OBSOLETE_BY">
-        <otherTable ref="SEC_USR_TBL" />
+        <otherTable ref="SEC_OBJ_TBL" />
       </column>
     </table>
 
@@ -88,11 +108,11 @@
       <column type="float" name="LNG"/>
       <column type="date-time" notNull="true" name="CREATED_TIME"/>
       <column type="ref" notNull="true" name="CREATED_BY">
-        <otherTable ref="SEC_USR_TBL" />
+        <otherTable ref="SEC_OBJ_TBL" />
       </column>
       <column type="date-time" name="OBSOLETE_TIME"/>
       <column type="ref" name="OBSOLETE_BY">
-        <otherTable ref="SEC_USR_TBL" />
+        <otherTable ref="SEC_OBJ_TBL" />
       </column>
     </table>
 
@@ -312,11 +332,11 @@
       <column type="float" name="LNG"/>
       <column type="date-time" notNull="true" name="CREATED_TIME"/>
       <column type="ref" notNull="true" name="CREATED_BY">
-        <otherTable ref="SEC_USR_TBL" />
+        <otherTable ref="SEC_OBJ_TBL" />
       </column>
       <column type="date-time" name="OBSOLETE_TIME"/>
       <column type="ref" name="OBSOLETE_BY">
-        <otherTable ref="SEC_USR_TBL" />
+        <otherTable ref="SEC_OBJ_TBL" />
       </column>
       <column type="ref" notNull="true" name="RECORD_TARGET">
         <otherTable ref="ENT_TBL" />
@@ -429,6 +449,8 @@
   </schema>
 
   <dataFlows>
+    <flow name="security_objects" ref="#org.santedb.bi.datamart.core.security_objects" />
+    <flow name="devices" ref="#org.santedb.bi.datamart.core.devices" />
     <flow name="users" ref="#org.santedb.bi.datamart.core.users" />
     <flow name="addresses" ref="#org.santedb.bi.datamart.core.addresses" />
     <flow name="names" ref="#org.santedb.bi.datamart.core.names" />
@@ -456,6 +478,28 @@
         <transaction name="main_transaction">
           <connection ref="warehouseDatabase" />
           <pipeline>
+            <call>  
+              <dataFlow ref="security_objects" />
+              <args>
+                <ref name="input">
+                  <value ref="mainDatabase" />
+                </ref>
+                <ref name="output">
+                  <value ref="warehouseDatabase" />
+                </ref>
+              </args>
+            </call>
+            <call>
+              <dataFlow ref="devices" />
+              <args>
+                <ref name="input">
+                  <value ref="mainDatabase" />
+                </ref>
+                <ref name="output">
+                  <value ref="warehouseDatabase" />
+                </ref>
+              </args>
+            </call>
             <call>
               <dataFlow ref="users" />
               <args>

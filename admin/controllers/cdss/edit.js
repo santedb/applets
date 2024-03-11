@@ -1,4 +1,4 @@
-/// <reference path="../../.ref/js/santedb.js"/>
+/// <reference path="../../../core/js/santedb.js"/>
 angular.module('santedb').controller('CdssEditController', ["$scope", "$rootScope", "$timeout", "$state", "$stateParams", "$interval", "$transitions", function ($scope, $rootScope, $timeout, $state, $stateParams, $interval, $transitions) {
 
     var _editor = null;
@@ -47,6 +47,7 @@ angular.module('santedb').controller('CdssEditController', ["$scope", "$rootScop
         }
     }
 
+    
     async function validateEditor(force) {
         try {
             var value = _editor.getValue();

@@ -49,9 +49,9 @@
                 GEO_TBL.LAT,
                 GEO_TBL.LNG,
                 ACT_VRSN_TBL.CRT_UTC AS CREATED_TIME,
-                CRT_PROV_TBL.USR_ID AS CREATED_BY,
+                COALESCE(CRT_PROV_TBL.USR_ID, CRT_PROV_TBL.DEV_ID)  AS CREATED_BY,
                 ACT_VRSN_TBL.OBSLT_UTC AS OBSOLETE_TIME,
-                OBS_PROV_TBL.USR_ID AS OBSOLETE_BY,
+                COALESCE(OBS_PROV_TBL.USR_ID, OBS_PROV_TBL.DEV_ID)  AS OBSOLETE_BY,
                 AUT.ENT_ID AS AUTHOR,
                 PRF.ENT_ID AS PERFORMER,
 				        RCT.ENT_ID AS RECORD_TARGET 
