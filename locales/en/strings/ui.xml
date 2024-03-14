@@ -195,7 +195,7 @@
       <string name="ui.action.search">Search</string>
       <string name="ui.action.search.advanced">Advanced Search</string>
       <string name="ui.action.search.basic">Basic Search</string>
-      <string name="ui.action.search.upstream">Search the central server</string>
+      <string name="ui.action.search.upstream">Search Upstream</string>
       <string name="ui.action.login">Login</string>
       <string name="ui.action.passwordReset">Forgot Password</string>
       <string name="ui.action.ignore">Ignore</string>
@@ -227,7 +227,7 @@
       <string name="ui.action.resolve">Resolve</string>
       <string name="ui.action.enable">Enable</string>
       <string name="ui.action.disable">Disable</string>
-      <string name="ui.action.schedule">Schedue</string>
+      <string name="ui.action.schedule">Schedule</string>
       <string name="ui.action.scan">Scan</string>
       <string name="ui.action.finish">Finish</string>
       <string name="ui.action.refresh">Refresh</string>

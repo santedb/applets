@@ -18,7 +18,10 @@
  * User: fyfej
  * Date: 2023-5-19
  */
-angular.module('santedb').controller('UserIndexController', ["$scope", "$rootScope", "$stateParams", "$templateCache", function ($scope, $rootScope, $stateParams, $templateCache) {
+angular.module('santedb')
+    .controller('UserIndexController', 
+        ["$scope", "$rootScope", "$stateParams", "$templateCache", 
+        function ($scope, $rootScope, $stateParams, $templateCache) {
 
     $scope.initialFilter = $stateParams.q;
     /**

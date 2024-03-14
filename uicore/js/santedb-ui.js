@@ -184,7 +184,7 @@ SanteDBWrapper.prototype.display = new function () {
             retVal = concept[Object.keys(concept)[0]];
 
         if (Array.isArray(retVal))
-            return retVal[0];
+            return retVal.find(o=>o[0] <= 'Z') || retVal[0];
         else
             return retVal;
     };

@@ -208,9 +208,11 @@
   <string name="ui.model.entity.name.use.hint"><![CDATA[The intended use for the name. For example <code>OfficialRecord</code> would indicate the name is used on official documentation.]]></string>
   <string name="ui.model.entity.name.component.prefix">Prefix</string>
   <string name="ui.model.entity.name.component.prefix.hint"><![CDATA[A prefix or honorary title used (example: <code>Sir</code>, <code>Mr.</code>, <code>Ms.</code>)]]></string>
-  <string name="ui.model.entity.name.component.given">Given</string>
+  <string name="ui.model.entity.name.component.given">Given Name</string>
   <string name="ui.model.entity.name.component.given.hint"><![CDATA[Given names of the entity]]></string>
-  <string name="ui.model.entity.name.component.family">Family</string>
+  <string name="ui.model.entity.name.component.middle">Middle Name</string>
+  <string name="ui.model.entity.name.component.middle.hint"><![CDATA[Middle names of the entity]]></string>
+  <string name="ui.model.entity.name.component.family">Family Name</string>
   <string name="ui.model.entity.name.component.family.hint"><![CDATA[Family names of the entity (or surname)]]></string>
   <string name="ui.model.entity.name.component.suffix">Suffix</string>
   <string name="ui.model.entity.name.component.suffix.hint"><![CDATA[Suffixes for the name such as an enumetion (William Gates <code>III</code>) a designator (Joe Smith <code>Jr.</code>) or designated title (Dr. Fran Smith <code>MD</code>)]]></string>

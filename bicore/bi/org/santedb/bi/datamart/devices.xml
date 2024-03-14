@@ -1,0 +1,75 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<!--
+ - Copyright 2021-2024 SanteSuite Contributors (See NOTICE.md for full copyright notices)
+ - Copyright (C) 2019 - 2021, Fyfe Software Inc. and the SanteSuite Contributors
+ - Portions Copyright (C) 2015-2018 Mohawk College of Applied Arts and Technology
+ - 
+ - Licensed under the Apache License, Version 2.0 (the "License"); you 
+ - may not use this file except in compliance with the License. You may 
+ - obtain a copy of the License at 
+ - 
+ - http://www.apache.org/licenses/LICENSE-2.0 
+ - 
+ - Unless required by applicable law or agreed to in writing, software
+ - distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+ - WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the 
+ - License for the specific language governing permissions and limitations under 
+ - the License.
+ - 
+ - User: fyfej
+ - Date: 2023-5-19
+ -->
+<BiDataFlowDefinition xmlns="http://santedb.org/bi" id="org.santedb.bi.datamart.core.devices">
+  <parameters>
+    <ref name="input"/>
+    <ref name="output"/>
+  </parameters>
+  <pipeline>
+    <log name="log_start" priority="Verbose">Start Security Devices {{input}}</log>
+    <reader name="source_devices">
+      <connection ref="input" />
+      <schema ref="SEC_DEV_TBL"/>
+      <sql>
+        <add>
+          <providers>
+            <invariant>npgsql</invariant>
+            <invariant>FirebirdSQL</invariant>
+            <invariant>sqlite</invariant>
+          </providers>
+          <![CDATA[ 
+                SELECT 
+	                SEC_DEV_TBL.DEV_ID,
+	                DEV_PUB_ID  AS NAME,
+	                CRT_UTC AS CREATED_TIME,
+	                COALESCE(CRT_PROV.USR_ID, CRT_PROV.DEV_ID) AS CREATED_BY,
+	                LAST_AUTH_UTC AS LAST_AUTH_DATE,
+	                OBSLT_UTC AS OBSOLETE_TIME,
+	                COALESCE(OBS_PROV.USR_ID, OBS_PROV.DEV_ID) AS OBSOLETE_BY
+                FROM 
+	                SEC_DEV_TBL 
+	                INNER JOIN SEC_PROV_TBL AS CRT_PROV ON (SEC_DEV_TBL.CRT_PROV_ID = CRT_PROV.PROV_ID)
+	                LEFT JOIN SEC_PROV_TBL AS OBS_PROV ON (SEC_DEV_TBL.OBSLT_PROV_ID = OBS_PROV.PROV_ID)
+                ORDER BY SEC_DEV_TBL.CRT_UTC ASC;
+              ]]>
+        </add>
+      </sql>
+    </reader>
+    <writer truncate="true" mode="insert" name="write_devices">
+      <input ref="source_devices"/>
+      <connection ref="output" />
+      <target ref="SEC_DEV_TBL" />
+    </writer>
+    <filter name="filter_rejects">
+      <input ref="write_devices" />
+      <all>
+        <when field="$reject" op="eq">
+          <bool>true</bool>
+        </when>
+      </all>
+    </filter>
+    <halt name="halt_rejects">
+      <input ref="filter_rejects" />
+      Halting execution - {{ name }} rejected {{ $reject.reason }}
+    </halt>
+  </pipeline>
+</BiDataFlowDefinition>
