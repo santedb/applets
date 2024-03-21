@@ -42,6 +42,7 @@
             <div ng-if="!tfaMechanisms">
                 <i class="fas fa-spin fa-circle-notch"></i> {{ 'ui.wait' | i18n }}
             </div>
+            {{$scope.scopedObject._localOnly}}
             <div ng-if="tfaMechanisms">
                 <div class="alert alert-warning"
                     ng-if="editObject.isUpstreamUser &amp;&amp; ($root.session.authType != 'OAUTH' || !$root.system.serviceState.ami)">

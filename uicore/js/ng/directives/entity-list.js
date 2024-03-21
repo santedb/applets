@@ -270,7 +270,6 @@ angular.module('santedb-lib')
                 _listTemplate = $("#listTemplate", element).html().replaceAll(" xg-", " ng-").replace("$template", _itemTemplate).replace("$itemClass", attrs.itemClass);
                 $("#listContainer", element).html(_listTemplate);
                 $compile(angular.element("#listContainer"))(scope);
-                console.info(_listTemplate);
                 $(".entity-list-waiter", element).attr("id", `${_id}_${_scid}`);
 
                 if (attrs.canChangeView == "true") {

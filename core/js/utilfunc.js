@@ -176,6 +176,36 @@ Date.prototype.lastWeekDay = function (month, year) {
 String.prototype.b64DecodeJson = function() {
     return JSON.parse(atob(this));
 }
+
+/**
+ * @summary Parses a string from base64 into a buffer
+ */
+String.prototype.b64DecodeBuffer = function() {
+    var source = this;
+    while(source.length % 4 != 0) source += '=';
+    var e={},i,b=0,c,x,l=0,a,w=String.fromCharCode,L=source.length, oi=0;
+    var r = new Uint8Array(L);
+    var A="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
+    for(i=0;i<64;i++){e[A.charAt(i)]=i;}
+
+    for(x=0;x<L;x++){
+        c=e[source.charAt(x)];
+        b=(b<<6)+c;
+        l+=6;
+        while(l>=8)
+        {
+            if((a=(b>>>(l-=8)) & 0xff) || (x < (L-2))) {
+                r[oi++] = a;
+            }
+        }
+    }
+    var retVal = new Uint8Array(oi);
+    for(var i = 0; i < oi; i++) {
+        retVal[i] = r[i];
+    }
+    return retVal.buffer;
+}
+
 /** 
  * @summary Decodes a hex string
  * @method

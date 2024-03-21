@@ -1908,13 +1908,40 @@ function SanteDBWrapper() {
         var _idClassifiers = {};
         var _templateView = {};
         var _templateForm = {};
+        
 
         /**
-         * @memberof SanteDBWrapper.ApplicationApi
-        * @summary Wraps native printing functionality for the host operating system
-        */
-        this.printView = function () {
-            __SanteDBAppService.Print();
+         * @summary Attempts to parse te JWS data contained in a scanned barcode into logical identifier structure
+         * @param {*} jwsData The data to be parsed in SVRP format
+         * @returns {object} The entity which is described in the SVRP
+         */
+        async function _extractJwsData(jwsData) {
+            try {
+                var jwsHeaderData = atob(jwsData[1]);
+                
+                var jwsBody = null;
+                var jwsHeader = JSON.parse(jwsHeaderData);
+                if(jwsHeader.zip == "DEF") {
+                    var decompress = new DecompressionStream("deflate-raw");
+                    var buffer = jwsData[2].b64DecodeBuffer();
+                    var blob = new Blob([buffer]);
+                    var reader = blob.stream().pipeThrough(decompress).getReader();
+                    var data = await reader.read();
+                    jwsBody = JSON.parse(new TextDecoder().decode(data));
+                }
+                else {
+                    var jwsBodyData = jwsData[2].b64DecodeBuffer();
+                    jwsBody = JSON.parse(new TextDecoder().decode(jwsBodyData));
+                }
+
+                // Return the data element
+                var retVal = jwsBody.data || {};
+                retVal.id = jwsBody.sub;
+                return retVal;
+            }
+            catch(e) {
+                throw new Exception("JwsParseError", e);
+            }
         }
 
         /**
@@ -1987,6 +2014,14 @@ function SanteDBWrapper() {
         }
 
         /**
+         * @memberof SanteDBWrapper.ApplicationApi
+        * @summary Wraps native printing functionality for the host operating system
+        */
+        this.printView = function () {
+            __SanteDBAppService.Print();
+        }
+
+        /**
          * @method scanIdentifierAsync
          * @memberof SanteDBWrapper.ApplicationApi
          * @summary Scans a barcode using {@link scanBarcodeAsync} however interprets the identifier rather than returning the raw data
@@ -1996,13 +2031,14 @@ function SanteDBWrapper() {
         this.scanIdentifierAsync = async function () {
             var data = await SanteDB.application.scanBarcodeAsync();
 
-            if (jwsDataPattern.test(data)) {
-                var match = jwsDataPattern.exec(data);
-                var idData = JSON.parse(atob(match[2]));
-                return idData.id[0].value;
+            if (svrpPattern.test(data)) {
+                var match = svrpPattern.exec(data);
+                var jwsData = jwsDataPattern.exec(match[1]);
+                return await _extractJwsData(jwsData);
             }
-            else if (srvpPattern.test(data)) {
-
+            else if (jwsDataPattern.test(data)) {
+                var jwsData = jwsDataPattern.exec(data);
+                return await _extractJwsData(jwsData);
             }
             else {
                 var idDomain = SanteDB.application.classifyIdentifier(data);
@@ -4417,7 +4453,7 @@ function SanteDBWrapper() {
             try {
                 var retVal = __SanteDBAppService.GetString(stringId);
 
-                if (retVal) {
+                if (retVal && retVal.replace) {
                     retVal = retVal.replace(/\{.*?\}/ig, function (s) {
                         if (typeof s === 'string' && parameters) {
                             return parameters[s.substring(1, s.length - 1)];
