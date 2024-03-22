@@ -2761,9 +2761,10 @@ function SanteDBWrapper() {
                 var configuration = {
                     resource: "_ptr",
                     headers: {
-                        accept: _viewModelJsonMime
+                        accept: _viewModelJsonMime,
+                        "X-SanteDB-Upstream": upstream
                     },
-                    query: { code: jwsData, validate: validateSignature, _upstream: upstream }
+                    query: { code: jwsData, validate: validateSignature }
                 };
                 return _hdsi.searchAsync(configuration);
             }
