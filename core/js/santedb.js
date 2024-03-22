@@ -67,7 +67,7 @@ function APIWrapper(_config) {
             else if (object.$ref !== undefined) {
                 if (!resolveStack.indexOf(object.$ref)) {
                     return referenceDictionary[object.$ref];
-                } 
+                }
             }
             else if (Array.isArray(object)) {
                 return object.map(o => _resolveObjectRefs(o, referenceDictionary));
@@ -88,7 +88,7 @@ function APIWrapper(_config) {
             }
         }
         finally {
-            if(object && object.$id) {
+            if (object && object.$id) {
                 resolveStack.splice(resolveStack.length, 1);
             }
         }
@@ -1908,7 +1908,7 @@ function SanteDBWrapper() {
         var _idClassifiers = {};
         var _templateView = {};
         var _templateForm = {};
-        
+
 
         /**
          * @summary Attempts to parse te JWS data contained in a scanned barcode into logical identifier structure
@@ -1918,16 +1918,24 @@ function SanteDBWrapper() {
         async function _extractJwsData(jwsData) {
             try {
                 var jwsHeaderData = atob(jwsData[1]);
-                
+
                 var jwsBody = null;
                 var jwsHeader = JSON.parse(jwsHeaderData);
-                if(jwsHeader.zip == "DEF") {
-                    var decompress = new DecompressionStream("deflate-raw");
-                    var buffer = jwsData[2].b64DecodeBuffer();
+                if (jwsHeader.zip) {
+                    var decompress = null;
+                    switch (jwsHeader.zip) {
+                        case "DEF":
+                            decompress = new DecompressionStream("deflate-raw");
+                            break;
+                        case "GZ":
+                            decompress = new DecompressionStream("gzip");
+                            break;
+                    }
+                    var buffer = jwsData[2].b64DecodeBuffer(true);
                     var blob = new Blob([buffer]);
                     var reader = blob.stream().pipeThrough(decompress).getReader();
                     var data = await reader.read();
-                    jwsBody = JSON.parse(new TextDecoder().decode(data));
+                    jwsBody = JSON.parse(new TextDecoder().decode(data.value));
                 }
                 else {
                     var jwsBodyData = jwsData[2].b64DecodeBuffer();
@@ -1939,7 +1947,7 @@ function SanteDBWrapper() {
                 retVal.id = jwsBody.sub;
                 return retVal;
             }
-            catch(e) {
+            catch (e) {
                 throw new Exception("JwsParseError", e);
             }
         }
@@ -3805,7 +3813,7 @@ function SanteDBWrapper() {
         this.getUserSettingsAsync = async function () {
             return _resources.configuration.findAssociatedAsync("me", "settings");
         }
-        
+
         /**
             * @method saveUserPreferencesAsync
          * @memberof SanteDBWrapper.ConfigurationApi
@@ -4039,7 +4047,7 @@ function SanteDBWrapper() {
                 },
                 contentType: "application/json",
                 data: {
-                    "parameter" : [
+                    "parameter": [
                         { name: "code", value: code }
                     ]
                 }

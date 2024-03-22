@@ -180,12 +180,14 @@ String.prototype.b64DecodeJson = function() {
 /**
  * @summary Parses a string from base64 into a buffer
  */
-String.prototype.b64DecodeBuffer = function() {
+String.prototype.b64DecodeBuffer = function(isUrlEncoded) {
     var source = this;
-    while(source.length % 4 != 0) source += '=';
+    while(source.length % 4 != 0) source += '='; // re-add padding
     var e={},i,b=0,c,x,l=0,a,w=String.fromCharCode,L=source.length, oi=0;
     var r = new Uint8Array(L);
-    var A="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
+    var A= isUrlEncoded ?
+    "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_"
+    : "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
     for(i=0;i<64;i++){e[A.charAt(i)]=i;}
 
     for(x=0;x<L;x++){
