@@ -158,16 +158,29 @@ angular.module('santedb')
             var errorFn = function (e) {
                 SanteDB.display.buttonWait("#saveUserButton", false);
                 if (e.$type == "DetectedIssueException" && userForm.newPassword) { // Error with password?
-                    userForm.newPassword.$error = {};
-                    var passwdRules = e.rules.filter(function (d) { return d.priority == "Error" && d.text == "err.password.complexity"; });
-                    if (passwdRules.length == e.rules.length) {
-                        passwdRules.forEach(function (d) {
-                            userForm.newPassword.$error[d.text] = true;
-                        });
-                        $scope.$apply();
-                    }
-                    else
-                        $rootScope.errorHandler(e);
+                    $timeout(() => {
+                        userForm.newPassword.$error = {};
+                        e.rules.filter(r=>r.priority == "Error").forEach(r => {
+                            switch(d.id) {
+                                case "password.complexity":
+                                    userForm.newPassword.$error[d.id] = true;
+                                    break;
+                                case "password.history":
+                                    userForm.newPassword.$error[d.id] = true;
+                                    break;
+                            }
+                        })
+                        var passwdRules = e.rules.filter(function (d) { return d.priority == "Error" && d.text == "err.password.complexity"; });
+                        if (passwdRules.length == e.rules.length) {
+                            passwdRules.forEach(function (d) {
+                                userForm.newPassword.$error[d.text] = true;
+                            });
+                            $scope.$apply();
+                        }
+                        else
+                            $rootScope.errorHandler(e);
+    
+                    });
                 }
                 else
                     $rootScope.errorHandler(e);

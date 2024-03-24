@@ -34,7 +34,6 @@
         </div>
     </div>
     <div ng-if="scopedObject.id" ng-controller="UserProfileWidgetController">
-        
         <div ng-if="panel.view != 'Edit'">
             <div class="row">
                 <label class="col-md-3 control-label">{{ 'ui.model.entity.name' | i18n }}</label>
@@ -56,57 +55,66 @@
                         <li ng-if="!scopedObject.telecom">{{ 'ui.unknown' | i18n }} </li>
                         <li ng-repeat="(k,tel) in scopedObject.telecom">
                             <a href="{{tel[0].value}}" target="_blank">{{tel[0].value}} <span
-                                class="badge badge-pill badge-info">{{ tel[0].useModel | concept }}</span></a></li>
+                                    class="badge badge-pill badge-info">{{ tel[0].useModel | concept }}</span></a>
+                        </li>
                     </ul>
                 </div>
-                <label class="col-md-3 control-label"  ng-if="scopedObject.language">{{ 'ui.model.entity.language' | i18n }}</label>
+                <label class="col-md-3 control-label" ng-if="scopedObject.language">{{ 'ui.model.entity.language' | i18n
+                    }}</label>
                 <div class="col-md-9 p-2" ng-repeat="lang in scopedObject.language track by $index"
                     ng-class="{ 'offset-md-3': $index > 0 }">
-                    {{ 'ui.locale.' + lang.languageCode | i18n }} <span
-                            class="badge badge-pill badge-info" ng-if="lang.isPreferred"><i class="fas fa-check"></i> {{ 'ui.model.entity.language.preferred' | i18n }}</span>
+                    {{ 'ui.locale.' + lang.languageCode | i18n }} <span class="badge badge-pill badge-info"
+                        ng-if="lang.isPreferred"><i class="fas fa-check"></i> {{ 'ui.model.entity.language.preferred' | i18n
+                        }}</span>
                 </div>
                 <label class="col-md-3 control-label">{{ 'ui.model.entity.relationship.Employer' | i18n }}</label>
                 <div class="col-md-9 p-2">
-                    <span ng-if="scopedObject.relationship.Employee">{{ scopedObject.relationship.Employee[0].targetModel.name | name }}</span>
+                    <span ng-if="scopedObject.relationship.Employee">{{
+                        scopedObject.relationship.Employee[0].targetModel.name | name }}</span>
                     <span ng-if="!scopedObject.relationship.Employee">
                         {{ 'ui.unknown' | i18n }}
                     </span>
                 </div>
-                <label class="col-md-3 control-label">{{ 'ui.model.entity.relationship.DedicatedServiceDeliveryLocation' | i18n }}</label>
+                <label class="col-md-3 control-label">{{ 'ui.model.entity.relationship.DedicatedServiceDeliveryLocation' |
+                    i18n }}</label>
                 <div class="col-md-9 p-2">
-                    <span ng-if="scopedObject.relationship.DedicatedServiceDeliveryLocation">{{ scopedObject.relationship.DedicatedServiceDeliveryLocation[0].targetModel.name | name }}</span>
+                    <span ng-if="scopedObject.relationship.DedicatedServiceDeliveryLocation">{{
+                        scopedObject.relationship.DedicatedServiceDeliveryLocation[0].targetModel.name | name }}</span>
                     <span ng-if="!scopedObject.relationship.DedicatedServiceDeliveryLocation">
                         {{ 'ui.unknown' | i18n }}
                     </span>
                 </div>
-
+    
             </div>
         </div>
         <form ng-submit="update(panel.editForm)" name="panel.editForm" method="dialog" novalidate="novalidate"
             ng-if="panel.view == 'Edit'">
-            <name-edit is-required="true" name="editObject.name" simple-entry="true" no-add="true" no-type="true" owner-form="panel.editForm" />
-            <hr/>
-            <address-edit is-required="false" address="editObject.address" no-add="true" simple-entry="true" no-type="true" owner-form="panel.editForm" />
-            <hr/>
+            <name-edit is-required="true" name="editObject.name" simple-entry="true" no-add="true" no-type="true"
+                owner-form="panel.editForm" />
+            <hr />
+            <address-edit is-required="false" address="editObject.address" no-add="true" simple-entry="true" no-type="true"
+                owner-form="panel.editForm" />
+            <hr />
             <div class="form-group row">
                 <label class="col-md-3 col-sm-12 control-label">
                     {{ 'ui.model.entity.telecom.Public' | i18n }}
                 </label>
                 <div class="col-md-9 col-sm-12">
-                    <telecom-edit telecom="editObject.telecom" single-edit="'Public'" owner-form="panel.editForm" no-label="true" />
+                    <telecom-edit telecom="editObject.telecom" single-edit="'Public'" owner-form="panel.editForm"
+                        no-label="true" />
                 </div>
             </div>
             <div class="form-group row">
-                <label for="language"
-                    class="col-xs-12 col-md-3 control-label">{{ 'ui.model.userEntity.language' | i18n }}</label>
+                <label for="language" class="col-xs-12 col-md-3 control-label">{{ 'ui.model.userEntity.language' | i18n
+                    }}</label>
                 <div class="col-xs-12 col-md-9">
-                    <select name="language"
-                        class="form-control"
-                        ng-model="editObject.preferredLanguage.languageCode">
-                        <option ng-repeat="lang in $root.system.locales" value="{{lang}}">{{ 'ui.locale.' + lang | i18n }}</option>
+                    <select name="language" class="form-control" ng-model="editObject.preferredLanguage.languageCode">
+                        <option ng-repeat="lang in $root.system.locales" value="{{lang}}">{{ 'ui.locale.' + lang | i18n }}
+                        </option>
                     </select>
                 </div>
             </div>
         </form>
+        
     </div>
 </div>

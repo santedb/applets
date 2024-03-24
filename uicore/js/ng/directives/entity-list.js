@@ -117,7 +117,7 @@ angular.module('santedb-lib')
                 if (Array.isArray(scope.itemSupplement)) {
                     results.resource = await Promise.all(results.resource.map(async res => {
                         for (var supl in scope.itemSupplement) {
-                            res = await scope.itemSupplement[s](res);
+                            res = await scope.itemSupplement[supl](res);
                         }
                         return res;
                     }));
@@ -219,7 +219,7 @@ angular.module('santedb-lib')
 
                 $scope.filterAction = function (action, record) {
                     if (action.when) {
-                        return $scope.$eval(action.when, { r: record });
+                        return $scope.$eval(action.when, { r: record, item: record });
                     }
                     else {
                         return true;

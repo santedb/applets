@@ -100,20 +100,26 @@ angular.module('santedb-lib')
                     scope.controlPrefix = '';
 
                 if (!scope.address)
-                    SanteDB.resources.concept.getAsync(AddressUseKeys.HomeAddress)
-                        .then(function (d) {
-                            scope.addressEdit = [{ useModel: d }];
-                            scope.address = {
-                                "$other": scope.addressEdit
-                            };
-                            try {
-                                scope.$apply();
-                            }
-                            catch (e) { }
-                        })
-                        .catch(function (e) { });
-                else  // address exists so let's move everything over to $other
                 {
+                    scope.address = {
+                        HomeAddress: [ new EntityAddress({
+                            component: {
+                                Country: [],
+                                State: [],
+                                County: [],
+                                Precinct: [],
+                                City: [],
+                                PostBox: [], 
+                                UnitIdentifier: [],
+                                AddressLine: [],
+                                CareOf: [], 
+                                AdditionalLocator: []
+                            }
+                        })]
+                    };
+                }
+                //else  // address exists so let's move everything over to $other
+                //{
                     var flatAddressList = scope.address.$other || [];
                     Object.keys(scope.address).filter(key=>key != "$other").forEach(function (key) {
                         var address = scope.address[key];
@@ -133,7 +139,7 @@ angular.module('santedb-lib')
                     //scope.address = { "$other": flatAddressList };
                     scope.addressEdit = flatAddressList;
                     scope.address["$other"] = scope.address["$other"] || [];
-                }
+                //}
             }
         }
     }])
@@ -247,6 +253,7 @@ angular.module('santedb-lib')
                     scope.allowedComponents = "prefix,given,family,suffix"; //Default for compatability.
                 }
 
+
                 // Flatten name
                 var flattenName = function () {
                     bound = true;
@@ -276,18 +283,23 @@ angular.module('santedb-lib')
                 }
 
                 if (!scope.name)
-                    SanteDB.resources.concept.getAsync(NameUseKeys.Legal)
-                        .then(function (d) {
-                            scope.nameEdit = [{ useModel: d }];
-                            scope.name = {
-                                "$other": scope.nameEdit
-                            };
-                        })
-                        .catch(function (e) { });
-                else  // Name exists so let's move everything over to $other
                 {
-                    flattenName();
+                    scope.name = { Legal: [
+                        new EntityName(
+                        { 
+                            component: {
+                                Given: [],
+                                Family: [],
+                                Prefix: [],
+                                Suffix: [],
+                                $other: []
+                            },
+                            id: SanteDB.application.newGuid()
+                        })
+                    ] };
                 }
+                
+                flattenName();
 
                 scope.$watch("name", function (n, o) {
                     if (n && !n.$other) {

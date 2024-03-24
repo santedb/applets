@@ -20,23 +20,20 @@
  -->
 <div xmlns="http://www.w3.org/1999/xhtml" style="min-width:250px; display:inline">
     <i class="fas fa-circle-notch fa-spin" ng-if="isLoading"></i>
-    <div style="display:inline">
-        <span ng-if="provData.userModel"><i class="fas fa-user"></i> {{ provData.userModel.userName }}
+    <div class="d-flex">
+        <span ng-if="provData.userModel" class="m-1"><i class="fas fa-user"></i> {{ provData.userModel.userName }}
         </span>
-        <span ng-if="provData.deviceModel &amp;&amp; !provData.userModel">
+        <span ng-if="provData.deviceModel &amp;&amp; !provData.userModel" class="m-1">
             <i class="fas fa-desktop" ng-if="provData.deviceModel"></i> {{ provData.deviceModel.name }}
         </span>
-        <span ng-if="provenanceTime">
+        <span ng-if="provenanceTime" class="m-1">
             at <i class="fas fa-clock"></i> {{ provenanceTime | extDate: 'M'}}  
         </span>
         <!-- <span ng-if="provData.applicationModel">
             via 
             <i class="fas fa-window-maximize" ng-if="provData.applicationModel"></i> {{ provData.applicationModel.name }}</span> -->
-        <div class="btn-group d-inline"><button type="button" class="btn btn-link" data-toggle="popover" data-trigger="focus"
+        <button type="button" class="btn btn-link p-0 m-0" data-toggle="popover" data-trigger="focus"
                 data-title="{{ 'ui.provenance.extraInfo' | i18n }}" data-content=""><i
-                    class="fas fa-info-circle"></i></button>
-            <button ng-if="sessionfn" class="btn btn-link" ng-click="sessionfn(provData.id)"><i
-                    class="fas fa-external-link-square-alt"></i></button>
-        </div>
+                    class="fas fa-info-circle fa-fw"></i></button>
     </div>
 </div>

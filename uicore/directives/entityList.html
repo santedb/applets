@@ -104,9 +104,9 @@
     <!-- The following is used as a template for each of the list items 
         xg-* is replaced with ng-* when injecting the HTML into the template-->
     <div class="d-none" id="listTemplate">
-        <div class="card $itemClass my-0"
+        <div class="card $itemClass"
             xg-class="::{ 'col-sm-12 col-md-6 col-xl-4' : _display != 'list', 'col-12' : _display == 'list' }"
-            xg-repeat="item in results.resource">
+            xg-repeat="item in results.resource track by $index">
             $template
             <div class="card-footer" xg-if="itemActions">
                 <div class="btn-group float-right">

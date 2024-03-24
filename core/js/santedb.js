@@ -1814,6 +1814,21 @@ function SanteDBWrapper() {
 
     /**
      * @private
+     * @summary Policy violation exception handler
+     * @param {*} faultJson The Fault message
+     * @returns {bool} True if the fault JSON inidcates a policy violation
+     */
+    var _isPolicyViolationException = function(faultJson) {
+        var isPve = false;
+        do {
+            isPve |= faultJson.$type == "PolicyViolationException";
+            faultJson = faultJson.cause;
+        } while(!isPve && faultJson)
+        return isPve;
+    }
+
+    /**
+     * @private
      * @summary Global error handler
      * @param {xhr} e The Errored request
      * @param {*} data 
@@ -1830,7 +1845,7 @@ function SanteDBWrapper() {
 
                 // Was the response a security policy exception where the back end is asking for elevation on the same user account?
                 if (data.responseJSON &&
-                    data.responseJSON.$type == "PolicyViolationException" &&
+                    _isPolicyViolationException(data.responseJSON) &&
                     data.getResponseHeader("WWW-Authenticate").indexOf("insufficient_scope") > -1)
                     _elevator.elevate(angular.copy(_session), [data.responseJSON.policyId]);
                 else
@@ -2869,13 +2884,24 @@ function SanteDBWrapper() {
             api: _hdsi
         });
         /**
-            * @type {ResourceWrapper}
-            * @memberof SanteDBWrapper.ResourceApi
-            * @summary Represents the Patient Resource
-            */
+        * @type {ResourceWrapper}
+        * @memberof SanteDBWrapper.ResourceApi
+        * @summary Represents the Patient Resource
+        */
         this.patient = new ResourceWrapper({
             accept: _viewModelJsonMime,
             resource: "Patient",
+            api: _hdsi
+        });
+
+        /**
+        * @type {ResourceWrapper}
+        * @memberof SanteDBWrapper.ResourceApi
+        * @summary Represents the PatientEncounter Resource
+        */
+        this.patientEncounter = new ResourceWrapper({
+            accept: _viewModelJsonMime,
+            resource: "PatientEncounter",
             api: _hdsi
         });
 
@@ -4243,13 +4269,25 @@ function SanteDBWrapper() {
         this.clientCredentialLoginAsync = function (noSession, scope) {
             return new Promise(function (fulfill, reject) {
                 try {
+                    var claims = {};
+                    if (noSession) {
+                        claims["urn:santedb:org:claim:temporary"] = "true";
+                    }
+
+                    if (Object.keys(claims).length > 0) {
+                        headers["X-SanteDBClient-Claim"] =
+                            btoa(Object.keys(claims).map(o => `${o}=${claims[o]}`).join(";"));
+                    }
+                    
                     _auth.postAsync({
                         resource: "oauth2_token",
                         data: {
                             grant_type: 'client_credentials',
                             client_id: SanteDB.configuration.getClientId(),
-                            scope: (scope || ["*"]).join(" ")
+                            scope: (scope || ["*"]).join(" "),
+                            no_session: noSession
                         },
+                        headers: headers,
                         contentType: 'application/x-www-form-urlencoded'
                     })
                         .then(function (d) {

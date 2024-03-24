@@ -34,6 +34,7 @@
   <string name="ui.model.securityUser.invalidLoginAttempts">Invalid Logins</string>
   <string name="ui.model.securityUser.title">User</string>
   <string name="ui.model.securityUser.password">Password</string>
+  <string name="ui.model.securityUser.neverLoggedIn">Never logged in</string>
   <string name="ui.model.securityRole.title">Role</string>
   <string name="ui.model.securityUser.email">Security E-Mail</string>
   <string name="ui.model.securityUser.phoneNumber">Security Phone</string>
