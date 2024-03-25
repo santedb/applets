@@ -43,6 +43,8 @@
   <string name="ui.model.securityUser.twoFactorEnabled.false">Disabled</string>
   <string name="ui.model.securityUser.twoFactorEnabled.setup">Setup</string>
   <string name="ui.model.securityUser.challenge">Password Recovery</string>
+  <string name="ui.model.userEntity.securityUserModel.central">This user can log into any device. Changing the profile requires an internet connection</string>
+  <string name="ui.model.userEntity.securityUserModel.local">This user can only log into this device/local deployment.</string>
   <string name="ui.model.userEntity.givenName">Given Name</string>
   <string name="ui.model.userEntity.familyName">Family Name</string>
   <string name="ui.model.userEntity.language">Preferred Language</string>
