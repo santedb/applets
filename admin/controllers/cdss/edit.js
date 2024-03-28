@@ -1,19 +1,9 @@
 /// <reference path="../../../core/js/santedb.js"/>
+/// <reference path="./codeEditor.js"/>
 angular.module('santedb').controller('CdssEditController', ["$scope", "$rootScope", "$timeout", "$state", "$stateParams", "$interval", "$transitions", function ($scope, $rootScope, $timeout, $state, $stateParams, $interval, $transitions) {
 
     var _editor = null;
     var _editorDirty = _validationDirty = false;
-
-    var _tooltipElement = document.createElement("div");
-    var _uuidRegex = /.*?([a-fA-F0-9]{8}\-(?:[a-fA-F0-9]{4}\-){3}[a-fA-F0-9]{12}).*/;
-    var _lookupApi = [
-        SanteDB.resources.entity,
-        SanteDB.resources.concept,
-        SanteDB.resources.conceptSet
-    ];
-
-
-
     $scope.dirty = () => _editorDirty;
 
     // Clean the object so the JSON.Stringify works
@@ -56,50 +46,6 @@ angular.module('santedb').controller('CdssEditController', ["$scope", "$rootScop
     }
 
 
-    async function validateEditor(force) {
-        try {
-            var value = _editor.getValue();
-            if (force !== true && !_validationDirty) {
-                return;
-            }
-
-            _validationDirty = false;
-            var issues = await SanteDB.resources.cdssLibraryDefinition.invokeOperationAsync(null, "validate", {
-                definition: value,
-                name: $scope.cdssLibrary.library.id
-            }, true);
-
-            _editor.getSession().clearAnnotations();
-            if (issues.issue) {
-                annotations = issues.issue.map(i => {
-
-                    if (!i.refersTo || i.refersTo.indexOf("@") == -1) {
-                        return {
-                            row: 0,
-                            column: 1,
-                            text: i.text,
-                            type: i.priority == "Error" ? "error" : i.priority == "Warning" ? "warn" : "info"
-                        }; // doesn't apply
-                    }
-                    var ln = i.refersTo.substring(i.refersTo.indexOf("@") + 1).split(":");
-                    return {
-                        row: parseInt(ln[0]) - 1,
-                        column: parseInt(ln[1]),
-                        text: i.text,
-                        type: i.priority == "Error" ? "error" : i.priority == "Warning" ? "warning" : "info"
-                    };
-                });
-                _editor.getSession().setAnnotations(annotations);
-                $timeout(() => $scope.validationIssues = annotations);
-            }
-            return issues.issue.find(o => o.priority == 'Error') == null;
-        }
-        catch (e) {
-            console.error(e);
-            return false;
-        }
-
-    }
 
     async function initializeView(id) {
         try {
@@ -122,175 +68,13 @@ angular.module('santedb').controller('CdssEditController', ["$scope", "$rootScop
                     }
                 });
 
-                ace.require("ace/ext/language_tools");
-                var Range = ace.require("ace/range").Range;
-
-                _editor = ace.edit("cdssEditor", {
-                    theme: "ace/theme/sqlserver",
-                    mode: "ace/mode/cdss",
-                    wrap: true,
-                    maxLines: window.innerHeight / 27,
-                    minLines: 2,
-                    hasCssTransforms: true,
-                    value: cdssTxtSource,
-                    keyboardHandler: "ace/keyboard/vscode",
-                    enableBasicAutocompletion: true,
-                    enableLiveAutocompletion: true
-                });
-
+                
                 await SanteDB.resources.cdssLibraryDefinition.checkoutAsync(libraryDefinition.id, true);
 
-                _editor.commands.addCommand({
-                    name: 'test',
-                    bindKey: { win: 'F9', mac: 'F9' },
-                    exec: function (editor) {
-                        $("#test-tab").tab('show');
-                    }
-                })
-                _editor.commands.addCommand({
-                    name: 'goto',
-                    bindKey: { win: 'F12', mac: 'F12'},
-                    exec: function(editor) {
-                        var session = editor.getSession();
-                        var currentPosition = editor.getCursorPosition();
-                        var findToken = session.getTokenAt(currentPosition.row, currentPosition.column);
-                        if(findToken.value.indexOf("\"") !== 0) return;
-
-                        var isInDefintiion = false;
-                        
-                        for(var line = 0; line < session.getDocument().getAllLines().length; line++) {
-                            var tokens = session.getTokens(line);
-                            isInDefintiion |= tokens.find(o => o.value == "define") != null;
-                            var foundToken = tokens.find(o => o.value == findToken.value);
-                            if(isInDefintiion && foundToken) {
-                               editor.gotoLine(line);
-                               var indexOnLine = session.getDocument().getLine(line).indexOf(foundToken.value);
-                               editor.selection.setRange(new Range(line, indexOnLine, line, indexOnLine + foundToken.length), true);
-                               return;
-                            }
-                            isInDefintiion = tokens.find(o=>o.value == "end") != null ? false : isInDefintiion;
-                        }
-                    }
-                })
-                _editor.commands.addCommand({
-                    name: 'save',
-                    bindKey: { win: 'Ctrl-S', mac: "Cmd-S" },
-                    exec: async function (editor) {
-                        var valid = await validateEditor(true);
-                        if (!valid) {
-                            toastr.error(SanteDB.locale.getString("ui.admin.cdss.publish.invalid"));
-                        }
-                        else if (confirm(SanteDB.locale.getString("ui.admin.cdss.publish.confirm"))) {
-                            try {
-                                await SanteDB.resources.cdssLibraryDefinition.checkoutAsync(libraryDefinition.id, true);
-
-                                _editor.setReadOnly(true);
-                                await SanteDB.api.ami.putAsync({
-                                    resource: `CdssLibraryDefinition`,
-                                    id: $stateParams.id,
-                                    dataType: 'text',
-                                    data: _editor.getValue(),
-                                    contentType: "text/plain",
-                                    enableBasicAutocompletion: true,
-                                    headers: {
-                                        "X-SanteDB-Upstream": true
-                                    }
-                                });
-                                _editorDirty = false;
-                                toastr.success(SanteDB.locale.getString("ui.admin.cdss.publish.success"));
-                            }
-                            catch (e) {
-                                if (e.$type == "ObjectLockedException") {
-                                    alert(e.message);
-                                }
-                                else {
-                                    $rootScope.errorHandler(e);
-                                }
-                            }
-                            finally {
-                                _editor.setReadOnly(false);
-                            }
-                        }
-                    }
-                })
-
-                // Documentation tooltip
-                var { HoverTooltip } = ace.require("ace/tooltip");
-                var docToolTip = new HoverTooltip();
-                var _lastLookupSymbol = null;
-                docToolTip.setDataProvider(async function (e, editor) {
-                    var session = editor.session;
-                    var docPosition = e.getDocumentPosition();
-
-                    // Get the word rage
-                    var wordRange = session.getWordRange(docPosition.row, docPosition.column);
-                    var cdssToken = session.getTokenAt(docPosition.row, docPosition.column);
-
-                    if (cdssToken.value != _lastLookupSymbol) {
-                        _lastLookupSymbol = cdssToken.value;
-
-                        // Now we want to fetch documentation for the keyword - or we want to lookup what a UUID might be
-                        if (_uuidRegex.test(cdssToken.value)) {
-                            var results = _uuidRegex.exec(cdssToken.value);
-                            try {
-                                var refConcept = await Promise.all(
-                                    _lookupApi.map(async function (a) {
-                                        var res = await a.findAsync({ id: results[1] });
-                                        if (res.resource) {
-                                            return res.resource[0];
-                                        }
-                                        else {
-                                            return null;
-                                        }
-                                    })
-                                );
-                                refConcept = refConcept.find(rc => rc !== null);
-
-                                if (refConcept) {
-                                    var helpHtml = `<strong>${refConcept.$type}</strong>: `;
-                                    switch (refConcept.$type) {
-                                        case "Concept":
-                                            helpHtml += `${SanteDB.display.renderConcept(refConcept)} <em>(${refConcept.mnemonic})</em>`;
-                                            break;
-                                        case "ConceptSet":
-                                            helpHtml += refConcept.name;
-                                            break;
-                                        case "Entity":
-                                        case "Patient":
-                                        case "Place":
-                                        case "Material":
-                                        case "ManufacturedMaterial":
-                                        case "Person":
-                                            if (refConcept.name) {
-                                                helpHtml += SanteDB.display.renderEntityName(refConcept.name);
-                                            } if (refConcept.typeConceptModel) {
-                                                helpHtml += ` <em>(${refConcept.typeConceptModel.mnemonic})</em>`;
-                                            }
-                                            break;
-                                    }
-                                    _tooltipElement.innerHTML = helpHtml;
-                                }
-                                else {
-                                    _tooltipElement.innerHTML = "Unknown";
-                                }
-                            }
-                            catch (e) {
-                                console.error(e);
-                            }
-                        }
-                        else {
-                            _tooltipElement.innerHTML = cdssToken.value;
-                        }
-                    }
-                    docToolTip.showForRange(editor, wordRange, _tooltipElement, e);
-                    console.info(wordRange);
-                });
-
-                docToolTip.addToEditor(_editor);
-
-
-                _editor.getSession().on('change', () => _validationDirty = _editorDirty = true);
-                validateInterval = $interval(validateEditor, 5000);
+                _editor = new CdssAceEditor('cdssEditor', cdssTxtSource, $scope.cdssLibrary.library.id, id);
+                _editor.onChange(() => _validationDirty = _editorDirty = true);
+                _editor.onAnnotationChange((issues) => $timeout(() => $scope.validationIssues = issues));
+                validateInterval = $interval(_editor.validateEditor, 5000);
                 window.onbeforeunload = (e) => _editorDirty ? SanteDB.locale.getString("ui.action.abandon.confirm") : null;
                 $transitions.onBefore({ from: "santedb-admin.emr.cdss.*", to: "santedb-admin.*" },
                     (transition) => {
@@ -299,7 +83,7 @@ angular.module('santedb').controller('CdssEditController', ["$scope", "$rootScop
                             transition.abort();
                         }
                     });
-                validateEditor(true);
+                _editor.validateEditor(true);
                 $scope.$on('$destroy', function (s) {
                     $interval.cancel(validateInterval);
                     SanteDB.resources.cdssLibraryDefinition.checkinAsync(s.currentScope.cdssLibrary.id, true);
@@ -325,7 +109,7 @@ angular.module('santedb').controller('CdssEditController', ["$scope", "$rootScop
     }
 
     $scope.gotoIssue = function (issue) {
-        _editor.gotoLine(issue.row + 1, issue.column);
+        _editor.gotoIssue(issue);
     }
 
     if ($stateParams.id) {
