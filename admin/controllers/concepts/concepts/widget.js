@@ -40,6 +40,14 @@ angular.module('santedb').controller('ConceptWidgetController', ["$scope", "$roo
         }
     }
 
+    $scope.saveConcept = function(editForm, newSet) {
+         // Sometimes users will have newSet with a value - we should add that
+         if(newSet) {
+            $scope.editObject.conceptSet.push(newSet);
+        }
+        var parentSaveFn = SanteDB.display.getScopeVariable($scope, 'saveConceptInternal');
+        parentSaveFn(editForm, $scope.editObject);
+    }
 
     $scope.renderRefTermCodeSystem = function(c) {
         return `<a ui-sref="santedb-admin.concept.codeSystem.view({ id: '${c.termModel.codeSystem}' })">${c.termModel.codeSystemModel.authority }</a>`;

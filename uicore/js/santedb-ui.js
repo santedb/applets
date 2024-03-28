@@ -436,6 +436,7 @@ SanteDBWrapper.prototype.display = new function () {
               };
         }
 
+
         /**
          * 
          * @param {*} scope The scope to traverse up the scope tree for
@@ -446,6 +447,22 @@ SanteDBWrapper.prototype.display = new function () {
                 scope = scope.$parent;
             }
             return scope;
+        }
+
+        /**
+         * @method
+         * @summary Iterates up the parent scope via scope.$parent until {see: nameOfVariable} is encountered
+         * @param {*} scope The Angular scope that is in the current controller
+         * @param {string} nameOfVariable The name of the variable to fetch from the scope
+         * @returns {object} The object with nameOfVariable
+         */
+        this.getScopeVariable = function(scope, nameOfVariable) {
+            var retVal = null;
+            do {
+                retVal = scope[nameOfVariable];
+                scope = scope.$parent;
+            } while(!retVal && scope)
+            return retVal;
         }
 
         /**
