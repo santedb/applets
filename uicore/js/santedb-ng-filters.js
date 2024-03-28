@@ -199,11 +199,11 @@ angular.module('santedb-lib')
             var source = other ? moment(other) : moment();
             var diff = source.diff(date, 'days');
             if(display == 'D' || diff < 45)
-                return diff + ' d/o';
+                return diff + ' ' + SanteDB.locale.getString('ui.model.patient.age.suffix.daysOld');
             diff = source.diff(date, 'months');
             if(display == 'M' || diff < 18)
-                return diff + ' m/o';
-            return source.diff(date, 'years') + ' y/o';
+                return diff + ' ' + SanteDB.locale.getString('ui.model.patient.age.suffix.monthsOld');
+            return source.diff(date, 'years') + ' ' + SanteDB.locale.getString('ui.model.patient.age.suffix.yearsOld');
         }
     })
     /**

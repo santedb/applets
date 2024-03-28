@@ -41,7 +41,7 @@
  - Date: 2019-8-8
  -->
 <AppletManifest xmlns="http://santedb.org/applet">
-  <info id="org.santedb.admin" version="2.1.113.0" uuid="62a654e0-7b40-485c-9813-36aaf88beb16">
+  <info id="org.santedb.admin" version="3.0.0.0" uuid="62a654e0-7b40-485c-9813-36aaf88beb16">
     <icon>/org.santedb.admin/img/icon.png</icon>
     <name lang="en">SanteDB Administrative Panel</name>
     <author>SanteSuite Community Partners (see: santesuite.org)</author>

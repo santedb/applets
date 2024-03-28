@@ -34,6 +34,7 @@
   <string name="ui.model.securityUser.invalidLoginAttempts">Invalid Logins</string>
   <string name="ui.model.securityUser.title">User</string>
   <string name="ui.model.securityUser.password">Password</string>
+  <string name="ui.model.securityUser.neverLoggedIn">Never logged in</string>
   <string name="ui.model.securityRole.title">Role</string>
   <string name="ui.model.securityUser.email">Security E-Mail</string>
   <string name="ui.model.securityUser.phoneNumber">Security Phone</string>
@@ -42,6 +43,8 @@
   <string name="ui.model.securityUser.twoFactorEnabled.false">Disabled</string>
   <string name="ui.model.securityUser.twoFactorEnabled.setup">Setup</string>
   <string name="ui.model.securityUser.challenge">Password Recovery</string>
+  <string name="ui.model.userEntity.securityUserModel.central">This user can log into any device. Changing the profile requires an internet connection</string>
+  <string name="ui.model.userEntity.securityUserModel.local">This user can only log into this device/local deployment.</string>
   <string name="ui.model.userEntity.givenName">Given Name</string>
   <string name="ui.model.userEntity.familyName">Family Name</string>
   <string name="ui.model.userEntity.language">Preferred Language</string>
@@ -208,9 +211,11 @@
   <string name="ui.model.entity.name.use.hint"><![CDATA[The intended use for the name. For example <code>OfficialRecord</code> would indicate the name is used on official documentation.]]></string>
   <string name="ui.model.entity.name.component.prefix">Prefix</string>
   <string name="ui.model.entity.name.component.prefix.hint"><![CDATA[A prefix or honorary title used (example: <code>Sir</code>, <code>Mr.</code>, <code>Ms.</code>)]]></string>
-  <string name="ui.model.entity.name.component.given">Given</string>
+  <string name="ui.model.entity.name.component.given">Given Name</string>
   <string name="ui.model.entity.name.component.given.hint"><![CDATA[Given names of the entity]]></string>
-  <string name="ui.model.entity.name.component.family">Family</string>
+  <string name="ui.model.entity.name.component.middle">Middle Name</string>
+  <string name="ui.model.entity.name.component.middle.hint"><![CDATA[Middle names of the entity]]></string>
+  <string name="ui.model.entity.name.component.family">Family Name</string>
   <string name="ui.model.entity.name.component.family.hint"><![CDATA[Family names of the entity (or surname)]]></string>
   <string name="ui.model.entity.name.component.suffix">Suffix</string>
   <string name="ui.model.entity.name.component.suffix.hint"><![CDATA[Suffixes for the name such as an enumetion (William Gates <code>III</code>) a designator (Joe Smith <code>Jr.</code>) or designated title (Dr. Fran Smith <code>MD</code>)]]></string>
@@ -263,6 +268,9 @@
   <string name="ui.model.patient.address.component.precinct">Precinct</string>
   <string name="ui.model.patient.address.component.street">Street</string>
   <string name="ui.model.patient.address.component.postalcode">Zip/Postal Code</string>
+  <string name="ui.model.patient.age.suffix.daysOld">d/o</string>
+  <string name="ui.model.patient.age.suffix.monthsOld">m/o</string>
+  <string name="ui.model.patient.age.suffix.yearsOld">y/o</string>
   <string name="ui.model.patient.dateOfBirth">DOB</string>
   <string name="ui.model.patient.dateOfBirth.approx">Approx.</string>
   <string name="ui.model.patient.dateOfBirth.required">A date of birth and gender are required for this operation to be completed</string>

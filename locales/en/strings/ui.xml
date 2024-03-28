@@ -195,7 +195,7 @@
       <string name="ui.action.search">Search</string>
       <string name="ui.action.search.advanced">Advanced Search</string>
       <string name="ui.action.search.basic">Basic Search</string>
-      <string name="ui.action.search.upstream">Search the central server</string>
+      <string name="ui.action.search.upstream">Search Upstream</string>
       <string name="ui.action.login">Login</string>
       <string name="ui.action.passwordReset">Forgot Password</string>
       <string name="ui.action.ignore">Ignore</string>
@@ -227,7 +227,7 @@
       <string name="ui.action.resolve">Resolve</string>
       <string name="ui.action.enable">Enable</string>
       <string name="ui.action.disable">Disable</string>
-      <string name="ui.action.schedule">Schedue</string>
+      <string name="ui.action.schedule">Schedule</string>
       <string name="ui.action.scan">Scan</string>
       <string name="ui.action.finish">Finish</string>
       <string name="ui.action.refresh">Refresh</string>
@@ -550,13 +550,13 @@
       <!-- Core Widgets -->
       <string name="org.santedb.widget.mdm.recordOfTruth">Record of Truth</string>
       <string name="org.santedb.widget.mdm.candidate">Candidate Records</string>
-      <string name="org.santedb.widget.userEntity.profile">Profile</string>
+      <string name="org.santedb.widget.userEntity.profile">Public Profile</string>
       <string name="org.santedb.widget.user.profile">My Profile</string>
       <string name="org.santedb.widget.userEntity.security">Security Controls</string>
       <string name="org.santedb.widget.patient.dataQuality">Data Quality</string>
       <string name="org.santedb.widget.dq.validation">Validation Issues</string>
       <string name="org.santedb.widget.patient.card">ID Card</string>
-
+      <string name="org.santedb.widget.userEntity.idCard">Digital ID</string>
       <!-- Data quality issues -->
       <string name="ui.dq.priority.1">Serious</string>
       <string name="ui.dq.priority.2">Warning</string>

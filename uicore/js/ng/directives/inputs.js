@@ -97,3 +97,4 @@ angular.module('santedb-lib')
             }
         }
     })
+;

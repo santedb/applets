@@ -67,7 +67,7 @@ function APIWrapper(_config) {
             else if (object.$ref !== undefined) {
                 if (!resolveStack.indexOf(object.$ref)) {
                     return referenceDictionary[object.$ref];
-                } 
+                }
             }
             else if (Array.isArray(object)) {
                 return object.map(o => _resolveObjectRefs(o, referenceDictionary));
@@ -88,7 +88,7 @@ function APIWrapper(_config) {
             }
         }
         finally {
-            if(object && object.$id) {
+            if (object && object.$id) {
                 resolveStack.splice(resolveStack.length, 1);
             }
         }
@@ -1814,6 +1814,21 @@ function SanteDBWrapper() {
 
     /**
      * @private
+     * @summary Policy violation exception handler
+     * @param {*} faultJson The Fault message
+     * @returns {bool} True if the fault JSON inidcates a policy violation
+     */
+    var _isPolicyViolationException = function(faultJson) {
+        var isPve = false;
+        do {
+            isPve |= faultJson.$type == "PolicyViolationException";
+            faultJson = faultJson.cause;
+        } while(!isPve && faultJson)
+        return isPve;
+    }
+
+    /**
+     * @private
      * @summary Global error handler
      * @param {xhr} e The Errored request
      * @param {*} data 
@@ -1830,7 +1845,7 @@ function SanteDBWrapper() {
 
                 // Was the response a security policy exception where the back end is asking for elevation on the same user account?
                 if (data.responseJSON &&
-                    data.responseJSON.$type == "PolicyViolationException" &&
+                    _isPolicyViolationException(data.responseJSON) &&
                     data.getResponseHeader("WWW-Authenticate").indexOf("insufficient_scope") > -1)
                     _elevator.elevate(angular.copy(_session), [data.responseJSON.policyId]);
                 else
@@ -1909,12 +1924,47 @@ function SanteDBWrapper() {
         var _templateView = {};
         var _templateForm = {};
 
+
         /**
-         * @memberof SanteDBWrapper.ApplicationApi
-        * @summary Wraps native printing functionality for the host operating system
-        */
-        this.printView = function () {
-            __SanteDBAppService.Print();
+         * @summary Attempts to parse te JWS data contained in a scanned barcode into logical identifier structure
+         * @param {*} jwsData The data to be parsed in SVRP format
+         * @returns {object} The entity which is described in the SVRP
+         */
+        async function _extractJwsData(jwsData) {
+            try {
+                var jwsHeaderData = atob(jwsData[1]);
+
+                var jwsBody = null;
+                var jwsHeader = JSON.parse(jwsHeaderData);
+                if (jwsHeader.zip) {
+                    var decompress = null;
+                    switch (jwsHeader.zip) {
+                        case "DEF":
+                            decompress = new DecompressionStream("deflate-raw");
+                            break;
+                        case "GZ":
+                            decompress = new DecompressionStream("gzip");
+                            break;
+                    }
+                    var buffer = jwsData[2].b64DecodeBuffer(true);
+                    var blob = new Blob([buffer]);
+                    var reader = blob.stream().pipeThrough(decompress).getReader();
+                    var data = await reader.read();
+                    jwsBody = JSON.parse(new TextDecoder().decode(data.value));
+                }
+                else {
+                    var jwsBodyData = jwsData[2].b64DecodeBuffer();
+                    jwsBody = JSON.parse(new TextDecoder().decode(jwsBodyData));
+                }
+
+                // Return the data element
+                var retVal = jwsBody.data || {};
+                retVal.id = jwsBody.sub;
+                return retVal;
+            }
+            catch (e) {
+                throw new Exception("JwsParseError", e);
+            }
         }
 
         /**
@@ -1987,6 +2037,14 @@ function SanteDBWrapper() {
         }
 
         /**
+         * @memberof SanteDBWrapper.ApplicationApi
+        * @summary Wraps native printing functionality for the host operating system
+        */
+        this.printView = function () {
+            __SanteDBAppService.Print();
+        }
+
+        /**
          * @method scanIdentifierAsync
          * @memberof SanteDBWrapper.ApplicationApi
          * @summary Scans a barcode using {@link scanBarcodeAsync} however interprets the identifier rather than returning the raw data
@@ -1996,13 +2054,14 @@ function SanteDBWrapper() {
         this.scanIdentifierAsync = async function () {
             var data = await SanteDB.application.scanBarcodeAsync();
 
-            if (jwsDataPattern.test(data)) {
-                var match = jwsDataPattern.exec(data);
-                var idData = JSON.parse(atob(match[2]));
-                return idData.id[0].value;
+            if (svrpPattern.test(data)) {
+                var match = svrpPattern.exec(data);
+                var jwsData = jwsDataPattern.exec(match[1]);
+                return await _extractJwsData(jwsData);
             }
-            else if (srvpPattern.test(data)) {
-
+            else if (jwsDataPattern.test(data)) {
+                var jwsData = jwsDataPattern.exec(data);
+                return await _extractJwsData(jwsData);
             }
             else {
                 var idDomain = SanteDB.application.classifyIdentifier(data);
@@ -2717,9 +2776,10 @@ function SanteDBWrapper() {
                 var configuration = {
                     resource: "_ptr",
                     headers: {
-                        accept: _viewModelJsonMime
+                        accept: _viewModelJsonMime,
+                        "X-SanteDB-Upstream": upstream
                     },
-                    query: { code: jwsData, validate: validateSignature, _upstream: upstream }
+                    query: { code: jwsData, validate: validateSignature }
                 };
                 return _hdsi.searchAsync(configuration);
             }
@@ -2824,13 +2884,24 @@ function SanteDBWrapper() {
             api: _hdsi
         });
         /**
-            * @type {ResourceWrapper}
-            * @memberof SanteDBWrapper.ResourceApi
-            * @summary Represents the Patient Resource
-            */
+        * @type {ResourceWrapper}
+        * @memberof SanteDBWrapper.ResourceApi
+        * @summary Represents the Patient Resource
+        */
         this.patient = new ResourceWrapper({
             accept: _viewModelJsonMime,
             resource: "Patient",
+            api: _hdsi
+        });
+
+        /**
+        * @type {ResourceWrapper}
+        * @memberof SanteDBWrapper.ResourceApi
+        * @summary Represents the PatientEncounter Resource
+        */
+        this.patientEncounter = new ResourceWrapper({
+            accept: _viewModelJsonMime,
+            resource: "PatientEncounter",
             api: _hdsi
         });
 
@@ -3769,7 +3840,7 @@ function SanteDBWrapper() {
         this.getUserSettingsAsync = async function () {
             return _resources.configuration.findAssociatedAsync("me", "settings");
         }
-        
+
         /**
             * @method saveUserPreferencesAsync
          * @memberof SanteDBWrapper.ConfigurationApi
@@ -4003,7 +4074,7 @@ function SanteDBWrapper() {
                 },
                 contentType: "application/json",
                 data: {
-                    "parameter" : [
+                    "parameter": [
                         { name: "code", value: code }
                     ]
                 }
@@ -4198,13 +4269,25 @@ function SanteDBWrapper() {
         this.clientCredentialLoginAsync = function (noSession, scope) {
             return new Promise(function (fulfill, reject) {
                 try {
+                    var claims = {};
+                    if (noSession) {
+                        claims["urn:santedb:org:claim:temporary"] = "true";
+                    }
+
+                    if (Object.keys(claims).length > 0) {
+                        headers["X-SanteDBClient-Claim"] =
+                            btoa(Object.keys(claims).map(o => `${o}=${claims[o]}`).join(";"));
+                    }
+                    
                     _auth.postAsync({
                         resource: "oauth2_token",
                         data: {
                             grant_type: 'client_credentials',
                             client_id: SanteDB.configuration.getClientId(),
-                            scope: (scope || ["*"]).join(" ")
+                            scope: (scope || ["*"]).join(" "),
+                            no_session: noSession
                         },
+                        headers: headers,
                         contentType: 'application/x-www-form-urlencoded'
                     })
                         .then(function (d) {
@@ -4417,7 +4500,7 @@ function SanteDBWrapper() {
             try {
                 var retVal = __SanteDBAppService.GetString(stringId);
 
-                if (retVal) {
+                if (retVal && retVal.replace) {
                     retVal = retVal.replace(/\{.*?\}/ig, function (s) {
                         if (typeof s === 'string' && parameters) {
                             return parameters[s.substring(1, s.length - 1)];

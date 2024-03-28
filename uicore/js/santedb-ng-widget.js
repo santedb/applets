@@ -46,6 +46,9 @@ angular.module('santedb-lib')
             ],
             link: function (scope, element, attrs) {
 
+                if(attrs.scopedObjectName) {
+                    scope[attrs.scopedObjectName] = scope.scopedObject;
+                }
                 _contextName = attrs.contextName;
                 if (_contextName) {
                     _contextName = _contextName.replaceAll("'", "");

@@ -51,9 +51,9 @@ angular.module('santedb').controller('SecurityUserWidgetController', ["$scope", 
     /**
      * @summary Reactivate Inactive User
      */
-    $scope.reactivateUser = function (securityUser) {
-        if (!confirm(SanteDB.locale.getString("ui.admin.users.reactivate.confirm")))
-            return;
+    $scope.reactivateUser = async function (securityUser) {
+        if (!confirm(SanteDB.locale.getString("ui.emr.users.reactivate.confirm")))
+        return;
 
         var patch = new Patch({
             change: [
@@ -71,26 +71,30 @@ angular.module('santedb').controller('SecurityUserWidgetController', ["$scope", 
         });
 
         // Send the patch
-        SanteDB.display.buttonWait("#reactivateUserButton", true);
-        SanteDB.resources.securityUser.patchAsync($stateParams.id, securityUser.etag, patch)
-            .then(function (r) {
+        try {
+            SanteDB.display.buttonWait("#reactivateUserButton", true);
+            var updatedUser = await SanteDB.resources.securityUser.patchAsync($stateParams.id, securityUser.etag, patch)
+            
+            $timeout(() => {
                 securityUser.obsoletionTime = null;
                 securityUser.obsoletedBy = null;
-                SanteDB.display.buttonWait("#reactivateUserButton", false);
-                $scope.$apply();
-            })
-            .catch(function (e) {
-                $rootScope.errorHandler(e);
-                SanteDB.display.buttonWait("#reactivateUserButton", false);
             });
+        }
+        catch (e) {
+            $rootScope.errorHandler(e);
+        }
+        finally {
+            SanteDB.display.buttonWait("#reactivateUserButton", false);
+
+        }
 
     }
 
     /**
      * @summary Reset invalid logins
      */
-    $scope.resetInvalidLogins = function (securityUser) {
-        if (!confirm(SanteDB.locale.getString("ui.admin.users.invalidLogin.reset")))
+    $scope.resetInvalidLogins = async function (securityUser) {
+        if (!confirm(SanteDB.locale.getString("ui.emr.users.invalidLogin.reset")))
             return;
 
         var patch = new Patch({
@@ -103,39 +107,40 @@ angular.module('santedb').controller('SecurityUserWidgetController', ["$scope", 
             ]
         });
 
-        SanteDB.display.buttonWait("#resetInvalidLoginButton", true);
-        SanteDB.resources.securityUser.patchAsync($stateParams.id, securityUser.etag, patch)
-            .then(function (r) {
-                SanteDB.display.buttonWait("#resetInvalidLoginButton", false);
+        try {
+            SanteDB.display.buttonWait("#resetInvalidLoginButton", true);
+            await SanteDB.resources.securityUser.patchAsync($stateParams.id, securityUser.etag, patch);
+            $timeout(() => {
                 securityUser.invalidLoginAttempts = 0;
-                $scope.$apply();
-            })
-            .catch(function (e) {
-                $rootScope.errorHandler(e);
-                SanteDB.display.buttonWait("#resetInvalidLoginButton", false);
-            })
+            });
+        }
+        catch (e) {
+            $rootScope.errorHandler(e);
+        }
+        finally {
+            SanteDB.display.buttonWait("#resetInvalidLoginButton", false);
+        }
     }
 
     /**
     * @summary Unlock user
     */
-    $scope.unlock = function (securityUser) {
-        if (!confirm(SanteDB.locale.getString("ui.admin.users.confirmUnlock")))
+    $scope.unlock = async function (securityUser) {
+        if (!confirm(SanteDB.locale.getString("ui.emr.users.confirmUnlock")))
             return;
 
-        SanteDB.display.buttonWait("#unlockButton", true);
-        SanteDB.resources.securityUser.unLockAsync($stateParams.id)
-            .then(function (r) {
-                SanteDB.display.buttonWait("#unlockButton", false);
-                securityUser.lockout = null;
-                $scope.$apply();
-            })
-            .catch(function (e) {
-                $rootScope.errorHandler(e);
-                SanteDB.display.buttonWait("#unlockButton", false);
-            })
+        try {
+            SanteDB.display.buttonWait("#unlockButton", true);
+            await SanteDB.resources.securityUser.unLockAsync($stateParams.id);
+            $timeout(() => securityUser.lockout = null);
+        }
+        catch(e) {
+            $rootScope.errorHandler(e);
+        }
+        finally {
+            SanteDB.display.buttonWait("#unlockButton", false);
+        }
     }
-
     /**
      * @summary Save the user security data
      */

@@ -22,6 +22,8 @@
 /// <reference path="../../santedb-ui.js"/>
 /// <reference path="../../../../core/js/santedb.js"/>
 
+var _mermaidInitialized = false;
+
 function erNavigateTo(resourceType, resourceId) {
     var injector = angular.injector(['ng', 'santedb']);
     var state = injector.get('state');
@@ -275,6 +277,25 @@ angular.module('santedb-lib')
                 }],
             link: {
                 pre: function (scope, element, attrs) {
+                    if(!_mermaidInitialized) {
+                        _mermaidInitialized = true;
+                        mermaid.mermaidAPI.initialize({
+                            "theme": "neutral",
+                            flowchart: {
+                                width: '100%',
+                                useMaxWidth: false,
+                                htmlLabels: true
+                            },
+                            erDiagram: {
+                                width: '100%',
+                                useMaxWidth: false,
+                                htmlLabels: true
+                    
+                            },
+                            securityLevel: 'loose'
+                        });
+                    }
+                    
                     scope.viewData = {
                         _id: SanteDB.application.newGuid().substring(0, 6),
                         mode: "simple",

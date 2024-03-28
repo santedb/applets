@@ -70,7 +70,7 @@ angular.module('santedb-lib')
                                 }));
                             }
 
-                            scope.setValues = scope.setValues.sort((a,b)=>a.mnemonic < b.mnemonic ? -1 : a.mnemonic > b.mnemonic ? 1 : 0);
+                            scope.setValues = scope.setValues.sort((a,b)=> a.mnemonic < b.mnemonic ? -1 : a.mnemonic > b.mnemonic ? 1 : 0);
 
                             loaded[setName].callme.forEach((r) => r(scope.setValues));
                             loaded[setName] = scope.setValues;
