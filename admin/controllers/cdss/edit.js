@@ -4,16 +4,25 @@ angular.module('santedb').controller('CdssEditController', ["$scope", "$rootScop
     var _editor = null;
     var _editorDirty = _validationDirty = false;
 
+    var _tooltipElement = document.createElement("div");
+    var _uuidRegex = /.*?([a-fA-F0-9]{8}\-(?:[a-fA-F0-9]{4}\-){3}[a-fA-F0-9]{12}).*/;
+    var _lookupApi = [
+        SanteDB.resources.entity,
+        SanteDB.resources.concept,
+        SanteDB.resources.conceptSet
+    ];
+
+
 
     $scope.dirty = () => _editorDirty;
 
     // Clean the object so the JSON.Stringify works
     function cleanObject(object) {
 
-        if(!object) {
+        if (!object) {
             return object;
         }
-        else if(object.$type == "Concept") {
+        else if (object.$type == "Concept") {
             return {
                 $type: "Concept",
                 mnemonic: object.mnemonic,
@@ -21,14 +30,13 @@ angular.module('santedb').controller('CdssEditController', ["$scope", "$rootScop
                 name: object.name
             };
         }
-        else if(Array.isArray(object)) {
-            for(var idx in object) {
+        else if (Array.isArray(object)) {
+            for (var idx in object) {
                 object[idx] = cleanObject(object[idx]);
             }
         }
-        else if(typeof object !== "string" && typeof object !== "number" && !(object instanceof Date) && typeof object !== "boolean" )
-        {
-            Object.keys(object).forEach(k=>object[k] = cleanObject(object[k]));
+        else if (typeof object !== "string" && typeof object !== "number" && !(object instanceof Date) && typeof object !== "boolean") {
+            Object.keys(object).forEach(k => object[k] = cleanObject(object[k]));
         }
 
         return object;
@@ -47,7 +55,7 @@ angular.module('santedb').controller('CdssEditController', ["$scope", "$rootScop
         }
     }
 
-    
+
     async function validateEditor(force) {
         try {
             var value = _editor.getValue();
@@ -114,7 +122,9 @@ angular.module('santedb').controller('CdssEditController', ["$scope", "$rootScop
                     }
                 });
 
-                var langTools = ace.require("ace/ext/language_tools");
+                ace.require("ace/ext/language_tools");
+                var Range = ace.require("ace/range").Range;
+
                 _editor = ace.edit("cdssEditor", {
                     theme: "ace/theme/sqlserver",
                     mode: "ace/mode/cdss",
@@ -135,6 +145,31 @@ angular.module('santedb').controller('CdssEditController', ["$scope", "$rootScop
                     bindKey: { win: 'F9', mac: 'F9' },
                     exec: function (editor) {
                         $("#test-tab").tab('show');
+                    }
+                })
+                _editor.commands.addCommand({
+                    name: 'goto',
+                    bindKey: { win: 'F12', mac: 'F12'},
+                    exec: function(editor) {
+                        var session = editor.getSession();
+                        var currentPosition = editor.getCursorPosition();
+                        var findToken = session.getTokenAt(currentPosition.row, currentPosition.column);
+                        if(findToken.value.indexOf("\"") !== 0) return;
+
+                        var isInDefintiion = false;
+                        
+                        for(var line = 0; line < session.getDocument().getAllLines().length; line++) {
+                            var tokens = session.getTokens(line);
+                            isInDefintiion |= tokens.find(o => o.value == "define") != null;
+                            var foundToken = tokens.find(o => o.value == findToken.value);
+                            if(isInDefintiion && foundToken) {
+                               editor.gotoLine(line);
+                               var indexOnLine = session.getDocument().getLine(line).indexOf(foundToken.value);
+                               editor.selection.setRange(new Range(line, indexOnLine, line, indexOnLine + foundToken.length), true);
+                               return;
+                            }
+                            isInDefintiion = tokens.find(o=>o.value == "end") != null ? false : isInDefintiion;
+                        }
                     }
                 })
                 _editor.commands.addCommand({
@@ -178,6 +213,81 @@ angular.module('santedb').controller('CdssEditController', ["$scope", "$rootScop
                         }
                     }
                 })
+
+                // Documentation tooltip
+                var { HoverTooltip } = ace.require("ace/tooltip");
+                var docToolTip = new HoverTooltip();
+                var _lastLookupSymbol = null;
+                docToolTip.setDataProvider(async function (e, editor) {
+                    var session = editor.session;
+                    var docPosition = e.getDocumentPosition();
+
+                    // Get the word rage
+                    var wordRange = session.getWordRange(docPosition.row, docPosition.column);
+                    var cdssToken = session.getTokenAt(docPosition.row, docPosition.column);
+
+                    if (cdssToken.value != _lastLookupSymbol) {
+                        _lastLookupSymbol = cdssToken.value;
+
+                        // Now we want to fetch documentation for the keyword - or we want to lookup what a UUID might be
+                        if (_uuidRegex.test(cdssToken.value)) {
+                            var results = _uuidRegex.exec(cdssToken.value);
+                            try {
+                                var refConcept = await Promise.all(
+                                    _lookupApi.map(async function (a) {
+                                        var res = await a.findAsync({ id: results[1] });
+                                        if (res.resource) {
+                                            return res.resource[0];
+                                        }
+                                        else {
+                                            return null;
+                                        }
+                                    })
+                                );
+                                refConcept = refConcept.find(rc => rc !== null);
+
+                                if (refConcept) {
+                                    var helpHtml = `<strong>${refConcept.$type}</strong>: `;
+                                    switch (refConcept.$type) {
+                                        case "Concept":
+                                            helpHtml += `${SanteDB.display.renderConcept(refConcept)} <em>(${refConcept.mnemonic})</em>`;
+                                            break;
+                                        case "ConceptSet":
+                                            helpHtml += refConcept.name;
+                                            break;
+                                        case "Entity":
+                                        case "Patient":
+                                        case "Place":
+                                        case "Material":
+                                        case "ManufacturedMaterial":
+                                        case "Person":
+                                            if (refConcept.name) {
+                                                helpHtml += SanteDB.display.renderEntityName(refConcept.name);
+                                            } if (refConcept.typeConceptModel) {
+                                                helpHtml += ` <em>(${refConcept.typeConceptModel.mnemonic})</em>`;
+                                            }
+                                            break;
+                                    }
+                                    _tooltipElement.innerHTML = helpHtml;
+                                }
+                                else {
+                                    _tooltipElement.innerHTML = "Unknown";
+                                }
+                            }
+                            catch (e) {
+                                console.error(e);
+                            }
+                        }
+                        else {
+                            _tooltipElement.innerHTML = cdssToken.value;
+                        }
+                    }
+                    docToolTip.showForRange(editor, wordRange, _tooltipElement, e);
+                    console.info(wordRange);
+                });
+
+                docToolTip.addToEditor(_editor);
+
 
                 _editor.getSession().on('change', () => _validationDirty = _editorDirty = true);
                 validateInterval = $interval(validateEditor, 5000);
@@ -284,7 +394,7 @@ angular.module('santedb').controller('CdssEditController', ["$scope", "$rootScop
                     else {
                         $scope.cdssLibrary.library.status = 'DontUse';
                         library = await SanteDB.resources.cdssLibraryDefinition.insertAsync($scope.cdssLibrary, true);
-                        $state.go("santedb-admin.emr.cdss.edit", { id: library.id });
+                        $state.go("santedb-admin.cdr.cdss.edit", { id: library.id });
                     }
 
                     toastr.success(SanteDB.locale.getString("ui.admin.cdss.create.success"));
@@ -379,14 +489,14 @@ angular.module('santedb').controller('CdssEditController', ["$scope", "$rootScop
 
             SanteDB.display.buttonWait("#btnRunTest", true);
 
-            var parms = { 
+            var parms = {
                 "isTesting": true,
                 "debug": true,
-                "definition" : _editor.getValue(),
-                "targetType" : $scope.test.type
+                "definition": _editor.getValue(),
+                "targetType": $scope.test.type
             };
 
-            if($scope.test.source == "db") {
+            if ($scope.test.source == "db") {
                 parms.targetId = $scope.test.db;
             }
             else {
@@ -395,17 +505,19 @@ angular.module('santedb').controller('CdssEditController', ["$scope", "$rootScop
 
             $scope.test.parameters.forEach(p => parms[p.name] = p.value);
             var executionResult = await SanteDB.resources.cdssLibraryDefinition.invokeOperationAsync($stateParams.id, "execute", parms, true);
-            if(executionResult.target) {
-                executionResult.target = await SanteDB.resources[executionResult.target.$type.toCamelCase()].invokeOperationAsync(null, "expand", { "object" : executionResult.target }, false);
+            if (executionResult.target) {
+                executionResult.target = await SanteDB.resources[executionResult.target.$type.toCamelCase()].invokeOperationAsync(null, "expand", { "object": executionResult.target }, false);
             }
 
-            var loadedResults = await SanteDB.resources.act.invokeOperationAsync(null, "expand", { "object" : new Bundle({
-                resource: executionResult.propose.filter((o,i) => i <= 20)
-            })});
+            var loadedResults = await SanteDB.resources.act.invokeOperationAsync(null, "expand", {
+                "object": new Bundle({
+                    resource: executionResult.propose.filter((o, i) => i <= 20)
+                })
+            });
             loadedResults = loadedResults.resource;
 
-            for(var idx in executionResult.propose) {
-                executionResult.propose[idx] = cleanObject(loadedResults.find(o=>o.id == executionResult.propose[idx].id));
+            for (var idx in executionResult.propose) {
+                executionResult.propose[idx] = cleanObject(loadedResults.find(o => o.id == executionResult.propose[idx].id));
             }
             $timeout(() => {
                 $scope.test.result = executionResult;
