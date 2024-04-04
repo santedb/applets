@@ -18,6 +18,17 @@
  - User: fyfej
  - Date: 2023-5-19
  -->
-<small class="d-inline">
-    <a data-toggle="popover"><i class="far fa-question-circle text-info"></i></a>
-</small>
+ <div xmlns="http://www.w3.org/1999/xhtml" xmlns:sdb="http://santedb.org/applet">
+    <sdb:script static="false">~/controllers/materials/viewEdit.js</sdb:script>
+    <sdb:state name="santedb-admin.data.material.view">
+        <sdb:demand>1.3.6.1.4.1.33349.3.1.5.9.2.4.0.1.3</sdb:demand>
+        <sdb:url>/{id}</sdb:url>
+        <sdb:view>
+            <sdb:controller>MaterialViewEditController</sdb:controller>
+            <sdb:title lang="en">View Material</sdb:title>
+        </sdb:view>
+    </sdb:state>
+    <!-- #include virtual="/org.santedb.uicore/partials/entity/entityHeader.html"-->
+    <widget-tabs context-name="'org.santedb.material.admin'" scoped-object="entity" class="mb-2" />
+
+</div>

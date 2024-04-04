@@ -58,7 +58,7 @@
                 </tbody>
             </table>
         </div>
-        <form ng-submit="update(panel.editForm)" class="form" name="panel.editForm" method="dialog" novalidate="novalidate"
+        <form ng-submit="update(panel.editForm)" class="form" name="panel.editForm" method="dialog" novalidate="novalidate" autocomplete="off"
             ng-if="panel.view == 'Edit'">
             <div class="alert"  ng-class="{'alert-info' : scopedObject.id != editObject.id , 'alert-success': scopedObject.id == editObject.id }" ng-if="scopedObject.tag['$mdm.type'] != 'L' &amp;&amp; scopedObject.tag['$generated'] == 'true'">
                 <span ng-if="scopedObject.id != editObject.id"><i class="fas fa-gavel"></i> {{ 'ui.mdm.edit.recordOfTruth' | i18n }}</span>

@@ -108,4 +108,63 @@ angular.module('santedb').controller('MaterialIndexController', ["$scope", "$roo
 
         }
     }
+
+    
+    /**
+     * 
+     * @param {*} id The id of the place to delete / obsolete
+     * @param {*} index The index of the place
+     */
+    $scope.delete = async function (id, index) {
+
+        var data = $("#MaterialTable table").DataTable().row(index).data();
+
+        if (data.obsoletionTime == null && confirm(SanteDB.locale.getString("ui.admin.material.confirmDelete"))) {
+            try {
+                $("#action_grp_" + index + " a").addClass("disabled");
+                $("#action_grp_" + index + " a i.fa-trash").removeClass("fa-trash").addClass("fa-circle-notch fa-spin");
+                await SanteDB.resources.material.deleteAsync(id);
+            }
+            catch (e) {
+                $rootScope.errorHandler(e);
+            }
+            finally {
+                $("#MaterialTable").attr("newQueryId", true);
+                $("#MaterialTable table").DataTable().draw();
+            }
+
+        }
+        else if (data.obsoletionTime != null && confirm(SanteDB.locale.getString("ui.admin.material.confirmUnDelete"))) {
+            $("#action_grp_" + index + " a").addClass("disabled");
+            $("#action_grp_" + index + " a i.fa-trash-restore").removeClass("fa-trash-restore").addClass("fa-circle-notch fa-spin");
+            try {
+                await SanteDB.resources.material.touchAsync(id);
+
+            }
+            catch (e) {
+                $rootScope.errorHandler(e);
+            }
+            finally {
+                $("#MaterialTable").attr("newQueryId", true);
+                $("#MaterialTable table").DataTable().draw();
+            }
+
+        }
+
+    }
+
+    // Download as a place
+    $scope.download = async function () {
+        if (confirm(SanteDB.locale.getString("ui.action.export.confirm"))) {
+            try {
+
+                window.location = `/hdsi/Material/_export?statusConcept=${StatusKeys.Active}&_include=Organization:relationship[ManufacturedProduct].target.classConcept=fafec286-89d5-420b-9085-054aca9d1eef`;
+            }
+            catch(e) {
+                $rootScope.errorHandler(e);
+            }
+        
+        }
+    }
+
 }]);

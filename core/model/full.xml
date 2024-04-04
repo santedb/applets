@@ -332,7 +332,7 @@
     <property name="classConceptModel" behavior="always" />
     <property name="classConcept" behavior="always" />
     <property name="determinerConceptModel" behavior="never" />
-    <property name="statusConceptModel" behavior="never" />
+    <property name="statusConceptModel" behavior="always" />
     <property name="formConceptModel" behavior="always" ref="Concept" />
     <property name="typeConceptModel" behavior="always" ref="Concept" />
     <property name="relationship" all="true" behavior="always">

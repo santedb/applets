@@ -682,6 +682,7 @@
             <li><code>CTRL+F</code>: Find</li>
             <li><code>CTRL+H</code>: Find/Replace</li>
             <li><code>CTRL+S</code>: Save/Publish</li>
+            <li><code>F12</code>: Go to definition</li>
             <li><code>F9</code>: Run/Test Library</li>
             <li><code>CTRL+U</code>: Convert text to upper case</li>
             <li><code>CTRL+SHIFT+U</code>: Convert text to lower case</li>
@@ -718,4 +719,20 @@
     <string name="org.santedb.widget.cdr.cdssLibrary.logic.define">Logic Definitions</string>
     <string name="org.santedb.widget.cdr.cdssLibrary.data.define">Reference Sets</string>
     <string name="org.santedb.widget.cdr.cdssLibrary.main.history">Version History</string>
+
+    <!-- Materials Management -->
+    <string name="ui.admin.material.create.help"><![CDATA[
+    <a data-toggle="collapse" data-target="#material-help"><h5 class="card-title">
+        <i class="fas fa-fw fa-question-circle"></i> Creating Materials</a></h5>
+    <div id="material-help" class="collapse">
+        <p>This screen allows you to create a new classification of material which is used within the SanteDB CDR. A classification of material or
+        <code>Material</code> does not represent a specific instance of a material (for example: Moderna mRNA SARS nCOV Vaccine), rather it is used 
+        to express the classification of a material (i.e. mRNA SARS nCOV Vaccine).</p>
+        <p>This classification of a material is then instantiated into a <code>ManufacturedMaterial</code> which carries information such as <code>Lot #</code>, 
+        <code>Expiration Date</code>, <code>GTIN</code> and more.</p>
+        <p>Administrators should familiarize themselves with the <a href="https://help.santesuite.org/santedb/data-and-information-architecture/conceptual-data-model/entities/data-dictionary#material"
+        target="_blank">SanteDB Conceptual Information Model</a> prior to changing the values in this screen</p>
+    </div>
+    ]]></string>
+    <string name="ui.admin.material.save.success">Material has been updated successfully</string>
 </resources>

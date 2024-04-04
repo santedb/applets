@@ -53,7 +53,11 @@ function CdssAceEditor(controlName, initialText, fileName, libraryUuid) {
                 _validationCallback.forEach(o=>o(annotations));
 
             }
-            return issues.issue.find(o => o.priority == 'Error') == null;
+            var isValid = issues.issue.find(o => o.priority == 'Error') == null;
+            if(isValid) {
+                _refreshOptions();
+            }
+            return isValid;
         }
         catch (e) {
             console.error(e);
@@ -86,17 +90,6 @@ function CdssAceEditor(controlName, initialText, fileName, libraryUuid) {
 
             }
         }
-
-        _editor.on('change', (e) => {
-            var documentPosition = e.start;
-            var token = _editor.getSession().getTokenAt(documentPosition.row, documentPosition.column);
-            if(token) {
-                switch (token.value.trim()) {
-                    case "end":
-                        _refreshOptions();
-                }
-            }
-        });
 
         this.getCompletions = async function (editor, session, pos, prefix, callback) {
 

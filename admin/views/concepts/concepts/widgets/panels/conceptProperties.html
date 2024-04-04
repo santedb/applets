@@ -91,7 +91,7 @@
                 </div>
             </div>
             <form ng-if="panel.view == 'Edit'" ng-submit="saveConcept(panel.editForm, newSet)" name="panel.editForm"
-                novalidate="novalidate">
+                novalidate="novalidate" autocomplete="off">
 
                 <div class="form-group row">
                     <label class="col-sm-12 col-md-3 control-label">
@@ -134,7 +134,7 @@
                                         name="conceptName{{$index}}" class="form-control" autocomplete="__away"
                                         required="required" />
                                     <div class="input-group-append">
-                                        <ref-term-select class="form-control" name="conceptNameLang{{$index}}"
+                                        <ref-term-select required="required" class="form-control" name="conceptNameLang{{$index}}"
                                             code-system-url="'urn:ietf:bcp:47'" ng-model="name.language" />
                                     </div>
                                     <div class="input-group-append btn-group">

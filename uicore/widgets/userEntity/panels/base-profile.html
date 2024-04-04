@@ -87,7 +87,7 @@
     
             </div>
         </div>
-        <form ng-submit="update(panel.editForm)" name="panel.editForm" method="dialog" novalidate="novalidate"
+        <form ng-submit="update(panel.editForm)" name="panel.editForm" method="dialog" novalidate="novalidate" autocomplete="off"
             ng-if="panel.view == 'Edit'">
             <name-edit is-required="true" name="editObject.name" simple-entry="true" no-add="true" no-type="true"
                 owner-form="panel.editForm" />

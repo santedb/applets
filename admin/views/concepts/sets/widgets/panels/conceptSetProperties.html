@@ -89,7 +89,7 @@
                 </div>
             </div>
             <form ng-if="panel.view == 'Edit'" ng-submit="saveConceptSet(panel.editForm)" name="panel.editForm"
-                novalidate="novalidate">
+                novalidate="novalidate" autocomplete="off">
                 <div class="form-group row">
                     <label class="control-label col-sm-12 col-md-3">
                         {{ 'ui.model.conceptSet.name' | i18n }}

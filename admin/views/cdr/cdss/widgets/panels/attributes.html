@@ -7,7 +7,7 @@
     </sdb:widget>
 
     <div ng-controller="CdssWidgetController">
-        <div ng-if="panel.view != 'Edit'" class="container-fluid">
+        <div class="container-fluid">
 
             <div class="row">
                 <label class="control-label col-sm-12 col-md-3">{{'ui.model.cdssLibraryDefinition.name'|i18n}}</label>
@@ -49,8 +49,6 @@
                 </div>
             </div>
         </div>
-        <form ng-if="panel.view == 'Edit'" ng-submit="saveCdssLibrary(panel.editForm)" name="panel.editForm" novalidate="novalidate">
-            
-        </form>
+        
     </div>
 </div>

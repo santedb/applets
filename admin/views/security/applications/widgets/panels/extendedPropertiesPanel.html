@@ -35,7 +35,9 @@
         </div>
     </div>
 
-    <form ng-submit="saveApplication(panel.editForm)" name="panel.editForm" method="dialog" novalidate="novalidate" ng-controller="EditApplicationExtendedController">
+    <form ng-submit="saveApplication(panel.editForm)" name="panel.editForm" 
+    method="dialog" novalidate="novalidate" ng-controller="EditApplicationExtendedController"
+    autocomplete="off">
         <div ng-if="scopedObject.securityApplication.id" id="demographicProps">
             <div class="form-group row">
                 <label class="col-md-2 col-sm-12 control-label"

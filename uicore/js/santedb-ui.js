@@ -183,7 +183,10 @@ SanteDBWrapper.prototype.display = new function () {
             retVal = concept[Object.keys(concept)[0]];
 
         if (Array.isArray(retVal))
-            return retVal.find(o => o[0] <= 'Z') || retVal[0];
+        {
+            var name = retVal[0];
+            return name[0].toUpperCase() + name.substring(1);
+        }
         else
             return retVal;
     };

@@ -18,7 +18,7 @@
  - User: fyfej
  - Date: 2023-5-19
  -->
-<form xmlns="http://www.w3.org/1999/xhtml" ng-submit="joinRealm(realmForm)" name="realmForm">
+<form xmlns="http://www.w3.org/1999/xhtml" ng-submit="joinRealm(realmForm)" name="realmForm" autocomplete="off">
     <div class="container" ng-init="config.realm._enabled=true">
         <div class="form-group row">
             <label class="col-md-2 col-xs-12 control-label" for="deviceName" id="deviceNameLabel">{{ 'ui.config.realm.deviceName.label' | i18n }}</label>

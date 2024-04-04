@@ -36,7 +36,7 @@
     </div>
 
     <div ng-if="scopedObject" ng-controller="EditGroupPropertiesController">
-        <form method="dialog" ng-submit="saveGroup(panel.editForm, scopedObject)" name="panel.editForm">
+        <form method="dialog" ng-submit="saveGroup(panel.editForm, scopedObject)" name="panel.editForm" autocomplete="off">
         <div class="card-body container-fluid">
             <div class="form-group row">
                 <label class="col-sm-12 col-md-2 control-label"

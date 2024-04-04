@@ -43,6 +43,10 @@ angular.module('santedb').controller('EditConceptController', ["$scope", "$rootS
             if(!concept.conceptSet) {
                 concept.conceptSet = [];
             }
+            if(!concept.name) {
+                concept.name = {};
+                concept.name[SanteDB.locale.getLanguage()] = [""];
+            }
             $timeout(() => $scope.concept = concept);
         }
         catch (e) {
@@ -77,6 +81,7 @@ angular.module('santedb').controller('EditConceptController', ["$scope", "$rootS
                 $state.go("santedb-admin.concept.concepts.view", { id: concept.id });
             }
             else {
+                concept = await SanteDB.resources.concept.getAsync(concept.id, 'full');
                 $timeout(() => $scope.concept = concept);
             }
         }

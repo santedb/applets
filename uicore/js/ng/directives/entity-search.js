@@ -177,6 +177,8 @@ angular.module('santedb-lib')
         return {
             scope: {
                 type: '=', // The type of object to be searched
+                childResource: '<', // The child resource to query on
+                childResourceScope: '=', // The child resource to query on
                 display: '<', // The expression which dictates the display
                 searchField: '<', // The field on the server to search results for
                 defaultResults: '<', // The default results to show
@@ -365,7 +367,11 @@ angular.module('santedb-lib')
                         dataAdapter: $.fn.select2.amd.require('select2/data/extended-ajax'),
                         ajax: {
 
-                            url: () => SanteDB.resources[scope.type.toCamelCase()].getUrl(), //((modelType == "SecurityUser" || modelType == "SecurityRole" || modelType == "SecurityPolicy") ? "/ami/" : "/hdsi/") + modelType,
+                            url: () => scope.childResource ? 
+                                scope.childResourceScope ? 
+                                `${SanteDB.resources[scope.type.toCamelCase()].getUrl()}/${scope.childResourceScope}/${scope.childResource}` :
+                                `${SanteDB.resources[scope.type.toCamelCase()].getUrl()}/${scope.childResource}` :
+                                SanteDB.resources[scope.type.toCamelCase()].getUrl(), //((modelType == "SecurityUser" || modelType == "SecurityRole" || modelType == "SecurityPolicy") ? "/ami/" : "/hdsi/") + modelType,
                             dataType: 'json',
                             delay: 500,
                             method: "GET",

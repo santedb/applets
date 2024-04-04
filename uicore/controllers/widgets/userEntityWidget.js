@@ -249,5 +249,44 @@ angular.module('santedb').controller('UserProfileWidgetController', ['$scope', '
 
     }
 
+}]).controller('UserEntityPreferencesController', ["$scope", "$timeout", "$rootScope", "$state", function($scope, $timeout, $rootScope, $state) {
+
+    $scope.$watch("scopedObject", function(n, o) {
+        if(n && !n._preferences) {
+            $scope.scopedObject._preferences = n._preferences = {};
+            if(n.extension && n.extension['http://santedb.org/extensions/core/userPreferences']) {
+                var prefExt = JSON.parse(atob(n.extension['http://santedb.org/extensions/core/userPreferences'][0]));
+                n._preferences.widgets = JSON.parse(prefExt.widgets);
+                n._preferences.help = prefExt.help || 'default';
+                n._preferences.uimode = prefExt.uimode || 'light';
+            }
+        }
+    });
+
+    $scope.updateHelpInlineHelpPreference = async function() {
+        try {
+            await SanteDB.configuration.saveUserSettingsAsync(
+                [
+                    { "key" : "help", "value" : $scope.scopedObject._preferences.help } 
+                ]);
+            location.reload();
+        }
+        catch (e) {
+            $rootScope.errorHandler(e);
+        }
+    }
+
+    $scope.updateUserInterfacePreference = async function() {
+        try {
+            await SanteDB.configuration.saveUserSettingsAsync(
+                [
+                    { "key" : "uimode", "value" : $scope.scopedObject._preferences.uimode } 
+                ]);
+            location.reload();
+        }
+        catch (e) {
+            $rootScope.errorHandler(e);
+        }
+    }
 }]);
 

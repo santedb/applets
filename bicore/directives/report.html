@@ -22,7 +22,7 @@
     <div class="card-header">
         <h5 class="mb-0">{{ report.label | i18n }} {{ filter}}</h5>
     </div>
-    <form class="form card-body" name="reportFilterForm" ng-submit="updateParameterValues(reportFilterForm)">
+    <form class="form card-body" name="reportFilterForm" ng-submit="updateParameterValues(reportFilterForm)" autocomplete="off">
         <div class="tab-content">
             <div ng-if="report.parameterDefinitions.length"  class="tab-pane show active" id="{{htmlId}}_parms">
                 <div class="container-fluid">

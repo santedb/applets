@@ -34,7 +34,7 @@
 
     <div ng-if="scopedObject" ng-controller="EditPolicyCoreController">
 
-        <form ng-submit="savePolicy(targetForm, scopedObject)" name="targetForm" novalidate="novalidate">
+        <form ng-submit="savePolicy(targetForm, scopedObject)" name="targetForm" novalidate="novalidate" autocomplete="off">
             <div class="alert alert-warning" ng-show="!scopedObject.securityPolicy.id">
                 <i class="fas fa-exclamation-triangle"></i> {{ 'ui.admin.policy.edit.readonly'  | i18n }}
             </div>

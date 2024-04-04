@@ -6,7 +6,7 @@
     </sdb:widget>
 
     <div class="container-fluid" ng-controller="MpiConfigurationEditController" ng-init="scopedObject._test.limit = 10">
-        <form class="form" novalidate="novalidate" ng-submit="runTest(testForm)" name="testForm">
+        <form class="form" novalidate="novalidate" ng-submit="runTest(testForm)" name="testForm" autocomplete="off">
             <div class="form-group row">
                 <label class="col-sm-12 col-md-3 control-label">{{ 'ui.admin.matches.config.test.input' | i18n }}
                     <hint-popover hint-title="ui.admin.matches.config.test.input" />

@@ -29,7 +29,7 @@
         </sdb:view>
     </sdb:state>
 
-    <form ng-submit="savePolicy(createForm, target)" name="createForm" novalidate="novalidate">
+    <form ng-submit="savePolicy(createForm, target)" name="createForm" novalidate="novalidate" autocomplete="off">
         <div class="alert alert-warning" ng-show="!target.securityPolicy.id">
             <i class="fas fa-exclamation-triangle"></i> {{ 'ui.admin.policy.edit.readonly'  | i18n }}
         </div>

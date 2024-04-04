@@ -6,9 +6,11 @@ label.control-label {
     margin-bottom: 0;
     padding-top: calc(.375rem + 1px);
     padding-bottom: calc(.375rem + 1px);
-
 }
 
+label.control-label > small.d-block {
+    font-weight: normal;
+}
 .control-value {
     font-size: inherit;
     line-height: 1.5;

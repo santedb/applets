@@ -63,7 +63,7 @@
     </div>
     <div class="container" ng-controller="MpiConfigurationEditController">
         <form name="panel.editForm" ng-submit="save(panel.editForm)" method="dialog" ng-if="panel.view == 'Edit'"
-            novalidate="novalidate">
+            novalidate="novalidate" autocomplete="off">
             <div class="form-group row">
                 <label class="control-label col-sm-12 col-md-3">{{ 'ui.model.matchConfiguration.id' | i18n }} <hint-popover hint-title="ui.model.matchConfiguration.id" /></label>
                 <div class="col-sm-12 col-md-9">
