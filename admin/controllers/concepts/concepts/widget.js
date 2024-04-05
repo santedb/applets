@@ -45,7 +45,7 @@ angular.module('santedb').controller('ConceptWidgetController', ["$scope", "$roo
          if(newSet) {
             $scope.editObject.conceptSet.push(newSet);
         }
-        var parentSaveFn = SanteDB.display.getScopeVariable($scope, 'saveConceptInternal');
+        var parentSaveFn = SanteDB.display.getParentScopeVariable($scope, 'saveConceptInternal');
         parentSaveFn(editForm, $scope.editObject);
     }
 

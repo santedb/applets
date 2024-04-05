@@ -124,6 +124,7 @@ angular.module('santedb').controller('MaterialIndexController', ["$scope", "$roo
                 $("#action_grp_" + index + " a").addClass("disabled");
                 $("#action_grp_" + index + " a i.fa-trash").removeClass("fa-trash").addClass("fa-circle-notch fa-spin");
                 await SanteDB.resources.material.deleteAsync(id);
+                toastr.success(SanteDB.locale.getString("ui.admin.material.delete.success"));
             }
             catch (e) {
                 $rootScope.errorHandler(e);
@@ -139,6 +140,7 @@ angular.module('santedb').controller('MaterialIndexController', ["$scope", "$roo
             $("#action_grp_" + index + " a i.fa-trash-restore").removeClass("fa-trash-restore").addClass("fa-circle-notch fa-spin");
             try {
                 await SanteDB.resources.material.touchAsync(id);
+                toastr.success(SanteDB.locale.getString("ui.admin.material.undelete.success"));
 
             }
             catch (e) {

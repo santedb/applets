@@ -115,6 +115,7 @@
   <string name="ui.model.entityRelationship.inverse.prefix">Is a</string>
   <string name="ui.model.entityRelationship.inverse.suffix">Of</string>
   <string name="ui.model.entityRelationship.target">With</string>
+  <string name="ui.model.entityRelationship.quantity">Quantity</string>
   <string name="ui.model.identityDomain.oid">Universal ID</string>
   <string name="ui.model.identityDomain.oid.hint"><![CDATA[The object identifier of the identity domain is used by HL7v3 messages and HL7v2 messages to tag an identifier with the identity domain to which the identity domain belongs. These should be: <ul><li>An IANA Private Enterprise Number</li><li>An HL7 Registered Assigning Authority</li><li>A UUID in format <code>2.25.XXXX</code></li></ul>]]></string>
   <string name="ui.model.identityDomain.domainName">Namespace ID</string>
@@ -148,6 +149,8 @@
   <string name="ui.model.version.changed">Changed Properties</string>
   <string name="ui.model.version.initial">Initial Version</string>
   <string name="ui.model.entity.properties">Properties</string>
+  <string name="ui.model.entity.versionSequence">Version #</string>
+  <string name="ui.model.entity.createdBy">Created By</string>
   <string name="ui.model.entity.id">UUID</string>
   <string name="ui.model.entity.classConcept">Classification</string>
   <string name="ui.model.entity.typeConcept">Type</string>
@@ -379,10 +382,13 @@
   <string name="ui.model.material.realationship.Industry">Regulation &amp; Manufacture</string>
   <string name="ui.model.material.relationship.RegulatedProduct">Regulatory Body</string>
   <string name="ui.model.material.relationship.RegulatedProduct.hint">Select the regulatory body which is in charge of this material, or should be notified for further investigation when safety concerns arise from use of the material</string>
-  <string name="ui.model.material.relationship.ManufacturedProduct">Suppliers</string>
-  <string name="ui.model.material.relationship.ManufacturedProduct.hint">Enter one or more preferred suppliers which are known to produce the material</string>
+  <string name="ui.model.material.relationship.ManufacturedProduct">Authorized Manufacturers</string>
+  <string name="ui.model.material.relationship.ManufacturedProduct.hint">Enter one or more authorized manufacturers or sources of supply which are licensed to produce the material</string>
   <string name="ui.model.material.expiryDate">Expiration</string>
   <string name="ui.model.material.expiryDate.hint">Select the regulatory expiration of this product type/material (when the material is no longer used)</string>
+  <string name="ui.model.material.isAdministrable">Is Administrable</string>
+  <string name="ui.model.material.isAdministrable.hint"><![CDATA[Indicates that the material can be administered to a patient or subject. Examples: 
+    <ul><li><code>Enable</code> for medications, vaccines, solutions, medical devices, etc.</li><li><code>Disable</code> for syringes, pill bottles, containers, diluents, etc.</li></ul>]]></string>
 
   <string name="ui.admin.facilities.edit.core.title">Facility</string>
   <string name="ui.model.facility.id">Unique Identifier</string>

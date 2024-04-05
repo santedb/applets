@@ -735,4 +735,17 @@
     </div>
     ]]></string>
     <string name="ui.admin.material.save.success">Material has been updated successfully</string>
+    <string name="org.santedb.material.admin.widget.tab.core">Core Properties</string>
+    <string name="org.santedb.material.admin.widget.tab.products">Products</string>
+    <string name="org.santedb.material.admin.widget.tab.lots">Lot Numbers</string>
+    <string name="org.santedb.material.admin.widget.panel.core">Material Properties</string>
+    <string name="org.santedb.material.admin.widget.panel.kit">Kitted Items</string>
+    <string name="org.santedb.material.admin.widget.panel.notes">Notes</string>
+    <string name="org.santedb.material.admin.widget.panel.history">History</string>
+    <string name="org.santedb.material.admin.widget.panel.regulation">Regulation &amp; Manufacture</string>
+    <string name="org.santedb.material.admin.widget.panel.parts">Components &amp; Hierarchy</string>
+    <string name="ui.admin.material.confirmDelete">Are you sure you want to delete this material definition?</string>
+    <string name="ui.admin.material.delete.success">Material definition has been successfully deleted</string>
+    <string name="ui.admin.material.confirmUnDelete">Are you sure you wish to re-activate this material definition?</string>
+    <string name="ui.admin.material.undelete.success">Material definition has been successfully restored</string>
 </resources>

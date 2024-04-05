@@ -20,6 +20,19 @@ label.control-label > small.d-block {
 }
 
 
+.w-10 {
+    width: 10% !important;
+  }
+  
+  .w-15 {
+    width: 15% !important;
+  }
+  
+  
+  .w-20 {
+    width: 20% !important;
+  }
+  
 @media only screen and (max-width:576px) {
     label.col-xs-12 {
         text-align: left;
@@ -288,4 +301,8 @@ svg.mermaidNoScale {
     top: -0.5em;
     right: 1em;
     background-color: rgba(00,00,00,00);
+}
+
+.widget-card {
+    height: calc(100% - 0.75em);
 }

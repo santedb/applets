@@ -214,7 +214,13 @@ angular.module('santedb-lib')
                                     await SanteDB.resources[$scope.scopedObject.$type.toCamelCase()].checkoutAsync($scope.scopedObject.id);
                                 }
                                 catch (e) {
-                                    console.warn(e.message);
+                                    if(e.$type == "ObjectLockedException") {
+                                        $rootScope.errorHandler(e);
+                                        return;
+                                    }
+                                    else {
+                                        console.warn(e.message);
+                                    }
                                 }
                                 // Isolate the editing object
                                 if (!$scope.$parent.editObject) {

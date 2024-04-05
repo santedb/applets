@@ -80,7 +80,6 @@
                 <div class="col-md-10 col-sm-12 control-value">
                     <provenance provenance-id="scopedObject.securityRole.createdBy"
                         provenance-time="scopedObject.securityRole.creationTime"></provenance>
-                    {{ scopedObject.securityRole.creationTime | extDate }}
                 </div>
             </div>
 
@@ -90,7 +89,6 @@
                 <div class="col-md-10 col-sm-12">
                     <provenance provenance-id="scopedObject.securityRole.updatedBy"
                         provenance-time="scopedObject.securityRole.updatedTime"></provenance>
-                    {{ scopedObject.securityRole.updatedTime | extDate }}
                 </div>
             </div>
 
@@ -101,7 +99,7 @@
                     <provenance provenance-id="scopedObject.securityRole.obsoletedBy"
                         provenance-time="scopedObject.securityRole.obsoletionTime"></provenance>
 
-                    {{ scopedObject.securityRole.obsoletionTime | extDate }} <button id="reactivateUserButton"
+                     <button id="reactivateUserButton"
                         ng-click="reactivateGroup(scopedObject)" type="button" class="btn btn-success"><i
                             class="fas fa-trash-restore"></i>
                         {{ 'ui.action.undelete' | i18n }}</button>

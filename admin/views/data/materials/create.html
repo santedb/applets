@@ -57,6 +57,11 @@
                     </div>
                 </div>
                 <div class="form-group row">
+                    <label class="col-sm-12 col-md-9 offset-md-3">
+                        <input type="checkbox" ng-model="editObject.isAdministrable" /> {{ 'ui.model.material.isAdministrable' | i18n }} <hint-popover hint-title="ui.model.material.isAdministrable" />
+                    </label>
+                </div>
+                <div class="form-group row">
                     <label class="col-md-3 col-sm-12 control-label required">
                         {{ 'ui.model.material.name.OfficialRecord' | i18n }} <hint-popover
                             hint-title="ui.model.material.name.OfficialRecord" />
@@ -76,7 +81,7 @@
                     </label>
                     <div class="col-md-9 col-sm-12">
                         <input type="text" required="required" name="assignedName" class="form-control"
-                            ng-model="model.name.Assigned[0].component.$other[0]" maxlength="64" />
+                            ng-model="entity.name.Assigned[0].component.$other[0]" maxlength="64" />
                         <div class="text-danger" ng-if="materialForm.assignedName.$error['required']">
                             <i class="fas fa-exclamation-triangle"></i> {{ 'ui.error.required' | i18n }}
                         </div>
@@ -88,7 +93,7 @@
                             hint-title="ui.model.material.formConcept" />
                     </label>
                     <div class="col-md-9 col-sm-12">
-                        <concept-select class="form-control" ng-required="entity._isVaccine" ng-disabled="!entity._isVaccine" name="formConcept"
+                        <concept-select class="form-control" ng-required="entity.isAdministrable" ng-disabled="!entity.isAdministrable" name="formConcept"
                             concept-set="'AdministrableDrugForm'" ng-model="entity.formConcept" />
                         <div class="text-danger" ng-if="materialForm.formConcept.$error['required']">
                             <i class="fas fa-exclamation-triangle"></i> {{ 'ui.error.required' | i18n }}
@@ -208,22 +213,11 @@
                     <div class="col-md-9 col-sm-12">
                         <entity-search is-required="true" class="form-control" type="'ConceptSet'" multiple="mutliple"
                             child-resource="'_members'" child-resource-scope="'d6cbe607-51e3-49cc-9b20-cb2a2d3c586e'"
-                            ng-model="entity.extension['http://santedb.org/extensions/core/targetCondition']"
+                            ng-model="entity.extension['http://santedb.org/extensions/core/targetCondition']" value-property="'id'"
                             search-field="'name.value'" name="typeConcept"></entity-search>
                     </div>
                 </div>
-                <div class="form-group row">
-                    <label class="col-md-3 col-sm-12 control-label">
-                        {{ 'ui.model.material.relationship.ManufacturedProduct' | i18n }} <hint-popover
-                            hint-title="ui.model.material.relationship.ManufacturedProduct" />
-                    </label>
-                    <div class="col-md-9 col-sm-12">
-                        <entity-search class="form-control" multiple="multiple" type="'Organization'"
-                            filter="{ industryConcept: '33b40c3c-c0c0-48b6-be74-0881d9c00ee6' }"
-                            ng-model="entity.relationship.ManufacturedProduct" value-property="'source'"
-                            name="manufacturers" />
-                    </div>
-                </div>
+                
             </div>
         </div>
         <div class="form-group row">

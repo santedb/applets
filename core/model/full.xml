@@ -328,13 +328,54 @@
     <property name="name" all="true" behavior="always">
       <property name="*" ref="EntityName" />
     </property>
-    <property name="identifier" all="true" ref="EntityIdentifier" behavior="always" />
-    <property name="classConceptModel" behavior="always" />
+    <property name="identifier" all="true" behavior="always">
+      <property name="*"  ref="EntityIdentifier"/>
+    </property>
+    <property name="classConceptModel" behavior="always" all="false">
+      <property name="id" />
+      <property name="mnemonic" />
+      <property name="name" all="true" />
+    </property>
     <property name="classConcept" behavior="always" />
     <property name="determinerConceptModel" behavior="never" />
-    <property name="statusConceptModel" behavior="always" />
-    <property name="formConceptModel" behavior="always" ref="Concept" />
-    <property name="typeConceptModel" behavior="always" ref="Concept" />
+    <property name="statusConceptModel" behavior="always" all="false">
+      <property name="id" />
+      <property name="mnemonic" />
+      <property name="name" all="true" />
+    </property>
+    <property name="formConceptModel" behavior="always" all="false">
+      <property name="id" />
+      <property name="mnemonic" />
+      <property name="name" all="true" />
+    </property>
+    <property name="quantityConceptModel" behavior="always" all="false">
+      <property name="id" />
+      <property name="mnemonic" />
+      <property name="name" all="true" />
+      <property name="referenceTerm" behavior="always" all="true">
+        <property name="*">
+          <property name="termModel" behavior="always" ref="ReferenceTerm" />
+        </property>
+      </property>
+    </property>
+    <property name="typeConcept" />
+    <property name="typeConceptModel" behavior="always" all="false">
+      <property name="id" />
+      <property name="mnemonic" />
+      <property name="name" all="true" />
+      <property name="conceptSet" all="true"/>
+      <property name="referenceTerm" behavior="always" all="true">
+       <property name="*" all="true">
+          <property name="relationshipType"/>
+          <property name="term" behavior="always"/>
+          <property name="termModel" behavior="always" ref="ReferenceTerm" />
+        </property>
+      </property>
+    </property>
+    <property name="note" behavior="always">
+      <property name="text" />
+      <property name="authorModel" behavior="always" ref="UserEntity" />
+    </property>
     <property name="relationship" all="true" behavior="always">
       <property name="*" all="true" ref="EntityRelationship" />
     </property>

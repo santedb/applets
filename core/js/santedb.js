@@ -901,7 +901,7 @@ function ResourceWrapper(_config) {
                 url = `${_config.resource}/${id}`;
 
             if (id.version)
-                url += `/history/${id.version}`;
+                url += `/_history/${id.version}`;
         }
         else
             url = _config.resource;

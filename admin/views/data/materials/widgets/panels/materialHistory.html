@@ -1,0 +1,32 @@
+<div xmlns="http://www.w3.org/1999/xhtml" xmlns:sdb="http://santedb.org/applet">
+    <sdb:widget type="Panel" name="org.santedb.material.admin.widget.panel.history" context="org.santedb.material.admin.core"
+        order="55" size="Medium">
+        <sdb:icon>fas fa-fw fa-clock-rotate-left</sdb:icon>
+        <sdb:name lang="en">History</sdb:name>
+        <sdb:demand>1.3.6.1.4.1.33349.3.1.5.9.2.4.0.1.3</sdb:demand>
+        <sdb:views></sdb:views>
+    </sdb:widget>
+    
+    <div ng-if="!scopedObject._history">
+        <i class="fas fa-circle-notch fa-spin"></i> {{ 'ui.wait' | i18n }}
+    </div>
+
+    <table ng-if="scopedObject._history" class="table table-striped">
+        <thead>
+            <tr>
+                <th>{{ 'ui.model.entity.versionSequence' | i18n }}</th>
+                <th>{{ 'ui.model.entity.createdBy' | i18n }}</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="hist in scopedObject._history" ng-class="{ 'bg-info text-white' : hist.head }">
+                <td>
+                    {{ hist.sequence }}
+                </td>
+                <td>
+                    <provenance provenance-id="hist.createdBy" provenance-time="hist.creationTime" ></provenance>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>

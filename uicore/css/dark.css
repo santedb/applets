@@ -7409,6 +7409,31 @@ button.bg-dark:focus {
   box-shadow: none !important;
 }
 
+
+footer.sticky-footer {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  height: 56px;
+  line-height: 55px;
+  background-color: var(--dark);
+}
+
+
+.w-10 {
+  width: 10% !important;
+}
+
+.w-15 {
+  width: 15% !important;
+}
+
+
+.w-20 {
+  width: 20% !important;
+}
+
 .w-25 {
   width: 25% !important;
 }

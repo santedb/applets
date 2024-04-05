@@ -471,7 +471,7 @@ SanteDBWrapper.prototype.display = new function () {
      * @param {string} nameOfVariable The name of the variable to fetch from the scope
      * @returns {object} The object with nameOfVariable
      */
-    this.getScopeVariable = function (scope, nameOfVariable) {
+    this.getParentScopeVariable = function (scope, nameOfVariable) {
         var retVal = null;
         do {
             retVal = scope[nameOfVariable];

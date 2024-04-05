@@ -238,7 +238,14 @@ angular.module('santedb-lib')
                                         var query = angular.copy($scope.filter || {});
                                         query[$scope.key] = v;
                                         query._viewModel = "dropdown";
-                                        var res = await api.findAsync(query);
+                                        var res = null;
+                                        if($scope.childResource) {
+                                            res = await api.findAssociatedAsync($scope.childResourceScope, $scope.childResource, query, "dropdown");
+                                        }
+                                        else {
+                                            res = await api.findAsync(query);
+                                        }
+
                                         // Matching item
                                         if (res.resource.length == 1 && $(selectControl).find(`option[value='${v}']`).length == 0) {
                                             var obj = res.resource[0];
@@ -250,7 +257,14 @@ angular.module('santedb-lib')
                                         }
                                     }
                                     else {
-                                        var res = await api.getAsync({ id: v && v.id ? v.id : v, viewModel: "dropdown" });
+                                        var res = null;
+                                        if($scope.childResource) {
+                                            res = await api.getAssociatedAsync($scope.childResourceScope, $scope.childResource, v.id || v, { _viewModel: "dropdown" }, null);
+                                        } 
+                                        else {
+                                            res = await api.getAsync({ id: v && v.id ? v.id : v, viewModel: "dropdown" });
+                                        }
+
                                         if ($(selectControl).find(`option[value='${v}']`).length == 0) {
                                             var obj = res;
                                             if ($scope.selector)

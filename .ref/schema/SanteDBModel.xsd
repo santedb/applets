@@ -644,7 +644,7 @@
         <xs:sequence>
           <xs:element minOccurs="1" maxOccurs="1" name="expiryDate" nillable="true" type="xs:dateTime" />
           <xs:element minOccurs="1" maxOccurs="1" name="formConcept" nillable="true" xmlns:q65="http://microsoft.com/wsdl/types/" type="q65:guid" />
-          <xs:element minOccurs="1" maxOccurs="1" name="isAdministrative" type="xs:boolean" />
+          <xs:element minOccurs="1" maxOccurs="1" name="isAdministrable" type="xs:boolean" />
           <xs:element minOccurs="1" maxOccurs="1" name="quantity" nillable="true" type="xs:decimal" />
           <xs:element minOccurs="1" maxOccurs="1" name="quantityConcept" nillable="true" xmlns:q66="http://microsoft.com/wsdl/types/" type="q66:guid" />
         </xs:sequence>
