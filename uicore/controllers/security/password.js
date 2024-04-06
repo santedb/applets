@@ -48,6 +48,9 @@ angular.module("santedb").controller("PasswordController", ['$scope', '$rootScop
                 await SanteDB.authentication.passwordLoginAsync($scope.password.entity.userName, $scope.password.entity.existingPassword, undefined, true, undefined, undefined);
             }
             var result = await SanteDB.authentication.setPasswordAsync($scope.password.entity.id, $scope.password.entity.userName, $scope.password.entity.password);
+            if($scope.password.expirePassword) {
+                await SanteDB.authentication.expirePasswordAsync($scope.password.entity.id, $scope.password.entity.userName);
+            }
             if ($scope.password.entity.userName == $rootScope.session.username) { // we are logged out - so we want to reauthenticate to start a new session
                 await SanteDB.authentication.passwordLoginAsync($scope.password.entity.userName, $scope.password.entity.password, undefined, false, undefined, undefined);
             }

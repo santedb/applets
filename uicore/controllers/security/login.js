@@ -22,6 +22,11 @@
 angular.module("santedb").controller("LoginController", ['$scope', '$rootScope', '$state', '$templateCache', '$stateParams', '$timeout', function ($scope, $rootScope, $state, $templateCache, $stateParams, $timeout) {
 
 
+    $scope.$watch("reset.password.password", function (n, o) {
+        if (n)
+            $scope.strength = SanteDB.application.calculatePasswordStrength(n);
+    });
+
     // Send login request and then call continue with for the authentication elevator
     $scope.doLogin = async function (form) {
         if (form.$invalid)
@@ -62,13 +67,24 @@ angular.module("santedb").controller("LoginController", ['$scope', '$rootScope',
         }
         catch (e) {
 
-            if (e.data.error === "mfa_required") {
+            if ((e.error || e.data.error) === "mfa_required") {
                 $timeout(() => {
-                     
                      $scope.login.requireTfa =
                      $scope.login._lockPassword = 
                      $scope.login._lockUserName = true;
                     $scope.login._mfaDetail = e.data.error_description;
+                });
+                return;
+            }
+            else if((e.error || e.data.error) === "password_expired") {
+                $scope.reset = { 
+                    username: $scope.login.userName, 
+                    challenge: { challenge: EmptyGuid },
+                    challengeResponse: $scope.login.password
+                 };
+                await $scope.challengeLogin();
+                $timeout(() => {
+                    $("#resetPasswordModal").modal('show');
                 });
                 return;
             }
@@ -134,20 +150,14 @@ angular.module("santedb").controller("LoginController", ['$scope', '$rootScope',
     $scope.challengeLogin = async function () {
         try {
             SanteDB.display.buttonWait("#verifyChallengeButton", true);
-            var session = await SanteDB.authentication.challengeLoginAsync($scope.reset.username, $scope.reset.challenge.challenge, $scope.reset.challengeResponse, null);
+
+            var session = await SanteDB.authentication.challengeLoginAsync($scope.reset.username, $scope.reset.challenge.challenge, $scope.reset.challengeResponse, null, null);
             SanteDB.authentication.setElevator({ getToken: function () { return session.access_token; } });
-
-            $scope.$watch("reset.password.password", function (n, o) {
-                if (n)
-                    $scope.strength = SanteDB.application.calculatePasswordStrength(n);
-            });
-
+            
             $timeout (_ => {
                 $scope.reset.challengeResponse = "XXXX";
                 $scope.reset.password = {};
                 $scope.reset.user = SanteDB.authentication.parseJwt(session.id_token);
-
-                
             });
         }
         catch (e) {
@@ -172,6 +182,10 @@ angular.module("santedb").controller("LoginController", ['$scope', '$rootScope',
 
             await SanteDB.authentication.setPasswordAsync(sid, $scope.reset.username, $scope.reset.password.password, $scope.reset.user.realm !== undefined);
             toastr.success(SanteDB.locale.getString("ui.login.resetPassword.success"));
+            $scope.login = {
+
+                grant_type: "password"
+            };
             $scope.cancelReset(form);
         }
         catch (e) {
@@ -197,6 +211,7 @@ angular.module("santedb").controller("LoginController", ['$scope', '$rootScope',
         form.$setPristine();
         form.$setUntouched();
         $("#forgotPasswordModal").modal("hide");
+        $("#resetPasswordModal").modal("hide");
         delete ($scope.reset);
     }
 }]);
