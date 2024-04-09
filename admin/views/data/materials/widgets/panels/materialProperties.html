@@ -29,8 +29,10 @@
                     {{ 'ui.model.material.isAdministrable' | i18n }}
                 </label>
                 <div class="col-md-9 col-sm-12 pt-2">
-                    <span class="badge" ng-class="{'badge-successs' : scopedObject.isAdministrable, 'badge-secondary' : !scopedObject.isAdministrable}">
-                        <i class="fas fa-fw" ng-class="{ 'fa-check' : scopedObject.isAdministrable, 'fa-times' : !scopedObject.isAdministrable }"></i>
+                    <span class="badge"
+                        ng-class="{'badge-success' : scopedObject.isAdministrable, 'badge-secondary' : !scopedObject.isAdministrable}">
+                        <i class="fas fa-fw"
+                            ng-class="{ 'fa-check' : scopedObject.isAdministrable, 'fa-times' : !scopedObject.isAdministrable }"></i>
                         {{ scopedObject.isAdministrable ? 'ui.true' : 'ui.false' | i18n }}
                     </span>
                 </div>
@@ -75,7 +77,29 @@
                         </li>
                     </ul>
                 </div>
+                <label class="col-md-3 col-sm-12 control-label">{{ 'ui.model.material.relationship.RegulatedProduct' |
+                    i18n }}</label>
+                <div class="col-md-9 col-sm-12 mt-2">
+                    <a ng-if="scopedObject.relationship.RegulatedProduct"
+                        ui-sref="santedb-admin.data.organization.view({id: scopedObject.relationship.RegulatedProduct[0].holder})"
+                        target="_blank">{{ scopedObject.relationship.RegulatedProduct[0].holderModel.name | name }}
+                        <sup><i class="fas fa-external-link-alt fa-fw"></i></sup></a>
+                    <span ng-if="!scopedObject.relationship.RegulatedProduct.length">{{ 'ui.unknown' | i18n }} </span>
+                </div>
+                <label class="col-md-3 col-sm-12 control-label">{{ 'ui.model.material.extension.TargetCondition' | i18n
+                    }}</label>
+                <div class="col-md-9 col-sm-12 mt-2">
+                    <ul class="list-group"
+                        ng-if="scopedObject.extension['http://santedb.org/extensions/core/targetCondition']">
+                        <li class="list-group-item"
+                            ng-repeat="cond in scopedObject.extension['http://santedb.org/extensions/core/targetCondition'] track by $index">
+                            {{ cond | concept }}
+                        </li>
+                    </ul>
+                    <span ng-if="!scopedObject.extension['http://santedb.org/extensions/core/targetCondition']">{{
+                        'ui.unknown' | i18n }} </span>
 
+                </div>
             </div>
         </div>
         <form ng-if="panel.view === 'Edit'" name="panel.editForm" novalidate="novalidate" autocomplete="off"
@@ -97,7 +121,9 @@
             </div>
             <div class="form-group row">
                 <label class="col-sm-12 col-md-9 offset-md-3">
-                    <input type="checkbox" ng-model="editObject.isAdministrable" /> {{ 'ui.model.material.isAdministrable' | i18n }} <hint-popover hint-title="ui.model.material.isAdministrable" />
+                    <input type="checkbox" ng-model="editObject.isAdministrable" /> {{
+                    'ui.model.material.isAdministrable' | i18n }} <hint-popover
+                        hint-title="ui.model.material.isAdministrable" />
                 </label>
             </div>
             <div class="form-group row">
@@ -132,7 +158,8 @@
                         hint-title="ui.model.material.formConcept" />
                 </label>
                 <div class="col-md-9 col-sm-12">
-                    <concept-select class="form-control" ng-required="editObject.isAdministrable" ng-disabled="!editObject.isAdministrable" name="formConcept"
+                    <concept-select class="form-control" ng-required="editObject.isAdministrable"
+                        ng-disabled="!editObject.isAdministrable" name="formConcept"
                         concept-set="'AdministrableDrugForm'" ng-model="editObject.formConcept" />
                     <div class="text-danger" ng-if="panel.editForm.formConcept.$error['required']">
                         <i class="fas fa-exclamation-triangle"></i> {{ 'ui.error.required' | i18n }}
@@ -156,14 +183,38 @@
             <div class="form-group row" ng-repeat="dmn in idDomains track by $index">
                 <label class="col-sm-12 col-md-3 control-label">{{ dmn.name }}</label>
                 <div class="col-sm-12 col-md-9">
-                    <input type="text" ng-pattern="dmn.validation" ng-init="editObject.identifier[dmn.domainName] = editObject.identifier[dmn.domainName] || []" ng-model="editObject.identifier[dmn.domainName][0].value"
-                        placeholder="{{dmn._exampleValue}}" class="form-control" name="id{{$index}}" />
+                    <input type="text" ng-pattern="dmn.validation"
+                        ng-init="editObject.identifier[dmn.domainName] = editObject.identifier[dmn.domainName] || []"
+                        ng-model="editObject.identifier[dmn.domainName][0].value" placeholder="{{dmn._exampleValue}}"
+                        class="form-control" name="id{{$index}}" />
                     <div class="text-danger" ng-if="panel.editForm['id' + $index].$error['pattern']">
                         <i class="fas fa-exclamation-triangle"></i> {{ 'ui.error.pattern' | i18n }}
                     </div>
                 </div>
             </div>
 
+            <div class="form-group row">
+                <label class="col-md-3 col-sm-12 control-label">{{ 'ui.model.material.relationship.RegulatedProduct' |
+                    i18n }}
+                    <hint-popover hint-title="ui.model.material.relationship.RegulatedProduct" />
+                </label>
+                <div class="col-md-9 col-sm-12 mt-2">
+                    <entity-search class="form-control" type="'Organization'"
+                        ng-model="editObject.relationship.RegulatedProduct[0].source" name="regulator" />
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-md-3 col-sm-12 control-label">{{ 'ui.model.material.extension.TargetCondition' | i18n
+                    }}
+                    <hint-popover hint-title="ui.model.material.extension.TargetCondition" />
+                </label>
+                <div class="col-md-9 col-sm-12 mt-2">
+                    <entity-search is-required="true" class="form-control" type="'ConceptSet'" multiple="mutliple"
+                        child-resource="'_members'" child-resource-scope="'d6cbe607-51e3-49cc-9b20-cb2a2d3c586e'"
+                        ng-model="editObject.extension['http://santedb.org/extensions/core/targetCondition']"
+                        value-property="'id'" search-field="'name.value'" name="typeConcept"></entity-search>
+                </div>
+            </div>
         </form>
     </div>
 </div>

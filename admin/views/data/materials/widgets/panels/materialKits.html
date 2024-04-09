@@ -1,6 +1,6 @@
 <div xmlns="http://www.w3.org/1999/xhtml" xmlns:sdb="http://santedb.org/applet">
-    <sdb:widget type="Panel" name="org.santedb.material.admin.widget.panel.kit" context="org.santedb.material.admin.core"
-        order="10" size="Medium">
+    <sdb:widget type="Panel" name="org.santedb.material.admin.widget.panel.kit"
+        context="org.santedb.material.admin.core" order="10" size="Medium">
         <sdb:icon>fas fa-fw fa-kitchen-set</sdb:icon>
         <sdb:name lang="en">Material Kits</sdb:name>
         <sdb:demand>1.3.6.1.4.1.33349.3.1.5.9.2.4.0.1.3</sdb:demand>
@@ -13,27 +13,52 @@
     <div ng-if="!scopedObject">
         <i class="fas fa-spin fa-circle-notch"></i> {{ 'ui.wait' | i18n }}
     </div>
-    <table class="table table-striped" ng-if="scopedObject">
-        <thead>
-            <tr>
-                <th>{{ 'ui.model.entityRelationship.target' | i18n }}</th>
-                <th>{{ 'ui.model.entityRelationship.quantity' | i18n }}</th>
-                <th ng-if="panel.view === 'Edit'">{{ 'ui.action' | i18n }}</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr ng-repeat="ue in scopedObject.relationship.UsedEntity track by $index">
-                <td>{{ ue.targetModel.name | name }}</td>
-                <td>{{ ue.quantity || 1 }}</td>
-                <td ng-if="panel.view === 'Edit'"></td>
-            </tr>
-        </tbody>
-        <tfoot ng-if="panel.view === 'Edit'">
-            <tr>
-                <td></td>
-                <td></td>
-                <td></td>
-            </tr>
-        </tfoot>
-    </table>
+    <div ng-controller="MaterialWidgetController">
+        <form name="panel.editForm" ng-submit="saveMaterial(panel.editForm)" novalidate="novalidate" autocomplete="off">
+            <table class="table table-striped" ng-if="scopedObject">
+                <thead>
+                    <tr>
+                        <th class="w-50">{{ 'ui.model.entityRelationship.target' | i18n }}</th>
+                        <th class="w-25">{{ 'ui.model.entityRelationship.quantity' | i18n }}</th>
+                        <th ng-if="panel.view === 'Edit'">{{ 'ui.action' | i18n }}</th>
+                    </tr>
+                </thead>
+                <tbody ng-if="panel.view !== 'Edit'">
+                    <tr ng-repeat="ue in scopedObject.relationship.UsedEntity track by $index">
+                        <td>{{ ue.targetModel.name | name }}</td>
+                        <td>{{ ue.quantity || 1 }}</td>
+                    </tr>
+                </tbody>
+                <tbody ng-if="panel.view === 'Edit'">
+                    <tr ng-repeat="ue in editObject.relationship.UsedEntity track by $index">
+                        <td>{{ ue.targetModel.name | name }}</td>
+                        <td><input type="number" min="0" ng-model="ue.quantity" class="form-control" /></td>
+                        <td><button class="btn btn-danger"
+                                ng-click="editObject.relationship.UsedEntity.splice($index, 1)">
+                                <i class="fas fa-fw fa-times"></i> {{ 'ui.action.remove' | i18n }}
+                            </button>
+                        </td>
+                    </tr>
+                </tbody>
+                <tfoot ng-if="panel.view === 'Edit'" >
+                    <tr>
+                        <td>
+                            <entity-search name="newMaterial" ng-model="newUsedEntity.target" type="'Material'"
+                                filter="{ classConcept: 'd39073be-0f8f-440e-b8c8-7034cc138a95' }" />
+                        </td>
+                        <td>
+                            <input type="number" min="0" name="newQuantity" ng-model="newUsedEntity.quantity"
+                                class="form-control" />
+                        </td>
+                        <td>
+                            <button class="btn btn-primary" type="button" ng-disabled="panel.editForm.$invalid"
+                                ng-click="editObject.relationship.UsedEntity.push(newUsedEntity); newUsedEntity = { quantity: 1 }">
+                                <i class="fa fas-fw fa-plus"></i> {{ 'ui.action.add' | i18n }}
+                            </button>
+                        </td>
+                    </tr>
+                </tfoot>
+            </table>
+        </form>
+    </div>
 </div>

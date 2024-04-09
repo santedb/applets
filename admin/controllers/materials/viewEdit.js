@@ -80,6 +80,14 @@ angular.module("santedb").controller("MaterialViewEditController", ["$scope", "$
                         );
                 }
 
+                material.relationship = material.relationship || {};
+                material.relationship.UsedEntity = material.relationship.UsedEntity || [];
+                material.relationship.HasPart = material.relationship.HasPart || [];
+                material.relationship.Parent = material.relationship.Parent || [];
+                material.relationship.HasIngredient = material.relationship.HasIngredient || [];
+                material.relationship.RegulatedProduct = material.relationship.RegulatedProduct || [];
+                material.note = material.note || [];
+
             }
             else {
                 material = angular.copy(entityTemplate);
@@ -129,7 +137,7 @@ angular.module("santedb").controller("MaterialViewEditController", ["$scope", "$
 
     // Save the material definition to the server
     $scope.saveMaterial = async function (form, materialToSave) {
-        if (form.$invalid) {
+        if (form.$invalid || form.$pristine) {
             return;
         }
 
@@ -166,7 +174,10 @@ angular.module("santedb").controller("MaterialViewEditController", ["$scope", "$
             var regulatedProduct = submissionMaterial.relationship.RegulatedProduct;
             if(regulatedProduct && regulatedProduct.length > 0 &&
                 regulatedProduct[0].source) {
+
+                    
                 submissionBundle.resource.push(new EntityRelationship({
+                    id: regulatedProduct[0].id,
                     source: regulatedProduct[0].source,
                     relationshipType: EntityRelationshipTypeKeys.RegulatedProduct,
                     target: submissionMaterial.id

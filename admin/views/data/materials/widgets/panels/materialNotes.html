@@ -1,6 +1,6 @@
 <div xmlns="http://www.w3.org/1999/xhtml" xmlns:sdb="http://santedb.org/applet">
-    <sdb:widget type="Panel" name="org.santedb.material.admin.widget.panel.notes" context="org.santedb.material.admin.core"
-        order="15" size="Medium">
+    <sdb:widget type="Panel" name="org.santedb.material.admin.widget.panel.notes"
+        context="org.santedb.material.admin.core" order="15" size="Medium">
         <sdb:icon>fas fa-fw fa-notes-medical</sdb:icon>
         <sdb:name lang="en">Notes</sdb:name>
         <sdb:demand>1.3.6.1.4.1.33349.3.1.5.9.2.4.0.1.3</sdb:demand>
@@ -13,12 +13,32 @@
     <div ng-if="!scopedObject">
         <i class="fas fa-spin fa-circle-notch"></i> {{ 'ui.wait' | i18n }}
     </div>
-    <div ng-if="scopedObject">
-        <ul class="list-group" ng-if="panel.view !== 'Edit'">
+    <div ng-if="scopedObject &amp;&amp; panel.view !== 'Edit'">
+        <ul class="list-group overflow-auto h-100">
             <li class="list-group-item" ng-repeat="note in scopedObject.note track by $index" ng-if="$index &lt; 3">
                 <strong>{{ note.authorModel.name | name }}</strong>
-                <pre class="alert alert-warning mt-1 mb-0">{{ note.text }}</pre>
+                <pre class="alert alert-warning my-1">{{ note.text }}</pre>
             </li>
         </ul>
+    </div>
+    <div ng-controller="MaterialWidgetController">
+        <form ng-if="panel.view === 'Edit'" novalidate="novalidate" name="panel.editForm" ng-submit="saveMaterial(panel.editForm)" autocomplete="off">
+            <ul class="list-group overflow-auto" ng-init="editObject._noteLength = editObject.note.length || 0">
+                <li>{{ editObject._noteLength }} </li>
+                <li class="list-group-item" ng-repeat="note in editObject.note track by $index"
+                    ng-if="$index !== editObject._noteLength">
+                    <strong>{{ note.authorModel.name | name }}</strong>
+                    <pre class="alert alert-warning mt-1 mb-0">{{ note.text }}</pre>
+                    <button class="btn btn-danger float-right" type="button" ng-click="editObject.note.splice($index, 1)"><i class="fas fa-times"></i> {{ 'ui.action.remove' | i18n }}</button>
+                    <div class="clearfix"></div>
+                </li>
+                <li class="list-group-item">
+                    <textarea class="form-control alert alert-warning border-dark my-1"
+                        ng-model="editObject.note[editObject._noteLength].text" maxlength="8192"></textarea>
+                    <div>{{ 8192 - editObject.note[editObject._noteLength].text.length }} {{ 'ui.common.charsRemain' |
+                        i18n }}</div>
+                </li>
+            </ul>
+        </form>
     </div>
 </div>
