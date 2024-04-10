@@ -114,7 +114,8 @@ angular.module('santedb-lib')
                     results = await _sourceApi.findAsync(query, 'full', scope.upstream == true);
                 }
 
-                if (Array.isArray(scope.itemSupplement)) {
+                // Check if there are search results and an array of one or more item supplement functions to add additional information for the resource.
+                if (results && results.resource && Array.isArray(results.resource) && Array.isArray(scope.itemSupplement)) {
                     results.resource = await Promise.all(results.resource.map(async res => {
                         for (var supl in scope.itemSupplement) {
                             res = await scope.itemSupplement[supl](res);
