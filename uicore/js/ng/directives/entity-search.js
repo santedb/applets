@@ -177,6 +177,8 @@ angular.module('santedb-lib')
         return {
             scope: {
                 type: '=', // The type of object to be searched
+                childResource: '<', // The child resource to query on
+                childResourceScope: '=', // The child resource to query on
                 display: '<', // The expression which dictates the display
                 searchField: '<', // The field on the server to search results for
                 defaultResults: '<', // The default results to show
@@ -236,7 +238,14 @@ angular.module('santedb-lib')
                                         var query = angular.copy($scope.filter || {});
                                         query[$scope.key] = v;
                                         query._viewModel = "dropdown";
-                                        var res = await api.findAsync(query);
+                                        var res = null;
+                                        if($scope.childResource) {
+                                            res = await api.findAssociatedAsync($scope.childResourceScope, $scope.childResource, query, "dropdown");
+                                        }
+                                        else {
+                                            res = await api.findAsync(query);
+                                        }
+
                                         // Matching item
                                         if (res.resource.length == 1 && $(selectControl).find(`option[value='${v}']`).length == 0) {
                                             var obj = res.resource[0];
@@ -248,7 +257,14 @@ angular.module('santedb-lib')
                                         }
                                     }
                                     else {
-                                        var res = await api.getAsync({ id: v && v.id ? v.id : v, viewModel: "dropdown" });
+                                        var res = null;
+                                        if($scope.childResource) {
+                                            res = await api.getAssociatedAsync($scope.childResourceScope, $scope.childResource, v.id || v, { _viewModel: "dropdown" }, null);
+                                        } 
+                                        else {
+                                            res = await api.getAsync({ id: v && v.id ? v.id : v, viewModel: "dropdown" });
+                                        }
+
                                         if ($(selectControl).find(`option[value='${v}']`).length == 0) {
                                             var obj = res;
                                             if ($scope.selector)
@@ -365,7 +381,11 @@ angular.module('santedb-lib')
                         dataAdapter: $.fn.select2.amd.require('select2/data/extended-ajax'),
                         ajax: {
 
-                            url: () => SanteDB.resources[scope.type.toCamelCase()].getUrl(), //((modelType == "SecurityUser" || modelType == "SecurityRole" || modelType == "SecurityPolicy") ? "/ami/" : "/hdsi/") + modelType,
+                            url: () => scope.childResource ? 
+                                scope.childResourceScope ? 
+                                `${SanteDB.resources[scope.type.toCamelCase()].getUrl()}/${scope.childResourceScope}/${scope.childResource}` :
+                                `${SanteDB.resources[scope.type.toCamelCase()].getUrl()}/${scope.childResource}` :
+                                SanteDB.resources[scope.type.toCamelCase()].getUrl(), //((modelType == "SecurityUser" || modelType == "SecurityRole" || modelType == "SecurityPolicy") ? "/ami/" : "/hdsi/") + modelType,
                             dataType: 'json',
                             delay: 500,
                             method: "GET",

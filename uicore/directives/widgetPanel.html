@@ -23,7 +23,7 @@
         <div class="col" ng-repeat="group in widgetGroups"
             ng-class="{ 'col-12' : !renderSize &amp;&amp; group.size == 'Large' || renderSize == 'Large', 'col-sm-12 col-lg-6' : !renderSize &amp;&amp; group.size == 'Medium' || renderSize == 'Medium', 'col-sm-6 col-lg-3': !renderSize &amp;&amp; group.size == 'Small' || renderSize == 'Small' }">
             <div class="mt-2 p-0 col" ng-repeat="panel in group.widgets" ng-if="$eval(panel.guard[0] || 'true')">
-                <div class="card">
+                <div class="card widget-card">
                     <div class="card-header d-flex align-items-center justify-content-between"
                         ng-class="panel.headerClass">
                         <h5 class="mb-0">
@@ -61,8 +61,8 @@
 
     </div>
     <div class="customizeViewBar d-none ">
-        <button class="btn btn-light d-block p-2" type="button" data-toggle="modal" data-target="#customizeViewModal">
-            <i class="far fa-fw fa-window-restore"></i> {{ 'ui.action.customize' | i18n }}
+        <button class="btn btn-light d-block p-2" type="button" data-toggle="modal" data-target="#customizeViewModal" title=" {{ 'ui.action.customize' | i18n }}">
+            <i class="far fa-fw fa-window-restore"></i>
         </button>
 
         <div class="modal" id="customizeViewModal" tabindex="-1" role="dialog" aria-labelledby="customizeViewModalTitle"
@@ -79,7 +79,7 @@
                             </span>
                         </button>
                     </div>
-                    <form name="customizePanelForm" ng-submit="customizePanels(customizePanelForm)">
+                    <form name="customizePanelForm" ng-submit="customizePanels(customizePanelForm)" autocomplete="off">
                         <div class="modal-body">
                             <ul class="list-group">
                                 <li class="list-group-item" ng-repeat="widget in availableWidgets track by $index">

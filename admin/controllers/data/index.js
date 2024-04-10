@@ -20,18 +20,27 @@
  * User: fyfej
  * Date: 2023-5-19
  */
-angular.module('santedb').controller('ReferenceDataIndexController', ["$scope", "$rootScope", function ($scope, $rootScope) {
+angular.module('santedb').controller('ReferenceDataIndexController', ["$scope", "$rootScope", "$timeout", function ($scope, $rootScope, $timeout) {
 
-    $scope.dashboard = {};
 
     // Get stats
     async function getStats() {
         try {
-            $scope.dashboard.domains = (await SanteDB.resources.identityDomain.findAsync({_count:0})).size;
-            $scope.dashboard.places = (await SanteDB.resources.place.findAsync({ classConcept: "!" + EntityClassKeys.ServiceDeliveryLocation, statusConcept: StatusKeys.Active,  _count:0})).totalResults;
-            $scope.dashboard.facilities = (await SanteDB.resources.place.findAsync({ classConcept: EntityClassKeys.ServiceDeliveryLocation, statusConcept: StatusKeys.Active, _count:0})).totalResults;
-            $scope.dashboard.materials = (await SanteDB.resources.material.findAsync({_count:0})).totalResults;
-            $scope.dashboard.organizations = (await SanteDB.resources.organization.findAsync({_count:0})).totalResults;
+
+            var domains = (await SanteDB.resources.identityDomain.findAsync({_count:0})).size;
+            var places = (await SanteDB.resources.place.findAsync({ classConcept: "!" + EntityClassKeys.ServiceDeliveryLocation, statusConcept: StatusKeys.Active,  _count:0})).totalResults;
+            var facilities = (await SanteDB.resources.place.findAsync({ classConcept: EntityClassKeys.ServiceDeliveryLocation, statusConcept: StatusKeys.Active, _count:0})).totalResults;
+            var materials = (await SanteDB.resources.material.findAsync({classConcept: EntityClassKeys.Material, _count:0})).totalResults;
+            var organizations = (await SanteDB.resources.organization.findAsync({_count:0})).totalResults;
+
+            $timeout(() => {
+                $scope.dashboard = {};
+                $scope.dashboard.domains = domains;
+                $scope.dashboard.places = places;
+                $scope.dashboard.facilities = facilities;
+                $scope.dashboard.materials = materials;
+                $scope.dashboard.organizations = organizations;
+            })
         }
         catch(e){ 
             $rootScope.errorHandler(e);

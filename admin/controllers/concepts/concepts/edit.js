@@ -40,6 +40,13 @@ angular.module('santedb').controller('EditConceptController', ["$scope", "$rootS
     async function initializeView(id) {
         try {
             var concept = await SanteDB.resources.concept.getAsync(id, "full");
+            if(!concept.conceptSet) {
+                concept.conceptSet = [];
+            }
+            if(!concept.name) {
+                concept.name = {};
+                concept.name[SanteDB.locale.getLanguage()] = [""];
+            }
             $timeout(() => $scope.concept = concept);
         }
         catch (e) {
@@ -48,26 +55,33 @@ angular.module('santedb').controller('EditConceptController', ["$scope", "$rootS
     }
 
     // Save code system
-    async function saveConcept(conceptForm) {
+    async function saveConcept(conceptForm, conceptToSave) {
         if (conceptForm.$invalid) return;
 
         try {
             SanteDB.display.buttonWait("#saveConceptButton", true);
+
+            // Sometimes users will have newSet with a value - we should add that
+            if($scope.newSet) {
+                conceptToSave.conceptSet.push($scope.newSet);
+            }
+
             // Update
             var concept = null;
             if ($stateParams.id) {
-                concept = await SanteDB.resources.concept.updateAsync($stateParams.id, $scope.concept);
+                concept = await SanteDB.resources.concept.updateAsync($stateParams.id, conceptToSave);
             }
             else {
-                concept = await SanteDB.resources.concept.insertAsync($scope.concept);
+                concept = await SanteDB.resources.concept.insertAsync(conceptToSave);
             }
 
             toastr.success(SanteDB.locale.getString("ui.admin.concept.save.success"));
 
             if (!$stateParams.id) {
-                $state.go("santedb-admin.concept.concept.view", { id: concept.id });
+                $state.go("santedb-admin.concept.concepts.view", { id: concept.id });
             }
             else {
+                concept = await SanteDB.resources.concept.getAsync(concept.id, 'full');
                 $timeout(() => $scope.concept = concept);
             }
         }
@@ -95,8 +109,10 @@ angular.module('santedb').controller('EditConceptController', ["$scope", "$rootS
             conceptClass: ConceptClassKeys.Other,
             conceptSet: [],
             statusConcept: StatusKeys.Active,
-            referenceTerm: [
-            ]
+            referenceTerm: {
+                $other: []
+            }
+            
         });
         $scope.$watch("concept.mnemonic", async function (n, o) {
             if (n != o && n && n.length > 1) {
@@ -107,7 +123,8 @@ angular.module('santedb').controller('EditConceptController', ["$scope", "$rootS
     
     }
     // Bind to scope
-    $scope.saveConcept = saveConcept;
+    $scope.saveConceptInternal = saveConcept;
+    $scope.saveConcept = function(form) { saveConcept(form, $scope.concept) };
 
     
     // Set the active state

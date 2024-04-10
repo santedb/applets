@@ -19,7 +19,7 @@
  - Date: 2023-5-19
  -->
 <div xmlns="http://www.w3.org/1999/xhtml" class="container-fluid">
-    <form class="form" ng-submit="saveDomain(targetForm)" name="targetForm" novalidate="novalidate">
+    <form class="form" ng-submit="saveDomain(targetForm)" name="targetForm" novalidate="novalidate" autocomplete="off">
         <div class="row" ng-if="!domain">
             <div class="col">
                 <p class="m-auto"><i class="fas fa-circle-notch fa-spin"></i> {{ 'ui.wait' | i18n }}</p>

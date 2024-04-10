@@ -1,0 +1,233 @@
+<!--
+ - Copyright 2021-2024 SanteSuite Contributors (See NOTICE.md for full copyright notices)
+ - Copyright (C) 2019 - 2021, Fyfe Software Inc. and the SanteSuite Contributors
+ - Portions Copyright (C) 2015-2018 Mohawk College of Applied Arts and Technology
+ - 
+ - Licensed under the Apache License, Version 2.0 (the "License"); you 
+ - may not use this file except in compliance with the License. You may 
+ - obtain a copy of the License at 
+ - 
+ - http://www.apache.org/licenses/LICENSE-2.0 
+ - 
+ - Unless required by applicable law or agreed to in writing, software
+ - distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+ - WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the 
+ - License for the specific language governing permissions and limitations under 
+ - the License.
+ - 
+ - User: fyfej
+ - Date: 2023-5-19
+ -->
+<div xmlns="http://www.w3.org/1999/xhtml" xmlns:sdb="http://santedb.org/applet">
+    <sdb:script static="false">~/controllers/materials/viewEdit.js</sdb:script>
+    <sdb:state name="santedb-admin.data.material.create">
+        <sdb:demand>1.3.6.1.4.1.33349.3.1.5.9.2.4.1.0</sdb:demand>
+        <sdb:url>/</sdb:url>
+        <sdb:view>
+            <sdb:controller>MaterialViewEditController</sdb:controller>
+            <sdb:title lang="en">New Material</sdb:title>
+        </sdb:view>
+    </sdb:state>
+
+    <div class="alert alert-info">
+        {{ 'ui.admin.material.create.help' | i18n }}
+    </div>
+
+    <form class="form" novalidate="novalidate" ng-submit="saveMaterial(materialForm)" name="materialForm"
+        autocomplete="off">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="card-title"><i class="fas fa-fw fa-pencil-alt"></i> {{ 'ui.model.material.core' | i18n }}
+                </h5>
+            </div>
+            <div class="card-body">
+                <div class="form-group row">
+                    <label class="col-md-3 col-sm-12 control-label required">
+                        {{ 'ui.model.material.typeConcept' | i18n }} <hint-popover
+                            hint-title="ui.model.material.typeConcept" />
+                    </label>
+                    <div class="col-md-9 col-sm-12">
+                        <entity-search is-required="true" class="form-control" type="'ConceptSet'" required="required"
+                            child-resource="'_members'" child-resource-scope="'a53ffda7-531c-46ce-85bc-f7ca2e07666d'"
+                            ng-model="entity.typeConcept" search-field="'name.value'"
+                            name="typeConcept"></entity-search>
+                        <div class="text-danger" ng-if="materialForm.typeConcept.$error['required']">
+                            <i class="fas fa-exclamation-triangle"></i> {{ 'ui.error.required' | i18n }}
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-12 col-md-9 offset-md-3">
+                        <input type="checkbox" ng-model="editObject.isAdministrable" /> {{ 'ui.model.material.isAdministrable' | i18n }} <hint-popover hint-title="ui.model.material.isAdministrable" />
+                    </label>
+                </div>
+                <div class="form-group row">
+                    <label class="col-md-3 col-sm-12 control-label required">
+                        {{ 'ui.model.material.name.OfficialRecord' | i18n }} <hint-popover
+                            hint-title="ui.model.material.name.OfficialRecord" />
+                    </label>
+                    <div class="col-md-9 col-sm-12">
+                        <input type="text" required="required" name="officialName" class="form-control"
+                            ng-model="entity.name.OfficialRecord[0].component.$other[0]" maxlength="256" />
+                        <div class="text-danger" ng-if="materialForm.officialName.$error['required']">
+                            <i class="fas fa-exclamation-triangle"></i> {{ 'ui.error.required' | i18n }}
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-md-3 col-sm-12 control-label required">
+                        {{ 'ui.model.material.name.Assigned' | i18n }} <hint-popover
+                            hint-title="ui.model.material.name.Assigned" />
+                    </label>
+                    <div class="col-md-9 col-sm-12">
+                        <input type="text" required="required" name="assignedName" class="form-control"
+                            ng-model="entity.name.Assigned[0].component.$other[0]" maxlength="64" />
+                        <div class="text-danger" ng-if="materialForm.assignedName.$error['required']">
+                            <i class="fas fa-exclamation-triangle"></i> {{ 'ui.error.required' | i18n }}
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-md-3 col-sm-12 control-label required">
+                        {{ 'ui.model.material.formConcept' | i18n}} <hint-popover
+                            hint-title="ui.model.material.formConcept" />
+                    </label>
+                    <div class="col-md-9 col-sm-12">
+                        <concept-select class="form-control" ng-required="entity.isAdministrable" ng-disabled="!entity.isAdministrable" name="formConcept"
+                            concept-set="'AdministrableDrugForm'" ng-model="entity.formConcept" />
+                        <div class="text-danger" ng-if="materialForm.formConcept.$error['required']">
+                            <i class="fas fa-exclamation-triangle"></i> {{ 'ui.error.required' | i18n }}
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-md-3 col-sm-12 control-label required">
+                        {{ 'ui.model.material.quantityConcept' | i18n }} <hint-popover
+                            hint-title="ui.model.material.quantityConcept" />
+                    </label>
+                    <div class="col-md-9 col-sm-12">
+                        <concept-select class="form-control" required="required" name="quantityConcept"
+                            concept-set="'DosingUnitOfMeasure'" ng-model="entity.quantityConcept" />
+                        <div class="text-danger" ng-if="materialForm.quantityConcept.$error['required']">
+                            <i class="fas fa-exclamation-triangle"></i> {{ 'ui.error.required' | i18n }}
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label class="col-md-3 col-sm-12 control-label">
+                        {{ 'ui.model.material.notes' | i18n }} <hint-popover hint-title="ui.model.material.notes" />
+                    </label>
+                    <div class="col-md-9 col-sm-12">
+                        <textarea name="notes" ng-model="entity.note[0].text" maxlength="8192" class="form-control">
+                        </textarea>
+                        {{ 8192 - entity.note[0].text.length }} {{ 'ui.common.charsRemain' | i18n }}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card" ng-if="idDomains">
+            <div class="card-header">
+                <h5 class="card-title"><i class="fas fa-fw fa-qrcode"></i> {{ 'ui.model.material.identification' | i18n
+                    }}</h5>
+            </div>
+            <div class="card-body">
+                <div class="form-group row" ng-repeat="dmn in idDomains track by $index">
+                    <label class="col-sm-12 col-md-3 control-label">{{ dmn.name }}</label>
+                    <div class="col-sm-12 col-md-9">
+                        <input type="text" ng-pattern="dmn.validation" ng-model="entity.identifier[dmn.domainName].value"
+                            placeholder="{{dmn._exampleValue}}" class="form-control" name="id{{$index}}" />
+                        <div class="text-danger" ng-if="materialForm['id' + $index].$error['pattern']">
+                            <i class="fas fa-exclamation-triangle"></i> {{ 'ui.error.pattern' | i18n }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header">
+                <h5 class="card-title"><i class="fas fa-fw fa-project-diagram"></i> {{
+                    'ui.model.material.relationship.Hierarchy' | i18n }}</h5>
+            </div>
+            <div class="card-body">
+                <div class="form-group row">
+                    <label class="col-md-3 col-sm-12 control-label">
+                        {{ 'ui.model.material.relationship.Parent' | i18n }} <hint-popover
+                            hint-title="ui.model.material.relationship.Parent" />
+                    </label>
+                    <div class="col-md-9 col-sm-12">
+                        <entity-search type="'Material'" ng-model="entity.relationship.Parent[0].target"
+                            filter="{ classConcept: 'd39073be-0f8f-440e-b8c8-7034cc138a95' }"
+                            class="form-control" name="parent" />
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-md-3 col-sm-12 control-label">
+                        {{ 'ui.model.material.relationship.Part' | i18n }} <hint-popover
+                            hint-title="ui.model.material.relationship.Part" />
+                    </label>
+                    <div class="col-md-9 col-sm-12">
+                        <entity-search multiple="mutliple" type="'Material'" ng-model="entity.relationship.HasPart"
+                            filter="{ classConcept: 'd39073be-0f8f-440e-b8c8-7034cc138a95' }"
+                            class="form-control" value-property="'target'" />
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-md-3 col-sm-12 control-label">
+                        {{ 'ui.model.material.relationship.UsedEntity' | i18n }} <hint-popover
+                            hint-title="ui.model.material.relationship.UsedEntity" />
+                    </label>
+                    <div class="col-md-9 col-sm-12">
+                        <entity-search multiple="mutliple" type="'Material'" ng-model="entity.relationship.UsedEntity"
+                            filter="{ classConcept: 'd39073be-0f8f-440e-b8c8-7034cc138a95' }"
+                            class="form-control" value-property="'target'" />
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header">
+                <h5 class="card-title"><i class="fas fa-fw fa-industry"></i> {{
+                    'ui.model.material.realationship.Industry' | i18n }}</h5>
+            </div>
+            <div class="card-body">
+                <div class="form-group row">
+                    <label class="col-md-3 col-sm-12 control-label">
+                        {{ 'ui.model.material.relationship.RegulatedProduct' | i18n }}
+                        <hint-popover hint-title="ui.model.material.relationship.RegulatedProduct" />
+                    </label>
+                    <div class="col-md-9 col-sm-12">
+                        <entity-search class="form-control" type="'Organization'"
+                            ng-model="entity.relationship.RegulatedProduct[0].source" name="regulator" />
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-md-3 col-sm-12 control-label">
+                        {{ 'ui.model.material.extension.TargetCondition' | i18n }} <hint-popover
+                            hint-title="ui.model.material.extension.TargetCondition" />
+                    </label>
+                    <div class="col-md-9 col-sm-12">
+                        <entity-search is-required="true" class="form-control" type="'ConceptSet'" multiple="mutliple"
+                            child-resource="'_members'" child-resource-scope="'d6cbe607-51e3-49cc-9b20-cb2a2d3c586e'"
+                            ng-model="entity.extension['http://santedb.org/extensions/core/targetCondition']" value-property="'id'"
+                            search-field="'name.value'" name="typeConcept"></entity-search>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+        <div class="form-group row">
+            <div class="col-12 pt-1">
+                <div class="btn-group float-right">
+                    <button type="submit" id="btnSaveMaterial" ng-disabled="materialForm.$invalid" class="btn btn-primary">
+                        <i class="fas fa-fw fa-check"></i> {{ 'ui.action.create' | i18n }}
+                    </button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>

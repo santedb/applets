@@ -27,6 +27,8 @@
       <string name="ui.confirmed">Confirmed</string>
       <string name="ui.none">None</string>
       <string name="ui.example">Example</string>
+      <string name="ui.true">Yes</string>
+      <string name="ui.false">No</string>
       <!-- Common Phrases -->
       <string name="ui.common.charsRemain">characters remain</string>
       <string name="ui.common.version">Version</string>
@@ -58,6 +60,8 @@
       <string name="ui.login.resetPassword.introduction">This tool will help you reset your password. You will need to have setup a password recovery question in your user profile prior to using this tool</string>
       <string name="ui.login.resetPassword.onlineRequired">You have entered a user which requires internet connectivity to reset their password. Please connect to the internet to complete your password reset</string>
       <string name="ui.login.resetPassword.success">Password successfully changed. You can now login with your new password</string>
+      <string name="ui.login.passwordExpired.title">Password Expired</string>
+      <string name="ui.login.passwordExpired.help">Your password is expired and needs to be changed. Enter a new password below to change your password</string>
       <string name="ui.tfa.setup.title">Setup TFA</string>
       <string name="org.santedb.tfa.authenticator">Authenticator App</string>
       <string name="org.santedb.tfa.authenticator.scan">Open your authenticator app and enter the secret generated</string>
@@ -76,6 +80,7 @@
       <string name="ui.password.new.help">Enter the new password for this user account</string>
       <string name="ui.password.confirm.label">Confirm Password</string>
       <string name="ui.password.confirm.help">Re-enter your password to confirm</string>
+      <string name="ui.password.forceChange">User must change password on next login</string>
       <string name="ui.password.pin.new.label">New PIN</string>
       <string name="ui.password.pin.new.help">Enter the new PIN number for this account on this device</string>
       <string name="ui.password.pin.confirm.label">Confirm PIN</string>
@@ -552,11 +557,13 @@
       <string name="org.santedb.widget.mdm.candidate">Candidate Records</string>
       <string name="org.santedb.widget.userEntity.profile">Public Profile</string>
       <string name="org.santedb.widget.user.profile">My Profile</string>
+      <string name="org.santedb.widget.userEntity.preferences">Preferences</string>
       <string name="org.santedb.widget.userEntity.security">Security Controls</string>
       <string name="org.santedb.widget.patient.dataQuality">Data Quality</string>
       <string name="org.santedb.widget.dq.validation">Validation Issues</string>
       <string name="org.santedb.widget.patient.card">ID Card</string>
       <string name="org.santedb.widget.userEntity.idCard">Digital ID</string>
+      
       <!-- Data quality issues -->
       <string name="ui.dq.priority.1">Serious</string>
       <string name="ui.dq.priority.2">Warning</string>
@@ -678,5 +685,14 @@
       <string name="ui.match.class.0">Non-Match</string>
       <string name="ui.match.class.1">Probable</string>
       <string name="ui.match.class.2">Match</string>
-
+      
+      <!-- Preferences -->
+      <string name="ui.userEntity.preferences.widgets">Dashboards</string>
+      <string name="ui.userEntity.preferences.help">Help Display</string>
+      <string name="ui.userEntity.preferences.help.popover">Popup - Click to show help (default)</string>
+      <string name="ui.userEntity.preferences.help.show">Show Inline</string>
+      <string name="ui.userEntity.preferences.help.hide">Don't Show</string>
+      <string name="ui.userEntity.preferences.ui">Theme</string>
+      <string name="ui.userEntity.preferences.ui.light">Light</string>
+      <string name="ui.userEntity.preferences.ui.dark">Dark</string>
 </resources>

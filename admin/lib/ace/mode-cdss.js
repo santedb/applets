@@ -19,15 +19,15 @@ ace.define("ace/mode/cdss_highlight_rules", ["require", "exports", "module", "ac
         var keywordMapper = this.createKeywordMapper({
             "variable.language": "this",
             "keyword.control": "define include as end having repeat when then with propose apply assign where from select order by raise",
-            "keyword.other" : "fact data logic rule protocol library model metadata type",
+            "keyword.other": "fact data logic rule protocol library model metadata type",
             "constant.language": "true false iterations until for",
-            "storage.type" : "Patient Act SubstanceAdministration Procedure QuantityObservation CodedObservation TextObservation PatientEncounter Narrative",
-            "storage.modifier" : "negation track-by normalize computed scoped-to",
-            "support.function" : "hdsi csharp all none any query first last average ",
-            "support.constant" : "active dont-use trial-use retired json xml error danger warn info context proposal",
-            "suppoort.variable" : "uuid id status format type scope oid const priority",
+            "storage.type": "Patient Act SubstanceAdministration Procedure QuantityObservation CodedObservation TextObservation PatientEncounter Narrative",
+            "storage.modifier": "negation track-by normalize computed scoped-to",
+            "support.function": "hdsi csharp all none any query first last average ",
+            "support.constant": "active dont-use trial-use retired json xml error danger warn info context proposal",
+            "suppoort.variable": "uuid id status format type scope oid const priority",
             "support.type": "string bool int real long",
-         
+
         }, "text", true, " ");
 
         this.$rules = {
@@ -42,13 +42,13 @@ ace.define("ace/mode/cdss_highlight_rules", ["require", "exports", "module", "ac
                 { token: "paren.lparen", regex: "[\\[({]" },
                 { token: "paren.rparen", regex: "[\\])}]" },
                 { token: "constant.numeric", regex: "[+-]?\\d+\\b" },
-                { token: "keyword.control", regex: /(track\-by|for|to)\s/, next: "parameter"},
+                { token: "keyword.control", regex: /(track\-by|for|to)\s/, next: "parameter" },
                 { token: "variable.parameter", regex: /\w+-\w[\-\w]*/ },
                 { token: keywordMapper, regex: "\\b\\w+\\b" },
                 { caseInsensitive: true }
             ],
-            "parameter" : [
-                { token: "variable.parameter", regex:/\w(\w|\d|\[|\])*/, next: "start" }
+            "parameter": [
+                { token: "variable.parameter", regex: /\w(\w|\d|\[|\])*/, next: "start" }
             ],
             "markup.raw": [
                 { token: "constant.language.escape", regex: /\\\$\\\$/ },
@@ -64,29 +64,32 @@ ace.define("ace/mode/cdss_highlight_rules", ["require", "exports", "module", "ac
 });
 
 
-ace.define("ace/mode/cdss",["require","exports","module","ace/mode/cdss_highlight_rules","ace/range","ace/mode/text","ace/lib/oop"], function(require, exports, module){"use strict";
-var Rules = require("./cdss_highlight_rules").CdssHilightRules;
-var Range = require("../range").Range;
-var TextMode = require("./text").Mode;
-var oop = require("../lib/oop");
-function Mode() {
-    this.HighlightRules = Rules;
-}
-oop.inherits(Mode, TextMode);
-(function () {
-    this.lineCommentStart = '"';
-    this.getNextLineIndent = function (state, line, tab) {
-        var indent = this.$getIndent(line);
-        return indent;
-    };
-    this.$id = "ace/mode/cdss";
-}).call(Mode.prototype);
-exports.Mode = Mode;
+ace.define("ace/mode/cdss", ["require", "exports", "module", "ace/mode/cdss_highlight_rules", "ace/range", "ace/mode/text", "ace/lib/oop"], function (require, exports, module) {
+    "use strict";
+    var Rules = require("./cdss_highlight_rules").CdssHilightRules;
+    var Range = require("../range").Range;
+    var TextMode = require("./text").Mode;
 
-});                (function() {
-                    ace.require(["ace/mode/cdss"], function(m) {
-                        if (typeof module == "object" && typeof exports == "object" && module) {
-                            module.exports = m;
-                        }
-                    });
-                })();
+    var oop = require("../lib/oop");
+    function Mode() {
+        this.HighlightRules = Rules;
+    }
+    oop.inherits(Mode, TextMode);
+    (function () {
+        this.lineCommentStart = '"';
+        this.getNextLineIndent = function (state, line, tab) {
+            var indent = this.$getIndent(line);
+            return indent;
+        };
+        this.$id = "ace/mode/cdss";
+    }).call(Mode.prototype);
+    exports.Mode = Mode;
+
+}); (function () {
+    ace.require(["ace/mode/cdss"], function (m) {
+        if (typeof module == "object" && typeof exports == "object" && module) {
+            module.exports = m;
+        }
+    });
+})();
+

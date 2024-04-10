@@ -36,7 +36,7 @@
         </div>
     </div>
     <div ng-controller="EditDeviceCoreController" ng-if="scopedObject">
-    <form method="dialog" ng-submit="saveDevice(panel.editForm, scopedObject)" name="panel.editForm" novalidate="novalidate" >
+    <form method="dialog" ng-submit="saveDevice(panel.editForm, scopedObject)" name="panel.editForm" novalidate="novalidate" autocomplete="off" >
         <div id="demographicProps">
             <div class="form-group row">
                 <label for="modelName"

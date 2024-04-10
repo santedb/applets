@@ -227,7 +227,7 @@ angular.module('santedb-lib')
                     }
                 };
 
-                $scope.doAction = function (action, record) {
+                $scope.doAction = function (action, record, index) {
                     if (action.sref) {
                         if (record) {
                             $state.go(action.sref, { id: record[_keyProperty] });
@@ -238,7 +238,7 @@ angular.module('santedb-lib')
                     }
                     else if (typeof (action.action) === "string") {
                         if (record) {
-                            $scope.$parent[action.action](record[_keyProperty], record);
+                            $scope.$parent[action.action](record[_keyProperty], index, record);
                         }
                         else {
                             $scope.$parent[action.action]();
@@ -246,7 +246,7 @@ angular.module('santedb-lib')
                     }
                     else if (action.action) {
                         if (record) {
-                            action.action(record[_keyProperty], record);
+                            action.action(record[_keyProperty], index, record);
                         }
                         else {
                             action.action();
@@ -268,7 +268,11 @@ angular.module('santedb-lib')
                 _scid = scope.scid = SanteDB.application.newGuid().substring(0, 8);
                 _sourceApi = SanteDB.resources[_type.toCamelCase()];
                 _itemTemplate = $("div[ng-transclude]", element).html();
-                _listTemplate = $("#listTemplate", element).html().replaceAll(" xg-", " ng-").replace("$template", _itemTemplate).replace("$itemClass", attrs.itemClass);
+                _listTemplate = $("#listTemplate", element).html()
+                    .replaceAll(" xg-", " ng-")
+                    .replace("$template", _itemTemplate)
+                    .replace("$itemClass", attrs.itemClass)
+                    .replace("$idRoot", _id);
                 $("#listContainer", element).html(_listTemplate);
                 $compile(angular.element("#listContainer"))(scope);
                 $(".entity-list-waiter", element).attr("id", `${_id}_${_scid}`);

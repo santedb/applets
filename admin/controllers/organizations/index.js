@@ -114,7 +114,7 @@ angular.module('santedb').controller('OrganizationIndexController', ["$scope", "
         if (confirm(SanteDB.locale.getString("ui.action.export.confirm"))) {
             try {
 
-                window.location = `/hdsi/Organization/_export?classConcept=!ff34dfa7-c6d3-4f8b-bc9f-14bcdc13ba6c&statusConcept=${StatusKeys.Active}`;
+                window.location = `/hdsi/Organization/_export?statusConcept=${StatusKeys.Active}`;
             }
             catch(e) {
                 $rootScope.errorHandler(e);

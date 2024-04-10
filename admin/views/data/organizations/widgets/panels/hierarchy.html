@@ -36,7 +36,7 @@
     </div>
     <div ng-if="scopedObject" ng-controller="HierarchyWidgetController" class="container-fluid">
 
-        <form name="panel.editForm" ng-submit="saveHierarchy(panel.editForm)">
+        <form name="panel.editForm" ng-submit="saveHierarchy(panel.editForm)" autocomplete="off">
             <div class="form-group row">
                 <label class="col-12 font-weight-bold" for="parent">{{
                     'ui.model.entity.relationship.Parent' | i18n }} <hint-popover

@@ -183,7 +183,10 @@ SanteDBWrapper.prototype.display = new function () {
             retVal = concept[Object.keys(concept)[0]];
 
         if (Array.isArray(retVal))
-            return retVal.find(o => o[0] <= 'Z') || retVal[0];
+        {
+            var name = retVal[0];
+            return name[0].toUpperCase() + name.substring(1);
+        }
         else
             return retVal;
     };
@@ -447,6 +450,36 @@ SanteDBWrapper.prototype.display = new function () {
         return scope;
     }
 
+
+
+    /**
+     * 
+     * @param {*} scope The scope to traverse up the scope tree for
+     * @returns The root scope on the tree
+     */
+    this.getRootScope = function (scope) {
+        while (scope.$parent) {
+            scope = scope.$parent;
+        }
+        return scope;
+    }
+
+    /**
+     * @method
+     * @summary Iterates up the parent scope via scope.$parent until {see: nameOfVariable} is encountered
+     * @param {*} scope The Angular scope that is in the current controller
+     * @param {string} nameOfVariable The name of the variable to fetch from the scope
+     * @returns {object} The object with nameOfVariable
+     */
+    this.getParentScopeVariable = function (scope, nameOfVariable) {
+        var retVal = null;
+        do {
+            retVal = scope[nameOfVariable];
+            scope = scope.$parent;
+        } while (!retVal && scope)
+        return retVal;
+    }
+
     /**
      * @method
      * @summary Copies an object scross scopes (useful for updating all objects)
@@ -460,9 +493,7 @@ SanteDBWrapper.prototype.display = new function () {
             objectNames = [objectNames];
         }
         __cascadeScopeObject(scope, objectNames, value, []);
-
     }
-
 
 };
 

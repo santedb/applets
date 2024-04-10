@@ -6,9 +6,11 @@ label.control-label {
     margin-bottom: 0;
     padding-top: calc(.375rem + 1px);
     padding-bottom: calc(.375rem + 1px);
-
 }
 
+label.control-label > small.d-block {
+    font-weight: normal;
+}
 .control-value {
     font-size: inherit;
     line-height: 1.5;
@@ -18,6 +20,19 @@ label.control-label {
 }
 
 
+.w-10 {
+    width: 10% !important;
+  }
+  
+  .w-15 {
+    width: 15% !important;
+  }
+  
+  
+  .w-20 {
+    width: 20% !important;
+  }
+  
 @media only screen and (max-width:576px) {
     label.col-xs-12 {
         text-align: left;
@@ -286,4 +301,8 @@ svg.mermaidNoScale {
     top: -0.5em;
     right: 1em;
     background-color: rgba(00,00,00,00);
+}
+
+.widget-card {
+    height: calc(100% - 0.75em);
 }

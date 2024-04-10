@@ -27,7 +27,7 @@
             <sdb:controller>EditConceptController</sdb:controller>
         </sdb:view>
     </sdb:state>
-    <form class="form" ng-submit="saveConcept(createConceptForm)" name="createConceptForm" novalidate="novalidate">
+    <form class="form" ng-submit="saveConcept(createConceptForm)" name="createConceptForm" novalidate="novalidate" autocomplete="off">
         <div class="card">
             <div class="card-header">
                 <h5 class="card-title mb-0"><i class="fas fa-viruses"></i> {{
@@ -80,7 +80,7 @@
                                             code-system-url="'urn:ietf:bcp:47'" ng-model="name.language" />
                                     </div>
                                     <div class="input-group-append btn-group">
-                                        <button class="btn btn-primary" type="button"
+                                        <button class="btn btn-primary" ng-if="$index == concept.name.$other.length - 1" type="button"
                                         ng-click="concept.name.$other.push({})">
                                         <i class="fas fa-fw fa-plus-circle"></i> {{ 'ui.action.add' | i18n }}
                                         </button>
@@ -145,7 +145,7 @@
                     <div class="col-sm-12 col-md-9">
                         <ul class="list-group">
                             <li class="list-group-item"
-                                ng-repeat="conceptMap in concept.referenceTerm track by $index">
+                                ng-repeat="conceptMap in concept.referenceTerm.$other track by $index">
                                 <div class="input-group">
                                     <div class="input-group-prepend">
                                         <select class="form-control" ng-model="conceptMap.relationshipType">
@@ -161,25 +161,25 @@
                                                 NARROWER_THAN</option>
                                         </select>
                                     </div>
-                                    <entity-search type="'CodeSystem'" ng-model="conceptMap.targetModel.codeSystem"
+                                    <entity-search type="'CodeSystem'" ng-model="conceptMap.codeSystem"
                                         search-field="'authority'" owner-form="createConceptForm" 
                                         filter="{obsoletionTime: 'null'}" required="required" auto-tab-next="true"
                                         style="width:30%;"></entity-search>
                                     <entity-search type="'ReferenceTerm'"
-                                        style="width:30%;" ng-model="conceptMap.targetModel.id"
+                                        style="width:30%;" ng-model="conceptMap.term"
                                         search-field="'mnemonic'" is-required="true"
                                         owner-form="createConceptForm"
                                         auto-tab-next="false"
-                                        filter="{ 'codeSystem': conceptMap.targetModel.codeSystem }" 
-                                        required="required" ng-disabled="!conceptMap.targetModel.codeSystem"
+                                        filter="{ 'codeSystem': conceptMap.codeSystem }" 
+                                        required="required" ng-disabled="!conceptMap.codeSystem"
                                         name="edit.referenceTermConcept{{$index}}"></entity-search>
                                     <div class="input-group-append btn-group">
                                         <button type="button" class="btn btn-primary"
-                                            ng-click="concept.referenceTerm.push({ relationshipType: '2c4dafc2-566a-41ae-9ebc-3097d7d22f4a'})">
+                                            ng-click="concept.referenceTerm.$other.push({ relationshipType: '2c4dafc2-566a-41ae-9ebc-3097d7d22f4a'})">
                                             <i class="fas fa-fw fa-plus-circle" ></i>  {{ 'ui.action.add' | i18n }}
                                         </button>
                                             <button class="btn btn-danger" type="button"
-                                            ng-click="concept.referenceTerm.splice($index, 1)">
+                                            ng-click="concept.referenceTerm.$other.splice($index, 1)">
                                             <i class="fas fa-fw fa-times-circle"></i>  {{ 'ui.action.remove' | i18n }}
                                         </button>
                                     </div>
@@ -190,9 +190,9 @@
                                     i18n }}
                                 </div>
                             </li>
-                            <li class="list-group-item" ng-if="concept.referenceTerm.length == 0">
+                            <li class="list-group-item" ng-if="concept.referenceTerm.$other.length == 0">
                                 <button type="button" class="btn btn-primary"
-                                    ng-click="concept.referenceTerm.push({ relationshipType: '2c4dafc2-566a-41ae-9ebc-3097d7d22f4a'})">
+                                    ng-click="concept.referenceTerm.$other.push({ relationshipType: '2c4dafc2-566a-41ae-9ebc-3097d7d22f4a'})">
                                     <i class="fas fa-fw fa-plus-circle" ></i> {{ 'ui.action.add' | i18n }}
                                 </button>
                             </li>

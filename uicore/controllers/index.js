@@ -75,6 +75,30 @@ var santedbApp = angular.module('santedb', ['ngSanitize', 'ui.router', 'oc.lazyL
     }])
     .run(['$rootScope', '$state', '$templateCache', '$transitions', '$ocLazyLoad', '$interval', '$timeout', function ($rootScope, $state, $templateCache, $transitions, $ocLazyLoad, $interval, $timeout) {
 
+        function applyDarkMode(session) {
+            if (session && session.userSettings) {
+                var uiMode = session.userSettings.find(o => o.key == "uimode");
+                if (uiMode.value === "dark") {
+                    $(["*[class*='-light']"]).each((i, ele) => {
+                        var classValue = $(ele).attr("class");
+                        if(!classValue) {
+                            return;
+                        }
+                        if (classValue.indexOf('bg-light') > -1) {
+                            $(ele).removeClass('bg-light');
+                            $(ele).addClass('bg-dark');
+                        }
+                        if (classValue.indexOf('navbar-light') > -1) {
+                            $(ele).removeClass('navbar-light');
+                            $(ele).addClass('navbar-dark');
+                        }
+                        //$(ele).toggleClass('text-light text-dark');
+                    })
+                    // toggle body class selector
+                }
+            }
+        }
+
         async function _setLocaleData() {
             try {
                 var localeData = await SanteDB.resources.locale.findAsync();
@@ -108,8 +132,8 @@ var santedbApp = angular.module('santedb', ['ngSanitize', 'ui.router', 'oc.lazyL
                     configuration = await SanteDB.configuration.getAsync();
                 } else {
                     configuration._isConfigured = SanteDB.configuration.getRealm() != null;
-                    $rootScope.$watch("session", async function(n,o) {
-                        if(n && !o) {
+                    $rootScope.$watch("session", async function (n, o) {
+                        if (n && !o) {
                             initialize();
                         }
                     })
@@ -126,7 +150,19 @@ var santedbApp = angular.module('santedb', ['ngSanitize', 'ui.router', 'oc.lazyL
                 // Get user preferences and set them in this view 
                 if (session) {
                     session.userSettings = await SanteDB.configuration.getUserSettingsAsync();
+                    var uiMode = session.userSettings.find(o => o.key == "uimode");
+                    if (uiMode && uiMode.value == "dark") {
+                        $($("head").append("<link>"));
+                        var css = $("head").children(":last");
+                        css.attr({
+                            rel: "stylesheet",
+                            type: "text/css",
+                            href: "/org.santedb.uicore/css/dark.css"
+                        });
+                        applyDarkMode(session);
+                    }
                 }
+
 
                 $timeout(() => {
                     console.info("Populating root context");
@@ -193,15 +229,15 @@ var santedbApp = angular.module('santedb', ['ngSanitize', 'ui.router', 'oc.lazyL
                     try {
                         serverSession = await SanteDB.authentication.getSessionInfoAsync(true);
                     }
-                    catch(e) {
+                    catch (e) {
                         console.info(e);
                     }
 
-                    if(serverSession == null) {
+                    if (serverSession == null) {
                         $timeout(() => {
                             $templateCache.removeAll();
                             $rootScope.session = null;
-                            delete($rootScope.session);
+                            delete ($rootScope.session);
                             toastr.clear();
                             $state.go("login");
                         });
@@ -218,7 +254,7 @@ var santedbApp = angular.module('santedb', ['ngSanitize', 'ui.router', 'oc.lazyL
                                 _extendToast = null;
                                 toastr.clear();
                                 $timeout(() => $rootScope.session = session);
-                            } catch(e) { $rootScope.errorHandler(e) };
+                            } catch (e) { $rootScope.errorHandler(e) };
                         },
                         positionClass: "toast-bottom-center",
                         showDuration: "0",
@@ -326,6 +362,7 @@ var santedbApp = angular.module('santedb', ['ngSanitize', 'ui.router', 'oc.lazyL
             }
             $("#navbarResponsive").collapse('hide');
             delete ($rootScope._transition);
+            applyDarkMode($rootScope.session);
         });
 
         $transitions.onError({}, function (transition) {
@@ -336,7 +373,7 @@ var santedbApp = angular.module('santedb', ['ngSanitize', 'ui.router', 'oc.lazyL
             delete ($rootScope._transition);
 
             // HACK: The user tried to nav to a screen when we wanted to go to a config page
-            if(transition._targetState._identifier == "santedb-config.initial") {
+            if (transition._targetState._identifier == "santedb-config.initial") {
                 window.location = "#!/config/initialSettings";
             }
 
@@ -419,5 +456,5 @@ var santedbApp = angular.module('santedb', ['ngSanitize', 'ui.router', 'oc.lazyL
         });
 
         // Cascade an object across all scopes
-        
+
     }]);

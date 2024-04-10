@@ -35,7 +35,7 @@
         <i class="fas fa-circle-notch fa-spin"></i> {{ 'ui.wait' | i18n  }}
     </div>
     <form id="alienForm" class="form" name="alienForm" ng-submit="submit()" 
-        novalidate="novalidate" ng-if="mappings" >
+        novalidate="novalidate" ng-if="mappings"  autocomplete="off">
         <div class="form-group row">
             <label class="control-label col-xs-12 col-md-2">{{ 'ui.admin.alien.upload.fileName' | i18n }}
                 <hint-popover hint-title="ui.admin.alien.upload.fileName" />

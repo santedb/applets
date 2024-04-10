@@ -901,7 +901,7 @@ function ResourceWrapper(_config) {
                 url = `${_config.resource}/${id}`;
 
             if (id.version)
-                url += `/history/${id.version}`;
+                url += `/_history/${id.version}`;
         }
         else
             url = _config.resource;
@@ -4390,6 +4390,8 @@ function SanteDBWrapper() {
                 }
             });
         }
+
+
         /**
             * @method setPasswordAsync
             * @memberof SanteDBWrapper.AuthenticationApi
@@ -4420,6 +4422,34 @@ function SanteDBWrapper() {
                 }
             });
         }
+
+        /**
+         * @memberof SanteDBWrapper.AuthenticationApi
+         * @summary Immediately expire the user's password
+         * @param {string} sid The security user for which the password should be expired
+         * @param {string} userName The name of the user which is to be expired
+         * @param {bool} upstream True if the request should be sent to the upstream
+         */
+        this.expirePasswordAsync = function(sid, userName, upstream) {
+            if (!_session && !(_elevator && _elevator.getToken()))
+            throw new Exception("SecurityException", "error.security", "Can only set password with active session");
+            return _ami.putAsync({
+                id: sid,
+                resource: "SecurityUser",
+                contentType: _viewModelJsonMime,
+                headers: {
+                    "X-SanteDB-Upstream": upstream
+                },
+                data: {
+                    $type: "SecurityUserInfo",
+                    expirePassword: true,
+                    entity: new SecurityUser({
+                        userName: userName
+                    })
+                }
+            });
+        }
+
         /**
             * @method logoutAsync
             * @memberof SanteDBWrapper.AuthenticationApi

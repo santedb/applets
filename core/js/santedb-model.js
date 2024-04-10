@@ -3548,7 +3548,7 @@ function ApplicationEntity (copyData) {
  * @property {Date} expiryDate Gets or sets the expiry date of the material
  * @property {Concept} formConceptModel [Delay loaded from formConcept],  Gets or sets the concept which dictates the form of the material (solid, liquid, capsule, injection, etc.)
  * @property {string} formConcept Gets or sets the form concept's key
- * @property {boolean} isAdministrative True if the material is simply administrative
+ * @property {boolean} isAdministrable True if the material is simply administrative
  * @property {number} quantity The base quantity of the object in the units. This differs from quantity on the relationship
             which is a /per ...
  * @property {Concept} quantityConceptModel [Delay loaded from quantityConcept],  Gets or sets the concept which dictates the unit of measure for a single instance of this entity
@@ -4051,7 +4051,7 @@ function Container (copyData) {
 	 * @summary True if the material is simply administrative
 	 * @type {boolean} 
 	 */
-	this.isAdministrative = copyData.isAdministrative;
+	this.isAdministrable = copyData.isAdministrable;
 	/**
 	 * @summary Gets or sets the concept which dictates the form of the material (solid, liquid, capsule, injection, etc.)
 	 * @type {string} 
@@ -5705,7 +5705,7 @@ function GenericComponentValues (copyData) {
  * @property {Date} expiryDate Gets or sets the expiry date of the material
  * @property {Concept} formConceptModel [Delay loaded from formConcept],  Gets or sets the concept which dictates the form of the material (solid, liquid, capsule, injection, etc.)
  * @property {string} formConcept Gets or sets the form concept's key
- * @property {boolean} isAdministrative True if the material is simply administrative
+ * @property {boolean} isAdministrable True if the material is simply administrative
  * @property {number} quantity The base quantity of the object in the units. This differs from quantity on the relationship
             which is a /per ...
  * @property {Concept} quantityConceptModel [Delay loaded from quantityConcept],  Gets or sets the concept which dictates the unit of measure for a single instance of this entity
@@ -6208,7 +6208,7 @@ function ManufacturedMaterial (copyData) {
 	 * @summary True if the material is simply administrative
 	 * @type {boolean} 
 	 */
-	this.isAdministrative = copyData.isAdministrative;
+	this.isAdministrable = copyData.isAdministrable;
 	/**
 	 * @summary Gets or sets the concept which dictates the form of the material (solid, liquid, capsule, injection, etc.)
 	 * @type {string} 
@@ -6241,7 +6241,7 @@ function ManufacturedMaterial (copyData) {
  * @property {Date} expiryDate Gets or sets the expiry date of the material
  * @property {Concept} formConceptModel [Delay loaded from formConcept],  Gets or sets the concept which dictates the form of the material (solid, liquid, capsule, injection, etc.)
  * @property {string} formConcept Gets or sets the form concept's key
- * @property {boolean} isAdministrative True if the material is simply administrative
+ * @property {boolean} isAdministrable True if the material is simply administrative
  * @property {number} quantity The base quantity of the object in the units. This differs from quantity on the relationship
             which is a /per ...
  * @property {Concept} quantityConceptModel [Delay loaded from quantityConcept],  Gets or sets the concept which dictates the unit of measure for a single instance of this entity
@@ -6744,7 +6744,7 @@ function Material (copyData) {
 	 * @summary True if the material is simply administrative
 	 * @type {boolean} 
 	 */
-	this.isAdministrative = copyData.isAdministrative;
+	this.isAdministrable = copyData.isAdministrable;
 	/**
 	 * @summary Gets or sets the concept which dictates the form of the material (solid, liquid, capsule, injection, etc.)
 	 * @type {string} 

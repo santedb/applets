@@ -19,7 +19,7 @@
  - Date: 2023-5-19
  -->
 <div xmlns="http://www.w3.org/1999/xhtml">
-    <form ng-submit="saveUser(targetForm)" name="targetForm" novalidate="novalidate">
+    <form ng-submit="saveUser(targetForm)" name="targetForm" novalidate="novalidate" autocomplete="off">
         <div class="accordion mb-2" id="userAccordion">
             <div class="card">
                 <div class="card-header">
@@ -127,6 +127,12 @@
                             <div class="col-xs-12 offset-md-2 col-md-10">
                                 <!-- #include virtual="/org.santedb.uicore/partials/security/password.strength.html" -->
                             </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-xs-12 offset-md-2 col-md-10">
+                                <input type="checkbox" ng-model="target.expirePassword" />
+                                {{ 'ui.password.forceChange' | i18n }}
+                            </label>
                         </div>
                     </div>
                 </div>

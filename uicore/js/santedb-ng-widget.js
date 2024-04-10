@@ -46,6 +46,9 @@ angular.module('santedb-lib')
             ],
             link: function (scope, element, attrs) {
 
+                if(attrs.scopedObjectName) {
+                    scope[attrs.scopedObjectName] = scope.scopedObject;
+                }
                 _contextName = attrs.contextName;
                 if (_contextName) {
                     _contextName = _contextName.replaceAll("'", "");
@@ -211,7 +214,13 @@ angular.module('santedb-lib')
                                     await SanteDB.resources[$scope.scopedObject.$type.toCamelCase()].checkoutAsync($scope.scopedObject.id);
                                 }
                                 catch (e) {
-                                    console.warn(e.message);
+                                    if(e.$type == "ObjectLockedException") {
+                                        $rootScope.errorHandler(e);
+                                        return;
+                                    }
+                                    else {
+                                        console.warn(e.message);
+                                    }
                                 }
                                 // Isolate the editing object
                                 if (!$scope.$parent.editObject) {

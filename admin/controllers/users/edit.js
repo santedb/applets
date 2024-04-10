@@ -191,7 +191,8 @@ angular.module('santedb')
                 SanteDB.resources.securityUser.insertAsync({
                     $type: "SecurityUserInfo",
                     role: $scope.target.role,
-                    entity: $scope.target.entity
+                    entity: $scope.target.entity,
+                    expirePassword: $scope.target.expirePassword
                 }).then(function (u) {
                     $scope.target.userEntity.securityUser = u.entity.id;
                     SanteDB.resources.userEntity.insertAsync($scope.target.userEntity)

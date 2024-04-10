@@ -38,7 +38,7 @@
     </div>
     <div ng-if="scopedObject.securityUserModel" ng-controller="UserSecurityWidgetController" id="userSecuritySettings">
         <form ng-submit="updateSecurity(panel.editForm)" method="dialog" ng-if="panel.view == 'Edit'"
-            name="panel.editForm" novalidate="novalidate">
+            name="panel.editForm" novalidate="novalidate" autocomplete="off">
             <div ng-if="!tfaMechanisms">
                 <i class="fas fa-spin fa-circle-notch"></i> {{ 'ui.wait' | i18n }}
             </div>
@@ -192,7 +192,7 @@
                             {{ tfaSetup.name | i18n }}
                         </h5>
                     </div>
-                    <form name="setupTfaForm" ng-submit="completeTfaSetup(setupTfaForm)" novalidate="novalidate">
+                    <form name="setupTfaForm" ng-submit="completeTfaSetup(setupTfaForm)" novalidate="novalidate" autocomplete="off">
                         <div class="modal-body">
                             <div ng-if="!tfaSetup">
                                 <i class="fas fa-fw fa-spin fa-circle-notch"></i> {{ 'ui.wait' | i18n }}

@@ -43,6 +43,7 @@ angular.module('santedb').controller('AdminLayoutController', ["$scope", "$rootS
             $timeout(() => {
                 $templateCache.removeAll();
                 $state.go('login');
+                location.reload();
             });
         }
         catch (e) {
