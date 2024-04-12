@@ -214,7 +214,7 @@ angular.module('santedb').controller('CdssEditController', ["$scope", "$rootScop
                     if (!data.issue || data.issue.length == 0) {
                         toastr.success(SanteDB.locale.getString('ui.admin.cdss.upload.success'));
                         if (!originalId) {
-                            $state.go('santedb-admin.emr.cdss.view', { id: data.id });
+                            $state.go('santedb-admin.cdr.cdss.view', { id: data.id });
                         }
                         else {
                             $state.reload();

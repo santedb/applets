@@ -4270,6 +4270,7 @@ function SanteDBWrapper() {
             return new Promise(function (fulfill, reject) {
                 try {
                     var claims = {};
+                    var headers = {};
                     if (noSession) {
                         claims["urn:santedb:org:claim:temporary"] = "true";
                     }
