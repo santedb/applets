@@ -64,7 +64,8 @@ angular.module('santedb').controller('LogIndexController', ["$scope", "$rootScop
             var query = {
                 _upstream: $scope.extern,
                 _count: data.length,
-                _offset: data.start
+                _offset: data.start,
+                _includeTotal: true
             };
             if (data.search.value.length > 0)
                 query.name = `~${data.search.value}`;
