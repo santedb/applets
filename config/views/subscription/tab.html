@@ -28,5 +28,11 @@
         <sdb:icon>fas fa-rss-square</sdb:icon>
         <sdb:description>ui.config.subscribe.description</sdb:description>
     </sdb:widget>
-    <!-- #include virtual="~/views/subscription/content.html" -->
+
+    <div ng-if="config.integration.mode != 'online'">
+        <!-- #include virtual="~/views/subscription/content.html" -->
+    </div>
+    <div ng-if="config.integration.mode == 'online'" class="alert alert-danger">
+        <div><i class="fa fa-exclamation-triangle"></i> {{ 'ui.config.integration.mode.unavailable' | i18n }}</div>
+    </div>
 </div>

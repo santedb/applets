@@ -28,5 +28,11 @@
         <sdb:icon>fas fa-database</sdb:icon>
         <sdb:description>ui.config.data.description</sdb:description>
     </sdb:widget>
-    <!-- #include virtual="~/views/data/content.html" -->
+    
+    <div ng-if="config.integration.mode != 'online'">
+        <!-- #include virtual="~/views/data/content.html" -->
+    </div>
+    <div ng-if="config.integration.mode == 'online'" class="alert alert-danger">
+        <div><i class="fa fa-exclamation-triangle"></i> {{ 'ui.config.integration.mode.unavailable' | i18n }}</div>
+    </div>
 </div>
