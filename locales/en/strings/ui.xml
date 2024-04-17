@@ -292,7 +292,7 @@
       <string name="ui.table.page.previous">Previous</string>
       <string name="ui.table.page.last">Last</string>
       <string name="ui.table.sort.ascending">Sort ascending order</string>
-      <string name="ui.table.sort.descending">Sort descneding order</string>
+      <string name="ui.table.sort.descending">Sort descending order</string>
       <string name="ui.table.search">Search:</string>
       <string name="ui.table.search.field._any">Freetext Search</string>
       <string name="ui.table.search.field.address.component.value">Search by address</string>
