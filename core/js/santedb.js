@@ -3639,7 +3639,7 @@ function SanteDBWrapper() {
                             .then(function (d) {
                                 _masterConfig = d.values;
                                 _masterConfig._isConfigured = d._isConfigured;
-                                if (fulfill) fulfill(_masterConfig);
+                                if (fulfill) fulfill(angular.copy(_masterConfig));
                             })
                             .catch(function (e) {
                                 if (reject) reject(e.responseJSON || e);

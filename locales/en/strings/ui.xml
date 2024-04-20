@@ -292,7 +292,7 @@
       <string name="ui.table.page.previous">Previous</string>
       <string name="ui.table.page.last">Last</string>
       <string name="ui.table.sort.ascending">Sort ascending order</string>
-      <string name="ui.table.sort.descending">Sort descneding order</string>
+      <string name="ui.table.sort.descending">Sort descending order</string>
       <string name="ui.table.search">Search:</string>
       <string name="ui.table.search.field._any">Freetext Search</string>
       <string name="ui.table.search.field.address.component.value">Search by address</string>
@@ -402,7 +402,8 @@
       <string name="ui.config.integration.mode.online">Online Only</string>
       <string name="ui.config.integration.mode.online.help">This dCDR will act as a relay for all requests to the upstream iCDR. The dCDR will have no offline functionality and will serve as a web-portal to the iCDR</string>
       <string name="ui.config.integration.mode.synchronize">Synchronize</string>
-      <string name="ui.config.integration.mode.synchronize.help">This dCDR will synchornize its data with the upstream iCDR and will provide this information to clients (and the user interface) even if the system is offline</string>
+      <string name="ui.config.integration.mode.synchronize.help">This dCDR will synchronize its data with the upstream iCDR and will provide this information to clients (and the user interface) even if the system is offline</string>
+      <string name="ui.config.integration.mode.unavailable">This feature is only available when the Integration mode is set to Synchronize</string>
       <string name="ui.config.sync.mode.label">Mode</string>
       <string name="ui.config.sync.mode.help">Use this option to set the mode in which this application behaves</string>
       <string name="ui.config.sync.mode.online">Online Only (No disconnected use)</string>
