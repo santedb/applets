@@ -40,4 +40,17 @@ angular.module('santedb').controller('IdentityDomainIndexController', ["$scope",
         if(identityDomain.isUnique)
             return '<i class="fas fa-check"></i>';
     }
+    
+    // Download as a place
+    $scope.download = async function () {
+        if (confirm(SanteDB.locale.getString("ui.action.export.confirm"))) {
+            try {
+                window.location = `/hdsi/IdentityDomain/_export?_exclude=assigningAuthority`;
+            }
+            catch(e) {
+                $rootScope.errorHandler(e);
+            }
+        
+        }
+    }
 }]);

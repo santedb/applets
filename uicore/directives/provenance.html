@@ -21,7 +21,7 @@
 <div xmlns="http://www.w3.org/1999/xhtml" style="min-width:250px; display:inline">
     <i class="fas fa-circle-notch fa-spin" ng-if="isLoading"></i>
     <div class="d-flex flex-wrap">
-        <span ng-if="provData.userModel" class="m-1"><i class="fas fa-user"></i> {{ provData.userModel.userName }}
+        <span ng-if="provData.userModel" class="m-1"><i class="fas fa-fw" ng-class="{ 'fa-user' : !applicationProvenance , 'fa-window-maximize' : applicationProvenance}"></i> {{ applicationProvenance ? provData.applicationModel.name : provData.userModel.userName }}
         </span>
         <span ng-if="provData.deviceModel &amp;&amp; !provData.userModel" class="m-1">
             <i class="fas fa-desktop" ng-if="provData.deviceModel"></i> {{ provData.deviceModel.name }}

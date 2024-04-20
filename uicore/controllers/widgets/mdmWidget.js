@@ -35,7 +35,7 @@ angular.module('santedb').controller('MasterDataManagementController', ['$scope'
 
     // Render entity information
     $scope.renderCreatedBy = function (entity) {
-        return `<provenance provenance-id="'${entity.createdBy}'"  provenance-time="'${entity.creationTime}'"></provenance>`;
+        return `<provenance provenance-id="'${entity.createdBy}'" application-provenance="true"  provenance-time="'${entity.creationTime}'"></provenance>`;
     }
 
     // Render classification concept

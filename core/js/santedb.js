@@ -1818,13 +1818,14 @@ function SanteDBWrapper() {
      * @param {*} faultJson The Fault message
      * @returns {bool} True if the fault JSON inidcates a policy violation
      */
-    var _isPolicyViolationException = function(faultJson) {
-        var isPve = false;
+    var _getPolicyException = function(faultJson) {
         do {
-            isPve |= faultJson.$type == "PolicyViolationException";
+            if(faultJson.$type == "PolicyViolationException") {
+                return faultJson;
+            }
             faultJson = faultJson.cause;
-        } while(!isPve && faultJson)
-        return isPve;
+        } while(faultJson)
+        return null;
     }
 
     /**
@@ -1843,11 +1844,12 @@ function SanteDBWrapper() {
                 !_elevator.getToken() ||
                 (_session == null || !_session.access_token) && _elevator) {
 
+                    var pve = _getPolicyException(data.responseJSON);
                 // Was the response a security policy exception where the back end is asking for elevation on the same user account?
                 if (data.responseJSON &&
-                    _isPolicyViolationException(data.responseJSON) &&
+                    pve &&
                     data.getResponseHeader("WWW-Authenticate").indexOf("insufficient_scope") > -1)
-                    _elevator.elevate(angular.copy(_session), [data.responseJSON.policyId]);
+                    _elevator.elevate(angular.copy(_session), [`${pve.policyId} - ${pve.policyName}`]);
                 else
                     _elevator.elevate(null);
                 return true;
@@ -2132,6 +2134,10 @@ function SanteDBWrapper() {
                     return null;
                 // Error was with validating the code
                 else if (e.rules && e.rules.length > 0 && e.rules.filter(o => o.id == "jws.verification" || o.id == "jws.app" || o.id == "jws.key").length == e.rules.length) {
+                    return await SanteDB.application.searchByBarcodeAsync(qrCodeData, true, upstream);
+                }
+                else if(e.rules && e.rules.length > 0 && e.rules.filter(o => o.id == "jws.algorithm" || o.id == "jws.format").length == e.rules.length && 
+                    confirm(SanteDB.locale.getString("ui.error.vrp.invalidFormat"))) {
                     return await SanteDB.application.searchByBarcodeAsync(qrCodeData, true, upstream);
                 }
                 else if (!upstream && (e.$type == "KeyNotFoundException" || e.cause && e.cause.$type == "KeyNotFoundException") && confirm(SanteDB.locale.getString("ui.emr.search.online"))) {

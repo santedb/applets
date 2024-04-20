@@ -397,8 +397,8 @@ angular.module('santedb-lib')
 
                                 if (params.term)
                                     filter[searchProperty] = "~" + params.term;
-                                filter["_count"] = 20;
-                                filter["_offset"] = params.page ? params.page * 20 : 0;
+                                filter["_count"] = 10;
+                                filter["_offset"] = params.page ? params.page * 10 : 0;
                                 filter["_viewModel"] = "dropdown";
                                 return filter;
                             },
