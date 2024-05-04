@@ -41,6 +41,8 @@ angular.module('santedb').controller('FacilityEditController', ["$scope", "$root
                 place.service = [];
             }
 
+            place.address = place.address || { PhysicalVisit: [new EntityAddress({use: AddressUseKeys.PhysicalVisit })] };
+
             document.title = document.title + " - " + SanteDB.display.renderEntityName(place.name);
 
             return place;

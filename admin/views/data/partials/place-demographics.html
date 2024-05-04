@@ -90,7 +90,7 @@
                                 </div>
                             </div>
                             <div class="form-group row">
-                                <label class="col-sm-12 col-md-3 control-label required">
+                                <label class="col-sm-12 col-md-3 control-label" ng-class="{'required' : scopedObject.classConcept == 'ff34dfa7-c6d3-4f8b-bc9f-14bcdc13ba6c'}">
                                     {{ 'ui.model.entity.typeConcept' | i18n }} <hint-popover
                                         hint-title="ui.model.entity.typeConcept" />
                                 </label>
@@ -146,7 +146,7 @@
                             container-class="editObject.classConcept" />
                     </div>
                     <div role="tabpanel" class="tab-pane p-2" id="entityAddressTab">
-                        <address-edit address="editObject.address" no-add="false" no-type="false" 
+                        <address-edit address="editObject.address" no-add="false" no-type="true" 
                             owner-form="panel.editForm"></address-edit>
                     </div>
                     <div role="tabpanel" class="tab-pane p-2" id="entityTelecomTab">

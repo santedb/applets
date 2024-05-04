@@ -326,6 +326,8 @@
   <string name="ui.model.place.statusConcept">Status</string>
   <string name="ui.model.place.service.serviceConcept">Type of Service</string>
   <string name="ui.model.place.service.serviceSchedule">Schedule</string>
+  <string name="ui.model.place.identifier.ISO3166">ISO-3166 Country Code</string>
+  <string name="ui.model.place.identifier.ISO3166.hint">The ISO country code for this country</string>
   <string name="ui.model.patient.saveSuccess">Patient updated successfully</string>
   <string name="ui.model.person.saveSuccess">Related person updated successfully</string>
   <string name="ui.model.place.saveSuccess">Place updated successfully</string>

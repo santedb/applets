@@ -60,14 +60,17 @@ angular.module('santedb').controller('PlaceFacilityWidgetController', ["$scope",
     };
 
     // Copy data from the parent scoped object
-    if ($scope.$parent.scopedObject.address) {
-        var parentAddress = $scope.$parent.scopedObject.address.PhysicalVisit || $scope.$parent.scopedObject.address.Direct;
-        var newAddress = angular.copy(parentAddress[0]);
-        newAddress.use = AddressUseKeys.PhysicalVisit;
-        delete (newAddress.id);
-        $scope.associationTemplate.targetModel.address.PhysicalVisit = newAddress;
-    }
-
+    $scope.$watch("$parent.scopedObject.address", function(n, o) {
+        if (n) {
+            var parentAddress = n.PhysicalVisit || n.Direct;
+            var newAddress = angular.copy(parentAddress[0]);
+            newAddress.use = AddressUseKeys.PhysicalVisit;
+            delete (newAddress.id);
+            $scope.associationTemplate.targetModel.address.PhysicalVisit = newAddress;
+        }
+    
+    })
+    
     $scope.association = angular.copy($scope.associationTemplate);
 
     $scope.renderName = function (plc) {

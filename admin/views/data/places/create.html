@@ -33,29 +33,35 @@
             <div class="card">
                 <div class="card-header">
                     <h5 class="mb-0 card-title">
-                            <i class="fa fa-globe-africa"></i>
-                            {{ 'ui.admin.places.edit.profile.title' | i18n }}
+                        <i class="fa fa-globe-africa"></i>
+                        {{ 'ui.admin.places.edit.profile.title' | i18n }}
                     </h5>
                 </div>
                 <div class="collapse show" id="placeProfile">
                     <div class="card-body container-fluid">
-                        <div class="form-group row"><!-- ng-if="entity.classConcept != 'ff34dfa7-c6d3-4f8b-bc9f-14bcdc13ba6c'">-->
+                        <div class="form-group row">
+                            <!-- ng-if="entity.classConcept != 'ff34dfa7-c6d3-4f8b-bc9f-14bcdc13ba6c'">-->
                             <label class="col-sm-12 col-md-3 control-label required">
-                                {{ 'ui.model.place.classConcept' | i18n }}  <hint-popover hint-title="ui.model.place.classConcept" />
+                                {{ 'ui.model.place.classConcept' | i18n }} <hint-popover
+                                    hint-title="ui.model.place.classConcept" />
                             </label>
                             <div class="col-sm-12 col-md-9 control-value">
-                                <concept-select class="form-control" required="required" name="classInput" concept-set="'PlaceClass'" ng-model="entity.classConcept"/>
+                                <concept-select class="form-control" required="required" name="classInput"
+                                    concept-set="'PlaceClass'" ng-model="entity.classConcept" />
                                 <div class="text-danger" ng-if="targetForm.classInput.$error['required']">
                                     <i class="fa fa-exclamation-triangle"></i> {{ 'ui.error.required' | i18n }}
                                 </div>
                             </div>
                         </div>
-                        <div class="form-group row"><!--ng-if="entity.classConcept == 'ff34dfa7-c6d3-4f8b-bc9f-14bcdc13ba6c'">-->
+                        <div class="form-group row">
+                            <!--ng-if="entity.classConcept == 'ff34dfa7-c6d3-4f8b-bc9f-14bcdc13ba6c'">-->
                             <label class="col-sm-12 col-md-3 control-label">
-                                {{ 'ui.model.place.typeConcept' | i18n }}  <hint-popover hint-title="ui.model.place.typeConcept" />
+                                {{ 'ui.model.place.typeConcept' | i18n }} <hint-popover
+                                    hint-title="ui.model.place.typeConcept" />
                             </label>
                             <div class="col-sm-12 col-md-9 control-value">
-                                <concept-select class="form-control" name="typeInput" concept-set="'PlaceTypeConcept'" ng-model="entity.typeConcept"/>
+                                <concept-select class="form-control" name="typeInput" concept-set="'PlaceTypeConcept'"
+                                    ng-model="entity.typeConcept" />
                                 <div class="text-danger" ng-if="targetForm.typeInput.$error['required']">
                                     <i class="fa fa-exclamation-triangle"></i> {{ 'ui.error.required' | i18n }}
                                 </div>
@@ -63,26 +69,42 @@
                         </div>
                         <div class="form-group row">
                             <label class="col-sm-12 col-md-3 control-label required">
-                                {{'ui.model.place.name.component.other' | i18n }}  <hint-popover hint-title="ui.model.place.name.component.other" />
+                                {{'ui.model.place.name.component.other' | i18n }} <hint-popover
+                                    hint-title="ui.model.place.name.component.other" />
                             </label>
                             <div class="col-sm-12 col-md-9 control-value">
-                                <input class="form-control" type="text" required="required" autocomplete="__away" name="nameInput" ng-model="entity.name.OfficialRecord[0].component.$other[0]" />
+                                <input class="form-control" type="text" required="required" autocomplete="__away"
+                                    name="nameInput" ng-model="entity.name.OfficialRecord[0].component.$other[0]" />
                                 <div class="text-danger" ng-if="targetForm.nameInput.$error['required']">
                                     <i class="fa fa-exclamation-triangle"></i> {{ 'ui.error.required' | i18n }}
                                 </div>
                             </div>
                         </div>
+                        <div class="form-group row"
+                            ng-if="entity.classConcept == '48b2ffb3-07db-47ba-ad73-fc8fb8502471'">
+                            <label class="col-sm-12 col-md-3 control-label">
+                                {{ 'ui.model.place.identifier.ISO3166' | i18n }} <hint-popover
+                                    hint-title="ui.model.place.identifier.ISO3166" />
+                            </label>
+                            <div class="col-sm-12 col-md-9">
+                                <input type="text" name="countryCode" ng-model="entity.identifier.ISO3166[0].value"
+                                    class="form-control" pattern="[A-Z]{2}" required="required" />
+                                <div class="text-danger" ng-if="targetForm.countryCode.$error['required']">
+                                    <i class="fas fa-exclamation-triangle"></i> {{ 'ui.error.required' | i18n }}
+                                </div>
+                            </div>
+                        </div>
                         <div class="form-group row">
-                            <label class="col-sm-12 col-md-3 control-label"
-                                for="name">{{ 'ui.model.entity.relationship.Parent' | i18n }}  <hint-popover hint-title="ui.model.entity.relationship.Parent" /></label>
+                            <label class="col-sm-12 col-md-3 control-label" for="name">{{
+                                'ui.model.entity.relationship.Parent' | i18n }} <hint-popover
+                                    hint-title="ui.model.entity.relationship.Parent" /></label>
                             <div class="col-sm-12 col-md-9 input-group">
                                 <entity-search type="'Place'"
-                                    group-by="['address.PhysicalVisit[0].component.State[0]','address.Direct[0].component.State[0]']" 
+                                    group-by="['address.PhysicalVisit[0].component.State[0]','address.Direct[0].component.State[0]']"
                                     ng-model="entity.relationship.Parent[0].target"
                                     search-field="'name.component.value'"
                                     for-relationship-type="'bfcbb345-86db-43ba-b47e-e7411276ac7c'"
-                                    with-relationship-source-class="entity.classConcept"
-                                ></entity-search>
+                                    with-relationship-source-class="entity.classConcept"></entity-search>
                             </div>
                         </div>
                     </div>
