@@ -325,8 +325,8 @@
 
 
     <!-- Import -->
-    <string name="org.santedb.widget.admin.panel.data.import.file">Import Details</string>
-    <string name="org.santedb.widget.admin.panel.data.import.issues">Detected Issues</string>
+    <string name="org.santedb.widget.admin.panel.cdr.import.file">Import Details</string>
+    <string name="org.santedb.widget.admin.panel.cdr.import.issues">Detected Issues</string>
 
     <!-- Facility Editing -->
 
@@ -628,6 +628,15 @@
     <string name="ui.admin.matches.config.test.knownMatch">Test Target</string>
     <string name="ui.admin.matches.config.test.knownMatch.hint"><![CDATA[Specifies one or more other records which you want to test against the <code>$input</code> - if no objects are specified here, the match engine will perform an entire block. Use this option if you're attempting to diagnose scoring results with particular record pairs]]></string>
     <string name="ui.admin.matches.config.test.analysis">Hints / Analysis</string>
+        <string name="ui.admin.match.vector.attribute">Attribute</string>
+    <string name="ui.admin.match.vector.value.a">A Value</string>
+    <string name="ui.admin.match.vector.value.b">B Value</string>
+    <string name="ui.admin.match.vector.mu">M / U</string>
+    <string name="ui.admin.match.vector.score">Score</string>
+    <string name="ui.admin.match.vector.weight">Weight</string>
+    <string name="ui.admin.match.vector.evaluated.yes">This attribute was evaluated - the score is an actual evaluation of A and B</string>
+    <string name="ui.admin.match.vector.evaluated.no">This attribute was not evaluated - the score represents the whenNull configuration option</string>
+
     <string name="ui.admin.matches.config.doctor.poorBlocking.title"><![CDATA[<i class="fas fa-info-circle"></i> Excessive results in blocking result]]></string>
     <string name="ui.admin.matches.config.doctor.poorBlocking.description"><![CDATA[The proportion of results which are non-matches ({NonMatch}) was the majority of records blocked ({count}). This indicates that your blocking configuration is too liberal. Try reducing the number of NonMatch by adding more stringent blocking criteria to your dataset.]]></string>
     <string name="ui.admin.matches.config.doctor.strictBlocking.title"><![CDATA[<i class="fas fa-info-circle"></i> Blocking may be too restrictive]]></string>
