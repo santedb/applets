@@ -64,4 +64,9 @@ angular.module('santedb').controller('QueueAdminController', ["$scope", "$rootSc
         }
     }
 
+    $scope.refreshTable = function() {
+        $("#queueTable table").DataTable().draw();
+
+    }
+
 }]);

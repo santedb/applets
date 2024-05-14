@@ -126,6 +126,8 @@
     <string name="ui.admin.provenance.type">Type</string>
     <!-- Security Dashboard -->
     <string name="ui.admin.security.dashboard.index">SanteDB Security Center</string>
+    <string name="ui.admin.securityEntity.certificate.uploadlabel">Upload Certificate</string>
+    <string name="ui.admin.application.cert.remove.confirm">Once removed, this certificate will no longer be mapped to this security object. Are you sure?</string>
     <string name="ui.admin.security.users.title">Users</string>
     <string name="ui.admin.security.users.create">New User</string>
     <string name="ui.admin.security.users.count">User management</string>

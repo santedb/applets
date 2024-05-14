@@ -27,19 +27,21 @@ angular.module('santedb').controller('PlaceEditController', ["$scope", "$rootSco
         try {
             var place = await SanteDB.resources.place.getAsync(id, "full");
 
-            if(place.classConcept == EntityClassKeys.ServiceDeliveryLocation) {
-                $state.go("santedb-admin.data.facility.view", {id: id});
+            if (place.classConcept == EntityClassKeys.ServiceDeliveryLocation) {
+                $state.go("santedb-admin.data.facility.view", { id: id });
             }
             if (place.isMobile === undefined) {
                 place.isMobile = false;
             }
             place.relationship = place.relationship || {};
-            if(!place.relationship.Parent) {
+            if (!place.relationship.Parent) {
                 place.relationship.Parent = [{}]
             }
 
+            place.address = place.address || { PhysicalVisit: [new EntityAddress({ use: AddressUseKeys.PhysicalVisit })] };
+
             document.title = document.title + " - " + SanteDB.display.renderEntityName(place.name);
-           
+
             return place;
         }
         catch (e) {
@@ -68,6 +70,9 @@ angular.module('santedb').controller('PlaceEditController', ["$scope", "$rootSco
             relationship: {
                 Parent: []
             },
+            identifier: {
+                ISO3166: [{}]
+            },
             name: {
                 OfficialRecord: [{
                     component: {
@@ -89,35 +94,50 @@ angular.module('santedb').controller('PlaceEditController', ["$scope", "$rootSco
             var place = angular.copy($scope.entity);
 
             // Correct the address information based on the type and parent
-            if (!place.address &&
-                place.relationship && place.relationship.Parent &&
-                place.relationship.Parent[0] &&
-                place.relationship.Parent[0].target) {
+            if (!place.address) {
+                if (place.relationship && place.relationship.Parent &&
+                    place.relationship.Parent[0] &&
+                    place.relationship.Parent[0].target) {
+                    // Fetch the parent
+                    var parent = await SanteDB.resources.place.getAsync(place.relationship.Parent[0].target, "fastview");
+                    var address = parent.address.PhysicalVisit || parent.address.Direct; // Grab the direct address of the parent
+                    delete (address[0].id); // we don't w|ant to update the address
+                    switch (place.classConcept) {
 
+                        case EntityClassKeys.Country:
+                            address[0].component.Country = [place.name.OfficialRecord[0].component.$other[0]];
+                            break;
+                        case EntityClassKeys.State:
+                        case EntityClassKeys.StateOrProvince:
+                            address[0].component.State = [place.name.OfficialRecord[0].component.$other[0]];
+                            break;
+                        case EntityClassKeys.CountyOrParish:
+                            address[0].component.County = [place.name.OfficialRecord[0].component.$other[0]];
+                            break;
+                        case EntityClassKeys.CityOrTown:
+                            address[0].component.City = [place.name.OfficialRecord[0].component.$other[0]];
+                            break;
+                        case EntityClassKeys.PrecinctOrBorough:
+                            address[0].component.Precinct = [place.name.OfficialRecord[0].component.$other[0]];
+                            break;
+                    }
+                    place.address = { PhysicalVisit: address };
 
-                // Fetch the parent
-                var parent = await SanteDB.resources.place.getAsync(place.relationship.Parent[0].target, "fastview");
-                var address = parent.address.PhysicalVisit; // Grab the direct address of the parent
-                delete (address[0].id); // we don't w|ant to update the address
-                switch (place.classConcept) {
-
-                    case EntityClassKeys.Country:
-                        address[0].component.Country = [place.name.OfficialRecord[0].component.$other[0]];
-                        break;
-                    case EntityClassKeys.State:
-                        address[0].component.State = [place.name.OfficialRecord[0].component.$other[0]];
-                        break;
-                    case EntityClassKeys.CountyOrParish:
-                        address[0].component.County = [place.name.OfficialRecord[0].component.$other[0]];
-                        break;
-                    case EntityClassKeys.CityOrTown:
-                        address[0].component.City = [place.name.OfficialRecord[0].component.$other[0]];
-                        break;
-                    case EntityClassKeys.PrecinctOrBorough:
-                        address[0].component.Precinct = [place.name.OfficialRecord[0].component.$other[0]];
-                        break;
                 }
-                place.address = { PhysicalVisit: address };
+            }
+
+            if (place.classConcept == EntityClassKeys.Country) {
+                place.address = {
+                    PhysicalVisit: [new EntityAddress({
+                        use: AddressUseKeys.PhysicalVisit,
+                        component: {
+                            Country: [place.identifier.ISO3166[0].value]
+                        }
+                    })]
+                }
+            }
+            else {
+                delete place.identifier.ISO3166;
             }
 
             place = await prepareEntityForSubmission(place);
@@ -140,7 +160,7 @@ angular.module('santedb').controller('PlaceEditController', ["$scope", "$rootSco
             SanteDB.display.buttonWait("#savePlaceButton", false);
         }
     }
-    
+
     // Set the active state
     $scope.setState = async function (status) {
         try {
@@ -156,7 +176,35 @@ angular.module('santedb').controller('PlaceEditController', ["$scope", "$rootSco
             SanteDB.display.buttonWait("#btnSetState", false);
         }
     }
-    
+
+    $scope.download = function () {
+        var parms = [];
+        if ($scope.entity.typeConcept) {
+            parms.push(`_include=Concept:id%3d${$scope.entity.typeConcept}%26_exclude=conceptSet%26_exclude=referenceTerm`);
+        }
+
+        if (confirm(SanteDB.locale.getString("ui.admin.place.export.heirarchy"))) {
+            var hLevels = {};
+            hLevels[EntityClassKeys.Country] = 5;
+            hLevels[EntityClassKeys.StateOrProvince] = 4;
+            hLevels[EntityClassKeys.State] = 4;
+            hLevels[EntityClassKeys.CountyOrParish] = 3;
+            hLevels[EntityClassKeys.CityOrTown] = 2;
+            hLevels[EntityClassKeys.PrecinctOrBorough] = 1;
+
+            for(var i = 1; i < hLevels[$scope.entity.classConcept]; i++) {
+                parms.push(`_include=Place:${"relationship[Parent].target.".repeat(i)}id=${$scope.entity.id}`);
+            }
+        }
+
+        var url = `/hdsi/Place/${$scope.entity.id}/_export?${parms.join("&")}`;
+        console.info(url);
+        var win = window.open(`/hdsi/Place/${$scope.entity.id}/_export?${parms.join("&")}`, '_blank');
+        win.onload = function (e) {
+            win.close();
+        };
+    }
+
     // Set the active state
     $scope.setTag = async function (tagName, tagValue) {
         try {
@@ -167,7 +215,7 @@ angular.module('santedb').controller('PlaceEditController', ["$scope", "$rootSco
             $timeout(() => {
                 SanteDB.display.cascadeScopeObject(SanteDB.display.getRootScope($scope), ['scopedObject', 'entity'], updated);
             });
-            
+
         }
         catch (e) {
             $rootScope.errorHandler(e);

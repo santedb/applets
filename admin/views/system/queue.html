@@ -34,6 +34,7 @@
     <entity-table stateless="true" id="queueTable" type="DispatcherQueue" 
     search-field="name"
      can-filter="true"
+     
      default-query="{ _upstream: extern }"
     i18n-prefix="'ui.admin.queue.contents.'"
     item-actions="[ 
@@ -51,5 +52,10 @@
             <option value="false">{{ 'ui.admin.system.logs.local' | i18n }}</option>
             <option ng-if="$root.system.online" value="true">{{ 'ui.admin.system.logs.remote' | i18n }}</option>
         </select>
+        <div class="input-group-append">
+            <button class="btn btn-success" type="button" ng-click="refreshTable()">
+                <i class="fas fa-refresh"></i> {{ 'ui.action.reload' | i18n }}
+            </button>
+        </div>
     </div>
 </div>

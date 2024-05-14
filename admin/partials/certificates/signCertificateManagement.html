@@ -43,7 +43,7 @@
                 <div class="custom-file">
                     <input type="file" class="custom-file-input" name="uploadCert" valid-file="valid-file"
                     ng-model="newCertificate" required="required" accept=".cer, .cert, .der" id="file-new-certificate-dsig" />    
-                    <label class="custom-file-label" for="file-new-certificate-dsig">{{ 'ui.admin.securityEntity.certificate.uploadlabel' | i18n }}</label>
+                    <label class="custom-file-label" for="file-new-certificate-dsig">{{ newCertificate || 'ui.admin.securityEntity.certificate.uploadlabel' | i18n }}</label>
                 </div>
                 <div class="input-group-append">
                     <button type="submit" id="btnSubmitSigningCert"
