@@ -33,8 +33,6 @@
                         <a class="nav-link active" href="javascript:void(0)" data-target="#entityPropertiesTab"
                             data-toggle="tab">
                             <i class="fa fa-edit"></i> {{ 'ui.model.entity.properties' | i18n }}
-                            <i class="text-danger fas fa-exclamation-circle"
-                                ng-if="panel.editForm.$error.required[0].$name.indexOf('birth') == 0"></i>
                         </a>
                     </li>
                     <li class="nav-item" role="presentation">
@@ -98,7 +96,7 @@
                                     <concept-select
                                         ng-required="scopedObject.classConcept == 'ff34dfa7-c6d3-4f8b-bc9f-14bcdc13ba6c'"
                                         is-required="true" class="form-control" name="typeInput"
-                                        concept-set="'PlaceTypeConcept'" ng-model="editObject.typeConcept" />
+                                        concept-set="scopedObject.classConcept == 'ff34dfa7-c6d3-4f8b-bc9f-14bcdc13ba6c' ? 'FacilityTypeConcept' : 'PlaceTypeConcept'" ng-model="editObject.typeConcept" />
                                     <div class="text-danger" ng-if="panel.editForm.typeInput.$error['required']">
                                         <i class="fa fa-exclamation-triangle"></i> {{ 'ui.error.required' |
                                         i18n }}
