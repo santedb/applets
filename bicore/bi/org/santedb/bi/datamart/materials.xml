@@ -119,8 +119,39 @@
         </add>
       </sql>
     </reader>
-    <writer truncate="true" mode="insert" name="write_mats">
+    <transform name="map_mats">
       <input ref="input_mats" />
+      <map>
+        <source name="ENT_ID" />
+        <target name="ENT_ID" />
+      </map>
+      <map>
+        <source name="TYPE"/>
+        <target name="TYPE"/>
+      </map>
+      <map>
+        <source name="EXPIRY">
+          <cast>date</cast>
+        </source>
+        <target name="EXPIRY"/>
+      </map>
+      <map>
+        <source name="QTY">
+          <cast>decimal</cast>
+        </source>
+        <target name="QTY"/>
+      </map>
+      <map>
+        <source name="UNIT_OF_MEASURE"/>
+        <target name="UNIT_OF_MEASURE"/>
+      </map>
+      <map>
+        <source name="FORM"/>
+        <target name="FORM"/>
+      </map>
+    </transform>
+    <writer truncate="true" mode="insert" name="write_mats">
+      <input ref="map_mats" />
       <connection ref="output" />
       <target ref="MAT_TBL" />
     </writer>

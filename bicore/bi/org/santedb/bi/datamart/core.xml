@@ -145,6 +145,7 @@
       <column type="string" name="ADDR_COUNTRY" />
       <column type="string" name="ADDR_POSTAL" />
       <column type="string" name="ADDR_CENSUS" />
+      <column type="uuid" name="ADDR_REF" />
     </table>
 
     <!-- Entity Names that have been pivoted -->
@@ -202,17 +203,23 @@
 
     <!-- Manufactured materials table storing only those materials which are manufactured by an organization -->
     <table name="MMAT_TBL">
-      <column type="string" name="LOT" />
       <column type="string" name="GTIN" />
       <column type="ref" name="MANUFACTURER">
         <otherTable ref="ORG_TBL" />
       </column>
-      <column type="ref" name="PRODUCT">
+      <column type="ref" name="SPECIALIZATION">
         <otherTable ref="MAT_TBL" />
       </column>
       <parent ref="MAT_TBL" />
     </table>
 
+    <table name="MMAT_LOT_TBL">
+      <column type="string" name="LOT" />
+      <column type="ref" name="PRODUCT">
+        <otherTable ref="MMAT_TBL" />
+      </column>
+      <parent ref="MAT_TBL"/>
+    </table>
     <!-- All Places (Facilities, Buildings, Provinces, States, Cities, etc. -->
     <table name="PLC_TBL">
       <column type="ref" name="NAME">

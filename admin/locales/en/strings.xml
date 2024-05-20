@@ -359,6 +359,7 @@
     <string name="org.santedb.widget.admin.panel.place.facilities">Service Facilities</string>
     <string name="org.santedb.widget.admin.panel.place.profile">Place Properties</string>
     <string name="org.santedb.widget.admin.panel.place.relationships">Relationships</string>
+    <string name="org.santedb.widget.admin.panel.facility.relationships">Relationships</string>
     <string name="org.santedb.widget.admin.panel.place.hierarchy">Hierarchy</string>
     <string name="ui.admin.place.edit.profile.title">Place Properties</string>
     <string name="ui.admin.place.edit.associate.title">Associate Facility</string>
