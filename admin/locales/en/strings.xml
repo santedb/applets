@@ -152,6 +152,11 @@
     <string name="ui.admin.system.info.workers">workers</string>
     <string name="ui.admin.system.info.memory">Used Memory</string>
     <string name="ui.admin.system.info.uptime">Uptime</string>
+    <string name="ui.admin.system.applets.manage.title">Manage Applets</string>
+    <string name="ui.admin.ssytem.applets.manage.description"><![CDATA[ 
+        <i class="fas fa-info-circle"></i> This screen is used to update or remove applet solutions from the iCDR instance. An applet is a 
+        packaged and digitally signed file which contains new features and functions in SanteDB.
+        ]]></string>
     <string name="ui.admin.system.applets.title">Applets</string>
     <string name="ui.admin.system.applets.name">Name</string>
     <string name="ui.admin.system.applets.version">Version</string>
