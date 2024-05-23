@@ -157,6 +157,9 @@
         <i class="fas fa-info-circle"></i> This screen is used to update or remove applet solutions from the iCDR instance. An applet is a 
         packaged and digitally signed file which contains new features and functions in SanteDB.
         ]]></string>
+        <string name="ui.admin.system.applet.remove.confirm">Are you sure you want to remove the applet {id} from the server?</string>
+        <string name="ui.admin.system.applet.upload.success">Applet solution was uploaded successfully</string>
+        <string name="ui.admin.system.applet.upload.error">Failed to upload applet solution to server</string>
     <string name="ui.admin.system.applets.title">Applets</string>
     <string name="ui.admin.system.applets.name">Name</string>
     <string name="ui.admin.system.applets.version">Version</string>
