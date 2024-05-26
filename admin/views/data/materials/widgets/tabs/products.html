@@ -24,5 +24,117 @@
             ]" properties="[ 'name', 'manufacturer', 'quantity', 'gtin', 'statusConcept', 'updatedBy' ]"
             item-supplement="[ loadManufacturer ]">
         </entity-table>
+
+        <!-- MODAL FOR CREATING A NEW SPECIALIZATION -->
+        <div class="modal" id="createProductModal" data-backdrop="static" role="dialog"
+            aria-labelledby="createProductModalTitle" aria-hidden="true">
+            <div class="modal-dialog modal-xl" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="uploadProductModalTitle">
+                            <i class="fas fa-pills"></i> {{ 'ui.admin.data.material.newProduct' | i18n }}
+                        </h5>
+                        <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">
+                                <i class="fa fa-times"></i>
+                            </span>
+                        </button>
+                    </div>
+                    <form novalidate="novalidate" class="form" ng-submit="createProductMaterial(createProductForm)"
+                        name="createProductForm" autocomplete="off">
+                        {{ newProduct }}
+                        <div class="modal-body">
+                            <div class="container-fluid">
+                                <div class="form-group row">
+                                    <div class="col-12">
+                                        <div class="alert alert-light">
+                                            <h5><i class="fas fa-info-circle"></i> {{
+                                                'ui.admin.data.material.newProduct.help' | i18n }}</h5>
+                                            {{ 'ui.admin.data.material.newProduct.help.text' | i18n }}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-sm-12 col-md-3 control-label">
+                                        {{ 'ui.model.manufacturedMaterial.name.assigned' | i18n }}
+                                        <hint-popover hint-title="ui.model.manufacturedMaterial.name.assigned" />
+                                    </label>
+                                    <div class="col-sm-12 col-md-9">
+                                        <input type="text" ng-model="newProduct.name.Assigned[0].component.$other[0]"
+                                            required="required" name="tradeName" maxlength="128" class="form-control" />
+                                        <div class="text-danger" ng-if="newProductForm.tradeName.$error['required']">
+                                            <i class="fas fa-exclamation-triangle"></i> {{ 'ui.error.required' | i18n }}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-sm-12 col-md-3 control-label">
+                                        {{ 'ui.model.manufacturedMaterial.relationship.ManufacturedProduct' | i18n }}
+                                        <hint-popover
+                                            hint-title="ui.model.manufacturedMaterial.relationship.ManufacturedProduct" />
+                                    </label>
+                                    <div class="col-sm-12 col-md-9">
+                                        <entity-search multiple="mutliple" type="'Organization'"
+                                            ng-model="newProduct.relationship.ManufacturedProduct[0].holder"
+                                            filter="{ industryConcept: '33b40c3c-c0c0-48b6-be74-0881d9c00ee6' }"
+                                            class="form-control" required="required" name="manufacturer" />
+                                        <div class="text-danger" ng-if="newProductForm.manufacturer.$error['required']">
+                                            <i calss="fas fa-exclamation-triangle"></i> {{ 'ui.error.required' | i18n }}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-sm-12 col-md-3 control-label">
+                                        {{ 'ui.model.manufacturedMaterial.relationship.HasGeneralization.quantity' |
+                                        i18n }}
+                                        <hint-popover
+                                            hint-title="ui.model.manufacturedMaterial.relationship.HasGeneralization.quantity" />
+                                    </label>
+                                    <div class="col-sm-12 col-md-3">
+                                        <div class="input-group">
+                                            <input type="number" min="1" max="100000" class="form-control w-50"
+                                                ng-model="newProduct.relationship.HasGeneralization[0].quantity"
+                                                name="quantityPer" />
+                                            <div class="input-group-append">
+                                                <span class="input-group-text">
+                                                    {{ 'ui.manufacturedMaterial.dose' | i18n }} {{
+                                                    scopedObject.name.Assigned | name }}
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-md-3 col-sm-12 control-label required">
+                                        {{ 'ui.model.manufacturedMaterial.quantity' | i18n }} <hint-popover
+                                            hint-title="ui.model.manufacturedMaterial.quantity" />
+                                    </label>
+                                    <div class="col-md-9 col-sm-12">
+                                        <div class="input-group">
+                                            <input class="form-control" ng-model="newProduct.quantity" required="required" type="number" min="0.00" 
+                                                name="quantity" />
+                                            <concept-select class="form-control" required="required" name="quantityConcept"
+                                                concept-set="'DosingUnitOfMeasure'" ng-model="newProduct.quantityConcept" />
+                                        </div>
+                                        <div class="text-danger" ng-if="newProductForm.quantityConcept.$error['required'] || newProductForm.quantity.$error['required']">
+                                            <i class="fas fa-exclamation-triangle"></i> {{ 'ui.error.required' | i18n }}
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button class="btn btn-secondary" type="button" data-dismiss="modal" data-toggle="none">
+                                <i class="fa fa-times"></i> {{ 'ui.action.cancel' | i18n }}</button>
+                            <button type="submit" class="btn btn-primary" id="btnSaveLibrary"
+                                ng-disabled="newProductForm.$invalid">
+                                <i class="fa fa-check"></i> {{ 'ui.action.create' | i18n }} </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
     </div>
+
 </div>

@@ -769,4 +769,13 @@
     <string name="ui.admin.material.delete.success">Material definition has been successfully deleted</string>
     <string name="ui.admin.material.confirmUnDelete">Are you sure you wish to re-activate this material definition?</string>
     <string name="ui.admin.material.undelete.success">Material definition has been successfully restored</string>
+    <string name="ui.admin.data.material.newProduct.help">Creating a Product</string>
+    <string name="ui.admin.data.material.newProduct">New Product</string>
+    <string name="ui.admin.data.material.newProduct.help.text">
+    <![CDATA[This form will create a new manufactured product for the material type. In SanteDB, this material product definition contains information for an
+    orderable/consumable product. Products typically have a <strong>Trade Name</strong> which is a common name represented on the product vial. Additioanlly 
+    each product will represent a certain quantity of a particular material for which it is a product. For example, if the manufactured product comes in 
+    <strong>5 dose vials</strong> then you will set the quantity per material to <strong>5</strong>, you should then set the quantity on this product to <strong>1 VIAL</strong>]]>
+    </string>
+    
 </resources>

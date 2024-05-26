@@ -1,6 +1,6 @@
 /// <reference path="../../../core/js/santedb.js"/>
 /// <reference path="../../../core/js/santedb-model.js"/>
-angular.module("santedb").controller("MaterialWidgetController", ["$scope", "$rootScope", "$timeout", function($scope, $rootScope, $timeout) {
+angular.module("santedb").controller("MaterialWidgetController", ["$scope", "$rootScope", "$timeout", function ($scope, $rootScope, $timeout) {
 
     $scope.newUsedEntity = new EntityRelationship({ quantity: 1 });
 
@@ -19,44 +19,44 @@ angular.module("santedb").controller("MaterialWidgetController", ["$scope", "$ro
         }
     });
 
-    $scope.$watch((s) => s.editObject && 
+    $scope.$watch((s) => s.editObject &&
         s.editObject.relationship &&
-        s.editObject.relationship.UsedEntity ? s.editObject.relationship.UsedEntity.length : 0, async function(n, o) {
-        if(n > 0) {
-            $scope.editObject.relationship.UsedEntity.filter(o=>!o.targetModel).forEach(o=> {
-                SanteDB.resources.material.getAsync(o.target, 'dropdown')
-                    .then(m=> $timeout(() => o.targetModel = m))
-                    .catch(e=>console.error(e));
-            });
-        }
-    });
+        s.editObject.relationship.UsedEntity ? s.editObject.relationship.UsedEntity.length : 0, async function (n, o) {
+            if (n > 0) {
+                $scope.editObject.relationship.UsedEntity.filter(o => !o.targetModel).forEach(o => {
+                    SanteDB.resources.material.getAsync(o.target, 'dropdown')
+                        .then(m => $timeout(() => o.targetModel = m))
+                        .catch(e => console.error(e));
+                });
+            }
+        });
 
     var saveMaterialInternal = SanteDB.display.getParentScopeVariable($scope, "saveMaterial");
     $scope.idDomains = SanteDB.display.getParentScopeVariable($scope, "idDomains");
 
     // Wrapper for underlying save material function
-    $scope.saveMaterial = async function(editForm) {
-        if(editForm.$invalid) return;
+    $scope.saveMaterial = async function (editForm) {
+        if (editForm.$invalid) return;
 
         // New used entity?
-        if($scope.newUsedEntity && $scope.newUsedEntity.target &&
-            $scope.editObject.relationship.UsedEntity.find(e=>e.target == $scope.newUsedEntity.target) == null
+        if ($scope.newUsedEntity && $scope.newUsedEntity.target &&
+            $scope.editObject.relationship.UsedEntity.find(e => e.target == $scope.newUsedEntity.target) == null
         ) {
             $scope.editObject.relationship.UsedEntity.push($scope.newUsedEntity);
-        } 
+        }
         saveMaterialInternal(editForm, $scope.editObject);
     }
 
-}]).controller("MaterialProductController", ["$scope", "$rootScope", "$timeout", function($scope, $rootScope, $timeout) {
+}]).controller("MaterialProductController", ["$scope", "$rootScope", "$timeout", function ($scope, $rootScope, $timeout) {
 
-    $scope.loadManufacturer = async function(r) {
+    $scope.loadManufacturer = async function (r) {
         // Attempt to load the manufacturer
         try {
             r.relationship = r.relationship || {};
             r.relationship.ManufacturedProduct = r.relationship.ManufacturedProduct || [];
-            if(!r.relationship.ManufacturedProduct.length) {
-                var itm = await SanteDB.resources.organization.findAsync({ "relationship[ManufacturedProduct].target" : r.target, _count: 1, _includeTotal: false }, "fastview");
-                if(itm.resource) {
+            if (!r.relationship.ManufacturedProduct.length) {
+                var itm = await SanteDB.resources.organization.findAsync({ "relationship[ManufacturedProduct].target": r.target, _count: 1, _includeTotal: false }, "fastview");
+                if (itm.resource) {
                     r.relationship.ManufacturedProduct = [
                         {
                             holderModel: itm.resource[0]
@@ -65,32 +65,32 @@ angular.module("santedb").controller("MaterialWidgetController", ["$scope", "$ro
                 }
             }
         }
-        catch(e) { console.warn(e); }
+        catch (e) { console.warn(e); }
         return r;
     }
 
-    $scope.renderManufacturer = function(r) {
-        if(r.relationship && r.relationship.ManufacturedProduct) {
+    $scope.renderManufacturer = function (r) {
+        if (r.relationship && r.relationship.ManufacturedProduct) {
             return SanteDB.display.renderEntityName(r.relationship.ManufacturedProduct[0].holderModel.name);
         }
     }
-    $scope.renderName = function(r) {
+    $scope.renderName = function (r) {
         return SanteDB.display.renderEntityName(r.targetModel.name);
     }
 
-    $scope.renderQuantity = function(r) {
+    $scope.renderQuantity = function (r) {
         // Start showing the PER instance 
         // I.E. 1 of the target = X of the parent
         var retVal = `${r.quantity || 1} ${SanteDB.display.renderConcept($scope.scopedObject.quantityConceptModel)}`;
-        
-        if(r.targetModel && r.targetModel.quantity) {
+
+        if (r.targetModel && r.targetModel.quantity) {
             retVal += `(${r.targetModel.quantity} ${SanteDB.display.renderConcept(r.targetModel.quantityConceptModel)})`;
         }
         return retVal;
     }
 
-    $scope.renderGtin = function(r) {
-        if(r.targetModel.identifier && r.targetModel.identifier.GTIN) {
+    $scope.renderGtin = function (r) {
+        if (r.targetModel.identifier && r.targetModel.identifier.GTIN) {
             return r.targetModel.identifier.GTIN[0].value;
         }
         else {
@@ -98,7 +98,7 @@ angular.module("santedb").controller("MaterialWidgetController", ["$scope", "$ro
         }
     }
 
-    $scope.renderStatusConcept = function(r) {
+    $scope.renderStatusConcept = function (r) {
         switch (r.targetModel.statusConcept) {
             case StatusKeys.Active:
                 return `<span class="badge badge-info"><i class="fas fa-check"></i> ${SanteDB.locale.getString('ui.state.active')}</span>`;
@@ -111,7 +111,7 @@ angular.module("santedb").controller("MaterialWidgetController", ["$scope", "$ro
         }
     }
 
-    $scope.renderUpdatedBy = function(r) {
+    $scope.renderUpdatedBy = function (r) {
         if (r.targetModel.obsoletedBy != null)
             return `<provenance provenance-id="'${r.targetModel.obsoletedBy}'" sessionfn="$parent.sessionFunction" provenance-time="'${r.targetModel.obsoletionTime}'"></provenance>`;
         else if (r.targetModel.updatedBy != null)
@@ -119,5 +119,49 @@ angular.module("santedb").controller("MaterialWidgetController", ["$scope", "$ro
         else if (r.targetModel.createdBy != null)
             return `<provenance provenance-id="'${r.targetModel.createdBy}'" sessionfn="$parent.sessionFunction" provenance-time="'${r.targetModel.creationTime}'"></provenance>`;
         return "";
+    }
+
+    $scope.$watch("newProduct.relationship.HasGeneralization[0].quantity", function(n, o) {
+        if(n && o != n) {
+            $scope.newProduct.quantity = n * $scope.scopedObject.quantity;
+        }
+    })
+    $scope.addProduct = function () {
+
+        $timeout(() => {
+            $scope.newProduct = new ManufacturedMaterial({
+                determinerConcept: DeterminerKeys.DescribedQualified,
+                typeConcept: $scope.scopedObject.typeConcept,
+                formConcept: $scope.scopedObject.formConcept,
+                isAdministrable: $scope.scopedObject.isAdministrable,
+                quantity: $scope.scopedObject.quantity,
+                quantityConcept: $scope.scopedObject.quantityConcept,
+                statusConcept: StatusKeys.Active,
+                name: {
+                    Assigned: [
+                        {
+                            component: {
+                                $other: [ $scope.scopedObject.name.Assigned[0].component.$other[0] ]
+                            }
+                        }
+                    ]
+                },
+                relationship: {
+                    HasGeneralization: [
+                        {
+                            target: $scope.scopedObject.id,
+                            quantity: 1
+                        }
+                    ],
+                    ManufacturedProduct: [
+                        {
+                            holder: null
+                        }
+                    ]
+                }
+            });
+
+            $("#createProductModal").modal("show");
+        });
     }
 }]);
