@@ -379,7 +379,7 @@
   <string name="ui.model.material.relationship.Part.hint"><![CDATA[If this material is composed of multiple attributes of other materials, then the parts should be listed here. For example, a <code>MMRV</code> vaccination material may have parts consisting of a Varicella, Measles, Rubella and Mumps materials]]></string>
   <string name="ui.model.material.extension.TargetCondition">Approved Treatment</string>
   <string name="ui.model.material.extension.TargetCondition.hint"><![CDATA[You can select one or more conditions or problems that this material is used commonly to treat or prevent]]></string>
-  <string name="ui.model.material.relationship.UsedEntity">Kitted Materials</string>
+  <string name="ui.model.material.relationship.UsedEntity">Bundled Materials</string>
   <string name="ui.model.material.relationship.UsedEntity.hint"><![CDATA[If the use of this material requires the use of another material (such as a syringe, diluent, etc.) select the materials which are used here]]></string>
   <string name="ui.model.material.realationship.Industry">Regulation &amp; Manufacture</string>
   <string name="ui.model.material.relationship.RegulatedProduct">Regulatory Body</string>

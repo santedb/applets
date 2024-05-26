@@ -60,7 +60,11 @@
   <menuItem context="org.santedb.admin" order="-50">
     <icon>fas fa-tools</icon>
     <text lang="en">System</text>
-    
+    <menuItem launch="santedb-admin.system.applets"
+      asset="/org.santedb.admin/views/system/applets.html" context="org.santedb.admin" order="0">
+      <icon>fas fa-file-code</icon>
+      <text lang="en">Applets</text>
+    </menuItem>
     <menuItem launch="santedb-admin.system.probes"
       asset="/org.santedb.admin/views/system/probes.html" context="org.santedb.admin" order="10">
       <icon>fas fa-thermometer</icon>

@@ -36,7 +36,7 @@
                 ng-class="{'required': isRequired &amp;&amp; $index == 0}">{{ 'ui.model.entity.address.component.city' | i18n }} <hint-popover hint-title="ui.model.entity.address.component.city" /></label>
             <div class="col-sm-12 col-md-9">
                 <entity-search ng-required="isRequired &amp;&amp; $index == 0" type="'Place'"
-                group-by="['address.PhysicalVisit[0].component.County[0]','address.Direct[0].component.County[0]']" ng-model="addr.targetId"
+                    group-by="['address.PhysicalVisit[0].component.County[0]','address.Direct[0].component.County[0]']" ng-model="addr.component._AddressPlaceRef[0]"
                     search-field="'name.component.value'" 
                     name="{{controlPrefix}}address{{$index}}target"
                     filter="{ 'classConcept': '79dd4f75-68e8-4722-a7f5-8bc2e08f5cd6', 'statusConcept': 'c8064cbd-fa06-4530-b430-1a52f1530c27' }" />

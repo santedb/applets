@@ -152,6 +152,14 @@
     <string name="ui.admin.system.info.workers">workers</string>
     <string name="ui.admin.system.info.memory">Used Memory</string>
     <string name="ui.admin.system.info.uptime">Uptime</string>
+    <string name="ui.admin.system.applets.manage.title">Manage Applets</string>
+    <string name="ui.admin.ssytem.applets.manage.description"><![CDATA[ 
+        <i class="fas fa-info-circle"></i> This screen is used to update or remove applet solutions from the iCDR instance. An applet is a 
+        packaged and digitally signed file which contains new features and functions in SanteDB.
+        ]]></string>
+        <string name="ui.admin.system.applet.remove.confirm">Are you sure you want to remove the applet {id} from the server?</string>
+        <string name="ui.admin.system.applet.upload.success">Applet solution was uploaded successfully</string>
+        <string name="ui.admin.system.applet.upload.error">Failed to upload applet solution to server</string>
     <string name="ui.admin.system.applets.title">Applets</string>
     <string name="ui.admin.system.applets.name">Name</string>
     <string name="ui.admin.system.applets.version">Version</string>
@@ -359,6 +367,7 @@
     <string name="org.santedb.widget.admin.panel.place.facilities">Service Facilities</string>
     <string name="org.santedb.widget.admin.panel.place.profile">Place Properties</string>
     <string name="org.santedb.widget.admin.panel.place.relationships">Relationships</string>
+    <string name="org.santedb.widget.admin.panel.facility.relationships">Relationships</string>
     <string name="org.santedb.widget.admin.panel.place.hierarchy">Hierarchy</string>
     <string name="ui.admin.place.edit.profile.title">Place Properties</string>
     <string name="ui.admin.place.edit.associate.title">Associate Facility</string>
@@ -751,7 +760,7 @@
     <string name="org.santedb.material.admin.widget.tab.products">Products</string>
     <string name="org.santedb.material.admin.widget.tab.lots">Lot Numbers</string>
     <string name="org.santedb.material.admin.widget.panel.core">Material Properties</string>
-    <string name="org.santedb.material.admin.widget.panel.kit">Kitted Items</string>
+    <string name="org.santedb.material.admin.widget.panel.kit">Bundle Items</string>
     <string name="org.santedb.material.admin.widget.panel.notes">Notes</string>
     <string name="org.santedb.material.admin.widget.panel.history">History</string>
     <string name="org.santedb.material.admin.widget.panel.regulation">Regulation &amp; Manufacture</string>

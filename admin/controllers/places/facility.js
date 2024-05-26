@@ -147,6 +147,26 @@ angular.module('santedb').controller('FacilityEditController', ["$scope", "$root
     }
 
     
+    $scope.download = function () {
+        var parms = [];
+        if ($scope.entity.typeConcept) {
+            parms.push(`_include=Concept:id%3d${$scope.entity.typeConcept}%26_exclude=conceptSet%26_exclude=referenceTerm`);
+        }
+
+        if (confirm(SanteDB.locale.getString("ui.admin.facility.export.heirarchy"))) {
+            for(var i = 1; i < 5; i++) {
+                parms.push(`_include=Place:${"relationship[Parent].target.".repeat(i)}id=${$scope.entity.id}`);
+            }
+        }
+
+        var url = `/hdsi/Place/${$scope.entity.id}/_export?${parms.join("&")}`;
+        console.info(url);
+        var win = window.open(`/hdsi/Place/${$scope.entity.id}/_export?${parms.join("&")}`, '_blank');
+        win.onload = function (e) {
+            win.close();
+        };
+    }
+
     // Set the active state
     $scope.setTag = async function (tagName, tagValue) {
         try {

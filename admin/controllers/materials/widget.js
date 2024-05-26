@@ -39,7 +39,9 @@ angular.module("santedb").controller("MaterialWidgetController", ["$scope", "$ro
         if(editForm.$invalid) return;
 
         // New used entity?
-        if($scope.newUsedEntity && $scope.newUsedEntity.target) {
+        if($scope.newUsedEntity && $scope.newUsedEntity.target &&
+            $scope.editObject.relationship.UsedEntity.find(e=>e.target == $scope.newUsedEntity.target) == null
+        ) {
             $scope.editObject.relationship.UsedEntity.push($scope.newUsedEntity);
         } 
         saveMaterialInternal(editForm, $scope.editObject);

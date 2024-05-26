@@ -81,7 +81,7 @@ oc-lazy-load="{name:'HierarchyWidgetController', files: ['/org.santedb.admin/con
                             for-relationship-type="'bfcbb345-86db-43ba-b47e-e7411276ac7c'"
                             with-relationship-target-class="editObject.classConcept"></entity-search>
                             <div class=" input-group-append">
-                        <button type="button" id="btnAddChild" class="btn btn-primary input-group-btn" ng-click="addChild(newChild)"><i
+                        <button type="button" id="btnAddChild" ng-disabled="!newChild" class="btn btn-primary input-group-btn" ng-click="addChild(newChild)"><i
                                 class="fas fa-plus-circle"></i> {{ 'ui.action.add' | i18n }}</button>
                             </div>
                     </div>
