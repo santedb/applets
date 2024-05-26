@@ -109,7 +109,7 @@ angular.module('santedb').controller('ApplicationIndexController', ["$scope", "$
      */
     $scope.renderUpdatedBy = function (device) {
         if (device.obsoletedBy != null)
-            return `<provenance provenance-id="'${device.obsoletedBy}'" sessionfn="$parent.sessionFunction" provenance-time="'${device.obsoletedBy}'"></provenance>`;
+            return `<provenance provenance-id="'${device.obsoletedBy}'" sessionfn="$parent.sessionFunction" provenance-time="'${device.obsoletionTime}'"></provenance>`;
         else if (device.updatedBy != null)
             return `<provenance provenance-id="'${device.updatedBy}'" sessionfn="$parent.sessionFunction" provenance-time="'${device.updatedTime}'"></provenance>`;
         else if (device.createdBy != null)

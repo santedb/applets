@@ -50,4 +50,7 @@
   <viewModel key="reverseRelationship">
     <definition>/org.santedb.core/model/reverseRelationship.xml</definition>
   </viewModel>
+  <viewModel key="relationship">
+    <definition>/org.santedb.core/model/relationship.xml</definition>
+  </viewModel>
 </AppletManifest>

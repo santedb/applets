@@ -1,8 +1,28 @@
 <div xmlns="http://www.w3.org/1999/xhtml" xmlns:sdb="http://santedb.org/applet">
     <sdb:script>~/controllers/materials/widget.js</sdb:script>
-    <sdb:widget type="Tab" name="org.santedb.material.admin.widget.tab.products" context="org.santedb.material.admin" order="10">
+    <sdb:widget type="Tab" name="org.santedb.material.admin.widget.tab.products" context="org.santedb.material.admin"
+        order="10">
         <sdb:icon>fas fa-fw fa-box-archive</sdb:icon>
         <sdb:name lang="en">Products</sdb:name>
         <sdb:demand>1.3.6.1.4.1.33349.3.1.5.9.2.4.0.1.3</sdb:demand>
     </sdb:widget>
+
+    <div ng-if="!scopedObject">
+        <i class="fas fa-circle-notch fa-spin"></i> {{ 'ui.wait' | i18n }}
+    </div>
+    <div ng-if="scopedObject" ng-controller="MaterialProductController">
+        <!-- Note: Change in Version 3 - The Materials here are specializations of holder -->
+        <entity-table id="MaterialProductTable" type="EntityRelationship" search-field="target.name.component.value"
+            default-query="{ 'relationshipType': 'BF9F929A-E7EB-4E5B-B82E-CF44384F0A3B', 'target': scopedObject.id, _viewModel: 'relationship', 'target.determinerConcept': '604CF1B7-8891-49FB-B95F-3E4E875691BC' }"
+            render="{ updatedBy: 'renderUpdatedBy', manufacturer: 'renderManufacturer', gtin: 'renderGtin', quantity: 'renderQuantity', name: 'renderName', statusConcept: 'renderStatusConcept' }"
+            i18n-prefix="'ui.model.manufacturedMaterial.'" item-class="{ 'name' : 'w-25', 'updatedBy' : 'w-20' }"
+            item-actions="[ 
+                { name: 'edit', action: 'editProduct', demand: '1.3.6.1.4.1.33349.3.1.5.9.2.4.1.1', className: 'btn-primary', icon: 'fa fa-pencil' },  
+                { name: 'delete', action: 'deleteProduct', demand: '1.3.6.1.4.1.33349.3.1.5.9.2.4.1.1', className: 'btn-danger', icon: 'fa fa-trash' },  
+            ]" actions="[ 
+                { name: 'add', demand: '1.3.6.1.4.1.33349.3.1.5.9.2.4.1.0', action: 'addProduct', className: 'btn-primary', icon: 'fa fa-plus-circle' }
+            ]" properties="[ 'name', 'manufacturer', 'quantity', 'gtin', 'statusConcept', 'updatedBy' ]"
+            item-supplement="[ loadManufacturer ]">
+        </entity-table>
+    </div>
 </div>
