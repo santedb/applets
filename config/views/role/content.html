@@ -24,6 +24,7 @@
         <div class="col-md-10 col-xs-12">
             <select class="form-control" name="syncInterval" ng-model="config.applet.solution">
                <option ng-repeat="sln in reference.solutions.resource" value="{{sln.applet.id}}">{{sln.applet.id}} - {{sln.applet.name[0].value}}</option>
+               <option ng-if="config.applet.solution" value="{{config.applet.solution}}">{{ config.applet.solution }}</option>
             </select>
             <div class="form-text text-muted">
                 {{ 'ui.config.role.applet.help' | i18n }}
