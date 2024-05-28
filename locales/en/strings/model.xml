@@ -313,7 +313,7 @@
   <string name="ui.model.place.names">Other Name(s)</string>
   <string name="ui.model.place.classConcept">Classification</string>
   <string name="ui.model.place.classConcept.hint">Select the SanteDB classification of the place which is being created</string>
-  <string name="ui.model.place.classConcept.changeWarning">Chaning the class concept may invalidate data already present in your database. You should only change this if there are no relationships established with this place</string>
+  <string name="ui.model.place.classConcept.changeWarning">Changing the class concept may invalidate data already present in your database. You should only change this if there are no relationships established with this place</string>
   <string name="ui.model.place.typeConcept">Type</string>
   <string name="ui.model.place.typeConcept.hint">Select the sub-classification of the place which you're creating (for example: Ward, Community Hospital, etc.)</string>
   <string name="ui.model.place.properties">Properties</string>
@@ -404,7 +404,7 @@
   <string name="ui.model.manufacturedMaterial.relationship.ManufacturedProduct">Manufacturer</string>
   <string name="ui.model.manufacturedMaterial.relationship.ManufacturedProduct.hint">Select the organization which manufactures this product. This should represent the manufacturer of origin rather than the supplier</string>
   <string name="ui.model.manufacturedMaterial.relationship.HasGeneralization.quantity">Doses Per</string>
-  <string name="ui.model.manufacturedMaterial.relationship.HasGeneralization.quantity.hint">For every one of the current product, how many of the type of material is represetented</string>
+  <string name="ui.model.manufacturedMaterial.relationship.HasGeneralization.quantity.hint">For every one of the current product, how many of the type of material is represented</string>
   <string name="ui.model.material.isAdministrable.hint"><![CDATA[Indicates that the material can be administered to a patient or subject. Examples: 
     <ul><li><code>Enable</code> for medications, vaccines, solutions, medical devices, etc.</li><li><code>Disable</code> for syringes, pill bottles, containers, diluents, etc.</li></ul>]]></string>
 
@@ -590,7 +590,7 @@
   <string name="ui.model.pubsubchannel.dispatcher">Dispatcher</string>
   <string name="ui.model.pubsubchannel.dispatcher.hint"><![CDATA[Identifies the type of messaging format to be used to send the notification (for example: FHIR messages, FHIR rest hook, HL7v2, etc.). <strong>OTHER</strong> is used when the iCDR has a dispatcher not listed here]]></string>
   <string name="ui.model.pubsubchannel.settings">Custom Settings</string>
-  <string name="ui.model.pubsubchannel.settings.hint"><![CDATA[Additional settings (key/value pairs) which are used be the dispatcher to control the flow of information. For exampe, in FHIR these equate to HTTP headers]]></string>
+  <string name="ui.model.pubsubchannel.settings.hint"><![CDATA[Additional settings (key/value pairs) which are used be the dispatcher to control the flow of information. For example, in FHIR these equate to HTTP headers]]></string>
 
   <!-- Foreign Data Submissions -->
   <string name="ui.model.alien.submission.name">Filename</string>
@@ -737,7 +737,7 @@
   <string name="ui.model.dataQualityRule.enabled">Rule is Active</string>
   <string name="ui.model.dataQualityRule.enabled.hint">When a rule is active, all incoming resources specified in the rule are validated using the assertions specified</string>
   <string name="ui.model.dataQualityRule.resources.resource">Resource Type</string>
-  <string name="ui.model.dataQualityRule.resources.resource.hint">Select the type fo resource to which this rule set applies. To change the resource type, all assertions must be removed</string>
+  <string name="ui.model.dataQualityRule.resources.resource.hint">Select the type of resource to which this rule set applies. To change the resource type, all assertions must be removed</string>
   <string name="ui.model.dataQualityRule.resources.assert.id">Assertion ID</string>
   <string name="ui.model.dataQualityRule.resources.assert.id.placeholder">my.rule.assertion.addressRequired</string>
   <string name="ui.model.dataQualityRule.resources.assert.id.hint"><![CDATA[Provide a unique identifier for this assertion. When this assertion fails, this identifier will be placed on the <code>DetectedIssue.id</code> field]]></string>
