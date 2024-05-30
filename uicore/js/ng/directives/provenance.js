@@ -85,12 +85,10 @@ angular.module('santedb-lib')
                             $(`div.prv_${scope.provenanceId}`).each(function (i, e) {
                                 if (e == $(element)[0]) return;
                                 $(e).removeClass(`prv_${scope.provenanceId}`);
-
-                                var sscope = angular.element(e).isolateScope();
-                                sscope.provData = provData;
-                                sscope.isLoading = false;
-                                sscope.$apply();
                                 $timeout(function () {
+                                    var sscope = angular.element(e).isolateScope();
+                                    sscope.provData = provData;
+                                    sscope.isLoading = false;
                                     $('button:first', e).attr('data-content', extraInfo);
                                     $('button:first', e).popover({ html: true });
                                 });
@@ -111,7 +109,7 @@ angular.module('santedb-lib')
                                 extraInfo += `<br/><b><i class='fas fa-clock'></i> ${SanteDB.locale.getString('ui.provenance.timestamp')}:</b>  ${moment(scope.provenanceTime).format(SanteDB.locale.dateFormats.second)}`;
 
                             try {
-                                scope.$apply();
+                                
                                 $timeout(function () {
                                     $('button:first', element).attr('data-content', extraInfo);
                                     $('button:first', element).popover({ html: true });
@@ -122,12 +120,11 @@ angular.module('santedb-lib')
                                     if (e == $(element)[0]) return;
                                     $(e).removeClass(`prv_${scope.provenanceId}`);
 
-                                    var sscope = angular.element(e).isolateScope();
-                                    sscope.provData = provData;
-                                    sscope.isLoading = false;
-                                    sscope.$apply();
                                     $timeout(function () {
-                                        $('button:first', e).attr('data-content', extraInfo);
+                                        var sscope = angular.element(e).isolateScope();
+                                        sscope.provData = provData;
+                                        sscope.isLoading = false;
+                                            $('button:first', e).attr('data-content', extraInfo);
                                         $('button:first', e).popover({ html: true });
                                     });
 

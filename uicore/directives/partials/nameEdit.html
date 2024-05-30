@@ -74,7 +74,7 @@
                     ng-model="name.component.Suffix[0]"  />
             </div>
     </div>
-    <div class="form-group row" ng-if="allowedComponents.indexOf('$other') == -1">
+    <div class="form-group row" ng-if="allowedComponents.indexOf('$other') == -1 &amp;&amp; !simpleEntry">
         <div class="col">
             <div class="btn-group float-right">
                 <button class="btn btn-sm btn-link" type="button" ng-click="name._showExtra = !name._showExtra">{{ name._showExtra ? 'ui.model.entity.name.collapse' : 'ui.model.entity.name.expand' | i18n }}</button>

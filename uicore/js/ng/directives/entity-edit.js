@@ -129,6 +129,7 @@ angular.module('santedb-lib')
                 });
 
                 flatAddressList.forEach(a=> {
+                    a.component = a.component || {};
                     a.component.Country = a.component.Country || [],
                     a.component.State = a.component.State || [],
                     a.component.City = a.component.City || [],
@@ -355,7 +356,8 @@ angular.module('santedb-lib')
                 telecom: '=',
                 singleEdit: '<',
                 ownerForm: '<',
-                noLabel: '<'
+                noLabel: '<',
+                allowedTypes: '<'
             },
             controller: ['$scope', '$rootScope', function ($scope, $rootScope) {
 
