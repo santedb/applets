@@ -256,7 +256,7 @@ angular.module('santedb').controller('UserProfileWidgetController', ['$scope', '
             $scope.scopedObject._preferences = n._preferences = {};
             if(n.extension && n.extension['http://santedb.org/extensions/core/userPreferences']) {
                 var prefExt = JSON.parse(atob(n.extension['http://santedb.org/extensions/core/userPreferences'][0]));
-                n._preferences.widgets = JSON.parse(prefExt.widgets);
+                n._preferences.widgets = prefExt.widgets ? JSON.parse(prefExt.widgets) : null;
                 n._preferences.help = prefExt.help || 'default';
                 n._preferences.uimode = prefExt.uimode || 'light';
             }

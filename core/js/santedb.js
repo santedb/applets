@@ -1925,7 +1925,7 @@ function SanteDBWrapper() {
         var _idClassifiers = {};
         var _templateView = {};
         var _templateForm = {};
-
+        var _identifierValidator = {};
 
         /**
          * @summary Attempts to parse te JWS data contained in a scanned barcode into logical identifier structure
@@ -2246,6 +2246,32 @@ function SanteDBWrapper() {
             return false;
         }
 
+        /**
+         * @method addIdentifierValidator
+         * @memberof SanteDBWrapper.ApplicationApi
+         * @summary Adds a new check digit validator. Note that this can be either a validator for the entire identifier or a check digit
+         * @param {*} algorithmName The name of the algorithm
+         * @param {*} validator The validator callback
+         */
+        this.addCheckDigitValidator = function(algorithmName, validator) {
+            _identifierValidator[algorithmName] = validator;
+        }
+
+        /**
+         * @method getIdentifierValidator
+         * @memberof SanteDBWrapper.ApplicationApi
+         * @summary Get the specified identifier validator
+         * @param {*} algorithmName The name of the algorithm
+         */
+        this.getCheckDigitValidator = function(algorithmName) {
+            if(_identifierValidator[algorithmName]) {
+                return _identifierValidator[algorithmName];
+            }
+            else {
+                return () => true;
+            }
+        }
+        
         /**
          * @method addIdentifierClassifier
          * @summary Adds a new classification map for an  identifier 
@@ -4777,3 +4803,18 @@ function ApplicationPrincipalElevator(multiuse) {
             });
     }
 }
+
+
+// Add default check digit handlers
+SanteDB.application.addCheckDigitValidator("SanteDB.Core.Model.DataTypes.CheckDigitAlgorithms.InlineMod97Validator, SanteDB.Core.Model", function(id) {
+    if(!id.value) {
+        return false;
+    }
+
+    return validateMod97CheckDigit(id.value.substring(0, id.value.length - 2), id.value.substring(id.value.length - 2, id.value.length));
+});
+
+// Add default check digit handlers
+SanteDB.application.addCheckDigitValidator("SanteDB.Core.Model.DataTypes.CheckDigitAlgorithms.Mod97CheckDigitAlgorithm, SanteDB.Core.Model", function(id) {
+    return validateMod97CheckDigit(id.value, id.checkDigit);
+});

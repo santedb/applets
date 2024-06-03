@@ -19,14 +19,21 @@
  - Date: 2023-5-19
  -->
 <div xmlns="http://www.w3.org/1999/xhtml">
-    <fieldset ng-repeat="addr in addressEdit" class="m-2" ng-if="!simpleEntry">
-        <legend>{{ addr.useModel | concept }}</legend>
-        <div class="container-fluid">
+    <div ng-if="!simpleEntry">
+        <fieldset ng-repeat="addr in addressEdit">
+            <legend ng-if="addr.operation != 'Delete'">
+                <div class="my-2">{{ addr.useModel | concept }}</div>
+            </legend>
+            <legend ng-if="addr.operation == 'Delete'" class="bg-secondary d-flex"><div class="my-2 flex-grow-1">{{ addr.useModel | concept }}</div><button type="button" class="btn btn-sm btn-info" ng-click="addr.operation = 'InsertOrUpdate'"><i class="fas fa-undo"></i> {{ 'ui.action.restore' | i18n }}</button></legend>
+            <div class="container-fluid">
+                <!-- #include virtual="/org.santedb.uicore/directives/partials/addressEdit.html" -->
+            </div>
+        </fieldset>
+    </div>
+    <div ng-if="simpleEntry">
+        <div ng-if="$index == 0" ng-repeat="addr in addressEdit track by $index">
             <!-- #include virtual="/org.santedb.uicore/directives/partials/addressEdit.html" -->
         </div>
-    </fieldset>
-    <div ng-if="simpleEntry &amp;&amp; (!noAdd || $index == 0)" ng-repeat="addr in addressEdit track by $index">
-        <!-- #include virtual="/org.santedb.uicore/directives/partials/addressEdit.html" -->
     </div>
     <div class="btn-group float-right" ng-if="!noAdd">
         <button type="button" ng-click="addAddress()" class="btn btn-primary"><i class="fas fa-plus"></i> {{ 'ui.action.add' | i18n }}</button>

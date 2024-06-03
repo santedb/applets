@@ -597,3 +597,18 @@ async function bundleRelatedObjects(object) {
     retVal.resource.forEach(res => deleteModelProperties(res));
     return retVal;
 }
+
+/**
+ * Validate check digit using mod97
+ */
+function validateMod97CheckDigit(value, checkDigit) {
+    if(!value || !checkDigit) return false;
+
+    // Compute the mod97 - extract digits
+    var source = value.match(/[0-9]/g);
+    source.splice(0, 0, 0);
+    var seed = source.map(o=>parseInt(o)).reduce(function (a, v, i) { return ((a + v) * 10) % 97; });
+    seed *= 10; seed %= 97;
+    var expectedCheckDigit = (97 - seed + 1) % 97;
+    return expectedCheckDigit == checkDigit;
+}

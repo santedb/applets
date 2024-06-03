@@ -397,7 +397,7 @@ angular.module('santedb-lib')
         }
     }])
     /**
-    * @summary Entity Identifier edit control as a collection
+    * @summary Entity Identifier edit control as a collection represented in a table
     * @memberof Angular
     * @method identifierEdit
     * @param {EntityIdentifier} identifier The identifier collection to be edited
@@ -405,18 +405,19 @@ angular.module('santedb-lib')
     * @param {UUID} containerClass The classifier which should be used to filter the identity domains in the edit list
     * @example
     *   <form name="myForm" novalidate="novalidate">
-    *       <identifier-list-edit identifier="scopedObject.identifier" owner-form="myForm"
+    *       <identifier-table-edit identifier="scopedObject.identifier" owner-form="myForm"
     *           container-class="scopedObject.classConcept" />
     */
-    .directive('identifierListEdit', ['$rootScope', '$timeout', function ($rootScope, $timeout) {
+    .directive('identifierTableEdit', ['$rootScope', '$timeout', function ($rootScope, $timeout) {
         return {
             restrict: 'E',
             replace: true,
-            templateUrl: './org.santedb.uicore/directives/identifierListEdit.html',
+            templateUrl: './org.santedb.uicore/directives/identifierTableEdit.html',
             scope: {
                 identifier: '=',
                 ownerForm: '<',
                 containerClass: '<',
+                noAdd: '<'
             },
             controller: ['$scope', '$rootScope', function ($scope, $rootScope) {
 
@@ -497,6 +498,111 @@ angular.module('santedb-lib')
 
                     })
                     .catch(function (e) { console.error(e); });
+            }
+        }
+    }])
+    .directive('identifierListEdit', ["$rootScope", "$timeout", function($rootScope, $timeout) {
+        return {
+            restrict: 'E',
+            replace: true,
+            templateUrl: "./org.santedb.uicore/directives/identifierListEdit.html",
+            scope: {
+                identifier: '=',
+                ownerForm: '<',
+                containerClass: '<',
+                noScan: '<',
+                onScanId: '<'
+            }, 
+            controller: ["$scope", function($scope) {
+
+                // Validate checkdigit
+                $scope.validateCheckDigit = function(domain, index) {
+                    if(domain._customValidator)  {
+                        var result = domain._customValidator($scope.identifier[domain.domainName][index]);
+                        $scope.ownerForm['id' + domain.domainName + index].$setValidity('checkDigit', result);
+                    }
+                }
+
+                // Generate an id
+                $scope.generateId = function (domain, index) {
+                    if (!domain._generator)
+                        return;
+                    try {
+                        var generated = domain._generator();
+                        $scope.identifier[domain.domainName][index].value = generated.value;
+                        $scope.identifier[domain.domainName][index].checkDigit = generated.checkDigit;
+                    } catch (e) {
+                        $rootScope.errorHandler(e);
+                    }
+                }
+
+                $scope.scanId = async function (domain, index) {
+                    try {
+                        var data = await SanteDB.application.scanBarcodeAsync();
+
+                        // Is there a parser?
+                        if (domain._parser)
+                            data = domain._parser(data);
+
+                        if($scope.onScanId) {
+                            await $scope.onScanId(domain, data);
+                        }
+                        $timeout(() => {
+                            if (data.value) {
+                                $scope.identifier[domain.domainName][index].value = data.value;
+                                $scope.identifier[domain.domainName][index].checkDigit = data.checkDigit;
+                            }
+                            else {
+                                $scope.identifier[domain.domainName][index].value = data;
+                            }
+                        });
+                    }
+                    catch (e) {
+                        $rootScope.errorHandler(e);
+                    }
+                }
+
+            }],
+            link: function(scope, element, attrs) {
+                
+                // Scope identifier
+                var identifier = scope.identifier = scope.identifier || {};
+                
+                async function initializeView() {
+                    try {
+                        var idDomains = await SanteDB.resources.identityDomain.findAsync();
+                        idDomains.resource = idDomains.resource || []; // For not found conditions
+
+                        // Get the identity domain generator
+                        idDomains = idDomains.resource
+                            .filter(o=>!o.scope || o.scope.length == 0 || o.scope.indexOf(scope.containerClass) > -1)
+                            .map(domain => {
+                            domain._generator = SanteDB.application.getIdentifierGenerator(domain.domainName);
+                            domain._parser = SanteDB.application.getIdentifierParser(domain.domainName);
+                            domain._assignable = !domain.assigningApplication || domain.identityDomain == $rootScope.session.claim.appid;
+                            domain._customValidator = SanteDB.application.getCheckDigitValidator(domain.checkDigitAlgorithm || domain.customValidator);
+
+                            // Is there a validator?
+                            if(domain.validation) {
+                                var rExp = new RandExp(new RegExp(domain.validation));
+                                var hint = rExp.gen();
+                                hint = hint.replace(/[A-Z]/g, 'A').replace(/[0-9]/g, '9').replace(/[a-z]/g, 'a');
+                                domain._validationHint = hint;
+                            }
+
+                            identifier[domain.domainName] = identifier[domain.domainName] || [ {} ];
+                            // Create a newid
+                            return domain;
+                        }).sort((a,b) => a.domainName < b.domainName ? -1 : 1);
+
+                        $timeout(s => scope.idDomains = idDomains);
+                    }
+                    catch(e) {
+                        $rootScope.errorHandler(e);
+                    }
+                }
+
+                initializeView();
             }
         }
     }])

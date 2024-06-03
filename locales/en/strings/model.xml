@@ -134,6 +134,7 @@
   <string name="ui.model.identityDomain.url.hint">Enter the URL for this identity domains. URLs are used by FHIR for correlating the identity domain with the identifier when FHIR messages are received</string>
   <string name="ui.model.identityDomain.validation">Validation Regex</string>
   <string name="ui.model.identityDomain.validation.hint">Use this field to specify the format of the identifier (the pattern that conformant identifiers need to have)</string>
+  <string name="ui.model.identityDomain.validateHint">Identifier in format {pattern}</string>
   <string name="ui.model.identityDomain.assigningAuthority.assigningApplication">Application</string>
   <string name="ui.model.identityDomain.assigningAuthority.authoritative">Authoritative Source</string>
   <string name="ui.model.identityDomain.assigningAuthority.assigningApplication.hint"><![CDATA[Whenever an identifier in this domain is registered from this application - it can be flagged as authoritative or informative. You may restrict the ability of non-authoritative applications from issuing new identifiers (which will result in a data quality warning)]]></string>
