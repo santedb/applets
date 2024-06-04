@@ -148,6 +148,7 @@ angular.module('santedb').controller('UserProfileWidgetController', ['$scope', '
             SanteDB.display.buttonWait("#btnCompleteTfaSetup", true);
             await SanteDB.authentication.setupTfaSecretAsync($scope.tfaSetup.id, $scope.tfaSetup.code, $scope.editObject.isUpstreamUser);
             toastr.success(SanteDB.locale.getString("ui.tfa.setup.success"));
+            await SanteDB.resources.securityUser.updateAsync(userSubmission.entity.id, userSubmission);
             $("#setupTfaModal").modal('hide');
         }
         catch(e) {
@@ -197,7 +198,6 @@ angular.module('santedb').controller('UserProfileWidgetController', ['$scope', '
                             }));
 
                         SanteDB.authentication.setElevator(null);
-                        toastr.success(SanteDB.locale.getString("ui.admin.users.saveConfirm"));
 
                     }
                     catch (e) {

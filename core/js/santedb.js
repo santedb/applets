@@ -4143,8 +4143,6 @@ function SanteDBWrapper() {
             return new Promise(function (fulfill, reject) {
                 try {
                     var headers = {};
-                    if (tfaSecret)
-                        headers["X-SanteDB-TfaSecret"] = tfaSecret;
                     var claims = {};
                     claims["urn:oasis:names:tc:xacml:2.0:action:purpose"] = 'PurposeOfUse-SecurityAdmin';
                     claims["urn:santedb:org:claim:temporary"] = "true";
@@ -4159,6 +4157,7 @@ function SanteDBWrapper() {
                             challenge: challenge,
                             response: response,
                             grant_type: 'x_challenge',
+                            x_mfa: tfaSecret,
                             scope: '*'
                         },
                         headers: headers,
