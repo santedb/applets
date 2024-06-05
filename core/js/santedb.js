@@ -4586,7 +4586,7 @@ function SanteDBWrapper() {
             * @return {string} The ISO language code and country code of the application
             */
         this.getLocale = function () {
-            var retVal = __SanteDBAppService.GetLocale();
+            var retVal = __SanteDBAppService.GetLocale().toLowerCase();
             return retVal;
         }
         /**

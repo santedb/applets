@@ -155,12 +155,16 @@
   <string name="ui.model.entity.id">UUID</string>
   <string name="ui.model.entity.classConcept">Classification</string>
   <string name="ui.model.entity.typeConcept">Type</string>
+  <string name="ui.model.entity.relationship.relationshipType">Relationship</string>
   <string name="ui.model.entity.relationship.hasA">HAS A</string>
   <string name="ui.model.entity.relationship.isA">IS A</string>
   <string name="ui.model.entity.relationship.Caregiver">Caregiver(s)</string>
   <string name="ui.model.entity.relationship.Citizen">Citizenship(s)</string>
   <string name="ui.model.entity.relationship.CoverageSponsor">Coverage/Sponsor</string>
-  <string name="ui.model.entity.relationship.DedicatedServiceDeliveryLocation">Facilities</string>
+  <string name="ui.model.entity.relationship.DedicatedServiceDeliveryLocation">Assigned Facilities</string>
+  <string name="ui.model.entity.relationship.DedicatedServiceDeliveryLocation.hint">Select the assigned facilities</string>
+  <string name="ui.model.entity.relationship.IncidentalServiceDeliveryLocation">Secondary Facilities</string>
+  <string name="ui.model.entity.relationship.IncidentalServiceDeliveryLocation.hint">Select secondary facilities which are subscribed/interested in this entity</string>
   <string name="ui.model.entity.relationship.Parent">Parent</string>
   <string name="ui.model.entity.relationship.Parent.hint">Select the direct parent of this entity in the entity hierarchy</string>
   <string name="ui.model.entity.relationship.Child">Child</string>
@@ -182,6 +186,13 @@
   <string name="ui.model.entity.address.title">Address Registration</string>
   <string name="ui.model.entity.address.use">Address Type</string>
   <string name="ui.model.entity.statusConcept">Status</string>
+  <string name="ui.model.entity.address.HomeAddress">Home Address</string>
+  <string name="ui.model.entity.address.HomeAddress.hint">The primary address for the person/patient. This is the residence where the person primarily lives</string>
+  <string name="ui.model.entity.address.Workplace">Work Address</string>
+  <string name="ui.model.entity.address.Workplace">The work address for the person/patient's place of employment.</string>
+  <string name="ui.model.entity.address.Temporary">Temporary Address</string>
+  <string name="ui.model.entity.address.Temporary">A temporary address where the person/patient resides</string>
+
   <string name="ui.model.entity.address.use.hint"><![CDATA[Indicates the intended use of the address such as <code>PhysicalVisit</string> for a physical address, or <code>WorkPlace</code>, etc.]]></string>
   <string name="ui.model.entity.address.component.state">State/Province</string>
   <string name="ui.model.entity.address.component.state.hint"><![CDATA[A partition of a country (also known as a Region, Territory, Zone, etc.)]]></string>
@@ -235,6 +246,9 @@
   <string name="ui.model.entity.language">Language(s)</string>
   <string name="ui.model.entity.language.preferred">Preferred</string>
   <string name="ui.model.entity.relationship.relationshipType">Relationship</string>
+  <string name="ui.model.entity.relationship.relationshipType.hint"><![CDATA[Select the nature of the relationship between this entity and the entity being registered (example: Mother, Father, Brother, etc.)]]></string>
+  <string name="ui.model.entity.relationship.relationshipRole">Role</string>
+  <string name="ui.model.entity.relationship.relationshipRole.hint"><![CDATA[Select the role of the entity playing the role here. How is this role important? (i.e. emergency contact, power of attorney, etc.)]]></string>
   <string name="ui.model.entity.relationship.Employer">Employer</string>
   <string name="ui.model.entity.telecom.NullFlavor-NoInformation">Other Tel/Email</string>
   <string name="ui.model.entity.telecom.AnsweringService">Answering Service</string>
@@ -276,6 +290,7 @@
   <string name="ui.model.patient.age.suffix.monthsOld">m/o</string>
   <string name="ui.model.patient.age.suffix.yearsOld">y/o</string>
   <string name="ui.model.patient.dateOfBirth">DOB</string>
+  <string name="ui.model.patient.dateOfBirth.age">Age</string>
   <string name="ui.model.patient.dateOfBirth.approx">Approx.</string>
   <string name="ui.model.patient.dateOfBirth.required">A date of birth and gender are required for this operation to be completed</string>
   <string name="ui.model.patient.genderConcept">Gender</string>
@@ -290,7 +305,7 @@
   <string name="ui.model.patient.birthplace">Birthplace</string>
   <string name="ui.model.patient.vipStatus">VIP Status</string>
   <string name="ui.model.patient.register">Registered At</string>
-  <string name="ui.model.patient.dedicatedServiceDeliveryLocation">Facilities</string>
+  <string name="ui.model.patient.dedicatedServiceDeliveryLocation">Assigned Facilities</string>
   <string name="ui.model.patient.placeOfDeath">Place of Death</string>
   <string name="ui.model.patient.multipleBirthOrder">Twin/Triplet/Etc.</string>
   <string name="ui.model.patient.multipleBirthOrder.-1">Unknown (of a multiple-birth)</string>
@@ -305,6 +320,12 @@
   <string name="ui.model.patient.maritalStatus">Marital Status</string>
   <string name="ui.model.patient.religion">Religion</string>
   <string name="ui.model.patient.ethnicity">Ethnic Group / Tribe</string>
+  <string name="ui.model.patient.relationship.relationshipRole">Contact's Role</string>
+  <string name="ui.model.patient.relationship.relationshipRole.hint">Optionally select the role that this related person plays for the patient for example: Power of Attorney (signing authority), Payment Guarantor, Emergency Contact</string>
+  <string name="ui.model.patient.relationship.DedicatedServiceDeliveryLocation">Primary Facility</string>
+  <string name="ui.model.patient.relationship.DedicatedServiceDeliveryLocation.hint">Select the primary facility where this patient will seek care. For programmes, this is the facility where the patient should appear in the denominator/catchment</string>
+  <string name="ui.model.patient.relationship.IncidentalServiceDeliveryLocation">Incidental Facilities</string>
+  <string name="ui.model.patient.relationship.IncidentalServiceDeliveryLocation.hint">Select facilities where the patient may visit to seek care, however should not appear on their denominator/catchment reports</string>
   <string name="ui.model.person.occupation">Occupation</string>
   <string name="ui.model.person.deceasedDate">Deceased</string>
   <string name="ui.model.person.nationality">Nationality</string>

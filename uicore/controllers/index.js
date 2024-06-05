@@ -212,6 +212,7 @@ var santedbApp = angular.module('santedb', ['ngSanitize', 'ui.router', 'oc.lazyL
             $rootScope.page = {
                 currentTime: new Date(),
                 maxEventTime: new Date().tomorrow().trunc().addSeconds(-1),
+                today: moment(new Date()).format('YYYY-MM-DD'),
                 minEventTime: $rootScope.page.minEventTime || new Date().yesterday()
             };
 

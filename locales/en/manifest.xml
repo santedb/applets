@@ -31,6 +31,11 @@
       <asset>/org.santedb.i18n.en/lib/select2/en.js</asset>
       <asset>/org.santedb.i18n.en/lib/santedb/en.js</asset>
     </locale>
+    <locale code="en-us">
+      <asset>/org.santedb.i18n.en/lib/angular/en.js</asset>
+      <asset>/org.santedb.i18n.en/lib/santedb/en.js</asset>
+      <asset>/org.santedb.i18n.en/lib/select2/en.js</asset>
+    </locale>
     <locale code="en-au">
       <asset>/org.santedb.i18n.en/lib/angular/en-au.js</asset>
       <asset>/org.santedb.i18n.en/lib/santedb/en.js</asset>
@@ -61,12 +66,30 @@
   <strings lang="en" extern="strings/model.xml"/>
   <strings lang="en" extern="strings/errors.xml" />
   <strings lang="en" extern="strings/ui.xml" />
+
+  <strings lang="en-ca" extern="strings/model.xml"/>
+  <strings lang="en-ca" extern="strings/errors.xml" />
+  <strings lang="en-ca" extern="strings/ui.xml" />
+
+  <strings lang="en-au" extern="strings/model.xml"/>
+  <strings lang="en-au" extern="strings/errors.xml" />
+  <strings lang="en-au" extern="strings/ui.xml" />
+
+  <strings lang="en-us" extern="strings/model.xml"/>
+  <strings lang="en-us" extern="strings/errors.xml" />
+  <strings lang="en-us" extern="strings/ui.xml" />
+
+  <strings lang="en-iso" extern="strings/model.xml"/>
+  <strings lang="en-iso" extern="strings/errors.xml" />
+  <strings lang="en-iso" extern="strings/ui.xml" />
+
   <strings lang="en">
     <string key="ui.locale">Language</string>
     <string key="ui.locale.en">English</string>
     <string key="ui.locale.en-au">English (Australia)</string>
     <string key="ui.locale.en-ca">English (Canada)</string>
     <string key="ui.locale.en-gb">English (UK)</string>
+    <string key="ui.locale.en-us">English (US)</string>
     <string key="ui.locale.en-iso">English (ISO)</string>
     <string key="ui.locale.en-nz">English (New Zealand)</string>
     <string key="ui.locale.en-ph">English (Philippines)</string>
@@ -93,6 +116,7 @@
     <string key="ui.locale.en-ca">English (Canada)</string>
     <string key="ui.locale.en-gb">English (UK)</string>
     <string key="ui.locale.en-iso">English (ISO)</string>
+    <string key="ui.locale.en-us">English (US)</string>
     <string key="ui.locale.en-nz">English (New Zealand)</string>
     <string key="ui.locale.en-ph">English (Philippines)</string>
     <string key="ui.locale.es">Spanish</string>
@@ -118,6 +142,7 @@
     <string key="ui.locale.en-ca">English (Canada)</string>
     <string key="ui.locale.en-gb">English (UK)</string>
     <string key="ui.locale.en-iso">English (ISO)</string>
+    <string key="ui.locale.en-us">English (US)</string>
     <string key="ui.locale.en-nz">English (New Zealand)</string>
     <string key="ui.locale.en-ph">English (Philippines)</string>
     <string key="ui.locale.es">Spanish</string>
@@ -143,6 +168,34 @@
     <string key="ui.locale.en-ca">English (Canada)</string>
     <string key="ui.locale.en-gb">English (UK)</string>
     <string key="ui.locale.en-iso">English (ISO)</string>
+    <string key="ui.locale.en-us">English (US)</string>
+    <string key="ui.locale.en-nz">English (New Zealand)</string>
+    <string key="ui.locale.en-ph">English (Philippines)</string>
+    <string key="ui.locale.es">Spanish</string>
+    <string key="ui.locale.es-es">Spanish (Spain)</string>
+    <string key="ui.locale.es-mx">Spanish (Mexico)</string>
+    <string key="ui.locale.es-us">Spanish (US)</string>
+    <string key="ui.locale.fr">French</string>
+    <string key="ui.locale.fr-be">French (Belgiun)</string>
+    <string key="ui.locale.fr-ca">French (Canada)</string>
+    <string key="ui.locale.fr-ch">French (Swiss)</string>
+    <string key="ui.locale.fr-fr">French (France)</string>
+    <string key="ui.locale.sw">Swahili</string>
+    <string key="ui.locale.sw-ke">Swahili (Kenya)</string>
+    <string key="ui.locale.sw-tz">Swahili (Tanzania)</string>
+    <string key="ui.locale.sw-ug">Swahili (Uganda)</string>
+    <string key="ui.locale.it">Italian</string>
+  </strings>
+
+  
+  <strings lang="en-us">
+    <string key="ui.locale">Language</string>
+    <string key="ui.locale.en">English</string>
+    <string key="ui.locale.en-au">English (Australia)</string>
+    <string key="ui.locale.en-ca">English (Canada)</string>
+    <string key="ui.locale.en-gb">English (UK)</string>
+    <string key="ui.locale.en-iso">English (ISO)</string>
+    <string key="ui.locale.en-us">English (US)</string>
     <string key="ui.locale.en-nz">English (New Zealand)</string>
     <string key="ui.locale.en-ph">English (Philippines)</string>
     <string key="ui.locale.es">Spanish</string>
@@ -168,6 +221,7 @@
     <string key="ui.locale.en-ca">English (Canada)</string>
     <string key="ui.locale.en-gb">English (UK)</string>
     <string key="ui.locale.en-iso">English (ISO)</string>
+    <string key="ui.locale.en-us">English (US)</string>
     <string key="ui.locale.en-nz">English (New Zealand)</string>
     <string key="ui.locale.en-ph">English (Philippines)</string>
     <string key="ui.locale.es">Spanish</string>
@@ -191,6 +245,7 @@
     <string key="ui.locale.en">English</string>
     <string key="ui.locale.en-au">English (Australia)</string>
     <string key="ui.locale.en-ca">English (Canada)</string>
+    <string key="ui.locale.en-us">English (US)</string>
     <string key="ui.locale.en-gb">English (UK)</string>
     <string key="ui.locale.en-iso">English (ISO)</string>
     <string key="ui.locale.en-nz">English (New Zealand)</string>

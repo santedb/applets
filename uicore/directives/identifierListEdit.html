@@ -1,6 +1,6 @@
 <div xmlns="http://www.w3.org/1999/xhtml" class="container-fluid">
 
-    <div class="form-group row" ng-repeat="domain in idDomains track by $index">
+    <div class="form-group row" ng-repeat="domain in idDomains track by $index" ng-if="(!allowedDomains || allowedDomains.indexOf(domain.domainName) != -1) &amp;&amp; (allowGenerated || !domain._generator)">
         <label class="control-label col-md-3 col-sm-12">{{ domain.name }} <hint-popover hint-title="{{ domain.name }}" hint-text="{{ 'ui.model.identityDomain.validateHint' | i18n: { pattern: domain._validationHint || 'any' } }}" /></label>
         <div class="col-md-9 col-sm-12">
             
@@ -9,11 +9,11 @@
                 <li class="list-group-item py-0 my-0" ng-repeat="id in identifier[domain.domainName] track by $index">
                     <div class="input-group my-1">
                         <input type="text" ng-readonly="id.id" placeholder="{{ domain._validationHint }}" class="form-control" ng-pattern="domain.validation" ng-model="id.value" 
-                            name="id{{ domain.domainName }}{{ $index }}" ng-change="validateCheckDigit(domain, $index)"/>
+                            name="{{controlPrefix}}id{{ domain.domainName }}{{ $index }}" ng-change="validateCheckDigit(domain, $index)" ng-required="requiredDomains.indexOf(domain.domainName) &gt; -1"/>
                         <div class="input-group-append" ng-if="domain.checkDigitAlgorithm || id.checkDigit">
                             <hint-popover hint-title="ui.model.entityIdentifier.checkDigit" />
                             <span class="input-group-text d-none d-sm-inline">{{ 'ui.model.entityidentifier.checkDigit.short' | i18n }} </span>
-                            <input type="text" class="form-control w-25" ng-model="id.checkDigit" name="cd{{domain.domainName}}{{$index}}" ng-change="validateCheckDigit(domain, $index)" ng-readonly="id.id" maxlength="5" />
+                            <input type="text" class="form-control w-25" ng-model="id.checkDigit" name="{{controlPrefix}}cd{{domain.domainName}}{{$index}}" ng-change="validateCheckDigit(domain, $index)" ng-readonly="id.id" maxlength="5" />
                         </div>
                         <div class="input-group-apppend">
                             <div class="btn-group">
@@ -25,11 +25,14 @@
                             </div>
                         </div>
                     </div>
-                    <div class="text-danger" ng-if="ownerForm['id' + domain.domainName + $index].$error['pattern']">
+                    <div class="text-danger" ng-if="ownerForm[controlPrefix + 'id' + domain.domainName + $index].$error['pattern']">
                         <i class="fas fa-exclamation-triangle"></i> {{ 'ui.error.pattern.ext' | i18n: { pattern: domain._validationHint } }}
                     </div>
-                    <div class="text-danger" ng-if="ownerForm['id' + domain.domainName + $index].$error['checkDigit']">
+                    <div class="text-danger" ng-if="ownerForm[controlPrefix + 'id' + domain.domainName + $index].$error['checkDigit']">
                         <i class="fas fa-exclamation-triangle"></i> {{ 'ui.error.checkDigit' | i18n}}
+                    </div>
+                    <div class="text-danger" ng-if="ownerForm[controlPrefix + 'id' + domain.domainName + $index].$error['required'] || ownerForm[controlPrefix + 'cd' + domain.domainName + $index].$error['required']">
+                        <i class="fas fa-exclamation-triangle"></i> {{ 'ui.error.required' | i18n}}
                     </div>
                     
                 </li>

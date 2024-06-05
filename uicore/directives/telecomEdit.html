@@ -22,20 +22,23 @@
     <div ng-repeat="(t, value) in telecom" ng-if="!allowedTypes || allowedTypes.indexOf(t) !== -1">
         <div ng-class="{ 'row' : !noLabel }" class="mb-1" ng-repeat="tel in value track by $index"
             ng-if="!singleEdit || singleEdit == t">
-            <label ng-if="!noLabel" class="col-md-3 col-sm-12 control-label">{{ 'ui.model.entity.telecom.' + t |
+            <label ng-if="!noLabel" class="col-md-3 col-sm-12 control-label" ng-class="{'required' : requiredTypes.indexOf(t) &gt; -1}">{{ 'ui.model.entity.telecom.' + t |
                 i18n }}</label>
             <!-- TODO: Clean this up -->
-            <div ng-class="{ 'col-md-9 col-sm-12' : !noLabel }">
-                <div class="input-group">
+            <div ng-class="{ 'col-md-9 col-sm-12' : !noLabel }" class="mb-2">
+                <div class="input-group mb-0">
                     <div class="input-group-prepend">
                         <concept-select concept-set="'HumanTelecomAddressType'" ng-model="tel.type" class="form-control"
                             required="required" />
                     </div>
                     <input type="text" ng-pattern="tel.type == 'c1c0a4ff-4238-4044-b89b-9c9798995b94' ? '\\w+?@\\w{2,}?\\.[a-zA-Z]{2,4}' : '\\+?[0-9\\(\\)\\-]{6,}'"
-                        class="form-control" ng-model="tel.editValue" name="tel{{t}}{{$index}}" />
+                        class="form-control" ng-model="tel.editValue" ng-required="requiredTypes.indexOf(t) &gt; -1" name="{{controlPrefix}}tel{{t}}{{$index}}" />
                 </div>
-                <div ng-if="ownerForm['tel' + t + $index].$error['pattern']" class="text-danger">
+                <div ng-if="ownerForm[controlPrefix + 'tel' + t + $index].$error['pattern']" class="text-danger">
                     <i class="fas fa-exclamation-triangle"></i> {{ 'ui.error.pattern' | i18n }}
+                </div>
+                <div ng-if="ownerForm[controlPrefix + 'tel' + t + $index].$error['required']" class="text-danger">
+                    <i class="fas fa-exclamation-triangle"></i> {{ 'ui.error.required' | i18n }}
                 </div>
             </div>
         </div>

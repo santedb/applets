@@ -238,4 +238,21 @@
   <strings lang="en" extern="~/locales/en/strings.xml">
     <string priority="0" />
   </strings>
+  <strings lang="en-ca" extern="~/locales/en/strings.xml">
+    <string priority="0" />
+  </strings>
+  <strings lang="en-us" extern="~/locales/en/strings.xml">
+    <string priority="0" />
+  </strings>
+  <strings lang="en-au" extern="~/locales/en/strings.xml">
+    <string priority="0" />
+  </strings>
+  <strings lang="en-iso" extern="~/locales/en/strings.xml">
+    <string priority="0" />
+  </strings>
+  <strings lang="en-ph" extern="~/locales/en/strings.xml">
+    <string priority="0" />
+  </strings>
+
+
 </AppletManifest>

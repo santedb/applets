@@ -53,7 +53,8 @@ angular.module('santedb-lib')
                 simpleEntry: '<',
                 isRequired: '<',
                 ownerForm: '<',
-                controlPrefix: '<'
+                controlPrefix: '<',
+                requiredTypes: '<'
             },
             controller: ['$scope', '$rootScope', function ($scope, $rootScope) {
 
@@ -86,8 +87,9 @@ angular.module('santedb-lib')
             }],
             link: function (scope, element, attrs) {
 
-                if (!scope.controlPrefix)
-                    scope.controlPrefix = '';
+                if(!scope.controlPrefix) 
+                    scope.controlPrefix = attrs.name || '';
+            
 
                 if (!scope.address) {
                     scope.address = {
@@ -176,9 +178,9 @@ angular.module('santedb-lib')
             link: function (scope, element, attrs) {
 
                 // Scan and find the form to which this belongs
-                if (!scope.controlPrefix)
-                    scope.controlPrefix = '';
-
+                if(!scope.controlPrefix) 
+                    scope.controlPrefix = attrs.name || '';
+            
 
                 if (!scope.geo) {
                     scope.geo = { _supplied: false };
@@ -222,6 +224,7 @@ angular.module('santedb-lib')
                 controlPrefix: '<',
                 inputStyle: '<',
                 allowedComponents: '<'
+                
             },
             controller: ['$scope', '$rootScope', function ($scope, $rootScope) {
 
@@ -255,7 +258,7 @@ angular.module('santedb-lib')
 
                 // Scan and find the form to which this belongs
                 if (!scope.controlPrefix)
-                    scope.controlPrefix = '';
+                    scope.controlPrefix = attrs.name || '';
 
                 if (!scope.allowedComponents || scope.allowedComponents === '' || scope.allowedComponents === ' ') {
                     scope.allowedComponents = "prefix,given,family,suffix"; //Default for compatability.
@@ -357,13 +360,18 @@ angular.module('santedb-lib')
                 singleEdit: '<',
                 ownerForm: '<',
                 noLabel: '<',
-                allowedTypes: '<'
+                allowedTypes: '<',
+                controlPrefix: '<',
+                requiredTypes: '<'
             },
             controller: ['$scope', '$rootScope', function ($scope, $rootScope) {
 
 
             }],
             link: function (scope, element, attrs) {
+
+                if(!scope.controlPrefix) 
+                    scope.controlPrefix = attrs.name || '';
 
                 if (!scope.telecom)
                     scope.telecom = {};
@@ -511,7 +519,9 @@ angular.module('santedb-lib')
                 ownerForm: '<',
                 containerClass: '<',
                 noScan: '<',
-                onScanId: '<'
+                onScanId: '<',
+                allowedDomains: '<',
+                requiredDomains: '<'
             }, 
             controller: ["$scope", function($scope) {
 

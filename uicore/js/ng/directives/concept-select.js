@@ -71,7 +71,9 @@ angular.module('santedb-lib')
                             }
 
                             setValues = setValues.sort((a,b)=> a.mnemonic < b.mnemonic ? -1 : a.mnemonic > b.mnemonic ? 1 : 0);
-
+                            if(scope.excludeConcepts) {
+                                setValues = setValues.filter(o => scope.excludeConcepts.indexOf(o.id) === -1)
+                            }
                             $timeout(function() {
                                 scope.setValues = setValues;
                                 loaded[setName].callme.forEach((r) => r(scope.setValues));

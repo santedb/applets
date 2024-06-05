@@ -155,16 +155,16 @@ angular.module('santedb-lib')
             retVal += "&nbsp;";
             if (!minRender) {
                 if (selection.address)
-                    retVal += "<small class='d-none d-sm-inline'> - (<i class='fa fa-map-marker'></i> " + SanteDB.display.renderEntityAddress(selection.address) + ")</small>";
+                    retVal += "<small class='d-none d-sm-inline ml-2'> - (<i class='fa fa-map-marker'></i> " + SanteDB.display.renderEntityAddress(selection.address) + ")</small>";
                 else if (selection.oid)
-                    retVal += "<small class='d-none d-sm-inline'> - (<i class='fa fa-cogs'></i> " + selection.oid + ")</small>";
+                    retVal += "<small class='d-none d-sm-inline ml-2'> - (<i class='fa fa-cogs'></i> " + selection.oid + ")</small>";
                 else if(selection.mnemonic)
-                    retVal += `<small class='d-none d-sm-inline'>(${selection.mnemonic})</small>`;
+                    retVal += `<small class='d-none d-sm-inline ml-2'>(${selection.mnemonic})</small>`;
             }
             if (selection.classConceptModel && !selection.typeConceptModel)
-                retVal += ` <span class='badge badge-secondary'>${SanteDB.display.renderConcept(selection.classConceptModel)}</span>`;
+                retVal += ` <span class='badge badge-secondary ml-2'>${SanteDB.display.renderConcept(selection.classConceptModel)}</span>`;
             else if (selection.typeConceptModel) {
-                retVal += `<span class="badge badge-secondary">${SanteDB.display.renderConcept(selection.typeConceptModel)}</span> `;
+                retVal += `<span class="badge badge-secondary ml-2">${SanteDB.display.renderConcept(selection.typeConceptModel)}</span> `;
             }
 
             if (selection.identifier) {
@@ -181,7 +181,7 @@ angular.module('santedb-lib')
                 childResourceScope: '=', // The child resource to query on
                 display: '<', // The expression which dictates the display
                 searchField: '<', // The field on the server to search results for
-                defaultResults: '<', // The default results to show
+                defaultResults: '=', // The default results to show
                 groupBy: '<', // If grouping results (by country, by state, etc.) the grouping expression
                 filter: '=', // The filter to apply in addition to the searchField
                 groupDisplay: '<', // The group display field expression
@@ -315,7 +315,6 @@ angular.module('santedb-lib')
                     var filter = scope.filter || { statusConcept: [StatusKeys.Active, StatusKeys.New] };;
                     var displayString = scope.display;
                     var searchProperty = scope.searchField;
-                    var defaultResults = scope.defaultResults;
                     var groupString = scope.groupBy;
                     var groupDisplayString = scope.groupDisplay;
                     var resultProperty = scope.valueSelector || scope.key || "id";
@@ -394,9 +393,18 @@ angular.module('santedb-lib')
                                 "X-SDB-ViewModel": "dropdown"
                             },
                             data: function (params) {
+                                
+                                // Remove previous filters 
+                                delete(filter[searchProperty]);
+                                if(scope.defaultResults) 
+                                    Object.keys(scope.defaultResults).forEach(k => delete(filter[k]));
 
-                                if (params.term)
+                                if (params.term) {
                                     filter[searchProperty] = "~" + params.term;
+                                }
+                                else if(scope.defaultResults) {
+                                    Object.keys(scope.defaultResults).forEach(k => filter[k] = scope.defaultResults[k] );
+                                }
                                 filter["_count"] = 10;
                                 filter["_offset"] = params.page ? params.page * 10 : 0;
                                 filter["_viewModel"] = "dropdown";
