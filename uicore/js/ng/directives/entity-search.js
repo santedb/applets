@@ -141,7 +141,7 @@ angular.module('santedb-lib')
                 retVal += selection.userName;
             else if (selection.mnemonic)
                 retVal += SanteDB.locale.getString(selection.mnemonic);
-            else if(selection.authority) {
+            else if (selection.authority) {
                 retVal += SanteDB.locale.getString(selection.authority);
 
             }
@@ -158,7 +158,7 @@ angular.module('santedb-lib')
                     retVal += "<small class='d-none d-sm-inline ml-2'> - (<i class='fa fa-map-marker'></i> " + SanteDB.display.renderEntityAddress(selection.address) + ")</small>";
                 else if (selection.oid)
                     retVal += "<small class='d-none d-sm-inline ml-2'> - (<i class='fa fa-cogs'></i> " + selection.oid + ")</small>";
-                else if(selection.mnemonic)
+                else if (selection.mnemonic)
                     retVal += `<small class='d-none d-sm-inline ml-2'>(${selection.mnemonic})</small>`;
             }
             if (selection.classConceptModel && !selection.typeConceptModel)
@@ -229,17 +229,24 @@ angular.module('santedb-lib')
                             $(selectControl)[0].add(new Option(`<i class='fa fa-circle-notch fa-spin'></i> ${SanteDB.locale.getString("ui.wait")}`, "loading", true, true));
 
                             value.filter(o => o).forEach(async function (v) {
-
-                                if ($scope.valueProperty && v[$scope.valueProperty])
-                                    v = v[$scope.valueProperty];
-
                                 try {
+
+                                    if ($scope.valueProperty) {
+                                        if (v[$scope.valueProperty]) {
+                                            v = v[$scope.valueProperty];
+                                        }
+                                        else {
+                                            return;
+                                        }
+                                    }
+
+
                                     if ($scope.key && $scope.key != "id") {
                                         var query = angular.copy($scope.filter || {});
                                         query[$scope.key] = v;
                                         query._viewModel = "dropdown";
                                         var res = null;
-                                        if($scope.childResource) {
+                                        if ($scope.childResource) {
                                             res = await api.findAssociatedAsync($scope.childResourceScope, $scope.childResource, query, "dropdown");
                                         }
                                         else {
@@ -258,9 +265,10 @@ angular.module('santedb-lib')
                                     }
                                     else {
                                         var res = null;
-                                        if($scope.childResource) {
+
+                                        if ($scope.childResource) {
                                             res = await api.getAssociatedAsync($scope.childResourceScope, $scope.childResource, v.id || v, { _viewModel: "dropdown" }, null);
-                                        } 
+                                        }
                                         else {
                                             res = await api.getAsync({ id: v && v.id ? v.id : v, viewModel: "dropdown" });
                                         }
@@ -290,9 +298,8 @@ angular.module('santedb-lib')
             ],
             link: function (scope, element, attrs, ngModel) {
 
-                if(!$(element).attr('id'))
-                {
-                    $(element).attr('id', SanteDB.application.newGuid().replace(/\-/g,'_'));
+                if (!$(element).attr('id')) {
+                    $(element).attr('id', SanteDB.application.newGuid().replace(/\-/g, '_'));
                 }
 
                 // Extract property
@@ -380,10 +387,10 @@ angular.module('santedb-lib')
                         dataAdapter: $.fn.select2.amd.require('select2/data/extended-ajax'),
                         ajax: {
 
-                            url: () => scope.childResource ? 
-                                scope.childResourceScope ? 
-                                `${SanteDB.resources[scope.type.toCamelCase()].getUrl()}/${scope.childResourceScope}/${scope.childResource}` :
-                                `${SanteDB.resources[scope.type.toCamelCase()].getUrl()}/${scope.childResource}` :
+                            url: () => scope.childResource ?
+                                scope.childResourceScope ?
+                                    `${SanteDB.resources[scope.type.toCamelCase()].getUrl()}/${scope.childResourceScope}/${scope.childResource}` :
+                                    `${SanteDB.resources[scope.type.toCamelCase()].getUrl()}/${scope.childResource}` :
                                 SanteDB.resources[scope.type.toCamelCase()].getUrl(), //((modelType == "SecurityUser" || modelType == "SecurityRole" || modelType == "SecurityPolicy") ? "/ami/" : "/hdsi/") + modelType,
                             dataType: 'json',
                             delay: 500,
@@ -393,17 +400,17 @@ angular.module('santedb-lib')
                                 "X-SDB-ViewModel": "dropdown"
                             },
                             data: function (params) {
-                                
+
                                 // Remove previous filters 
-                                delete(filter[searchProperty]);
-                                if(scope.defaultResults) 
-                                    Object.keys(scope.defaultResults).forEach(k => delete(filter[k]));
+                                delete (filter[searchProperty]);
+                                if (scope.defaultResults)
+                                    Object.keys(scope.defaultResults).forEach(k => delete (filter[k]));
 
                                 if (params.term) {
                                     filter[searchProperty] = "~" + params.term;
                                 }
-                                else if(scope.defaultResults) {
-                                    Object.keys(scope.defaultResults).forEach(k => filter[k] = scope.defaultResults[k] );
+                                else if (scope.defaultResults) {
+                                    Object.keys(scope.defaultResults).forEach(k => filter[k] = scope.defaultResults[k]);
                                 }
                                 filter["_count"] = 10;
                                 filter["_offset"] = params.page ? params.page * 10 : 0;
@@ -506,8 +513,8 @@ angular.module('santedb-lib')
                         placeholder: SanteDB.locale.getString(`ui.table.search.field.${searchProperty}`)
                     });
 
-                   
-                    
+
+
                     // On change
                     element.on('change', function (e) {
                         var val = $(element).select2("val");
