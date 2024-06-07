@@ -1749,7 +1749,7 @@ function ResourceWrapper(_config) {
             data: requestParms,
             state: state,
             resource: url,
-            contentType: "application/json"
+            contentType: _config.accept
 
         });
     }

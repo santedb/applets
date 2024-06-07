@@ -408,6 +408,7 @@ async function prepareEntityForSubmission(entity) {
                     }
 
                     delete (addrItem.useModel);
+
                     addressList.push(addrItem);
                 });
                 await Promise.all(intlPromises);

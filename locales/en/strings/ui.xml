@@ -196,6 +196,9 @@
       <string name="ui.action.cancel.confirm">Are you sure you want to cancel?</string>
       <string name="ui.action.abandon.confirm">You have unsaved changes on this page. Are you sure you want to abandon them?</string>
       <string name="ui.action.save">Save</string>
+      <string name="ui.action.save.then.new">Save &amp; Create Another</string>
+      <string name="ui.action.save.then.goto">Save &amp; Go To</string>
+
       <string name="ui.action.submit">Submit</string>
       <string name="ui.action.search">Search</string>
       <string name="ui.action.search.advanced">Advanced Search</string>

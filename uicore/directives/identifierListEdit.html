@@ -31,6 +31,9 @@
                     <div class="text-danger" ng-if="ownerForm[controlPrefix + 'id' + domain.domainName + $index].$error['checkDigit']">
                         <i class="fas fa-exclamation-triangle"></i> {{ 'ui.error.checkDigit' | i18n}}
                     </div>
+                    <div class="text-danger" ng-if="ownerForm[controlPrefix + 'id' + domain.domainName + $index].$error['duplicate']">
+                        <i class="fas fa-exclamation-triangle"></i> {{ 'ui.error.duplicate' | i18n}}
+                    </div>
                     <div class="text-danger" ng-if="ownerForm[controlPrefix + 'id' + domain.domainName + $index].$error['required'] || ownerForm[controlPrefix + 'cd' + domain.domainName + $index].$error['required']">
                         <i class="fas fa-exclamation-triangle"></i> {{ 'ui.error.required' | i18n}}
                     </div>

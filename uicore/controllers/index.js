@@ -128,15 +128,17 @@ var santedbApp = angular.module('santedb', ['ngSanitize', 'ui.router', 'oc.lazyL
                 _setLocaleData();
                 var session = await SanteDB.authentication.getSessionInfoAsync();
                 var configuration = {};
+                var uqDomains = [];
                 if (session) {
                     configuration = await SanteDB.configuration.getAsync();
+                    uqDomains = (await SanteDB.resources.identityDomain.findAsync({ isUnique: true})).resource.map(o=>o.domainName);
                 } else {
                     configuration._isConfigured = SanteDB.configuration.getRealm() != null;
                     $rootScope.$watch("session", async function (n, o) {
                         if (n && !o) {
                             initialize();
                         }
-                    })
+                    });
                 }
 
                 // Extended attributes
@@ -175,6 +177,7 @@ var santedbApp = angular.module('santedb', ['ngSanitize', 'ui.router', 'oc.lazyL
                     $rootScope.system.config = configuration;
                     $rootScope.system.config.realmName = realmName;
                     $rootScope.system.config.deviceName = SanteDB.configuration.getDeviceId();
+                    $rootScope.system.uniqueDomains = uqDomains;
                     // Make app settings easier to handle
                     var appSettings = {};
                     if (configuration.application) {
