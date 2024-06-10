@@ -43,7 +43,7 @@
         <div class="col-md-10 col-xs-12">
             <entity-search type="'Place'" name="assignedFacility"
                 filter="{ obsoletionTime: 'null', &quot;statusConcept.mnemonic&quot; : &quot;ACTIVE&quot;, &quot;classConcept.mnemonic&quot; : &quot;ServiceDeliveryLocation&quot; }"
-                class="form-control" multiple="multiple" ng-model="config.security.facility" />
+                class="form-control" ng-model="config.security.facility" />
             <div class="form-text text-muted">
                 {{ 'ui.config.security.facility.help' | i18n }}
             </div>
@@ -54,7 +54,7 @@
             }}</label>
         <div class="col-md-10 col-xs-12">
             <entity-search type="'UserEntity'" name="owner" filter="{ obsoletionTime: 'null' }" class="form-control"
-                multiple="multiple" ng-model="config.security.owner" />
+                 ng-model="config.security.owner" />
             <div class="form-text text-muted">
                 {{ 'ui.config.security.owner.help' | i18n }}
             </div>
