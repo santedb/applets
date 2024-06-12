@@ -322,10 +322,11 @@ function copyObject(fromObject, deepCopy) {
  */
 function scrubModelProperties(source) {
 
-    if (!Array.isArray(source))
-        source = [source];
+    var tSource = source;
+    if (!Array.isArray(tSource))
+        tSource = [tSource];
 
-    source.forEach(function (object) {
+    tSource.forEach(function (object) {
         Object.keys(object).forEach(function (key) {
             var rawValue = object[key];
 
@@ -456,6 +457,18 @@ async function prepareEntityForSubmission(entity) {
         });
         entity.name = { "$other": nameList };
     }
+    if(entity.identifier) // strip out empty identifiers
+    {
+        Object.keys(entity.identifier).forEach(function(k) {
+            var id = entity.identifier[k];
+            if(!Array.isArray(id)) {
+                id = [id];
+            }
+
+            id = id.filter(o=>o.value && o.value !== "");
+            entity.identifier[k] = id;
+        });
+    }
 
     // Clear out the relationships of their MDM keys
     if (entity.relationship) {
@@ -463,6 +476,7 @@ async function prepareEntityForSubmission(entity) {
             if (!Array.isArray(entity.relationship[k])) {
                 entity.relationship[k] = [entity.relationship[k]];
             }
+
             entity.relationship[k] = entity.relationship[k].map((r) => {
                 if (r.targetModel && r.targetModel.id) {
                     r.target = r.targetModel.id;
@@ -476,7 +490,7 @@ async function prepareEntityForSubmission(entity) {
                 delete r.relationshipRoleModel;
                 delete r.classificationModel;
                 return r;
-            });
+            }).filter(r => r.source || r.holder || r.target);
         });
 
     }
@@ -489,6 +503,8 @@ async function prepareEntityForSubmission(entity) {
         delete entity.relationship['MDM-RecordOfTruth'];
         delete entity.relationship['Replaces'];
     }
+
+    // Strip entity relationships with no source or no target
 
     return entity;
 }
@@ -548,6 +564,8 @@ function deleteModelProperties(objectToRemove) {
             }
         });
     }
+
+    return objectToRemove;
 
 }
 

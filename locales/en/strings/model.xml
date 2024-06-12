@@ -328,6 +328,7 @@
   <string name="ui.model.patient.relationship.DedicatedServiceDeliveryLocation.hint">Select the primary facility where this patient will seek care. For programmes, this is the facility where the patient should appear in the denominator/catchment</string>
   <string name="ui.model.patient.relationship.IncidentalServiceDeliveryLocation">Incidental Facilities</string>
   <string name="ui.model.patient.relationship.IncidentalServiceDeliveryLocation.hint">Select facilities where the patient may visit to seek care, however should not appear on their denominator/catchment reports</string>
+  <string name="ui.model.patient.relationship.ServiceDeliveryLocation">Registration Facility</string>
   <string name="ui.model.person.occupation">Occupation</string>
   <string name="ui.model.person.deceasedDate">Deceased</string>
   <string name="ui.model.person.nationality">Nationality</string>

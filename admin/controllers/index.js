@@ -38,6 +38,7 @@ angular.module('santedb').controller('AdminLayoutController', ["$scope", "$rootS
     // abandon session
     $scope.abandonSession = async function () {
         try {
+            SanteDB.display.buttonWait("#btnLogout", true);
             await SanteDB.authentication.logoutAsync();
             $("#logoutModal").modal('hide');
             $timeout(() => {
@@ -48,6 +49,9 @@ angular.module('santedb').controller('AdminLayoutController', ["$scope", "$rootS
         }
         catch (e) {
             $rootScope.errorHandler(e);
+        }
+        finally {
+            SanteDB.display.buttonWait("#btnLogout", false);
         }
     }
 

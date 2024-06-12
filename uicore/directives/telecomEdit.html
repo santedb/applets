@@ -32,7 +32,7 @@
                             required="required" />
                     </div>
                     <input type="text" ng-pattern="tel.type == 'c1c0a4ff-4238-4044-b89b-9c9798995b94' ? '\\w+?@\\w{2,}?\\.[a-zA-Z]{2,4}' : '\\+?[0-9\\(\\)\\-]{6,}'"
-                        class="form-control" ng-model="tel.editValue" ng-required="requiredTypes.indexOf(t) &gt; -1" name="{{controlPrefix}}tel{{t}}{{$index}}" />
+                        class="form-control" ng-model="tel.editValue" ng-required="requiredTypes.indexOf(t) &gt; -1" name="{{::controlPrefix}}tel{{t}}{{$index}}" />
                 </div>
                 <div ng-if="ownerForm[controlPrefix + 'tel' + t + $index].$error['pattern']" class="text-danger">
                     <i class="fas fa-exclamation-triangle"></i> {{ 'ui.error.pattern' | i18n }}

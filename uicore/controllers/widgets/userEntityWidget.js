@@ -265,7 +265,8 @@ angular.module('santedb').controller('UserProfileWidgetController', ['$scope', '
             else {
                 var settings = await await SanteDB.configuration.getUserSettingsAsync();
                 $timeout(() => {
-                    n._preferences.widgets = JSON.parse((settings.find(o=>o.key == "widgets") || {}).value || "");
+                    var widgetPref = (settings.find(o=>o.key == "widgets") || {}).value;
+                    n._preferences.widgets = widgetPref ? JSON.parse(widgetPref) : {};
                     n._preferences.help = (settings.find(o=>o.key == "help") || {}).value;
                     n._preferences.uimode = (settings.find(o=>o.key == "uimode") || {}).value;
                 });

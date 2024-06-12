@@ -3768,6 +3768,27 @@ function SanteDBWrapper() {
         this.getDeviceId = function () {
             return __SanteDBAppService.GetDeviceId();
         }
+
+        /**
+         * @method getFacilityId
+         * @memberof SanteDBWrapper.ConfigurationApi
+         * @summary Get the configured facility identifier
+         * @returns {string} The identifier of the facility
+         */
+        this.getFacilityId = function () {
+            return __SanteDBAppService.GetAssignedFacilityId();
+        }
+
+        /**
+         * @method getOwnerId
+         * @memberof SanteDBWrapper.ConfigurationApi
+         * @summary Get the configured owner of this device
+         * @returns {string} The identifier of the device
+         */
+        this.getOwnerId = function () {
+            return __SanteDBAppService.GetAssignedOwnerId();
+        }
+        
         /**
             * @method getRealm
             * @memberof SanteDBWrapper.ConfigurationApi
@@ -4516,6 +4537,46 @@ function SanteDBWrapper() {
                     if (reject) reject(ex);
                 }
             });
+        }
+
+        /**
+         * @summary Gets the current CDR facility identifier from either (1) the user's session assertion (the facility the user is assigned to and/or selected on login) or (2) the configured facility 
+         * @memberof SanteDBWrapper.AuthenticationApi
+         * @returns {String} The UUID of the current facility identifier
+         */
+        this.getCurrentFacilityId = async function() {
+            try {
+                var sessionInfo = await SanteDB.authentication.getSessionInfoAsync();
+                var sessionFacility = sessionInfo.claims["urn:oasis:names:tc:xspa:1.0:subject:facility"];
+                return sessionFacility || SanteDB.configuration.getFacilityId();
+            }
+            catch(e) {
+                console.warn(e);
+                return SanteDB.configuration.getFacilityId();
+            }
+        }
+
+        /**
+         * @summary Get the currently logged in user's CDR entity id
+         * @memberof SanteDBWrapper.AuthenticationApi
+         * @returns {String} The UUID of the current user's CDR entity id
+         */
+        this.getCurrentUserEntityId = async function() {
+            try {
+                var sessionInfo = await SanteDB.authentication.getSessionInfoAsync();
+                if(sessionInfo.entity) {
+                    return sessionInfo.entity.id;
+                }
+                else {
+                    var ue = await SanteDB.resources.userEntity.findAsync({ securityUser: sessionInfo.user.id, _includeTotal: false, _count: 1 });
+                    if(ue.resource) {
+                        return ue.resource[0].id;
+                    }
+                }
+            }
+            catch(e) {
+                console.warn(e);
+            }
         }
     };
 

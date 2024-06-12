@@ -38,7 +38,7 @@ angular.module('santedb-lib')
      * @param {string} controlPrefix The prefix to add to all inputs which allow validation and access by other JavaScript
      * @example
      * <form novalidate="novalidate" name="myForm">
-     *      <address-edit address="scopedObject.address" no-add="true" no-type="false" simple-entry="true" 
+     *      <address-edit model="scopedObject.address" no-add="true" no-type="false" simple-entry="true" 
      *          owner-form="myForm" />
      */
     .directive('addressEdit', ['$rootScope', function ($rootScope) {
@@ -47,14 +47,15 @@ angular.module('santedb-lib')
             replace: true,
             templateUrl: './org.santedb.uicore/directives/addressEdit.html',
             scope: {
-                address: '=',
+                model: '=',
                 noAdd: '<',
                 noType: '<',
                 simpleEntry: '<',
                 isRequired: '<',
                 ownerForm: '<',
                 controlPrefix: '<',
-                requiredTypes: '<'
+                requiredTypes: '<',
+                catchmentAreaFor: '<'
             },
             controller: ['$scope', '$rootScope', function ($scope, $rootScope) {
 
@@ -87,9 +88,9 @@ angular.module('santedb-lib')
             }],
             link: function (scope, element, attrs) {
 
-                if(!scope.controlPrefix) 
-                    scope.controlPrefix = attrs.name || '';
-            
+                scope.controlPrefix = scope.controlPrefix || attrs.name;
+
+                scope.address = scope.model;
 
                 if (!scope.address) {
                     scope.address = {
@@ -162,7 +163,7 @@ angular.module('santedb-lib')
             replace: true,
             templateUrl: './org.santedb.uicore/directives/geoEdit.html',
             scope: {
-                geo: '=',
+                model: '=',
                 isRequired: '<',
                 ownerForm: '<',
                 controlPrefix: '<'
@@ -177,10 +178,9 @@ angular.module('santedb-lib')
             }],
             link: function (scope, element, attrs) {
 
-                // Scan and find the form to which this belongs
-                if(!scope.controlPrefix) 
-                    scope.controlPrefix = attrs.name || '';
-            
+                scope.controlPrefix = scope.controlPrefix || attrs.name;
+                scope.geo = scope.model;
+                
 
                 if (!scope.geo) {
                     scope.geo = { _supplied: false };
@@ -215,7 +215,7 @@ angular.module('santedb-lib')
             replace: true,
             templateUrl: './org.santedb.uicore/directives/nameEdit.html',
             scope: {
-                name: '=',
+                model: '=',
                 noAdd: '<',
                 noType: '<',
                 simpleEntry: '<',
@@ -224,7 +224,6 @@ angular.module('santedb-lib')
                 controlPrefix: '<',
                 inputStyle: '<',
                 allowedComponents: '<'
-                
             },
             controller: ['$scope', '$rootScope', function ($scope, $rootScope) {
 
@@ -256,9 +255,8 @@ angular.module('santedb-lib')
             }],
             link: function (scope, element, attrs) {
 
-                // Scan and find the form to which this belongs
-                if (!scope.controlPrefix)
-                    scope.controlPrefix = attrs.name || '';
+                scope.controlPrefix = scope.controlPrefix || attrs.name;
+                scope.name = scope.model;
 
                 if (!scope.allowedComponents || scope.allowedComponents === '' || scope.allowedComponents === ' ') {
                     scope.allowedComponents = "prefix,given,family,suffix"; //Default for compatability.
@@ -356,7 +354,7 @@ angular.module('santedb-lib')
             replace: true,
             templateUrl: './org.santedb.uicore/directives/telecomEdit.html',
             scope: {
-                telecom: '=',
+                model: '=',
                 singleEdit: '<',
                 ownerForm: '<',
                 noLabel: '<',
@@ -370,6 +368,8 @@ angular.module('santedb-lib')
             }],
             link: function (scope, element, attrs) {
 
+                scope.controlPrefix = scope.controlPrefix || attrs.name;
+                scope.telecom = scope.model;
                 if(!scope.controlPrefix) 
                     scope.controlPrefix = attrs.name || '';
 
@@ -422,10 +422,11 @@ angular.module('santedb-lib')
             replace: true,
             templateUrl: './org.santedb.uicore/directives/identifierTableEdit.html',
             scope: {
-                identifier: '=',
+                model: '=',
                 ownerForm: '<',
                 containerClass: '<',
-                noAdd: '<'
+                noAdd: '<',
+                controlPrefix: '<'
             },
             controller: ['$scope', '$rootScope', function ($scope, $rootScope) {
 
@@ -465,6 +466,7 @@ angular.module('santedb-lib')
                 }
             }],
             link: function (scope, element, attrs) {
+                scope.controlPrefix = scope.controlPrefix || attrs.name;
 
                 var identifier = {};
                 if (scope.identifier)
@@ -515,13 +517,14 @@ angular.module('santedb-lib')
             replace: true,
             templateUrl: "./org.santedb.uicore/directives/identifierListEdit.html",
             scope: {
-                identifier: '=',
+                model: '=',
                 ownerForm: '<',
                 containerClass: '<',
                 noScan: '<',
                 onScanId: '<',
                 allowedDomains: '<',
-                requiredDomains: '<'
+                requiredDomains: '<',
+                controlPrefix: '<'
             }, 
             controller: ["$scope", function($scope) {
 
@@ -575,7 +578,10 @@ angular.module('santedb-lib')
             }],
             link: function(scope, element, attrs) {
                 
+                scope.controlPrefix = scope.controlPrefix || attrs.name;
+
                 // Scope identifier
+                scope.identifier = scope.model;
                 var identifier = scope.identifier = scope.identifier || {};
                 
                 async function initializeView() {

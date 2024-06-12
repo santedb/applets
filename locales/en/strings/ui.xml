@@ -20,7 +20,7 @@
  - Date: 2023-5-19
  -->
 <resources>
-    <string name="ui.debug">DEBUG ENVIRONMENT - NOT FOR PRODUCTION USE</string>
+    <string name="ui.debug">DEBUG ENVIRONMENT</string>
     <string name="ui.generated.on">Generated On</string>
       <string name="ui.card">Card</string>
       <string name="ui.unknown">N/A</string>
@@ -198,6 +198,7 @@
       <string name="ui.action.save">Save</string>
       <string name="ui.action.save.then.new">Save &amp; Create Another</string>
       <string name="ui.action.save.then.goto">Save &amp; Go To</string>
+      <string name="ui.action.goto">Go To</string>
 
       <string name="ui.action.submit">Submit</string>
       <string name="ui.action.search">Search</string>

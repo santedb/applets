@@ -105,13 +105,14 @@ angular.module('santedb-lib')
                 }
 
                 var results = null;
+                var viewModel = query._viewModel || 'full';
                 if (_operation) {
                     results = await _sourceApi.invokeOperationAsync(scope.operationScope, _operation, query, scope.upstream == true);
                 } else if (_subResource) {
-                    results = await _sourceApi.findAssociatedAsync(scope.subResourceScope, _subResource, query, full, scope.upstream == true);
+                    results = await _sourceApi.findAssociatedAsync(scope.subResourceScope, _subResource, query, viewModel, scope.upstream == true);
                 }
                 else {
-                    results = await _sourceApi.findAsync(query, 'full', scope.upstream == true);
+                    results = await _sourceApi.findAsync(query, viewModel, scope.upstream == true);
                 }
 
                 // Check if there are search results and an array of one or more item supplement functions to add additional information for the resource.
@@ -161,7 +162,8 @@ angular.module('santedb-lib')
                 itemActions: '<',
                 operationScope: '=',
                 subResourceScope: '=',
-                itemSupplement: '<'
+                itemSupplement: '<',
+
             },
             restrict: 'E',
             replace: true,
@@ -169,8 +171,8 @@ angular.module('santedb-lib')
             templateUrl: '/org.santedb.uicore/directives/entityList.html',
             controller: ['$scope', "$state", function ($scope, $state) {
 
-                $scope.$watch("defaultQuery", function(n, o) {
-                    if(n && n != o) {
+                $scope.$watch("defaultQuery", function (n, o) {
+                    if (n && n != o) {
                         if (_queryId !== undefined) {
                             _queryId = SanteDB.application.newGuid();
                         }
@@ -268,13 +270,25 @@ angular.module('santedb-lib')
                 _scid = scope.scid = SanteDB.application.newGuid().substring(0, 8);
                 _sourceApi = SanteDB.resources[_type.toCamelCase()];
                 _itemTemplate = $("div[ng-transclude]", element).html();
-                _listTemplate = $("#listTemplate", element).html()
-                    .replaceAll(" xg-", " ng-")
-                    .replace("$template", _itemTemplate)
-                    .replace("$itemClass", attrs.itemClass)
-                    .replace("$idRoot", _id);
+
+                // item template?
+                if (attrs.itemTemplate) {
+                    _listTemplate = $("#listTemplate", element).html()
+                        .replaceAll("xg-", "ng-")
+                        .replace("$template", `<ng-include src="'${attrs.itemTemplate}'" />`)
+                        .replace("$itemClass", attrs.itemClass)
+                        .replace("$idRoot", _id);
+                }
+                else {
+                    _listTemplate = $("#listTemplate", element).html()
+                        .replaceAll("xg-", "ng-")
+                        .replace("$template", _itemTemplate)
+                        .replace("$itemClass", attrs.itemClass)
+                        .replace("$idRoot", _id);
+                }
                 $("#listContainer", element).html(_listTemplate);
                 $compile(angular.element("#listContainer"))(scope);
+
                 $(".entity-list-waiter", element).attr("id", `${_id}_${_scid}`);
 
                 if (attrs.canChangeView == "true") {
@@ -283,7 +297,7 @@ angular.module('santedb-lib')
                 if (attrs.canSize == "true") {
                     $(".resultSize", element).removeClass("d-none");
                 }
-                if(attrs.canFilter == "true") {
+                if (attrs.canFilter == "true") {
                     $(".filter", element).removeClass("d-none");
                 }
 
@@ -299,7 +313,7 @@ angular.module('santedb-lib')
 
                 if (!_type) { throw "@type required on entity-list"; }
                 else if (!_sourceApi) { throw `No SanteDB API exists for ${_type}`; }
-                else if (!_itemTemplate) { throw "entity-list missing item template"; }
+                //else if (!_itemTemplate) { throw "entity-list missing item template"; }
 
                 refreshItems(scope);
 

@@ -29,6 +29,7 @@
       <string name="ui.error.required">Required field missing</string>
       <string name="ui.error.hdsiNeedsRhs"><![CDATA[This expression needs a value for example <code>genderConcept.mnemonic=FEMALE</code>]]></string>
       <string name="ui.error.range">The value is out of range. Allowed ranges are {min} to {max}</string>
+      <string name="ui.error.dataQuality"><![CDATA[Data Quality Issue: {text}]]></string>
       <string name="ui.error.pattern">Invalid format (please ensure input is in correct format)</string>
       <string name="ui.error.checkDigit">Check-digit validation failed, please verify input</string>
       <string name="ui.error.pattern.ext">Invalid format (expected: {pattern})</string>

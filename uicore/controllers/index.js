@@ -177,6 +177,9 @@ var santedbApp = angular.module('santedb', ['ngSanitize', 'ui.router', 'oc.lazyL
                     $rootScope.system.config = configuration;
                     $rootScope.system.config.realmName = realmName;
                     $rootScope.system.config.deviceName = SanteDB.configuration.getDeviceId();
+                    $rootScope.system.config.facility = SanteDB.configuration.getFacilityId();
+                    $rootScope.system.config.owner = SanteDB.configuration.getOwnerId();
+
                     $rootScope.system.uniqueDomains = uqDomains;
                     // Make app settings easier to handle
                     var appSettings = {};
