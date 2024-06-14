@@ -19,7 +19,7 @@
  - Date: 2023-5-19
  -->
 <div xmlns="http://www.w3.org/1999/xhtml">
-    <div ng-repeat="(t, value) in telecom" ng-if="!allowedTypes || allowedTypes.indexOf(t) !== -1">
+    <div ng-repeat="(t, value) in model" ng-if="!allowedTypes || allowedTypes.indexOf(t) !== -1">
         <div ng-class="{ 'row' : !noLabel }" class="mb-1" ng-repeat="tel in value track by $index"
             ng-if="!singleEdit || singleEdit == t">
             <label ng-if="!noLabel" class="col-md-3 col-sm-12 control-label" ng-class="{'required' : requiredTypes.indexOf(t) &gt; -1}">{{ 'ui.model.entity.telecom.' + t |

@@ -28,5 +28,50 @@
         </sdb:view>
     </sdb:state>
 
-    <!-- #include virtual="~/views/cdr/quality/partials/properties.html" -->
+
+    <h3><i class="fas fa-tasks fa-fw"></i> {{ 'ui.admin.dataQuality.create.title' | i18n }}</h3>
+    <ul class="list-group">
+        <li class="list-group-item">
+            <label class="w-100 d-block">
+                <input type="radio" name="creationMode" ng-model="dqLibrary._mode" value="upload" /> {{
+                'ui.admin.dataQuality.create.upload.option' | i18n }}
+            </label>
+            <div class="w-100 container-fluid" ng-if="dqLibrary._mode == 'upload'">
+                <form novalidate="novalidate" name="uploadForm" id="uploadForm"
+                    ng-submit="uploadDataQualityRules(uploadForm)">
+                    <div class="form-group row">
+                        <label class="col-sm-12 col-md-3 control-label">
+                            {{ 'ui.admin.dataQuality.create.upload.file' | i18n }}
+                            <hint-popover hint-title="ui.admin.dataQuality.create.upload.file" />
+                        </label>
+                        <div class="col-sm-12 col-md-9">
+                            <input id="source-file" type="file" ng-model="dqLibrary._sourceFile" class="form-control"
+                                name="source" valid-file="valid-file" required="required" accept=".xml" />
+                            <div class="text-danger" ng-if="uploadForm.source.$error['required']">
+                                <i class="fas fa-exclamation-triangle"></i> {{ 'ui.error.required' | i18n }}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="btn-group float-right">
+                                <button type="submit" id="btnUpload" class="btn btn-primary" ng-disabled="uploadForm.$invalid">
+                                    <i class="fas fa-fw fa-cloud-upload"></i> {{ 'ui.action.upload' | i18n }}
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </li>
+        <li class="list-group-item">
+            <label class="w-100 d-block">
+                <input type="radio" name="creationMode" ng-model="dqLibrary._mode" value="manual" /> {{
+                'ui.admin.dataQuality.create.manual.option' | i18n }}
+            </label>
+            <div class="w-100 container-fluid" ng-if="dqLibrary._mode == 'manual'">
+                <!-- #include virtual="~/views/cdr/quality/partials/properties.html" -->
+            </div>
+        </li>
+    </ul>
 </div>

@@ -23,7 +23,7 @@
         <label class="col-md-3 col-sm-12 control-label">{{ 'ui.model.geo.supplied' | i18n }}</label>
         <div class="col-md-9 col-sm-12 control-value">
             <div class="custom-control custom-checkbox">
-                <input type="checkbox" class="custom-control-input" id="geoSupplied" ng-model="geo._supplied" />
+                <input type="checkbox" class="custom-control-input" id="geoSupplied" ng-model="model._supplied" />
                 <label for="geoSupplied" class="custom-control-label"></label>
             </div>
         </div>
@@ -31,13 +31,13 @@
     <div class="row form-group" ng-if="geo._supplied">
         <label class="col-md-3 col-sm-12 control-label">{{ 'ui.model.geo.lat' | i18n }}</label>
         <div class="col-sm-12 col-md-9">
-            <input type="number" class="form-control" ng-model="geo.lat" />
+            <input type="number" class="form-control" ng-model="model.lat" />
         </div>
     </div>
     <div class="row form-group" ng-if="geo._supplied">
         <label class="col-md-3 col-sm-12 control-label">{{ 'ui.model.geo.lng' | i18n }}</label>
         <div class="col-sm-12 col-md-9">
-            <input type="number" class="form-control" ng-model="geo.lng" />
+            <input type="number" class="form-control" ng-model="model.lng" />
         </div>
     </div>
 </div>

@@ -23,7 +23,7 @@
         <label
             class="col-sm-12 col-md-3 control-label required">{{ 'ui.model.entity.identifier.authority' | i18n }}</label>
         <div class="col-sm-12 col-md-9">
-            <select class="form-control" ng-model="identifier.domainModel.domainName">
+            <select class="form-control" ng-model="model.domainModel.domainName">
                 <option ng-repeat="(k, auth) in authorities" ng-selected="$index == 0" value="{{auth.domainName}}">
                     {{ auth.name }}</option>
             </select>
@@ -31,32 +31,32 @@
     </div>
     <div class="form-group row" ng-if="!noLabel">
         <label class="col-sm-12 col-md-3 control-label" ng-if="noDomain">
-            {{ authorities[identifier.domainModel.domainName].name || identifier.domainModel.name }}
+            {{ authorities[model.domainModel.domainName].name || model.domainModel.name }}
         </label>
         <div ng-class="{ 'col-sm-12 col-md-9' : noDomain , 'col-12' : !noDomain }">
             <div class="input-group">
-                <input ng-pattern="authorities[identifier.domainModel.domainName].validation" ng-model="identifier.value"
+                <input ng-pattern="authorities[model.domainModel.domainName].validation" ng-model="model.value"
                     class="form-control" name="identifier{{identifier.id}}" ng-required="isRequired"
-                    ng-disabled="!identifier.domainModel.domainName" ng-readonly="!authorities[identifier.domainModel.domainName]"
-                    placeholder="{{ authorities[identifier.domainModel.domainName].validationHint }}" />
-                    <div class="input-group-append"  ng-if="authorities[identifier.domainModel.domainName].checkDigitAlgorithm">
+                    ng-disabled="!model.domainModel.domainName" ng-readonly="!authorities[model.domainModel.domainName]"
+                    placeholder="{{ authorities[model.domainModel.domainName].validationHint }}" />
+                    <div class="input-group-append"  ng-if="authorities[model.domainModel.domainName].checkDigitAlgorithm">
                         <span class="input-group-text">{{ 'ui.model.entityidentifier.checkDigit.short' | i18n }}                                     <hint-popover hint-title="ui.model.entityIdentifier.checkDigit" />
                         </span>
-                        <input class="form-control" name="identifier{{identifier.id}}cd" ng-value="identifier.checkDigitAlgorithm" />
+                        <input class="form-control" name="identifier{{model.id}}cd" ng-model="model.checkDigitAlgorithm" />
                     </div>
                     <div class="input-group-append" ng-if="!noScan">
-                        <div class="btn-group" ng-if="authorities[identifier.domainModel.domainName]">
-                        <button ng-click="generateId()" ng-if="authorities[identifier.domainModel.domainName].generator" class="btn btn-outline-secondary" type="button" ><i class="fas fa-robot"></i><span class="d-none d-sm-inline">{{ 'ui.action.generate' | i18n }}</span></button>
+                        <div class="btn-group" ng-if="authorities[model.domainModel.domainName]">
+                        <button ng-click="generateId()" ng-if="authorities[model.domainModel.domainName].generator" class="btn btn-outline-secondary" type="button" ><i class="fas fa-robot"></i><span class="d-none d-sm-inline">{{ 'ui.action.generate' | i18n }}</span></button>
                         <button ng-click="scanId()" class="btn btn-outline-info" type="button"><i class="fas fa-qrcode"></i><span class="d-none d-sm-inline">{{ 'ui.action.scan' | i18n }}</span></button>
-                        <button ng-click="removeFn(identifier.domainModel.domainName, identifier.value)" class="btn btn-outline-danger" type="button" ng-if="removeFn"><i class="fas fa-times"></i><span class="d-none d-sm-inline">{{ 'ui.action.remove' | i18n }}</span></button>
+                        <button ng-click="removeFn(model.domainModel.domainName, model.value)" class="btn btn-outline-danger" type="button" ng-if="removeFn"><i class="fas fa-times"></i><span class="d-none d-sm-inline">{{ 'ui.action.remove' | i18n }}</span></button>
                     </div>
                     </div>
             </div>
-            <div ng-if="ownerForm['identifier' + identifier.id].$error['pattern']" class="text-danger">
+            <div ng-if="ownerForm['identifier' + model.id].$error['pattern']" class="text-danger">
                 <i class="fa fa-exclamation-triangle"></i>
                 {{ 'ui.error.pattern' | i18n }}
             </div>
-            <div ng-show="ownerForm['identifier' + identifier.id].$error['required']" class="text-danger">
+            <div ng-show="ownerForm['identifier' + model.id].$error['required']" class="text-danger">
                 <i class="fa fa-exclamation-triangle"></i>
                 {{ 'ui.error.required' | i18n }}
             </div>
@@ -64,28 +64,28 @@
     </div>
     <div ng-if="noLabel">
         <div class="input-group mb-0" ng-if="noLabel">
-            <input ng-pattern="authorities[identifier.domainModel.domainName].validation" ng-model="identifier.value"
-                class="form-control" name="identifier{{identifier.id}}" ng-required="isRequired"
-                ng-disabled="!identifier.domainModel.domainName" ng-readonly="!authorities[identifier.domainModel.domainName]"
-                placeholder="{{ authorities[identifier.domainModel.domainName].validationHint }}" />
-                <div class="input-group-append"  ng-if="authorities[identifier.domainModel.domainName].checkDigitAlgorithm">
+            <input ng-pattern="authorities[model.domainModel.domainName].validation" ng-model="model.value"
+                class="form-control" name="identifier{{model.id}}" ng-required="isRequired"
+                ng-disabled="!model.domainModel.domainName" ng-readonly="!authorities[model.domainModel.domainName]"
+                placeholder="{{ authorities[model.domainModel.domainName].validationHint }}" />
+                <div class="input-group-append"  ng-if="authorities[model.domainModel.domainName].checkDigitAlgorithm">
                                     <hint-popover hint-title="ui.model.entityIdentifier.checkDigit" />
                                     <span class="input-group-text">{{ 'ui.model.entityidentifier.checkDigit.short' | i18n }} </span>
-                    <input class="form-control" name="identifier{{identifier.id}}cd" ng-value="identifier.checkDigitAlgorithm" />
+                    <input class="form-control" name="identifier{{model.id}}cd" ng-model="model.checkDigitAlgorithm" />
                 </div>
             <div class="input-group-append" ng-if="!noScan">
-                    <div class="btn-group" ng-if="authorities[identifier.domainModel.domainName]">
-                    <button ng-click="generateId()" ng-if="authorities[identifier.domainModel.domainName].generator" class="btn btn-outline-secondary" type="button" ><i class="fas fa-robot"></i><span class="d-none d-sm-inline">{{ 'ui.action.generate' | i18n }}</span></button>
+                    <div class="btn-group" ng-if="authorities[model.domainModel.domainName]">
+                    <button ng-click="generateId()" ng-if="authorities[model.domainModel.domainName].generator" class="btn btn-outline-secondary" type="button" ><i class="fas fa-robot"></i><span class="d-none d-sm-inline">{{ 'ui.action.generate' | i18n }}</span></button>
                     <button ng-click="scanId()" class="btn btn-outline-info" type="button"><i class="fas fa-qrcode"></i><span class="d-none d-sm-inline">{{ 'ui.action.scan' | i18n }}</span></button>
-                    <button ng-click="removeFn(identifier.domainModel.domainName, identifier.value)" class="btn btn-outline-danger" type="button" ng-if="removeFn"><i class="fas fa-times"></i><span class="d-none d-sm-inline">{{ 'ui.action.remove' | i18n }}</span></button>
+                    <button ng-click="removeFn(model.domainModel.domainName, model.value)" class="btn btn-outline-danger" type="button" ng-if="removeFn"><i class="fas fa-times"></i><span class="d-none d-sm-inline">{{ 'ui.action.remove' | i18n }}</span></button>
                 </div>
                 </div>
         </div>
-        <p ng-if="ownerForm['identifier' + identifier.id].$error['pattern']" class="mt-0 text-danger">
+        <p ng-if="ownerForm['identifier' + model.id].$error['pattern']" class="mt-0 text-danger">
             <i class="fa fa-exclamation-triangle"></i>
             {{ 'ui.error.pattern' | i18n }}
         </p>
-        <p ng-if="ownerForm['identifier' + identifier.id].$error['required']" class="mt-0 text-danger">
+        <p ng-if="ownerForm['identifier' + model.id].$error['required']" class="mt-0 text-danger">
             <i class="fa fa-exclamation-triangle"></i>
             {{ 'ui.error.required' | i18n }}
         </p>

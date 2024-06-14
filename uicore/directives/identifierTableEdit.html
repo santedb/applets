@@ -28,7 +28,7 @@
             </tr>
         </thead>
         <tbody>
-            <tr ng-repeat="(authority, idArr) in identifier">
+            <tr ng-repeat="(authority, idArr) in model">
                 <td>{{ idArr[0].domainModel.name }}</td>
                 <td colspan="2">
                     <div ng-repeat="idValue in idArr track by $index" class="w-100">

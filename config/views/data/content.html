@@ -72,7 +72,7 @@
                                                 placeholder="{{ 'ui.config.data.options.user.placeholder' | i18n }}" />
                                             <input ng-change="propogateDataChanges()" name="option{{optKey}}" ng-switch-when="DatabaseName"
                                                 class="form-control" required="required" type="text"
-                                                pattern="^[A-Za-z0-9_\.]+$" ng-model="config.data.options[optKey]"
+                                                pattern="^[A-Za-z][A-Za-z0-9_\.]*$" ng-model="config.data.options[optKey]"
                                                 placeholder="{{ 'ui.config.data.options.databaseName.placeholder' | i18n }}" />
                                             <input ng-change="propogateDataChanges()" name="option{{optKey}}" ng-switch-when="Boolean" type="checkbox"
                                                 ng-model="config.data.options[optKey]" value="true" />

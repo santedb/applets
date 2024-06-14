@@ -20,7 +20,7 @@
  - Date: 2023-5-19
  -->
 <resources>
-
+  <string name="ui.model.date.approx">Date is approximate</string>
   <string name="ui.model.version.current">Current Version</string>
   <string name="ui.model.securityProvenance.type.device">Device Principal</string>
   <string name="ui.model.securityProvenance.type.user">User Principal</string>
@@ -309,7 +309,8 @@
   <string name="ui.model.patient.register">Registered At</string>
   <string name="ui.model.patient.dedicatedServiceDeliveryLocation">Assigned Facilities</string>
   <string name="ui.model.patient.placeOfDeath">Place of Death</string>
-  <string name="ui.model.patient.multipleBirthOrder">Twin/Triplet/Etc.</string>
+  <string name="ui.model.patient.multipleBirthOrder">Multiple Birth</string>
+  <string name="ui.model.patient.multipleBirthOrder.hint">If this person was born as part of a multiple birth (twin, triplet, etc.) the birthing order of this person.</string>
   <string name="ui.model.patient.multipleBirthOrder.-1">Unknown (of a multiple-birth)</string>
   <string name="ui.model.patient.multipleBirthOrder.0">Unknown (of a multiple-birth)</string>
   <string name="ui.model.patient.multipleBirthOrder.1">1st of multiple-birth</string>
@@ -333,6 +334,10 @@
   <string name="ui.model.person.deceasedDate">Deceased</string>
   <string name="ui.model.person.nationality">Nationality</string>
   <string name="ui.model.person.vipStatus">VIP Status</string>
+  <string name="ui.model.person.deceasedDate">Deceased Date</string>
+  <string name="ui.model.person.deceasedDate.hint">The date/year that the person was known to have died</string>
+  <string name="ui.model.person.deceasedIndicator">Person is Deceased</string>
+  <string name="ui.model.person.deceasedDate.approx">Approximate Date</string>
   <string name="ui.model.patient.summary">Patient Summary</string>
   <string name="ui.model.place.name">Name</string>
   <string name="ui.model.place.names">Other Name(s)</string>

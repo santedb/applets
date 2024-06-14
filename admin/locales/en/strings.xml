@@ -169,6 +169,7 @@
     <string name="ui.admin.system.services.name">Name</string>
     <string name="ui.admin.system.services.state">Status</string>
     <string name="ui.admin.system.applets.signed">Digitally Signed</string>
+    <string name="ui.admin.system.applets.uploadNew">Upload New Version</string>
     <string name="ui.admin.system.logs.show">Show Logs From</string>
     <string name="ui.admin.system.logs.local">Local Service</string>
     <string name="ui.admin.system.logs.remote">Realm Service</string>
@@ -741,6 +742,14 @@
     <string name="org.santedb.widget.cdr.cdssLibrary.data.define">Reference Sets</string>
     <string name="org.santedb.widget.cdr.cdssLibrary.main.history">Version History</string>
 
+
+    <string name="ui.admin.dataQuality.create.title">Create Data Quality Ruleset</string>
+    <string name="ui.admin.dataQuality.create.upload.option">Upload Existing Ruleset</string>
+    <string name="ui.admin.dataQuality.create.upload.file">Ruleset File</string>
+    <string name="ui.admin.dataQuality.create.upload.file.hint">The file that was exported from another SanteDB iCDR instance or a file which your development partner has prepared for you</string>
+    <string name="ui.admin.dataQuality.create.manual.option">Manually Create Ruleset</string>
+    <string name="ui.admin.dataQuality.upload.success">Ruleset Uploaded Successfully</string>
+    <string name="ui.admin.dataQuality.upload.error">Error uploading ruleset file : {error}</string>
     <!-- Materials Management -->
     <string name="ui.admin.material.create.help"><![CDATA[
     <a data-toggle="collapse" data-target="#material-help"><h5 class="card-title">

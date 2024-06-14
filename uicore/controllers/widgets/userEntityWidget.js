@@ -33,6 +33,7 @@ angular.module('santedb').controller('UserProfileWidgetController', ['$scope', '
             var submissionObject = angular.copy($scope.editObject);
             await prepareEntityForSubmission(submissionObject);
 
+            submissionObject.securityUser = submissionObject.securityUser || $rootScope.session.user.id;
             // Find the preferred language
             submissionObject.language = submissionObject.language || [];
             if ($scope.editObject.preferredLanguage) {

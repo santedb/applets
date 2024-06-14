@@ -2093,6 +2093,9 @@ function SanteDBWrapper() {
                 // QR Code is a signed code
                 if (svrpPattern.test(qrCodeData)) {
                     var match = svrpPattern.exec(qrCodeData);
+
+                    var jwsData = await _extractJwsData(match[1]);
+                    
                     var result = await SanteDB.application.ptrSearchAsync(match[1], !noValidate, upstream || false);
                     result.$novalidate = noValidate;
                     result.$upstream = upstream;
@@ -2805,6 +2808,8 @@ function SanteDBWrapper() {
          */
         this.ptrSearchAsync = function (jwsData, validateSignature, upstream) {
             try {
+
+                
                 var configuration = {
                     resource: "_ptr",
                     headers: {
