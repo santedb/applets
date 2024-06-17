@@ -110,44 +110,50 @@ angular.module('santedb-lib')
                     };
                 }
 
-                //else  // address exists so let's move everything over to $other
-                //{
-                var flatAddressList = scope.model.$other || [];
-                Object.keys(scope.model).filter(key => key != "$other").forEach(function (key) {
-                    var address = scope.model[key];
-
-                    if ((!address.useModel || !address.useModel.id) && key != '$other')
-                        SanteDB.resources.concept.findAsync({ mnemonic: key })
-                            .then(function (bundle) {
-                                if (bundle.resource && bundle.resource.length > 0)
-                                    address.useModel = bundle.resource[0];
+               
+                function syncEditToAddress() {
+                    var flatAddressList = scope.model.$other || [];
+                    Object.keys(scope.model).filter(key => key != "$other").forEach(function (key) {
+                        var address = scope.model[key];
+                        
+                        address.forEach(addr => {
+                        if ((!addr.useModel || !addr.useModel.id) && key != '$other')
+                            SanteDB.resources.concept.findAsync({ mnemonic: key })
+                                .then(function (bundle) {
+                                    if (bundle.resource && bundle.resource.length > 0)
+                                        addr.useModel = addr.resource[0];
+                                });
                             });
 
-                    if (Array.isArray(address))
-                        address.forEach((n) => flatAddressList.push(n));
-                    else
-                        flatAddressList.push(address);
-                });
+                        if (Array.isArray(address))
+                            address.forEach((n) => flatAddressList.push(n));
+                        else
+                            flatAddressList.push(address);
+                    });
+    
+                    flatAddressList.forEach(a => {
+                        a.component = a.component || {};
+                        a.component.Country = a.component.Country || [],
+                            a.component.State = a.component.State || [],
+                            a.component.City = a.component.City || [],
+                            a.component.County = a.component.County || [],
+                            a.component.Precinct = a.component.Precinct || [],
+                            a.component.StreetAddressLine = a.component.StreetAddressLine || [],
+                            a.component.PostalCode = a.component.PostalCode || [],
+                            a.component.PostBox = a.component.PostBox || [],
+                            a.component.CareOf = a.component.CareOf || [],
+                            a.component.UnitIdentifier = a.component.UnitIdentifier || [],
+                            a.component._AddressPlaceRef = a.component._AddressPlaceRef || []
+                    });
+                    scope.addressEdit = flatAddressList;
+                }
 
-                flatAddressList.forEach(a => {
-                    a.component = a.component || {};
-                    a.component.Country = a.component.Country || [],
-                        a.component.State = a.component.State || [],
-                        a.component.City = a.component.City || [],
-                        a.component.County = a.component.County || [],
-                        a.component.Precinct = a.component.Precinct || [],
-                        a.component.StreetAddressLine = a.component.StreetAddressLine || [],
-                        a.component.PostalCode = a.component.PostalCode || [],
-                        a.component.PostBox = a.component.PostBox || [],
-                        a.component.CareOf = a.component.CareOf || [],
-                        a.component.UnitIdentifier = a.component.UnitIdentifier || [],
-                        a.component._AddressPlaceRef = a.component._AddressPlaceRef || []
+                syncEditToAddress();
+                scope.$watch("model", function(n, o ) {
+                    if(n && n.id) {
+                        syncEditToAddress();
+                    }
                 })
-                //scope.address = { "$other": flatAddressList };
-
-
-                scope.addressEdit = flatAddressList;
-                scope.model["$other"] = scope.model["$other"] || [];
                 //}
             }
         }
