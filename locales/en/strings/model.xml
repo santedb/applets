@@ -421,8 +421,8 @@
   <string name="ui.model.material.expiryDate">Expiration</string>
   <string name="ui.model.material.expiryDate.hint">Select the regulatory expiration of this product type/material (when the material is no longer used)</string>
   <string name="ui.model.material.isAdministrable">Is Administrable</string>
-  <string name="ui.model.manufacturedMaterial.quantity">Quantity</string>
-  <string name="ui.model.manufacturedMaterial.quantity.hint">Enter the quantity (amount of material) which is in one unit of the product</string>
+  <string name="ui.model.manufacturedMaterial.quantity">Stock Quantity</string>
+  <string name="ui.model.manufacturedMaterial.quantity.hint">Enter the quantity (amount of material) which is in one unit of this product used for ordering stock</string>
   <string name="ui.model.manufacturedMaterial.name">Trade Name</string>
   <string name="ui.model.manufacturedMaterial.gtin">GTIN</string>
   <string name="ui.model.manufacturedMaterial.statusConcept">Status</string>
@@ -433,7 +433,7 @@
   <string name="ui.model.manufacturedMaterial.name.assigned.hint">Enter the common name or trade name for the manufactured product</string>
   <string name="ui.model.manufacturedMaterial.relationship.ManufacturedProduct">Manufacturer</string>
   <string name="ui.model.manufacturedMaterial.relationship.ManufacturedProduct.hint">Select the organization which manufactures this product. This should represent the manufacturer of origin rather than the supplier</string>
-  <string name="ui.model.manufacturedMaterial.relationship.HasGeneralization.quantity">Doses Per</string>
+  <string name="ui.model.manufacturedMaterial.relationship.HasGeneralization.quantity">Contained Quantity</string>
   <string name="ui.model.manufacturedMaterial.relationship.HasGeneralization.quantity.hint">For every one of the current product, how many of the type of material is represented</string>
   <string name="ui.model.material.isAdministrable.hint"><![CDATA[Indicates that the material can be administered to a patient or subject. Examples: 
     <ul><li><code>Enable</code> for medications, vaccines, solutions, medical devices, etc.</li><li><code>Disable</code> for syringes, pill bottles, containers, diluents, etc.</li></ul>]]></string>

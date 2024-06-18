@@ -12,13 +12,14 @@
     </div>
     <div ng-if="scopedObject" ng-controller="MaterialProductController">
         <!-- Note: Change in Version 3 - The Materials here are specializations of holder -->
-        <entity-table id="MaterialProductTable" type="EntityRelationship" search-field="target.name.component.value"
-            default-query="{ 'relationshipType': 'BF9F929A-E7EB-4E5B-B82E-CF44384F0A3B', 'target': scopedObject.id, _viewModel: 'relationship', 'target.determinerConcept': '604CF1B7-8891-49FB-B95F-3E4E875691BC' }"
+        <entity-table id="MaterialProductTable" type="ManufacturedMaterial" search-field="name.component.value"
+            default-query="{ 'relationship[HasGeneralization].target' : scopedObject.id, _viewModel: 'full' }"
             render="{ updatedBy: 'renderUpdatedBy', manufacturer: 'renderManufacturer', gtin: 'renderGtin', quantity: 'renderQuantity', name: 'renderName', statusConcept: 'renderStatusConcept' }"
             i18n-prefix="'ui.model.manufacturedMaterial.'" item-class="{ 'name' : 'w-25', 'updatedBy' : 'w-20' }"
+            default-sort="{ 'modifiedOn' : 'desc' }"
             item-actions="[ 
-                { name: 'edit', action: 'editProduct', demand: '1.3.6.1.4.1.33349.3.1.5.9.2.4.1.1', className: 'btn-primary', icon: 'fa fa-pencil' },  
-                { name: 'delete', action: 'deleteProduct', demand: '1.3.6.1.4.1.33349.3.1.5.9.2.4.1.1', className: 'btn-danger', icon: 'fa fa-trash' },  
+                { name: 'edit', action: 'doEditProduct', demand: '1.3.6.1.4.1.33349.3.1.5.9.2.4.1.1', className: 'btn-primary', icon: 'fa fa-pencil' },  
+                { name: 'delete', action: 'doDeleteProduct', demand: '1.3.6.1.4.1.33349.3.1.5.9.2.4.1.1', className: 'btn-danger', icon: 'fa fa-trash' },  
             ]" actions="[ 
                 { name: 'add', demand: '1.3.6.1.4.1.33349.3.1.5.9.2.4.1.0', action: 'addProduct', className: 'btn-primary', icon: 'fa fa-plus-circle' }
             ]" properties="[ 'name', 'manufacturer', 'quantity', 'gtin', 'statusConcept', 'updatedBy' ]"
@@ -26,13 +27,13 @@
         </entity-table>
 
         <!-- MODAL FOR CREATING A NEW SPECIALIZATION -->
-        <div class="modal" id="createProductModal" data-backdrop="static" role="dialog"
-            aria-labelledby="createProductModalTitle" aria-hidden="true">
+        <div class="modal" id="editProductModal" data-backdrop="static" role="dialog"
+            aria-labelledby="editProductModalTitle" aria-hidden="true">
             <div class="modal-dialog modal-xl" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title" id="uploadProductModalTitle">
-                            <i class="fas fa-pills"></i> {{ 'ui.admin.data.material.newProduct' | i18n }}
+                            <i class="fas fa-pills"></i> {{ 'ui.admin.data.material.editProduct' | i18n }}
                         </h5>
                         <button class="close" type="button" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">
@@ -40,17 +41,33 @@
                             </span>
                         </button>
                     </div>
-                    <form novalidate="novalidate" class="form" ng-submit="createProductMaterial(createProductForm)"
-                        name="createProductForm" autocomplete="off">
-                        {{ newProduct }}
+                    <form novalidate="novalidate" class="form" ng-submit="saveProductMaterial(editProductForm)"
+                        name="editProductForm" autocomplete="off">
                         <div class="modal-body">
                             <div class="container-fluid">
                                 <div class="form-group row">
                                     <div class="col-12">
                                         <div class="alert alert-light">
                                             <h5><i class="fas fa-info-circle"></i> {{
-                                                'ui.admin.data.material.newProduct.help' | i18n }}</h5>
-                                            {{ 'ui.admin.data.material.newProduct.help.text' | i18n }}
+                                                'ui.admin.data.material.editProduct.help' | i18n }}</h5>
+                                            {{ 'ui.admin.data.material.editProduct.help.text' | i18n }}
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="form-group row">
+                                    <label class="col-sm-12 col-md-3 control-label">
+                                        {{ 'ui.model.manufacturedMaterial.relationship.ManufacturedProduct' | i18n }}
+                                        <hint-popover
+                                            hint-title="ui.model.manufacturedMaterial.relationship.ManufacturedProduct" />
+                                    </label>
+                                    <div class="col-sm-12 col-md-9">
+                                        <entity-search type="'Organization'"
+                                            ng-model="editProduct.relationship.ManufacturedProduct[0].holder"
+                                            filter="{ industryConcept: '33b40c3c-c0c0-48b6-be74-0881d9c00ee6' }"
+                                            class="form-control" required="required" name="manufacturer" />
+                                        <div class="text-danger" ng-if="editProductForm.manufacturer.$error['required']">
+                                            <i class="fas fa-exclamation-triangle"></i> {{ 'ui.error.required' | i18n }}
                                         </div>
                                     </div>
                                 </div>
@@ -60,26 +77,21 @@
                                         <hint-popover hint-title="ui.model.manufacturedMaterial.name.assigned" />
                                     </label>
                                     <div class="col-sm-12 col-md-9">
-                                        <input type="text" ng-model="newProduct.name.Assigned[0].component.$other[0]"
+                                        <input type="text" ng-model="editProduct.name.Assigned[0].component.$other[0]"
                                             required="required" name="tradeName" maxlength="128" class="form-control" />
-                                        <div class="text-danger" ng-if="newProductForm.tradeName.$error['required']">
+                                        <div class="text-danger" ng-if="editProductForm.tradeName.$error['required']">
                                             <i class="fas fa-exclamation-triangle"></i> {{ 'ui.error.required' | i18n }}
                                         </div>
                                     </div>
                                 </div>
-                                <div class="form-group row">
-                                    <label class="col-sm-12 col-md-3 control-label">
-                                        {{ 'ui.model.manufacturedMaterial.relationship.ManufacturedProduct' | i18n }}
-                                        <hint-popover
-                                            hint-title="ui.model.manufacturedMaterial.relationship.ManufacturedProduct" />
-                                    </label>
+                                <div class="form-group row" ng-repeat="dmn in idDomains track by $index">
+                                    <label class="col-sm-12 col-md-3 control-label">{{ dmn.name }}</label>
                                     <div class="col-sm-12 col-md-9">
-                                        <entity-search multiple="mutliple" type="'Organization'"
-                                            ng-model="newProduct.relationship.ManufacturedProduct[0].holder"
-                                            filter="{ industryConcept: '33b40c3c-c0c0-48b6-be74-0881d9c00ee6' }"
-                                            class="form-control" required="required" name="manufacturer" />
-                                        <div class="text-danger" ng-if="newProductForm.manufacturer.$error['required']">
-                                            <i calss="fas fa-exclamation-triangle"></i> {{ 'ui.error.required' | i18n }}
+                                        <input type="text" ng-pattern="dmn.validation"
+                                            ng-model="editProduct.identifier[dmn.domainName][0].value" placeholder="{{dmn._exampleValue}}"
+                                            class="form-control" name="id{{$index}}" />
+                                        <div class="text-danger" ng-if="editProductForm['id' + $index].$error['pattern']">
+                                            <i class="fas fa-exclamation-triangle"></i> {{ 'ui.error.pattern' | i18n }}
                                         </div>
                                     </div>
                                 </div>
@@ -93,14 +105,17 @@
                                     <div class="col-sm-12 col-md-3">
                                         <div class="input-group">
                                             <input type="number" min="1" max="100000" class="form-control w-50"
-                                                ng-model="newProduct.relationship.HasGeneralization[0].quantity"
-                                                name="quantityPer" />
+                                                ng-model="editProduct.relationship.HasGeneralization[0].quantity"
+                                                name="quantityPer" required="required" />
                                             <div class="input-group-append">
                                                 <span class="input-group-text">
                                                     {{ 'ui.manufacturedMaterial.dose' | i18n }} {{
                                                     scopedObject.name.Assigned | name }}
                                                 </span>
                                             </div>
+                                        </div>
+                                        <div class="text-danger" ng-if="editProductForm.quantityPer.$error['required']">
+                                            <i class="fas fa-exclamation-triangle"></i> {{ 'ui.error.required' | i18n }}
                                         </div>
                                     </div>
                                 </div>
@@ -111,12 +126,12 @@
                                     </label>
                                     <div class="col-md-9 col-sm-12">
                                         <div class="input-group">
-                                            <input class="form-control" ng-model="newProduct.quantity" required="required" type="number" min="0.00" 
+                                            <input class="form-control" ng-model="editProduct.quantity" required="required" type="number" min="0.00" 
                                                 name="quantity" />
                                             <concept-select class="form-control" required="required" name="quantityConcept"
-                                                concept-set="'DosingUnitOfMeasure'" ng-model="newProduct.quantityConcept" />
+                                                concept-set="'StockUnitOfMeasure'" ng-model="editProduct.quantityConcept" />
                                         </div>
-                                        <div class="text-danger" ng-if="newProductForm.quantityConcept.$error['required'] || newProductForm.quantity.$error['required']">
+                                        <div class="text-danger" ng-if="editProductForm.quantityConcept.$error['required'] || editProductForm.quantity.$error['required']">
                                             <i class="fas fa-exclamation-triangle"></i> {{ 'ui.error.required' | i18n }}
                                         </div>
                                     </div>
@@ -127,9 +142,9 @@
                         <div class="modal-footer">
                             <button class="btn btn-secondary" type="button" data-dismiss="modal" data-toggle="none">
                                 <i class="fa fa-times"></i> {{ 'ui.action.cancel' | i18n }}</button>
-                            <button type="submit" class="btn btn-primary" id="btnSaveLibrary"
-                                ng-disabled="newProductForm.$invalid">
-                                <i class="fa fa-check"></i> {{ 'ui.action.create' | i18n }} </button>
+                            <button type="submit" class="btn btn-primary" id="btnSaveMaterialDefn"
+                                ng-disabled="editProductForm.$invalid">
+                                <i class="fa fa-check"></i> {{ 'ui.action.save' | i18n }} </button>
                         </div>
                     </form>
                 </div>

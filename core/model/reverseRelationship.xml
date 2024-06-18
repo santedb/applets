@@ -59,4 +59,23 @@
     <property name="relationship" behavior="never"/>
 
   </type>
+
+  <type type="ManufacturedMaterial" all="true">
+    <property name="classConcept"/>
+    <property name="classConceptModel" behavior="always" ref="Concept"/>
+   <property name="name" all="true"  behavior="always">
+      <property name="*" ref="EntityName"/>
+    </property>
+    <property name="address" all="true"  behavior="always">
+      <property name="*" ref="EntityAddress"/>
+    </property>
+    <property name="identifier" all="true"  behavior="always">
+      <property name="*" ref="EntityIdentifier"/>
+    </property>
+    <property name="telecom" all="true" behavior="always">
+      <property name="*" ref="EntityTelecom"/>
+    </property>
+    <property name="relationship" behavior="never"/>
+    <property name="quantityConceptModel" behavior="always" />
+  </type>
 </ViewModel>

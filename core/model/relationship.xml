@@ -43,7 +43,12 @@
         <property name="identifier" all="true"  behavior="always">
             <property name="*" ref="EntityIdentifier"/>
         </property>
+        <property name="quantityConceptModel" behavior="always" ref="Concept" />
         <property name="relationship" behavior="always">
+            <property name="HasGeneralization" all="true">
+              <property name="quantity" />
+              <property name="targetModel" ref="Entity" behavior="always" />
+            </property>
             <property name="*" all="true" ref="EntityRelationship" />
         </property>
         <property name="quantityConceptModel" behavior="always" />
