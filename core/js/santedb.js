@@ -2926,6 +2926,7 @@ function SanteDBWrapper() {
      * @property {ResourceWrapper} foreignDataMap Functions for interacting with {@link ForeignDataMap}
      * @property {ResourceWrapper} appletSolution Functions for interacting with system applet solutions
      * @property {ResourceWrapper} applet Functions for interacting with system applets
+     * @property {ResourceWrapper} conceptRelationship Functions for interacting with concept relationships
      * 
      */
     function ResourceApi() {
@@ -3607,6 +3608,17 @@ function SanteDBWrapper() {
             resource: "Backup",
             accept: "application/json",
             api: _ami
+        });
+
+        /** 
+         * @type {ResourceWrapper}
+         * @memberOf SanteDBWrapper.resources
+         * @summary Wrapper for concept relationships
+         */
+        this.conceptRelationship = new ResourceWrapper({
+            resource: "ConceptRelationship",
+            accept: _viewModelJsonMime,
+            api: _hdsi
         });
 
     };

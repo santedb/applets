@@ -33,7 +33,10 @@
     <property name="quantity" all="true"/>
     <property name="strength" all="true"/>
   </type>
-
+  <type type="ConceptRelationship" all="true">
+    <property name="relationshipTypeModel" behavior="always" />
+    <property name="targetConceptModel" behavior="always" />
+  </type>
     <type type="ManufacturedMaterial" all="true">
         <property name="classConcept"/>
         <property name="classConceptModel" behavior="always" ref="Concept"/>

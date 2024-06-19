@@ -10,19 +10,19 @@
     <div ng-if="!scopedObject">
         <i class="fas fa-circle-notch fa-spin"></i> {{ 'ui.wait' | i18n }}
     </div>
-    <div ng-if="scopedObject" ng-controller="MaterialProductController">
+    <div ng-if="scopedObject" class="m-2" ng-controller="MaterialProductController">
         <!-- Note: Change in Version 3 - The Materials here are specializations of holder -->
         <entity-table id="MaterialProductTable" type="ManufacturedMaterial" search-field="name.component.value"
-            default-query="{ 'relationship[HasGeneralization].target' : scopedObject.id, _viewModel: 'full' }"
-            render="{ updatedBy: 'renderUpdatedBy', manufacturer: 'renderManufacturer', gtin: 'renderGtin', quantity: 'renderQuantity', name: 'renderName', statusConcept: 'renderStatusConcept' }"
-            i18n-prefix="'ui.model.manufacturedMaterial.'" item-class="{ 'name' : 'w-25', 'updatedBy' : 'w-20' }"
+            default-query="{ 'relationship[HasGeneralization].target' : scopedObject.id, _viewModel: 'fastview', 'determinerConcept': '604CF1B7-8891-49FB-B95F-3E4E875691BC' }"
+            render="{ typeConcept: 'renderTypeConcept', updatedBy: 'renderUpdatedBy', manufacturer: 'renderManufacturer', gtin: 'renderGtin', quantity: 'renderQuantity', name: 'renderName', statusConcept: 'renderStatusConcept' }"
+            i18n-prefix="'ui.model.manufacturedMaterial.'" item-class="{ 'name' : 'w-20', 'updatedBy' : 'w-20' }"
             default-sort="{ 'modifiedOn' : 'desc' }"
             item-actions="[ 
                 { name: 'edit', action: 'doEditProduct', demand: '1.3.6.1.4.1.33349.3.1.5.9.2.4.1.1', className: 'btn-primary', icon: 'fa fa-pencil' },  
                 { name: 'delete', action: 'doDeleteProduct', demand: '1.3.6.1.4.1.33349.3.1.5.9.2.4.1.1', className: 'btn-danger', icon: 'fa fa-trash' },  
             ]" actions="[ 
                 { name: 'add', demand: '1.3.6.1.4.1.33349.3.1.5.9.2.4.1.0', action: 'addProduct', className: 'btn-primary', icon: 'fa fa-plus-circle' }
-            ]" properties="[ 'name', 'manufacturer', 'quantity', 'gtin', 'statusConcept', 'updatedBy' ]"
+            ]" properties="[ 'name', 'typeConcept', 'manufacturer', 'quantity', 'gtin', 'statusConcept', 'updatedBy' ]"
             item-supplement="[ loadManufacturer ]">
         </entity-table>
 
@@ -56,12 +56,12 @@
                                 </div>
                                 
                                 <div class="form-group row">
-                                    <label class="col-sm-12 col-md-3 control-label">
+                                    <label class="col-md-12 col-lg-3 control-label">
                                         {{ 'ui.model.manufacturedMaterial.relationship.ManufacturedProduct' | i18n }}
                                         <hint-popover
                                             hint-title="ui.model.manufacturedMaterial.relationship.ManufacturedProduct" />
                                     </label>
-                                    <div class="col-sm-12 col-md-9">
+                                    <div class="col-md-12 col-lg-9">
                                         <entity-search type="'Organization'"
                                             ng-model="editProduct.relationship.ManufacturedProduct[0].holder"
                                             filter="{ industryConcept: '33b40c3c-c0c0-48b6-be74-0881d9c00ee6' }"
@@ -72,21 +72,25 @@
                                     </div>
                                 </div>
                                 <div class="form-group row">
-                                    <label class="col-sm-12 col-md-3 control-label">
-                                        {{ 'ui.model.manufacturedMaterial.name.assigned' | i18n }}
-                                        <hint-popover hint-title="ui.model.manufacturedMaterial.name.assigned" />
+                                    <label class="col-md-12 col-lg-3 control-label">
+                                        {{ 'ui.model.manufacturedMaterial.typeConcept' | i18n }}
+                                        <hint-popover
+                                            hint-title="ui.model.manufacturedMaterial.typeConcept" />
                                     </label>
-                                    <div class="col-sm-12 col-md-9">
-                                        <input type="text" ng-model="editProduct.name.Assigned[0].component.$other[0]"
-                                            required="required" name="tradeName" maxlength="128" class="form-control" />
-                                        <div class="text-danger" ng-if="editProductForm.tradeName.$error['required']">
+                                    <div class="col-md-12 col-lg-9">
+                                        <entity-search type="'Concept'"
+                                            ng-model="editProduct.typeConcept"
+                                            search-field="'name.value'"
+                                            filter="{ 'relationship[MemberOf].targetConcept' : scopedObject.typeConcept }"
+                                            class="form-control" required="required" name="editTypeConcept" />
+                                        <div class="text-danger" ng-if="editProductForm.editTypeConcept.$error['required']">
                                             <i class="fas fa-exclamation-triangle"></i> {{ 'ui.error.required' | i18n }}
                                         </div>
                                     </div>
                                 </div>
                                 <div class="form-group row" ng-repeat="dmn in idDomains track by $index">
-                                    <label class="col-sm-12 col-md-3 control-label">{{ dmn.name }}</label>
-                                    <div class="col-sm-12 col-md-9">
+                                    <label class="col-md-12 col-lg-3 control-label">{{ dmn.name }}</label>
+                                    <div class="col-md-12 col-lg-9">
                                         <input type="text" ng-pattern="dmn.validation"
                                             ng-model="editProduct.identifier[dmn.domainName][0].value" placeholder="{{dmn._exampleValue}}"
                                             class="form-control" name="id{{$index}}" />
@@ -96,13 +100,13 @@
                                     </div>
                                 </div>
                                 <div class="form-group row">
-                                    <label class="col-sm-12 col-md-3 control-label">
+                                    <label class="col-md-12 col-lg-3 control-label">
                                         {{ 'ui.model.manufacturedMaterial.relationship.HasGeneralization.quantity' |
                                         i18n }}
                                         <hint-popover
                                             hint-title="ui.model.manufacturedMaterial.relationship.HasGeneralization.quantity" />
                                     </label>
-                                    <div class="col-sm-12 col-md-3">
+                                    <div class="col-md-12 col-lg-9">
                                         <div class="input-group">
                                             <input type="number" min="1" max="100000" class="form-control w-50"
                                                 ng-model="editProduct.relationship.HasGeneralization[0].quantity"
@@ -120,11 +124,11 @@
                                     </div>
                                 </div>
                                 <div class="form-group row">
-                                    <label class="col-md-3 col-sm-12 control-label required">
+                                    <label class="col-lg-3 col-md-12 control-label required">
                                         {{ 'ui.model.manufacturedMaterial.quantity' | i18n }} <hint-popover
                                             hint-title="ui.model.manufacturedMaterial.quantity" />
                                     </label>
-                                    <div class="col-md-9 col-sm-12">
+                                    <div class="col-lg-9 col-md-12">
                                         <div class="input-group">
                                             <input class="form-control" ng-model="editProduct.quantity" required="required" type="number" min="0.00" 
                                                 name="quantity" />

@@ -53,4 +53,7 @@
   <viewModel key="relationship">
     <definition>/org.santedb.core/model/relationship.xml</definition>
   </viewModel>
+    <viewModel key="concept">
+    <definition>/org.santedb.core/model/concept.xml</definition>
+  </viewModel>
 </AppletManifest>

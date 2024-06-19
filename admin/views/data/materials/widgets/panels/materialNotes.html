@@ -24,7 +24,6 @@
     <div ng-controller="MaterialWidgetController">
         <form ng-if="panel.view === 'Edit'" novalidate="novalidate" name="panel.editForm" ng-submit="saveMaterial(panel.editForm)" autocomplete="off">
             <ul class="list-group overflow-auto" ng-init="editObject._noteLength = editObject.note.length || 0">
-                <li>{{ editObject._noteLength }} </li>
                 <li class="list-group-item" ng-repeat="note in editObject.note track by $index"
                     ng-if="$index !== editObject._noteLength">
                     <strong>{{ note.authorModel.name | name }}</strong>

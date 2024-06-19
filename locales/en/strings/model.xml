@@ -421,6 +421,8 @@
   <string name="ui.model.material.expiryDate">Expiration</string>
   <string name="ui.model.material.expiryDate.hint">Select the regulatory expiration of this product type/material (when the material is no longer used)</string>
   <string name="ui.model.material.isAdministrable">Is Administrable</string>
+  <string name="ui.model.manufacturedMaterial.typeConcept">Product Code</string>
+  <string name="ui.model.manufacturedMaterial.typeConcept.hint">Select the classification / type code for this material (if it is different than the parent kind)</string>
   <string name="ui.model.manufacturedMaterial.quantity">Stock Quantity</string>
   <string name="ui.model.manufacturedMaterial.quantity.hint">Enter the quantity (amount of material) which is in one unit of this product used for ordering stock</string>
   <string name="ui.model.manufacturedMaterial.name">Trade Name</string>
@@ -437,7 +439,13 @@
   <string name="ui.model.manufacturedMaterial.relationship.HasGeneralization.quantity.hint">For every one of the current product, how many of the type of material is represented</string>
   <string name="ui.model.material.isAdministrable.hint"><![CDATA[Indicates that the material can be administered to a patient or subject. Examples: 
     <ul><li><code>Enable</code> for medications, vaccines, solutions, medical devices, etc.</li><li><code>Disable</code> for syringes, pill bottles, containers, diluents, etc.</li></ul>]]></string>
-
+  <string name="ui.model.manufacturedMaterial.product">Product</string>
+  <string name="ui.model.manufacturedMaterial.lotNumber">Lot/Batch</string>
+  <string name="ui.model.manufacturedMaterial.lotNumber.hint">The lot or batch number of the specified product type</string>
+  <string name="ui.model.manufacturedMaterial.expiry">Expiry Date</string>
+  <string name="ui.model.manufacturedMaterial.expiry.hint">The latest date where the material maintains its potentcy</string>
+  <string name="ui.model.manufacturedMaterial.relationship.Instance">Instance of Product</string>
+  <string name="ui.model.manufacturedMaterial.relationship.Instance.hint">Select the product which this lot number is an instance of</string>
   <string name="ui.admin.facilities.edit.core.title">Facility</string>
   <string name="ui.model.facility.id">Unique Identifier</string>
   <string name="org.santedb.widget.admin.tab.facility.profile">Facility Profile</string>
@@ -824,4 +832,8 @@
   <string name="ui.model.backup.password.hint">The passphrase for the backup. This passphrase will need to be entered to restore the backup</string>
   <string name="ui.model.backup.asset.name">Name</string>
   <string name="ui.model.backup.asset.classId">Classification/Owner</string>
+
+  <string name="ui.model.conceptRelationship.mnemonic">Related Concept</string>
+  <string name="ui.model.conceptRelationship.name">Name</string>
+  <string name="ui.model.conceptRelationship.relationshipType">Relationship</string>
 </resources>

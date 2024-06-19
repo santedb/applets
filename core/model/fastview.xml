@@ -238,7 +238,9 @@
     <property name="determinerConceptModel" behavior="never"/>
     <property name="statusConceptModel" behavior="never"/>
     <property name="name" all="true" ref="EntityName" behavior="always"/>
-    <property name="identifier" all="true" ref="EntityIdentifier" behavior="always"/>
+    <property name="identifier" all="true" behavior="always">
+      <property name="GTIN" all="true" />
+      </property>
     <property name="typeConceptModel" behavior="always"/>
     <property name="relationship" all="true">
       <property name="*" all="true" ref="EntityRelationship"/>

@@ -82,7 +82,7 @@
                                 ng-class="{ 'disabled' : !config.realm.address }">
                                 <i class="fa fa-wifi"></i> {{ 'ui.config.network.title' | i18n }}</a>
                         </li>
-                        <li role="presentation" class="nav-item" ng-repeat="widget in widgets">
+                        <li role="presentation" class="nav-item" ng-repeat="widget in widgets track by $index">
                             <a class="nav-link" href="javascript:" data-target="#{{widget.htmlId}}Tab" data-toggle="tab"
                                 ng-class="{ 'disabled' : !config.realm.address }">
                                 <i class="{{widget.icon}}"></i> {{ widget.name | i18n }}</a>

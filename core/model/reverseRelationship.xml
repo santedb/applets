@@ -60,6 +60,11 @@
 
   </type>
 
+  <type type="ConceptRelationship" all="true">
+    <property name="relationshipTypeModel" behavior="always" />
+    <property name="sourceModel" behavior="always" />
+  </type>
+
   <type type="ManufacturedMaterial" all="true">
     <property name="classConcept"/>
     <property name="classConceptModel" behavior="always" ref="Concept"/>

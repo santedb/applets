@@ -111,6 +111,10 @@ angular.module("santedb").controller("MaterialWidgetController", ["$scope", "$ro
         }
     }
 
+    $scope.renderTypeConcept = function(r) {
+        return SanteDB.display.renderConcept(r.typeConceptModel);
+    }
+
     $scope.renderStatusConcept = function (r) {
         switch (r.statusConcept) {
             case StatusKeys.Active:
@@ -175,8 +179,10 @@ angular.module("santedb").controller("MaterialWidgetController", ["$scope", "$ro
         }
     }
 
-    $scope.doEditProduct = async function(id) {
+    $scope.doEditProduct = async function(id, idx) {
         try {
+            SanteDB.display.buttonWait(`#ManufacturedMaterialedit${idx}`, true);
+
             var product = await SanteDB.resources.manufacturedMaterial.getAsync(id, "full");
             product.identifier = product.identifier || {};
             product.identifier.GTIN = product.identifier.GTIN || [ { value: ""} ];
@@ -190,11 +196,15 @@ angular.module("santedb").controller("MaterialWidgetController", ["$scope", "$ro
         catch(e) {
             $rootScope.errorHandler(e);
         }
+        finally {
+            SanteDB.display.buttonWait(`#ManufacturedMaterialedit${idx}`, false);
+        }
     }
 
-    $scope.doDeleteProduct = async function(id) {
+    $scope.doDeleteProduct = async function(id, idx) {
         if(confirm(SanteDB.locale.getString("ui.admin.data.material.product.delete.confirm"))) {
             try {
+                SanteDB.display.buttonWait(`#ManufacturedMaterialdelete${idx}`, true);
                 await SanteDB.resources.manufacturedMaterial.deleteAsync(id);
                 $("#MaterialProductTable").attr("newQueryId", true);
                 $("#MaterialProductTable table").DataTable().draw();
@@ -202,7 +212,9 @@ angular.module("santedb").controller("MaterialWidgetController", ["$scope", "$ro
             }
             catch(e) {
                 toastr.success(SanteDB.locale.getString("ui.admin.data.material.product.delete.error", { error: e.message }));
-
+            }
+            finally {
+                SanteDB.display.buttonWait(`#ManufacturedMaterialdelete${idx}`, false);
             }
         }
     }
@@ -249,6 +261,119 @@ angular.module("santedb").controller("MaterialWidgetController", ["$scope", "$ro
             });
 
             $("#editProductModal").modal("show");
+        });
+    }
+}]).controller('MaterialLotController', ["$scope", "$rootScope", "$timeout", function($scope, $rootScope, $timeout) {
+
+    
+    async function initialize() {
+        try {
+            var idDomains = await SanteDB.resources.identityDomain.findAsync({ scope: EntityClassKeys.ManufacturedMaterial });
+            $timeout(() => $scope.idDomains = idDomains.resource);
+        }
+        catch (e) {
+            console.warn("Error loading ID domains for widget: ", e);
+        }
+    }
+    initialize();
+    
+    $scope.$watch("editLot.relationship.Instance[0].holder", async function(n, o) {
+        if(n && n != o) {
+            try {
+                var prod = await SanteDB.resources.manufacturedMaterial.getAsync(n);
+                var form = angular.element("form[name='editLotForm']").scope().editLotForm;
+
+                // Propagate the necessary properties
+                $timeout(() => {
+                    $scope.editLot.formConcept = prod.formConcept;
+                    $scope.editLot.typeConcept = prod.typeConcept;
+                    $scope.editLot.quantityConcept = prod.quantityConcept;
+                    $scope.editLot.quantity = 1;
+                    if(prod.identifier && prod.identifier.GTIN && form.idGTIN.$pristine) {
+                        $scope.editLot.identifier.GTIN[0].value = prod.identifier.GTIN[0].value;
+                    }
+                    if(form.tradeName.$pristine) {
+                        $scope.editLot.name.Assigned[0].component.$other[0] = prod.name.Assigned[0].component.$other[0];
+                    }
+                });
+            }
+            catch(e) {
+                console.warn("Error copying product details:" , e);
+            }
+        }
+    })
+    $scope.doEditLot = async function(id, idx) {
+        try {
+            SanteDB.display.buttonWait(`#ManufacturedMaterialedit${idx}`, true);
+
+            var product = await SanteDB.resources.manufacturedMaterial.getAsync(id, "full");
+            var manufacturer = await SanteDB.resources.entityRelationship.findAsync({ "target": id, "relationshipType": EntityRelationshipTypeKeys.ManufacturedProduct, _count: 1, _includeTotal: 'false' }, "fastview");
+            product.relationship.ManufacturedProduct = [ manufacturer.resource[0] ];
+            $timeout(() => {
+                $scope.editLot = product;
+                $("#editLotModal").modal("show");
+            });
+        }
+        catch(e) {
+            $rootScope.errorHandler(e);
+        }
+        finally {
+            SanteDB.display.buttonWait(`#ManufacturedMaterialedit${idx}`, false);
+        }
+    }
+
+    $scope.doDeleteLot = async function(id, idx) {
+        if(confirm(SanteDB.locale.getString("ui.admin.data.material.lot.delete.confirm"))) {
+            try {
+                SanteDB.display.buttonWait(`#ManufacturedMaterialdelete${idx}`, true);
+                await SanteDB.resources.manufacturedMaterial.deleteAsync(id);
+                $("#MaterialLotTable").attr("newQueryId", true);
+                $("#MaterialLotTable table").DataTable().draw();
+                toastr.success(SanteDB.locale.getString("ui.admin.data.material.product.delete.success"));
+            }
+            catch(e) {
+                toastr.success(SanteDB.locale.getString("ui.admin.data.material.product.delete.error", { error: e.message }));
+            }
+            finally {
+                SanteDB.display.buttonWait(`#ManufacturedMaterialdelete${idx}`, false);
+            }
+        }
+    }
+
+    $scope.addLot = function () {
+
+        $timeout(() => {
+            var newId = SanteDB.application.newGuid();
+            $scope.editLot = new ManufacturedMaterial({
+                id: newId,
+                determinerConcept: DeterminerKeys.Specific,
+                statusConcept: StatusKeys.Active,
+                identifier: {
+                    GTIN: [
+                        { value: ""}
+                    ]
+                },
+                name: {
+                    Assigned: [
+                        {
+                            component: {
+                                $other: [$scope.scopedObject.name.Assigned[0].component.$other[0]]
+                            }
+                        }
+                    ]
+                },
+                relationship: {
+                    Instance: [
+                        {
+                            holder: null,
+                            quantity: 1,
+                            target: newId
+                        }
+                    ]
+                }
+            });
+
+            $("#editLotModal").modal("show");
         });
     }
 }]);

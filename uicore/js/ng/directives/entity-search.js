@@ -168,7 +168,7 @@ angular.module('santedb-lib')
             }
 
             if (selection.identifier) {
-                retVal += `<small class="ml-2 d-none d-sm-inline badge badge-info"><i class="fas fa-id-card"></i> ${SanteDB.display.renderIdentifier(selection.identifier)}</small>`;
+                retVal += `<small class="ml-2 d-none d-sm-inline badge badge-info"><i class="fas fa-id-card"></i> ${SanteDB.display.renderIdentifier(selection.identifier, null, true)}</small>`;
             }
 
             return retVal;

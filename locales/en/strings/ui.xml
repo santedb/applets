@@ -313,6 +313,8 @@
       <string name="ui.table.search.field.label">Search by label</string>
       <string name="ui.table.search.field.description">Search by description</string>
       <string name="ui.table.search.field.target.name.component.value">Search by name</string>
+      <string name="ui.table.search.field.targetConcept.name.value">Search by Target</string>
+      <string name="ui.table.search.field.source.name.value">Search by Source</string>
       <!-- Common --> 
       <string name="ui.common.interop.hl7v2">HL7v2</string>
       <string name="ui.common.interop.hl7v3">HL7v3/CDA</string>

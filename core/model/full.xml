@@ -920,28 +920,8 @@
     <property name="mnemonic" behavior="always" />
     <property name="id" behavior="always" />
     <property name="statusConcept" />
-    <property name="statusConceptModel" behavior="always">
-      <property name="mnemonic" />
-    </property>
     <property name="conceptClass" />
-    
-    <property name="conceptClassModel" behavior="always" ref="Concept" />
     <property name="conceptSet" />
-    <property name="conceptSetModel" behavior="always" ref="ConceptSet" />
-    <property name="relationship" behavior="always">
-      <property name="*" all="true">
-        <property name="relationshipTypeModel" behavior="always"/>
-        <property name="targetConcept" />
-        <property name="targetConceptModel"/>
-        </property>
-      </property>
-    <property name="referenceTerm" behavior="always" all="true">
-      <property name="*" all="false">
-        <property name="relationshipType"/>
-        <property name="term" behavior="always"/>
-        <property name="termModel" behavior="always" ref="ReferenceTerm" />
-      </property>
-    </property>
   </type>
   <type type="ConceptSet" all="true">
     <property name="compose" behavior="always" all="true">
