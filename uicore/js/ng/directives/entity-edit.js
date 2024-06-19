@@ -111,27 +111,36 @@ angular.module('santedb-lib')
                 }
 
                
-                function syncEditToAddress() {
-                    var flatAddressList = scope.model.$other || [];
-                    Object.keys(scope.model).filter(key => key != "$other").forEach(function (key) {
-                        var address = scope.model[key];
-                        
-                        address.forEach(addr => {
-                        if ((!addr.useModel || !addr.useModel.id) && key != '$other')
-                            SanteDB.resources.concept.findAsync({ mnemonic: key })
-                                .then(function (bundle) {
-                                    if (bundle.resource && bundle.resource.length > 0)
-                                        addr.useModel = addr.resource[0];
-                                });
+                function fixAddressUse(addr) {
+                    if ((!addr.useModel || !addr.useModel.id) && key != '$other')
+                        SanteDB.resources.concept.findAsync({ mnemonic: key })
+                            .then(function (bundle) {
+                                if (bundle.resource && bundle.resource.length > 0)
+                                    addr.useModel = addr.resource[0];
                             });
+                        };
 
-                        if (Array.isArray(address))
-                            address.forEach((n) => flatAddressList.push(n));
-                        else
-                            flatAddressList.push(address);
-                    });
-    
+                function syncEditToAddress() {
+
+                    var flatAddressList = [];
+                    if(Array.isArray(scope.model)) {
+                        flatAddressList = scope.model;
+                    }
+                    else {
+                        flatAddressList = scope.model.$other || [];
+
+                        // Is the address we're editing already an array?
+                        Object.keys(scope.model).filter(key => key != "$other").forEach(function (key) {
+                            var address = scope.model[key];
+                            if (Array.isArray(address))
+                                address.forEach((n) => flatAddressList.push(n));
+                            else
+                                flatAddressList.push(address);
+                        });
+                    }
+
                     flatAddressList.forEach(a => {
+                        fixAddressUse(a);
                         a.component = a.component || {};
                         a.component.Country = a.component.Country || [],
                             a.component.State = a.component.State || [],

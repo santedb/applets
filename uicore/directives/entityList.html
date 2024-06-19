@@ -31,10 +31,10 @@
                         <div class="btn-group">
                             <button class="btn btn-info" ng-class="{ 'active' : _display == 'list'}"
                                 ng-click="_display = 'list'; queryControl.resultsPerPage = 5"><i
-                                    class="fas fa-fw fa-th-list"></i></button>
+                                    class="fas fa-fw fa-th-list m-1"></i></button>
                             <button class="btn btn-info" ng-class="{ 'active' : _display == 'grid'}"
                                 ng-click="_display = 'grid'; queryControl.resultsPerPage = 9"><i
-                                    class="fas fa-fw fa-th"></i></button>
+                                    class="fas fa-fw fa-th m-1"></i></button>
                         </div>
                     </div>
                 </div>
@@ -104,10 +104,10 @@
 
     <!-- The following is used as a template for each of the list items 
         xg-* is replaced with ng-* when injecting the HTML into the template-->
-    <div class="d-none" id="listTemplate">
+    <div class="d-none" id="listTemplate"> 
         <div class="card $itemClass"
-            xg-class="::{ 'col-xs-12 col-lg-6 col-xl-4' : _display != 'list', 'col-12' : _display == 'list' }"
-            xg-repeat="item in results.resource track by $index">
+            xg-class="{ 'col-xs-12 col-lg-6 col-xl-4' : _display != 'list', 'col-12' : _display == 'list' }"
+            xg-repeat="item in results.resource track by $index">         
             $template
             <div class="card-footer" xg-if="itemActions">
                 <div class="btn-group float-right">
