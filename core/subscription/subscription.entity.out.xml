@@ -19,13 +19,17 @@
  - User: fyfej
  - Date: 2023-5-19
  -->
-<SubscriptionDefinition xmlns="http://santedb.org/subscription" name="ui.subscription.act.out"  uuid="81b65812-c14e-4bb4-b7a1-ca7bcee83dbf" resource="Entity">
+<SubscriptionDefinition xmlns="http://santedb.org/subscription" name="ui.subscription.entity.out"  uuid="81b65812-c14e-4bb4-b7a1-ca7bcee83dbf" resource="Entity">
+  <!-- DOWNLOADS ALL ENTITIES WHERE:
+    * The ENTITY is assigned to an act which DID occur in my facility and 
+    * The ENTITY is not assigned to my facility
+    -->
   <server>
     <definition invariant="npgsql">
       <![CDATA[
      SELECT * FROM 
 	    ENT_VRSN_TBL 
-        INNER JOIN ENT_TBL USING (ENT_ID)
+      INNER JOIN ENT_TBL USING (ENT_ID)
     WHERE
 	    OBSLT_UTC IS NULL 
 	    AND ENT_ID IN (
@@ -54,7 +58,7 @@
     WHERE
 	    OBSLT_UTC IS NULL 
 	    AND ENT_ID IN (
-		    WITH cte_ents AS ( -- ALL ENTITIES ASSIGNED TO MY FACILITY
+		    WITH cte_ents AS ( -- ALL ENTITIES NOT ASSIGNED TO MY FACILITY
 			    SELECT SRC_ENT_ID
 			    FROM
 				    ENT_REL_TBL

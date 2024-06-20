@@ -81,6 +81,7 @@
     <property name="classification" all="true"/>
     <property name="relationshipRole" all="true"/>
   </type>
+  
   <type type="ActRelationship" all="false">
     <property name="source" all="true"/>
     <property name="target" all="true"/>

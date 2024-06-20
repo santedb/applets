@@ -392,6 +392,23 @@ async function prepareEntityForSubmission(entity) {
                     addrItem.component = addrItem.component || {};
 
                     if (addrItem.component) {
+                        // If the component contains a reference to a place copy the place data elements
+                        if(addrItem.component._AddressPlaceRef && addrItem.component._AddressPlaceRef.length > 0 &&
+                            addrItem.component._AddressPlaceRef[0] !== "")
+                        {
+                            try {
+                                var pr = await SanteDB.resources.place.getAsync(addrItem.component._AddressPlaceRef[0], 'fastview');
+                                var copyAddress = pr.address.Direct || pr.address.PhysicalVisit;
+                                Object.keys(copyAddress[0].component).forEach(k => {
+                                    if(!addrItem.component[k] || addrItem.component[k].length == 0) {
+                                        addrItem.component[k] = copyAddress[0].component[k];
+                                    }
+                                });
+                            }
+                            catch(e) {
+                                console.warn("Error cascading address place reference ", e);
+                            }
+                        }
                         Object.keys(addrItem.component).forEach(o => {
                             if (!Array.isArray(addrItem.component[o])) {
                                 if (typeof addrItem.component[o] === 'string') {
@@ -418,7 +435,14 @@ async function prepareEntityForSubmission(entity) {
             }
         });
         await Promise.all(promises);
-        entity.address = { "$other": addressList };
+
+        // Ensure that the addresses are placed back in the correct paths
+        entity.address = {};
+        addressList.forEach(addr => {
+            var useKey = Object.keys(AddressUseKeys).find(o=>AddressUseKeys[o] == addr.use) || '$other';
+            entity.address[useKey] = entity.address[useKey] || [];
+            entity.address[useKey].push(addr);
+        });
     }
     if (entity.name) {
         var nameList = [];
@@ -455,7 +479,12 @@ async function prepareEntityForSubmission(entity) {
             })
 
         });
-        entity.name = { "$other": nameList };
+        entity.name = { };
+        nameList.forEach(name => {
+            var useKey = Object.keys(NameUseKeys).find(o=>NameUseKeys[o] == name.use) || '$other';
+            entity.name[useKey] = entity.name[useKey] || [];
+            entity.name[useKey].push(name);
+        });
     }
     if(entity.identifier) // strip out empty identifiers
     {
