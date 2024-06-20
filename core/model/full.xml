@@ -302,11 +302,20 @@
     <property name="name" all="true" behavior="always">
       <property name="*" ref="EntityName" />
     </property>
-    <property name="identifier" all="true" ref="EntityIdentifier" behavior="always" />
+    <property name="identifier" all="true">
+      <property name="*" all="true" ref="EntityIdentifier" />
+    </property>
     <property name="typeConceptModel" behavior="always" ref="Concept" />
-    <property name="relationship" all="true">
+    <property name="relationship" all="true" behavior="always">
+      <property name="HasGeneralization" all="true">
+        <property name="targetModel" behavior="always" ref="Material" />
+      </property>
+      <property name="Instance" all="true">
+        <property name="targetModel" behavior="always" ref="ManufacturedMaterial"/>
+      </property>
       <property name="*" all="true" ref="EntityRelationship" />
     </property>
+    <property name="quantityConceptModel" behavior="always" />
     <property name="participation" all="false">
       <property name="*" all="true">
         <property name="targetAct" behavior="never">
@@ -917,28 +926,8 @@
     <property name="mnemonic" behavior="always" />
     <property name="id" behavior="always" />
     <property name="statusConcept" />
-    <property name="statusConceptModel" behavior="always">
-      <property name="mnemonic" />
-    </property>
     <property name="conceptClass" />
-    
-    <property name="conceptClassModel" behavior="always" ref="Concept" />
     <property name="conceptSet" />
-    <property name="conceptSetModel" behavior="always" ref="ConceptSet" />
-    <property name="relationship" behavior="always">
-      <property name="*" all="true">
-        <property name="relationshipTypeModel" behavior="always"/>
-        <property name="targetConcept" />
-        <property name="targetConceptModel"/>
-        </property>
-      </property>
-    <property name="referenceTerm" behavior="always" all="true">
-      <property name="*" all="false">
-        <property name="relationshipType"/>
-        <property name="term" behavior="always"/>
-        <property name="termModel" behavior="always" ref="ReferenceTerm" />
-      </property>
-    </property>
   </type>
   <type type="ConceptSet" all="true">
     <property name="compose" behavior="always" all="true">

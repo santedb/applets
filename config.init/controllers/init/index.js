@@ -82,6 +82,10 @@ angular.module('santedb').controller('InitialSettingsController', ['$scope', '$r
 
             $scope.config.security.offline = { enable: true };*/
 
+            if(sessionInfo && sessionInfo.entity) {
+                config.security.owner =  sessionInfo.entity.id ;
+            }
+
             if (config.realm.address) {
 
                 try {
@@ -105,7 +109,6 @@ angular.module('santedb').controller('InitialSettingsController', ['$scope', '$r
                         $scope.reference.integrationPatterns = integrationPatterns;
                         $scope.reference.dataProviders = dataProviders;
                         $scope.reference.providerData = {};
-                        $scope.security.owner = $scope.security.owner || [ sessionInfo.entity.id ];
                         $scope.reference.dataProviders.forEach(p => $scope.reference.providerData[p.invariant] = p.options);
                     });
 

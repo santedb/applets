@@ -1,8 +1,151 @@
 <div xmlns="http://www.w3.org/1999/xhtml" xmlns:sdb="http://santedb.org/applet">
     <sdb:script>~/controllers/materials/widget.js</sdb:script>
-    <sdb:widget type="Tab" name="org.santedb.material.admin.widget.tab.lots" context="org.santedb.material.admin" order="15">
+    <sdb:widget type="Tab" name="org.santedb.material.admin.widget.tab.lots" context="org.santedb.material.admin"
+        order="15">
         <sdb:icon>fas fa-fw fa-boxes-packing</sdb:icon>
         <sdb:name lang="en">Lots</sdb:name>
         <sdb:demand>1.3.6.1.4.1.33349.3.1.5.9.2.4.0.1.3</sdb:demand>
     </sdb:widget>
+
+
+    <div ng-if="!scopedObject">
+        <i class="fas fa-circle-notch fa-spin"></i> {{ 'ui.wait' | i18n }}
+    </div>
+    <div ng-if="scopedObject" class="m-2" ng-controller="MaterialLotController">
+        <!-- Note: Change in Version 3 - The Materials here are specializations of holder -->
+        <entity-table id="MaterialLotTable" type="ManufacturedMaterial" search-field="lotNumber"
+            default-query="{ 'relationship[Instance].source.relationship[HasGeneralization].target' : scopedObject.id, _viewModel: 'fastview', 'determinerConcept': 'F29F08DE-78A7-4A5E-AEAF-7B545BA19A09' }"
+            render="{ updatedBy: 'renderUpdatedBy', name: 'renderName', 'gtin': 'renderGtin', statusConcept: 'renderStatusConcept', expiry: 'renderExpiry' }"
+            i18n-prefix="'ui.model.manufacturedMaterial.'" item-class="{ 'name' : 'w-25', 'updatedBy' : 'w-20' }"
+            default-sort="{ 'modifiedOn' : 'desc' }" item-actions="[ 
+                { name: 'edit', action: 'doEditLot', demand: '1.3.6.1.4.1.33349.3.1.5.9.2.4.1.1', className: 'btn-primary', icon: 'fa fa-pencil' },  
+                { name: 'delete', action: 'doDeleteLot', demand: '1.3.6.1.4.1.33349.3.1.5.9.2.4.1.1', className: 'btn-danger', icon: 'fa fa-trash' },  
+            ]" actions="[ 
+                { name: 'add', demand: '1.3.6.1.4.1.33349.3.1.5.9.2.4.1.0', action: 'addLot', className: 'btn-primary', icon: 'fa fa-plus-circle' }
+            ]" properties="[ 'name', 'gtin', 'lotNumber', 'expiry',  'statusConcept', 'updatedBy' ]"
+            >
+        </entity-table>
+
+        
+        <!-- MODAL FOR CREATING A NEW SPECIALIZATION -->
+        <div class="modal" id="editLotModal" data-backdrop="static" role="dialog"
+            aria-labelledby="editLotModalTitle" aria-hidden="true">
+            <div class="modal-dialog modal-xl" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="editLotModalTitle">
+                            <i class="fas fa-pills"></i> {{ 'ui.admin.data.material.editLot' | i18n }}
+                        </h5>
+                        <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">
+                                <i class="fa fa-times"></i>
+                            </span>
+                        </button>
+                    </div>
+                    <form novalidate="novalidate" class="form" ng-submit="saveLotMaterial(editLotForm)"
+                        name="editLotForm" autocomplete="off">
+                        <div class="modal-body">
+                            <div class="container-fluid">
+                                <div class="form-group row">
+                                    <div class="col-12">
+                                        <div class="alert alert-light">
+                                            <h5><i class="fas fa-info-circle"></i> {{
+                                                'ui.admin.data.material.editLot.help' | i18n }}</h5>
+                                            {{ 'ui.admin.data.material.editLot.help.text' | i18n }}
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="form-group row">
+                                    <label class="col-md-12 col-lg-3 control-label required">
+                                        {{ 'ui.model.manufacturedMaterial.relationship.Instance.reverse' | i18n }}
+                                        <hint-popover
+                                            hint-title="ui.model.manufacturedMaterial.relationship.Instance" />
+                                    </label>
+                                    <div class="col-md-12 col-lg-9">
+                                        <entity-search type="'ManufacturedMaterial'"
+                                            ng-model="editLot.relationship.Instance[0].holder"
+                                            filter="{ 'relationship[HasGeneralization].target' : scopedObject.id, 'determinerConcept': '604CF1B7-8891-49FB-B95F-3E4E875691BC' }"
+                                            class="form-control" required="required" name="product" />
+                                        <div class="text-danger" ng-if="editLotForm.product.$error['required']">
+                                            <i class="fas fa-exclamation-triangle"></i> {{ 'ui.error.required' | i18n }}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-md-12 col-lg-3 control-label required">
+                                        {{ 'ui.model.manufacturedMaterial.name.assigned' | i18n }}
+                                        <hint-popover hint-title="ui.model.manufacturedMaterial.name.assigned" />
+                                    </label>
+                                    <div class="col-md-12 col-lg-9">
+                                        <input type="text" ng-model="editLot.name.Assigned[0].component.$other[0]"
+                                            required="required" name="tradeName" maxlength="128" class="form-control" readonly="readonly" />
+                                        <div class="text-danger" ng-if="editLotform.tradeName.$error['required']">
+                                            <i class="fas fa-exclamation-triangle"></i> {{ 'ui.error.required' | i18n }}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group row" ng-if="editLot.version">
+                                    <label class="col-md-12 col-lg-3 control-label">{{ 'ui.model.entity.statusConcept' | i18n }} 
+                                        <hint-popover hint-title="ui.model.entity.statusConcept" />
+                                    </label>
+                                    <div class="col-md-12 col-lg-9">
+                                        <concept-select concept-set="'EntityStatus'" ng-model="editLot.statusConcept" class="form-control" />
+                                    </div>
+                                </div>
+
+                                <div class="form-group row" ng-repeat="dmn in idDomains track by $index">
+                                    <label class="col-md-12 col-lg-3 control-label">{{ dmn.name }}</label>
+                                    <div class="col-md-12 col-lg-9">
+                                        <input type="text" ng-pattern="dmn.validation" ng-readonly="dmn.domainName === 'GTIN' &amp;&amp; editLot.relationship.Instance[0].holder"
+                                            ng-model="editLot.identifier[dmn.domainName][0].value" placeholder="{{dmn._exampleValue}}"
+                                            class="form-control" name="id{{dmn.domainName}}" />
+                                        <div class="text-danger" ng-if="editLotForm['id' + dmn.domainName].$error['pattern']">
+                                            <i class="fas fa-exclamation-triangle"></i> {{ 'ui.error.pattern' | i18n }}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-md-12 col-lg-3 control-label required">
+                                        {{ 'ui.model.manufacturedMaterial.lotNumber' | i18n }}
+                                        <hint-popover hint-title="ui.model.manufacturedMaterial.lotNumber" />
+                                    </label>
+                                    <div class="col-md-12 col-lg-9">
+                                        <input type="text" ng-model="editLot.lotNumber" maxlength="128" minlength="2" name="lotNumber"
+                                            class="form-control" required="required" />
+                                        <div class="text-danger" ng-if="editLotForm.lotNumber.$error['required']">
+                                            <i class="fas fa-exclamation-triangle"></i> {{ 'ui.error.required' | i18n }}
+                                        </div>
+                                        <div class="text-danger" ng-if="editLotForm.lotNumber.$error['length']">
+                                            <i class="fas fa-exclamation-triangle"></i> {{ 'ui.error.length' | i18n }}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-md-12 col-lg-3 control-label required">
+                                        {{ 'ui.model.manufacturedMaterial.expiry' | i18n }}
+                                        <hint-popover hint-title="ui.model.manufacturedMaterial.expiry" />
+                                    </label>
+                                    <div class="col-md-12 col-lg-9">
+                                        <input type="date" ng-model="editLot.expiryDate" name="expiry" class="form-control" required="required" />
+                                        <div class="text-danger" ng-if="editLotForm.expiry.$error['required']">
+                                            <i class="fas fa-exclamation-triangle"></i> {{ 'ui.error.required' | i18n }}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button class="btn btn-secondary" type="button" data-dismiss="modal" data-toggle="none">
+                                <i class="fa fa-times"></i> {{ 'ui.action.cancel' | i18n }}</button>
+                            <button type="submit" class="btn btn-primary" id="btnSaveMaterialDefn"
+                                ng-disabled="editLotForm.$invalid">
+                                <i class="fa fa-check"></i> {{ 'ui.action.save' | i18n }} </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
 </div>

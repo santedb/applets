@@ -42,7 +42,7 @@ angular.module('santedb-lib')
                 excludeConcepts: '=',
                 key: "<"
             },
-            controller: ['$scope', '$rootScope', function ($scope, $rootScope) {
+            controller: ['$scope', '$rootScope', '$timeout', function ($scope, $rootScope, $timeout) {
             }],
             link: function (scope, element, attrs, ngModel) {
 
@@ -55,7 +55,7 @@ angular.module('santedb-lib')
                         if (!loaded[setName]) {
                             loaded[setName] = { callme: [] };
                             
-                            scope.setValues = (await SanteDB.resources.conceptSet.invokeOperationAsync(null, "expand", { "_mnemonic": setName })).resource;
+                            var setValues = (await SanteDB.resources.conceptSet.invokeOperationAsync(null, "expand", { "_mnemonic": setName })).resource;
 
                             // Now - is there an additional concept
                             if (scope.addConcept) {
@@ -66,16 +66,19 @@ angular.module('santedb-lib')
                                 await Promise.all(scope.addConcept.map(async function (o) {
                                     if (typeof (o) === "string")
                                         o = await SanteDB.resources.concept.getAsync(o);
-                                    scope.setValues.push(o);
+                                    setValues.push(o);
                                 }));
                             }
 
-                            scope.setValues = scope.setValues.sort((a,b)=> a.mnemonic < b.mnemonic ? -1 : a.mnemonic > b.mnemonic ? 1 : 0);
-
-                            loaded[setName].callme.forEach((r) => r(scope.setValues));
-                            loaded[setName] = scope.setValues;
-
-                            scope.$apply();
+                            setValues = setValues.sort((a,b)=> a.mnemonic < b.mnemonic ? -1 : a.mnemonic > b.mnemonic ? 1 : 0);
+                            if(scope.excludeConcepts) {
+                                setValues = setValues.filter(o => scope.excludeConcepts.indexOf(o.id) === -1)
+                            }
+                            $timeout(function() {
+                                scope.setValues = setValues;
+                                loaded[setName].callme.forEach((r) => r(scope.setValues));
+                                loaded[setName] = scope.setValues;
+                            });
                         }
                         else {
                             if (Array.isArray(loaded[setName])) // loaded already

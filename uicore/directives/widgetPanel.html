@@ -20,7 +20,7 @@
  -->
 <div xmlns="http://www.w3.org/1999/xhtml">
     <div class="row">
-        <div class="col" ng-repeat="group in widgetGroups"
+        <div class="col" ng-repeat="group in widgetGroups track by $index"
             ng-class="{ 'col-12' : !renderSize &amp;&amp; group.size == 'Large' || renderSize == 'Large', 'col-sm-12 col-lg-6' : !renderSize &amp;&amp; group.size == 'Medium' || renderSize == 'Medium', 'col-sm-6 col-lg-3': !renderSize &amp;&amp; group.size == 'Small' || renderSize == 'Small' }">
             <div class="mt-2 p-0 col" ng-repeat="panel in group.widgets" ng-if="$eval(panel.guard[0] || 'true')">
                 <div class="card widget-card">

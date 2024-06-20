@@ -130,26 +130,26 @@
                                     </div>
                                 </div>
                             </div>
-                            <geo-edit owner-form="panel.editForm" geo="editObject.geo" ng-if="scopedObject.classConcept == 'ff34dfa7-c6d3-4f8b-bc9f-14bcdc13ba6c'"></geo-edit>
+                            <geo-edit owner-form="panel.editForm" model="editObject.geo" ng-if="scopedObject.classConcept == 'ff34dfa7-c6d3-4f8b-bc9f-14bcdc13ba6c'"></geo-edit>
 
                         </div>
                     </div>
                     <div role="tabpanel" class="tab-pane p-2" id="entityNamesTab">
-                        <name-edit name="editObject.name" no-add="false" no-type="false" simple-entry="true"
+                        <name-edit model="editObject.name" no-add="false" no-type="false" simple-entry="true"
                             owner-form="panel.editForm" allowed-components="'$other'"
                             input-style="'simple'"></name-edit>
                     </div>
                     <div role="tabpanel" class="tab-pane p-2" id="entityIdentifierTab">
-                        <identifier-list-edit identifier="editObject.identifier" owner-form="panel.editForm"
+                        <identifier-table-edit model="editObject.identifier" owner-form="panel.editForm"
                             container-class="editObject.classConcept" />
                     </div>
                     <div role="tabpanel" class="tab-pane p-2" id="entityAddressTab">
-                        <address-edit address="editObject.address" no-add="false" no-type="true" 
+                        <address-edit model="editObject.address" no-add="false" no-type="true" 
                             owner-form="panel.editForm"></address-edit>
                     </div>
                     <div role="tabpanel" class="tab-pane p-2" id="entityTelecomTab">
                         <telecom-edit
-                            telecom="editObject.telecom" owner-form="panel.editForm"/>
+                        model="editObject.telecom" owner-form="panel.editForm"/>
                     </div>
 
                 </div>

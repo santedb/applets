@@ -37,4 +37,8 @@ angular.module('santedb').controller('DataQualityIndexController', ["$scope", fu
                 $("#DataQualityRuleTable table").DataTable().ajax.reload();
         }
     }
+
+    $scope.download = function(id) {
+        window.open(`/ami/DataQualityRulesetConfiguration/${id}?_format=xml&_upstream=true`);
+    }
 }]);

@@ -29,10 +29,14 @@
       <string name="ui.error.required">Required field missing</string>
       <string name="ui.error.hdsiNeedsRhs"><![CDATA[This expression needs a value for example <code>genderConcept.mnemonic=FEMALE</code>]]></string>
       <string name="ui.error.range">The value is out of range. Allowed ranges are {min} to {max}</string>
+      <string name="ui.error.dataQuality"><![CDATA[Data Quality Issue: {text}]]></string>
       <string name="ui.error.pattern">Invalid format (please ensure input is in correct format)</string>
+      <string name="ui.error.checkDigit">Check-digit validation failed, please verify input</string>
       <string name="ui.error.pattern.ext">Invalid format (expected: {pattern})</string>
       <string name="ui.error.duplicate">Duplicate record detected</string>
       <string name="ui.error.policy">You don't have access to this function. Contact your administrator</string>
+      <string name="ui.error.maxValue">Entered value exceeds maximum value {max}</string>
+      <string name="ui.error.minValue">Entered value is below minimum value {min}</string>
       <string name="error.http.403">Access Denied</string>
       <string name="error.http.403.text">Your request has been denied and audited. In order to access this resource, you must first either elevate your current session, obtain appropriate authorization, or temporary authenticate as someone else. You can attempt to elevate your session by selecting the override option below</string>
       <string name="error.http.404">The requested resource could not be found</string>
@@ -326,7 +330,7 @@
       <string name="error.foreign.map.notFound">The foreign data map for {subsetName} could not be found</string>
       <string name="error.foreign.transform">Error applying {name} to input value</string>
       <string name="error.foreign.map">Error applying transform on row {row}</string>
-      <string name="error.foreign.map.target">Could not apply the mapping because the map is misisng a target at {row}</string>
+      <string name="error.foreign.map.target">Could not apply the mapping because the map is missing a target at {row}</string>
       <string name="error.foreign.map.gen">General error applying the mapping at {row} because of {ex}</string>
       <string name="error.foreign.map.required">The field {field} on row {row} is null or missing a value when one is required</string>
       <string name="error.foreign.map.target.null">The source field {field} with value {value} could not be translated and populated on {target} - check for missing mapping data in SanteDB database (at row {row})</string>
@@ -334,7 +338,7 @@
       <string name="error.foreign.manager.gen">General error in foreign data stage manager</string>
       <string name="error.foreign.manager.state">The foreign data is not in a valid state to perform this operation</string>
       <string name="error.foreign.manager.map.notfound">The foreign data map {map} which is referenced in this data cannot be found</string>
-      <string name="error.foreign.manager.map.format">The data in format {format} cannot be interpreted by this instance of SanteDB (are you misisng a plugin?)</string>
+      <string name="error.foreign.manager.map.format">The data in format {format} cannot be interpreted by this instance of SanteDB (are you missing a plugin?)</string>
 
       <string name="error.datamart.manager.gen">General error in datamart manager</string>
       <string name="error.datamart.drop">Error dropping data mart {id}</string>

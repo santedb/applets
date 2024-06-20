@@ -39,7 +39,7 @@ angular.module('santedb').controller('EditConceptController', ["$scope", "$rootS
     // Initialize the view
     async function initializeView(id) {
         try {
-            var concept = await SanteDB.resources.concept.getAsync(id, "full");
+            var concept = await SanteDB.resources.concept.getAsync(id, "concept");
             if(!concept.conceptSet) {
                 concept.conceptSet = [];
             }
@@ -81,7 +81,7 @@ angular.module('santedb').controller('EditConceptController', ["$scope", "$rootS
                 $state.go("santedb-admin.concept.concepts.view", { id: concept.id });
             }
             else {
-                concept = await SanteDB.resources.concept.getAsync(concept.id, 'full');
+                concept = await SanteDB.resources.concept.getAsync(concept.id, 'concept');
                 $timeout(() => $scope.concept = concept);
             }
         }

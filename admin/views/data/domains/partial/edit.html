@@ -135,6 +135,14 @@
                                     </div>
                                 </div>
                             </div>
+                            <div class="form-group row">
+                                <label class="control-label col-sm-12 col-md-2" for="identifierClass">
+                                    {{ 'ui.model.identityDomain.identifierClass' | i18n }} <hint-popover hint-title="ui.model.identityDomain.identifierClass" />
+                                </label>
+                                <div class="col-sm-12 col-md-10">
+                                    <concept-select concept-set="'IdentifierType'" ng-model="domain.identifierClass" class="form-control" />
+                                </div>
+                            </div>
 
                             <div class="form-group row" ng-if="domain.createdBy">
                                 <label class="col-sm-12 col-md-2 control-label">{{ 'ui.model.identityDomain.createdBy' |
@@ -163,6 +171,7 @@
                                         {{ 'ui.action.undelete' | i18n }}</button>
                                 </div>
                             </div>
+                            
                         </div>
                     </div>
                 </div>

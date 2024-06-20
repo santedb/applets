@@ -91,4 +91,17 @@ angular.module('santedb').controller('ConceptWidgetController', ["$scope", "$roo
             $scope.editObject.name = { $other: newName };
         }
     })
+
+    $scope.renderMnemonic = function(cr) {
+        if(cr.targetConceptModel) {
+            return cr.targetConceptModel.mnemonic;
+        }
+        else {
+            return cr.sourceModel.mnemonic;
+        }
+    }
+
+    $scope.renderName = function(cr) {
+        return SanteDB.display.renderConcept(cr.targetConceptModel || cr.sourceModel);
+    }
 }]);

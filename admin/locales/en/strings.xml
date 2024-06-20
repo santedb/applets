@@ -169,6 +169,7 @@
     <string name="ui.admin.system.services.name">Name</string>
     <string name="ui.admin.system.services.state">Status</string>
     <string name="ui.admin.system.applets.signed">Digitally Signed</string>
+    <string name="ui.admin.system.applets.uploadNew">Upload New Version</string>
     <string name="ui.admin.system.logs.show">Show Logs From</string>
     <string name="ui.admin.system.logs.local">Local Service</string>
     <string name="ui.admin.system.logs.remote">Realm Service</string>
@@ -362,6 +363,7 @@
     <string name="ui.admin.alien.reschedule.success">Data submission scheduled for execution</string>
     <string name="ui.admin.alien.submission.view.title">Data Import File - {name}</string>
     <string name="ui.admin.alien.upload.error">Error uploading external import file - {error}</string>
+    <string name="ui.admin.alien.runAll.success">Running scheduled import jobs started successfully</string>
     <!-- Place Editing -->
     <string name="ui.admin.places.edit.profile.title">Place Properties</string>
     <string name="org.santedb.widget.admin.panel.place.facilities">Service Facilities</string>
@@ -733,6 +735,7 @@
     <string name="ui.admin.cdss.edit.test.debug.raise">Raise Issue</string>
     <string name="ui.admin.cdss.edit.test.debug.exception">Fault Thrown</string>
     <string name="ui.admin.cdss.edit.errorList">Errors/Issues</string>
+    <string name="ui.admin.cdss.create.success">CDSS Library created successfully</string>
     <string name="org.santedb.widget.cdr.cdssLibrary.logic">Logic</string>
     <string name="org.santedb.widget.cdr.cdssLibrary.data">Reference Data</string>
     <string name="org.santedb.widget.cdr.cdssLibrary.main">Library</string>
@@ -741,6 +744,14 @@
     <string name="org.santedb.widget.cdr.cdssLibrary.data.define">Reference Sets</string>
     <string name="org.santedb.widget.cdr.cdssLibrary.main.history">Version History</string>
 
+
+    <string name="ui.admin.dataQuality.create.title">Create Data Quality Ruleset</string>
+    <string name="ui.admin.dataQuality.create.upload.option">Upload Existing Ruleset</string>
+    <string name="ui.admin.dataQuality.create.upload.file">Ruleset File</string>
+    <string name="ui.admin.dataQuality.create.upload.file.hint">The file that was exported from another SanteDB iCDR instance or a file which your development partner has prepared for you</string>
+    <string name="ui.admin.dataQuality.create.manual.option">Manually Create Ruleset</string>
+    <string name="ui.admin.dataQuality.upload.success">Ruleset Uploaded Successfully</string>
+    <string name="ui.admin.dataQuality.upload.error">Error uploading ruleset file : {error}</string>
     <!-- Materials Management -->
     <string name="ui.admin.material.create.help"><![CDATA[
     <a data-toggle="collapse" data-target="#material-help"><h5 class="card-title">
@@ -769,13 +780,30 @@
     <string name="ui.admin.material.delete.success">Material definition has been successfully deleted</string>
     <string name="ui.admin.material.confirmUnDelete">Are you sure you wish to re-activate this material definition?</string>
     <string name="ui.admin.material.undelete.success">Material definition has been successfully restored</string>
-    <string name="ui.admin.data.material.newProduct.help">Creating a Product</string>
-    <string name="ui.admin.data.material.newProduct">New Product</string>
-    <string name="ui.admin.data.material.newProduct.help.text">
-    <![CDATA[This form will create a new manufactured product for the material type. In SanteDB, this material product definition contains information for an
+    <string name="ui.admin.data.material.editProduct.help">Editing a Product</string>
+    <string name="ui.admin.data.material.editProduct">New Product</string>
+    <string name="ui.admin.data.material.editProduct.help.text">
+    <![CDATA[This form will create or edit a manufactured product for the material type. In SanteDB, this material product definition contains information for an
     orderable/consumable product. Products typically have a <strong>Trade Name</strong> which is a common name represented on the product vial. Additioanlly 
     each product will represent a certain quantity of a particular material for which it is a product. For example, if the manufactured product comes in 
     <strong>5 dose vials</strong> then you will set the quantity per material to <strong>5</strong>, you should then set the quantity on this product to <strong>1 VIAL</strong>]]>
     </string>
+    <string name="ui.admin.data.material.product.save.success">Material product has been saved sucessfully</string>
+    <string name="ui.admin.data.material.product.delete.confirm">Are you sure you want to delete this product definition?</string>
+    <string name="ui.admin.data.material.product.delete.success">Material product definition deleted successfully</string>
+    <string name="ui.admin.data.material.product.delete.error">Error deleting material product definition {error}</string>
+    <string name="ui.admin.data.material.editLot">Edit Lot Instance</string>
+    <string name="ui.admin.data.material.editLot.help">Lot / Batch Number Instances</string>
+    <string name="ui.admin.data.material.editLot.help.text"><![CDATA[
+        In SanteDB, a <strong>Material</strong> represents the generic concept, a <strong>Product</strong> represents a specific type of the <c>Material</c> 
+        which is manufactured. A <strong>Lot/Batch</strong> number represents a particular instance of the <c>Product</c> that has been produced and is administered
+        to patients.
+        ]]></string>
+        <string name="ui.admin.data.material.lot.save.success">Lot has been saved successfully</string>
+        <string name="ui.admin.data.material.lot.delete.confirm">Are you sure you want to delete this lot/batch?</string>
+        <string name="ui.admin.data.material.lot.delete.success">Material lot/batch has been successfully deleted</string>
+        <string name="ui.admin.data.material.lot.delete.error">Error deleting material lot/batch definition {error}</string>
+    <string name="org.santedb.widget.concept.concepts.core.relationship.out">Related To Concept</string>
+    <string name="org.santedb.widget.concept.concepts.core.relationship.in">Concepts Related</string>
     
 </resources>

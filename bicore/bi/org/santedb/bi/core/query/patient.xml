@@ -64,7 +64,6 @@
       <providers>
         <invariant>npgsql</invariant>
         <invariant>FirebirdSQL</invariant>
-        <invariant>sqlite</invariant>
       </providers>
       <materialize name="org_santedb_bi_core_query_patient">
         <![CDATA[
@@ -78,7 +77,7 @@
             ent_vrsn_tbl.crt_utc as created_time,
             mrtl.mnemonic as marital_status,
             edu_lvl.mnemonic as edu_level,
-            master.trg_ent_id as master_id
+            coalesce(master.trg_ent_id, ent_id) as master_id
           from 
             pat_tbl 
             inner join psn_tbl using (ent_vrsn_id) 
@@ -99,6 +98,46 @@
         WHERE 
             birth_time between CAST(coalesce(${dob-from}, '0001-01-01') AS DATE) and CAST(coalesce(${dob-to}, current_date) AS DATE)   
             and (gndr_cd_id IS NULL OR gndr_cd_id = COALESCE(${gender}, gndr_cd_id))
+        ]]>
+    </add>
+    <add>
+      <providers>
+        <invariant>sqlite</invariant>
+      </providers>
+      <materialize name="org_santedb_bi_core_query_patient">
+        <![CDATA[
+          select 
+            ent_id as id,
+            dcsd_utc as death_time,
+            mb_ord as multi_birth,
+            dob as birth_time,
+            gndr_cd_id,
+            coalesce(gndr.mnemonic, 'Unknown') as gender,
+            ent_vrsn_tbl.crt_utc as created_time,
+            mrtl.mnemonic as marital_status,
+            edu_lvl.mnemonic as edu_level,
+            coalesce(master.trg_ent_id, ent_id) as master_id
+          from 
+            pat_tbl 
+            inner join psn_tbl using (ent_vrsn_id) 
+            inner join ent_vrsn_tbl using (ent_vrsn_id) 
+            left join cd_vrsn_tbl gndr on (gndr_cd_id = gndr.cd_id and gndr.obslt_utc is null)
+            left join ent_rel_tbl master on (src_ent_id = ent_id and rel_typ_cd_id = '97730a52-7e30-4dcd-94cd-fd532d111578' and obslt_vrsn_seq_id is null)
+            left join cd_vrsn_tbl mrtl on (mrtl_sts_cd_id = mrtl.cd_id and mrtl.obslt_utc is null)
+            left join cd_vrsn_tbl edu_lvl on (edu_lvl_cd_id = edu_lvl.cd_id and edu_lvl.obslt_utc is null)
+          where 
+            ent_vrsn_tbl.obslt_utc is null
+            
+        ]]>
+        </materialize>
+        <![CDATA[
+         SELECT *
+        FROM 
+          org_santedb_bi_core_query_patient
+        WHERE 
+            birth_time between coalesce(${dob-from}, 0) and coalesce(${dob-to}, current_timestamp)   
+            and (gndr_cd_id IS NULL OR gndr_cd_id = COALESCE(${gender}, gndr_cd_id))
+            
         ]]>
     </add>
   </definitions>

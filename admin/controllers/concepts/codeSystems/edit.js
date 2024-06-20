@@ -37,7 +37,7 @@ angular.module('santedb').controller('EditCodeSystemController', ["$scope", "$ro
     // Initialize the view
     async function initializeView(id) {
         try {
-            var codeSystem = await SanteDB.resources.codeSystem.getAsync(id, "full");
+            var codeSystem = await SanteDB.resources.codeSystem.getAsync(id, "concept");
             $timeout(() => $scope.codeSystem = codeSystem);
         }
         catch (e) {

@@ -79,52 +79,54 @@ angular.module('santedb-lib')
             var retVal = "";
             switch (selection.$type) {
                 case "Patient":
-                    retVal += "<i class='fa fa-hospital-user'></i> ";
+                    retVal += "<i class='fa fa-fw fa-hospital-user'></i> ";
                     break;
                 case "UserEntity":
                 case "Provider":
                 case "Person":
-                    retVal += "<i class='fa fa-user'></i> ";
+                    retVal += "<i class='fa fa-fw fa-user'></i> ";
                     break;
                 case "Material":
+                    retVal += "<i class='fa fa-fw fa-flask'></i> ";
+                    break;
                 case "ManufacturedMaterial":
-                    retVal += "<i class='fa fa-flask'></i> ";
+                    retVal += "<i class='fa fa-fw fa-prescription-bottle'></i>";
                     break;
                 case "Place":
                     if (selection.classConcept == EntityClassKeys.ServiceDeliveryLocation)
-                        retVal += "<i class='fa fa-hospital'></i> ";
+                        retVal += "<i class='fa fa-fw fa-hospital'></i> ";
                     else
-                        retVal += "<i class='fa fa-map-pin'></i> ";
+                        retVal += "<i class='fa fa-fw fa-map-pin'></i> ";
                     break;
                 case "Organization":
-                    retVal += "<i class='fa fa-building'></i> ";
+                    retVal += "<i class='fa fa-fw fa-sitemap'></i> ";
                     break;
                 case "Entity":
-                    retVal += "<i class='fa fa-share-alt'></i> ";
+                    retVal += "<i class='fa fa-fw fa-share-alt'></i> ";
                     break;
                 case "IdentityDomain":
-                    retVal += "<i class='fa fa-id-card'></i> ";
+                    retVal += "<i class='fa fa-fw fa-id-card'></i> ";
                     break;
                 case "SecurityRole":
                 case "SecurityRoleInfo":
                 case "SanteDB.Core.Model.AMI.Auth.SecurityRoleInfo, SanteDB.Core.Model.AMI":
-                    retVal += "<i class='fa fa-users'></i>";
+                    retVal += "<i class='fa fa-fw fa-users'></i>";
                     break;
                 case "SecurityUser":
                 case "SecurityUserInfo":
                 case "SanteDB.Core.Model.AMI.Auth.SecurityUserInfo, SanteDB.Core.Model.AMI":
-                    retVal += "<i class='fa fa-user'></i>";
+                    retVal += "<i class='fa fa-fw fa-user'></i>";
                     break;
                 case "Concept":
                 case "CodeSystem":
-                    retVal += "<i class='fa fa-book-medical'></i>";
+                    retVal += "<i class='fa fa-fw fa-book-medical'></i>";
                     break;
                 case "SecurityPolicy":
                 case "SecurityPolicyInstance":
-                    retVal += "<i class='fa fa-certificate'></i>";
+                    retVal += "<i class='fa fa-fw fa-certificate'></i>";
                     break;
                 default:
-                    retVal += "<i class='fa fa-box'></i> ";
+                    retVal += "<i class='fa fa-fw fa-box'></i> ";
                     break;
             }
 
@@ -141,7 +143,7 @@ angular.module('santedb-lib')
                 retVal += selection.userName;
             else if (selection.mnemonic)
                 retVal += SanteDB.locale.getString(selection.mnemonic);
-            else if(selection.authority) {
+            else if (selection.authority) {
                 retVal += SanteDB.locale.getString(selection.authority);
 
             }
@@ -155,20 +157,20 @@ angular.module('santedb-lib')
             retVal += "&nbsp;";
             if (!minRender) {
                 if (selection.address)
-                    retVal += "<small class='d-none d-sm-inline'> - (<i class='fa fa-map-marker'></i> " + SanteDB.display.renderEntityAddress(selection.address) + ")</small>";
+                    retVal += "<small class='d-none d-sm-inline ml-2'> - (<i class='fa fa-map-marker'></i> " + SanteDB.display.renderEntityAddress(selection.address) + ")</small>";
                 else if (selection.oid)
-                    retVal += "<small class='d-none d-sm-inline'> - (<i class='fa fa-cogs'></i> " + selection.oid + ")</small>";
-                else if(selection.mnemonic)
-                    retVal += `<small class='d-none d-sm-inline'>(${selection.mnemonic})</small>`;
+                    retVal += "<small class='d-none d-sm-inline ml-2'> - (<i class='fa fa-cogs'></i> " + selection.oid + ")</small>";
+                else if (selection.mnemonic)
+                    retVal += `<small class='d-none d-sm-inline ml-2'>(${selection.mnemonic})</small>`;
             }
             if (selection.classConceptModel && !selection.typeConceptModel)
-                retVal += ` <span class='badge badge-secondary'>${SanteDB.display.renderConcept(selection.classConceptModel)}</span>`;
+                retVal += ` <span class='badge badge-secondary ml-2'>${SanteDB.display.renderConcept(selection.classConceptModel)}</span>`;
             else if (selection.typeConceptModel) {
-                retVal += `<span class="badge badge-secondary">${SanteDB.display.renderConcept(selection.typeConceptModel)}</span> `;
+                retVal += `<span class="badge badge-secondary ml-2">${SanteDB.display.renderConcept(selection.typeConceptModel)}</span> `;
             }
 
             if (selection.identifier) {
-                retVal += `<small class="ml-2 d-none d-sm-inline badge badge-info"><i class="fas fa-id-card"></i> ${SanteDB.display.renderIdentifier(selection.identifier)}</small>`;
+                retVal += `<small class="ml-2 d-none d-sm-inline badge badge-info"><i class="fas fa-id-card"></i> ${SanteDB.display.renderIdentifier(selection.identifier, null, true)}</small>`;
             }
 
             return retVal;
@@ -181,7 +183,7 @@ angular.module('santedb-lib')
                 childResourceScope: '=', // The child resource to query on
                 display: '<', // The expression which dictates the display
                 searchField: '<', // The field on the server to search results for
-                defaultResults: '<', // The default results to show
+                defaultResults: '=', // The default results to show
                 groupBy: '<', // If grouping results (by country, by state, etc.) the grouping expression
                 filter: '=', // The filter to apply in addition to the searchField
                 groupDisplay: '<', // The group display field expression
@@ -229,17 +231,24 @@ angular.module('santedb-lib')
                             $(selectControl)[0].add(new Option(`<i class='fa fa-circle-notch fa-spin'></i> ${SanteDB.locale.getString("ui.wait")}`, "loading", true, true));
 
                             value.filter(o => o).forEach(async function (v) {
-
-                                if ($scope.valueProperty && v[$scope.valueProperty])
-                                    v = v[$scope.valueProperty];
-
                                 try {
+
+                                    if ($scope.valueProperty) {
+                                        if (v[$scope.valueProperty]) {
+                                            v = v[$scope.valueProperty];
+                                        }
+                                        else {
+                                            return;
+                                        }
+                                    }
+
+
                                     if ($scope.key && $scope.key != "id") {
                                         var query = angular.copy($scope.filter || {});
                                         query[$scope.key] = v;
                                         query._viewModel = "dropdown";
                                         var res = null;
-                                        if($scope.childResource) {
+                                        if ($scope.childResource) {
                                             res = await api.findAssociatedAsync($scope.childResourceScope, $scope.childResource, query, "dropdown");
                                         }
                                         else {
@@ -258,9 +267,10 @@ angular.module('santedb-lib')
                                     }
                                     else {
                                         var res = null;
-                                        if($scope.childResource) {
+
+                                        if ($scope.childResource) {
                                             res = await api.getAssociatedAsync($scope.childResourceScope, $scope.childResource, v.id || v, { _viewModel: "dropdown" }, null);
-                                        } 
+                                        }
                                         else {
                                             res = await api.getAsync({ id: v && v.id ? v.id : v, viewModel: "dropdown" });
                                         }
@@ -290,9 +300,8 @@ angular.module('santedb-lib')
             ],
             link: function (scope, element, attrs, ngModel) {
 
-                if(!$(element).attr('id'))
-                {
-                    $(element).attr('id', SanteDB.application.newGuid().replace(/\-/g,'_'));
+                if (!$(element).attr('id')) {
+                    $(element).attr('id', SanteDB.application.newGuid().replace(/\-/g, '_'));
                 }
 
                 // Extract property
@@ -315,7 +324,6 @@ angular.module('santedb-lib')
                     var filter = scope.filter || { statusConcept: [StatusKeys.Active, StatusKeys.New] };;
                     var displayString = scope.display;
                     var searchProperty = scope.searchField;
-                    var defaultResults = scope.defaultResults;
                     var groupString = scope.groupBy;
                     var groupDisplayString = scope.groupDisplay;
                     var resultProperty = scope.valueSelector || scope.key || "id";
@@ -381,10 +389,10 @@ angular.module('santedb-lib')
                         dataAdapter: $.fn.select2.amd.require('select2/data/extended-ajax'),
                         ajax: {
 
-                            url: () => scope.childResource ? 
-                                scope.childResourceScope ? 
-                                `${SanteDB.resources[scope.type.toCamelCase()].getUrl()}/${scope.childResourceScope}/${scope.childResource}` :
-                                `${SanteDB.resources[scope.type.toCamelCase()].getUrl()}/${scope.childResource}` :
+                            url: () => scope.childResource ?
+                                scope.childResourceScope ?
+                                    `${SanteDB.resources[scope.type.toCamelCase()].getUrl()}/${scope.childResourceScope}/${scope.childResource}` :
+                                    `${SanteDB.resources[scope.type.toCamelCase()].getUrl()}/${scope.childResource}` :
                                 SanteDB.resources[scope.type.toCamelCase()].getUrl(), //((modelType == "SecurityUser" || modelType == "SecurityRole" || modelType == "SecurityPolicy") ? "/ami/" : "/hdsi/") + modelType,
                             dataType: 'json',
                             delay: 500,
@@ -395,8 +403,17 @@ angular.module('santedb-lib')
                             },
                             data: function (params) {
 
-                                if (params.term)
+                                // Remove previous filters 
+                                delete (filter[searchProperty]);
+                                if (scope.defaultResults)
+                                    Object.keys(scope.defaultResults).forEach(k => delete (filter[k]));
+
+                                if (params.term) {
                                     filter[searchProperty] = "~" + params.term;
+                                }
+                                else if (scope.defaultResults) {
+                                    Object.keys(scope.defaultResults).forEach(k => filter[k] = scope.defaultResults[k]);
+                                }
                                 filter["_count"] = 10;
                                 filter["_offset"] = params.page ? params.page * 10 : 0;
                                 filter["_viewModel"] = "dropdown";
@@ -498,8 +515,8 @@ angular.module('santedb-lib')
                         placeholder: SanteDB.locale.getString(`ui.table.search.field.${searchProperty}`)
                     });
 
-                   
-                    
+
+
                     // On change
                     element.on('change', function (e) {
                         var val = $(element).select2("val");

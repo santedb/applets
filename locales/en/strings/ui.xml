@@ -20,7 +20,7 @@
  - Date: 2023-5-19
  -->
 <resources>
-    <string name="ui.debug">DEBUG ENVIRONMENT - NOT FOR PRODUCTION USE</string>
+    <string name="ui.debug">DEBUG ENVIRONMENT</string>
     <string name="ui.generated.on">Generated On</string>
       <string name="ui.card">Card</string>
       <string name="ui.unknown">N/A</string>
@@ -37,7 +37,7 @@
       <string name="ui.common.size.large">Large</string>
       <string name="ui.common.size.medium">Medium</string>
       <string name="ui.common.size.small">Small</string>
-      <string name="ui.common.kilobytes">Kb</string>
+      <string name="ui.common.kilobytes">KB</string>
       <string name="ui.common.show">Show:</string>
       <string name="ui.search.onlineResult">Online Result</string>
       <!-- Login Translations -->
@@ -196,6 +196,10 @@
       <string name="ui.action.cancel.confirm">Are you sure you want to cancel?</string>
       <string name="ui.action.abandon.confirm">You have unsaved changes on this page. Are you sure you want to abandon them?</string>
       <string name="ui.action.save">Save</string>
+      <string name="ui.action.save.then.new">Save &amp; Create Another</string>
+      <string name="ui.action.save.then.goto">Save &amp; Go To</string>
+      <string name="ui.action.goto">Go To</string>
+
       <string name="ui.action.submit">Submit</string>
       <string name="ui.action.search">Search</string>
       <string name="ui.action.search.advanced">Advanced Search</string>
@@ -309,6 +313,9 @@
       <string name="ui.table.search.field.label">Search by label</string>
       <string name="ui.table.search.field.description">Search by description</string>
       <string name="ui.table.search.field.target.name.component.value">Search by name</string>
+      <string name="ui.table.search.field.targetConcept.name.value">Search by Target</string>
+      <string name="ui.table.search.field.source.name.value">Search by Source</string>
+      <string name="ui.table.search.field.lotNumber">Search by Lot</string>
       <!-- Common --> 
       <string name="ui.common.interop.hl7v2">HL7v2</string>
       <string name="ui.common.interop.hl7v3">HL7v3/CDA</string>
@@ -340,7 +347,7 @@
       <string name="ui.subscription.quantityObservation.all">All quantified observations (weight, height, etc.)</string>
       <string name="ui.subscription.conceptSet.all">All concept sets (recommended)</string>
       <string name="ui.subscription.concept.all">All concepts (recommended)</string>
-      <string name="ui.subscription.identityDomain.all">All assinging authorities (recommended)</string>
+      <string name="ui.subscription.identityDomain.all">All assigning authorities (recommended)</string>
       <string name="ui.subscription.identifierType.all">All identifier types (recommended)</string>
       <string name="ui.subscription.templateDefinition.all">All clinical templates (recommended)</string>
       <string name="ui.subscription.extensionType.all">All extension types (recommended)</string>
@@ -449,7 +456,7 @@
       <string name="ui.config.data.basic.title">Basic Configuration</string>
       <string name="ui.config.data.advanced.title">Advanced Configuration</string>
       <string name="ui.config.log.title">Logging</string>
-      <string name="ui.config.log.description">SanteDB disconnected clients keep logs about the activities that occur on the mobile. While these are helpful for debugging and bug reports, they may impact performance or take up a lot of space. Use this panel to adjust the loggin levels</string>
+      <string name="ui.config.log.description">SanteDB disconnected clients keep logs about the activities that occur on the mobile. While these are helpful for debugging and bug reports, they may impact performance or take up a lot of space. Use this panel to adjust the logging levels</string>
       <string name="ui.config.log.verbosity.label">Log Detail</string>
       <string name="ui.config.log.verbosity.help">Use this setting to control how verbose the logs that SanteDB produces are. Note that these are not security audits or security logs, rather these are programmatic and application logs used for debugging. The higher the log verbosity, the slower this application will run.</string>
       <string name="ui.config.log.verbosity.disabled">Disabled</string>
@@ -470,7 +477,7 @@
       <string name="ui.config.security.signing.key">Key</string>
       <string name="ui.config.security.password.help">Use this setting to modify the password hashing strength. Note: You should only use SHA1 hashing in legacy mode, SHA256 is the recommended setting</string>
       <string name="ui.config.security.password.sha256">SHA256 Password Hashing</string>
-      <string name="ui.config.security.password.sha1">SHA1 Password Hashin</string>
+      <string name="ui.config.security.password.sha1">SHA1 Password Hashing</string>
       <string name="ui.config.security.password.plain">Plaintext (not recommended)</string>
       <string name="ui.config.security.audit.label">AR Store</string>
       <string name="ui.config.security.owner.title">Maintainer</string>
@@ -497,7 +504,7 @@
       <string name="ui.config.network.optimize.Gzip">GZIP (recommended for 4g/LTE/DSL)</string>
       <string name="ui.config.network.optimize.Gzip.help">GZIP compression represents a good balance of computing resources at the expense of larger payload sizes</string>
       <string name="ui.config.network.optimize.Deflate">Deflate (recommended for 5g/Broadband/Wi-Fi)</string>
-      <string name="ui.config.network.optimize.Deflate.help">Deflate compression uses ver little computing resources, however the level of compression may result in larger payloads with the server</string>
+      <string name="ui.config.network.optimize.Deflate.help">Deflate compression uses very little computing resources, however the level of compression may result in larger payloads with the server</string>
       <string name="ui.config.network.optimize.None">None (recommended for LAN)</string>
       <string name="ui.config.network.optimize.None.help">This option turns off compression in SanteDB between this server and the upstream. This saves on computing resources however the payload sizes are much larger</string>
       <string name="ui.config.network.useProxy">Use a proxy to access the server</string>

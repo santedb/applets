@@ -306,3 +306,8 @@ svg.mermaidNoScale {
 .widget-card {
     height: calc(100% - 0.75em);
 }
+
+.form-control::placeholder {
+    color: #d4d4d4;
+    opacity: 1; /* Firefox */
+}

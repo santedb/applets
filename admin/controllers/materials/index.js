@@ -96,17 +96,7 @@ angular.module('santedb').controller('MaterialIndexController', ["$scope", "$roo
      * @summary Render status
      */
     $scope.renderStatusConcept = function (place) {
-        switch (place.statusConcept) {
-            case StatusKeys.Active:
-                return `<span class="badge badge-info"><i class="fas fa-check"></i> ${SanteDB.locale.getString('ui.state.active')}</span>`;
-            case StatusKeys.Obsolete:
-                return `<span class="badge badge-danger"><i class="fas fa-trash"></i> ${SanteDB.locale.getString('ui.state.obsolete')}</span>`;
-            case StatusKeys.Nullified:
-                return `<span class="badge badge-secondary"><i class="fas fa-eraser"></i> ${SanteDB.locale.getString('ui.state.nullified')}</span>`;
-            case StatusKeys.New:
-                return `<span class="badge badge-secondary"><i class="fas fa-asterisk"></i> ${SanteDB.locale.getString('ui.state.new')}</span>`;
-
-        }
+        return SanteDB.display.renderStatus(place.statusConcept);
     }
 
     

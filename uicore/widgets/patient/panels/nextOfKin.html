@@ -247,15 +247,15 @@
                                 </div>
                                 <div role="tabpanel" class="tab-pane fade show active"
                                     id="demoName{{relType.mnemonic}}">
-                                    <name-edit name="editObject.relationship[relType.mnemonic].targetModel.name" />
+                                    <name-edit model="editObject.relationship[relType.mnemonic].targetModel.name" />
                                 </div>
                                 <div role="tabpanel" class="tab-pane fade" id="demoTelecom{{relType.mnemonic}}">
                                     <telecom-edit
-                                        telecom="editObject.relationship[relType.mnemonic].targetModel.telecom" />
+                                    model="editObject.relationship[relType.mnemonic].targetModel.telecom" />
                                 </div>
                                 <div role="tabpanel" class="tab-pane fade" id="demoAddress{{relType.mnemonic}}">
                                     <address-edit
-                                        address="editObject.relationship[relType.mnemonic].targetModel.address" />
+                                        model="editObject.relationship[relType.mnemonic].targetModel.address" />
                                 </div>
                             </div>
                         </div>

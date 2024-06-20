@@ -69,7 +69,7 @@
             </div>
             <div class="alert alert-warning" ng-if="scopedObject.tag['$mdm.type'] == 'L'"><i
                     class="fas fa-exclamation-triangle"></i> {{ 'ui.mdm.edit.local' | i18n }}</div>
-            <identifier-list-edit identifier="editObject.identifier" container-class="editObject.classConcept" owner-form="panel.editForm" />
+            <identifier-table-edit model="editObject.identifier" container-class="editObject.classConcept" owner-form="panel.editForm" />
         </form>
     </div>
 </div>

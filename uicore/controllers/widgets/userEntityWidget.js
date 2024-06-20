@@ -33,6 +33,7 @@ angular.module('santedb').controller('UserProfileWidgetController', ['$scope', '
             var submissionObject = angular.copy($scope.editObject);
             await prepareEntityForSubmission(submissionObject);
 
+            submissionObject.securityUser = submissionObject.securityUser || $rootScope.session.user.id;
             // Find the preferred language
             submissionObject.language = submissionObject.language || [];
             if ($scope.editObject.preferredLanguage) {
@@ -134,7 +135,7 @@ angular.module('santedb').controller('UserProfileWidgetController', ['$scope', '
                 catch (e) {
                     $rootScope.errorHandler(e);
                     $("#setupTfaModal").modal('hide');
-                    $timeout(()=>delete ($scope.editObject.securityUserModel.twoFactorMechanism));
+                    $timeout(() => delete ($scope.editObject.securityUserModel.twoFactorMechanism));
                 }
             }
         }
@@ -148,9 +149,10 @@ angular.module('santedb').controller('UserProfileWidgetController', ['$scope', '
             SanteDB.display.buttonWait("#btnCompleteTfaSetup", true);
             await SanteDB.authentication.setupTfaSecretAsync($scope.tfaSetup.id, $scope.tfaSetup.code, $scope.editObject.isUpstreamUser);
             toastr.success(SanteDB.locale.getString("ui.tfa.setup.success"));
+            await SanteDB.resources.securityUser.updateAsync(userSubmission.entity.id, userSubmission);
             $("#setupTfaModal").modal('hide');
         }
-        catch(e) {
+        catch (e) {
             $rootScope.errorHandler(e);
         }
         finally {
@@ -197,7 +199,6 @@ angular.module('santedb').controller('UserProfileWidgetController', ['$scope', '
                             }));
 
                         SanteDB.authentication.setElevator(null);
-                        toastr.success(SanteDB.locale.getString("ui.admin.users.saveConfirm"));
 
                     }
                     catch (e) {
@@ -249,25 +250,36 @@ angular.module('santedb').controller('UserProfileWidgetController', ['$scope', '
 
     }
 
-}]).controller('UserEntityPreferencesController', ["$scope", "$timeout", "$rootScope", "$state", function($scope, $timeout, $rootScope, $state) {
+}]).controller('UserEntityPreferencesController', ["$scope", "$timeout", "$rootScope", "$state", function ($scope, $timeout, $rootScope, $state) {
 
-    $scope.$watch("scopedObject", function(n, o) {
-        if(n && !n._preferences) {
+    $scope.$watch("scopedObject", async function (n, o) {
+        if (n && !n._preferences) {
             $scope.scopedObject._preferences = n._preferences = {};
-            if(n.extension && n.extension['http://santedb.org/extensions/core/userPreferences']) {
-                var prefExt = JSON.parse(atob(n.extension['http://santedb.org/extensions/core/userPreferences'][0]));
-                n._preferences.widgets = JSON.parse(prefExt.widgets);
-                n._preferences.help = prefExt.help || 'default';
-                n._preferences.uimode = prefExt.uimode || 'light';
+            if (n.extension && n.extension['http://santedb.org/extensions/core/userPreferences']) {
+                $timeout(() => {
+                    var prefExt = JSON.parse(atob(n.extension['http://santedb.org/extensions/core/userPreferences'][0]));
+                    n._preferences.widgets = prefExt.widgets ? JSON.parse(prefExt.widgets) : null;
+                    n._preferences.help = prefExt.help || 'default';
+                    n._preferences.uimode = prefExt.uimode || 'light';
+                });
+            }
+            else {
+                var settings = await await SanteDB.configuration.getUserSettingsAsync();
+                $timeout(() => {
+                    var widgetPref = (settings.find(o=>o.key == "widgets") || {}).value;
+                    n._preferences.widgets = widgetPref ? JSON.parse(widgetPref) : {};
+                    n._preferences.help = (settings.find(o=>o.key == "help") || {}).value;
+                    n._preferences.uimode = (settings.find(o=>o.key == "uimode") || {}).value;
+                });
             }
         }
     });
 
-    $scope.updateHelpInlineHelpPreference = async function() {
+    $scope.updateHelpInlineHelpPreference = async function () {
         try {
             await SanteDB.configuration.saveUserSettingsAsync(
                 [
-                    { "key" : "help", "value" : $scope.scopedObject._preferences.help } 
+                    { "key": "help", "value": $scope.scopedObject._preferences.help }
                 ]);
             location.reload();
         }
@@ -276,11 +288,11 @@ angular.module('santedb').controller('UserProfileWidgetController', ['$scope', '
         }
     }
 
-    $scope.updateUserInterfacePreference = async function() {
+    $scope.updateUserInterfacePreference = async function () {
         try {
             await SanteDB.configuration.saveUserSettingsAsync(
                 [
-                    { "key" : "uimode", "value" : $scope.scopedObject._preferences.uimode } 
+                    { "key": "uimode", "value": $scope.scopedObject._preferences.uimode }
                 ]);
             location.reload();
         }

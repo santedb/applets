@@ -33,7 +33,10 @@
     <property name="quantity" all="true"/>
     <property name="strength" all="true"/>
   </type>
-
+  <type type="ConceptRelationship" all="true">
+    <property name="relationshipTypeModel" behavior="always" />
+    <property name="targetConceptModel" behavior="always" />
+  </type>
     <type type="ManufacturedMaterial" all="true">
         <property name="classConcept"/>
         <property name="classConceptModel" behavior="always" ref="Concept"/>
@@ -43,7 +46,12 @@
         <property name="identifier" all="true"  behavior="always">
             <property name="*" ref="EntityIdentifier"/>
         </property>
+        <property name="quantityConceptModel" behavior="always" ref="Concept" />
         <property name="relationship" behavior="always">
+            <property name="HasGeneralization" all="true">
+              <property name="quantity" />
+              <property name="targetModel" ref="Entity" behavior="always" />
+            </property>
             <property name="*" all="true" ref="EntityRelationship" />
         </property>
         <property name="quantityConceptModel" behavior="always" />

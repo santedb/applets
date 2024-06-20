@@ -135,6 +135,23 @@ angular.module("santedb").controller("MaterialViewEditController", ["$scope", "$
     }
 
 
+      // Set the active state
+      $scope.setState = async function (status) {
+        try {
+            SanteDB.display.buttonWait("#btnSetState", true);
+            await setEntityState($scope.entity.id, $scope.entity.etag, status);
+            toastr.info(SanteDB.locale.getString("ui.model.material.saveSuccess"));
+            $state.reload();
+            
+        }
+        catch (e) {
+            $rootScope.errorHandler(e);
+        }
+        finally {
+            SanteDB.display.buttonWait("#btnSetState", false);
+        }
+    }
+
     // Save the material definition to the server
     $scope.saveMaterial = async function (form, materialToSave) {
         if (form.$invalid || form.$pristine) {

@@ -68,11 +68,11 @@
                                     patient.identifier[$root.system.config.application.setting['aa.preferred']][0].value
                                     }}
                                     <span ng-if="entity.identifier[$root.system.config.application.setting['aa.preferred']][0].checkDigit">
-                                        ({{entity.identifier[$root.system.config.application.setting['aa.preferred']][0].checkDigit}})
+                                        ({{patient.identifier[$root.system.config.application.setting['aa.preferred']][0].checkDigit}})
                                     </span>
                                     <span class="d-none d-md-inline">
                                         <span class="badge badge-primary">{{
-                                            patient.identifier[$root.system.config.application.setting['aa.place.preferred']][0].domainModel.name
+                                            patient.identifier[$root.system.config.application.setting['aa.preferred']][0].domainModel.name
                                             }}</span>
                                     </span>
                                 </div>

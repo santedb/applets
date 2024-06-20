@@ -80,7 +80,7 @@ angular.module('santedb-lib')
      */
     .filter('identifier', function () {
         return function (modelValue, domain) {
-            return SanteDB.display.renderIdentifier(modelValue, domain);
+            return SanteDB.display.renderIdentifier(modelValue, domain, false);
         };
     })
     /**

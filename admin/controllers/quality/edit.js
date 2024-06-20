@@ -18,8 +18,11 @@
  * User: fyfej
  * Date: 2024-1-5
  */
-angular.module('santedb').controller('DataQualityRuleEditController', ["$scope", "$rootScope", "$timeout", "$stateParams", function ($scope, $rootScope, $timeout, $stateParams) {
+angular.module('santedb').controller('DataQualityRuleEditController', ["$scope", "$rootScope", "$timeout", "$stateParams", "$state", function ($scope, $rootScope, $timeout, $stateParams, $state) {
 
+    $scope.dqLibrary = {
+        _mode: 'upload'
+    }
 
     async function initializeView(id) {
         try {
@@ -41,7 +44,7 @@ angular.module('santedb').controller('DataQualityRuleEditController', ["$scope",
             var result = await SanteDB.resources.dataQuality.updateAsync(dataQualityRule.id, dataQualityRule, true);
 
             toastr.success(SanteDB.locale.getString("ui.model.dataQualityRule.save.success"));
-            $timeout(() => $scope.rule = result);
+            $state.go('santedb-admin.cdr.quality.edit', { id: result.id });
         }
         catch(e) {
             $rootScope.errorHandler(e);
@@ -49,6 +52,53 @@ angular.module('santedb').controller('DataQualityRuleEditController', ["$scope",
         finally {
             SanteDB.display.buttonWait("#btnSaveDataQualityRule", false);
         }
+    }
+
+    async function uploadDataQualityFile(form) {
+        if(form.$invalid) {
+            return;
+        }
+
+        var file_data = form.source.$$element.prop('files')[0];
+        var form_data = new FormData();
+        form_data.append('ruleset', file_data);
+        SanteDB.display.buttonWait("#btnUpload", true);
+        $.ajax({
+            cache: false,
+            contentType: false,
+            processData: false,
+            headers: {
+                "X-SanteDB-Upstream": true
+            },
+            method: 'POST',
+            dataType: 'json',
+            url: "/ami/DataQualityRulesetConfiguration",
+            data: form_data,
+            success: function (data) {
+                try {
+                    if (!data.issue || data.issue.length == 0) {
+                        toastr.success(SanteDB.locale.getString('ui.admin.dataQuality.upload.success'));
+                        $state.go('santedb-admin.cdr.quality.edit', { id: data.id });
+                    }
+                    else {
+                        toastr.success(SanteDB.locale.getString('ui.admin.dataQuality.upload.error', { error: data.message }));
+                        $rootScope.errorHandler(data);
+                    }
+                }
+                catch (e) {
+                    console.error(e);
+                }
+                finally {
+                    SanteDB.display.buttonWait("#btnUpload", false);
+                }
+            },
+            error: function (xhr, status, error) {
+                $rootScope.errorHandler(xhr.responseJSON);
+                toastr.error(SanteDB.locale.getString('ui.admin.dataQuality.upload.error', { status: status, error: error }));
+                SanteDB.display.buttonWait("#btnUpload", false);
+
+            }
+        });
     }
 
     if($stateParams.id) {
@@ -70,6 +120,8 @@ angular.module('santedb').controller('DataQualityRuleEditController', ["$scope",
             }
     }
 
+
+    $scope.uploadDataQualityRules = uploadDataQualityFile;
 
     $scope.saveDataQualityRule = function(form) {
         if(form.$invalid) { return; }

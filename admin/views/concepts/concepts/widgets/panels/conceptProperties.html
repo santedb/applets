@@ -48,7 +48,7 @@
                                 <li ng-repeat="(lang, vals) in scopedObject.name">
                                     {{ "ui.locale." + lang | i18n }} ({{lang}}):
                                     <ul class="mb-0 mr-1">
-                                        <li ng-repeat="v in vals">{{v}}</li>
+                                        <li ng-repeat="v in vals track by $index">{{v}}</li>
                                     </ul>
                                 </li>
                             </ul>

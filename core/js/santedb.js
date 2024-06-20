@@ -1749,7 +1749,7 @@ function ResourceWrapper(_config) {
             data: requestParms,
             state: state,
             resource: url,
-            contentType: "application/json"
+            contentType: _config.accept
 
         });
     }
@@ -1919,13 +1919,14 @@ function SanteDBWrapper() {
      */
     function ApplicationApi() {
 
+        const _skipCopy = [ "$type", "$objId", "$id", "previousVersion", "holder", "source", "act", "creationTime", "createdBy", "updatedBy", "updatedTime", "id", "version", "sequence", "effectiveVersionSequence", "obsoleteVersionSequence" ];
         var _idGenerators = {};
         var _resourceStates = {};
         var _idParsers = {};
         var _idClassifiers = {};
         var _templateView = {};
         var _templateForm = {};
-
+        var _identifierValidator = {};
 
         /**
          * @summary Attempts to parse te JWS data contained in a scanned barcode into logical identifier structure
@@ -1969,6 +1970,54 @@ function SanteDBWrapper() {
             }
         }
 
+        /**
+         * @summary Copies objects from @fromObject to @toObject stripping any identification data
+         * @param {any} toObject The object to which the values are copied
+         * @param {any} fromObject The object from which the values are to be copied 
+         * @param {bool} overwrite When true overwrite existing values in @toObject
+         */
+        function copyValues(toObject, fromObject) {
+
+            if(Array.isArray(fromObject)) {
+                for(var i = 0; i < fromObject.length; i++) {
+                    var copyElement = toObject[i] || {};
+                    if(fromObject[i] == copyElement) continue; // No need to process same value
+                    else if(!copyValues(copyElement, fromObject[i])) {
+                        copyElement = fromObject[i];
+                    }
+
+                    if(toObject.length <= i) {
+                        toObject.push(copyElement);
+                    } else {
+                        toObject[i] = copyElement;
+                    }
+                }
+                return true;
+            }
+            else if(angular.isObject(fromObject) && !angular.isDate(fromObject)) {
+                Object.keys(fromObject).filter(k=>_skipCopy.indexOf(k) == -1).forEach(k => {
+                    if(!fromObject[k]) { 
+                        return; // no copy
+                    }
+
+                    if(Array.isArray(fromObject[k])) {
+                        toObject[k] = toObject[k] || [];
+                    }
+                    else {
+                        toObject[k] = toObject[k] || {};
+                    }
+                    if(!copyValues(toObject[k], fromObject[k])) {
+                        toObject[k] = fromObject[k];
+                    }
+                });
+                return true;
+            }
+            else {
+                return false;
+            }
+        }
+
+        this.copyValues = copyValues;
         /**
          * @summary Fetches sub-templates 
          * @memberof SanteDBWrapper.ApplicationApi
@@ -2093,6 +2142,9 @@ function SanteDBWrapper() {
                 // QR Code is a signed code
                 if (svrpPattern.test(qrCodeData)) {
                     var match = svrpPattern.exec(qrCodeData);
+
+                    var jwsData = await _extractJwsData(match[1]);
+
                     var result = await SanteDB.application.ptrSearchAsync(match[1], !noValidate, upstream || false);
                     result.$novalidate = noValidate;
                     result.$upstream = upstream;
@@ -2246,6 +2298,32 @@ function SanteDBWrapper() {
             return false;
         }
 
+        /**
+         * @method addIdentifierValidator
+         * @memberof SanteDBWrapper.ApplicationApi
+         * @summary Adds a new check digit validator. Note that this can be either a validator for the entire identifier or a check digit
+         * @param {*} algorithmName The name of the algorithm
+         * @param {*} validator The validator callback
+         */
+        this.addCheckDigitValidator = function(algorithmName, validator) {
+            _identifierValidator[algorithmName] = validator;
+        }
+
+        /**
+         * @method getIdentifierValidator
+         * @memberof SanteDBWrapper.ApplicationApi
+         * @summary Get the specified identifier validator
+         * @param {*} algorithmName The name of the algorithm
+         */
+        this.getCheckDigitValidator = function(algorithmName) {
+            if(_identifierValidator[algorithmName]) {
+                return _identifierValidator[algorithmName];
+            }
+            else {
+                return () => true;
+            }
+        }
+        
         /**
          * @method addIdentifierClassifier
          * @summary Adds a new classification map for an  identifier 
@@ -2779,6 +2857,8 @@ function SanteDBWrapper() {
          */
         this.ptrSearchAsync = function (jwsData, validateSignature, upstream) {
             try {
+
+                
                 var configuration = {
                     resource: "_ptr",
                     headers: {
@@ -2846,6 +2926,7 @@ function SanteDBWrapper() {
      * @property {ResourceWrapper} foreignDataMap Functions for interacting with {@link ForeignDataMap}
      * @property {ResourceWrapper} appletSolution Functions for interacting with system applet solutions
      * @property {ResourceWrapper} applet Functions for interacting with system applets
+     * @property {ResourceWrapper} conceptRelationship Functions for interacting with concept relationships
      * 
      */
     function ResourceApi() {
@@ -3529,6 +3610,17 @@ function SanteDBWrapper() {
             api: _ami
         });
 
+        /** 
+         * @type {ResourceWrapper}
+         * @memberOf SanteDBWrapper.resources
+         * @summary Wrapper for concept relationships
+         */
+        this.conceptRelationship = new ResourceWrapper({
+            resource: "ConceptRelationship",
+            accept: _viewModelJsonMime,
+            api: _hdsi
+        });
+
     };
 
     // HACK: Wrapper pointer facility = place
@@ -3742,6 +3834,27 @@ function SanteDBWrapper() {
         this.getDeviceId = function () {
             return __SanteDBAppService.GetDeviceId();
         }
+
+        /**
+         * @method getFacilityId
+         * @memberof SanteDBWrapper.ConfigurationApi
+         * @summary Get the configured facility identifier
+         * @returns {string} The identifier of the facility
+         */
+        this.getFacilityId = function () {
+            return __SanteDBAppService.GetAssignedFacilityId();
+        }
+
+        /**
+         * @method getOwnerId
+         * @memberof SanteDBWrapper.ConfigurationApi
+         * @summary Get the configured owner of this device
+         * @returns {string} The identifier of the device
+         */
+        this.getOwnerId = function () {
+            return __SanteDBAppService.GetAssignedOwnerId();
+        }
+        
         /**
             * @method getRealm
             * @memberof SanteDBWrapper.ConfigurationApi
@@ -4117,8 +4230,6 @@ function SanteDBWrapper() {
             return new Promise(function (fulfill, reject) {
                 try {
                     var headers = {};
-                    if (tfaSecret)
-                        headers["X-SanteDB-TfaSecret"] = tfaSecret;
                     var claims = {};
                     claims["urn:oasis:names:tc:xacml:2.0:action:purpose"] = 'PurposeOfUse-SecurityAdmin';
                     claims["urn:santedb:org:claim:temporary"] = "true";
@@ -4133,6 +4244,7 @@ function SanteDBWrapper() {
                             challenge: challenge,
                             response: response,
                             grant_type: 'x_challenge',
+                            x_mfa: tfaSecret,
                             scope: '*'
                         },
                         headers: headers,
@@ -4492,6 +4604,46 @@ function SanteDBWrapper() {
                 }
             });
         }
+
+        /**
+         * @summary Gets the current CDR facility identifier from either (1) the user's session assertion (the facility the user is assigned to and/or selected on login) or (2) the configured facility 
+         * @memberof SanteDBWrapper.AuthenticationApi
+         * @returns {String} The UUID of the current facility identifier
+         */
+        this.getCurrentFacilityId = async function() {
+            try {
+                var sessionInfo = await SanteDB.authentication.getSessionInfoAsync();
+                var sessionFacility = sessionInfo.claims["urn:oasis:names:tc:xspa:1.0:subject:facility"];
+                return sessionFacility || SanteDB.configuration.getFacilityId();
+            }
+            catch(e) {
+                console.warn(e);
+                return SanteDB.configuration.getFacilityId();
+            }
+        }
+
+        /**
+         * @summary Get the currently logged in user's CDR entity id
+         * @memberof SanteDBWrapper.AuthenticationApi
+         * @returns {String} The UUID of the current user's CDR entity id
+         */
+        this.getCurrentUserEntityId = async function() {
+            try {
+                var sessionInfo = await SanteDB.authentication.getSessionInfoAsync();
+                if(sessionInfo.entity) {
+                    return sessionInfo.entity.id;
+                }
+                else {
+                    var ue = await SanteDB.resources.userEntity.findAsync({ securityUser: sessionInfo.user.id, _includeTotal: false, _count: 1 });
+                    if(ue.resource) {
+                        return ue.resource[0].id;
+                    }
+                }
+            }
+            catch(e) {
+                console.warn(e);
+            }
+        }
     };
 
     // Provides localization support functions
@@ -4561,7 +4713,7 @@ function SanteDBWrapper() {
             * @return {string} The ISO language code and country code of the application
             */
         this.getLocale = function () {
-            var retVal = __SanteDBAppService.GetLocale();
+            var retVal = __SanteDBAppService.GetLocale().toLowerCase();
             return retVal;
         }
         /**
@@ -4777,3 +4929,18 @@ function ApplicationPrincipalElevator(multiuse) {
             });
     }
 }
+
+
+// Add default check digit handlers
+SanteDB.application.addCheckDigitValidator("SanteDB.Core.Model.DataTypes.CheckDigitAlgorithms.InlineMod97Validator, SanteDB.Core.Model", function(id) {
+    if(!id.value) {
+        return false;
+    }
+
+    return validateMod97CheckDigit(id.value.substring(0, id.value.length - 2), id.value.substring(id.value.length - 2, id.value.length));
+});
+
+// Add default check digit handlers
+SanteDB.application.addCheckDigitValidator("SanteDB.Core.Model.DataTypes.CheckDigitAlgorithms.Mod97CheckDigitAlgorithm, SanteDB.Core.Model", function(id) {
+    return validateMod97CheckDigit(id.value, id.checkDigit);
+});

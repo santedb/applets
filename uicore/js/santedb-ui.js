@@ -196,15 +196,27 @@ SanteDBWrapper.prototype.display = new function () {
      * @summary Renders an entity or act identifier
      * @param {EntityIdentifier} id The identifier to be rendered
      * @param {String} domain The domain to render
+     * @param {boolean} emitDomain True if the domain in which the identifier belongs should be emitted
      */
-    this.renderIdentifier = function (id, domain) {
+    this.renderIdentifier = function (id, domain, emitDomain) {
+        var retVal = "";
         if (id === undefined)
             return "";
         if (domain && id[domain])
-            return id[domain][0].value;
+            retVal = id[domain][0].value;
         else
             for (var k in id)
-                return id[k][0].value;
+                { 
+                    retVal = id[k][0].value;
+                    domain = k;
+                    break;
+                }
+        
+        if(emitDomain) {
+            retVal += ` <small>${domain}</small>`;
+        }
+
+        return retVal;
     };
     /**
      * @method
@@ -412,13 +424,13 @@ SanteDBWrapper.prototype.display = new function () {
     this.renderStatus = function (statusConcept) {
         switch (statusConcept) {
             case StatusKeys.Active:
-                return `<span class="badge badge-info"><i class="fas fa-circle"></i> ${SanteDB.locale.getString('ui.state.active')}</span>`;
+                return `<span class="badge badge-primary"><i class="fas fa-circle"></i> ${SanteDB.locale.getString('ui.state.active')}</span>`;
             case StatusKeys.Obsolete:
-                return `<span class="badge badge-dark"><i class="fas fa-circle"></i> ${SanteDB.locale.getString('ui.state.obsolete')}</span>`;
+                return `<span class="badge badge-danger"><i class="fas fa-circle"></i> ${SanteDB.locale.getString('ui.state.obsolete')}</span>`;
             case StatusKeys.Nullified:
-                return `<span class="badge badge-danger"><i class="fas fa-circle"></i> ${SanteDB.locale.getString('ui.state.nullified')}</span>`;
+                return `<span class="badge badge-dark"><i class="fas fa-circle"></i> ${SanteDB.locale.getString('ui.state.nullified')}</span>`;
             case StatusKeys.New:
-                return `<span class="badge badge-secondary"><i class="fas fa-circle"></i> ${SanteDB.locale.getString('ui.state.new')}</span>`;
+                return `<span class="badge badge-info"><i class="fas fa-circle"></i> ${SanteDB.locale.getString('ui.state.new')}</span>`;
             case StatusKeys.Inactive:
                 return `<span class="badge badge-warning"><i class="fas fa-circle"></i> ${SanteDB.locale.getString('ui.state.inactive')}</span>`;
 

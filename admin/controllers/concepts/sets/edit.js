@@ -37,7 +37,7 @@ angular.module('santedb').controller('EditConceptSetController', ["$scope", "$ro
     // Initialize the view
     async function initializeView(id) {
         try {
-            var conceptSet = await SanteDB.resources.conceptSet.getAsync(id, "full");
+            var conceptSet = await SanteDB.resources.conceptSet.getAsync(id, "concept");
             $timeout(() => $scope.conceptSet = conceptSet);
         }
         catch (e) {

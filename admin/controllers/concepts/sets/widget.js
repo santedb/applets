@@ -247,7 +247,7 @@ angular.module('santedb').controller('ConceptSetWidgetController', ["$scope", "$
             }
 
             await SanteDB.resources.conceptSet.updateAsync(conceptSet.id, conceptSet);
-            conceptSet = await SanteDB.resources.conceptSet.getAsync(conceptSet.id, "full");
+            conceptSet = await SanteDB.resources.conceptSet.getAsync(conceptSet.id, "concept");
             toastr.success(SanteDB.locale.getString("ui.admin.conceptSet.save.success"));
             $timeout(() => {
                 SanteDB.display.cascadeScopeObject(SanteDB.display.getRootScope($scope), ['scopedObject', 'conceptSet'], conceptSet);
@@ -285,7 +285,7 @@ angular.module('santedb').controller('ConceptSetWidgetController', ["$scope", "$
 
                 await SanteDB.resources.conceptSet.patchAsync($scope.scopedObject.id, null, patch);
                 toastr.success(SanteDB.locale.getString("ui.admin.concept.conceptSet.unDelete.success"));
-                var conceptSet = await SanteDB.resources.conceptSet.getAsync($scope.scopedObject.id, 'full');
+                var conceptSet = await SanteDB.resources.conceptSet.getAsync($scope.scopedObject.id, 'concept');
 
                 $timeout(() => {
                     SanteDB.display.cascadeScopeObject(SanteDB.display.getRootScope($scope), ['scopedObject', 'conceptSet'], conceptSet);

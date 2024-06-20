@@ -3,48 +3,49 @@
         <i class="fas fa-fw fa-circle-notch fa-spin"></i> {{ 'ui.wait' | i18n }}
     </div>
     <div class="row">
-        <div class="col-6">
-            <div class="d-flex flex-row">
-                <div class="m-1">
-                    <div class="btn-group" ng-if="actions">
-                        <button ng-repeat="action in actions track by $index" class="btn" ng-class="action.className"
-                            ng-click="doAction(action)" demand="{{action.demand}}">
-                            <i class="fas fa-fw" ng-class="action.icon"></i>
-                            {{ action.label || 'ui.action.' + action.name | i18n }}
-                        </button>
+        <div class="col-12">
+            <div class="d-flex justify-content-between align-items-stretch">
+                <div class="d-flex justify-content-between">
+                    <div class="m-1 flex-grow-1">
+                        <div class="btn-group" ng-if="actions">
+                            <button ng-repeat="action in actions track by $index" class="btn"
+                                ng-class="action.className" ng-click="doAction(action)" demand="{{action.demand}}">
+                                <i class="fas fa-fw" ng-class="action.icon"></i>
+                                {{ action.label || 'ui.action.' + action.name | i18n }}
+                            </button>
+                        </div>
+                    </div>
+                    <div class="m-1 resultSize d-none">
+                        <span class="mt-1 px-2">{{ 'ui.common.show' | i18n }}</span>
+                        <select class="form-control d-inline" style="min-width:2em;"
+                            ng-model="queryControl.resultsPerPage" name="scresultsize">
+                            <option value="9" ng-if="_display == 'grid'">9</option>
+                            <option value="18" ng-if="_display == 'grid'">18</option>
+                            <option value="27" ng-if="_display == 'grid'">27</option>
+                            <option value="5" ng-if="_display == 'list'">5</option>
+                            <option value="10" ng-if="_display == 'list'">10</option>
+                            <option value="15" ng-if="_display == 'list'">15</option>
+                        </select>
+                    </div>
+                    <div class="m-1 viewChange d-none">
+                        <div class="btn-group">
+                            <button class="btn btn-info" ng-class="{ 'active' : _display == 'list'}"
+                                ng-click="_display = 'list'; queryControl.resultsPerPage = 5"><i
+                                    class="fas fa-fw fa-th-list m-1"></i></button>
+                            <button class="btn btn-info" ng-class="{ 'active' : _display == 'grid'}"
+                                ng-click="_display = 'grid'; queryControl.resultsPerPage = 9"><i
+                                    class="fas fa-fw fa-th m-1"></i></button>
+                        </div>
                     </div>
                 </div>
-                <div class="m-1 resultSize d-none">
-                    <div class="d-flex flex-row">
-                    <span class="mt-1 px-2">{{ 'ui.common.show' | i18n }}</span>
-                    <select class="form-control d-inline" style="min-width:2em;"
-                        ng-model="queryControl.resultsPerPage" name="scresultsize">
-                        <option value="9" ng-if="_display == 'grid'">9</option>
-                        <option value="18" ng-if="_display == 'grid'">18</option>
-                        <option value="27" ng-if="_display == 'grid'">27</option>
-                        <option value="5" ng-if="_display == 'list'">5</option>
-                        <option value="10" ng-if="_display == 'list'">10</option>
-                        <option value="15" ng-if="_display == 'list'">15</option>
-                    </select>
+                <div class="m-1 filter d-none">
+                        <div class="float-right">
+                            {{ 'ui.action.search' | i18n }}:
+                            <input class="form-control w-75 d-inline"
+                                placeholder="{{ 'ui.table.search.field.' + searchField | i18n }}"
+                                ng-model="queryControl.filter" />
+                        </div>
                     </div>
-                </div>
-                <div class="m-1 viewChange d-none">
-                    <div class="btn-group">
-                        <button class="btn btn-info" ng-class="{ 'active' : _display == 'list'}"
-                            ng-click="_display = 'list'; queryControl.resultsPerPage = 5"><i
-                                class="fas fa-fw fa-th-list"></i></button>
-                        <button class="btn btn-info" ng-class="{ 'active' : _display == 'grid'}"
-                            ng-click="_display = 'grid'; queryControl.resultsPerPage = 9"><i
-                                class="fas fa-fw fa-th"></i></button>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-6 filter d-none">
-            <div class="float-right w-50">
-                {{ 'ui.action.search' | i18n }}:
-                <input class="form-control w-75 d-inline"
-                    placeholder="{{ 'ui.table.search.field.' + searchField | i18n }}" ng-model="queryControl.filter" />
             </div>
         </div>
     </div>
@@ -103,16 +104,16 @@
 
     <!-- The following is used as a template for each of the list items 
         xg-* is replaced with ng-* when injecting the HTML into the template-->
-    <div class="d-none" id="listTemplate">
+    <div class="d-none" id="listTemplate"> 
         <div class="card $itemClass"
-            xg-class="::{ 'col-sm-12 col-md-6 col-xl-4' : _display != 'list', 'col-12' : _display == 'list' }"
-            xg-repeat="item in results.resource track by $index">
+            xg-class="{ 'col-xs-12 col-lg-6 col-xl-4' : _display != 'list', 'col-12' : _display == 'list' }"
+            xg-repeat="item in results.resource track by $index">         
             $template
             <div class="card-footer" xg-if="itemActions">
                 <div class="btn-group float-right">
                     <button xg-repeat="action in itemActions track by $index" class="btn {{ action.className }}"
-                        id="$idRoot_action_{{action.name}}_{{$index}}"
-                        xg-click="doAction(action, item, $index)" xg-if="filterAction(action, item)" demand="{{ action.demand }}">
+                        id="$idRoot_action_{{action.name}}_{{$index}}" xg-click="doAction(action, item, $index)"
+                        xg-if="filterAction(action, item)" demand="{{ action.demand }}">
                         <i class="fas fa-fw {{action.icon}}"></i>
                         {{ action.label || 'ui.action.' + action.name | i18n }}
                     </button>
