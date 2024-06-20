@@ -78,7 +78,7 @@ var santedbApp = angular.module('santedb', ['ngSanitize', 'ui.router', 'oc.lazyL
         function applyDarkMode(session) {
             if (session && session.userSettings) {
                 var uiMode = session.userSettings.find(o => o.key == "uimode");
-                if (uiMode && uiModel.value === "dark") {
+                if (uiMode && uiMode.value === "dark") {
                     $(["*[class*='-light']"]).each((i, ele) => {
                         var classValue = $(ele).attr("class");
                         if(!classValue) {
