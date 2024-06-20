@@ -288,26 +288,20 @@
   </type>
 
   <type type="Material" all="true">
-    <property name="templateModel" behavior="always" all="false">
-      <property name="mnemonic"/>
-    </property>
-
-    <property name="createdBy" behavior="never"/>
-    <property name="creationTime" behavior="never"/>
+    <property name="createdBy" />
+    <property name="creationTime" />
     <property name="creationTimeModel" behavior="never"/>
     <property name="version" behavior="never"/>
     <property name="name" all="true" ref="EntityName" behavior="always"/>
-    <property name="identifier" all="true" ref="EntityIdentifier" behavior="always"/>
-    <property name="classConceptModel" behavior="always"/>
+    <property name="identifier" all="true">
+      <property name="*" ref="EntityIdentifier" />
+    </property>
+    <property name="classConceptModel" behavior="always" ref="Concept"/>
     <property name="classConcept" behavior="always"/>
     <property name="determinerConceptModel" behavior="never"/>
-    <property name="statusConceptModel" behavior="never"/>
+    <property name="statusConceptModel" behavior="always" ref="Concept"/>
     <property name="typeConceptModel" behavior="always" ref="Concept"/>
-    <property name="relationship" all="true" behavior="always">
-      <property name="*" all="true" ref="EntityRelationship"/>
-    </property>
-    <property name="participation" all="false">
-    </property>
+    <property name="formConceptModel" behavior="always" ref="Concept" />
   </type>
 
   <type type="Place" all="true">

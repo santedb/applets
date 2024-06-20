@@ -424,13 +424,13 @@ SanteDBWrapper.prototype.display = new function () {
     this.renderStatus = function (statusConcept) {
         switch (statusConcept) {
             case StatusKeys.Active:
-                return `<span class="badge badge-info"><i class="fas fa-circle"></i> ${SanteDB.locale.getString('ui.state.active')}</span>`;
+                return `<span class="badge badge-primary"><i class="fas fa-circle"></i> ${SanteDB.locale.getString('ui.state.active')}</span>`;
             case StatusKeys.Obsolete:
-                return `<span class="badge badge-dark"><i class="fas fa-circle"></i> ${SanteDB.locale.getString('ui.state.obsolete')}</span>`;
+                return `<span class="badge badge-danger"><i class="fas fa-circle"></i> ${SanteDB.locale.getString('ui.state.obsolete')}</span>`;
             case StatusKeys.Nullified:
-                return `<span class="badge badge-danger"><i class="fas fa-circle"></i> ${SanteDB.locale.getString('ui.state.nullified')}</span>`;
+                return `<span class="badge badge-dark"><i class="fas fa-circle"></i> ${SanteDB.locale.getString('ui.state.nullified')}</span>`;
             case StatusKeys.New:
-                return `<span class="badge badge-secondary"><i class="fas fa-circle"></i> ${SanteDB.locale.getString('ui.state.new')}</span>`;
+                return `<span class="badge badge-info"><i class="fas fa-circle"></i> ${SanteDB.locale.getString('ui.state.new')}</span>`;
             case StatusKeys.Inactive:
                 return `<span class="badge badge-warning"><i class="fas fa-circle"></i> ${SanteDB.locale.getString('ui.state.inactive')}</span>`;
 

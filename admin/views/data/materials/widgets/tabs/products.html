@@ -88,6 +88,27 @@
                                         </div>
                                     </div>
                                 </div>
+                                <div class="form-group row">
+                                    <label class="col-md-12 col-lg-3 control-label required">
+                                        {{ 'ui.model.manufacturedMaterial.name.assigned' | i18n }}
+                                        <hint-popover hint-title="ui.model.manufacturedMaterial.name.assigned" />
+                                    </label>
+                                    <div class="col-md-12 col-lg-9">
+                                        <input type="text" ng-model="editProduct.name.Assigned[0].component.$other[0]"
+                                            required="required" name="tradeName" maxlength="128" class="form-control"  />
+                                        <div class="text-danger" ng-if="editProductForm.tradeName.$error['required']">
+                                            <i class="fas fa-exclamation-triangle"></i> {{ 'ui.error.required' | i18n }}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group row" ng-if="editProduct.version">
+                                    <label class="col-md-12 col-lg-3 control-label">{{ 'ui.model.entity.statusConcept' | i18n }} 
+                                        <hint-popover hint-title="ui.model.entity.statusConcept" />
+                                    </label>
+                                    <div class="col-md-12 col-lg-9">
+                                        <concept-select concept-set="'EntityStatus'" ng-model="editProduct.statusConcept" class="form-control" />
+                                    </div>
+                                </div>
                                 <div class="form-group row" ng-repeat="dmn in idDomains track by $index">
                                     <label class="col-md-12 col-lg-3 control-label">{{ dmn.name }}</label>
                                     <div class="col-md-12 col-lg-9">
@@ -140,7 +161,48 @@
                                         </div>
                                     </div>
                                 </div>
-
+                                <div class="form-group row">
+                                    <label class="control-label col-md-12 col-lg-3">
+                                        {{ 'ui.model.manufacturedMaterial.relationship.Instance' | i18n }}
+                                        <hint-popover hint-title="ui.model.manufacturedMaterial.relationship.instance" />
+                                    </label>
+                                    <div class="col-md-12 col-lg-9">
+                                        <ul class="list-group">
+                                            <li ng-repeat="lot in editProduct.relationship.Instance track by $index" class="list-group-item">
+                                                <div class="input-group">
+                                                    <div class="input-group-prepend">
+                                                        <span class="input-group-text">
+                                                            {{ 'ui.model.manufacturedMaterial.lotNumber' | i18n }}
+                                                        </span>
+                                                    </div>
+                                                    <input type="text" maxlength="128" minlength="2" name="lotNumber"
+                                                    class="form-control" required="required" ng-model="lot.targetModel.lotNumber"
+                                                     />
+                                                    <div class="input-group-append">
+                                                        <span class="input-group-text">
+                                                            {{ 'ui.model.manufacturedMaterial.expiry' | i18n }}
+                                                        </span>
+                                                    </div>
+                                                    <input type="date" ng-required="lot.targetModel.lotNumber" name="lotExpiry{{$index}}" 
+                                                    class="form-control" ng-model="lot.targetModel.expiryDate" />
+                                                    <div class="input-group-append">
+                                                        <button type="button" class="btn btn-danger" ng-click="editProduct.relationship.Instance.splice($index, 1)">
+                                                            <i class="fas fa-fw fa-times-circle"></i><span class="d-none d-md-inline">{{ 'ui.action.remove' | i18n }}</span>
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                                <div class="text-danger" ng-if="editProductForm['lotExpiry' + $index].$error['required']">
+                                                    <i class="fas fa-fw fa-exclamation-triangle"></i> {{ 'ui.error.required' | i18n }}
+                                                </div>
+                                            </li>
+                                            <li class="list-group-item">
+                                                <button type="button" class="btn btn-success" ng-click="editProduct.relationship.Instance.push({})">
+                                                    <i class="fas fa-fw-fa-plus-circle"></i>{{ 'ui.action.add' | i18n }}
+                                                </button>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                         <div class="modal-footer">

@@ -14,16 +14,16 @@
     <div ng-if="scopedObject" class="m-2" ng-controller="MaterialLotController">
         <!-- Note: Change in Version 3 - The Materials here are specializations of holder -->
         <entity-table id="MaterialLotTable" type="ManufacturedMaterial" search-field="lotNumber"
-            default-query="{ 'relationship[Instance].target.relationship[HasGeneralization].target' : scopedObject.id, _viewModel: 'fastview', 'determinerConcept': 'F29F08DE-78A7-4A5E-AEAF-7B545BA19A09' }"
-            render="{ updatedBy: 'renderUpdatedBy', product: 'renderProduct', statusConcept: 'renderStatusConcept', expiry: 'renderExpiry' }"
-            i18n-prefix="'ui.model.manufacturedMaterial.'" item-class="{ 'product' : 'w-25', 'updatedBy' : 'w-20' }"
+            default-query="{ 'relationship[Instance].source.relationship[HasGeneralization].target' : scopedObject.id, _viewModel: 'fastview', 'determinerConcept': 'F29F08DE-78A7-4A5E-AEAF-7B545BA19A09' }"
+            render="{ updatedBy: 'renderUpdatedBy', name: 'renderName', 'gtin': 'renderGtin', statusConcept: 'renderStatusConcept', expiry: 'renderExpiry' }"
+            i18n-prefix="'ui.model.manufacturedMaterial.'" item-class="{ 'name' : 'w-25', 'updatedBy' : 'w-20' }"
             default-sort="{ 'modifiedOn' : 'desc' }" item-actions="[ 
                 { name: 'edit', action: 'doEditLot', demand: '1.3.6.1.4.1.33349.3.1.5.9.2.4.1.1', className: 'btn-primary', icon: 'fa fa-pencil' },  
                 { name: 'delete', action: 'doDeleteLot', demand: '1.3.6.1.4.1.33349.3.1.5.9.2.4.1.1', className: 'btn-danger', icon: 'fa fa-trash' },  
             ]" actions="[ 
                 { name: 'add', demand: '1.3.6.1.4.1.33349.3.1.5.9.2.4.1.0', action: 'addLot', className: 'btn-primary', icon: 'fa fa-plus-circle' }
-            ]" properties="[ 'product', 'lotNumber', 'expiry', 'statusConcept', 'updatedBy' ]"
-            item-supplement="[ loadManufacturer ]">
+            ]" properties="[ 'name', 'gtin', 'lotNumber', 'expiry',  'statusConcept', 'updatedBy' ]"
+            >
         </entity-table>
 
         
@@ -58,7 +58,7 @@
                                 
                                 <div class="form-group row">
                                     <label class="col-md-12 col-lg-3 control-label required">
-                                        {{ 'ui.model.manufacturedMaterial.relationship.Instance' | i18n }}
+                                        {{ 'ui.model.manufacturedMaterial.relationship.Instance.reverse' | i18n }}
                                         <hint-popover
                                             hint-title="ui.model.manufacturedMaterial.relationship.Instance" />
                                     </label>
@@ -85,6 +85,15 @@
                                         </div>
                                     </div>
                                 </div>
+                                <div class="form-group row" ng-if="editLot.version">
+                                    <label class="col-md-12 col-lg-3 control-label">{{ 'ui.model.entity.statusConcept' | i18n }} 
+                                        <hint-popover hint-title="ui.model.entity.statusConcept" />
+                                    </label>
+                                    <div class="col-md-12 col-lg-9">
+                                        <concept-select concept-set="'EntityStatus'" ng-model="editLot.statusConcept" class="form-control" />
+                                    </div>
+                                </div>
+
                                 <div class="form-group row" ng-repeat="dmn in idDomains track by $index">
                                     <label class="col-md-12 col-lg-3 control-label">{{ dmn.name }}</label>
                                     <div class="col-md-12 col-lg-9">
@@ -118,7 +127,7 @@
                                         <hint-popover hint-title="ui.model.manufacturedMaterial.expiry" />
                                     </label>
                                     <div class="col-md-12 col-lg-9">
-                                        <input type="date" ng-model="editLot.expiry" name="expiry" class="form-control" required="required" />
+                                        <input type="date" ng-model="editLot.expiryDate" name="expiry" class="form-control" required="required" />
                                         <div class="text-danger" ng-if="editLotForm.expiry.$error['required']">
                                             <i class="fas fa-exclamation-triangle"></i> {{ 'ui.error.required' | i18n }}
                                         </div>

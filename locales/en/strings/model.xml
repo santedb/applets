@@ -188,6 +188,13 @@
   <string name="ui.model.entity.address.title">Address Registration</string>
   <string name="ui.model.entity.address.use">Address Type</string>
   <string name="ui.model.entity.statusConcept">Status</string>
+  <string name="ui.model.entity.statusConcept.hint"><![CDATA[Sets the state of the current object in the database: <ul>
+    <li><code>NEW:</code> The object can be used however the information may not be validated</li>
+    <li><code>ACTIVE:</code> The object can be used normally</li>
+    <li><code>OBSOLETE:</code> The object should no longer be used as it has been supersceded</li>
+    <li><code>NULLIFIED:</code> The object was created in error</li>
+    <li><code>INACTIVE:</code> The object should not be used</li>
+    ]]></string>
   <string name="ui.model.entity.address.HomeAddress">Home Address</string>
   <string name="ui.model.entity.address.HomeAddress.hint">The primary address for the person/patient. This is the residence where the person primarily lives</string>
   <string name="ui.model.entity.address.Workplace">Work Address</string>
@@ -444,8 +451,9 @@
   <string name="ui.model.manufacturedMaterial.lotNumber.hint">The lot or batch number of the specified product type</string>
   <string name="ui.model.manufacturedMaterial.expiry">Expiry Date</string>
   <string name="ui.model.manufacturedMaterial.expiry.hint">The latest date where the material maintains its potentcy</string>
-  <string name="ui.model.manufacturedMaterial.relationship.Instance">Instance of Product</string>
+  <string name="ui.model.manufacturedMaterial.relationship.Instance">Batches/Lots</string>
   <string name="ui.model.manufacturedMaterial.relationship.Instance.hint">Select the product which this lot number is an instance of</string>
+  <string name="ui.model.manufacturedMaterial.relationship.Instance.reverse">Product</string>
   <string name="ui.admin.facilities.edit.core.title">Facility</string>
   <string name="ui.model.facility.id">Unique Identifier</string>
   <string name="org.santedb.widget.admin.tab.facility.profile">Facility Profile</string>
