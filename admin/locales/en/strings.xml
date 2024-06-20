@@ -565,6 +565,13 @@
     <string name="ui.admin.concept.concept.delete.success">Concept deleted successfully</string>
     <string name="ui.admin.concept.concept.unDelete.confirm">Are you sure you want to un-delete this concept?</string>
     <string name="ui.admin.concept.concept.unDelete.success">Concept un-deleted successfully</string>
+    <string name="ui.admin.concept.conceptRelationship.delete.confirm">Are you sure you want to remove this concept relationship?</string>
+    <string name="ui.admin.concept.conceptRelationship.delete.success">Concept relationship has been deleted successfully</string>
+    <string name="ui.admin.concept.conceptRelationship.delete.error">Error deleting the concept relationship {error}</string>
+    <string name="ui.admin.concept.conceptRelationship.create.success">Concept relationship has been created successfully</string>
+    <string name="ui.admin.concept.conceptRelationship.create.error">Error creating concept relationship {error}</string>
+    <string name="ui.admin.conceptui.admin.concept.conceptRelationship.create">Create Concept Relationship</string>
+    <string name="ui.admin.conceptui.admin.concept.conceptRelationship.create.help">A concept relationship is used to link one or more concepts together. For example, instructing the CDR that two concepts have the same meaning or that one is a narrower concept than another.</string>
     <string name="org.santedb.widget.concept.concepts.core.terms">Reference Terms</string>
     <string name="org.santedb.widget.concept.concepts.core.sets">Concept Sets</string>
     <string name="org.santedb.widget.concept.concepts.core.properties">Concept Properties</string>

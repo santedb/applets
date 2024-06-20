@@ -62,6 +62,7 @@
     <string name="ui.bi.marts.registration">Status</string>
     <string name="ui.bi.marts.register">Register</string>
     <string name="ui.bi.marts.unregister">Unregister</string>
+    <string name="ui.bi.marts.refresh">Refresh Data</string>
     <string name="ui.bi.marts.unregister.success">Datamart {id} was removed successfully</string>
     <string name="ui.bi.marts.unregister.fail">Datamart {id} was not removed: {e}</string>
     <string name="ui.bi.marts.register.success">Datamart {id} was registered successfully</string>
@@ -70,7 +71,8 @@
     <string name="ui.bi.marts.unregistered">Not Registered</string>
     <string name="ui.bi.marts.register.confirm">Are you sure you want to register the data-mart {id} with the data warehouse manager?</string>
     <string name="ui.bi.marts.unregister.confirm">Are you sure you want to un-register the data-mart {id} with the data warehouse manager? Any reports which use this report will no longer work</string>
-
+    <string name="ui.bi.marts.refresh.success">Datamart {id} has been scheduled for refresh</string>
+    <string name="ui.bi.marts.refresh.error">Error scheduling datamart {id} for refresh due to {error}</string>
     <!-- Warehouse Strings -->
     <string name="ui.model.bi.dataMart.exec.startedBy">Ran As</string>
     <string name="ui.model.bi.dataMart.exec.purpose">Purpose</string>

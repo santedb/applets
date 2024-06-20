@@ -31,11 +31,12 @@
     <div ng-controller="ConceptWidgetController">
 
         <entity-table id="ConceptRelationshipTable" type="ConceptRelationship" search-field="source.name.value"
-            default-query="{ _viewModel: 'reverseRelationship', targetConcept: scopedObject.id }" key-property="'source'"
+            default-query="{ _viewModel: 'reverseRelationship', targetConcept: scopedObject.id }" 
             i18n-prefix="'ui.model.conceptRelationship.'" no-deleted="true" 
             item-actions="[ 
-                { name: 'view', sref: 'santedb-admin.concept.concepts.view', demand: '1.3.6.1.4.1.33349.3.1.5.9.2.0.7', className: 'btn-primary', icon: 'fa fa-eye' }
-            ]" properties="[ 'mnemonic', 'name', 'relationshipType' ]"
+                { name: 'view', action: 'navSourceConcept', demand: '1.3.6.1.4.1.33349.3.1.5.9.2.0.7', className: 'btn-primary', icon: 'fa fa-eye' },
+                { name: 'remove', action: 'removeConceptRelationship', demand: '1.3.6.1.4.1.33349.3.1.5.9.2.0.7', className: 'btn-danger', icon: 'fa fa-times' } 
+                ]" properties="[ 'mnemonic', 'name', 'relationshipType' ]"
             render="{ name: 'renderName', mnemonic: 'renderMnemonic', relationshipType: 'renderRelationshipType' }">
         </entity-table>
     </div>

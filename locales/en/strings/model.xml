@@ -844,4 +844,8 @@
   <string name="ui.model.conceptRelationship.mnemonic">Related Concept</string>
   <string name="ui.model.conceptRelationship.name">Name</string>
   <string name="ui.model.conceptRelationship.relationshipType">Relationship</string>
+  <string name="ui.model.conceptRelationship.relationshipType.hint">Indicates the nature of the relationship between the two concepts</string>
+  <string name="ui.model.conceptRelationship.targetConcept">Target Concept</string>
+  <string name="ui.model.conceptRelationship.targetConcept.hint">The concept which is the target of this relationship</string>
+  
 </resources>
