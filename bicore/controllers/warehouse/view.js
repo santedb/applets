@@ -44,4 +44,39 @@ angular.module('santedb').controller('WarehouseViewController', ["$scope", "$roo
         $state.go("santedb-admin.bi.warehouse.index");
     }
 
+    $scope.refresh = async function() {
+        try {
+
+            SanteDB.display.buttonWait('#btnRefresh', true);
+            await SanteDBBi.resources.datamart.invokeOperationAsync($scope.dataMart.id, "refresh");
+            toastr.success(SanteDB.locale.getString("ui.bi.marts.refresh.success", {id: $scope.dataMart.id}));
+            $state.reload();
+        }  
+        catch (e) {
+            $rootScope.errorHandler(e);
+            toastr.error(SanteDB.locale.getString("ui.bi.marts.refresh.fail", { id: $scope.dataMart.id, e: e.message }));
+        }
+        finally {
+            SanteDB.display.buttonWait('#btnRefresh', false);
+        }
+    }
+
+    $scope.unRegister = async function() {
+        if (confirm(SanteDB.locale.getString('ui.bi.marts.unregister.confirm', { id: $scope.dataMart.id }))) {
+            try {
+
+                SanteDB.display.buttonWait('#btnUnregister', true);
+                await SanteDBBi.resources.datamart.invokeOperationAsync($scope.dataMart.id, "unregister");
+                toastr.success(SanteDB.locale.getString("ui.bi.marts.unregister.success", {id: $scope.dataMart.id}));
+                $state.go("santedb-admin.bi.warehouse.index");
+            }  
+            catch (e) {
+                $rootScope.errorHandler(e);
+                toastr.error(SanteDB.locale.getString("ui.bi.marts.unregister.fail", { id: $scope.dataMart.id, e: e.message }));
+            }
+            finally {
+                SanteDB.display.buttonWait('#btnUnregister', false);
+            }
+        }
+    }
 }]);

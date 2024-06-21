@@ -1919,6 +1919,7 @@ function SanteDBWrapper() {
      */
     function ApplicationApi() {
 
+        const _skipCopy = [ "$type", "$objId", "$id", "previousVersion", "holder", "source", "act", "creationTime", "createdBy", "updatedBy", "updatedTime", "id", "version", "sequence", "effectiveVersionSequence", "obsoleteVersionSequence" ];
         var _idGenerators = {};
         var _resourceStates = {};
         var _idParsers = {};
@@ -1969,6 +1970,54 @@ function SanteDBWrapper() {
             }
         }
 
+        /**
+         * @summary Copies objects from @fromObject to @toObject stripping any identification data
+         * @param {any} toObject The object to which the values are copied
+         * @param {any} fromObject The object from which the values are to be copied 
+         * @param {bool} overwrite When true overwrite existing values in @toObject
+         */
+        function copyValues(toObject, fromObject) {
+
+            if(Array.isArray(fromObject)) {
+                for(var i = 0; i < fromObject.length; i++) {
+                    var copyElement = toObject[i] || {};
+                    if(fromObject[i] == copyElement) continue; // No need to process same value
+                    else if(!copyValues(copyElement, fromObject[i])) {
+                        copyElement = fromObject[i];
+                    }
+
+                    if(toObject.length <= i) {
+                        toObject.push(copyElement);
+                    } else {
+                        toObject[i] = copyElement;
+                    }
+                }
+                return true;
+            }
+            else if(angular.isObject(fromObject) && !angular.isDate(fromObject)) {
+                Object.keys(fromObject).filter(k=>_skipCopy.indexOf(k) == -1).forEach(k => {
+                    if(!fromObject[k]) { 
+                        return; // no copy
+                    }
+
+                    if(Array.isArray(fromObject[k])) {
+                        toObject[k] = toObject[k] || [];
+                    }
+                    else {
+                        toObject[k] = toObject[k] || {};
+                    }
+                    if(!copyValues(toObject[k], fromObject[k])) {
+                        toObject[k] = fromObject[k];
+                    }
+                });
+                return true;
+            }
+            else {
+                return false;
+            }
+        }
+
+        this.copyValues = copyValues;
         /**
          * @summary Fetches sub-templates 
          * @memberof SanteDBWrapper.ApplicationApi
@@ -2095,7 +2144,7 @@ function SanteDBWrapper() {
                     var match = svrpPattern.exec(qrCodeData);
 
                     var jwsData = await _extractJwsData(match[1]);
-                    
+
                     var result = await SanteDB.application.ptrSearchAsync(match[1], !noValidate, upstream || false);
                     result.$novalidate = noValidate;
                     result.$upstream = upstream;
@@ -2877,6 +2926,7 @@ function SanteDBWrapper() {
      * @property {ResourceWrapper} foreignDataMap Functions for interacting with {@link ForeignDataMap}
      * @property {ResourceWrapper} appletSolution Functions for interacting with system applet solutions
      * @property {ResourceWrapper} applet Functions for interacting with system applets
+     * @property {ResourceWrapper} conceptRelationship Functions for interacting with concept relationships
      * 
      */
     function ResourceApi() {
@@ -3558,6 +3608,17 @@ function SanteDBWrapper() {
             resource: "Backup",
             accept: "application/json",
             api: _ami
+        });
+
+        /** 
+         * @type {ResourceWrapper}
+         * @memberOf SanteDBWrapper.resources
+         * @summary Wrapper for concept relationships
+         */
+        this.conceptRelationship = new ResourceWrapper({
+            resource: "ConceptRelationship",
+            accept: _viewModelJsonMime,
+            api: _hdsi
         });
 
     };

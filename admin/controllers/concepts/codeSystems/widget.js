@@ -258,7 +258,7 @@ angular.module('santedb').controller('CodeSystemWidgetController', ["$scope", "$
 
                 await SanteDB.resources.codeSystem.patchAsync($scope.scopedObject.id, null, patch);
                 toastr.success(SanteDB.locale.getString("ui.admin.concept.codeSystem.unDelete.success"));
-                var codeSystem = await SanteDB.resources.codeSystem.getAsync($scope.scopedObject.id, 'full');
+                var codeSystem = await SanteDB.resources.codeSystem.getAsync($scope.scopedObject.id, 'concept');
 
                 $timeout(() => {
                     SanteDB.display.cascadeScopeObject(SanteDB.display.getRootScope($scope), ['scopedObject', 'codeSystem'], codeSystem);

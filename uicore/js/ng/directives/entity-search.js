@@ -79,52 +79,54 @@ angular.module('santedb-lib')
             var retVal = "";
             switch (selection.$type) {
                 case "Patient":
-                    retVal += "<i class='fa fa-hospital-user'></i> ";
+                    retVal += "<i class='fa fa-fw fa-hospital-user'></i> ";
                     break;
                 case "UserEntity":
                 case "Provider":
                 case "Person":
-                    retVal += "<i class='fa fa-user'></i> ";
+                    retVal += "<i class='fa fa-fw fa-user'></i> ";
                     break;
                 case "Material":
+                    retVal += "<i class='fa fa-fw fa-flask'></i> ";
+                    break;
                 case "ManufacturedMaterial":
-                    retVal += "<i class='fa fa-flask'></i> ";
+                    retVal += "<i class='fa fa-fw fa-prescription-bottle'></i>";
                     break;
                 case "Place":
                     if (selection.classConcept == EntityClassKeys.ServiceDeliveryLocation)
-                        retVal += "<i class='fa fa-hospital'></i> ";
+                        retVal += "<i class='fa fa-fw fa-hospital'></i> ";
                     else
-                        retVal += "<i class='fa fa-map-pin'></i> ";
+                        retVal += "<i class='fa fa-fw fa-map-pin'></i> ";
                     break;
                 case "Organization":
-                    retVal += "<i class='fa fa-building'></i> ";
+                    retVal += "<i class='fa fa-fw fa-sitemap'></i> ";
                     break;
                 case "Entity":
-                    retVal += "<i class='fa fa-share-alt'></i> ";
+                    retVal += "<i class='fa fa-fw fa-share-alt'></i> ";
                     break;
                 case "IdentityDomain":
-                    retVal += "<i class='fa fa-id-card'></i> ";
+                    retVal += "<i class='fa fa-fw fa-id-card'></i> ";
                     break;
                 case "SecurityRole":
                 case "SecurityRoleInfo":
                 case "SanteDB.Core.Model.AMI.Auth.SecurityRoleInfo, SanteDB.Core.Model.AMI":
-                    retVal += "<i class='fa fa-users'></i>";
+                    retVal += "<i class='fa fa-fw fa-users'></i>";
                     break;
                 case "SecurityUser":
                 case "SecurityUserInfo":
                 case "SanteDB.Core.Model.AMI.Auth.SecurityUserInfo, SanteDB.Core.Model.AMI":
-                    retVal += "<i class='fa fa-user'></i>";
+                    retVal += "<i class='fa fa-fw fa-user'></i>";
                     break;
                 case "Concept":
                 case "CodeSystem":
-                    retVal += "<i class='fa fa-book-medical'></i>";
+                    retVal += "<i class='fa fa-fw fa-book-medical'></i>";
                     break;
                 case "SecurityPolicy":
                 case "SecurityPolicyInstance":
-                    retVal += "<i class='fa fa-certificate'></i>";
+                    retVal += "<i class='fa fa-fw fa-certificate'></i>";
                     break;
                 default:
-                    retVal += "<i class='fa fa-box'></i> ";
+                    retVal += "<i class='fa fa-fw fa-box'></i> ";
                     break;
             }
 
@@ -168,7 +170,7 @@ angular.module('santedb-lib')
             }
 
             if (selection.identifier) {
-                retVal += `<small class="ml-2 d-none d-sm-inline badge badge-info"><i class="fas fa-id-card"></i> ${SanteDB.display.renderIdentifier(selection.identifier)}</small>`;
+                retVal += `<small class="ml-2 d-none d-sm-inline badge badge-info"><i class="fas fa-id-card"></i> ${SanteDB.display.renderIdentifier(selection.identifier, null, true)}</small>`;
             }
 
             return retVal;

@@ -58,6 +58,7 @@ function SanteDBBusinessIntelligence() {
          */
         this.package = new ResourceWrapper({
             resource: "BiPackage",
+            accept: 'application/json',
             api: _bis
         });
         /**
@@ -65,6 +66,7 @@ function SanteDBBusinessIntelligence() {
          */
         this.dataSource = new ResourceWrapper({
             resource: "BiDataSourceDefinition",
+            accept: 'application/json',
             api: _bis
         });
         /**
@@ -72,6 +74,7 @@ function SanteDBBusinessIntelligence() {
          */
         this.parameter = new ResourceWrapper({
             resource: "BiParameterDefinition",
+            accept: 'application/json',
             api: _bis
         });
         /**
@@ -79,6 +82,7 @@ function SanteDBBusinessIntelligence() {
          */
         this.query = new ResourceWrapper({
             resource: "BiQueryDefinition",
+            accept: 'application/json',
             api: _bis
         });
         /**
@@ -86,6 +90,7 @@ function SanteDBBusinessIntelligence() {
          */
         this.report = new ResourceWrapper({
             resource: "BiReportDefinition",
+            accept: 'application/json',
             api: _bis
         });
         /**
@@ -93,6 +98,7 @@ function SanteDBBusinessIntelligence() {
          */
         this.view = new ResourceWrapper({
             resource: "BiViewDefinition",
+            accept: 'application/json',
             api: _bis
         });
         /**
@@ -100,6 +106,7 @@ function SanteDBBusinessIntelligence() {
         */
         this.format = new ResourceWrapper({
             resource: "BiRenderFormatDefinition",
+            accept: 'application/json',
             api: _bis
         });
         /**
@@ -107,6 +114,7 @@ function SanteDBBusinessIntelligence() {
         */
         this.datamart = new ResourceWrapper({
             resource: "BiDatamartDefinition",
+            accept: 'application/json',
             api: _bis
         });
         /**
@@ -114,6 +122,7 @@ function SanteDBBusinessIntelligence() {
         */
         this.warehouse = new ResourceWrapper({
             resource: "DatamartInfo",
+            accept: 'application/json',
             api: _bis
         });
 
