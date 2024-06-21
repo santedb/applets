@@ -42,6 +42,7 @@ angular.module('santedb').controller('AdminLayoutController', ["$scope", "$rootS
             await SanteDB.authentication.logoutAsync();
             $("#logoutModal").modal('hide');
             $timeout(() => {
+                $rootScope.session = null;
                 $templateCache.removeAll();
                 $state.go('login');
                 location.reload();
