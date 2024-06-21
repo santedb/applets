@@ -1,8 +1,8 @@
 ﻿/// <reference path="./santedb-model.js"/>
 /*
- * Copyright 2021-2023 SanteSuite Inc. and the SanteSuite Contributors (see NOTICES.md)
- * Copyright 2019-2021 Fyfe Software Inc. and the SanteSuite Contributors
- * Copyright 2015-2019 Mohawk College of Applied Arts and Technology
+ * Copyright (C) 2021 - 2024, SanteSuite Inc. and the SanteSuite Contributors (See NOTICE.md for full copyright notices)
+ * Copyright (C) 2019 - 2021, Fyfe Software Inc. and the SanteSuite Contributors
+ * Portions Copyright (C) 2015-2018 Mohawk College of Applied Arts and Technology
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you 
  * may not use this file except in compliance with the License. You may 
@@ -16,8 +16,8 @@
  * License for the specific language governing permissions and limitations under 
  * the License.
  * 
- * User: Justin Fyfe
- * Date: 2019-8-8
+ * User: fyfej
+ * Date: 2023-5-19
  */
 
 // Interactive SHIM between host environment and browser
@@ -51,34 +51,47 @@ function APIWrapper(_config) {
      * @summary Resolves all $ref in the object with the $id data ensuring the model is ready for display
      * @param {any} object The object which should be resolved
      */
-    function _resolveObjectRefs(object, referenceDictionary) {
+    function _resolveObjectRefs(object, referenceDictionary, resolveStack) {
 
         referenceDictionary = referenceDictionary || {};
+        resolveStack = resolveStack || [];
+        if (object && object.$id) {
+            resolveStack.push(object.$id);
+        }
 
-        // This is not really an object but a reference to an object
-        if (object == null) {
-            return null;
-        }
-        else if (object.$ref !== undefined) {
-            return referenceDictionary[object.$ref];
-        }
-        else if (Array.isArray(object)) {
-            return object.map(o => _resolveObjectRefs(o, referenceDictionary));
-        }
-        else if (typeof (object) == 'object' &&
-            !(object instanceof Date)) {
-            if (object.$id !== undefined) {
-                referenceDictionary[`#${object.$id}`] = object;
+        try {
+            // This is not really an object but a reference to an object
+            if (object == null) {
+                return null;
             }
-            Object.keys(object).forEach(p => {
-                object[p] = _resolveObjectRefs(object[p], referenceDictionary);
-            });
-            return object;
-        }
-        else {
-            return object;
-        }
+            else if (object.$ref !== undefined) {
+                if (!resolveStack.indexOf(object.$ref)) {
+                    return referenceDictionary[object.$ref];
+                }
+            }
+            else if (Array.isArray(object)) {
+                return object.map(o => _resolveObjectRefs(o, referenceDictionary));
+            }
+            else if (typeof (object) == 'object' &&
+                !(object instanceof Date)) {
+                if (object.$id !== undefined) {
+                    referenceDictionary[`#${object.$id}`] = object;
+                }
 
+                Object.keys(object).forEach(p => {
+                    object[p] = _resolveObjectRefs(object[p], referenceDictionary);
+                });
+                return object;
+            }
+            else {
+                return object;
+            }
+        }
+        finally {
+            if (object && object.$id) {
+                resolveStack.splice(resolveStack.length, 1);
+            }
+        }
     }
 
     /**
@@ -365,8 +378,7 @@ function APIWrapper(_config) {
                         if (xhr && response.getResponseHeader("etag"))
                             xhr.etag = response.getResponseHeader("etag");
                         if (fulfill) {
-                            if(xhr && configuration.state != null) 
-                            {
+                            if (xhr && configuration.state != null) {
                                 xhr.$state = configuration.state;
                             }
                             if (configuration.headers && configuration.headers["Accept"] == _viewModelJsonMime) {
@@ -378,7 +390,7 @@ function APIWrapper(_config) {
                         }
                     }
                     catch (e) {
-                        if (reject){
+                        if (reject) {
                             var result = e.responseJSON || e;
                             try {
                                 result.$state = configuration.state;
@@ -400,7 +412,7 @@ function APIWrapper(_config) {
                         try { error = JSON.parse(e.responseText); }
                         catch (e) { };
 
-                    if(error && configuration.state != null) {
+                    if (error && configuration.state != null) {
                         error.$state = configuration.state;
                     }
                     if (reject) {
@@ -889,7 +901,7 @@ function ResourceWrapper(_config) {
                 url = `${_config.resource}/${id}`;
 
             if (id.version)
-                url += `/history/${id.version}`;
+                url += `/_history/${id.version}`;
         }
         else
             url = _config.resource;
@@ -1737,7 +1749,7 @@ function ResourceWrapper(_config) {
             data: requestParms,
             state: state,
             resource: url,
-            contentType: "application/json"
+            contentType: _config.accept
 
         });
     }
@@ -1802,6 +1814,22 @@ function SanteDBWrapper() {
 
     /**
      * @private
+     * @summary Policy violation exception handler
+     * @param {*} faultJson The Fault message
+     * @returns {bool} True if the fault JSON inidcates a policy violation
+     */
+    var _getPolicyException = function(faultJson) {
+        do {
+            if(faultJson.$type == "PolicyViolationException") {
+                return faultJson;
+            }
+            faultJson = faultJson.cause;
+        } while(faultJson)
+        return null;
+    }
+
+    /**
+     * @private
      * @summary Global error handler
      * @param {xhr} e The Errored request
      * @param {*} data 
@@ -1816,11 +1844,12 @@ function SanteDBWrapper() {
                 !_elevator.getToken() ||
                 (_session == null || !_session.access_token) && _elevator) {
 
+                    var pve = _getPolicyException(data.responseJSON);
                 // Was the response a security policy exception where the back end is asking for elevation on the same user account?
                 if (data.responseJSON &&
-                    data.responseJSON.$type == "PolicyViolationException" &&
+                    pve &&
                     data.getResponseHeader("WWW-Authenticate").indexOf("insufficient_scope") > -1)
-                    _elevator.elevate(angular.copy(_session), [data.responseJSON.policyId]);
+                    _elevator.elevate(angular.copy(_session), [`${pve.policyId} - ${pve.policyName}`]);
                 else
                     _elevator.elevate(null);
                 return true;
@@ -1890,21 +1919,105 @@ function SanteDBWrapper() {
      */
     function ApplicationApi() {
 
+        const _skipCopy = [ "$type", "$objId", "$id", "previousVersion", "holder", "source", "act", "creationTime", "createdBy", "updatedBy", "updatedTime", "id", "version", "sequence", "effectiveVersionSequence", "obsoleteVersionSequence" ];
         var _idGenerators = {};
         var _resourceStates = {};
         var _idParsers = {};
         var _idClassifiers = {};
         var _templateView = {};
         var _templateForm = {};
+        var _identifierValidator = {};
 
         /**
-         * @memberof SanteDBWrapper.ApplicationApi
-        * @summary Wraps native printing functionality for the host operating system
-        */
-        this.printView = function () {
-            __SanteDBAppService.Print();
+         * @summary Attempts to parse te JWS data contained in a scanned barcode into logical identifier structure
+         * @param {*} jwsData The data to be parsed in SVRP format
+         * @returns {object} The entity which is described in the SVRP
+         */
+        async function _extractJwsData(jwsData) {
+            try {
+                var jwsHeaderData = atob(jwsData[1]);
+
+                var jwsBody = null;
+                var jwsHeader = JSON.parse(jwsHeaderData);
+                if (jwsHeader.zip) {
+                    var decompress = null;
+                    switch (jwsHeader.zip) {
+                        case "DEF":
+                            decompress = new DecompressionStream("deflate-raw");
+                            break;
+                        case "GZ":
+                            decompress = new DecompressionStream("gzip");
+                            break;
+                    }
+                    var buffer = jwsData[2].b64DecodeBuffer(true);
+                    var blob = new Blob([buffer]);
+                    var reader = blob.stream().pipeThrough(decompress).getReader();
+                    var data = await reader.read();
+                    jwsBody = JSON.parse(new TextDecoder().decode(data.value));
+                }
+                else {
+                    var jwsBodyData = jwsData[2].b64DecodeBuffer();
+                    jwsBody = JSON.parse(new TextDecoder().decode(jwsBodyData));
+                }
+
+                // Return the data element
+                var retVal = jwsBody.data || {};
+                retVal.id = jwsBody.sub;
+                return retVal;
+            }
+            catch (e) {
+                throw new Exception("JwsParseError", e);
+            }
         }
 
+        /**
+         * @summary Copies objects from @fromObject to @toObject stripping any identification data
+         * @param {any} toObject The object to which the values are copied
+         * @param {any} fromObject The object from which the values are to be copied 
+         * @param {bool} overwrite When true overwrite existing values in @toObject
+         */
+        function copyValues(toObject, fromObject) {
+
+            if(Array.isArray(fromObject)) {
+                for(var i = 0; i < fromObject.length; i++) {
+                    var copyElement = toObject[i] || {};
+                    if(fromObject[i] == copyElement) continue; // No need to process same value
+                    else if(!copyValues(copyElement, fromObject[i])) {
+                        copyElement = fromObject[i];
+                    }
+
+                    if(toObject.length <= i) {
+                        toObject.push(copyElement);
+                    } else {
+                        toObject[i] = copyElement;
+                    }
+                }
+                return true;
+            }
+            else if(angular.isObject(fromObject) && !angular.isDate(fromObject)) {
+                Object.keys(fromObject).filter(k=>_skipCopy.indexOf(k) == -1).forEach(k => {
+                    if(!fromObject[k]) { 
+                        return; // no copy
+                    }
+
+                    if(Array.isArray(fromObject[k])) {
+                        toObject[k] = toObject[k] || [];
+                    }
+                    else {
+                        toObject[k] = toObject[k] || {};
+                    }
+                    if(!copyValues(toObject[k], fromObject[k])) {
+                        toObject[k] = fromObject[k];
+                    }
+                });
+                return true;
+            }
+            else {
+                return false;
+            }
+        }
+
+        this.copyValues = copyValues;
         /**
          * @summary Fetches sub-templates 
          * @memberof SanteDBWrapper.ApplicationApi
@@ -1975,6 +2088,14 @@ function SanteDBWrapper() {
         }
 
         /**
+         * @memberof SanteDBWrapper.ApplicationApi
+        * @summary Wraps native printing functionality for the host operating system
+        */
+        this.printView = function () {
+            __SanteDBAppService.Print();
+        }
+
+        /**
          * @method scanIdentifierAsync
          * @memberof SanteDBWrapper.ApplicationApi
          * @summary Scans a barcode using {@link scanBarcodeAsync} however interprets the identifier rather than returning the raw data
@@ -1984,13 +2105,14 @@ function SanteDBWrapper() {
         this.scanIdentifierAsync = async function () {
             var data = await SanteDB.application.scanBarcodeAsync();
 
-            if (jwsDataPattern.test(data)) {
-                var match = jwsDataPattern.exec(data);
-                var idData = JSON.parse(atob(match[2]));
-                return idData.id[0].value;
+            if (svrpPattern.test(data)) {
+                var match = svrpPattern.exec(data);
+                var jwsData = jwsDataPattern.exec(match[1]);
+                return await _extractJwsData(jwsData);
             }
-            else if(srvpPattern.test(data)) {
-
+            else if (jwsDataPattern.test(data)) {
+                var jwsData = jwsDataPattern.exec(data);
+                return await _extractJwsData(jwsData);
             }
             else {
                 var idDomain = SanteDB.application.classifyIdentifier(data);
@@ -2018,8 +2140,11 @@ function SanteDBWrapper() {
                     qrCodeData = await SanteDB.application.scanBarcodeAsync();
 
                 // QR Code is a signed code
-                if(svrpPattern.test(qrCodeData)) {
+                if (svrpPattern.test(qrCodeData)) {
                     var match = svrpPattern.exec(qrCodeData);
+
+                    var jwsData = await _extractJwsData(match[1]);
+
                     var result = await SanteDB.application.ptrSearchAsync(match[1], !noValidate, upstream || false);
                     result.$novalidate = noValidate;
                     result.$upstream = upstream;
@@ -2040,15 +2165,15 @@ function SanteDBWrapper() {
                     }
 
                     var query = {};
-                    if(qrCodeData.value) {
+                    if (qrCodeData.value) {
                         query = {
-                            "identifier.value" : qrCodeData.value,
-                            "identifier.checkDigit" : qrCodeData.checkDigit
+                            "identifier.value": qrCodeData.value,
+                            "identifier.checkDigit": qrCodeData.checkDigit
                         };
                     }
                     else {
                         query = {
-                            "identifier.value" : qrCodeData
+                            "identifier.value": qrCodeData
                         }
                     }
                     var result = await SanteDB.resources.entity.findAsync(query);
@@ -2061,6 +2186,10 @@ function SanteDBWrapper() {
                     return null;
                 // Error was with validating the code
                 else if (e.rules && e.rules.length > 0 && e.rules.filter(o => o.id == "jws.verification" || o.id == "jws.app" || o.id == "jws.key").length == e.rules.length) {
+                    return await SanteDB.application.searchByBarcodeAsync(qrCodeData, true, upstream);
+                }
+                else if(e.rules && e.rules.length > 0 && e.rules.filter(o => o.id == "jws.algorithm" || o.id == "jws.format").length == e.rules.length && 
+                    confirm(SanteDB.locale.getString("ui.error.vrp.invalidFormat"))) {
                     return await SanteDB.application.searchByBarcodeAsync(qrCodeData, true, upstream);
                 }
                 else if (!upstream && (e.$type == "KeyNotFoundException" || e.cause && e.cause.$type == "KeyNotFoundException") && confirm(SanteDB.locale.getString("ui.emr.search.online"))) {
@@ -2170,6 +2299,32 @@ function SanteDBWrapper() {
         }
 
         /**
+         * @method addIdentifierValidator
+         * @memberof SanteDBWrapper.ApplicationApi
+         * @summary Adds a new check digit validator. Note that this can be either a validator for the entire identifier or a check digit
+         * @param {*} algorithmName The name of the algorithm
+         * @param {*} validator The validator callback
+         */
+        this.addCheckDigitValidator = function(algorithmName, validator) {
+            _identifierValidator[algorithmName] = validator;
+        }
+
+        /**
+         * @method getIdentifierValidator
+         * @memberof SanteDBWrapper.ApplicationApi
+         * @summary Get the specified identifier validator
+         * @param {*} algorithmName The name of the algorithm
+         */
+        this.getCheckDigitValidator = function(algorithmName) {
+            if(_identifierValidator[algorithmName]) {
+                return _identifierValidator[algorithmName];
+            }
+            else {
+                return () => true;
+            }
+        }
+        
+        /**
          * @method addIdentifierClassifier
          * @summary Adds a new classification map for an  identifier 
          * @memberof SanteDBWrapper.ApplicationApi
@@ -2276,7 +2431,7 @@ function SanteDBWrapper() {
                     return JSON.parse(result[1]);
                 }
                 else {
-                    exceptionRegex = new RegExp("(\\w*?Exception)\\:(.*)", "gs");
+                    exceptionRegex = new RegExp("(\\w*?Exception)\\s*?\\:(.*)", "gs");
                     var result = exceptionRegex.exec(exceptionString);
                     return new Exception(result[1], result[2]);
                 }
@@ -2702,12 +2857,15 @@ function SanteDBWrapper() {
          */
         this.ptrSearchAsync = function (jwsData, validateSignature, upstream) {
             try {
+
+                
                 var configuration = {
                     resource: "_ptr",
                     headers: {
-                        accept: _viewModelJsonMime
+                        accept: _viewModelJsonMime,
+                        "X-SanteDB-Upstream": upstream
                     },
-                    query: { code: jwsData, validate: validateSignature, _upstream: upstream }
+                    query: { code: jwsData, validate: validateSignature }
                 };
                 return _hdsi.searchAsync(configuration);
             }
@@ -2768,6 +2926,7 @@ function SanteDBWrapper() {
      * @property {ResourceWrapper} foreignDataMap Functions for interacting with {@link ForeignDataMap}
      * @property {ResourceWrapper} appletSolution Functions for interacting with system applet solutions
      * @property {ResourceWrapper} applet Functions for interacting with system applets
+     * @property {ResourceWrapper} conceptRelationship Functions for interacting with concept relationships
      * 
      */
     function ResourceApi() {
@@ -2812,13 +2971,24 @@ function SanteDBWrapper() {
             api: _hdsi
         });
         /**
-            * @type {ResourceWrapper}
-            * @memberof SanteDBWrapper.ResourceApi
-            * @summary Represents the Patient Resource
-            */
+        * @type {ResourceWrapper}
+        * @memberof SanteDBWrapper.ResourceApi
+        * @summary Represents the Patient Resource
+        */
         this.patient = new ResourceWrapper({
             accept: _viewModelJsonMime,
             resource: "Patient",
+            api: _hdsi
+        });
+
+        /**
+        * @type {ResourceWrapper}
+        * @memberof SanteDBWrapper.ResourceApi
+        * @summary Represents the PatientEncounter Resource
+        */
+        this.patientEncounter = new ResourceWrapper({
+            accept: _viewModelJsonMime,
+            resource: "PatientEncounter",
             api: _hdsi
         });
 
@@ -3363,34 +3533,45 @@ function SanteDBWrapper() {
             api: _ami
         });
 
-      /**
-       * @type {ResourceWrapper}
-       * @memberOf SanteDBWrapper.resources
-       * @summary Wrapper for relationship validation rules
-       */
-      this.validationRule = new ResourceWrapper({
+        /**
+         * @type {ResourceWrapper}
+         * @memberOf SanteDBWrapper.resources
+         * @summary Wrapper for relationship validation rules
+         */
+        this.validationRule = new ResourceWrapper({
             resource: "RelationshipValidationRule",
             accept: "application/json",
             api: _ami
         });
 
-      /**
-       * @type {ResourceWrapper}
-       * @memberOf SanteDBWrapper.resources
-       * @summary Wrapper for applets 
-       */
-      this.applet = new ResourceWrapper({
+        /**
+         * @type {ResourceWrapper}
+         * @memberOf SanteDBWrapper.resources
+         * @summary Wrapper for relationship validation rules
+         */
+        this.dataQuality = new ResourceWrapper({
+            resource: "DataQualityRulesetConfiguration",
+            accept: "application/json",
+            api: _ami
+        });
+
+        /**
+         * @type {ResourceWrapper}
+         * @memberOf SanteDBWrapper.resources
+         * @summary Wrapper for applets 
+         */
+        this.applet = new ResourceWrapper({
             resource: "Applet",
             accept: "application/json",
             api: _ami
         });
 
-      /**
-       * @type {ResourceWrapper}
-       * @memberOf SanteDBWrapper.resources
-       * @summary Wrapper for appletSolution 
-       */
-      this.appletSolution = new ResourceWrapper({
+        /**
+         * @type {ResourceWrapper}
+         * @memberOf SanteDBWrapper.resources
+         * @summary Wrapper for appletSolution 
+         */
+        this.appletSolution = new ResourceWrapper({
             resource: "AppletSolution",
             accept: "application/json",
             api: _ami
@@ -3418,6 +3599,28 @@ function SanteDBWrapper() {
             api: _ami
         });
 
+        /** 
+         * @type {ResourceWrapper}
+         * @memberOf SanteDBWrapper.resources
+         * @summary Wrapper for backup media
+         */
+        this.backup = new ResourceWrapper({
+            resource: "Backup",
+            accept: "application/json",
+            api: _ami
+        });
+
+        /** 
+         * @type {ResourceWrapper}
+         * @memberOf SanteDBWrapper.resources
+         * @summary Wrapper for concept relationships
+         */
+        this.conceptRelationship = new ResourceWrapper({
+            resource: "ConceptRelationship",
+            accept: _viewModelJsonMime,
+            api: _hdsi
+        });
+
     };
 
     // HACK: Wrapper pointer facility = place
@@ -3434,6 +3637,59 @@ function SanteDBWrapper() {
      * @memberof SanteDBWrapper
      */
     function ConfigurationApi() {
+
+        // Check whether a guard is applicable to the reference objects
+        function _checkGuard(filter, referenceObjects) {
+
+            if (!referenceObjects || referenceObjects.length == 0) {
+                return false;
+            }
+
+            var retVal = true;
+            filter.guards.forEach(function (oldGuard) {
+                if (!retVal) return;
+
+                // Rewrite guard
+                var guardFilterRegex = /^([\!\sA-Za-z\.&|]*?)\[([A-Za-z]*?)\](.*)$/;
+                var valueRegex = /^(\w+?)\=(.*)$/;
+                var newGuard = "";
+                while (oldGuard.length > 0) {
+                    var match = guardFilterRegex.exec(oldGuard);
+                    if (!match) {
+                        newGuard += oldGuard;
+                        break;
+                    }
+                    else {
+                        newGuard += `${match[1]}.${match[2]}`;
+                        oldGuard = match[3];
+                    }
+                }
+                referenceObjects
+                    .forEach(function (subscribed) {
+                        var match = valueRegex.exec(newGuard);
+                        if (match) {
+                            var op = "==", value = match[2];
+                            if (value.startsWith("!")) {
+                                op = "!=";
+                                value = value.substring(1);
+                            }
+                            switch (value) {
+                                case "null":
+                                case "true":
+                                case "false":
+                                    newGuard = `subscribed.${match[1]}${op}${value}`;
+                                    break;
+                                default:
+                                    newGuard = `subscribed.${match[1]}${op}'${value}'`;
+                                    break;
+                            }
+                        }
+                        var e = angular.element('body').scope().$eval(newGuard, { "subscribed": subscribed });
+                        retVal &= (e != null) && (e !== false);
+                    });
+            });
+            return retVal
+        }
 
         /**
          * @method getDataProvidersAsync
@@ -3475,7 +3731,7 @@ function SanteDBWrapper() {
                             .then(function (d) {
                                 _masterConfig = d.values;
                                 _masterConfig._isConfigured = d._isConfigured;
-                                if (fulfill) fulfill(_masterConfig);
+                                if (fulfill) fulfill(angular.copy(_masterConfig));
                             })
                             .catch(function (e) {
                                 if (reject) reject(e.responseJSON || e);
@@ -3578,6 +3834,27 @@ function SanteDBWrapper() {
         this.getDeviceId = function () {
             return __SanteDBAppService.GetDeviceId();
         }
+
+        /**
+         * @method getFacilityId
+         * @memberof SanteDBWrapper.ConfigurationApi
+         * @summary Get the configured facility identifier
+         * @returns {string} The identifier of the facility
+         */
+        this.getFacilityId = function () {
+            return __SanteDBAppService.GetAssignedFacilityId();
+        }
+
+        /**
+         * @method getOwnerId
+         * @memberof SanteDBWrapper.ConfigurationApi
+         * @summary Get the configured owner of this device
+         * @returns {string} The identifier of the device
+         */
+        this.getOwnerId = function () {
+            return __SanteDBAppService.GetAssignedOwnerId();
+        }
+        
         /**
             * @method getRealm
             * @memberof SanteDBWrapper.ConfigurationApi
@@ -3609,20 +3886,20 @@ function SanteDBWrapper() {
         }
 
         /**
-            * @method joinRealmAsync
-            * @summary Instructs the current system to join a realm
-         * @memberof SanteDBWrapper.ConfigurationApi
-            * @returns {Promise} The configuration file after joining the realm
-            * @param {any} configData The configuration data for the realm
-            * @param {string} configData.address The domain to which the application is to be joined
-            * @param {string} configData.device The name of the device to join as
-            * @param {boolean} configData.replaceExisting When true, instructs the application to replace an existing registration
-            * @param {boolean} configData.enableTrace When true, enables log file tracing of requests
-            * @param {boolean} configData.enableSSL When true, enables HTTPS
-            * @param {boolean} configData.noTimeout When true, removes all timeouts from the configuration
-            * @param {number} configData.port The port number to connect to the realm on
-            * @param {boolean} overwrite Overwrites the existing configuration if needed
-            */
+        * @method joinRealmAsync
+        * @summary Instructs the current system to join a realm
+        * @memberof SanteDBWrapper.ConfigurationApi
+        * @returns {Promise} The configuration file after joining the realm
+        * @param {any} configData The configuration data for the realm
+        * @param {string} configData.address The domain to which the application is to be joined
+        * @param {string} configData.device The name of the device to join as
+        * @param {boolean} configData.replaceExisting When true, instructs the application to replace an existing registration
+        * @param {boolean} configData.enableTrace When true, enables log file tracing of requests
+        * @param {boolean} configData.enableSSL When true, enables HTTPS
+        * @param {boolean} configData.noTimeout When true, removes all timeouts from the configuration
+        * @param {number} configData.port The port number to connect to the realm on
+        * @param {boolean} overwrite Overwrites the existing configuration if needed
+        */
         this.joinRealmAsync = function (configData, overwrite) {
             return new Promise(function (fulfill, reject) {
                 try {
@@ -3674,7 +3951,7 @@ function SanteDBWrapper() {
             return _resources.configuration.insertAsync(configuration || _masterConfig);
         }
         /**
-            * @method getUserPreferencesAsync
+            * @method getUserSettingsAsync
             * @memberof SanteDBWrapper.ConfigurationApi
             * @summary Gets the user specific preferences
             * @returns {Promise} A promise representing the retrieval of the user settings
@@ -3682,6 +3959,7 @@ function SanteDBWrapper() {
         this.getUserSettingsAsync = async function () {
             return _resources.configuration.findAssociatedAsync("me", "settings");
         }
+
         /**
             * @method saveUserPreferencesAsync
          * @memberof SanteDBWrapper.ConfigurationApi
@@ -3696,6 +3974,19 @@ function SanteDBWrapper() {
         this.saveUserSettingsAsync = function (preferences) {
             return _resources.configuration.addAssociatedAsync("me", "settings", preferences);
         }
+
+        /** 
+         * @method canSelectSubscription
+         * @memberof SanteDBWrapper.ConfigurationApi
+         * @summary Determines whether the subscription definition can be selected based on the subscribed objects
+         * @returns {boolean} True if the subscription definition can be selected
+         * @param {SubscriptionDefinition} subscriptionDefinition  The subscription definition
+         * @param {object} subscribedObjects The objects for which the subscription check is being performed
+         */
+        this.canSelectSubscription = function (subscriptionDefinition, subscribedObjects, syncMode) {
+            return subscriptionDefinition.definitions.find(filter => (!filter.guards || filter.guards.length == 0 || _checkGuard(filter, subscribedObjects)) && (syncMode == filter.mode || filter.mode == 'FullOrPartial'));
+        }
+
     };
 
     // Session and auth data
@@ -3717,9 +4008,8 @@ function SanteDBWrapper() {
         var _cacheDemand = {};
         setInterval(() => _cacheDemand = {}, 15000); // clear the cache every 10 seconds
         // Extract JWT data
-        var _extractJwtData = function(jwtData) {
-            if(jwsDataPattern.test(jwtData))
-            {
+        var _extractJwtData = function (jwtData) {
+            if (jwsDataPattern.test(jwtData)) {
                 var match = jwsDataPattern.exec(jwtData);
                 var idData = JSON.parse(atob(match[2]));
                 return idData;
@@ -3793,26 +4083,25 @@ function SanteDBWrapper() {
         this.demandAsync = function (policy) {
             return new Promise(function (fulfill, reject) {
                 try {
-                    if(_cacheDemand[policy] !== undefined) {
+                    if (_cacheDemand[policy] !== undefined) {
                         fulfill(_cacheDemand[policy]);
                     }
                     else {
-                    _auth.getAsync({
-                        resource: `pdp/${policy}`
-                    })
-                        .then(function () { 
-                            _cacheDemand[policy] = _authentication.PolicyDecision.Grant;
-                            fulfill(_authentication.PolicyDecision.Grant); 
-                        }) // fulfillment for the PDP means grant success
-                        .catch(function (e) {
-                            if (e.policyOutcome)
-                            {
-                                _cacheDemand[policy] = e.policyOutcome;
-                                fulfill(_authentication.PolicyDecision[e.policyOutcome]);
-                            }
-                            else
-                                reject(e);
-                        });
+                        _auth.getAsync({
+                            resource: `pdp/${policy}`
+                        })
+                            .then(function () {
+                                _cacheDemand[policy] = _authentication.PolicyDecision.Grant;
+                                fulfill(_authentication.PolicyDecision.Grant);
+                            }) // fulfillment for the PDP means grant success
+                            .catch(function (e) {
+                                if (e.policyOutcome) {
+                                    _cacheDemand[policy] = e.policyOutcome;
+                                    fulfill(_authentication.PolicyDecision[e.policyOutcome]);
+                                }
+                                else
+                                    reject(e);
+                            });
                     }
                 }
                 catch (e) {
@@ -3876,38 +4165,52 @@ function SanteDBWrapper() {
          * @param {bool} upstream When true contact the upstream
          * @returns {Promise} The promise for the reset
          */
-        this.initiateChallengeFlowAsync = function(userName, upstream) {
+        this.initiateChallengeFlowAsync = function (userName, upstream) {
             return _ami.postAsync({
                 resource: "SecurityUser/$reset",
                 contentType: "application/json",
                 headers: {
-                    "X-SanteDB-Upstream" : upstream
+                    "X-SanteDB-Upstream": upstream
                 },
-                data: { parameter: [ { name: "userName", value: userName } ]  }
+                data: { parameter: [{ name: "userName", value: userName }] }
             })
         }
         /**
-            * @method sendTfaSecretAsync
+            * @method setupTfaSecretAsync
             * @memberof SanteDBWrapper.AuthenticationApi
-            * @summary Requests a two-factor authentication secret to be sent
-            * @param {string} mode The mode of two-factor authentication (email, sms, etc.)
+            * @summary Initiates the setup of a TFA secret for the current user
+            * @param {string} mechanism The mode of two-factor authentication (email, sms, etc.)
+            * @param {string} code When specified, the validation code to complete the setup
+            * @param {boolean} upstream True if the request should be executed upstream
             * @returns {Promise} A promise representing the outcome of the TFA secret send
             */
-        this.sendTfaSecretAsync = function (mode) {
+        this.setupTfaSecretAsync = function (mechanism, code, upstream) {
+
             return _ami.postAsync({
-                resource: "SecurityUser/$tfa",
+                resource: `Tfa/${mechanism}/$setup`,
+                headers: {
+                    "X-SanteDB-Upstream": upstream
+                },
                 contentType: "application/json",
-                data: { parameter: [ { name: "mode", value: mode } ] }
+                data: {
+                    "parameter": [
+                        { name: "code", value: code }
+                    ]
+                }
             })
         }
         /**
             * @method getTfaModesAsync
             * @memberof SanteDBWrapper.AuthenticationApi
+            * @param {boolean} upstream True if the request should be forwarded to the upstream
             * @summary Retrieves information about the two-factor authentication modes supported by the server
             * @returns {Promise} The promise representing the fulfillment or rejection of the get request
             */
-        this.getTfaModesAsync = function () {
+        this.getTfaModesAsync = function (upstream) {
             return _ami.getAsync({
+                headers: {
+                    "X-SanteDB-Upstream": upstream
+                },
                 resource: "Tfa"
             });
         }
@@ -3927,8 +4230,6 @@ function SanteDBWrapper() {
             return new Promise(function (fulfill, reject) {
                 try {
                     var headers = {};
-                    if (tfaSecret)
-                        headers["X-SanteDB-TfaSecret"] = tfaSecret;
                     var claims = {};
                     claims["urn:oasis:names:tc:xacml:2.0:action:purpose"] = 'PurposeOfUse-SecurityAdmin';
                     claims["urn:santedb:org:claim:temporary"] = "true";
@@ -3943,6 +4244,7 @@ function SanteDBWrapper() {
                             challenge: challenge,
                             response: response,
                             grant_type: 'x_challenge',
+                            x_mfa: tfaSecret,
                             scope: '*'
                         },
                         headers: headers,
@@ -4085,13 +4387,26 @@ function SanteDBWrapper() {
         this.clientCredentialLoginAsync = function (noSession, scope) {
             return new Promise(function (fulfill, reject) {
                 try {
+                    var claims = {};
+                    var headers = {};
+                    if (noSession) {
+                        claims["urn:santedb:org:claim:temporary"] = "true";
+                    }
+
+                    if (Object.keys(claims).length > 0) {
+                        headers["X-SanteDBClient-Claim"] =
+                            btoa(Object.keys(claims).map(o => `${o}=${claims[o]}`).join(";"));
+                    }
+                    
                     _auth.postAsync({
                         resource: "oauth2_token",
                         data: {
                             grant_type: 'client_credentials',
                             client_id: SanteDB.configuration.getClientId(),
-                            scope: (scope || ["*"]).join(" ")
+                            scope: (scope || ["*"]).join(" "),
+                            no_session: noSession
                         },
+                        headers: headers,
                         contentType: 'application/x-www-form-urlencoded'
                     })
                         .then(function (d) {
@@ -4194,6 +4509,8 @@ function SanteDBWrapper() {
                 }
             });
         }
+
+
         /**
             * @method setPasswordAsync
             * @memberof SanteDBWrapper.AuthenticationApi
@@ -4212,7 +4529,7 @@ function SanteDBWrapper() {
                 resource: "SecurityUser",
                 contentType: _viewModelJsonMime,
                 headers: {
-                    "X-SanteDB-Upstream" : upstream
+                    "X-SanteDB-Upstream": upstream
                 },
                 data: {
                     $type: "SecurityUserInfo",
@@ -4224,6 +4541,34 @@ function SanteDBWrapper() {
                 }
             });
         }
+
+        /**
+         * @memberof SanteDBWrapper.AuthenticationApi
+         * @summary Immediately expire the user's password
+         * @param {string} sid The security user for which the password should be expired
+         * @param {string} userName The name of the user which is to be expired
+         * @param {bool} upstream True if the request should be sent to the upstream
+         */
+        this.expirePasswordAsync = function(sid, userName, upstream) {
+            if (!_session && !(_elevator && _elevator.getToken()))
+            throw new Exception("SecurityException", "error.security", "Can only set password with active session");
+            return _ami.putAsync({
+                id: sid,
+                resource: "SecurityUser",
+                contentType: _viewModelJsonMime,
+                headers: {
+                    "X-SanteDB-Upstream": upstream
+                },
+                data: {
+                    $type: "SecurityUserInfo",
+                    expirePassword: true,
+                    entity: new SecurityUser({
+                        userName: userName
+                    })
+                }
+            });
+        }
+
         /**
             * @method logoutAsync
             * @memberof SanteDBWrapper.AuthenticationApi
@@ -4258,6 +4603,46 @@ function SanteDBWrapper() {
                     if (reject) reject(ex);
                 }
             });
+        }
+
+        /**
+         * @summary Gets the current CDR facility identifier from either (1) the user's session assertion (the facility the user is assigned to and/or selected on login) or (2) the configured facility 
+         * @memberof SanteDBWrapper.AuthenticationApi
+         * @returns {String} The UUID of the current facility identifier
+         */
+        this.getCurrentFacilityId = async function() {
+            try {
+                var sessionInfo = await SanteDB.authentication.getSessionInfoAsync();
+                var sessionFacility = sessionInfo.claims["urn:oasis:names:tc:xspa:1.0:subject:facility"];
+                return sessionFacility || SanteDB.configuration.getFacilityId();
+            }
+            catch(e) {
+                console.warn(e);
+                return SanteDB.configuration.getFacilityId();
+            }
+        }
+
+        /**
+         * @summary Get the currently logged in user's CDR entity id
+         * @memberof SanteDBWrapper.AuthenticationApi
+         * @returns {String} The UUID of the current user's CDR entity id
+         */
+        this.getCurrentUserEntityId = async function() {
+            try {
+                var sessionInfo = await SanteDB.authentication.getSessionInfoAsync();
+                if(sessionInfo.entity) {
+                    return sessionInfo.entity.id;
+                }
+                else {
+                    var ue = await SanteDB.resources.userEntity.findAsync({ securityUser: sessionInfo.user.id, _includeTotal: false, _count: 1 });
+                    if(ue.resource) {
+                        return ue.resource[0].id;
+                    }
+                }
+            }
+            catch(e) {
+                console.warn(e);
+            }
         }
     };
 
@@ -4304,7 +4689,7 @@ function SanteDBWrapper() {
             try {
                 var retVal = __SanteDBAppService.GetString(stringId);
 
-                if (retVal) {
+                if (retVal && retVal.replace) {
                     retVal = retVal.replace(/\{.*?\}/ig, function (s) {
                         if (typeof s === 'string' && parameters) {
                             return parameters[s.substring(1, s.length - 1)];
@@ -4328,7 +4713,7 @@ function SanteDBWrapper() {
             * @return {string} The ISO language code and country code of the application
             */
         this.getLocale = function () {
-            var retVal = __SanteDBAppService.GetLocale();
+            var retVal = __SanteDBAppService.GetLocale().toLowerCase();
             return retVal;
         }
         /**
@@ -4544,3 +4929,18 @@ function ApplicationPrincipalElevator(multiuse) {
             });
     }
 }
+
+
+// Add default check digit handlers
+SanteDB.application.addCheckDigitValidator("SanteDB.Core.Model.DataTypes.CheckDigitAlgorithms.InlineMod97Validator, SanteDB.Core.Model", function(id) {
+    if(!id.value) {
+        return false;
+    }
+
+    return validateMod97CheckDigit(id.value.substring(0, id.value.length - 2), id.value.substring(id.value.length - 2, id.value.length));
+});
+
+// Add default check digit handlers
+SanteDB.application.addCheckDigitValidator("SanteDB.Core.Model.DataTypes.CheckDigitAlgorithms.Mod97CheckDigitAlgorithm, SanteDB.Core.Model", function(id) {
+    return validateMod97CheckDigit(id.value, id.checkDigit);
+});

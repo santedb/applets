@@ -1,4 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--
+ - Copyright 2021-2024 SanteSuite Contributors (See NOTICE.md for full copyright notices)
+ - Copyright (C) 2019 - 2021, Fyfe Software Inc. and the SanteSuite Contributors
+ - Portions Copyright (C) 2015-2018 Mohawk College of Applied Arts and Technology
+ - 
+ - Licensed under the Apache License, Version 2.0 (the "License"); you 
+ - may not use this file except in compliance with the License. You may 
+ - obtain a copy of the License at 
+ - 
+ - http://www.apache.org/licenses/LICENSE-2.0 
+ - 
+ - Unless required by applicable law or agreed to in writing, software
+ - distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+ - WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the 
+ - License for the specific language governing permissions and limitations under 
+ - the License.
+ - 
+ - User: fyfej
+ - Date: 2023-5-19
+ -->
 <resources>
       <!-- Login Translations -->
       <string name="ui.login.input.username">အီးမေးလိပ်စာ</string>
@@ -62,14 +82,14 @@
       <string name="ui.sync">ထပ်တူပြုခြင်း</string>
       <string name="ui.sync.clear">သဘောထား ကွဲ လွဲ ခြင်း မရှိ</string>
       <string name="ui.sync.conflict">သဘောထား ကွဲ လွဲ ခြင်း</string>
-      <string name="ui.sync.outbound">Outbox Queue</string>
-      <string name="ui.sync.outbound.text">(ပေးပို့ရန်)</string>
-      <string name="ui.sync.inbound">Inbox Queue</string>
-      <string name="ui.sync.inbound.text">(ပြုပြင်ရန်)</string>
+      <string name="ui.sync.out">Outbox Queue</string>
+      <string name="ui.sync.out.text">(ပေးပို့ရန်)</string>
+      <string name="ui.sync.in">Inbox Queue</string>
+      <string name="ui.sync.in.text">(ပြုပြင်ရန်)</string>
       <string name="ui.sync.admin">အက်မင် တန်းစီ</string>
       <string name="ui.sync.admin.text">(ပေးပို့ရန်)</string>
-      <string name="ui.sync.dead">သဘောထား ကွဲ လွဲ ခြင်း</string>
-      <string name="ui.sync.dead.text">(ဖြေရှင်းရန်)</string>
+      <string name="ui.sync.deadletter">သဘောထား ကွဲ လွဲ ခြင်း</string>
+      <string name="ui.sync.deadletter.text">(ဖြေရှင်းရန်)</string>
       <string name="ui.sync.log">ထပ်တူပြုခြင်းမှတ်တမ်း</string>
       <string name="ui.sync.log.resource">အရင်းအမြစ်</string>
       <string name="ui.sync.log.etag">နောက်ဆုံးဗားရှင်း</string>
@@ -92,7 +112,7 @@
       <string name="ui.sync.patch.actions">လျှောက်ထားခံရဖို့လုပ်ဆောင်ချက်များကို</string>
       <string name="ui.sync.log.none">အဘယ်အရာကိုမျှထပ်တူမပြုပါ</string>
       <string name="ui.sync.queue.error">အမှား</string>
-      <string name="ui.sync.dead.ignoreConfirm">ဤconflict/သဘောထား ကွဲ လွဲ ခြင်း ကိုသင်လျစ်လျူရှုလိုပါသလား။ သင်၏ပြောင်းလဲမှုများကိုဗဟိုဆာဗာသို့ပေးပို့မည်မဟုတ်ပါ။</string>
+      <string name="ui.sync.deadletter.ignoreConfirm">ဤconflict/သဘောထား ကွဲ လွဲ ခြင်း ကိုသင်လျစ်လျူရှုလိုပါသလား။ သင်၏ပြောင်းလဲမှုများကိုဗဟိုဆာဗာသို့ပေးပို့မည်မဟုတ်ပါ။</string>
       <string name="ui.sync.resetConfirm">သင်ဤအမျိုးအစားအတွက်ထပ်တူပြုခြင်းမှတ်တမ်းကိုပြန်လည်စတင်လိုသည်မှာသေချာပါသလား။</string>
       <!-- Common Action buttons -->
       <string name="ui.action">လုပ်ဆောင်ချက်များ</string>

@@ -1,8 +1,9 @@
 /// <reference path="../../../core/js/santedb.js"/>
 /// <reference path="../../../uicore/js/santedb-ui.js"/>
 /*
- * Portions Copyright 2015-2019 Mohawk College of Applied Arts and Technology
- * Portions Copyright 2019-2019 SanteSuite Contributors (See NOTICE)
+ * Copyright (C) 2021 - 2024, SanteSuite Inc. and the SanteSuite Contributors (See NOTICE.md for full copyright notices)
+ * Copyright (C) 2019 - 2021, Fyfe Software Inc. and the SanteSuite Contributors
+ * Portions Copyright (C) 2015-2018 Mohawk College of Applied Arts and Technology
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you 
  * may not use this file except in compliance with the License. You may 
@@ -16,8 +17,8 @@
  * License for the specific language governing permissions and limitations under 
  * the License.
  * 
- * User: Justin Fyfe
- * Date: 2019-8-8
+ * User: fyfej
+ * Date: 2023-5-19
  */
 angular.module('santedb').controller('InitialSettingsController', ['$scope', '$rootScope', '$interval', '$timeout', function ($scope, $rootScope, $interval, $timeout) {
 
@@ -51,78 +52,10 @@ angular.module('santedb').controller('InitialSettingsController', ['$scope', '$r
 
 
     function canSelectSubscription(subscription, referenceObjects) {
-        return subscription.definitions.find(filter => (!filter.guards || filter.guards.length == 0 || checkGuard(filter, referenceObjects)) && ($scope.config.sync.mode == filter.mode || filter.mode == 'FullOrPartial'));
+        return SanteDB.configuration.canSelectSubscription(subscription, referenceObjects, $scope.config.sync.mode);
     }
 
-    function checkGuard(filter, referenceObjects) {
-
-        if (!referenceObjects) {
-            referenceObjects = $scope.reference[$scope.config.sync.subscribeType.toCamelCase()]; // copy from scope
-        }
-
-        if (referenceObjects.length == 0) {
-            return false;
-        }
-
-        try {
-            SanteDB.display.buttonWait("#selectAllButton", true);
-            $("#nextButton").prop("disabled", true);
-
-            var retVal = true;
-            filter.guards.forEach(function (oldGuard) {
-                if (!retVal) return;
-
-                // Rewrite guard
-                var guardFilterRegex = /^([\!\sA-Za-z\.&|]*?)\[([A-Za-z]*?)\](.*)$/;
-                var valueRegex = /^(\w+?)\=(.*)$/;
-                var newGuard = "";
-                while (oldGuard.length > 0) {
-                    var match = guardFilterRegex.exec(oldGuard);
-                    if (!match) {
-                        newGuard += oldGuard;
-                        break;
-                    }
-                    else {
-                        newGuard += `${match[1]}.${match[2]}`;
-                        oldGuard = match[3];
-                    }
-                }
-                referenceObjects
-                    .filter(function (f) { return $scope.config.sync.subscribeTo && $scope.config.sync.subscribeTo.indexOf(f.id) > -1; })
-                    .forEach(function (subscribed) {
-                        var match = valueRegex.exec(newGuard);
-                        if (match) {
-                            var op = "==", value = match[2];
-                            if(value.startsWith("!")) {
-                                op = "!=";
-                                value = value.substring(1);
-                            }
-                            switch (value) {
-                                case "null":
-                                case "true":
-                                case "false":
-                                    newGuard = `subscribed.${match[1]}${op}${value}`;
-                                    break;
-                                default:
-                                    newGuard = `subscribed.${match[1]}${op}'${value}'`;
-                                    break;
-                            }
-                        }
-                        var e = $scope.$eval(newGuard, { "subscribed": subscribed });
-                        retVal &= (e != null) && (e !== false);
-                    });
-            });
-
-            console.info(filter.resource, filter.name, filter.trigger, filter.guards, retVal);
-            return retVal
-
-        }
-        finally {
-            SanteDB.display.buttonWait("#selectAllButton", false);
-            $("#nextButton").prop("disabled", false);
-
-        }
-    }
+    
 
     // Process configuration
     async function _processConfiguration(config, sessionInfo) {
@@ -148,6 +81,10 @@ angular.module('santedb').controller('InitialSettingsController', ['$scope', '$r
             };
 
             $scope.config.security.offline = { enable: true };*/
+
+            if(sessionInfo && sessionInfo.entity) {
+                config.security.owner =  sessionInfo.entity.id ;
+            }
 
             if (config.realm.address) {
 
@@ -242,7 +179,7 @@ angular.module('santedb').controller('InitialSettingsController', ['$scope', '$r
                         $("#nextButton").prop("disabled", false);
                     }
                 }
-                var subscriptions = $scope.reference.subscriptions.filter((s) => canSelectSubscription(s, referenceObjects));
+                var subscriptions = $scope.reference.subscriptions.filter((s) => canSelectSubscription(s, referenceObjects, $scope.config.sync.mode));
                 $timeout(() => {
                     $scope.permittedSubscriptions = subscriptions;
                 });
@@ -327,6 +264,7 @@ angular.module('santedb').controller('InitialSettingsController', ['$scope', '$r
             config._autoRestart = true;
 
             try {
+                
                 config = await SanteDB.configuration.saveAsync(config);
 
                 SanteDB.display.buttonWait("#finishButton", false);

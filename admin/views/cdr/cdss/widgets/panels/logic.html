@@ -1,0 +1,236 @@
+<div xmlns="http://www.w3.org/1999/xhtml" xmlns:sdb="http://santedb.org/applet"
+    oc-lazy-load="{name:'CdssWidgetController', files: ['/org.santedb.admin/controllers/cdss/widget.js'] }">
+    <sdb:widget name="org.santedb.widget.cdr.cdssLibrary.logic.define" type="Panel"
+        context="org.santedb.emr.cdssLibrary.logic" order="0" size="Large" headerClass="alert-primary">
+        <sdb:icon>fas fa-brain</sdb:icon>
+        <sdb:description lang="en">Logic Definition</sdb:description>
+    </sdb:widget>
+
+    <div ng-controller="CdssWidgetController">
+
+        <ul class="nav nav-tabs" role="tablist">
+            <li ng-repeat="defn in ::scopedObject.library.definitions.filter(filterLogicBlocks) track by $index"
+                class="nav-item">
+                <button type="button" data-toggle="tab" data-target="#logic{{$index}}" class="nav-link"
+                    ng-class="{'active': $index == 0}">
+                    {{ defn.name || defn.context.type }}
+                </button>
+            </li>
+        </ul>
+
+        <div class="tab-content">
+            <div class="tab-pane" ng-class="{'show active' : $index == 0 }" id="logic{{$index}}"
+                ng-repeat="defn in ::scopedObject.library.definitions.filter(filterLogicBlocks) track by $index">
+
+                <div class="card">
+                    <div class="card-body">
+                        <div class="container-fluid">
+                            <div class="row">
+                                <label class="control-label col-sm-12 col-md-3">{{
+                                    'ui.model.cdssLibraryDefinition.context' | i18n }}</label>
+                                <div class="col-sm-12 col-md-9">{{ defn.context.type }}</div>
+                            </div>
+                            <div class="row" ng-if="defn.when">
+                                <label class="control-label col-sm-12 col-md-3">{{ 'ui.model.cdssLibraryDefinition.when'
+                                    | i18n }}</label>
+                                <div class="col-sm-12 col-md-9"
+                                    ng-bind-html="defn.when.logic._html || renderLogic(defn.when.logic)">
+                                </div>
+                            </div>
+                            <div class="row" ng-if="defn.meta.documentation">
+                                <label class="control-label col-sm-12 col-md-3">{{
+                                    'ui.model.cdssLibraryDefinition.documentation' | i18n }}</label>
+                                <div class="col-sm-12 col-md-9">{{ defn.meta.documentation }}</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="definitionAccordion{{$index}}">
+                    <div class="card" ng-repeat="define in defn.define track by $index">
+                        <div class="card-header" id="hdg{{$parent.$index}}{{$index}}">
+                            <h5 class="mb-0">
+                                <button class="btn btn-link" type="button" data-toggle="collapse"
+                                    data-target="#bdy{{$parent.$index}}{{$index}}" ng-switch="define.$type">
+                                    <span
+                                        ng-switch-when="SanteDB.Cdss.Xml.Model.Assets.CdssFactAssetDefinition, SanteDB.Cdss.Xml">
+                                        <span class="badge badge-dark"><i class="fas fa-cube"></i> {{
+                                            'ui.model.cdssLibraryDefinition.define.fact' | i18n }}</span> {{ define.name
+                                        }} <span ng-if="define.id">&lt;{{define.id}}&gt;</span>
+                                    </span>
+                                    <span
+                                        ng-switch-when="SanteDB.Cdss.Xml.Model.Assets.CdssModelAssetDefinition, SanteDB.Cdss.Xml">
+                                        <span class="badge badge-dark"><i class="fas fa-images"></i> {{
+                                            'ui.model.cdssLibraryDefinition.define.model' | i18n }}</span> {{
+                                        define.name }} <span ng-if="define.id">&lt;{{define.id}}&gt;</span>
+                                    </span>
+                                    <span
+                                        ng-switch-when="SanteDB.Cdss.Xml.Model.Assets.CdssRuleAssetDefinition, SanteDB.Cdss.Xml">
+                                        <span class="badge badge-dark"><i class="fas fa-bezier-curve"></i> {{
+                                            'ui.model.cdssLibraryDefinition.define.rule' | i18n }}</span> {{ define.name
+                                        }} <span ng-if="define.id">&lt;{{define.id}}&gt;</span>
+                                    </span>
+                                    <span
+                                        ng-switch-when="SanteDB.Cdss.Xml.Model.Assets.CdssProtocolAssetDefinition, SanteDB.Cdss.Xml">
+                                        <span class="badge badge-dark"><i class="fas fa-hand-holding-medical"></i> {{
+                                            'ui.model.cdssLibraryDefinition.define.protocol' | i18n }}</span> {{
+                                        define.name }} <span ng-if="define.id">&lt;{{define.id}}&gt;</span>
+                                    </span>
+                                </button>
+                            </h5>
+                        </div>
+                        <div id="bdy{{$parent.$index}}{{$index}}" class="collapse"
+                            data-parent="#definitionAccordion{{$parent.$index}}" ng-switch="define.$type">
+                            <div ng-switch-when="SanteDB.Cdss.Xml.Model.Assets.CdssFactAssetDefinition, SanteDB.Cdss.Xml"
+                                class="container-fluid m-1">
+                                <div class="row" ng-if="define.meta.documentation">
+                                    <label class="control-label col-sm-12 col-md-3">{{
+                                        'ui.model.cdssLibraryDefinition.documentation' | i18n }}</label>
+                                    <div class="col-sm-12 col-md-9">{{ define.meta.documentation }}</div>
+                                </div>
+                                <div class="row">
+                                    <label class="control-label col-sm-12 col-md-3">{{
+                                        'ui.model.cdssLibraryDefinition.logic' | i18n }}</label>
+                                    <div class="col-sm-12 col-md-9"
+                                        ng-bind-html="define.logic._html || renderLogic(define.logic)">
+                                    </div>
+                                </div>
+                                <div class="row" ng-if="define.normalize.length">
+                                    <label class="control-label col-sm-12 col-md-3">{{
+                                        'ui.model.cdssLibraryDefinition.normalize' | i18n }}</label>
+                                    <div class="col-sm-12 col-md-9">
+                                        <table class="table table-striped">
+                                            <thead>
+                                                <tr>
+                                                    <th>{{ 'ui.model.cdssLibraryDefinition.when' | i18n }}</th>
+                                                    <th>{{ 'ui.model.cdssLibraryDefinition.then' | i18n }}</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr ng-repeat="norm in define.normalize">
+                                                    <td
+                                                        ng-bind-html="norm.when.logic._html || renderLogic(norm.when.logic)">
+                                                    </td>
+                                                    <td ng-bind-html="norm.logic._html || renderLogic(norm.logic)"></td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <label class="control-label col-sm-12 col-md-3">{{
+                                        'ui.model.cdssLibraryDefinition.modifier' | i18n }}</label>
+                                    <div class="col-sm-12 col-md-9">
+                                        <span class="badge badge-dark" ng-if="define.negate">NEGATE</span>
+                                        <span class="badge badge-info" ng-if="define.type">CAST AS {{ define.type
+                                            }}</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div ng-switch-when="SanteDB.Cdss.Xml.Model.Assets.CdssModelAssetDefinition, SanteDB.Cdss.Xml"
+                                class="container-fluid m-1">
+                                <pre class="bg-light m-1">{{ define.json.trim() }}</pre>
+                            </div>
+                            <div ng-switch-when="SanteDB.Cdss.Xml.Model.Assets.CdssRuleAssetDefinition, SanteDB.Cdss.Xml"
+                                class="container-fluid m-1">
+                                <div class="row" ng-if="define.when">
+                                    <label class="control-label col-sm-12 col-md-3">{{
+                                        'ui.model.cdssLibraryDefinition.when' | i18n }}</label>
+                                    <div class="col-sm-12 col-md-9"
+                                        ng-bind-html="define.when.logic._html || renderLogic(define.when.logic)">
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <label class="control-label col-sm-12 col-md-3">{{
+                                        'ui.model.cdssLibraryDefinition.then' | i18n }}</label>
+                                    <div class="col-sm-12 col-md-9">
+                                        <ul class="list-group">
+                                            <li ng-repeat="then in define.then.action track by $index"
+                                                class="list-group-item" ng-switch="then.$type">
+                                                <div ng-switch-when="SanteDB.Cdss.Xml.Model.Actions.CdssProposeActionDefinition, SanteDB.Cdss.Xml"
+                                                    class="container-fluid">
+                                                    <div class="row">
+                                                        <div class="col-12">
+                                                            <h5 class="m-0"><i class="fas fa-hand-holding-medical"></i>
+                                                                {{ 'ui.model.cdssLibraryDefinition.then.propose' | i18n }}</h5>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row" ng-if="then.meta.documentation">
+                                                        <label class="control-label col-sm-12 col-md-3">{{ 'ui.model.cdssLibraryDefinition.documentation' | i18n }}</label>
+                                                        <div class="col-sm-12 col-md-9">{{ then.meta.documentation }}
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <label class="control-label col-sm-12 col-md-3">{{ 'ui.model.cdssLibraryDefinition.then.propose.model' | i18n }}</label>
+                                                        <div class="col-sm-12 col-md-9" ng-if="then.model.ref">
+                                                            <code><i class="fas fa-cube fa-fw"></i> {{ then.model.ref }}</code>
+                                                        </div>
+                                                        <div class="col-sm-12 col-md-9" ng-if="then.model.json">
+                                                            <pre class="bg-light">{{then.model.json.trim()}}</pre>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row" ng-if="then.assign">
+                                                        <label class="control-label col-sm-12 col-md-3">{{ 'ui.model.cdssLibraryDefinition.then.propose.assign' | i18n }}</label>
+                                                        <div class="col-sm-12 col-md-9">
+                                                            <table class="table">
+                                                                <tr ng-repeat="asgn in then.assign track by $index">
+                                                                    <td><code>{{ asgn.path }}</code></td>
+                                                                    <td
+                                                                        ng-bind-html="asgn.expression._html || renderLogic(asgn.expression)">
+                                                                    </td>
+                                                                </tr>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div ng-switch-when="SanteDB.Cdss.Xml.Model.Actions.CdssPropertyAssignActionDefinition, SanteDB.Cdss.Xml"
+                                                    class="container-fluid">
+                                                    <div class="row">
+                                                        <div class="col-12">
+                                                            <h5 class="m-0"><i class="fas fa-arrow-left"></i> {{ 'ui.model.cdssLibraryDefinition.then.propose.assign' | i18n }}</h5>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-6"><code>{{ then.path }}</code></div>
+                                                        <div class="col-6"
+                                                            ng-bind-html="then.expression._html || renderLogic(then.expression)">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div ng-switch-when="SanteDB.Cdss.Xml.Model.Actions.CdssIssueActionDefinition, SanteDB.Cdss.Xml"
+                                                    class="container-fluid">
+                                                    <div class="row">
+                                                        <div class="col-12">
+                                                            <h5 class="m-0"><i class="fas fa-exclamation-triangle"></i>
+                                                                {{ 'ui.model.cdssLibraryDefinition.then.raise' | i18n }}
+                                                            </h5>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <label class="control-label col-sm-12 col-md-3">{{ 'ui.model.cdssLibraryDefinition.then.raise.priority' | i18n }}</label>
+                                                        <div class="col-sm-12 col-md-9">
+                                                            <span class="badge"
+                                                                ng-class="{ 'badge-info' : then.issue.priority == 'Information', 'badge-warning': then.issue.priority == 'Warning', 'badge-danger' : then.issue.priority == 'Error' }">{{
+                                                                then.issue.priority }}</span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <label class="control-label col-sm-12 col-md-3">{{ 'ui.model.cdssLibraryDefinition.then.raise.text' | i18n }}</label>
+                                                        <div class="col-sm-12 col-md-9">
+                                                            {{ then.issue.text }}
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,6 +1,7 @@
 /*
- * Portions Copyright 2015-2019 Mohawk College of Applied Arts and Technology
- * Portions Copyright 2019-2019 SanteSuite Contributors (See NOTICE)
+ * Copyright (C) 2021 - 2024, SanteSuite Inc. and the SanteSuite Contributors (See NOTICE.md for full copyright notices)
+ * Copyright (C) 2019 - 2021, Fyfe Software Inc. and the SanteSuite Contributors
+ * Portions Copyright (C) 2015-2018 Mohawk College of Applied Arts and Technology
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you 
  * may not use this file except in compliance with the License. You may 
@@ -14,36 +15,49 @@
  * License for the specific language governing permissions and limitations under 
  * the License.
  * 
- * User: Justin Fyfe
- * Date: 2019-8-8
+ * User: fyfej
+ * Date: 2023-5-19
  */
 
 /// <reference path="../../../core/js/santedb.js"/>
-angular.module('santedb').controller('UserProfileController', ["$scope", "$rootScope", "$stateParams", function ($scope, $rootScope, $stateParams) {
+angular.module('santedb').controller('UserProfileController', ["$scope", "$rootScope", "$stateParams", "$timeout", function ($scope, $rootScope, $stateParams, $timeout) {
 
     // Initialize the view
     var initializeView = async function() {
-
         try {
             var sessionInfo = await SanteDB.authentication.getSessionInfoAsync();
+            var userEntity = null;
 
             if(sessionInfo.entity && sessionInfo.entity.id)
-                $scope.userEntity = await SanteDB.resources.userEntity.getAsync(sessionInfo.entity.id, "full");
-            else 
-                $scope.userEntity = new UserEntity({
-                    securityUser: sessionInfo.user.id,
-                    language: [
-                        {
-                            "languageCode": SanteDB.locale.getLanguage(),
-                            "isPreferred": true
-                        }
-                    ]
-                }) ;
+                userEntity = await SanteDB.resources.userEntity.getAsync(sessionInfo.entity.id, "full");
+            else {
+                var userEntityQuery = await SanteDB.resources.userEntity.findAsync({ securityUser: sessionInfo.user.id });
+                if (userEntityQuery.resource) {
+                    userEntity = userEntityQuery.resource[0];
+                }
+                else {
+                    userEntity = new UserEntity({
+                        id: SanteDB.application.newGuid(),
+                        securityUser: sessionInfo.user.id,
+                        language: [
+                            {
+                                "languageCode": SanteDB.locale.getLanguage(),
+                                "isPreferred": true
+                            }
+                        ]
+                    });
+                }
+            }
+
+
 
             var userInfo = await SanteDB.resources.securityUser.getAsync(sessionInfo.user.id);
 
-            $scope.userEntity.securityUserModel = userInfo.entity;
-            $scope.userEntity.securityUserModel.role = userInfo.role;
+            $timeout(() => {
+                $scope.userEntity = userEntity;
+                $scope.userEntity.securityUserModel = userInfo.entity;
+                $scope.userEntity.securityUserModel.role = userInfo.role;
+            });
 
         }
         catch(e) {
@@ -51,6 +65,6 @@ angular.module('santedb').controller('UserProfileController', ["$scope", "$rootS
         }
     }
 
-    initializeView().then(()=>$scope.$apply()).catch($rootScope.errorHandler);
+    initializeView();
 }]);
 

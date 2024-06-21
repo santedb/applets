@@ -1,0 +1,271 @@
+<!--
+ - Copyright (C) 2021-2023 SanteSuite Inc and the SanteSuite Contributors (see NOTICES)
+Portions Copyright (C) 2019-2021 Fyfe Software Inc.
+Portions Copyright (C) 2015-2018 Mohawk College of Applied Arts and Technology
+ - 
+ - 
+ - Licensed under the Apache License, Version 2.0 (the "License"); you 
+ - may not use this file except in compliance with the License. You may 
+ - obtain a copy of the License at 
+ - 
+ - http://www.apache.org/licenses/LICENSE-2.0 
+ - 
+ - Unless required by applicable law or agreed to in writing, software
+ - distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+ - WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the 
+ - License for the specific language governing permissions and limitations under 
+ - the License.
+ - 
+ - User: justin
+ - Date: 2018-11-14
+ -->
+<div xmlns="http://www.w3.org/1999/xhtml" xmlns:sdb="http://santedb.org/applet">
+    <sdb:script static="true">~/lib/ace/ace.min.js</sdb:script>
+    <sdb:script static="false">~/controllers/cdss/codeEditor.js</sdb:script>
+    <sdb:script static="false">~/controllers/cdss/edit.js</sdb:script>
+    <sdb:script static="false">~/controllers/cdss/debug.js</sdb:script>
+    <sdb:script static="false">~/lib/ace/ext-language_tools.js</sdb:script>
+    <sdb:state name="santedb-admin.cdr.cdss.edit">
+        <sdb:demand>1.3.6.1.4.1.33349.3.1.5.9.2.0.15</sdb:demand>
+        <sdb:url>/rule/edit/:id</sdb:url>
+        <sdb:view>
+            <sdb:title lang="en">Edit Library</sdb:title>
+            <sdb:controller>CdssEditController</sdb:controller>
+        </sdb:view>
+    </sdb:state>
+
+    <div class="card shadow mb-2">
+        <div class="card-body p-2">
+            <h2 class="mr-2 d-inline"><i class="fas fa-pencil fa-fw"></i> {{ cdssLibrary.library.name }}
+            </h2>
+            <small class="d-block text-muted">{{ cdssLibrary.library.id }}</small>
+        </div>
+    </div>
+
+    <ul class="nav nav-tabs">
+        <li class="nav-item">
+            <button class="nav-link active" data-toggle="tab" data-target="#source" type="button"><i
+                    class="fas fa-file-code"></i> {{ 'ui.admin.cdss.edit.source' | i18n }} <hint-popover
+                    hint-title="ui.admin.cdss.edit.source" /> <sup ng-if="dirty()"><i
+                        class="fas fa-asterisk"></i></sup></button>
+        </li>
+        <li class="nav-item">
+            <button class="nav-link" id="test-tab" data-toggle="tab" data-target="#test" type="button"><i
+                    class="fas fa-play"></i> {{
+                'ui.admin.cdss.edit.test' | i18n }}</button>
+        </li>
+    </ul>
+    <div class="tab-content">
+        <div class="alert alert-warning" ng-if="lock">
+            <i class="fas fa-fw fa-lock"></i> {{ lock }}
+        </div>
+        <div class="tab-pane fade show active" id="source" role="tabpanel">
+            <div id="cdssEditor" style="max-height:calc(100vh - 300px)">
+            </div>
+            <div class="w-100 alert-info">
+                <h5 class="p-1 m-0"><i class="fas fa-tasks fa-fw"></i> {{ 'ui.admin.cdss.edit.errorList' | i18n }}</h5>
+            </div>
+            <ul class="list-unstyled" style="max-height:10vh; overflow-y: scroll; height:10vh">
+                <li ng-click="gotoIssue(iss)" ng-repeat="iss in validationIssues"><i class="fas"
+                        ng-class="{ 'text-danger fa-times-square': iss.type == 'error', 'text-warning fa-exclamation-triangle' : iss.type == 'warning', 'text-primary fa-info-circle' : iss.type == 'info' }"></i>
+                    {{ iss.type }} - {{ iss.text }} @ {{iss.row + 1}}:{{iss.column}}</li>
+            </ul>
+        </div>
+        <div class="tab-pane fade" id="test">
+
+            <div class="d-block clearfix">
+                <form class="form" name="testForm" ng-submit="performTest(testForm)" novalidate="novalidate" autocomplete="off">
+
+                    <div class="container-fluid">
+                        <div class="form-group row">
+                            <label class="control-label col-md-3 col-sm-12">
+                                {{ 'ui.admin.cdss.edit.test.object' | i18n }}
+                                <hint-popover hint-title="ui.admin.cdss.edit.test.object" />
+                            </label>
+                            <div class="col-md-9 col-sm-12">
+                                <select ng-model="test.type" name="testTypeInput" class="form-control"
+                                    required="required">
+                                    <option value="Patient">Patient</option>
+                                    <option value="Act">Act</option>
+                                    <option value="QuantityObservation">QuantityObservation</option>
+                                    <option value="TextObservation">TextObservation</option>
+                                    <option value="CodedObservation">CodedObservation</option>
+                                    <option value="Procedure">Procedure</option>
+                                    <option value="PatientEncounter">PatientEncounter</option>
+                                    <option value="SubstanceAdministration">SubstanceAdministration</option>
+                                </select>
+                                <div class="text-danger" ng-if="testForm.testTypeInput.$error['required']">
+                                    <i class="fas fa-exclamation-triangle fs-fw"></i> {{ 'ui.error.required' | i18n }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="control-label col-md-3 col-sm-12">
+                                {{ 'ui.admin.cdss.edit.test.source' | i18n }}
+                                <hint-popover hint-title="ui.admin.cdss.edit.test.source" />
+                            </label>
+                            <div class="col-md-9 col-sm-12">
+                                <ul class="list-group">
+                                    <li class="list-group-item">
+                                        <label>
+                                            <input type="radio" name="newObject" ng-model="test.source" value="new" />
+                                            {{ 'ui.admin.cdss.edit.test.source.new' | i18n }}
+                                        </label>
+                                        <textarea ng-required="test.source == 'new'" class="form-control"
+                                            ng-model="test.new" name="newObjectSource"
+                                            ng-if="test.source == 'new'">{}</textarea>
+                                        <div class="text-danger" ng-if="testForm.newObjectSource.$error['required']">
+                                            <i class="fas fa-exclamation-triangle fs-fw"></i> {{ 'ui.error.required' |
+                                            i18n }}
+                                        </div>
+                                    </li>
+                                    <li class="list-group-item">
+                                        <label>
+                                            <input type="radio" name="newObject" ng-model="test.source" value="db" />
+                                            {{ 'ui.admin.cdss.edit.test.source.db' | i18n }}
+                                        </label>
+                                        <entity-search is-required="true" ng-if="test.source == 'db'"
+                                            class="form-control" type="test.type" required="required"
+                                            filter="{ statusConcept : [ 'c8064cbd-fa06-4530-b430-1a52f1530c27', 'afc33800-8225-4061-b168-bacc09cdbae3', 'c34fcbf1-e0fe-4989-90fd-0dc49e1b9685' ] }"
+                                            ng-model="test.db" search-field="'identifier.value'"
+                                            name="existingRecord"></entity-search>
+                                        <div class="text-danger" ng-if="testForm.existingRecord.$error['required']">
+                                            <i class="fas fa-exclamation-triangle fs-fw"></i> {{ 'ui.error.required' |
+                                            i18n }}
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="control-label col-md-3 col-sm-12">{{ 'ui.admin.cdss.edit.test.parms' | i18n }}
+                                <hint-popover hint-title="ui.admin.cdss.edit.test.parms" />
+                            </label>
+                            <div class="col-md-9 col-sm-12">
+                                <table class="table table-striped">
+                                    <tbody>
+                                        <tr ng-repeat="parm in test.parameters track by $index">
+                                            <td>{{ parm.name }}</td>
+                                            <td><input class="form-control" type="text" ng-model="parm.value"
+                                                    ng-required="true" /></td>
+                                            <td>
+                                                <button type="button" ng-click="test.parameters.splice($index, 1)"
+                                                    class="btn btn-danger"><i
+                                                        class="fas fa-fw fa-times-circle"></i></button>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                    <tfoot>
+                                        <tr>
+                                            <td><input class="form-control" ng-model="newParm.name" name="newParmName"
+                                                    type="text" />
+                                            </td>
+                                            <td><input class="form-control" ng-required="newParm.name"
+                                                    ng-model="newParm.value" name="newParmValue" type="text" />
+                                                <div class="text-danger"
+                                                    ng-if="testForm.newParmValue.$error['required']">
+                                                    <i class="fas fa-fw fa-exclamation-triangle"></i> {{
+                                                    'ui.error.required' | i18n }}
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <button type="button"
+                                                    ng-click="test.parameters.push(newParm); newParm = {}"
+                                                    class="btn btn-success"
+                                                    ng-disabled="!newParm.name || !newParm.value"><i
+                                                        class="fas fa-plus-circle fa-fw"></i></button>
+                                            </td>
+                                        </tr>
+                                    </tfoot>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="float-right btn-group">
+                        <button class="btn btn-primary" id="btnRunTest" type="submit" ng-disabled="testForm.$invalid">
+                            <i class="fas fa-fw fa-play"></i> {{ 'ui.action.run' | i18n }}
+                        </button>
+                    </div>
+                </form>
+            </div>
+            <!-- results -->
+            <div ng-if="test.result" class="d-block float-clear">
+                <div class="w-100 alert-primary">
+                    <h5 class="p-1 m-0"><i class="fas fa-play fa-fw"></i> {{ 'ui.admin.cdss.edit.test.results' | i18n }}
+                    </h5>
+                </div>
+                <ul class="nav nav-tabs">
+                    <li class="nav-item" ng-if="test.result.target">
+                        <button class="nav-link active" data-toggle="tab" data-target="#resultTarget">
+                            <i class="fas fa-fw fa-person"></i> {{ 'ui.admin.cdss.edit.test.result.target' | i18n }}
+                        </button>
+                    </li>
+                    <li class="nav-item" ng-if="test.result.propose.length > 0">
+                        <button class="nav-link" data-toggle="tab" data-target="#resultPropose">
+                            <i class="fas fa-fw fa-diagnoses"></i> {{ 'ui.admin.cdss.edit.test.result.proposal' | i18n }}
+                            ( {{test.result.propose.length}}
+                            )
+                        </button>
+                    </li>
+                    <li class="nav-item" ng-if="test.result.issue.length > 0">
+                        <button class="nav-link" data-toggle="tab" data-target="#resultIssue">
+                            <i class="fas fa-fw fa-hand-holding-medical"></i>  {{ 'ui.admin.cdss.edit.test.result.issue' | i18n }}
+                        </button>
+                    </li>
+                    <li class="nav-item" ng-if="test.result.debug">
+                        <button class="nav-link" data-toggle="tab" data-target="#resultDebug">
+                            <i class="fas fa-fw fa-bug"></i> {{ 'ui.admin.cdss.edit.test.result.debug' | i18n }}
+                        </button>
+                    </li>
+                </ul>
+
+                <div class="tab-content">
+                    <div class="tab-pane fade active show" id="resultTarget">
+                        <object-tree object="test.result.target" />
+                    </div>
+                    <div class="tab-pane fade" id="resultPropose">
+                        <ol class="list-group">
+                            <li class="list-group-item" ng-if="test.result.propose.length &gt; 20">
+                                1 .. 20 of {{ test.result.propose.length }} {{
+                                'ui.admin.cdss.edit.test.result.proposal.computed' | i18n}}
+                            </li>
+                            <li class="list-group-item" ng-repeat="prop in test.result.propose track by $index"
+                                ng-if="$index &lt;= 20">
+                                <object-tree object="prop" scoper="'proposal' + $index" />
+                            </li>
+                        </ol>
+                    </div>
+                    <div class="tab-pane fade" id="resultIssue">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <td>{{ 'ui.dq.priority' | i18n }}</td>
+                                    <td>{{ 'ui.dq.text' | i18n }}</td>
+                                    <td>{{ 'ui.dq.type' | i18n }}</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="iss in test.result.issue">
+                                    <td>
+                                        <span class="badge m-2 " ng-class="{ 'badge-danger' : iss.priority == 'Error', 'badge-warning' : iss.priority == 'Warning', 'badge-primary' : iss.priority == 'Information' }">
+                                            <i class="fas fa-fw" ng-class="{ 'fa-times-square' : iss.priority == 'Error', 'fa-exclamation-triangle' : iss.priority == 'Warning', 'fa-info-circle' : iss.priority == 'Information' }"></i>
+                                            {{ iss.priority }}
+                                        </span>
+                                    </td>
+                                    <td>{{ iss.text }}</td>
+                                    <td>{{ iss.type }}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                    </div>
+                    <div class="tab-pane fade" id="resultDebug">
+                        <cdss-debug frame="test.result.debug.frame" proposals="test.result.proposal" />
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+</div>

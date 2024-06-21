@@ -1,8 +1,9 @@
 /// <reference path="../../../core/js/santedb.js"/>
 /// <reference path="../../../core/js/santedb-model.js"/>
 /*
- * Copyright 2015-2019 Mohawk College of Applied Arts and Technology
- * 
+ * Copyright (C) 2021 - 2024, SanteSuite Inc. and the SanteSuite Contributors (See NOTICE.md for full copyright notices)
+ * Copyright (C) 2019 - 2021, Fyfe Software Inc. and the SanteSuite Contributors
+ * Portions Copyright (C) 2015-2018 Mohawk College of Applied Arts and Technology
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you 
  * may not use this file except in compliance with the License. You may 
@@ -16,10 +17,10 @@
  * License for the specific language governing permissions and limitations under 
  * the License.
  * 
- * User: Justin Fyfe
- * Date: 2019-8-8
+ * User: fyfej
+ * Date: 2023-5-19
  */
-angular.module("santedb").controller("PasswordController", ['$scope', '$rootScope', '$state', '$templateCache', '$stateParams', function ($scope, $rootScope, $state, $templateCache, $stateParams) {
+angular.module("santedb").controller("PasswordController", ['$scope', '$rootScope', '$timeout', function ($scope, $rootScope, $timeout) {
 
 
     /**
@@ -44,11 +45,14 @@ angular.module("santedb").controller("PasswordController", ['$scope', '$rootScop
         SanteDB.display.buttonWait("#passwordButton", true);
         try {
             if ($scope.password.entity.userName == $rootScope.session.username) {
-                await SanteDB.authentication.passwordLoginAsync($scope.password.entity.userName, $scope.password.entity.existingPassword, undefined, true, undefined, undefined);
+                await SanteDB.authentication.passwordLoginAsync($scope.password.entity.userName, $scope.password.entity.existingPassword, $scope.password.entity.mfaSecret, true, undefined, undefined);
             }
             var result = await SanteDB.authentication.setPasswordAsync($scope.password.entity.id, $scope.password.entity.userName, $scope.password.entity.password);
+            if($scope.password.expirePassword) {
+                await SanteDB.authentication.expirePasswordAsync($scope.password.entity.id, $scope.password.entity.userName);
+            }
             if ($scope.password.entity.userName == $rootScope.session.username) { // we are logged out - so we want to reauthenticate to start a new session
-                await SanteDB.authentication.passwordLoginAsync($scope.password.entity.userName, $scope.password.entity.password, undefined, false, undefined, undefined);
+                await SanteDB.authentication.passwordLoginAsync($scope.password.entity.userName, $scope.password.entity.password, $scope.password.entity.mfaSecret, false, undefined, undefined);
             }
             toastr.success(SanteDB.locale.getString("ui.password.notification.success"));
             $scope.closeForm(form);
@@ -61,6 +65,14 @@ angular.module("santedb").controller("PasswordController", ['$scope', '$rootScop
                 case "invalid_grant":
                     e.userMessage = 'error.login.invalidPassword';
                     break;
+                case "mfa_required":
+                    $timeout(() => {
+                        $scope.password._requireTfa =
+                        $scope.password._lockPassword = 
+                        $scope.password._lockUserName = true;
+                        $scope.password._mfaDetail = e.data.error_description;
+                   });
+                   return;
                 default:
                     e.userMessage = e.message;
                     break;

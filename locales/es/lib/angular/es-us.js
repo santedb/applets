@@ -1,8 +1,7 @@
 /*
- * Copyright (C) 2021-2023 SanteSuite Inc and the SanteSuite Contributors (see NOTICES)
-Portions Copyright (C) 2019-2021 Fyfe Software Inc.
-Portions Copyright (C) 2015-2018 Mohawk College of Applied Arts and Technology
- * 
+ * Copyright (C) 2021 - 2024, SanteSuite Inc. and the SanteSuite Contributors (See NOTICE.md for full copyright notices)
+ * Copyright (C) 2019 - 2021, Fyfe Software Inc. and the SanteSuite Contributors
+ * Portions Copyright (C) 2015-2018 Mohawk College of Applied Arts and Technology
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you 
  * may not use this file except in compliance with the License. You may 
@@ -16,8 +15,8 @@ Portions Copyright (C) 2015-2018 Mohawk College of Applied Arts and Technology
  * License for the specific language governing permissions and limitations under 
  * the License.
  * 
- * User: justi
- * Date: 2018-7-13
+ * User: fyfej
+ * Date: 2023-5-19
  */
 'use strict';
 angular.module("ngLocale", [], ["$provide", function($provide) {

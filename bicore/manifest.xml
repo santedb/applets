@@ -1,8 +1,8 @@
 <?xml-model href="../.ref/schema/SanteDBApplet.xsd" type="application/xml" schematypens="http://www.w3.org/2001/XMLSchema"?>
 <!--
- - Portions Copyright 2015-2019 Mohawk College of Applied Arts and Technology
- - Portions Copyright 2019-2019 SanteSuite Contributors (See NOTICE)
- - 
+ - Copyright 2021-2024 SanteSuite Contributors (See NOTICE.md for full copyright notices)
+ - Copyright (C) 2019 - 2021, Fyfe Software Inc. and the SanteSuite Contributors
+ - Portions Copyright (C) 2015-2018 Mohawk College of Applied Arts and Technology
  - 
  - Licensed under the Apache License, Version 2.0 (the "License"); you 
  - may not use this file except in compliance with the License. You may 
@@ -16,11 +16,11 @@
  - License for the specific language governing permissions and limitations under 
  - the License.
  - 
- - User: Justin Fyfe
- - Date: 2019-11-13
+ - User: fyfej
+ - Date: 2023-5-19
  -->
 <AppletManifest xmlns="http://santedb.org/applet">
-  <info id="org.santedb.bicore" version="2.1.113.3" uuid="442cf6ad-2202-4cc3-90af-b7730b29722c">
+  <info id="org.santedb.bicore" version="3.0.0.0" uuid="442cf6ad-2202-4cc3-90af-b7730b29722c">
     <icon>/org.santedb.core/img/icon.png</icon>
     <name lang="en">SanteDB Core BI Definitions</name>
     <author>SanteSuite Community Partners (see: santesuite.org)</author>
@@ -44,4 +44,9 @@
     </menuItem>
   </menuItem>
   <strings lang="en" extern="locales/en/strings.xml" />
+  <strings lang="en-ca" extern="locales/en/strings.xml" />
+  <strings lang="en-us" extern="locales/en/strings.xml" />
+  <strings lang="en-ph" extern="locales/en/strings.xml" />
+  <strings lang="en-uk" extern="locales/en/strings.xml" />
+  <strings lang="en-iso" extern="locales/en/strings.xml" />
 </AppletManifest>

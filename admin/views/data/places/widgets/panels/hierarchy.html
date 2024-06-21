@@ -1,3 +1,23 @@
+<!--
+ - Copyright 2021-2024 SanteSuite Contributors (See NOTICE.md for full copyright notices)
+ - Copyright (C) 2019 - 2021, Fyfe Software Inc. and the SanteSuite Contributors
+ - Portions Copyright (C) 2015-2018 Mohawk College of Applied Arts and Technology
+ - 
+ - Licensed under the Apache License, Version 2.0 (the "License"); you 
+ - may not use this file except in compliance with the License. You may 
+ - obtain a copy of the License at 
+ - 
+ - http://www.apache.org/licenses/LICENSE-2.0 
+ - 
+ - Unless required by applicable law or agreed to in writing, software
+ - distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+ - WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the 
+ - License for the specific language governing permissions and limitations under 
+ - the License.
+ - 
+ - User: fyfej
+ - Date: 2023-5-19
+ -->
 <div xmlns="http://www.w3.org/1999/xhtml" xmlns:sdb="http://santedb.org/applet"
     oc-lazy-load="{name:'HierarchyWidgetController', files: ['/org.santedb.admin/controllers/widgets/hierarchyWidgetController.js'] }">
     <sdb:widget name="org.santedb.widget.admin.panel.place.hierarchy" type="Panel"
@@ -16,21 +36,26 @@
     </div>
     <div ng-if="scopedObject" ng-controller="HierarchyWidgetController" class="container-fluid">
 
-        <form name="panel.editForm" ng-submit="saveHierarchy(panel.editForm)">
+        <form name="panel.editForm" ng-submit="saveHierarchy(panel.editForm)" autocomplete="off">
             <div class="form-group row">
                 <label class="col-12 font-weight-bold" for="parent">{{
                     'ui.model.entity.relationship.Parent' | i18n }} <hint-popover
                         hint-title="ui.model.entity.relationship.Parent" /></label>
                 <div class="col-12">
                     <div ng-show="panel.view != 'Edit'" ng-if="scopedObject.relationship.Parent[0].targetModel">
-                        <a target="_blank" ui-sref="santedb-admin.data.place.view({id: scopedObject.relationship.Parent[0].target})"><i class="fas fa-map-pin"></i> {{ scopedObject.relationship.Parent[0].targetModel.name | name }} - (<i class="fas fa-map-marker"></i> {{ scopedObject.relationship.Parent[0].targetModel.address | address }}) <sup><i class="fas fa-external-link-alt"></i></sup></a>
+                        <a target="_blank"
+                            ui-sref="santedb-admin.data.place.view({id: scopedObject.relationship.Parent[0].target})"><i
+                                class="fas fa-map-pin"></i> {{ scopedObject.relationship.Parent[0].targetModel.name |
+                            name }} - (<i class="fas fa-map-marker"></i> {{
+                            scopedObject.relationship.Parent[0].targetModel.address | address }}) <sup><i
+                                    class="fas fa-external-link-alt"></i></sup></a>
                     </div>
                     <div ng-show="panel.view == 'Edit'">
-                    <entity-search type="'Place'"
-                    group-by="['address.PhysicalVisit[0].component.State[0]','address.Direct[0].component.State[0]']" ng-model="scopedObject.relationship.Parent[0].target"
-                        search-field="'name.component.value'"
-                        for-relationship-type="'bfcbb345-86db-43ba-b47e-e7411276ac7c'"
-                        with-relationship-source-class="scopedObject.classConcept"></entity-search>
+                        <entity-search type="'Place'"
+                            group-by="['address.PhysicalVisit[0].component.State[0]','address.Direct[0].component.State[0]']"
+                            ng-model="scopedObject.relationship.Parent[0].target" search-field="'name.component.value'"
+                            for-relationship-type="'bfcbb345-86db-43ba-b47e-e7411276ac7c'"
+                            with-relationship-source-class="scopedObject.classConcept"></entity-search>
                     </div>
                 </div>
             </div>
@@ -40,30 +65,28 @@
                         hint-title="ui.model.entity.relationship.Children" />
                 </label>
                 <div class="col-12">
-                    <entity-table id="hierarchyTable" type="Place" search-field="name.component.value"
-                        stateless="true"
+                    <entity-table id="hierarchyTable" type="Place" search-field="name.component.value" stateless="true"
                         can-filter="true"
                         default-query="{ 'obsoletionTime' : 'null', _viewModel: 'fastView', 'relationship[Parent].target' : scopedObject.id }"
                         render="{ name: 'renderName', classConcept: 'renderClass', statusConcept : 'renderStatusConcept' }"
-                        i18n-prefix="'ui.model.entity.'"
-                        item-actions="[ 
+                        i18n-prefix="'ui.model.entity.'" item-actions="[ 
                             { name: 'view', sref: 'santedb-admin.data.place.view', demand: '1.3.6.1.4.1.33349.3.1.5.9.2.4', className: 'btn-info', icon: 'fa fa-eye' }, 
                             { name: 'remove', action: 'removeChild', demand: '1.3.6.1.4.1.33349.3.1.5.9.2.4.2.0', className: 'btn-danger', icon: 'fa fa-times' } 
-                        ]"
-                        properties="[ 'name', 'classConcept', 'statusConcept' ]" button-bar="'#addChildHeader'" />
+                        ]" properties="[ 'name', 'classConcept', 'statusConcept' ]" button-bar="'#addChildHeader'" />
                 </div>
 
                 <div id="addChildHeader">
-                    <div class="input-group" ng-show="panel.view == 'Edit'">
+                    <div ng-show="panel.view == 'Edit'" class="d-flex justify-content-start align-items-baseline">
                         <entity-search type="'Place'" style="width:75%"
-                        group-by="['address.PhysicalVisit[0].component.State[0]','address.Direct[0].component.State[0]']" ng-model="newChild"
-                            search-field="'name.component.value'"
+                            group-by="['address.PhysicalVisit[0].component.State[0]','address.Direct[0].component.State[0]']"
+                            ng-model="newChild" search-field="'name.component.value'"
                             for-relationship-type="'bfcbb345-86db-43ba-b47e-e7411276ac7c'"
                             with-relationship-target-class="editObject.classConcept"></entity-search>
-                            <div class=" input-group-append">
-                        <button type="button" id="btnAddChild" class="btn btn-primary input-group-btn" ng-click="addChild(newChild)"><i
-                                class="fas fa-plus-circle"></i> {{ 'ui.action.add' | i18n }}</button>
-                            </div>
+                        <div class="mx-2">
+                            <button type="button" id="btnAddChild" class="btn btn-primary"
+                                ng-click="addChild(newChild)"><i class="fas fa-plus-circle"></i> {{ 'ui.action.add' |
+                                i18n }}</button>
+                        </div>
                     </div>
 
                 </div>

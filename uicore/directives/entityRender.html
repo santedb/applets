@@ -1,0 +1,20 @@
+<div xmlns="http://www.w3.org/1999/xhtml">
+
+    <div ng-if="!entity">
+        <i class="fas fa-fw fa-circle-notch fa-spin"></i> {{ 'ui.wait' | i18n }}
+    </div>
+    <div ng-if="entity">
+        <i class="fas fa-fw" ng-class="{
+        'fa-hospital-user' : entity.$type == 'Patient',
+        'fa-user' : entity.$type == 'UserEntity' || entity.$type == 'Person' || entity.$type == 'Provider',
+        'fa-flask' : entity.$type == 'Material',
+        'fa-prescription-bottle' : entity.$type == 'ManufacturedMaterial',
+        'fa-hospital' : entity.$type == 'Place' &amp;&amp; entity.classConcept == 'ff34dfa7-c6d3-4f8b-bc9f-14bcdc13ba6c',
+        'fa-map-pin' : entity.$type == 'Place' &amp;&amp; entity.classConcept != 'ff34dfa7-c6d3-4f8b-bc9f-14bcdc13ba6c',
+        'fa-sitemap' : entity.$type == 'Organization',
+        'fa-share-alt' : entity.$type == 'Entity',
+        'fa-circle' : null
+        }"></i>
+        {{ entity.name | name }}
+    </div>
+</div>

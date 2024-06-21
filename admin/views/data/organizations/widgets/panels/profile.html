@@ -1,3 +1,23 @@
+<!--
+ - Copyright 2021-2024 SanteSuite Contributors (See NOTICE.md for full copyright notices)
+ - Copyright (C) 2019 - 2021, Fyfe Software Inc. and the SanteSuite Contributors
+ - Portions Copyright (C) 2015-2018 Mohawk College of Applied Arts and Technology
+ - 
+ - Licensed under the Apache License, Version 2.0 (the "License"); you 
+ - may not use this file except in compliance with the License. You may 
+ - obtain a copy of the License at 
+ - 
+ - http://www.apache.org/licenses/LICENSE-2.0 
+ - 
+ - Unless required by applicable law or agreed to in writing, software
+ - distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+ - WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the 
+ - License for the specific language governing permissions and limitations under 
+ - the License.
+ - 
+ - User: fyfej
+ - Date: 2023-5-19
+ -->
 <div xmlns="http://www.w3.org/1999/xhtml" xmlns:sdb="http://santedb.org/applet"
     oc-lazy-load="{ name: 'EntityDemographicsController', files: ['/org.santedb.admin/controllers/widgets/entityWidget.js'] }">
     <sdb:widget name="org.santedb.widget.admin.panel.organization.profile" type="Panel"
@@ -22,7 +42,7 @@
             </div>
             <div ng-if="panel.view == 'Edit'">
                 <form action="javascript:void(0)" id="editEntityDemographicsForm" ng-submit="update(panel.editForm)"
-                    novalidate="novalidate" name="panel.editForm">
+                    novalidate="novalidate" name="panel.editForm" autocomplete="off">
                     <ul class="nav nav-tabs" role="tablist" id="entityEditForms">
                         <li class="active nav-item active" role="presentation">
                             <a class="nav-link active" href="javascript:void(0)" data-target="#entityPropertiesTab"
@@ -125,27 +145,32 @@
                                         </div>
                                     </div>
                                 </div>
-                                <geo-edit owner-form="panel.editForm" geo="editObject.geo"
+                                <geo-edit owner-form="panel.editForm" model="editObject.geo"
                                     ng-if="scopedObject.classConcept == 'ff34dfa7-c6d3-4f8b-bc9f-14bcdc13ba6c'"></geo-edit>
 
                             </div>
                         </div>
                         <div role="tabpanel" class="tab-pane p-2" id="entityNamesTab">
-                            <name-edit name="editObject.name" no-add="false" no-type="false" simple-entry="true"
-                                owner-form="panel.editForm" allowed-components="'$other'"
-                                input-style="'simple'"></name-edit>
+                            <name-edit model="editObject.name" 
+                                no-add="false" 
+                                no-type="false" 
+                                simple-entry="true"
+                                owner-form="panel.editForm" 
+                                allowed-components="'$other'"
+                                input-style="'simple'">
+                            </name-edit>
                         </div>
                         <div role="tabpanel" class="tab-pane p-2" id="entityIdentifierTab">
-                            <identifier-list-edit identifier="editObject.identifier" owner-form="panel.editForm"
+                            <identifier-table-edit model="editObject.identifier" owner-form="panel.editForm"
                                 container-class="editObject.classConcept" />
                         </div>
                         <div role="tabpanel" class="tab-pane p-2" id="entityAddressTab">
-                            <address-edit address="editObject.address" no-add="false" no-type="false"
+                            <address-edit model="editObject.address" no-add="false" no-type="false"
                                 owner-form="panel.editForm"></address-edit>
                         </div>
                         <div role="tabpanel" class="tab-pane p-2" id="entityTelecomTab">
                             <telecom-edit
-                            telecom="editObject.telecom" owner-form="panel.editForm"/>
+                            model="editObject.telecom" owner-form="panel.editForm"/>
                         </div>
 
                     </div>

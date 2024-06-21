@@ -1,3 +1,23 @@
+<!--
+ - Copyright 2021-2024 SanteSuite Contributors (See NOTICE.md for full copyright notices)
+ - Copyright (C) 2019 - 2021, Fyfe Software Inc. and the SanteSuite Contributors
+ - Portions Copyright (C) 2015-2018 Mohawk College of Applied Arts and Technology
+ - 
+ - Licensed under the Apache License, Version 2.0 (the "License"); you 
+ - may not use this file except in compliance with the License. You may 
+ - obtain a copy of the License at 
+ - 
+ - http://www.apache.org/licenses/LICENSE-2.0 
+ - 
+ - Unless required by applicable law or agreed to in writing, software
+ - distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+ - WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the 
+ - License for the specific language governing permissions and limitations under 
+ - the License.
+ - 
+ - User: fyfej
+ - Date: 2023-5-19
+ -->
 <div xmlns="http://www.w3.org/1999/xhtml" xmlns:sdb="http://santedb.org/applet">
     <sdb:script static="false">~/controllers/places/facility.js</sdb:script>
     <sdb:state name="santedb-admin.data.facility.create">
@@ -8,7 +28,7 @@
             <sdb:title lang="en">New Facility</sdb:title>
         </sdb:view>
     </sdb:state>
-    <form ng-submit="savePlace(targetForm)" name="targetForm" novalidate="novalidate">
+    <form ng-submit="savePlace(targetForm)" name="targetForm" novalidate="novalidate" autocomplete="off">
         <div class="accordion mb-2" id="placeAccordion">
             <div class="card">
                 <div class="card-header">
@@ -25,7 +45,7 @@
                                     hint-title="ui.model.place.typeConcept" />
                             </label>
                             <div class="col-sm-12 col-md-9">
-                                <concept-select class="form-control" required="required" name="typeInput" concept-set="'PlaceTypeConcept'"
+                                <concept-select class="form-control" required="required" name="typeInput" concept-set="'FacilityTypeConcept'"
                                     ng-model="entity.typeConcept" />
                                 <div class="text-danger" ng-if="targetForm.typeInput.$error['required']">
                                     <i class="fa fa-exclamation-triangle"></i> {{ 'ui.error.required' | i18n }}
@@ -46,14 +66,14 @@
                             </div>
                         </div>
                         <address-edit is-required="true" owner-form="targetForm"
-                            address="entity.address" simple-entry="true" no-type="true" no-add="true">
+                            model="entity.address" simple-entry="true" no-type="true" no-add="true">
                         </address-edit>
                         <hr />
                         <div class="mb-2">
                             <div class="row form-group">
                                 <label class="control-label col-sm-12 col-md-3">{{ 'ui.model.place.isMobile' | i18n
                                     }} <hint-popover hint-title="ui.model.place.isMobile" /></label>
-                                <div class="col-sm-12 col-md-9">
+                                <div class="col-sm-12 col-md-9 control-value">
                                     <div class="custom-control custom-checkbox">
                                         <input type="checkbox" class="custom-control-input" id="isMobile"
                                             ng-model="entity.isMobile" />
@@ -62,7 +82,7 @@
                                 </div>
                             </div>
                         </div>
-                        <geo-edit owner-form="targetForm" geo="entity.geo"></geo-edit>
+                        <geo-edit owner-form="targetForm" model="entity.geo"></geo-edit>
                         <hr />
                         <div class="form-group row">
                             <label class="col-sm-12 col-md-3 control-label" for="name">{{

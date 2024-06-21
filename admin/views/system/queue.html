@@ -1,3 +1,23 @@
+<!--
+ - Copyright 2021-2024 SanteSuite Contributors (See NOTICE.md for full copyright notices)
+ - Copyright (C) 2019 - 2021, Fyfe Software Inc. and the SanteSuite Contributors
+ - Portions Copyright (C) 2015-2018 Mohawk College of Applied Arts and Technology
+ - 
+ - Licensed under the Apache License, Version 2.0 (the "License"); you 
+ - may not use this file except in compliance with the License. You may 
+ - obtain a copy of the License at 
+ - 
+ - http://www.apache.org/licenses/LICENSE-2.0 
+ - 
+ - Unless required by applicable law or agreed to in writing, software
+ - distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+ - WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the 
+ - License for the specific language governing permissions and limitations under 
+ - the License.
+ - 
+ - User: fyfej
+ - Date: 2023-5-19
+ -->
 <div xmlns="http://www.w3.org/1999/xhtml" xmlns:sdb="http://santedb.org/applet">
     <sdb:script static="false">~/controllers/server/queue.js</sdb:script>
     <sdb:state name="santedb-admin.system.queue">
@@ -14,6 +34,7 @@
     <entity-table stateless="true" id="queueTable" type="DispatcherQueue" 
     search-field="name"
      can-filter="true"
+     
      default-query="{ _upstream: extern }"
     i18n-prefix="'ui.admin.queue.contents.'"
     item-actions="[ 
@@ -31,5 +52,10 @@
             <option value="false">{{ 'ui.admin.system.logs.local' | i18n }}</option>
             <option ng-if="$root.system.online" value="true">{{ 'ui.admin.system.logs.remote' | i18n }}</option>
         </select>
+        <div class="input-group-append">
+            <button class="btn btn-success" type="button" ng-click="refreshTable()">
+                <i class="fas fa-refresh"></i> {{ 'ui.action.reload' | i18n }}
+            </button>
+        </div>
     </div>
 </div>

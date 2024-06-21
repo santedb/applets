@@ -1,6 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--
+ - Copyright 2021-2024 SanteSuite Contributors (See NOTICE.md for full copyright notices)
+ - Copyright (C) 2019 - 2021, Fyfe Software Inc. and the SanteSuite Contributors
+ - Portions Copyright (C) 2015-2018 Mohawk College of Applied Arts and Technology
+ - 
+ - Licensed under the Apache License, Version 2.0 (the "License"); you 
+ - may not use this file except in compliance with the License. You may 
+ - obtain a copy of the License at 
+ - 
+ - http://www.apache.org/licenses/LICENSE-2.0 
+ - 
+ - Unless required by applicable law or agreed to in writing, software
+ - distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+ - WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the 
+ - License for the specific language governing permissions and limitations under 
+ - the License.
+ - 
+ - User: fyfej
+ - Date: 2023-5-19
+ -->
 <resources>
-
+  <string name="ui.model.date.approx">Date is approximate</string>
   <string name="ui.model.version.current">Current Version</string>
   <string name="ui.model.securityProvenance.type.device">Device Principal</string>
   <string name="ui.model.securityProvenance.type.user">User Principal</string>
@@ -14,13 +34,17 @@
   <string name="ui.model.securityUser.invalidLoginAttempts">Invalid Logins</string>
   <string name="ui.model.securityUser.title">User</string>
   <string name="ui.model.securityUser.password">Password</string>
+  <string name="ui.model.securityUser.neverLoggedIn">Never logged in</string>
   <string name="ui.model.securityRole.title">Role</string>
   <string name="ui.model.securityUser.email">Security E-Mail</string>
   <string name="ui.model.securityUser.phoneNumber">Security Phone</string>
   <string name="ui.model.securityUser.twoFactorEnabled">TFA Enabled</string>
   <string name="ui.model.securityUser.twoFactorEnabled.true">Enabled</string>
   <string name="ui.model.securityUser.twoFactorEnabled.false">Disabled</string>
+  <string name="ui.model.securityUser.twoFactorEnabled.setup">Setup</string>
   <string name="ui.model.securityUser.challenge">Password Recovery</string>
+  <string name="ui.model.userEntity.securityUserModel.central">This user can log into any device. Changing the profile requires an internet connection</string>
+  <string name="ui.model.userEntity.securityUserModel.local">This user can only log into this device/local deployment.</string>
   <string name="ui.model.userEntity.givenName">Given Name</string>
   <string name="ui.model.userEntity.familyName">Family Name</string>
   <string name="ui.model.userEntity.language">Preferred Language</string>
@@ -29,6 +53,7 @@
   <string name="ui.model.securityUser.lockout">Locked Until</string>
   <string name="ui.model.securityRole.id">Security ID</string>
   <string name="ui.model.securityUser.passwordExpiry">Expires on</string>
+  <string name="ui.model.securityUser._changesPremittedOnlineOnly">This information requires an online session to change! Please change the information on the web interface, or wait until this device is back online</string>
   <string name="ui.model.securityRole.name">Name</string>
   <string name="ui.model.securityRole.createdBy">Created By</string>
   <string name="ui.model.securityRole.updatedBy">Updated By</string>
@@ -90,8 +115,11 @@
   <string name="ui.model.entityRelationship.inverse.prefix">Is a</string>
   <string name="ui.model.entityRelationship.inverse.suffix">Of</string>
   <string name="ui.model.entityRelationship.target">With</string>
+  <string name="ui.model.entityRelationship.quantity">Quantity</string>
   <string name="ui.model.identityDomain.oid">Universal ID</string>
   <string name="ui.model.identityDomain.oid.hint"><![CDATA[The object identifier of the identity domain is used by HL7v3 messages and HL7v2 messages to tag an identifier with the identity domain to which the identity domain belongs. These should be: <ul><li>An IANA Private Enterprise Number</li><li>An HL7 Registered Assigning Authority</li><li>A UUID in format <code>2.25.XXXX</code></li></ul>]]></string>
+  <string name="ui.model.identityDomain.identifierClass">Classification</string>
+  <string name="ui.model.identityDomain.identifierClass.hint">Select the general classification which identifiers assigned to this identity domain carry</string>
   <string name="ui.model.identityDomain.domainName">Namespace ID</string>
   <string name="ui.model.identityDomain.domainName.hint"><![CDATA[The namespace identifier is used in the HDSI and HL7v2 to identify the identifiers. These must be unique in this installation of SanteDB.]]></string>
   <string name="ui.model.identityDomain.name">Name</string>
@@ -108,6 +136,7 @@
   <string name="ui.model.identityDomain.url.hint">Enter the URL for this identity domains. URLs are used by FHIR for correlating the identity domain with the identifier when FHIR messages are received</string>
   <string name="ui.model.identityDomain.validation">Validation Regex</string>
   <string name="ui.model.identityDomain.validation.hint">Use this field to specify the format of the identifier (the pattern that conformant identifiers need to have)</string>
+  <string name="ui.model.identityDomain.validateHint">Identifier in format {pattern}</string>
   <string name="ui.model.identityDomain.assigningAuthority.assigningApplication">Application</string>
   <string name="ui.model.identityDomain.assigningAuthority.authoritative">Authoritative Source</string>
   <string name="ui.model.identityDomain.assigningAuthority.assigningApplication.hint"><![CDATA[Whenever an identifier in this domain is registered from this application - it can be flagged as authoritative or informative. You may restrict the ability of non-authoritative applications from issuing new identifiers (which will result in a data quality warning)]]></string>
@@ -123,15 +152,21 @@
   <string name="ui.model.version.changed">Changed Properties</string>
   <string name="ui.model.version.initial">Initial Version</string>
   <string name="ui.model.entity.properties">Properties</string>
+  <string name="ui.model.entity.versionSequence">Version #</string>
+  <string name="ui.model.entity.createdBy">Created By</string>
   <string name="ui.model.entity.id">UUID</string>
   <string name="ui.model.entity.classConcept">Classification</string>
   <string name="ui.model.entity.typeConcept">Type</string>
+  <string name="ui.model.entity.relationship.relationshipType">Relationship</string>
   <string name="ui.model.entity.relationship.hasA">HAS A</string>
   <string name="ui.model.entity.relationship.isA">IS A</string>
   <string name="ui.model.entity.relationship.Caregiver">Caregiver(s)</string>
   <string name="ui.model.entity.relationship.Citizen">Citizenship(s)</string>
   <string name="ui.model.entity.relationship.CoverageSponsor">Coverage/Sponsor</string>
-  <string name="ui.model.entity.relationship.DedicatedServiceDeliveryLocation">Facilities</string>
+  <string name="ui.model.entity.relationship.DedicatedServiceDeliveryLocation">Assigned Facilities</string>
+  <string name="ui.model.entity.relationship.DedicatedServiceDeliveryLocation.hint">Select the assigned facilities</string>
+  <string name="ui.model.entity.relationship.IncidentalServiceDeliveryLocation">Secondary Facilities</string>
+  <string name="ui.model.entity.relationship.IncidentalServiceDeliveryLocation.hint">Select secondary facilities which are subscribed/interested in this entity</string>
   <string name="ui.model.entity.relationship.Parent">Parent</string>
   <string name="ui.model.entity.relationship.Parent.hint">Select the direct parent of this entity in the entity hierarchy</string>
   <string name="ui.model.entity.relationship.Child">Child</string>
@@ -153,6 +188,20 @@
   <string name="ui.model.entity.address.title">Address Registration</string>
   <string name="ui.model.entity.address.use">Address Type</string>
   <string name="ui.model.entity.statusConcept">Status</string>
+  <string name="ui.model.entity.statusConcept.hint"><![CDATA[Sets the state of the current object in the database: <ul>
+    <li><code>NEW:</code> The object can be used however the information may not be validated</li>
+    <li><code>ACTIVE:</code> The object can be used normally</li>
+    <li><code>OBSOLETE:</code> The object should no longer be used as it has been supersceded</li>
+    <li><code>NULLIFIED:</code> The object was created in error</li>
+    <li><code>INACTIVE:</code> The object should not be used</li>
+    ]]></string>
+  <string name="ui.model.entity.address.HomeAddress">Home Address</string>
+  <string name="ui.model.entity.address.HomeAddress.hint">The primary address for the person/patient. This is the residence where the person primarily lives</string>
+  <string name="ui.model.entity.address.Workplace">Work Address</string>
+  <string name="ui.model.entity.address.Workplace">The work address for the person/patient's place of employment.</string>
+  <string name="ui.model.entity.address.Temporary">Temporary Address</string>
+  <string name="ui.model.entity.address.Temporary">A temporary address where the person/patient resides</string>
+
   <string name="ui.model.entity.address.use.hint"><![CDATA[Indicates the intended use of the address such as <code>PhysicalVisit</string> for a physical address, or <code>WorkPlace</code>, etc.]]></string>
   <string name="ui.model.entity.address.component.state">State/Province</string>
   <string name="ui.model.entity.address.component.state.hint"><![CDATA[A partition of a country (also known as a Region, Territory, Zone, etc.)]]></string>
@@ -186,9 +235,11 @@
   <string name="ui.model.entity.name.use.hint"><![CDATA[The intended use for the name. For example <code>OfficialRecord</code> would indicate the name is used on official documentation.]]></string>
   <string name="ui.model.entity.name.component.prefix">Prefix</string>
   <string name="ui.model.entity.name.component.prefix.hint"><![CDATA[A prefix or honorary title used (example: <code>Sir</code>, <code>Mr.</code>, <code>Ms.</code>)]]></string>
-  <string name="ui.model.entity.name.component.given">Given</string>
+  <string name="ui.model.entity.name.component.given">Given Name</string>
   <string name="ui.model.entity.name.component.given.hint"><![CDATA[Given names of the entity]]></string>
-  <string name="ui.model.entity.name.component.family">Family</string>
+  <string name="ui.model.entity.name.component.middle">Middle Name</string>
+  <string name="ui.model.entity.name.component.middle.hint"><![CDATA[Middle names of the entity]]></string>
+  <string name="ui.model.entity.name.component.family">Family Name</string>
   <string name="ui.model.entity.name.component.family.hint"><![CDATA[Family names of the entity (or surname)]]></string>
   <string name="ui.model.entity.name.component.suffix">Suffix</string>
   <string name="ui.model.entity.name.component.suffix.hint"><![CDATA[Suffixes for the name such as an enumetion (William Gates <code>III</code>) a designator (Joe Smith <code>Jr.</code>) or designated title (Dr. Fran Smith <code>MD</code>)]]></string>
@@ -204,17 +255,20 @@
   <string name="ui.model.entity.language">Language(s)</string>
   <string name="ui.model.entity.language.preferred">Preferred</string>
   <string name="ui.model.entity.relationship.relationshipType">Relationship</string>
+  <string name="ui.model.entity.relationship.relationshipType.hint"><![CDATA[Select the nature of the relationship between this entity and the entity being registered (example: Mother, Father, Brother, etc.)]]></string>
+  <string name="ui.model.entity.relationship.relationshipRole">Role</string>
+  <string name="ui.model.entity.relationship.relationshipRole.hint"><![CDATA[Select the role of the entity playing the role here. How is this role important? (i.e. emergency contact, power of attorney, etc.)]]></string>
   <string name="ui.model.entity.relationship.Employer">Employer</string>
-  <string name="ui.model.entity.telecom.NullFlavor-NoInformation">Other</string>
+  <string name="ui.model.entity.telecom.NullFlavor-NoInformation">Other Tel/Email</string>
   <string name="ui.model.entity.telecom.AnsweringService">Answering Service</string>
-  <string name="ui.model.entity.telecom.EmergencyContact">Emergency</string>
-  <string name="ui.model.entity.telecom.MobileContact">Mobile</string>
-  <string name="ui.model.entity.telecom.BadAddress">Old/Bad</string>
-  <string name="ui.model.entity.telecom.Pager">Pager</string>
-  <string name="ui.model.entity.telecom.PrimaryHome">Primary Home</string>
-  <string name="ui.model.entity.telecom.Public">Public</string>
-  <string name="ui.model.entity.telecom.TemporaryAddress">Temporary</string>
-  <string name="ui.model.entity.telecom.WorkPlace">Work</string>
+  <string name="ui.model.entity.telecom.EmergencyContact">Emergency Tel/Email</string>
+  <string name="ui.model.entity.telecom.MobileContact">Mobile Tel/Email</string>
+  <string name="ui.model.entity.telecom.BadAddress">Old/Bad Tel/Email</string>
+  <string name="ui.model.entity.telecom.Pager">Pager Tel/Email</string>
+  <string name="ui.model.entity.telecom.PrimaryHome">Primary Home Tel/Email</string>
+  <string name="ui.model.entity.telecom.Public">Public Tel/Email</string>
+  <string name="ui.model.entity.telecom.TemporaryAddress">Temporary Tel/Email</string>
+  <string name="ui.model.entity.telecom.WorkPlace">Work Tel/Email</string>
   <string name="ui.model.entity.identifier">Identifiers</string>
   <string name="ui.model.entity.identifier.authority.remove.confirm">Are you sure you want to remove this identifier from this entity?</string>
   <string name="ui.model.entity.identifier.authority.noAssign">No Authority</string>
@@ -241,7 +295,11 @@
   <string name="ui.model.patient.address.component.precinct">Precinct</string>
   <string name="ui.model.patient.address.component.street">Street</string>
   <string name="ui.model.patient.address.component.postalcode">Zip/Postal Code</string>
+  <string name="ui.model.patient.age.suffix.daysOld">d/o</string>
+  <string name="ui.model.patient.age.suffix.monthsOld">m/o</string>
+  <string name="ui.model.patient.age.suffix.yearsOld">y/o</string>
   <string name="ui.model.patient.dateOfBirth">DOB</string>
+  <string name="ui.model.patient.dateOfBirth.age">Age</string>
   <string name="ui.model.patient.dateOfBirth.approx">Approx.</string>
   <string name="ui.model.patient.dateOfBirth.required">A date of birth and gender are required for this operation to be completed</string>
   <string name="ui.model.patient.genderConcept">Gender</string>
@@ -256,9 +314,10 @@
   <string name="ui.model.patient.birthplace">Birthplace</string>
   <string name="ui.model.patient.vipStatus">VIP Status</string>
   <string name="ui.model.patient.register">Registered At</string>
-  <string name="ui.model.patient.dedicatedServiceDeliveryLocation">Facilities</string>
+  <string name="ui.model.patient.dedicatedServiceDeliveryLocation">Assigned Facilities</string>
   <string name="ui.model.patient.placeOfDeath">Place of Death</string>
-  <string name="ui.model.patient.multipleBirthOrder">Twin/Triplet/Etc.</string>
+  <string name="ui.model.patient.multipleBirthOrder">Multiple Birth</string>
+  <string name="ui.model.patient.multipleBirthOrder.hint">If this person was born as part of a multiple birth (twin, triplet, etc.) the birthing order of this person.</string>
   <string name="ui.model.patient.multipleBirthOrder.-1">Unknown (of a multiple-birth)</string>
   <string name="ui.model.patient.multipleBirthOrder.0">Unknown (of a multiple-birth)</string>
   <string name="ui.model.patient.multipleBirthOrder.1">1st of multiple-birth</string>
@@ -271,16 +330,27 @@
   <string name="ui.model.patient.maritalStatus">Marital Status</string>
   <string name="ui.model.patient.religion">Religion</string>
   <string name="ui.model.patient.ethnicity">Ethnic Group / Tribe</string>
+  <string name="ui.model.patient.relationship.relationshipRole">Contact's Role</string>
+  <string name="ui.model.patient.relationship.relationshipRole.hint">Optionally select the role that this related person plays for the patient for example: Power of Attorney (signing authority), Payment Guarantor, Emergency Contact</string>
+  <string name="ui.model.patient.relationship.DedicatedServiceDeliveryLocation">Primary Facility</string>
+  <string name="ui.model.patient.relationship.DedicatedServiceDeliveryLocation.hint">Select the primary facility where this patient will seek care. For programmes, this is the facility where the patient should appear in the denominator/catchment</string>
+  <string name="ui.model.patient.relationship.IncidentalServiceDeliveryLocation">Incidental Facilities</string>
+  <string name="ui.model.patient.relationship.IncidentalServiceDeliveryLocation.hint">Select facilities where the patient may visit to seek care, however should not appear on their denominator/catchment reports</string>
+  <string name="ui.model.patient.relationship.ServiceDeliveryLocation">Registration Facility</string>
   <string name="ui.model.person.occupation">Occupation</string>
   <string name="ui.model.person.deceasedDate">Deceased</string>
   <string name="ui.model.person.nationality">Nationality</string>
   <string name="ui.model.person.vipStatus">VIP Status</string>
+  <string name="ui.model.person.deceasedDate">Deceased Date</string>
+  <string name="ui.model.person.deceasedDate.hint">The date/year that the person was known to have died</string>
+  <string name="ui.model.person.deceasedIndicator">Person is Deceased</string>
+  <string name="ui.model.person.deceasedDate.approx">Approximate Date</string>
   <string name="ui.model.patient.summary">Patient Summary</string>
   <string name="ui.model.place.name">Name</string>
   <string name="ui.model.place.names">Other Name(s)</string>
   <string name="ui.model.place.classConcept">Classification</string>
   <string name="ui.model.place.classConcept.hint">Select the SanteDB classification of the place which is being created</string>
-  <string name="ui.model.place.classConcept.changeWarning">Chaning the class concept may invalidate data already present in your database. You should only change this if there are no relationships established with this place</string>
+  <string name="ui.model.place.classConcept.changeWarning">Changing the class concept may invalidate data already present in your database. You should only change this if there are no relationships established with this place</string>
   <string name="ui.model.place.typeConcept">Type</string>
   <string name="ui.model.place.typeConcept.hint">Select the sub-classification of the place which you're creating (for example: Ward, Community Hospital, etc.)</string>
   <string name="ui.model.place.properties">Properties</string>
@@ -293,6 +363,8 @@
   <string name="ui.model.place.statusConcept">Status</string>
   <string name="ui.model.place.service.serviceConcept">Type of Service</string>
   <string name="ui.model.place.service.serviceSchedule">Schedule</string>
+  <string name="ui.model.place.identifier.ISO3166">ISO-3166 Country Code</string>
+  <string name="ui.model.place.identifier.ISO3166.hint">The ISO country code for this country</string>
   <string name="ui.model.patient.saveSuccess">Patient updated successfully</string>
   <string name="ui.model.person.saveSuccess">Related person updated successfully</string>
   <string name="ui.model.place.saveSuccess">Place updated successfully</string>
@@ -322,9 +394,66 @@
   <string name="ui.model.material.name">Name</string>
   <string name="ui.model.material.classConcept">Class</string>
   <string name="ui.model.material.typeConcept">Material Type</string>
+  <string name="ui.model.material.typeConcept.hint">Select the overall classification concept of this material. This is used by decision support and business rules to understand the classification of the material</string>
   <string name="ui.model.material.formConcept">Form</string>
   <string name="ui.model.material.statusConcept">Status</string>
   <string name="ui.model.material.updatedBy">Last Update</string>
+  <string name="ui.model.material.core">Material Properties</string>
+  <string name="ui.model.material.name.OfficialRecord">Official Name</string>
+  <string name="ui.model.material.name.OfficialRecord.hint">The fully qualified name of the material as it appears in clinical documentation, regulations, product certifications, etc.</string>
+  <string name="ui.model.material.name.Assigned">Common Name</string>
+  <string name="ui.model.material.name.Assigned.hint">If the material is commonly referred to a shorter name, enter it here. This is the common name by which the material is known</string>
+  <string name="ui.model.material.formConcept.hint">Select the format in which the material is packaged or administered (such as injection, drops, etc.)</string>
+  <string name="ui.model.material.quantity">Dose</string>
+  <string name="ui.model.material.quantity.hint">The number and unit of one dose unit which represents one dose of the product</string>
+  <string name="ui.model.material.quantityConcept">Dose Unit</string>
+  <string name="ui.model.material.quantityConcept.hint">Select the real-world units in which the material is administered, prescribed or ordered. Examples: Dose, Puffs, etc.</string>
+  <string name="ui.model.material.notes">Special Instructions</string>
+  <string name="ui.model.material.notes.hint">Enter any special long-form documentation about the material including how it is administered, any safety or regulatory concerns, etc.</string>
+  <string name="ui.model.material.identification">Identification</string>
+  <string name="ui.model.material.relationship.Hierarchy">Components/Parts</string>
+  <string name="ui.model.material.relationship.Parent">Parent</string>
+  <string name="ui.model.material.relationship.Parent.hint"><![CDATA[If this material is a subclass of another material then enter the parent material. For example, an mRNA COVID vaccine <c>IS A</c> COVID vaccine]]></string>
+  <string name="ui.model.material.relationship.Part">Has Parts</string>
+  <string name="ui.model.material.relationship.Part.hint"><![CDATA[If this material is composed of multiple attributes of other materials, then the parts should be listed here. For example, a <code>MMRV</code> vaccination material may have parts consisting of a Varicella, Measles, Rubella and Mumps materials]]></string>
+  <string name="ui.model.material.extension.TargetCondition">Approved Treatment</string>
+  <string name="ui.model.material.extension.TargetCondition.hint"><![CDATA[You can select one or more conditions or problems that this material is used commonly to treat or prevent]]></string>
+  <string name="ui.model.material.relationship.UsedEntity">Bundled Materials</string>
+  <string name="ui.model.material.relationship.UsedEntity.hint"><![CDATA[If the use of this material requires the use of another material (such as a syringe, diluent, etc.) select the materials which are used here]]></string>
+  <string name="ui.model.material.realationship.Industry">Regulation &amp; Manufacture</string>
+  <string name="ui.model.material.relationship.RegulatedProduct">Regulatory Body</string>
+  <string name="ui.model.material.relationship.RegulatedProduct.hint">Select the regulatory body which is in charge of this material, or should be notified for further investigation when safety concerns arise from use of the material</string>
+  <string name="ui.model.material.relationship.ManufacturedProduct">Authorized Manufacturers</string>
+  <string name="ui.model.material.relationship.ManufacturedProduct.hint">Enter one or more authorized manufacturers or sources of supply which are licensed to produce the material</string>
+  <string name="ui.model.material.expiryDate">Expiration</string>
+  <string name="ui.model.material.expiryDate.hint">Select the regulatory expiration of this product type/material (when the material is no longer used)</string>
+  <string name="ui.model.material.isAdministrable">Is Administrable</string>
+  <string name="ui.model.manufacturedMaterial.typeConcept">Product Code</string>
+  <string name="ui.model.manufacturedMaterial.typeConcept.hint">Select the classification / type code for this material (if it is different than the parent kind)</string>
+  <string name="ui.model.manufacturedMaterial.quantity">Stock Quantity</string>
+  <string name="ui.model.manufacturedMaterial.quantity.hint">Enter the quantity (amount of material) which is in one unit of this product used for ordering stock</string>
+  <string name="ui.model.manufacturedMaterial.name">Trade Name</string>
+  <string name="ui.model.manufacturedMaterial.gtin">GTIN</string>
+  <string name="ui.model.manufacturedMaterial.statusConcept">Status</string>
+  <string name="ui.model.manufacturedMaterial.updatedBy">Last Update</string>
+  <string name="ui.model.manufacturedMaterial.manufacturer">Manufacturer</string>
+  <string name="ui.model.manufacturedMaterial.name.assigned">Trade Name</string>
+  <string name="ui.manufacturedMaterial.dose"> doses of </string>
+  <string name="ui.model.manufacturedMaterial.name.assigned.hint">Enter the common name or trade name for the manufactured product</string>
+  <string name="ui.model.manufacturedMaterial.relationship.ManufacturedProduct">Manufacturer</string>
+  <string name="ui.model.manufacturedMaterial.relationship.ManufacturedProduct.hint">Select the organization which manufactures this product. This should represent the manufacturer of origin rather than the supplier</string>
+  <string name="ui.model.manufacturedMaterial.relationship.HasGeneralization.quantity">Contained Quantity</string>
+  <string name="ui.model.manufacturedMaterial.relationship.HasGeneralization.quantity.hint">For every one of the current product, how many of the type of material is represented</string>
+  <string name="ui.model.material.isAdministrable.hint"><![CDATA[Indicates that the material can be administered to a patient or subject. Examples: 
+    <ul><li><code>Enable</code> for medications, vaccines, solutions, medical devices, etc.</li><li><code>Disable</code> for syringes, pill bottles, containers, diluents, etc.</li></ul>]]></string>
+  <string name="ui.model.manufacturedMaterial.product">Product</string>
+  <string name="ui.model.manufacturedMaterial.lotNumber">Lot/Batch</string>
+  <string name="ui.model.manufacturedMaterial.lotNumber.hint">The lot or batch number of the specified product type</string>
+  <string name="ui.model.manufacturedMaterial.expiry">Expiry Date</string>
+  <string name="ui.model.manufacturedMaterial.expiry.hint">The latest date where the material maintains its potentcy</string>
+  <string name="ui.model.manufacturedMaterial.relationship.Instance">Batches/Lots</string>
+  <string name="ui.model.manufacturedMaterial.relationship.Instance.hint">Select the product which this lot number is an instance of</string>
+  <string name="ui.model.manufacturedMaterial.relationship.Instance.reverse">Product</string>
   <string name="ui.admin.facilities.edit.core.title">Facility</string>
   <string name="ui.model.facility.id">Unique Identifier</string>
   <string name="org.santedb.widget.admin.tab.facility.profile">Facility Profile</string>
@@ -507,7 +636,7 @@
   <string name="ui.model.pubsubchannel.dispatcher">Dispatcher</string>
   <string name="ui.model.pubsubchannel.dispatcher.hint"><![CDATA[Identifies the type of messaging format to be used to send the notification (for example: FHIR messages, FHIR rest hook, HL7v2, etc.). <strong>OTHER</strong> is used when the iCDR has a dispatcher not listed here]]></string>
   <string name="ui.model.pubsubchannel.settings">Custom Settings</string>
-  <string name="ui.model.pubsubchannel.settings.hint"><![CDATA[Additional settings (key/value pairs) which are used be the dispatcher to control the flow of information. For exampe, in FHIR these equate to HTTP headers]]></string>
+  <string name="ui.model.pubsubchannel.settings.hint"><![CDATA[Additional settings (key/value pairs) which are used be the dispatcher to control the flow of information. For example, in FHIR these equate to HTTP headers]]></string>
 
   <!-- Foreign Data Submissions -->
   <string name="ui.model.alien.submission.name">Filename</string>
@@ -641,4 +770,82 @@
   <string name="ui.model.cdssLibraryDefinition.normalize">Normalization(s)</string>
   <string name="ui.model.cdssLibraryDefinition.include">Include(s)</string>
   <string name="ui.model.cdssLibraryDefinition.status">Status</string>
+
+  <!-- Data Quality -->
+  <string name="ui.model.dataQualityRule">Rule Properties</string>
+  <string name="ui.model.dataQualityRule.resources">Rule Resources</string>
+  <string name="ui.model.dataQualityRule.id">Identifier</string>
+  <string name="ui.model.dataQualityRule.id.placeholder">my.rule.identifier</string>
+  <string name="ui.model.dataQualityRule.id.hint">A unique identifier for the data quality rule - this is a system mnemonic for the rule</string>
+  <string name="ui.model.dataQualityRule.name">Name</string>
+  <string name="ui.model.dataQualityRule.name.placeholder">My Data Quality Rule</string>
+  <string name="ui.model.dataQualityRule.name.hint">A human-readable name for the data quality rule</string>
+  <string name="ui.model.dataQualityRule.enabled">Rule is Active</string>
+  <string name="ui.model.dataQualityRule.enabled.hint">When a rule is active, all incoming resources specified in the rule are validated using the assertions specified</string>
+  <string name="ui.model.dataQualityRule.resources.resource">Resource Type</string>
+  <string name="ui.model.dataQualityRule.resources.resource.hint">Select the type of resource to which this rule set applies. To change the resource type, all assertions must be removed</string>
+  <string name="ui.model.dataQualityRule.resources.assert.id">Assertion ID</string>
+  <string name="ui.model.dataQualityRule.resources.assert.id.placeholder">my.rule.assertion.addressRequired</string>
+  <string name="ui.model.dataQualityRule.resources.assert.id.hint"><![CDATA[Provide a unique identifier for this assertion. When this assertion fails, this identifier will be placed on the <code>DetectedIssue.id</code> field]]></string>
+  <string name="ui.model.dataQualityRule.resources.assert.name">Assertion Text</string>
+  <string name="ui.model.dataQualityRule.resources.assert.name.placeholder">Patient Must Have An Address</string>
+  
+  <string name="ui.model.dataQualityRule.resources.assert.name.hint"><![CDATA[Human readable text for the assertion. When this assertion fails, this text will be placed on the <code>DetectedIssue.text</code> field]]></string>
+  <string name="ui.model.dataQualityRule.resources.assert.priority">Priority</string>
+  <string name="ui.model.dataQualityRule.resources.assert.priority.hint"><![CDATA[Indicates the severity of the detected issue that is raised when the assertion fails. <ul><li><code>Error</code>: The detected issue will result in a rejected resource/failed operation</li><li><code>Warning</code>:: The detected issue will result in a warning. The resource may still be processed</li><li><code>Information</code>: The detected issue will be displayed/conveyed as an informational message</li></ul>]]></string>
+  <string name="ui.model.dataQualityRule.resources.assert.expression">Expression(s)</string>
+  <string name="ui.model.dataQualityRule.resources.assert.expression.hint"><![CDATA[Provide the HDSI expressions which will trigger this detected issue to be raised. The evaluation of multiple HDSI expressions is controlled by the selection of <code>all-of, any-of, none-of</code> representing logical <code>and, or, not</code> respectively]]></string>
+  <string name="ui.model.dataQualityRule.assertion.add">Add Assertion</string>
+
+  <!-- Data Quality -->
+  <string name="ui.model.dataQuality.id">ID</string>
+  <string name="ui.model.dataQuality.name">Name</string>
+  <string name="ui.model.dataQuality.enabled">Status</string>
+  <string name="ui.model.dataQuality.resources">Applies To</string>
+  <!-- Synchronization Queue -->
+  <string name="ui.model.syncQueue.status">State</string>
+  <string name="ui.model.syncQueue.id">Sequence ID</string>
+  <string name="ui.model.syncQueue.correlationKey">Correlation Key</string>
+  <string name="ui.model.syncQueue.creationTime">Enqueue Time</string>
+  <string name="ui.model.syncQueue.dataFile">Data Stream ID</string>
+  <string name="ui.model.syncQueue.operation">Operation</string>
+  <string name="ui.model.syncQueue.operation.Sync">Synchronization (download from server)</string>
+  <string name="ui.model.syncQueue.operation.Insert">Create (upload to server)</string>
+  <string name="ui.model.syncQueue.operation.Update">Update (change on server)</string>
+  <string name="ui.model.syncQueue.operation.Patch">Patch (difference)</string>
+  <string name="ui.model.syncQueue.operation.Delete">Delete (remove from server)</string>
+  <string name="ui.model.syncQueue.originalQueue">Original Queue</string>
+  <string name="ui.model.syncQueue.queue">Current Queue</string>
+  <string name="ui.model.syncQueue.resourceType">Resource Type</string>
+  <string name="ui.model.syncQueue.retry">Retry Count</string>
+  <string name="ui.model.syncQueue.reason">Error/Issue</string>
+
+  <!-- Backups -->
+  <string name="ui.model.backup.label">Label/ID</string>
+  <string name="ui.model.backup.timestamp">Timestamp</string>
+  <string name="ui.model.backup.size">Size</string>
+  <string name="ui.model.backup.createdBy">Created By</string>
+  <string name="ui.model.backup.media">Location</string>
+  <string name="ui.model.backup.media.hint"><![CDATA[ 
+    <p>The backup location where this backup resides:</p>
+    <ul><li><c>Private</c> - Private storage (usually within the app's own data storage)</li>
+      <li><c>Public</c> - A public location on the primary disk of this device</li>
+      <li><c>External Public</c> - A public location on the first removable media device (usually the SD card slot)</li>
+    </ul>
+    ]]></string>
+  <string name="ui.model.backup.encrypted">Encrypted</string>
+  <string name="ui.model.backup.encrypt">Encrypt this backup</string>
+  <string name="ui.model.backup.encrypt.hint">Select this option if you would like to encrypt this backup file</string>
+  <string name="ui.model.backup.password">Passphrase</string>
+  <string name="ui.model.backup.password.hint">The passphrase for the backup. This passphrase will need to be entered to restore the backup</string>
+  <string name="ui.model.backup.asset.name">Name</string>
+  <string name="ui.model.backup.asset.classId">Classification/Owner</string>
+
+  <string name="ui.model.conceptRelationship.mnemonic">Related Concept</string>
+  <string name="ui.model.conceptRelationship.name">Name</string>
+  <string name="ui.model.conceptRelationship.relationshipType">Relationship</string>
+  <string name="ui.model.conceptRelationship.relationshipType.hint">Indicates the nature of the relationship between the two concepts</string>
+  <string name="ui.model.conceptRelationship.targetConcept">Target Concept</string>
+  <string name="ui.model.conceptRelationship.targetConcept.hint">The concept which is the target of this relationship</string>
+  
 </resources>

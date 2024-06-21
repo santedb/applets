@@ -1,3 +1,23 @@
+<!--
+ - Copyright 2021-2024 SanteSuite Contributors (See NOTICE.md for full copyright notices)
+ - Copyright (C) 2019 - 2021, Fyfe Software Inc. and the SanteSuite Contributors
+ - Portions Copyright (C) 2015-2018 Mohawk College of Applied Arts and Technology
+ - 
+ - Licensed under the Apache License, Version 2.0 (the "License"); you 
+ - may not use this file except in compliance with the License. You may 
+ - obtain a copy of the License at 
+ - 
+ - http://www.apache.org/licenses/LICENSE-2.0 
+ - 
+ - Unless required by applicable law or agreed to in writing, software
+ - distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+ - WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the 
+ - License for the specific language governing permissions and limitations under 
+ - the License.
+ - 
+ - User: fyfej
+ - Date: 2023-5-19
+ -->
 <div xmlns="http://www.w3.org/1999/xhtml" xmlns:sdb="http://santedb.org/applet" 
     oc-lazy-load="{ name: 'AuditEventController', files: ['/org.santedb.admin/controllers/audit/widgets/events.js'] }" >
     <sdb:widget order="15" name="org.santedb.widget.admin.panel.audit.eventInfo" headerClass="bl-light"
@@ -17,44 +37,44 @@
             <div class="row">
                 <label
                     class="control-label col-4">{{ 'ui.admin.audit.core.sid' | i18n }}</label>
-                <div class="col-8">{{scopedObject.audit.id}}
+                <div class="col-8 control-value">{{scopedObject.audit.id}}
                 </div>
             </div>
             <div class="row">
                 <label
                     class="control-label col-4">{{ 'ui.admin.audit.core.action' | i18n }}</label>
-                <div class="col-8" ng-bind-html="renderAction(scopedObject.audit)">
+                <div class="col-8 control-value" ng-bind-html="renderAction(scopedObject.audit)">
                 </div>
             </div>
             <div class="row">
                 <label
                     class="control-label col-4">{{ 'ui.admin.audit.core.event' | i18n }}</label>
-                <div class="col-8" ng-bind-html="renderEvent(scopedObject.audit)">
+                <div class="col-8 control-value" ng-bind-html="renderEvent(scopedObject.audit)">
                 </div>
             </div>
             <div class="row">
                 <label
                     class="control-label col-4">{{ 'ui.admin.audit.core.timestamp' | i18n }}</label>
-                <div class="col-8" ng-bind-html="scopedObject.audit.timestamp | extDate">
+                <div class="col-8 control-value" ng-bind-html="scopedObject.audit.timestamp | extDate">
                 </div>
             </div>
             <div class="row">
                 <label
                     class="control-label col-4">{{ 'ui.admin.audit.core.outcome' | i18n }}</label>
-                <div class="col-8" ng-bind-html="renderOutcome(scopedObject.audit)">
+                <div class="col-8 control-value" ng-bind-html="renderOutcome(scopedObject.audit)">
                 </div>
             </div>
             <div class="row">
                 <label
                     class="control-label col-4">{{ 'ui.admin.audit.core.process' | i18n }}</label>
-                <div class="col-8">{{scopedObject.audit.metaDisplay.ProcessName}} <small
+                <div class="col-8 control-value">{{scopedObject.audit.metaDisplay.ProcessName}} <small
                         class="badge badge-info">PID {{scopedObject.audit.metaDisplay.PID}}</small>
                 </div>
             </div>
             <div class="row">
                 <label
                     class="control-label col-4">{{ 'ui.admin.audit.core.source' | i18n }}</label>
-                <div class="col-8">
+                <div class="col-8 control-value">
                     <i class="fas"
                         ng-class="{ 'fa-laptop-medical' : scopedObject.audit.metaDisplay.AuditSourceType == 'EndUserInterface' , 'fa-server' :  scopedObject.audit.metaDisplay.AuditSourceType == 'ApplicationServerProcess'}"></i>
                     {{scopedObject.audit.metaDisplay.AuditSourceType}}

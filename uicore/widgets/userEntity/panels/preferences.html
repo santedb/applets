@@ -1,0 +1,53 @@
+<div xmlns="http://www.w3.org/1999/xhtml" xmlns:sdb="http://santedb.org/applet">
+    <sdb:script>~/controllers/widgets/userEntityWidget.js</sdb:script>
+    <sdb:widget order="20" name="org.santedb.widget.userEntity.preferences" size="Medium" type="Panel"
+        context="org.santedb.userEntity.profile">
+        <sdb:icon>fas fa-asterisk</sdb:icon>
+        <sdb:description lang="en">Preferences</sdb:description>
+        <sdb:guard>scopedObject</sdb:guard>
+    </sdb:widget>
+
+    <div ng-controller="UserEntityPreferencesController">
+        <div class="form-group row" ng-if="scopedObject._preferences.widgets">
+            <label class="col-md-3 col-sm-12 control-label">
+                <i class="fas fa-fw fa-window-restore"></i> {{ 'ui.userEntity.preferences.widgets' | i18n }}
+            </label>
+            <div class="col-md-9 col-sm-12">
+                <ul class="list-group">
+                    <li ng-repeat="(id, w) in scopedObject._preferences.widgets track by $index" class="list-group-item">
+                        {{ id | i18n }} <button type="button" ng-click="resetWidgetPreference(id)"
+                            class="btn btn-info mx-2">
+                            <i class="fas fa-fw fa-trash"></i> {{ 'ui.action.remove' | i18n }}
+                        </button>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label class="col-md-3 col-sm-12 control-label">
+                <i class="fas fa-fw fa-question-circle"></i> {{ 'ui.userEntity.preferences.help' | i18n }}
+            </label>
+            <div class="col-md-9 col-sm-12">
+                <select ng-change="updateHelpInlineHelpPreference()" ng-model="scopedObject._preferences.help"
+                    class="form-control">
+                    <option value="default">{{ 'ui.userEntity.preferences.help.popover' | i18n }}</option>
+                    <option value="show">{{ 'ui.userEntity.preferences.help.show' | i18n }}</option>
+                    <option value="hide">{{ 'ui.userEntity.preferences.help.hide' | i18n }}</option>
+                </select>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label class="col-md-3 col-sm-12 control-label">
+                <i class="far fa-fw fa-window-maximize"></i> {{ 'ui.userEntity.preferences.ui' | i18n }}
+            </label>
+            <div class="col-md-9 col-sm-12">
+               
+                <select ng-change="updateUserInterfacePreference()" ng-model="scopedObject._preferences.uimode"
+                    class="form-control">
+                    <option value="light">{{ 'ui.userEntity.preferences.ui.light' | i18n }}</option>
+                    <option value="dark">{{ 'ui.userEntity.preferences.ui.dark' | i18n }}</option>
+                </select>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,7 +1,27 @@
+<!--
+ - Copyright 2021-2024 SanteSuite Contributors (See NOTICE.md for full copyright notices)
+ - Copyright (C) 2019 - 2021, Fyfe Software Inc. and the SanteSuite Contributors
+ - Portions Copyright (C) 2015-2018 Mohawk College of Applied Arts and Technology
+ - 
+ - Licensed under the Apache License, Version 2.0 (the "License"); you 
+ - may not use this file except in compliance with the License. You may 
+ - obtain a copy of the License at 
+ - 
+ - http://www.apache.org/licenses/LICENSE-2.0 
+ - 
+ - Unless required by applicable law or agreed to in writing, software
+ - distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+ - WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the 
+ - License for the specific language governing permissions and limitations under 
+ - the License.
+ - 
+ - User: fyfej
+ - Date: 2023-5-19
+ -->
 <div xmlns="http://www.w3.org/1999/xhtml" xmlns:sdb="http://santedb.org/applet">
     <sdb:script static="false">~/controllers/server/jobs.js</sdb:script>
     <sdb:state name="santedb-admin.system.jobs">
-        <sdb:demand>1.3.6.1.4.1.33349.3.1.5.9.2.10</sdb:demand>
+        <sdb:demand>1.3.6.1.4.1.33349.3.1.5.9.2.0.22</sdb:demand>
         <sdb:url>/jobs</sdb:url>
         <sdb:view>
             <sdb:title lang="en">Jobs</sdb:title>
@@ -13,16 +33,18 @@
         properties="[ 'name', 'schedule', 'state', 'lastRun' ]"
         render="{ 'name': 'renderName', schedule: 'renderSchedule', state: 'renderState', lastRun: 'renderLastRun' }"
         actions="[
-            { name: 'add', action: 'registerJob', demand: '1.3.6.1.4.1.33349.3.1.5.9.2.0.15', className: 'btn-primary', icon: 'fa fa-plus' }
-        ]"
+            { name: 'add', action: 'registerJob', demand: '1.3.6.1.4.1.33349.3.1.5.9.2.0.22.3', className: 'btn-primary', icon: 'fa fa-plus' }
+        ]" no-deleted="true"
+        item-class="{ 'lastRun' : 'd-none d-xl-table-cell w-10', 'schedule' : 'd-none d-xl-table-cell w-10', 'lastRun' : 'w-10', 'state' : 'w-10' }"
         item-actions="[ 
-            { name: 'run', action: 'runJob', demand: '1.3.6.1.4.1.33349.3.1.5.9.2.10', className: 'btn-primary', icon: 'fa fa-play', when : 'r.state != \'Running\'' }, 
-            { name: 'cancel', action: 'cancelJob', demand: '1.3.6.1.4.1.33349.3.1.5.9.2.10', className: 'btn-danger', icon: 'fa fa-stop', when : 'r.canCancel &amp;&amp; r.state == \'Running\'' },
-            { name: 'schedule', action: 'scheduleJob', demand: '1.3.6.1.4.1.33349.3.1.5.9.2.10', className: 'btn-info', icon: 'fa fa-calendar' }
-        ]">
+            { name: 'run', action: 'runJob', demand: '1.3.6.1.4.1.33349.3.1.5.9.2.0.22.1', className: 'btn-primary', icon: 'fa fa-play', when : 'r.state != \'Running\'' }, 
+            { name: 'cancel', action: 'cancelJob', demand: '1.3.6.1.4.1.33349.3.1.5.9.2.0.22.1', className: 'btn-danger', icon: 'fa fa-stop', when : 'r.canCancel &amp;&amp; r.state == \'Running\'' },
+            { name: 'schedule', action: 'scheduleJob', demand: '1.3.6.1.4.1.33349.3.1.5.9.2.0.22.2', className: 'btn-info', icon: 'fa fa-calendar' }
+        ]" item-action-text-class="'d-none d-lg-inline'">
     </entity-table>
 
-    <div class="modal" id="addJobDialog" tabindex="-1" role="dialog" aria-labelledby="addJobDialogTitle" aria-hidden="true">
+    <div class="modal" id="addJobDialog" tabindex="-1" role="dialog" aria-labelledby="addJobDialogTitle"
+        aria-hidden="true">
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -38,19 +60,19 @@
                 <div class="modal-body">
                     <div class="container-fluid">
                         <div class="alert alert-success m-2">
-                    {{ 'ui.admin.job.register.help' | i18n }}
-                </div>
-                    <table class="table table-striped">
-                        <tr ng-repeat="job in unregisteredJobs">
-                            <td>{{ job.type }}</td>
-                            <td>
-                                <button type="button" class="btn btn-primary" ng-click="registerJob(job)">
-                                    <i class="fas fa-plus fa-fw"></i> {{ 'ui.action.register' | i18n }}
-                                </button>
-                            </td>
-                        </tr>
-                    </table>
-                </div>
+                            {{ 'ui.admin.job.register.help' | i18n }}
+                        </div>
+                        <table class="table table-striped">
+                            <tr ng-repeat="job in unregisteredJobs">
+                                <td>{{ job.type | dotNetType }}</td>
+                                <td>
+                                    <button type="button" class="btn btn-primary" ng-click="registerJob(job)">
+                                        <i class="fas fa-plus fa-fw"></i> {{ 'ui.action.register' | i18n }}
+                                    </button>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
                 </div>
                 <div class="modal-footer">
                     <button class="btn btn-secondary" type="button" data-dismiss="modal">
@@ -78,7 +100,8 @@
                         <tr ng-repeat="p in currentJob.parameters">
                             <th>{{ p.key }}</th>
                             <td ng-switch="p.type">
-                                <input ng-model="p.value" class="form-control" type="text" autocomplete="__away" ng-switch-when="String" />
+                                <input ng-model="p.value" class="form-control" type="text" autocomplete="__away"
+                                    ng-switch-when="String" />
                                 <input ng-model="p.value" type="checkbox" ng-switch-when="Boolean" />
                                 <input ng-model="p.value" class="form-control" type="number" ng-switch-when="Integer" />
                             </td>
@@ -110,7 +133,7 @@
                         </span>
                     </button>
                 </div>
-                <form novalidate="novalidate" ng-submit="saveJob(jobScheduleForm)" name="jobScheduleForm">
+                <form novalidate="novalidate" ng-submit="saveJob(jobScheduleForm)" name="jobScheduleForm" autocomplete="off">
                     <div class="modal-body">
                         <div class="container-fluid">
                             <div class="form-group row">
@@ -132,16 +155,19 @@
                             </div>
                             <div ng-switch="currentJob.schedule[0].type">
                                 <div ng-switch-when="Scheduled">
-                                    
+
                                     <div class="form-group row">
                                         <label class="control-label col-sm-12 col-md-3">
                                             {{ 'ui.model.job.schedule.start' | i18n }}
                                             <hint-popover hint-title="ui.model.job.schedule.start" />
                                         </label>
                                         <div class="col-md-9 col-sm-12">
-                                            <input name="startDate" type="date" ng-model="currentJob.schedule[0].start" class="form-control" required="required" />
-                                            <span class="text-danger" ng-show="jobScheduleForm.startDate.$error['required']">
-                                                <i class="fas fa-exclamation-triangle"></i> {{ 'ui.error.required' | i18n }}
+                                            <input name="startDate" type="date" ng-model="currentJob.schedule[0].start"
+                                                class="form-control" required="required" />
+                                            <span class="text-danger"
+                                                ng-show="jobScheduleForm.startDate.$error['required']">
+                                                <i class="fas fa-exclamation-triangle"></i> {{ 'ui.error.required' |
+                                                i18n }}
                                             </span>
                                         </div>
                                     </div>
@@ -152,9 +178,12 @@
 
                                         </label>
                                         <div class="col-md-9 col-sm-12">
-                                            <input  name="startTime" type="time" ng-model="currentJob.schedule[0].time" class="form-control" required="required" />
-                                            <span class="text-danger"  ng-show="jobScheduleForm.startTime.$error['required']">
-                                                <i class="fas fa-exclamation-triangle"></i> {{ 'ui.error.required' | i18n }}
+                                            <input name="startTime" type="time" ng-model="currentJob.schedule[0].time"
+                                                class="form-control" required="required" />
+                                            <span class="text-danger"
+                                                ng-show="jobScheduleForm.startTime.$error['required']">
+                                                <i class="fas fa-exclamation-triangle"></i> {{ 'ui.error.required' |
+                                                i18n }}
                                             </span>
                                         </div>
                                     </div>
@@ -165,7 +194,9 @@
 
                                         </label>
                                         <div class="col-md-9 col-sm-12">
-                                            <select size="7"  name="repeat" type="time" ng-model="currentJob.schedule[0].repeat" multiple="multiple" class="form-control" required="required">
+                                            <select size="7" name="repeat" type="time"
+                                                ng-model="currentJob.schedule[0].repeat" multiple="multiple"
+                                                class="form-control" required="required">
                                                 <option value="Sunday">{{ 'ui.date.day.sunday' | i18n }}</option>
                                                 <option value="Monday">{{ 'ui.date.day.monday' | i18n }}</option>
                                                 <option value="Tuesday">{{ 'ui.date.day.tuesday' | i18n }}</option>
@@ -174,44 +205,61 @@
                                                 <option value="Friday">{{ 'ui.date.day.friday' | i18n }}</option>
                                                 <option value="Saturday">{{ 'ui.date.day.saturday' | i18n }}</option>
                                             </select>
-                                            <span class="text-danger" ng-show="jobScheduleForm.repeat.$error['required']">
-                                                <i class="fas fa-exclamation-triangle"></i> {{ 'ui.error.required' | i18n }}
+                                            <span class="text-danger"
+                                                ng-show="jobScheduleForm.repeat.$error['required']">
+                                                <i class="fas fa-exclamation-triangle"></i> {{ 'ui.error.required' |
+                                                i18n }}
                                             </span>
                                         </div>
                                     </div>
 
                                 </div>
                                 <div ng-switch-when="Interval">
-                                   
+
                                     <div class="form-group row">
                                         <label class="control-label col-sm-12 col-md-3">
                                             {{ 'ui.model.job.schedule.interval' | i18n }}
                                             <hint-popover hint-title="ui.model.job.schedule.interval" />
                                         </label>
                                         <div class="col-md-9 col-sm-12">
-                                            <select name="interval" type="number" ng-model="currentJob.schedule[0].interval" class="form-control" required="required">
-                                                <option value="P30D">{{ 'ui.model.job.schedule.interval.mo' | i18n }}</option>
-                                                <option value="P7D">{{ 'ui.model.job.schedule.interval.wk' | i18n }}</option>
-                                                <option value="P2D">{{ 'ui.model.job.schedule.interval.48h' | i18n }}</option>
-                                                <option value="P1D">{{ 'ui.model.job.schedule.interval.24h' | i18n }}</option>
-                                                <option value="PT12H">{{ 'ui.model.job.schedule.interval.12h' | i18n }}</option>
-                                                <option value="PT6H">{{ 'ui.model.job.schedule.interval.6h' | i18n }}</option>
-                                                <option value="PT3H">{{ 'ui.model.job.schedule.interval.3h' | i18n }}</option>
-                                                <option value="PT2H">{{ 'ui.model.job.schedule.interval.2h' | i18n }}</option>
-                                                <option value="PT1H">{{ 'ui.model.job.schedule.interval.1h' | i18n }}</option>
-                                                <option value="PT30M">{{ 'ui.model.job.schedule.interval.30m' | i18n }}</option>
-                                                <option value="PT15M">{{ 'ui.model.job.schedule.interval.15m' | i18n }}</option>
-                                                <option value="PT5M">{{ 'ui.model.job.schedule.interval.05m' | i18n }}</option>
+                                            <select name="interval" type="number"
+                                                ng-model="currentJob.schedule[0].interval" class="form-control"
+                                                required="required">
+                                                <option value="P30D">{{ 'ui.model.job.schedule.interval.mo' | i18n }}
+                                                </option>
+                                                <option value="P7D">{{ 'ui.model.job.schedule.interval.wk' | i18n }}
+                                                </option>
+                                                <option value="P2D">{{ 'ui.model.job.schedule.interval.48h' | i18n }}
+                                                </option>
+                                                <option value="P1D">{{ 'ui.model.job.schedule.interval.24h' | i18n }}
+                                                </option>
+                                                <option value="PT12H">{{ 'ui.model.job.schedule.interval.12h' | i18n }}
+                                                </option>
+                                                <option value="PT6H">{{ 'ui.model.job.schedule.interval.6h' | i18n }}
+                                                </option>
+                                                <option value="PT3H">{{ 'ui.model.job.schedule.interval.3h' | i18n }}
+                                                </option>
+                                                <option value="PT2H">{{ 'ui.model.job.schedule.interval.2h' | i18n }}
+                                                </option>
+                                                <option value="PT1H">{{ 'ui.model.job.schedule.interval.1h' | i18n }}
+                                                </option>
+                                                <option value="PT30M">{{ 'ui.model.job.schedule.interval.30m' | i18n }}
+                                                </option>
+                                                <option value="PT15M">{{ 'ui.model.job.schedule.interval.15m' | i18n }}
+                                                </option>
                                             </select>
-                                            <span class="text-danger" ng-show="jobScheduleForm.interval.$error['required']">
-                                                <i class="fas fa-exclamation-triangle"></i> {{ 'ui.error.required' | i18n }}
+                                            <span class="text-danger"
+                                                ng-show="jobScheduleForm.interval.$error['required']">
+                                                <i class="fas fa-exclamation-triangle"></i> {{ 'ui.error.required' |
+                                                i18n }}
                                             </span>
                                         </div>
 
                                     </div>
                                 </div>
                                 <div ng-switch-default="" class="alert alert-info">
-                                    <i class="fas fa-info-circle"></i> {{ 'ui.model.job.schedule.type.never.help' | i18n }}
+                                    <i class="fas fa-info-circle"></i> {{ 'ui.model.job.schedule.type.never.help' | i18n
+                                    }}
                                 </div>
                             </div>
 

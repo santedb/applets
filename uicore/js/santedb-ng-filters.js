@@ -1,7 +1,7 @@
-/// <reference path="../../core/js/santedb.js"/>
 /*
- * Copyright 2015-2019 Mohawk College of Applied Arts and Technology
- * 
+ * Copyright (C) 2021 - 2024, SanteSuite Inc. and the SanteSuite Contributors (See NOTICE.md for full copyright notices)
+ * Copyright (C) 2019 - 2021, Fyfe Software Inc. and the SanteSuite Contributors
+ * Portions Copyright (C) 2015-2018 Mohawk College of Applied Arts and Technology
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you 
  * may not use this file except in compliance with the License. You may 
@@ -15,10 +15,11 @@
  * License for the specific language governing permissions and limitations under 
  * the License.
  * 
- * User: Justin Fyfe
- * Date: 2019-8-8
+ * User: fyfej
+ * Date: 2023-5-19
  */
 
+/// <reference path="../../core/js/santedb.js"/>
 /// <reference path="./santedb-ui.js"/>
 
 angular.module('santedb-lib')
@@ -79,7 +80,7 @@ angular.module('santedb-lib')
      */
     .filter('identifier', function () {
         return function (modelValue, domain) {
-            return SanteDB.display.renderIdentifier(modelValue, domain);
+            return SanteDB.display.renderIdentifier(modelValue, domain, false);
         };
     })
     /**
@@ -198,11 +199,11 @@ angular.module('santedb-lib')
             var source = other ? moment(other) : moment();
             var diff = source.diff(date, 'days');
             if(display == 'D' || diff < 45)
-                return diff + ' d/o';
+                return diff + ' ' + SanteDB.locale.getString('ui.model.patient.age.suffix.daysOld');
             diff = source.diff(date, 'months');
             if(display == 'M' || diff < 18)
-                return diff + ' m/o';
-            return source.diff(date, 'years') + ' y/o';
+                return diff + ' ' + SanteDB.locale.getString('ui.model.patient.age.suffix.monthsOld');
+            return source.diff(date, 'years') + ' ' + SanteDB.locale.getString('ui.model.patient.age.suffix.yearsOld');
         }
     })
     /**
@@ -216,7 +217,7 @@ angular.module('santedb-lib')
                 return '';
             else 
             {
-                var aqmPattern = /^([A-Za-z0-9\.]*?),\s?([A-Za-z0-9\.]*?),\s?.*$/i;
+                var aqmPattern = /^([A-Za-z0-9\.]*?),\s?([A-Za-z0-9\.]*?),?\s?.*$/i;
                 var aqmMatch = aqmPattern.exec(aqm);
                 if(aqmMatch !== null)
                     aqm = aqmMatch[1]; // Get full name
@@ -251,9 +252,8 @@ angular.module('santedb-lib')
     .filter('exceptionType', function () {
         return function (v) {
             
-            var rawValue = atob(v);
             // Is there a server exception?
-            var parseResult = SanteDB.application.parseException(rawValue);
+            var parseResult = SanteDB.application.parseException(v);
 
             if(parseResult.rules && parseResult.rules.length > 0)
                 return parseResult.rules[0].text;

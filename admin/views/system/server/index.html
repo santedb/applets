@@ -1,3 +1,23 @@
+<!--
+ - Copyright 2021-2024 SanteSuite Contributors (See NOTICE.md for full copyright notices)
+ - Copyright (C) 2019 - 2021, Fyfe Software Inc. and the SanteSuite Contributors
+ - Portions Copyright (C) 2015-2018 Mohawk College of Applied Arts and Technology
+ - 
+ - Licensed under the Apache License, Version 2.0 (the "License"); you 
+ - may not use this file except in compliance with the License. You may 
+ - obtain a copy of the License at 
+ - 
+ - http://www.apache.org/licenses/LICENSE-2.0 
+ - 
+ - Unless required by applicable law or agreed to in writing, software
+ - distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+ - WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the 
+ - License for the specific language governing permissions and limitations under 
+ - the License.
+ - 
+ - User: fyfej
+ - Date: 2023-5-19
+ -->
 <div xmlns="http://www.w3.org/1999/xhtml" xmlns:sdb="http://santedb.org/applet">
     <sdb:script static="false">~/controllers/server/index.js</sdb:script>
     <sdb:state name="santedb-admin.system.info" abstract="false">
@@ -9,7 +29,7 @@
         </sdb:view>
     </sdb:state>
 
-        <ul class="nav nav-tabs" role="tablist">
+        <ul class="nav nav-tabs border-bottom-0" role="tablist">
             <li class="nav-item"><a class="nav-link active" data-toggle="tab" role="tab" data-target="#localServerInfo"
                     aria-selected="true"><i class="fas fa" ng-class="{ 'fa-circle-notch fa-spin' : isLocalLoading , 'fa-laptop-medical' : !isLocalLoading }"></i>
                     {{ 'ui.admin.system.info.local.title' | i18n }}
@@ -21,277 +41,283 @@
         </ul>
         <div class="tab-content">
             <div class="tab-pane show active" id="localServerInfo" role="tabpanel">
-                <div class="card">
-                    <div class="card-header">
-                        <h2 class="mb-0">
-                            <button class="btn btn-link p-0" type="button" data-toggle="collapse"
-                                data-target="#localCoreProps" aria-expanded="true">
-                                <i class="fas fa-info-circle"></i>
-                                {{ 'ui.admin.system.info.coreInfo' | i18n }}
-                                <i class="fa fa-chevron-down"></i>
-                            </button></h2>
+                <div class="accordion">
+                    <div class="card d-none"></div>
+                    <div class="card">
+                        <div class="card-header">
+                            <h2 class="mb-0">
+                                <button class="btn btn-link p-0" type="button" data-toggle="collapse"
+                                    data-target="#localCoreProps" aria-expanded="true">
+                                    <i class="fas fa-info-circle"></i>
+                                    {{ 'ui.admin.system.info.coreInfo' | i18n }}
+                                    <i class="fa fa-chevron-down"></i>
+                                </button></h2>
 
-                    </div>
-                    <div class="collapse show" id="localCoreProps">
-                        <div class="card-body">
-                            <div class="container-fluid">
-                                <div class="row">
-                                    <div class="col-6">
-                                        <table class="table">
-                                            <tr>
-                                                <th colspan="2">{{ info.appInfo.santedb.info }} <small
-                                                        class="text-secondary">{{ info.appInfo.santedb.copyright }}</small>
-                                                </th>
-                                            </tr>
-                                            <tr>
-                                                <th>{{ 'ui.admin.system.info.version' | i18n }}</th>
-                                                <td>{{ info.appInfo.santedb.version }} </td>
-                                            </tr>
-                                            <tr>
-                                                <th>{{ 'ui.admin.system.info.product' | i18n }}</th>
-                                                <td>{{ info.appInfo.product }} </td>
-                                            </tr>
-                                            <tr>
-                                                <th>{{ 'ui.admin.system.info.environment' | i18n }}</th>
-                                                <td>{{ info.appInfo.environment.osVersion }} <span
-                                                        class="badge badge-pill badge-info"
-                                                        ng-if="info.appInfo.environment.is64bit">64-bit</span> </td>
-                                            </tr>
-                                            <tr>
-                                                <th>{{ 'ui.admin.system.info.cpuInfo' | i18n }}</th>
-                                                <td>{{ info.appInfo.environment.processorCount }} <span
-                                                        ng-if="health">({{health.active}} / {{health.concurrency}}
-                                                        {{ 'ui.admin.system.info.workers' | i18n}})</span></td>
-                                            </tr>
-                                            <tr>
-                                                <th>{{ 'ui.admin.system.info.memory' | i18n }}</th>
-                                                <td>{{ info.appInfo.environment.usedMem }} </td>
-                                            </tr>
-                                            <tr>
-                                                <th>{{ 'ui.admin.system.info.uptime' | i18n }}</th>
-                                                <td>{{ info.appInfo.uptime }} </td>
-                                            </tr>
-                                        </table>
-                                    </div>
-                                    <div class="col-6">
-                                        <h2><img src="/org.santedb.core/img/icon.png" />
-                                            {{ info.appInfo.santedb.product }}
-                                            <small>({{ info.appInfo.santedb.infoVersion }})</small></h2>
+                        </div>
+                        <div class="collapse show" id="localCoreProps">
+                            <div class="card-body">
+                                <div class="container-fluid">
+                                    <div class="row">
+                                        <div class="col-6">
+                                            <table class="table">
+                                                <tr>
+                                                    <th colspan="2">{{ info.appInfo.santedb.info }} <small
+                                                            class="text-secondary">{{ info.appInfo.santedb.copyright }}</small>
+                                                    </th>
+                                                </tr>
+                                                <tr>
+                                                    <th>{{ 'ui.admin.system.info.version' | i18n }}</th>
+                                                    <td>{{ info.appInfo.santedb.version }} </td>
+                                                </tr>
+                                                <tr>
+                                                    <th>{{ 'ui.admin.system.info.product' | i18n }}</th>
+                                                    <td>{{ info.appInfo.product }} </td>
+                                                </tr>
+                                                <tr>
+                                                    <th>{{ 'ui.admin.system.info.environment' | i18n }}</th>
+                                                    <td>{{ info.appInfo.environment.osVersion }} <span
+                                                            class="badge badge-pill badge-info"
+                                                            ng-if="info.appInfo.environment.is64bit">64-bit</span> </td>
+                                                </tr>
+                                                <tr>
+                                                    <th>{{ 'ui.admin.system.info.cpuInfo' | i18n }}</th>
+                                                    <td>{{ info.appInfo.environment.processorCount }} <span
+                                                            ng-if="health">({{health.active}} / {{health.concurrency}}
+                                                            {{ 'ui.admin.system.info.workers' | i18n}})</span></td>
+                                                </tr>
+                                                <tr>
+                                                    <th>{{ 'ui.admin.system.info.memory' | i18n }}</th>
+                                                    <td>{{ info.appInfo.environment.usedMem }} </td>
+                                                </tr>
+                                                <tr>
+                                                    <th>{{ 'ui.admin.system.info.uptime' | i18n }}</th>
+                                                    <td>{{ info.appInfo.uptime }} </td>
+                                                </tr>
+                                            </table>
+                                        </div>
+                                        <div class="col-6">
+                                            <h2><img src="/org.santedb.core/img/icon.png" />
+                                                {{ info.appInfo.santedb.product }}
+                                                <small>({{ info.appInfo.santedb.infoVersion }})</small></h2>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="card">
-                    <div class="card-header">
-                        <h2 class="mb-0">
-                            <button type="button" class="collapse-indicator btn btn-link p-0" data-toggle="collapse"
-                                aria-expanded="true" data-target="#localAppletProps">
-                                <i class="fa fa-window-maximize"></i> {{ 'ui.admin.system.applets.title' | i18n }}
-                                ({{info.appInfo.applet.length}})
-                                <i class="fa fa-chevron-right"></i>
-                            </button>
-                        </h2>
+                    <div class="card">
+                        <div class="card-header">
+                            <h2 class="mb-0">
+                                <button type="button" class="collapse-indicator btn btn-link p-0" data-toggle="collapse"
+                                    aria-expanded="true" data-target="#localAppletProps">
+                                    <i class="fa fa-window-maximize"></i> {{ 'ui.admin.system.applets.title' | i18n }}
+                                    ({{info.appInfo.applet.length}})
+                                    <i class="fa fa-chevron-right"></i>
+                                </button>
+                            </h2>
+                        </div>
+                        <div class="collapse show" id="localAppletProps">
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>{{ 'ui.admin.system.applets.name' | i18n }}</th>
+                                        <th>{{ 'ui.admin.system.applets.version' | i18n }}</th>
+                                        <th>{{ 'ui.admin.system.applets.id' | i18n }}</th>
+                                        <th>{{ 'ui.admin.system.applets.author' | i18n }}</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="app in info.appInfo.applet">
+                                        <td>{{ app.name[0].value }} <span ng-if="app.publicKeyToken" class="badge badge-success"><i class="fas fa-file-signature"></i> {{ 'ui.admin.system.applets.signed' | i18n }}</span></td>
+                                        <td>{{ app.version }}</td>
+                                        <td>{{ app.id }}</td>
+                                        <td>{{ app.author }}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
-                    <div class="collapse show" id="localAppletProps">
-                        <table class="table table-striped">
-                            <thead>
-                                <tr>
-                                    <th>{{ 'ui.admin.system.applets.name' | i18n }}</th>
-                                    <th>{{ 'ui.admin.system.applets.version' | i18n }}</th>
-                                    <th>{{ 'ui.admin.system.applets.id' | i18n }}</th>
-                                    <th>{{ 'ui.admin.system.applets.author' | i18n }}</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr ng-repeat="app in info.appInfo.applet">
-                                    <td>{{ app.name[0].value }} <span ng-if="app.publicKeyToken" class="badge badge-success"><i class="fas fa-file-signature"></i> {{ 'ui.admin.system.applets.signed' | i18n }}</span></td>
-                                    <td>{{ app.version }}</td>
-                                    <td>{{ app.id }}</td>
-                                    <td>{{ app.author }}</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-                <div class="card">
-                    <div class="card-header">
-                        <h2 class="mb-0">
-                            <button type="button" class="collapse-indicator btn btn-link p-0" data-toggle="collapse"
-                                aria-expanded="false" data-target="#localServices">
-                                <i class="fa fa-cog"></i> {{ 'ui.admin.system.services.title' | i18n }}
-                                ({{info.appInfo.service.length}})
-                                <i class="fa fa-chevron-right"></i>
-                            </button>
-                        </h2>
-                    </div>
-                    <div class="collapse" id="localServices">
-                        <table class="table table-striped">
-                            <thead>
-                                <tr>
-                                    <th>{{ 'ui.admin.system.services.name' | i18n }}</th>
-                                    <th>{{ 'ui.admin.system.services.state' | i18n }}</th>
-                                    <th>{{ 'ui.action' | i18n }}</th>
+                    <div class="card">
+                        <div class="card-header">
+                            <h2 class="mb-0">
+                                <button type="button" class="collapse-indicator btn btn-link p-0" data-toggle="collapse"
+                                    aria-expanded="false" data-target="#localServices">
+                                    <i class="fa fa-cog"></i> {{ 'ui.admin.system.services.title' | i18n }}
+                                    ({{info.appInfo.service.length}})
+                                    <i class="fa fa-chevron-right"></i>
+                                </button>
+                            </h2>
+                        </div>
+                        <div class="collapse" id="localServices">
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>{{ 'ui.admin.system.services.name' | i18n }}</th>
+                                        <th>{{ 'ui.admin.system.services.state' | i18n }}</th>
+                                        <th>{{ 'ui.action' | i18n }}</th>
 
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr ng-repeat="svc in info.appInfo.service"
-                                    ng-class="{ 'bg-success' : app.publicKeyToken }">
-                                    <td>{{ svc.description }} <small class="text-secondary">(<i class="fas"
-                                                ng-class="{ 'fa-database' : svc.class == 'Data', 'fa-cog' : svc.class == 'Passive', 'fa-cogs' : svc.class == 'Daemon', 'fa-random' : svc.class == 'Repository' }"></i>
-                                            {{ svc.class }})</small> </td>
-                                    <td ng-if="svc.active &amp;&amp; !svc.running"><span
-                                            class="badge badge-pill badge-success"><i class="fas fa-check"></i>
-                                            {{ 'ui.state.active' | i18n }} </span></td>
-                                    <td ng-if="svc.running"><span class="badge badge-pill badge-primary"><i
-                                                class="fas fa-play"></i> {{ 'ui.state.running' | i18n }} </span></td>
-                                    <td ng-if="!svc.active"><span class="badge badge-pill badge-danger"><i
-                                                class="fas fa-stop"></i> {{ 'ui.state.inactive' | i18n }} </span></td>
-                                    <td>
-                                        <div class="btn-group">
-                                            <button class="btn btn-primary" ng-disabled="svc.active" type="button" ng-click="enableService(svc.type)"><i class="fas fa-check"></i> {{ 'ui.action.enable' | i18n }}</button>
-                                            <button class="btn btn-danger" ng-disabled="!svc.active" type="button" ng-click="disableService(svc.type)"><i class="fas fa-times"></i> {{ 'ui.action.disable' | i18n }}</button>
-                                        </div>
-                                    </td>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="svc in info.appInfo.service"
+                                        ng-class="{ 'bg-success' : app.publicKeyToken }">
+                                        <td>{{ svc.description }} <small class="text-secondary">(<i class="fas"
+                                                    ng-class="{ 'fa-database' : svc.class == 'Data', 'fa-cog' : svc.class == 'Passive', 'fa-cogs' : svc.class == 'Daemon', 'fa-random' : svc.class == 'Repository' }"></i>
+                                                {{ svc.class }})</small> </td>
+                                        <td ng-if="svc.active &amp;&amp; !svc.running"><span
+                                                class="badge badge-pill badge-success"><i class="fas fa-check"></i>
+                                                {{ 'ui.state.active' | i18n }} </span></td>
+                                        <td ng-if="svc.running"><span class="badge badge-pill badge-primary"><i
+                                                    class="fas fa-play"></i> {{ 'ui.state.running' | i18n }} </span></td>
+                                        <td ng-if="!svc.active"><span class="badge badge-pill badge-danger"><i
+                                                    class="fas fa-stop"></i> {{ 'ui.state.inactive' | i18n }} </span></td>
+                                        <td>
+                                            <div class="btn-group">
+                                                <button class="btn btn-primary" ng-disabled="svc.active" type="button" ng-click="enableService(svc.type)"><i class="fas fa-check"></i> {{ 'ui.action.enable' | i18n }}</button>
+                                                <button class="btn btn-danger" ng-disabled="!svc.active" type="button" ng-click="disableService(svc.type)"><i class="fas fa-times"></i> {{ 'ui.action.disable' | i18n }}</button>
+                                            </div>
+                                        </td>
 
-                                </tr>
-                            </tbody>
-                        </table>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
             </div>
             <div class="tab-pane" id="remoteServerInfo" role="tabpanel">
-                <div class="card">
-                    <div class="card-header">
-                        <h2 class="mb-0">
-                            <button class="btn btn-link" type="button" data-toggle="collapse"
-                                data-target="#remoteCoreProps" aria-expanded="true">
-                                <i class="fas fa-info-circle"></i>
-                                {{ 'ui.admin.system.info.coreInfo' | i18n }}
-                                <i class="fa fa-chevron-down"></i>
-                            </button></h2>
+                <div class="accordion">
+                    <div class="card d-none"></div>
+                    <div class="card">
+                        <div class="card-header">
+                            <h2 class="mb-0">
+                                <button class="btn btn-link p-0" type="button" data-toggle="collapse"
+                                    data-target="#remoteCoreProps" aria-expanded="true">
+                                    <i class="fas fa-info-circle"></i>
+                                    {{ 'ui.admin.system.info.coreInfo' | i18n }}
+                                    <i class="fa fa-chevron-down"></i>
+                                </button></h2>
 
-                    </div>
-                    <div class="collapse show" id="remoteCoreProps">
-                        <div class="card-body">
-                            <div class="container-fluid">
-                                <div class="row">
-                                    <div class="col-6">
-                                        <table class="table">
-                                            <tr>
-                                                <th colspan="2">{{ server.appInfo.santedb.info }} <small
-                                                        class="text-secondary">{{ server.appInfo.santedb.copyright }}</small>
-                                                </th>
-                                            </tr>
-                                            <tr>
-                                                <th>{{ 'ui.admin.system.info.version' | i18n }}</th>
-                                                <td>{{ server.appInfo.santedb.version }} </td>
-                                            </tr>
-                                            <tr>
-                                                <th>{{ 'ui.admin.system.info.product' | i18n }}</th>
-                                                <td>{{ server.appInfo.product }} </td>
-                                            </tr>
-                                            <tr>
-                                                <th>{{ 'ui.admin.system.info.environment' | i18n }}</th>
-                                                <td>{{ server.appInfo.environment.osVersion }} <span
-                                                        class="badge badge-pill badge-info"
-                                                        ng-if="server.appInfo.environment.is64bit">64-bit</span> </td>
-                                            </tr>
-                                            <tr>
-                                                <th>{{ 'ui.admin.system.info.cpuInfo' | i18n }}</th>
-                                                <td>{{ server.appInfo.environment.processorCount }}</td>
-                                            </tr>
-                                            <tr>
-                                                <th>{{ 'ui.admin.system.info.memory' | i18n }}</th>
-                                                <td>{{ server.appInfo.environment.usedMem }} </td>
-                                            </tr>
-                                            <tr>
-                                                <th>{{ 'ui.admin.system.info.uptime' | i18n }}</th>
-                                                <td>{{ server.appInfo.uptime }} </td>
-                                            </tr>
-                                        </table>
-                                    </div>
-                                    <div class="col-6">
-                                        <h2><img src="/org.santedb.core/img/icon.png" />
-                                            {{ server.appInfo.santedb.product }}
-                                            <small>({{ server.appInfo.santedb.infoVersion }})</small></h2>
+                        </div>
+                        <div class="collapse show" id="remoteCoreProps">
+                            <div class="card-body">
+                                <div class="container-fluid">
+                                    <div class="row">
+                                        <div class="col-6">
+                                            <table class="table">
+                                                <tr>
+                                                    <th colspan="2">{{ server.appInfo.santedb.info }} <small
+                                                            class="text-secondary">{{ server.appInfo.santedb.copyright }}</small>
+                                                    </th>
+                                                </tr>
+                                                <tr>
+                                                    <th>{{ 'ui.admin.system.info.version' | i18n }}</th>
+                                                    <td>{{ server.appInfo.santedb.version }} </td>
+                                                </tr>
+                                                <tr>
+                                                    <th>{{ 'ui.admin.system.info.product' | i18n }}</th>
+                                                    <td>{{ server.appInfo.product }} </td>
+                                                </tr>
+                                                <tr>
+                                                    <th>{{ 'ui.admin.system.info.environment' | i18n }}</th>
+                                                    <td>{{ server.appInfo.environment.osVersion }} <span
+                                                            class="badge badge-pill badge-info"
+                                                            ng-if="server.appInfo.environment.is64bit">64-bit</span> </td>
+                                                </tr>
+                                                <tr>
+                                                    <th>{{ 'ui.admin.system.info.cpuInfo' | i18n }}</th>
+                                                    <td>{{ server.appInfo.environment.processorCount }}</td>
+                                                </tr>
+                                                <tr>
+                                                    <th>{{ 'ui.admin.system.info.memory' | i18n }}</th>
+                                                    <td>{{ server.appInfo.environment.usedMem }} </td>
+                                                </tr>
+                                                <tr>
+                                                    <th>{{ 'ui.admin.system.info.uptime' | i18n }}</th>
+                                                    <td>{{ server.appInfo.uptime }} </td>
+                                                </tr>
+                                            </table>
+                                        </div>
+                                        <div class="col-6">
+                                            <h2><img src="/org.santedb.core/img/icon.png" />
+                                                {{ server.appInfo.santedb.product }}
+                                                <small>({{ server.appInfo.santedb.infoVersion }})</small></h2>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="card">
-                    <div class="card-header">
-                        <h2 class="mb-0">
-                            <button type="button" class="collapse-indicator btn btn-link p-0" data-toggle="collapse"
-                                aria-expanded="true" data-target="#remoteAppletProps">
-                                <i class="fa fa-window-maximize"></i> {{ 'ui.admin.system.applets.title' | i18n }}
-                                ({{server.appInfo.applet.length}})
-                                <i class="fa fa-chevron-right"></i>
-                            </button>
-                        </h2>
+                    <div class="card">
+                        <div class="card-header">
+                            <h2 class="mb-0">
+                                <button type="button" class="collapse-indicator btn btn-link p-0" data-toggle="collapse"
+                                    aria-expanded="true" data-target="#remoteAppletProps">
+                                    <i class="fa fa-window-maximize"></i> {{ 'ui.admin.system.applets.title' | i18n }}
+                                    ({{server.appInfo.applet.length}})
+                                    <i class="fa fa-chevron-right"></i>
+                                </button>
+                            </h2>
+                        </div>
+                        <div class="collapse show" id="remoteAppletProps">
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>{{ 'ui.admin.system.applets.name' | i18n }}</th>
+                                        <th>{{ 'ui.admin.system.applets.version' | i18n }}</th>
+                                        <th>{{ 'ui.admin.system.applets.id' | i18n }}</th>
+                                        <th>{{ 'ui.admin.system.applets.author' | i18n }}</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="app in server.appInfo.applet">
+                                            <td>{{ app.name[0].value }} <span ng-if="app.publicKeyToken" class="badge badge-success"><i class="fas fa-file-signature"></i> {{ 'ui.admin.system.applets.signed' | i18n }}</span></td>
+                                            <td>{{ app.version }}</td>
+                                        <td>{{ app.id }}</td>
+                                        <td>{{ app.author }}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
-                    <div class="collapse show" id="remoteAppletProps">
-                        <table class="table table-striped">
-                            <thead>
-                                <tr>
-                                    <th>{{ 'ui.admin.system.applets.name' | i18n }}</th>
-                                    <th>{{ 'ui.admin.system.applets.version' | i18n }}</th>
-                                    <th>{{ 'ui.admin.system.applets.id' | i18n }}</th>
-                                    <th>{{ 'ui.admin.system.applets.author' | i18n }}</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr ng-repeat="app in server.appInfo.applet">
-                                        <td>{{ app.name[0].value }} <span ng-if="app.publicKeyToken" class="badge badge-success"><i class="fas fa-file-signature"></i> {{ 'ui.admin.system.applets.signed' | i18n }}</span></td>
-                                        <td>{{ app.version }}</td>
-                                    <td>{{ app.id }}</td>
-                                    <td>{{ app.author }}</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-                <div class="card">
-                    <div class="card-header">
-                        <h2 class="mb-0">
-                            <button type="button" class="collapse-indicator btn btn-link p-0" data-toggle="collapse"
-                                aria-expanded="false" data-target="#remoteServices">
-                                <i class="fa fa-cog"></i> {{ 'ui.admin.system.services.title' | i18n }}
-                                ({{server.appInfo.service.length}})
-                                <i class="fa fa-chevron-right"></i>
-                            </button>
-                        </h2>
-                    </div>
-                    <div class="collapse" id="remoteServices">
-                        <table class="table table-striped">
-                            <thead>
-                                <tr>
-                                    <th>{{ 'ui.admin.system.services.name' | i18n }}</th>
-                                    <th>{{ 'ui.admin.system.services.state' | i18n }}</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr ng-repeat="svc in server.appInfo.service"
-                                    ng-class="{ 'bg-success' : app.publicKeyToken }">
-                                    <td>{{ svc.description }} <small class="text-secondary">(<i class="fas"
-                                                ng-class="{ 'fa-database' : svc.class == 'Data', 'fa-cog' : svc.class == 'Passive', 'fa-cogs' : svc.class == 'Daemon', 'fa-random' : svc.class == 'Repository' }"></i>
-                                            {{ svc.class }})</small> </td>
-                                    <td ng-if="svc.active &amp;&amp; !svc.running"><span
-                                            class="badge badge-pill badge-success"><i class="fas fa-check"></i>
-                                            {{ 'ui.state.active' | i18n }} </span></td>
-                                    <td ng-if="svc.running"><span class="badge badge-pill badge-primary"><i
-                                                class="fas fa-play"></i> {{ 'ui.state.running' | i18n }} </span></td>
-                                    <td ng-if="!svc.active"><span class="badge badge-pill badge-danger"><i
-                                                class="fas fa-stop"></i> {{ 'ui.state.inactive' | i18n }} </span></td>
-                                   
+                    <div class="card">
+                        <div class="card-header">
+                            <h2 class="mb-0">
+                                <button type="button" class="collapse-indicator btn btn-link p-0" data-toggle="collapse"
+                                    aria-expanded="false" data-target="#remoteServices">
+                                    <i class="fa fa-cog"></i> {{ 'ui.admin.system.services.title' | i18n }}
+                                    ({{server.appInfo.service.length}})
+                                    <i class="fa fa-chevron-right"></i>
+                                </button>
+                            </h2>
+                        </div>
+                        <div class="collapse" id="remoteServices">
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>{{ 'ui.admin.system.services.name' | i18n }}</th>
+                                        <th>{{ 'ui.admin.system.services.state' | i18n }}</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="svc in server.appInfo.service"
+                                        ng-class="{ 'bg-success' : app.publicKeyToken }">
+                                        <td>{{ svc.description }} <small class="text-secondary">(<i class="fas"
+                                                    ng-class="{ 'fa-database' : svc.class == 'Data', 'fa-cog' : svc.class == 'Passive', 'fa-cogs' : svc.class == 'Daemon', 'fa-random' : svc.class == 'Repository' }"></i>
+                                                {{ svc.class }})</small> </td>
+                                        <td ng-if="svc.active &amp;&amp; !svc.running"><span
+                                                class="badge badge-pill badge-success"><i class="fas fa-check"></i>
+                                                {{ 'ui.state.active' | i18n }} </span></td>
+                                        <td ng-if="svc.running"><span class="badge badge-pill badge-primary"><i
+                                                    class="fas fa-play"></i> {{ 'ui.state.running' | i18n }} </span></td>
+                                        <td ng-if="!svc.active"><span class="badge badge-pill badge-danger"><i
+                                                    class="fas fa-stop"></i> {{ 'ui.state.inactive' | i18n }} </span></td>
+                                    
 
-                                </tr>
-                            </tbody>
-                        </table>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
             </div>

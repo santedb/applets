@@ -1,5 +1,24 @@
 /// <reference path="../../core/js/santedb.js" />
-
+/*
+ * Copyright (C) 2021 - 2024, SanteSuite Inc. and the SanteSuite Contributors (See NOTICE.md for full copyright notices)
+ * Copyright (C) 2019 - 2021, Fyfe Software Inc. and the SanteSuite Contributors
+ * Portions Copyright (C) 2015-2018 Mohawk College of Applied Arts and Technology
+ * 
+ * Licensed under the Apache License, Version 2.0 (the "License"); you 
+ * may not use this file except in compliance with the License. You may 
+ * obtain a copy of the License at 
+ * 
+ * http://www.apache.org/licenses/LICENSE-2.0 
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+ * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the 
+ * License for the specific language governing permissions and limitations under 
+ * the License.
+ * 
+ * User: fyfej
+ * Date: 2023-5-19
+ */
 angular.module('santedb-lib')
     /**
      * @method widgetTabs
@@ -10,11 +29,10 @@ angular.module('santedb-lib')
      * @example
      * <widget-tabs context-name="'org.santedb.patient'"/>
     */
-    .directive('widgetTabs', function () {
+    .directive('widgetTabs', ["$timeout", function ($timeout) {
+        var _contextName = undefined;
         return {
             scope: {
-                contextName: '<',
-                currentTab: '=',
                 scopedObject: '=',
                 view: '<'
             },
@@ -24,28 +42,23 @@ angular.module('santedb-lib')
             templateUrl: './org.santedb.uicore/directives/widgetTab.html',
             controller: ['$scope', '$timeout',
                 function ($scope, $timeout) {
-
-                    // Fetch the widgets which are valid in this context
-                    async function getWidgets(context) {
-                        try {
-                            var widgets = await SanteDB.application.getWidgetsAsync(context, "Tab");
-                            $timeout(() => $scope.widgets = widgets);
-                        }
-                        catch (e) {
-                            $scope.error = e.message;
-                            console.error(e);
-                        }
-                    }
-
-                    if ($scope.contextName) {
-                        getWidgets($scope.contextName);
-                    }
                 }
             ],
             link: function (scope, element, attrs) {
+
+                if(attrs.scopedObjectName) {
+                    scope[attrs.scopedObjectName] = scope.scopedObject;
+                }
+                _contextName = attrs.contextName;
+                if (_contextName) {
+                    _contextName = _contextName.replaceAll("'", "");
+                    SanteDB.application.getWidgetsAsync(_contextName, "Tab")
+                        .then((widgets) => $timeout(() => scope.widgets = widgets))
+                        .catch((e) => console.error(e))
+                }
             }
         };
-    })
+    }])
     /**
      * @method widgetTabs
      * @memberof Angular
@@ -55,36 +68,98 @@ angular.module('santedb-lib')
      * @example
      * <widget-panel context-name="'org.santedb.patient'"/>
     */
-    .directive('widgetPanels', function () {
+    .directive('widgetPanels', ["$timeout", function ($timeout) {
+        var _view = undefined,
+            _canCustomize = undefined,
+            _contextName = undefined,
+            _userPreferences = undefined;
+
+
+        // Fetch the widgets which are valid in this context
+        async function getWidgets(scope, context) {
+            try {
+                var widgets = await SanteDB.application.getWidgetsAsync(context, "Panel");
+                var userSettings  = (_canCustomize ?
+                    (scope.$root.session ? scope.$root.session.userSettings : await SanteDB.configuration.getUserSettingsAsync()) : []) 
+                    || [];
+                var widgetPreferences = userSettings.find(o=>o.key == "widgets") || { value:"{}" };
+                _userPreferences = JSON.parse(widgetPreferences.value);
+                var thisWidgetConfig = _userPreferences[_contextName];
+
+                var renderWidgets = [];
+                if(thisWidgetConfig) {
+                    var tempWidgets = widgets
+                        .map(w => { 
+                            return { widget: w, config: thisWidgetConfig.find(c=>c.name == w.name) };
+                        })
+                        .filter(w=>w.config)
+                        .sort((a, b) => a.config.order <= b.config.order ? -1 : 1);
+                    renderWidgets = tempWidgets.map(tw => { 
+                        tw.widget.size = tw.config.size || tw.widget.size;
+                        tw.widget.order = tw.config.order || tw.widget.order;
+                        return tw.widget;
+                    });
+                }
+                else {
+                    renderWidgets = widgets;
+                }
+
+                // Small are combined 2 per group
+                var widgetGroups = [];
+                renderWidgets.forEach(function (w) {
+                    w.id = w.name.replaceAll(".", "_");
+                    w.view = _view;
+                    w.isVisible = true;
+                    widgetGroups.push({ size: w.size, widgets: [w] });
+
+                    if (scope.editForm && !w.editForm) {
+                        w.editForm = scope.editForm;
+                    }
+
+                });
+
+                $timeout(() => {
+                    scope.widgetGroups = widgetGroups;
+                    scope.availableWidgets = renderWidgets;
+                    widgets.forEach(wd => {
+                        if(!scope.availableWidgets.find(aw=>aw.name == wd.name)) {
+                            scope.availableWidgets.push(wd);
+                        }
+                    })
+                })
+            }
+            catch (e) {
+                scope.error = e.message;
+                console.error(e);
+            }
+        }
+
         return {
             scope: {
-                contextName: '<',
-                currentTab: '=',
                 scopedObject: '=',
                 editForm: '=',
-                noAlt: '<',
-                view: '<'
+                noAlt: '<'
             },
             restrict: 'E',
             replace: true,
             transclude: false,
             templateUrl: './org.santedb.uicore/directives/widgetPanel.html',
-            controller: ['$scope', '$timeout', '$rootScope', '$state', '$transitions',
-                function ($scope, $timeout, $rootScope, $state, $transitions) {
+            controller: ['$scope','$rootScope', '$state', '$transitions',
+                function ($scope, $rootScope, $state, $transitions) {
 
                     function checkNavigateAway(e) {
-                            if($scope.widgetGroups) {
-                                $scope.widgetGroups.forEach((group) => {
-                                    if(group.widgets) {
-                                        group.widgets.forEach((panel) => {
-                                            if(panel.view == 'Edit' && panel.editForm && !panel.editForm.$pristine) {
-                                                e.returnValue = SanteDB.locale.getString("ui.action.abandon.confirm");
-                                            }
-                                        });
-                                    }
-                                })
-                            }
-                            return e.returnValue;
+                        if ($scope.widgetGroups) {
+                            $scope.widgetGroups.forEach((group) => {
+                                if (group.widgets) {
+                                    group.widgets.forEach((panel) => {
+                                        if (panel.view == 'Edit' && panel.editForm && !panel.editForm.$pristine) {
+                                            e.returnValue = SanteDB.locale.getString("ui.action.abandon.confirm");
+                                        }
+                                    });
+                                }
+                            })
+                        }
+                        return e.returnValue;
                     }
 
                     window.addEventListener("beforeunload", checkNavigateAway);
@@ -92,7 +167,7 @@ angular.module('santedb-lib')
                     // Transitions
                     $transitions.onBefore({}, function (transition) {
                         var navMessage = checkNavigateAway({})
-                        if(navMessage && !confirm(navMessage)) {
+                        if (navMessage && !confirm(navMessage)) {
                             $("#pageTransitioner").hide();
                             transition.abort();
                         }
@@ -138,8 +213,14 @@ angular.module('santedb-lib')
                                 try {
                                     await SanteDB.resources[$scope.scopedObject.$type.toCamelCase()].checkoutAsync($scope.scopedObject.id);
                                 }
-                                catch(e) {
-                                    console.warn(e.message);
+                                catch (e) {
+                                    if(e.$type == "ObjectLockedException") {
+                                        $rootScope.errorHandler(e);
+                                        return;
+                                    }
+                                    else {
+                                        console.warn(e.message);
+                                    }
                                 }
                                 // Isolate the editing object
                                 if (!$scope.$parent.editObject) {
@@ -169,7 +250,7 @@ angular.module('santedb-lib')
                                 try {
                                     await SanteDB.resources[$scope.scopedObject.$type.toCamelCase()].checkinAsync($scope.scopedObject.id);
                                 }
-                                catch(e) {
+                                catch (e) {
                                     console.warn(e.message);
                                 }
                                 delete ($scope.editObject);
@@ -206,53 +287,55 @@ angular.module('santedb-lib')
                         }
                     }
 
-                    // Fetch the widgets which are valid in this context
-                    async function getWidgets(context) {
+                    $scope.customizePanels = async function(form) {
+                        if(form.$invalid) { return; }
+
                         try {
-                            var widgets = await SanteDB.application.getWidgetsAsync(context, "Panel");
+                            SanteDB.display.buttonWait("#btnSaveView", true);
 
-                            // Small are combined 2 per group
-                            var widgetGroups = [];
-                            widgets.forEach(function (w) {
+                            // Get the setting object at this
+                            var thisContextSettings = _userPreferences[_contextName] = [];
 
-                                /*if(w.size == "Small") {  // combine
-                                    if(cGroup == null) {
-                                        cGroup = { size: "Small", widgets: [] };
-                                        $scope.widgetGroups.push(cGroup);
-                                    }
-                                    cGroup.widgets.push(w);
-                                    if(cGroup.widgets.length >= w.maxStack)
-                                        cGroup = null;
-                                }
-                                else */
-                                w.id = w.name.replaceAll(".", "_");
-                                w.view = $scope.view;
-                                widgetGroups.push({ size: w.size, widgets: [w] });
-
-                                if ($scope.editForm && !w.editForm) {
-                                    w.editForm = $scope.editForm;
-                                }
-
+                            // iterate through the widgets in order and add them 
+                            var order = 0;
+                            $scope.availableWidgets.filter(o=>o.isVisible).forEach(w => {
+                                thisContextSettings.push({
+                                    name: w.name, 
+                                    order: order++,
+                                    size: w.size
+                                });
                             });
 
-                            $timeout(() => {
-                                $scope.widgetGroups = widgetGroups;
-                            })
+                            await SanteDB.configuration.saveUserSettingsAsync(
+                                [
+                                    { "key" : "widgets", "value" : JSON.stringify(_userPreferences)} 
+                                ]);
+                            $rootScope.session.userSettings = await SanteDB.configuration.getUserSettingsAsync();
+                            await getWidgets($scope, _contextName);
+                            $("#customizeViewModal").modal("hide");
                         }
-                        catch (e) {
-                            $scope.error = e.message;
-                            console.error(e);
+                        catch(e) {
+                            $rootScope.errorHandler(e);
+                        }
+                        finally {
+                            SanteDB.display.buttonWait("#btnSaveView", false);
                         }
                     }
-
-                    if($scope.contextName) {
-                        getWidgets($scope.contextName);
-                    }
+                    
                 }
             ],
             link: function (scope, element, attrs) {
                 scope.renderSize = attrs.renderSize;
-
+                _view = attrs.view;
+                _canCustomize = attrs.canCustomize == "true";
+                _contextName = attrs.contextName;
+                if (_contextName) {
+                    _contextName = _contextName.replaceAll("'", "");
+                    getWidgets(scope, _contextName);
+                }
+                if (_canCustomize) {
+                    $(".customizeViewBar").removeClass("d-none");
+                }
             }
         };
-    });
+    }]);

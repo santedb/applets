@@ -1,3 +1,23 @@
+<!--
+ - Copyright 2021-2024 SanteSuite Contributors (See NOTICE.md for full copyright notices)
+ - Copyright (C) 2019 - 2021, Fyfe Software Inc. and the SanteSuite Contributors
+ - Portions Copyright (C) 2015-2018 Mohawk College of Applied Arts and Technology
+ - 
+ - Licensed under the Apache License, Version 2.0 (the "License"); you 
+ - may not use this file except in compliance with the License. You may 
+ - obtain a copy of the License at 
+ - 
+ - http://www.apache.org/licenses/LICENSE-2.0 
+ - 
+ - Unless required by applicable law or agreed to in writing, software
+ - distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+ - WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the 
+ - License for the specific language governing permissions and limitations under 
+ - the License.
+ - 
+ - User: fyfej
+ - Date: 2023-7-22
+ -->
 <div ng-controller="EditSecurityCertificatesController" xmlns="http://www.w3.org/1999/xhtml">
 
 
@@ -13,7 +33,7 @@
 
     <div id="addSigningCertificateDiv">
         <form ng-submit="addSigningCertificate(addSigningCertificateForm)"
-            name="addSigningCertificateForm">
+            name="addSigningCertificateForm" autocomplete="off">
             <div class="input-group">
                 <div class="input-group-prepend">
                     <span class="input-group-text">{{ 'ui.admin.securityEntity.certificate.add' | i18n }}
@@ -23,7 +43,7 @@
                 <div class="custom-file">
                     <input type="file" class="custom-file-input" name="uploadCert" valid-file="valid-file"
                     ng-model="newCertificate" required="required" accept=".cer, .cert, .der" id="file-new-certificate-dsig" />    
-                    <label class="custom-file-label" for="file-new-certificate-dsig">{{ 'ui.admin.securityEntity.certificate.uploadlabel' | i18n }}</label>
+                    <label class="custom-file-label" for="file-new-certificate-dsig">{{ newCertificate || 'ui.admin.securityEntity.certificate.uploadlabel' | i18n }}</label>
                 </div>
                 <div class="input-group-append">
                     <button type="submit" id="btnSubmitSigningCert"

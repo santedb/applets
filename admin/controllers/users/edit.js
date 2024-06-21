@@ -1,7 +1,8 @@
 /// <reference path="../../../core/js/santedb.js"/>
 /*
- * Portions Copyright 2015-2019 Mohawk College of Applied Arts and Technology
- * Portions Copyright 2019-2019 SanteSuite Contributors (See NOTICE)
+ * Copyright (C) 2021 - 2024, SanteSuite Inc. and the SanteSuite Contributors (See NOTICE.md for full copyright notices)
+ * Copyright (C) 2019 - 2021, Fyfe Software Inc. and the SanteSuite Contributors
+ * Portions Copyright (C) 2015-2018 Mohawk College of Applied Arts and Technology
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you 
  * may not use this file except in compliance with the License. You may 
@@ -15,8 +16,8 @@
  * License for the specific language governing permissions and limitations under 
  * the License.
  * 
- * User: Justin Fyfe
- * Date: 2019-8-8
+ * User: fyfej
+ * Date: 2023-5-19
  */
 angular.module('santedb')
     .controller('EditUserController', ["$scope", "$rootScope", "$state", "$templateCache", "$stateParams", "$timeout", function ($scope, $rootScope, $state, $templateCache, $stateParams, $timeout) {
@@ -157,16 +158,29 @@ angular.module('santedb')
             var errorFn = function (e) {
                 SanteDB.display.buttonWait("#saveUserButton", false);
                 if (e.$type == "DetectedIssueException" && userForm.newPassword) { // Error with password?
-                    userForm.newPassword.$error = {};
-                    var passwdRules = e.rules.filter(function (d) { return d.priority == "Error" && d.text == "err.password.complexity"; });
-                    if (passwdRules.length == e.rules.length) {
-                        passwdRules.forEach(function (d) {
-                            userForm.newPassword.$error[d.text] = true;
-                        });
-                        $scope.$apply();
-                    }
-                    else
-                        $rootScope.errorHandler(e);
+                    $timeout(() => {
+                        userForm.newPassword.$error = {};
+                        e.rules.filter(r=>r.priority == "Error").forEach(r => {
+                            switch(d.id) {
+                                case "password.complexity":
+                                    userForm.newPassword.$error[d.id] = true;
+                                    break;
+                                case "password.history":
+                                    userForm.newPassword.$error[d.id] = true;
+                                    break;
+                            }
+                        })
+                        var passwdRules = e.rules.filter(function (d) { return d.priority == "Error" && d.text == "err.password.complexity"; });
+                        if (passwdRules.length == e.rules.length) {
+                            passwdRules.forEach(function (d) {
+                                userForm.newPassword.$error[d.text] = true;
+                            });
+                            $scope.$apply();
+                        }
+                        else
+                            $rootScope.errorHandler(e);
+    
+                    });
                 }
                 else
                     $rootScope.errorHandler(e);
@@ -177,7 +191,8 @@ angular.module('santedb')
                 SanteDB.resources.securityUser.insertAsync({
                     $type: "SecurityUserInfo",
                     role: $scope.target.role,
-                    entity: $scope.target.entity
+                    entity: $scope.target.entity,
+                    expirePassword: $scope.target.expirePassword
                 }).then(function (u) {
                     $scope.target.userEntity.securityUser = u.entity.id;
                     SanteDB.resources.userEntity.insertAsync($scope.target.userEntity)

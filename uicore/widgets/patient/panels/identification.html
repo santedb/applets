@@ -1,3 +1,23 @@
+<!--
+ - Copyright 2021-2024 SanteSuite Contributors (See NOTICE.md for full copyright notices)
+ - Copyright (C) 2019 - 2021, Fyfe Software Inc. and the SanteSuite Contributors
+ - Portions Copyright (C) 2015-2018 Mohawk College of Applied Arts and Technology
+ - 
+ - Licensed under the Apache License, Version 2.0 (the "License"); you 
+ - may not use this file except in compliance with the License. You may 
+ - obtain a copy of the License at 
+ - 
+ - http://www.apache.org/licenses/LICENSE-2.0 
+ - 
+ - Unless required by applicable law or agreed to in writing, software
+ - distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+ - WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the 
+ - License for the specific language governing permissions and limitations under 
+ - the License.
+ - 
+ - User: fyfej
+ - Date: 2023-5-19
+ -->
 <div xmlns="http://www.w3.org/1999/xhtml" xmlns:sdb="http://santedb.org/applet" class="container-fluid"
     oc-lazy-load="{ name: 'PatientDemographicsWidgetController', files: ['/org.santedb.uicore/controllers/widgets/patientWidget.js'] }">
     <sdb:widget order="10" name="org.santedb.widget.patient.identity" headerClass="alert-info"
@@ -38,7 +58,7 @@
                 </tbody>
             </table>
         </div>
-        <form ng-submit="update(panel.editForm)" class="form" name="panel.editForm" method="dialog" novalidate="novalidate"
+        <form ng-submit="update(panel.editForm)" class="form" name="panel.editForm" method="dialog" novalidate="novalidate" autocomplete="off"
             ng-if="panel.view == 'Edit'">
             <div class="alert"  ng-class="{'alert-info' : scopedObject.id != editObject.id , 'alert-success': scopedObject.id == editObject.id }" ng-if="scopedObject.tag['$mdm.type'] != 'L' &amp;&amp; scopedObject.tag['$generated'] == 'true'">
                 <span ng-if="scopedObject.id != editObject.id"><i class="fas fa-gavel"></i> {{ 'ui.mdm.edit.recordOfTruth' | i18n }}</span>
@@ -49,7 +69,7 @@
             </div>
             <div class="alert alert-warning" ng-if="scopedObject.tag['$mdm.type'] == 'L'"><i
                     class="fas fa-exclamation-triangle"></i> {{ 'ui.mdm.edit.local' | i18n }}</div>
-            <identifier-list-edit identifier="editObject.identifier" container-class="editObject.classConcept" owner-form="panel.editForm" />
+            <identifier-table-edit model="editObject.identifier" container-class="editObject.classConcept" owner-form="panel.editForm" />
         </form>
     </div>
 </div>

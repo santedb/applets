@@ -1,8 +1,9 @@
 /// <reference path="../../../core/js/santedb.js"/>
 /// <reference path="../../../core/js/santedb-model.js"/>
 /*
- * Portions Copyright 2015-2019 Mohawk College of Applied Arts and Technology
- * Portions Copyright 2019-2019 SanteSuite Contributors (See NOTICE)
+ * Copyright (C) 2021 - 2024, SanteSuite Inc. and the SanteSuite Contributors (See NOTICE.md for full copyright notices)
+ * Copyright (C) 2019 - 2021, Fyfe Software Inc. and the SanteSuite Contributors
+ * Portions Copyright (C) 2015-2018 Mohawk College of Applied Arts and Technology
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you 
  * may not use this file except in compliance with the License. You may 
@@ -16,8 +17,8 @@
  * License for the specific language governing permissions and limitations under 
  * the License.
  * 
- * User: Justin Fyfe
- * Date: 2019-9-20
+ * User: fyfej
+ * Date: 2023-5-19
  */
 angular.module('santedb').controller('MaterialIndexController', ["$scope", "$rootScope", function ($scope, $rootScope) {
 
@@ -95,16 +96,67 @@ angular.module('santedb').controller('MaterialIndexController', ["$scope", "$roo
      * @summary Render status
      */
     $scope.renderStatusConcept = function (place) {
-        switch (place.statusConcept) {
-            case StatusKeys.Active:
-                return `<span class="badge badge-info"><i class="fas fa-check"></i> ${SanteDB.locale.getString('ui.state.active')}</span>`;
-            case StatusKeys.Obsolete:
-                return `<span class="badge badge-danger"><i class="fas fa-trash"></i> ${SanteDB.locale.getString('ui.state.obsolete')}</span>`;
-            case StatusKeys.Nullified:
-                return `<span class="badge badge-secondary"><i class="fas fa-eraser"></i> ${SanteDB.locale.getString('ui.state.nullified')}</span>`;
-            case StatusKeys.New:
-                return `<span class="badge badge-secondary"><i class="fas fa-asterisk"></i> ${SanteDB.locale.getString('ui.state.new')}</span>`;
+        return SanteDB.display.renderStatus(place.statusConcept);
+    }
+
+    
+    /**
+     * 
+     * @param {*} id The id of the place to delete / obsolete
+     * @param {*} index The index of the place
+     */
+    $scope.delete = async function (id, index) {
+
+        var data = $("#MaterialTable table").DataTable().row(index).data();
+
+        if (data.obsoletionTime == null && confirm(SanteDB.locale.getString("ui.admin.material.confirmDelete"))) {
+            try {
+                $("#action_grp_" + index + " a").addClass("disabled");
+                $("#action_grp_" + index + " a i.fa-trash").removeClass("fa-trash").addClass("fa-circle-notch fa-spin");
+                await SanteDB.resources.material.deleteAsync(id);
+                toastr.success(SanteDB.locale.getString("ui.admin.material.delete.success"));
+            }
+            catch (e) {
+                $rootScope.errorHandler(e);
+            }
+            finally {
+                $("#MaterialTable").attr("newQueryId", true);
+                $("#MaterialTable table").DataTable().draw();
+            }
 
         }
+        else if (data.obsoletionTime != null && confirm(SanteDB.locale.getString("ui.admin.material.confirmUnDelete"))) {
+            $("#action_grp_" + index + " a").addClass("disabled");
+            $("#action_grp_" + index + " a i.fa-trash-restore").removeClass("fa-trash-restore").addClass("fa-circle-notch fa-spin");
+            try {
+                await SanteDB.resources.material.touchAsync(id);
+                toastr.success(SanteDB.locale.getString("ui.admin.material.undelete.success"));
+
+            }
+            catch (e) {
+                $rootScope.errorHandler(e);
+            }
+            finally {
+                $("#MaterialTable").attr("newQueryId", true);
+                $("#MaterialTable table").DataTable().draw();
+            }
+
+        }
+
     }
+
+    // Download as a place
+    $scope.download = async function () {
+        if (confirm(SanteDB.locale.getString("ui.action.export.confirm"))) {
+            try {
+
+                window.location = `/hdsi/Material/_export?statusConcept=${StatusKeys.Active}&_include=Organization:relationship[ManufacturedProduct].target.classConcept=fafec286-89d5-420b-9085-054aca9d1eef`;
+            }
+            catch(e) {
+                $rootScope.errorHandler(e);
+            }
+        
+        }
+    }
+
 }]);

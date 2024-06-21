@@ -1,8 +1,9 @@
 /// <reference path="./santedb-ui.js"/>
 /// <reference path="../../core/js/santedb.js"/>
 /*
- * Copyright 2015-2019 Mohawk College of Applied Arts and Technology
- * 
+ * Copyright (C) 2021 - 2024, SanteSuite Inc. and the SanteSuite Contributors (See NOTICE.md for full copyright notices)
+ * Copyright (C) 2019 - 2021, Fyfe Software Inc. and the SanteSuite Contributors
+ * Portions Copyright (C) 2015-2018 Mohawk College of Applied Arts and Technology
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you 
  * may not use this file except in compliance with the License. You may 
@@ -16,10 +17,9 @@
  * License for the specific language governing permissions and limitations under 
  * the License.
  * 
- * User: Justin Fyfe
- * Date: 2019-8-8
+ * User: fyfej
+ * Date: 2023-5-19
  */
-
 angular.module('santedb-lib')
     /**
      * @method breadcrumbService

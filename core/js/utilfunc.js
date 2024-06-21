@@ -1,9 +1,9 @@
 /// <reference path="./santedb-model.js"/>
 /// <reference path="./santedb.js"/>
-
 /*
- * Copyright 2015-2019 Mohawk College of Applied Arts and Technology
- * 
+ * Copyright (C) 2021 - 2024, SanteSuite Inc. and the SanteSuite Contributors (See NOTICE.md for full copyright notices)
+ * Copyright (C) 2019 - 2021, Fyfe Software Inc. and the SanteSuite Contributors
+ * Portions Copyright (C) 2015-2018 Mohawk College of Applied Arts and Technology
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you 
  * may not use this file except in compliance with the License. You may 
@@ -17,8 +17,8 @@
  * License for the specific language governing permissions and limitations under 
  * the License.
  * 
- * User: Justin Fyfe
- * Date: 2019-8-8
+ * User: fyfej
+ * Date: 2023-5-19
  */
 
 /**
@@ -176,6 +176,38 @@ Date.prototype.lastWeekDay = function (month, year) {
 String.prototype.b64DecodeJson = function() {
     return JSON.parse(atob(this));
 }
+
+/**
+ * @summary Parses a string from base64 into a buffer
+ */
+String.prototype.b64DecodeBuffer = function(isUrlEncoded) {
+    var source = this;
+    while(source.length % 4 != 0) source += '='; // re-add padding
+    var e={},i,b=0,c,x,l=0,a,w=String.fromCharCode,L=source.length, oi=0;
+    var r = new Uint8Array(L);
+    var A= isUrlEncoded ?
+    "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_"
+    : "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
+    for(i=0;i<64;i++){e[A.charAt(i)]=i;}
+
+    for(x=0;x<L;x++){
+        c=e[source.charAt(x)];
+        b=(b<<6)+c;
+        l+=6;
+        while(l>=8)
+        {
+            if((a=(b>>>(l-=8)) & 0xff) || (x < (L-2))) {
+                r[oi++] = a;
+            }
+        }
+    }
+    var retVal = new Uint8Array(oi);
+    for(var i = 0; i < oi; i++) {
+        retVal[i] = r[i];
+    }
+    return retVal.buffer;
+}
+
 /** 
  * @summary Decodes a hex string
  * @method
@@ -290,10 +322,11 @@ function copyObject(fromObject, deepCopy) {
  */
 function scrubModelProperties(source) {
 
-    if (!Array.isArray(source))
-        source = [source];
+    var tSource = source;
+    if (!Array.isArray(tSource))
+        tSource = [tSource];
 
-    source.forEach(function (object) {
+    tSource.forEach(function (object) {
         Object.keys(object).forEach(function (key) {
             var rawValue = object[key];
 
@@ -359,6 +392,23 @@ async function prepareEntityForSubmission(entity) {
                     addrItem.component = addrItem.component || {};
 
                     if (addrItem.component) {
+                        // If the component contains a reference to a place copy the place data elements
+                        if(addrItem.component._AddressPlaceRef && addrItem.component._AddressPlaceRef.length > 0 &&
+                            addrItem.component._AddressPlaceRef[0] !== "")
+                        {
+                            try {
+                                var pr = await SanteDB.resources.place.getAsync(addrItem.component._AddressPlaceRef[0], 'fastview');
+                                var copyAddress = pr.address.Direct || pr.address.PhysicalVisit;
+                                Object.keys(copyAddress[0].component).forEach(k => {
+                                    if(!addrItem.component[k] || addrItem.component[k].length == 0) {
+                                        addrItem.component[k] = copyAddress[0].component[k];
+                                    }
+                                });
+                            }
+                            catch(e) {
+                                console.warn("Error cascading address place reference ", e);
+                            }
+                        }
                         Object.keys(addrItem.component).forEach(o => {
                             if (!Array.isArray(addrItem.component[o])) {
                                 if (typeof addrItem.component[o] === 'string') {
@@ -376,6 +426,7 @@ async function prepareEntityForSubmission(entity) {
                     }
 
                     delete (addrItem.useModel);
+
                     addressList.push(addrItem);
                 });
                 await Promise.all(intlPromises);
@@ -384,7 +435,14 @@ async function prepareEntityForSubmission(entity) {
             }
         });
         await Promise.all(promises);
-        entity.address = { "$other": addressList };
+
+        // Ensure that the addresses are placed back in the correct paths
+        entity.address = {};
+        addressList.forEach(addr => {
+            var useKey = Object.keys(AddressUseKeys).find(o=>AddressUseKeys[o] == addr.use) || '$other';
+            entity.address[useKey] = entity.address[useKey] || [];
+            entity.address[useKey].push(addr);
+        });
     }
     if (entity.name) {
         var nameList = [];
@@ -421,7 +479,24 @@ async function prepareEntityForSubmission(entity) {
             })
 
         });
-        entity.name = { "$other": nameList };
+        entity.name = { };
+        nameList.forEach(name => {
+            var useKey = Object.keys(NameUseKeys).find(o=>NameUseKeys[o] == name.use) || '$other';
+            entity.name[useKey] = entity.name[useKey] || [];
+            entity.name[useKey].push(name);
+        });
+    }
+    if(entity.identifier) // strip out empty identifiers
+    {
+        Object.keys(entity.identifier).forEach(function(k) {
+            var id = entity.identifier[k];
+            if(!Array.isArray(id)) {
+                id = [id];
+            }
+
+            id = id.filter(o=>o.value && o.value !== "");
+            entity.identifier[k] = id;
+        });
     }
 
     // Clear out the relationships of their MDM keys
@@ -430,6 +505,7 @@ async function prepareEntityForSubmission(entity) {
             if (!Array.isArray(entity.relationship[k])) {
                 entity.relationship[k] = [entity.relationship[k]];
             }
+
             entity.relationship[k] = entity.relationship[k].map((r) => {
                 if (r.targetModel && r.targetModel.id) {
                     r.target = r.targetModel.id;
@@ -443,7 +519,7 @@ async function prepareEntityForSubmission(entity) {
                 delete r.relationshipRoleModel;
                 delete r.classificationModel;
                 return r;
-            });
+            }).filter(r => r.source || r.holder || r.target);
         });
 
     }
@@ -456,6 +532,8 @@ async function prepareEntityForSubmission(entity) {
         delete entity.relationship['MDM-RecordOfTruth'];
         delete entity.relationship['Replaces'];
     }
+
+    // Strip entity relationships with no source or no target
 
     return entity;
 }
@@ -516,4 +594,69 @@ function deleteModelProperties(objectToRemove) {
         });
     }
 
+    return objectToRemove;
+
+}
+
+/**
+ * Bundle all related properties into a new Bundle
+ * @param {Any} object The object which is to be bundled
+ */
+async function bundleRelatedObjects(object) {
+    
+    var retVal = new Bundle({ resource: [ await prepareEntityForSubmission(angular.copy(object)) ], focal: [ object.id ]});
+
+    if(object.relationship) {
+
+        await Promise.all(Object.keys(object.relationship).map(async function(relationshipType) {
+            var relationships = object.relationship[relationshipType];
+            if(!Array.isArray(relationships)) {
+                relationships = [relationships];
+            }
+            await Promise.all(relationships
+                .filter(o => o && o.targetModel)
+                .map(async function(rel) {
+                    var entity = await prepareEntityForSubmission(angular.copy(rel.targetModel));
+                    rel.target = entity.id = SanteDB.application.newGuid();
+                    retVal.resource.push(entity);
+                    delete rel.targetModel;
+                }));
+            relationships.forEach(rel => {
+                rel.holder = object.id;
+                delete rel.holderModel;
+                delete rel.targetModel;
+            });
+        }));
+    }
+
+    if(object.participation) {
+        await Promise.all(Object.keys(object.participation).map(async function(participationType) {
+            var participations = object.participation[participationType];
+            if(!Array.isArray(participations)) {
+                participations = [participations];
+            }
+            participations.forEach(ptcpt => {
+                rel.act = object.id;
+                delete rel.playerModel;
+            })
+        }))
+    }
+
+    retVal.resource.forEach(res => deleteModelProperties(res));
+    return retVal;
+}
+
+/**
+ * Validate check digit using mod97
+ */
+function validateMod97CheckDigit(value, checkDigit) {
+    if(!value || !checkDigit) return false;
+
+    // Compute the mod97 - extract digits
+    var source = value.match(/[0-9]/g);
+    source.splice(0, 0, 0);
+    var seed = source.map(o=>parseInt(o)).reduce(function (a, v, i) { return ((a + v) * 10) % 97; });
+    seed *= 10; seed %= 97;
+    var expectedCheckDigit = (97 - seed + 1) % 97;
+    return expectedCheckDigit == checkDigit;
 }

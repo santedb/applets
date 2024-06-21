@@ -1,8 +1,9 @@
 /// <reference path="../../core/js/santedb.js"/>
 /// <reference path="../../core/js/santedb-model.js"/>
 /*
- * Portions Copyright 2015-2019 Mohawk College of Applied Arts and Technology
- * Portions Copyright 2019-2019 SanteSuite Contributors (See NOTICE)
+ * Copyright (C) 2021 - 2024, SanteSuite Inc. and the SanteSuite Contributors (See NOTICE.md for full copyright notices)
+ * Copyright (C) 2019 - 2021, Fyfe Software Inc. and the SanteSuite Contributors
+ * Portions Copyright (C) 2015-2018 Mohawk College of Applied Arts and Technology
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you 
  * may not use this file except in compliance with the License. You may 
@@ -16,11 +17,12 @@
  * License for the specific language governing permissions and limitations under 
  * the License.
  * 
- * User: Justin Fyfe
- * Date: 2019-8-8
+ * User: fyfej
+ * Date: 2023-5-19
  */
 angular.module('santedb').controller('AdminLayoutController', ["$scope", "$rootScope", "$state", "$templateCache", "$interval", "$timeout", function ($scope, $rootScope, $state, $templateCache, $interval, $timeout) {
 
+    var _lastTickle = null;
     initializeSideNavTriggers();
 
     // Shows the elevation dialog, elevates and then refreshes the state
@@ -34,12 +36,24 @@ angular.module('santedb').controller('AdminLayoutController', ["$scope", "$rootS
     }
 
     // abandon session
-    $scope.abandonSession = function () {
-        SanteDB.authentication.logoutAsync().then(function () {
+    $scope.abandonSession = async function () {
+        try {
+            SanteDB.display.buttonWait("#btnLogout", true);
+            await SanteDB.authentication.logoutAsync();
             $("#logoutModal").modal('hide');
-            $templateCache.removeAll();
-            $state.go('login');
-        });
+            $timeout(() => {
+                $rootScope.session = null;
+                $templateCache.removeAll();
+                $state.go('login');
+                location.reload();
+            });
+        }
+        catch (e) {
+            $rootScope.errorHandler(e);
+        }
+        finally {
+            SanteDB.display.buttonWait("#btnLogout", false);
+        }
     }
 
     // Load menus for the current user
@@ -85,9 +99,10 @@ angular.module('santedb').controller('AdminLayoutController', ["$scope", "$rootS
     // Check for new tickles
     var checkTickles = async function () {
         try {
-            var tickles = await SanteDB.resources.tickle.findAsync({});
+            var sourceTickles = await SanteDB.resources.tickle.findAsync({});
+            var tickles = [];
             var hasAlert = false;
-            tickles.forEach(function (t) {
+            sourceTickles.forEach(function (t) {
 
                 if (!t.type) return;
 
@@ -102,7 +117,20 @@ angular.module('santedb').controller('AdminLayoutController', ["$scope", "$rootS
 
                     SanteDB.resources.tickle.deleteAsync(t.id);
                 }
+
+                tickles.push(t);
+
             });
+            
+            var lastTickle = tickles.length > 0 ? tickles[tickles.length - 1].id : null;
+            if (!lastTickle) {
+                _lastTickle = null;
+            }
+            else if(lastTickle != _lastTickle) {
+                _lastTickle = lastTickle;
+                toastr.info(SanteDB.locale.getString("ui.emr.alerts.new"), null, { preventDuplicates: true });
+            }
+
             $timeout(() => $scope.tickles = tickles);
         }
         catch (e) {
@@ -133,6 +161,7 @@ angular.module('santedb').controller('AdminLayoutController', ["$scope", "$rootS
             await Promise.all($scope.tickles.map(async function (t) {
                 try {
                     await SanteDB.resources.tickle.deleteAsync(t.id);
+                    checkTickles();
                 }
                 catch(e) {
                     toastr.warning(SanteDB.locale.getString("ui.admin.tickleError"));

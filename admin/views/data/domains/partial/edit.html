@@ -1,5 +1,25 @@
+<!--
+ - Copyright 2021-2024 SanteSuite Contributors (See NOTICE.md for full copyright notices)
+ - Copyright (C) 2019 - 2021, Fyfe Software Inc. and the SanteSuite Contributors
+ - Portions Copyright (C) 2015-2018 Mohawk College of Applied Arts and Technology
+ - 
+ - Licensed under the Apache License, Version 2.0 (the "License"); you 
+ - may not use this file except in compliance with the License. You may 
+ - obtain a copy of the License at 
+ - 
+ - http://www.apache.org/licenses/LICENSE-2.0 
+ - 
+ - Unless required by applicable law or agreed to in writing, software
+ - distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+ - WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the 
+ - License for the specific language governing permissions and limitations under 
+ - the License.
+ - 
+ - User: fyfej
+ - Date: 2023-5-19
+ -->
 <div xmlns="http://www.w3.org/1999/xhtml" class="container-fluid">
-    <form class="form" ng-submit="saveDomain(targetForm)" name="targetForm" novalidate="novalidate">
+    <form class="form" ng-submit="saveDomain(targetForm)" name="targetForm" novalidate="novalidate" autocomplete="off">
         <div class="row" ng-if="!domain">
             <div class="col">
                 <p class="m-auto"><i class="fas fa-circle-notch fa-spin"></i> {{ 'ui.wait' | i18n }}</p>
@@ -115,11 +135,19 @@
                                     </div>
                                 </div>
                             </div>
+                            <div class="form-group row">
+                                <label class="control-label col-sm-12 col-md-2" for="identifierClass">
+                                    {{ 'ui.model.identityDomain.identifierClass' | i18n }} <hint-popover hint-title="ui.model.identityDomain.identifierClass" />
+                                </label>
+                                <div class="col-sm-12 col-md-10">
+                                    <concept-select concept-set="'IdentifierType'" ng-model="domain.identifierClass" class="form-control" />
+                                </div>
+                            </div>
 
                             <div class="form-group row" ng-if="domain.createdBy">
                                 <label class="col-sm-12 col-md-2 control-label">{{ 'ui.model.identityDomain.createdBy' |
                                     i18n }}</label>
-                                <div class="col-md-10 col-sm-12">
+                                <div class="col-md-10 col-sm-12 control-value">
                                     <provenance provenance-id="domain.createdBy" provenance-time="domain.creationTime">
                                     </provenance>
                                 </div>
@@ -127,7 +155,7 @@
                             <div class="form-group row" ng-if="domain.updatedBy">
                                 <label class="col-sm-12 col-md-2 control-label">{{ 'ui.model.identityDomain.updatedBy' |
                                     i18n }}</label>
-                                <div class="col-md-10 col-sm-12">
+                                <div class="col-md-10 col-sm-12 control-value">
                                     <provenance provenance-id="domain.updatedBy" provenance-time="domain.updatedTime">
                                     </provenance>
                                 </div>
@@ -135,7 +163,7 @@
                             <div class="form-group row" ng-if="domain.obsoletedBy">
                                 <label class="col-sm-12 col-md-2 control-label">{{ 'ui.model.identityDomain.obsoletedBy'
                                     | i18n }}</label>
-                                <div class="col-md-10 col-sm-12">
+                                <div class="col-md-10 col-sm-12 control-value">
                                     <provenance provenance-id="domain.obsoletedBy"
                                         provenance-time="domain.obsoletionTime"></provenance>
                                     <button id="reactivateAuthorityButton" ng-click="reactivateDomain()" type="button"
@@ -143,6 +171,7 @@
                                         {{ 'ui.action.undelete' | i18n }}</button>
                                 </div>
                             </div>
+                            
                         </div>
                     </div>
                 </div>

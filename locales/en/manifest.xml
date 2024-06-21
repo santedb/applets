@@ -1,9 +1,8 @@
 <?xml-model href="../../.ref/schema/SanteDBApplet.xsd" type="application/xml" schematypens="http://www.w3.org/2001/XMLSchema"?>
 <!--
- - Copyright (C) 2021-2023 SanteSuite Inc and the SanteSuite Contributors (see NOTICES)
-Portions Copyright (C) 2019-2021 Fyfe Software Inc.
-Portions Copyright (C) 2015-2018 Mohawk College of Applied Arts and Technology
- -
+ - Copyright 2021-2024 SanteSuite Contributors (See NOTICE.md for full copyright notices)
+ - Copyright (C) 2019 - 2021, Fyfe Software Inc. and the SanteSuite Contributors
+ - Portions Copyright (C) 2015-2018 Mohawk College of Applied Arts and Technology
  - 
  - Licensed under the Apache License, Version 2.0 (the "License"); you 
  - may not use this file except in compliance with the License. You may 
@@ -17,11 +16,11 @@ Portions Copyright (C) 2015-2018 Mohawk College of Applied Arts and Technology
  - License for the specific language governing permissions and limitations under 
  - the License.
  - 
- - User: justin
- - Date: 2018-7-23
+ - User: fyfej
+ - Date: 2023-5-19
  -->
 <AppletManifest xmlns="http://santedb.org/applet">
-  <info id="org.santedb.i18n.en" version="2.1.151" uuid="10589c16-12c0-48f2-b76c-20964701fb5b">
+  <info id="org.santedb.i18n.en" version="3.0.0.0" uuid="10589c16-12c0-48f2-b76c-20964701fb5b">
     <icon>/org.santedb.core/img/i18n.png</icon>
     <name lang="en">English Applet Support</name>
     <author>SanteSuite Community Partners (see: santesuite.org)</author>
@@ -31,6 +30,11 @@ Portions Copyright (C) 2015-2018 Mohawk College of Applied Arts and Technology
       <asset>/org.santedb.i18n.en/lib/angular/en.js</asset>
       <asset>/org.santedb.i18n.en/lib/select2/en.js</asset>
       <asset>/org.santedb.i18n.en/lib/santedb/en.js</asset>
+    </locale>
+    <locale code="en-us">
+      <asset>/org.santedb.i18n.en/lib/angular/en.js</asset>
+      <asset>/org.santedb.i18n.en/lib/santedb/en.js</asset>
+      <asset>/org.santedb.i18n.en/lib/select2/en.js</asset>
     </locale>
     <locale code="en-au">
       <asset>/org.santedb.i18n.en/lib/angular/en-au.js</asset>
@@ -62,12 +66,30 @@ Portions Copyright (C) 2015-2018 Mohawk College of Applied Arts and Technology
   <strings lang="en" extern="strings/model.xml"/>
   <strings lang="en" extern="strings/errors.xml" />
   <strings lang="en" extern="strings/ui.xml" />
+
+  <strings lang="en-ca" extern="strings/model.xml"/>
+  <strings lang="en-ca" extern="strings/errors.xml" />
+  <strings lang="en-ca" extern="strings/ui.xml" />
+
+  <strings lang="en-au" extern="strings/model.xml"/>
+  <strings lang="en-au" extern="strings/errors.xml" />
+  <strings lang="en-au" extern="strings/ui.xml" />
+
+  <strings lang="en-us" extern="strings/model.xml"/>
+  <strings lang="en-us" extern="strings/errors.xml" />
+  <strings lang="en-us" extern="strings/ui.xml" />
+
+  <strings lang="en-iso" extern="strings/model.xml"/>
+  <strings lang="en-iso" extern="strings/errors.xml" />
+  <strings lang="en-iso" extern="strings/ui.xml" />
+
   <strings lang="en">
     <string key="ui.locale">Language</string>
     <string key="ui.locale.en">English</string>
     <string key="ui.locale.en-au">English (Australia)</string>
     <string key="ui.locale.en-ca">English (Canada)</string>
     <string key="ui.locale.en-gb">English (UK)</string>
+    <string key="ui.locale.en-us">English (US)</string>
     <string key="ui.locale.en-iso">English (ISO)</string>
     <string key="ui.locale.en-nz">English (New Zealand)</string>
     <string key="ui.locale.en-ph">English (Philippines)</string>
@@ -94,6 +116,7 @@ Portions Copyright (C) 2015-2018 Mohawk College of Applied Arts and Technology
     <string key="ui.locale.en-ca">English (Canada)</string>
     <string key="ui.locale.en-gb">English (UK)</string>
     <string key="ui.locale.en-iso">English (ISO)</string>
+    <string key="ui.locale.en-us">English (US)</string>
     <string key="ui.locale.en-nz">English (New Zealand)</string>
     <string key="ui.locale.en-ph">English (Philippines)</string>
     <string key="ui.locale.es">Spanish</string>
@@ -119,6 +142,7 @@ Portions Copyright (C) 2015-2018 Mohawk College of Applied Arts and Technology
     <string key="ui.locale.en-ca">English (Canada)</string>
     <string key="ui.locale.en-gb">English (UK)</string>
     <string key="ui.locale.en-iso">English (ISO)</string>
+    <string key="ui.locale.en-us">English (US)</string>
     <string key="ui.locale.en-nz">English (New Zealand)</string>
     <string key="ui.locale.en-ph">English (Philippines)</string>
     <string key="ui.locale.es">Spanish</string>
@@ -144,6 +168,34 @@ Portions Copyright (C) 2015-2018 Mohawk College of Applied Arts and Technology
     <string key="ui.locale.en-ca">English (Canada)</string>
     <string key="ui.locale.en-gb">English (UK)</string>
     <string key="ui.locale.en-iso">English (ISO)</string>
+    <string key="ui.locale.en-us">English (US)</string>
+    <string key="ui.locale.en-nz">English (New Zealand)</string>
+    <string key="ui.locale.en-ph">English (Philippines)</string>
+    <string key="ui.locale.es">Spanish</string>
+    <string key="ui.locale.es-es">Spanish (Spain)</string>
+    <string key="ui.locale.es-mx">Spanish (Mexico)</string>
+    <string key="ui.locale.es-us">Spanish (US)</string>
+    <string key="ui.locale.fr">French</string>
+    <string key="ui.locale.fr-be">French (Belgiun)</string>
+    <string key="ui.locale.fr-ca">French (Canada)</string>
+    <string key="ui.locale.fr-ch">French (Swiss)</string>
+    <string key="ui.locale.fr-fr">French (France)</string>
+    <string key="ui.locale.sw">Swahili</string>
+    <string key="ui.locale.sw-ke">Swahili (Kenya)</string>
+    <string key="ui.locale.sw-tz">Swahili (Tanzania)</string>
+    <string key="ui.locale.sw-ug">Swahili (Uganda)</string>
+    <string key="ui.locale.it">Italian</string>
+  </strings>
+
+  
+  <strings lang="en-us">
+    <string key="ui.locale">Language</string>
+    <string key="ui.locale.en">English</string>
+    <string key="ui.locale.en-au">English (Australia)</string>
+    <string key="ui.locale.en-ca">English (Canada)</string>
+    <string key="ui.locale.en-gb">English (UK)</string>
+    <string key="ui.locale.en-iso">English (ISO)</string>
+    <string key="ui.locale.en-us">English (US)</string>
     <string key="ui.locale.en-nz">English (New Zealand)</string>
     <string key="ui.locale.en-ph">English (Philippines)</string>
     <string key="ui.locale.es">Spanish</string>
@@ -169,6 +221,7 @@ Portions Copyright (C) 2015-2018 Mohawk College of Applied Arts and Technology
     <string key="ui.locale.en-ca">English (Canada)</string>
     <string key="ui.locale.en-gb">English (UK)</string>
     <string key="ui.locale.en-iso">English (ISO)</string>
+    <string key="ui.locale.en-us">English (US)</string>
     <string key="ui.locale.en-nz">English (New Zealand)</string>
     <string key="ui.locale.en-ph">English (Philippines)</string>
     <string key="ui.locale.es">Spanish</string>
@@ -192,6 +245,7 @@ Portions Copyright (C) 2015-2018 Mohawk College of Applied Arts and Technology
     <string key="ui.locale.en">English</string>
     <string key="ui.locale.en-au">English (Australia)</string>
     <string key="ui.locale.en-ca">English (Canada)</string>
+    <string key="ui.locale.en-us">English (US)</string>
     <string key="ui.locale.en-gb">English (UK)</string>
     <string key="ui.locale.en-iso">English (ISO)</string>
     <string key="ui.locale.en-nz">English (New Zealand)</string>

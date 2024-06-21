@@ -1,7 +1,8 @@
 /// <reference path="../../../core/js/santedb.js"/>
 /*
- * Portions Copyright 2015-2019 Mohawk College of Applied Arts and Technology
- * Portions Copyright 2019-2019 SanteSuite Contributors (See NOTICE)
+ * Copyright (C) 2021 - 2024, SanteSuite Inc. and the SanteSuite Contributors (See NOTICE.md for full copyright notices)
+ * Copyright (C) 2019 - 2021, Fyfe Software Inc. and the SanteSuite Contributors
+ * Portions Copyright (C) 2015-2018 Mohawk College of Applied Arts and Technology
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you 
  * may not use this file except in compliance with the License. You may 
@@ -15,8 +16,8 @@
  * License for the specific language governing permissions and limitations under 
  * the License.
  * 
- * User: Justin Fyfe
- * Date: 2019-10-5
+ * User: fyfej
+ * Date: 2023-5-19
  */
 angular.module('santedb').controller('JobAdminController', ["$scope", "$rootScope", "$timeout", function ($scope, $rootScope, $timeout) {
 
@@ -26,8 +27,7 @@ angular.module('santedb').controller('JobAdminController', ["$scope", "$rootScop
         if (job.schedule) {
             return "<ul class='p-0 m-0 list-unstyled'>" + job.schedule.map(o => {
                 if (o.type == "Scheduled") {
-                    return `<li><i class='fas fa-calendar'></i> ${o.repeat.map(d => d.substring(0, 2)).join(",")} @ ${moment(o.start).format("HH:mm")} starting ${moment(o.start).format("YYYY-MM-DD")}</li>`;
-
+                    return `<li><i class='fas fa-calendar'></i> ${o.repeat.map(d => d.substring(0, 2)).join(",")} <br/>@ ${moment(o.start).format("HH:mm")}<br/>starting ${moment(o.start).format("YYYY-MM-DD")}</li>`;
                 }
                 else {
                     return `<li><i class='fas fa-clock'></i> repeat ${moment.duration(o.interval).humanize(true)}</li>`;
@@ -43,7 +43,7 @@ angular.module('santedb').controller('JobAdminController', ["$scope", "$rootScop
                 return `<span class="badge badge-success badge-pill"><i class="fas fa-check"></i> ${SanteDB.locale.getString("ui.state.complete")}</span>`;
             case "Running":
                 if (job.status) {
-                    return `<div  style="min-width:20vw"><span class="badge badge-primary badge-pill"><i class="fas fa-play"></i> ${SanteDB.locale.getString("ui.state.running")} (${Math.round(job.progress * 100)}%)</span> - ${job.status}</div>`;
+                    return `<span class="badge badge-primary badge-pill"><i class="fas fa-play"></i> ${SanteDB.locale.getString("ui.state.running")} (${Math.round(job.progress * 100)}%)</span><br/><small>${job.status}</small>`;
                 }
                 else {
                     return `<span class="badge badge-primary badge-pill"><i class="fas fa-play"></i> ${SanteDB.locale.getString("ui.state.running")}</span>`;
@@ -51,7 +51,7 @@ angular.module('santedb').controller('JobAdminController', ["$scope", "$rootScop
             case "Cancelled":
                 return `<span class="badge badge-warning badge-pill"><i class="fas fa-info-circle"></i> ${SanteDB.locale.getString("ui.state.cancelled")}</span>`;
             case "Aborted":
-                return `<span class="badge badge-danger badge-pill"><i class="fas fa-exlamation-triange"></i> ${SanteDB.locale.getString("ui.state.abort")}</span>`;
+                return `<span class="badge badge-danger badge-pill"><i class="fas fa-exlamation-triange"></i> ${SanteDB.locale.getString("ui.state.abort")}</span><br/><small>${job.status}</small>`;
             case "Stopped":
                 return `<span class="badge badge-danger badge-pill"><i class="fas fa-exlamation-triange"></i> ${SanteDB.locale.getString("ui.state.stop")}</span>`;
             default:
@@ -105,7 +105,6 @@ angular.module('santedb').controller('JobAdminController', ["$scope", "$rootScop
         }
     }
 
-
     $scope.saveJob = async function(form) {
 
         if(!form.$valid) { return; }
@@ -150,6 +149,7 @@ angular.module('santedb').controller('JobAdminController', ["$scope", "$rootScop
         }
 
     }
+
     // Render run
     $scope.runJob = async function (id, index, jobParameters) {
 
@@ -213,13 +213,13 @@ angular.module('santedb').controller('JobAdminController', ["$scope", "$rootScop
                         jobType: jobType.type
                     };
                     await SanteDB.resources.jobInfo.insertAsync(ji);
-                    toastr.success("ui.admin.job.register.success", {job: jobType.type });
+                    toastr.success(SanteDB.locale.getString("ui.admin.job.register.success", { job: jobType.type }));
                     $("#jobsTable table").DataTable().ajax.reload();
 
                 }
                 catch(e) {
                     $rootScope.errorHandler(e);
-                    toastr.error("ui.admin.job.register.error", { error: e.message, job: jobType.type });
+                    toastr.error(SanteDB.locale.getString("ui.admin.job.register.error", { error: e.message, job: jobType.type }));
 
                 }
                 finally {

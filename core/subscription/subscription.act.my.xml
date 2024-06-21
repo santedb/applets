@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
- - Copyright 2015-2019 Mohawk College of Applied Arts and Technology
- -
+ - Copyright 2021-2024 SanteSuite Contributors (See NOTICE.md for full copyright notices)
+ - Copyright (C) 2019 - 2021, Fyfe Software Inc. and the SanteSuite Contributors
+ - Portions Copyright (C) 2015-2018 Mohawk College of Applied Arts and Technology
  - 
  - Licensed under the Apache License, Version 2.0 (the "License"); you 
  - may not use this file except in compliance with the License. You may 
@@ -15,10 +16,15 @@
  - License for the specific language governing permissions and limitations under 
  - the License.
  - 
- - User: Justin Fyfe
- - Date: 2019-8-8
+ - User: fyfej
+ - Date: 2023-5-19
  -->
 <SubscriptionDefinition xmlns="http://santedb.org/subscription" name="ui.subscription.act.my" uuid="decad40c-a232-482f-b93d-317b25c1ef0d" resource="Act">
+    <!-- DOWNLOADS ALL ACTS WHERE:
+    * The ACT occurred at my facility or 
+    * The ACT did not occur at my facility but the entity was involved as a RCT, REFERRER, PERFORMER, AUTHOR
+    -->
+
   <server>
     <definition invariant="npgsql">
       <![CDATA[
@@ -27,22 +33,28 @@
         INNER JOIN ACT_TBL USING (ACT_ID)
       WHERE ACT_ID IN (
         SELECT DISTINCT ACT_ID FROM (
+          -- ALL ACTS THAT OCCURRED IN MY FACILITY
           SELECT ACT_ID FROM ACT_PTCPT_TBL WHERE ENT_ID = ${placeid}
           UNION ALL
-          SELECT ACT_ID FROM ACT_PTCPT_TBL WHERE ENT_ID IN (SELECT SRC_ENT_ID FROM ENT_REL_TBL WHERE TRG_ENT_ID = ${placeid})
+          -- ALL ACTS THAT FOR ANYONE ASSOCIATED WITH MY FACILITY
+          SELECT ACT_ID FROM ACT_PTCPT_TBL WHERE ENT_ID IN (SELECT SRC_ENT_ID FROM ENT_REL_TBL WHERE TRG_ENT_ID = ${placeid} AND REL_TYP_CD_ID IN ('455F1772-F580-47E8-86BD-B5CE25D351F9','41BAF7AA-5FFD-4421-831F-42D4AB3DE38A','FF34DFA7-C6D3-4F8B-BC9F-14BCDC13BA6C')) AND
+            ROL_CD_ID IN ('3F92DBEE-A65E-434F-98CE-841FEEB02E3F','02BB7934-76B5-4CC5-BD42-58570F15EB4D','39604248-7812-4B60-BC54-8CC1FFFB1DE6','D9F63423-BA9B-48D9-BA38-C404B784B670')
       ) I)
       ]]>
     </definition>
     <definition invariant="sqlite">
       <![CDATA[
-      SELECT * FROM
+                 SELECT * FROM
         ACT_VRSN_TBL
         INNER JOIN ACT_TBL USING (ACT_ID)
       WHERE ACT_ID IN (
         SELECT DISTINCT ACT_ID FROM (
+          -- ALL ACTS THAT OCCURRED IN MY FACILITY
           SELECT ACT_ID FROM ACT_PTCPT_TBL WHERE ENT_ID = ${placeid}
           UNION ALL
-          SELECT ACT_ID FROM ACT_PTCPT_TBL WHERE ENT_ID IN (SELECT SRC_ENT_ID FROM ENT_REL_TBL WHERE TRG_ENT_ID = ${placeid})
+          -- ALL ACTS THAT FOR ANYONE ASSOCIATED WITH MY FACILITY
+          SELECT ACT_ID FROM ACT_PTCPT_TBL WHERE ENT_ID IN (SELECT SRC_ENT_ID FROM ENT_REL_TBL WHERE TRG_ENT_ID = ${placeid} AND REL_TYP_CD_ID IN (x'72175F4580F5E84786BDB5CE25D351F9',x'AAF7BA41FD5F2144831F42D4AB3DE38A',x'A7DF34FFD3C68B4FBC9F14BCDC13BA6C')) AND
+            ROL_CD_ID IN (x'EEDB923F5EA64F4398CE841FEEB02E3F',x'3479BB02B576C54CBD4258570F15EB4D',x'484260391278604BBC548CC1FFFB1DE6',x'2334F6D99BBAD948BA38C404B784B670')
       ) I)
       ]]>
     </definition>

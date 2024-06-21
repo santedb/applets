@@ -1,4 +1,24 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
+<!--
+ - Copyright 2021-2024 SanteSuite Contributors (See NOTICE.md for full copyright notices)
+ - Copyright (C) 2019 - 2021, Fyfe Software Inc. and the SanteSuite Contributors
+ - Portions Copyright (C) 2015-2018 Mohawk College of Applied Arts and Technology
+ - 
+ - Licensed under the Apache License, Version 2.0 (the "License"); you 
+ - may not use this file except in compliance with the License. You may 
+ - obtain a copy of the License at 
+ - 
+ - http://www.apache.org/licenses/LICENSE-2.0 
+ - 
+ - Unless required by applicable law or agreed to in writing, software
+ - distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+ - WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the 
+ - License for the specific language governing permissions and limitations under 
+ - the License.
+ - 
+ - User: fyfej
+ - Date: 2023-5-19
+ -->
 <BiDataFlowDefinition id="org.santedb.bi.datamart.core.addresses" xmlns="http://santedb.org/bi">
   <meta version="3.0">
     <public>false</public>
@@ -48,6 +68,7 @@
           <add>City</add>
           <add>PostalCode</add>
           <add>CensusTract</add>
+          <add>_AddressPlaceRef</add>
         </columns>
       </pivot>
     </crosstab>
@@ -96,6 +117,12 @@
       <map>
         <source name="CensusTract" />
         <target name="ADDR_CENSUS" />
+      </map>
+      <map>
+        <source name="_AddressPlaceRef">
+          <cast>uuid</cast>
+        </source>
+        <target name="ADDR_REF" />
       </map>
     </transform>
     <writer mode="insert" truncate="true" name="write_addresses">

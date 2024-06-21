@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
- - Copyright 2015-2019 Mohawk College of Applied Arts and Technology
- -
+ - Copyright 2021-2024 SanteSuite Contributors (See NOTICE.md for full copyright notices)
+ - Copyright (C) 2019 - 2021, Fyfe Software Inc. and the SanteSuite Contributors
+ - Portions Copyright (C) 2015-2018 Mohawk College of Applied Arts and Technology
  - 
  - Licensed under the Apache License, Version 2.0 (the "License"); you 
  - may not use this file except in compliance with the License. You may 
@@ -15,16 +16,20 @@
  - License for the specific language governing permissions and limitations under 
  - the License.
  - 
- - User: Justin Fyfe
- - Date: 2019-12-13
+ - User: fyfej
+ - Date: 2023-5-19
  -->
-<SubscriptionDefinition xmlns="http://santedb.org/subscription" name="ui.subscription.act.out"  uuid="81b65812-c14e-4bb4-b7a1-ca7bcee83dbf" resource="Entity">
+<SubscriptionDefinition xmlns="http://santedb.org/subscription" name="ui.subscription.entity.out"  uuid="81b65812-c14e-4bb4-b7a1-ca7bcee83dbf" resource="Entity">
+  <!-- DOWNLOADS ALL ENTITIES WHERE:
+    * The ENTITY is assigned to an act which DID occur in my facility and 
+    * The ENTITY is not assigned to my facility
+    -->
   <server>
     <definition invariant="npgsql">
       <![CDATA[
      SELECT * FROM 
 	    ENT_VRSN_TBL 
-        INNER JOIN ENT_TBL USING (ENT_ID)
+      INNER JOIN ENT_TBL USING (ENT_ID)
     WHERE
 	    OBSLT_UTC IS NULL 
 	    AND ENT_ID IN (
@@ -53,7 +58,7 @@
     WHERE
 	    OBSLT_UTC IS NULL 
 	    AND ENT_ID IN (
-		    WITH cte_ents AS ( -- ALL ENTITIES ASSIGNED TO MY FACILITY
+		    WITH cte_ents AS ( -- ALL ENTITIES NOT ASSIGNED TO MY FACILITY
 			    SELECT SRC_ENT_ID
 			    FROM
 				    ENT_REL_TBL

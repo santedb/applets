@@ -1,8 +1,7 @@
 <!--
- - Copyright (C) 2021-2023 SanteSuite Inc and the SanteSuite Contributors (see NOTICES)
-Portions Copyright (C) 2019-2021 Fyfe Software Inc.
-Portions Copyright (C) 2015-2018 Mohawk College of Applied Arts and Technology
- - 
+ - Copyright 2021-2024 SanteSuite Contributors (See NOTICE.md for full copyright notices)
+ - Copyright (C) 2019 - 2021, Fyfe Software Inc. and the SanteSuite Contributors
+ - Portions Copyright (C) 2015-2018 Mohawk College of Applied Arts and Technology
  - 
  - Licensed under the Apache License, Version 2.0 (the "License"); you 
  - may not use this file except in compliance with the License. You may 
@@ -16,14 +15,15 @@ Portions Copyright (C) 2015-2018 Mohawk College of Applied Arts and Technology
  - License for the specific language governing permissions and limitations under 
  - the License.
  - 
- - User: justin
- - Date: 2018-11-14
+ - User: fyfej
+ - Date: 2023-5-19
  -->
 <div xmlns="http://www.w3.org/1999/xhtml" xmlns:sdb="http://santedb.org/applet">
     <sdb:style static="false">~/css/sb-admin.css</sdb:style>
     <sdb:style static="false">~/css/admin.css</sdb:style>
     <sdb:script static="false">~/controllers/index.js</sdb:script>
     <sdb:script>~/lib/sb-admin.js</sdb:script>
+    <sdb:script static="true">~/lib/mermaid.min.js</sdb:script>
     <sdb:state name="santedb-admin">
         <sdb:demand>1.3.6.1.4.1.33349.3.1.5.9.2.1</sdb:demand>
         <sdb:url>/</sdb:url>
@@ -32,7 +32,7 @@ Portions Copyright (C) 2015-2018 Mohawk College of Applied Arts and Technology
         </sdb:view>
         <sdb:title lang="en">Administration Panel</sdb:title>
     </sdb:state>
-    <div class="fixed-nav sticky-footer bg-dark">
+    <div class="fixed-nav sticky-footer">
         <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top" id="mainNav">
             <a class="navbar-brand" ui-shref="santedb-admin">
                 {{ 'ui.admin.brand.title' | i18n }}
@@ -336,7 +336,7 @@ Portions Copyright (C) 2015-2018 Mohawk College of Applied Arts and Technology
                 <div class="modal-footer">
                     <button class="btn btn-secondary" type="button" data-dismiss="modal">
                         <i class="fa fa-times"></i> {{ 'ui.action.cancel' | i18n }}</button>
-                    <button type="button" ng-click="abandonSession()" class="btn btn-primary">
+                    <button type="button" id="btnLogout" ng-click="abandonSession()" class="btn btn-primary">
                         <i class="fa fa-sign-out-alt"></i> {{ 'ui.action.logout' | i18n }}</button>
                 </div>
             </div>

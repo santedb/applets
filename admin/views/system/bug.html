@@ -1,3 +1,23 @@
+<!--
+ - Copyright 2021-2024 SanteSuite Contributors (See NOTICE.md for full copyright notices)
+ - Copyright (C) 2019 - 2021, Fyfe Software Inc. and the SanteSuite Contributors
+ - Portions Copyright (C) 2015-2018 Mohawk College of Applied Arts and Technology
+ - 
+ - Licensed under the Apache License, Version 2.0 (the "License"); you 
+ - may not use this file except in compliance with the License. You may 
+ - obtain a copy of the License at 
+ - 
+ - http://www.apache.org/licenses/LICENSE-2.0 
+ - 
+ - Unless required by applicable law or agreed to in writing, software
+ - distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+ - WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the 
+ - License for the specific language governing permissions and limitations under 
+ - the License.
+ - 
+ - User: fyfej
+ - Date: 2023-5-19
+ -->
 <div xmlns="http://www.w3.org/1999/xhtml" xmlns:sdb="http://santedb.org/applet">
     <sdb:script static="false">~/controllers/system/bug.js</sdb:script>
     <sdb:state name="santedb-admin.system.bug" abstract="false">
@@ -11,7 +31,7 @@
 
 
     <div class="container">
-        <form autocomplete="__away"  novalidate="novalidate" class="form" ng-submit="submitBug(bugForm)" name="bugForm">
+        <form novalidate="novalidate" class="form" ng-submit="submitBug(bugForm)" name="bugForm" autocomplete="off">
             <div class="form-group row">
                 <label class="col-md-3 col-sm-12 control-label">{{ 'ui.admin.bug.user' | i18n }}</label>
                 <div class="col-md-9 col-sm-12 control-value">
@@ -37,7 +57,8 @@
                 </div>
             </div>
             <div class="form-group row">
-                <label class="col-md-3 col-sm-12 control-label required">{{ 'ui.admin.bug.attachments' | i18n }}</label>
+                <label class="col-md-3 col-sm-12 control-label required">
+                    <span class="d-inline-block mt-1">{{ 'ui.admin.bug.attachments' | i18n }}</span></label>
                 <div class="col-md-9 col-sm-12">
                     <div class="list-group">
                         <div class="list-group-item list-group-item-action">

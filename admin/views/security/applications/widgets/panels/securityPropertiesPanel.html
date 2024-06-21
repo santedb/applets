@@ -1,3 +1,23 @@
+<!--
+ - Copyright 2021-2024 SanteSuite Contributors (See NOTICE.md for full copyright notices)
+ - Copyright (C) 2019 - 2021, Fyfe Software Inc. and the SanteSuite Contributors
+ - Portions Copyright (C) 2015-2018 Mohawk College of Applied Arts and Technology
+ - 
+ - Licensed under the Apache License, Version 2.0 (the "License"); you 
+ - may not use this file except in compliance with the License. You may 
+ - obtain a copy of the License at 
+ - 
+ - http://www.apache.org/licenses/LICENSE-2.0 
+ - 
+ - Unless required by applicable law or agreed to in writing, software
+ - distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+ - WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the 
+ - License for the specific language governing permissions and limitations under 
+ - the License.
+ - 
+ - User: fyfej
+ - Date: 2023-5-19
+ -->
 <div xmlns="http://www.w3.org/1999/xhtml" xmlns:sdb="http://santedb.org/applet" 
     oc-lazy-load="{ name: 'EditApplicationSecurityController', files: ['/org.santedb.admin/controllers/applications/widgets/security.js'] }" >
     <sdb:widget order="10" name="org.santedb.widget.admin.panel.applications.security"  headerClass="bl-light"
@@ -16,9 +36,9 @@
         <div class="form-group row">
             <label
                 class="col-xs-12 col-md-4 control-label">{{ 'ui.model.securityApplication.lastAuthenticationTime' | i18n }}</label>
-            <div class="col-xs-12 col-md-8" ng-if="scopedObject.securityApplication.lastAuthenticationTime">
+            <div class="col-xs-12 col-md-8 control-value" ng-if="scopedObject.securityApplication.lastAuthenticationTime">
                 {{ scopedObject.securityApplication.lastAuthenticationTime | extDate: 'F' }}</div>
-            <div class="col-xs-12 col-md-8" ng-if="!scopedObject.securityApplication.lastAuthenticationTime">
+            <div class="col-xs-12 col-md-8 control-value" ng-if="!scopedObject.securityApplication.lastAuthenticationTime">
                 {{ 'ui.admin.applications.edit.security.neverLoggedIn' | i18n }}</div>
         </div>
         <div class="form-group row" ng-if="scopedObject.securityApplication.id">
@@ -32,11 +52,11 @@
                 </button>
             </div>
         </div>
-        <div class="form-group row" ng-if="scopedObject.securityApplication.lockout > $root.page.currentTime">
+        <div class="form-group row align-items-center" ng-if="scopedObject.securityApplication.lockout > $root.page.currentTime">
             <label for="lockout"
                 class="col-xs-12 col-md-4 control-label">{{ 'ui.model.securityApplication.lockout' | i18n }}</label>
-            <div class="col-xs-12 col-md-8">
-                {{ scopedObject.securityApplication.lockout | extDate: 'F' }}
+            <div class="col-xs-12 col-md-8 d-flex align-items-center">
+                <span class="me-2 mr-2">{{ scopedObject.securityApplication.lockout | extDate: 'F' }}</span>
                 <button ng-click="unlock()" id="unlockButton" class="btn btn-info" type="button">
                     <i class="fa fa-lock-open"></i> {{ 'ui.action.unlock' | i18n }}
                 </button>

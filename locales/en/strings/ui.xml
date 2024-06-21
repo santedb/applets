@@ -1,23 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--
+ - Copyright 2021-2024 SanteSuite Contributors (See NOTICE.md for full copyright notices)
+ - Copyright (C) 2019 - 2021, Fyfe Software Inc. and the SanteSuite Contributors
+ - Portions Copyright (C) 2015-2018 Mohawk College of Applied Arts and Technology
+ - 
+ - Licensed under the Apache License, Version 2.0 (the "License"); you 
+ - may not use this file except in compliance with the License. You may 
+ - obtain a copy of the License at 
+ - 
+ - http://www.apache.org/licenses/LICENSE-2.0 
+ - 
+ - Unless required by applicable law or agreed to in writing, software
+ - distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+ - WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the 
+ - License for the specific language governing permissions and limitations under 
+ - the License.
+ - 
+ - User: fyfej
+ - Date: 2023-5-19
+ -->
 <resources>
-    <string name="ui.debug">DEBUG ENVIRONMENT - NOT FOR PRODUCTION USE</string>
+    <string name="ui.debug">DEBUG ENVIRONMENT</string>
     <string name="ui.generated.on">Generated On</string>
       <string name="ui.card">Card</string>
       <string name="ui.unknown">N/A</string>
       <string name="ui.confirmed">Confirmed</string>
       <string name="ui.none">None</string>
       <string name="ui.example">Example</string>
+      <string name="ui.true">Yes</string>
+      <string name="ui.false">No</string>
       <!-- Common Phrases -->
       <string name="ui.common.charsRemain">characters remain</string>
       <string name="ui.common.version">Version</string>
       <string name="ui.common.rows">Rows</string>
       <string name="ui.common.size">Size</string>
-      <string name="ui.common.kilobytes">Kb</string>
+      <string name="ui.common.size.large">Large</string>
+      <string name="ui.common.size.medium">Medium</string>
+      <string name="ui.common.size.small">Small</string>
+      <string name="ui.common.kilobytes">KB</string>
+      <string name="ui.common.show">Show:</string>
       <string name="ui.search.onlineResult">Online Result</string>
       <!-- Login Translations -->
       <string name="ui.login.input.username">Username</string>
       <string name="ui.login.input.password">Password</string>
-      <string name="ui.login.input.tfa">MFA Code</string>
+      <string name="ui.login.input.tfa">MFA Code</string>   
       <string name="ui.login.input.pin">PIN #</string>
       <string name="ui.login.title.elevate">User Elevation</string>
       <string name="ui.login.input.purpose">Reason</string>
@@ -34,7 +60,14 @@
       <string name="ui.login.resetPassword.introduction">This tool will help you reset your password. You will need to have setup a password recovery question in your user profile prior to using this tool</string>
       <string name="ui.login.resetPassword.onlineRequired">You have entered a user which requires internet connectivity to reset their password. Please connect to the internet to complete your password reset</string>
       <string name="ui.login.resetPassword.success">Password successfully changed. You can now login with your new password</string>
+      <string name="ui.login.passwordExpired.title">Password Expired</string>
+      <string name="ui.login.passwordExpired.help">Your password is expired and needs to be changed. Enter a new password below to change your password</string>
+      <string name="ui.tfa.setup.title">Setup TFA</string>
+      <string name="org.santedb.tfa.authenticator">Authenticator App</string>
+      <string name="org.santedb.tfa.authenticator.scan">Open your authenticator app and enter the secret generated</string>
+      <string name="org.santedb.tfa.authenticator.help"><![CDATA[Open your authenticator application (examples: Google Authenticator, Microsoft Authenticator) and scan this QR code. Then enter the generated code into the area below to validate your configuration when complete.]]></string>
       <string name="org.santedb.tfa.email">Send an E-Mail</string>
+      <string name="org.santedb.tfa.email.setup"><![CDATA[An e-mail with a validation code will be sent to your registered e-mail address (noted below). When you receive this e-mail enter the provided code below to validate your TFA setup]]></string>
       <string name="org.santedb.tfa.sms">Send an SMS message</string>
       <string name="ui.logout">Logout</string>
       <string name="ui.logout.confirm">Are you sure you want to end your session?</string>
@@ -47,6 +80,7 @@
       <string name="ui.password.new.help">Enter the new password for this user account</string>
       <string name="ui.password.confirm.label">Confirm Password</string>
       <string name="ui.password.confirm.help">Re-enter your password to confirm</string>
+      <string name="ui.password.forceChange">User must change password on next login</string>
       <string name="ui.password.pin.new.label">New PIN</string>
       <string name="ui.password.pin.new.help">Enter the new PIN number for this account on this device</string>
       <string name="ui.password.pin.confirm.label">Confirm PIN</string>
@@ -89,14 +123,14 @@
       <string name="ui.sync">Synchronization</string>
       <string name="ui.sync.clear">No Conflicts</string>
       <string name="ui.sync.conflict">Conflicts</string>
-      <string name="ui.sync.outbound">Outbox Queue</string>
-      <string name="ui.sync.outbound.text">(to be sent)</string>
-      <string name="ui.sync.inbound">Inbox Queue</string>
-      <string name="ui.sync.inbound.text">(to be processed)</string>
+      <string name="ui.sync.out">Outbox Queue</string>
+      <string name="ui.sync.out.text">(to be sent)</string>
+      <string name="ui.sync.in">Inbox Queue</string>
+      <string name="ui.sync.in.text">(to be processed)</string>
       <string name="ui.sync.admin">Admin Queue</string>
       <string name="ui.sync.admin.text">(to be sent)</string>
-      <string name="ui.sync.dead">Conflicts</string>
-      <string name="ui.sync.dead.text">(to be resolved)</string>
+      <string name="ui.sync.deadletter">Conflicts</string>
+      <string name="ui.sync.deadletter.text">(to be resolved)</string>
       <string name="ui.sync.log">Synchronization Log</string>
       <string name="ui.sync.log.resource">Resource</string>
       <string name="ui.sync.log.local"># Local</string>
@@ -104,6 +138,7 @@
       <string name="ui.sync.log.etag">Last Version</string>
       <string name="ui.sync.log.date">Sync Timestamp</string>
       <string name="ui.sync.retry">Re-Queue Conflicted</string>
+      <string name="ui.sync.queue.original">Original Queue</string>
       <string name="ui.sync.now">Synchronize Now</string>
       <string name="ui.sync.queue.id">ID</string>
       <string name="ui.sync.queue.action">Action</string>
@@ -121,8 +156,18 @@
       <string name="ui.sync.patch.actions">Actions to be applied</string>
       <string name="ui.sync.log.none">Nothing Synchronized Yet</string>
       <string name="ui.sync.queue.error">Error</string>
-      <string name="ui.sync.dead.ignoreConfirm">Are you sure you want to ignore this conflict? YOUR CHANGES WILL NOT BE SENT TO CENTRAL SERVER!</string>
+      <string name="ui.sync.investigate">View Object</string>
+      <string name="ui.sync.investigate.summary">Queue Metadata</string>
+      <string name="ui.sync.investigate.detail">Queued Object</string>
+      <string name="ui.sync.countRemote">Count Remotes</string>
+      <string name="ui.sync.deadletter.requeue.success">Object has been re-submitted for re-processing</string>
+      <string name="ui.sync.deadletter.ignore.confirm">Are you sure you want to ignore this conflict? The data will not be processed.</string>
+      <string name="ui.sync.deadletter.ignore.success">Queue object has been successfully ignored.</string>
+      <string name="ui.sync.deadletter.retryAll.confirm">Are you sure you want to retry all the failed synchronization messages?</string>
+      <string name="ui.sync.deadletter.retryAll.success">All conflicts have been re-submitted for retry</string>
       <string name="ui.sync.resetConfirm">Are you sure you want to reset the synchronization log for this type?</string>
+      <string name="ui.sync.onStart.begin">Synchronization has started, access to data may be slow and/or adversely impacted during this process</string>
+      <string name="ui.sync.onStart.complete">Synchronization has completed - data services are restored</string>
 
       <!-- Common Date -->
       <string name="ui.date.day.monday">Monday</string>
@@ -145,15 +190,21 @@
       <string name="ui.action.dismiss">Dismiss</string>
       <string name="ui.action.cancel">Cancel</string>
       <string name="ui.action.clear">Clear</string>
+      <string name="ui.action.complete">Complete</string>
+      <string name="ui.action.customize">Customize</string>
       <string name="ui.action.clone">Clone</string>
       <string name="ui.action.cancel.confirm">Are you sure you want to cancel?</string>
       <string name="ui.action.abandon.confirm">You have unsaved changes on this page. Are you sure you want to abandon them?</string>
       <string name="ui.action.save">Save</string>
+      <string name="ui.action.save.then.new">Save &amp; Create Another</string>
+      <string name="ui.action.save.then.goto">Save &amp; Go To</string>
+      <string name="ui.action.goto">Go To</string>
+
       <string name="ui.action.submit">Submit</string>
       <string name="ui.action.search">Search</string>
       <string name="ui.action.search.advanced">Advanced Search</string>
       <string name="ui.action.search.basic">Basic Search</string>
-      <string name="ui.action.search.upstream">Search the central server</string>
+      <string name="ui.action.search.upstream">Search Upstream</string>
       <string name="ui.action.login">Login</string>
       <string name="ui.action.passwordReset">Forgot Password</string>
       <string name="ui.action.ignore">Ignore</string>
@@ -169,6 +220,9 @@
       <string name="ui.action.delete">Delete</string>
       <string name="ui.action.nullify">Nullify</string>
       <string name="ui.action.upload">Upload</string>
+      <string name="ui.action.backup">Backup Now</string>
+      <string name="ui.action.restore">Restore</string>
+      <string name="ui.action.customize.view">Customize View</string>
       <string name="ui.action.nullify.confirm">Are you sure you want to nullify this object? This cannot be undone!</string>
       <string name="ui.action.delete.confirm">Are you sure you want to delete this object?</string>
       <string name="ui.action.undelete">Un-Delete</string>
@@ -182,7 +236,7 @@
       <string name="ui.action.resolve">Resolve</string>
       <string name="ui.action.enable">Enable</string>
       <string name="ui.action.disable">Disable</string>
-      <string name="ui.action.schedule">Schedue</string>
+      <string name="ui.action.schedule">Schedule</string>
       <string name="ui.action.scan">Scan</string>
       <string name="ui.action.finish">Finish</string>
       <string name="ui.action.refresh">Refresh</string>
@@ -242,7 +296,7 @@
       <string name="ui.table.page.previous">Previous</string>
       <string name="ui.table.page.last">Last</string>
       <string name="ui.table.sort.ascending">Sort ascending order</string>
-      <string name="ui.table.sort.descending">Sort descneding order</string>
+      <string name="ui.table.sort.descending">Sort descending order</string>
       <string name="ui.table.search">Search:</string>
       <string name="ui.table.search.field._any">Freetext Search</string>
       <string name="ui.table.search.field.address.component.value">Search by address</string>
@@ -256,7 +310,12 @@
       <string name="ui.table.search.field.sub">Search by subject</string>
       <string name="ui.table.search.field.mnemonic">Search by mnemonic</string>
       <string name="ui.table.search.field.authority">Search by domain</string>
+      <string name="ui.table.search.field.label">Search by label</string>
       <string name="ui.table.search.field.description">Search by description</string>
+      <string name="ui.table.search.field.target.name.component.value">Search by name</string>
+      <string name="ui.table.search.field.targetConcept.name.value">Search by Target</string>
+      <string name="ui.table.search.field.source.name.value">Search by Source</string>
+      <string name="ui.table.search.field.lotNumber">Search by Lot</string>
       <!-- Common --> 
       <string name="ui.common.interop.hl7v2">HL7v2</string>
       <string name="ui.common.interop.hl7v3">HL7v3/CDA</string>
@@ -288,7 +347,7 @@
       <string name="ui.subscription.quantityObservation.all">All quantified observations (weight, height, etc.)</string>
       <string name="ui.subscription.conceptSet.all">All concept sets (recommended)</string>
       <string name="ui.subscription.concept.all">All concepts (recommended)</string>
-      <string name="ui.subscription.identityDomain.all">All assinging authorities (recommended)</string>
+      <string name="ui.subscription.identityDomain.all">All assigning authorities (recommended)</string>
       <string name="ui.subscription.identifierType.all">All identifier types (recommended)</string>
       <string name="ui.subscription.templateDefinition.all">All clinical templates (recommended)</string>
       <string name="ui.subscription.extensionType.all">All extension types (recommended)</string>
@@ -301,6 +360,7 @@
       <string name="ui.subscription.patient.liveInCounty">Patients who live in my county</string>
       <string name="ui.subscription.codeSystem.liveInState">Patients who live in my state</string>
       <string name="ui.subscription.referenceTerm.all">All Reference Terms (recommended)</string>
+      <string name="ui.subscription.places">All Places</string>
       <string name="ui.subscription.place.county">All places in my county/district</string>
       <string name="ui.subscription.place.outOfState">All places out of my state/province (background after start)</string>
       <string name="ui.subscription.place.outOfCounty">All places out of my county/district (background after start)</string>
@@ -318,6 +378,8 @@
       <string name="ui.subscription.act.PatientEncounter.me">Only patient encounters performed at my facility</string>
 
       <!-- Configuration Translations -->
+      <string name="ui.config.advancedMode.active">The configuration tooling has been placed into advanced mode. Additional options are now available</string>
+      <string name="ui.config.advancedMode.count">Tap this option {away} more times to enter advanced mode</string>
       <string name="ui.config.network.clientCert.label">Client Certificate</string>
       <string name="ui.config.network.clientCert.help">If your upstream requires the use of PKI authentication you may specify the certificate to present to the upstream here. PKI authentication uses encryption to authenticate your SanteDB node with the upstream using strong public key encryption</string>
       <string name="ui.config.subscribe.type.label">Selectively Replicate</string>
@@ -348,7 +410,8 @@
       <string name="ui.config.integration.mode.online">Online Only</string>
       <string name="ui.config.integration.mode.online.help">This dCDR will act as a relay for all requests to the upstream iCDR. The dCDR will have no offline functionality and will serve as a web-portal to the iCDR</string>
       <string name="ui.config.integration.mode.synchronize">Synchronize</string>
-      <string name="ui.config.integration.mode.synchronize.help">This dCDR will synchornize its data with the upstream iCDR and will provide this information to clients (and the user interface) even if the system is offline</string>
+      <string name="ui.config.integration.mode.synchronize.help">This dCDR will synchronize its data with the upstream iCDR and will provide this information to clients (and the user interface) even if the system is offline</string>
+      <string name="ui.config.integration.mode.unavailable">This feature is only available when the Integration mode is set to Synchronize</string>
       <string name="ui.config.sync.mode.label">Mode</string>
       <string name="ui.config.sync.mode.help">Use this option to set the mode in which this application behaves</string>
       <string name="ui.config.sync.mode.online">Online Only (No disconnected use)</string>
@@ -393,7 +456,7 @@
       <string name="ui.config.data.basic.title">Basic Configuration</string>
       <string name="ui.config.data.advanced.title">Advanced Configuration</string>
       <string name="ui.config.log.title">Logging</string>
-      <string name="ui.config.log.description">SanteDB disconnected clients keep logs about the activities that occur on the mobile. While these are helpful for debugging and bug reports, they may impact performance or take up a lot of space. Use this panel to adjust the loggin levels</string>
+      <string name="ui.config.log.description">SanteDB disconnected clients keep logs about the activities that occur on the mobile. While these are helpful for debugging and bug reports, they may impact performance or take up a lot of space. Use this panel to adjust the logging levels</string>
       <string name="ui.config.log.verbosity.label">Log Detail</string>
       <string name="ui.config.log.verbosity.help">Use this setting to control how verbose the logs that SanteDB produces are. Note that these are not security audits or security logs, rather these are programmatic and application logs used for debugging. The higher the log verbosity, the slower this application will run.</string>
       <string name="ui.config.log.verbosity.disabled">Disabled</string>
@@ -414,13 +477,13 @@
       <string name="ui.config.security.signing.key">Key</string>
       <string name="ui.config.security.password.help">Use this setting to modify the password hashing strength. Note: You should only use SHA1 hashing in legacy mode, SHA256 is the recommended setting</string>
       <string name="ui.config.security.password.sha256">SHA256 Password Hashing</string>
-      <string name="ui.config.security.password.sha1">SHA1 Password Hashin</string>
+      <string name="ui.config.security.password.sha1">SHA1 Password Hashing</string>
       <string name="ui.config.security.password.plain">Plaintext (not recommended)</string>
       <string name="ui.config.security.audit.label">AR Store</string>
       <string name="ui.config.security.owner.title">Maintainer</string>
-      <string name="ui.config.security.owner.help">Select one or more users that will be using this tablet. These people may be contacted from time to time to perform maintenance.</string>
+      <string name="ui.config.security.owner.help">Select one or more users that are responsible for the maintenance of this device. These people may be contacted from time to time to perform maintenance, diagnose issues.</string>
       <string name="ui.config.security.facility.title">Assigned Facility</string>
-      <string name="ui.config.security.facility.help">Select one or more facilities which this gateway services</string>
+      <string name="ui.config.security.facility.help">Select one or more facilities which this device services</string>
       <string name="ui.config.security.audit.help">Use this setting to configure how long audits are retained on this device. Depending on internet availability and legal/policy requirements this setting may need to be changed.</string>
       <string name="ui.config.security.audit.none">Do not store security audits locally (not recommended)</string>
       <string name="ui.config.security.audit.48hr">Retain for 48 hrs</string>
@@ -441,7 +504,7 @@
       <string name="ui.config.network.optimize.Gzip">GZIP (recommended for 4g/LTE/DSL)</string>
       <string name="ui.config.network.optimize.Gzip.help">GZIP compression represents a good balance of computing resources at the expense of larger payload sizes</string>
       <string name="ui.config.network.optimize.Deflate">Deflate (recommended for 5g/Broadband/Wi-Fi)</string>
-      <string name="ui.config.network.optimize.Deflate.help">Deflate compression uses ver little computing resources, however the level of compression may result in larger payloads with the server</string>
+      <string name="ui.config.network.optimize.Deflate.help">Deflate compression uses very little computing resources, however the level of compression may result in larger payloads with the server</string>
       <string name="ui.config.network.optimize.None">None (recommended for LAN)</string>
       <string name="ui.config.network.optimize.None.help">This option turns off compression in SanteDB between this server and the upstream. This saves on computing resources however the payload sizes are much larger</string>
       <string name="ui.config.network.useProxy">Use a proxy to access the server</string>
@@ -501,13 +564,15 @@
       <!-- Core Widgets -->
       <string name="org.santedb.widget.mdm.recordOfTruth">Record of Truth</string>
       <string name="org.santedb.widget.mdm.candidate">Candidate Records</string>
-      <string name="org.santedb.widget.userEntity.profile">Profile</string>
+      <string name="org.santedb.widget.userEntity.profile">Public Profile</string>
       <string name="org.santedb.widget.user.profile">My Profile</string>
+      <string name="org.santedb.widget.userEntity.preferences">Preferences</string>
       <string name="org.santedb.widget.userEntity.security">Security Controls</string>
       <string name="org.santedb.widget.patient.dataQuality">Data Quality</string>
       <string name="org.santedb.widget.dq.validation">Validation Issues</string>
       <string name="org.santedb.widget.patient.card">ID Card</string>
-
+      <string name="org.santedb.widget.userEntity.idCard">Digital ID</string>
+      
       <!-- Data quality issues -->
       <string name="ui.dq.priority.1">Serious</string>
       <string name="ui.dq.priority.2">Warning</string>
@@ -608,4 +673,35 @@
       <string name="ui.config.log.writer.label">Log Writers</string>
       <string name="ui.config.log.writer.help">This controls where SanteDB will collect produce log output. Each log writer can be filtered based on the event type.</string>
 
+      <!-- Job Execution -->
+      <string name="ui.job.run">Running job {jobName}</string>
+
+      <!-- Backup -->
+      <string name="ui.app.backup.complete">System backup is completed successfully</string>
+      <string name="ui.app.backup.error">There was an error backing up system files :" {error}</string>
+
+      <!-- Resubmit Deadletter on start -->
+      <string name="ui.start.deadLetter.resubmit">There are data objects downloaded that could not be processed, would you like to retry them?</string>
+
+      <!-- Matching -->
+      <string name="ui.match.mode.AbsoluteScore">Classification performed using absolute result score of attributes</string>
+      <string name="ui.match.mode.Percentage">Classify performed using normalized score of evaluated attributes</string>
+      <string name="ui.match.detail.title">Candidate Match Report</string>
+
+      <string name="ui.match.score.label">Score</string>
+      <string name="ui.match.strength.label">Strength</string>
+      <string name="ui.match.class.label">Classification</string>
+      <string name="ui.match.class.0">Non-Match</string>
+      <string name="ui.match.class.1">Probable</string>
+      <string name="ui.match.class.2">Match</string>
+      
+      <!-- Preferences -->
+      <string name="ui.userEntity.preferences.widgets">Dashboards</string>
+      <string name="ui.userEntity.preferences.help">Help Display</string>
+      <string name="ui.userEntity.preferences.help.popover">Popup - Click to show help (default)</string>
+      <string name="ui.userEntity.preferences.help.show">Show Inline</string>
+      <string name="ui.userEntity.preferences.help.hide">Don't Show</string>
+      <string name="ui.userEntity.preferences.ui">Theme</string>
+      <string name="ui.userEntity.preferences.ui.light">Light</string>
+      <string name="ui.userEntity.preferences.ui.dark">Dark</string>
 </resources>

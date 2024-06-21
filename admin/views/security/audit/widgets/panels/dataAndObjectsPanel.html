@@ -1,3 +1,23 @@
+<!--
+ - Copyright 2021-2024 SanteSuite Contributors (See NOTICE.md for full copyright notices)
+ - Copyright (C) 2019 - 2021, Fyfe Software Inc. and the SanteSuite Contributors
+ - Portions Copyright (C) 2015-2018 Mohawk College of Applied Arts and Technology
+ - 
+ - Licensed under the Apache License, Version 2.0 (the "License"); you 
+ - may not use this file except in compliance with the License. You may 
+ - obtain a copy of the License at 
+ - 
+ - http://www.apache.org/licenses/LICENSE-2.0 
+ - 
+ - Unless required by applicable law or agreed to in writing, software
+ - distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+ - WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the 
+ - License for the specific language governing permissions and limitations under 
+ - the License.
+ - 
+ - User: fyfej
+ - Date: 2023-5-19
+ -->
 <div xmlns="http://www.w3.org/1999/xhtml" xmlns:sdb="http://santedb.org/applet"
     oc-lazy-load="{ name: 'AuditDataController', files: ['/org.santedb.admin/controllers/audit/widgets/data.js'] }">
     <sdb:widget order="16" name="org.santedb.widget.admin.panel.audit.dataAndObjects" headerClass="bl-light"
@@ -47,23 +67,23 @@
                     <div class="row">
 
                         <label class="control-label col-md-2">{{ 'ui.admin.audit.object.type' | i18n }}</label>
-                        <div class="col-md-4"><i class="fas"
+                        <div class="col-md-4 control-value"><i class="fas"
                                 ng-class="{ 'fa-user' : o.type == 'Person', 'fa-cog' : o.type == 'SystemObject', 'fa-building' : o.type == 'Organization', 'fa-question' : o.type == 'Other' }"></i>
                             {{ o.type }}</div>
                         <label class="control-label col-md-2">{{ 'ui.admin.audit.object.lifecycle' | i18n }}</label>
-                        <div class="col-md-4"><i class="fas"
+                        <div class="col-md-4 control-value"><i class="fas"
                                 ng-class="{ 'fa-plus' : o.lifecycle == 'Creation', 'fa-file-import' : o.lifecycle == 'Import', 'fa-pencil-alt' : o.lifecycle == 'Amendment','fa-random' : o.lifecycle == 'Translation', 'fa-search' : o.lifecycle == 'Access', 'fa-object-group' : o.lifecycle == 'Aggregation', 'fa-file-export' : o.lifecycle == 'Export', 'fa-comment-medical' : o.lifecycle == 'Disclosure', 'fa-file-archive' : o.lifecycle == 'Archiving', 'fa-trash' : o.lifecycle == 'PermanentErasure', 'fa-recycle' : o.lifecycle == 'LogicalDeletion' }"></i>
 
                             {{ o.lifecycle }}</div>
                         <label class="control-label col-md-2">{{ 'ui.admin.audit.object.role' | i18n }}</label>
-                        <div class="col-md-4">
+                        <div class="col-md-4 control-value">
                             <i class="fas"
                                 ng-class="{ 'fa-user-nurse' : o.role == 'Provider', 'fa-user-md' : o.role == 'Doctor', 'fa-shield-alt' : o.role == 'SecurityResource', 'fa-user' : o.role == 'SecurityUser', 'fa-database': o.role == 'DataRepository', 'fa-table': o.role == 'Table', 'fa-search' : o.role == 'Query', 'fa-bed' : o.role == 'Patient', 'fa-building' : o.role == 'Location', 'fa-file' : o.role == 'Report', 'fa-files' : o.role == 'MasterFile' }"></i>
 
                             {{ o.role }}
                         </div>
                         <label class="control-label col-md-2">{{ 'ui.admin.audit.object.idType' | i18n }}</label>
-                        <div class="col-md-4">
+                        <div class="col-md-4 control-value">
                             <i class="fas"
                                 ng-class="{ 'fa-question-circle' : o.idType == 'Custom', 'fa-filter' : o.idType == 'SearchCritereon' }"></i>
 
@@ -76,18 +96,12 @@
                     <div class="row" ng-if="o.name">
                         <label class="control-label col-sm-2 col-xs-12">{{ 'ui.admin.audit.name' | i18n
                             }}</label>
-                        <div class="col-sm-10 col-xs-12">
-
-
-                            {{ o.name }}
-                        </div>
+                        <div class="col-sm-10 col-xs-12 control-value">{{ o.name }}</div>
                     </div>
                     <div class="row" ng-if="o.queryData">
                         <label class="control-label col-sm-2 col-xs-12">{{ 'ui.admin.audit.query' | i18n
                             }}</label>
-                        <div class="col-sm-10 col-xs-12">
-
-
+                        <div class="col-sm-10 col-xs-12 control-value">
                             <code>{{ o.queryData }}</code>
                         </div>
 

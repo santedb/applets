@@ -1,0 +1,118 @@
+<!--
+ - Copyright 2021-2024 SanteSuite Contributors (See NOTICE.md for full copyright notices)
+ - Copyright (C) 2019 - 2021, Fyfe Software Inc. and the SanteSuite Contributors
+ - Portions Copyright (C) 2015-2018 Mohawk College of Applied Arts and Technology
+ - 
+ - Licensed under the Apache License, Version 2.0 (the "License"); you 
+ - may not use this file except in compliance with the License. You may 
+ - obtain a copy of the License at 
+ - 
+ - http://www.apache.org/licenses/LICENSE-2.0 
+ - 
+ - Unless required by applicable law or agreed to in writing, software
+ - distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+ - WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the 
+ - License for the specific language governing permissions and limitations under 
+ - the License.
+ - 
+ - User: fyfej
+ - Date: 2023-5-19
+ -->
+<div xmlns="http://www.w3.org/1999/xhtml" class="m-2">
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>{{ 'ui.model.entityIdentifier.authority' | i18n }}</th>
+                <th>{{ 'ui.model.entityIdentifier.value' | i18n }}</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="(authority, idArr) in model">
+                <td>{{ idArr[0].domainModel.name }}</td>
+                <td colspan="2">
+                    <div ng-repeat="idValue in idArr track by $index" class="w-100">
+                        <div class="input-group">
+                            <input ng-pattern="idValue.domainModel.validation" ng-model="idValue.value"
+                                class="form-control" name="id{{authority}}{{$index}}input" ng-readonly="idValue.readonly" 
+                                autocomplete="__away" autocapitalize="false"
+                                ng-if="idValue.operation != 'Delete'" />
+                            <div class="input-group-append">
+                                <span ng-if="idValue.operation == 'Delete'" class="input-group-text text-secondary"
+                                    style="text-decoration: line-through;">{{ idValue.value }}</span>
+                            </div>
+                            <div class="input-group-append" ng-if="idValue.checkDigit">
+                                <span class="input-group-text">
+                                    {{ 'ui.model.entityIdentifier.checkDigit.short' | i18n }} 
+                                    <hint-popover hint-title="ui.model.entityIdentifier.checkDigit" />
+                                </span>
+                                <input type="text" class="form-control" name="id{{authority}}{{$index}}cd" required="required" 
+                                ng-model="idValue.checkDigit" ng-readonly="idValue.readonly" />
+                                
+                            </div>
+                            <div class="input-group-append btn-group">
+                                
+                                <button ng-if="idValue.operation != 'Delete'" type="button" class="btn btn-danger" ng-click="idValue.operation = 'Delete'"><i
+                                        class="fas fa-times"></i></button>
+                                        <button ng-if="idValue.operation == 'Delete'" type="button" class="btn btn-info" ng-click="idValue.operation = 'InsertOrUpdate'"><i
+                                            class="fas fa-undo"></i></button>
+                                </div>
+                        </div>
+                        <div ng-show="ownerForm['id' + authority + $index + 'input'].$error['pattern']" class="text-danger">
+                            <i class="fa fa-exclamation-triangle"></i>
+                            {{ 'ui.error.pattern' | i18n }}
+                        </div>
+                        <div ng-show="ownerForm['id' + authority + $index + 'input'].$error['required'] || ownerForm['id' + authority + $index + 'cd'].$error['required']" class="text-danger">
+                            <i class="fa fa-exclamation-triangle"></i>
+                            {{ 'ui.error.required' | i18n }}
+                        </div>
+                    </div>
+                    
+                </td>
+
+            </tr>
+        </tbody>
+        <tfoot ng-if="!noAdd">
+            <tr>
+                <td>
+                    <select class="form-control" ng-model="newId.domainModel.domainName">
+                        <option value="" selected="selected">---</option>
+                        <option ng-repeat="(k, auth) in authorities" value="{{auth.domainName}}">{{ auth.name }}
+                        </option>
+                    </select>
+                </td>
+                <td>
+                    <div class="input-group">
+                        <input ng-pattern="authorities[newId.domainModel.domainName].validation" ng-model="newId.value"
+                            class="form-control" name="idNewinput" ng-required="newId.domainModel.domainName"
+                            ng-disabled="!newId.domainModel.domainName" />
+                        <div class="input-group-append" ng-if="authorities[newId.domainModel.domainName].checkDigitAlgorithm">
+                            <span class="input-group-text">
+                                {{ 'ui.model.entityIdentifier.checkDigit.short' | i18n }}                                     <hint-popover hint-title="ui.model.entityIdentifier.checkDigit" />
+
+                            </span>
+                            <input ng-model="newId.checkDigit"
+                                class="form-control" name="idNewcheck" required="required"
+                                ng-disabled="!newId.domainModel.domainName" />
+                        </div>
+                    </div>
+                    <div ng-show="ownerForm.idNewinput.$error['pattern']" class="text-danger">
+                        <i class="fa fa-exclamation-triangle"></i>
+                        {{ 'ui.error.pattern' | i18n }}
+                    </div>
+                    <div ng-show="ownerForm.idNewinput.$error['required'] || ownerForm.idNewcheck.$error['required']" class="text-danger">
+                        <i class="fa fa-exclamation-triangle"></i>
+                        {{ 'ui.error.required' | i18n }}
+                    </div>
+                    
+                </td>
+                <td class="btn-group">
+                    <button ng-if="authorities[newId.domainModel.domainName].generator" title="Auto-Generate" ng-click="generateId(newId)"
+                        class="btn btn-light" type="button"><i class="fas fa-robot"></i></button>
+                    <button ng-disabled="ownerForm.idNewinput.$error['required'] || ownerForm.idNewcheck.$error['required'] || ownerForm.idNewinput.$error['pattern']" type="button" class="btn btn-primary" ng-click="addIdentifier(newId)"><i
+                            class="fas fa-circle-plus"></i> {{ 'ui.action.add' | i18n}}</button>
+                </td>
+            </tr>
+        </tfoot>
+    </table>
+</div>

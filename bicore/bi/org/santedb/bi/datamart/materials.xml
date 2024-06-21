@@ -1,4 +1,24 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
+<!--
+ - Copyright 2021-2024 SanteSuite Contributors (See NOTICE.md for full copyright notices)
+ - Copyright (C) 2019 - 2021, Fyfe Software Inc. and the SanteSuite Contributors
+ - Portions Copyright (C) 2015-2018 Mohawk College of Applied Arts and Technology
+ - 
+ - Licensed under the Apache License, Version 2.0 (the "License"); you 
+ - may not use this file except in compliance with the License. You may 
+ - obtain a copy of the License at 
+ - 
+ - http://www.apache.org/licenses/LICENSE-2.0 
+ - 
+ - Unless required by applicable law or agreed to in writing, software
+ - distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+ - WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the 
+ - License for the specific language governing permissions and limitations under 
+ - the License.
+ - 
+ - User: fyfej
+ - Date: 2023-5-19
+ -->
 <BiDataFlowDefinition xmlns="http://santedb.org/bi" id="org.santedb.bi.datamart.core.mats">
   <parameters>
     <ref name="input" />
@@ -28,6 +48,9 @@
 	          LEFT JOIN CD_VRSN_TBL UOM ON (MAT_TBL.QTY_CD_ID = UOM.CD_ID AND UOM.HEAD)
 	          LEFT JOIN CD_VRSN_TBL FRM ON (MAT_TBL.FRM_CD_ID = FRM.CD_ID AND FRM.HEAD)
             LEFT JOIN CD_VRSN_TBL TYP ON (ENT_VRSN_TBL.TYP_CD_ID = TYP.CD_ID AND TYP.HEAD)
+          WHERE 
+            ENT_VRSN_TBL.HEAD = TRUE
+
           ]]>
         </add>
         <add>
@@ -48,6 +71,8 @@
 	          LEFT JOIN CD_VRSN_TBL UOM ON (MAT_TBL.QTY_CD_ID = UOM.CD_ID AND UOM.HEAD = 1)
 	          LEFT JOIN CD_VRSN_TBL FRM ON (MAT_TBL.FRM_CD_ID = FRM.CD_ID AND FRM.HEAD = 1)
             LEFT JOIN CD_VRSN_TBL TYP ON (ENT_VRSN_TBL.TYP_CD_ID = TYP.CD_ID AND TYP.HEAD = 1)
+          WHERE
+            ENT_VRSN_TBL.HEAD = 1
           ]]>
         </add>
       </sql>
@@ -99,8 +124,39 @@
         </add>
       </sql>
     </reader>
-    <writer truncate="true" mode="insert" name="write_mats">
+    <transform name="map_mats">
       <input ref="input_mats" />
+      <map>
+        <source name="ENT_ID" />
+        <target name="ENT_ID" />
+      </map>
+      <map>
+        <source name="TYPE"/>
+        <target name="TYPE"/>
+      </map>
+      <map>
+        <source name="EXPIRY">
+          <cast>date</cast>
+        </source>
+        <target name="EXPIRY"/>
+      </map>
+      <map>
+        <source name="QTY">
+          <cast>decimal</cast>
+        </source>
+        <target name="QTY"/>
+      </map>
+      <map>
+        <source name="UNIT_OF_MEASURE"/>
+        <target name="UNIT_OF_MEASURE"/>
+      </map>
+      <map>
+        <source name="FORM"/>
+        <target name="FORM"/>
+      </map>
+    </transform>
+    <writer truncate="true" mode="insert" name="write_mats">
+      <input ref="map_mats" />
       <connection ref="output" />
       <target ref="MAT_TBL" />
     </writer>

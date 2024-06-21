@@ -1,4 +1,24 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ - Copyright 2021-2024 SanteSuite Contributors (See NOTICE.md for full copyright notices)
+ - Copyright (C) 2019 - 2021, Fyfe Software Inc. and the SanteSuite Contributors
+ - Portions Copyright (C) 2015-2018 Mohawk College of Applied Arts and Technology
+ - 
+ - Licensed under the Apache License, Version 2.0 (the "License"); you 
+ - may not use this file except in compliance with the License. You may 
+ - obtain a copy of the License at 
+ - 
+ - http://www.apache.org/licenses/LICENSE-2.0 
+ - 
+ - Unless required by applicable law or agreed to in writing, software
+ - distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+ - WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the 
+ - License for the specific language governing permissions and limitations under 
+ - the License.
+ - 
+ - User: fyfej
+ - Date: 2023-5-19
+ -->
 <?xml-model href="../../../../../../.ref/schema/BusinessIntelligence.xsd" type="application/xml" schematypens="http://www.w3.org/2001/XMLSchema"?>
 <BiDatamartDefinition xmlns="http://santedb.org/bi" id="org.santedb.bi.datamart.core"
     status="active"
@@ -41,9 +61,29 @@
       <column type="string" name="REASON" />
     </table>
 
+    <!-- Security Object Table -->
+    <table name="SEC_OBJ_TBL">
+      <column type="uuid" key="true" notNull="true" unique="true" name="SEC_OBJ_ID" />
+      <column type="string" notNull="true" name="CLS" />
+    </table>
+    <table name="SEC_DEV_TBL">
+      <column type="ref" key="true" notNull="true" name="DEV_ID">
+        <otherTable ref="SEC_OBJ_TBL" />
+      </column>
+      <column type="string" notNull="true" name="NAME" />
+      <column type="date-time" notNull="true" name="CREATED_TIME" />
+      <column type="uuid" notNull="true" name="CREATED_BY" />
+      <column type="date-time" name="LAST_AUTH_DATE" />
+      <column type="date-time" name="OBSOLETE_TIME"/>
+      <column type="ref" name="OBSOLETE_BY">
+        <otherTable ref="SEC_OBJ_TBL" />
+      </column>
+    </table>
     <!-- Security User Reporting Table -->
     <table name="SEC_USR_TBL">
-      <column type="uuid" key="true" notNull="true" unique="true" name="USR_ID"/>
+      <column type="ref" key="true" notNull="true" name="USR_ID">
+        <otherTable ref="SEC_OBJ_TBL" />
+      </column>
       <column type="string" notNull="true" name="USERNAME" />
       <column type="date-time" notNull="true" name="CREATED_TIME" />
       <column type="uuid" notNull="true" name="CREATED_BY" />
@@ -52,7 +92,7 @@
       <column type="string" name="PHONE" />
       <column type="date-time" name="OBSOLETE_TIME"/>
       <column type="ref" name="OBSOLETE_BY">
-        <otherTable ref="SEC_USR_TBL" />
+        <otherTable ref="SEC_OBJ_TBL" />
       </column>
     </table>
 
@@ -68,11 +108,11 @@
       <column type="float" name="LNG"/>
       <column type="date-time" notNull="true" name="CREATED_TIME"/>
       <column type="ref" notNull="true" name="CREATED_BY">
-        <otherTable ref="SEC_USR_TBL" />
+        <otherTable ref="SEC_OBJ_TBL" />
       </column>
       <column type="date-time" name="OBSOLETE_TIME"/>
       <column type="ref" name="OBSOLETE_BY">
-        <otherTable ref="SEC_USR_TBL" />
+        <otherTable ref="SEC_OBJ_TBL" />
       </column>
     </table>
 
@@ -105,6 +145,7 @@
       <column type="string" name="ADDR_COUNTRY" />
       <column type="string" name="ADDR_POSTAL" />
       <column type="string" name="ADDR_CENSUS" />
+      <column type="uuid" name="ADDR_REF" />
     </table>
 
     <!-- Entity Names that have been pivoted -->
@@ -162,17 +203,23 @@
 
     <!-- Manufactured materials table storing only those materials which are manufactured by an organization -->
     <table name="MMAT_TBL">
-      <column type="string" name="LOT" />
       <column type="string" name="GTIN" />
       <column type="ref" name="MANUFACTURER">
         <otherTable ref="ORG_TBL" />
       </column>
-      <column type="ref" name="PRODUCT">
+      <column type="ref" name="SPECIALIZATION">
         <otherTable ref="MAT_TBL" />
       </column>
       <parent ref="MAT_TBL" />
     </table>
 
+    <table name="MMAT_LOT_TBL">
+      <column type="string" name="LOT" />
+      <column type="ref" name="PRODUCT">
+        <otherTable ref="MMAT_TBL" />
+      </column>
+      <parent ref="MAT_TBL"/>
+    </table>
     <!-- All Places (Facilities, Buildings, Provinces, States, Cities, etc. -->
     <table name="PLC_TBL">
       <column type="ref" name="NAME">
@@ -292,11 +339,11 @@
       <column type="float" name="LNG"/>
       <column type="date-time" notNull="true" name="CREATED_TIME"/>
       <column type="ref" notNull="true" name="CREATED_BY">
-        <otherTable ref="SEC_USR_TBL" />
+        <otherTable ref="SEC_OBJ_TBL" />
       </column>
       <column type="date-time" name="OBSOLETE_TIME"/>
       <column type="ref" name="OBSOLETE_BY">
-        <otherTable ref="SEC_USR_TBL" />
+        <otherTable ref="SEC_OBJ_TBL" />
       </column>
       <column type="ref" notNull="true" name="RECORD_TARGET">
         <otherTable ref="ENT_TBL" />
@@ -409,6 +456,8 @@
   </schema>
 
   <dataFlows>
+    <flow name="security_objects" ref="#org.santedb.bi.datamart.core.security_objects" />
+    <flow name="devices" ref="#org.santedb.bi.datamart.core.devices" />
     <flow name="users" ref="#org.santedb.bi.datamart.core.users" />
     <flow name="addresses" ref="#org.santedb.bi.datamart.core.addresses" />
     <flow name="names" ref="#org.santedb.bi.datamart.core.names" />
@@ -436,6 +485,28 @@
         <transaction name="main_transaction">
           <connection ref="warehouseDatabase" />
           <pipeline>
+            <call>  
+              <dataFlow ref="security_objects" />
+              <args>
+                <ref name="input">
+                  <value ref="mainDatabase" />
+                </ref>
+                <ref name="output">
+                  <value ref="warehouseDatabase" />
+                </ref>
+              </args>
+            </call>
+            <call>
+              <dataFlow ref="devices" />
+              <args>
+                <ref name="input">
+                  <value ref="mainDatabase" />
+                </ref>
+                <ref name="output">
+                  <value ref="warehouseDatabase" />
+                </ref>
+              </args>
+            </call>
             <call>
               <dataFlow ref="users" />
               <args>

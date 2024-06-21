@@ -1,9 +1,29 @@
+<!--
+ - Copyright 2021-2024 SanteSuite Contributors (See NOTICE.md for full copyright notices)
+ - Copyright (C) 2019 - 2021, Fyfe Software Inc. and the SanteSuite Contributors
+ - Portions Copyright (C) 2015-2018 Mohawk College of Applied Arts and Technology
+ - 
+ - Licensed under the Apache License, Version 2.0 (the "License"); you 
+ - may not use this file except in compliance with the License. You may 
+ - obtain a copy of the License at 
+ - 
+ - http://www.apache.org/licenses/LICENSE-2.0 
+ - 
+ - Unless required by applicable law or agreed to in writing, software
+ - distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+ - WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the 
+ - License for the specific language governing permissions and limitations under 
+ - the License.
+ - 
+ - User: fyfej
+ - Date: 2023-5-19
+ -->
 <div xmlns="http://www.w3.org/1999/xhtml">
     <div class="row form-group">
         <label class="col-md-3 col-sm-12 control-label">{{ 'ui.model.geo.supplied' | i18n }}</label>
-        <div class="col-md-9 col-sm-12">
+        <div class="col-md-9 col-sm-12 control-value">
             <div class="custom-control custom-checkbox">
-                <input type="checkbox" class="custom-control-input" id="geoSupplied" ng-model="geo._supplied" />
+                <input type="checkbox" class="custom-control-input" id="geoSupplied" ng-model="model._supplied" />
                 <label for="geoSupplied" class="custom-control-label"></label>
             </div>
         </div>
@@ -11,13 +31,13 @@
     <div class="row form-group" ng-if="geo._supplied">
         <label class="col-md-3 col-sm-12 control-label">{{ 'ui.model.geo.lat' | i18n }}</label>
         <div class="col-sm-12 col-md-9">
-            <input type="number" class="form-control" ng-model="geo.lat" />
+            <input type="number" class="form-control" ng-model="model.lat" />
         </div>
     </div>
     <div class="row form-group" ng-if="geo._supplied">
         <label class="col-md-3 col-sm-12 control-label">{{ 'ui.model.geo.lng' | i18n }}</label>
         <div class="col-sm-12 col-md-9">
-            <input type="number" class="form-control" ng-model="geo.lng" />
+            <input type="number" class="form-control" ng-model="model.lng" />
         </div>
     </div>
 </div>

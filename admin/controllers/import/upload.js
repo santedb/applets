@@ -1,8 +1,9 @@
 /// <reference path="../../../core/js/santedb.js"/>
 /// <reference path="../../../core/js/santedb-model.js"/>
 /*
- * Portions Copyright 2015-2019 Mohawk College of Applied Arts and Technology
- * Portions Copyright 2019-2019 SanteSuite Contributors (See NOTICE)
+ * Copyright (C) 2021 - 2024, SanteSuite Inc. and the SanteSuite Contributors (See NOTICE.md for full copyright notices)
+ * Copyright (C) 2019 - 2021, Fyfe Software Inc. and the SanteSuite Contributors
+ * Portions Copyright (C) 2015-2018 Mohawk College of Applied Arts and Technology
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you 
  * may not use this file except in compliance with the License. You may 
@@ -16,8 +17,8 @@
  * License for the specific language governing permissions and limitations under 
  * the License.
  * 
- * User: Justin Fyfe
- * Date: 2019-9-20
+ * User: fyfej
+ * Date: 2023-5-19
  */
 angular.module('santedb').controller('ForeignDataUploadController', ["$scope", "$rootScope", "$timeout", "$state", function ($scope, $rootScope, $timeout, $state) {
 
@@ -66,7 +67,7 @@ angular.module('santedb').controller('ForeignDataUploadController', ["$scope", "
             success: function (data) {
                 console.log('Success');
                 toastr.success(SanteDB.locale.getString('ui.admin.alien.upload.success'));
-                $state.go('santedb-admin.data.import.index');
+                $state.go('santedb-admin.cdr.import.index');
             },
             error: function (xhr, status, error) {
                 console.log('error');

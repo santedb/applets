@@ -1,6 +1,7 @@
 <!--
- - Copyright 2015-2019 Mohawk College of Applied Arts and Technology
- -
+ - Copyright 2021-2024 SanteSuite Contributors (See NOTICE.md for full copyright notices)
+ - Copyright (C) 2019 - 2021, Fyfe Software Inc. and the SanteSuite Contributors
+ - Portions Copyright (C) 2015-2018 Mohawk College of Applied Arts and Technology
  - 
  - Licensed under the Apache License, Version 2.0 (the "License"); you 
  - may not use this file except in compliance with the License. You may 
@@ -14,13 +15,13 @@
  - License for the specific language governing permissions and limitations under 
  - the License.
  - 
- - User: Justin Fyfe
- - Date: 2019-8-8
+ - User: fyfej
+ - Date: 2023-5-19
  -->
 <div class="container" xmlns="http://www.w3.org/1999/xhtml">
     <div class="form-group row">
         <label for="subscribeObjects" class="col-md-2 col-xs-12 control-label">{{ 'ui.config.services.type.label' | i18n }}</label>
-        <div class="col-md-10 col-xs-12">
+        <div class="col-md-10 col-xs-12 control-value">
             <ul class="checklist-box" style="height:10em">
                 <li ng-repeat="service in serverCaps.appInfo.service track by $index"><label><input type="checkbox" ng-model="service.active" value="true"/>
                     <i class="fa " ng-class="{'fa-database' : service.class == 'Data', 'fa-play-circle' : service.class == 'Daemon', 'fa-cloud': service.class == 'Repository', 'fa-cog': service.class == 'Passive'}"></i>

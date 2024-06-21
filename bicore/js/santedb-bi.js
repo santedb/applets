@@ -1,8 +1,9 @@
 /// <reference path="../../core/js/santedb.js"/>
 /// <reference path="../../core/js/santedb-model.js"/>
 /*
- * Portions Copyright 2015-2019 Mohawk College of Applied Arts and Technology
- * Portions Copyright 2019-2019 SanteSuite Contributors (See NOTICE)
+ * Copyright (C) 2021 - 2024, SanteSuite Inc. and the SanteSuite Contributors (See NOTICE.md for full copyright notices)
+ * Copyright (C) 2019 - 2021, Fyfe Software Inc. and the SanteSuite Contributors
+ * Portions Copyright (C) 2015-2018 Mohawk College of Applied Arts and Technology
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you 
  * may not use this file except in compliance with the License. You may 
@@ -16,10 +17,9 @@
  * License for the specific language governing permissions and limitations under 
  * the License.
  * 
- * User: Justin Fyfe
- * Date: 2019-12-10
+ * User: fyfej
+ * Date: 2023-5-19
  */
-//if (!SanteDBBusinessIntelligence)
 
 /**
  * @class
@@ -58,6 +58,7 @@ function SanteDBBusinessIntelligence() {
          */
         this.package = new ResourceWrapper({
             resource: "BiPackage",
+            accept: 'application/json',
             api: _bis
         });
         /**
@@ -65,6 +66,7 @@ function SanteDBBusinessIntelligence() {
          */
         this.dataSource = new ResourceWrapper({
             resource: "BiDataSourceDefinition",
+            accept: 'application/json',
             api: _bis
         });
         /**
@@ -72,6 +74,7 @@ function SanteDBBusinessIntelligence() {
          */
         this.parameter = new ResourceWrapper({
             resource: "BiParameterDefinition",
+            accept: 'application/json',
             api: _bis
         });
         /**
@@ -79,6 +82,7 @@ function SanteDBBusinessIntelligence() {
          */
         this.query = new ResourceWrapper({
             resource: "BiQueryDefinition",
+            accept: 'application/json',
             api: _bis
         });
         /**
@@ -86,6 +90,7 @@ function SanteDBBusinessIntelligence() {
          */
         this.report = new ResourceWrapper({
             resource: "BiReportDefinition",
+            accept: 'application/json',
             api: _bis
         });
         /**
@@ -93,6 +98,7 @@ function SanteDBBusinessIntelligence() {
          */
         this.view = new ResourceWrapper({
             resource: "BiViewDefinition",
+            accept: 'application/json',
             api: _bis
         });
         /**
@@ -100,6 +106,7 @@ function SanteDBBusinessIntelligence() {
         */
         this.format = new ResourceWrapper({
             resource: "BiRenderFormatDefinition",
+            accept: 'application/json',
             api: _bis
         });
         /**
@@ -107,6 +114,7 @@ function SanteDBBusinessIntelligence() {
         */
         this.datamart = new ResourceWrapper({
             resource: "BiDatamartDefinition",
+            accept: 'application/json',
             api: _bis
         });
         /**
@@ -114,6 +122,7 @@ function SanteDBBusinessIntelligence() {
         */
         this.warehouse = new ResourceWrapper({
             resource: "DatamartInfo",
+            accept: 'application/json',
             api: _bis
         });
 

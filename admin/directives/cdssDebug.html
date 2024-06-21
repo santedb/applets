@@ -1,0 +1,76 @@
+<div xmlns="http://www.w3.org/1999/xhtml" ng-class="{ 'bg-secondary  text-light' : depth % 2 == 0, 'bg-dark text-light' : depth % 2 == 1}">
+    <div ng-if="depth == 0">
+        <i class="fas fa-stream"></i>
+        {{ activity.defn.type }} {{ activity.defn.name }}
+        <span ng-if="frame.defn" class="m-1 badge badge-info p-1">
+            <i class="fas fa-fw fa-file-code"></i> {{ ::frame.defn.name }} 
+            <a class="text-light"  ng-if="frame.defn.source.start" ng-click="navigateSource(frame.defn.source.start)">@ {{ ::frame.defn.source.start }}</a>
+        </span>
+        <span>
+            <i class="fas fa-clock fa-fw"></i> {{ ::activityRuntime(frame) }} ms
+        </span>
+    </div>
+    <ul class="list-group ml-1">
+        <li ng-repeat="activity in ::frame.activities track by $index" class="list-group-item" ng-switch="activity.$type" ng-class="{ 'list-group-item-secondary' : depth % 2 == 0, 'list-group-item-dark' : depth % 2 == 1}">
+            <div ng-switch-when="SanteDB.Cdss.Xml.Model.Diagnostics.CdssValueDiagnosticSample, SanteDB.Cdss.Xml" >
+                <!-- Value has been assigned -->
+                <i class="fas fa-fw fa-arrow-right"></i> {{ 'ui.admin.cdss.edit.test.debug.set' | i18n }} <code><strong>{{ ::activity.name }}</strong> = {{ ::activity.value.value }}</code>
+                <!-- #include virtual="~/directives/partials/sourceref.html" -->
+            </div>
+            <div ng-switch-when="SanteDB.Cdss.Xml.Model.Diagnostics.CdssFactDiagnosticSample, SanteDB.Cdss.Xml">
+                <!-- Fact has been established -->
+                <i class="fas fa-fw fa-notes-medical"></i>  {{ 'ui.admin.cdss.edit.test.debug.fact' | i18n }} <code><strong>{{ ::activity.name }}</strong> is {{ ::activity.value.value != null ? activity.value.value : 'nil' }}</code> (<i class="fas fa-fw fa-clock"></i> {{ ::activity.computationMs }} ms)
+                <!-- #include virtual="~/directives/partials/sourceref.html" -->
+            </div>
+            <div ng-switch-when="SanteDB.Cdss.Xml.Model.Diagnostics.CdssValueLookupDiagnosticSample, SanteDB.Cdss.Xml">
+                <!-- Value has been read  -->
+                <i class="fas fa-fw fa-arrow-left"></i> {{ 'ui.admin.cdss.edit.test.debug.read' | i18n }} <code><strong>{{ ::activity.name }}</strong> ( {{::activity.value.value}} )</code>
+                <!-- #include virtual="~/directives/partials/sourceref.html" -->
+            </div>
+            <div ng-switch-when="SanteDB.Cdss.Xml.Model.Diagnostics.CdssProposalDiagnosticSample, SanteDB.Cdss.Xml">
+                <!-- Proposal -->
+                <i class="fas fa-fw fa-diagnoses"></i> {{ 'ui.admin.cdss.edit.test.debug.propose' | i18n }} <code><strong>{{ activity.value.refType }}</strong> id={{ activity.value.id}}</code>
+                <!-- #include virtual="~/directives/partials/sourceref.html" -->
+            </div>
+            <div ng-switch-when="SanteDB.Cdss.Xml.Model.Diagnostics.CdssDiagnosticFrame, SanteDB.Cdss.Xml">
+                <!-- New Frame Created -->
+                <div ng-class="{ 'bg-secondary  text-light' : depth % 2 == 1, 'bg-dark text-light' : depth % 2 == 0}">
+                <button data-toggle="collapse" data-target="#exp_{{parentControl}}_{{$index}}" class="btn btn-sm btn-link collapse-indicator text-light" type="button" aria-expanded="false">
+                    <i class="fas fa-stream"></i>
+                    {{ activity.defn.type || 'Frame' }}
+                    <i class="fas fa-fw fa-chevron-right"></i>
+                </button> 
+                <span ng-if="activity.defn" class="m-1 badge badge-info p-1">
+                    <i class="fas fa-fw fa-file-code"></i> {{ ::activity.defn.name }} 
+                    <a class="text-light"  ng-if="activity.defn.source.start" ng-click="navigateSource(activity.defn.source.start)">@ {{ ::activity.defn.source.start }}</a>
+                </span>
+                <span>
+                    <i class="fas fa-clock fa-fw"></i> {{ ::activityRuntime(activity) }} ms
+                </span>
+                <div class="collapse" id="exp_{{parentControl}}_{{$index}}">
+                    <cdss-debug frame="activity" depth="depth + 1" parent-control="parentControl + '_' + $index"/>
+                </div>
+            </div>
+            </div>
+            <div ng-switch-when="SanteDB.Cdss.Xml.Model.Diagnostics.CdssExceptionDiagnosticSample, SanteDB.Cdss.Xml">
+                <!-- Exception has been thrown -->
+                <i class="fas fa-fw fa-exclamation-triangle"></i>
+                <!-- #include virtual="~/directives/partials/sourceref.html" -->
+            </div>
+            <div ng-switch-when="SanteDB.Cdss.Xml.Model.Diagnostics.CdssPropertyAssignDiagnosticSample, SanteDB.Cdss.Xml">
+                <!-- Property Has Been Assigned -->
+                <i class="fas fa-fw fa-arrow-right"></i>{{ 'ui.admin.cdss.edit.test.debug.assign' | i18n }} <code>{{::activity.value.value}} to <strong>{{ ::activity.path }}</strong></code>
+                <!-- #include virtual="~/directives/partials/sourceref.html" -->
+            </div>
+            <div ng-switch-when="SanteDB.Cdss.Xml.Model.Diagnostics.CdssIssueDiagnosticSample, SanteDB.Cdss.Xml">
+                <!-- Issue Has Been Raised -->
+                <i class="fas fa-fw fa-hand-holding-medical"></i> <span class="badge m-2 " ng-class="{ 'badge-danger' : activity.issue.priority == 'Error', 'badge-warning' : activity.issue.priority == 'Warning', 'badge-primary' : activity.issue.priority == 'Information' }">
+                    <i class="fas fa-fw" ng-class="{ 'fa-times-square' : activity.issue.priority == 'Error', 'fa-exclamation-triangle' : activity.issue.priority == 'Warning', 'fa-info-circle' : activity.issue.priority == 'Information' }"></i>
+                    {{ activity.issue.priority }}
+                </span>
+                <code>{{ activity.issue.text }}</code>
+                <!-- #include virtual="~/directives/partials/sourceref.html" -->
+            </div>
+        </li>
+    </ul>
+</div>

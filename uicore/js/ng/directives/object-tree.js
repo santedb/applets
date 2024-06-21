@@ -1,6 +1,7 @@
 /*
- * Copyright 2015-2019 Mohawk College of Applied Arts and Technology
- * 
+ * Copyright (C) 2021 - 2024, SanteSuite Inc. and the SanteSuite Contributors (See NOTICE.md for full copyright notices)
+ * Copyright (C) 2019 - 2021, Fyfe Software Inc. and the SanteSuite Contributors
+ * Portions Copyright (C) 2015-2018 Mohawk College of Applied Arts and Technology
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you 
  * may not use this file except in compliance with the License. You may 
@@ -14,8 +15,8 @@
  * License for the specific language governing permissions and limitations under 
  * the License.
  * 
- * User: Justin Fyfe
- * Date: 2019-8-8
+ * User: fyfej
+ * Date: 2023-12-8
  */
 
 /// <reference path="../../santedb-ui.js"/>
@@ -39,17 +40,15 @@ angular.module('santedb-lib')
             templateUrl: './org.santedb.uicore/directives/objectTree.html',
             controller: ['$scope', '$rootScope',
                 function ($scope, $rootScope) {
-
-
-                    $scope.isExpandible = (val) => !(typeof val === "string" || typeof val === "number" || typeof val === "boolean" || val instanceof Date) && $scope.depth < 5;
+                    $scope.isExpandible = (val) => angular.isObject(val) && !(val instanceof Date) && $scope.depth < 5;
                 }
             ],
             link: function (scope, element, attrs, ngModel) {
                 scope.depth = scope.depth || 0;
-                if(scope.object.$type) {
+                if(scope.object && scope.object.$type) {
 
                     Object.keys(scope.object).forEach(k => {
-                        if(scope.object[k].$type == "Concept") {
+                        if(scope.object[k] && scope.object[k].$type == "Concept") {
                             scope.object[k] = {
                                 $type:"Concept",
                                 mnemonic: scope.object[k].mnemonic,

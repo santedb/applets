@@ -1,6 +1,7 @@
 <!--
- - Copyright 2015-2019 Mohawk College of Applied Arts and Technology
- -
+ - Copyright 2021-2024 SanteSuite Contributors (See NOTICE.md for full copyright notices)
+ - Copyright (C) 2019 - 2021, Fyfe Software Inc. and the SanteSuite Contributors
+ - Portions Copyright (C) 2015-2018 Mohawk College of Applied Arts and Technology
  - 
  - Licensed under the Apache License, Version 2.0 (the "License"); you 
  - may not use this file except in compliance with the License. You may 
@@ -14,8 +15,8 @@
  - License for the specific language governing permissions and limitations under 
  - the License.
  - 
- - User: Justin Fyfe
- - Date: 2019-8-8
+ - User: fyfej
+ - Date: 2023-5-19
  -->
 <div class="container" xmlns="http://www.w3.org/1999/xhtml">
 
@@ -42,7 +43,7 @@
         <div class="col-md-10 col-xs-12">
             <entity-search type="'Place'" name="assignedFacility"
                 filter="{ obsoletionTime: 'null', &quot;statusConcept.mnemonic&quot; : &quot;ACTIVE&quot;, &quot;classConcept.mnemonic&quot; : &quot;ServiceDeliveryLocation&quot; }"
-                class="form-control" multiple="multiple" ng-model="config.security.facility" />
+                class="form-control" ng-model="config.security.facility" />
             <div class="form-text text-muted">
                 {{ 'ui.config.security.facility.help' | i18n }}
             </div>
@@ -53,7 +54,7 @@
             }}</label>
         <div class="col-md-10 col-xs-12">
             <entity-search type="'UserEntity'" name="owner" filter="{ obsoletionTime: 'null' }" class="form-control"
-                multiple="multiple" ng-model="config.security.owner" />
+                 ng-model="config.security.owner" />
             <div class="form-text text-muted">
                 {{ 'ui.config.security.owner.help' | i18n }}
             </div>

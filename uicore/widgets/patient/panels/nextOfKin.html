@@ -1,3 +1,23 @@
+<!--
+ - Copyright 2021-2024 SanteSuite Contributors (See NOTICE.md for full copyright notices)
+ - Copyright (C) 2019 - 2021, Fyfe Software Inc. and the SanteSuite Contributors
+ - Portions Copyright (C) 2015-2018 Mohawk College of Applied Arts and Technology
+ - 
+ - Licensed under the Apache License, Version 2.0 (the "License"); you 
+ - may not use this file except in compliance with the License. You may 
+ - obtain a copy of the License at 
+ - 
+ - http://www.apache.org/licenses/LICENSE-2.0 
+ - 
+ - Unless required by applicable law or agreed to in writing, software
+ - distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+ - WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the 
+ - License for the specific language governing permissions and limitations under 
+ - the License.
+ - 
+ - User: fyfej
+ - Date: 2023-5-19
+ -->
 <div xmlns="http://www.w3.org/1999/xhtml" xmlns:sdb="http://santedb.org/applet" class="container-fluid"
     oc-lazy-load="{ name: 'PatientDemographicsWidgetController', files: ['/org.santedb.uicore/controllers/widgets/patientWidget.js'] }">
     <sdb:widget order="15" name="org.santedb.widget.patient.nok"  headerClass="bl-light" size="Medium"
@@ -97,7 +117,7 @@
                 </div>
             </div>
         </div>
-        <form ng-submit="update(panel.editForm)" method="dialog" name="panel.editForm" novalidate="novalidate"
+        <form ng-submit="update(panel.editForm)" method="dialog" name="panel.editForm" novalidate="novalidate" autocomplete="off"
             ng-if="panel.view == 'Edit'">
 
             <!-- Warnings about MDM -->
@@ -227,15 +247,15 @@
                                 </div>
                                 <div role="tabpanel" class="tab-pane fade show active"
                                     id="demoName{{relType.mnemonic}}">
-                                    <name-edit name="editObject.relationship[relType.mnemonic].targetModel.name" />
+                                    <name-edit model="editObject.relationship[relType.mnemonic].targetModel.name" />
                                 </div>
                                 <div role="tabpanel" class="tab-pane fade" id="demoTelecom{{relType.mnemonic}}">
                                     <telecom-edit
-                                        telecom="editObject.relationship[relType.mnemonic].targetModel.telecom" />
+                                    model="editObject.relationship[relType.mnemonic].targetModel.telecom" />
                                 </div>
                                 <div role="tabpanel" class="tab-pane fade" id="demoAddress{{relType.mnemonic}}">
                                     <address-edit
-                                        address="editObject.relationship[relType.mnemonic].targetModel.address" />
+                                        model="editObject.relationship[relType.mnemonic].targetModel.address" />
                                 </div>
                             </div>
                         </div>

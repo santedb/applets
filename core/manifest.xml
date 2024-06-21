@@ -1,7 +1,8 @@
 <?xml-model href="../.ref/schema/SanteDBApplet.xsd" type="application/xml" schematypens="http://www.w3.org/2001/XMLSchema"?>
 <!--
- - Copyright 2015-2019 Mohawk College of Applied Arts and Technology
- -
+ - Copyright 2021-2024 SanteSuite Contributors (See NOTICE.md for full copyright notices)
+ - Copyright (C) 2019 - 2021, Fyfe Software Inc. and the SanteSuite Contributors
+ - Portions Copyright (C) 2015-2018 Mohawk College of Applied Arts and Technology
  - 
  - Licensed under the Apache License, Version 2.0 (the "License"); you 
  - may not use this file except in compliance with the License. You may 
@@ -15,12 +16,12 @@
  - License for the specific language governing permissions and limitations under 
  - the License.
  - 
- - User: Justin Fyfe
- - Date: 2019-8-8
+ - User: fyfej
+ - Date: 2023-5-19
  -->
 <AppletManifest  xmlns="http://santedb.org/applet">
   
-  <info id="org.santedb.core" version="2.1.113.0" uuid="1f5825da-8c11-400c-939a-94c3507da427">
+  <info id="org.santedb.core" version="3.0.0.0" uuid="1f5825da-8c11-400c-939a-94c3507da427">
     <icon>/org.santedb.core/img/icon.png</icon>
     <name lang="en">SanteDB Core Applet</name>
     <author>SanteSuite Community Partners (see: santesuite.org)</author>
@@ -48,5 +49,11 @@
   </viewModel>
   <viewModel key="reverseRelationship">
     <definition>/org.santedb.core/model/reverseRelationship.xml</definition>
+  </viewModel>
+  <viewModel key="relationship">
+    <definition>/org.santedb.core/model/relationship.xml</definition>
+  </viewModel>
+    <viewModel key="concept">
+    <definition>/org.santedb.core/model/concept.xml</definition>
   </viewModel>
 </AppletManifest>

@@ -1,8 +1,9 @@
 /// <reference path="../../../core/js/santedb.js"/>
 /// <reference path="../../../core/js/santedb-model.js"/>
 /*
- * Portions Copyright 2015-2019 Mohawk College of Applied Arts and Technology
- * Portions Copyright 2019-2019 SanteSuite Contributors (See NOTICE)
+ * Copyright (C) 2021 - 2024, SanteSuite Inc. and the SanteSuite Contributors (See NOTICE.md for full copyright notices)
+ * Copyright (C) 2019 - 2021, Fyfe Software Inc. and the SanteSuite Contributors
+ * Portions Copyright (C) 2015-2018 Mohawk College of Applied Arts and Technology
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you 
  * may not use this file except in compliance with the License. You may 
@@ -16,8 +17,8 @@
  * License for the specific language governing permissions and limitations under 
  * the License.
  * 
- * User: Justin Fyfe
- * Date: 2019-9-20
+ * User: fyfej
+ * Date: 2023-5-19
  */
 angular.module('santedb').controller('FacilityEditController', ["$scope", "$rootScope", "$stateParams", "$state", "$timeout", function ($scope, $rootScope, $stateParams, $state, $timeout) {
 
@@ -39,6 +40,8 @@ angular.module('santedb').controller('FacilityEditController', ["$scope", "$root
             if(!place.service) {
                 place.service = [];
             }
+
+            place.address = place.address || { PhysicalVisit: [new EntityAddress({use: AddressUseKeys.PhysicalVisit })] };
 
             document.title = document.title + " - " + SanteDB.display.renderEntityName(place.name);
 
@@ -144,6 +147,26 @@ angular.module('santedb').controller('FacilityEditController', ["$scope", "$root
     }
 
     
+    $scope.download = function () {
+        var parms = [];
+        if ($scope.entity.typeConcept) {
+            parms.push(`_include=Concept:id%3d${$scope.entity.typeConcept}%26_exclude=conceptSet%26_exclude=referenceTerm`);
+        }
+
+        if (confirm(SanteDB.locale.getString("ui.admin.facility.export.heirarchy"))) {
+            for(var i = 1; i < 5; i++) {
+                parms.push(`_include=Place:${"relationship[Parent].target.".repeat(i)}id=${$scope.entity.id}`);
+            }
+        }
+
+        var url = `/hdsi/Place/${$scope.entity.id}/_export?${parms.join("&")}`;
+        console.info(url);
+        var win = window.open(`/hdsi/Place/${$scope.entity.id}/_export?${parms.join("&")}`, '_blank');
+        win.onload = function (e) {
+            win.close();
+        };
+    }
+
     // Set the active state
     $scope.setTag = async function (tagName, tagValue) {
         try {

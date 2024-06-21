@@ -1,10 +1,31 @@
+<!--
+ - Copyright 2021-2024 SanteSuite Contributors (See NOTICE.md for full copyright notices)
+ - Copyright (C) 2019 - 2021, Fyfe Software Inc. and the SanteSuite Contributors
+ - Portions Copyright (C) 2015-2018 Mohawk College of Applied Arts and Technology
+ - 
+ - Licensed under the Apache License, Version 2.0 (the "License"); you 
+ - may not use this file except in compliance with the License. You may 
+ - obtain a copy of the License at 
+ - 
+ - http://www.apache.org/licenses/LICENSE-2.0 
+ - 
+ - Unless required by applicable law or agreed to in writing, software
+ - distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+ - WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the 
+ - License for the specific language governing permissions and limitations under 
+ - the License.
+ - 
+ - User: fyfej
+ - Date: 2023-5-19
+ -->
 <div xmlns="http://www.w3.org/1999/xhtml"  ng-if="addr.operation != 'Delete'">
+    <input type="text" class="d-none" ng-if="controlPrefix &amp;&amp; $index == 0" ng-model="addr._away" name="{{::controlPrefix}}" /> <!-- CONTROL PREFIX BINDER-->
     <div class="form-group row" ng-if="!noType">
         <label class="col-sm-12 col-md-3 control-label"
             ng-class="{'required': isRequired  &amp;&amp; $index == 0 || !noType &amp;&amp; (addr.component.Country || addr.component.State || addr.component.City)}">{{ 'ui.model.entity.address.use' | i18n }} <hint-popover hint-title="ui.model.entity.address.use" /></label>
         <div class="col-sm-12 col-md-9">
             <concept-select class="form-control" ng-required="isRequired  &amp;&amp; $index == 0 || !noType &amp;&amp; (addr.component.Country || addr.component.State || addr.component.City)"
-                name="{{controlPrefix}}address{{$index}}use" concept-set="'AddressUse'" ng-model="addr.use" />
+                name="{{::controlPrefix}}address{{$index}}use" concept-set="'AddressUse'" ng-model="addr.use" />
         </div>
         <div class="text-danger" ng-if="ownerForm[controlPrefix + 'address' + $index + 'use'].$invalid"><i
                 class="fas fa-exclamation-triangle"></i> {{ 'ui.error.required' | i18n }}</div>
@@ -15,11 +36,12 @@
             <label class="col-sm-12 col-md-3 control-label"
                 ng-class="{'required': isRequired &amp;&amp; $index == 0}">{{ 'ui.model.entity.address.component.city' | i18n }} <hint-popover hint-title="ui.model.entity.address.component.city" /></label>
             <div class="col-sm-12 col-md-9">
-                <entity-search ng-required="isRequired &amp;&amp; $index == 0" type="'Place'"
-                group-by="['address.PhysicalVisit[0].component.County[0]','address.Direct[0].component.County[0]']" ng-model="addr.targetId"
+                <entity-search ng-required="isRequired &amp;&amp; $index == 0 || requiredTypes.indexOf(address.useModel.mnemonic) &gt; -1" type="'Place'"
+                    group-by="['address.PhysicalVisit[0].component.County[0]','address.Direct[0].component.County[0]']" ng-model="addr.component._AddressPlaceRef[0]"
                     search-field="'name.component.value'" 
-                    name="{{controlPrefix}}address{{$index}}target"
-                    filter="{ 'classConcept': '79dd4f75-68e8-4722-a7f5-8bc2e08f5cd6', 'statusConcept': 'c8064cbd-fa06-4530-b430-1a52f1530c27' }" />
+                    name="{{::controlPrefix}}address{{$index}}target"
+                    filter="{ 'classConcept': '79dd4f75-68e8-4722-a7f5-8bc2e08f5cd6', 'statusConcept': 'c8064cbd-fa06-4530-b430-1a52f1530c27' }"
+                    default-results="{ 'relationship[DedicatedServiceDeliveryLocation].target' : catchmentAreaFor }" />
 
                 <div class="text-danger" ng-if="ownerForm[controlPrefix + 'address' + $index + 'target'].$invalid"><i
                         class="fas fa-exclamation-triangle"></i> {{ 'ui.error.required' | i18n }}</div>
@@ -35,7 +57,7 @@
                     <entity-search ng-required="isRequired &amp;&amp; $index == 0 &amp;&amp; !$root.system.config.application.setting['optional.patient.address.country']" type="'Place'"
                         ng-model="addr.component.Country[0]"
                         search-field="'name.component.value'" 
-                        name="{{controlPrefix}}address{{$index}}country" key="'identifier[ISO3166].value'"
+                        name="{{::controlPrefix}}address{{$index}}country" key="'identifier[ISO3166].value'"
                         value-selector="'identifier.ISO3166[0].value'"
                         
                         change-clear="{ 'scope': addr.component, values: [ 'State', 'County', 'City', 'Precinct' ], resetTo: [] }"
@@ -53,11 +75,11 @@
                     <entity-search ng-required="isRequired &amp;&amp; $index == 0 &amp;&amp; !$root.system.config.application.setting['optional.patient.address.state']" type="'Place'"
                     group-by="['address.PhysicalVisit[0].component.Country[0]','address.Direct[0].component.Country[0]']" ng-model="addr.component.State[0]"
                         search-field="'name.component.value'" 
-                        name="{{controlPrefix}}address{{$index}}state" key="'name[OfficialRecord].component.value'"
+                        name="{{::controlPrefix}}address{{$index}}state" key="'name[OfficialRecord].component.value'"
                         change-clear="{ 'scope': addr.component, values: [ 'County', 'City', 'Precinct' ], resetTo: [] }"
                         filter="{ 'classConcept': '4d1a5c28-deb7-411e-b75f-d524f90dfa63', 'address[PhysicalVisit].component[Country].value': addr.component.Country, 'statusConcept': 'c8064cbd-fa06-4530-b430-1a52f1530c27' }" />
                 </div>
-                <input autocomplete="__away" name="{{controlPrefix}}address{{$index}}state" ng-switch-default=""
+                <input autocomplete="__away" name="{{::controlPrefix}}address{{$index}}state" ng-switch-default=""
                     type="text" class="form-control" ng-model="addr.component.State[0]"
                     ng-required="isRequired &amp;&amp; $index == 0 &amp;&amp; !$root.system.config.application.setting['optional.patient.address.state']" />
                 <div class="text-danger" ng-if="ownerForm[controlPrefix + 'address' + $index + 'state'].$invalid || isRequired &amp;&amp;  !addr.component.State"><i
@@ -72,7 +94,7 @@
                 <div ng-switch-when="structured">
                     <entity-search type="'Place'"
                     ng-required="isRequired &amp;&amp; $index == 0  &amp;&amp; !$root.system.config.application.setting['optional.patient.address.county']"
-                    group-by="['address.PhysicalVisit[0].component.State[0]','address.Direct[0].component.State[0]']" name="{{controlPrefix}}address{{$index}}county"
+                    group-by="['address.PhysicalVisit[0].component.State[0]','address.Direct[0].component.State[0]']" name="{{::controlPrefix}}address{{$index}}county"
                         ng-model="addr.component.County[0]" search-field="'name.component.value'"
                         key="'name[OfficialRecord].component.value'"
                         change-clear="{ 'scope': addr.component, values: [ 'City', 'Precinct' ], resetTo: [] }"
@@ -80,7 +102,7 @@
                         filter="{ 'classConcept': '6eefee7d-dff5-46d3-a6a7-171ef93879c7', 'address[PhysicalVisit].component[State].value': addr.component.State, 'statusConcept': 'c8064cbd-fa06-4530-b430-1a52f1530c27' }" />
                 </div>
                 <input ng-switch-default="" autocomplete="__away"  ng-required="isRequired &amp;&amp; $index == 0  &amp;&amp; !$root.system.config.application.setting['optional.patient.address.county']"
-                    name="{{controlPrefix}}address{{$index}}county" type="text" class="form-control"
+                    name="{{::controlPrefix}}address{{$index}}county" type="text" class="form-control"
                     ng-model="addr.component.County[0]" />
                 <div class="text-danger" ng-if="ownerForm[controlPrefix + 'address' + $index + 'county'].$invalid || isRequired &amp;&amp;  !addr.component.County"><i
                         class="fas fa-exclamation-triangle"></i> {{ 'ui.error.required' | i18n }}</div>
@@ -93,7 +115,7 @@
             <div class="col-sm-12 col-md-9" ng-switch="$root.system.config.application.setting['input.address']">
                 <div ng-switch-when="structured">
                     <entity-search ng-required="isRequired &amp;&amp; $index == 0 &amp;&amp; !$root.system.config.application.setting['optional.patient.address.city']" type="'Place'"
-                    group-by="['address.PhysicalVisit[0].component.County[0]','address.Direct[0].component.County[0]']" name="{{controlPrefix}}address{{$index}}city"
+                    group-by="['address.PhysicalVisit[0].component.County[0]','address.Direct[0].component.County[0]']" name="{{::controlPrefix}}address{{$index}}city"
                         ng-model="addr.component.City[0]" search-field="'name.component.value'"
                         key="'name[OfficialRecord].component.value'"
                         change-clear="{ 'scope': addr.component, values: [ 'Precinct' ], resetTo: [] }"
@@ -111,7 +133,7 @@
             <div class="col-sm-12 col-md-9" ng-switch="$root.system.config.application.setting['input.address']">
                 <div ng-switch-when="structured">
                     <entity-search type="'Place'"
-                    group-by="['address.PhysicalVisit[0].component.City[0]','address.Direct[0].component.City[0]']" name="{{controlPrefix}}address{{$index}}precinct"
+                    group-by="['address.PhysicalVisit[0].component.City[0]','address.Direct[0].component.City[0]']" name="{{::controlPrefix}}address{{$index}}precinct"
                         ng-model="addr.component.Precinct[0]" search-field="'name.component.value'"
                         key="'name[OfficialRecord].component.value'"
                         copy-nulls="{ 'to': addr.component, from: 'address.PhysicalVisit.component', values: ['State', 'County', 'City'] }"

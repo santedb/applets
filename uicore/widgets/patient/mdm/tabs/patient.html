@@ -1,3 +1,23 @@
+<!--
+ - Copyright 2021-2024 SanteSuite Contributors (See NOTICE.md for full copyright notices)
+ - Copyright (C) 2019 - 2021, Fyfe Software Inc. and the SanteSuite Contributors
+ - Portions Copyright (C) 2015-2018 Mohawk College of Applied Arts and Technology
+ - 
+ - Licensed under the Apache License, Version 2.0 (the "License"); you 
+ - may not use this file except in compliance with the License. You may 
+ - obtain a copy of the License at 
+ - 
+ - http://www.apache.org/licenses/LICENSE-2.0 
+ - 
+ - Unless required by applicable law or agreed to in writing, software
+ - distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+ - WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the 
+ - License for the specific language governing permissions and limitations under 
+ - the License.
+ - 
+ - User: fyfej
+ - Date: 2023-5-19
+ -->
 <div xmlns="http://www.w3.org/1999/xhtml" xmlns:sdb="http://santedb.org/applet"
     oc-lazy-load="{ name: 'MasterDataManagementController', files: ['/org.santedb.uicore/controllers/widgets/mdmWidget.js'] }">
     <sdb:widget name="org.santedb.widget.patient.mdm" type="Tab" order="50" context="org.santedb.patient">
@@ -13,7 +33,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="candidateDetailModalTitle">
-                        <i class="fa fa-fw fa-clone"></i> {{ 'ui.mpi.match.detail.title' | i18n }}
+                        <i class="fa fa-fw fa-clone"></i> {{ 'ui.match.detail.title' | i18n }}
                     </h5>
                     <button class="close" type="button" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">
@@ -34,7 +54,7 @@
                                         data-toggle="collapse" data-target="#score{{$index}}" aria-expanded="true">
                                         <i class="fas fa-file"></i> {{ match.configuration }} (<span class="badge"
                                             ng-class="{ 'badge-success' : match.classification == 2, 'badge-info' : match.classification == 1, 'badge-dark' : match.classification == 0 }">{{
-                                            'ui.mpi.match.class.' + match.classification | i18n }}</span> - {{
+                                            'ui.match.class.' + match.classification | i18n }}</span> - {{
                                         match.strength * 100 | number: 0 }}%)
                                         <i class="fas fa-chevron-right"></i>
                                     </button>

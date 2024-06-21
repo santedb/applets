@@ -1,0 +1,80 @@
+<!--
+ - Copyright 2021-2024 SanteSuite Contributors (See NOTICE.md for full copyright notices)
+ - Copyright (C) 2019 - 2021, Fyfe Software Inc. and the SanteSuite Contributors
+ - Portions Copyright (C) 2015-2018 Mohawk College of Applied Arts and Technology
+ - 
+ - Licensed under the Apache License, Version 2.0 (the "License"); you 
+ - may not use this file except in compliance with the License. You may 
+ - obtain a copy of the License at 
+ - 
+ - http://www.apache.org/licenses/LICENSE-2.0 
+ - 
+ - Unless required by applicable law or agreed to in writing, software
+ - distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+ - WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the 
+ - License for the specific language governing permissions and limitations under 
+ - the License.
+ - 
+ - User: fyfej
+ - Date: 2023-5-19
+ -->
+<ViewModel xmlns="http://santedb.org/model/view">
+  <include>fastview</include>
+
+  <type type="EntityRelationship" all="false">
+    <property name="source" all="true"/>
+    <property name="target" all="true"/>
+    <property name="holder" all="true"/>
+    <property name="targetModel" all="true" behavior="always" ref="Entity" />
+    <property name="relationshipType" all="true" behavior="always"/>
+    <property name="holderModel" behavior="never" />
+    <property name="relationshipTypeModel" behavior="always" all="true" ref="Concept"/>
+    <property name="key" all="true"/>
+    <property name="quantity" all="true"/>
+    <property name="strength" all="true"/>
+  </type>
+  <type type="ConceptRelationship" all="true">
+    <property name="relationshipTypeModel" behavior="always" />
+    <property name="targetConceptModel" behavior="always" />
+  </type>
+    <type type="ManufacturedMaterial" all="true">
+        <property name="classConcept"/>
+        <property name="classConceptModel" behavior="always" ref="Concept"/>
+        <property name="name" all="true"  behavior="always">
+            <property name="*" ref="EntityName"/>
+        </property>
+        <property name="identifier" all="true"  behavior="always">
+            <property name="*" ref="EntityIdentifier"/>
+        </property>
+        <property name="quantityConceptModel" behavior="always" ref="Concept" />
+        <property name="relationship" behavior="always">
+            <property name="HasGeneralization" all="true">
+              <property name="quantity" />
+              <property name="targetModel" ref="Entity" behavior="always" />
+            </property>
+            <property name="*" all="true" ref="EntityRelationship" />
+        </property>
+        <property name="quantityConceptModel" behavior="always" />
+    </type>
+  <!-- Entity types -->
+  <type type="Entity" all="true">
+    <property name="classConcept"/>
+    <property name="classConceptModel" behavior="always" ref="Concept"/>
+   <property name="name" all="true"  behavior="always">
+      <property name="*" ref="EntityName"/>
+    </property>
+    <property name="address" all="true"  behavior="always">
+      <property name="*" ref="EntityAddress"/>
+    </property>
+    <property name="identifier" all="true"  behavior="always">
+      <property name="*" ref="EntityIdentifier"/>
+    </property>
+    <property name="telecom" all="true" behavior="always">
+      <property name="*" ref="EntityTelecom"/>
+    </property>
+    <property name="relationship" behavior="always">
+        <property name="*" all="true" ref="EntityRelationship" />
+    </property>
+  </type>
+
+</ViewModel>

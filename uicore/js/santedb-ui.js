@@ -1,7 +1,8 @@
 /// <reference path="../../core/js/santedb.js"/>
 /*
- * Copyright 2015-2019 Mohawk College of Applied Arts and Technology
- * 
+ * Copyright (C) 2021 - 2024, SanteSuite Inc. and the SanteSuite Contributors (See NOTICE.md for full copyright notices)
+ * Copyright (C) 2019 - 2021, Fyfe Software Inc. and the SanteSuite Contributors
+ * Portions Copyright (C) 2015-2018 Mohawk College of Applied Arts and Technology
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you 
  * may not use this file except in compliance with the License. You may 
@@ -15,8 +16,8 @@
  * License for the specific language governing permissions and limitations under 
  * the License.
  * 
- * User: Justin Fyfe
- * Date: 2019-8-8
+ * User: fyfej
+ * Date: 2023-5-19
  */
 var ___originalButtonTexts = {};
 
@@ -24,29 +25,29 @@ var ___originalButtonTexts = {};
 SanteDBWrapper.prototype.display = new function () {
 
     var __preferredName = "OfficialRecord";
-    
+
     function __cascadeScopeObject(scope, objectNames, value, processList) {
 
         // Make sure we don't double process
         processList = processList || [];
-        if(processList.indexOf(scope.$id) > -1) {
+        if (processList.indexOf(scope.$id) > -1) {
             return;
         }
         processList.push(scope.$id);
 
         objectNames.forEach(n => {
-            if(scope[n] !== undefined) {
+            if (scope[n] !== undefined) {
                 scope[n] = value;
             }
         });
 
         // Traverse siblings
-        if(scope.$$nextSibling) {
+        if (scope.$$nextSibling) {
             __cascadeScopeObject(scope.$$nextSibling, objectNames, value, processList);
         }
 
         // Traverse children
-        if(scope.$$childHead) {
+        if (scope.$$childHead) {
             __cascadeScopeObject(scope.$$childHead, objectNames, value, processList);
         }
     }
@@ -56,8 +57,7 @@ SanteDBWrapper.prototype.display = new function () {
      * @summary Sets the preferred name type for rendering names
      * @param {string} nameType The name type preferred
      */
-    this.setPreferredNameType = function(nameType) 
-    {
+    this.setPreferredNameType = function (nameType) {
         __preferredName = nameType;
     }
 
@@ -183,7 +183,10 @@ SanteDBWrapper.prototype.display = new function () {
             retVal = concept[Object.keys(concept)[0]];
 
         if (Array.isArray(retVal))
-            return retVal[0];
+        {
+            var name = retVal[0];
+            return name[0].toUpperCase() + name.substring(1);
+        }
         else
             return retVal;
     };
@@ -193,15 +196,27 @@ SanteDBWrapper.prototype.display = new function () {
      * @summary Renders an entity or act identifier
      * @param {EntityIdentifier} id The identifier to be rendered
      * @param {String} domain The domain to render
+     * @param {boolean} emitDomain True if the domain in which the identifier belongs should be emitted
      */
-    this.renderIdentifier = function (id, domain) {
+    this.renderIdentifier = function (id, domain, emitDomain) {
+        var retVal = "";
         if (id === undefined)
             return "";
         if (domain && id[domain])
-            return id[domain][0].value;
+            retVal = id[domain][0].value;
         else
             for (var k in id)
-                return id[k][0].value;
+                { 
+                    retVal = id[k][0].value;
+                    domain = k;
+                    break;
+                }
+        
+        if(emitDomain) {
+            retVal += ` <small>${domain}</small>`;
+        }
+
+        return retVal;
     };
     /**
      * @method
@@ -215,13 +230,13 @@ SanteDBWrapper.prototype.display = new function () {
 
         if (!name)
             return "";
-        else if(typeof(name) === "string")
+        else if (typeof (name) === "string")
             return name;
         // Get the type of name to render
         if (type) {
             name = name[type];
         }
-        else if(name[__preferredName])
+        else if (name[__preferredName])
             name = name[__preferredName];
         else if (!name.component) {
             name = name[Object.keys(name)[0]]
@@ -281,9 +296,9 @@ SanteDBWrapper.prototype.display = new function () {
             }
             return nameStr;
         }
-        else if(typeof(name) === 'string')
+        else if (typeof (name) === 'string')
             return name;
-        else 
+        else
             return "N/A";
     },
         /**
@@ -296,7 +311,7 @@ SanteDBWrapper.prototype.display = new function () {
          */
         this.renderEntityAddress = function (address, type) {
 
-            if(!address)
+            if (!address)
                 return "N/A";
             if (type)
                 address = address[type];
@@ -338,148 +353,159 @@ SanteDBWrapper.prototype.display = new function () {
                 return addrStr.substring(0, addrStr.length - 2);
             }
         };
-        
 
-        
-        /**
-         * @method
-         * @memberof SanteDB.display
-         * @param {Patient} patient The patient to be rendered as a string
-         * @param {String} preferredDomain The preferred identity domain for identity rendering
-         */
-        this.renderPatientAsString = function (patient, preferredDomain) {
-            var retVal = '';
 
-            retVal += "<span class='mr-1'>";
-            if(patient.name) {
-                retVal += SanteDB.display.renderEntityName(patient.name);
+
+    /**
+     * @method
+     * @memberof SanteDB.display
+     * @param {Patient} patient The patient to be rendered as a string
+     * @param {String} preferredDomain The preferred identity domain for identity rendering
+     */
+    this.renderPatientAsString = function (patient, preferredDomain) {
+        var retVal = '';
+
+        retVal += "<span class='mr-1'>";
+        if (patient.name) {
+            retVal += SanteDB.display.renderEntityName(patient.name);
+        }
+
+        retVal += "</span><span class='mr-1 badge badge-secondary'>";
+
+        if (patient.identifier) {
+            if (preferredDomain && patient.identifier[preferredDomain])
+                retVal += `<i class="fas fa-id-card"></i> ${SanteDB.display.renderIdentifier(patient.identifier, preferredDomain)}`;
+            else {
+                var key = Object.keys(patient.identifier)[0];
+                retVal += `<i class="far fa-id-card"></i> ${SanteDB.display.renderIdentifier(patient.identifier, key)}`;
             }
+        }
 
-            retVal += "</span><span class='mr-1 badge badge-secondary'>";
+        retVal += "</span><span class='mr-1'>";
 
-            if(patient.identifier) {
-                if(preferredDomain && patient.identifier[preferredDomain])
-                    retVal += `<i class="fas fa-id-card"></i> ${SanteDB.display.renderIdentifier(patient.identifier, preferredDomain)}`;
-                else {
-                    var key = Object.keys(patient.identifier)[0];
-                    retVal += `<i class="far fa-id-card"></i> ${SanteDB.display.renderIdentifier(patient.identifier, key)}`;
-                }
+        if (patient.dateOfBirth)
+            retVal += `<br/><i class='fas fa-birthday-cake'></i> ${SanteDB.display.renderDate(patient.dateOfBirth, patient.dateOfBirthPrecision)} `;
+        // Deceased?
+        if (patient.deceasedDate)
+            retVal += `<span class='badge badge-dark'>${SanteDB.locale.getString("ui.model.patient.deceasedIndicator")}</span>`;
+
+        retVal += "</span><span class='mr-1'>";
+
+        // Gender
+        if (patient.genderConceptModel) {
+            switch (patient.genderConceptModel.mnemonic) {
+                case 'Male':
+                    retVal += `<i class='fas fa-male' title="${SanteDB.display.renderConcept(patient.genderConceptModel)}"></i> ${SanteDB.display.renderConcept(patient.genderConceptModel)}`;
+                    break;
+                case 'Female':
+                    retVal += `<i class='fas fa-female' title="${SanteDB.display.renderConcept(patient.genderConceptModel)}"></i> ${SanteDB.display.renderConcept(patient.genderConceptModel)}`;
+                    break;
+                default:
+                    retVal += `<i class='fas fa-restroom' title="${SanteDB.display.renderConcept(patient.genderConceptModel)}"></i> ${SanteDB.display.renderConcept(patient.genderConceptModel)}`;
+                    break;
             }
-            
-            retVal += "</span><span class='mr-1'>";
+        }
+        retVal += "</span>";
 
-            if(patient.dateOfBirth)
-                retVal += `<br/><i class='fas fa-birthday-cake'></i> ${SanteDB.display.renderDate(patient.dateOfBirth, patient.dateOfBirthPrecision)} `;
-            // Deceased?
-            if(patient.deceasedDate)
-                retVal += `<span class='badge badge-dark'>${SanteDB.locale.getString("ui.model.patient.deceasedIndicator")}</span>`;
 
-            retVal += "</span><span class='mr-1'>";
-            
-            // Gender
-            if(patient.genderConceptModel) {
-                switch(patient.genderConceptModel.mnemonic) {
-                    case 'Male':
-                        retVal += `<i class='fas fa-male' title="${SanteDB.display.renderConcept(patient.genderConceptModel)}"></i> ${SanteDB.display.renderConcept(patient.genderConceptModel)}`;
-                        break;
-                    case 'Female':
-                        retVal += `<i class='fas fa-female' title="${SanteDB.display.renderConcept(patient.genderConceptModel)}"></i> ${SanteDB.display.renderConcept(patient.genderConceptModel)}`;
-                        break;
-                    default:
-                        retVal += `<i class='fas fa-restroom' title="${SanteDB.display.renderConcept(patient.genderConceptModel)}"></i> ${SanteDB.display.renderConcept(patient.genderConceptModel)}`;
-                        break;
-                }
-            }
-            retVal += "</span>";
+        if (patient.determinerConcept == "6b1d6764-12be-42dc-a5dc-52fc275c4935") {
+            retVal += `<span class='badge badge-success' title='${SanteDB.locale.getString("ui.mdm.rot")}'><i class='fas fa-gavel'></i> </span>`
+        }
+        return retVal;
+    };
 
-        
-            if(patient.determinerConcept == "6b1d6764-12be-42dc-a5dc-52fc275c4935") {
-                    retVal += `<span class='badge badge-success' title='${SanteDB.locale.getString("ui.mdm.rot")}'><i class='fas fa-gavel'></i> </span>`
-                }
-            return retVal;
+
+    /**
+     * @method
+     * @memberof SanteDB.display
+     * @param {Guid} statusConcept The status concept to render
+     * @returns {string} The HTML rendering of the status concept
+     */
+    this.renderStatus = function (statusConcept) {
+        switch (statusConcept) {
+            case StatusKeys.Active:
+                return `<span class="badge badge-primary"><i class="fas fa-circle"></i> ${SanteDB.locale.getString('ui.state.active')}</span>`;
+            case StatusKeys.Obsolete:
+                return `<span class="badge badge-danger"><i class="fas fa-circle"></i> ${SanteDB.locale.getString('ui.state.obsolete')}</span>`;
+            case StatusKeys.Nullified:
+                return `<span class="badge badge-dark"><i class="fas fa-circle"></i> ${SanteDB.locale.getString('ui.state.nullified')}</span>`;
+            case StatusKeys.New:
+                return `<span class="badge badge-info"><i class="fas fa-circle"></i> ${SanteDB.locale.getString('ui.state.new')}</span>`;
+            case StatusKeys.Inactive:
+                return `<span class="badge badge-warning"><i class="fas fa-circle"></i> ${SanteDB.locale.getString('ui.state.inactive')}</span>`;
+
+        }
+    }
+
+    /**
+     * 
+     * @param {number} decimal The degrees expressed as a decimal
+     * @returns {Object} A structure with degrees, minutes, and seconds
+     */
+    this.convertToDegrees = function (decimal) {
+        return {
+            deg: 0 | (decimal < 0 ? (decimal = -decimal) : decimal),
+            min: 0 | (((decimal += 1e-9) % 1) * 60),
+            sec: (0 | (((decimal * 60) % 1) * 6000)) / 100,
         };
+    }
 
-
-        /**
-         * @method
-         * @memberof SanteDB.display
-         * @param {Guid} statusConcept The status concept to render
-         * @returns {string} The HTML rendering of the status concept
-         */
-        this.renderStatus = function(statusConcept) {
-            switch (statusConcept) {
-                case StatusKeys.Active:
-                    return `<span class="badge badge-info"><i class="fas fa-circle"></i> ${SanteDB.locale.getString('ui.state.active')}</span>`;
-                case StatusKeys.Obsolete:
-                    return `<span class="badge badge-dark"><i class="fas fa-circle"></i> ${SanteDB.locale.getString('ui.state.obsolete')}</span>`;
-                case StatusKeys.Nullified:
-                    return `<span class="badge badge-danger"><i class="fas fa-circle"></i> ${SanteDB.locale.getString('ui.state.nullified')}</span>`;
-                case StatusKeys.New:
-                    return `<span class="badge badge-secondary"><i class="fas fa-circle"></i> ${SanteDB.locale.getString('ui.state.new')}</span>`;
-                case StatusKeys.Inactive:
-                    return `<span class="badge badge-warning"><i class="fas fa-circle"></i> ${SanteDB.locale.getString('ui.state.inactive')}</span>`;
-    
-            }
+    /**
+     * 
+     * @param {*} scope The scope to traverse up the scope tree for
+     * @returns The root scope on the tree
+     */
+    this.getRootScope = function (scope) {
+        while (scope.$parent) {
+            scope = scope.$parent;
         }
+        return scope;
+    }
 
-        /**
-         * 
-         * @param {number} decimal The degrees expressed as a decimal
-         * @returns {Object} A structure with degrees, minutes, and seconds
-         */
-        this.convertToDegrees = function(decimal) {
-            return {
-                deg: 0 | (decimal < 0 ? (decimal = -decimal) : decimal),
-                min: 0 | (((decimal += 1e-9) % 1) * 60),
-                sec: (0 | (((decimal * 60) % 1) * 6000)) / 100,
-              };
+
+
+    /**
+     * 
+     * @param {*} scope The scope to traverse up the scope tree for
+     * @returns The root scope on the tree
+     */
+    this.getRootScope = function (scope) {
+        while (scope.$parent) {
+            scope = scope.$parent;
         }
+        return scope;
+    }
 
-        /**
-         * 
-         * @param {*} scope The scope to traverse up the scope tree for
-         * @returns The root scope on the tree
-         */
-        this.getRootScope = function(scope) {
-            while(scope.$parent) {
-                scope = scope.$parent;
-            }
-            return scope;
+    /**
+     * @method
+     * @summary Iterates up the parent scope via scope.$parent until {see: nameOfVariable} is encountered
+     * @param {*} scope The Angular scope that is in the current controller
+     * @param {string} nameOfVariable The name of the variable to fetch from the scope
+     * @returns {object} The object with nameOfVariable
+     */
+    this.getParentScopeVariable = function (scope, nameOfVariable) {
+        var retVal = null;
+        do {
+            retVal = scope[nameOfVariable];
+            scope = scope.$parent;
+        } while (!retVal && scope)
+        return retVal;
+    }
+
+    /**
+     * @method
+     * @summary Copies an object scross scopes (useful for updating all objects)
+     * @param {*} scope The angularJS scope to cascade the object to
+     * @param {*} objectNames The names to propogate on the scope 
+     * @param {*} value The value to set on the @param objectNames
+     */
+    this.cascadeScopeObject = function (scope, objectNames, value) {
+        // Ensure objects are an array
+        if (!Array.isArray(objectNames)) {
+            objectNames = [objectNames];
         }
+        __cascadeScopeObject(scope, objectNames, value, []);
+    }
 
-        /**
-         * @method
-         * @summary Copies an object scross scopes (useful for updating all objects)
-         * @param {*} scope The angularJS scope to cascade the object to
-         * @param {*} objectNames The names to propogate on the scope 
-         * @param {*} value The value to set on the @param objectNames
-         */
-        this.cascadeScopeObject = function(scope, objectNames, value) {
-            // Ensure objects are an array
-            if(!Array.isArray(objectNames)) {
-                objectNames = [objectNames];
-            }
-            __cascadeScopeObject(scope, objectNames, value, []);
-
-        } 
-        
-        
 };
 
-
-// Initialize the MermaidAPI
-mermaid.mermaidAPI.initialize({
-    "theme": "neutral",
-    flowchart: {
-        width: '100%',
-        useMaxWidth: false,
-        htmlLabels: true    
-    },
-    erDiagram: {
-        width: '100%',
-        useMaxWidth: false,
-        htmlLabels: true    
-
-    },
-    securityLevel: 'loose'
-});

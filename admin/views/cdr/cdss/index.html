@@ -1,0 +1,56 @@
+<!--
+ - Copyright (C) 2021-2023 SanteSuite Inc and the SanteSuite Contributors (see NOTICES)
+Portions Copyright (C) 2019-2021 Fyfe Software Inc.
+Portions Copyright (C) 2015-2018 Mohawk College of Applied Arts and Technology
+ - 
+ - 
+ - Licensed under the Apache License, Version 2.0 (the "License"); you 
+ - may not use this file except in compliance with the License. You may 
+ - obtain a copy of the License at 
+ - 
+ - http://www.apache.org/licenses/LICENSE-2.0 
+ - 
+ - Unless required by applicable law or agreed to in writing, software
+ - distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+ - WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the 
+ - License for the specific language governing permissions and limitations under 
+ - the License.
+ - 
+ - User: justin
+ - Date: 2018-11-14
+ -->
+<div xmlns="http://www.w3.org/1999/xhtml" xmlns:sdb="http://santedb.org/applet">
+    <sdb:script static="false">~/controllers/cdss/index.js</sdb:script>
+    <sdb:state name="santedb-admin.cdr.cdss.dashboard">
+        <sdb:demand>1.3.6.1.4.1.33349.3.1.5.9.2.0.15</sdb:demand>
+        <sdb:url>/</sdb:url>
+        <sdb:view>
+            <sdb:title lang="en">Master Library</sdb:title>
+            <sdb:controller>CdssDashboardController</sdb:controller>
+        </sdb:view>
+    </sdb:state>
+    <h3><i class="fas fa-lightbulb"></i> {{ 'ui.admin.cdss.master.title' | i18n }}</h3>
+    <p class="text-subtle">{{ 'ui.admin.cdss.master.help' | i18n }}</p>
+
+    <entity-table id="CdssLibraryDefinitionTable" type="CdssLibraryDefinition" 
+        search-field="name" 
+        i18n-prefix="'ui.model.cdssLibraryDefinition.'"
+        upstream="true"
+        no-deleted="true" 
+        item-actions="[ 
+            { name: 'view', sref: 'santedb-admin.cdr.cdss.view', demand: '1.3.6.1.4.1.33349.3.1.5.9.2.0.15.2', className: 'btn-primary', icon: 'fas fa-eye' }, 
+            { name: 'edit', sref: 'santedb-admin.cdr.cdss.edit', demand: '1.3.6.1.4.1.33349.3.1.5.9.2.0.15.2.1', className: 'btn-secondary', icon: 'fas fa-pencil' }, 
+            { name: 'download', action: 'downloadCdssLibraryDefinition', demand: '1.3.6.1.4.1.33349.3.1.5.9.2.0.15.2.1', className: 'btn-info', icon: 'fa fa-arrow-down' }, 
+            { name: 'delete', action: 'deleteCdssLibraryDefinition', demand: '1.3.6.1.4.1.33349.3.1.5.9.2.0.15.2.2', className: 'btn-danger', icon: 'fa fa-trash' } 
+        ]"
+        actions="[
+            { name: 'create', sref: 'santedb-admin.cdr.cdss.create', demand: '1.3.6.1.4.1.33349.3.1.5.9.2.0.15.2.0', className: 'btn-primary', icon: 'fas fa-asterisk' }
+        ]"
+        render="{ 'modifiedOn' : 'renderModifiedOn', 'status': renderStatus, version: renderVersion, name: renderName }"
+        properties="[  'name', 'version', 'status', 'modifiedOn' ]"
+        sort="{ 'modifiedOn' : 'creationTime' }"
+        default-sort="{ 'storage.creationTime' : 'desc'}"
+        >
+    </entity-table>
+
+</div>

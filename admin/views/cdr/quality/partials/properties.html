@@ -1,0 +1,264 @@
+<!--
+ - Copyright 2021-2024 SanteSuite Contributors (See NOTICE.md for full copyright notices)
+ - Copyright (C) 2019 - 2021, Fyfe Software Inc. and the SanteSuite Contributors
+ - Portions Copyright (C) 2015-2018 Mohawk College of Applied Arts and Technology
+ - 
+ - Licensed under the Apache License, Version 2.0 (the "License"); you 
+ - may not use this file except in compliance with the License. You may 
+ - obtain a copy of the License at 
+ - 
+ - http://www.apache.org/licenses/LICENSE-2.0 
+ - 
+ - Unless required by applicable law or agreed to in writing, software
+ - distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+ - WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the 
+ - License for the specific language governing permissions and limitations under 
+ - the License.
+ - 
+ - User: fyfej
+ - Date: 2024-1-5
+ -->
+<form xmlns="http://www.w3.org/1999/xhtml" ng-submit="saveDataQualityRule(dataQualityForm)" name="dataQualityForm"
+    novalidate="novalidate" class="form" autocomplete="off">
+
+    <div class="card">
+        <div class="card-header bg-info text-white">
+            <h5 class="card-title m-0">
+                <i class="fas fa-fw fa-pencil"></i> {{ 'ui.model.dataQualityRule' | i18n }}
+            </h5>
+        </div>
+        <div class="card-body container-fluid">
+            <div class="form-group row">
+                <label class="col-sm-12 col-md-3 control-label" for="dataQualityRuleId">
+                    {{ 'ui.model.dataQualityRule.id' | i18n }} <hint-popover hint-title="ui.model.dataQualityRule.id" />
+                </label>
+                <div class="col-sm-12 col-md-9">
+                    <input class="form-control" name="dataQualityRuleId" ng-model="rule.id" required="required"
+                        pattern="^[a-zA-Z]+[\.a-zA-Z0-9]*$" type="text"
+                        placeholder="{{ 'ui.model.dataQualityRule.id.placeholder' | i18n }}" maxlength="128" />
+                    <div class="text-danger" ng-if="dataQualityForm.dataQualityRuleId.$error['required']">
+                        <i class="fas fa-exclamation-triangle"></i> {{ 'ui.error.required' | i18n }}
+                    </div>
+                    <div class="text-danger" ng-if="dataQualityForm.dataQualityRuleId.$error['pattern']">
+                        <i class="fas fa-exclamation-triangle"></i> {{ 'ui.error.pattern' | i18n }}
+                    </div>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-12 col-md-3 control-label" for="dataQualityRuleName">
+                    {{ 'ui.model.dataQualityRule.name' | i18n }} <hint-popover
+                        hint-title="ui.model.dataQualityRule.name" />
+                </label>
+                <div class="col-sm-12 col-md-9">
+                    <input class="form-control" name="dataQualityRuleName" ng-model="rule.name" required="required"
+                        type="text" placeholder="{{ 'ui.model.dataQualityRule.name.placeholder' | i18n }}"
+                        maxlength="256" />
+                    <div class="text-danger" ng-if="dataQualityForm.dataQualityRuleName.$error['required']">
+                        <i class="fas fa-exclamation-triangle"></i> {{ 'ui.error.required' | i18n }}
+                    </div>
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-md-9 col-sm-12 offset-md-3">
+                    <label class="control-label">
+                        <input type="checkbox" ng-model="rule.enabled" /> {{ 'ui.model.dataQualityRule.enabled' | i18n
+                        }} <hint-popover hint-title="ui.model.dataQualityRule.enabled" />
+                    </label>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="card">
+        <div class="card-header bg-light">
+            <h5 class="card-title mx-0">
+                <i class="fas fa-shapes"></i> {{ 'ui.model.dataQualityRule.resources' | i18n }}
+            </h5>
+        </div>
+        <div class="card-body">
+            <ul class="nav nav-tabs">
+                <li class="nav-item" ng-repeat="resource in rule.resources track by $index">
+                    <a class="nav-link" ng-class="{'active':$index==0}" data-toggle="tab"
+                        data-target="#resource{{$index}}" role="tab"><span class="mr-2"><i class="fas fa-circle"></i> {{
+                            resource.resource || 'new' }}</span> <button title="{{ 'ui.action.remove' | i18n }}"
+                            type="button" class="ml-2 btn btn-danger btn-sm" ng-click="removeResource($index)"><i
+                                class="fas fa-times"></i></button></a>
+                </li>
+                <i class="nav-item">
+                    <button type="button" class="btn btn-sm btn-primary m-2" title="{{ 'ui.action.add' | i18n }}"
+                        ng-click="rule.resources.push({ assert: [] })"><i class="fas fa-plus"></i></button>
+                </i>
+            </ul>
+            <div class="tab-content">
+                <div class="tab-pane fade p-2" id="resource{{$index}}" role="tabpanel"
+                    ng-repeat="resource in rule.resources track by $index" ng-class="{ 'active show' : $index == 0 }">
+                    <div class="container-fluid">
+                        <div class="form-group row">
+                            <label class="col-sm-12 col-md-3 control-label">
+                                {{ 'ui.model.dataQualityRule.resources.resource' | i18n }}
+                                <hint-popover hint-title="ui.model.dataQualityRule.resources.resource"/>
+                            </label>
+                            <div class="col-sm-12 col-md-9">
+                                <select class="form-control" required="required"
+                                     name="resource{{$index}}Type"
+                                    ng-model="resource.resource" ng-disabled="resource.assert.length != 0">
+                                    <optgroup label="Entities">
+                                        <option value="Entity">Entity</option>
+                                        <option value="Material">Material</option>
+                                        <option value="ManufacturedMaterial">Manufactured Material</option>
+                                        <option value="Patient">Patient</option>
+                                        <option value="Person">Person</option>
+                                        <option value="Place">Place</option>
+                                    </optgroup>
+                                    <optgroup label="Acts">
+                                        <option value="Act">Act</option>
+                                        <option value="ControlAct">Control Act</option>
+                                        <option value="Narrative">Narrative</option>
+                                        <option value="QuantityObservation">Observation - Quantity Observation</option>
+                                        <option value="CodedObservation">Observation - Coded Observation</option>
+                                        <option value="TextObservation">Observation - Text Observation</option>
+                                        <option value="SubstanceAdministration">Substance Administration</option>
+                                        <option value="Procedure">Procedure</option>
+                                        <option value="PatientEncounter">Patient Encounter</option>
+                                    </optgroup>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-12">
+                                <div class="card"
+                                    ng-class="{ 'border-info' : assertion.priority == 'Information', 'border-warning' : assertion.priority == 'Warning', 'border-danger' : assertion.priority == 'Error' }"
+                                    ng-repeat="assertion in resource.assert">
+                                    <div class="card-header text-white p-1"
+                                        ng-class="{ 'bg-info' : assertion.priority == 'Information', 'bg-warning' : assertion.priority == 'Warning', 'bg-dark' : assertion.priority == 'Error' }">
+                                        <i class="fas fa-fw"
+                                            ng-class="{ 'fa-info-circle' : assertion.priority == 'Information', 'fa-exclamation-circle' : assertion.priority == 'Warning', 'fa-exclamation-triangle' : assertion.priority == 'Error' }"></i>
+                                        {{ assertion.name }}
+                                        <button class="btn btn-sm float-right btn-danger" type="button"
+                                            title="{{ 'ui.action.remove' | i18n }}"
+                                            ng-click="resource.assert.splice($index, 1)">
+                                            <i class="fas fa-fw fa-times"></i>
+                                        </button>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="container-fluid">
+                                            <div class="form-group row">
+                                                <label class="col-md-3 col-sm-12 control-label">
+                                                    {{ 'ui.model.dataQualityRule.resources.assert.id' | i18n }}
+                                                    <hint-popover
+                                                        hint-title="ui.model.dataQualityRule.resources.assert.id" />
+                                                </label>
+                                                <div class="col-sm-12 col-md-9">
+                                                    <input class="form-control"
+                                                        name="resource{{$parent.$index}}assert{{$index}}Id"
+                                                        ng-model="assertion.id" required="required"
+                                                        pattern="^[a-zA-Z]+[\.a-zA-Z0-9]*$" type="text"
+                                                        placeholder="{{ 'ui.model.dataQualityRule.resources.assert.id.placeholder' | i18n }}"
+                                                        maxlength="128" />
+                                                    <div class="text-danger"
+                                                        ng-if="dataQualityForm['resource' + $parent.$index + 'assert' + $index + 'Id'].$error['required']">
+                                                        <i class="fas fa-exclamation-triangle"></i> {{
+                                                        'ui.error.required' | i18n }}
+                                                    </div>
+                                                    <div class="text-danger"
+                                                        ng-if="dataQualityForm['resource' + $parent.$index + 'assert' + $index + 'Id'].$error['pattern']">
+                                                        <i class="fas fa-exclamation-triangle"></i> {{
+                                                        'ui.error.pattern' | i18n }}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <label class="col-md-3 col-sm-12 control-label">
+                                                    {{ 'ui.model.dataQualityRule.resources.assert.name' | i18n }}
+                                                    <hint-popover
+                                                        hint-title="ui.model.dataQualityRule.resources.assert.name" />
+                                                </label>
+                                                <div class="col-sm-12 col-md-9">
+                                                    <input class="form-control"
+                                                        name="resource{{$parent.$index}}assert{{$index}}Name"
+                                                        ng-model="assertion.name" required="required" type="text"
+                                                        placeholder="{{ 'ui.model.dataQualityRule.resources.assert.name.placeholder' | i18n }}"
+                                                        maxlength="128" />
+                                                    <div class="text-danger"
+                                                        ng-if="dataQualityForm['resource' + $parent.$index + 'assert' + $index + 'Name'].$error['required']">
+                                                        <i class="fas fa-exclamation-triangle"></i> {{
+                                                        'ui.error.required' | i18n }}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <label class="col-md-3 col-sm-12 control-label">
+                                                    {{ 'ui.model.dataQualityRule.resources.assert.priority' | i18n }}
+                                                    <hint-popover
+                                                        hint-title="ui.model.dataQualityRule.resources.assert.priority" />
+                                                </label>
+                                                <div class="col-sm-12 col-md-9">
+                                                    <select class="form-control"
+                                                        name="resource{{$parent.$index}}assert{{$index}}Priority"
+                                                        ng-model="assertion.priority" required="required">
+                                                        <option value="Error">Error</option>
+                                                        <option value="Warning">Warning</option>
+                                                        <option value="Information">Information</option>
+                                                    </select>
+                                                    <div class="text-danger"
+                                                        ng-if="dataQualityForm['resource' + $parent.$index + 'assert' + $index + 'Priority'].$error['required']">
+                                                        <i class="fas fa-exclamation-triangle"></i> {{
+                                                        'ui.error.required' | i18n }}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <label class="col-sm-12 col-md-3 control-label">
+                                                    {{ 'ui.model.dataQualityRule.resources.assert.expression' | i18n }}
+                                                    <hint-popover
+                                                        hint-title="ui.model.dataQualityRule.resources.assert.expression" />
+                                                </label>
+
+                                                <div class="col-sm-12 col-md-9">
+                                                    <select class="form-control" ng-model="assertion.evaluation">
+                                                        <option value="All">all-of (and)</option>
+                                                        <option value="Any">any-of (or)</option>
+                                                        <option value="None">none-of (not)</option>
+                                                    </select>
+                                                </div>
+                                                <div class="col-sm-12 col-md-9 offset-md-3"
+                                                    ng-repeat="expression in assertion.expression">
+                                                    <div class="input-group">
+                                                        <hdsi-expression simple-input="true" required="required"
+                                                            name="resource{{$parent.$parent.$index}}assert{{$parent.$index}}expr{{$index}}" focal-type="resource.resource"
+                                                            include-rhs="true" ng-model="assertion.expression[$index]" />
+                                                        <div class="input-group-append">
+                                                            <button class="btn btn-outline-danger" type="button" ng-if="$index &gt; 0"
+                                                                ng-click="assertion.expression.splice($index, 1)"><i
+                                                                    class="fas fa-times"></i></button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-9 col-sm-12 offset-md-3">
+                                                    <button type="button" class="btn btn-primary float-right" ng-click="assertion.expression.push('')">
+                                                        <i class="fas fa-plus fa-fw"></i> {{ 'ui.action.add' | i18n }}
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <button type="button" class="btn btn-primary float-right" ng-click="resource.assert.push({ priority: 'Information', evaluation: 'All', expression: [ '' ]})" 
+                                    ng-disabled="!resource.resource">
+                                        <i class="fas fa-fw fa-plus"></i> {{ 'ui.model.dataQualityRule.assertion.add' | i18n }}
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="btn btn-group float-right">
+        <button type="submit" id="btnSaveDataQualityRule" ng-disabled="dataQualityForm.$invalid" class="btn btn-primary"><i class="fas fa-fw fa-check"></i> {{ 'ui.action.save' | i18n }}</button>
+    </div>
+</form>

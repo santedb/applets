@@ -1,4 +1,24 @@
 /// <reference path="../../.ref/js/santedb.js"/>
+/*
+ * Copyright (C) 2021 - 2024, SanteSuite Inc. and the SanteSuite Contributors (See NOTICE.md for full copyright notices)
+ * Copyright (C) 2019 - 2021, Fyfe Software Inc. and the SanteSuite Contributors
+ * Portions Copyright (C) 2015-2018 Mohawk College of Applied Arts and Technology
+ * 
+ * Licensed under the Apache License, Version 2.0 (the "License"); you 
+ * may not use this file except in compliance with the License. You may 
+ * obtain a copy of the License at 
+ * 
+ * http://www.apache.org/licenses/LICENSE-2.0 
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+ * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the 
+ * License for the specific language governing permissions and limitations under 
+ * the License.
+ * 
+ * User: fyfej
+ * Date: 2023-5-19
+ */
 angular.module('santedb').controller('MasterDataManagementController', ['$scope', '$rootScope', '$timeout', function ($scope, $rootScope, $timeout) {
 
     // Strength
@@ -15,7 +35,7 @@ angular.module('santedb').controller('MasterDataManagementController', ['$scope'
 
     // Render entity information
     $scope.renderCreatedBy = function (entity) {
-        return `<provenance provenance-id="'${entity.createdBy}'"  provenance-time="'${entity.creationTime}'"></provenance>`;
+        return `<provenance provenance-id="'${entity.createdBy}'" application-provenance="true"  provenance-time="'${entity.creationTime}'"></provenance>`;
     }
 
     // Render classification concept
@@ -43,7 +63,7 @@ angular.module('santedb').controller('MasterDataManagementController', ['$scope'
                 $("#candidateDetailModal").modal('show');
             });
             delete ($scope.candidateObject);
-            var matchReport = await SanteDB.resources.patient.getAssociatedAsync($scope.scopedObject.id, "mdm-candidate", id, { _upstream: true });
+            var matchReport = await SanteDB.resources.patient.getAssociatedAsync($scope.scopedObject.id, "match-candidate", id, { _upstream: true });
 
             $timeout(_ => {
                 $scope.scopedObject.candidateObject = {
@@ -136,11 +156,11 @@ angular.module('santedb').controller('MasterDataManagementController', ['$scope'
         try {
             SanteDB.display.buttonWait('#Patientrematch', true);
 
-            if (!confirm(SanteDB.locale.getString("ui.mpi.matches.rematch.confirm"))) {
+            if (!confirm(SanteDB.locale.getString("ui.admin.matches.rematch.confirm"))) {
                 return;
             }
 
-            var result = await SanteDB.resources.patient.invokeOperationAsync($scope.scopedObject.id, "mdm-rematch", { clear: true }, true);
+            var result = await SanteDB.resources.patient.invokeOperationAsync($scope.scopedObject.id, "match", { clear: true }, true);
 
             $("div[type=Patient] table").DataTable().ajax.reload()
 
