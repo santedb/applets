@@ -1,32 +1,6 @@
 /// <reference path="../../../core/js/santedb.js"/>
 /// <reference path="../../../core/js/santedb-model.js"/>
 
-/**
- * 
- * @param {ManufacturedMaterial} lot The material representing the lot instance
- * @param {ManufacturedMaterial} product The material representing the generic product
- * @param {string} statusConcept The status of the lot to set
- * @param {boolean} copyGtin True if GTIN should be copied from the product to the lot
- * @param {boolean} copyName True if the name of the product should be copied to the lot
- */
-function copyMaterialInstance(lot, product, statusConcept, copyGtin, copyName) {
-    lot.determinerConcept = DeterminerKeys.Specific;
-    lot.formConcept = product.formConcept;
-    lot.typeConcept = product.typeConcept;
-    lot.quantityConcept = product.quantityConcept;
-    lot.statusConcept = statusConcept;
-    lot.quantity = 1;
-    lot.identifier = lot.identifier || {};
-    lot.identifier.GTIN = lot.identifier.GTIN || [{}];
-    if (product.identifier && product.identifier.GTIN && copyGtin) {
-        lot.identifier.GTIN[0].value = product.identifier.GTIN[0].value;
-    }
-    lot.name = lot.name || {};
-    lot.name.Assigned = lot.name.Assigned || [{ component: { $other: [""] } }];
-    if (copyName) {
-        lot.name.Assigned[0].component.$other[0] = product.name.Assigned[0].component.$other[0];
-    }
-}
 
 var loadedObjects = {};
 

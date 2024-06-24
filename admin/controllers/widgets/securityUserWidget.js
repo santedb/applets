@@ -94,7 +94,7 @@ angular.module('santedb').controller('SecurityUserWidgetController', ["$scope", 
      * @summary Reset invalid logins
      */
     $scope.resetInvalidLogins = async function (securityUser) {
-        if (!confirm(SanteDB.locale.getString("ui.emr.users.invalidLogin.reset")))
+        if (!confirm(SanteDB.locale.getString("ui.admin.users.invalidLogin.reset")))
             return;
 
         var patch = new Patch({

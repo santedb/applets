@@ -48,7 +48,8 @@
   <string name="ui.model.userEntity.givenName">Given Name</string>
   <string name="ui.model.userEntity.familyName">Family Name</string>
   <string name="ui.model.userEntity.language">Preferred Language</string>
-  <string name="ui.model.userEntity.relationship.DedicatedServiceDeliveryLocation">Primary Facility</string>
+  <string name="ui.model.userEntity.relationship.DedicatedServiceDeliveryLocation">Facilities</string>
+  <string name="ui.model.userEntity.relationship.MaintainedEntity">Managed Facilities</string>
   <string name="ui.model.userEntity.relationship.Employee">Employer</string>
   <string name="ui.model.securityUser.lockout">Locked Until</string>
   <string name="ui.model.securityRole.id">Security ID</string>
@@ -440,6 +441,8 @@
   <string name="ui.model.manufacturedMaterial.name.assigned">Trade Name</string>
   <string name="ui.manufacturedMaterial.dose"> doses of </string>
   <string name="ui.model.manufacturedMaterial.name.assigned.hint">Enter the common name or trade name for the manufactured product</string>
+  <string name="ui.model.manufacturedMaterial.relationship.HasGeneralization">Material Definition</string>
+  <string name="ui.model.manufacturedMaterial.relationship.HasGeneralization.hint">Select the kind of material which this instance of the material represents</string>
   <string name="ui.model.manufacturedMaterial.relationship.ManufacturedProduct">Manufacturer</string>
   <string name="ui.model.manufacturedMaterial.relationship.ManufacturedProduct.hint">Select the organization which manufactures this product. This should represent the manufacturer of origin rather than the supplier</string>
   <string name="ui.model.manufacturedMaterial.relationship.HasGeneralization.quantity">Contained Quantity</string>
@@ -847,5 +850,6 @@
   <string name="ui.model.conceptRelationship.relationshipType.hint">Indicates the nature of the relationship between the two concepts</string>
   <string name="ui.model.conceptRelationship.targetConcept">Target Concept</string>
   <string name="ui.model.conceptRelationship.targetConcept.hint">The concept which is the target of this relationship</string>
+  
   
 </resources>

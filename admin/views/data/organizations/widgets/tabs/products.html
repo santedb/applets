@@ -1,0 +1,236 @@
+<div xmlns="http://www.w3.org/1999/xhtml" xmlns:sdb="http://santedb.org/applet">
+    <sdb:script>~/controllers/organizations/product.js</sdb:script>
+    <sdb:widget type="Tab" name="org.santedb.widget.admin.tab.organization.products" context="org.santedb.organization.admin"
+        order="10">
+        <sdb:icon>fas fa-fw fa-box-archive</sdb:icon>
+        <sdb:name lang="en">Products</sdb:name>
+        <sdb:demand>1.3.6.1.4.1.33349.3.1.5.9.2.4.0.1.3</sdb:demand>
+        <sdb:guard>scopedObject.typeConcept == 'a6751db5-4313-432e-b3ea-80e39d5e551c'</sdb:guard>
+    </sdb:widget>
+
+    <div ng-if="scopedObject" class="m-2" ng-controller="OrganizationProductController">
+        <!-- Note: Change in Version 3 - The Materials here are specializations of holder -->
+        <entity-table id="MaterialProductTable" type="ManufacturedMaterial" search-field="name.component.value"
+            default-query="{ 'relationship[ManufacturedProduct].source' : scopedObject.id, _viewModel: 'fastview', 'determinerConcept': '604CF1B7-8891-49FB-B95F-3E4E875691BC' }"
+            render="{ typeConcept: 'renderTypeConcept', updatedBy: 'renderUpdatedBy', gtin: 'renderGtin', quantity: 'renderQuantity', name: 'renderName', statusConcept: 'renderStatusConcept' }"
+            i18n-prefix="'ui.model.manufacturedMaterial.'" item-class="{ 'name' : 'w-20', 'updatedBy' : 'w-20' }"
+            default-sort="{ 'modifiedOn' : 'desc' }"
+            item-actions="[ 
+                { name: 'edit', action: 'doEditProduct', demand: '1.3.6.1.4.1.33349.3.1.5.9.2.4.1.1', className: 'btn-primary', icon: 'fa fa-pencil' },  
+                { name: 'delete', action: 'doDeleteProduct', demand: '1.3.6.1.4.1.33349.3.1.5.9.2.4.1.1', className: 'btn-danger', icon: 'fa fa-trash' },  
+            ]" actions="[ 
+                { name: 'add', demand: '1.3.6.1.4.1.33349.3.1.5.9.2.4.1.0', action: 'addProduct', className: 'btn-primary', icon: 'fa fa-plus-circle' }
+            ]" properties="[ 'name', 'typeConcept', 'quantity', 'gtin', 'statusConcept', 'updatedBy' ]"
+            >
+        </entity-table>
+
+        <!-- MODAL FOR CREATING A NEW SPECIALIZATION -->
+        <div class="modal" id="editProductModal" data-backdrop="static" role="dialog"
+            aria-labelledby="editProductModalTitle" aria-hidden="true">
+            <div class="modal-dialog modal-xl" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="editProductModalTitle">
+                            <i class="fas fa-pills"></i> {{ 'ui.admin.data.material.editProduct' | i18n }}
+                        </h5>
+                        <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">
+                                <i class="fa fa-times"></i>
+                            </span>
+                        </button>
+                    </div>
+                    <form novalidate="novalidate" class="form" ng-submit="saveProductMaterial(editProductForm)"
+                        name="editProductForm" autocomplete="off">
+                        <div class="modal-body">
+                            <div class="container-fluid">
+                                <div class="form-group row">
+                                    <div class="col-12">
+                                        <div class="alert alert-light">
+                                            <h5><i class="fas fa-info-circle"></i> {{
+                                                'ui.admin.data.material.editProduct.help' | i18n }}</h5>
+                                            {{ 'ui.admin.data.material.editProduct.help.text' | i18n }}
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="form-group row">
+                                    <label class="col-md-12 col-lg-3 control-label">
+                                        {{ 'ui.model.manufacturedMaterial.relationship.ManufacturedProduct' | i18n }}
+                                        <hint-popover
+                                            hint-title="ui.model.manufacturedMaterial.relationship.ManufacturedProduct" />
+                                    </label>
+                                    <div class="col-md-12 col-lg-9">
+                                        <entity-search type="'Organization'" disabled="disabled"
+                                            ng-model="editProduct.relationship.ManufacturedProduct[0].holder"
+                                            filter="{ industryConcept: '33b40c3c-c0c0-48b6-be74-0881d9c00ee6' }"
+                                            class="form-control" required="required" name="manufacturer" />
+                                        <div class="text-danger" ng-if="editProductForm.manufacturer.$error['required']">
+                                            <i class="fas fa-exclamation-triangle"></i> {{ 'ui.error.required' | i18n }}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-md-12 col-lg-3 control-label">
+                                        {{ 'ui.model.manufacturedMaterial.relationship.HasGeneralization' | i18n }}
+                                        <hint-popover
+                                            hint-title="ui.model.manufacturedMaterial.relationship.HasGeneralization" />
+                                    </label>
+                                    <div class="col-md-12 col-lg-9">
+                                        <entity-search type="'Material'"
+                                            ng-model="editProduct.relationship.HasGeneralization[0].target"
+                                            search-field="'name.value'"
+                                            filter="{ 'determinerConcept' : 'ad28a7ac-a66b-42c4-91b4-de40a2b11980' }"
+                                            class="form-control" required="required" name="editGenericDefinition" />
+                                        <div class="text-danger" ng-if="editProductForm.editGenericDefinition.$error['required']">
+                                            <i class="fas fa-exclamation-triangle"></i> {{ 'ui.error.required' | i18n }}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-md-12 col-lg-3 control-label">
+                                        {{ 'ui.model.manufacturedMaterial.typeConcept' | i18n }}
+                                        <hint-popover
+                                            hint-title="ui.model.manufacturedMaterial.typeConcept" />
+                                    </label>
+                                    <div class="col-md-12 col-lg-9">
+                                        <entity-search type="'Concept'"
+                                            ng-model="editProduct.typeConcept"
+                                            search-field="'name.value'"
+                                            filter="{ 'relationship[MemberOf].targetConcept' : scopedObject.typeConcept }"
+                                            class="form-control" required="required" name="editTypeConcept" />
+                                        <div class="text-danger" ng-if="editProductForm.editTypeConcept.$error['required']">
+                                            <i class="fas fa-exclamation-triangle"></i> {{ 'ui.error.required' | i18n }}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-md-12 col-lg-3 control-label required">
+                                        {{ 'ui.model.manufacturedMaterial.name.assigned' | i18n }}
+                                        <hint-popover hint-title="ui.model.manufacturedMaterial.name.assigned" />
+                                    </label>
+                                    <div class="col-md-12 col-lg-9">
+                                        <input type="text" ng-model="editProduct.name.Assigned[0].component.$other[0]"
+                                            required="required" name="tradeName" maxlength="128" class="form-control"  />
+                                        <div class="text-danger" ng-if="editProductForm.tradeName.$error['required']">
+                                            <i class="fas fa-exclamation-triangle"></i> {{ 'ui.error.required' | i18n }}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group row" ng-if="editProduct.version">
+                                    <label class="col-md-12 col-lg-3 control-label">{{ 'ui.model.entity.statusConcept' | i18n }} 
+                                        <hint-popover hint-title="ui.model.entity.statusConcept" />
+                                    </label>
+                                    <div class="col-md-12 col-lg-9">
+                                        <concept-select concept-set="'EntityStatus'" ng-model="editProduct.statusConcept" class="form-control" />
+                                    </div>
+                                </div>
+                                <div class="form-group row" ng-repeat="dmn in idDomains track by $index">
+                                    <label class="col-md-12 col-lg-3 control-label">{{ dmn.name }}</label>
+                                    <div class="col-md-12 col-lg-9">
+                                        <input type="text" ng-pattern="dmn.validation"
+                                            ng-model="editProduct.identifier[dmn.domainName][0].value" placeholder="{{dmn._exampleValue}}"
+                                            class="form-control" name="id{{$index}}" />
+                                        <div class="text-danger" ng-if="editProductForm['id' + $index].$error['pattern']">
+                                            <i class="fas fa-exclamation-triangle"></i> {{ 'ui.error.pattern' | i18n }}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-md-12 col-lg-3 control-label">
+                                        {{ 'ui.model.manufacturedMaterial.relationship.HasGeneralization.quantity' |
+                                        i18n }}
+                                        <hint-popover
+                                            hint-title="ui.model.manufacturedMaterial.relationship.HasGeneralization.quantity" />
+                                    </label>
+                                    <div class="col-md-12 col-lg-9">
+                                        <div class="input-group">
+                                            <input type="number" min="1" max="100000" class="form-control w-50"
+                                                ng-model="editProduct.relationship.HasGeneralization[0].quantity"
+                                                name="quantityPer" required="required" />
+                                            <div class="input-group-append">
+                                                <span class="input-group-text">
+                                                    {{ 'ui.manufacturedMaterial.dose' | i18n }} {{
+                                                    editProduct.relationship.HasGeneralization[0].targetModel.name.Assigned | name }}
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <div class="text-danger" ng-if="editProductForm.quantityPer.$error['required']">
+                                            <i class="fas fa-exclamation-triangle"></i> {{ 'ui.error.required' | i18n }}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-lg-3 col-md-12 control-label required">
+                                        {{ 'ui.model.manufacturedMaterial.quantity' | i18n }} <hint-popover
+                                            hint-title="ui.model.manufacturedMaterial.quantity" />
+                                    </label>
+                                    <div class="col-lg-9 col-md-12">
+                                        <div class="input-group">
+                                            <input class="form-control" ng-model="editProduct.quantity" required="required" type="number" min="0.00" 
+                                                name="quantity" />
+                                            <concept-select class="form-control" required="required" name="quantityConcept"
+                                                concept-set="'StockUnitOfMeasure'" ng-model="editProduct.quantityConcept" />
+                                        </div>
+                                        <div class="text-danger" ng-if="editProductForm.quantityConcept.$error['required'] || editProductForm.quantity.$error['required']">
+                                            <i class="fas fa-exclamation-triangle"></i> {{ 'ui.error.required' | i18n }}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="control-label col-md-12 col-lg-3">
+                                        {{ 'ui.model.manufacturedMaterial.relationship.Instance' | i18n }}
+                                        <hint-popover hint-title="ui.model.manufacturedMaterial.relationship.instance" />
+                                    </label>
+                                    <div class="col-md-12 col-lg-9">
+                                        <ul class="list-group">
+                                            <li ng-repeat="lot in editProduct.relationship.Instance track by $index" class="list-group-item">
+                                                <div class="input-group">
+                                                    <div class="input-group-prepend">
+                                                        <span class="input-group-text">
+                                                            {{ 'ui.model.manufacturedMaterial.lotNumber' | i18n }}
+                                                        </span>
+                                                    </div>
+                                                    <input type="text" maxlength="128" minlength="2" name="lotNumber"
+                                                    class="form-control" required="required" ng-model="lot.targetModel.lotNumber"
+                                                     />
+                                                    <div class="input-group-append">
+                                                        <span class="input-group-text">
+                                                            {{ 'ui.model.manufacturedMaterial.expiry' | i18n }}
+                                                        </span>
+                                                    </div>
+                                                    <input type="date" ng-required="lot.targetModel.lotNumber" name="lotExpiry{{$index}}" 
+                                                    class="form-control" ng-model="lot.targetModel.expiryDate" />
+                                                    <div class="input-group-append">
+                                                        <button type="button" class="btn btn-danger" ng-click="editProduct.relationship.Instance.splice($index, 1)">
+                                                            <i class="fas fa-fw fa-times-circle"></i><span class="d-none d-md-inline">{{ 'ui.action.remove' | i18n }}</span>
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                                <div class="text-danger" ng-if="editProductForm['lotExpiry' + $index].$error['required']">
+                                                    <i class="fas fa-fw fa-exclamation-triangle"></i> {{ 'ui.error.required' | i18n }}
+                                                </div>
+                                            </li>
+                                            <li class="list-group-item">
+                                                <button type="button" class="btn btn-success" ng-click="editProduct.relationship.Instance.push({})">
+                                                    <i class="fas fa-fw-fa-plus-circle"></i>{{ 'ui.action.add' | i18n }}
+                                                </button>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button class="btn btn-secondary" type="button" data-dismiss="modal" data-toggle="none">
+                                <i class="fa fa-times"></i> {{ 'ui.action.cancel' | i18n }}</button>
+                            <button type="submit" class="btn btn-primary" id="btnSaveMaterialDefn"
+                                ng-disabled="editProductForm.$invalid">
+                                <i class="fa fa-check"></i> {{ 'ui.action.save' | i18n }} </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

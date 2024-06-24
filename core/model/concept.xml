@@ -32,10 +32,7 @@
     <property name="scopeModel" behavior="always" ref="Concept" />
   </type>
 
-  <type type="ConceptRelationship" all="true">
-    <property name="relationshipTypeModel" behavior="always" />
-    <property name="targetConceptModel" behavior="always" />
-  </type>
+
   <type type="Concept" all="true">
     <property name="name" behavior="always" all="true" />
     <property name="mnemonic" behavior="always" />

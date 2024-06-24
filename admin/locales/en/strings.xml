@@ -407,6 +407,9 @@
         organization?</string>
     <string name="ui.admin.organization.confirmUnDelete">Are you sure you want to un-delete this
         organization?</string>
+    <string name="org.santedb.widget.admin.tab.organization.profile">Profile</string>
+    <string name="org.santedb.widget.admin.tab.organization.products">Manufactured Products</string>
+
 
     <string name="ui.admin.entity.edit.child.add.confirm">The entity you are attempting to add to
         this entity already has a Parent. Do you want to reassign this entity to a new parent?</string>
@@ -428,6 +431,7 @@
     <string name="org.santedb.widget.admin.panel.user.auth_certs">Authentication</string>
     <string name="org.santedb.widget.admin.panel.user.dsig_certs">Digital Signatures</string>
     <string name="org.santedb.widget.admin.tab.user.certs">Certificates</string>
+    <string name="org.santedb.widget.admin.tab.user.profile">Public Profile</string>
     <string name="org.santedb.widget.admin.panel.device.auth_certs">Authentication</string>
     <string name="org.santedb.widget.admin.panel.device.dsig_certs">Digital Signatures</string>
     <string name="org.santedb.widget.admin.tab.device.certs">Certificates</string>
