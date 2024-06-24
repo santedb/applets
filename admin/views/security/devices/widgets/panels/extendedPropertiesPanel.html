@@ -81,6 +81,7 @@
                 <div class="col-xs-12 col-md-10">
                     <entity-search  ng-disabled="panel.view != 'Edit'" autocomplete="_away" type="'UserEntity'"
                         filter="{ obsoletionTime: 'null' }"
+                        search-field="'securityUser.userName'"
                         class="form-control"
                         name="assignedEntity"
                         ng-model="scopedObject.entity.relationship.AssignedEntity"

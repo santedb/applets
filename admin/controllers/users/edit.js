@@ -28,7 +28,7 @@ angular.module('santedb')
 
             try {
                 var securityUser = await SanteDB.resources.securityUser.getAsync(id);
-                var userEntity = await SanteDB.resources.userEntity.findAsync({ securityUser: id, _viewModel: 'fastview' });
+                var userEntity = await SanteDB.resources.userEntity.findAsync({ securityUser: id, _viewModel: 'full' });
                 $timeout(()=> {
                     $scope.isLoading = false;
                     $scope.target = $scope.target || {};
@@ -43,26 +43,48 @@ angular.module('santedb')
                     } 
                     else {
                         $scope.target.userEntity = new UserEntity({
+                            id: SanteDB.application.newGuid(),
                             language: [
                                 {
                                     "languageCode": SanteDB.locale.getLanguage(),
                                     "isPreferred": true
                                 }
                             ],
-                            securityUser: $stateParams.id
+                            securityUser: $stateParams.id,
+                            name: {
+                                OfficialRecord: [
+                                    { 
+                                        component: {
+                                            Given: [ securityUser.entity.userName ]
+                                        }
+                                    }
+                                ]
+                            },
+                            telecom: {
+                                Public: [
+
+                                ]
+                            },
+                            address: {
+                                HomeAddress: [
+                                    {
+                                        use: AddressUseKeys.HomeAddress    
+                                    }
+                                ]
+                            }
                         });
                     }
 
                     // Set language
                     if (!$scope.target.userEntity.language)
-                        $scope.target.preferredLanguage = SanteDB.locale.getLanguage();
+                        $scope.target.userEntity.preferredLanguage = SanteDB.locale.getLanguage();
                     else if (!Array.isArray($scope.target.userEntity.language))
-                        $scope.target.preferredLanguage = $scope.target.userEntity.language.languageCode;
+                        $scope.target.userEntity.preferredLanguage = $scope.target.userEntity.language.languageCode;
                     else {
                         var lng = $scope.target.userEntity.language.find(function (l) { return l.isPreferred; });
                         if (!lng)
                             lng = { "languageCode": SanteDB.locale.getLanguage() };
-                        $scope.target.preferredLanguage = lng.languageCode;
+                        $scope.target.userEntity.preferredLanguage = lng.languageCode;
                     }
                 });
             }

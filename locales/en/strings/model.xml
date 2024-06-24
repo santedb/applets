@@ -43,6 +43,8 @@
   <string name="ui.model.securityUser.twoFactorEnabled.false">Disabled</string>
   <string name="ui.model.securityUser.twoFactorEnabled.setup">Setup</string>
   <string name="ui.model.securityUser.challenge">Password Recovery</string>
+  <string name="ui.model.userEntity.name">Display Name</string>
+  <string name="ui.model.userEntity.securityUser">Login Account</string>
   <string name="ui.model.userEntity.securityUserModel.central">This user can log into any device. Changing the profile requires an internet connection</string>
   <string name="ui.model.userEntity.securityUserModel.local">This user can only log into this device/local deployment.</string>
   <string name="ui.model.userEntity.givenName">Given Name</string>
@@ -471,12 +473,6 @@
   <string name="ui.model.manufacturedMaterial.relationship.Instance.reverse">Product</string>
   <string name="ui.admin.facilities.edit.core.title">Facility</string>
   <string name="ui.model.facility.id">Unique Identifier</string>
-  <string name="org.santedb.widget.admin.tab.facility.profile">Facility Profile</string>
-  <string name="org.santedb.widget.admin.tab.facility.relationships">Relationships</string>
-  <string name="org.santedb.widget.admin.panel.facility.profile.name">Name</string>
-  <string name="org.santedb.widget.admin.panel.facility.profile.location">Location</string>
-  <string name="org.santedb.widget.admin.panel.facility.profile.telecom">Telecom</string>
-  <string name="org.santedb.widget.admin.panel.facility.profile.services">Services</string>
   <string name="ui.model.place.isMobile">Is Mobile</string>
   <string name="ui.model.place.isMobile.hint">Check this box to indicate that the facility is not fixed (for example: a portable facility, vehicle or bus) as opposed to a building</string>
   <string name="ui.model.place.isMobile.on">This facility record represents a mobile care facility (such as ambulance, mobile clinic, etc.) </string>

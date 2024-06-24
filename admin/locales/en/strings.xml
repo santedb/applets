@@ -19,6 +19,7 @@
  - Date: 2023-5-19
  -->
 <resources>
+    <string name="ui.action.makeManager">Manager</string>
     <string name="ui.directConnect">Direct Connect to Server</string>
     <string name="ui.admin.brand.title"><![CDATA[<img src="/org.santedb.core/img/icon.png" height="24px"/> SanteDB Admin]]></string>
     <string name="ui.admin.tickleError">Error fetching application alerts</string>
@@ -252,6 +253,16 @@
     <string name="org.santedb.widget.admin.panel.place.profile.type">Type</string>
     <string name="org.santedb.widget.admin.panel.place.profile.location">Location</string>
     <string name="org.santedb.widget.admin.panel.place.profile.parent">Parent</string>
+    <string name="org.santedb.widget.admin.panel.facility.staff">Assigned Staff</string>
+    <string name="org.santedb.widget.admin.panel.facility.managers">Managers</string>
+    <string name="org.santedb.widget.admin.tab.facility.profile">Facility Profile</string>
+    <string name="org.santedb.widget.admin.tab.facility.relationships">Relationships</string>
+    <string name="org.santedb.widget.admin.tab.facility.staffing">Staffing</string>
+    <string name="org.santedb.widget.admin.panel.facility.profile.name">Name</string>
+    <string name="org.santedb.widget.admin.panel.facility.profile.location">Location</string>
+    <string name="org.santedb.widget.admin.panel.facility.profile.telecom">Telecom</string>
+    <string name="org.santedb.widget.admin.panel.facility.profile.services">Services</string>
+  
 
 
     <!-- Edit Identity Domain -->
@@ -430,6 +441,7 @@
     <!-- Certificate Management -->
     <string name="org.santedb.widget.admin.panel.user.auth_certs">Authentication</string>
     <string name="org.santedb.widget.admin.panel.user.dsig_certs">Digital Signatures</string>
+    <string name="org.santedb.widget.admin.panel.user.public">Profile</string>
     <string name="org.santedb.widget.admin.tab.user.certs">Certificates</string>
     <string name="org.santedb.widget.admin.tab.user.profile">Public Profile</string>
     <string name="org.santedb.widget.admin.panel.device.auth_certs">Authentication</string>

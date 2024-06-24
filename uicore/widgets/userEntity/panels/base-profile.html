@@ -92,7 +92,6 @@
         </div>
         <form ng-submit="update(panel.editForm)" name="panel.editForm" method="dialog" novalidate="novalidate" autocomplete="off"
             ng-if="panel.view == 'Edit'">
-            {{ editObject.address }}
             <name-edit is-required="true" model="editObject.name" simple-entry="true" no-add="true" no-type="true"
                 owner-form="panel.editForm" />
             <hr />

@@ -187,8 +187,8 @@
     <property name="classConceptModel" behavior="never" />
     <property name="relationship" all="true" behavior="always">
       <property name="*" ref="EntityRelationship" all="true" />
-
     </property>
+    <property name="securityUserModel" behavior="always" all="true" />
   </type>
 
   <type type="Patient" all="true">

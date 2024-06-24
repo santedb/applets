@@ -156,6 +156,8 @@ angular.module('santedb-lib')
 
             retVal += "&nbsp;";
             if (!minRender) {
+                if(selection.securityUserModel) 
+                    retVal += `<code class='d-non d-sm-inline ml-2'><i class='fas fa-fw fa-shield-alt'></i> ${selection.securityUserModel.userName}</code> `;
                 if (selection.address)
                     retVal += "<small class='d-none d-sm-inline ml-2'> - (<i class='fa fa-map-marker'></i> " + SanteDB.display.renderEntityAddress(selection.address) + ")</small>";
                 else if (selection.oid)
