@@ -49,6 +49,7 @@
   <string name="ui.model.userEntity.securityUserModel.local">This user can only log into this device/local deployment.</string>
   <string name="ui.model.userEntity.givenName">Given Name</string>
   <string name="ui.model.userEntity.familyName">Family Name</string>
+  <string name="ui.model.userEntity.securityUser.none">No Login Account</string>
   <string name="ui.model.userEntity.language">Preferred Language</string>
   <string name="ui.model.userEntity.relationship.DedicatedServiceDeliveryLocation">Facilities</string>
   <string name="ui.model.userEntity.relationship.MaintainedEntity">Managed Facilities</string>

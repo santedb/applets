@@ -407,7 +407,16 @@
     <string name="ui.admin.facility.services.none">Facility Proivdes No Services</string>
     <string name="ui.admin.facility.services.save.success">Facility services saved successfully</string>
     <string name="ui.admin.facility.services.save.failure">Facility services save failed: {e}</string>
-
+    <string name="ui.admin.facility.staff.manager.remove.confirm">Are you sure you want to remove the management role for {user}?</string>
+    <string name="ui.admin.facility.staff.manager.remove.success">Manager has been removed successfully</string>
+    <string name="ui.admin.facility.staff.manager.remove.error">Error removing manager: {error}</string>
+    <string name="ui.admin.facility.staff.manager.promote.confirm">Are you sure you want to promote this staff member to manager?</string>
+    <string name="ui.admin.facility.staff.manager.promote.success">Staff member has been promoted successfully</string>
+    <string name="ui.admin.facility.staff.manager.promote.error">Error promoting to manager: {error}</string>
+    <string name="ui.admin.facility.staff.remove.confirm">Are you sure you want to remove the staff member {user} from this facility? (note: any management role will also be removed)</string>
+    <string name="ui.admin.facility.staff.remove.success">Staff has been removed successfully</string>
+    <string name="ui.admin.facility.staff.add.success">Staff has been added successfully</string>
+    <string name="ui.admin.facility.staff.remove.error">Error removing staff: {error}</string>
     <!-- Organization Editing -->
     <string name="ui.admin.organizations.edit.profile.title">Create Organization</string>
     <string name="org.santedb.widget.admin.panel.organization.profile">Organization Profile</string>

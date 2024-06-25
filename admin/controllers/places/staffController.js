@@ -23,13 +23,135 @@
 angular.module('santedb').controller('FacilityStaffController', ["$scope", "$rootScope", "$state", "$timeout", function ($scope, $rootScope, $state, $timeout) {
 
     $scope.assignUser = {};
-    $scope.renderName = (r) => SanteDB.display.renderEntityName(r.name);
+    $scope.renderName = (r) => SanteDB.display.renderEntityName(r.holderModel.name);
     $scope.renderUser = function(r) {
-        if(r.securityUserModel) {
-            return `<i class="fas fa-fw fa-shield-alt"></i> ${r.securityUserModel.userName}`;
+        if(r.holderModel && r.holderModel.securityUserModel) {
+            return `<i class="fas fa-fw fa-shield-alt"></i> ${r.holderModel.securityUserModel.userName}`;
         }
         else {
             return SanteDB.locale.getString("ui.model.userEntity.securityUser.none");
         }
     }
+
+    $scope.removeManager = async function(id, row) {
+        var user = $("#ManagerStaffTable table").DataTable().row(row).data();
+        if(confirm(SanteDB.locale.getString("ui.admin.facility.staff.manager.remove.confirm", { user: SanteDB.display.renderEntityName(user.holderModel.name) }))) {
+            try {
+                await SanteDB.resources.entityRelationship.deleteAsync(id);
+                toastr.success(SanteDB.locale.getString("ui.admin.facility.staff.manager.remove.success"));
+                $("#ManagerStaffTable").attr("newQueryId", true);
+                $("#ManagerStaffTable table").DataTable().draw();
+            }
+            catch(e) {
+                taostr.error(SanteDB.locale.getString("ui.admin.facility.staff.manager.remove.error", {error: e.message}));
+            }
+        }
+    }
+
+    $scope.removeStaffMember = async function(id, row) {
+        var user = $("#AssignedStaffTable table").DataTable().row(row).data();
+        if(confirm(SanteDB.locale.getString("ui.admin.facility.staff.remove.confirm", { user: SanteDB.display.renderEntityName(user.holderModel.name) }))) {
+            try {
+                // Is the user also a manager? if so we need to delete that too
+                var mgr = await SanteDB.resources.entityRelationship.findAsync({ source: user.holder, target: $scope.scopedObject.id, relationshipType: EntityRelationshipTypeKeys.MaintainedEntity, _count: 1, _includeTotal: false });
+                if(mgr.resource) {
+                    await SanteDB.resources.entityRelationship.deleteAsync(mgr.resource[0].id);
+                }
+                await SanteDB.resources.entityRelationship.deleteAsync(id);
+                toastr.success(SanteDB.locale.getString("ui.admin.facility.staff.remove.success"));
+                $("#ManagerStaffTable").attr("newQueryId", true);
+                $("#ManagerStaffTable table").DataTable().draw();
+                $("#AssignedStaffTable").attr("newQueryId", true);
+                $("#AssignedStaffTable table").DataTable().draw();
+                
+            }
+            catch(e) {
+                taostr.error(SanteDB.locale.getString("ui.admin.facility.staff.remove.error", {error: e.message}));
+            }
+        }
+    }
+
+    $scope.makeManager = async function(id, row) {
+        var user = $("#AssignedStaffTable table").DataTable().row(row).data();
+        if(confirm(SanteDB.locale.getString("ui.admin.facility.staff.manager.promote.confirm", { user: SanteDB.display.renderEntityName(user.holderModel.name) })))
+        {
+            try {
+                await SanteDB.resources.entityRelationship.insertAsync(new EntityRelationship({
+                    source: user.holder,
+                    target: $scope.scopedObject.id,
+                    relationshipType: EntityRelationshipTypeKeys.MaintainedEntity
+                }));
+                toastr.success(SanteDB.locale.getString("ui.admin.facility.staff.manager.promote.success"));
+                $("#ManagerStaffTable").attr("newQueryId", true);
+                $("#ManagerStaffTable table").DataTable().draw();
+            }
+            catch(e) {
+                toastr.error(SanteDB.locale.getString("ui.admin.facility.staff.manager.promote.error", { error: e.message }));
+            }
+            finally {
+                SanteDB.display.buttonWait("#btnAssignManager", false);
+            }         
+        }
+    }
+
+    $scope.navSourceUser = async function(id) {
+        try {
+            var usr = await SanteDB.resources.entityRelationship.getAsync(id, "reverseRelationship");
+            SanteDB.application.callResourceViewer("SecurityUser", $state, { id: usr.holderModel.securityUser });
+        }
+        catch(e) {
+            console.warn(e);
+        }
+    }
+
+    $scope.assignManager = async function(form) {
+        if(form.$invalid || !confirm(SanteDB.locale.getString("ui.admin.facility.staff.manager.promote.confirm"))) return;
+
+        try {
+
+            SanteDB.display.buttonWait("#btnAssignManager", true);
+            await SanteDB.resources.entityRelationship.insertAsync(new EntityRelationship({
+                source: $scope.assignUser.id,
+                target: $scope.scopedObject.id,
+                relationshipType: EntityRelationshipTypeKeys.MaintainedEntity
+            }));
+            toastr.success(SanteDB.locale.getString("ui.admin.facility.staff.manager.promote.success"));
+            $("#ManagerStaffTable").attr("newQueryId", true);
+            $("#ManagerStaffTable table").DataTable().draw();
+
+            $timeout(() => $scope.assignUser.id = "");
+        }
+        catch(e) {
+            $rootScope.errorHandler(e);
+        }
+        finally {
+            SanteDB.display.buttonWait("#btnAssignManager", false);
+        }
+    }
+
+    $scope.assignStaff = async function(form) {
+        if(form.$invalid) return;
+
+        try {
+            SanteDB.display.buttonWait("#btnAssignStaff", true);
+            await SanteDB.resources.entityRelationship.insertAsync(new EntityRelationship({
+                source: $scope.assignUser.id,
+                target: $scope.scopedObject.id,
+                relationshipType: EntityRelationshipTypeKeys.DedicatedServiceDeliveryLocation
+            }));
+            toastr.success(SanteDB.locale.getString("ui.admin.facility.staff.add.success"));
+            $("#AssignedStaffTable").attr("newQueryId", true);
+            $("#AssignedStaffTable table").DataTable().draw();
+
+            $timeout(() => $scope.assignUser.id = "");
+        }
+        catch(e) {
+            $rootScope.errorHandler(e);
+        }
+        finally {
+            SanteDB.display.buttonWait("#btnAssignStaff", false);
+        }
+
+    }
+
 }]);

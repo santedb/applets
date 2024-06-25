@@ -28,15 +28,19 @@
     </sdb:widget>
 
     <div ng-controller="FacilityStaffController">
-        <entity-table id="AssignedStaffTable" type="UserEntity"
+        <entity-table id="AssignedStaffTable" type="EntityRelationship"
         item-actions="[ 
-            { name: 'view', action: 'navStaffMember', demand: '1.3.6.1.4.1.33349.3.1.5.9.2.4', className: 'btn-info', icon: 'fa fa-eye' } ,
+            { name: 'view', action: 'navSourceUser', demand: '1.3.6.1.4.1.33349.3.1.5.9.2.4', className: 'btn-info', icon: 'fa fa-eye' } ,
             { name: 'makeManager', action: 'makeManager', demand: '1.3.6.1.4.1.33349.3.1.5.9.2.4', className: 'btn-success', icon: 'fa fa-chevron-right' } ,
             { name: 'remove', action: 'removeStaffMember', demand: '1.3.6.1.4.1.33349.3.1.5.9.2.4', className: 'btn-danger', icon: 'fa fa-times-circle' } 
         ]" 
-        search-field="securityUser.userName"
+        search-field="source@UserEntity.securityUser.userName"
         no-deleted="true"
-        default-query="{ _viewModel: 'full', 'relationship[DedicatedServiceDeliveryLocation|ServiceDeliveryLocation].target' : scopedObject.id }"
+        default-query="{ _viewModel: 'reverseRelationship', 
+            'relationshipType' : [ 'FF34DFA7-C6D3-4F8B-BC9F-14BCDC13BA6C', '455F1772-F580-47E8-86BD-B5CE25D351F9' ], 
+            'target': scopedObject.id,
+            'source.classConcept' : '6a2b00ba-501b-4523-b57c-f96d8ae44684'
+         }"
         render="{ name: 'renderName', securityUser: 'renderUser'  }" i18n-prefix="'ui.model.userEntity.'"
         properties="[ 'name', 'securityUser' ]"
         button-bar="'#assignStaffDiv'"

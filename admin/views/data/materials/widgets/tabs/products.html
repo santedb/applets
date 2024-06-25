@@ -12,7 +12,7 @@
     </div>
     <div ng-if="scopedObject" class="m-2" ng-controller="MaterialProductController">
         <!-- Note: Change in Version 3 - The Materials here are specializations of holder -->
-        <entity-table id="MaterialProductTable" type="ManufacturedMaterial" search-field="name.component.value"
+        <entity-table id="MaterialProductTable" type="ManufacturedMaterial" search-field="identifier.value"
             default-query="{ 'relationship[HasGeneralization].target' : scopedObject.id, _viewModel: 'fastview', 'determinerConcept': '604CF1B7-8891-49FB-B95F-3E4E875691BC' }"
             render="{ typeConcept: 'renderTypeConcept', updatedBy: 'renderUpdatedBy', manufacturer: 'renderManufacturer', gtin: 'renderGtin', quantity: 'renderQuantity', name: 'renderName', statusConcept: 'renderStatusConcept' }"
             i18n-prefix="'ui.model.manufacturedMaterial.'" item-class="{ 'name' : 'w-20', 'updatedBy' : 'w-20' }"
