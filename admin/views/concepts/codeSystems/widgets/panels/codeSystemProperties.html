@@ -140,7 +140,7 @@
                         <hint-popover hint-title="ui.model.codeSystem.url" />
                     </label>
                     <div class="col-sm-12 col-md-9">
-                        <input autocomplete="__away" class="form-control" type="url" required="required"
+                        <input autocomplete="__away" class="form-control" type="text" pattern="^(([^:/?#]+):)(//([^/?#]*))?([^?#]*)(\?([^#]*))?(#(.*))?" required="required"
                             ng-model="editObject.url" name="codeSystemUrl" />
                         <div class="text-danger" ng-if="panel.editForm.codeSystemUrl.$error['required']">
                             <i class="fa fa-exclamation-triangle"></i> {{ 'ui.error.required' | i18n }}

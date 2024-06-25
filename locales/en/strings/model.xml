@@ -860,5 +860,16 @@
   <string name="ui.model.conceptRelationship.targetConcept">Target Concept</string>
   <string name="ui.model.conceptRelationship.targetConcept.hint">The concept which is the target of this relationship</string>
   
-  
+  <string name="ui.model.extensionType.name">Name/Description</string>
+  <string name="ui.model.extensionType.name.hint">A descriptive name for the extension</string>
+  <string name="ui.model.extensionType.uri">URI</string>
+  <string name="ui.model.extensionType.uri.hint">The URI of the extension (must be unique for this instance of SanteDB)</string>
+  <string name="ui.model.extensionType.handlerClass">Type/Handler</string>
+  <string name="ui.model.extensionType.handlerClass.hint">The type of data that this extension holds</string>
+  <string name="ui.model.extensionType.modifiedOn">Last Modified</string>
+  <string name="ui.model.extensionType.scope">Applies To</string>
+  <string name="ui.model.extensionType.scope.hint">The types of objects which the extension type is permitted to be associated with</string>
+  <string name="ui.model.extensionType.createdBy">Created By</string>
+  <string name="ui.model.extensionType.updatedBy">Last Update</string>
+  <string name="ui.model.extensionType.obsoletedBy">Obsoletion Time</string>
 </resources>

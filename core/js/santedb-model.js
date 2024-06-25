@@ -10903,6 +10903,11 @@ function ExtensionType (copyData) {
 	 * @type {string} 
 	 */
 	this.name = copyData.name;
+		/**
+	 * @summary Gets or sets the URI
+	 * @type {string} 
+	 */
+		this.uri = copyData.uri;
 	/**
 	 * @summary Gets or sets the description
 	 * @type {string} 

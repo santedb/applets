@@ -1,0 +1,13 @@
+<div xmlns="http://www.w3.org/1999/xhtml" xmlns:sdb="http://santedb.org/applet">
+    <sdb:script static="false">~/controllers/extensions/edit.js</sdb:script>
+    <sdb:state name="santedb-admin.cdr.ext.create" abstract="false">
+        <sdb:url>/new</sdb:url>
+        <sdb:demand>1.3.6.1.4.1.33349.3.1.5.9.2.4</sdb:demand>
+        <sdb:view>
+            <sdb:title lang="en">Extensions</sdb:title>
+            <sdb:controller>EditExtensionTypeController</sdb:controller>
+        </sdb:view>
+    </sdb:state>
+
+    <!-- #include virtual="~/partials/extensions/edit.html" -->
+</div>

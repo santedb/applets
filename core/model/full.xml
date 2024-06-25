@@ -949,4 +949,10 @@
       <property name="oid" />
     </property>
   </type>
+  <type type="ExtensionType" all="true">
+    <property name="createdByModel" behavior="always" />
+    <property name="updatedByModel" behavior="always" />
+    <property name="obsoletedByModel" behavior="always" />
+    <property name="scopeModel" behavior="always" />
+  </type>
 </ViewModel>

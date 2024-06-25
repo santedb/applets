@@ -838,4 +838,15 @@
     <string name="org.santedb.widget.concept.concepts.core.relationship.out">Related To Concept</string>
     <string name="org.santedb.widget.concept.concepts.core.relationship.in">Concepts Related</string>
     
+    <!-- Extension Type -->
+     <string name="ui.admin.cdr.extensionType.properties">Extension Type Properties</string>
+     <string name="ui.admin.cdr.extensionType.provenance">Provenance / Tracking</string>
+     <string name="ui.admin.cdr.extensionType.create.success">Extension type was created successfully</string>
+     <string name="ui.admin.cdr.extensionType.save.success">Extension type was saved successfully</string>
+     <string name="ui.admin.cdr.extensionType.delete.confirm">Are you sure you want to delete this extension type?</string>
+     <string name="ui.admin.cdr.extensionType.delete.success">Extension type has been deleted successfully</string>
+     <string name="ui.admin.cdr.extensionType.delete.error">Extension could not be deleted due to {error}</string>
+     <string name="ui.admin.cdr.extensionType.restore.confirm">Are you sure you want to un-delete this extension type?</string>
+     <string name="ui.admin.cdr.extensionType.restore.success">Extension type has been un-deleted successfully</string>
+     <string name="ui.admin.cdr.extensionType.restore.error">Could not restore extension type due to error: {error}</string>
 </resources>
