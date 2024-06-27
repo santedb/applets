@@ -320,6 +320,7 @@
   <string name="ui.model.patient.multipleBirth">MULTIPLE BIRTH</string>
   <string name="ui.model.patient.birthplace">Birthplace</string>
   <string name="ui.model.patient.vipStatus">VIP Status</string>
+  <string name="ui.model.patient.vipStatus.notification">This patient has a Very Important Status flag set</string>
   <string name="ui.model.patient.register">Registered At</string>
   <string name="ui.model.patient.dedicatedServiceDeliveryLocation">Assigned Facilities</string>
   <string name="ui.model.patient.placeOfDeath">Place of Death</string>

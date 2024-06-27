@@ -311,3 +311,23 @@ svg.mermaidNoScale {
     color: #d4d4d4;
     opacity: 1; /* Firefox */
 }
+
+
+div.scroll-sticky {
+    position: -webkit-sticky;
+    position: sticky;
+    top: 0;
+    transition: 0.2s ease-out;
+}
+
+div.is-sticky {
+    top: -1rem;
+    margin-left: -0.5rem;
+    width: calc(100% + 1rem);
+    transition: 0.2s ease-out;
+    
+}
+
+div.object-header {
+    z-index: 100;
+}
