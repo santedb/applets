@@ -29,6 +29,7 @@
       <string name="ui.example">Example</string>
       <string name="ui.true">Yes</string>
       <string name="ui.false">No</string>
+      <string name="ui.barcode">Barcode Label</string>
       <!-- Common Phrases -->
       <string name="ui.common.charsRemain">characters remain</string>
       <string name="ui.common.version">Version</string>
@@ -199,7 +200,7 @@
       <string name="ui.action.save.then.new">Save &amp; Create Another</string>
       <string name="ui.action.save.then.goto">Save &amp; Go To</string>
       <string name="ui.action.goto">Go To</string>
-
+      <string name="ui.action.assign">Assign</string>
       <string name="ui.action.submit">Submit</string>
       <string name="ui.action.search">Search</string>
       <string name="ui.action.search.advanced">Advanced Search</string>
@@ -316,6 +317,8 @@
       <string name="ui.table.search.field.targetConcept.name.value">Search by Target</string>
       <string name="ui.table.search.field.source.name.value">Search by Source</string>
       <string name="ui.table.search.field.lotNumber">Search by Lot</string>
+      <string name="ui.table.search.field.securityUser.userName">Search by username</string>
+      <string name="ui.table.search.field.source@UserEntity.securityUser.userName">Search by username</string>
       <!-- Common --> 
       <string name="ui.common.interop.hl7v2">HL7v2</string>
       <string name="ui.common.interop.hl7v3">HL7v3/CDA</string>

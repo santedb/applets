@@ -94,10 +94,14 @@
                         <hint-popover hint-title="ui.model.codeSystem.url" />
                     </label>
                     <div class="col-sm-12 col-md-9">
-                        <input autocomplete="__away" class="form-control" type="url" required="required" ng-model="codeSystem.url"
+                        <input autocomplete="__away" class="form-control" type="text" required="required" ng-model="codeSystem.url"
+                        pattern="^(([^:/?#]+):)(//([^/?#]*))?([^?#]*)(\?([^#]*))?(#(.*))?"
                             name="codeSystemUrl" />
                         <div class="text-danger" ng-if="createCodeSystemForm.codeSystemUrl.$error['required']">
                             <i class="fa fa-exclamation-triangle"></i> {{ 'ui.error.required' | i18n }}
+                        </div>
+                        <div class="text-danger" ng-if="createCodeSystemForm.codeSystemUrl.$error['pattern']">
+                            <i class="fa fa-exclamation-triangle"></i> {{ 'ui.error.pattern' | i18n }}
                         </div>
                         <div class="text-danger" ng-if="createCodeSystemForm.codeSystemUrl.$error['duplicate']">
                             <i class="fa fa-exclamation-triangle"></i> {{ 'ui.error.duplicate' | i18n }}

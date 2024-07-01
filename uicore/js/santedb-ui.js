@@ -509,3 +509,32 @@ SanteDBWrapper.prototype.display = new function () {
 
 };
 
+
+// Set the sticky style
+function attachStickyScrollEvent() {
+
+    var contentWrapper = $(".content-wrapper");
+    
+    if(contentWrapper.length) {
+        contentWrapper.scroll(() => {
+            $(".scroll-sticky").each((i, ele) => {
+                if(CSS.supports && CSS.supports('position','sticky')) {
+                    var cOfs = ele.getBoundingClientRect().top;
+                    var cwOfs = contentWrapper[0].getBoundingClientRect().top;
+                    var stuck = (cOfs - cwOfs) < 50;
+                    ele.classList.toggle('is-sticky', stuck);
+                }
+            })
+        });
+    }
+    else {
+        setTimeout(attachStickyScrollEvent, 50);
+    }
+}
+$(document).ready(attachStickyScrollEvent);
+
+$(".content-wrapper").ready(()=> {
+$(".content-wrapper").scroll(e => {
+    
+  })
+});

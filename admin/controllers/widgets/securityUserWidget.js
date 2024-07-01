@@ -52,7 +52,7 @@ angular.module('santedb').controller('SecurityUserWidgetController', ["$scope", 
      * @summary Reactivate Inactive User
      */
     $scope.reactivateUser = async function (securityUser) {
-        if (!confirm(SanteDB.locale.getString("ui.emr.users.reactivate.confirm")))
+        if (!confirm(SanteDB.locale.getString("ui.admin.users.reactivate.confirm")))
         return;
 
         var patch = new Patch({
@@ -94,7 +94,7 @@ angular.module('santedb').controller('SecurityUserWidgetController', ["$scope", 
      * @summary Reset invalid logins
      */
     $scope.resetInvalidLogins = async function (securityUser) {
-        if (!confirm(SanteDB.locale.getString("ui.emr.users.invalidLogin.reset")))
+        if (!confirm(SanteDB.locale.getString("ui.admin.users.invalidLogin.reset")))
             return;
 
         var patch = new Patch({
@@ -126,7 +126,7 @@ angular.module('santedb').controller('SecurityUserWidgetController', ["$scope", 
     * @summary Unlock user
     */
     $scope.unlock = async function (securityUser) {
-        if (!confirm(SanteDB.locale.getString("ui.emr.users.confirmUnlock")))
+        if (!confirm(SanteDB.locale.getString("ui.admin.users.confirmUnlock")))
             return;
 
         try {

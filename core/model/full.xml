@@ -187,8 +187,8 @@
     <property name="classConceptModel" behavior="never" />
     <property name="relationship" all="true" behavior="always">
       <property name="*" ref="EntityRelationship" all="true" />
-
     </property>
+    <property name="securityUserModel" behavior="always" all="true" />
   </type>
 
   <type type="Patient" all="true">
@@ -948,5 +948,11 @@
       <property name="url" />
       <property name="oid" />
     </property>
+  </type>
+  <type type="ExtensionType" all="true">
+    <property name="createdByModel" behavior="always" />
+    <property name="updatedByModel" behavior="always" />
+    <property name="obsoletedByModel" behavior="always" />
+    <property name="scopeModel" behavior="always" />
   </type>
 </ViewModel>

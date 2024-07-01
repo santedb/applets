@@ -146,4 +146,17 @@
     <property name="classConcept" behavior="always"/>
     <property name="classConceptModel" all="true" ref="Concept" behavior="always"/>
   </type>
+
+  <type type="UserEntity" all="true">
+    <property name="identifier" behavior="always">
+      <property name="*"  all="true" ref="EntityIdentifier"/>
+    </property>
+    <property name="name" behavior="always">
+      <property name="*"  all="true" ref="EntityName"/>
+    </property>
+    <property name="address" behavior="always">
+      <property name="*"  all="true" ref="EntityAddress"/>
+    </property>
+    <property name="securityUserModel" behavior="always" all="true" />
+  </type>
 </ViewModel>

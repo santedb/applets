@@ -41,7 +41,7 @@ angular.module("santedb").controller("MaterialViewEditController", ["$scope", "$
             console.error(e);
         }
     }
-    
+
     async function initialize(materialId) {
         try {
 
@@ -66,18 +66,18 @@ angular.module("santedb").controller("MaterialViewEditController", ["$scope", "$
                     material.relationship.Child = reverseRelationships.resource.filter(o => o.relationshipType == EntityRelationshipTypeKeys.Parent);
                 }
 
-                if(material.extension && material.extension['http://santedb.org/extensions/core/targetCondition']) {
+                if (material.extension && material.extension['http://santedb.org/extensions/core/targetCondition']) {
                     material.extension['http://santedb.org/extensions/core/targetCondition'] = await Promise.all(
-                        material.extension['http://santedb.org/extensions/core/targetCondition'].map(async function(cd) {
+                        material.extension['http://santedb.org/extensions/core/targetCondition'].map(async function (cd) {
                             var cdId = atob(cd).split('^')[1];
                             try {
                                 return await SanteDB.resources.concept.getAsync(cdId);
                             }
-                            catch(e) {
+                            catch (e) {
                                 return null;
                             }
                         })
-                        );
+                    );
                 }
 
                 material.relationship = material.relationship || {};
@@ -135,14 +135,14 @@ angular.module("santedb").controller("MaterialViewEditController", ["$scope", "$
     }
 
 
-      // Set the active state
-      $scope.setState = async function (status) {
+    // Set the active state
+    $scope.setState = async function (status) {
         try {
             SanteDB.display.buttonWait("#btnSetState", true);
             await setEntityState($scope.entity.id, $scope.entity.etag, status);
             toastr.info(SanteDB.locale.getString("ui.model.material.saveSuccess"));
             $state.reload();
-            
+
         }
         catch (e) {
             $rootScope.errorHandler(e);
@@ -166,7 +166,7 @@ angular.module("santedb").controller("MaterialViewEditController", ["$scope", "$
             submissionMaterial = await prepareEntityForSubmission(submissionMaterial);
             deleteModelProperties(submissionMaterial);
 
-            if (submissionMaterial.relationship.UsedEntity) {
+            if (submissionMaterial.relationship && submissionMaterial.relationship.UsedEntity) {
                 submissionMaterial.relationship.UsedEntity = submissionMaterial.relationship.UsedEntity.map(o => {
                     o.quantity = o.quantity || 1;
                     return o;
@@ -180,26 +180,28 @@ angular.module("santedb").controller("MaterialViewEditController", ["$scope", "$
                     });
             }
 
-            if(submissionMaterial.note) {
+            if (submissionMaterial.note) {
                 submissionMaterial.note = submissionMaterial.note.filter(o => o.text !== '');
             }
             submissionMaterial.id = submissionMaterial.id || SanteDB.application.newGuid();
 
-            var submissionBundle = new Bundle({ resource: [ submissionMaterial ]});
+            var submissionBundle = new Bundle({ resource: [submissionMaterial] });
 
             // Reverse relationships
-            var regulatedProduct = submissionMaterial.relationship.RegulatedProduct;
-            if(regulatedProduct && regulatedProduct.length > 0 &&
-                regulatedProduct[0].source) {
+            if (submissionMaterial.relationship) {
+                var regulatedProduct = submissionMaterial.relationship.RegulatedProduct;
+                if (regulatedProduct && regulatedProduct.length > 0 &&
+                    regulatedProduct[0].source) {
 
-                    
-                submissionBundle.resource.push(new EntityRelationship({
-                    id: regulatedProduct[0].id,
-                    source: regulatedProduct[0].source,
-                    relationshipType: EntityRelationshipTypeKeys.RegulatedProduct,
-                    target: submissionMaterial.id
-                }));
-                delete(submissionMaterial.relationship.RegulatedProduct);
+
+                    submissionBundle.resource.push(new EntityRelationship({
+                        id: regulatedProduct[0].id,
+                        source: regulatedProduct[0].source,
+                        relationshipType: EntityRelationshipTypeKeys.RegulatedProduct,
+                        target: submissionMaterial.id
+                    }));
+                    delete (submissionMaterial.relationship.RegulatedProduct);
+                }
             }
 
             submissionBundle = await SanteDB.resources.bundle.insertAsync(submissionBundle)

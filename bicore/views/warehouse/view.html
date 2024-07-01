@@ -46,9 +46,17 @@
                             <h2 class="mr-2 d-inline">{{ dataMart.name }}</h2><span class="badge badge-info">{{ dataMart.id }}</span>
                         </div>
                         <div class="col-sm-12 col-md-6">
-                            <span class="float-right m-auto badge badge-dark">
+                            <span class="float-right m-auto d-inline-block badge badge-dark mr-5 mt-2">
                                 <i class="fas fa-code-branch"></i> v. {{dataMart.meta.version}}
                             </span>
+                            <div class="btn-group float-right mr-5">
+                                <button type="button" ng-click="unRegister()" id="btnUnregister" class="btn btn-sm btn-warning">
+                                    <i class="fas fa-fw fa-arrow-down"></i> {{ 'ui.bi.marts.unregister' | i18n }}
+                                </button>    
+                                <button type="button" ng-click="refresh()" id="btnRefresh" class="btn btn-sm btn-primary">
+                                    <i class="fas fa-fw fa-chevron-right"></i> {{ 'ui.bi.marts.refresh' | i18n }}
+                                </button>
+                            </div>
                         </div>
                         <div class="col-12">
                             <div ng-bind-html="dataMart.meta.doc.doc"></div>

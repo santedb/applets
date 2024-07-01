@@ -48,6 +48,9 @@
 	          LEFT JOIN CD_VRSN_TBL UOM ON (MAT_TBL.QTY_CD_ID = UOM.CD_ID AND UOM.HEAD)
 	          LEFT JOIN CD_VRSN_TBL FRM ON (MAT_TBL.FRM_CD_ID = FRM.CD_ID AND FRM.HEAD)
             LEFT JOIN CD_VRSN_TBL TYP ON (ENT_VRSN_TBL.TYP_CD_ID = TYP.CD_ID AND TYP.HEAD)
+          WHERE 
+            ENT_VRSN_TBL.HEAD = TRUE
+
           ]]>
         </add>
         <add>
@@ -68,6 +71,8 @@
 	          LEFT JOIN CD_VRSN_TBL UOM ON (MAT_TBL.QTY_CD_ID = UOM.CD_ID AND UOM.HEAD = 1)
 	          LEFT JOIN CD_VRSN_TBL FRM ON (MAT_TBL.FRM_CD_ID = FRM.CD_ID AND FRM.HEAD = 1)
             LEFT JOIN CD_VRSN_TBL TYP ON (ENT_VRSN_TBL.TYP_CD_ID = TYP.CD_ID AND TYP.HEAD = 1)
+          WHERE
+            ENT_VRSN_TBL.HEAD = 1
           ]]>
         </add>
       </sql>

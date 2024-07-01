@@ -365,6 +365,35 @@
     </property>
   </type>
 
+  
+  <type type="Organization" all="true">
+    <property name="createdBy" behavior="never"/>
+    <property name="creationTime" behavior="never"/>
+    <property name="creationTimeModel" behavior="never"/>
+    <property name="version" behavior="never"/>
+    <property name="name" all="true" behavior="always">
+      <property name="*"  ref="EntityName"/>
+    </property>
+    <property name="address" all="true" behavior="always">
+      <property name="*" ref="EntityAddress"/>
+    </property>
+    <property name="classConceptModel" behavior="always"/>
+    <property name="classConcept" behavior="always"/>
+    <property name="determinerConceptModel" behavior="never"/>
+    <property name="typeConceptModel" all="true" behavior="always" ref="Concept"/>
+    <property name="industryConceptModel" all="true" behavior="always" ref="Concept"/>
+    <property name="extension" all="true" behavior="always"/>
+    <property name="relationship" all="false" behavior="always">
+      <property name="*" all="true">
+        <property name="source" behavior="never"/>
+        <property name="holder" behavior="never"/>
+        <property name="holderModel" behavior="never"/>
+        <property name="sourceModel" behavior="never"/>
+        <property name="relationshipTypeModel" behavior="never"/>
+      </property>
+    </property>
+  </type>
+
   <!-- Act Information -->
   <type type="Act" all="true">
 

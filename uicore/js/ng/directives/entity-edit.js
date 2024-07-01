@@ -112,8 +112,8 @@ angular.module('santedb-lib')
 
                
                 function fixAddressUse(addr) {
-                    if ((!addr.useModel || !addr.useModel.id) && key != '$other')
-                        SanteDB.resources.concept.findAsync({ mnemonic: key })
+                    if ((!addr.useModel || !addr.useModel.id) && addr != '$other')
+                        SanteDB.resources.concept.findAsync({ mnemonic: addr })
                             .then(function (bundle) {
                                 if (bundle.resource && bundle.resource.length > 0)
                                     addr.useModel = addr.resource[0];
