@@ -183,9 +183,9 @@ angular.module('santedb-lib')
             },
             controller: ['$scope', '$rootScope', function ($scope, $rootScope) {
 
-                $scope.$watch((s) => s.geo.lat + s.geo.lng, function (n, o) {
+                $scope.$watch((s) => s.model.lat + s.model.lng, function (n, o) {
                     if (n != o && n && o) {
-                        delete ($scope.geo.id); // force a change
+                        delete ($scope.model.id); // force a change
                     }
                 })
             }],

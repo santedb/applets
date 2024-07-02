@@ -28,13 +28,13 @@
             </div>
         </div>
     </div>
-    <div class="row form-group" ng-if="geo._supplied">
+    <div class="row form-group" ng-if="model._supplied">
         <label class="col-md-3 col-sm-12 control-label">{{ 'ui.model.geo.lat' | i18n }}</label>
         <div class="col-sm-12 col-md-9">
             <input type="number" class="form-control" ng-model="model.lat" />
         </div>
     </div>
-    <div class="row form-group" ng-if="geo._supplied">
+    <div class="row form-group" ng-if="model._supplied">
         <label class="col-md-3 col-sm-12 control-label">{{ 'ui.model.geo.lng' | i18n }}</label>
         <div class="col-sm-12 col-md-9">
             <input type="number" class="form-control" ng-model="model.lng" />
