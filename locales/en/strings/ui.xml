@@ -43,6 +43,7 @@
       <!-- Login Translations -->
       <string name="ui.login.input.username">Username</string>
       <string name="ui.login.input.password">Password</string>
+      <string name="ui.login.input.facility">Facility</string>
       <string name="ui.login.input.tfa">MFA Code</string>   
       <string name="ui.login.input.pin">PIN #</string>
       <string name="ui.login.title.elevate">User Elevation</string>

@@ -1849,7 +1849,7 @@ function SanteDBWrapper() {
                 if (data.responseJSON &&
                     pve &&
                     data.getResponseHeader("WWW-Authenticate").indexOf("insufficient_scope") > -1)
-                    _elevator.elevate(angular.copy(_session), [`${pve.policyId} - ${pve.policyName}`]);
+                    _elevator.elevate(angular.copy(_session), [pve.policyId, "*"]);
                 else
                     _elevator.elevate(null);
                 return true;
@@ -4231,7 +4231,7 @@ function SanteDBWrapper() {
                 try {
                     var headers = {};
                     var claims = {};
-                    claims["urn:oasis:names:tc:xacml:2.0:action:purpose"] = 'PurposeOfUse-SecurityAdmin';
+                    claims["urn:oasis:names:tc:xacml:2.0:action:purpose"] = '8b18c8ce-916a-11ea-bb37-0242ac130002'; // Security Admin
                     claims["urn:santedb:org:claim:temporary"] = "true";
                     headers["X-SanteDBClient-Claim"] =
                         btoa(Object.keys(claims).map(o => `${o}=${claims[o]}`).join(";"));
@@ -4274,13 +4274,18 @@ function SanteDBWrapper() {
             * @param {boolean} uacPrompt True if the authentication is part of a UAC prompt and no perminant session is to be 
             * @param {String} purposeOfUse The identifier of the purpose of use for the access
             * @returns {Promise} A promise representing the login request
+            * @param {any} claims The claims which are to be appended to the OAUTH request
             * @see https://help.santesuite.org/developers/service-apis/openid-connect
             */
-        this.passwordLoginAsync = function (userName, password, tfaSecret, uacPrompt, purposeOfUse, scope) {
+        this.passwordLoginAsync = function (userName, password, tfaSecret, uacPrompt, purposeOfUse, scope, claims) {
             return new Promise(function (fulfill, reject) {
                 try {
                     var headers = {};
-                    var claims = {};
+                    claims = claims || {};
+
+                    if(!Array.isArray(scope)) {
+                        scope = [scope];
+                    }
 
                     if (purposeOfUse) {
                         claims["urn:santedb:org:claim:override"] = "true";
