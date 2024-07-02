@@ -429,6 +429,19 @@
           </property>
         </property>
       </property>
+      <property name="CommunityServiceDeliveryLocation" all="false">
+        <property name="id" />
+        <property name="target" />
+        <property name="targetModel" behavior="always" all="false">
+          <property name="classConceptModel" behavior="always" ref="Concept" />
+          <property name="id" />
+          <property name="version" />
+          <property name="relationship" behavior="never" />
+          <property name="name" all="true" behavior="always">
+            <property name="*" ref="EntityName" />
+          </property>
+        </property>
+      </property>
       <property name="DedicatedServiceDeliveryLocation" all="false">
         <property name="id" />
         <property name="target" />

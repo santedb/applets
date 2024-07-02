@@ -1,4 +1,4 @@
-// SanteDB.Core.Model.Association`1, SanteDB.Core.Model, Version=3.0.1900.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Association`1, SanteDB.Core.Model, Version=3.0.1910.0, Culture=neutral, PublicKeyToken=null
 //if(!Association)
 /**
  * @class
@@ -45,7 +45,7 @@ function Association (copyData) {
 	this.modifiedOn = copyData.modifiedOn;
 	}
 }  // Association 
-// SanteDB.Core.Model.BaseEntityData, SanteDB.Core.Model, Version=3.0.1900.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.BaseEntityData, SanteDB.Core.Model, Version=3.0.1910.0, Culture=neutral, PublicKeyToken=null
 //if(!BaseEntityData)
 /**
  * @class
@@ -127,7 +127,7 @@ function BaseEntityData (copyData) {
 	this.creationTimeModel = copyData.creationTimeModel;
 	}
 }  // BaseEntityData 
-// SanteDB.Core.Model.IdentifiedData, SanteDB.Core.Model, Version=3.0.1900.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.IdentifiedData, SanteDB.Core.Model, Version=3.0.1910.0, Culture=neutral, PublicKeyToken=null
 //if(!IdentifiedData)
 /**
  * @class
@@ -164,7 +164,7 @@ function IdentifiedData (copyData) {
 	this.id = copyData.id;
 	}
 }  // IdentifiedData 
-// SanteDB.Core.Model.NonVersionedEntityData, SanteDB.Core.Model, Version=3.0.1900.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.NonVersionedEntityData, SanteDB.Core.Model, Version=3.0.1910.0, Culture=neutral, PublicKeyToken=null
 //if(!NonVersionedEntityData)
 /**
  * @class
@@ -262,7 +262,7 @@ function NonVersionedEntityData (copyData) {
 	this.updatedTime = copyData.updatedTime;
 	}
 }  // NonVersionedEntityData 
-// SanteDB.Core.Model.VersionedAssociation`1, SanteDB.Core.Model, Version=3.0.1900.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.VersionedAssociation`1, SanteDB.Core.Model, Version=3.0.1910.0, Culture=neutral, PublicKeyToken=null
 //if(!VersionedAssociation)
 /**
  * @class
@@ -310,7 +310,7 @@ function VersionedAssociation (copyData) {
 	this.modifiedOn = copyData.modifiedOn;
 	}
 }  // VersionedAssociation 
-// SanteDB.Core.Model.VersionedEntityData`1, SanteDB.Core.Model, Version=3.0.1900.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.VersionedEntityData`1, SanteDB.Core.Model, Version=3.0.1910.0, Culture=neutral, PublicKeyToken=null
 //if(!VersionedEntityData)
 /**
  * @class
@@ -417,7 +417,7 @@ function VersionedEntityData (copyData) {
 	this.previousVersion = copyData.previousVersion;
 	}
 }  // VersionedEntityData 
-// SanteDB.Core.Model.Subscription.SubscriptionClientDefinition, SanteDB.Core.Model, Version=3.0.1900.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Subscription.SubscriptionClientDefinition, SanteDB.Core.Model, Version=3.0.1910.0, Culture=neutral, PublicKeyToken=null
 //if(!SubscriptionClientDefinition)
 /**
  * @class
@@ -473,7 +473,7 @@ function SubscriptionClientDefinition (copyData) {
 	this.resource = copyData.resource;
 	}
 }  // SubscriptionClientDefinition 
-// SanteDB.Core.Model.Subscription.SubscriptionDefinition, SanteDB.Core.Model, Version=3.0.1900.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Subscription.SubscriptionDefinition, SanteDB.Core.Model, Version=3.0.1910.0, Culture=neutral, PublicKeyToken=null
 //if(!SubscriptionDefinition)
 /**
  * @class
@@ -531,7 +531,7 @@ function SubscriptionDefinition (copyData) {
 	this.uuid = copyData.uuid;
 	}
 }  // SubscriptionDefinition 
-// SanteDB.Core.Model.Security.SecurityApplication, SanteDB.Core.Model, Version=3.0.1900.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Security.SecurityApplication, SanteDB.Core.Model, Version=3.0.1910.0, Culture=neutral, PublicKeyToken=null
 //if(!SecurityApplication)
 /**
  * @class
@@ -665,7 +665,7 @@ function SecurityApplication (copyData) {
 	this.applicationSecret = copyData.applicationSecret;
 	}
 }  // SecurityApplication 
-// SanteDB.Core.Model.Security.SecurityChallenge, SanteDB.Core.Model, Version=3.0.1900.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Security.SecurityChallenge, SanteDB.Core.Model, Version=3.0.1910.0, Culture=neutral, PublicKeyToken=null
 //if(!SecurityChallenge)
 /**
  * @class
@@ -765,7 +765,7 @@ function SecurityChallenge (copyData) {
 	this.text = copyData.text;
 	}
 }  // SecurityChallenge 
-// SanteDB.Core.Model.Security.SecurityDevice, SanteDB.Core.Model, Version=3.0.1900.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Security.SecurityDevice, SanteDB.Core.Model, Version=3.0.1910.0, Culture=neutral, PublicKeyToken=null
 //if(!SecurityDevice)
 /**
  * @class
@@ -899,7 +899,7 @@ function SecurityDevice (copyData) {
 	this.deviceSecret = copyData.deviceSecret;
 	}
 }  // SecurityDevice 
-// SanteDB.Core.Model.Security.SecurityEntity, SanteDB.Core.Model, Version=3.0.1900.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Security.SecurityEntity, SanteDB.Core.Model, Version=3.0.1910.0, Culture=neutral, PublicKeyToken=null
 //if(!SecurityEntity)
 /**
  * @class
@@ -993,7 +993,7 @@ function SecurityEntity (copyData) {
 	this.updatedTime = copyData.updatedTime;
 	}
 }  // SecurityEntity 
-// SanteDB.Core.Model.Security.SecurityPolicy, SanteDB.Core.Model, Version=3.0.1900.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Security.SecurityPolicy, SanteDB.Core.Model, Version=3.0.1910.0, Culture=neutral, PublicKeyToken=null
 //if(!SecurityPolicy)
 /**
  * @class
@@ -1004,7 +1004,7 @@ function SecurityEntity (copyData) {
  * @property {string} handler Gets or sets the handler which may handle this policy
  * @property {string} name Gets or sets the name of the policy
  * @property {string} oid Gets or sets the universal ID
- * @property {boolean} isPublic Whether the property is public
+ * @property {boolean} isPublic Whether the policy is public
  * @property {boolean} canOverride Whether the policy can be elevated over
  * @property {Date} creationTimeModel [Delay loaded from creationTime],  Gets or sets the time at which the data was created
  * @property {Date} creationTime Gets or sets the creation time as an ISO date format
@@ -1080,7 +1080,7 @@ function SecurityPolicy (copyData) {
 	 */
 	this.canOverride = copyData.canOverride;
 	/**
-	 * @summary Whether the property is public
+	 * @summary Whether the policy is public
 	 * @type {boolean} 
 	 */
 	this.isPublic = copyData.isPublic;
@@ -1101,7 +1101,7 @@ function SecurityPolicy (copyData) {
 	this.handler = copyData.handler;
 	}
 }  // SecurityPolicy 
-// SanteDB.Core.Model.Security.SecurityPolicyInstance, SanteDB.Core.Model, Version=3.0.1900.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Security.SecurityPolicyInstance, SanteDB.Core.Model, Version=3.0.1910.0, Culture=neutral, PublicKeyToken=null
 //if(!SecurityPolicyInstance)
 /**
  * @class
@@ -1161,7 +1161,7 @@ function SecurityPolicyInstance (copyData) {
 	this.policy = copyData.policy;
 	}
 }  // SecurityPolicyInstance 
-// SanteDB.Core.Model.Security.SecurityProvenance, SanteDB.Core.Model, Version=3.0.1900.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Security.SecurityProvenance, SanteDB.Core.Model, Version=3.0.1910.0, Culture=neutral, PublicKeyToken=null
 //if(!SecurityProvenance)
 /**
  * @class
@@ -1257,7 +1257,7 @@ function SecurityProvenance (copyData) {
 	this.modifiedOn = copyData.modifiedOn;
 	}
 }  // SecurityProvenance 
-// SanteDB.Core.Model.Security.SecurityRole, SanteDB.Core.Model, Version=3.0.1900.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Security.SecurityRole, SanteDB.Core.Model, Version=3.0.1910.0, Culture=neutral, PublicKeyToken=null
 //if(!SecurityRole)
 /**
  * @class
@@ -1363,7 +1363,7 @@ function SecurityRole (copyData) {
 	this.name = copyData.name;
 	}
 }  // SecurityRole 
-// SanteDB.Core.Model.Security.SecurityUser, SanteDB.Core.Model, Version=3.0.1900.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Security.SecurityUser, SanteDB.Core.Model, Version=3.0.1910.0, Culture=neutral, PublicKeyToken=null
 //if(!SecurityUser)
 /**
  * @class
@@ -1562,7 +1562,7 @@ function SecurityUser (copyData) {
 	this.email = copyData.email;
 	}
 }  // SecurityUser 
-// SanteDB.Core.Model.Roles.Patient, SanteDB.Core.Model, Version=3.0.1900.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Roles.Patient, SanteDB.Core.Model, Version=3.0.1910.0, Culture=neutral, PublicKeyToken=null
 //if(!Patient)
 /**
  * @class
@@ -1721,6 +1721,7 @@ function SecurityUser (copyData) {
  * @property {EntityRelationship} relationship.ClinicalResearchInvestigator             The clinical research investigator            
  * @property {EntityRelationship} relationship.ClinicalResearchSponsor             The clinical research sponsor            
  * @property {EntityRelationship} relationship.CommissioningParty             The commissioning party            
+ * @property {EntityRelationship} relationship.CommunityServiceDeliveryLocation             Community location which is used to provide services within holder            
  * @property {EntityRelationship} relationship.Contact             The target represents a contact of the source            
  * @property {EntityRelationship} relationship.Cousin             The cousin            
  * @property {EntityRelationship} relationship.CoverageSponsor             The target represents a coverage sponsor of the source            
@@ -2185,7 +2186,7 @@ function Patient (copyData) {
 	this.multipleBirthOrder = copyData.multipleBirthOrder;
 	}
 }  // Patient 
-// SanteDB.Core.Model.Roles.Provider, SanteDB.Core.Model, Version=3.0.1900.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Roles.Provider, SanteDB.Core.Model, Version=3.0.1910.0, Culture=neutral, PublicKeyToken=null
 //if(!Provider)
 /**
  * @class
@@ -2335,6 +2336,7 @@ function Patient (copyData) {
  * @property {EntityRelationship} relationship.ClinicalResearchInvestigator             The clinical research investigator            
  * @property {EntityRelationship} relationship.ClinicalResearchSponsor             The clinical research sponsor            
  * @property {EntityRelationship} relationship.CommissioningParty             The commissioning party            
+ * @property {EntityRelationship} relationship.CommunityServiceDeliveryLocation             Community location which is used to provide services within holder            
  * @property {EntityRelationship} relationship.Contact             The target represents a contact of the source            
  * @property {EntityRelationship} relationship.Cousin             The cousin            
  * @property {EntityRelationship} relationship.CoverageSponsor             The target represents a coverage sponsor of the source            
@@ -2758,7 +2760,7 @@ function Provider (copyData) {
 	this.providerSpecialty = copyData.providerSpecialty;
 	}
 }  // Provider 
-// SanteDB.Core.Model.Patch.Patch, SanteDB.Core.Model, Version=3.0.1900.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Patch.Patch, SanteDB.Core.Model, Version=3.0.1910.0, Culture=neutral, PublicKeyToken=null
 //if(!Patch)
 /**
  * @class
@@ -2854,7 +2856,7 @@ function Patch (copyData) {
 	this.version = copyData.version;
 	}
 }  // Patch 
-// SanteDB.Core.Model.Patch.PatchOperation, SanteDB.Core.Model, Version=3.0.1900.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Patch.PatchOperation, SanteDB.Core.Model, Version=3.0.1910.0, Culture=neutral, PublicKeyToken=null
 //if(!PatchOperation)
 /**
  * @class
@@ -2886,7 +2888,7 @@ function PatchOperation (copyData) {
 	this.op = copyData.op;
 	}
 }  // PatchOperation 
-// SanteDB.Core.Model.Patch.PatchTarget, SanteDB.Core.Model, Version=3.0.1900.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Patch.PatchTarget, SanteDB.Core.Model, Version=3.0.1910.0, Culture=neutral, PublicKeyToken=null
 //if(!PatchTarget)
 /**
  * @class
@@ -2924,7 +2926,7 @@ function PatchTarget (copyData) {
 	this.type = copyData.type;
 	}
 }  // PatchTarget 
-// SanteDB.Core.Model.Parameters.Parameter, SanteDB.Core.Model, Version=3.0.1900.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Parameters.Parameter, SanteDB.Core.Model, Version=3.0.1910.0, Culture=neutral, PublicKeyToken=null
 //if(!Parameter)
 /**
  * @class
@@ -2950,7 +2952,7 @@ function Parameter (copyData) {
 	this.name = copyData.name;
 	}
 }  // Parameter 
-// SanteDB.Core.Model.Parameters.ParameterCollection, SanteDB.Core.Model, Version=3.0.1900.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Parameters.ParameterCollection, SanteDB.Core.Model, Version=3.0.1910.0, Culture=neutral, PublicKeyToken=null
 //if(!ParameterCollection)
 /**
  * @class
@@ -2970,7 +2972,7 @@ function ParameterCollection (copyData) {
 	this.parameter = copyData.parameter;
 	}
 }  // ParameterCollection 
-// SanteDB.Core.Model.Entities.ApplicationEntity, SanteDB.Core.Model, Version=3.0.1900.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Entities.ApplicationEntity, SanteDB.Core.Model, Version=3.0.1910.0, Culture=neutral, PublicKeyToken=null
 //if(!ApplicationEntity)
 /**
  * @class
@@ -3118,6 +3120,7 @@ function ParameterCollection (copyData) {
  * @property {EntityRelationship} relationship.ClinicalResearchInvestigator             The clinical research investigator            
  * @property {EntityRelationship} relationship.ClinicalResearchSponsor             The clinical research sponsor            
  * @property {EntityRelationship} relationship.CommissioningParty             The commissioning party            
+ * @property {EntityRelationship} relationship.CommunityServiceDeliveryLocation             Community location which is used to provide services within holder            
  * @property {EntityRelationship} relationship.Contact             The target represents a contact of the source            
  * @property {EntityRelationship} relationship.Cousin             The cousin            
  * @property {EntityRelationship} relationship.CoverageSponsor             The target represents a coverage sponsor of the source            
@@ -3495,7 +3498,7 @@ function ApplicationEntity (copyData) {
 	this.securityApplicationModel = copyData.securityApplicationModel;
 	}
 }  // ApplicationEntity 
-// SanteDB.Core.Model.Entities.Container, SanteDB.Core.Model, Version=3.0.1900.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Entities.Container, SanteDB.Core.Model, Version=3.0.1910.0, Culture=neutral, PublicKeyToken=null
 //if(!Container)
 /**
  * @class
@@ -3642,6 +3645,7 @@ function ApplicationEntity (copyData) {
  * @property {EntityRelationship} relationship.ClinicalResearchInvestigator             The clinical research investigator            
  * @property {EntityRelationship} relationship.ClinicalResearchSponsor             The clinical research sponsor            
  * @property {EntityRelationship} relationship.CommissioningParty             The commissioning party            
+ * @property {EntityRelationship} relationship.CommunityServiceDeliveryLocation             Community location which is used to provide services within holder            
  * @property {EntityRelationship} relationship.Contact             The target represents a contact of the source            
  * @property {EntityRelationship} relationship.Cousin             The cousin            
  * @property {EntityRelationship} relationship.CoverageSponsor             The target represents a coverage sponsor of the source            
@@ -4049,7 +4053,7 @@ function Container (copyData) {
 	this.lotNumber = copyData.lotNumber;
 	}
 }  // Container 
-// SanteDB.Core.Model.Entities.DeviceEntity, SanteDB.Core.Model, Version=3.0.1900.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Entities.DeviceEntity, SanteDB.Core.Model, Version=3.0.1910.0, Culture=neutral, PublicKeyToken=null
 //if(!DeviceEntity)
 /**
  * @class
@@ -4188,6 +4192,7 @@ function Container (copyData) {
  * @property {EntityRelationship} relationship.ClinicalResearchInvestigator             The clinical research investigator            
  * @property {EntityRelationship} relationship.ClinicalResearchSponsor             The clinical research sponsor            
  * @property {EntityRelationship} relationship.CommissioningParty             The commissioning party            
+ * @property {EntityRelationship} relationship.CommunityServiceDeliveryLocation             Community location which is used to provide services within holder            
  * @property {EntityRelationship} relationship.Contact             The target represents a contact of the source            
  * @property {EntityRelationship} relationship.Cousin             The cousin            
  * @property {EntityRelationship} relationship.CoverageSponsor             The target represents a coverage sponsor of the source            
@@ -4560,7 +4565,7 @@ function DeviceEntity (copyData) {
 	this.manufacturerModelName = copyData.manufacturerModelName;
 	}
 }  // DeviceEntity 
-// SanteDB.Core.Model.Entities.Entity, SanteDB.Core.Model, Version=3.0.1900.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Entities.Entity, SanteDB.Core.Model, Version=3.0.1910.0, Culture=neutral, PublicKeyToken=null
 //if(!Entity)
 /**
  * @class
@@ -4697,6 +4702,7 @@ function DeviceEntity (copyData) {
  * @property {EntityRelationship} relationship.ClinicalResearchInvestigator             The clinical research investigator            
  * @property {EntityRelationship} relationship.ClinicalResearchSponsor             The clinical research sponsor            
  * @property {EntityRelationship} relationship.CommissioningParty             The commissioning party            
+ * @property {EntityRelationship} relationship.CommunityServiceDeliveryLocation             Community location which is used to provide services within holder            
  * @property {EntityRelationship} relationship.Contact             The target represents a contact of the source            
  * @property {EntityRelationship} relationship.Cousin             The cousin            
  * @property {EntityRelationship} relationship.CoverageSponsor             The target represents a coverage sponsor of the source            
@@ -5050,7 +5056,7 @@ function Entity (copyData) {
 	this.address = copyData.address;
 	}
 }  // Entity 
-// SanteDB.Core.Model.Entities.EntityAddress, SanteDB.Core.Model, Version=3.0.1900.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Entities.EntityAddress, SanteDB.Core.Model, Version=3.0.1910.0, Culture=neutral, PublicKeyToken=null
 //if(!EntityAddress)
 /**
  * @class
@@ -5148,7 +5154,7 @@ function EntityAddress (copyData) {
 	this.useModel = copyData.useModel;
 	}
 }  // EntityAddress 
-// SanteDB.Core.Model.Entities.EntityAddressComponent, SanteDB.Core.Model, Version=3.0.1900.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Entities.EntityAddressComponent, SanteDB.Core.Model, Version=3.0.1910.0, Culture=neutral, PublicKeyToken=null
 //if(!AddressComponent)
 /**
  * @class
@@ -5213,7 +5219,7 @@ function AddressComponent (copyData) {
 	this.type = copyData.type;
 	}
 }  // AddressComponent 
-// SanteDB.Core.Model.Entities.EntityName, SanteDB.Core.Model, Version=3.0.1900.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Entities.EntityName, SanteDB.Core.Model, Version=3.0.1910.0, Culture=neutral, PublicKeyToken=null
 //if(!EntityName)
 /**
  * @class
@@ -5289,7 +5295,7 @@ function EntityName (copyData) {
 	this.externId = copyData.externId;
 	}
 }  // EntityName 
-// SanteDB.Core.Model.Entities.EntityNameComponent, SanteDB.Core.Model, Version=3.0.1900.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Entities.EntityNameComponent, SanteDB.Core.Model, Version=3.0.1910.0, Culture=neutral, PublicKeyToken=null
 //if(!EntityNameComponent)
 /**
  * @class
@@ -5354,7 +5360,7 @@ function EntityNameComponent (copyData) {
 	this.type = copyData.type;
 	}
 }  // EntityNameComponent 
-// SanteDB.Core.Model.Entities.EntityRelationship, SanteDB.Core.Model, Version=3.0.1900.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Entities.EntityRelationship, SanteDB.Core.Model, Version=3.0.1910.0, Culture=neutral, PublicKeyToken=null
 //if(!EntityRelationship)
 /**
  * @class
@@ -5476,7 +5482,7 @@ function EntityRelationship (copyData) {
 	this.holderModel = copyData.holderModel;
 	}
 }  // EntityRelationship 
-// SanteDB.Core.Model.Entities.EntityTelecomAddress, SanteDB.Core.Model, Version=3.0.1900.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Entities.EntityTelecomAddress, SanteDB.Core.Model, Version=3.0.1910.0, Culture=neutral, PublicKeyToken=null
 //if(!EntityTelecomAddress)
 /**
  * @class
@@ -5553,7 +5559,7 @@ function EntityTelecomAddress (copyData) {
 	this.useModel = copyData.useModel;
 	}
 }  // EntityTelecomAddress 
-// SanteDB.Core.Model.Entities.GenericComponentValues`1, SanteDB.Core.Model, Version=3.0.1900.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Entities.GenericComponentValues`1, SanteDB.Core.Model, Version=3.0.1910.0, Culture=neutral, PublicKeyToken=null
 //if(!GenericComponentValues)
 /**
  * @class
@@ -5614,7 +5620,7 @@ function GenericComponentValues (copyData) {
 	this.typeModel = copyData.typeModel;
 	}
 }  // GenericComponentValues 
-// SanteDB.Core.Model.Entities.ManufacturedMaterial, SanteDB.Core.Model, Version=3.0.1900.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Entities.ManufacturedMaterial, SanteDB.Core.Model, Version=3.0.1910.0, Culture=neutral, PublicKeyToken=null
 //if(!ManufacturedMaterial)
 /**
  * @class
@@ -5760,6 +5766,7 @@ function GenericComponentValues (copyData) {
  * @property {EntityRelationship} relationship.ClinicalResearchInvestigator             The clinical research investigator            
  * @property {EntityRelationship} relationship.ClinicalResearchSponsor             The clinical research sponsor            
  * @property {EntityRelationship} relationship.CommissioningParty             The commissioning party            
+ * @property {EntityRelationship} relationship.CommunityServiceDeliveryLocation             Community location which is used to provide services within holder            
  * @property {EntityRelationship} relationship.Contact             The target represents a contact of the source            
  * @property {EntityRelationship} relationship.Cousin             The cousin            
  * @property {EntityRelationship} relationship.CoverageSponsor             The target represents a coverage sponsor of the source            
@@ -6152,7 +6159,7 @@ function ManufacturedMaterial (copyData) {
 	this.lotNumber = copyData.lotNumber;
 	}
 }  // ManufacturedMaterial 
-// SanteDB.Core.Model.Entities.Material, SanteDB.Core.Model, Version=3.0.1900.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Entities.Material, SanteDB.Core.Model, Version=3.0.1910.0, Culture=neutral, PublicKeyToken=null
 //if(!Material)
 /**
  * @class
@@ -6296,6 +6303,7 @@ function ManufacturedMaterial (copyData) {
  * @property {EntityRelationship} relationship.ClinicalResearchInvestigator             The clinical research investigator            
  * @property {EntityRelationship} relationship.ClinicalResearchSponsor             The clinical research sponsor            
  * @property {EntityRelationship} relationship.CommissioningParty             The commissioning party            
+ * @property {EntityRelationship} relationship.CommunityServiceDeliveryLocation             Community location which is used to provide services within holder            
  * @property {EntityRelationship} relationship.Contact             The target represents a contact of the source            
  * @property {EntityRelationship} relationship.Cousin             The cousin            
  * @property {EntityRelationship} relationship.CoverageSponsor             The target represents a coverage sponsor of the source            
@@ -6683,7 +6691,7 @@ function Material (copyData) {
 	this.expiryDate = copyData.expiryDate;
 	}
 }  // Material 
-// SanteDB.Core.Model.Entities.NonPersonLivingSubject, SanteDB.Core.Model, Version=3.0.1900.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Entities.NonPersonLivingSubject, SanteDB.Core.Model, Version=3.0.1910.0, Culture=neutral, PublicKeyToken=null
 //if(!NonPersonLivingSubject)
 /**
  * @class
@@ -6823,6 +6831,7 @@ function Material (copyData) {
  * @property {EntityRelationship} relationship.ClinicalResearchInvestigator             The clinical research investigator            
  * @property {EntityRelationship} relationship.ClinicalResearchSponsor             The clinical research sponsor            
  * @property {EntityRelationship} relationship.CommissioningParty             The commissioning party            
+ * @property {EntityRelationship} relationship.CommunityServiceDeliveryLocation             Community location which is used to provide services within holder            
  * @property {EntityRelationship} relationship.Contact             The target represents a contact of the source            
  * @property {EntityRelationship} relationship.Cousin             The cousin            
  * @property {EntityRelationship} relationship.CoverageSponsor             The target represents a coverage sponsor of the source            
@@ -7185,7 +7194,7 @@ function NonPersonLivingSubject (copyData) {
 	this.strain = copyData.strain;
 	}
 }  // NonPersonLivingSubject 
-// SanteDB.Core.Model.Entities.Organization, SanteDB.Core.Model, Version=3.0.1900.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Entities.Organization, SanteDB.Core.Model, Version=3.0.1910.0, Culture=neutral, PublicKeyToken=null
 //if(!Organization)
 /**
  * @class
@@ -7322,6 +7331,7 @@ function NonPersonLivingSubject (copyData) {
  * @property {EntityRelationship} relationship.ClinicalResearchInvestigator             The clinical research investigator            
  * @property {EntityRelationship} relationship.ClinicalResearchSponsor             The clinical research sponsor            
  * @property {EntityRelationship} relationship.CommissioningParty             The commissioning party            
+ * @property {EntityRelationship} relationship.CommunityServiceDeliveryLocation             Community location which is used to provide services within holder            
  * @property {EntityRelationship} relationship.Contact             The target represents a contact of the source            
  * @property {EntityRelationship} relationship.Cousin             The cousin            
  * @property {EntityRelationship} relationship.CoverageSponsor             The target represents a coverage sponsor of the source            
@@ -7684,7 +7694,7 @@ function Organization (copyData) {
 	this.industryConceptModel = copyData.industryConceptModel;
 	}
 }  // Organization 
-// SanteDB.Core.Model.Entities.Person, SanteDB.Core.Model, Version=3.0.1900.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Entities.Person, SanteDB.Core.Model, Version=3.0.1910.0, Culture=neutral, PublicKeyToken=null
 //if(!Person)
 /**
  * @class
@@ -7832,6 +7842,7 @@ function Organization (copyData) {
  * @property {EntityRelationship} relationship.ClinicalResearchInvestigator             The clinical research investigator            
  * @property {EntityRelationship} relationship.ClinicalResearchSponsor             The clinical research sponsor            
  * @property {EntityRelationship} relationship.CommissioningParty             The commissioning party            
+ * @property {EntityRelationship} relationship.CommunityServiceDeliveryLocation             Community location which is used to provide services within holder            
  * @property {EntityRelationship} relationship.Contact             The target represents a contact of the source            
  * @property {EntityRelationship} relationship.Cousin             The cousin            
  * @property {EntityRelationship} relationship.CoverageSponsor             The target represents a coverage sponsor of the source            
@@ -8246,7 +8257,7 @@ function Person (copyData) {
 	this.dateOfBirthPrecision = copyData.dateOfBirthPrecision;
 	}
 }  // Person 
-// SanteDB.Core.Model.Entities.PersonLanguageCommunication, SanteDB.Core.Model, Version=3.0.1900.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Entities.PersonLanguageCommunication, SanteDB.Core.Model, Version=3.0.1910.0, Culture=neutral, PublicKeyToken=null
 //if(!PersonLanguageCommunication)
 /**
  * @class
@@ -8307,7 +8318,7 @@ function PersonLanguageCommunication (copyData) {
 	this.externId = copyData.externId;
 	}
 }  // PersonLanguageCommunication 
-// SanteDB.Core.Model.Entities.Place, SanteDB.Core.Model, Version=3.0.1900.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Entities.Place, SanteDB.Core.Model, Version=3.0.1910.0, Culture=neutral, PublicKeyToken=null
 //if(!Place)
 /**
  * @class
@@ -8444,6 +8455,7 @@ function PersonLanguageCommunication (copyData) {
  * @property {EntityRelationship} relationship.ClinicalResearchInvestigator             The clinical research investigator            
  * @property {EntityRelationship} relationship.ClinicalResearchSponsor             The clinical research sponsor            
  * @property {EntityRelationship} relationship.CommissioningParty             The commissioning party            
+ * @property {EntityRelationship} relationship.CommunityServiceDeliveryLocation             Community location which is used to provide services within holder            
  * @property {EntityRelationship} relationship.Contact             The target represents a contact of the source            
  * @property {EntityRelationship} relationship.Cousin             The cousin            
  * @property {EntityRelationship} relationship.CoverageSponsor             The target represents a coverage sponsor of the source            
@@ -8807,7 +8819,7 @@ function Place (copyData) {
 	this.isMobile = copyData.isMobile;
 	}
 }  // Place 
-// SanteDB.Core.Model.Entities.PlaceService, SanteDB.Core.Model, Version=3.0.1900.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Entities.PlaceService, SanteDB.Core.Model, Version=3.0.1910.0, Culture=neutral, PublicKeyToken=null
 //if(!PlaceService)
 /**
  * @class
@@ -8873,7 +8885,7 @@ function PlaceService (copyData) {
 	this.serviceConceptModel = copyData.serviceConceptModel;
 	}
 }  // PlaceService 
-// SanteDB.Core.Model.Entities.UserEntity, SanteDB.Core.Model, Version=3.0.1900.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Entities.UserEntity, SanteDB.Core.Model, Version=3.0.1910.0, Culture=neutral, PublicKeyToken=null
 //if(!UserEntity)
 /**
  * @class
@@ -9025,6 +9037,7 @@ function PlaceService (copyData) {
  * @property {EntityRelationship} relationship.ClinicalResearchInvestigator             The clinical research investigator            
  * @property {EntityRelationship} relationship.ClinicalResearchSponsor             The clinical research sponsor            
  * @property {EntityRelationship} relationship.CommissioningParty             The commissioning party            
+ * @property {EntityRelationship} relationship.CommunityServiceDeliveryLocation             Community location which is used to provide services within holder            
  * @property {EntityRelationship} relationship.Contact             The target represents a contact of the source            
  * @property {EntityRelationship} relationship.Cousin             The cousin            
  * @property {EntityRelationship} relationship.CoverageSponsor             The target represents a coverage sponsor of the source            
@@ -9448,7 +9461,7 @@ function UserEntity (copyData) {
 	this.securityUserModel = copyData.securityUserModel;
 	}
 }  // UserEntity 
-// SanteDB.Core.Model.DataTypes.AssigningAuthority, SanteDB.Core.Model, Version=3.0.1900.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.DataTypes.AssigningAuthority, SanteDB.Core.Model, Version=3.0.1910.0, Culture=neutral, PublicKeyToken=null
 //if(!AssigningAuthority)
 /**
  * @class
@@ -9554,7 +9567,7 @@ function AssigningAuthority (copyData) {
 	this.assigningApplication = copyData.assigningApplication;
 	}
 }  // AssigningAuthority 
-// SanteDB.Core.Model.DataTypes.CodeSystem, SanteDB.Core.Model, Version=3.0.1900.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.DataTypes.CodeSystem, SanteDB.Core.Model, Version=3.0.1910.0, Culture=neutral, PublicKeyToken=null
 //if(!CodeSystem)
 /**
  * @class
@@ -9684,7 +9697,7 @@ function CodeSystem (copyData) {
 	this.name = copyData.name;
 	}
 }  // CodeSystem 
-// SanteDB.Core.Model.DataTypes.Concept, SanteDB.Core.Model, Version=3.0.1900.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.DataTypes.Concept, SanteDB.Core.Model, Version=3.0.1910.0, Culture=neutral, PublicKeyToken=null
 //if(!Concept)
 /**
  * @class
@@ -9844,7 +9857,7 @@ function Concept (copyData) {
 	this.mnemonic = copyData.mnemonic;
 	}
 }  // Concept 
-// SanteDB.Core.Model.DataTypes.ConceptClass, SanteDB.Core.Model, Version=3.0.1900.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.DataTypes.ConceptClass, SanteDB.Core.Model, Version=3.0.1910.0, Culture=neutral, PublicKeyToken=null
 //if(!ConceptClass)
 /**
  * @class
@@ -9950,7 +9963,7 @@ function ConceptClass (copyData) {
 	this.name = copyData.name;
 	}
 }  // ConceptClass 
-// SanteDB.Core.Model.DataTypes.ConceptName, SanteDB.Core.Model, Version=3.0.1900.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.DataTypes.ConceptName, SanteDB.Core.Model, Version=3.0.1910.0, Culture=neutral, PublicKeyToken=null
 //if(!ConceptName)
 /**
  * @class
@@ -10005,7 +10018,7 @@ function ConceptName (copyData) {
 	this.language = copyData.language;
 	}
 }  // ConceptName 
-// SanteDB.Core.Model.DataTypes.ConceptReferenceTerm, SanteDB.Core.Model, Version=3.0.1900.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.DataTypes.ConceptReferenceTerm, SanteDB.Core.Model, Version=3.0.1910.0, Culture=neutral, PublicKeyToken=null
 //if(!ConceptReferenceTerm)
 /**
  * @class
@@ -10070,7 +10083,7 @@ function ConceptReferenceTerm (copyData) {
 	this.term = copyData.term;
 	}
 }  // ConceptReferenceTerm 
-// SanteDB.Core.Model.DataTypes.ConceptRelationship, SanteDB.Core.Model, Version=3.0.1900.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.DataTypes.ConceptRelationship, SanteDB.Core.Model, Version=3.0.1910.0, Culture=neutral, PublicKeyToken=null
 //if(!ConceptRelationship)
 /**
  * @class
@@ -10135,7 +10148,7 @@ function ConceptRelationship (copyData) {
 	this.targetConcept = copyData.targetConcept;
 	}
 }  // ConceptRelationship 
-// SanteDB.Core.Model.DataTypes.ConceptRelationshipType, SanteDB.Core.Model, Version=3.0.1900.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.DataTypes.ConceptRelationshipType, SanteDB.Core.Model, Version=3.0.1910.0, Culture=neutral, PublicKeyToken=null
 //if(!ConceptRelationshipType)
 /**
  * @class
@@ -10241,7 +10254,7 @@ function ConceptRelationshipType (copyData) {
 	this.name = copyData.name;
 	}
 }  // ConceptRelationshipType 
-// SanteDB.Core.Model.DataTypes.ConceptSet, SanteDB.Core.Model, Version=3.0.1900.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.DataTypes.ConceptSet, SanteDB.Core.Model, Version=3.0.1910.0, Culture=neutral, PublicKeyToken=null
 //if(!ConceptSet)
 /**
  * @class
@@ -10372,7 +10385,7 @@ function ConceptSet (copyData) {
 	this.name = copyData.name;
 	}
 }  // ConceptSet 
-// SanteDB.Core.Model.DataTypes.ConceptSetComposition, SanteDB.Core.Model, Version=3.0.1900.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.DataTypes.ConceptSetComposition, SanteDB.Core.Model, Version=3.0.1910.0, Culture=neutral, PublicKeyToken=null
 //if(!ConceptSetComposition)
 /**
  * @class
@@ -10432,7 +10445,7 @@ function ConceptSetComposition (copyData) {
 	this.instruction = copyData.instruction;
 	}
 }  // ConceptSetComposition 
-// SanteDB.Core.Model.DataTypes.Extension`1, SanteDB.Core.Model, Version=3.0.1900.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.DataTypes.Extension`1, SanteDB.Core.Model, Version=3.0.1910.0, Culture=neutral, PublicKeyToken=null
 //if(!Extension)
 /**
  * @class
@@ -10504,7 +10517,7 @@ function Extension (copyData) {
 	this.value = copyData.value;
 	}
 }  // Extension 
-// SanteDB.Core.Model.DataTypes.EntityExtension, SanteDB.Core.Model, Version=3.0.1900.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.DataTypes.EntityExtension, SanteDB.Core.Model, Version=3.0.1910.0, Culture=neutral, PublicKeyToken=null
 //if(!EntityExtension)
 /**
  * @class
@@ -10572,7 +10585,7 @@ function EntityExtension (copyData) {
 	this.value = copyData.value;
 	}
 }  // EntityExtension 
-// SanteDB.Core.Model.DataTypes.ActExtension, SanteDB.Core.Model, Version=3.0.1900.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.DataTypes.ActExtension, SanteDB.Core.Model, Version=3.0.1910.0, Culture=neutral, PublicKeyToken=null
 //if(!ActExtension)
 /**
  * @class
@@ -10640,7 +10653,7 @@ function ActExtension (copyData) {
 	this.value = copyData.value;
 	}
 }  // ActExtension 
-// SanteDB.Core.Model.DataTypes.ExtensionType, SanteDB.Core.Model, Version=3.0.1900.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.DataTypes.ExtensionType, SanteDB.Core.Model, Version=3.0.1910.0, Culture=neutral, PublicKeyToken=null
 //if(!ExtensionType)
 /**
  * @class
@@ -10764,7 +10777,7 @@ function ExtensionType (copyData) {
 	this.handlerClass = copyData.handlerClass;
 	}
 }  // ExtensionType 
-// SanteDB.Core.Model.DataTypes.GeoTag, SanteDB.Core.Model, Version=3.0.1900.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.DataTypes.GeoTag, SanteDB.Core.Model, Version=3.0.1910.0, Culture=neutral, PublicKeyToken=null
 //if(!GeoTag)
 /**
  * @class
@@ -10816,7 +10829,7 @@ function GeoTag (copyData) {
 	this.modifiedOn = copyData.modifiedOn;
 	}
 }  // GeoTag 
-// SanteDB.Core.Model.DataTypes.IdentifiedDataReference, SanteDB.Core.Model, Version=3.0.1900.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.DataTypes.IdentifiedDataReference, SanteDB.Core.Model, Version=3.0.1910.0, Culture=neutral, PublicKeyToken=null
 //if(!Reference)
 /**
  * @class
@@ -10859,7 +10872,7 @@ function Reference (copyData) {
 	this.modifiedOn = copyData.modifiedOn;
 	}
 }  // Reference 
-// SanteDB.Core.Model.DataTypes.EntityIdentifier, SanteDB.Core.Model, Version=3.0.1900.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.DataTypes.EntityIdentifier, SanteDB.Core.Model, Version=3.0.1910.0, Culture=neutral, PublicKeyToken=null
 //if(!EntityIdentifier)
 /**
  * @class
@@ -10952,7 +10965,7 @@ function EntityIdentifier (copyData) {
 	this.value = copyData.value;
 	}
 }  // EntityIdentifier 
-// SanteDB.Core.Model.DataTypes.ActIdentifier, SanteDB.Core.Model, Version=3.0.1900.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.DataTypes.ActIdentifier, SanteDB.Core.Model, Version=3.0.1910.0, Culture=neutral, PublicKeyToken=null
 //if(!ActIdentifier)
 /**
  * @class
@@ -11045,7 +11058,7 @@ function ActIdentifier (copyData) {
 	this.value = copyData.value;
 	}
 }  // ActIdentifier 
-// SanteDB.Core.Model.DataTypes.IdentifierBase`1, SanteDB.Core.Model, Version=3.0.1900.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.DataTypes.IdentifierBase`1, SanteDB.Core.Model, Version=3.0.1910.0, Culture=neutral, PublicKeyToken=null
 //if(!IdentifierBase)
 /**
  * @class
@@ -11147,7 +11160,7 @@ function IdentifierBase (copyData) {
 	this.value = copyData.value;
 	}
 }  // IdentifierBase 
-// SanteDB.Core.Model.DataTypes.IdentityDomain, SanteDB.Core.Model, Version=3.0.1900.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.DataTypes.IdentityDomain, SanteDB.Core.Model, Version=3.0.1910.0, Culture=neutral, PublicKeyToken=null
 //if(!IdentityDomain)
 /**
  * @class
@@ -11335,7 +11348,7 @@ function IdentityDomain (copyData) {
 	this.name = copyData.name;
 	}
 }  // IdentityDomain 
-// SanteDB.Core.Model.DataTypes.Note`1, SanteDB.Core.Model, Version=3.0.1900.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.DataTypes.Note`1, SanteDB.Core.Model, Version=3.0.1910.0, Culture=neutral, PublicKeyToken=null
 //if(!Note)
 /**
  * @class
@@ -11396,7 +11409,7 @@ function Note (copyData) {
 	this.text = copyData.text;
 	}
 }  // Note 
-// SanteDB.Core.Model.DataTypes.EntityNote, SanteDB.Core.Model, Version=3.0.1900.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.DataTypes.EntityNote, SanteDB.Core.Model, Version=3.0.1910.0, Culture=neutral, PublicKeyToken=null
 //if(!EntityNote)
 /**
  * @class
@@ -11454,7 +11467,7 @@ function EntityNote (copyData) {
 	this.text = copyData.text;
 	}
 }  // EntityNote 
-// SanteDB.Core.Model.DataTypes.ActNote, SanteDB.Core.Model, Version=3.0.1900.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.DataTypes.ActNote, SanteDB.Core.Model, Version=3.0.1910.0, Culture=neutral, PublicKeyToken=null
 //if(!ActNote)
 /**
  * @class
@@ -11512,7 +11525,7 @@ function ActNote (copyData) {
 	this.text = copyData.text;
 	}
 }  // ActNote 
-// SanteDB.Core.Model.DataTypes.ReferenceTerm, SanteDB.Core.Model, Version=3.0.1900.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.DataTypes.ReferenceTerm, SanteDB.Core.Model, Version=3.0.1910.0, Culture=neutral, PublicKeyToken=null
 //if(!ReferenceTerm)
 /**
  * @class
@@ -11630,7 +11643,7 @@ function ReferenceTerm (copyData) {
 	this.mnemonic = copyData.mnemonic;
 	}
 }  // ReferenceTerm 
-// SanteDB.Core.Model.DataTypes.ReferenceTermName, SanteDB.Core.Model, Version=3.0.1900.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.DataTypes.ReferenceTermName, SanteDB.Core.Model, Version=3.0.1910.0, Culture=neutral, PublicKeyToken=null
 //if(!ReferenceTermName)
 /**
  * @class
@@ -11726,7 +11739,7 @@ function ReferenceTermName (copyData) {
 	this.language = copyData.language;
 	}
 }  // ReferenceTermName 
-// SanteDB.Core.Model.DataTypes.RelationshipValidationRule, SanteDB.Core.Model, Version=3.0.1900.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.DataTypes.RelationshipValidationRule, SanteDB.Core.Model, Version=3.0.1910.0, Culture=neutral, PublicKeyToken=null
 //if(!RelationshipValidationRule)
 /**
  * @class
@@ -11856,7 +11869,7 @@ function RelationshipValidationRule (copyData) {
 	this.modifiedOn = copyData.modifiedOn;
 	}
 }  // RelationshipValidationRule 
-// SanteDB.Core.Model.DataTypes.Tag`1, SanteDB.Core.Model, Version=3.0.1900.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.DataTypes.Tag`1, SanteDB.Core.Model, Version=3.0.1910.0, Culture=neutral, PublicKeyToken=null
 //if(!Tag)
 /**
  * @class
@@ -11958,7 +11971,7 @@ function Tag (copyData) {
 	this.key = copyData.key;
 	}
 }  // Tag 
-// SanteDB.Core.Model.DataTypes.EntityTag, SanteDB.Core.Model, Version=3.0.1900.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.DataTypes.EntityTag, SanteDB.Core.Model, Version=3.0.1910.0, Culture=neutral, PublicKeyToken=null
 //if(!EntityTag)
 /**
  * @class
@@ -12056,7 +12069,7 @@ function EntityTag (copyData) {
 	this.key = copyData.key;
 	}
 }  // EntityTag 
-// SanteDB.Core.Model.DataTypes.ActTag, SanteDB.Core.Model, Version=3.0.1900.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.DataTypes.ActTag, SanteDB.Core.Model, Version=3.0.1910.0, Culture=neutral, PublicKeyToken=null
 //if(!ActTag)
 /**
  * @class
@@ -12154,7 +12167,7 @@ function ActTag (copyData) {
 	this.key = copyData.key;
 	}
 }  // ActTag 
-// SanteDB.Core.Model.DataTypes.TemplateDefinition, SanteDB.Core.Model, Version=3.0.1900.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.DataTypes.TemplateDefinition, SanteDB.Core.Model, Version=3.0.1910.0, Culture=neutral, PublicKeyToken=null
 //if(!TemplateDefinition)
 /**
  * @class
@@ -12274,7 +12287,7 @@ function TemplateDefinition (copyData) {
 	this.mnemonic = copyData.mnemonic;
 	}
 }  // TemplateDefinition 
-// SanteDB.Core.Model.Collection.Bundle, SanteDB.Core.Model, Version=3.0.1900.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Collection.Bundle, SanteDB.Core.Model, Version=3.0.1910.0, Culture=neutral, PublicKeyToken=null
 //if(!Bundle)
 /**
  * @class
@@ -12338,7 +12351,7 @@ function Bundle (copyData) {
 	this.modifiedOn = copyData.modifiedOn;
 	}
 }  // Bundle 
-// SanteDB.Core.Model.Audit.AuditableObject, SanteDB.Core.Model, Version=3.0.1900.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Audit.AuditableObject, SanteDB.Core.Model, Version=3.0.1910.0, Culture=neutral, PublicKeyToken=null
 //if(!AuditableObject)
 /**
  * @class
@@ -12408,7 +12421,7 @@ function AuditableObject (copyData) {
 	this.customCode = copyData.customCode;
 	}
 }  // AuditableObject 
-// SanteDB.Core.Model.Audit.AuditActorData, SanteDB.Core.Model, Version=3.0.1900.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Audit.AuditActorData, SanteDB.Core.Model, Version=3.0.1910.0, Culture=neutral, PublicKeyToken=null
 //if(!AuditActorData)
 /**
  * @class
@@ -12466,7 +12479,7 @@ function AuditActorData (copyData) {
 	this.role = copyData.role;
 	}
 }  // AuditActorData 
-// SanteDB.Core.Model.Audit.AuditCode, SanteDB.Core.Model, Version=3.0.1900.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Audit.AuditCode, SanteDB.Core.Model, Version=3.0.1910.0, Culture=neutral, PublicKeyToken=null
 //if(!AuditCode)
 /**
  * @class
@@ -12510,7 +12523,7 @@ function AuditCode (copyData) {
 	this.code = copyData.code;
 	}
 }  // AuditCode 
-// SanteDB.Core.Model.Audit.AuditEventData, SanteDB.Core.Model, Version=3.0.1900.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Audit.AuditEventData, SanteDB.Core.Model, Version=3.0.1910.0, Culture=neutral, PublicKeyToken=null
 //if(!AuditEventData)
 /**
  * @class
@@ -12595,7 +12608,7 @@ function AuditEventData (copyData) {
 	this.action = copyData.action;
 	}
 }  // AuditEventData 
-// SanteDB.Core.Model.Audit.AuditMetadata, SanteDB.Core.Model, Version=3.0.1900.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Audit.AuditMetadata, SanteDB.Core.Model, Version=3.0.1910.0, Culture=neutral, PublicKeyToken=null
 //if(!AuditMetadata)
 /**
  * @class
@@ -12621,7 +12634,7 @@ function AuditMetadata (copyData) {
 	this.key = copyData.key;
 	}
 }  // AuditMetadata 
-// SanteDB.Core.Model.Acts.Account, SanteDB.Core.Model, Version=3.0.1900.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Acts.Account, SanteDB.Core.Model, Version=3.0.1910.0, Culture=neutral, PublicKeyToken=null
 //if(!Account)
 /**
  * @class
@@ -12983,7 +12996,7 @@ function Account (copyData) {
 	this.balance = copyData.balance;
 	}
 }  // Account 
-// SanteDB.Core.Model.Acts.Act, SanteDB.Core.Model, Version=3.0.1900.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Acts.Act, SanteDB.Core.Model, Version=3.0.1910.0, Culture=neutral, PublicKeyToken=null
 //if(!Act)
 /**
  * @class
@@ -13360,7 +13373,7 @@ function Act (copyData) {
 	this.isNegated = copyData.isNegated;
 	}
 }  // Act 
-// SanteDB.Core.Model.Acts.ActParticipation, SanteDB.Core.Model, Version=3.0.1900.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Acts.ActParticipation, SanteDB.Core.Model, Version=3.0.1910.0, Culture=neutral, PublicKeyToken=null
 //if(!ActParticipation)
 /**
  * @class
@@ -13499,7 +13512,7 @@ function ActParticipation (copyData) {
 	this.classificationModel = copyData.classificationModel;
 	}
 }  // ActParticipation 
-// SanteDB.Core.Model.Acts.ActProtocol, SanteDB.Core.Model, Version=3.0.1900.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Acts.ActProtocol, SanteDB.Core.Model, Version=3.0.1910.0, Culture=neutral, PublicKeyToken=null
 //if(!ActProtocol)
 /**
  * @class
@@ -13579,7 +13592,7 @@ function ActProtocol (copyData) {
 	this.protocol = copyData.protocol;
 	}
 }  // ActProtocol 
-// SanteDB.Core.Model.Acts.ActRelationship, SanteDB.Core.Model, Version=3.0.1900.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Acts.ActRelationship, SanteDB.Core.Model, Version=3.0.1910.0, Culture=neutral, PublicKeyToken=null
 //if(!ActRelationship)
 /**
  * @class
@@ -13676,7 +13689,7 @@ function ActRelationship (copyData) {
 	this.classificationModel = copyData.classificationModel;
 	}
 }  // ActRelationship 
-// SanteDB.Core.Model.Acts.CarePlan, SanteDB.Core.Model, Version=3.0.1900.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Acts.CarePlan, SanteDB.Core.Model, Version=3.0.1910.0, Culture=neutral, PublicKeyToken=null
 //if(!CarePlan)
 /**
  * @class
@@ -14021,7 +14034,7 @@ function CarePlan (copyData) {
 	this.title = copyData.title;
 	}
 }  // CarePlan 
-// SanteDB.Core.Model.Acts.ControlAct, SanteDB.Core.Model, Version=3.0.1900.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Acts.ControlAct, SanteDB.Core.Model, Version=3.0.1910.0, Culture=neutral, PublicKeyToken=null
 //if(!ControlAct)
 /**
  * @class
@@ -14355,7 +14368,7 @@ function ControlAct (copyData) {
 	this.isNegated = copyData.isNegated;
 	}
 }  // ControlAct 
-// SanteDB.Core.Model.Acts.FinancialContract, SanteDB.Core.Model, Version=3.0.1900.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Acts.FinancialContract, SanteDB.Core.Model, Version=3.0.1910.0, Culture=neutral, PublicKeyToken=null
 //if(!FinancialContract)
 /**
  * @class
@@ -14700,7 +14713,7 @@ function FinancialContract (copyData) {
 	this.paymentTerms = copyData.paymentTerms;
 	}
 }  // FinancialContract 
-// SanteDB.Core.Model.Acts.FinancialTransaction, SanteDB.Core.Model, Version=3.0.1900.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Acts.FinancialTransaction, SanteDB.Core.Model, Version=3.0.1910.0, Culture=neutral, PublicKeyToken=null
 //if(!FinancialTransaction)
 /**
  * @class
@@ -15060,7 +15073,7 @@ function FinancialTransaction (copyData) {
 	this.amount = copyData.amount;
 	}
 }  // FinancialTransaction 
-// SanteDB.Core.Model.Acts.InvoiceElement, SanteDB.Core.Model, Version=3.0.1900.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Acts.InvoiceElement, SanteDB.Core.Model, Version=3.0.1910.0, Culture=neutral, PublicKeyToken=null
 //if(!InvoiceElement)
 /**
  * @class
@@ -15439,7 +15452,7 @@ function InvoiceElement (copyData) {
 	this.modifier = copyData.modifier;
 	}
 }  // InvoiceElement 
-// SanteDB.Core.Model.Acts.Narrative, SanteDB.Core.Model, Version=3.0.1900.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Acts.Narrative, SanteDB.Core.Model, Version=3.0.1910.0, Culture=neutral, PublicKeyToken=null
 //if(!Narrative)
 /**
  * @class
@@ -15802,7 +15815,7 @@ function Narrative (copyData) {
 	this.versionCode = copyData.versionCode;
 	}
 }  // Narrative 
-// SanteDB.Core.Model.Acts.Observation, SanteDB.Core.Model, Version=3.0.1900.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Acts.Observation, SanteDB.Core.Model, Version=3.0.1910.0, Culture=neutral, PublicKeyToken=null
 //if(!Observation)
 /**
  * @class
@@ -16167,7 +16180,7 @@ function Observation (copyData) {
 	this.interpretationConcept = copyData.interpretationConcept;
 	}
 }  // Observation 
-// SanteDB.Core.Model.Acts.QuantityObservation, SanteDB.Core.Model, Version=3.0.1900.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Acts.QuantityObservation, SanteDB.Core.Model, Version=3.0.1910.0, Culture=neutral, PublicKeyToken=null
 //if(!QuantityObservation)
 /**
  * @class
@@ -16534,7 +16547,7 @@ function QuantityObservation (copyData) {
 	this.value = copyData.value;
 	}
 }  // QuantityObservation 
-// SanteDB.Core.Model.Acts.TextObservation, SanteDB.Core.Model, Version=3.0.1900.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Acts.TextObservation, SanteDB.Core.Model, Version=3.0.1910.0, Culture=neutral, PublicKeyToken=null
 //if(!TextObservation)
 /**
  * @class
@@ -16891,7 +16904,7 @@ function TextObservation (copyData) {
 	this.valueType = copyData.valueType;
 	}
 }  // TextObservation 
-// SanteDB.Core.Model.Acts.CodedObservation, SanteDB.Core.Model, Version=3.0.1900.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Acts.CodedObservation, SanteDB.Core.Model, Version=3.0.1910.0, Culture=neutral, PublicKeyToken=null
 //if(!CodedObservation)
 /**
  * @class
@@ -17252,7 +17265,7 @@ function CodedObservation (copyData) {
 	this.valueType = copyData.valueType;
 	}
 }  // CodedObservation 
-// SanteDB.Core.Model.Acts.PatientEncounter, SanteDB.Core.Model, Version=3.0.1900.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Acts.PatientEncounter, SanteDB.Core.Model, Version=3.0.1910.0, Culture=neutral, PublicKeyToken=null
 //if(!PatientEncounter)
 /**
  * @class
@@ -17614,7 +17627,7 @@ function PatientEncounter (copyData) {
 	this.dischargeDisposition = copyData.dischargeDisposition;
 	}
 }  // PatientEncounter 
-// SanteDB.Core.Model.Acts.PatientEncounterArrangement, SanteDB.Core.Model, Version=3.0.1900.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Acts.PatientEncounterArrangement, SanteDB.Core.Model, Version=3.0.1910.0, Culture=neutral, PublicKeyToken=null
 //if(!PatientEncounterArrangement)
 /**
  * @class
@@ -17683,7 +17696,7 @@ function PatientEncounterArrangement (copyData) {
 	this.type = copyData.type;
 	}
 }  // PatientEncounterArrangement 
-// SanteDB.Core.Model.Acts.Procedure, SanteDB.Core.Model, Version=3.0.1900.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Acts.Procedure, SanteDB.Core.Model, Version=3.0.1910.0, Culture=neutral, PublicKeyToken=null
 //if(!Procedure)
 /**
  * @class
@@ -18048,7 +18061,7 @@ function Procedure (copyData) {
 	this.method = copyData.method;
 	}
 }  // Procedure 
-// SanteDB.Core.Model.Acts.Protocol, SanteDB.Core.Model, Version=3.0.1900.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Acts.Protocol, SanteDB.Core.Model, Version=3.0.1910.0, Culture=neutral, PublicKeyToken=null
 //if(!Protocol)
 /**
  * @class
@@ -18147,7 +18160,7 @@ function Protocol (copyData) {
 	this.name = copyData.name;
 	}
 }  // Protocol 
-// SanteDB.Core.Model.Acts.SubstanceAdministration, SanteDB.Core.Model, Version=3.0.1900.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Acts.SubstanceAdministration, SanteDB.Core.Model, Version=3.0.1910.0, Culture=neutral, PublicKeyToken=null
 //if(!SubstanceAdministration)
 /**
  * @class
@@ -18534,7 +18547,7 @@ function SubstanceAdministration (copyData) {
 	this.route = copyData.route;
 	}
 }  // SubstanceAdministration 
-// SanteDB.Core.Model.DataTypes.BatchOperationType, SanteDB.Core.Model, Version=3.0.1900.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.DataTypes.BatchOperationType, SanteDB.Core.Model, Version=3.0.1910.0, Culture=neutral, PublicKeyToken=null
 // if(!BatchOperationType)
 /**
  * @enum {string}
@@ -18574,7 +18587,7 @@ const BatchOperationType = {
 	Ignore : 'Ignore',
 	IgnoreInt : '5',
 }  // BatchOperationType 
-// SanteDB.Core.Model.Subscription.SubscriptionModeType, SanteDB.Core.Model, Version=3.0.1900.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Subscription.SubscriptionModeType, SanteDB.Core.Model, Version=3.0.1910.0, Culture=neutral, PublicKeyToken=null
 // if(!SubscriptionModeType)
 /**
  * @enum {string}
@@ -18599,7 +18612,7 @@ const SubscriptionModeType = {
 	FullOrPartial : 'FullOrPartial',
 	FullOrPartialInt : '3',
 }  // SubscriptionModeType 
-// SanteDB.Core.Model.Subscription.SubscriptionTriggerType, SanteDB.Core.Model, Version=3.0.1900.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Subscription.SubscriptionTriggerType, SanteDB.Core.Model, Version=3.0.1910.0, Culture=neutral, PublicKeyToken=null
 // if(!SubscriptionTriggerType)
 /**
  * @enum {string}
@@ -18654,7 +18667,7 @@ const SubscriptionTriggerType = {
 	Manual : 'Manual',
 	ManualInt : '64',
 }  // SubscriptionTriggerType 
-// SanteDB.Core.Model.Security.PolicyGrantType, SanteDB.Core.Model, Version=3.0.1900.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Security.PolicyGrantType, SanteDB.Core.Model, Version=3.0.1910.0, Culture=neutral, PublicKeyToken=null
 // if(!PolicyGrantType)
 /**
  * @enum {string}
@@ -18679,7 +18692,7 @@ const PolicyGrantType = {
 	Grant : 'Grant',
 	GrantInt : '2',
 }  // PolicyGrantType 
-// SanteDB.Core.Model.Constants.ActorTypeKeys, SanteDB.Core.Model, Version=3.0.1900.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Constants.ActorTypeKeys, SanteDB.Core.Model, Version=3.0.1910.0, Culture=neutral, PublicKeyToken=null
 // if(!ActorTypeKeys)
 /**
  * @enum {string}
@@ -18705,7 +18718,7 @@ const ActorTypeKeys = {
 	 */
 	Device : '5d584bec-7cfe-4d24-a6d7-efaf7f315c1f',
 }  // ActorTypeKeys 
-// SanteDB.Core.Model.DataTypes.DatePrecision, SanteDB.Core.Model, Version=3.0.1900.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.DataTypes.DatePrecision, SanteDB.Core.Model, Version=3.0.1910.0, Culture=neutral, PublicKeyToken=null
 // if(!DatePrecision)
 /**
  * @enum {string}
@@ -18750,7 +18763,7 @@ const DatePrecision = {
 	Second : 'Second',
 	SecondInt : '6',
 }  // DatePrecision 
-// SanteDB.Core.Model.Constants.AddressUseKeys, SanteDB.Core.Model, Version=3.0.1900.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Constants.AddressUseKeys, SanteDB.Core.Model, Version=3.0.1910.0, Culture=neutral, PublicKeyToken=null
 // if(!AddressUseKeys)
 /**
  * @enum {string}
@@ -18820,7 +18833,7 @@ const AddressUseKeys = {
 	 */
 	WorkPlace : 'eaa6f08e-bb8e-4457-9dc0-3a1555fadf5c',
 }  // AddressUseKeys 
-// SanteDB.Core.Model.Constants.EntityClassKeys, SanteDB.Core.Model, Version=3.0.1900.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Constants.EntityClassKeys, SanteDB.Core.Model, Version=3.0.1910.0, Culture=neutral, PublicKeyToken=null
 // if(!EntityClassKeys)
 /**
  * @enum {string}
@@ -18918,7 +18931,7 @@ const EntityClassKeys = {
 	 */
 	UserEntity : '6a2b00ba-501b-4523-b57c-f96d8ae44684',
 }  // EntityClassKeys 
-// SanteDB.Core.Model.Constants.DeterminerKeys, SanteDB.Core.Model, Version=3.0.1900.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Constants.DeterminerKeys, SanteDB.Core.Model, Version=3.0.1910.0, Culture=neutral, PublicKeyToken=null
 // if(!DeterminerKeys)
 /**
  * @enum {string}
@@ -18940,7 +18953,7 @@ const DeterminerKeys = {
 	 */
 	Specific : 'f29f08de-78a7-4a5e-aeaf-7b545ba19a09',
 }  // DeterminerKeys 
-// SanteDB.Core.Model.Constants.NameUseKeys, SanteDB.Core.Model, Version=3.0.1900.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Constants.NameUseKeys, SanteDB.Core.Model, Version=3.0.1910.0, Culture=neutral, PublicKeyToken=null
 // if(!NameUseKeys)
 /**
  * @enum {string}
@@ -19014,7 +19027,7 @@ const NameUseKeys = {
 	 */
 	Syllabic : 'b4ca3bf0-a7fc-44f3-87d5-e126beda93ff',
 }  // NameUseKeys 
-// SanteDB.Core.Model.Constants.ActParticipationKeys, SanteDB.Core.Model, Version=3.0.1900.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Constants.ActParticipationKeys, SanteDB.Core.Model, Version=3.0.1910.0, Culture=neutral, PublicKeyToken=null
 // if(!ActParticipationKeys)
 /**
  * @enum {string}
@@ -19248,7 +19261,7 @@ const ActParticipationKeys = {
 	 */
 	Witness : '0b82357f-5ae0-4543-ab8e-a33e9b315bab',
 }  // ActParticipationKeys 
-// SanteDB.Core.Model.Constants.EntityRelationshipTypeKeys, SanteDB.Core.Model, Version=3.0.1900.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Constants.EntityRelationshipTypeKeys, SanteDB.Core.Model, Version=3.0.1910.0, Culture=neutral, PublicKeyToken=null
 // if(!EntityRelationshipTypeKeys)
 /**
  * @enum {string}
@@ -19349,6 +19362,10 @@ const EntityRelationshipTypeKeys = {
 	 *             The commissioning party            
 	 */
 	CommissioningParty : '33bd1401-dfdb-40e7-a914-0a695ad5186e',
+	/** 
+	 *             Community location which is used to provide services within holder            
+	 */
+	CommunityServiceDeliveryLocation : '4aa573a0-d967-493a-bea0-8bad060e4264',
 	/** 
 	 *             The target represents a contact of the source            
 	 */
@@ -19902,7 +19919,7 @@ const EntityRelationshipTypeKeys = {
 	 */
 	HasPart : '2220ef3f-b8d9-43a4-9bae-a2906e3c0803',
 }  // EntityRelationshipTypeKeys 
-// SanteDB.Core.Model.Constants.StatusKeys, SanteDB.Core.Model, Version=3.0.1900.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Constants.StatusKeys, SanteDB.Core.Model, Version=3.0.1910.0, Culture=neutral, PublicKeyToken=null
 // if(!StatusKeys)
 /**
  * @enum {string}
@@ -19956,7 +19973,7 @@ const StatusKeys = {
 	 */
 	AllStates : 'System.Guid[]',
 }  // StatusKeys 
-// SanteDB.Core.Model.Constants.TelecomAddressUseKeys, SanteDB.Core.Model, Version=3.0.1900.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Constants.TelecomAddressUseKeys, SanteDB.Core.Model, Version=3.0.1910.0, Culture=neutral, PublicKeyToken=null
 // if(!TelecomAddressUseKeys)
 /**
  * @enum {string}
@@ -19998,7 +20015,7 @@ const TelecomAddressUseKeys = {
 	 */
 	WorkPlace : 'eaa6f08e-bb8e-4457-9dc0-3a1555fadf5c',
 }  // TelecomAddressUseKeys 
-// SanteDB.Core.Model.Patch.PatchOperationType, SanteDB.Core.Model, Version=3.0.1900.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Patch.PatchOperationType, SanteDB.Core.Model, Version=3.0.1910.0, Culture=neutral, PublicKeyToken=null
 // if(!PatchOperationType)
 /**
  * @enum {string}
@@ -20028,7 +20045,7 @@ const PatchOperationType = {
 	Test : 'Test',
 	TestInt : '3',
 }  // PatchOperationType 
-// SanteDB.Core.Model.Constants.AddressComponentKeys, SanteDB.Core.Model, Version=3.0.1900.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Constants.AddressComponentKeys, SanteDB.Core.Model, Version=3.0.1910.0, Culture=neutral, PublicKeyToken=null
 // if(!AddressComponentKeys)
 /**
  * @enum {string}
@@ -20154,7 +20171,7 @@ const AddressComponentKeys = {
 	 */
 	PlaceReference : 'a314f427-2b6d-4948-9146-a5f700973899',
 }  // AddressComponentKeys 
-// SanteDB.Core.Model.Constants.NameComponentKeys, SanteDB.Core.Model, Version=3.0.1900.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Constants.NameComponentKeys, SanteDB.Core.Model, Version=3.0.1910.0, Culture=neutral, PublicKeyToken=null
 // if(!NameComponentKeys)
 /**
  * @enum {string}
@@ -20188,7 +20205,7 @@ const NameComponentKeys = {
 	 */
 	Title : '4386d92a-d81b-4033-b968-01e57e20d5e0',
 }  // NameComponentKeys 
-// SanteDB.Core.Model.Constants.RelationshipClassKeys, SanteDB.Core.Model, Version=3.0.1900.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Constants.RelationshipClassKeys, SanteDB.Core.Model, Version=3.0.1910.0, Culture=neutral, PublicKeyToken=null
 // if(!RelationshipClassKeys)
 /**
  * @enum {string}
@@ -20222,7 +20239,7 @@ const RelationshipClassKeys = {
 	 */
 	ConfirmedLink : 'aef80d5e-911a-456e-97f4-d341e420181a',
 }  // RelationshipClassKeys 
-// SanteDB.Core.Model.Constants.TelecomAddressTypeKeys, SanteDB.Core.Model, Version=3.0.1900.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Constants.TelecomAddressTypeKeys, SanteDB.Core.Model, Version=3.0.1910.0, Culture=neutral, PublicKeyToken=null
 // if(!TelecomAddressTypeKeys)
 /**
  * @enum {string}
@@ -20256,7 +20273,7 @@ const TelecomAddressTypeKeys = {
 	 */
 	Internet : 'c1c0a4e9-4238-4044-b89b-9c9798995b93',
 }  // TelecomAddressTypeKeys 
-// SanteDB.Core.Model.DataTypes.IdentifierReliability, SanteDB.Core.Model, Version=3.0.1900.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.DataTypes.IdentifierReliability, SanteDB.Core.Model, Version=3.0.1910.0, Culture=neutral, PublicKeyToken=null
 // if(!IdentifierReliability)
 /**
  * @enum {string}
@@ -20281,7 +20298,7 @@ const IdentifierReliability = {
 	Informative : 'Informative',
 	InformativeInt : '2',
 }  // IdentifierReliability 
-// SanteDB.Core.Model.Constants.ConceptRelationshipTypeKeys, SanteDB.Core.Model, Version=3.0.1900.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Constants.ConceptRelationshipTypeKeys, SanteDB.Core.Model, Version=3.0.1910.0, Culture=neutral, PublicKeyToken=null
 // if(!ConceptRelationshipTypeKeys)
 /**
  * @enum {string}
@@ -20315,7 +20332,7 @@ const ConceptRelationshipTypeKeys = {
 	 */
 	WiderThan : 'ae8b4f2f-009f-4e0d-b35e-5a89555c5980',
 }  // ConceptRelationshipTypeKeys 
-// SanteDB.Core.Model.Constants.ConceptClassKeys, SanteDB.Core.Model, Version=3.0.1900.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Constants.ConceptClassKeys, SanteDB.Core.Model, Version=3.0.1910.0, Culture=neutral, PublicKeyToken=null
 // if(!ConceptClassKeys)
 /**
  * @enum {string}
@@ -20381,7 +20398,7 @@ const ConceptClassKeys = {
 	 */
 	Language : 'ed032625-8139-4bdd-af25-c54a6960f87d',
 }  // ConceptClassKeys 
-// SanteDB.Core.Model.DataTypes.ConceptSetCompositionOperation, SanteDB.Core.Model, Version=3.0.1900.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.DataTypes.ConceptSetCompositionOperation, SanteDB.Core.Model, Version=3.0.1910.0, Culture=neutral, PublicKeyToken=null
 // if(!ConceptSetCompositionOperation)
 /**
  * @enum {string}
@@ -20401,7 +20418,7 @@ const ConceptSetCompositionOperation = {
 	Exclude : 'Exclude',
 	ExcludeInt : '2',
 }  // ConceptSetCompositionOperation 
-// SanteDB.Core.Model.Constants.CodeSystemKeys, SanteDB.Core.Model, Version=3.0.1900.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Constants.CodeSystemKeys, SanteDB.Core.Model, Version=3.0.1910.0, Culture=neutral, PublicKeyToken=null
 // if(!CodeSystemKeys)
 /**
  * @enum {string}
@@ -20459,7 +20476,7 @@ const CodeSystemKeys = {
 	 */
 	AdministrativeGender : '7a3a7139-b93e-4a99-bd54-749e30fe712a',
 }  // CodeSystemKeys 
-// SanteDB.Core.Model.Audit.AuditableObjectIdType, SanteDB.Core.Model, Version=3.0.1900.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Audit.AuditableObjectIdType, SanteDB.Core.Model, Version=3.0.1910.0, Culture=neutral, PublicKeyToken=null
 // if(!AuditableObjectIdType)
 /**
  * @enum {string}
@@ -20539,7 +20556,7 @@ const AuditableObjectIdType = {
 	Custom : 'Custom',
 	CustomInt : '13',
 }  // AuditableObjectIdType 
-// SanteDB.Core.Model.Audit.AuditableObjectLifecycle, SanteDB.Core.Model, Version=3.0.1900.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Audit.AuditableObjectLifecycle, SanteDB.Core.Model, Version=3.0.1910.0, Culture=neutral, PublicKeyToken=null
 // if(!AuditableObjectLifecycle)
 /**
  * @enum {string}
@@ -20629,7 +20646,7 @@ const AuditableObjectLifecycle = {
 	PermanentErasure : 'PermanentErasure',
 	PermanentErasureInt : '15',
 }  // AuditableObjectLifecycle 
-// SanteDB.Core.Model.Audit.AuditableObjectRole, SanteDB.Core.Model, Version=3.0.1900.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Audit.AuditableObjectRole, SanteDB.Core.Model, Version=3.0.1910.0, Culture=neutral, PublicKeyToken=null
 // if(!AuditableObjectRole)
 /**
  * @enum {string}
@@ -20759,7 +20776,7 @@ const AuditableObjectRole = {
 	Query : 'Query',
 	QueryInt : '24',
 }  // AuditableObjectRole 
-// SanteDB.Core.Model.Audit.AuditableObjectType, SanteDB.Core.Model, Version=3.0.1900.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Audit.AuditableObjectType, SanteDB.Core.Model, Version=3.0.1910.0, Culture=neutral, PublicKeyToken=null
 // if(!AuditableObjectType)
 /**
  * @enum {string}
@@ -20794,7 +20811,7 @@ const AuditableObjectType = {
 	Other : 'Other',
 	OtherInt : '4',
 }  // AuditableObjectType 
-// SanteDB.Core.Model.Audit.NetworkAccessPointType, SanteDB.Core.Model, Version=3.0.1900.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Audit.NetworkAccessPointType, SanteDB.Core.Model, Version=3.0.1910.0, Culture=neutral, PublicKeyToken=null
 // if(!NetworkAccessPointType)
 /**
  * @enum {string}
@@ -20819,7 +20836,7 @@ const NetworkAccessPointType = {
 	TelephoneNumber : 'TelephoneNumber',
 	TelephoneNumberInt : '3',
 }  // NetworkAccessPointType 
-// SanteDB.Core.Model.Audit.ActionType, SanteDB.Core.Model, Version=3.0.1900.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Audit.ActionType, SanteDB.Core.Model, Version=3.0.1910.0, Culture=neutral, PublicKeyToken=null
 // if(!ActionType)
 /**
  * @enum {string}
@@ -20854,7 +20871,7 @@ const ActionType = {
 	Execute : 'Execute',
 	ExecuteInt : '16',
 }  // ActionType 
-// SanteDB.Core.Model.Audit.EventIdentifierType, SanteDB.Core.Model, Version=3.0.1900.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Audit.EventIdentifierType, SanteDB.Core.Model, Version=3.0.1910.0, Culture=neutral, PublicKeyToken=null
 // if(!EventIdentifierType)
 /**
  * @enum {string}
@@ -20959,7 +20976,7 @@ const EventIdentifierType = {
 	Logout : 'Logout',
 	LogoutInt : '262144',
 }  // EventIdentifierType 
-// SanteDB.Core.Model.Audit.OutcomeIndicator, SanteDB.Core.Model, Version=3.0.1900.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Audit.OutcomeIndicator, SanteDB.Core.Model, Version=3.0.1910.0, Culture=neutral, PublicKeyToken=null
 // if(!OutcomeIndicator)
 /**
  * @enum {string}
@@ -20989,7 +21006,7 @@ const OutcomeIndicator = {
 	EpicFail : 'EpicFail',
 	EpicFailInt : '8',
 }  // OutcomeIndicator 
-// SanteDB.Core.Model.Audit.AuditMetadataKey, SanteDB.Core.Model, Version=3.0.1900.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Audit.AuditMetadataKey, SanteDB.Core.Model, Version=3.0.1910.0, Culture=neutral, PublicKeyToken=null
 // if(!AuditMetadataKey)
 /**
  * @enum {string}
@@ -21074,7 +21091,7 @@ const AuditMetadataKey = {
 	CorrelationToken : 'CorrelationToken',
 	CorrelationTokenInt : '14',
 }  // AuditMetadataKey 
-// SanteDB.Core.Model.Constants.CurrencyKeys, SanteDB.Core.Model, Version=3.0.1900.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Constants.CurrencyKeys, SanteDB.Core.Model, Version=3.0.1910.0, Culture=neutral, PublicKeyToken=null
 // if(!CurrencyKeys)
 /**
  * @enum {string}
@@ -21164,7 +21181,7 @@ const CurrencyKeys = {
 	 */
 	Rand : '69f1fd07-ba26-4e92-8ad0-deac7559e90f',
 }  // CurrencyKeys 
-// SanteDB.Core.Model.Constants.ActClassKeys, SanteDB.Core.Model, Version=3.0.1900.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Constants.ActClassKeys, SanteDB.Core.Model, Version=3.0.1910.0, Culture=neutral, PublicKeyToken=null
 // if(!ActClassKeys)
 /**
  * @enum {string}
@@ -21266,7 +21283,7 @@ const ActClassKeys = {
 	 */
 	List : 'b0323489-9a09-411a-bb55-ff283830ea1a',
 }  // ActClassKeys 
-// SanteDB.Core.Model.Constants.ActMoodKeys, SanteDB.Core.Model, Version=3.0.1900.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Constants.ActMoodKeys, SanteDB.Core.Model, Version=3.0.1910.0, Culture=neutral, PublicKeyToken=null
 // if(!ActMoodKeys)
 /**
  * @enum {string}
@@ -21312,7 +21329,7 @@ const ActMoodKeys = {
 	 */
 	Request : 'e658ca72-3b6a-4099-ab6e-7cf6861a5b61',
 }  // ActMoodKeys 
-// SanteDB.Core.Model.Constants.ActReasonKeys, SanteDB.Core.Model, Version=3.0.1900.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Constants.ActReasonKeys, SanteDB.Core.Model, Version=3.0.1910.0, Culture=neutral, PublicKeyToken=null
 // if(!ActReasonKeys)
 /**
  * @enum {string}
@@ -21362,7 +21379,7 @@ const ActReasonKeys = {
 	 */
 	ColdStorageFailure : '06922eac-0cae-49af-a33c-fc7096349e4a',
 }  // ActReasonKeys 
-// SanteDB.Core.Model.Constants.ActRelationshipTypeKeys, SanteDB.Core.Model, Version=3.0.1900.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Constants.ActRelationshipTypeKeys, SanteDB.Core.Model, Version=3.0.1910.0, Culture=neutral, PublicKeyToken=null
 // if(!ActRelationshipTypeKeys)
 /**
  * @enum {string}
@@ -21468,7 +21485,7 @@ const ActRelationshipTypeKeys = {
 	 */
 	Duplicate : '2bbf068b-9121-4081-bf3c-ab62c01362ee',
 }  // ActRelationshipTypeKeys 
-// SanteDB.Core.Model.Constants.NullReasonKeys, SanteDB.Core.Model, Version=3.0.1900.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Constants.NullReasonKeys, SanteDB.Core.Model, Version=3.0.1910.0, Culture=neutral, PublicKeyToken=null
 // if(!NullReasonKeys)
 /**
  * @enum {string}

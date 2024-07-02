@@ -796,6 +796,11 @@ angular.module('santedb-lib')
                         entityType: "Place",
                         filter: { classConcept: [EntityClassKeys.ServiceDeliveryLocation], statusConcept: StatusKeys.Active }
                     },
+                    CommunityServiceDeliveryLocation: {
+                        applyTo: [EntityClassKeys.Place],
+                        entityType: "Place",
+                        filter: { classConcept: [EntityClassKeys.ServiceDeliveryLocation], statusConcept: StatusKeys.Active }
+                    },
                     Employee: {
                         applyTo: [EntityClassKeys.Patient, EntityClassKeys.Person],
                         entityType: "Organization",

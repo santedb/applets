@@ -262,9 +262,6 @@
       <column type="string" name="OCCUPATION" />
       <column type="string" name="VIP" />
       <column type="string" name="NATIONALITY" />
-      <column type="ref" name="DEDICATED_FACILITY">
-        <otherTable ref="PLC_TBL" />
-      </column>
       <parent ref="ENT_TBL" />
     </table>
 
@@ -274,6 +271,17 @@
       <parent ref="PSN_TBL" />
     </table>
 
+    <!-- Facility Staff -->
+     <table name="PLC_STF_TBL">
+      <column type="uuid" key="true" notNull="true" name="REL_ID" />
+      <column type="ref" name="PSN_ID" notNull="true">
+        <otherTable ref="USR_TBL" />
+      </column>
+      <column type="ref" name="PLC_ID" notNull="true">
+        <otherTable ref="PLC_TBL"/>
+      </column>
+     </table>
+     
     <!-- Provider Entity table -->
     <table name="PVD_TBL">
       <column type="ref" name="USR_ID">

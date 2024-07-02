@@ -51,6 +51,7 @@
   <string name="ui.model.userEntity.familyName">Family Name</string>
   <string name="ui.model.userEntity.securityUser.none">No Login Account</string>
   <string name="ui.model.userEntity.language">Preferred Language</string>
+  <string name="ui.model.userEntity.relationship.CommunityServiceDeliveryLocation">Facilities</string>
   <string name="ui.model.userEntity.relationship.DedicatedServiceDeliveryLocation">Facilities</string>
   <string name="ui.model.userEntity.relationship.MaintainedEntity">Managed Facilities</string>
   <string name="ui.model.userEntity.relationship.Employee">Employer</string>
@@ -168,6 +169,7 @@
   <string name="ui.model.entity.relationship.Citizen">Citizenship(s)</string>
   <string name="ui.model.entity.relationship.Citizen.hint">Select the citizenship(s) which the person holds</string>
   <string name="ui.model.entity.relationship.CoverageSponsor">Coverage/Sponsor</string>
+  <string name="ui.model.entity.relationship.CommunityServiceDeliveryLocation">Community Locations</string>
   <string name="ui.model.entity.relationship.DedicatedServiceDeliveryLocation">Assigned Facilities</string>
   <string name="ui.model.entity.relationship.DedicatedServiceDeliveryLocation.hint">Select the assigned facilities</string>
   <string name="ui.model.entity.relationship.IncidentalServiceDeliveryLocation">Secondary Facilities</string>
