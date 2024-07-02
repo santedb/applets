@@ -48,6 +48,7 @@
       <string name="error.http.501">Method not implemented</string>
       <string name="error.http.502">Proxy Error</string>
 
+      <string name="error.svrp.noRegisteredViewerForType">The QR code scanned is valid, however this application cannot display the data which the QR code points to</string>
       <string name="error.type.DetectedIssueException">Business Rules Violation</string>
       <string name="error.type.ResetPasswordException">Password Reset Failure</string>
       <string name="error.type.Exception">General Error</string>

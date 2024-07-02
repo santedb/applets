@@ -304,6 +304,7 @@
   <string name="ui.model.patient.age.suffix.monthsOld">m/o</string>
   <string name="ui.model.patient.age.suffix.yearsOld">y/o</string>
   <string name="ui.model.patient.dateOfBirth">DOB</string>
+  <string name="ui.model.patient.dateOfBirth.hint"><![CDATA[The date on which the patient was born. If the exact date is unknown, or you wish to enter the age, use the <code>approx</code> checkbox]]></string>
   <string name="ui.model.patient.dateOfBirth.age">Age</string>
   <string name="ui.model.patient.dateOfBirth.approx">Approx.</string>
   <string name="ui.model.patient.dateOfBirth.required">A date of birth and gender are required for this operation to be completed</string>
@@ -319,6 +320,7 @@
   <string name="ui.model.patient.multipleBirth">MULTIPLE BIRTH</string>
   <string name="ui.model.patient.birthplace">Birthplace</string>
   <string name="ui.model.patient.vipStatus">VIP Status</string>
+  <string name="ui.model.patient.vipStatus.notification">This patient has a Very Important Status flag set</string>
   <string name="ui.model.patient.register">Registered At</string>
   <string name="ui.model.patient.dedicatedServiceDeliveryLocation">Assigned Facilities</string>
   <string name="ui.model.patient.placeOfDeath">Place of Death</string>

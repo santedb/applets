@@ -1778,8 +1778,8 @@ function SanteDBWrapper() {
     var _viewModelJsonMime = "application/json+sdb-viewmodel";
 
     // JWS Pattern
-    var jwsDataPattern = /^(.*?)\.(.*?)\.(.*?)$/;
-    var svrpPattern = /^svrp\:\/\/(.*)$/;
+    var jwsDataPattern = /^([A-Za-z0-9-_\+\/]+?)\.([A-Za-z0-9-_\+\/]+?)\.([A-Za-z0-9-_\+\/]+?)$/;
+    var svrpPattern = /^svrp\:\/\/([A-Za-z0-9-_\+\/]+?)\.([A-Za-z0-9-_\+\/]+?)\.([A-Za-z0-9-_\+\/]+?)$/;
 
     // Get the version of this API Wrapper
     this.getVersion = function () {
@@ -1961,9 +1961,10 @@ function SanteDBWrapper() {
                 }
 
                 // Return the data element
-                var retVal = jwsBody.data || {};
-                retVal.id = jwsBody.sub;
-                return retVal;
+                return {
+                    header: jwsHeader,
+                    body: jwsBody
+                }
             }
             catch (e) {
                 throw new Exception("JwsParseError", e);
@@ -2106,13 +2107,16 @@ function SanteDBWrapper() {
             var data = await SanteDB.application.scanBarcodeAsync();
 
             if (svrpPattern.test(data)) {
-                var match = svrpPattern.exec(data);
-                var jwsData = jwsDataPattern.exec(match[1]);
-                return await _extractJwsData(jwsData);
+                var jwsData = svrpPattern.exec(data);
+                var rawJwsData = await _extractJwsData(jwsData);
+                rawJwsData.body.data.id = rawJwsData.body.sub;
+                return rawJwsData.body.data;
             }
             else if (jwsDataPattern.test(data)) {
                 var jwsData = jwsDataPattern.exec(data);
-                return await _extractJwsData(jwsData);
+                var rawJwsData = await _extractJwsData(jwsData);
+                rawJwsData.body.data.id = rawJwsData.body.sub;
+                return rawJwsData.body.data;
             }
             else {
                 var idDomain = SanteDB.application.classifyIdentifier(data);
@@ -2131,27 +2135,21 @@ function SanteDBWrapper() {
          * @param {*} qrCodeData The QR Code data already scanned
          * @param {*} noValidate True if the barcode should not be validated
          * @param {*} upstream True if search upstream
+         * @param {bool} noExec When true, don't execute the search just return the search parameters
          * @description This method will use the barcode providers referenced to parse information from the barcode and will search the HDSI for the object which the 
          *                barcode represents. This method works best with the SanteDB VRP API {@link https://help.santesuite.org/developers/service-apis/health-data-service-interface-hdsi/digitally-signed-visual-code-api}
          */
-        this.searchByBarcodeAsync = async function (qrCodeData, noValidate, upstream) {
+        this.searchByBarcodeAsync = async function (qrCodeData, noValidate, upstream, noExec) {
             try {
                 if (!qrCodeData)
                     qrCodeData = await SanteDB.application.scanBarcodeAsync();
-
+                
                 // QR Code is a signed code
-                if (svrpPattern.test(qrCodeData)) {
-                    var match = svrpPattern.exec(qrCodeData);
-
-                    var jwsData = await _extractJwsData(match[1]);
-
-                    var result = await SanteDB.application.ptrSearchAsync(match[1], !noValidate, upstream || false);
-                    result.$novalidate = noValidate;
-                    result.$upstream = upstream;
-                    return result;
-                }
-                else if (jwsDataPattern.test(qrCodeData)) {
-                    var result = await SanteDB.application.ptrSearchAsync(qrCodeData, !noValidate, upstream || false);
+                if (svrpPattern.test(qrCodeData) || jwsDataPattern.test(qrCodeData)) {
+                    var match = svrpPattern.exec(qrCodeData) || jwsDataPattern.exec(qrCodeData);
+                    var jwsData = await _extractJwsData(match);
+                    // The issuer for the QR code data trumps the upstream setting
+                    var result = await SanteDB.application.ptrSearchAsync(match[0], !noValidate, upstream || false);
                     result.$novalidate = noValidate;
                     result.$upstream = upstream;
                     return result;
@@ -2176,7 +2174,9 @@ function SanteDBWrapper() {
                             "identifier.value": qrCodeData
                         }
                     }
-                    var result = await SanteDB.resources.entity.findAsync(query);
+
+                    var result = {};
+                    if(!noExec) result = await SanteDB.resources.entity.findAsync(query);
                     result.$search = qrCodeData;
                     return result;
                 }
@@ -2192,17 +2192,23 @@ function SanteDBWrapper() {
                     confirm(SanteDB.locale.getString("ui.error.vrp.invalidFormat"))) {
                     return await SanteDB.application.searchByBarcodeAsync(qrCodeData, true, upstream);
                 }
-                else if (!upstream && (e.$type == "KeyNotFoundException" || e.cause && e.cause.$type == "KeyNotFoundException") && confirm(SanteDB.locale.getString("ui.emr.search.online"))) {
+
+                // Get root cause
+                var rootCause = e;
+                while(rootCause.cause) {
+                    rootCause = rootCause.cause;
+                }
+
+                if (!upstream && rootCause.$type == "KeyNotFoundException" && confirm(SanteDB.locale.getString("ui.emr.search.online"))) {
                     // Ask the user if they want to search upstream, only if they are allowed
                     var session = await SanteDB.authentication.getSessionInfoAsync();
-
-                    if (session.method == "LOCAL") // Local session so elevate to use the principal elevator
+                    if (session.authType == "LOCAL") // Local session so elevate to use the principal elevator
                     {
                         var elevator = new ApplicationPrincipalElevator();
                         await elevator.elevate(session);
                         SanteDB.authentication.setElevator(elevator);
                     }
-                    return await SanteDB.application.searchByBarcodeAsync(qrCodeData, true, true);
+                    return await SanteDB.application.searchByBarcodeAsync(qrCodeData, noValidate, true);
                 }
                 throw e;
             }
@@ -4028,7 +4034,6 @@ function SanteDBWrapper() {
                 try {
                     var tokenData = _extractJwtData(oauthResponse.id_token);
                     // Set the locale
-                    console.info(tokenData);
                     if (tokenData.lang)
                         __SanteDBAppService.SetLocale(tokenData.lang);
                     else if (tokenData['urn:santedb:org:lang'])
