@@ -386,6 +386,7 @@
     <string name="ui.admin.place.edit.associate.title">Associate Facility</string>
     <string name="ui.admin.place.edit.associate.new">Associate a New Facility</string>
     <string name="ui.admin.place.edit.associate.existing">Associate an Existing Facility</string>
+    <string name="ui.admin.place.export.heirarchy">You are about to export a dataset containing this place and all its descendants. This may take up to 2 minutes, are you sure?</string>
     <string name="ui.admin.place.edit.associate.success">Association successfully created</string>
     <string name="ui.admin.place.edit.associate.failure">Association was not created: {e}</string>
     <string name="ui.admin.place.edit.associate.remove.confirm">Are you sure you want to remove the

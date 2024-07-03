@@ -1,0 +1,17 @@
+@media print {
+    @page {size: landscape}
+   
+    body.printout {
+        width: 8.5in;
+        max-width: 8.5in;
+        min-width: 8.5in;
+    }
+
+    div.scale {
+        width: auto;
+        max-width: 8.5in;
+        height: 100%;
+        margin: auto;
+        display: block;
+    }
+}

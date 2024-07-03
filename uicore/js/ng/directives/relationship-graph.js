@@ -294,6 +294,14 @@ angular.module('santedb-lib')
 
                     var drawn = false;
 
+                    $scope.printDiagram = function() {
+                        if($scope.viewData.graphs[$scope.viewData.mode]) {
+                            var win = window.open('about:blank', '_blank');
+                            win.document.write(`<html><head><link rel="stylesheet" type="text/css" href="/org.santedb.uicore/css/print.css" /></head><body class="printout"><div class="scale">${$scope.viewData.graphs[$scope.viewData.mode]}</div></body></html>`);
+                            win.print();
+                            win.close();
+                        }
+                    }
                     // Redraw the entity
                     $scope.redraw = function () {
                         $(`#entityNetworkDiagram${$scope.viewData._id}`).html("<i class='fas fa-circle-notch fa-spin'></i> " + SanteDB.locale.getString("ui.wait"));
