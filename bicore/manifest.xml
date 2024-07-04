@@ -47,6 +47,6 @@
   <strings lang="en-ca" extern="locales/en/strings.xml" />
   <strings lang="en-us" extern="locales/en/strings.xml" />
   <strings lang="en-ph" extern="locales/en/strings.xml" />
-  <strings lang="en-uk" extern="locales/en/strings.xml" />
+  <strings lang="en-gb" extern="locales/en/strings.xml" />
   <strings lang="en-iso" extern="locales/en/strings.xml" />
 </AppletManifest>

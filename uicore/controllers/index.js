@@ -370,6 +370,7 @@ var santedbApp = angular.module('santedb', ['ngSanitize', 'ui.router', 'oc.lazyL
             $("#navbarResponsive").collapse('hide');
             delete ($rootScope._transition);
             applyDarkMode($rootScope.session);
+            attachStickyScrollEvent();
         });
 
         $transitions.onError({}, function (transition) {
