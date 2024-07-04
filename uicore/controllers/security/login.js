@@ -40,6 +40,7 @@ angular.module("santedb").controller("LoginController", ['$scope', '$rootScope',
                 $scope.login.claim = $scope.login.claim || {};
                 $scope.login.claim['urn:oasis:names:tc:xspa:1.0:subject:facility'] = $scope.login.claim['urn:oasis:names:tc:xspa:1.0:subject:facility'] || SanteDB.configuration.getFacilityId();
             }
+            
             var pouKey = $scope.login.purposeOfUse ? $scope.login.purposeOfUse.id : null;
             var sessionResult = null;
             switch ($scope.login.grant_type) {

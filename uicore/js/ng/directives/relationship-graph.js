@@ -210,10 +210,10 @@ angular.module('santedb-lib')
                                 var promises = Object.keys(ent.relationship).filter(k => !k.startsWith('$')).map(function (k) {
                                     var retVal = [];
                                     if (Array.isArray(ent.relationship[k]))
-                                        retVal = ent.relationship[k].map(function (r) {
+                                        retVal = ent.relationship[k].filter(r=>r.target || r.source).map(function (r) {
                                             return renderRelationship(ent, r, k, false, viewData.mode);
                                         });
-                                    else
+                                    else if(ent.relationship[k].target || ent.relationship[k].source)
                                         retVal = renderRelationship(ent, ent.relationship[k], k, false, viewData.mode);
                                     return retVal;
                                 }).flat();
