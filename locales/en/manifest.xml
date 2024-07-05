@@ -74,6 +74,16 @@
   <strings lang="en-au" extern="strings/model.xml"/>
   <strings lang="en-au" extern="strings/errors.xml" />
   <strings lang="en-au" extern="strings/ui.xml" />
+  <strings lang="en-gb" extern="strings/uk.xml">
+    <string priority="1" />
+  </strings>
+
+  <strings lang="en-gb" extern="strings/model.xml"/>
+  <strings lang="en-gb" extern="strings/errors.xml" />
+  <strings lang="en-gb" extern="strings/ui.xml" />
+  <strings lang="en-gb" extern="strings/uk.xml">
+    <string priority="1" />
+  </strings>
 
   <strings lang="en-us" extern="strings/model.xml"/>
   <strings lang="en-us" extern="strings/errors.xml" />

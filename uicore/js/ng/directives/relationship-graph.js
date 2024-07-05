@@ -303,7 +303,9 @@ angular.module('santedb-lib')
                     $scope.printDiagram = function() {
                         if($scope.viewData.graphs[$scope.viewData.mode]) {
                             var win = window.open('about:blank', '_blank');
-                            win.document.write(`<html><head><link rel="stylesheet" type="text/css" href="/org.santedb.uicore/css/print.css" /></head><body class="printout"><div class="scale">${$scope.viewData.graphs[$scope.viewData.mode]}</div></body></html>`);
+                            var svgData = $scope.viewData.graphs[$scope.viewData.mode];
+                            svgData = //g.r
+                            win.document.write(`<html><head><link rel="stylesheet" type="text/css" href="/org.santedb.uicore/css/print.css" /></head><body class="printout"><div class="scale">${svgData}</div></body></html>`);
                             win.print();
                             win.close();
                         }
