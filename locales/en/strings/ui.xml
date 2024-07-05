@@ -672,6 +672,7 @@
       </ul>]]></string>
       <string name="ui.entity.relationship.mode.simple">Simple Relationship Graph</string>
       <string name="ui.entity.relationship.mode.advanced">Advanced Relationship Graph</string>
+      <string name="ui.entity.relationship.mode.full">Full Relationship Graph</string>
 
       <!-- Log Configuration -->
       <string name="ui.config.log.writer.label">Log Writers</string>

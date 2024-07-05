@@ -28,6 +28,7 @@
                 <select ng-change="redraw()" ng-model="viewData.mode" class="form-control">
                     <option value="simple">{{ 'ui.entity.relationship.mode.simple' | i18n }}</option>
                     <option value="advanced">{{ 'ui.entity.relationship.mode.advanced' | i18n }}</option>
+                    <option value="full">{{ 'ui.entity.relationship.mode.full' | i18n }}</option>
                 </select>
                 <div class="input-group-append">
                     <button type="button" ng-click="printDiagram()" class="btn btn-info"><i class='fas fa-fw fa-print'></i> {{ 'ui.action.print' | i18n }}</button> 

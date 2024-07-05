@@ -147,7 +147,7 @@ angular.module('santedb-lib')
                     if(entityRelationship.$type == 'EntityRelationshipMaster')
                     {
                         // To show physical relationships
-                        if (viewMode == "advanced") {
+                        if (viewMode == "advanced" || viewMode == "full") {
                             if (entityRelationship.originalTarget != entityRelationship.target) {
                                 retVal += `\nrel${entityRelationship.originalHolder.substr(0, 8)} ---- rel${entityRelationship.originalTarget.substr(0, 8)}`;
                                 retVal += `\nrel${entityRelationship.originalTarget.substr(0, 8)}("<i class='fas fa-random fa-fw' title='MDM Redirected Link'></i>") ${dashType} rel${entityRelationship.target.substr(0, 8)}`;
@@ -292,6 +292,12 @@ angular.module('santedb-lib')
             controller: ['$scope', '$rootScope',
                 function ($scope, $rootScope) {
 
+                    const _defaultDepths = {
+                        simple: 1,
+                        advanced: 2,
+                        full: 4
+                    };
+
                     var drawn = false;
 
                     $scope.printDiagram = function() {
@@ -305,16 +311,16 @@ angular.module('santedb-lib')
                     // Redraw the entity
                     $scope.redraw = function () {
                         $(`#entityNetworkDiagram${$scope.viewData._id}`).html("<i class='fas fa-circle-notch fa-spin'></i> " + SanteDB.locale.getString("ui.wait"));
-                        drawRelationships($scope.entity, $scope.direction, $scope.viewData, $scope.depth || 1);
+                        drawRelationships($scope.entity, $scope.direction, $scope.viewData, $scope.depth || _defaultDepths[$scope.viewData.mode]);
                         drawn = true;
                     }
                     // When the entity is set
                     $scope.$watch((s) => s.entity, function (n, o) {
                         if (!o && n || n && n.sequence != o.sequence || n && !drawn) {
                             if (!o || n.sequence != o.sequence) {
-                                $scope.viewData.graphs = { simple: null, advance: null };
+                                $scope.viewData.graphs = { simple: null, advanced: null, full: null };
                             }
-                            drawRelationships($scope.entity, $scope.direction, $scope.viewData, $scope.depth || 1);
+                            drawRelationships($scope.entity, $scope.direction, $scope.viewData, $scope.depth || _defaultDepths[$scope.viewData.mode]);
                             drawn = true;
                         }
                     })
@@ -325,6 +331,7 @@ angular.module('santedb-lib')
                         _mermaidInitialized = true;
                         mermaid.mermaidAPI.initialize({
                             "theme": "neutral",
+                            maxTextSize: 1048576,
                             flowchart: {
                                 width: '100%',
                                 useMaxWidth: false,
@@ -345,7 +352,8 @@ angular.module('santedb-lib')
                         mode: "simple",
                         graphs: {
                             simple: null,
-                            advanced: null
+                            advanced: null,
+                            full: null
                         }
                     };
                 }
