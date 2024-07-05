@@ -25,6 +25,7 @@
     name="core-datamart" label="core-datamart">
 
 
+  <refreshFrequency>daily</refreshFrequency>
   <meta version="3.0">
     <authors>
       <add>SanteSuite Inc. and the SanteSuite Contributors</add>
