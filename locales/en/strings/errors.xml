@@ -20,7 +20,7 @@
  - Date: 2023-5-19
  -->
 <resources>
- <!-- Common Errors -->
+      <!-- Common Errors -->
       <string name="ui.error.title">System Error</string>
       <string name="ui.error.description">Additional details follow:</string>
       <string name="ui.error.causedBy">Cause:</string>

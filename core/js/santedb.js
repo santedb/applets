@@ -3627,6 +3627,17 @@ function SanteDBWrapper() {
             api: _hdsi
         });
 
+        /**
+         * @type {ResourceWrapper}
+         * @memberOf SanteDBWrapper.resources
+         * @summary Wrapper for containers
+         */
+        this.container = new ResourceWrapper({
+            resource: "Container",
+            accept: _viewModelJsonMime,
+            api: _hdsi
+        });
+
     };
 
     // HACK: Wrapper pointer facility = place
