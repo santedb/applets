@@ -21,6 +21,7 @@
 
 /// <reference path="../../santedb-ui.js"/>
 /// <reference path="../../../../core/js/santedb.js"/>
+/// <reference path="../../../../core/js/santedb-model.js"/>
 
 var _mermaidInitialized = false;
 
@@ -103,6 +104,10 @@ angular.module('santedb-lib')
                             break;
                         case 'Place':
                             iconography = "fa-map-marker-alt";
+
+                            if(entity.classConcept == EntityClassKeys.ServiceDeliveryLocation) {
+                                iconography = "fa-hospital";
+                            }
                             break;
                         case 'Provider':
                             iconography = "fa-user-md";
@@ -305,9 +310,15 @@ angular.module('santedb-lib')
                             var win = window.open('about:blank', '_blank');
                             var svgData = $scope.viewData.graphs[$scope.viewData.mode];
                             svgData = //g.r
-                            win.document.write(`<html><head><link rel="stylesheet" type="text/css" href="/org.santedb.uicore/css/print.css" /></head><body class="printout"><div class="scale">${svgData}</div></body></html>`);
-                            win.print();
-                            win.close();
+                            win.document.write(`<html><head>
+                                    <link rel="stylesheet" type="text/css" href="/org.santedb.uicore/css/print.css" />
+                                    <link rel="stylesheet" type="text/css" href="/org.santedb.uicore/css/fontawesome.min.css" />
+                                    <link rel="stylesheet" type="text/css" href="/org.santedb.uicore/css/fa-solid.min.css" />
+                                </head><body class="printout"><div class="scale">${svgData}</div></body></html>`);
+                            setTimeout(() => {
+                                win.print();
+                               // win.close();
+                            }, 500);
                         }
                     }
                     // Redraw the entity
