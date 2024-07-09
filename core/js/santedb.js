@@ -24,7 +24,7 @@
 var __SanteDBAppService = window.SanteDBAppService || {};
 
 // Backing of execution environment
-var ExecutionEnvironment = {
+const ExecutionEnvironment = {
     Unknown: 0,
     Server: 1,
     Mobile: 2,
@@ -32,6 +32,11 @@ var ExecutionEnvironment = {
     Test: 4,
     Gateway: 5
 };
+
+const BooleanExtensionValues = {
+    true: `AQ==`,
+    false: `AA==`
+}
 
 /**
 * @class
@@ -3853,12 +3858,12 @@ function SanteDBWrapper() {
         }
 
         /**
-         * @method getFacilityId
+         * @method getAssignedFacilityId
          * @memberof SanteDBWrapper.ConfigurationApi
          * @summary Get the configured facility identifier
          * @returns {string} The identifier of the facility
          */
-        this.getFacilityId = function () {
+        this.getAssignedFacilityId = function () {
             return __SanteDBAppService.GetAssignedFacilityId();
         }
 
@@ -4635,11 +4640,11 @@ function SanteDBWrapper() {
             try {
                 var sessionInfo = await SanteDB.authentication.getSessionInfoAsync();
                 var sessionFacility = sessionInfo.claims["urn:oasis:names:tc:xspa:1.0:subject:facility"];
-                return sessionFacility || SanteDB.configuration.getFacilityId();
+                return sessionFacility || SanteDB.configuration.getAssignedFacilityId();
             }
             catch(e) {
                 console.warn(e);
-                return SanteDB.configuration.getFacilityId();
+                return SanteDB.configuration.getAssignedFacilityId();
             }
         }
 

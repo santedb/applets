@@ -491,7 +491,16 @@ async function prepareEntityForSubmission(entity) {
         Object.keys(entity.identifier).forEach(function(k) {
             var id = entity.identifier[k];
             if(!Array.isArray(id)) {
-                id = [id];
+                if(id[0]) // not an array but has a '0' element so we convert
+                {
+                    var arrId = [];
+                    Object.keys(id).forEach(k => arrId.push(id[k]));
+                    entity.identifier[k] = id = arrId;
+                    
+                }
+                else {
+                    entity.identifier[k] = id = [id];
+                }
             }
 
             id = id.filter(o=>o.value && o.value !== "");

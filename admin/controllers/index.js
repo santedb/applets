@@ -74,8 +74,11 @@ angular.module('santedb').controller('AdminLayoutController', ["$scope", "$rootS
             // Add menu items
             loadMenus();
         }
-        else
+        else if(ov && !nv) {
             $scope.menuItems = null;
+            // Redirect to login
+            $state.go('login');
+        }
     });
 
     if ($rootScope.session)

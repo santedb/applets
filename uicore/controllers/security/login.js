@@ -36,9 +36,9 @@ angular.module("santedb").controller("LoginController", ['$scope', '$rootScope',
         try {
 
             // Facility?
-            if(SanteDB.configuration.getFacilityId() !== EmptyGuid) {
+            if(SanteDB.configuration.getAssignedFacilityId() !== EmptyGuid) {
                 $scope.login.claim = $scope.login.claim || {};
-                $scope.login.claim['urn:oasis:names:tc:xspa:1.0:subject:facility'] = $scope.login.claim['urn:oasis:names:tc:xspa:1.0:subject:facility'] || SanteDB.configuration.getFacilityId();
+                $scope.login.claim['urn:oasis:names:tc:xspa:1.0:subject:facility'] = $scope.login.claim['urn:oasis:names:tc:xspa:1.0:subject:facility'] || SanteDB.configuration.getAssignedFacilityId();
             }
             
             var pouKey = $scope.login.purposeOfUse ? $scope.login.purposeOfUse.id : null;
