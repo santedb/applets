@@ -425,10 +425,11 @@ angular.module('santedb-lib')
 
                 for (var i in scope.data) {
                     if (scope.type == "line" || scope.type == "radar") {
-                        scope.data[i].backgroundColor = scope.data[i].backgroundColor || randomColor(0.5, parseInt(i));
+
+                        scope.data[i].backgroundColor = scope.data[i].backgroundColor || randomColor(0.1, parseInt(i));
                         scope.data[i].borderColor = scope.data[i].borderColor || randomColor(1, parseInt(i));
-                        scope.data[i].pointBackgroundColor = 'rgba(0,0,0,0.1)';
-                        scope.data[i].pointBorderColor = 'rgba(0,0,0,0.1)';
+                        scope.data[i].pointBackgroundColor = scope.data[i].pointBackgroundColor || 'rgba(0,0,0,0.1)';
+                        scope.data[i].pointBorderColor = scope.data[i].pointBorderColor || 'rgba(0,0,0,0.1)';
                     }
                     else if (scope.type == "bar") {
                         scope.data[i].backgroundColor = scope.data[i].backgroundColor || randomColor(0.5, parseInt(i));
@@ -445,7 +446,7 @@ angular.module('santedb-lib')
                     var scale = {
                         yAxes: [{
                             ticks: {
-                                beginAtZero: true
+                                beginAtZero: false
                             }
                         }]
                     };
