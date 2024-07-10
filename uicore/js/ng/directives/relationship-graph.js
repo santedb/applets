@@ -317,7 +317,7 @@ angular.module('santedb-lib')
                                 </head><body class="printout"><div class="scale">${svgData}</div></body></html>`);
                             setTimeout(() => {
                                 win.print();
-                               // win.close();
+                                win.close();
                             }, 500);
                         }
                     }

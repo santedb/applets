@@ -36,9 +36,9 @@
           <![CDATA[
           SELECT DISTINCT
 	          ent_vrsn_tbl.ent_id,
-	          home.TEL_VAL AS tell_home,
-	          cell.TEL_VAL AS tell_cell,
-	          wrk.TEL_VAL AS tell_work,
+	          home.TEL_VAL AS tel_home,
+	          cell.TEL_VAL AS tel_cell,
+	          wrk.TEL_VAL AS tel_work,
 	          psn_tbl.DOB,
 	          psn_tbl.DCSD_UTC,
 	          gndr.MNEMONIC AS gender,
@@ -67,16 +67,16 @@
           <![CDATA[
           SELECT DISTINCT
 	          ent_vrsn_tbl.ent_id,
-	          home.TEL_VAL AS tell_home,
-	          cell.TEL_VAL AS tell_cell,
-	          wrk.TEL_VAL AS tell_work,
-	          psn_tbl.DOB,
-	          psn_tbl.DCSD_UTC,
-	          gndr.MNEMONIC AS gender,
-	          plt.LNG_CS AS primary_language,
-	          occ.MNEMONIC AS occupation,
-	          vip.MNEMONIC AS vip,
-	          nat.MNEMONIC AS nationality
+	          FIRST_NVL(home.TEL_VAL) AS tel_home,
+	          FIRST_NVL(cell.TEL_VAL) AS tel_cell,
+	          FIRST_NVL(wrk.TEL_VAL) AS tel_work,
+	          FIRST_NVL(psn_tbl.DOB) AS dob,
+	          FIRST_NVL(psn_tbl.DCSD_UTC) AS DCSD_UTC,
+	          FIRST_NVL(gndr.MNEMONIC)  AS gender,
+	          FIRST_NVL(plt.LNG_CS)  AS primary_language,
+	          FIRST_NVL(occ.MNEMONIC)  AS occupation,
+	          FIRST_NVL(vip.MNEMONIC) AS vip,
+	          FIRST_NVL(nat.MNEMONIC) AS nationality
           FROM 
 	          psn_tbl 
 	          INNER JOIN ent_vrsn_tbl USING (ent_vrsn_id)
@@ -88,6 +88,8 @@
 	          LEFT JOIN ent_tel_tbl cell ON (cell.ent_id = ENT_VRSN_TBL.ent_id AND cell.OBSLT_VRSN_SEQ_ID IS NULL AND cell.TYP_CD_ID  = 'c1c0a4e9-4238-4044-b89b-9c9798995b90' OR cell.USE_CD_ID = 'E161F90E-5939-430E-861A-F8E885CC353D')
 	          LEFT JOIN ent_tel_tbl wrk ON (wrk.ENT_ID = ENT_VRSN_TBL.ENT_ID AND wrk.OBSLT_VRSN_SEQ_ID IS NULL AND wrk.USE_CD_ID = 'EAA6F08E-BB8E-4457-9DC0-3A1555FADF5C')
 	          LEFT JOIN PSN_LNG_TBL PLT ON (plt.ent_id = ent_vrsn_tbl.ENT_ID AND plt.obslt_vrsn_Seq_id IS NULL AND plt.PREF_IND)
+          GROUP BY ent_vrsn_tbl.ent_id -- HACK: Use grouping to get distinct on first of the rels (multi-facility persons)
+
           ]]>
         </add>
       </sql>

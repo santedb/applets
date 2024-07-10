@@ -4965,3 +4965,19 @@ SanteDB.application.addCheckDigitValidator("SanteDB.Core.Model.DataTypes.CheckDi
 SanteDB.application.addCheckDigitValidator("SanteDB.Core.Model.DataTypes.CheckDigitAlgorithms.Mod97CheckDigitAlgorithm, SanteDB.Core.Model", function(id) {
     return validateMod97CheckDigit(id.value, id.checkDigit);
 });
+
+
+
+// Add default check digit handlers
+SanteDB.application.addCheckDigitValidator("SanteDB.Core.Model.DataTypes.CheckDigitAlgorithms.InlineMod97Validator, SanteDB.Core.Model", function(id) {
+    if(!id.value) {
+        return false;
+    }
+
+    return validateIso7064Mod97CheckDigit(id.value.substring(0, id.value.length - 2), id.value.substring(id.value.length - 2, id.value.length));
+});
+
+// Add default check digit handlers
+SanteDB.application.addCheckDigitValidator("SanteDB.Core.Model.DataTypes.CheckDigitAlgorithms.Mod97CheckDigitAlgorithm, SanteDB.Core.Model", function(id) {
+    return validateIso7064Mod97CheckDigit(id.value, id.checkDigit);
+});
