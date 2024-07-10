@@ -305,6 +305,25 @@
     <property name="formConceptModel" behavior="always" ref="Concept" />
   </type>
 
+
+  
+  <type type="Container" all="true">
+    <property name="createdBy" />
+    <property name="creationTime" />
+    <property name="creationTimeModel" behavior="never"/>
+    <property name="version" behavior="never"/>
+    <property name="name" all="true" ref="EntityName" behavior="always"/>
+    <property name="identifier" all="true">
+      <property name="*" ref="EntityIdentifier" />
+    </property>
+    <property name="classConceptModel" behavior="always" ref="Concept"/>
+    <property name="classConcept" behavior="always"/>
+    <property name="determinerConceptModel" behavior="never"/>
+    <property name="statusConceptModel" behavior="always" ref="Concept"/>
+    <property name="typeConceptModel" behavior="always" ref="Concept"/>
+    <property name="quantityConceptModel" behavior="always" ref="Concept" />
+  </type>
+
   <type type="Place" all="true">
     <property name="templateModel" behavior="always" all="false">
       <property name="mnemonic"/>
@@ -367,8 +386,8 @@
 
   
   <type type="Organization" all="true">
-    <property name="createdBy" behavior="never"/>
-    <property name="creationTime" behavior="never"/>
+    <property name="createdBy" behavior="always"/>
+    <property name="creationTime" behavior="always"/>
     <property name="creationTimeModel" behavior="never"/>
     <property name="version" behavior="never"/>
     <property name="name" all="true" behavior="always">
