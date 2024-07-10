@@ -659,12 +659,12 @@
   <!-- Foreign Data Submissions -->
   <string name="ui.model.alien.submission.name">Filename</string>
   <string name="ui.model.alien.submission.status">Status</string>
-  <string name="ui.model.alien.submission.status.scheduled">Scheduled (will be run next time imports are processed)</string>
-  <string name="ui.model.alien.submission.status.staged">Staged (needs to be scheduled)</string>
-  <string name="ui.model.alien.submission.status.success">Completed Successfully (all data imported)</string>
-  <string name="ui.model.alien.submission.status.withErrors">Completed with Errors (check issues and reject file)</string>
-  <string name="ui.model.alien.submission.status.running">Running (data is being imported)</string>
-  <string name="ui.model.alien.submission.status.rejected">Rejected (correct issues and re-upload)</string>
+  <string name="ui.model.alien.submission.status.Scheduled">Scheduled (will be run next time imports are processed)</string>
+  <string name="ui.model.alien.submission.status.Staged">Staged (needs to be scheduled)</string>
+  <string name="ui.model.alien.submission.status.CompletedSuccessfully">Completed Successfully (all data imported)</string>
+  <string name="ui.model.alien.submission.status.CompletedWithErrors">Completed with Errors (check issues and reject file)</string>
+  <string name="ui.model.alien.submission.status.Running">Running (data is being imported)</string>
+  <string name="ui.model.alien.submission.status.Rejected">Rejected (correct issues and re-upload)</string>
   <string name="ui.model.alien.submission.modifiedOn">Last Modified</string>
   <string name="ui.model.alien.submission.description">Notes</string>
   <string name="ui.model.alien.submission.reject">Rejected Records</string>
