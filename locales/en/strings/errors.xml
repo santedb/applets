@@ -20,7 +20,7 @@
  - Date: 2023-5-19
  -->
 <resources>
- <!-- Common Errors -->
+      <!-- Common Errors -->
       <string name="ui.error.title">System Error</string>
       <string name="ui.error.description">Additional details follow:</string>
       <string name="ui.error.causedBy">Cause:</string>
@@ -359,4 +359,5 @@
       <string name="error.signing.cert.remove">Error removing signing certificate {subject} from {identity}</string>
       <string name="error.signing.cert.duplicate">Signing certificate is already assigned to another device</string>
 
+      <string name="error.session.facility.required">Please select the facility in which you are working for this session</string>
 </resources>

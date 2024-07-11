@@ -27,12 +27,13 @@
         <div class="card-body container-fluid p-2" ng-if="patient"
             ng-class="{ 'alert-success': patient.tag['$mdm.type'] == 'T', 'alert-light' : patient.tag['$mdm.type'] == 'L'  }">
             <div class="row">
-                <div class="col-6">
-                    <div class="p-2 flex-grow-1">
-                        <h5 class="m-0">{{ patient.name | name }} <div class="d-inline"><button id="btnSetState"
-                                    type="button" data-toggle="dropdown" class="p-2 btn"
+                <div class="col-12 d-flex justify-content-between">
+                    <div class="flex-grow-1">
+                        <h5 class="m-0 p-0">{{ patient.name | name }} <div class="p-2 d-inline">
+                            <button ng-if="setState" id="btnSetState"
+                                    type="button" data-toggle="dropdown" class="btn  btn-sm"
                                     ng-class="{ 'btn-primary' : patient.statusConcept == 'c8064cbd-fa06-4530-b430-1a52f1530c27' , 'btn-success' : patient.statusConcept == 'c34fcbf1-e0fe-4989-90fd-0dc49e1b9685' , 'btn-warning' : patient.statusConcept == '0bbec253-21a1-49cb-b376-7fe4d0592cda', 'btn-danger' : patient.statusConcept == 'cd4aa3c4-02d5-4cc9-9088-ef8f31e321c5', 'btn-dark' : patient.statusConcept == 'bdef5f90-5497-4f26-956c-8f818cce2bd2' }">
-                                    {{ patient.statusConceptModel | concept }}
+                                    {{ patient.statusConceptModel | concept }} <i class="fas fa-fw mr-1 fa-chevron-down"></i>
                                     <div class="dropdown-menu">
                                         <a class="btn btn-link dropdown-item"
                                             ng-if="patient.statusConcept != 'c8064cbd-fa06-4530-b430-1a52f1530c27'"
@@ -52,12 +53,16 @@
                                                 class="fas fa-circle text-danger"></i> Nullify</a>
                                     </div>
                                 </button>
+                                <button ng-if="printPage" class="btn btn-sm btn-outline-secondary" ng-click="printPage()">
+                                    <i class="fas fa-fw fa-print"></i> <span class="d-none d-md-inline">{{ 'ui.action.print' | i18n }}</span>
+                                </button>
+                                <button ng-if="printCard" class="btn btn-sm btn-outline-primary" ng-click="printCard()">
+                                    <i class="fas fa-fw fa-qrcode"></i> <span class="d-none d-md-inline">{{ 'ui.action.print.vrp' | i18n }}</span>
+                                </button>
                             </div>
                         </h5>
                     </div>
-                </div>
-                <div class="col-6">
-                    <div class="p-2 flex-grow-1 float-right">
+                    <div>
                         <h5 class="m-0 p-0">
                             <div
                                 ng-if="$root.system.config.application.setting['aa.preferred'] &amp;&amp; patient.identifier[$root.system.config.application.setting['aa.preferred']]">
@@ -89,7 +94,7 @@
                         </h5>
                     </div>
                 </div>
-                <div class="col-sm-12">
+                <div class="col-12">
                     <div class="d-flex flex-wrap justify-content-between">
                         <div class="p-2"><i class="fas"
                                 ng-class="{ 'fa-male' : patient.genderConceptModel.mnemonic == 'Male' || patient.genderConcept == 'f4e3a6bb-612e-46b2-9f77-ff844d971198', 'fa-female' :  patient.genderConceptModel.mnemonic == 'Female' || patient.genderConcept == '094941e9-a3db-48b5-862c-bc289bd7f86c' }"></i>
@@ -104,10 +109,24 @@
                                 'ui.model.patient.deceasedIndicator' | i18n }}</span>
                             {{ patient.dateOfBirth | age: 'y':patient.deceasedDate }} )
                         </div>
-                        <div class="p-2" ng-if="patient.address"><i class="fas fa-home"></i> {{ patient.address |
-                            address }}</div>
                         <div class="p-2" ng-if="patient.telecom"><i class="fas fa-home"></i> {{ patient.telecom |
                             telecom }}</div>
+                        <div class="p-2" ng-if="patient.address"><i class="fas fa-home"></i> {{ patient.address |
+                            address }}</div>
+                    </div>
+                </div>
+                <div class="col-12 hide-when-sticky">
+                    <div class="d-flex flex-wrap justify-content-between">
+                        <div class="mx-2" ng-repeat="(k, rel) in patient.relationship" ng-if="$root.refValues.FamilyMember.indexOf(k) &gt; -1">
+                            <div ng-repeat="r in rel track by $index">
+                                <i class="fas fa-fw fa-people-arrows"></i>
+                                <span class="badge badge-primary m-2">{{ rel.relationshipTypeModel || k | concept }} </span>
+                                {{ r.targetModel.name | name }} 
+                                <a ng-if="r.targetModel.telecom.MobileContact" href="{{r.targetModel.telecom.MobileContact[0].value}}">
+                                    <i class="fas fa-fw fa-phone"></i> {{ r.targetModel.telecom.MobileContact[0].value }}
+                                </a>
+                            </div>
+                        </div>
                     </div>
                 </div>
 

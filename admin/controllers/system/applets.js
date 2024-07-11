@@ -2,7 +2,7 @@ angular.module("santedb").controller("AppletManagerController", ["$scope", "$roo
 
     async function initializeView() {
         try {
-            var solutions = await SanteDB.resources.appletSolution.findAsync();
+            var solutions = await SanteDB.resources.appletSolution.findAsync({}, null, true);
             // Determine whether the applets or solutions are being used 
             $timeout(() => {
                 $scope.solutions = solutions.resource;
@@ -25,6 +25,9 @@ angular.module("santedb").controller("AppletManagerController", ["$scope", "$roo
                 cache: false,
                 contentType: false,
                 processData: false,
+                headers: {
+                    "X-SanteDB-Upstream": true
+                },
                 method: 'POST',
                 url: `/ami/AppletSolution`,
                 data: form_data,

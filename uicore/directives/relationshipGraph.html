@@ -21,13 +21,19 @@
 <div xmlns="http://www.w3.org/1999/xhtml">
     <div class="row">
         <label class="col-sm-12 col-md-3 control-label">{{ 'ui.entity.relationship.mode' | i18n }}
-            <hint-popover hint-title="ui.entity.relationship.mode"/>
+            <hint-popover hint-title="ui.entity.relationship.mode" />
         </label>
         <div class="col-sm-12 col-md-9">
-            <select ng-change="redraw()" ng-model="viewData.mode" class="form-control">
-                <option value="simple">{{ 'ui.entity.relationship.mode.simple' | i18n }}</option>
-                <option value="advanced">{{ 'ui.entity.relationship.mode.advanced' | i18n }}</option>
-            </select>
+            <div class="input-group">
+                <select ng-change="redraw()" ng-model="viewData.mode" class="form-control">
+                    <option value="simple">{{ 'ui.entity.relationship.mode.simple' | i18n }}</option>
+                    <option value="advanced">{{ 'ui.entity.relationship.mode.advanced' | i18n }}</option>
+                    <option value="full">{{ 'ui.entity.relationship.mode.full' | i18n }}</option>
+                </select>
+                <div class="input-group-append">
+                    <button type="button" ng-click="printDiagram()" class="btn btn-info"><i class='fas fa-fw fa-print'></i> {{ 'ui.action.print' | i18n }}</button> 
+                </div>
+            </div>
         </div>
     </div>
     <div class="row">

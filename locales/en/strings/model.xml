@@ -51,6 +51,7 @@
   <string name="ui.model.userEntity.familyName">Family Name</string>
   <string name="ui.model.userEntity.securityUser.none">No Login Account</string>
   <string name="ui.model.userEntity.language">Preferred Language</string>
+  <string name="ui.model.userEntity.relationship.CommunityServiceDeliveryLocation">Facilities</string>
   <string name="ui.model.userEntity.relationship.DedicatedServiceDeliveryLocation">Facilities</string>
   <string name="ui.model.userEntity.relationship.MaintainedEntity">Managed Facilities</string>
   <string name="ui.model.userEntity.relationship.Employee">Employer</string>
@@ -168,6 +169,7 @@
   <string name="ui.model.entity.relationship.Citizen">Citizenship(s)</string>
   <string name="ui.model.entity.relationship.Citizen.hint">Select the citizenship(s) which the person holds</string>
   <string name="ui.model.entity.relationship.CoverageSponsor">Coverage/Sponsor</string>
+  <string name="ui.model.entity.relationship.CommunityServiceDeliveryLocation">Community Locations</string>
   <string name="ui.model.entity.relationship.DedicatedServiceDeliveryLocation">Assigned Facilities</string>
   <string name="ui.model.entity.relationship.DedicatedServiceDeliveryLocation.hint">Select the assigned facilities</string>
   <string name="ui.model.entity.relationship.IncidentalServiceDeliveryLocation">Secondary Facilities</string>
@@ -388,6 +390,8 @@
   <string name="ui.model.place.saveSuccess">Place updated successfully</string>
   <string name="ui.model.place.name.component.other">Official Name</string>
   <string name="ui.model.place.name.component.other.hint">Enter the official name of the place</string>
+  <string name="ui.model.place.relationship.Scoper">Scope / Reporting Area</string>
+  <string name="ui.model.place.relationship.Scoper.hint"><![CDATA[The scoper relationship describes the place/organization under which this place operates - this is typically used for reporting purposes and attributing ownership]]></string>
   <string name="ui.model.organization.name">Name</string>
   <string name="ui.model.organization.typeConcept">Type</string>
   <string name="ui.model.organization.typeConcept.hint"><![CDATA[The primary classification or type of organization that this entry represents]]></string>
@@ -655,12 +659,12 @@
   <!-- Foreign Data Submissions -->
   <string name="ui.model.alien.submission.name">Filename</string>
   <string name="ui.model.alien.submission.status">Status</string>
-  <string name="ui.model.alien.submission.status.scheduled">Scheduled (will be run next time imports are processed)</string>
-  <string name="ui.model.alien.submission.status.staged">Staged (needs to be scheduled)</string>
-  <string name="ui.model.alien.submission.status.success">Completed Successfully (all data imported)</string>
-  <string name="ui.model.alien.submission.status.withErrors">Completed with Errors (check issues and reject file)</string>
-  <string name="ui.model.alien.submission.status.running">Running (data is being imported)</string>
-  <string name="ui.model.alien.submission.status.rejected">Rejected (correct issues and re-upload)</string>
+  <string name="ui.model.alien.submission.status.Scheduled">Scheduled (will be run next time imports are processed)</string>
+  <string name="ui.model.alien.submission.status.Staged">Staged (needs to be scheduled)</string>
+  <string name="ui.model.alien.submission.status.CompletedSuccessfully">Completed Successfully (all data imported)</string>
+  <string name="ui.model.alien.submission.status.CompletedWithErrors">Completed with Errors (check issues and reject file)</string>
+  <string name="ui.model.alien.submission.status.Running">Running (data is being imported)</string>
+  <string name="ui.model.alien.submission.status.Rejected">Rejected (correct issues and re-upload)</string>
   <string name="ui.model.alien.submission.modifiedOn">Last Modified</string>
   <string name="ui.model.alien.submission.description">Notes</string>
   <string name="ui.model.alien.submission.reject">Rejected Records</string>
@@ -874,4 +878,24 @@
   <string name="ui.model.extensionType.createdBy">Created By</string>
   <string name="ui.model.extensionType.updatedBy">Last Update</string>
   <string name="ui.model.extensionType.obsoletedBy">Obsoletion Time</string>
+
+  <string name="ui.model.container.name">Name</string>
+  <string name="ui.model.container.name.assigned">Name/Description</string>
+  <string name="ui.model.container.name.assigned.hint">Use this field to enter the friendly name of the container. Examples: Divisional Fridge, School Programme Flask, Extra-Large Box, etc.</string>
+  <string name="ui.model.container.typeConcept">Type</string>
+  <string name="ui.model.container.typeConcept.hint">Indicates the type or subclass of container which is being represented</string>
+  <string name="ui.model.container.identifier">Identifier</string>
+  <string name="ui.model.container.identifier.hint">One or more identifiers which are used for uniquely identifying the container (fridge number, asset code, UPC, etc.)</string>
+  <string name="ui.model.container.statusConcept">Status</string>
+  <string name="ui.model.container.statusConcept.hint">Primary status of the container - note this differs from the functional status of the container</string>
+  <string name="ui.model.container.modifiedOn">Last Modified</string>
+  <string name="ui.model.container.relationship.ManufacturedProduct">Manufacturer</string>
+  <string name="ui.model.container.relationship.ManufacturedProduct.hint">The company which manufactures this container</string>
+  <string name="ui.model.container.lotNumber">Serial #</string>
+  <string name="ui.model.container.lotNumber.hint">The manufactured provided serial number for the container</string>
+  <string name="ui.model.container.capacityQuantity">Max Capacity</string>
+  <string name="ui.model.container.capacityQuantity.hint">The maximum capacity of materials which can be held in this container with unit</string>
+  <string name="ui.model.container.expiryDate">Expires</string>
+  <string name="ui.model.container.expiryDate.hint">That last date that the container can be used</string>
+
 </resources>

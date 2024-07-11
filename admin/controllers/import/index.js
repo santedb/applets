@@ -54,7 +54,7 @@ angular.module('santedb').controller('ForeignDataIndexController', ["$scope", "$
                 status += "<span class='text-warning'><i class='fas fa-exclamation-circle'></i> ";
                 break;
         }
-        status += entity.status;
+        status += SanteDB.locale.getString(`ui.model.alien.submission.status.${entity.status}`);
         return status;
     }
 

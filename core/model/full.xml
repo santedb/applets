@@ -415,8 +415,21 @@
     <property name="determinerConceptModel" behavior="never" />
     <property name="typeConceptModel" all="true" behavior="always" ref="Concept" />
     <property name="extension" all="true" behavior="always" />
-    <property name="relationship" all="false" behavior="always">
+    <property name="relationship" all="true" behavior="always">
       <property name="Parent" all="false">
+        <property name="id" />
+        <property name="target" />
+        <property name="targetModel" behavior="always" all="false">
+          <property name="classConceptModel" behavior="always" ref="Concept" />
+          <property name="id" />
+          <property name="version" />
+          <property name="relationship" behavior="never" />
+          <property name="name" all="true" behavior="always">
+            <property name="*" ref="EntityName" />
+          </property>
+        </property>
+      </property>
+      <property name="CommunityServiceDeliveryLocation" all="false">
         <property name="id" />
         <property name="target" />
         <property name="targetModel" behavior="always" all="false">
@@ -463,7 +476,8 @@
         <property name="holder" behavior="never" />
         <property name="holderModel" behavior="never" />
         <property name="sourceModel" behavior="never" />
-        <property name="relationshipTypeModel" behavior="never" />
+        <property name="relationshipTypeModel" behavior="never"/>
+        <property name="targetModel" behavior="always"/>
       </property>
     </property>
     <property name="service" all="false" behavior="always">
@@ -928,6 +942,7 @@
     <property name="statusConcept" />
     <property name="conceptClass" />
     <property name="conceptSet" />
+    <property name="referenceTerm" behavior="never" />
   </type>
   <type type="ConceptSet" all="true">
     <property name="compose" behavior="always" all="true">

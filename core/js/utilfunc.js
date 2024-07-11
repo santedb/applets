@@ -23,6 +23,21 @@
 
 /**
  * @method
+ * @memberof Exception
+ * @summary Get the root cause of the exception
+ */
+Exception.prototype.getRootCause = function() {
+
+    var retVal = this;
+    while(retVal.cause) {
+        retVal = retVal.cause; 
+    }
+    return retVal;
+    
+}
+
+/**
+ * @method
  * @memberof Date
  * @summary Get the week of the year
  */
@@ -491,7 +506,16 @@ async function prepareEntityForSubmission(entity) {
         Object.keys(entity.identifier).forEach(function(k) {
             var id = entity.identifier[k];
             if(!Array.isArray(id)) {
-                id = [id];
+                if(id[0]) // not an array but has a '0' element so we convert
+                {
+                    var arrId = [];
+                    Object.keys(id).forEach(k => arrId.push(id[k]));
+                    entity.identifier[k] = id = arrId;
+                    
+                }
+                else {
+                    entity.identifier[k] = id = [id];
+                }
             }
 
             id = id.filter(o=>o.value && o.value !== "");
@@ -647,7 +671,7 @@ async function bundleRelatedObjects(object) {
 }
 
 /**
- * Validate check digit using mod97
+ * Validate check digit using the a simple Mod-97 check digit algorithm
  */
 function validateMod97CheckDigit(value, checkDigit) {
     if(!value || !checkDigit) return false;
@@ -659,6 +683,17 @@ function validateMod97CheckDigit(value, checkDigit) {
     seed *= 10; seed %= 97;
     var expectedCheckDigit = (97 - seed + 1) % 97;
     return expectedCheckDigit == checkDigit;
+}
+
+/**
+ * Validate check digit using the standard ISO/IEC 7064 Check Digit Algorithm
+ */
+function validateIso7064Mod97CheckDigit(value, checkDigit) {
+    if(!value || !checkDigit) return false;
+
+    // Compute the mod97 - extract digits
+    var source = value.match(/[0-9]/g);
+    var checkDigit = "" + source + checkDigit
 }
 
 /**
@@ -687,3 +722,5 @@ function copyMaterialInstance(lot, product, statusConcept, copyGtin, copyName) {
         lot.name.Assigned[0].component.$other[0] = product.name.Assigned[0].component.$other[0];
     }
 }
+
+

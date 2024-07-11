@@ -36,6 +36,12 @@ angular.module('santedb').controller('ForeignDataUploadController', ["$scope", "
 
     initialize();
 
+    $scope.$watch("submission.source", function(n, o) {
+        if(n && n!=o) {
+            $scope.submission.description = n;
+        }
+    });
+
     $scope.$watch("submission.map", function(n,o) {
         if(n) {
             $scope.submission.selectedMapping = $scope.mappings.find(o=>o.id == n);

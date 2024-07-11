@@ -33,7 +33,7 @@
     <div ng-controller="PlaceFacilityWidgetController" ng-if="scopedObject">
         <entity-table id="facilityAssociationTable" type="Place" search-field="name.component.value"
             stateless="true"
-            default-query="{ 'obsoletionTime' : 'null', _viewModel: 'fastView', 'relationship[DedicatedServiceDeliveryLocation].source' : scopedObject.id }"
+            default-query="{ 'obsoletionTime' : 'null', _viewModel: 'fastView', 'relationship[CommunityServiceDeliveryLocation].source' : scopedObject.id }"
             render="{ name: 'renderName', typeConcept: 'renderType', address: 'renderAddress', statusConcept: 'renderStatus' }"
             i18n-prefix="'ui.model.entity.'"
             item-actions="[ 

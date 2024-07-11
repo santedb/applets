@@ -24,7 +24,7 @@
 var __SanteDBAppService = window.SanteDBAppService || {};
 
 // Backing of execution environment
-var ExecutionEnvironment = {
+const ExecutionEnvironment = {
     Unknown: 0,
     Server: 1,
     Mobile: 2,
@@ -32,6 +32,11 @@ var ExecutionEnvironment = {
     Test: 4,
     Gateway: 5
 };
+
+const BooleanExtensionValues = {
+    true: `AQ==`,
+    false: `AA==`
+}
 
 /**
 * @class
@@ -1849,7 +1854,7 @@ function SanteDBWrapper() {
                 if (data.responseJSON &&
                     pve &&
                     data.getResponseHeader("WWW-Authenticate").indexOf("insufficient_scope") > -1)
-                    _elevator.elevate(angular.copy(_session), [`${pve.policyId} - ${pve.policyName}`]);
+                    _elevator.elevate(angular.copy(_session), [pve.policyId, "*"]);
                 else
                     _elevator.elevate(null);
                 return true;
@@ -3627,6 +3632,17 @@ function SanteDBWrapper() {
             api: _hdsi
         });
 
+        /**
+         * @type {ResourceWrapper}
+         * @memberOf SanteDBWrapper.resources
+         * @summary Wrapper for containers
+         */
+        this.container = new ResourceWrapper({
+            resource: "Container",
+            accept: _viewModelJsonMime,
+            api: _hdsi
+        });
+
     };
 
     // HACK: Wrapper pointer facility = place
@@ -3842,12 +3858,12 @@ function SanteDBWrapper() {
         }
 
         /**
-         * @method getFacilityId
+         * @method getAssignedFacilityId
          * @memberof SanteDBWrapper.ConfigurationApi
          * @summary Get the configured facility identifier
          * @returns {string} The identifier of the facility
          */
-        this.getFacilityId = function () {
+        this.getAssignedFacilityId = function () {
             return __SanteDBAppService.GetAssignedFacilityId();
         }
 
@@ -4236,7 +4252,7 @@ function SanteDBWrapper() {
                 try {
                     var headers = {};
                     var claims = {};
-                    claims["urn:oasis:names:tc:xacml:2.0:action:purpose"] = 'PurposeOfUse-SecurityAdmin';
+                    claims["urn:oasis:names:tc:xacml:2.0:action:purpose"] = '8b18c8ce-916a-11ea-bb37-0242ac130002'; // Security Admin
                     claims["urn:santedb:org:claim:temporary"] = "true";
                     headers["X-SanteDBClient-Claim"] =
                         btoa(Object.keys(claims).map(o => `${o}=${claims[o]}`).join(";"));
@@ -4279,13 +4295,18 @@ function SanteDBWrapper() {
             * @param {boolean} uacPrompt True if the authentication is part of a UAC prompt and no perminant session is to be 
             * @param {String} purposeOfUse The identifier of the purpose of use for the access
             * @returns {Promise} A promise representing the login request
+            * @param {any} claims The claims which are to be appended to the OAUTH request
             * @see https://help.santesuite.org/developers/service-apis/openid-connect
             */
-        this.passwordLoginAsync = function (userName, password, tfaSecret, uacPrompt, purposeOfUse, scope) {
+        this.passwordLoginAsync = function (userName, password, tfaSecret, uacPrompt, purposeOfUse, scope, claims) {
             return new Promise(function (fulfill, reject) {
                 try {
                     var headers = {};
-                    var claims = {};
+                    claims = claims || {};
+
+                    if(!Array.isArray(scope)) {
+                        scope = [scope];
+                    }
 
                     if (purposeOfUse) {
                         claims["urn:santedb:org:claim:override"] = "true";
@@ -4619,11 +4640,11 @@ function SanteDBWrapper() {
             try {
                 var sessionInfo = await SanteDB.authentication.getSessionInfoAsync();
                 var sessionFacility = sessionInfo.claims["urn:oasis:names:tc:xspa:1.0:subject:facility"];
-                return sessionFacility || SanteDB.configuration.getFacilityId();
+                return sessionFacility || SanteDB.configuration.getAssignedFacilityId();
             }
             catch(e) {
                 console.warn(e);
-                return SanteDB.configuration.getFacilityId();
+                return SanteDB.configuration.getAssignedFacilityId();
             }
         }
 
@@ -4948,4 +4969,20 @@ SanteDB.application.addCheckDigitValidator("SanteDB.Core.Model.DataTypes.CheckDi
 // Add default check digit handlers
 SanteDB.application.addCheckDigitValidator("SanteDB.Core.Model.DataTypes.CheckDigitAlgorithms.Mod97CheckDigitAlgorithm, SanteDB.Core.Model", function(id) {
     return validateMod97CheckDigit(id.value, id.checkDigit);
+});
+
+
+
+// Add default check digit handlers
+SanteDB.application.addCheckDigitValidator("SanteDB.Core.Model.DataTypes.CheckDigitAlgorithms.InlineMod97Validator, SanteDB.Core.Model", function(id) {
+    if(!id.value) {
+        return false;
+    }
+
+    return validateIso7064Mod97CheckDigit(id.value.substring(0, id.value.length - 2), id.value.substring(id.value.length - 2, id.value.length));
+});
+
+// Add default check digit handlers
+SanteDB.application.addCheckDigitValidator("SanteDB.Core.Model.DataTypes.CheckDigitAlgorithms.Mod97CheckDigitAlgorithm, SanteDB.Core.Model", function(id) {
+    return validateIso7064Mod97CheckDigit(id.value, id.checkDigit);
 });

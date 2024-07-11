@@ -1,0 +1,58 @@
+<!-- UK overrides for the base EN profile -->
+<resources>
+    <string name="error.messaging.h17.authorizationToken">Must carry MSH-8 authorisation token
+        information</string>
+    <string name="error.server.core.privateWriteProtectionFailure"><![CDATA[An attempt was made to create or update data which has protected or redacted fields. This error can occur when: <ul><li>You are trying to set a field forbidden on this server (like religion, or ethnicity)</li><li>You are trying to record an identifier in a protected domain for which you lack permission</li><li>You are attempting to update data which has been masked by the policy enforcement service</li></ul> Please contact your system administrator and try again at a later time]]></string>
+    <string name="error.security.session.notAuthorized">Cannot create a session for an unauthorised
+        principal</string>
+    <string name="error.security.user.auth.reauthNotAllowed">Reauthorisation of this principal is
+        not permitted</string>
+    <string name="ui.login.input.username">User Name</string>
+
+    <string name="ui.sync">Synchronisation</string>
+    <string name="ui.sync.log">Synchronisation Log</string>
+    <string name="ui.sync.now">Synchronise Now</string>
+    <string name="ui.sync.log.none">Nothing Synchronised Yet</string>
+    <string name="ui.sync.deadletter.retryAll.confirm">Are you sure you want to retry all the failed synchronisation messages?</string>
+          <string name="ui.sync.resetConfirm">Are you sure you want to reset the synchronisation log for this type?</string>
+          <string name="ui.sync.onStart.begin">Synchronisation has started, access to data may be slow and/or adversely impacted during this process</string>
+          <string name="ui.sync.onStart.complete">Synchronisation has completed - data services are restored</string>
+    
+          <!-- Common Action buttons -->
+          <string name="ui.action.customize">Customise</string>
+          <string name="ui.action.customize.view">Customise View</string>
+          <string name="ui.table.search.field._any">Freeform Search</string>
+          <string name="ui.operator.gte">Greater-than or Equal</string>
+          <string name="ui.operator.lte">Less-than or Equal</string>
+
+          <string name="ui.subscription.organization.all">All Organisations</string>
+          <string name="ui.subscription.substanceAdministration.all">All Substance Administrations (immunisation, drug administrations, etc.)</string>
+          <string name="ui.config.realm.description">This SanteDB client application needs to contact a centralised instanced called an &quot;upstream realm&quot;. This screen will allow you to configure the specific details of how this mobile device will contact the realm's administrative management service.</string>
+          <string name="ui.config.integration.mode.synchronize">Synchronise</string>
+          <string name="ui.config.integration.mode.synchronize.help">This dCDR will synchronise its data with the upstream iCDR and will provide this information to clients (and the user interface) even if the system is offline</string>
+          <string name="ui.config.integration.mode.unavailable">This feature is only available when the Integration mode is set to Synchronise</string>
+          <string name="ui.config.sync.trigger.help">Use this option to specify when a forced synchronisation should occur</string>
+          <string name="ui.config.sync.bigBundles">Instruct the server to send back larger bundles (faster synchronisation, however may result in timeouts on slow networks)</string>
+          <string name="ui.config.subscribe.description">SanteDB can either synchronise the entire database, or can synchronise a subset of data based on places (geographic regions, villages, facilities, etc.)</string>
+          <string name="ui.config.network.description">SanteDB can optimise the bandwidth that this device will use when communicating with the central instance, which can be set here. You can also setup any proxy information required for your local network</string>
+          <string name="ui.config.network.optimize.label">Optimisation</string>
+          <string name="ui.config.network.optimize.help">SanteDB can optimise the bandwidth used by this device by compressing data</string>
+          <string name="ui.mdm.view.master">You are looking at a &lt;strong&gt;MASTER&lt;/strong&gt; record. This record is synthesised from multiple &lt;strong&gt;LOCAL&lt;/strong&gt; records. Editing the record will create a &lt;strong&gt;RECORD OF TRUTH&lt;/strong&gt;</string>
+          <string name="ui.match.mode.Percentage">Classify performed using normalised score of evaluated attributes</string>
+
+          <string name="ui.model.identityDomain.customValidator.hint">If the identifiers in this identity domain have a specialised format (for example, check digits or computational generation) select the implementation of the validation here.</string>
+
+          <string name="ui.model.organization.typeConcept.hint"><![CDATA[The primary classification or type of organisation that this entry represents]]></string>
+          <string name="ui.model.organization.address.hint">The legal mailing/contact address of the organisation</string>
+          <string name="ui.model.organization.industryConcept.hint">The industry that this organisation operates within</string>
+          <string name="ui.model.organization.name.component.other.hint">The official/legal name of the organisation</string>
+          <string name="ui.model.organization.saveSuccess">Organisation updated successfully</string>
+
+          <string name="ui.model.material.relationship.ManufacturedProduct">Authorised Manufacturers</string>
+          <string name="ui.model.material.relationship.ManufacturedProduct.hint">Enter one or more authorised manufacturers or sources of supply which are licensed to produce the material</string>
+
+          <string name="ui.model.manufacturedMaterial.relationship.ManufacturedProduct.hint">Select the organisation which manufactures this product. This should represent the manufacturer of origin rather than the supplier</string>
+          <string name="ui.model.codeSystem.url.hint">Provide the unique URL which the code system defines (or the URL the external trading partner recognises). This is often used in  HL7 FHIR messages</string>
+          <string name="ui.model.cdssLibraryDefinition.normalize">Normaliaation(s)</string>
+          <string name="ui.model.syncQueue.operation.Sync">Synchronisation (download from server)</string>
+</resources>
