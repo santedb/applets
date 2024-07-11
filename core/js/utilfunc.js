@@ -23,6 +23,21 @@
 
 /**
  * @method
+ * @memberof Exception
+ * @summary Get the root cause of the exception
+ */
+Exception.prototype.getRootCause = function() {
+
+    var retVal = this;
+    while(retVal.cause) {
+        retVal = retVal.cause; 
+    }
+    return retVal;
+    
+}
+
+/**
+ * @method
  * @memberof Date
  * @summary Get the week of the year
  */
@@ -707,3 +722,5 @@ function copyMaterialInstance(lot, product, statusConcept, copyGtin, copyName) {
         lot.name.Assigned[0].component.$other[0] = product.name.Assigned[0].component.$other[0];
     }
 }
+
+

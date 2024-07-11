@@ -297,11 +297,22 @@ svg.mermaidNoScale {
 }
 
 .customizeViewBar {
-    position: absolute;
-    top: -0.5em;
+    position: fixed;
     right: 1em;
+    bottom: 4rem;
+    z-index: 1;
     background-color: rgba(00,00,00,00);
 }
+
+.customizeViewBar button {
+    opacity: 50%;
+}
+
+.customizeViewBar button:hover {
+    opacity: 1;
+    transition: 0.5s ease-in-out;
+}
+
 
 .widget-card {
     height: calc(100% - 0.75em);
@@ -320,14 +331,34 @@ div.scroll-sticky {
     transition: 0.2s ease-out;
 }
 
-div.is-sticky {
+@keyframes shrink {
+    25% {
+        height: 1.0rem;
+    }
+    50% {
+        height: 0.5rem;
+    }
+    75% {
+        height: 0.25rem;
+    }
+    100% {
+        height: 0rem;
+    }
+}
+
+.is-sticky {
     top: -1rem;
     margin-left: -0.5rem;
     width: calc(100% + 1rem);
-    transition: 0.2s ease-out;
+    transition: 0.5s ease-out;
     
 }
 
+.is-sticky .hide-when-sticky {
+    opacity: 0;
+    animation: shrink 0.5s linear forwards;
+    transition: 0.5s ease-out;
+}
 div.object-header {
     z-index: 100;
 }

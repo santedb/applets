@@ -334,7 +334,7 @@ angular.module('santedb-lib')
                     getWidgets(scope, _contextName);
                 }
                 if (_canCustomize) {
-                    $(".customizeViewBar").removeClass("d-none");
+                    $(".customizeViewBar", element).removeClass("d-none");
                 }
             }
         };

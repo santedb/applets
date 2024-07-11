@@ -408,12 +408,13 @@ angular.module('santedb-lib')
                 labels: "<",
                 legend: "<",
                 title: "<",
-                axis: "<"
+                axis: "<",
+                valueLabel: '<'
             },
             restrict: 'E',
             replace: true,
             transclude: true,
-            template: '<canvas width="400" height="400"></canvas>',
+            template: '<canvas></canvas>',
             controller: ['$scope',
                 function ($scope) {
                 }
@@ -445,13 +446,29 @@ angular.module('santedb-lib')
                 if (scope.type == 'bar' || scope.type == 'line') {
                     var scale = {
                         yAxes: [{
+                            scaleLabel: {
+                                display: scope.valueLabel !== undefined,
+                                labelString: scope.valueLabel
+                            },
                             ticks: {
                                 beginAtZero: false
                             }
                         }]
                     };
-                    if (scope.axis)
-                        scale.xAxes = scope.axis;
+                    if (scope.axis) {
+                        scale.xAxes = [{
+                            type: scope.axis.type,
+                            position: 'bottom',
+                            display: true,
+                            scaleLabel: {
+                                display: true,
+                                labelString: scope.axis.scaleLabel
+                            },
+                            ticks: {
+                                stepSize: scope.axis.stepSize || 1
+                            }
+                        }];
+                    }
                 }
 
                 // Construct the chart

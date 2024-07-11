@@ -193,7 +193,7 @@
       <string name="ui.action.cancel">Cancel</string>
       <string name="ui.action.clear">Clear</string>
       <string name="ui.action.complete">Complete</string>
-      <string name="ui.action.customize">Customize</string>
+      <string name="ui.action.customize">Customize View</string>
       <string name="ui.action.clone">Clone</string>
       <string name="ui.action.cancel.confirm">Are you sure you want to cancel?</string>
       <string name="ui.action.abandon.confirm">You have unsaved changes on this page. Are you sure you want to abandon them?</string>
@@ -277,6 +277,7 @@
       <string name="ui.action.upgrade">Upgrade</string>
       <string name="ui.action.convert">Convert</string>
       <string name="ui.action.print">Print</string>
+      <string name="ui.action.print.vrp">Print QR</string>
       <string name="ui.action.convertTo">Convert To</string>
       <string name="ui.action.new">New</string>
       <string name="ui.action.resetPassword">Reset Pwd</string>
