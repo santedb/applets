@@ -591,7 +591,7 @@
     <property name="doseUnitModel" behavior="always" ref="Concept" />
     <property name="moodConceptModel" behavior="never" />
     <property name="interpretationConceptModel" behavior="always" ref="Concept" />
-    <property name="protocol" behavior="never" />
+    <property name="protocol" behavior="always" all="true" />
     <property name="routeModel" behavior="always" ref="Concept" />
     <property name="protocol" behavior="always" />
     <property name="siteModel" behavior="always" ref="Concept" />
@@ -599,7 +599,7 @@
     <property name="relationship" behavior="always">
       <property name="*" ref="ActRelationship">
         <property name="target" />
-        <property name="targetModel" />
+        <property name="targetModel" ref="Act"/>
       </property>
     </property>
     <property name="participation" all="true" behavior="always">
@@ -620,7 +620,9 @@
           <property name="version" />
           <property name="typeConceptModel" behavior="always" ref="Concept" />
           <property name="identifier" all="true" />
-          <property name="name" all="true" behavior="always" />
+          <property name="name" all="true" behavior="always">
+            <property name="*" ref="EntityName" />
+          </property>
           <property name="tag" all="true" />
           <property name="extension" all="true" />
           <property name="relationship" all="false">
@@ -882,6 +884,14 @@
         <property name="player" all="true" />
         <property name="playerModel" behavior="never" />
       </property>
+    </property>
+  </type>
+
+  <type type="CarePlan" all="true">
+    <property name="relationship" all="true">
+      <property name="HasComponent" all="true">
+        <property name="targetModel" all="true" ref="Act" />
+    </property>
     </property>
   </type>
 

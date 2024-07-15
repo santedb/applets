@@ -1701,6 +1701,7 @@ function ResourceWrapper(_config) {
     * @param {string} operation The operation you want to execute
     * @param {any} parameters The parameters to the operation being executes (example: { clear: true, softFind: true })
     * @param {bool} upstream True if the operation shold be executed opstream 
+    * @param {string} viewModel The view model which should be used to load data
     * @param {object} state A tracking state to send to the callback
     * @returns {Promise} A promise which is fulfilled when the request is complete
     * @description SanteDB's iCDR and dCDR HDSI interfaces allow for the invokation of operations ({@link https://help.santesuite.org/developers/service-apis/health-data-service-interface-hdsi/http-request-verbs#operations}). 
@@ -1717,7 +1718,7 @@ function ResourceWrapper(_config) {
     *   }
     * }
     */
-    this.invokeOperationAsync = function (id, operation, parameters, upstream, state) {
+    this.invokeOperationAsync = function (id, operation, parameters, upstream, viewModel, state) {
 
 
         if (!operation)
@@ -1726,8 +1727,7 @@ function ResourceWrapper(_config) {
         var headers = {
             Accept: _config.accept
         };
-        if (_config.viewModel)
-            headers["X-SanteDB-ViewModel"] = _config.viewModel;
+        headers["X-SanteDB-ViewModel"] = viewModel || _config.viewModel;
 
         // Prepare path
         var url = null;
@@ -2198,12 +2198,7 @@ function SanteDBWrapper() {
                     return await SanteDB.application.searchByBarcodeAsync(qrCodeData, true, upstream);
                 }
 
-                // Get root cause
-                var rootCause = e;
-                while(rootCause.cause) {
-                    rootCause = rootCause.cause;
-                }
-
+                var rootCause = e.getRootCause();
                 if (!upstream && rootCause.$type == "KeyNotFoundException" && confirm(SanteDB.locale.getString("ui.emr.search.online"))) {
                     // Ask the user if they want to search upstream, only if they are allowed
                     var session = await SanteDB.authentication.getSessionInfoAsync();
