@@ -75,7 +75,7 @@ angular.module("santedb").controller("LoginController", ['$scope', '$rootScope',
         }
         catch (e) {
 
-            switch (e.error || e.data.error) {
+            switch (e.error || e.data && e.data.error) {
                 case "mfa_required":
                     $timeout(() => {
                         $scope.login.requireTfa =
