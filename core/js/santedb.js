@@ -1701,6 +1701,7 @@ function ResourceWrapper(_config) {
     * @param {string} operation The operation you want to execute
     * @param {any} parameters The parameters to the operation being executes (example: { clear: true, softFind: true })
     * @param {bool} upstream True if the operation shold be executed opstream 
+    * @param {string} viewModel The view model which should be used to load data
     * @param {object} state A tracking state to send to the callback
     * @param {string} viewModel The view model to use to load returned properties
     * @returns {Promise} A promise which is fulfilled when the request is complete
@@ -2200,12 +2201,7 @@ function SanteDBWrapper() {
                     return await SanteDB.application.searchByBarcodeAsync(qrCodeData, true, upstream);
                 }
 
-                // Get root cause
-                var rootCause = e;
-                while(rootCause.cause) {
-                    rootCause = rootCause.cause;
-                }
-
+                var rootCause = e.getRootCause();
                 if (!upstream && rootCause.$type == "KeyNotFoundException" && confirm(SanteDB.locale.getString("ui.emr.search.online"))) {
                     // Ask the user if they want to search upstream, only if they are allowed
                     var session = await SanteDB.authentication.getSessionInfoAsync();
@@ -4987,4 +4983,20 @@ SanteDB.application.addCheckDigitValidator("SanteDB.Core.Model.DataTypes.CheckDi
 // Add default check digit handlers
 SanteDB.application.addCheckDigitValidator("SanteDB.Core.Model.DataTypes.CheckDigitAlgorithms.Mod97CheckDigitAlgorithm, SanteDB.Core.Model", function(id) {
     return validateMod97CheckDigit(id.value, id.checkDigit);
+});
+
+
+
+// Add default check digit handlers
+SanteDB.application.addCheckDigitValidator("SanteDB.Core.Model.DataTypes.CheckDigitAlgorithms.InlineMod97Validator, SanteDB.Core.Model", function(id) {
+    if(!id.value) {
+        return false;
+    }
+
+    return validateIso7064Mod97CheckDigit(id.value.substring(0, id.value.length - 2), id.value.substring(id.value.length - 2, id.value.length));
+});
+
+// Add default check digit handlers
+SanteDB.application.addCheckDigitValidator("SanteDB.Core.Model.DataTypes.CheckDigitAlgorithms.Mod97CheckDigitAlgorithm, SanteDB.Core.Model", function(id) {
+    return validateIso7064Mod97CheckDigit(id.value, id.checkDigit);
 });

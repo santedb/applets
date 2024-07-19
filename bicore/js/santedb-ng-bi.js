@@ -408,12 +408,13 @@ angular.module('santedb-lib')
                 labels: "<",
                 legend: "<",
                 title: "<",
-                axis: "<"
+                axis: "<",
+                valueLabel: '<'
             },
             restrict: 'E',
             replace: true,
             transclude: true,
-            template: '<canvas width="400" height="400"></canvas>',
+            template: '<canvas></canvas>',
             controller: ['$scope',
                 function ($scope) {
                 }
@@ -425,10 +426,11 @@ angular.module('santedb-lib')
 
                 for (var i in scope.data) {
                     if (scope.type == "line" || scope.type == "radar") {
-                        scope.data[i].backgroundColor = scope.data[i].backgroundColor || randomColor(0.5, parseInt(i));
+
+                        scope.data[i].backgroundColor = scope.data[i].backgroundColor || randomColor(0.1, parseInt(i));
                         scope.data[i].borderColor = scope.data[i].borderColor || randomColor(1, parseInt(i));
-                        scope.data[i].pointBackgroundColor = 'rgba(0,0,0,0.1)';
-                        scope.data[i].pointBorderColor = 'rgba(0,0,0,0.1)';
+                        scope.data[i].pointBackgroundColor = scope.data[i].pointBackgroundColor || 'rgba(0,0,0,0.1)';
+                        scope.data[i].pointBorderColor = scope.data[i].pointBorderColor || 'rgba(0,0,0,0.1)';
                     }
                     else if (scope.type == "bar") {
                         scope.data[i].backgroundColor = scope.data[i].backgroundColor || randomColor(0.5, parseInt(i));
@@ -444,13 +446,29 @@ angular.module('santedb-lib')
                 if (scope.type == 'bar' || scope.type == 'line') {
                     var scale = {
                         yAxes: [{
+                            scaleLabel: {
+                                display: scope.valueLabel !== undefined,
+                                labelString: scope.valueLabel
+                            },
                             ticks: {
-                                beginAtZero: true
+                                beginAtZero: false
                             }
                         }]
                     };
-                    if (scope.axis)
-                        scale.xAxes = scope.axis;
+                    if (scope.axis) {
+                        scale.xAxes = [{
+                            type: scope.axis.type,
+                            position: 'bottom',
+                            display: true,
+                            scaleLabel: {
+                                display: true,
+                                labelString: scope.axis.scaleLabel
+                            },
+                            ticks: {
+                                stepSize: scope.axis.stepSize || 1
+                            }
+                        }];
+                    }
                 }
 
                 // Construct the chart
