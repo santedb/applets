@@ -59,7 +59,8 @@ angular.module('santedb').controller('AdminLayoutController', ["$scope", "$rootS
     // Load menus for the current user
     async function loadMenus() {
         try {
-            var menus = await SanteDB.application.getMenusAsync("org.santedb.admin")
+            var menus = await SanteDB.application.getMenusAsync("org.santedb.admin");
+            var templates = await SanteDB.application.getTemplateDefinitionsAsync();
             $timeout(() => $scope.menuItems = menus);
         }
         catch (e) {

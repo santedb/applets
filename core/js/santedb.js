@@ -1702,6 +1702,7 @@ function ResourceWrapper(_config) {
     * @param {any} parameters The parameters to the operation being executes (example: { clear: true, softFind: true })
     * @param {bool} upstream True if the operation shold be executed opstream 
     * @param {object} state A tracking state to send to the callback
+    * @param {string} viewModel The view model to use to load returned properties
     * @returns {Promise} A promise which is fulfilled when the request is complete
     * @description SanteDB's iCDR and dCDR HDSI interfaces allow for the invokation of operations ({@link https://help.santesuite.org/developers/service-apis/health-data-service-interface-hdsi/http-request-verbs#operations}). 
     *               Operations aren't resources per-se, rather they are remote procedure calls where a caller can pass parameters to the operation. Invokable operations can be bound to specific instances 
@@ -1717,7 +1718,7 @@ function ResourceWrapper(_config) {
     *   }
     * }
     */
-    this.invokeOperationAsync = function (id, operation, parameters, upstream, state) {
+    this.invokeOperationAsync = function (id, operation, parameters, upstream, viewModel, state) {
 
 
         if (!operation)
@@ -1726,7 +1727,9 @@ function ResourceWrapper(_config) {
         var headers = {
             Accept: _config.accept
         };
-        if (_config.viewModel)
+        if(viewModel) 
+            headers["X-SanteDB-ViewModel"] = viewModel;
+        else if (_config.viewModel)
             headers["X-SanteDB-ViewModel"] = _config.viewModel;
 
         // Prepare path
@@ -1929,8 +1932,7 @@ function SanteDBWrapper() {
         var _resourceStates = {};
         var _idParsers = {};
         var _idClassifiers = {};
-        var _templateView = {};
-        var _templateForm = {};
+        var _templateCache = undefined;
         var _identifierValidator = {};
 
         /**
@@ -2754,7 +2756,13 @@ function SanteDBWrapper() {
          * @description This method allows a plugin to resolve a template identifier (like: entity.tanzania.child) to an actual HTML input form
          */
         this.resolveTemplateForm = function (templateId) {
-            return _resources.template.getAssociatedAsync(templateId, "ui", "form.html");
+            var entry = _templateCache.find(o=>o.mnemonic == templateId);
+            if(entry) {
+                return entry.form;
+            }
+            else {
+                return null;
+            }
         }
         /**
          * @summary Resolves the HTML view for the specified template
@@ -2765,7 +2773,13 @@ function SanteDBWrapper() {
          * @description This method allows a plugin to resolve a template view (to display informaton from the template)
          */
         this.resolveTemplateView = function (templateId) {
-            return _resources.template.getAssociatedAsync(templateId, "ui", "view.html");
+            var entry = _templateCache.find(o=>o.mnemonic == templateId);
+            if(entry) {
+                return entry.view;
+            }
+            else {
+                return null;
+            }
         }
         /**
          * @summary Get a list of all installed template definitions
@@ -2775,7 +2789,13 @@ function SanteDBWrapper() {
          * @returns {Array<string>} The list of template definitions
          */
         this.getTemplateDefinitionsAsync = async function (query) {
-            return _resources.template.findAsync(query);
+            if(_templateCache) {
+                return _templateCache;
+            }
+            else {
+                _templateCache = await _resources.template.findAsync(query);
+                return _templateCache;
+            }
         }
         /**
          * @summary Get a list of all installed template definitions
@@ -2885,8 +2905,6 @@ function SanteDBWrapper() {
                 throw new Exception("Exception", "error.codeSearch", e);
             }
         }
-
-
 
     }
 

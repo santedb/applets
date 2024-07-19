@@ -72,7 +72,10 @@ angular.module('santedb').controller('CdssEditController', ["$scope", "$rootScop
                 await SanteDB.resources.cdssLibraryDefinition.checkoutAsync(libraryDefinition.id, true);
 
                 _editor = new CdssAceEditor('cdssEditor', cdssTxtSource, $scope.cdssLibrary.library.id, id);
-                _editor.onChange(() => _validationDirty = _editorDirty = true);
+                _editor.onChange(() => {
+                    _validationDirty = _editorDirty = true
+                });
+                _editor.onSave(() => _validationDirty = _editorDirty = false);    
                 _editor.onAnnotationChange((issues) => $timeout(() => $scope.validationIssues = issues));
                 validateInterval = $interval(_editor.validateEditor, 5000);
                 window.onbeforeunload = (e) => _editorDirty ? SanteDB.locale.getString("ui.action.abandon.confirm") : null;
