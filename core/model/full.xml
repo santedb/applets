@@ -955,6 +955,7 @@
     <property name="name" behavior="always" all="true" />
     <property name="mnemonic" behavior="always" />
     <property name="id" behavior="always" />
+    <property name="conceptSetModel" behavior="never" />
     <property name="statusConcept" />
     <property name="conceptClass" />
     <property name="conceptSet" />

@@ -903,4 +903,10 @@
   <string name="ui.model.container.expiryDate">Expires</string>
   <string name="ui.model.container.expiryDate.hint">That last date that the container can be used</string>
 
+  <string name="ui.model.observation.interpretationConcept">Interpretation</string>
+  <string name="ui.model.observation.interpretationConcept.lowlow">Very Low</string>
+  <string name="ui.model.observation.interpretationConcept.low">Low</string>
+  <string name="ui.model.observation.interpretationConcept.normal">Normal</string>
+  <string name="ui.model.observation.interpretationConcept.high">High</string>
+  <string name="ui.model.observation.interpretationConcept.highhigh">Very High</string>
 </resources>

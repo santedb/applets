@@ -35,7 +35,7 @@ function SanteDBCdssWrapper() {
         try {
 
             // Submit the bundle to the analyze endpoint
-            var analysis = await SanteDB.resources.bundle.invokeOperationAsync(null, "analyze", { target: object, libraryId: libraryIds }, null, "fasview");
+            var analysis = await SanteDB.resources.bundle.invokeOperationAsync(null, "analyze", { target: object, libraryId: libraryIds }, null, "fastview");
 
             // Analysis issues 
             var issues = analysis.issue;
@@ -43,7 +43,7 @@ function SanteDBCdssWrapper() {
 
             // We want to update any item in the submitted object with any interpretation concept or fields that have changed 
             objectReturn.resource.forEach(r => {
-                var originalObject = object.resource.modifiedOn(o=>o.id == r.id);
+                var originalObject = object.resource.find(o=>o.id == r.id);
                 if (!originalObject) return;
 
                 // Copy any non-model fields over to 
@@ -71,9 +71,6 @@ function SanteDBCdssWrapper() {
             throw new Exception("CdssException", e.message, e.detail, e);
         }
     }
-
-    this.analyzeAsync = analyzeAsync;
-
 }
 
-const SanteDBCdss = new SanteDBCdssWrapper();
+var SanteDBCdss = new SanteDBCdssWrapper();
