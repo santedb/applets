@@ -418,6 +418,7 @@ async function prepareActForSubmission(act) {
             act.relationship[k] = act.relationship[k].map((r) => {
                 if (r.targetModel) {
                     r.target = r.targetModel.id = r.targetModel.id || r.target || SanteDB.application.newGuid();
+                    r.targetModel = applyCascadeInstructions(r.targetModel);
                 }
                 if (r.holderModel && r.holderModel.id) {
                     r.holder = r.holderModel.id = r.holderModel.id || r.holder || SanteDB.application.newGuid();
@@ -425,6 +426,7 @@ async function prepareActForSubmission(act) {
                 delete r.relationshipTypeModel;
                 delete r.relationshipRoleModel;
                 delete r.classificationModel;
+
                 return r;
             }).filter(r => r && (r.source || r.holder || r.target));
         });
@@ -448,16 +450,25 @@ async function prepareActForSubmission(act) {
         });
     }
 
-    // If the act has cascade instructions for context conduction then enforce them
-    act.tag = act.tag || {};
-    act.tag["$cascade:*:*"] = ["Location","Authororiginator"];
-    act.relationship = act.relationship || {};
+    return applyCascadeInstructions(act);
+}
+
+/**
+ * @summary Apply any act cascade instructions
+ * @param {Act} source The act on which the cascade instructions should be applied
+ */
+function applyCascadeInstructions(source) {
     
-    var cascadeInstructions = Object.keys(act.tag).filter(o => o.indexOf("$cascade:") == 0);
+    // If the act has cascade instructions for context conduction then enforce them
+    source.tag = source.tag || {};
+    source.tag["$cascade:*:*"] = ["Location","Authororiginator","RecordTarget"];
+    source.relationship = source.relationship || {};
+    
+    var cascadeInstructions = Object.keys(source.tag).filter(o => o.indexOf("$cascade:") == 0);
 
     cascadeInstructions.forEach(function (instruction) {
         var targetTemplate = instruction.split(':');
-        var cascadeInstructions = act.tag[instruction];
+        var cascadeInstructions = source.tag[instruction];
 
         if (targetTemplate.length != 3) {
             console.error("Cascade control tag should be in format: $cascade:RelationshipType:template-id");
@@ -465,10 +476,10 @@ async function prepareActForSubmission(act) {
         }
         // Find the participation with that template
         if (targetTemplate[1] == "*") {
-            searchRelationship = Object.keys(act.relationship).map(key => act.relationship[key]).flat();
+            searchRelationship = Object.keys(source.relationship).map(key => source.relationship[key]).flat();
         }
         else {
-            var searchRelationship = act.relationship[targetTemplate[1]];
+            var searchRelationship = source.relationship[targetTemplate[1]];
             if (searchRelationship == null) {
                 console.warn("Cannot find indicated path", targetTemplate[1]);
                 return;
@@ -480,7 +491,7 @@ async function prepareActForSubmission(act) {
             searchRelationship = [searchRelationship];
 
         searchRelationship
-            .filter(o => o.targetModel != null && o.targetModel.templateModel != null && (o.targetModel.templateModel.mnemonic == targetTemplate[2] || targetTemplate[2] == "*"))
+            .filter(o => o.targetModel != null && (o.targetModel.templateModel != null && o.targetModel.templateModel.mnemonic == targetTemplate[2] || targetTemplate[2] == "*"))
             .forEach(function (relationship) {
 
                 if (!relationship.targetModel.participation)
@@ -494,6 +505,14 @@ async function prepareActForSubmission(act) {
                         return { sourceRole: data[1], targetRole: data[0] };
                 })
                     .forEach(function (instruction) {
+                        
+                        // Apply the cascade for actTime, startTime, stopTime
+                        relationship.targetModel.actTime = relationship.targetModel.actTime || source.actTime;
+                        relationship.targetModel.startTime = relationship.targetModel.startTime || source.startTime;
+                        relationship.targetModel.stopTime = relationship.targetModel.stopTime || source.stopTime;
+                        relationship.targetModel.statusConcept = relationship.targetModel.statusConcept || source.statusConcept;
+                        relationship.targetModel.moodConcept = relationship.targetModel.moodConcept || source.moodConcept;
+
                         if (!relationship.targetModel.participation[instruction.targetRole]) // Only cascade if not specified
                             relationship.targetModel.participation[instruction.targetRole] = source.participation[instruction.sourceRole];
                     });
@@ -501,7 +520,7 @@ async function prepareActForSubmission(act) {
             });
     });
 
-    return act;
+    return source;
 }
 
 /**
@@ -758,15 +777,16 @@ function deleteModelProperties(objectToRemove) {
  * Bundle all related properties into a new Bundle
  * @param {Any} object The object which is to be bundled
  * @param {Array} ignoreRelations The relationship types to ignore when pushing to the bundle
+ * @param {Bundle} existingBundle If the results should be added to an existing bundle
  */
-function bundleRelatedObjects(object, ignoreRelations) {
+function bundleRelatedObjects(object, ignoreRelations, existingBundle) {
     
     ignoreRelations = ignoreRelations || [];
     if(!Array.isArray(ignoreRelations)) {
         ignoreRelations = [ignoreRelations];
     }
 
-    var retVal = new Bundle({ resource: [ angular.copy(object) ], focal: [ object.id ]});
+    var retVal = existingBundle || new Bundle({ resource: [ angular.copy(object) ], focal: [ object.id ]});
 
     if(object.relationship) {
 
@@ -782,6 +802,7 @@ function bundleRelatedObjects(object, ignoreRelations) {
                         retVal.resource.push(relatedObject);
                     }
 
+                    bundleRelatedObjects(relatedObject, ignoreRelations, retVal);
                     delete rel.targetModel;
                 }
                 if(rel.holderModel) {

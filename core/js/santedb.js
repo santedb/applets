@@ -977,7 +977,7 @@ function ResourceWrapper(_config) {
             headers["X-SanteDB-Upstream"] = upstream;
         }
 
-        if (!query._includeTotal) {
+        if (query._includeTotal === undefined) {
             query._includeTotal = true;
         }
 

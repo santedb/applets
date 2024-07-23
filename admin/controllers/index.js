@@ -140,6 +140,13 @@ angular.module('santedb').controller('AdminLayoutController', ["$scope", "$rootS
         catch (e) {
             toastr.warning(SanteDB.locale.getString("ui.admin.tickleError"));
             console.error(e);
+
+            var rootCause = e.getRootCause();
+            if(rootCause.$type == "PolicyViolationException" && rootCause.policy == "1.3.6.1.4.1.33349.3.1.5.9.2.1" &&
+                    rootCause.policyOutcome == "Elevate")
+            {
+                $state.go("login");
+            }
         }
     }
 
