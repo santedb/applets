@@ -1,7 +1,7 @@
 <div xmlns="http://www.w3.org/1999/xhtml">
     <div class="actEntryForm">
         <div ng-if="::model.$templateUrl" ng-init="act = model">
-            <ng-include src="::model.$templateUrl" />
+            <ng-include src="model.$templateUrl" />
         </div>
         <div class="actInputList">
             <!-- Header Information for the core act-->
@@ -23,7 +23,7 @@
                         <!-- Render the main act entry content -->
                         <div class="flex-grow-1 actEntryComponent">
                             <div ng-if="!comp.targetModel.negationInd" ng-init="act = comp.targetModel">
-                                <ng-include src="::resolveTemplate(comp.targetModel.templateModel.mnemonic)">
+                                <ng-include src="resolveTemplate(comp.targetModel.templateModel.mnemonic)">
 
                                 </ng-include>
                             </div>

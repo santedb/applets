@@ -1100,9 +1100,10 @@ function ResourceWrapper(_config) {
             throw new Exception("ArgumentException", "error.invalidType", `Invalid type, resource wrapper expects ${_config.resource} however ${data.$type} specified`);
 
         var headers = {};
-        if (etag)
+        if (etag) {
             headers['If-Match'] = etag;
-
+        }
+        
         if (upstream !== undefined) {
             headers["X-SanteDB-Upstream"] = upstream;
         }

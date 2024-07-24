@@ -25,13 +25,13 @@
     <div class="col-sm-12 col-md-8" ng-switch="parameter.type">
         <input ng-switch-when="Date" ng-required="parameter.required == 'true'" ng-model="values[parameter.name]" ng-min="parameter.min ? values[parameter.min] : null" ng-max="parameter.max ? values[parameter.max] : null"  type="date" name="{{parameter.name}}"  class="form-control"/>
         <div ng-switch-when="String">
-            <input ng-if="!parameter.values" type="text" autocomplete="__away" ng-required="parameter.required == 'true'" ng-model="values[parameter.name]" />
-            <select ng-required="parameter.required == 'true'" ng-model="values[parameter.name]" class="form-control">
-                <option ng-repeat="val in (parameter.values.list || refreshValueList())" value="{{val.id}}">{{ val.val | i18n }}</option>
+            <input ng-if="!parameter.values.length" type="text" class="form-control" autocomplete="__away" ng-required="parameter.required == 'true'" ng-model="values[parameter.name]" />
+            <select ng-required="parameter.required == 'true'" ng-if="parameter.values.length" ng-model="values[parameter.name]" class="form-control">
+                <option ng-repeat="val in (parameter.values.list || refreshValueList())" value="{{val.id}}">{{ val.val || val.value | i18n }}</option>
             </select>
         </div>
         <select ng-switch-when="Uuid" ng-required="parameter.required == 'true'" ng-model="values[parameter.name]" class="form-control">
-            <option ng-repeat="val in (parameter.values.list || refreshValueList())" value="{{val.id}}">{{ val.val | i18n }}</option>
+            <option ng-repeat="val in (parameter.values.list || refreshValueList())" value="{{val.id}}">{{ val.val || val.value | i18n }}</option>
         </select>
     </div>
     
