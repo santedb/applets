@@ -58,7 +58,7 @@ angular.module("santedb").controller("SyncController", ['$scope', '$rootScope', 
                     s.Filter = decodeURI(s.Filter);
                 var filter = s.Filter;
 
-                if (!SanteDB.resources[resource]) {
+                if (!SanteDB.resources[resource] || filter && filter.indexOf("$") == 0) {
                     s.local = "-";
                     s.remote = "-";
                     return;
