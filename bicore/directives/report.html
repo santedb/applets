@@ -36,9 +36,16 @@
             </div>
             <div ng-class="{ 'active show' : !report.parameterDefinitions.length }" class="tab-pane  report-view-container"
                 ng-repeat="viewDefinition in report.views" id="{{htmlId}}_{{viewDefinition.name}}">
-                <div  id="{{htmlId}}view">
-                    <i class="fas fa-circle-notch fa-spin"></i> {{ 'ui.wait' | i18n }}
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-12">
+                            <div  id="{{htmlId}}_{{viewDefinition.name}}view">
+                                <i class="fas fa-circle-notch fa-spin"></i> {{ 'ui.wait' | i18n }}
+                            </div>
+                        </div>
+                    </div>
                 </div>
+               
                 <div class="float-right btn-group dropup">
                     <button type="button"  class="btn btn-secondary dropdown-toggle" aria-haspopup="true" data-toggle="dropdown" id="btnDownloadReport_{{viewDefinition.name}}"><i class="fas fa-save"></i> {{ 'ui.action.download' | i18n }}</button>
                     <button type="button"  id="btnPrintReport_{{viewDefinition.name}}" ng-click="printReport(viewDefinition.name)" class="btn btn-primary"><i class="fas fa-print"></i> {{ 'ui.action.print' | i18n }}</button>

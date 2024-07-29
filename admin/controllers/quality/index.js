@@ -33,12 +33,51 @@ angular.module('santedb').controller('DataQualityIndexController', ["$scope", fu
 
     $scope.delete = async function(id) {
         if(confirm(SanteDB.locale.getString("ui.admin.dataQuality.delete.confirm"))) {
+            try {
                 await SanteDB.resources.dataQuality.deleteAsync(id, true);
+                $("#DataQualityRuleTable").attr("newQueryId", true);
                 $("#DataQualityRuleTable table").DataTable().ajax.reload();
+                toastr.success(SanteDB.locale.getString("ui.admin.dataQuality.delete.success"));
+            }
+            catch(e) {
+                toastr.error(SanteDB.locale.getString("ui.admin.dataQuality.delete.error", { error: e.message }));
+            }
         }
     }
 
     $scope.download = function(id) {
         window.open(`/ami/DataQualityRulesetConfiguration/${id}?_format=xml&_upstream=true`);
+    }
+
+    $scope.restore = async function(id) {
+        if(confirm(SanteDB.locale.getString("ui.admin.dataQuality.restore.confirm"))) {
+            try {
+                var dq = await SanteDB.resources.dataQuality.getAsync(id, null, null, true);
+                dq.obsoletionTime = null;
+                dq.obsoletedBy = null;
+                dq.enabled =false;
+                await SanteDB.resources.dataQuality.updateAsync(id, dq, true);
+                $("#DataQualityRuleTable").attr("newQueryId", true);
+                $("#DataQualityRuleTable table").DataTable().ajax.reload();
+            }
+            catch(e) {
+                toastr.error(SanteDB.locale.getString("ui.admin.dataQuality.restore.error", { error: e.message }));
+            }
+        }
+    }
+
+    $scope.purge = async function(id) {
+        if(confirm(SanteDB.locale.getString("ui.admin.dataQuality.purge.confirm"))) {
+            try {
+                await SanteDB.resources.dataQuality.deleteAsync(id, true);
+                $("#DataQualityRuleTable").attr("newQueryId", true);
+                $("#DataQualityRuleTable table").DataTable().ajax.reload();
+                toastr.success(SanteDB.locale.getString("ui.admin.dataQuality.purge.success"));
+            }
+            catch(e) {
+                toastr.error(SanteDB.locale.getString("ui.admin.dataQuality.purge.error", { error: e.message }));
+            }
+
+        }
     }
 }]);

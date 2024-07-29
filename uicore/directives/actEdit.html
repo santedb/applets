@@ -1,0 +1,56 @@
+<div xmlns="http://www.w3.org/1999/xhtml">
+    <div class="actEntryForm">
+        <div ng-if="::model.$templateUrl" ng-init="act = model">
+            <ng-include src="model.$templateUrl" />
+        </div>
+        <div class="actInputList">
+            <!-- Header Information for the core act-->
+            <div class="actHeader">
+                TODO: Act Header
+            </div>
+            <ul class="list-group" ng-if="isReady">
+                <li class="list-group-item" ng-repeat="comp in model.relationship.HasComponent track by $index">
+                    <div class="d-flex justify-content-left">
+                        <!-- PROPOSE Should allow users to select an override -->
+                        <div class="actProposeControl"
+                            ng-if="comp.targetModel.moodConcept == 'ACF7BAF2-221F-4BC2-8116-CEB5165BE079'">
+                            <div class="checkbox-container">
+                                <input type="checkbox" ng-model="comp.targetModel.negationInd"
+                                    class="checkbox-control" />
+                                <span></span>
+                            </div>
+                        </div>
+                        <!-- Render the main act entry content -->
+                        <div class="flex-grow-1 actEntryComponent">
+                            <div ng-if="!comp.targetModel.negationInd" ng-init="act = comp.targetModel">
+                                <ng-include src="resolveTemplate(comp.targetModel.templateModel.mnemonic)">
+
+                                </ng-include>
+                            </div>
+                            <div ng-if="comp.targetModel.negationInd">
+                                <concept-select ng-model="comp.targetModel.reason"
+                                    concept-set="'ProtocolViolationReason'" required="required" class="form-control"
+                                    name="violationReason{{$index}}" />
+                                <div class="text-danger"
+                                    ng-if="ownerForm['violationReason' + $index].$error['required']">
+                                    <i class="fas fa-fw fa-exclamation-triangle"></i> {{ 'ui.error.required' | i18n }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="actRemoveItem" ng-if="comp.targetModel._userAdded">
+                            <button type="button" ng-click="model.relationship.HasComponent.splice($index, 1)"
+                                class="btn btn-danger">
+                                <i class="fas fa-fw fa-times-circle"></i> <span class="d-none d-lg-inline">{{
+                                    'ui.action.remove' | i18n }}</span>
+                            </button>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+            <div class="actAddItem">
+                TODO: New Add Items Control
+            </div>
+        </div>
+    </div>
+
+</div>

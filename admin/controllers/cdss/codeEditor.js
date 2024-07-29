@@ -1,6 +1,8 @@
 function CdssAceEditor(controlName, initialText, fileName, libraryUuid) {
 
     var _editor;
+    var _completor;
+    var _saveHandlers = [];
     var _tooltipElement = document.createElement("div");
     var _uuidRegex = /.*?([a-fA-F0-9]{8}\-(?:[a-fA-F0-9]{4}\-){3}[a-fA-F0-9]{12}).*/;
     var _lookupApi = [
@@ -54,8 +56,9 @@ function CdssAceEditor(controlName, initialText, fileName, libraryUuid) {
 
             }
             var isValid = issues.issue.find(o => o.priority == 'Error') == null;
+            
             if(isValid) {
-                _refreshOptions();
+                _completor.refreshOptions();
             }
             return isValid;
         }
@@ -68,7 +71,7 @@ function CdssAceEditor(controlName, initialText, fileName, libraryUuid) {
 
     // CDSS Auto-completor
     function _cdssCompletor() {
-        var _typeMaps = {
+        const _typeMaps = {
             "CdssLibrary" : "Library",
             "CdssDecisionLogicBlockDefinition" : "Logic",
             "CdssFactAssetDefinition" : "Fact",
@@ -77,7 +80,6 @@ function CdssAceEditor(controlName, initialText, fileName, libraryUuid) {
             "CdssDataBlockDefinition": "Data"
         };
         var _scopedList;
-        _refreshOptions();
 
         async function _refreshOptions()
         { 
@@ -90,6 +92,10 @@ function CdssAceEditor(controlName, initialText, fileName, libraryUuid) {
 
             }
         }
+
+        _refreshOptions();
+
+        this.refreshOptions = _refreshOptions;
 
         this.getCompletions = async function (editor, session, pos, prefix, callback) {
 
@@ -143,7 +149,8 @@ function CdssAceEditor(controlName, initialText, fileName, libraryUuid) {
             enableBasicAutocompletion: true,
             enableLiveAutocompletion: true
         });
-        LanguageTools.addCompleter(new _cdssCompletor());
+        _completor = new _cdssCompletor();
+        LanguageTools.addCompleter(_completor);
         _addTestKeyboardShortcut();
         _addGotoKeyboardShortcut();
         _addSaveKeyboardShortcut();
@@ -215,6 +222,7 @@ function CdssAceEditor(controlName, initialText, fileName, libraryUuid) {
                         });
                         _editorDirty = false;
                         toastr.success(SanteDB.locale.getString("ui.admin.cdss.publish.success"));
+                        _saveHandlers.forEach(o=>o());
                     }
                     catch (e) {
                         if (e.message) {
@@ -322,6 +330,9 @@ function CdssAceEditor(controlName, initialText, fileName, libraryUuid) {
     }
     this.onChange = function (changeHandler) {
         _editor.getSession().on('change', changeHandler);
+    }
+    this.onSave = function(saveHandler) {
+        _saveHandlers.push(saveHandler);
     }
     this.onAnnotationChange = function(callback) {
         _validationCallback.push(callback);

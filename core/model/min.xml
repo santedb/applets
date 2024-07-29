@@ -39,6 +39,7 @@
   <type type="ActRelationship" all="false">
     <property name="source" all="true"/>
     <property name="target" all="true"/>
+    <property name="targetModel" behavior="always" all="true"/>
     <property name="relationshipType" all="true"/>
     <property name="key" all="true"/>
     <property name="quantity" all="true"/>
@@ -446,4 +447,15 @@
     </property>
   </type>
 
+  <type type="CodedObservation" all="true">
+    <property name="typeConceptModel" ref="Concept" all="true" behavior="always" />
+    <property name="valueModel" ref="Concept" all="true" behavior="always"/>
+  </type>
+
+  <type type="QuantityObservation" all="true">
+    <property name="typeConceptModel" ref="Concept" all="true" behavior="always" />
+    <property name="relationship" all="true" behavior="always">
+      <property name="HasComponent" all="true" ref="ActRelationship" />
+      </property>
+  </type>
 </ViewModel>

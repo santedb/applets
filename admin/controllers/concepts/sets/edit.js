@@ -1,4 +1,5 @@
 /// <reference path="../../../../core/js/santedb.js"/>
+/// <reference path="../../../../bicore/js/santedb-bi.js"/>
 /*
  * Copyright (C) 2021 - 2024, SanteSuite Inc. and the SanteSuite Contributors (See NOTICE.md for full copyright notices)
  * Copyright (C) 2019 - 2021, Fyfe Software Inc. and the SanteSuite Contributors
@@ -38,7 +39,11 @@ angular.module('santedb').controller('EditConceptSetController', ["$scope", "$ro
     async function initializeView(id) {
         try {
             var conceptSet = await SanteDB.resources.conceptSet.getAsync(id, "concept");
-            $timeout(() => $scope.conceptSet = conceptSet);
+            var formats = await SanteDBBi.resources.format.findAsync();
+            $timeout(() => {
+                $scope.conceptSet = conceptSet;
+                $scope.formats = formats.resource;
+            });
         }
         catch (e) {
             $rootScope.errorHandler(e);
@@ -114,5 +119,15 @@ angular.module('santedb').controller('EditConceptSetController', ["$scope", "$ro
         win.onload = function (e) {
             win.close();
         };
+    }
+
+    $scope.exportConceptSet = function(format) {
+        
+        var parms = jQuery.param({"set-id":$stateParams.id})
+        var win = window.open(`/bis/Report/${format}/org.santedb.bi.core.reports.concept.set?${parms}&_view=table&_download=true`, '_blank');
+        win.onload = function (e) {
+            //win.close();
+        };
+       
     }
 }]);

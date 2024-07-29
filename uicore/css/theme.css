@@ -329,6 +329,7 @@ div.scroll-sticky {
     position: sticky;
     top: 0;
     transition: 0.2s ease-out;
+    z-index: 100;
 }
 
 @keyframes shrink {

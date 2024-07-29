@@ -527,6 +527,10 @@
   <string name="ui.model.job.schedule.interval.05m">5 minutes</string>
   <string name="ui.model.act.template">Template</string>
   <string name="ui.model.act.typeConcept">Type</string>
+  <string name="ui.model.act.reasonConcept">Reason</string>
+  <string name="ui.model.act.reasonConcept.hint">Select a reason for the action you're taking. This will help provide context for an administrator or reviewer of the information</string>
+  <string name="ui.model.act.reasonConcept.other">Other Reason</string>
+  <string name="ui.model.act.reasonConcept.other.hint">Because you selected "other" as the reason for the action, you should enter description of the reason</string>
   <string name="ui.model.act.actTime">Timestamp</string>
   <string name="ui.model.act.startTime">Start Time</string>
   <string name="ui.model.act.stopTime">Stop Time</string>
@@ -535,7 +539,8 @@
   <string name="ui.model.act.participation.Authororiginator">Author / Reporter</string>
   <string name="ui.model.act.participation.Performer">Performer(s)</string>
   <string name="ui.model.act.participation.Attender">Attending Physician</string>
-
+  <string name="ui.model.act.participation.RecordTarget">Subject</string>
+  <string name="ui.model.act.participation.RecordTarget.container">Container</string>
   <!-- Help Text -->
   <string name="ui.model.act.template.help">Identifies the type of event</string>
   <string name="ui.model.act.typeConcept.help">Identifies the classification of the event</string>
@@ -898,4 +903,10 @@
   <string name="ui.model.container.expiryDate">Expires</string>
   <string name="ui.model.container.expiryDate.hint">That last date that the container can be used</string>
 
+  <string name="ui.model.observation.interpretationConcept">Interpretation</string>
+  <string name="ui.model.observation.interpretationConcept.lowlow">Very Low</string>
+  <string name="ui.model.observation.interpretationConcept.low">Low</string>
+  <string name="ui.model.observation.interpretationConcept.normal">Normal</string>
+  <string name="ui.model.observation.interpretationConcept.high">High</string>
+  <string name="ui.model.observation.interpretationConcept.highhigh">Very High</string>
 </resources>

@@ -31,18 +31,21 @@
         id="DataQualityRuleTable"
         type="DataQuality" 
         upstream="true" 
-        no-deleted="true"
+        no-deleted="false"
         can-filter="true"
         stateless="true"
         search-field="name"
         can-size="true"
         i18n-prefix="'ui.model.dataQuality.'"
+        default-query="{ obsoletionTime: 'null'}"
         render="{ enabled: renderEnabled, resources: renderResources }"
         properties="[  'id', 'name', 'enabled', 'resources' ]"
         item-actions="[
-            { sref: 'santedb-admin.cdr.quality.edit', name: 'edit', className: 'btn btn-primary', icon: 'fas fa-pencil', demand: '1.3.6.1.4.1.33349.3.1.5.9.2.0.15' },
-            { action: 'delete', name: 'delete', className: 'btn btn-danger', icon: 'fas fa-trash', demand: '1.3.6.1.4.1.33349.3.1.5.9.2.0.15' },
-            { action: 'download', name: 'download', className: 'btn btn-info', icon: 'fas fa-cloud-download',demand: '1.3.6.1.4.1.33349.3.1.5.9.2.0.15' }
+            { sref: 'santedb-admin.cdr.quality.edit', name: 'edit', className: 'btn btn-primary', icon: 'fas fa-pencil', demand: '1.3.6.1.4.1.33349.3.1.5.9.2.0.15', when: '!r.obsoletionTime' },
+            { action: 'delete', name: 'delete', className: 'btn btn-danger', icon: 'fas fa-trash', demand: '1.3.6.1.4.1.33349.3.1.5.9.2.0.15', when: '!r.obsoletionTime' },
+            { action: 'restore', name: 'restore', className: 'btn btn-success', icon: 'fas fa-trash-restore', demand: '1.3.6.1.4.1.33349.3.1.5.9.2.0.15', when: 'r.obsoletionTime' },
+            { action: 'purge', name: 'purge', className: 'btn btn-danger', icon: 'fas fa-fire-flame-curved', demand: '1.3.6.1.4.1.33349.3.1.5.9.2.0.15', when: 'r.obsoletionTime' },
+            { action: 'download', name: 'download', className: 'btn btn-info', icon: 'fas fa-cloud-download',demand: '1.3.6.1.4.1.33349.3.1.5.9.2.0.15' },
         ]"
         actions="[
             { sref: 'santedb-admin.cdr.quality.create', name: 'create', className: 'btn btn-primary', icon: 'fas fa-asterisk', demand: '1.3.6.1.4.1.33349.3.1.5.9.2.0.15' }

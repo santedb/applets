@@ -110,8 +110,8 @@ angular.module('santedb-lib')
                     // Data tables?
                     var tableData = $("table", $(element));
                     if (tableData.length > 0) {
+                        $(tableData).addClass("table table-striped w-100");
                         $(tableData).DataTable();
-                        $(tableData).addClass("table table-responsive w-100");
                     }
                     if ($compile)
                         $compile($(element))($scope);
@@ -204,7 +204,7 @@ angular.module('santedb-lib')
                             var parameters = angular.copy($scope.parameterValues);
                             parameters["_count"] = 1000;
                             var html = await SanteDBBi.renderReportAsync($scope.reportId, v.name, "html", parameters);
-                            setReportContent(`${$scope.htmlId}view`, html);
+                            setReportContent(`${$scope.htmlId}_${v.name}view`, html);
                         }));
                         // Select the view
                         if ($scope.view)
@@ -235,7 +235,7 @@ angular.module('santedb-lib')
                                 if (r.query)
                                     r.query.parameters.forEach(function (p) {
                                         if (parameters.find(function (ep) { ep.name == p.name }) == null) {
-                                            if (scope.parameters)
+                                            if ($scope.parameters)
                                                 p.value = $scope.parameters[p.name];
                                             parameters.push(p);
                                         }
@@ -311,8 +311,8 @@ angular.module('santedb-lib')
                     // Data tables?
                     var tableData = $("table", $(element));
                     if (tableData.length > 0) {
+                        $(tableData).addClass("table table-striped w-100");
                         $(tableData).DataTable();
-                        $(tableData).addClass("table table-responsive w-100");
                     }
                     if (compile)
                         $compile($(element))(scope);
@@ -408,8 +408,8 @@ angular.module('santedb-lib')
                 labels: "<",
                 legend: "<",
                 title: "<",
-                axis: "<",
-                valueLabel: '<'
+                xAxis: "<",
+                yAxis: "<",
             },
             restrict: 'E',
             replace: true,
@@ -443,34 +443,54 @@ angular.module('santedb-lib')
                     scope.data[i].borderWidth = 1;
                 }
 
+                var yAxis = scope.yAxis || {};
                 if (scope.type == 'bar' || scope.type == 'line') {
                     var scale = {
                         yAxes: [{
                             scaleLabel: {
-                                display: scope.valueLabel !== undefined,
-                                labelString: scope.valueLabel
+                                display: yAxis.scaleLabel !== undefined,
+                                labelString: yAxis.scaleLabel
                             },
                             ticks: {
-                                beginAtZero: false
+                                beginAtZero: false,
+                                min: yAxis.min,
+                                max: yAxis.max
                             }
                         }]
                     };
-                    if (scope.axis) {
+                    if (scope.xAxes) {
                         scale.xAxes = [{
-                            type: scope.axis.type,
+                            type: scope.xAxes.type,
                             position: 'bottom',
                             display: true,
                             scaleLabel: {
                                 display: true,
-                                labelString: scope.axis.scaleLabel
+                                labelString: scope.xAxes.scaleLabel
                             },
                             ticks: {
-                                stepSize: scope.axis.stepSize || 1
+                                stepSize: scope.xAxes.stepSize || 1
                             }
                         }];
+
+                        if(scope.xAxes.type == 'time' || scope.xAxes.type == 'timeseries') {
+                            scale.xAxes[0].time = scope.xAxes.time;
+                        }
                     }
                 }
 
+                // Correct any datasets
+                scope.data = scope.data.map(d=> {
+                    if(d.type == "bubble") {
+                        d.data = d.data.map((p,i)=>{ 
+                            return { 
+                                y: p.y || 0,
+                                r: p.r || p,
+                                x: p.x || scope.labels[i] 
+                            } 
+                        });
+                    }
+                    return d;
+                })
                 // Construct the chart
                 scope.chart = new Chart(element[0].getContext("2d"), {
                     type: scope.type,
