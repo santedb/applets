@@ -86,7 +86,7 @@ angular.module("santedb").controller("MaterialWidgetController", ["$scope", "$ro
     }
 
     $scope.renderManufacturer = function (r) {
-        if (r.relationship && r.relationship.ManufacturedProduct) {
+        if (r.relationship && r.relationship.ManufacturedProduct && r.relationship.ManufacturedProduct[0]) {
             return SanteDB.display.renderEntityName(r.relationship.ManufacturedProduct[0].holderModel.name);
         }
     }
@@ -174,6 +174,17 @@ angular.module("santedb").controller("MaterialWidgetController", ["$scope", "$ro
                 material.operation = BatchOperationType.Update;
             }
 
+            // Remove the manufacturer assocation
+            if(material.relationship && material.relationship.ManufacturedProduct) {
+                submissionBundle.resource.push(new EntityRelationship({
+                    id: material.relationship.ManufacturedProduct[0].id,
+                    source: material.relationship.ManufacturedProduct[0].holder,
+                    relationshipType: EntityRelationshipTypeKeys.ManufacturedProduct,
+                    target: material.id
+                }));
+                delete(material.relationship.ManufacturedProduct);
+            }
+
             await SanteDB.resources.bundle.insertAsync(submissionBundle);
             $("#MaterialProductTable").attr("newQueryId", true);
             $("#MaterialProductTable table").DataTable().draw();
@@ -196,9 +207,18 @@ angular.module("santedb").controller("MaterialWidgetController", ["$scope", "$ro
             product.identifier = product.identifier || {};
             product.identifier.GTIN = product.identifier.GTIN || [{ value: "" }];
             var manufacturer = await SanteDB.resources.entityRelationship.findAsync({ "target": id, "relationshipType": EntityRelationshipTypeKeys.ManufacturedProduct, _count: 1, _includeTotal: 'false' }, "fastview");
-            product.relationship.ManufacturedProduct = [manufacturer.resource[0]];
+            if(manufacturer.resource) {
+                product.relationship.ManufacturedProduct = [manufacturer.resource[0]];
+            }
+            else {
+                product.relationship.ManufacturedProduct = [];
+            }
             $timeout(() => {
                 $scope.editProduct = product;
+
+                if(!product.relationship.Instance) {
+                    product.relationship.Instance = [];
+                }
                 $("#editProductModal").modal("show");
             });
         }

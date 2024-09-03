@@ -384,7 +384,7 @@ function ensureIsArray(objectToMakeArray) {
         if(objectToMakeArray[0]) // not an array but has a '0' element so we convert
         {
             var arr = [];
-            Object.keys(objectToMakeArray).forEach(k => arr.push(id[k]));
+            Object.keys(objectToMakeArray).forEach(k => arr.push(objectToMakeArray[k]));
             return arr;
         }
         else {
