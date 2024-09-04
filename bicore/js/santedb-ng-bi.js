@@ -408,8 +408,8 @@ angular.module('santedb-lib')
                 labels: "<",
                 legend: "<",
                 title: "<",
-                xAxis: "<",
-                yAxis: "<",
+                axisX: "<",
+                axisY: "<",
             },
             restrict: 'E',
             replace: true,
@@ -443,7 +443,7 @@ angular.module('santedb-lib')
                     scope.data[i].borderWidth = 1;
                 }
 
-                var yAxis = scope.yAxis || {};
+                var yAxis = scope.axisY || {};
                 if (scope.type == 'bar' || scope.type == 'line') {
                     var scale = {
                         yAxes: [{
@@ -454,26 +454,28 @@ angular.module('santedb-lib')
                             ticks: {
                                 beginAtZero: false,
                                 min: yAxis.min,
-                                max: yAxis.max
+                                max: yAxis.max,
+                                grace: yAxis.grace || '10%'
                             }
                         }]
                     };
-                    if (scope.xAxes) {
+                    var xAxis = scope.axisX;
+                    if (xAxis) {
                         scale.xAxes = [{
-                            type: scope.xAxes.type,
+                            type: xAxis.type,
                             position: 'bottom',
                             display: true,
                             scaleLabel: {
                                 display: true,
-                                labelString: scope.xAxes.scaleLabel
+                                labelString: xAxis.scaleLabel
                             },
                             ticks: {
-                                stepSize: scope.xAxes.stepSize || 1
+                                stepSize: xAxis.stepSize || 1
                             }
                         }];
 
-                        if(scope.xAxes.type == 'time' || scope.xAxes.type == 'timeseries') {
-                            scale.xAxes[0].time = scope.xAxes.time;
+                        if(xAxis.type == 'time' || xAxis.type == 'timeseries') {
+                            scale.xAxes[0].time = xAxis.time;
                         }
                     }
                 }
