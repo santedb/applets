@@ -28,7 +28,7 @@
  * @param {Function} valueSelector The function predicate that returns the value for the groupin
  * @returns {Object} An object whose keys represent the delegate returned by {keySelector}
  */
-Array.prototype.groupBy = function(keySelector, valueSelector) {
+Object.defineProperty(Array.prototype, 'groupBy', { value: function(keySelector, valueSelector) {
     var retVal = {};
     this.forEach(itm => {
         var keyValue = keySelector(itm);
@@ -40,7 +40,8 @@ Array.prototype.groupBy = function(keySelector, valueSelector) {
         }
     });
     return retVal;
-}
+}, enumerable: false });
+
 /**
  * @method
  * @memberof Exception

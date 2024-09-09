@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ForeignDataMap xmlns="http://santedb.org/import" xmlns:model="http://santedb.org/model"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <id>a45eb1b5-ada7-4b67-af40-a80b495d1157</id>
+    <name>PDH Facility Microdata Import</name>
+    <description>Allows for the import of facility metadata from Pacific Data Hub's Stat Data Explorer (stats.paciticdata.org). Ensure that PDH_FAC_UNIT_ID is created as an identity domain in your instance, and that PDH_FAC_TYPE_IMPORT reference term mappings are imported</description>
+    <parameters>
+        <add name="rootCountry" required="true"
+          pattern="^[A-Z]{2}$" />
+        <add name="reportTargetType" required="true"
+        pattern="^PlaceType-[A-Za-z]*$" />
+    </parameters>
+    <maps>
+        <map>
+            <resource type="Place">
+                <when>
+                    <source>INDICATOR</source>
+                    <value>NFAC</value>
+                </when>
+                <skel xsi:type="model:Place">
+                    <model:classConcept>ff34dfa7-c6d3-4f8b-bc9f-14bcdc13ba6c</model:classConcept>
+                    <model:statusConcept>C8064CBD-FA06-4530-B430-1A52F1530C27</model:statusConcept>
+                    <model:address>
+                        <model:use>5724A9B6-24B6-43B7-8075-7A0D61FCB814</model:use>
+                    </model:address>
+                </skel>
+
+                <maps>
+                    <map replace="true">
+                        <parameter>rootCountry</parameter>
+                        <target>address[PhysicalVisit].component[Country].value</target>
+                    </map>
+
+                    <map required="true">
+                        <source>Pacific Island Countries and territories</source>
+                        <target>address[PhysicalVisit].component[State].value</target>
+                    </map>
+
+                    <map required="false" replace="true">
+                        <source>Pacific Island Countries and territories</source>
+                        <transform transformer="Expression">
+                            <args>
+                                <string>input.Replace("Nth.","North ").Replace("Sth.","South ").Replace("Wst.","West ").Replace("Est.","East ").Replace("  "," ")</string>
+                            </args>
+                        </transform>
+                        <transform transformer="EntityLookup">
+                            <args>
+                                <string>Place</string>
+                                <string>name.component.value=~$input&amp;address.component[Country].value=$rootCountry&amp;typeConcept.mnemonic=$reportTargetType</string>
+                            </args>
+                        </transform>
+                        <target>relationship[ReportTarget].target</target>
+                    </map>
+
+                    <map required="true" replace="true">
+                        <source>FACNAME</source>
+                        <target>name[OfficialRecord].component.value</target>
+                    </map>
+
+                    <map required="true" replace="true">
+                        <source>FACTYPE</source>
+                        <transform transformer="EntityLookup">
+                            <args>
+                                <string>Concept</string>
+                                <string>referenceTerm[PDH_FAC_TYPE_IMPORT].term.mnemonic=$FACTYPE&amp;conceptSet=d65719ec-0795-47ec-8aaf-dcb867c5ca56</string>
+                            </args>
+                        </transform>
+                        <target>typeConcept</target>
+                    </map>
+
+                    <map required="false" replace="true">
+                        <source>LATITUDE</source>
+                        <target>geo.lat</target>
+                    </map>
+
+                    <map required="false" replace="true">
+                        <source>LONGITUDE</source>
+                        <target>geo.lng</target>
+                    </map>
+
+                    <map required="true" replace="true">
+                        <source>UNIT_ID</source>
+                        <target>identifier[PDH_FAC_UNIT_ID].value</target>
+                    </map>
+
+                </maps>
+                <existing>
+                    <where>classConcept=ff34dfa7-c6d3-4f8b-bc9f-14bcdc13ba6c&amp;identifier[PDH_FAC_UNIT_ID].value=$output.identifier[PDH_FAC_UNIT_ID].value</where>
+                </existing>
+            </resource>
+        </map>
+    </maps>
+</ForeignDataMap>

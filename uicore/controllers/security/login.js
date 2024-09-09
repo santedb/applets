@@ -45,10 +45,10 @@ angular.module("santedb").controller("LoginController", ['$scope', '$rootScope',
             var sessionResult = null;
             switch ($scope.login.grant_type) {
                 case "password":
-                    sessionResult = await SanteDB.authentication.passwordLoginAsync($scope.login.userName, $scope.login.password, $scope.login.tfaSecret, $scope.login.noSession, pouKey, $scope.login.scope, $scope.login.claim);
+                    sessionResult = await SanteDB.authentication.passwordLoginAsync($scope.login.userName, $scope.login.password, $scope.login.tfaSecret, $scope.login.noSession, pouKey, $scope.login.scope || "*", $scope.login.claim);
                     break;
                 case "pin":
-                    sessionResult = await SanteDB.authentication.pinLoginAsync($scope.login.userName, $scope.login.password, $scope.login.tfaSecret, $scope.login.noSession, $scope.login.scope, $scope.login.claim);
+                    sessionResult = await SanteDB.authentication.pinLoginAsync($scope.login.userName, $scope.login.password, $scope.login.tfaSecret, $scope.login.noSession, $scope.login.scope || "*", $scope.login.claim);
                     break;
                 default:
                     throw { "message": "ui.login.invalidMethod" };
