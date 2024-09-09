@@ -415,6 +415,7 @@
     <string name="ui.admin.facility.staff.manager.promote.confirm">Are you sure you want to promote this staff member to manager?</string>
     <string name="ui.admin.facility.staff.manager.promote.success">Staff member has been promoted successfully</string>
     <string name="ui.admin.facility.staff.manager.promote.error">Error promoting to manager: {error}</string>
+    <string name="ui.admin.facility.staff.manager.promote.administrator">Would you like to add this user to the local administrators group?</string>
     <string name="ui.admin.facility.staff.remove.confirm">Are you sure you want to remove the staff member {user} from this facility? (note: any management role will also be removed)</string>
     <string name="ui.admin.facility.staff.remove.success">Staff has been removed successfully</string>
     <string name="ui.admin.facility.staff.add.success">Staff has been added successfully</string>

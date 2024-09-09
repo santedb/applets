@@ -363,3 +363,7 @@ div.scroll-sticky {
 div.object-header {
     z-index: 100;
 }
+
+.strikethrough {
+    text-decoration: line-through;
+}

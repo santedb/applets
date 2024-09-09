@@ -552,6 +552,10 @@
   <string name="ui.model.act.participation.Baby.multipleBirthIndicator.help">If this newborn was part of a multiple birth (twin, triplet, etc.)</string>
   <string name="ui.model.act.participation.Baby.birthplace.help">The place (hospital, township, etc.) where the newborn was born</string>
 
+  <!-- Account management -->
+  <string name="ui.model.act.accm.participation.Consumable.id">Material Lot/Batch</string>
+  <string name="ui.model.act.accm.participation.quantity">Count</string>
+  <string name="ui.model.act.participation.Consumable.partialQuantity">Partial {unit}</string>
   <!-- Audit Logs -->
   <string name="ui.model.audit.action">Action</string>
   <string name="ui.model.audit.event">Event</string>

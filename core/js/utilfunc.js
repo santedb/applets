@@ -21,6 +21,26 @@
  * Date: 2023-5-19
  */
 
+
+/**
+ * Group the array into an object by the keySelector
+ * @param {Function} keySelector The function predicate that returns the key for grouping
+ * @param {Function} valueSelector The function predicate that returns the value for the groupin
+ * @returns {Object} An object whose keys represent the delegate returned by {keySelector}
+ */
+Array.prototype.groupBy = function(keySelector, valueSelector) {
+    var retVal = {};
+    this.forEach(itm => {
+        var keyValue = keySelector(itm);
+        if(retVal[keyValue]) {
+            retVal[keyValue].push(valueSelector(itm));
+        }
+        else {
+            retVal[keyValue] = [valueSelector(itm)];
+        }
+    });
+    return retVal;
+}
 /**
  * @method
  * @memberof Exception
@@ -384,7 +404,7 @@ function ensureIsArray(objectToMakeArray) {
         if(objectToMakeArray[0]) // not an array but has a '0' element so we convert
         {
             var arr = [];
-            Object.keys(objectToMakeArray).forEach(k => arr.push(id[k]));
+            Object.keys(objectToMakeArray).forEach(k => arr.push(objectToMakeArray[k]));
             return arr;
         }
         else {

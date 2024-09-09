@@ -133,6 +133,11 @@ angular.module('santedb-lib')
 
             retVal += "&nbsp;";
 
+
+            if(selection.lotNumber) {
+                retVal += `${selection.lotNumber} - `;
+            }
+
             if (selection.name != null)
                 retVal += SanteDB.display.renderEntityName(selection.name);
             else if (selection.name != null && selection.name[SanteDB.locale.getLocale()])
@@ -153,6 +158,10 @@ angular.module('santedb-lib')
                 retVal += selection.element.innerText.trim();
             else if (selection.text)
                 retVal += selection.text;
+            
+            if(selection.expiryDate) {
+                retVal += ` <span class="badge badge-warning">EXP: ${moment(selection.expiryDate).format("YYYY-MM-DD")}</span>`;
+            }
 
             retVal += "&nbsp;";
             if (!minRender) {

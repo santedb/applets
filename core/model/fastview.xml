@@ -238,6 +238,7 @@
     <property name="classConcept" behavior="always"/>
     <property name="determinerConceptModel" behavior="never"/>
     <property name="statusConceptModel" behavior="never"/>
+    <property name="quantityConceptModel" behavior="always" ref="Concept"/>
     <property name="name" all="true" ref="EntityName" behavior="always"/>
     <property name="identifier" all="true" behavior="always">
       <property name="GTIN" all="true" />
@@ -300,6 +301,7 @@
     <property name="classConceptModel" behavior="always" ref="Concept"/>
     <property name="classConcept" behavior="always"/>
     <property name="determinerConceptModel" behavior="never"/>
+    <property name="quantityConceptModel" behavior="always" ref="Concept"/>
     <property name="statusConceptModel" behavior="always" ref="Concept"/>
     <property name="typeConceptModel" behavior="always" ref="Concept"/>
     <property name="formConceptModel" behavior="always" ref="Concept" />

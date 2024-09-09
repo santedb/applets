@@ -22,6 +22,8 @@
  */
 angular.module('santedb').controller('FacilityStaffController', ["$scope", "$rootScope", "$state", "$timeout", function ($scope, $rootScope, $state, $timeout) {
 
+    const LOCAL_ADMINISTRATORS_GID = '67606be0-cb99-4cfb-8658-8d0c006116ac';
+
     $scope.assignUser = {};
     $scope.renderName = (r) => SanteDB.display.renderEntityName(r.holderModel.name);
     $scope.renderUser = function(r) {
@@ -76,6 +78,11 @@ angular.module('santedb').controller('FacilityStaffController', ["$scope", "$roo
         if(confirm(SanteDB.locale.getString("ui.admin.facility.staff.manager.promote.confirm", { user: SanteDB.display.renderEntityName(user.holderModel.name) })))
         {
             try {
+                // Check if they're a local administrator and prompt if we want to make them
+                var userInfo = await SanteDB.resources.securityUser.getAsync(user.holderModel.securityUser);
+                if(userInfo.role.indexOf('LOCAL_ADMINISTRATORS') == -1 && confirm(SanteDB.locale.getString("ui.admin.facility.staff.manager.promote.administrator"))) {
+                    await SanteDB.resources.securityRole.addAssociatedAsync(LOCAL_ADMINISTRATORS_GID, 'user', userInfo.entity);
+                }
                 await SanteDB.resources.entityRelationship.insertAsync(new EntityRelationship({
                     source: user.holder,
                     target: $scope.scopedObject.id,
