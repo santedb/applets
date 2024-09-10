@@ -66,7 +66,7 @@ angular.module('santedb').controller('PubSubIndexController', ["$scope", "$rootS
     $scope.deleteSubscription = async function(id) {
         if (confirm(SanteDB.locale.getString("ui.admin.pubsub.delete.confirm"))) {
             try {
-                await SanteDB.resources.pubSubSubscription.deleteAsync(id);
+                await SanteDB.resources.pubSubSubscriptionDefinition.deleteAsync(id);
                 $("#pubSubManager table").DataTable().ajax.reload();
             }
             catch (e) {
