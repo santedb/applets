@@ -103,6 +103,7 @@
     <property name="name" behavior="always">
       <property name="*"  all="true" ref="EntityName"/>
     </property>
+    <property name="typeConceptModel" behavior="always" ref="Concept"/>
   </type>
 
   <type type="Material" all="true">

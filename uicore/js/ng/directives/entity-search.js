@@ -126,7 +126,12 @@ angular.module('santedb-lib')
                     retVal += "<i class='fa fa-fw fa-certificate'></i>";
                     break;
                 default:
-                    retVal += "<i class='fa fa-fw fa-box'></i> ";
+                    if(selection.icon) {
+                        retVal += `<i class='${selection.icon}'></i> `;
+                    }
+                    else {
+                        retVal += "<i class='fa fa-fw fa-box'></i> ";
+                    }
                     break;
             }
 
@@ -210,7 +215,8 @@ angular.module('santedb-lib')
                 isRequired: '=', // True if the selector is required
                 forRelationshipType: '=', // If this is the target of the relationship then the default query can be auto-populated with this information
                 withRelationshipSourceClass: '=', // The class concept of the source object
-                withRelationshipTargetClass: '=' // The class concept of the target object
+                withRelationshipTargetClass: '=', // The class concept of the target object
+                jsFilter: '<'
             },
             restrict: 'E',
             require: 'ngModel',
@@ -435,6 +441,10 @@ angular.module('santedb-lib')
 
                                 var retVal = { results: [], pagination: { more: data.totalResults > data.count } };
                                 var data = data.$type == "Bundle" ? data.resource : data.resource || data;
+
+                                if(scope.jsFilter) {
+                                    data = data.filter(flt => scope.jsFilter(flt));
+                                }
 
                                 try {
                                     if (!data || data.length == 0) return [];
