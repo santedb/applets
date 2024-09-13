@@ -2745,6 +2745,24 @@ function SanteDBWrapper() {
             return __SanteDBAppService.IsClinicalAvailable();
         }
         /**
+         * @summary Resolves the HTML summary view for the specified template
+         * @method resolveTemplateSummary
+         * @memberof SanteDBWrapper.ApplicationApi
+         * @returns {string} The HTML content of the sumary form for the specified template
+         * @param {string} templateId The id of the template for which HTML summary should be gathered
+         * @description This method allows a plugin to resolve a template identifier (like: entity.tanzania.child) to an actual HTML summary
+         */
+        this.resolveTemplateSummary = function (templateId) {
+            var entry = _templateCache.find(o=>o.mnemonic == templateId);
+            if(entry) {
+                return entry.summary;
+            }
+            else {
+                return null;
+            }
+        }
+
+        /**
          * @summary Resolves the HTML input form for the specified template
          * @method resolveTemplateForm
          * @memberof SanteDBWrapper.ApplicationApi
@@ -4652,10 +4670,10 @@ function SanteDBWrapper() {
          * @returns {String} The UUID of the current facility identifier
          */
         this.getCurrentFacilityId = async function() {
-            try {
+            try { 
                 var sessionInfo = await SanteDB.authentication.getSessionInfoAsync();
                 var sessionFacility = sessionInfo.claims["urn:oasis:names:tc:xspa:1.0:subject:facility"];
-                return sessionFacility || SanteDB.configuration.getAssignedFacilityId();
+                return sessionFacility ? sessionFacility.value || sessionFacility : SanteDB.configuration.getAssignedFacilityId();
             }
             catch(e) {
                 console.warn(e);
