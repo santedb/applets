@@ -2755,7 +2755,7 @@ function SanteDBWrapper() {
         this.resolveTemplateSummary = function (templateId) {
             var entry = _templateCache.find(o=>o.mnemonic == templateId);
             if(entry) {
-                return entry.summary;
+                return entry.summaryView;
             }
             else {
                 return null;

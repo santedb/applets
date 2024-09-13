@@ -31,6 +31,7 @@
         <add>_exclude=concept</add>
       </filters>
     </definition>
+    <definition resource="CarePathwayDefinition" name="ui.subscription.carePathway.all" mode="*" ignoreModifiedOn="false" trigger="on-start on-x-net" />
     <!-- All Concepts Terms Should be Downloaded -->
     <definition resource="Concept" name="ui.subscription.concept.all" mode="*" ignoreModifiedOn="false" trigger="on-start">
       <filters>
