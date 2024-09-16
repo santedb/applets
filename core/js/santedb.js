@@ -3004,6 +3004,18 @@ function SanteDBWrapper() {
             resource: "Bundle",
             api: _hdsi
         });
+
+        /**
+        * @type {ResourceWrapper}
+        * @memberof SanteDBWrapper.ResourceApi
+        * @summary Represents a resource wrapper that persists care pathway definitions
+        */
+        this.carePathwayDefinition = new ResourceWrapper({
+            accept: _viewModelJsonMime,
+            resource: 'CarePathwayDefinition',
+            api: _hdsi
+        });
+
         /**
             * @type {ResourceWrapper}
             * @memberof SanteDBWrapper.ResourceApi
