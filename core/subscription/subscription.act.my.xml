@@ -15,9 +15,6 @@
  - WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the 
  - License for the specific language governing permissions and limitations under 
  - the License.
- - 
- - User: fyfej
- - Date: 2023-5-19
  -->
 <SubscriptionDefinition xmlns="http://santedb.org/subscription" name="ui.subscription.act.my" uuid="decad40c-a232-482f-b93d-317b25c1ef0d" resource="Act">
     <!-- DOWNLOADS ALL ACTS WHERE:

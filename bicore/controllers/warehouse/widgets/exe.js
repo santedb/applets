@@ -16,9 +16,6 @@
  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the 
  * License for the specific language governing permissions and limitations under 
  * the License.
- * 
- * User: fyfej
- * Date: 2023-12-6
  */
 angular.module('santedb').controller('DataMartExecutionController', ["$scope", "$rootScope", "$timeout", function ($scope, $rootScope, $timeout) {
 

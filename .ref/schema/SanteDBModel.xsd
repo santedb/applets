@@ -15,9 +15,6 @@
  - WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the 
  - License for the specific language governing permissions and limitations under 
  - the License.
- - 
- - User: fyfej
- - Date: 2023-5-19
  -->
 <xs:schema xmlns:tns="http://santedb.org/model" elementFormDefault="qualified" targetNamespace="http://santedb.org/model" xmlns:xs="http://www.w3.org/2001/XMLSchema">
   <xs:import namespace="http://microsoft.com/wsdl/types/" schemaLocation="BaseTypes.xsd"/>
