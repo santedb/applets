@@ -257,7 +257,7 @@ angular.module('santedb').controller('InitialSettingsController', ['$scope', '$r
 
             // Define the services
             config.values.application.service = $scope.serverCaps.appInfo.service.filter(function (s) { return s.active; })
-                .map(function (m) { return { type: m.type } });
+                .map(function (m) { return m.type });
             config._autoRestart = true;
 
             try {

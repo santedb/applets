@@ -1,21 +1,3 @@
-/*
- * Copyright (C) 2021 - 2024, SanteSuite Inc. and the SanteSuite Contributors (See NOTICE.md for full copyright notices)
- * Copyright (C) 2019 - 2021, Fyfe Software Inc. and the SanteSuite Contributors
- * Portions Copyright (C) 2015-2018 Mohawk College of Applied Arts and Technology
- * 
- * Licensed under the Apache License, Version 2.0 (the "License"); you 
- * may not use this file except in compliance with the License. You may 
- * obtain a copy of the License at 
- * 
- * http://www.apache.org/licenses/LICENSE-2.0 
- * 
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
- * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the 
- * License for the specific language governing permissions and limitations under 
- * the License.
- */
-
 // SanteDB.Core.Model.Association`1, SanteDB.Core.Model, Version=3.0.1965.0, Culture=neutral, PublicKeyToken=null
 //if(!Association)
 /**
@@ -13731,7 +13713,7 @@ function ActRelationship (copyData) {
  * @property {string} mnemonic Gets or sets the mnemonic for the care pathway
  * @property {string} description Gets or sets the description of the care pathway
  * @property {string} eligibility Gets or sets the eligibility criteria (when someone can be enroled to create a care plan)
- * @property {CarePathwayEnrolmentMode} enrolment Gets or sets the enrolment mode(see: {@link CarePathwayEnrolmentMode} for values)
+ * @property {CarePathwayEnrollmentMode} enrollment Gets or sets the enrolment mode(see: {@link CarePathwayEnrollmentMode} for values)
  * @property {string} encounterTemplate Gets or sets the type of encounter
  * @property {TemplateDefinition} encounterTemplateModel [Delay loaded from encounterTemplate],  Identifies the template definition (delay load for 
     {@link TemplateKey}
@@ -13834,9 +13816,9 @@ function CarePathwayDefinition (copyData) {
 	this.encounterTemplate = copyData.encounterTemplate;
 	/**
 	 * @summary Gets or sets the enrolment mode
-	 * @type {CarePathwayEnrolmentMode} 
+	 * @type {CarePathwayEnrollmentMode} 
 	 */
-	this.enrolment = copyData.enrolment;
+	this.enrollment = copyData.enrollment;
 	/**
 	 * @summary Gets or sets the eligibility criteria (when someone can be enroled to create a care plan)
 	 * @type {string} 
@@ -21667,17 +21649,17 @@ const ActRelationshipTypeKeys = {
 	 */
 	Duplicate : '2bbf068b-9121-4081-bf3c-ab62c01362ee',
 }  // ActRelationshipTypeKeys 
-// SanteDB.Core.Model.Acts.CarePathwayEnrolmentMode, SanteDB.Core.Model, Version=3.0.1965.0, Culture=neutral, PublicKeyToken=null
-// if(!CarePathwayEnrolmentMode)
+// SanteDB.Core.Model.Acts.CarePathwayEnrollmentMode, SanteDB.Core.Model, Version=3.0.1965.0, Culture=neutral, PublicKeyToken=null
+// if(!CarePathwayEnrollmentMode)
 /**
  * @enum {string}
  * @public
  * @readonly
  * @summary             Enrolment mode            
  */
-const CarePathwayEnrolmentMode = { 
+const CarePathwayEnrollmentMode = { 
 	/** 
-	 *             Enrolment is manually performed            
+	 *             Enrollment is manually performed            
 	 */
 	Manual : 'Manual',
 	ManualInt : '0',
@@ -21686,7 +21668,7 @@ const CarePathwayEnrolmentMode = {
 	 */
 	Automatic : 'Automatic',
 	AutomaticInt : '1',
-}  // CarePathwayEnrolmentMode 
+}  // CarePathwayEnrollmentMode 
 // SanteDB.Core.Model.Constants.NullReasonKeys, SanteDB.Core.Model, Version=3.0.1965.0, Culture=neutral, PublicKeyToken=null
 // if(!NullReasonKeys)
 /**

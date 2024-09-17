@@ -910,4 +910,18 @@
   <string name="ui.model.observation.interpretationConcept.normal">Normal</string>
   <string name="ui.model.observation.interpretationConcept.high">High</string>
   <string name="ui.model.observation.interpretationConcept.highhigh">Very High</string>
+  
+  <!-- Care Pathway Definitions -->
+   <string name="ui.model.carePathwayDefinition.description">Description</string>
+   <string name="ui.model.carePathwayDefinition.description.hint">A user-friendly name for the care pathway (example: ANC Care)</string>
+   <string name="ui.model.carePathwayDefinition.mnemonic">Mnemonic</string>
+   <string name="ui.model.carePathwayDefinition.mnemonic.hint"><![CDATA[A unique system identifier for the care pathway. This will be referenced in your <code>having scope &lt;mnemonic></code> statement in any CDSS protocol which applies to this care pathway]]></string>
+   <string name="ui.model.carePathwayDefinition.enrollment">Enrollment</string>
+   <string name="ui.model.carePathwayDefinition.enrollment.hint"><![CDATA[The enrolment rules for this care pathway. Values are <ul><li><code>Manual</code> - Users must manually enrol patients into this care pathway</li><li><code>Automatic</code> - Any new patients meeting the eligibility criteria are automatically enrolled in the pathway</li></ul>]]></string>
+   <string name="ui.model.carePathwayDefinition.eligibility">Eligibility Criteria</string>
+   <string name="ui.model.carePathwayDefinition.eligibility.hint">The eligibility which patients must meet to be enrolled in this care pathway</string>
+   <string name="ui.model.carePathwayDefinition.uuid">Unique ID</string>
+   <string name="ui.model.carePathwayDefinition.uuid.hint">A unique system identifier for the care pathway</string>
+   <string name="ui.model.carePathwayDefinition.encounter">Encounter Template</string>
+   <string name="ui.model.carePathwayDefinition.encounter.hint">For proposals of encounters, this is the template which is to be used (also used when checking in a patient for the care pathway)</string>
 </resources>

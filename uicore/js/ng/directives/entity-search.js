@@ -269,13 +269,15 @@ angular.module('santedb-lib')
                                             res = await api.findAsync(query);
                                         }
 
+                                        var results = Array.isArray(res) ? res : res.resource;
+
                                         // Matching item
-                                        if (res.resource.length == 1 && $(selectControl).find(`option[value='${v}']`).length == 0) {
-                                            var obj = res.resource[0];
+                                        if (results.length == 1 && $(selectControl).find(`option[value='${v}']`).length == 0) {
+                                            var obj = results[0];
                                             if ($scope.selector)
                                                 obj = obj[$scope.selector] || obj;
-                                            var option = new Option(renderObject(res.resource[0], $scope.minRender), v, false, true);
-                                            option.title = renderTitle(res.resource[0]);
+                                            var option = new Option(renderObject(results[0], $scope.minRender), v, false, true);
+                                            option.title = renderTitle(results[0]);
                                             $(selectControl)[0].add(option);
                                         }
                                     }
