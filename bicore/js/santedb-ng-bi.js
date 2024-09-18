@@ -422,7 +422,7 @@ angular.module('santedb-lib')
                     scope.data = [scope.data];
 
                 for (var i in scope.data) {
-                    if(!parseInt(i)) continue;
+                    if(parseInt(i) === NaN) continue;
                     if (scope.type == "line" || scope.type == "radar") {
 
                         scope.data[i].backgroundColor = scope.data[i].backgroundColor || randomColor(0.1, parseInt(i));
