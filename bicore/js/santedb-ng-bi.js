@@ -14,9 +14,6 @@
  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the 
  * License for the specific language governing permissions and limitations under 
  * the License.
- * 
- * User: fyfej
- * Date: 2023-5-19
  */
 
 /// <reference path="../../uicore/js/santedb-ui.js"/>
@@ -110,8 +107,8 @@ angular.module('santedb-lib')
                     // Data tables?
                     var tableData = $("table", $(element));
                     if (tableData.length > 0) {
+                        $(tableData).addClass("table table-striped w-100");
                         $(tableData).DataTable();
-                        $(tableData).addClass("table table-responsive w-100");
                     }
                     if ($compile)
                         $compile($(element))($scope);
@@ -204,7 +201,7 @@ angular.module('santedb-lib')
                             var parameters = angular.copy($scope.parameterValues);
                             parameters["_count"] = 1000;
                             var html = await SanteDBBi.renderReportAsync($scope.reportId, v.name, "html", parameters);
-                            setReportContent(`${$scope.htmlId}view`, html);
+                            setReportContent(`${$scope.htmlId}_${v.name}view`, html);
                         }));
                         // Select the view
                         if ($scope.view)
@@ -235,7 +232,7 @@ angular.module('santedb-lib')
                                 if (r.query)
                                     r.query.parameters.forEach(function (p) {
                                         if (parameters.find(function (ep) { ep.name == p.name }) == null) {
-                                            if (scope.parameters)
+                                            if ($scope.parameters)
                                                 p.value = $scope.parameters[p.name];
                                             parameters.push(p);
                                         }
@@ -311,8 +308,8 @@ angular.module('santedb-lib')
                     // Data tables?
                     var tableData = $("table", $(element));
                     if (tableData.length > 0) {
+                        $(tableData).addClass("table table-striped w-100");
                         $(tableData).DataTable();
-                        $(tableData).addClass("table table-responsive w-100");
                     }
                     if (compile)
                         $compile($(element))(scope);
@@ -408,12 +405,13 @@ angular.module('santedb-lib')
                 labels: "<",
                 legend: "<",
                 title: "<",
-                axis: "<"
+                axisX: "<",
+                axisY: "<",
             },
             restrict: 'E',
             replace: true,
             transclude: true,
-            template: '<canvas width="400" height="400"></canvas>',
+            template: '<canvas></canvas>',
             controller: ['$scope',
                 function ($scope) {
                 }
@@ -424,11 +422,13 @@ angular.module('santedb-lib')
                     scope.data = [scope.data];
 
                 for (var i in scope.data) {
+                    if(parseInt(i) === NaN) continue;
                     if (scope.type == "line" || scope.type == "radar") {
-                        scope.data[i].backgroundColor = scope.data[i].backgroundColor || randomColor(0.5, parseInt(i));
+
+                        scope.data[i].backgroundColor = scope.data[i].backgroundColor || randomColor(0.1, parseInt(i));
                         scope.data[i].borderColor = scope.data[i].borderColor || randomColor(1, parseInt(i));
-                        scope.data[i].pointBackgroundColor = 'rgba(0,0,0,0.1)';
-                        scope.data[i].pointBorderColor = 'rgba(0,0,0,0.1)';
+                        scope.data[i].pointBackgroundColor = scope.data[i].pointBackgroundColor || 'rgba(0,0,0,0.1)';
+                        scope.data[i].pointBorderColor = scope.data[i].pointBorderColor || 'rgba(0,0,0,0.1)';
                     }
                     else if (scope.type == "bar") {
                         scope.data[i].backgroundColor = scope.data[i].backgroundColor || randomColor(0.5, parseInt(i));
@@ -441,18 +441,56 @@ angular.module('santedb-lib')
                     scope.data[i].borderWidth = 1;
                 }
 
+                var yAxis = scope.axisY || {};
                 if (scope.type == 'bar' || scope.type == 'line') {
                     var scale = {
                         yAxes: [{
+                            scaleLabel: {
+                                display: yAxis.scaleLabel !== undefined,
+                                labelString: yAxis.scaleLabel
+                            },
                             ticks: {
-                                beginAtZero: true
+                                beginAtZero: false,
+                                min: yAxis.min,
+                                max: yAxis.max,
+                                grace: yAxis.grace || '10%'
                             }
                         }]
                     };
-                    if (scope.axis)
-                        scale.xAxes = scope.axis;
+                    var xAxis = scope.axisX;
+                    if (xAxis) {
+                        scale.xAxes = [{
+                            type: xAxis.type,
+                            position: 'bottom',
+                            display: true,
+                            scaleLabel: {
+                                display: true,
+                                labelString: xAxis.scaleLabel
+                            },
+                            ticks: {
+                                stepSize: xAxis.stepSize || 1
+                            }
+                        }];
+
+                        if(xAxis.type == 'time' || xAxis.type == 'timeseries') {
+                            scale.xAxes[0].time = xAxis.time;
+                        }
+                    }
                 }
 
+                // Correct any datasets
+                scope.data = scope.data.map(d=> {
+                    if(d.type == "bubble") {
+                        d.data = d.data.map((p,i)=>{ 
+                            return { 
+                                y: p.y || 0,
+                                r: p.r || p,
+                                x: p.x || scope.labels[i] 
+                            } 
+                        });
+                    }
+                    return d;
+                })
                 // Construct the chart
                 scope.chart = new Chart(element[0].getContext("2d"), {
                     type: scope.type,

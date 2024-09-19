@@ -14,9 +14,6 @@
  - WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the 
  - License for the specific language governing permissions and limitations under 
  - the License.
- - 
- - User: fyfej
- - Date: 2023-5-19
  -->
 <div xmlns="http://www.w3.org/1999/xhtml" xmlns:sdb="http://santedb.org/applet" 
     oc-lazy-load="{ name: 'EditDeviceCoreController', files: ['/org.santedb.admin/controllers/devices/widgets/core.js'] }" >
@@ -81,6 +78,7 @@
                 <div class="col-xs-12 col-md-10">
                     <entity-search  ng-disabled="panel.view != 'Edit'" autocomplete="_away" type="'UserEntity'"
                         filter="{ obsoletionTime: 'null' }"
+                        search-field="'securityUser.userName'"
                         class="form-control"
                         name="assignedEntity"
                         ng-model="scopedObject.entity.relationship.AssignedEntity"

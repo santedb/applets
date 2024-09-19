@@ -14,13 +14,11 @@
  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the 
  * License for the specific language governing permissions and limitations under 
  * the License.
- * 
- * User: fyfej
- * Date: 2023-5-19
  */
 
 /// <reference path="../../santedb-ui.js"/>
 /// <reference path="../../../../core/js/santedb.js"/>
+/// <reference path="../../../../core/js/santedb-model.js"/>
 
 var _mermaidInitialized = false;
 
@@ -103,6 +101,10 @@ angular.module('santedb-lib')
                             break;
                         case 'Place':
                             iconography = "fa-map-marker-alt";
+
+                            if(entity.classConcept == EntityClassKeys.ServiceDeliveryLocation) {
+                                iconography = "fa-hospital";
+                            }
                             break;
                         case 'Provider':
                             iconography = "fa-user-md";
@@ -147,7 +149,7 @@ angular.module('santedb-lib')
                     if(entityRelationship.$type == 'EntityRelationshipMaster')
                     {
                         // To show physical relationships
-                        if (viewMode == "advanced") {
+                        if (viewMode == "advanced" || viewMode == "full") {
                             if (entityRelationship.originalTarget != entityRelationship.target) {
                                 retVal += `\nrel${entityRelationship.originalHolder.substr(0, 8)} ---- rel${entityRelationship.originalTarget.substr(0, 8)}`;
                                 retVal += `\nrel${entityRelationship.originalTarget.substr(0, 8)}("<i class='fas fa-random fa-fw' title='MDM Redirected Link'></i>") ${dashType} rel${entityRelationship.target.substr(0, 8)}`;
@@ -210,10 +212,10 @@ angular.module('santedb-lib')
                                 var promises = Object.keys(ent.relationship).filter(k => !k.startsWith('$')).map(function (k) {
                                     var retVal = [];
                                     if (Array.isArray(ent.relationship[k]))
-                                        retVal = ent.relationship[k].map(function (r) {
+                                        retVal = ent.relationship[k].filter(r=>r.target || r.source).map(function (r) {
                                             return renderRelationship(ent, r, k, false, viewData.mode);
                                         });
-                                    else
+                                    else if(ent.relationship[k].target || ent.relationship[k].source)
                                         retVal = renderRelationship(ent, ent.relationship[k], k, false, viewData.mode);
                                     return retVal;
                                 }).flat();
@@ -292,21 +294,43 @@ angular.module('santedb-lib')
             controller: ['$scope', '$rootScope',
                 function ($scope, $rootScope) {
 
+                    const _defaultDepths = {
+                        simple: 1,
+                        advanced: 2,
+                        full: 4
+                    };
+
                     var drawn = false;
 
+                    $scope.printDiagram = function() {
+                        if($scope.viewData.graphs[$scope.viewData.mode]) {
+                            var win = window.open('about:blank', '_blank');
+                            var svgData = $scope.viewData.graphs[$scope.viewData.mode];
+                            svgData = //g.r
+                            win.document.write(`<html><head>
+                                    <link rel="stylesheet" type="text/css" href="/org.santedb.uicore/css/print.css" />
+                                    <link rel="stylesheet" type="text/css" href="/org.santedb.uicore/css/fontawesome.min.css" />
+                                    <link rel="stylesheet" type="text/css" href="/org.santedb.uicore/css/fa-solid.min.css" />
+                                </head><body class="printout"><div class="scale">${svgData}</div></body></html>`);
+                            setTimeout(() => {
+                                win.print();
+                                win.close();
+                            }, 500);
+                        }
+                    }
                     // Redraw the entity
                     $scope.redraw = function () {
                         $(`#entityNetworkDiagram${$scope.viewData._id}`).html("<i class='fas fa-circle-notch fa-spin'></i> " + SanteDB.locale.getString("ui.wait"));
-                        drawRelationships($scope.entity, $scope.direction, $scope.viewData, $scope.depth || 1);
+                        drawRelationships($scope.entity, $scope.direction, $scope.viewData, $scope.depth || _defaultDepths[$scope.viewData.mode]);
                         drawn = true;
                     }
                     // When the entity is set
                     $scope.$watch((s) => s.entity, function (n, o) {
                         if (!o && n || n && n.sequence != o.sequence || n && !drawn) {
                             if (!o || n.sequence != o.sequence) {
-                                $scope.viewData.graphs = { simple: null, advance: null };
+                                $scope.viewData.graphs = { simple: null, advanced: null, full: null };
                             }
-                            drawRelationships($scope.entity, $scope.direction, $scope.viewData, $scope.depth || 1);
+                            drawRelationships($scope.entity, $scope.direction, $scope.viewData, $scope.depth || _defaultDepths[$scope.viewData.mode]);
                             drawn = true;
                         }
                     })
@@ -317,6 +341,7 @@ angular.module('santedb-lib')
                         _mermaidInitialized = true;
                         mermaid.mermaidAPI.initialize({
                             "theme": "neutral",
+                            maxTextSize: 1048576,
                             flowchart: {
                                 width: '100%',
                                 useMaxWidth: false,
@@ -337,7 +362,8 @@ angular.module('santedb-lib')
                         mode: "simple",
                         graphs: {
                             simple: null,
-                            advanced: null
+                            advanced: null,
+                            full: null
                         }
                     };
                 }

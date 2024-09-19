@@ -14,9 +14,6 @@
  - WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the 
  - License for the specific language governing permissions and limitations under 
  - the License.
- - 
- - User: fyfej
- - Date: 2023-5-19
  -->
 <div xmlns="http://www.w3.org/1999/xhtml" class="container-fluid">
     <div class="row mb-2">
@@ -63,6 +60,17 @@
         <label for="loginPou" class="col-sm-3 control-label">{{ 'ui.login.input.tfa' | i18n }}</label>
         <div class="col-sm-9">
             <input type="text" pattern="^\d{4,}$" maxlength="10" class="form-control" ng-model="login.tfaSecret" ng-required="login.requireTfa"/>
+        </div>
+    </div>
+    <div class="form-group row" ng-if="login.requireFacility">
+        <div class="col-12 alert-secondary p-1 m-2">
+            <i class="fas fa-info-circle"></i> {{ 'error.session.facility.required' | i18n  }}
+        </div>
+        <label for="loginPou" class="col-sm-3 control-label">{{ 'ui.login.input.facility' | i18n }}</label>
+        <div class="col-sm-9">
+            <select class="form-control" ng-model="login.claim['urn:oasis:names:tc:xspa:1.0:subject:facility']" ng-required="login.requireFacility">
+                <option ng-repeat="fac in login.facilityList track by $index" value="{{fac.id}}">{{ fac.value }}</option>
+            </select>
         </div>
     </div>
     <div class="form-group row" ng-if="login.scope">

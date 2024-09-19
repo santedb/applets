@@ -15,9 +15,6 @@
  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the 
  * License for the specific language governing permissions and limitations under 
  * the License.
- * 
- * User: fyfej
- * Date: 2023-5-19
  */
 angular.module("santedb").controller("LoginController", ['$scope', '$rootScope', '$state', '$templateCache', '$stateParams', '$timeout', function ($scope, $rootScope, $state, $templateCache, $stateParams, $timeout) {
 
@@ -35,18 +32,26 @@ angular.module("santedb").controller("LoginController", ['$scope', '$rootScope',
         SanteDB.display.buttonWait("#loginButton", true);
         try {
 
+            // Facility?
+            if(SanteDB.configuration.getAssignedFacilityId() !== EmptyGuid) {
+                $scope.login.claim = $scope.login.claim || {};
+                $scope.login.claim['urn:oasis:names:tc:xspa:1.0:subject:facility'] = $scope.login.claim['urn:oasis:names:tc:xspa:1.0:subject:facility'] || SanteDB.configuration.getAssignedFacilityId();
+            }
+            
             var pouKey = $scope.login.purposeOfUse ? $scope.login.purposeOfUse.id : null;
             var sessionResult = null;
             switch ($scope.login.grant_type) {
                 case "password":
-                    sessionResult = await SanteDB.authentication.passwordLoginAsync($scope.login.userName, $scope.login.password, $scope.login.tfaSecret, $scope.login.noSession, pouKey, $scope.login.scope);
+                    sessionResult = await SanteDB.authentication.passwordLoginAsync($scope.login.userName, $scope.login.password, $scope.login.tfaSecret, $scope.login.noSession, pouKey, $scope.login.scope || "*", $scope.login.claim);
                     break;
                 case "pin":
-                    sessionResult = await SanteDB.authentication.pinLoginAsync($scope.login.userName, $scope.login.password, $scope.login.tfaSecret, $scope.login.noSession, $scope.login.scope);
+                    sessionResult = await SanteDB.authentication.pinLoginAsync($scope.login.userName, $scope.login.password, $scope.login.tfaSecret, $scope.login.noSession, $scope.login.scope || "*", $scope.login.claim);
                     break;
                 default:
                     throw { "message": "ui.login.invalidMethod" };
             }
+
+            $scope.login.claim = null;
 
             if ($scope.login.onLogin) {
                 $scope.login.onLogin(sessionResult);
@@ -67,35 +72,60 @@ angular.module("santedb").controller("LoginController", ['$scope', '$rootScope',
         }
         catch (e) {
 
-            if ((e.error || e.data.error) === "mfa_required") {
-                $timeout(() => {
-                    $scope.login.requireTfa =
-                        $scope.login._lockPassword =
-                        $scope.login._lockUserName = true;
-                    $scope.login._mfaDetail = e.data.error_description;
-                });
-                return;
+            switch (e.error || e.data && e.data.error) {
+                case "mfa_required":
+                    $timeout(() => {
+                        $scope.login.requireTfa =
+                            $scope.login._lockPassword =
+                            $scope.login._lockUserName = true;
+                        $scope.login._mfaDetail = e.data.error_description;
+                    });
+                    return;
+                case "password_expired":
+                    $scope.reset = {
+                        username: $scope.login.userName,
+                        challenge: { challenge: EmptyGuid },
+                        challengeResponse: $scope.login.password
+                    };
+                    await $scope.challengeLogin();
+                    $timeout(() => {
+                        $("#resetPasswordModal").modal('show');
+                    });
+                    return;
+                case "missing_claim":
+                    var claimInfo = (e.data || e).data;
+                    switch (claimInfo.claimType) {
+                        case "urn:oasis:names:tc:xspa:1.0:subject:facility":
+                            // todo: Post assigned facilities to scope
+                            try {
+                                var facilityList = claimInfo.claimValue.split(',').map(v => {
+                                    var vD = v.split('=');
+                                    return { id: vD[0], value: vD[1] }
+                                });
+                                $timeout(() => {
+                                    $scope.login.requireFacility =
+                                        $scope.login._lockPassword =
+                                        $scope.login._lockUserName = true;
+                                    $scope.login.facilityList = facilityList;
+                                });
+                                return;
+                            }
+                            catch (e2) {
+                                console.error("Error on place challenge", e2);
+                            }
+                    }
+                    break;
+                default:
+                    if (e.data && e.data.error_description) {
+                        e.userMessage = e.data.error_description;
+                        e.expiry = new Date(new Date().getTime() + e.data.expires_in);
+                    }
+                    else {
+                        e.userMessage = e.message;
+                    }
+                    $rootScope.errorHandler(e);
+                    break;
             }
-            else if ((e.error || e.data.error) === "password_expired") {
-                $scope.reset = {
-                    username: $scope.login.userName,
-                    challenge: { challenge: EmptyGuid },
-                    challengeResponse: $scope.login.password
-                };
-                await $scope.challengeLogin();
-                $timeout(() => {
-                    $("#resetPasswordModal").modal('show');
-                });
-                return;
-            }
-            else if (e.data && e.data.error_description) {
-                e.userMessage = e.data.error_description;
-                e.expiry = new Date(new Date().getTime() + e.data.expires_in);
-            }
-            else {
-                e.userMessage = e.message;
-            }
-            $rootScope.errorHandler(e);
         }
         finally {
             SanteDB.display.buttonWait("#loginButton", false);

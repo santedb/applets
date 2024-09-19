@@ -15,9 +15,6 @@
  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the 
  * License for the specific language governing permissions and limitations under 
  * the License.
- * 
- * User: fyfej
- * Date: 2023-5-19
  */
 angular.module('santedb').controller('UserProfileWidgetController', ['$scope', '$rootScope', '$timeout', function ($scope, $rootScope, $timeout) {
 
@@ -49,10 +46,12 @@ angular.module('santedb').controller('UserProfileWidgetController', ['$scope', '
                 $scope.scopedObject = await SanteDB.resources.userEntity.insertAsync(submissionObject);
             }
 
-            $scope.scopedObject = await SanteDB.resources.userEntity.getAsync($scope.scopedObject.id, "full"); // re-fetch the entity
+            var refetch =  await SanteDB.resources.userEntity.getAsync($scope.scopedObject.id, "full"); // re-fetch the entity
+            $timeout(() => {
+                $scope.scopedObject = refetch;
+            })
             toastr.success(SanteDB.locale.getString("ui.model.userEntity.saveSuccess"));
             form.$valid = true;
-            $scope.$apply();
         }
         catch (e) {
             $rootScope.errorHandler(e);

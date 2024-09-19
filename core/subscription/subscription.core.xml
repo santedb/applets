@@ -15,9 +15,6 @@
  - WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the 
  - License for the specific language governing permissions and limitations under 
  - the License.
- - 
- - User: fyfej
- - Date: 2023-5-19
  -->
 <SubscriptionDefinition xmlns="http://santedb.org/subscription" name="ui.subscription.core" uuid="a3f5d2a4-c3ef-4349-9dec-bdd6389a7037" resource="IdentifiedData" order="-1000">
   <client>
@@ -31,6 +28,7 @@
         <add>_exclude=concept</add>
       </filters>
     </definition>
+    <definition resource="CarePathwayDefinition" name="ui.subscription.carePathway.all" mode="*" ignoreModifiedOn="false" trigger="on-start on-x-net" />
     <!-- All Concepts Terms Should be Downloaded -->
     <definition resource="Concept" name="ui.subscription.concept.all" mode="*" ignoreModifiedOn="false" trigger="on-start">
       <filters>

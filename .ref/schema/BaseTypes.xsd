@@ -15,9 +15,6 @@
  - WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the 
  - License for the specific language governing permissions and limitations under 
  - the License.
- - 
- - User: fyfej
- - Date: 2023-5-19
  -->
 <xs:schema xmlns:tns="http://microsoft.com/wsdl/types/" elementFormDefault="qualified" targetNamespace="http://microsoft.com/wsdl/types/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
   <xs:simpleType name="guid">

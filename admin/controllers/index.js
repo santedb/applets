@@ -16,9 +16,6 @@
  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the 
  * License for the specific language governing permissions and limitations under 
  * the License.
- * 
- * User: fyfej
- * Date: 2023-5-19
  */
 angular.module('santedb').controller('AdminLayoutController', ["$scope", "$rootScope", "$state", "$templateCache", "$interval", "$timeout", function ($scope, $rootScope, $state, $templateCache, $interval, $timeout) {
 
@@ -59,7 +56,8 @@ angular.module('santedb').controller('AdminLayoutController', ["$scope", "$rootS
     // Load menus for the current user
     async function loadMenus() {
         try {
-            var menus = await SanteDB.application.getMenusAsync("org.santedb.admin")
+            var menus = await SanteDB.application.getMenusAsync("org.santedb.admin");
+            var templates = await SanteDB.application.getTemplateDefinitionsAsync();
             $timeout(() => $scope.menuItems = menus);
         }
         catch (e) {
@@ -74,8 +72,11 @@ angular.module('santedb').controller('AdminLayoutController', ["$scope", "$rootS
             // Add menu items
             loadMenus();
         }
-        else
+        else if(ov && !nv) {
             $scope.menuItems = null;
+            // Redirect to login
+            $state.go('login');
+        }
     });
 
     if ($rootScope.session)
@@ -136,6 +137,13 @@ angular.module('santedb').controller('AdminLayoutController', ["$scope", "$rootS
         catch (e) {
             toastr.warning(SanteDB.locale.getString("ui.admin.tickleError"));
             console.error(e);
+
+            var rootCause = e.getRootCause();
+            if(rootCause.$type == "PolicyViolationException" && rootCause.policy == "1.3.6.1.4.1.33349.3.1.5.9.2.1" &&
+                    rootCause.policyOutcome == "Elevate")
+            {
+                $state.go("login");
+            }
         }
     }
 

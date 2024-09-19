@@ -16,10 +16,42 @@
  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the 
  * License for the specific language governing permissions and limitations under 
  * the License.
- * 
- * User: fyfej
- * Date: 2023-5-19
  */
+
+/**
+ * Group the array into an object by the keySelector
+ * @param {Function} keySelector The function predicate that returns the key for grouping
+ * @param {Function} valueSelector The function predicate that returns the value for the groupin
+ * @returns {Object} An object whose keys represent the delegate returned by {keySelector}
+ */
+Object.defineProperty(Array.prototype, 'groupBy', { value: function(keySelector, valueSelector) {
+    var retVal = {};
+    this.forEach(itm => {
+        var keyValue = keySelector(itm);
+        if(retVal[keyValue]) {
+            retVal[keyValue].push(valueSelector(itm));
+        }
+        else {
+            retVal[keyValue] = [valueSelector(itm)];
+        }
+    });
+    return retVal;
+}, enumerable: false });
+
+/**
+ * @method
+ * @memberof Exception
+ * @summary Get the root cause of the exception
+ */
+Exception.prototype.getRootCause = function() {
+
+    var retVal = this;
+    while(retVal.cause) {
+        retVal = retVal.cause; 
+    }
+    return retVal;
+    
+}
 
 /**
  * @method
@@ -360,6 +392,155 @@ function scrubModelProperties(source) {
 }
 
 /**
+ * @summary Ensures that the object provided is an array, correcting any angularJS issues
+ * @param {any} objectToMakeArray The object to ensure is an array
+ */
+function ensureIsArray(objectToMakeArray) {
+
+    if(!Array.isArray(objectToMakeArray)) {
+        if(objectToMakeArray[0]) // not an array but has a '0' element so we convert
+        {
+            var arr = [];
+            Object.keys(objectToMakeArray).forEach(k => arr.push(objectToMakeArray[k]));
+            return arr;
+        }
+        else {
+            return [id];
+        }
+    }
+    else 
+        return objectToMakeArray;
+}
+
+/**
+ * @summary Ensures that the act being submitted doesn't have any odd or nasty data which may cause erorrs in the API
+ * @param {Act} act The act which is to be corrected
+ */
+async function prepareActForSubmission(act) {
+
+    // Convert AngularJS' odd identifier.0.value to identifier[0].value (i.e. make it an array)
+    if(act.identifier) {
+        Object.keys(act.identifier).forEach(function(k) {
+            var id = ensureIsArray(act.identifier[k]);
+            id = id.filter(o=>o.value && o.value !== "");
+            act.identifier[k] = id;
+        });
+    }
+ 
+    // Remove and correct identifiers on the relationships and participations
+    if (act.relationship) {
+        Object.keys(act.relationship).forEach((k) => {
+           
+            act.relationship[k] = ensureIsArray(act.relationship[k]);
+            act.relationship[k] = act.relationship[k].map((r) => {
+                if (r.targetModel) {
+                    r.target = r.targetModel.id = r.targetModel.id || r.target || SanteDB.application.newGuid();
+                    r.targetModel = applyCascadeInstructions(r.targetModel);
+                }
+                if (r.holderModel && r.holderModel.id) {
+                    r.holder = r.holderModel.id = r.holderModel.id || r.holder || SanteDB.application.newGuid();
+                }
+                delete r.relationshipTypeModel;
+                delete r.relationshipRoleModel;
+                delete r.classificationModel;
+
+                return r;
+            }).filter(r => r && (r.source || r.holder || r.target));
+        });
+    }
+
+    // Remove and correct keys on participations
+    if(act.participation) {
+        Object.keys(act.participation).forEach((k) => {
+            act.participation[k] = ensureIsArray(act.participation[k]);
+            act.participation[k] = act.participation[k].map((p) => {
+                if(p.playerModel) {
+                    p.player = p.playerModel.id = p.playerModel.id || p.player || SanteDB.application.newGuid();
+                }
+                if(p.actModel) {
+                    p.act = p.actModel.id = p.actModel.id || p.act || SanteDB.application.newGuid();
+                }
+                delete p.participationRoleModel;
+                delete p.classificationModel;
+                return p;
+            }).filter(r => r && (r.act || r.player || r.source));
+        });
+    }
+
+    return applyCascadeInstructions(act);
+}
+
+/**
+ * @summary Apply any act cascade instructions
+ * @param {Act} source The act on which the cascade instructions should be applied
+ */
+function applyCascadeInstructions(source) {
+    
+    // If the act has cascade instructions for context conduction then enforce them
+    source.tag = source.tag || {};
+    source.tag["$cascade:*:*"] = ["Location","Authororiginator","RecordTarget"];
+    source.relationship = source.relationship || {};
+    
+    var cascadeInstructions = Object.keys(source.tag).filter(o => o.indexOf("$cascade:") == 0);
+
+    cascadeInstructions.forEach(function (instruction) {
+        var targetTemplate = instruction.split(':');
+        var cascadeInstructions = source.tag[instruction];
+
+        if (targetTemplate.length != 3) {
+            console.error("Cascade control tag should be in format: $cascade:RelationshipType:template-id");
+            return;
+        }
+        // Find the participation with that template
+        if (targetTemplate[1] == "*") {
+            searchRelationship = Object.keys(source.relationship).map(key => source.relationship[key]).flat();
+        }
+        else {
+            var searchRelationship = source.relationship[targetTemplate[1]];
+            if (searchRelationship == null) {
+                console.warn("Cannot find indicated path", targetTemplate[1]);
+                return;
+            }
+        }
+
+        // Find the object with the specified template
+        if (!Array.isArray(searchRelationship))
+            searchRelationship = [searchRelationship];
+
+        searchRelationship
+            .filter(o => o.targetModel != null && (o.targetModel.templateModel != null && o.targetModel.templateModel.mnemonic == targetTemplate[2] || targetTemplate[2] == "*"))
+            .forEach(function (relationship) {
+
+                if (!relationship.targetModel.participation)
+                    relationship.targetModel.participation = {};
+
+                cascadeInstructions.map(function (instruction) {
+                    var data = instruction.split('=');
+                    if (data.length == 1)
+                        return { sourceRole: data[0], targetRole: data[0] };
+                    else if (data.length == 2)
+                        return { sourceRole: data[1], targetRole: data[0] };
+                })
+                    .forEach(function (instruction) {
+                        
+                        // Apply the cascade for actTime, startTime, stopTime
+                        relationship.targetModel.actTime = relationship.targetModel.actTime || source.actTime;
+                        relationship.targetModel.startTime = relationship.targetModel.startTime || source.startTime;
+                        relationship.targetModel.stopTime = relationship.targetModel.stopTime || source.stopTime;
+                        relationship.targetModel.statusConcept = relationship.targetModel.statusConcept || source.statusConcept;
+                        relationship.targetModel.moodConcept = relationship.targetModel.moodConcept || source.moodConcept;
+
+                        if (!relationship.targetModel.participation[instruction.targetRole]) // Only cascade if not specified
+                            relationship.targetModel.participation[instruction.targetRole] = source.participation[instruction.sourceRole];
+                    });
+
+            });
+    });
+
+    return source;
+}
+
+/**
  * @summary Ensures that the entity being submitted doesn't have any odd or nasty data - also ensures that the 
  * @param {Entity} entity The entity to be corrected
  */
@@ -371,7 +552,7 @@ async function prepareEntityForSubmission(entity) {
     }
     else  // Not a MDM so just update the determiner to be specific
     {
-        entity.determinerConcept = DeterminerKeys.Specific;
+        entity.determinerConcept = entity.determinerConcept || DeterminerKeys.Specific;
     }
 
     // Update the address - Correcting any linked addresses to the strong addresses
@@ -380,9 +561,7 @@ async function prepareEntityForSubmission(entity) {
         var addressList = [];
         var promises = Object.keys(entity.address).map(async function (k) {
             try {
-                var addr = entity.address[k];
-                if (!Array.isArray(addr))
-                    addr = [addr];
+                var addr = ensureIsArray(entity.address[k]);
 
                 var intlPromises = addr.map(async function (addrItem) {
                     if (addrItem.useModel) // have to load use
@@ -448,10 +627,7 @@ async function prepareEntityForSubmission(entity) {
         var nameList = [];
         Object.keys(entity.name).forEach(function (k) {
 
-            var name = entity.name[k];
-            if (!Array.isArray(name))
-                name = [name];
-
+            var name = ensureIsArray(entity.name[k]);
             name.forEach(function (nameItem) {
                 if (nameItem.useModel) // have to load use
                     nameItem.use = nameItem.useModel.id;
@@ -489,11 +665,7 @@ async function prepareEntityForSubmission(entity) {
     if(entity.identifier) // strip out empty identifiers
     {
         Object.keys(entity.identifier).forEach(function(k) {
-            var id = entity.identifier[k];
-            if(!Array.isArray(id)) {
-                id = [id];
-            }
-
+            var id = ensureIsArray(entity.identifier[k]);
             id = id.filter(o=>o.value && o.value !== "");
             entity.identifier[k] = id;
         });
@@ -502,18 +674,14 @@ async function prepareEntityForSubmission(entity) {
     // Clear out the relationships of their MDM keys
     if (entity.relationship) {
         Object.keys(entity.relationship).forEach((k) => {
-            if (!Array.isArray(entity.relationship[k])) {
-                entity.relationship[k] = [entity.relationship[k]];
-            }
+            entity.relationship[k] = ensureIsArray(entity.relationship[k]);
 
             entity.relationship[k] = entity.relationship[k].map((r) => {
-                if (r.targetModel && r.targetModel.id) {
-                    r.target = r.targetModel.id;
-                    delete r.targetModel;
+                if (r.targetModel) {
+                    r.target = r.targetModel.id = r.targetModel.id || r.target || SanteDB.application.newGuid();
                 }
-                if (r.holderModel && r.holderModel.id) {
-                    r.holder = r.holderModel.id;
-                    delete r.holderModel;
+                if (r.holderModel) {
+                    r.holder = r.holderModel.id = r.holderModel.id || r.holder || SanteDB.application.newGuid();
                 }
                 delete r.relationshipTypeModel;
                 delete r.relationshipRoleModel;
@@ -550,6 +718,30 @@ async function setEntityTag(entityId, tagName, tagValue) {
     parameters[tagName] = tagValue;
     return await SanteDB.resources.entity.invokeOperationAsync(entityId, "tag", parameters);
 
+}
+
+/**
+ * Set the status of the act
+ * @param {Guid} actId The identifier of the act
+ * @param {Guid} newStatus The identifier of the state to set
+ * @param {String} eTag The ETAG of the object which this method is attempting to patch
+ */
+async function setActState(actId, eTag, newStatus) {
+
+    // Set the status and update
+    var patch = new Patch({
+        appliesTo: new PatchTarget({
+            id: actId
+        }),
+        change: [
+            new PatchOperation({
+                op: PatchOperationType.Replace,
+                path: "statusConcept",
+                value: newStatus
+            })
+        ]
+    });
+    await SanteDB.resources.act.patchAsync(actId, eTag, patch);
 }
 
 /**
@@ -601,45 +793,81 @@ function deleteModelProperties(objectToRemove) {
 /**
  * Bundle all related properties into a new Bundle
  * @param {Any} object The object which is to be bundled
+ * @param {Array} ignoreRelations The relationship types to ignore when pushing to the bundle
+ * @param {Bundle} existingBundle If the results should be added to an existing bundle
  */
-async function bundleRelatedObjects(object) {
+function bundleRelatedObjects(object, ignoreRelations, existingBundle) {
     
-    var retVal = new Bundle({ resource: [ await prepareEntityForSubmission(angular.copy(object)) ], focal: [ object.id ]});
+    ignoreRelations = ignoreRelations || [];
+    if(!Array.isArray(ignoreRelations)) {
+        ignoreRelations = [ignoreRelations];
+    }
+
+    var retVal = existingBundle || new Bundle({ resource: [ angular.copy(object) ], focal: [ object.id ]});
 
     if(object.relationship) {
 
-        await Promise.all(Object.keys(object.relationship).map(async function(relationshipType) {
-            var relationships = object.relationship[relationshipType];
-            if(!Array.isArray(relationships)) {
-                relationships = [relationships];
-            }
-            await Promise.all(relationships
-                .filter(o => o && o.targetModel)
-                .map(async function(rel) {
-                    var entity = await prepareEntityForSubmission(angular.copy(rel.targetModel));
-                    rel.target = entity.id = SanteDB.application.newGuid();
-                    retVal.resource.push(entity);
+        Object.keys(object.relationship).filter(k=>ignoreRelations.indexOf(k) == -1).forEach(k => {
+            var relationship = object.relationship[k] = ensureIsArray(object.relationship[k]);
+            relationship.filter(r=> r).forEach(rel => {
+                if(rel.targetModel) {
+                    var relatedObject = angular.copy(rel.targetModel);
+                    rel.target = relatedObject.id = relatedObject.id || SanteDB.application.newGuid();
+
+                    if(!relatedObject.version) // new object
+                    {
+                        retVal.resource.push(relatedObject);
+                    }
+
+                    bundleRelatedObjects(relatedObject, ignoreRelations, retVal);
                     delete rel.targetModel;
-                }));
-            relationships.forEach(rel => {
-                rel.holder = object.id;
-                delete rel.holderModel;
-                delete rel.targetModel;
+                }
+                if(rel.holderModel) {
+                    var relatedObject = angular.copy(rel.holderModel);
+                    rel.holder = rel.source = relatedObject.id = relatedObject.id || SanteDB.application.newGuid();
+                    
+                    if(!relatedObject.version) {
+                        retVal.resource.push(relatedObject);
+                    }
+
+                    delete rel.holderModel;
+                }
+                
+                rel.holder = rel.holder || object.id;
             });
-        }));
+            object.relationship[k] = relationship.filter(o=>o && (o.target || o.holder || o.source));
+        });
     }
 
     if(object.participation) {
-        await Promise.all(Object.keys(object.participation).map(async function(participationType) {
-            var participations = object.participation[participationType];
-            if(!Array.isArray(participations)) {
-                participations = [participations];
-            }
-            participations.forEach(ptcpt => {
-                rel.act = object.id;
-                delete rel.playerModel;
-            })
-        }))
+        Object.keys(object.participation).filter(k=>ignoreRelations.indexOf(k) == -1).forEach(k => {
+            var participations = object.participation[k] = ensureIsArray(object.participation[k]);
+            participations.filter(p=>p).forEach(ptcpt => {
+                if(ptcpt.playerModel) {
+                    var relatedObject = angular.copy(ptcpt.playerModel);
+                    ptcpt.player = relatedObject.id = relatedObject.id || SanteDB.application.newGuid();
+
+                    if(!relatedObject.version) {
+                        retVal.resource.push(relatedObject);
+                    }
+
+                    delete ptcpt.playerModel;
+                }
+                if(ptcpt.actModel) {
+                    var relatedObject = angular.copy(ptcpt.actModel);
+                    ptcpt.act = relatedObject.id = relatedObject.id || SanteDB.application.newGuid();
+
+                    if(!relatedObject.version) {
+                        retVal.resource.push(relatedObject);
+                    }
+
+                    delete ptcpt.actModel;
+                }
+
+                ptcpt.act = ptcpt.act || object.id;
+            });
+            object.participation[k] = participations.filter(o=>o && (o.player || o.act));
+        })
     }
 
     retVal.resource.forEach(res => deleteModelProperties(res));
@@ -647,7 +875,7 @@ async function bundleRelatedObjects(object) {
 }
 
 /**
- * Validate check digit using mod97
+ * Validate check digit using the a simple Mod-97 check digit algorithm
  */
 function validateMod97CheckDigit(value, checkDigit) {
     if(!value || !checkDigit) return false;
@@ -660,3 +888,43 @@ function validateMod97CheckDigit(value, checkDigit) {
     var expectedCheckDigit = (97 - seed + 1) % 97;
     return expectedCheckDigit == checkDigit;
 }
+
+/**
+ * Validate check digit using the standard ISO/IEC 7064 Check Digit Algorithm
+ */
+function validateIso7064Mod97CheckDigit(value, checkDigit) {
+    if(!value || !checkDigit) return false;
+
+    // Compute the mod97 - extract digits
+    var source = value.match(/[0-9]/g);
+    var checkDigit = "" + source + checkDigit
+}
+
+/**
+ * @summary Copies details about a product to a lot number
+ * @param {ManufacturedMaterial} lot The material representing the lot instance
+ * @param {ManufacturedMaterial} product The material representing the generic product
+ * @param {string} statusConcept The status of the lot to set
+ * @param {boolean} copyGtin True if GTIN should be copied from the product to the lot
+ * @param {boolean} copyName True if the name of the product should be copied to the lot
+ */
+function copyMaterialInstance(lot, product, statusConcept, copyGtin, copyName) {
+    lot.determinerConcept = DeterminerKeys.Specific;
+    lot.formConcept = product.formConcept;
+    lot.typeConcept = product.typeConcept;
+    lot.quantityConcept = product.quantityConcept;
+    lot.statusConcept = statusConcept;
+    lot.quantity = 1;
+    lot.identifier = lot.identifier || {};
+    lot.identifier.GTIN = lot.identifier.GTIN || [{}];
+    if (product.identifier && product.identifier.GTIN && copyGtin) {
+        lot.identifier.GTIN[0].value = product.identifier.GTIN[0].value;
+    }
+    lot.name = lot.name || {};
+    lot.name.Assigned = lot.name.Assigned || [{ component: { $other: [""] } }];
+    if (copyName) {
+        lot.name.Assigned[0].component.$other[0] = product.name.Assigned[0].component.$other[0];
+    }
+}
+
+

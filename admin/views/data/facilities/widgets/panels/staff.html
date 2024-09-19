@@ -1,0 +1,63 @@
+<!--
+ - Copyright 2021-2024 SanteSuite Contributors (See NOTICE.md for full copyright notices)
+ - Copyright (C) 2019 - 2021, Fyfe Software Inc. and the SanteSuite Contributors
+ - Portions Copyright (C) 2015-2018 Mohawk College of Applied Arts and Technology
+ - 
+ - Licensed under the Apache License, Version 2.0 (the "License"); you 
+ - may not use this file except in compliance with the License. You may 
+ - obtain a copy of the License at 
+ - 
+ - http://www.apache.org/licenses/LICENSE-2.0 
+ - 
+ - Unless required by applicable law or agreed to in writing, software
+ - distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+ - WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the 
+ - License for the specific language governing permissions and limitations under 
+ - the License.
+ -->
+<div xmlns="http://www.w3.org/1999/xhtml" xmlns:sdb="http://santedb.org/applet">
+    <sdb:script>~/controllers/places/staffController.js</sdb:script>
+    <sdb:widget name="org.santedb.widget.admin.panel.facility.staff" type="Panel"
+        context="org.santedb.facility.admin.staffing" size="Medium" order="20">
+        <sdb:icon>fas fa-fw fa-person-digging</sdb:icon>
+        <sdb:description lang="en">Staff Members</sdb:description>
+        <sdb:guard>scopedObject.id</sdb:guard>
+    </sdb:widget>
+
+    <div ng-controller="FacilityStaffController">
+        <entity-table id="AssignedStaffTable" type="EntityRelationship"
+        item-actions="[ 
+            { name: 'view', action: 'navSourceUser', demand: '1.3.6.1.4.1.33349.3.1.5.9.2.4', className: 'btn-info', icon: 'fa fa-eye' } ,
+            { name: 'makeManager', action: 'makeManager', demand: '1.3.6.1.4.1.33349.3.1.5.9.2.4', className: 'btn-success', icon: 'fa fa-chevron-right' } ,
+            { name: 'remove', action: 'removeStaffMember', demand: '1.3.6.1.4.1.33349.3.1.5.9.2.4', className: 'btn-danger', icon: 'fa fa-times-circle' } 
+        ]" 
+        search-field="source@UserEntity.securityUser.userName"
+        no-deleted="true"
+        default-query="{ _viewModel: 'reverseRelationship', 
+            'relationshipType' : [ 'FF34DFA7-C6D3-4F8B-BC9F-14BCDC13BA6C', '455F1772-F580-47E8-86BD-B5CE25D351F9' ], 
+            'target': scopedObject.id,
+            'source.classConcept' : '6a2b00ba-501b-4523-b57c-f96d8ae44684'
+         }"
+        render="{ name: 'renderName', securityUser: 'renderUser'  }" i18n-prefix="'ui.model.userEntity.'"
+        properties="[ 'name', 'securityUser' ]"
+        button-bar="'#assignStaffDiv'"
+        >
+        </entity-table>
+
+        <div id="assignStaffDiv">
+            <form name="assignStaffForm" novalidate="novalidate" ng-submit="assignStaff(assignStaffForm)">
+                <div class="input-group">
+                    <div class="h-100" style="width:85%; max-width: 85%">
+                    <entity-search type="'UserEntity'" ng-model="assignUser.id" search-field="'securityUser.userName'" filter="{ 'relationship[DedicatedServiceDeliveryLocation|ServiceDeliveryLocation].target' : '!' + scopedObject.id }"
+                        class="form-control h-100"  required="required" />
+                    </div>
+                    <div class="input-group-append">
+                        <button type="submit" class="btn btn-primary" id="btnAssignStaff" ng-disabled="assignStaffForm.$invalid" title="{{ 'ui.action.assign' | i18n }}">
+                            <i class="fas fa-fw fa-person-circle-plus"></i>
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

@@ -1,3 +1,20 @@
+<!--
+ - Copyright 2021-2024 SanteSuite Contributors (See NOTICE.md for full copyright notices)
+ - Copyright (C) 2019 - 2021, Fyfe Software Inc. and the SanteSuite Contributors
+ - Portions Copyright (C) 2015-2018 Mohawk College of Applied Arts and Technology
+ - 
+ - Licensed under the Apache License, Version 2.0 (the "License"); you 
+ - may not use this file except in compliance with the License. You may 
+ - obtain a copy of the License at 
+ - 
+ - http://www.apache.org/licenses/LICENSE-2.0 
+ - 
+ - Unless required by applicable law or agreed to in writing, software
+ - distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+ - WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the 
+ - License for the specific language governing permissions and limitations under 
+ - the License.
+ -->
 <div xmlns="http://www.w3.org/1999/xhtml" xmlns:sdb="http://santedb.org/applet">
     <sdb:script>~/controllers/materials/widget.js</sdb:script>
     <sdb:widget type="Tab" name="org.santedb.material.admin.widget.tab.products" context="org.santedb.material.admin"
@@ -12,7 +29,7 @@
     </div>
     <div ng-if="scopedObject" class="m-2" ng-controller="MaterialProductController">
         <!-- Note: Change in Version 3 - The Materials here are specializations of holder -->
-        <entity-table id="MaterialProductTable" type="ManufacturedMaterial" search-field="name.component.value"
+        <entity-table id="MaterialProductTable" type="ManufacturedMaterial" search-field="identifier.value"
             default-query="{ 'relationship[HasGeneralization].target' : scopedObject.id, _viewModel: 'fastview', 'determinerConcept': '604CF1B7-8891-49FB-B95F-3E4E875691BC' }"
             render="{ typeConcept: 'renderTypeConcept', updatedBy: 'renderUpdatedBy', manufacturer: 'renderManufacturer', gtin: 'renderGtin', quantity: 'renderQuantity', name: 'renderName', statusConcept: 'renderStatusConcept' }"
             i18n-prefix="'ui.model.manufacturedMaterial.'" item-class="{ 'name' : 'w-20', 'updatedBy' : 'w-20' }"

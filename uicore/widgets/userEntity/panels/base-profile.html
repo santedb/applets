@@ -14,9 +14,6 @@
  - WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the 
  - License for the specific language governing permissions and limitations under 
  - the License.
- - 
- - User: fyfej
- - Date: 2023-5-19
  -->
 <div xmlns="http://www.w3.org/1999/xhtml" xmlns:sdb="http://santedb.org/applet"
     oc-lazy-load="{ name: 'CoreUserWidgetController', files: ['/org.santedb.uicore/controllers/widgets/userEntityWidget.js'] }">
@@ -78,8 +75,11 @@
                 <label class="col-md-3 control-label">{{ 'ui.model.entity.relationship.DedicatedServiceDeliveryLocation' |
                     i18n }}</label>
                 <div class="col-md-9 p-2">
-                    <span ng-if="scopedObject.relationship.DedicatedServiceDeliveryLocation">{{
-                        scopedObject.relationship.DedicatedServiceDeliveryLocation[0].targetModel.name | name }}</span>
+                    <ul class="list-unstyled">
+                        <li ng-repeat="sdl in scopedObject.relationship.DedicatedServiceDeliveryLocation track by $index">
+                            {{ sdl.targetModel.name | name }}
+                        </li>
+                    </ul>
                     <span ng-if="!scopedObject.relationship.DedicatedServiceDeliveryLocation">
                         {{ 'ui.unknown' | i18n }}
                     </span>
@@ -89,7 +89,6 @@
         </div>
         <form ng-submit="update(panel.editForm)" name="panel.editForm" method="dialog" novalidate="novalidate" autocomplete="off"
             ng-if="panel.view == 'Edit'">
-            {{ editObject.address }}
             <name-edit is-required="true" model="editObject.name" simple-entry="true" no-add="true" no-type="true"
                 owner-form="panel.editForm" />
             <hr />

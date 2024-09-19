@@ -15,9 +15,6 @@
  - WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the 
  - License for the specific language governing permissions and limitations under 
  - the License.
- - 
- - User: fyfej
- - Date: 2023-5-19
  -->
 <BiDataFlowDefinition xmlns="http://santedb.org/bi" id="org.santedb.bi.datamart.core.mats">
   <parameters>
@@ -38,7 +35,7 @@
           SELECT DISTINCT
             ENT_ID, 
             TYP.MNEMONIC AS TYPE,
-            EXP_UTC AS EXPIRY, 
+            CASE WHEN EXP_UTC = '0001-01-01' THEN NULL ELSE EXP_UTC END AS EXPIRY, 
             QTY, 
             UOM.MNEMONIC AS UNIT_OF_MEASURE, 
             FRM.MNEMONIC AS FORM  
@@ -87,18 +84,65 @@
           <![CDATA[
           SELECT DISTINCT
 	          ENT_VRSN_TBL.ENT_ID AS ENT_ID, 
-	          LOT_NO AS LOT,
 	          ENT_ID_TBL.ID_VAL AS GTIN,
-	          PROD.SRC_ENT_ID AS PRODUCT,
+	          PROD.TRG_ENT_ID AS MAT_ID,
+	          PROD.QTY AS PRESENTATION,
 	          MANUF.SRC_ENT_ID AS MANUFACTURER
           FROM 
 	          MMAT_TBL
 	          INNER JOIN ENT_VRSN_TBL USING (ENT_VRSN_ID)
 	          LEFT JOIN ENT_ID_TBL ON (ENT_ID_TBL.ENT_ID = ENT_VRSN_TBL.ENT_ID AND ENT_ID_TBL.DMN_ID = 'ce5990db-2e2a-467d-a376-2a7b53481e84' AND ENT_ID_TBL.OBSLT_VRSN_SEQ_ID IS NULL)
-	          LEFT JOIN ENT_REL_TBL PROD ON (PROD.TRG_ENT_ID = ENT_VRSN_TBL.ENT_ID AND PROD.OBSLT_VRSN_SEQ_ID IS NULL AND PROD.REL_TYP_CD_ID = 'AC45A740-B0C7-4425-84D8-B3F8A41FEF9F')
+	          LEFT JOIN ENT_REL_TBL PROD ON (PROD.SRC_ENT_ID = ENT_VRSN_TBL.ENT_ID AND PROD.OBSLT_VRSN_SEQ_ID IS NULL AND PROD.REL_TYP_CD_ID = 'BF9F929A-E7EB-4E5B-B82E-CF44384F0A3B')
 	          LEFT JOIN ENT_REL_TBL MANUF ON (MANUF.TRG_ENT_ID = ENT_VRSN_TBL.ENT_ID AND MANUF.OBSLT_VRSN_SEQ_ID IS NULL AND MANUF.REL_TYP_CD_ID = '6780DF3B-AFBD-44A3-8627-CBB3DC2F02F6')
           WHERE 
 	          ENT_VRSN_TBL.HEAD
+            AND ENT_VRSN_TBL.DTR_CD_ID = '604CF1B7-8891-49FB-B95F-3E4E875691BC'
+          ]]>
+        </add>
+        <add>
+          <providers>
+            <invariant>sqlite</invariant>
+          </providers>
+          <![CDATA[
+          SELECT DISTINCT
+	          ENT_VRSN_TBL.ENT_ID AS ENT_ID, 
+	          ENT_ID_TBL.ID_VAL AS GTIN,
+	          PROD.TRG_ENT_ID AS MAT_ID,
+	          PROD.QTY AS PRESENTATION,
+	          MANUF.SRC_ENT_ID AS MANUFACTURER
+          FROM 
+	          MMAT_TBL
+	          INNER JOIN ENT_VRSN_TBL USING (ENT_VRSN_ID)
+	          LEFT JOIN ENT_ID_TBL ON (ENT_ID_TBL.ENT_ID = ENT_VRSN_TBL.ENT_ID AND ENT_ID_TBL.DMN_ID = x'DB9059CE2A2E7D46A3762A7B53481E84' AND ENT_ID_TBL.OBSLT_VRSN_SEQ_ID IS NULL)
+	          LEFT JOIN ENT_REL_TBL PROD ON (PROD.SRC_ENT_ID = ENT_VRSN_TBL.ENT_ID AND PROD.OBSLT_VRSN_SEQ_ID IS NULL AND PROD.REL_TYP_CD_ID = x'9A929FBFEBE75B4EB82ECF44384F0A3B')
+	          LEFT JOIN ENT_REL_TBL MANUF ON (MANUF.TRG_ENT_ID = ENT_VRSN_TBL.ENT_ID AND MANUF.OBSLT_VRSN_SEQ_ID IS NULL AND MANUF.REL_TYP_CD_ID = x'3BDF8067BDAFA3448627CBB3DC2F02F6')
+          WHERE 
+	          ENT_VRSN_TBL.HEAD = 1
+            AND ENT_VRSN_TBL.DTR_CD_ID = x'B7F14C609188FB49B95F3E4E875691BC'
+          ]]>
+        </add>
+      </sql>
+    </reader>
+
+    <reader name="input_mmat_lots">
+      <connection ref="input" />
+      <sql>
+        <add>
+          <providers>
+            <invariant>npgsql</invariant>
+          </providers>
+          <![CDATA[
+          SELECT DISTINCT
+	          ENT_VRSN_TBL.ENT_ID AS ENT_ID, 
+	          LOT_NO AS LOT,
+	          PROD.SRC_ENT_ID AS PRODUCT
+          FROM 
+	          MMAT_TBL
+	          INNER JOIN ENT_VRSN_TBL USING (ENT_VRSN_ID)
+	          LEFT JOIN ENT_REL_TBL PROD ON (PROD.TRG_ENT_ID = ENT_VRSN_TBL.ENT_ID AND PROD.OBSLT_VRSN_SEQ_ID IS NULL AND PROD.REL_TYP_CD_ID = 'AC45A740-B0C7-4425-84D8-B3F8A41FEF9F')
+          WHERE 
+	          ENT_VRSN_TBL.HEAD
+            AND ENT_VRSN_TBL.DTR_CD_ID = 'F29F08DE-78A7-4A5E-AEAF-7B545BA19A09'
           ]]>
         </add>
         <add>
@@ -109,21 +153,19 @@
           SELECT DISTINCT
 	          ENT_VRSN_TBL.ENT_ID AS ENT_ID, 
 	          LOT_NO AS LOT,
-	          ENT_ID_TBL.ID_VAL AS GTIN,
-	          PROD.SRC_ENT_ID AS PRODUCT,
-	          MANUF.SRC_ENT_ID AS MANUFACTURER
+	          PROD.SRC_ENT_ID AS PRODUCT
           FROM 
 	          MMAT_TBL
 	          INNER JOIN ENT_VRSN_TBL USING (ENT_VRSN_ID)
-	          LEFT JOIN ENT_ID_TBL ON (ENT_ID_TBL.ENT_ID = ENT_VRSN_TBL.ENT_ID AND ENT_ID_TBL.DMN_ID = X'DB9059CE2A2E7D46A3762A7B53481E84' AND ENT_ID_TBL.OBSLT_VRSN_SEQ_ID IS NULL)
-	          LEFT JOIN ENT_REL_TBL PROD ON (PROD.TRG_ENT_ID = ENT_VRSN_TBL.ENT_ID AND PROD.OBSLT_VRSN_SEQ_ID IS NULL AND PROD.REL_TYP_CD_ID = X'3BDF8067BDAFA3448627CBB3DC2F02F6')
-	          LEFT JOIN ENT_REL_TBL MANUF ON (MANUF.TRG_ENT_ID = ENT_VRSN_TBL.ENT_ID AND MANUF.OBSLT_VRSN_SEQ_ID IS NULL AND MANUF.REL_TYP_CD_ID = X'40A745ACC7B0254484D8B3F8A41FEF9F')
+	          LEFT JOIN ENT_REL_TBL PROD ON (PROD.TRG_ENT_ID = ENT_VRSN_TBL.ENT_ID AND PROD.OBSLT_VRSN_SEQ_ID IS NULL AND PROD.REL_TYP_CD_ID = x'40A745ACC7B0254484D8B3F8A41FEF9F')
           WHERE 
-	          ENT_VRSN_TBL.HEAD = 1
-          ]]>
+	          ENT_VRSN_TBL.HEAD
+            AND ENT_VRSN_TBL.DTR_CD_ID = x'DE089FF2A7785E4AAEAF7B545BA19A09'
+        ]]>
         </add>
       </sql>
     </reader>
+
     <transform name="map_mats">
       <input ref="input_mats" />
       <map>
@@ -165,9 +207,15 @@
       <connection ref="output" />
       <target ref="MMAT_TBL" />
     </writer>
+    <writer truncate="true" mode="insert" name="write_mmat_lots">
+      <input ref="input_mmat_lots"/>
+      <connection ref="output"/>
+      <target ref="MMAT_LOT_TBL"/>
+    </writer>
     <union name="union_rejects">
       <input ref="write_mats" />
       <with ref="write_mmats" />
+      <with ref="write_mmat_lots" />
     </union>
     <filter name="filter_rejects">
       <input ref="union_rejects" />

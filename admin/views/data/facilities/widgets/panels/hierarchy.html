@@ -14,9 +14,6 @@
  - WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the 
  - License for the specific language governing permissions and limitations under 
  - the License.
- - 
- - User: fyfej
- - Date: 2023-5-19
  -->
 <div xmlns="http://www.w3.org/1999/xhtml" xmlns:sdb="http://santedb.org/applet"
 oc-lazy-load="{name:'HierarchyWidgetController', files: ['/org.santedb.admin/controllers/widgets/hierarchyWidgetController.js'] }">
@@ -48,6 +45,23 @@ oc-lazy-load="{name:'HierarchyWidgetController', files: ['/org.santedb.admin/con
                     <div ng-show="panel.view == 'Edit'">
                     <entity-search type="'Place'"
                     group-by="['address.PhysicalVisit[0].component.State[0]','address.Direct[0].component.State[0]']" ng-model="scopedObject.relationship.Parent[0].target"
+                        search-field="'name.component.value'"
+                        for-relationship-type="'bfcbb345-86db-43ba-b47e-e7411276ac7c'"
+                        with-relationship-source-class="scopedObject.classConcept"></entity-search>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-12 font-weight-bold" for="reporting">{{
+                    'ui.model.place.relationship.Scoper' | i18n }} <hint-popover
+                        hint-title="ui.model.place.relationship.Scoper" /></label>
+                <div class="col-12">
+                    <div ng-show="panel.view != 'Edit'" ng-if="scopedObject.relationship.Scoper[0].targetModel">
+                        <a target="_blank" ui-sref="santedb-admin.data.place.view({id: scopedObject.relationship.Scoper[0].target})"><i class="fas fa-map-pin"></i> {{ scopedObject.relationship.Scoper[0].targetModel.name | name }} - (<i class="fas fa-map-marker"></i> {{ scopedObject.relationship.Scoper[0].targetModel.address | address }}) <sup><i class="fas fa-external-link-alt"></i></sup></a>
+                    </div>
+                    <div ng-show="panel.view == 'Edit'">
+                    <entity-search type="'Place'"
+                    group-by="['address.PhysicalVisit[0].component.State[0]','address.Direct[0].component.State[0]']" ng-model="scopedObject.relationship.Scoper[0].target"
                         search-field="'name.component.value'"
                         for-relationship-type="'bfcbb345-86db-43ba-b47e-e7411276ac7c'"
                         with-relationship-source-class="scopedObject.classConcept"></entity-search>

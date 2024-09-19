@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!--
+ - Copyright 2021-2024 SanteSuite Contributors (See NOTICE.md for full copyright notices)
+ - Copyright (C) 2019 - 2021, Fyfe Software Inc. and the SanteSuite Contributors
+ - Portions Copyright (C) 2015-2018 Mohawk College of Applied Arts and Technology
+ - 
+ - Licensed under the Apache License, Version 2.0 (the "License"); you 
+ - may not use this file except in compliance with the License. You may 
+ - obtain a copy of the License at 
+ - 
+ - http://www.apache.org/licenses/LICENSE-2.0 
+ - 
+ - Unless required by applicable law or agreed to in writing, software
+ - distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+ - WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the 
+ - License for the specific language governing permissions and limitations under 
+ - the License.
+ -->
+<?xml-model href="../../../../../../../../.ref/schema/BusinessIntelligence.xsd" type="application/xml" schematypens="http://www.w3.org/2001/XMLSchema"?>
+<BiParameterDefinition xmlns="http://santedb.org/bi" id="org.santedb.bi.core.parameter.common.facility" name="facility" label="ui.bi.core.common.facility" type="uuid" status="active">
+  <meta>
+    <authors>
+      <add>Justin Fyfe (SanteSuite Inc.) &lt;justin@fyfesoftware.ca></add>
+    </authors>
+    <annotation lang="en">
+      <div xmlns="http://www.w3.org/1999/xhtml">
+        <p>Parameter for all facilities registered</p>
+      </div>
+    </annotation>
+  </meta>
+  <query>
+    <dataSources>
+      <add ref="#org.santedb.bi.dataSource.main" name="main"/>
+    </dataSources>
+    <definitions>
+      <add>
+        <providers>
+          <invariant>npgsql</invariant>
+        </providers>
+        <![CDATA[
+        SELECT ent_id AS id, val AS value FROM 
+	PLC_TBL
+	INNER JOIN ENT_VRSN_TBL USING (ENT_VRSN_ID)
+	INNER JOIN ENT_NAME_TBL USING (ENT_ID)
+	INNER JOIN ENT_NAME_CMP_TBL USING (NAME_ID)
+WHERE 
+	ENT_VRSN_TBL.CLS_CD_ID = 'ff34dfa7-c6d3-4f8b-bc9f-14bcdc13ba6c'
+	AND ENT_VRSN_TBL.HEAD
+            ]]>
+      </add>
+      <add>
+        <providers>
+          <invariant>sqlite</invariant>
+        </providers>
+        <![CDATA[
+        SELECT ent_id AS id, val AS value FROM 
+	PLC_TBL
+	INNER JOIN ENT_VRSN_TBL USING (ENT_VRSN_ID)
+	INNER JOIN ENT_NAME_TBL USING (ENT_ID)
+	INNER JOIN ENT_NAME_CMP_TBL USING (NAME_ID)
+WHERE 
+	ENT_VRSN_TBL.CLS_CD_ID = x'A7DF34FFD3C68B4FBC9F14BCDC13BA6C'
+	AND ENT_VRSN_TBL.HEAD
+            ]]>
+      </add>
+    </definitions>
+  </query>
+</BiParameterDefinition>

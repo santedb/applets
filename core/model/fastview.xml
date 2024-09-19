@@ -15,9 +15,6 @@
  - WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the 
  - License for the specific language governing permissions and limitations under 
  - the License.
- - 
- - User: fyfej
- - Date: 2023-5-19
  -->
 <ViewModel xmlns="http://santedb.org/model/view">
   <include>base</include>
@@ -238,6 +235,7 @@
     <property name="classConcept" behavior="always"/>
     <property name="determinerConceptModel" behavior="never"/>
     <property name="statusConceptModel" behavior="never"/>
+    <property name="quantityConceptModel" behavior="always" ref="Concept"/>
     <property name="name" all="true" ref="EntityName" behavior="always"/>
     <property name="identifier" all="true" behavior="always">
       <property name="GTIN" all="true" />
@@ -300,9 +298,29 @@
     <property name="classConceptModel" behavior="always" ref="Concept"/>
     <property name="classConcept" behavior="always"/>
     <property name="determinerConceptModel" behavior="never"/>
+    <property name="quantityConceptModel" behavior="always" ref="Concept"/>
     <property name="statusConceptModel" behavior="always" ref="Concept"/>
     <property name="typeConceptModel" behavior="always" ref="Concept"/>
     <property name="formConceptModel" behavior="always" ref="Concept" />
+  </type>
+
+
+  
+  <type type="Container" all="true">
+    <property name="createdBy" />
+    <property name="creationTime" />
+    <property name="creationTimeModel" behavior="never"/>
+    <property name="version" behavior="never"/>
+    <property name="name" all="true" ref="EntityName" behavior="always"/>
+    <property name="identifier" all="true">
+      <property name="*" ref="EntityIdentifier" />
+    </property>
+    <property name="classConceptModel" behavior="always" ref="Concept"/>
+    <property name="classConcept" behavior="always"/>
+    <property name="determinerConceptModel" behavior="never"/>
+    <property name="statusConceptModel" behavior="always" ref="Concept"/>
+    <property name="typeConceptModel" behavior="always" ref="Concept"/>
+    <property name="quantityConceptModel" behavior="always" ref="Concept" />
   </type>
 
   <type type="Place" all="true">
@@ -361,6 +379,35 @@
     <property name="participation" all="true">
       <property name="*" all="true">
         <property name="targetAct" all="true"/>
+      </property>
+    </property>
+  </type>
+
+  
+  <type type="Organization" all="true">
+    <property name="createdBy" behavior="always"/>
+    <property name="creationTime" behavior="always"/>
+    <property name="creationTimeModel" behavior="never"/>
+    <property name="version" behavior="never"/>
+    <property name="name" all="true" behavior="always">
+      <property name="*"  ref="EntityName"/>
+    </property>
+    <property name="address" all="true" behavior="always">
+      <property name="*" ref="EntityAddress"/>
+    </property>
+    <property name="classConceptModel" behavior="always"/>
+    <property name="classConcept" behavior="always"/>
+    <property name="determinerConceptModel" behavior="never"/>
+    <property name="typeConceptModel" all="true" behavior="always" ref="Concept"/>
+    <property name="industryConceptModel" all="true" behavior="always" ref="Concept"/>
+    <property name="extension" all="true" behavior="always"/>
+    <property name="relationship" all="false" behavior="always">
+      <property name="*" all="true">
+        <property name="source" behavior="never"/>
+        <property name="holder" behavior="never"/>
+        <property name="holderModel" behavior="never"/>
+        <property name="sourceModel" behavior="never"/>
+        <property name="relationshipTypeModel" behavior="never"/>
       </property>
     </property>
   </type>

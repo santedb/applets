@@ -15,9 +15,6 @@
  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the 
  * License for the specific language governing permissions and limitations under 
  * the License.
- * 
- * User: fyfej
- * Date: 2023-5-19
  */
 angular.module("santedb").controller("SyncController", ['$scope', '$rootScope', '$interval', '$timeout', function ($scope, $rootScope, $interval, $timeout) {
 
@@ -58,7 +55,7 @@ angular.module("santedb").controller("SyncController", ['$scope', '$rootScope', 
                     s.Filter = decodeURI(s.Filter);
                 var filter = s.Filter;
 
-                if (!SanteDB.resources[resource]) {
+                if (!SanteDB.resources[resource] || filter && filter.indexOf("$") == 0) {
                     s.local = "-";
                     s.remote = "-";
                     return;

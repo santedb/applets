@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!--
+ - Copyright 2021-2024 SanteSuite Contributors (See NOTICE.md for full copyright notices)
+ - Copyright (C) 2019 - 2021, Fyfe Software Inc. and the SanteSuite Contributors
+ - Portions Copyright (C) 2015-2018 Mohawk College of Applied Arts and Technology
+ - 
+ - Licensed under the Apache License, Version 2.0 (the "License"); you 
+ - may not use this file except in compliance with the License. You may 
+ - obtain a copy of the License at 
+ - 
+ - http://www.apache.org/licenses/LICENSE-2.0 
+ - 
+ - Unless required by applicable law or agreed to in writing, software
+ - distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+ - WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the 
+ - License for the specific language governing permissions and limitations under 
+ - the License.
+ -->
+<?xml-model href="../../../../../../../.ref/schema/BusinessIntelligence.xsd" type="application/xml" schematypens="http://www.w3.org/2001/XMLSchema"?>
+<!--
+ - Portions Copyright 2015-2019 Mohawk College of Applied Arts and Technology
+ - Portions Copyright 2019-2019 SanteSuite Contributors (See NOTICE)
+ - 
+ - 
+ - Licensed under the Apache License, Version 2.0 (the "License"); you 
+ - may not use this file except in compliance with the License. You may 
+ - obtain a copy of the License at 
+ - 
+ - http://www.apache.org/licenses/LICENSE-2.0 
+ - 
+ - Unless required by applicable law or agreed to in writing, software
+ - distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+ - WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the 
+ - License for the specific language governing permissions and limitations under 
+ - the License.
+ - 
+ - User: Justin Fyfe
+ - Date: 2019-11-13
+ -->
+<BiQueryDefinition xmlns="http://santedb.org/bi" id="org.santedb.bi.core.query.concept.set" name="concept-set" label="ui.santedb.bi.core.query.concept.set" status="active">
+  <meta>
+    <authors>
+      <add>Justin Fyfe (Fyfe Software Inc.) &lt;justin@fyfesoftware.ca&gt;</add>
+    </authors>
+    <annotation>
+      <div xmlns="http://www.w3.org/1999/xhtml">
+        <p>Query which produces a list of <strong>all</strong> concepts in a concept set</p>
+      </div>
+    </annotation>
+  </meta>
+  <dataSources>
+    <add name="main" ref="#org.santedb.bi.dataSource.main"/>
+  </dataSources>
+  <parameters>
+    <add type="uuid" ref="#org.santedb.bi.core.parameter.common.conceptSet" name="set-id" required="true"/>
+  </parameters>
+  <definitions>
+    <add>
+      <providers>
+        <invariant>npgsql</invariant>
+        <invariant>FirebirdSQL</invariant>
+        <invariant>sqlite</invariant>
+      </providers>
+      <![CDATA[
+-- assigned concepts
+WITH assigned_concepts AS (
+	SELECT cd_id  
+	FROM 
+		CD_SET_MEM_ASSOC_TBL
+	WHERE 
+		set_id = ${set-id}
+), include_concepts AS (
+	SELECT cd_id 
+	FROM
+		CD_SET_COMP_ASSOC_TBL
+		INNER JOIN CD_SET_MEM_ASSOC_TBL ON (cd_set_mem_assoc_tbl.set_id = trg_set_id)
+	WHERE 
+		cd_set_comp_assoc_tbl.set_id = ${set-id}
+		AND rol_cs = 1
+), exclude_concepts AS (
+	SELECT cd_id 
+	FROM
+		CD_SET_COMP_ASSOC_TBL
+		INNER JOIN CD_SET_MEM_ASSOC_TBL ON (cd_set_mem_assoc_tbl.set_id = trg_set_id)
+	WHERE 
+		cd_set_comp_assoc_tbl.set_id = ${set-id}
+		AND rol_cs = 2
+)
+SELECT cd_id, cd_vrsn_tbl.mnemonic, cd_set_tbl.set_name, min(cd_name_tbl.VAL) AS name, cd_cls_tbl.MNEMONIC AS class 
+FROM 
+	CD_SET_MEM_ASSOC_TBL 
+	INNER JOIN cd_vrsn_tbl USING (cd_id)
+	INNER JOIN cd_set_tbl USING (set_id)
+	INNER JOIN CD_CLS_TBL USING (cls_id)
+	LEFT JOIN CD_NAME_TBL USING (cd_id)
+WHERE 
+	CD_ID IN (SELECT * FROM INCLUDE_CONCEPTS UNION ALL SELECT * FROM assigned_concepts)
+	AND CD_ID NOT IN (SELECT * FROM EXCLUDE_CONCEPTS)
+GROUP BY cd_id, cd_vrsn_Tbl.MNEMONIC, cd_set_tbl.set_name, cd_cls_tbl.mnemonic
+	]]>
+    </add>
+  </definitions>
+</BiQueryDefinition>

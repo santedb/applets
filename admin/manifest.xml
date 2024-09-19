@@ -15,9 +15,6 @@
  - WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the 
  - License for the specific language governing permissions and limitations under 
  - the License.
- - 
- - User: fyfej
- - Date: 2023-5-19
  -->
 <?xml-model href="../.ref/schema/SanteDBApplet.xsd" type="application/xml" schematypens="http://www.w3.org/2001/XMLSchema"?>
 <!--
@@ -176,6 +173,11 @@
         <icon>fas fa-swatchbook</icon>
         <text lang="en">Decision Support</text>
       </menuItem>
+      <menuItem context="org.santedb.admin" launch="santedb-admin.cdr.ext.index"
+        asset="/org.santedb.admin/views/cdr/extensions/index.html" order="50">
+        <icon>fas fa-square-up-right</icon>
+        <text lang="en">Extensions</text>
+    </menuItem>
   </menuItem>
   <menuItem context="org.santedb.admin" launch="santedb-admin.data.index"
     asset="/org.santedb.admin/views/data/index.html" order="0">

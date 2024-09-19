@@ -14,9 +14,6 @@
  - WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the 
  - License for the specific language governing permissions and limitations under 
  - the License.
- - 
- - User: fyfej
- - Date: 2023-5-19
  -->
 <div xmlns="http://www.w3.org/1999/xhtml">
     <form ng-submit="saveUser(targetForm)" name="targetForm" novalidate="novalidate" autocomplete="off">
@@ -203,7 +200,7 @@
                             </label>
                             <div class="col-xs-12 col-md-10">
                                 <entity-search type="'Place'"
-                                    filter="{ obsoletionTime: 'null', classConcept: EntityClassKeys.ServiceDeliveryLocation }"
+                                    filter="{ obsoletionTime: 'null', classConcept: 'ff34dfa7-c6d3-4f8b-bc9f-14bcdc13ba6c' }"
                                     class="form-control"
                                     ng-model="target.userEntity.relationship.DedicatedServiceDeliveryLocation"
                                     value-property="'target'"
@@ -217,7 +214,7 @@
                                 <entity-search type="'Organization'" filter="{ obsoletionTime: 'null' }"
                                     class="form-control" ng-model="target.userEntity.relationship.Employee"
                                     value-property="'target'"
-                                    multiple="multiple" />
+                                     />
                             </div>
                         </div>
                     </div>

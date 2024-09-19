@@ -16,9 +16,6 @@
  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the 
  * License for the specific language governing permissions and limitations under 
  * the License.
- * 
- * User: fyfej
- * Date: 2023-5-19
  */
 angular.module('santedb').controller('InitialSettingsController', ['$scope', '$rootScope', '$interval', '$timeout', function ($scope, $rootScope, $interval, $timeout) {
 
@@ -260,7 +257,7 @@ angular.module('santedb').controller('InitialSettingsController', ['$scope', '$r
 
             // Define the services
             config.values.application.service = $scope.serverCaps.appInfo.service.filter(function (s) { return s.active; })
-                .map(function (m) { return { type: m.type } });
+                .map(function (m) { return m.type });
             config._autoRestart = true;
 
             try {

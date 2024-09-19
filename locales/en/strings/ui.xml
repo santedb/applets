@@ -15,9 +15,6 @@
  - WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the 
  - License for the specific language governing permissions and limitations under 
  - the License.
- - 
- - User: fyfej
- - Date: 2023-5-19
  -->
 <resources>
     <string name="ui.debug">DEBUG ENVIRONMENT</string>
@@ -29,6 +26,7 @@
       <string name="ui.example">Example</string>
       <string name="ui.true">Yes</string>
       <string name="ui.false">No</string>
+      <string name="ui.barcode">Barcode Label</string>
       <!-- Common Phrases -->
       <string name="ui.common.charsRemain">characters remain</string>
       <string name="ui.common.version">Version</string>
@@ -43,6 +41,7 @@
       <!-- Login Translations -->
       <string name="ui.login.input.username">Username</string>
       <string name="ui.login.input.password">Password</string>
+      <string name="ui.login.input.facility">Facility</string>
       <string name="ui.login.input.tfa">MFA Code</string>   
       <string name="ui.login.input.pin">PIN #</string>
       <string name="ui.login.title.elevate">User Elevation</string>
@@ -191,7 +190,7 @@
       <string name="ui.action.cancel">Cancel</string>
       <string name="ui.action.clear">Clear</string>
       <string name="ui.action.complete">Complete</string>
-      <string name="ui.action.customize">Customize</string>
+      <string name="ui.action.customize">Customize View</string>
       <string name="ui.action.clone">Clone</string>
       <string name="ui.action.cancel.confirm">Are you sure you want to cancel?</string>
       <string name="ui.action.abandon.confirm">You have unsaved changes on this page. Are you sure you want to abandon them?</string>
@@ -199,7 +198,7 @@
       <string name="ui.action.save.then.new">Save &amp; Create Another</string>
       <string name="ui.action.save.then.goto">Save &amp; Go To</string>
       <string name="ui.action.goto">Go To</string>
-
+      <string name="ui.action.assign">Assign</string>
       <string name="ui.action.submit">Submit</string>
       <string name="ui.action.search">Search</string>
       <string name="ui.action.search.advanced">Advanced Search</string>
@@ -275,6 +274,7 @@
       <string name="ui.action.upgrade">Upgrade</string>
       <string name="ui.action.convert">Convert</string>
       <string name="ui.action.print">Print</string>
+      <string name="ui.action.print.vrp">Print QR</string>
       <string name="ui.action.convertTo">Convert To</string>
       <string name="ui.action.new">New</string>
       <string name="ui.action.resetPassword">Reset Pwd</string>
@@ -316,6 +316,8 @@
       <string name="ui.table.search.field.targetConcept.name.value">Search by Target</string>
       <string name="ui.table.search.field.source.name.value">Search by Source</string>
       <string name="ui.table.search.field.lotNumber">Search by Lot</string>
+      <string name="ui.table.search.field.securityUser.userName">Search by username</string>
+      <string name="ui.table.search.field.source@UserEntity.securityUser.userName">Search by username</string>
       <!-- Common --> 
       <string name="ui.common.interop.hl7v2">HL7v2</string>
       <string name="ui.common.interop.hl7v3">HL7v3/CDA</string>
@@ -668,6 +670,7 @@
       </ul>]]></string>
       <string name="ui.entity.relationship.mode.simple">Simple Relationship Graph</string>
       <string name="ui.entity.relationship.mode.advanced">Advanced Relationship Graph</string>
+      <string name="ui.entity.relationship.mode.full">Full Relationship Graph</string>
 
       <!-- Log Configuration -->
       <string name="ui.config.log.writer.label">Log Writers</string>

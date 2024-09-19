@@ -15,9 +15,6 @@
  - WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the 
  - License for the specific language governing permissions and limitations under 
  - the License.
- - 
- - User: fyfej
- - Date: 2023-5-19
  -->
 <xs:schema xmlns:tns="http://santedb.org/matcher" elementFormDefault="qualified" targetNamespace="http://santedb.org/matcher" xmlns:xs="http://www.w3.org/2001/XMLSchema">
   <xs:simpleType name="BinaryOperatorType">

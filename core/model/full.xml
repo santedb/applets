@@ -15,9 +15,6 @@
  - WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the 
  - License for the specific language governing permissions and limitations under 
  - the License.
- - 
- - User: fyfej
- - Date: 2023-5-19
  -->
 <ViewModel xmlns="http://santedb.org/model/view">
   <include>base</include>
@@ -187,8 +184,8 @@
     <property name="classConceptModel" behavior="never" />
     <property name="relationship" all="true" behavior="always">
       <property name="*" ref="EntityRelationship" all="true" />
-
     </property>
+    <property name="securityUserModel" behavior="always" all="true" />
   </type>
 
   <type type="Patient" all="true">
@@ -415,8 +412,21 @@
     <property name="determinerConceptModel" behavior="never" />
     <property name="typeConceptModel" all="true" behavior="always" ref="Concept" />
     <property name="extension" all="true" behavior="always" />
-    <property name="relationship" all="false" behavior="always">
+    <property name="relationship" all="true" behavior="always">
       <property name="Parent" all="false">
+        <property name="id" />
+        <property name="target" />
+        <property name="targetModel" behavior="always" all="false">
+          <property name="classConceptModel" behavior="always" ref="Concept" />
+          <property name="id" />
+          <property name="version" />
+          <property name="relationship" behavior="never" />
+          <property name="name" all="true" behavior="always">
+            <property name="*" ref="EntityName" />
+          </property>
+        </property>
+      </property>
+      <property name="CommunityServiceDeliveryLocation" all="false">
         <property name="id" />
         <property name="target" />
         <property name="targetModel" behavior="always" all="false">
@@ -463,7 +473,8 @@
         <property name="holder" behavior="never" />
         <property name="holderModel" behavior="never" />
         <property name="sourceModel" behavior="never" />
-        <property name="relationshipTypeModel" behavior="never" />
+        <property name="relationshipTypeModel" behavior="never"/>
+        <property name="targetModel" behavior="always"/>
       </property>
     </property>
     <property name="service" all="false" behavior="always">
@@ -577,7 +588,7 @@
     <property name="doseUnitModel" behavior="always" ref="Concept" />
     <property name="moodConceptModel" behavior="never" />
     <property name="interpretationConceptModel" behavior="always" ref="Concept" />
-    <property name="protocol" behavior="never" />
+    <property name="protocol" behavior="always" all="true" />
     <property name="routeModel" behavior="always" ref="Concept" />
     <property name="protocol" behavior="always" />
     <property name="siteModel" behavior="always" ref="Concept" />
@@ -585,16 +596,22 @@
     <property name="relationship" behavior="always">
       <property name="*" ref="ActRelationship">
         <property name="target" />
-        <property name="targetModel" />
+        <property name="targetModel" ref="Act"/>
       </property>
     </property>
     <property name="participation" all="true" behavior="always">
-      <property name="RecordTarget" behavior="never">
+      <property name="RecordTarget" all="true">
         <property name="actModel" behavior="never" />
         <property name="sourceModel" behavior="never" />
         <property name="participationRoleModel" behavior="never" />
-        <property name="playerModel" all="false" behavior="never" />
         <property name="player" behavior="always" />
+        <property name="playerModel" behavior="always" all="true">
+          <property name="id" />
+          <property name="version" />
+          <property name="typeConceptModel" behavior="always" ref="Concept" />
+          <property name="identifier" all="true" behavior="always" />
+          <property name="name" all="true" behavior="always" />
+        </property>
       </property>
       <property name="Product" all="false">
         <property name="sourceModel" behavior="never" />
@@ -606,7 +623,9 @@
           <property name="version" />
           <property name="typeConceptModel" behavior="always" ref="Concept" />
           <property name="identifier" all="true" />
-          <property name="name" all="true" behavior="always" />
+          <property name="name" all="true" behavior="always">
+            <property name="*" ref="EntityName" />
+          </property>
           <property name="tag" all="true" />
           <property name="extension" all="true" />
           <property name="relationship" all="false">
@@ -871,6 +890,14 @@
     </property>
   </type>
 
+  <type type="CarePlan" all="true">
+    <property name="relationship" all="true">
+      <property name="HasComponent" all="true">
+        <property name="targetModel" all="true" ref="Act" />
+    </property>
+    </property>
+  </type>
+
   <type type="CodedObservation" all="true">
     <property name="createdBy" behavior="never" />
     <property name="creationTime" />
@@ -925,9 +952,11 @@
     <property name="name" behavior="always" all="true" />
     <property name="mnemonic" behavior="always" />
     <property name="id" behavior="always" />
+    <property name="conceptSetModel" behavior="never" />
     <property name="statusConcept" />
     <property name="conceptClass" />
     <property name="conceptSet" />
+    <property name="referenceTerm" behavior="never" />
   </type>
   <type type="ConceptSet" all="true">
     <property name="compose" behavior="always" all="true">
@@ -948,5 +977,11 @@
       <property name="url" />
       <property name="oid" />
     </property>
+  </type>
+  <type type="ExtensionType" all="true">
+    <property name="createdByModel" behavior="always" />
+    <property name="updatedByModel" behavior="always" />
+    <property name="obsoletedByModel" behavior="always" />
+    <property name="scopeModel" behavior="always" />
   </type>
 </ViewModel>

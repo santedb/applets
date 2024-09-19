@@ -16,9 +16,6 @@
  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the 
  * License for the specific language governing permissions and limitations under 
  * the License.
- * 
- * User: fyfej
- * Date: 2023-5-19
  */
 angular.module('santedb').controller('PlaceFacilityWidgetController', ["$scope", "$rootScope", "$stateParams", "$state", "$timeout", function ($scope, $rootScope, $stateParams, $state, $timeout) {
 
@@ -115,7 +112,7 @@ angular.module('santedb').controller('PlaceFacilityWidgetController', ["$scope",
         if (confirm(SanteDB.locale.getString("ui.admin.place.edit.associate.remove.confirm", { id: idOfTarget }))) {
             try {
                 SanteDB.display.buttonWait(`#Placeremove${index}`, true);
-                var relationship = await SanteDB.resources.entityRelationship.findAsync({ source: idOfSource, target: idOfTarget, relationshipType: EntityRelationshipTypeKeys.DedicatedServiceDeliveryLocation, _count: 1 }, "min");
+                var relationship = await SanteDB.resources.entityRelationship.findAsync({ source: idOfSource, target: idOfTarget, relationshipType: EntityRelationshipTypeKeys.CommunityServiceDeliveryLocation, _count: 1 }, "min");
                 if (relationship.resource.length == 1) {
                     await SanteDB.resources.entityRelationship.deleteAsync(relationship.resource[0].id);
                 }
@@ -141,7 +138,7 @@ angular.module('santedb').controller('PlaceFacilityWidgetController', ["$scope",
             await SanteDB.resources.entityRelationship.insertAsync(new EntityRelationship({
                 source: placeId,
                 target: $scope.scopedObject.id,
-                relationshipType: EntityRelationshipTypeKeys.DedicatedServiceDeliveryLocation
+                relationshipType: EntityRelationshipTypeKeys.CommunityServiceDeliveryLocation
             }));
             await SanteDB.resources.place.checkinAsync($scope.scopedObject.id);
             toastr.success(SanteDB.locale.getString("ui.admin.place.edit.associate.success"));
@@ -175,7 +172,7 @@ angular.module('santedb').controller('PlaceFacilityWidgetController', ["$scope",
                     submission.resource.push(new EntityRelationship({
                         holder: $scope.association.holder,
                         target: $scope.association.target,
-                        relationshipType: EntityRelationshipTypeKeys.DedicatedServiceDeliveryLocation
+                        relationshipType: EntityRelationshipTypeKeys.CommunityServiceDeliveryLocation
                     }));
                     break;
                 case "new":
@@ -185,7 +182,7 @@ angular.module('santedb').controller('PlaceFacilityWidgetController', ["$scope",
                     submission.resource.push(new EntityRelationship({
                         holder: $scope.association.holder,
                         target: newPlace.id,
-                        relationshipType: EntityRelationshipTypeKeys.DedicatedServiceDeliveryLocation
+                        relationshipType: EntityRelationshipTypeKeys.CommunityServiceDeliveryLocation
                     }));
                     break;
                 default:

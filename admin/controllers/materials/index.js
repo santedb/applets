@@ -16,9 +16,6 @@
  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the 
  * License for the specific language governing permissions and limitations under 
  * the License.
- * 
- * User: fyfej
- * Date: 2023-5-19
  */
 angular.module('santedb').controller('MaterialIndexController', ["$scope", "$rootScope", function ($scope, $rootScope) {
 
@@ -150,7 +147,7 @@ angular.module('santedb').controller('MaterialIndexController', ["$scope", "$roo
         if (confirm(SanteDB.locale.getString("ui.action.export.confirm"))) {
             try {
 
-                window.location = `/hdsi/Material/_export?statusConcept=${StatusKeys.Active}&_include=Organization:relationship[ManufacturedProduct].target.classConcept=fafec286-89d5-420b-9085-054aca9d1eef`;
+                window.location = `/hdsi/Material/_export??classConcept=${EntityClassKeys.Material}&classConcept=${EntityClassKeys.ManufacturedMaterial}&statusConcept=${StatusKeys.Active}&_include=Organization:relationship[ManufacturedProduct].target.classConcept=fafec286-89d5-420b-9085-054aca9d1eef`;
             }
             catch(e) {
                 $rootScope.errorHandler(e);

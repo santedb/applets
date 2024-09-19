@@ -14,9 +14,6 @@
  - WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the 
  - License for the specific language governing permissions and limitations under 
  - the License.
- - 
- - User: fyfej
- - Date: 2023-5-19
  -->
 <div xmlns="http://www.w3.org/1999/xhtml"  ng-if="addr.operation != 'Delete'">
     <input type="text" class="d-none" ng-if="controlPrefix &amp;&amp; $index == 0" ng-model="addr._away" name="{{::controlPrefix}}" /> <!-- CONTROL PREFIX BINDER-->
@@ -41,7 +38,7 @@
                     search-field="'name.component.value'" 
                     name="{{::controlPrefix}}address{{$index}}target"
                     filter="{ 'classConcept': '79dd4f75-68e8-4722-a7f5-8bc2e08f5cd6', 'statusConcept': 'c8064cbd-fa06-4530-b430-1a52f1530c27' }"
-                    default-results="{ 'relationship[DedicatedServiceDeliveryLocation].target' : catchmentAreaFor }" />
+                    default-results="{ 'relationship[DedicatedServiceDeliveryLocation|CommunityServiceDeliveryLocation].target' : catchmentAreaFor }" />
 
                 <div class="text-danger" ng-if="ownerForm[controlPrefix + 'address' + $index + 'target'].$invalid"><i
                         class="fas fa-exclamation-triangle"></i> {{ 'ui.error.required' | i18n }}</div>

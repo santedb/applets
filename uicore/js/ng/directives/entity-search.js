@@ -14,9 +14,6 @@
  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the 
  * License for the specific language governing permissions and limitations under 
  * the License.
- * 
- * User: fyfej
- * Date: 2023-5-19
  */
 
 /// <reference path="../../santedb-ui.js"/>
@@ -126,12 +123,22 @@ angular.module('santedb-lib')
                     retVal += "<i class='fa fa-fw fa-certificate'></i>";
                     break;
                 default:
-                    retVal += "<i class='fa fa-fw fa-box'></i> ";
+                    if(selection.icon) {
+                        retVal += `<i class='${selection.icon}'></i> `;
+                    }
+                    else {
+                        retVal += "<i class='fa fa-fw fa-box'></i> ";
+                    }
                     break;
             }
 
 
             retVal += "&nbsp;";
+
+
+            if(selection.lotNumber) {
+                retVal += `${selection.lotNumber} - `;
+            }
 
             if (selection.name != null)
                 retVal += SanteDB.display.renderEntityName(selection.name);
@@ -153,9 +160,15 @@ angular.module('santedb-lib')
                 retVal += selection.element.innerText.trim();
             else if (selection.text)
                 retVal += selection.text;
+            
+            if(selection.expiryDate) {
+                retVal += ` <span class="badge badge-warning">EXP: ${moment(selection.expiryDate).format("YYYY-MM-DD")}</span>`;
+            }
 
             retVal += "&nbsp;";
             if (!minRender) {
+                if(selection.securityUserModel) 
+                    retVal += `<code class='d-non d-sm-inline ml-2'><i class='fas fa-fw fa-shield-alt'></i> ${selection.securityUserModel.userName}</code> `;
                 if (selection.address)
                     retVal += "<small class='d-none d-sm-inline ml-2'> - (<i class='fa fa-map-marker'></i> " + SanteDB.display.renderEntityAddress(selection.address) + ")</small>";
                 else if (selection.oid)
@@ -199,7 +212,8 @@ angular.module('santedb-lib')
                 isRequired: '=', // True if the selector is required
                 forRelationshipType: '=', // If this is the target of the relationship then the default query can be auto-populated with this information
                 withRelationshipSourceClass: '=', // The class concept of the source object
-                withRelationshipTargetClass: '=' // The class concept of the target object
+                withRelationshipTargetClass: '=', // The class concept of the target object
+                jsFilter: '<'
             },
             restrict: 'E',
             require: 'ngModel',
@@ -255,13 +269,15 @@ angular.module('santedb-lib')
                                             res = await api.findAsync(query);
                                         }
 
+                                        var results = Array.isArray(res) ? res : res.resource;
+
                                         // Matching item
-                                        if (res.resource.length == 1 && $(selectControl).find(`option[value='${v}']`).length == 0) {
-                                            var obj = res.resource[0];
+                                        if (results.length == 1 && $(selectControl).find(`option[value='${v}']`).length == 0) {
+                                            var obj = results[0];
                                             if ($scope.selector)
                                                 obj = obj[$scope.selector] || obj;
-                                            var option = new Option(renderObject(res.resource[0], $scope.minRender), v, false, true);
-                                            option.title = renderTitle(res.resource[0]);
+                                            var option = new Option(renderObject(results[0], $scope.minRender), v, false, true);
+                                            option.title = renderTitle(results[0]);
                                             $(selectControl)[0].add(option);
                                         }
                                     }
@@ -294,6 +310,11 @@ angular.module('santedb-lib')
                                 }
 
                             });
+
+                            var form = SanteDB.display.getParentScopeVariable($scope, selectControl[0].form.name);
+                            if(form) {
+                                form[selectControl[0].name].$setValidity("required", true);
+                            }
                         }
                     }
                 }
@@ -424,6 +445,10 @@ angular.module('santedb-lib')
 
                                 var retVal = { results: [], pagination: { more: data.totalResults > data.count } };
                                 var data = data.$type == "Bundle" ? data.resource : data.resource || data;
+
+                                if(scope.jsFilter) {
+                                    data = data.filter(flt => scope.jsFilter(flt));
+                                }
 
                                 try {
                                     if (!data || data.length == 0) return [];

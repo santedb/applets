@@ -15,9 +15,6 @@
  - WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the 
  - License for the specific language governing permissions and limitations under 
  - the License.
- - 
- - User: fyfej
- - Date: 2023-5-19
  -->
 <?xml-model href="../../../../../../.ref/schema/BusinessIntelligence.xsd" type="application/xml" schematypens="http://www.w3.org/2001/XMLSchema"?>
 <BiDatamartDefinition xmlns="http://santedb.org/bi" id="org.santedb.bi.datamart.core"
@@ -25,6 +22,7 @@
     name="core-datamart" label="core-datamart">
 
 
+  <refreshFrequency>daily</refreshFrequency>
   <meta version="3.0">
     <authors>
       <add>SanteSuite Inc. and the SanteSuite Contributors</add>
@@ -107,6 +105,7 @@
       <column type="float" name="LAT"/>
       <column type="float" name="LNG"/>
       <column type="date-time" notNull="true" name="CREATED_TIME"/>
+      <column type="string" name="STATUS" />
       <column type="ref" notNull="true" name="CREATED_BY">
         <otherTable ref="SEC_OBJ_TBL" />
       </column>
@@ -204,11 +203,12 @@
     <!-- Manufactured materials table storing only those materials which are manufactured by an organization -->
     <table name="MMAT_TBL">
       <column type="string" name="GTIN" />
+      <column type="ref" name="MAT_ID">
+        <otherTable ref="MAT_TBL" />
+      </column>
+      <column type="int" name="PRESENTATION" />
       <column type="ref" name="MANUFACTURER">
         <otherTable ref="ORG_TBL" />
-      </column>
-      <column type="ref" name="SPECIALIZATION">
-        <otherTable ref="MAT_TBL" />
       </column>
       <parent ref="MAT_TBL" />
     </table>
@@ -222,12 +222,6 @@
     </table>
     <!-- All Places (Facilities, Buildings, Provinces, States, Cities, etc. -->
     <table name="PLC_TBL">
-      <column type="ref" name="NAME">
-        <otherTable ref="ENT_NAME_TBL" />
-      </column>
-      <column type="ref" name="ADDR">
-        <otherTable ref="ENT_ADDR_TBL" />
-      </column>
       <column type="string" name="TEL" />
       <column type="ref" name="PARENT" >
         <otherTable ref="PLC_TBL" />
@@ -262,9 +256,6 @@
       <column type="string" name="OCCUPATION" />
       <column type="string" name="VIP" />
       <column type="string" name="NATIONALITY" />
-      <column type="ref" name="DEDICATED_FACILITY">
-        <otherTable ref="PLC_TBL" />
-      </column>
       <parent ref="ENT_TBL" />
     </table>
 
@@ -274,6 +265,17 @@
       <parent ref="PSN_TBL" />
     </table>
 
+    <!-- Facility Staff -->
+     <table name="PLC_STF_TBL">
+      <column type="uuid" key="true" notNull="true" name="REL_ID" />
+      <column type="ref" name="PSN_ID" notNull="true">
+        <otherTable ref="USR_TBL" />
+      </column>
+      <column type="ref" name="PLC_ID" notNull="true">
+        <otherTable ref="PLC_TBL"/>
+      </column>
+     </table>
+     
     <!-- Provider Entity table -->
     <table name="PVD_TBL">
       <column type="ref" name="USR_ID">

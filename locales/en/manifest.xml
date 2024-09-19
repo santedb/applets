@@ -15,9 +15,6 @@
  - WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the 
  - License for the specific language governing permissions and limitations under 
  - the License.
- - 
- - User: fyfej
- - Date: 2023-5-19
  -->
 <AppletManifest xmlns="http://santedb.org/applet">
   <info id="org.santedb.i18n.en" version="3.0.0.0" uuid="10589c16-12c0-48f2-b76c-20964701fb5b">
@@ -74,6 +71,16 @@
   <strings lang="en-au" extern="strings/model.xml"/>
   <strings lang="en-au" extern="strings/errors.xml" />
   <strings lang="en-au" extern="strings/ui.xml" />
+  <strings lang="en-gb" extern="strings/uk.xml">
+    <string priority="1" />
+  </strings>
+
+  <strings lang="en-gb" extern="strings/model.xml"/>
+  <strings lang="en-gb" extern="strings/errors.xml" />
+  <strings lang="en-gb" extern="strings/ui.xml" />
+  <strings lang="en-gb" extern="strings/uk.xml">
+    <string priority="1" />
+  </strings>
 
   <strings lang="en-us" extern="strings/model.xml"/>
   <strings lang="en-us" extern="strings/errors.xml" />

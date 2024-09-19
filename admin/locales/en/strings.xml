@@ -14,11 +14,9 @@
  - WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the 
  - License for the specific language governing permissions and limitations under 
  - the License.
- - 
- - User: fyfej
- - Date: 2023-5-19
  -->
 <resources>
+    <string name="ui.action.makeManager">Manager</string>
     <string name="ui.directConnect">Direct Connect to Server</string>
     <string name="ui.admin.brand.title"><![CDATA[<img src="/org.santedb.core/img/icon.png" height="24px"/> SanteDB Admin]]></string>
     <string name="ui.admin.tickleError">Error fetching application alerts</string>
@@ -153,13 +151,14 @@
     <string name="ui.admin.system.info.memory">Used Memory</string>
     <string name="ui.admin.system.info.uptime">Uptime</string>
     <string name="ui.admin.system.applets.manage.title">Manage Applets</string>
-    <string name="ui.admin.ssytem.applets.manage.description"><![CDATA[ 
+    <string name="ui.admin.system.applets.manage.description"><![CDATA[ 
         <i class="fas fa-info-circle"></i> This screen is used to update or remove applet solutions from the iCDR instance. An applet is a 
         packaged and digitally signed file which contains new features and functions in SanteDB.
         ]]></string>
-        <string name="ui.admin.system.applet.remove.confirm">Are you sure you want to remove the applet {id} from the server?</string>
-        <string name="ui.admin.system.applet.upload.success">Applet solution was uploaded successfully</string>
-        <string name="ui.admin.system.applet.upload.error">Failed to upload applet solution to server</string>
+    <string name="ui.admin.system.applet.manage.solutionapplets">Solution Applets</string>
+    <string name="ui.admin.system.applet.remove.confirm">Are you sure you want to remove the applet {id} from the server?</string>
+    <string name="ui.admin.system.applet.upload.success">Applet solution was uploaded successfully</string>
+    <string name="ui.admin.system.applet.upload.error">Failed to upload applet solution to server</string>
     <string name="ui.admin.system.applets.title">Applets</string>
     <string name="ui.admin.system.applets.name">Name</string>
     <string name="ui.admin.system.applets.version">Version</string>
@@ -252,6 +251,16 @@
     <string name="org.santedb.widget.admin.panel.place.profile.type">Type</string>
     <string name="org.santedb.widget.admin.panel.place.profile.location">Location</string>
     <string name="org.santedb.widget.admin.panel.place.profile.parent">Parent</string>
+    <string name="org.santedb.widget.admin.panel.facility.staff">Assigned Staff</string>
+    <string name="org.santedb.widget.admin.panel.facility.managers">Managers</string>
+    <string name="org.santedb.widget.admin.tab.facility.profile">Facility Profile</string>
+    <string name="org.santedb.widget.admin.tab.facility.relationships">Relationships</string>
+    <string name="org.santedb.widget.admin.tab.facility.staffing">Staffing</string>
+    <string name="org.santedb.widget.admin.panel.facility.profile.name">Name</string>
+    <string name="org.santedb.widget.admin.panel.facility.profile.location">Location</string>
+    <string name="org.santedb.widget.admin.panel.facility.profile.telecom">Telecom</string>
+    <string name="org.santedb.widget.admin.panel.facility.profile.services">Services</string>
+  
 
 
     <!-- Edit Identity Domain -->
@@ -375,6 +384,7 @@
     <string name="ui.admin.place.edit.associate.title">Associate Facility</string>
     <string name="ui.admin.place.edit.associate.new">Associate a New Facility</string>
     <string name="ui.admin.place.edit.associate.existing">Associate an Existing Facility</string>
+    <string name="ui.admin.place.export.heirarchy">You are about to export a dataset containing this place and all its descendants. This may take up to 2 minutes, are you sure?</string>
     <string name="ui.admin.place.edit.associate.success">Association successfully created</string>
     <string name="ui.admin.place.edit.associate.failure">Association was not created: {e}</string>
     <string name="ui.admin.place.edit.associate.remove.confirm">Are you sure you want to remove the
@@ -396,7 +406,17 @@
     <string name="ui.admin.facility.services.none">Facility Proivdes No Services</string>
     <string name="ui.admin.facility.services.save.success">Facility services saved successfully</string>
     <string name="ui.admin.facility.services.save.failure">Facility services save failed: {e}</string>
-
+    <string name="ui.admin.facility.staff.manager.remove.confirm">Are you sure you want to remove the management role for {user}?</string>
+    <string name="ui.admin.facility.staff.manager.remove.success">Manager has been removed successfully</string>
+    <string name="ui.admin.facility.staff.manager.remove.error">Error removing manager: {error}</string>
+    <string name="ui.admin.facility.staff.manager.promote.confirm">Are you sure you want to promote this staff member to manager?</string>
+    <string name="ui.admin.facility.staff.manager.promote.success">Staff member has been promoted successfully</string>
+    <string name="ui.admin.facility.staff.manager.promote.error">Error promoting to manager: {error}</string>
+    <string name="ui.admin.facility.staff.manager.promote.administrator">Would you like to add this user to the local administrators group?</string>
+    <string name="ui.admin.facility.staff.remove.confirm">Are you sure you want to remove the staff member {user} from this facility? (note: any management role will also be removed)</string>
+    <string name="ui.admin.facility.staff.remove.success">Staff has been removed successfully</string>
+    <string name="ui.admin.facility.staff.add.success">Staff has been added successfully</string>
+    <string name="ui.admin.facility.staff.remove.error">Error removing staff: {error}</string>
     <!-- Organization Editing -->
     <string name="ui.admin.organizations.edit.profile.title">Create Organization</string>
     <string name="org.santedb.widget.admin.panel.organization.profile">Organization Profile</string>
@@ -407,6 +427,9 @@
         organization?</string>
     <string name="ui.admin.organization.confirmUnDelete">Are you sure you want to un-delete this
         organization?</string>
+    <string name="org.santedb.widget.admin.tab.organization.profile">Profile</string>
+    <string name="org.santedb.widget.admin.tab.organization.products">Manufactured Products</string>
+
 
     <string name="ui.admin.entity.edit.child.add.confirm">The entity you are attempting to add to
         this entity already has a Parent. Do you want to reassign this entity to a new parent?</string>
@@ -427,7 +450,9 @@
     <!-- Certificate Management -->
     <string name="org.santedb.widget.admin.panel.user.auth_certs">Authentication</string>
     <string name="org.santedb.widget.admin.panel.user.dsig_certs">Digital Signatures</string>
+    <string name="org.santedb.widget.admin.panel.user.public">Profile</string>
     <string name="org.santedb.widget.admin.tab.user.certs">Certificates</string>
+    <string name="org.santedb.widget.admin.tab.user.profile">Public Profile</string>
     <string name="org.santedb.widget.admin.panel.device.auth_certs">Authentication</string>
     <string name="org.santedb.widget.admin.panel.device.dsig_certs">Digital Signatures</string>
     <string name="org.santedb.widget.admin.tab.device.certs">Certificates</string>
@@ -759,6 +784,16 @@
     <string name="ui.admin.dataQuality.create.manual.option">Manually Create Ruleset</string>
     <string name="ui.admin.dataQuality.upload.success">Ruleset Uploaded Successfully</string>
     <string name="ui.admin.dataQuality.upload.error">Error uploading ruleset file : {error}</string>
+    <string name="ui.admin.dataQuality.purge.confirm">Are you sure you want to purge this data quality configuration? It cannot be restored after this action</string>
+    <string name="ui.admin.dataQuality.purge.success">Data quality configuration has been successfully purged</string>
+    <string name="ui.admin.dataQuality.purge.error">Could not purge data quality rule: {error}</string>
+    <string name="ui.admin.dataQuality.delete.confirm">Are you sure you want to delete this data quality configuration?</string>
+    <string name="ui.admin.dataQuality.delete.success">Data quality configuration has been successfully deleted</string>
+    <string name="ui.admin.dataQuality.delete.error">Could not delete data quality rule: {error}</string>
+    <string name="ui.admin.dataQuality.restore.confirm">Are you sure you want to restore this data quality configuration? (it will be deactivated prior to restore)</string>
+    <string name="ui.admin.dataQuality.restore.success">Data quality configuration has been successfully restored</string>
+    <string name="ui.admin.dataQuality.restore.error">Could not restore data quality rule: {error}</string>
+    <string name="ui.admin.dataQuality.save.success">Data quality rule has been saved successfully</string>
     <!-- Materials Management -->
     <string name="ui.admin.material.create.help"><![CDATA[
     <a data-toggle="collapse" data-target="#material-help"><h5 class="card-title">
@@ -813,4 +848,15 @@
     <string name="org.santedb.widget.concept.concepts.core.relationship.out">Related To Concept</string>
     <string name="org.santedb.widget.concept.concepts.core.relationship.in">Concepts Related</string>
     
+    <!-- Extension Type -->
+     <string name="ui.admin.cdr.extensionType.properties">Extension Type Properties</string>
+     <string name="ui.admin.cdr.extensionType.provenance">Provenance / Tracking</string>
+     <string name="ui.admin.cdr.extensionType.create.success">Extension type was created successfully</string>
+     <string name="ui.admin.cdr.extensionType.save.success">Extension type was saved successfully</string>
+     <string name="ui.admin.cdr.extensionType.delete.confirm">Are you sure you want to delete this extension type?</string>
+     <string name="ui.admin.cdr.extensionType.delete.success">Extension type has been deleted successfully</string>
+     <string name="ui.admin.cdr.extensionType.delete.error">Extension could not be deleted due to {error}</string>
+     <string name="ui.admin.cdr.extensionType.restore.confirm">Are you sure you want to un-delete this extension type?</string>
+     <string name="ui.admin.cdr.extensionType.restore.success">Extension type has been un-deleted successfully</string>
+     <string name="ui.admin.cdr.extensionType.restore.error">Could not restore extension type due to error: {error}</string>
 </resources>

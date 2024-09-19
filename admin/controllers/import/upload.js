@@ -16,9 +16,6 @@
  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the 
  * License for the specific language governing permissions and limitations under 
  * the License.
- * 
- * User: fyfej
- * Date: 2023-5-19
  */
 angular.module('santedb').controller('ForeignDataUploadController', ["$scope", "$rootScope", "$timeout", "$state", function ($scope, $rootScope, $timeout, $state) {
 
@@ -35,6 +32,12 @@ angular.module('santedb').controller('ForeignDataUploadController', ["$scope", "
     }
 
     initialize();
+
+    $scope.$watch("submission.source", function(n, o) {
+        if(n && n!=o) {
+            $scope.submission.description = n;
+        }
+    });
 
     $scope.$watch("submission.map", function(n,o) {
         if(n) {

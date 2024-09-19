@@ -14,9 +14,6 @@
  - WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the 
  - License for the specific language governing permissions and limitations under 
  - the License.
- - 
- - User: fyfej
- - Date: 2023-5-19
  -->
 <div xmlns="http://www.w3.org/1999/xhtml">
     <div class="row form-group">
@@ -28,13 +25,13 @@
             </div>
         </div>
     </div>
-    <div class="row form-group" ng-if="geo._supplied">
+    <div class="row form-group" ng-if="model._supplied">
         <label class="col-md-3 col-sm-12 control-label">{{ 'ui.model.geo.lat' | i18n }}</label>
         <div class="col-sm-12 col-md-9">
             <input type="number" class="form-control" ng-model="model.lat" />
         </div>
     </div>
-    <div class="row form-group" ng-if="geo._supplied">
+    <div class="row form-group" ng-if="model._supplied">
         <label class="col-md-3 col-sm-12 control-label">{{ 'ui.model.geo.lng' | i18n }}</label>
         <div class="col-sm-12 col-md-9">
             <input type="number" class="form-control" ng-model="model.lng" />

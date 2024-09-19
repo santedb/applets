@@ -14,9 +14,6 @@
  - WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the 
  - License for the specific language governing permissions and limitations under 
  - the License.
- - 
- - User: fyfej
- - Date: 2023-5-19
  -->
 <ViewModel xmlns="http://santedb.org/model/view">
   <include>full</include>
@@ -27,7 +24,7 @@
     <property name="holder" all="true"/>
     <property name="targetModel" all="false" behavior="never"/>
     <property name="relationshipType" all="true" behavior="always"/>
-    <property name="holderModel" behavior="always" all="true" ref="Entity"/>
+    <property name="holderModel" behavior="always" ref="Entity" all="true" />
     <property name="relationshipTypeModel" behavior="always" all="true" ref="Concept"/>
     <property name="key" all="true"/>
     <property name="quantity" all="true"/>
@@ -57,6 +54,7 @@
       <property name="*" ref="EntityTelecom"/>
     </property>
     <property name="relationship" behavior="never"/>
+    <property name="securityUserModel" behavior="always" all="true"/>
 
   </type>
 
@@ -82,5 +80,24 @@
     </property>
     <property name="relationship" behavior="never"/>
     <property name="quantityConceptModel" behavior="always" />
+  </type>
+
+  
+  <!-- User Entity -->
+  <type type="UserEntity" all="true">
+    <property name="classConcept"/>
+    <property name="classConceptModel" behavior="always" ref="Concept"/>
+   <property name="name" all="true"  behavior="always">
+      <property name="*" ref="EntityName"/>
+    </property>
+    <property name="address" all="true"  behavior="always">
+      <property name="*" ref="EntityAddress"/>
+    </property>
+    <property name="identifier" all="true"  behavior="always">
+      <property name="*" ref="EntityIdentifier"/>
+    </property>
+    <property name="telecom" all="true" behavior="always">
+      <property name="*" ref="EntityTelecom"/>
+    </property>
   </type>
 </ViewModel>

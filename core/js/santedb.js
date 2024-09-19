@@ -15,16 +15,13 @@
  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the 
  * License for the specific language governing permissions and limitations under 
  * the License.
- * 
- * User: fyfej
- * Date: 2023-5-19
  */
 
 // Interactive SHIM between host environment and browser
 var __SanteDBAppService = window.SanteDBAppService || {};
 
 // Backing of execution environment
-var ExecutionEnvironment = {
+const ExecutionEnvironment = {
     Unknown: 0,
     Server: 1,
     Mobile: 2,
@@ -32,7 +29,12 @@ var ExecutionEnvironment = {
     Test: 4,
     Gateway: 5
 };
- 
+
+const BooleanExtensionValues = {
+    true: `AQ==`,
+    false: `AA==`
+}
+
 /**
 * @class
 * @constructor
@@ -972,7 +974,7 @@ function ResourceWrapper(_config) {
             headers["X-SanteDB-Upstream"] = upstream;
         }
 
-        if (!query._includeTotal) {
+        if (query._includeTotal === undefined) {
             query._includeTotal = true;
         }
 
@@ -1095,9 +1097,10 @@ function ResourceWrapper(_config) {
             throw new Exception("ArgumentException", "error.invalidType", `Invalid type, resource wrapper expects ${_config.resource} however ${data.$type} specified`);
 
         var headers = {};
-        if (etag)
+        if (etag) {
             headers['If-Match'] = etag;
-
+        }
+        
         if (upstream !== undefined) {
             headers["X-SanteDB-Upstream"] = upstream;
         }
@@ -1696,7 +1699,9 @@ function ResourceWrapper(_config) {
     * @param {string} operation The operation you want to execute
     * @param {any} parameters The parameters to the operation being executes (example: { clear: true, softFind: true })
     * @param {bool} upstream True if the operation shold be executed opstream 
+    * @param {string} viewModel The view model which should be used to load data
     * @param {object} state A tracking state to send to the callback
+    * @param {string} viewModel The view model to use to load returned properties
     * @returns {Promise} A promise which is fulfilled when the request is complete
     * @description SanteDB's iCDR and dCDR HDSI interfaces allow for the invokation of operations ({@link https://help.santesuite.org/developers/service-apis/health-data-service-interface-hdsi/http-request-verbs#operations}). 
     *               Operations aren't resources per-se, rather they are remote procedure calls where a caller can pass parameters to the operation. Invokable operations can be bound to specific instances 
@@ -1712,7 +1717,7 @@ function ResourceWrapper(_config) {
     *   }
     * }
     */
-    this.invokeOperationAsync = function (id, operation, parameters, upstream, state) {
+    this.invokeOperationAsync = function (id, operation, parameters, upstream, viewModel, state) {
 
 
         if (!operation)
@@ -1721,7 +1726,9 @@ function ResourceWrapper(_config) {
         var headers = {
             Accept: _config.accept
         };
-        if (_config.viewModel)
+        if(viewModel) 
+            headers["X-SanteDB-ViewModel"] = viewModel;
+        else if (_config.viewModel)
             headers["X-SanteDB-ViewModel"] = _config.viewModel;
 
         // Prepare path
@@ -1778,8 +1785,8 @@ function SanteDBWrapper() {
     var _viewModelJsonMime = "application/json+sdb-viewmodel";
 
     // JWS Pattern
-    var jwsDataPattern = /^(.*?)\.(.*?)\.(.*?)$/;
-    var svrpPattern = /^svrp\:\/\/(.*)$/;
+    var jwsDataPattern = /^([A-Za-z0-9-_\+\/]+?)\.([A-Za-z0-9-_\+\/]+?)\.([A-Za-z0-9-_\+\/]+?)$/;
+    var svrpPattern = /^svrp\:\/\/([A-Za-z0-9-_\+\/]+?)\.([A-Za-z0-9-_\+\/]+?)\.([A-Za-z0-9-_\+\/]+?)$/;
 
     // Get the version of this API Wrapper
     this.getVersion = function () {
@@ -1849,7 +1856,7 @@ function SanteDBWrapper() {
                 if (data.responseJSON &&
                     pve &&
                     data.getResponseHeader("WWW-Authenticate").indexOf("insufficient_scope") > -1)
-                    _elevator.elevate(angular.copy(_session), [`${pve.policyId} - ${pve.policyName}`]);
+                    _elevator.elevate(angular.copy(_session), [pve.policyId, "*"]);
                 else
                     _elevator.elevate(null);
                 return true;
@@ -1924,8 +1931,7 @@ function SanteDBWrapper() {
         var _resourceStates = {};
         var _idParsers = {};
         var _idClassifiers = {};
-        var _templateView = {};
-        var _templateForm = {};
+        var _templateCache = undefined;
         var _identifierValidator = {};
 
         /**
@@ -1961,9 +1967,10 @@ function SanteDBWrapper() {
                 }
 
                 // Return the data element
-                var retVal = jwsBody.data || {};
-                retVal.id = jwsBody.sub;
-                return retVal;
+                return {
+                    header: jwsHeader,
+                    body: jwsBody
+                }
             }
             catch (e) {
                 throw new Exception("JwsParseError", e);
@@ -2106,13 +2113,16 @@ function SanteDBWrapper() {
             var data = await SanteDB.application.scanBarcodeAsync();
 
             if (svrpPattern.test(data)) {
-                var match = svrpPattern.exec(data);
-                var jwsData = jwsDataPattern.exec(match[1]);
-                return await _extractJwsData(jwsData);
+                var jwsData = svrpPattern.exec(data);
+                var rawJwsData = await _extractJwsData(jwsData);
+                rawJwsData.body.data.id = rawJwsData.body.sub;
+                return rawJwsData.body.data;
             }
             else if (jwsDataPattern.test(data)) {
                 var jwsData = jwsDataPattern.exec(data);
-                return await _extractJwsData(jwsData);
+                var rawJwsData = await _extractJwsData(jwsData);
+                rawJwsData.body.data.id = rawJwsData.body.sub;
+                return rawJwsData.body.data;
             }
             else {
                 var idDomain = SanteDB.application.classifyIdentifier(data);
@@ -2131,27 +2141,21 @@ function SanteDBWrapper() {
          * @param {*} qrCodeData The QR Code data already scanned
          * @param {*} noValidate True if the barcode should not be validated
          * @param {*} upstream True if search upstream
+         * @param {bool} noExec When true, don't execute the search just return the search parameters
          * @description This method will use the barcode providers referenced to parse information from the barcode and will search the HDSI for the object which the 
          *                barcode represents. This method works best with the SanteDB VRP API {@link https://help.santesuite.org/developers/service-apis/health-data-service-interface-hdsi/digitally-signed-visual-code-api}
          */
-        this.searchByBarcodeAsync = async function (qrCodeData, noValidate, upstream) {
+        this.searchByBarcodeAsync = async function (qrCodeData, noValidate, upstream, noExec) {
             try {
                 if (!qrCodeData)
                     qrCodeData = await SanteDB.application.scanBarcodeAsync();
-
+                
                 // QR Code is a signed code
-                if (svrpPattern.test(qrCodeData)) {
-                    var match = svrpPattern.exec(qrCodeData);
-
-                    var jwsData = await _extractJwsData(match[1]);
-
-                    var result = await SanteDB.application.ptrSearchAsync(match[1], !noValidate, upstream || false);
-                    result.$novalidate = noValidate;
-                    result.$upstream = upstream;
-                    return result;
-                }
-                else if (jwsDataPattern.test(qrCodeData)) {
-                    var result = await SanteDB.application.ptrSearchAsync(qrCodeData, !noValidate, upstream || false);
+                if (svrpPattern.test(qrCodeData) || jwsDataPattern.test(qrCodeData)) {
+                    var match = svrpPattern.exec(qrCodeData) || jwsDataPattern.exec(qrCodeData);
+                    var jwsData = await _extractJwsData(match);
+                    // The issuer for the QR code data trumps the upstream setting
+                    var result = await SanteDB.application.ptrSearchAsync(match[0], !noValidate, upstream || false);
                     result.$novalidate = noValidate;
                     result.$upstream = upstream;
                     return result;
@@ -2176,7 +2180,9 @@ function SanteDBWrapper() {
                             "identifier.value": qrCodeData
                         }
                     }
-                    var result = await SanteDB.resources.entity.findAsync(query);
+
+                    var result = {};
+                    if(!noExec) result = await SanteDB.resources.entity.findAsync(query);
                     result.$search = qrCodeData;
                     return result;
                 }
@@ -2192,17 +2198,18 @@ function SanteDBWrapper() {
                     confirm(SanteDB.locale.getString("ui.error.vrp.invalidFormat"))) {
                     return await SanteDB.application.searchByBarcodeAsync(qrCodeData, true, upstream);
                 }
-                else if (!upstream && (e.$type == "KeyNotFoundException" || e.cause && e.cause.$type == "KeyNotFoundException") && confirm(SanteDB.locale.getString("ui.emr.search.online"))) {
+
+                var rootCause = e.getRootCause();
+                if (!upstream && rootCause.$type == "KeyNotFoundException" && confirm(SanteDB.locale.getString("ui.emr.search.online"))) {
                     // Ask the user if they want to search upstream, only if they are allowed
                     var session = await SanteDB.authentication.getSessionInfoAsync();
-
-                    if (session.method == "LOCAL") // Local session so elevate to use the principal elevator
+                    if (session.authType == "LOCAL") // Local session so elevate to use the principal elevator
                     {
                         var elevator = new ApplicationPrincipalElevator();
                         await elevator.elevate(session);
                         SanteDB.authentication.setElevator(elevator);
                     }
-                    return await SanteDB.application.searchByBarcodeAsync(qrCodeData, true, true);
+                    return await SanteDB.application.searchByBarcodeAsync(qrCodeData, noValidate, true);
                 }
                 throw e;
             }
@@ -2735,6 +2742,24 @@ function SanteDBWrapper() {
             return __SanteDBAppService.IsClinicalAvailable();
         }
         /**
+         * @summary Resolves the HTML summary view for the specified template
+         * @method resolveTemplateSummary
+         * @memberof SanteDBWrapper.ApplicationApi
+         * @returns {string} The HTML content of the sumary form for the specified template
+         * @param {string} templateId The id of the template for which HTML summary should be gathered
+         * @description This method allows a plugin to resolve a template identifier (like: entity.tanzania.child) to an actual HTML summary
+         */
+        this.resolveTemplateSummary = function (templateId) {
+            var entry = _templateCache.find(o=>o.mnemonic == templateId);
+            if(entry) {
+                return entry.summaryView;
+            }
+            else {
+                return null;
+            }
+        }
+
+        /**
          * @summary Resolves the HTML input form for the specified template
          * @method resolveTemplateForm
          * @memberof SanteDBWrapper.ApplicationApi
@@ -2743,7 +2768,13 @@ function SanteDBWrapper() {
          * @description This method allows a plugin to resolve a template identifier (like: entity.tanzania.child) to an actual HTML input form
          */
         this.resolveTemplateForm = function (templateId) {
-            return _resources.template.getAssociatedAsync(templateId, "ui", "form.html");
+            var entry = _templateCache.find(o=>o.mnemonic == templateId);
+            if(entry) {
+                return entry.form;
+            }
+            else {
+                return null;
+            }
         }
         /**
          * @summary Resolves the HTML view for the specified template
@@ -2754,7 +2785,13 @@ function SanteDBWrapper() {
          * @description This method allows a plugin to resolve a template view (to display informaton from the template)
          */
         this.resolveTemplateView = function (templateId) {
-            return _resources.template.getAssociatedAsync(templateId, "ui", "view.html");
+            var entry = _templateCache.find(o=>o.mnemonic == templateId);
+            if(entry) {
+                return entry.view;
+            }
+            else {
+                return null;
+            }
         }
         /**
          * @summary Get a list of all installed template definitions
@@ -2764,7 +2801,13 @@ function SanteDBWrapper() {
          * @returns {Array<string>} The list of template definitions
          */
         this.getTemplateDefinitionsAsync = async function (query) {
-            return _resources.template.findAsync(query);
+            if(_templateCache) {
+                return _templateCache;
+            }
+            else {
+                _templateCache = await _resources.template.findAsync(query);
+                return _templateCache;
+            }
         }
         /**
          * @summary Get a list of all installed template definitions
@@ -2875,8 +2918,6 @@ function SanteDBWrapper() {
             }
         }
 
-
-
     }
 
     /**
@@ -2960,6 +3001,18 @@ function SanteDBWrapper() {
             resource: "Bundle",
             api: _hdsi
         });
+
+        /**
+        * @type {ResourceWrapper}
+        * @memberof SanteDBWrapper.ResourceApi
+        * @summary Represents a resource wrapper that persists care pathway definitions
+        */
+        this.carePathwayDefinition = new ResourceWrapper({
+            accept: _viewModelJsonMime,
+            resource: 'CarePathwayDefinition',
+            api: _hdsi
+        });
+
         /**
             * @type {ResourceWrapper}
             * @memberof SanteDBWrapper.ResourceApi
@@ -3621,6 +3674,17 @@ function SanteDBWrapper() {
             api: _hdsi
         });
 
+        /**
+         * @type {ResourceWrapper}
+         * @memberOf SanteDBWrapper.resources
+         * @summary Wrapper for containers
+         */
+        this.container = new ResourceWrapper({
+            resource: "Container",
+            accept: _viewModelJsonMime,
+            api: _hdsi
+        });
+
     };
 
     // HACK: Wrapper pointer facility = place
@@ -3836,12 +3900,12 @@ function SanteDBWrapper() {
         }
 
         /**
-         * @method getFacilityId
+         * @method getAssignedFacilityId
          * @memberof SanteDBWrapper.ConfigurationApi
          * @summary Get the configured facility identifier
          * @returns {string} The identifier of the facility
          */
-        this.getFacilityId = function () {
+        this.getAssignedFacilityId = function () {
             return __SanteDBAppService.GetAssignedFacilityId();
         }
 
@@ -4028,7 +4092,6 @@ function SanteDBWrapper() {
                 try {
                     var tokenData = _extractJwtData(oauthResponse.id_token);
                     // Set the locale
-                    console.info(tokenData);
                     if (tokenData.lang)
                         __SanteDBAppService.SetLocale(tokenData.lang);
                     else if (tokenData['urn:santedb:org:lang'])
@@ -4231,7 +4294,7 @@ function SanteDBWrapper() {
                 try {
                     var headers = {};
                     var claims = {};
-                    claims["urn:oasis:names:tc:xacml:2.0:action:purpose"] = 'PurposeOfUse-SecurityAdmin';
+                    claims["urn:oasis:names:tc:xacml:2.0:action:purpose"] = '8b18c8ce-916a-11ea-bb37-0242ac130002'; // Security Admin
                     claims["urn:santedb:org:claim:temporary"] = "true";
                     headers["X-SanteDBClient-Claim"] =
                         btoa(Object.keys(claims).map(o => `${o}=${claims[o]}`).join(";"));
@@ -4274,13 +4337,18 @@ function SanteDBWrapper() {
             * @param {boolean} uacPrompt True if the authentication is part of a UAC prompt and no perminant session is to be 
             * @param {String} purposeOfUse The identifier of the purpose of use for the access
             * @returns {Promise} A promise representing the login request
+            * @param {any} claims The claims which are to be appended to the OAUTH request
             * @see https://help.santesuite.org/developers/service-apis/openid-connect
             */
-        this.passwordLoginAsync = function (userName, password, tfaSecret, uacPrompt, purposeOfUse, scope) {
+        this.passwordLoginAsync = function (userName, password, tfaSecret, uacPrompt, purposeOfUse, scope, claims) {
             return new Promise(function (fulfill, reject) {
                 try {
                     var headers = {};
-                    var claims = {};
+                    claims = claims || {};
+
+                    if(!Array.isArray(scope)) {
+                        scope = [scope];
+                    }
 
                     if (purposeOfUse) {
                         claims["urn:santedb:org:claim:override"] = "true";
@@ -4611,14 +4679,14 @@ function SanteDBWrapper() {
          * @returns {String} The UUID of the current facility identifier
          */
         this.getCurrentFacilityId = async function() {
-            try {
+            try { 
                 var sessionInfo = await SanteDB.authentication.getSessionInfoAsync();
                 var sessionFacility = sessionInfo.claims["urn:oasis:names:tc:xspa:1.0:subject:facility"];
-                return sessionFacility || SanteDB.configuration.getFacilityId();
+                return sessionFacility ? sessionFacility.value || sessionFacility : SanteDB.configuration.getAssignedFacilityId();
             }
             catch(e) {
                 console.warn(e);
-                return SanteDB.configuration.getFacilityId();
+                return SanteDB.configuration.getAssignedFacilityId();
             }
         }
 
@@ -4943,4 +5011,20 @@ SanteDB.application.addCheckDigitValidator("SanteDB.Core.Model.DataTypes.CheckDi
 // Add default check digit handlers
 SanteDB.application.addCheckDigitValidator("SanteDB.Core.Model.DataTypes.CheckDigitAlgorithms.Mod97CheckDigitAlgorithm, SanteDB.Core.Model", function(id) {
     return validateMod97CheckDigit(id.value, id.checkDigit);
+});
+
+
+
+// Add default check digit handlers
+SanteDB.application.addCheckDigitValidator("SanteDB.Core.Model.DataTypes.CheckDigitAlgorithms.InlineMod97Validator, SanteDB.Core.Model", function(id) {
+    if(!id.value) {
+        return false;
+    }
+
+    return validateIso7064Mod97CheckDigit(id.value.substring(0, id.value.length - 2), id.value.substring(id.value.length - 2, id.value.length));
+});
+
+// Add default check digit handlers
+SanteDB.application.addCheckDigitValidator("SanteDB.Core.Model.DataTypes.CheckDigitAlgorithms.Mod97CheckDigitAlgorithm, SanteDB.Core.Model", function(id) {
+    return validateIso7064Mod97CheckDigit(id.value, id.checkDigit);
 });

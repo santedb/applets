@@ -1,32 +1,23 @@
 /// <reference path="../../../core/js/santedb.js"/>
 /// <reference path="../../../core/js/santedb-model.js"/>
-
-/**
+/*
+ * Copyright (C) 2021 - 2024, SanteSuite Inc. and the SanteSuite Contributors (See NOTICE.md for full copyright notices)
+ * Copyright (C) 2019 - 2021, Fyfe Software Inc. and the SanteSuite Contributors
+ * Portions Copyright (C) 2015-2018 Mohawk College of Applied Arts and Technology
  * 
- * @param {ManufacturedMaterial} lot The material representing the lot instance
- * @param {ManufacturedMaterial} product The material representing the generic product
- * @param {string} statusConcept The status of the lot to set
- * @param {boolean} copyGtin True if GTIN should be copied from the product to the lot
- * @param {boolean} copyName True if the name of the product should be copied to the lot
+ * Licensed under the Apache License, Version 2.0 (the "License"); you 
+ * may not use this file except in compliance with the License. You may 
+ * obtain a copy of the License at 
+ * 
+ * http://www.apache.org/licenses/LICENSE-2.0 
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+ * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the 
+ * License for the specific language governing permissions and limitations under 
+ * the License.
  */
-function copyMaterialInstance(lot, product, statusConcept, copyGtin, copyName) {
-    lot.determinerConcept = DeterminerKeys.Specific;
-    lot.formConcept = product.formConcept;
-    lot.typeConcept = product.typeConcept;
-    lot.quantityConcept = product.quantityConcept;
-    lot.statusConcept = statusConcept;
-    lot.quantity = 1;
-    lot.identifier = lot.identifier || {};
-    lot.identifier.GTIN = lot.identifier.GTIN || [{}];
-    if (product.identifier && product.identifier.GTIN && copyGtin) {
-        lot.identifier.GTIN[0].value = product.identifier.GTIN[0].value;
-    }
-    lot.name = lot.name || {};
-    lot.name.Assigned = lot.name.Assigned || [{ component: { $other: [""] } }];
-    if (copyName) {
-        lot.name.Assigned[0].component.$other[0] = product.name.Assigned[0].component.$other[0];
-    }
-}
+
 
 var loadedObjects = {};
 
@@ -112,7 +103,7 @@ angular.module("santedb").controller("MaterialWidgetController", ["$scope", "$ro
     }
 
     $scope.renderManufacturer = function (r) {
-        if (r.relationship && r.relationship.ManufacturedProduct) {
+        if (r.relationship && r.relationship.ManufacturedProduct && r.relationship.ManufacturedProduct[0]) {
             return SanteDB.display.renderEntityName(r.relationship.ManufacturedProduct[0].holderModel.name);
         }
     }
@@ -200,6 +191,17 @@ angular.module("santedb").controller("MaterialWidgetController", ["$scope", "$ro
                 material.operation = BatchOperationType.Update;
             }
 
+            // Remove the manufacturer assocation
+            if(material.relationship && material.relationship.ManufacturedProduct) {
+                submissionBundle.resource.push(new EntityRelationship({
+                    id: material.relationship.ManufacturedProduct[0].id,
+                    source: material.relationship.ManufacturedProduct[0].holder,
+                    relationshipType: EntityRelationshipTypeKeys.ManufacturedProduct,
+                    target: material.id
+                }));
+                delete(material.relationship.ManufacturedProduct);
+            }
+
             await SanteDB.resources.bundle.insertAsync(submissionBundle);
             $("#MaterialProductTable").attr("newQueryId", true);
             $("#MaterialProductTable table").DataTable().draw();
@@ -222,9 +224,18 @@ angular.module("santedb").controller("MaterialWidgetController", ["$scope", "$ro
             product.identifier = product.identifier || {};
             product.identifier.GTIN = product.identifier.GTIN || [{ value: "" }];
             var manufacturer = await SanteDB.resources.entityRelationship.findAsync({ "target": id, "relationshipType": EntityRelationshipTypeKeys.ManufacturedProduct, _count: 1, _includeTotal: 'false' }, "fastview");
-            product.relationship.ManufacturedProduct = [manufacturer.resource[0]];
+            if(manufacturer.resource) {
+                product.relationship.ManufacturedProduct = [manufacturer.resource[0]];
+            }
+            else {
+                product.relationship.ManufacturedProduct = [];
+            }
             $timeout(() => {
                 $scope.editProduct = product;
+
+                if(!product.relationship.Instance) {
+                    product.relationship.Instance = [];
+                }
                 $("#editProductModal").modal("show");
             });
         }

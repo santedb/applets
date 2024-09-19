@@ -1,0 +1,171 @@
+<!--
+ - Copyright 2021-2024 SanteSuite Contributors (See NOTICE.md for full copyright notices)
+ - Copyright (C) 2019 - 2021, Fyfe Software Inc. and the SanteSuite Contributors
+ - Portions Copyright (C) 2015-2018 Mohawk College of Applied Arts and Technology
+ - 
+ - Licensed under the Apache License, Version 2.0 (the "License"); you 
+ - may not use this file except in compliance with the License. You may 
+ - obtain a copy of the License at 
+ - 
+ - http://www.apache.org/licenses/LICENSE-2.0 
+ - 
+ - Unless required by applicable law or agreed to in writing, software
+ - distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+ - WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the 
+ - License for the specific language governing permissions and limitations under 
+ - the License.
+ -->
+<div xmlns="http://www.w3.org/1999/xhtml" xmlns:sdb="http://santedb.org/applet">
+    <sdb:script>~/controllers/users/admProfile.js</sdb:script>
+    <sdb:widget order="30" name="org.santedb.widget.admin.panel.user.public" size="Large"
+        type="Panel" context="org.santedb.securityUser.admin.profile">
+        <sdb:icon>fas fa-user-plus</sdb:icon>
+        <sdb:description lang="en">User Profile</sdb:description>
+        <sdb:demand>1.3.6.1.4.1.33349.3.1.5.9.2.0.8</sdb:demand>
+        <sdb:views>
+            <sdb:view type="Edit"/>
+        </sdb:views>
+    </sdb:widget>
+
+    <div class="row" ng-if="!scopedObject.id">
+        <div class="col">
+            <p class="m-auto"><i class="fas fa-circle-notch fa-spin"></i> {{ 'ui.wait' | i18n }}</p>
+        </div>
+    </div>
+    <div ng-if="scopedObject.id" ng-controller="AdminUserProfileWidgetController">
+        <div ng-if="panel.view != 'Edit'">
+            <div class="row">
+                <label class="col-md-3 control-label">{{ 'ui.model.entity.name' | i18n }}</label>
+                <div class="col-md-9 p-2">
+                    {{ scopedObject.name | name }}
+                </div>
+                <label class="col-md-3 control-label">{{ 'ui.model.entity.address' | i18n }}</label>
+                <div class="col-md-9 p-2">
+                    <span ng-if="scopedObject.address">
+                        {{ scopedObject.address | address }}
+                    </span>
+                    <span ng-if="!scopedObject.address">
+                        {{ 'ui.unknown' | i18n }}
+                    </span>
+                </div>
+                <label class="col-md-3 control-label">{{ 'ui.model.entity.telecom' | i18n }}</label>
+                <div class="col-md-9 p-2">
+                    <ul class="list-unstyled mt-0">
+                        <li ng-if="!scopedObject.telecom">{{ 'ui.unknown' | i18n }} </li>
+                        <li ng-repeat="(k,tel) in scopedObject.telecom">
+                            <a href="{{tel[0].value}}" target="_blank">{{tel[0].value}} <span
+                                    class="badge badge-pill badge-info">{{ tel[0].useModel | concept }}</span></a>
+                        </li>
+                    </ul>
+                </div>
+                <label class="col-md-3 control-label" ng-if="scopedObject.language">{{ 'ui.model.entity.language' | i18n
+                    }}</label>
+                <div class="col-md-9 p-2" ng-repeat="lang in scopedObject.language track by $index"
+                    ng-class="{ 'offset-md-3': $index > 0 }">
+                    {{ 'ui.locale.' + lang.languageCode | i18n }} <span class="badge badge-pill badge-info"
+                        ng-if="lang.isPreferred"><i class="fas fa-check"></i> {{ 'ui.model.entity.language.preferred' | i18n
+                        }}</span>
+                </div>
+                <label class="col-md-3 control-label">{{ 'ui.model.entity.relationship.Employer' | i18n }}</label>
+                <div class="col-md-9 p-2">
+                    <span ng-if="scopedObject.relationship.Employee">{{
+                        scopedObject.relationship.Employee[0].targetModel.name | name }}</span>
+                    <span ng-if="!scopedObject.relationship.Employee">
+                        {{ 'ui.unknown' | i18n }}
+                    </span>
+                </div>
+                <label class="col-md-3 control-label">{{ 'ui.model.entity.relationship.DedicatedServiceDeliveryLocation' |
+                    i18n }}</label>
+                <div class="col-md-9 p-2">
+                    <ul class="list-unstyled mt-0">
+                        <li ng-repeat="sdl in scopedObject.relationship.DedicatedServiceDeliveryLocation track by $index">
+                            {{ sdl.targetModel.name | name }}
+                        </li>
+                    </ul>
+                    <span ng-if="!scopedObject.relationship.DedicatedServiceDeliveryLocation">
+                        {{ 'ui.unknown' | i18n }}
+                    </span>
+                </div>
+                <label class="col-md-3 control-label">{{ 'ui.model.userEntity.relationship.MaintainedEntity' | i18n }}</label>
+                <div class="col-md-9 p-2">
+                    <ul class="list-unstyled mt-0">
+                        <li ng-repeat="sdl in scopedObject.relationship.MaintainedEntity track by $index">
+                            {{ sdl.targetModel.name | name }}
+                        </li>
+                    </ul>
+                    <span ng-if="!scopedObject.relationship.MaintainedEntity">
+                        {{ 'ui.unknown' | i18n }}
+                    </span>
+                </div>
+            </div>
+        </div>
+        <form ng-submit="update(panel.editForm)" name="panel.editForm" method="dialog" novalidate="novalidate" autocomplete="off"
+            ng-if="panel.view == 'Edit'">
+            <name-edit is-required="true" model="editObject.name" simple-entry="true" no-add="true" no-type="true"
+                owner-form="panel.editForm" />
+            <hr />
+            <address-edit is-required="false" model="editObject.address" no-add="true" simple-entry="true" no-type="true"
+                owner-form="panel.editForm" />
+            <hr />
+            <div class="form-group row">
+                <label class="col-md-3 col-sm-12 control-label">
+                    {{ 'ui.model.entity.telecom.Public' | i18n }}
+                </label>
+                <div class="col-md-9 col-sm-12">
+                    <telecom-edit model="editObject.telecom" single-edit="'Public'" owner-form="panel.editForm"
+                        no-label="true" />
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="language" class="col-sm-12 col-md-3 control-label">{{ 'ui.model.userEntity.language' | i18n
+                    }}</label>
+                <div class="col-sm-12 col-md-9">
+                    <select name="language" class="form-control" ng-model="editObject.preferredLanguage">
+                        <option ng-repeat="lang in $root.system.locales" value="{{lang}}">{{ 'ui.locale.' + lang | i18n }}
+                        </option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="familyName"
+                    class="col-sm-12 col-md-3 control-label">
+                    {{ 'ui.model.userEntity.relationship.DedicatedServiceDeliveryLocation' | i18n }}
+                    <hint-popover hint-title="ui.model.userEntity.relationship.DedicatedServiceDeliveryLocation" />
+                </label>
+                <div class="col-sm-12 col-md-9">
+                    <entity-search type="'Place'"
+                        filter="{ obsoletionTime: 'null', classConcept: 'ff34dfa7-c6d3-4f8b-bc9f-14bcdc13ba6c' }"
+                        class="form-control"
+                        ng-model="editObject.relationship.DedicatedServiceDeliveryLocation"
+                        value-property="'target'"
+                        multiple="multiple" />
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="familyName"
+                    class="col-sm-12 col-md-3 control-label">{{ 'ui.model.userEntity.relationship.Employee' | i18n }}
+                    <hint-popover hint-title="ui.model.userEntity.relationship.Employee" /></label>
+                <div class="col-sm-12 col-md-9">
+                    <entity-search type="'Organization'" filter="{ obsoletionTime: 'null' }"
+                        class="form-control" ng-model="editObject.relationship.Employee"
+                        value-property="'target'"
+                        />
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="familyName"
+                    class="col-sm-12 col-md-3 control-label">{{ 'ui.model.userEntity.relationship.MaintainedEntity' | i18n }}
+                    <hint-popover hint-title="ui.model.userEntity.relationship.MaintainedEntity" /></label>
+                <div class="col-sm-12 col-md-9">
+                    <entity-search type="'Place'" filter="{ 'relationship[DedicatedServiceDeliveryLocation|ServiceDeliveryLocation].source': editObject.id }"
+                        class="form-control" ng-model="editObject.relationship.MaintainedEntity"
+                        value-property="'target'"
+                        multiple="multiple"
+                        />
+                </div>
+            </div>
+
+        </form>
+        
+    </div>
+</div>

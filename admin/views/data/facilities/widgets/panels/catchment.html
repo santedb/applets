@@ -14,9 +14,6 @@
  - WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the 
  - License for the specific language governing permissions and limitations under 
  - the License.
- - 
- - User: fyfej
- - Date: 2023-5-19
  -->
 <div xmlns="http://www.w3.org/1999/xhtml" xmlns:sdb="http://santedb.org/applet"
     oc-lazy-load="{name:'PlaceFacilityWidgetController', files: ['/org.santedb.admin/controllers/places/placeFacilityWidgetController.js'] }">
@@ -32,7 +29,7 @@
 
     <div ng-controller="PlaceFacilityWidgetController" ng-if="scopedObject">
         <entity-table id="facilityAssociationTable" type="Place" search-field="name.component.value" stateless="true"
-            default-query="{ 'obsoletionTime' : 'null', _viewModel: 'fastView', 'relationship[DedicatedServiceDeliveryLocation].target' : scopedObject.id }"
+            default-query="{ 'obsoletionTime' : 'null', _viewModel: 'fastView', 'relationship[CommunityServiceDeliveryLocation].target' : scopedObject.id }"
             render="{ name: 'renderName', classConcept: 'renderClass', typeConcept: 'renderType', statusConcept: 'renderStatus' }"
             i18n-prefix="'ui.model.entity.'"
             item-actions="[ 
@@ -45,7 +42,7 @@
             <div class="d-flex justify-content-start align-items-baseline">
                 <entity-search type="'Place'" style="width:60%; height:100%"
                     group-by="['address.PhysicalVisit[0].component.State[0]','address.Direct[0].component.State[0]']" ng-model="newPlaceId"
-                    search-field="'name.component.value'" for-relationship-type="'455f1772-f580-47e8-86bd-b5ce25d351f9'"
+                    search-field="'name.component.value'" for-relationship-type="'4AA573A0-D967-493A-BEA0-8BAD060E4264'"
                     with-relationship-target-class="'ff34dfa7-c6d3-4f8b-bc9f-14bcdc13ba6c'"></entity-search>
                 <div class="mx-2">
                     <button type="button" id="btn-associate-place" class="btn btn-primary input-group-btn"

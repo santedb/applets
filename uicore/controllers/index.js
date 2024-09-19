@@ -16,9 +16,6 @@
  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the 
  * License for the specific language governing permissions and limitations under 
  * the License.
- * 
- * User: fyfej
- * Date: 2023-5-19
  */
 
 /**
@@ -177,7 +174,7 @@ var santedbApp = angular.module('santedb', ['ngSanitize', 'ui.router', 'oc.lazyL
                     $rootScope.system.config = configuration;
                     $rootScope.system.config.realmName = realmName;
                     $rootScope.system.config.deviceName = SanteDB.configuration.getDeviceId();
-                    $rootScope.system.config.facility = SanteDB.configuration.getFacilityId();
+                    $rootScope.system.config.facility = SanteDB.configuration.getAssignedFacilityId();
                     $rootScope.system.config.owner = SanteDB.configuration.getOwnerId();
 
                     $rootScope.system.uniqueDomains = uqDomains;
@@ -370,6 +367,7 @@ var santedbApp = angular.module('santedb', ['ngSanitize', 'ui.router', 'oc.lazyL
             $("#navbarResponsive").collapse('hide');
             delete ($rootScope._transition);
             applyDarkMode($rootScope.session);
+            attachStickyScrollEvent();
         });
 
         $transitions.onError({}, function (transition) {

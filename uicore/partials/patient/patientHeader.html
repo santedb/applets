@@ -14,106 +14,131 @@
  - WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the 
  - License for the specific language governing permissions and limitations under 
  - the License.
- - 
- - User: fyfej
- - Date: 2023-5-19
  -->
-<div xmlns="http://www.w3.org/1999/xhtml">
+<div xmlns="http://www.w3.org/1999/xhtml" class="mb-1 scroll-sticky object-header">
 
-    <div scroll-sticky="true">
-
-        <div class="card shadow">
-            <div class="card-body" ng-if="!patient">
-                <i class="fas fa-circle-notch fa-spin"></i> {{ 'ui.wait' | i18n }}
-            </div>
-            <div class="card-body container-fluid p-2" ng-if="patient"
-                ng-class="{ 'alert-success': patient.tag['$mdm.type'] == 'T', 'alert-light' : patient.tag['$mdm.type'] == 'L'  }">
-                <div class="row">
-                    <div class="col-6">
-                        <div class="p-2 flex-grow-1">
-                            <h5 class="m-0">{{ patient.name | name }} <div class="d-inline"><button id="btnSetState"
-                                        type="button" data-toggle="dropdown" class="p-2 btn"
-                                        ng-class="{ 'btn-primary' : patient.statusConcept == 'c8064cbd-fa06-4530-b430-1a52f1530c27' , 'btn-success' : patient.statusConcept == 'c34fcbf1-e0fe-4989-90fd-0dc49e1b9685' , 'btn-warning' : patient.statusConcept == '0bbec253-21a1-49cb-b376-7fe4d0592cda', 'btn-danger' : patient.statusConcept == 'cd4aa3c4-02d5-4cc9-9088-ef8f31e321c5', 'btn-dark' : patient.statusConcept == 'bdef5f90-5497-4f26-956c-8f818cce2bd2' }">
-                                        {{ patient.statusConceptModel | concept }}
-                                        <div class="dropdown-menu">
-                                            <a class="btn btn-link dropdown-item"
-                                                ng-if="patient.statusConcept != 'c8064cbd-fa06-4530-b430-1a52f1530c27'"
-                                                ng-click="setState('c8064cbd-fa06-4530-b430-1a52f1530c27')"><i
-                                                    class="fas fa-circle text-primary"></i> Activate</a>
-                                            <a class="btn btn-link dropdown-item"
-                                                ng-if="patient.statusConcept != '0bbec253-21a1-49cb-b376-7fe4d0592cda'"
-                                                ng-click="setState('0bbec253-21a1-49cb-b376-7fe4d0592cda')"><i
-                                                    class="fas fa-circle text-warning"></i> Inactivate</a>
-                                            <a class="btn btn-link dropdown-item"
-                                                ng-if="patient.statusConcept != 'bdef5f90-5497-4f26-956c-8f818cce2bd2'"
-                                                ng-click="setState('bdef5f90-5497-4f26-956c-8f818cce2bd2')"><i
-                                                    class="fas fa-circle text-dark"></i> Obsolete</a>
-                                            <a class="btn btn-link dropdown-item"
-                                                ng-if="patient.statusConcept != 'cd4aa3c4-02d5-4cc9-9088-ef8f31e321c5'"
-                                                ng-click="setState('cd4aa3c4-02d5-4cc9-9088-ef8f31e321c5')"><i
-                                                    class="fas fa-circle text-danger"></i> Nullify</a>
-                                        </div>
-                                    </button>
-                                </div>
-                            </h5>
-                        </div>
-                    </div>
-                    <div class="col-6">
-                        <div class="p-2 flex-grow-1 float-right">
-                            <h5 class="m-0 p-0">
-                                <div
-                                    ng-if="$root.system.config.application.setting['aa.preferred'] &amp;&amp; patient.identifier[$root.system.config.application.setting['aa.preferred']]">
-                                    <i class="fas fa-id-card"></i>
-                                    {{
-                                    patient.identifier[$root.system.config.application.setting['aa.preferred']][0].value
-                                    }}
-                                    <span ng-if="entity.identifier[$root.system.config.application.setting['aa.preferred']][0].checkDigit">
-                                        ({{patient.identifier[$root.system.config.application.setting['aa.preferred']][0].checkDigit}})
-                                    </span>
-                                    <span class="d-none d-md-inline">
-                                        <span class="badge badge-primary">{{
-                                            patient.identifier[$root.system.config.application.setting['aa.preferred']][0].domainModel.name
-                                            }}</span>
-                                    </span>
-                                </div>
-                                <div ng-if="!$root.system.config.application.setting['aa.preferred'] || !patient.identifier[$root.system.config.application.setting['aa.preferred']]">
-                                        <div class="p-2"
-                                            ng-if="id[0].value &amp;&amp; domain != $root.system.config.application.setting['aa.preferred']"
-                                            ng-repeat="(domain, id) in patient.identifier track by $index">
-                                            <i class="far fa-id-card"></i> {{ id[0].value }} 
-                                            <span ng-if="id[0].checkDigit">({{id[0].checkDigit}})</span> 
-                                            <span class="badge badge-info">{{
-                                                id[0].domainModel.name }}</span>
-                                        </div>
-                                </div>
-                            </h5>
-                        </div>
-                    </div>
-                    <div class="col-sm-12">
-                        <div class="d-flex flex-wrap justify-content-between">
-                            <div class="p-2"><i class="fas"
-                                    ng-class="{ 'fa-male' : patient.genderConceptModel.mnemonic == 'Male' , 'fa-female' :  patient.genderConceptModel.mnemonic == 'Female' }"></i>
-                                {{ patient.genderConceptModel | concept }}</div>
-                            <div class="p-2" ng-if="patient.multipleBirthOrder">
-                                <span class="badge badge-info"><i class="fas fa-restroom"></i>
-                                    {{ 'ui.model.patient.multipleBirth' | i18n }}</span>
+    <div class="card mb-0">
+        <div class="card-body" ng-if="!patient">
+            <i class="fas fa-circle-notch fa-spin"></i> {{ 'ui.wait' | i18n }}
+        </div>
+        <div class="card-body container-fluid p-2" ng-if="patient"
+            ng-class="{ 'alert-success': patient.tag['$mdm.type'] == 'T', 'alert-light' : patient.tag['$mdm.type'] == 'L'  }">
+            <div class="row">
+                <div class="col-12 d-flex justify-content-between">
+                    <div class="flex-grow-1">
+                        <h5 class="m-0 p-0">{{ patient.name | name }} <div class="p-2 d-inline">
+                            <button ng-if="setState" id="btnSetState"
+                                    type="button" data-toggle="dropdown" class="btn  btn-sm"
+                                    ng-class="{ 'btn-primary' : patient.statusConcept == 'c8064cbd-fa06-4530-b430-1a52f1530c27' , 'btn-success' : patient.statusConcept == 'c34fcbf1-e0fe-4989-90fd-0dc49e1b9685' , 'btn-warning' : patient.statusConcept == '0bbec253-21a1-49cb-b376-7fe4d0592cda', 'btn-danger' : patient.statusConcept == 'cd4aa3c4-02d5-4cc9-9088-ef8f31e321c5', 'btn-dark' : patient.statusConcept == 'bdef5f90-5497-4f26-956c-8f818cce2bd2' }">
+                                    {{ patient.statusConceptModel | concept }} <i class="fas fa-fw mr-1 fa-chevron-down"></i>
+                                    <div class="dropdown-menu">
+                                        <a class="btn btn-link dropdown-item"
+                                            ng-if="patient.statusConcept != 'c8064cbd-fa06-4530-b430-1a52f1530c27'"
+                                            ng-click="setState('c8064cbd-fa06-4530-b430-1a52f1530c27')"><i
+                                                class="fas fa-circle text-primary"></i> Activate</a>
+                                        <a class="btn btn-link dropdown-item"
+                                            ng-if="patient.statusConcept != '0bbec253-21a1-49cb-b376-7fe4d0592cda'"
+                                            ng-click="setState('0bbec253-21a1-49cb-b376-7fe4d0592cda')"><i
+                                                class="fas fa-circle text-warning"></i> Inactivate</a>
+                                        <a class="btn btn-link dropdown-item"
+                                            ng-if="patient.statusConcept != 'bdef5f90-5497-4f26-956c-8f818cce2bd2'"
+                                            ng-click="setState('bdef5f90-5497-4f26-956c-8f818cce2bd2')"><i
+                                                class="fas fa-circle text-dark"></i> Obsolete</a>
+                                        <a class="btn btn-link dropdown-item"
+                                            ng-if="patient.statusConcept != 'cd4aa3c4-02d5-4cc9-9088-ef8f31e321c5'"
+                                            ng-click="setState('cd4aa3c4-02d5-4cc9-9088-ef8f31e321c5')"><i
+                                                class="fas fa-circle text-danger"></i> Nullify</a>
+                                    </div>
+                                </button>
+                                <button ng-if="printPage" class="btn btn-sm btn-outline-secondary" ng-click="printPage()">
+                                    <i class="fas fa-fw fa-print"></i> <span class="d-none d-md-inline">{{ 'ui.action.print' | i18n }}</span>
+                                </button>
+                                <button ng-if="printCard" class="btn btn-sm btn-outline-primary" ng-click="printCard()">
+                                    <i class="fas fa-fw fa-qrcode"></i> <span class="d-none d-md-inline">{{ 'ui.action.print.vrp' | i18n }}</span>
+                                </button>
                             </div>
-                            <div class="p-2"><i class="fas fa-birthday-cake"></i>
-                                {{ patient.dateOfBirth | extDate: patient.dateOfBirthPrecision }} ( <span
-                                    class="badge badge-dark" ng-if="patient.deceasedDate">{{
-                                    'ui.model.patient.deceasedIndicator' | i18n }}</span>
-                                {{ patient.dateOfBirth | age: 'y':patient.deceasedDate }} )</div>
-                                <div class="p-2" ng-if="patient.address"><i class="fas fa-home"></i> {{ patient.address | address }}</div>
-                            <div class="p-2" ng-if="patient.telecom"><i class="fas fa-home"></i> {{ patient.telecom | telecom }}</div>
+                        </h5>
+                    </div>
+                    <div>
+                        <h5 class="m-0 p-0">
+                            <div
+                                ng-if="$root.system.config.application.setting['aa.preferred'] &amp;&amp; patient.identifier[$root.system.config.application.setting['aa.preferred']]">
+                                <i class="fas fa-id-card"></i>
+                                {{
+                                patient.identifier[$root.system.config.application.setting['aa.preferred']][0].value
+                                }}
+                                <span
+                                    ng-if="entity.identifier[$root.system.config.application.setting['aa.preferred']][0].checkDigit">
+                                    ({{patient.identifier[$root.system.config.application.setting['aa.preferred']][0].checkDigit}})
+                                </span>
+                                <span class="d-none d-md-inline">
+                                    <span class="badge badge-primary">{{
+                                        patient.identifier[$root.system.config.application.setting['aa.preferred']][0].domainModel.name
+                                        }}</span>
+                                </span>
+                            </div>
+                            <div
+                                ng-if="!$root.system.config.application.setting['aa.preferred'] || !patient.identifier[$root.system.config.application.setting['aa.preferred']]">
+                                <div class="p-2"
+                                    ng-if="id[0].value &amp;&amp; domain != $root.system.config.application.setting['aa.preferred']"
+                                    ng-repeat="(domain, id) in patient.identifier track by $index">
+                                    <i class="far fa-id-card"></i> {{ id[0].value }}
+                                    <span ng-if="id[0].checkDigit">({{id[0].checkDigit}})</span>
+                                    <span class="badge badge-info">{{
+                                        id[0].domainModel.name }}</span>
+                                </div>
+                            </div>
+                        </h5>
+                    </div>
+                </div>
+                <div class="col-12">
+                    <div class="d-flex flex-wrap justify-content-between">
+                        <div class="p-2"><i class="fas"
+                                ng-class="{ 'fa-male' : patient.genderConceptModel.mnemonic == 'Male' || patient.genderConcept == 'f4e3a6bb-612e-46b2-9f77-ff844d971198', 'fa-female' :  patient.genderConceptModel.mnemonic == 'Female' || patient.genderConcept == '094941e9-a3db-48b5-862c-bc289bd7f86c' }"></i>
+                            {{ patient.genderConceptModel | concept }}</div>
+                        <div class="p-2" ng-if="patient.multipleBirthOrder">
+                            <span class="badge badge-info"><i class="fas fa-restroom"></i>
+                                {{ 'ui.model.patient.multipleBirth' | i18n }}</span>
+                        </div>
+                        <div class="p-2"><i class="fas fa-birthday-cake"></i>
+                            {{ patient.dateOfBirth | extDate: patient.dateOfBirthPrecision }} ( <span
+                                class="badge badge-dark" ng-if="patient.deceasedDate">{{
+                                'ui.model.patient.deceasedIndicator' | i18n }}</span>
+                            {{ patient.dateOfBirth | age: 'y':patient.deceasedDate }} )
+                        </div>
+                        <div class="p-2" ng-if="patient.telecom"><i class="fas fa-home"></i> {{ patient.telecom |
+                            telecom }}</div>
+                        <div class="p-2" ng-if="patient.address"><i class="fas fa-home"></i> {{ patient.address |
+                            address }}</div>
+                    </div>
+                </div>
+                <div class="col-12 hide-when-sticky">
+                    <div class="d-flex flex-wrap justify-content-between">
+                        <div class="mx-2" ng-repeat="(k, rel) in patient.relationship" ng-if="$root.refValues.FamilyMember.indexOf(k) &gt; -1">
+                            <div ng-repeat="r in rel track by $index">
+                                <i class="fas fa-fw fa-people-arrows"></i>
+                                <span class="badge badge-primary m-2">{{ rel.relationshipTypeModel || k | concept }} </span>
+                                {{ r.targetModel.name | name }} 
+                                <a ng-if="r.targetModel.telecom.MobileContact" href="{{r.targetModel.telecom.MobileContact[0].value}}">
+                                    <i class="fas fa-fw fa-phone"></i> {{ r.targetModel.telecom.MobileContact[0].value }}
+                                </a>
+                            </div>
                         </div>
                     </div>
-                   
                 </div>
+
             </div>
         </div>
     </div>
-    <div class="m-0 alert alert-secondary" ng-if="patient.tag['$checkoutState'] &amp;&amp; patient.tag['$checkoutState'] != $root.session.username">
-        <i ng-init="patient._readonly = true" class="fas fa-lock"></i> {{ 'ui.notices.checkout' | i18n: { user: patient.tag['$checkoutState'] } }}
+    <div class="m-0 alert alert-info" ng-if="patient.vipStatus">
+        <i class="fas fa-fw"
+            ng-class="{ 'fa-person-burst' : patient.genderConceptModel.mnemonic == 'Male' || patient.genderConcept == 'f4e3a6bb-612e-46b2-9f77-ff844d971198', 'fa-person-dress-burst' :  patient.genderConceptModel.mnemonic == 'Female' || patient.genderConcept == '094941e9-a3db-48b5-862c-bc289bd7f86c' }"></i>
+        {{ 'ui.model.patient.vipStatus.notification' | i18n }}
+    </div>
+    <div class="m-0 alert alert-secondary"
+        ng-if="patient.tag['$checkoutState'] &amp;&amp; patient.tag['$checkoutState'] != $root.session.username">
+        <i ng-init="patient._readonly = true" class="fas fa-lock"></i> {{ 'ui.notices.checkout' | i18n: { user:
+        patient.tag['$checkoutState'] } }}
     </div>
     <div class="m-0 alert alert-dark" ng-if="patient.tag['$pep.masked'] == 'true'">
         <i class="fas fa-exclamation-circle"></i> {{ 'ui.notices.privacyControls.masked' | i18n }}
@@ -135,22 +160,23 @@
             {{ 'ui.view.deletedRecord' | i18n }}
         </div>
     </div>
-     <!-- Imported -->
-     <div class="m-0 alert alert-info" ng-if="patient.tag['imported'] == 'true'">
+    <!-- Imported -->
+    <div class="m-0 alert alert-info" ng-if="patient.tag['imported'] == 'true'">
         <div class="d-flex justify-content-between">
-            <div>       
-                 <i class="fas fa-file-import"></i> {{ 'ui.notices.imported' | i18n }}
+            <div>
+                <i class="fas fa-file-import"></i> {{ 'ui.notices.imported' | i18n }}
             </div>
             <div class="flex-grow-1">
                 <div class="float-right btn-group">
-                    <button id="btnClearTag" class="btn btn-sm btn-info" ng-click="setTag('imported', null)"><i class="fas fa-check"></i> {{
+                    <button id="btnClearTag" class="btn btn-sm btn-info" ng-click="setTag('imported', null)"><i
+                            class="fas fa-check"></i> {{
                         'ui.action.clear' | i18n }}</button>
                 </div>
 
             </div>
 
         </div>
-        
+
     </div>
     <div ng-if="!patient._upstream &amp;&amp; patient &amp;&amp; patient.relationship['MDM-Master'] "
         ng-switch="patient.tag['$mdm.type']">
@@ -220,7 +246,7 @@
                 </div>
             </div>
         </div>
-       
-    </div>
 
-</div>
+
+    </div>
+    </div>

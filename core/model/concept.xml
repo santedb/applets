@@ -15,9 +15,6 @@
  - WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the 
  - License for the specific language governing permissions and limitations under 
  - the License.
- - 
- - User: fyfej
- - Date: 2023-5-19
  -->
 <ViewModel xmlns="http://santedb.org/model/view">
   <include>base</include>
@@ -32,10 +29,7 @@
     <property name="scopeModel" behavior="always" ref="Concept" />
   </type>
 
-  <type type="ConceptRelationship" all="true">
-    <property name="relationshipTypeModel" behavior="always" />
-    <property name="targetConceptModel" behavior="always" />
-  </type>
+
   <type type="Concept" all="true">
     <property name="name" behavior="always" all="true" />
     <property name="mnemonic" behavior="always" />

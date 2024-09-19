@@ -1,5 +1,22 @@
 /// <reference path="../../../core/js/santedb.js"/>
 /// <reference path="../../../core/js/santedb-model.js"/>
+/*
+ * Copyright (C) 2021 - 2024, SanteSuite Inc. and the SanteSuite Contributors (See NOTICE.md for full copyright notices)
+ * Copyright (C) 2019 - 2021, Fyfe Software Inc. and the SanteSuite Contributors
+ * Portions Copyright (C) 2015-2018 Mohawk College of Applied Arts and Technology
+ * 
+ * Licensed under the Apache License, Version 2.0 (the "License"); you 
+ * may not use this file except in compliance with the License. You may 
+ * obtain a copy of the License at 
+ * 
+ * http://www.apache.org/licenses/LICENSE-2.0 
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+ * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the 
+ * License for the specific language governing permissions and limitations under 
+ * the License.
+ */
 angular.module("santedb").controller("MaterialViewEditController", ["$scope", "$rootScope", "$stateParams", "$timeout", "$state", function ($scope, $rootScope, $stateParams, $timeout, $state) {
 
     const entityTemplate = new Material({
@@ -41,7 +58,7 @@ angular.module("santedb").controller("MaterialViewEditController", ["$scope", "$
             console.error(e);
         }
     }
-    
+
     async function initialize(materialId) {
         try {
 
@@ -66,18 +83,18 @@ angular.module("santedb").controller("MaterialViewEditController", ["$scope", "$
                     material.relationship.Child = reverseRelationships.resource.filter(o => o.relationshipType == EntityRelationshipTypeKeys.Parent);
                 }
 
-                if(material.extension && material.extension['http://santedb.org/extensions/core/targetCondition']) {
+                if (material.extension && material.extension['http://santedb.org/extensions/core/targetCondition']) {
                     material.extension['http://santedb.org/extensions/core/targetCondition'] = await Promise.all(
-                        material.extension['http://santedb.org/extensions/core/targetCondition'].map(async function(cd) {
+                        material.extension['http://santedb.org/extensions/core/targetCondition'].map(async function (cd) {
                             var cdId = atob(cd).split('^')[1];
                             try {
                                 return await SanteDB.resources.concept.getAsync(cdId);
                             }
-                            catch(e) {
+                            catch (e) {
                                 return null;
                             }
                         })
-                        );
+                    );
                 }
 
                 material.relationship = material.relationship || {};
@@ -135,14 +152,14 @@ angular.module("santedb").controller("MaterialViewEditController", ["$scope", "$
     }
 
 
-      // Set the active state
-      $scope.setState = async function (status) {
+    // Set the active state
+    $scope.setState = async function (status) {
         try {
             SanteDB.display.buttonWait("#btnSetState", true);
             await setEntityState($scope.entity.id, $scope.entity.etag, status);
             toastr.info(SanteDB.locale.getString("ui.model.material.saveSuccess"));
             $state.reload();
-            
+
         }
         catch (e) {
             $rootScope.errorHandler(e);
@@ -166,7 +183,7 @@ angular.module("santedb").controller("MaterialViewEditController", ["$scope", "$
             submissionMaterial = await prepareEntityForSubmission(submissionMaterial);
             deleteModelProperties(submissionMaterial);
 
-            if (submissionMaterial.relationship.UsedEntity) {
+            if (submissionMaterial.relationship && submissionMaterial.relationship.UsedEntity) {
                 submissionMaterial.relationship.UsedEntity = submissionMaterial.relationship.UsedEntity.map(o => {
                     o.quantity = o.quantity || 1;
                     return o;
@@ -180,26 +197,28 @@ angular.module("santedb").controller("MaterialViewEditController", ["$scope", "$
                     });
             }
 
-            if(submissionMaterial.note) {
+            if (submissionMaterial.note) {
                 submissionMaterial.note = submissionMaterial.note.filter(o => o.text !== '');
             }
             submissionMaterial.id = submissionMaterial.id || SanteDB.application.newGuid();
 
-            var submissionBundle = new Bundle({ resource: [ submissionMaterial ]});
+            var submissionBundle = new Bundle({ resource: [submissionMaterial] });
 
             // Reverse relationships
-            var regulatedProduct = submissionMaterial.relationship.RegulatedProduct;
-            if(regulatedProduct && regulatedProduct.length > 0 &&
-                regulatedProduct[0].source) {
+            if (submissionMaterial.relationship) {
+                var regulatedProduct = submissionMaterial.relationship.RegulatedProduct;
+                if (regulatedProduct && regulatedProduct.length > 0 &&
+                    regulatedProduct[0].source) {
 
-                    
-                submissionBundle.resource.push(new EntityRelationship({
-                    id: regulatedProduct[0].id,
-                    source: regulatedProduct[0].source,
-                    relationshipType: EntityRelationshipTypeKeys.RegulatedProduct,
-                    target: submissionMaterial.id
-                }));
-                delete(submissionMaterial.relationship.RegulatedProduct);
+
+                    submissionBundle.resource.push(new EntityRelationship({
+                        id: regulatedProduct[0].id,
+                        source: regulatedProduct[0].source,
+                        relationshipType: EntityRelationshipTypeKeys.RegulatedProduct,
+                        target: submissionMaterial.id
+                    }));
+                    delete (submissionMaterial.relationship.RegulatedProduct);
+                }
             }
 
             submissionBundle = await SanteDB.resources.bundle.insertAsync(submissionBundle)

@@ -15,9 +15,6 @@
  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the 
  * License for the specific language governing permissions and limitations under 
  * the License.
- * 
- * User: fyfej
- * Date: 2023-5-19
  */
 angular.module('santedb').controller('SecurityUserWidgetController', ["$scope", "$rootScope", "$state", "$templateCache", "$stateParams", function ($scope, $rootScope, $state, $templateCache, $stateParams) {
 
@@ -52,7 +49,7 @@ angular.module('santedb').controller('SecurityUserWidgetController', ["$scope", 
      * @summary Reactivate Inactive User
      */
     $scope.reactivateUser = async function (securityUser) {
-        if (!confirm(SanteDB.locale.getString("ui.emr.users.reactivate.confirm")))
+        if (!confirm(SanteDB.locale.getString("ui.admin.users.reactivate.confirm")))
         return;
 
         var patch = new Patch({
@@ -94,7 +91,7 @@ angular.module('santedb').controller('SecurityUserWidgetController', ["$scope", 
      * @summary Reset invalid logins
      */
     $scope.resetInvalidLogins = async function (securityUser) {
-        if (!confirm(SanteDB.locale.getString("ui.emr.users.invalidLogin.reset")))
+        if (!confirm(SanteDB.locale.getString("ui.admin.users.invalidLogin.reset")))
             return;
 
         var patch = new Patch({
@@ -126,7 +123,7 @@ angular.module('santedb').controller('SecurityUserWidgetController', ["$scope", 
     * @summary Unlock user
     */
     $scope.unlock = async function (securityUser) {
-        if (!confirm(SanteDB.locale.getString("ui.emr.users.confirmUnlock")))
+        if (!confirm(SanteDB.locale.getString("ui.admin.users.confirmUnlock")))
             return;
 
         try {

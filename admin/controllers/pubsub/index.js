@@ -15,9 +15,6 @@
  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the 
  * License for the specific language governing permissions and limitations under 
  * the License.
- * 
- * User: fyfej
- * Date: 2023-5-19
  */
 angular.module('santedb').controller('PubSubIndexController', ["$scope", "$rootScope", "$state", function ($scope, $rootScope, $state) {
 
@@ -66,7 +63,7 @@ angular.module('santedb').controller('PubSubIndexController', ["$scope", "$rootS
     $scope.deleteSubscription = async function(id) {
         if (confirm(SanteDB.locale.getString("ui.admin.pubsub.delete.confirm"))) {
             try {
-                await SanteDB.resources.pubSubSubscription.deleteAsync(id);
+                await SanteDB.resources.pubSubSubscriptionDefinition.deleteAsync(id);
                 $("#pubSubManager table").DataTable().ajax.reload();
             }
             catch (e) {

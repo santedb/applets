@@ -15,9 +15,6 @@
  - WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the 
  - License for the specific language governing permissions and limitations under 
  - the License.
- - 
- - User: fyfej
- - Date: 2023-5-19
  -->
 <AppletManifest xmlns="http://santedb.org/applet">
   <info id="org.santedb.i18n.sw" version="2.1.113.0" uuid="4a80013b-6831-436b-a230-5b04759b16a9">

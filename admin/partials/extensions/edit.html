@@ -1,0 +1,139 @@
+<!--
+ - Copyright 2021-2024 SanteSuite Contributors (See NOTICE.md for full copyright notices)
+ - Copyright (C) 2019 - 2021, Fyfe Software Inc. and the SanteSuite Contributors
+ - Portions Copyright (C) 2015-2018 Mohawk College of Applied Arts and Technology
+ - 
+ - Licensed under the Apache License, Version 2.0 (the "License"); you 
+ - may not use this file except in compliance with the License. You may 
+ - obtain a copy of the License at 
+ - 
+ - http://www.apache.org/licenses/LICENSE-2.0 
+ - 
+ - Unless required by applicable law or agreed to in writing, software
+ - distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+ - WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the 
+ - License for the specific language governing permissions and limitations under 
+ - the License.
+ -->
+<form xmlns="http://www.w3.org/1999/xhtml" novalidate="novalidate" ng-submit="saveExtensionType(extensionTypeForm)"
+    name="extensionTypeForm" autocomplete="off">
+
+    <div class="card mb-3">
+        <div class="card-header">
+            <h5 class="card-heading m-0">
+                <i class="fas fa-fw fa-square-up-right"></i> {{ 'ui.admin.cdr.extensionType.properties' | i18n }}
+            </h5>
+        </div>
+        <div class="card-body">
+            <div class="form-group row">
+                <label class="col-sm-12 col-md-3 control-label required">
+                    {{ 'ui.model.extensionType.name' | i18n }}
+                    <hint-popover hint-title="ui.model.extensionType.name" />
+                </label>
+                <div class="col-sm-12 col-md-9">
+                    <input type="text" class="form-control" name="name" ng-model="extensionType.name"
+                        required="required" maxlength="128" />
+                    <div class="text-danger" ng-if="extensionTypeForm.name.$error.required">
+                        <i class="fas fa-fw fa-exclamation-triangle"></i> {{ 'ui.error.required' | i18n }}
+                    </div>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-12 col-md-3 control-label required">
+                    {{ 'ui.model.extensionType.uri' | i18n }}
+                    <hint-popover hint-title="ui.model.extensionType.uri" />
+                </label>
+                <div class="col-sm-12 col-md-9">
+                    <input type="text" class="form-control" name="uri" ng-model="extensionType.uri" required="required"
+                        pattern="^(([^:/?#]+):)(//([^/?#]*))?([^?#]*)(\?([^#]*))?(#(.*))?$"
+                        maxlength="512" />
+                    <div class="text-danger" ng-if="extensionTypeForm.uri.$error.required">
+                        <i class="fas fa-fw fa-exclamation-triangle"></i> {{ 'ui.error.required' | i18n }}
+                    </div>
+                    <div class="text-danger" ng-if="extensionTypeForm.uri.$error.pattern">
+                        <i class="fas fa-fw fa-exclamation-triangle"></i> {{ 'ui.error.pattern' | i18n }}
+                    </div>
+                    <div class="text-danger" ng-if="extensionTypeForm.uri.$error.duplicate">
+                        <i class="fas fa-fw fa-exclamation-triangle"></i> {{ 'ui.error.duplicate' | i18n }}
+                    </div>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-12 col-md-3 control-label required">
+                    {{ 'ui.model.extensionType.handlerClass' | i18n }}
+                    <hint-popover hint-title="ui.model.extensionType.handlerClass" />
+                </label>
+                <div class="col-sm-12 col-md-9">
+                    {{extesionType.handlerClass}}
+                    <select name="handler" class="form-control" ng-model="extensionType.handlerClass"
+                        required="required">
+                        <option ng-repeat="hdl in handlerClasses track by $index" value="{{ hdl.value }}">{{ hdl.name }}
+                        </option>
+                    </select>
+                    <div class="text-danger" ng-if="extensionTypeForm.handler.$error.required">
+                        <i class="fas fa-fw fa-exclamation-triangle"></i> {{ 'ui.error.required' | i18n }}
+                    </div>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-12 col-md-3 control-label">
+                    {{ 'ui.model.extensionType.scope' | i18n }}
+                    <hint-popover hint-title="ui.model.extensionType.scope" />
+                </label>
+                <div class="col-sm-12 col-md-9">
+                    <entity-search multiple="multiple" ng-model="extensionType.scope" type="'Concept'"
+                        filter="{ conceptSet: ['4E6DA567-0094-4F23-8555-11DA499593AF','62C5FDE0-A3AA-45DF-94E9-242F4451644A' ] }"
+                        search="'name.value'" class="form-control" />
+                </div>
+            </div>
+        </div>
+        <div class="card-footer">
+            <div class="btn-group float-right">
+                <button id="btnSaveExtensionType" type="submit" class="btn btn-primary" ng-disabled="extensionTypeForm.$invalid">
+                    <i class="fas fa-fw fa-check"></i> 
+                    <span ng-if="extensionType.id">{{ 'ui.action.save' | i18n }}</span>
+                    <span ng-if="!extensionType.id">{{ 'ui.action.create' | i18n }}</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div class="card mb-3" ng-if="extensionType.id">
+        <div class="card-header">
+            <h5 class="card-heading m-0">
+                <i class="fas fa-fw fa-users"></i> {{ 'ui.admin.cdr.extensionType.provenance' | i18n }}
+            </h5>
+        </div>
+        <div class="card-body">
+            <div class="container-fluid">
+                <div class="row">
+                    <label class="control-label col-sm-12 col-md-3">{{'ui.model.extensionType.createdBy' | i18n
+                        }}</label>
+                    <div class="col-sm-12 col-md-9 control-value">
+                        <provenance provenance-id="extensionType.createdBy"
+                            provenance-time="extensionType.creationTime" />
+                    </div>
+                    <label ng-if="extensionType.updatedBy"
+                        class="control-label col-sm-12 col-md-3">{{'ui.model.extensionType.updatedBy' | i18n
+                        }}</label>
+                    <div ng-if="extensionType.updatedBy" class="col-sm-12 col-md-9 control-value">
+                        <provenance provenance-id="extensionType.updatedBy"
+                            provenance-time="extensionType.updatedTime" />
+                    </div>
+                    <label ng-if="extensionType.obsoletedBy"
+                        class="control-label col-sm-12 col-md-3">{{'ui.model.extensionType.obsoletedBy' | i18n
+                        }}</label>
+                    <div ng-if="extensionType.obsoletedBy" class="col-sm-12 col-md-9 control-value">
+                        <provenance provenance-id="extensionType.obsoletedBy"
+                            provenance-time="extensionType.obsoletionTime" />
+                        <button type="button" ng-click="unDelete()" class="btn btn-success"><i
+                                class="fas fa-trash-restore"></i> {{ 'ui.action.undelete' | i18n }}</button>
+                        {{ 'ui.view.deletedRecord' | i18n }}
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</form>

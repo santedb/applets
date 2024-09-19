@@ -14,9 +14,6 @@
  - WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the 
  - License for the specific language governing permissions and limitations under 
  - the License.
- - 
- - User: fyfej
- - Date: 2023-5-19
  -->
 <div xmlns="http://www.w3.org/1999/xhtml" xmlns:sdb="http://santedb.org/applet">
     <sdb:script static="false">~/controllers/organizations/index.js</sdb:script>
@@ -32,7 +29,7 @@
         id="OrganizationTable"
         type="Organization" 
         search-field="name.component.value" 
-        default-query="{ _viewModel: 'full', _orderBy: 'modifiedOn:desc' }"
+        default-query="{ _viewModel: 'fastview', _orderBy: 'modifiedOn:desc' }"
         render="{ updatedBy: 'renderUpdatedBy', 'name': 'renderName', 'address': 'renderAddress', 'typeConcept': 'renderTypeConcept', 'industryConcept': 'renderIndustryConcept', 'statusConcept': 'renderStatusConcept' }"
         i18n-prefix="'ui.model.organization.'"
         actions="[ 

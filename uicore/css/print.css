@@ -1,0 +1,17 @@
+@media print {
+   
+    body.printout {
+        max-width: 8.5in;
+        min-width: 8.5in;
+        height: 11in;
+        max-height: 11in;
+        min-height:11in;
+    }
+
+    div.scale {
+        width: auto;
+        height: 100%;
+        margin: auto;
+        display: block;
+    }
+}

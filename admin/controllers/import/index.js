@@ -16,9 +16,6 @@
  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the 
  * License for the specific language governing permissions and limitations under 
  * the License.
- * 
- * User: fyfej
- * Date: 2023-5-19
  */
 angular.module('santedb').controller('ForeignDataIndexController', ["$scope", "$rootScope", "$timeout", function ($scope, $rootScope, $timeout) {
 
@@ -54,7 +51,7 @@ angular.module('santedb').controller('ForeignDataIndexController', ["$scope", "$
                 status += "<span class='text-warning'><i class='fas fa-exclamation-circle'></i> ";
                 break;
         }
-        status += entity.status;
+        status += SanteDB.locale.getString(`ui.model.alien.submission.status.${entity.status}`);
         return status;
     }
 

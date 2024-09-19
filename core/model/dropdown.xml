@@ -15,9 +15,6 @@
  - WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the 
  - License for the specific language governing permissions and limitations under 
  - the License.
- - 
- - User: fyfej
- - Date: 2023-5-19
  -->
 <ViewModel xmlns="http://santedb.org/model/view">
   <include>base</include>
@@ -103,6 +100,7 @@
     <property name="name" behavior="always">
       <property name="*"  all="true" ref="EntityName"/>
     </property>
+    <property name="typeConceptModel" behavior="always" ref="Concept"/>
   </type>
 
   <type type="Material" all="true">
@@ -145,5 +143,18 @@
     <property name="typeConceptModel" all="true" ref="Concept" behavior="always"/>
     <property name="classConcept" behavior="always"/>
     <property name="classConceptModel" all="true" ref="Concept" behavior="always"/>
+  </type>
+
+  <type type="UserEntity" all="true">
+    <property name="identifier" behavior="always">
+      <property name="*"  all="true" ref="EntityIdentifier"/>
+    </property>
+    <property name="name" behavior="always">
+      <property name="*"  all="true" ref="EntityName"/>
+    </property>
+    <property name="address" behavior="always">
+      <property name="*"  all="true" ref="EntityAddress"/>
+    </property>
+    <property name="securityUserModel" behavior="always" all="true" />
   </type>
 </ViewModel>

@@ -14,9 +14,6 @@
  - WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the 
  - License for the specific language governing permissions and limitations under 
  - the License.
- - 
- - User: fyfej
- - Date: 2023-5-19
  -->
 <div xmlns="http://www.w3.org/1999/xhtml" xmlns:sdb="http://santedb.org/applet">
     <sdb:script static="false">~/controllers/materials/viewEdit.js</sdb:script>
@@ -58,7 +55,7 @@
                 </div>
                 <div class="form-group row">
                     <label class="col-sm-12 col-md-9 offset-md-3">
-                        <input type="checkbox" ng-model="editObject.isAdministrable" /> {{ 'ui.model.material.isAdministrable' | i18n }} <hint-popover hint-title="ui.model.material.isAdministrable" />
+                        <input type="checkbox" ng-model="entity.isAdministrable" /> {{ 'ui.model.material.isAdministrable' | i18n }} <hint-popover hint-title="ui.model.material.isAdministrable" />
                     </label>
                 </div>
                 <div class="form-group row">

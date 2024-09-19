@@ -14,9 +14,6 @@
  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the 
  * License for the specific language governing permissions and limitations under 
  * the License.
- * 
- * User: fyfej
- * Date: 2023-5-19
  */
 
 /// <reference path="../../santedb-ui.js"/>
@@ -112,8 +109,8 @@ angular.module('santedb-lib')
 
                
                 function fixAddressUse(addr) {
-                    if ((!addr.useModel || !addr.useModel.id) && key != '$other')
-                        SanteDB.resources.concept.findAsync({ mnemonic: key })
+                    if ((!addr.useModel || !addr.useModel.id) && addr != '$other')
+                        SanteDB.resources.concept.findAsync({ mnemonic: addr })
                             .then(function (bundle) {
                                 if (bundle.resource && bundle.resource.length > 0)
                                     addr.useModel = addr.resource[0];
@@ -183,9 +180,9 @@ angular.module('santedb-lib')
             },
             controller: ['$scope', '$rootScope', function ($scope, $rootScope) {
 
-                $scope.$watch((s) => s.geo.lat + s.geo.lng, function (n, o) {
+                $scope.$watch((s) => s.model.lat + s.model.lng, function (n, o) {
                     if (n != o && n && o) {
-                        delete ($scope.geo.id); // force a change
+                        delete ($scope.model.id); // force a change
                     }
                 })
             }],
@@ -793,6 +790,11 @@ angular.module('santedb-lib')
                     },
                     DedicatedServiceDeliveryLocation: {
                         applyTo: [EntityClassKeys.Patient],
+                        entityType: "Place",
+                        filter: { classConcept: [EntityClassKeys.ServiceDeliveryLocation], statusConcept: StatusKeys.Active }
+                    },
+                    CommunityServiceDeliveryLocation: {
+                        applyTo: [EntityClassKeys.Place],
                         entityType: "Place",
                         filter: { classConcept: [EntityClassKeys.ServiceDeliveryLocation], statusConcept: StatusKeys.Active }
                     },
