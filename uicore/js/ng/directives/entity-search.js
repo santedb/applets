@@ -310,6 +310,11 @@ angular.module('santedb-lib')
                                 }
 
                             });
+
+                            var form = SanteDB.display.getParentScopeVariable($scope, selectControl[0].form.name);
+                            if(form) {
+                                form[selectControl[0].name].$setValidity("required", true);
+                            }
                         }
                     }
                 }
