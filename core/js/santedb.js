@@ -2794,6 +2794,17 @@ function SanteDBWrapper() {
             }
         }
         /**
+         * @summary
+         * @method getTemplateMetadata
+         * @memberof SanteDBWrapper.ApplicationApi
+         * @param {string} templateId The template mnemonic to fetch data for
+         * @returns {object} The template definition metadata
+         */
+        this.getTemplateMetadata = function(templateId) {
+            return _templateCache.find(o=>o.mnemonic == templateId);
+        }
+
+        /**
          * @summary Get a list of all installed template definitions
          * @method getTemplateDefinitionsAsync
          * @memberof SanteDBWrapper.ApplicationApi
