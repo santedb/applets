@@ -90,7 +90,7 @@ angular.module('santedb').controller('ForeignDataIndexController', ["$scope", "$
     // Run scheduled
     $scope.runJobs = async function() {
         try {
-            await SanteDB.resources.foreignData.invokeOperationAsync(null, "execute", null);
+            await SanteDB.resources.foreignData.invokeOperationAsync(null, "execute", null, true);
             toastr.success(SanteDB.locale.getString("ui.admin.alien.runAll.success"));
         }
         catch(e) {

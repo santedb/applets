@@ -69,6 +69,23 @@
                         <target>relationship[ReportTarget].target</target>
                     </map>
 
+                    
+                    <map required="false" replace="true">
+                        <source>Pacific Island Countries and territories</source>
+                        <transform transformer="Expression">
+                            <args>
+                                <string>input.Replace("Nth.","North ").Replace("Sth.","South ").Replace("Wst.","West ").Replace("Est.","East ").Replace("  "," ")</string>
+                            </args>
+                        </transform>
+                        <transform transformer="EntityLookup">
+                            <args>
+                                <string>Place</string>
+                                <string>name.component.value=~$input&amp;address.component[Country].value=$rootCountry&amp;typeConcept.mnemonic=$reportTargetType</string>
+                            </args>
+                        </transform>
+                        <target>relationship[CommunityServiceDeliveryLocation].target</target>
+                    </map>
+
                     <map required="true" replace="true">
                         <source>FACNAME</source>
                         <target>name[OfficialRecord].component.value</target>
