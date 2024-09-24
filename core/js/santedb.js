@@ -135,7 +135,7 @@ function APIWrapper(_config) {
             $.ajax({
                 method: 'POST',
                 url: _config.base + configuration.resource,
-                data: configuration.data && configuration.contentType.indexOf('application/json') == 0 ? JSON.stringify(SanteDB._reorderProperties(configuration.data)) : configuration.data,
+                data: configuration.data && configuration.contentType.indexOf('json') != -1 ? JSON.stringify(SanteDB._reorderProperties(configuration.data)) : configuration.data,
                 dataType: configuration.dataType || 'json',
                 contentType: configuration.contentType || 'application/json',
                 headers: configuration.headers,
@@ -195,7 +195,7 @@ function APIWrapper(_config) {
             $.ajax({
                 method: 'PUT',
                 url: _config.base + configuration.resource + (_config.idByQuery ? "?_id=" + configuration.id : "/" + configuration.id),
-                data: configuration.contentType.indexOf('application/json') == 0 ? JSON.stringify(SanteDB._reorderProperties(configuration.data)) : configuration.data,
+                data: configuration.contentType.indexOf('json') != -1 ? JSON.stringify(SanteDB._reorderProperties(configuration.data)) : configuration.data,
                 dataType: configuration.dataType || 'json',
                 contentType: configuration.contentType || 'application/json',
                 headers: configuration.headers,
@@ -315,7 +315,7 @@ function APIWrapper(_config) {
             $.ajax({
                 method: 'PATCH',
                 url: _config.base + configuration.resource + (_config.idByQuery ? "?_id=" + configuration.id : "/" + configuration.id),
-                data: configuration.contentType.indexOf('application/json') == 0 ? JSON.stringify(SanteDB._reorderProperties(configuration.data)) : configuration.data,
+                data: configuration.contentType.indexOf('json') != -1 ? JSON.stringify(SanteDB._reorderProperties(configuration.data)) : configuration.data,
                 dataType: configuration.dataType || 'json',
                 contentType: configuration.contentType || 'application/json',
                 headers: configuration.headers,
