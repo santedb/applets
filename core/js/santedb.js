@@ -45,7 +45,7 @@ const BooleanExtensionValues = {
 */
 function APIWrapper(_config) {
 
-    var _viewModelJsonMime = "application/json+sdb-viewmodel";
+    var _viewModelJsonMime = "application/x.santedb.rim.viewModel+json"; //"application/json+sdb-viewmodel";
 
     /**
      * @method
@@ -1119,7 +1119,7 @@ function ResourceWrapper(_config) {
             data: patch,
             id: id,
             state: state,
-            contentType: "application/json+sdb-patch",
+            contentType: "application/x.santedb.patch+json",
             resource: _config.resource
         });
     }
@@ -1782,7 +1782,7 @@ function ResourceWrapper(_config) {
 function SanteDBWrapper() {
     "use strict";
 
-    var _viewModelJsonMime = "application/json+sdb-viewmodel";
+    var _viewModelJsonMime = "application/x.santedb.rim.viewModel+json"; // "application/json+sdb-viewmodel";
 
     // JWS Pattern
     var jwsDataPattern = /^([A-Za-z0-9-_\+\/]+?)\.([A-Za-z0-9-_\+\/]+?)\.([A-Za-z0-9-_\+\/]+?)$/;

@@ -163,11 +163,11 @@ angular.module('santedb-lib')
                             dashType = `-. <span class='mr-2'>${relationshipText}</span> .->`;
                         }
                     }
-                    else {
-                        if (reverse)
-                            retVal += `\nrel${entity.id.substr(0, 8)} ${dashType} rel${rootNode.substr(0, 8)}`;
-                        else if (!entity.$ref)
-                            retVal += `\nrel${rootNode.substr(0, 8)} ${dashType} rel${entity.id.substr(0, 8)}`;
+                    if (reverse) {
+                        retVal += `\nrel${entity.id.substr(0, 8)} ${dashType} rel${rootNode.substr(0, 8)}`;
+                    }
+                    else if (!entity.$ref) {
+                        retVal += `\nrel${rootNode.substr(0, 8)} ${dashType} rel${entity.id.substr(0, 8)}`;
                     }
                     
                 }
