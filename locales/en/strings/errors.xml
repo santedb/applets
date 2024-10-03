@@ -337,7 +337,7 @@
       <string name="error.foreign.manager.state">The foreign data is not in a valid state to perform this operation</string>
       <string name="error.foreign.manager.map.notfound">The foreign data map {map} which is referenced in this data cannot be found</string>
       <string name="error.foreign.manager.map.format">The data in format {format} cannot be interpreted by this instance of SanteDB (are you missing a plugin?)</string>
-
+      <string name="error.foreign.manager.map.fld">Could not process foreign data field {field} at {row} due to {ex}</string>
       <string name="error.datamart.manager.gen">General error in datamart manager</string>
       <string name="error.datamart.drop">Error dropping data mart {id}</string>
       <string name="error.datamart.create">Error while creating data mart {id}</string>

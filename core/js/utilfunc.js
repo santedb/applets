@@ -405,7 +405,7 @@ function ensureIsArray(objectToMakeArray) {
             return arr;
         }
         else {
-            return [id];
+            return [objectToMakeArray];
         }
     }
     else 
