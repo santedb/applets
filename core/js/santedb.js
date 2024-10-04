@@ -2750,7 +2750,7 @@ function SanteDBWrapper() {
          * @description This method allows a plugin to resolve a template identifier (like: entity.tanzania.child) to an actual HTML summary
          */
         this.resolveTemplateSummary = function (templateId) {
-            var entry = _templateCache.find(o=>o.mnemonic == templateId);
+            var entry = (_templateCache || []).find(o=>o.mnemonic == templateId);
             if(entry) {
                 return entry.summaryView;
             }
@@ -2768,7 +2768,7 @@ function SanteDBWrapper() {
          * @description This method allows a plugin to resolve a template identifier (like: entity.tanzania.child) to an actual HTML input form
          */
         this.resolveTemplateForm = function (templateId) {
-            var entry = _templateCache.find(o=>o.mnemonic == templateId);
+            var entry = (_templateCache || []).find(o=>o.mnemonic == templateId);
             if(entry) {
                 return entry.form;
             }
@@ -2785,7 +2785,7 @@ function SanteDBWrapper() {
          * @description This method allows a plugin to resolve a template view (to display informaton from the template)
          */
         this.resolveTemplateView = function (templateId) {
-            var entry = _templateCache.find(o=>o.mnemonic == templateId);
+            var entry = (_templateCache || []).find(o=>o.mnemonic == templateId);
             if(entry) {
                 return entry.view;
             }
@@ -2801,7 +2801,7 @@ function SanteDBWrapper() {
          * @returns {object} The template definition metadata
          */
         this.getTemplateMetadata = function(templateId) {
-            return _templateCache.find(o=>o.mnemonic == templateId);
+            return (_templateCache || []).find(o=>o.mnemonic == templateId);
         }
 
         /**
