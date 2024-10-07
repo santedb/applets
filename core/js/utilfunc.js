@@ -405,7 +405,7 @@ function ensureIsArray(objectToMakeArray) {
             return arr;
         }
         else {
-            return [id];
+            return [objectToMakeArray];
         }
     }
     else 
@@ -525,13 +525,17 @@ function applyCascadeInstructions(source) {
                         
                         // Apply the cascade for actTime, startTime, stopTime
                         relationship.targetModel.actTime = relationship.targetModel.actTime || source.actTime;
-                        relationship.targetModel.startTime = relationship.targetModel.startTime || source.startTime;
-                        relationship.targetModel.stopTime = relationship.targetModel.stopTime || source.stopTime;
-                        relationship.targetModel.statusConcept = relationship.targetModel.statusConcept || source.statusConcept;
                         relationship.targetModel.moodConcept = relationship.targetModel.moodConcept || source.moodConcept;
 
-                        if (!relationship.targetModel.participation[instruction.targetRole]) // Only cascade if not specified
+                        if (!relationship.targetModel.participation[instruction.targetRole]
+                        ) // Only cascade if not specified
+                        {
                             relationship.targetModel.participation[instruction.targetRole] = source.participation[instruction.sourceRole];
+                        }
+                        else if(!relationship.targetModel.participation[instruction.targetRole][0].player) {
+                            relationship.targetModel.participation[instruction.targetRole][0].player =  source.participation[instruction.sourceRole][0].player;
+                            delete relationship.targetModel.participation[instruction.targetRole][0].playerModel;
+                        }
                     });
 
             });

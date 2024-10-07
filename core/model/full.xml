@@ -891,9 +891,10 @@
   </type>
 
   <type type="CarePlan" all="true">
+    <property name="pathwayModel" behavior="always" all="true" />
     <property name="relationship" all="true">
       <property name="HasComponent" all="true">
-        <property name="targetModel" all="true" ref="Act" />
+        <property name="targetModel" all="true" behavior="always" ref="Act" />
     </property>
     </property>
   </type>

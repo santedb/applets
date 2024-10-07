@@ -75,7 +75,7 @@
             INNER JOIN AUD_ACT_TBL ON (AUD_ACT_ASSOC_TBL.ACT_ID = AUD_ACT_TBL.ID)
             INNER JOIN AUD_CD_TBL AS CLS_CD ON (CLS_CD.ID = CLS_CD_ID)
         WHERE
-            AUD_TBL.EVT_UTC BETWEEN COALESCE(${from-date}, '0001-01-01')::DATE AND COALESCE(${to-date}::DATE, CURRENT_TIMESTAMP)
+            AUD_TBL.EVT_UTC BETWEEN COALESCE(${from-date}::DATE, '0001-01-01')::DATE AND COALESCE(${to-date}::DATE, CURRENT_TIMESTAMP)
             AND OBJ_ID = CAST(${object-id} AS VARCHAR)
           
       ]]>

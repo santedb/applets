@@ -45,7 +45,7 @@ const BooleanExtensionValues = {
 */
 function APIWrapper(_config) {
 
-    var _viewModelJsonMime = "application/json+sdb-viewmodel";
+    var _viewModelJsonMime = "application/x.santedb.rim.viewModel+json"; //"application/json+sdb-viewmodel";
 
     /**
      * @method
@@ -135,7 +135,7 @@ function APIWrapper(_config) {
             $.ajax({
                 method: 'POST',
                 url: _config.base + configuration.resource,
-                data: configuration.data && configuration.contentType.indexOf('application/json') == 0 ? JSON.stringify(SanteDB._reorderProperties(configuration.data)) : configuration.data,
+                data: configuration.data && configuration.contentType.indexOf('json') != -1 ? JSON.stringify(SanteDB._reorderProperties(configuration.data)) : configuration.data,
                 dataType: configuration.dataType || 'json',
                 contentType: configuration.contentType || 'application/json',
                 headers: configuration.headers,
@@ -195,7 +195,7 @@ function APIWrapper(_config) {
             $.ajax({
                 method: 'PUT',
                 url: _config.base + configuration.resource + (_config.idByQuery ? "?_id=" + configuration.id : "/" + configuration.id),
-                data: configuration.contentType.indexOf('application/json') == 0 ? JSON.stringify(SanteDB._reorderProperties(configuration.data)) : configuration.data,
+                data: configuration.contentType.indexOf('json') != -1 ? JSON.stringify(SanteDB._reorderProperties(configuration.data)) : configuration.data,
                 dataType: configuration.dataType || 'json',
                 contentType: configuration.contentType || 'application/json',
                 headers: configuration.headers,
@@ -315,7 +315,7 @@ function APIWrapper(_config) {
             $.ajax({
                 method: 'PATCH',
                 url: _config.base + configuration.resource + (_config.idByQuery ? "?_id=" + configuration.id : "/" + configuration.id),
-                data: configuration.contentType.indexOf('application/json') == 0 ? JSON.stringify(SanteDB._reorderProperties(configuration.data)) : configuration.data,
+                data: configuration.contentType.indexOf('json') != -1 ? JSON.stringify(SanteDB._reorderProperties(configuration.data)) : configuration.data,
                 dataType: configuration.dataType || 'json',
                 contentType: configuration.contentType || 'application/json',
                 headers: configuration.headers,
@@ -1119,7 +1119,7 @@ function ResourceWrapper(_config) {
             data: patch,
             id: id,
             state: state,
-            contentType: "application/json+sdb-patch",
+            contentType: "application/x.santedb.patch+json",
             resource: _config.resource
         });
     }
@@ -1782,7 +1782,7 @@ function ResourceWrapper(_config) {
 function SanteDBWrapper() {
     "use strict";
 
-    var _viewModelJsonMime = "application/json+sdb-viewmodel";
+    var _viewModelJsonMime = "application/x.santedb.rim.viewModel+json"; // "application/json+sdb-viewmodel";
 
     // JWS Pattern
     var jwsDataPattern = /^([A-Za-z0-9-_\+\/]+?)\.([A-Za-z0-9-_\+\/]+?)\.([A-Za-z0-9-_\+\/]+?)$/;
@@ -2750,7 +2750,7 @@ function SanteDBWrapper() {
          * @description This method allows a plugin to resolve a template identifier (like: entity.tanzania.child) to an actual HTML summary
          */
         this.resolveTemplateSummary = function (templateId) {
-            var entry = _templateCache.find(o=>o.mnemonic == templateId);
+            var entry = (_templateCache || []).find(o=>o.mnemonic == templateId);
             if(entry) {
                 return entry.summaryView;
             }
@@ -2768,7 +2768,7 @@ function SanteDBWrapper() {
          * @description This method allows a plugin to resolve a template identifier (like: entity.tanzania.child) to an actual HTML input form
          */
         this.resolveTemplateForm = function (templateId) {
-            var entry = _templateCache.find(o=>o.mnemonic == templateId);
+            var entry = (_templateCache || []).find(o=>o.mnemonic == templateId);
             if(entry) {
                 return entry.form;
             }
@@ -2785,7 +2785,7 @@ function SanteDBWrapper() {
          * @description This method allows a plugin to resolve a template view (to display informaton from the template)
          */
         this.resolveTemplateView = function (templateId) {
-            var entry = _templateCache.find(o=>o.mnemonic == templateId);
+            var entry = (_templateCache || []).find(o=>o.mnemonic == templateId);
             if(entry) {
                 return entry.view;
             }
@@ -2793,6 +2793,17 @@ function SanteDBWrapper() {
                 return null;
             }
         }
+        /**
+         * @summary
+         * @method getTemplateMetadata
+         * @memberof SanteDBWrapper.ApplicationApi
+         * @param {string} templateId The template mnemonic to fetch data for
+         * @returns {object} The template definition metadata
+         */
+        this.getTemplateMetadata = function(templateId) {
+            return (_templateCache || []).find(o=>o.mnemonic == templateId);
+        }
+
         /**
          * @summary Get a list of all installed template definitions
          * @method getTemplateDefinitionsAsync
