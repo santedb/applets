@@ -69,23 +69,6 @@
                         <target>relationship[ReportTarget].target</target>
                     </map>
 
-                    
-                    <map required="false" replace="true">
-                        <source>Pacific Island Countries and territories</source>
-                        <transform transformer="Expression">
-                            <args>
-                                <string>input.Replace("Nth.","North ").Replace("Sth.","South ").Replace("Wst.","West ").Replace("Est.","East ").Replace("  "," ")</string>
-                            </args>
-                        </transform>
-                        <transform transformer="EntityLookup">
-                            <args>
-                                <string>Place</string>
-                                <string>name.component.value=~$input&amp;address.component[Country].value=$rootCountry&amp;typeConcept.mnemonic=$reportTargetType</string>
-                            </args>
-                        </transform>
-                        <target>relationship[CommunityServiceDeliveryLocation].target</target>
-                    </map>
-
                     <map required="true" replace="true">
                         <source>FACNAME</source>
                         <target>name[OfficialRecord].component.value</target>
@@ -120,6 +103,41 @@
                 </maps>
                 <existing>
                     <where>classConcept=ff34dfa7-c6d3-4f8b-bc9f-14bcdc13ba6c&amp;identifier[PDH_FAC_UNIT_ID].value=$output.identifier[PDH_FAC_UNIT_ID].value</where>
+                </existing>
+            </resource>
+            <resource  type="EntityRelationship">
+                <maps>
+                    <map required="false" replace="true">
+                        <fixed>4AA573A0-D967-493A-BEA0-8BAD060E4264</fixed>
+                        <target>relationshipType</target>
+                    </map>
+                    <map required="false" replace="true">
+                        <source>UNIT_ID</source>
+                        <xref>
+                            <previousEntry type="Place" />
+                            <expression>identifier[PDH_FAC_UNIT_ID].value=$input</expression>
+                        </xref>
+                        <target>target</target>
+                    </map>
+                    
+                    <map required="false" replace="true">
+                        <source>Pacific Island Countries and territories</source>
+                        <transform transformer="Expression">
+                            <args>
+                                <string>input.Replace("Nth.","North ").Replace("Sth.","South ").Replace("Wst.","West ").Replace("Est.","East ").Replace("  "," ")</string>
+                            </args>
+                        </transform>
+                        <transform transformer="EntityLookup">
+                            <args>
+                                <string>Place</string>
+                                <string>name.component.value=~$input&amp;address.component[Country].value=$rootCountry&amp;typeConcept.mnemonic=$reportTargetType</string>
+                            </args>
+                        </transform>
+                        <target>source</target>
+                    </map>
+                </maps>
+                <existing>
+                    <where>source=$output.source&amp;relationshipType=$output.relationshipType&amp;target=$output.target</where>
                 </existing>
             </resource>
         </map>

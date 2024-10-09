@@ -38,6 +38,8 @@
       <string name="ui.common.kilobytes">KB</string>
       <string name="ui.common.show">Show:</string>
       <string name="ui.search.onlineResult">Online Result</string>
+      <string name="ui.common.ontime">On-Time</string>
+      <string name="ui.common.pastdue">Past-Due</string>
       <!-- Login Translations -->
       <string name="ui.login.input.username">Username</string>
       <string name="ui.login.input.password">Password</string>
@@ -283,8 +285,11 @@
       <string name="ui.action.resubmit">Resubmit</string>
       <string name="ui.action.redirecting">Redirecting to appropriate page</string>
       <string name="ui.action.export">Export</string>
+      <string name="ui.action.recompute">Re-Compute</string>
       <string name="ui.action.export.confirm">You are about to export potentially sensitive data from the CDR in XML format. Extra audits will be generated and your actions may be reviewed by an administrator. Do you want to continue?</string>
       <!-- Data Tables -->
+
+      <string name="ui.common.results">Showing {start} to {end} of {total} results</string>
       <string name="ui.table.empty">No Results Returned</string>
       <string name="ui.table.info">Showing _START_ to _END_ of _TOTAL_ results</string>
       <string name="ui.table.infoEmpty">Showing 0 to 0 of 0 results</string>
