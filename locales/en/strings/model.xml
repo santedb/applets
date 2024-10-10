@@ -924,4 +924,6 @@
    <string name="ui.model.carePathwayDefinition.uuid.hint">A unique system identifier for the care pathway</string>
    <string name="ui.model.carePathwayDefinition.encounter">Encounter Template</string>
    <string name="ui.model.carePathwayDefinition.encounter.hint">For proposals of encounters, this is the template which is to be used (also used when checking in a patient for the care pathway)</string>
+   <string name="ui.model.carePathwayDefinition.name">Name</string>
+   <string name="ui.model.carePathwayDefinition.name.hint">A short name for this care pathway</string>
 </resources>
