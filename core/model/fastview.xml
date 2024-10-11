@@ -42,7 +42,7 @@
   </type>
   <type type="Concept" all="false">
     <property name="mnemonic" />
-    <property name="name" all="true" />
+    <property name="name" all="true" behavior="always" />
   </type>
   <type type="EntityRelationship" all="false">
     <property name="source" all="true"/>
@@ -732,4 +732,21 @@
     </property>
   </type>
 
+  <type name="PatientEncounter" all="true">
+    <property name="typeConceptModel" behavior="always" ref="Concept" />
+    <property name="statusConceptModel" behavior="always" ref="Concept" />
+    <property name="templateModel" behavior="always" />
+    <property name="protocolModel" behavior="always" />
+    <property name="participation" behavior="always">
+      <property name="Authororiginator" all="true">
+        <property name="playerModel" behavior="always" ref="UserEntity" />
+      </property>
+      <property name="Location" all="true">
+        <property name="playerModel" behavior="always" ref="Place" />
+      </property>
+      <property name="RecordTarget" all="true">
+        <property name="playerModel" behavior="always" ref="Patient" />
+      </property>
+    </property>
+  </type>
 </ViewModel>

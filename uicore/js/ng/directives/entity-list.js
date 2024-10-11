@@ -81,6 +81,22 @@ angular.module('santedb-lib')
             _subResource = undefined,
             _throttleGuard = 0;
 
+        (function($) {
+
+            var _scopeRef = null;
+
+            $.fn.EntityList = function() {
+                _scopeRef = angular.element("div", $(this)).scope();
+            };
+            $.fn.EntityList.refresh = function()
+            {
+                if (_queryId !== undefined) {
+                    _queryId = SanteDB.application.newGuid();
+                }
+                refreshItems(_scopeRef);
+            };
+        })(jQuery);
+
         async function refreshItems(scope, filter) {
             var waiterDiv = $(`#${_id}_${_scid}`);
             try {
@@ -176,6 +192,7 @@ angular.module('santedb-lib')
                         refreshItems($scope);
                     }
                 })
+
                 $scope.$watch("queryControl.filter", function (n, o) {
                     if (n != o) {
                         if (_queryId !== undefined) {
@@ -255,6 +272,9 @@ angular.module('santedb-lib')
 
             }],
             link: function (scope, element, attrs) {
+
+                $(element).EntityList(scope);
+
                 _type = attrs.type;
                 _noActions = attrs.noActions;
                 scope._display = attrs.display || 'list';

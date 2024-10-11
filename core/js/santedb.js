@@ -3150,6 +3150,19 @@ function SanteDBWrapper() {
             resource: "EntityRelationship",
             api: _hdsi
         });
+
+
+        /**
+         * @type {ResourceWrapper}
+         * @summary Represents the act relationship resource
+         * @memberof SanteDBWrapper.ResourceApi
+         */
+        this.actRelationship = new ResourceWrapper({
+            accept: _viewModelJsonMime,
+            resource: "ActRelationship",
+            api: _hdsi
+        });
+
         /**
             * @type {ResourceWrapper}
             * @memberof SanteDBWrapper.ResourceApi
