@@ -547,8 +547,9 @@ function applyCascadeInstructions(source) {
 /**
  * @summary Ensures that the entity being submitted doesn't have any odd or nasty data - also ensures that the 
  * @param {Entity} entity The entity to be corrected
+ * @param {boolean} splitCompoundNames When true, instructs the function to split any compound names like "John Jacob Jinglehiemer" into an array
  */
-async function prepareEntityForSubmission(entity) {
+async function prepareEntityForSubmission(entity, splitCompoundNames) {
 
     if (entity.tag && entity.tag["$generated"]) {
         entity.tag["$mdm.type"] = "T"; // Set a ROT tag
@@ -642,7 +643,12 @@ async function prepareEntityForSubmission(entity) {
                     Object.keys(nameItem.component).forEach(o => {
                         if (!Array.isArray(nameItem.component[o])) {
                             if (typeof nameItem.component[o] === 'string') {
-                                nameItem.component[o] = [nameItem.component[o]]
+                                if(splitCompoundNames) {
+                                    nameItem.component[o] = nameItem.component[o].split(' ');
+                                }
+                                else {
+                                    nameItem.component[o] = [nameItem.component[o]]
+                                }
                             }
                             else if (typeof nameItem.component[o] === 'object' || nameItem.component[o]['0']) // Sometimes AngularJS will represent new objects as an object with property 0
                             {
