@@ -643,12 +643,7 @@ async function prepareEntityForSubmission(entity, splitCompoundNames) {
                     Object.keys(nameItem.component).forEach(o => {
                         if (!Array.isArray(nameItem.component[o])) {
                             if (typeof nameItem.component[o] === 'string') {
-                                if(splitCompoundNames) {
-                                    nameItem.component[o] = nameItem.component[o].split(' ');
-                                }
-                                else {
-                                    nameItem.component[o] = [nameItem.component[o]]
-                                }
+                                nameItem.component[o] = [nameItem.component[o]]
                             }
                             else if (typeof nameItem.component[o] === 'object' || nameItem.component[o]['0']) // Sometimes AngularJS will represent new objects as an object with property 0
                             {
@@ -657,6 +652,14 @@ async function prepareEntityForSubmission(entity, splitCompoundNames) {
                             else {
                                 nameItem.component[o] = [nameItem.component[o]]
                             }
+                        }
+
+                        if(splitCompoundNames) {
+                            var compoundArray = [];
+                            nameItem.component[o].forEach(name => {
+                                name.split(' ').forEach(c=>compoundArray.push(c));
+                            });
+                            nameItem.component[o] = compoundArray; 
                         }
                     });
                 }
