@@ -447,6 +447,10 @@ angular.module('santedb-lib')
                                 var data = data.$type == "Bundle" ? data.resource : data.resource || data;
 
                                 if(scope.jsFilter) {
+
+                                    if(typeof scope.jsFilter === "string") {
+                                        scope.jsFilter = SanteDB.display.getParentScopeVariable(scope, scope.jsFilter);
+                                    }
                                     data = data.filter(flt => scope.jsFilter(flt));
                                 }
 
