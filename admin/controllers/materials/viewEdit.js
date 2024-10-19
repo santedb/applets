@@ -86,9 +86,8 @@ angular.module("santedb").controller("MaterialViewEditController", ["$scope", "$
                 if (material.extension && material.extension['http://santedb.org/extensions/core/targetCondition']) {
                     material.extension['http://santedb.org/extensions/core/targetCondition'] = await Promise.all(
                         material.extension['http://santedb.org/extensions/core/targetCondition'].map(async function (cd) {
-                            var cdId = atob(cd).split('^')[1];
                             try {
-                                return await SanteDB.resources.concept.getAsync(cdId);
+                                return await SanteDB.application.resolveReferenceExtensionAsync(cd);
                             }
                             catch (e) {
                                 return null;
@@ -192,9 +191,7 @@ angular.module("santedb").controller("MaterialViewEditController", ["$scope", "$
             if (submissionMaterial.extension && submissionMaterial.extension['http://santedb.org/extensions/core/targetCondition']) {
                 // Correct for references
                 submissionMaterial.extension['http://santedb.org/extensions/core/targetCondition'] =
-                    submissionMaterial.extension['http://santedb.org/extensions/core/targetCondition'].map(ext => {
-                        return btoa(`2^${ext.id}`);
-                    });
+                    submissionMaterial.extension['http://santedb.org/extensions/core/targetCondition'].map(ext => SanteDB.application.encodeReferenceExtension("Concept", ext.id));
             }
 
             if (submissionMaterial.note) {

@@ -40,6 +40,14 @@
       <string name="ui.search.onlineResult">Online Result</string>
       <string name="ui.common.ontime">On-Time</string>
       <string name="ui.common.pastdue">Past-Due</string>
+
+      <!-- Time Phrases -->
+       <string name="ui.common.since.seconds">Seconds Ago</string>
+       <string name="ui.common.since.minutes">Minutes Ago</string>
+       <string name="ui.common.since.hours">Hours Ago</string>
+       <string name="ui.common.since.days">Days Ago</string>
+       <string name="ui.common.since.months">Months Ago</string>
+       <string name="ui.common.since.years">Years Ago</string>
       <!-- Login Translations -->
       <string name="ui.login.input.username">Username</string>
       <string name="ui.login.input.password">Password</string>
