@@ -312,7 +312,7 @@ angular.module('santedb-lib')
                             });
 
                             var form = SanteDB.display.getParentScopeVariable($scope, selectControl[0].form.name);
-                            if(form) {
+                            if(form && form[selectControl[0].name]) {
                                 form[selectControl[0].name].$setValidity("required", true);
                             }
                         }
@@ -444,7 +444,7 @@ angular.module('santedb-lib')
                                 //params.page = params.page || 0;
 
                                 var retVal = { results: [], pagination: { more: data.totalResults > data.count } };
-                                var data = data.$type == "Bundle" ? data.resource : data.resource || data;
+                                var data = (data.$type == "Bundle" ? data.resource : data.resource || data) || [];
 
                                 if(scope.jsFilter) {
 
