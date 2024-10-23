@@ -2862,12 +2862,17 @@ function SanteDBWrapper() {
          * @returns {Array<string>} The list of template definitions
          */
         this.getTemplateDefinitionsAsync = async function (query) {
-            if (_templateCache) {
-                return _templateCache;
+            if (!query) {
+                if (_templateCache) {
+                    return _templateCache;
+                }
+                else {
+                    _templateCache = await _resources.template.findAsync(query);
+                    return _templateCache;
+                }
             }
             else {
-                _templateCache = await _resources.template.findAsync(query);
-                return _templateCache;
+                return _resources.template.findAsync(query);
             }
         }
         /**

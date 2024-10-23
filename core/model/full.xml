@@ -308,7 +308,7 @@
         <property name="targetModel" behavior="always" ref="Material" />
       </property>
       <property name="Instance" all="true">
-        <property name="targetModel" behavior="always" ref="ManufacturedMaterial"/>
+        <property name="targetModel" behavior="always" ref="ManufacturedMaterial" />
       </property>
       <property name="*" all="true" ref="EntityRelationship" />
     </property>
@@ -335,7 +335,7 @@
       <property name="*" ref="EntityName" />
     </property>
     <property name="identifier" all="true" behavior="always">
-      <property name="*"  ref="EntityIdentifier"/>
+      <property name="*" ref="EntityIdentifier" />
     </property>
     <property name="classConceptModel" behavior="always" all="false">
       <property name="id" />
@@ -369,11 +369,11 @@
       <property name="id" />
       <property name="mnemonic" />
       <property name="name" all="true" />
-      <property name="conceptSet" all="true"/>
+      <property name="conceptSet" all="true" />
       <property name="referenceTerm" behavior="always" all="true">
-       <property name="*" all="true">
-          <property name="relationshipType"/>
-          <property name="term" behavior="always"/>
+        <property name="*" all="true">
+          <property name="relationshipType" />
+          <property name="term" behavior="always" />
           <property name="termModel" behavior="always" ref="ReferenceTerm" />
         </property>
       </property>
@@ -473,8 +473,8 @@
         <property name="holder" behavior="never" />
         <property name="holderModel" behavior="never" />
         <property name="sourceModel" behavior="never" />
-        <property name="relationshipTypeModel" behavior="never"/>
-        <property name="targetModel" behavior="always"/>
+        <property name="relationshipTypeModel" behavior="never" />
+        <property name="targetModel" behavior="always" />
       </property>
     </property>
     <property name="service" all="false" behavior="always">
@@ -596,7 +596,7 @@
     <property name="relationship" behavior="always">
       <property name="*" ref="ActRelationship">
         <property name="target" />
-        <property name="targetModel" ref="Act"/>
+        <property name="targetModel" ref="Act" />
       </property>
     </property>
     <property name="participation" all="true" behavior="always">
@@ -676,7 +676,7 @@
           <property name="identifier" all="true" />
           <property name="name" all="true" behavior="always">
             <property name="*" ref="EntityName" />
-            </property>
+          </property>
           <property name="tag" all="true" />
           <property name="extension" all="true" />
         </property>
@@ -891,7 +891,7 @@
     <property name="relationship" all="true">
       <property name="HasComponent" all="true">
         <property name="targetModel" all="true" behavior="always" ref="Act" />
-    </property>
+      </property>
     </property>
   </type>
 
@@ -980,5 +980,47 @@
     <property name="updatedByModel" behavior="always" />
     <property name="obsoletedByModel" behavior="always" />
     <property name="scopeModel" behavior="always" />
+  </type>
+
+  <type type="Act" name="ComponentAct" all="true">
+    <property name="id" />
+    <property name="moodConcept" />
+    <property name="relationship" behavior="always" all="false">
+      <property name="Fulfills" all="true">
+        <property name="targetModel" behavior="always" ref="ComponentAct" />
+      </property>
+    </property>
+  </type>
+  <!-- Encounters -->
+  <type type="PatientEncounter" all="true">
+    <property name="templateModel" behavior="always" />
+    <property name="typeConceptModel" behavior="always" ref="Concept" />
+    <property name="statusConceptModel" behavior="always" ref="Concept" />
+    <property name="relationship" all="true" behavior="always">
+      <property name="HasComponent" all="true">
+        <property name="targetModel" behavior="always" ref="ComponentAct" />
+      </property>
+      <property name="Fulfills" all="true">
+        <property name="targetModel" behavior="always" ref="Act" />
+      </property>
+    </property>
+    <property name="participation" all="true" behavior="always">
+      <property name="RecordTarget" all="true">
+        <property name="relationshipTypeModel" behavior="always" />
+        <property name="playerModel" ref="Patient" behavior="always" />
+      </property>
+      <property name="Authororiginator" all="true">
+        <property name="relationshipTypeModel" behavior="always" />
+        <property name="playerModel" ref="Entity" behavior="always" />
+      </property>
+      <property name="Location" all="true">
+        <property name="relationshipTypeModel" behavior="always" />
+        <property name="playerModel" ref="Place" behavior="always" />
+      </property>
+      <property name="Informant" all="true">
+        <property name="relationshipTypeModel" behavior="always" />
+        <property name="playerModel" ref="Person" behavior="always" />
+      </property>
+    </property>
   </type>
 </ViewModel>

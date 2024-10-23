@@ -16,41 +16,121 @@
  - the License.
  -->
 <div xmlns="http://www.w3.org/1999/xhtml">
-    <div class="actEntryForm">
+    <div class="actEntryForm w-100">
         <div ng-if="::model.$templateUrl" ng-init="act = model">
             <ng-include src="model.$templateUrl" />
         </div>
         <div class="actInputList">
             <!-- Header Information for the core act-->
-            <div class="actHeader">
-                TODO: Act Header
+            <div class="scroll-sticky">
+                <div class="actHeader object-header card">
+                    <div class="row">
+                        <label class="col-sm-12 col-md-3 col-xl-2 control-label">
+                            {{ 'ui.model.act.template' | i18n }}
+                        </label>
+                        <div class="col-sm-12 col-md-9 col-xl-4 pt-2">
+                            <i class="fas fa-fw fa-table-cells"></i>
+                            {{ model.templateModel.name }} <span class="badge badge-primary">{{ model.typeConceptModel |
+                                concept }}</span>
+                        </div>
+                        <label class="col-sm-12 col-md-3 col-xl-2 control-label">
+                            {{ 'ui.model.act.participation.RecordTarget' | i18n }}
+                        </label>
+                        <div class="col-sm-12 col-md-9 col-xl-4 pt-2">
+                            <i class="fas fa-fw" ng-class="{
+                            'fa-person' : model.participation.RecordTarget[0].playerModel.classConcept == 'bacd9c6f-3fa9-481e-9636-37457962804d', 
+                            'fa-box': model.participation.RecordTarget[0].playerModel.classConcept == 'b76ff324-b174-40b7-a6ac-d1fdf8e23967'
+                        }"></i>
+                            {{ model.participation.RecordTarget[0].playerModel.name | name }}
+                        </div>
+                        <label class="col-sm-12 col-md-3 col-xl-2 control-label">
+                            {{ 'ui.model.act.participation.Location' | i18n }}
+                        </label>
+                        <div class="col-sm-12 col-md-9 col-xl-4 pt-2">
+                            <i class="fas fa-fw fa-house-chimney-medical"></i>
+                            {{ model.participation.Location[0].playerModel.name | name }}
+                        </div>
+                        <label class="col-sm-12 col-md-3 col-xl-2 control-label">
+                            {{ 'ui.model.act.actTime' | i18n }}
+                        </label>
+                        <div class="col-sm-12 col-md-9 col-xl-4 pt-2">
+                            <div ng-if="model.startTime || model.stopTime">
+                                <span ng-if="model.startTime">{{ 'ui.model.act.startTime' | i18n }} <i
+                                        class="fas fa-fw fa-clock"></i> {{ model.startTime | extDate: 'M' }}</span>
+                                <span ng-if="model.stopTime">{{ 'ui.model.act.stopTime' | i18n }} <i
+                                        class="fas fa-fw fa-clock"></i> {{ model.startTime | extDate: 'M' }}</span>
+                            </div>
+                            <div ng-if="!model.startTime &amp;&amp; !model.stopTime">
+                                <i class="fas fa-fw fa-clock"></i> {{ model.actTime | extDate: 'M' }}
+                            </div>
+                        </div>
+                        <label class="col-sm-12 col-md-3 col-xl-2 control-label">
+                            {{ 'ui.model.act.participation.Performer' | i18n }}
+                        </label>
+                        <div class="col-sm-12 col-md-9 col-xl-4 pt-2 d-flex justify-content-between">
+                            <span class="mr-2" ng-repeat="aut in model.participation.Authororiginator track by $index">
+                                <i class="fas fa-fw fa-user-doctor"></i> {{ aut.playerModel.name | name }}
+                            </span>
+                            <span class="mr-2" ng-repeat="aut in model.participation.Performer track by $index">
+                                <i class="fas fa-fw fa-user-doctor"></i> {{ aut.playerModel.name | name }}
+                            </span>
+                        </div>
+                        <label class="col-sm-12 col-md-3 col-xl-2 control-label" ng-if="model.participation.Informant">
+                            {{ 'ui.model.act.participation.Informant' | i18n }}
+                        </label>
+                        <div class="col-sm-12 col-md-9 col-xl-4 pt-2" ng-if="model.participation.Informant">
+                            <i class="fas fa-fw fa-person"></i> {{ model.participation.Informant[0].playerModel.name |
+                            name }}
+                        </div>
+                        <label class="col-sm-12 col-md-3 col-xl-2 control-label"
+                            ng-if="model.relationship._HasComponent">
+                            {{ 'ui.model.act.participation._HasComponent' | i18n }}
+                        </label>
+                        <div class="col-sm-12 col-md-9 col-xl-4" ng-if="model.relationship._HasComponent">
+                            <i class="fas fa-fw fa-list-check"></i> {{
+                            model.relationship._HasComponent.holderModel.typeConceptModel | concept }}
+                            <span
+                                ng-repeat="dst in model.relationship._HasComponent.holderModel.participation.Destination track by $index">
+                                <i class="fas fa-map-pin mr-1"></i> {{ dst.playerModel.name | name }}
+                            </span>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <ul class="list-group" ng-if="isReady">
+            <ul class="scroll list-group">
                 <li class="list-group-item" ng-repeat="comp in model.relationship.HasComponent track by $index">
                     <div class="d-flex justify-content-left">
                         <!-- PROPOSE Should allow users to select an override -->
                         <div class="actProposeControl"
-                            ng-if="comp.targetModel.moodConcept == 'ACF7BAF2-221F-4BC2-8116-CEB5165BE079'">
-                            <div class="checkbox-container">
-                                <input type="checkbox" ng-model="comp.targetModel.negationInd"
-                                    class="checkbox-control" />
+                            ng-if="comp.targetModel.moodConcept == 'acf7baf2-221f-4bc2-8116-ceb5165be079' || comp.targetModel.relationship.Fulfills[0].targetModel.moodConcept == 'acf7baf2-221f-4bc2-8116-ceb5165be079'">
+                            <label class="checkbox-container">
+                                <input type="checkbox" class="checkbox-control" ng-model="comp.targetModel.isNegated"
+                                    id="negate{{$index}}" ng-true-value="false" ng-false-value="true" />
                                 <span></span>
-                            </div>
+                            </label>
                         </div>
                         <!-- Render the main act entry content -->
                         <div class="flex-grow-1 actEntryComponent">
-                            <div ng-if="!comp.targetModel.negationInd" ng-init="act = comp.targetModel">
+                            <div ng-if="!comp.targetModel.isNegated" ng-init="act = comp.targetModel">
                                 <ng-include src="resolveTemplate(comp.targetModel.templateModel.mnemonic)">
 
                                 </ng-include>
                             </div>
-                            <div ng-if="comp.targetModel.negationInd">
-                                <concept-select ng-model="comp.targetModel.reason"
-                                    concept-set="'ProtocolViolationReason'" required="required" class="form-control"
-                                    name="violationReason{{$index}}" />
+                            <div ng-if="comp.targetModel.isNegated">
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">
+                                            {{ 'ui.model.act.isNegated.reason' | i18n }}
+                                        </span>
+                                    </div>
+                                    <concept-select ng-model="comp.targetModel.isNegated"
+                                        concept-set="'ProtocolViolationReason'" required="required" class="form-control"
+                                        name="violationReason{{$index}}" />
+                                </div>
                                 <div class="text-danger"
                                     ng-if="ownerForm['violationReason' + $index].$error['required']">
-                                    <i class="fas fa-fw fa-exclamation-triangle"></i> {{ 'ui.error.required' | i18n }}
+                                    <i class="fas fa-fw fa-exclamation-triangle"></i> {{ 'ui.error.required' |
+                                    i18n }}
                                 </div>
                             </div>
                         </div>
@@ -64,8 +144,27 @@
                     </div>
                 </li>
             </ul>
-            <div class="actAddItem">
-                TODO: New Add Items Control
+            <div class="btn-group float-right dropup">
+                <button type="button" class="btn btn-dark dropdown-toggle" data-display="static" data-toggle="dropdown"
+                    data-target="#addActionDropdown" aria-haspopup="true" id="btnAddAction">
+                    <i class="fas fa-fw fa-plus-circle"></i> {{ 'ui.action.add' | i18n }}
+                </button>
+                <button ng-repeat="action in actions track by $index" class="btn ml-1" ng-class="action.className"
+                    ng-click="doAction(action)" demand="{{action.demand}}">
+                    <i class="fas fa-fw" ng-class="action.icon"></i>
+                    {{ action.label || 'ui.action.' + action.name | i18n }}
+                </button>
+                <div class="dropdown-menu overflow-auto" id="addActionDropdown">
+                    <button class="dropdown-item" type="button" ng-click="addItem(tpl)"
+                        ng-repeat="tpl in availableTemplates track by $index">
+                        <i ng-class="tpl.icon"></i> {{ tpl.description | i18n }}
+                    </button>
+                    <div class="dropdown-divider"></div>
+                    <div class="dropdown-item">
+                        <input type="search" name="_none" ng-model="filterTemplates" class="form-control"
+                            placeholder="{{ 'ui.action.search' | i18n }}" />
+                    </div>
+                </div>
             </div>
         </div>
     </div>

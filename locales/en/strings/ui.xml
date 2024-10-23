@@ -37,6 +37,8 @@
       <string name="ui.common.size.small">Small</string>
       <string name="ui.common.kilobytes">KB</string>
       <string name="ui.common.show">Show:</string>
+      <string name="ui.common.from">From</string>
+      <string name="ui.common.until">Until</string>
       <string name="ui.search.onlineResult">Online Result</string>
       <string name="ui.common.ontime">On-Time</string>
       <string name="ui.common.pastdue">Past-Due</string>

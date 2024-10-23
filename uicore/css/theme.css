@@ -296,6 +296,15 @@ svg.mermaidNoScale {
     background: var(--white);
 }
 
+.floating-command-bar {
+    position: fixed;
+    right: 0em;
+    width: auto;;
+    bottom: 30%;
+    z-index: 1;
+    background-color: var(--white);
+}
+
 .customizeViewBar {
     position: fixed;
     right: 1em;

@@ -46,11 +46,41 @@ angular.module('santedb-lib')
         scope: {
             model: '=',
             ownerForm: '<',
-            cdssValidationCallback: '<'
+            cdssValidationCallback: '<',
+            actions: '<'
         },
         controller: ['$scope', '$rootScope', function($scope, $rootScope) {
 
+            var _masterTemplateList;
 
+            async function initializeView() {
+                try {
+                    var scopeArr = [];
+                    if($scope.model && $scope.model.templateModel) {
+                        scopeArr.push(`:(nocase)${$scope.model.templateModel.mnemonic}`);
+                    }
+                    scopeArr.push(`:(nocase)${$scope.model.typeConcept}`);
+
+                    await SanteDB.application.getTemplateDefinitionsAsync();
+                    _masterTemplateList = await SanteDB.application.getTemplateDefinitionsAsync({
+                        scope: scopeArr,
+                        public: true
+                    });
+
+                    $timeout(() => {
+                        $scope.availableTemplates = _masterTemplateList;
+                    })
+                }
+                catch(e) {
+                    console.error(e);
+                }
+            }
+
+            $scope.$watch("model.id", function(n, o) {
+                if(n) {
+                    initializeView();
+                }
+            });
             $scope.resolveTemplate = function(templateId) {
 
                 var templateValue = _mode == 'edit' ? SanteDB.application.resolveTemplateForm(templateId) : SanteDB.application.resolveTemplateView(templateId);
@@ -59,27 +89,39 @@ angular.module('santedb-lib')
                 }
                 return templateValue;
             }
+
+            $scope.$watch("filterTemplates", function(n, o) {
+                if(n && n != o) {
+                    $scope.availableTemplates = _masterTemplateList.filter(f=>f.description.toLowerCase().indexOf(n.toLowerCase()) > -1);
+                }
+                else {
+                    $scope.availableTemplates = _masterTemplateList;
+                }
+            })
+            
+
         }],
         link: function(scope, element, attrs) {
 
-            if(attrs.noAdd) {
-                $("div.actAddItem", element).remove();
+            if(attrs.noAdd === "true") {
+                $(".actAddItem", element).remove();
             }
-            if(attrs.noRemove) {
-                $("div.actRemoveItem", element).remove();
+            if(attrs.noRemove === "true") {
+                $(".actRemoveItem", element).remove();
             }
-            if(attrs.noOverride) {
-                $("div.actProposeControl", element).remove();
+            if(attrs.noOverride === "true") {
+                $(".actProposeControl", element).remove();
             }
-            if(attrs.noHeader) {
-                $("div.actHeader", element).remove();
+            if(attrs.noHeader === "true") {
+                $(".actHeader", element).remove();
             }
 
             // Are we viewing or editing?
             _mode = attrs.readonly === true ? 'view' : 'edit';
             _noCdss = attrs.disableCdss;
 
-            if(scope.model.templateModel && scope.model.templateModel.mnemonic) {
+            if(scope.model && scope.model.templateModel && scope.model.templateModel.mnemonic) {
+    
                 if(_mode == 'edit') {
                     scope.model.$templateUrl = SanteDB.application.resolveTemplateForm(scope.model.templateModel.mnemonic);
                 }
