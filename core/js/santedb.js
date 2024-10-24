@@ -2817,6 +2817,23 @@ function SanteDBWrapper() {
          * @param {string} templateId The id of the template for which HTML input should be gathered
          * @description This method allows a plugin to resolve a template identifier (like: entity.tanzania.child) to an actual HTML input form
          */
+        this.resolveTemplateBackentry = function(templateId) {
+            var entry = (_templateCache || []).find(o => o.mnemonic == templateId);
+            if (entry) {
+                return entry.backEntry;
+            }
+            else {
+                return null;
+            }
+        }
+        /**
+         * @summary Resolves the HTML input form for the specified template
+         * @method resolveTemplateForm
+         * @memberof SanteDBWrapper.ApplicationApi
+         * @returns {string} The HTML content of the input form for the specified template
+         * @param {string} templateId The id of the template for which HTML input should be gathered
+         * @description This method allows a plugin to resolve a template identifier (like: entity.tanzania.child) to an actual HTML input form
+         */
         this.resolveTemplateForm = function (templateId) {
             var entry = (_templateCache || []).find(o => o.mnemonic == templateId);
             if (entry) {

@@ -20,115 +20,144 @@
  */
 
 angular.module('santedb-lib')
-   /**
-   * @summary Core editing of acts - and their components using their registered templates and forms
-   * @memberof Angular
-   * @example
-   *    <act-edit 
-   *        act="act_to_edit" // bi-directional binding
-   *        no-add="true|false" // not-bound
-   *        no-remove="true|false" // not-bound
-   *        no-override="true|false" // not-bound
-   *        no-header="true|false" // not bound
-   *        disable-cdss="true|false" // not-bound
-   *        owner-form="form_that_own" // one-way binding
-   *        readonly="true|false" // not-bound 
-   *    />
-   */
-  .directive('actEdit', ['$timeout', function ($timeout) {
+    /**
+    * @summary Core editing of acts - and their components using their registered templates and forms
+    * @memberof Angular
+    * @example
+    *    <act-edit 
+    *        act="act_to_edit" // bi-directional binding
+    *        no-add="true|false" // not-bound
+    *        no-remove="true|false" // not-bound
+    *        no-override="true|false" // not-bound
+    *        no-header="true|false" // not bound
+    *        disable-cdss="true|false" // not-bound
+    *        owner-form="form_that_own" // one-way binding
+    *        readonly="true|false" // not-bound 
+    *    />
+    */
+    .directive('actEdit', ['$timeout', function ($timeout) {
 
-    var _mode = 'edit', _noCdss = false;
+        var _mode = 'edit', _noCdss = false;
 
-    return {
-        restrict: 'E',
-        replace: true,
-        templateUrl: './org.santedb.uicore/directives/actEdit.html',
-        scope: {
-            model: '=',
-            ownerForm: '<',
-            cdssValidationCallback: '<',
-            actions: '<'
-        },
-        controller: ['$scope', '$rootScope', function($scope, $rootScope) {
+        return {
+            restrict: 'E',
+            replace: true,
+            templateUrl: './org.santedb.uicore/directives/actEdit.html',
+            scope: {
+                model: '=',
+                ownerForm: '<',
+                cdssValidationCallback: '<',
+                actions: '<'
+            },
+            controller: ['$scope', '$rootScope', function ($scope, $rootScope) {
 
-            var _masterTemplateList;
+                var _masterTemplateList;
 
-            async function initializeView() {
-                try {
-                    var scopeArr = [];
-                    if($scope.model && $scope.model.templateModel) {
-                        scopeArr.push(`:(nocase)${$scope.model.templateModel.mnemonic}`);
+                async function initializeView() {
+                    try {
+                        var scopeArr = [];
+                        if ($scope.model && $scope.model.templateModel) {
+                            scopeArr.push(`:(nocase)${$scope.model.templateModel.mnemonic}`);
+                        }
+                        scopeArr.push(`:(nocase)${$scope.model.typeConcept}`);
+
+                        await SanteDB.application.getTemplateDefinitionsAsync();
+                        _masterTemplateList = await SanteDB.application.getTemplateDefinitionsAsync({
+                            scope: scopeArr,
+                            public: true
+                        });
+
+                        $timeout(() => {
+                            $scope.availableTemplates = _masterTemplateList;
+                        })
                     }
-                    scopeArr.push(`:(nocase)${$scope.model.typeConcept}`);
+                    catch (e) {
+                        console.error(e);
+                    }
+                }
 
-                    await SanteDB.application.getTemplateDefinitionsAsync();
-                    _masterTemplateList = await SanteDB.application.getTemplateDefinitionsAsync({
-                        scope: scopeArr,
-                        public: true
-                    });
+                $scope.$watch("model.id", function (n, o) {
+                    if (n) {
+                        initializeView();
+                    }
+                });
 
-                    $timeout(() => {
+                $scope.resolveBackentryTemplate = function (templateId) {
+
+                    var templateValue = _mode == 'edit' ? SanteDB.application.resolveTemplateBackentry(templateId) : SanteDB.application.resolveTemplateView(templateId);
+                    if (templateValue == null) {
+                        return "/org.santedb.uicore/partials/act/noTemplate.html"
+                    }
+                    return templateValue;
+                }
+
+                $scope.resolveTemplate = function (templateId) {
+
+                    var templateValue = _mode == 'edit' ? SanteDB.application.resolveTemplateForm(templateId) : SanteDB.application.resolveTemplateView(templateId);
+                    if (templateValue == null) {
+                        return "/org.santedb.uicore/partials/act/noTemplate.html"
+                    }
+                    return templateValue;
+                }
+
+                $scope.$watch("filterTemplates", function (n, o) {
+                    if (n && n != o) {
+                        $scope.availableTemplates = _masterTemplateList.filter(f => f.description.toLowerCase().indexOf(n.toLowerCase()) > -1);
+                    }
+                    else {
                         $scope.availableTemplates = _masterTemplateList;
-                    })
-                }
-                catch(e) {
-                    console.error(e);
-                }
-            }
+                    }
+                })
 
-            $scope.$watch("model.id", function(n, o) {
-                if(n) {
-                    initializeView();
+                $scope.doAction = function (action) {
+                    if (action.sref) {
+                        $state.go(action.sref);
+                    }
+                    else if (typeof (action.action) === "string") {
+                        $scope.$parent[action.action]();
+                    }
+                    else if (action.action) {
+                        action.action();
+                    }
                 }
-            });
-            $scope.resolveTemplate = function(templateId) {
+            }],
+            link: function (scope, element, attrs) {
 
-                var templateValue = _mode == 'edit' ? SanteDB.application.resolveTemplateForm(templateId) : SanteDB.application.resolveTemplateView(templateId);
-                if(templateValue == null) {
-                    return  "/org.santedb.uicore/partials/act/noTemplate.html"
+                if (attrs.noAdd === "true") {
+                    $(".actAddItem", element).remove();
                 }
-                return templateValue;
-            }
-
-            $scope.$watch("filterTemplates", function(n, o) {
-                if(n && n != o) {
-                    $scope.availableTemplates = _masterTemplateList.filter(f=>f.description.toLowerCase().indexOf(n.toLowerCase()) > -1);
+                if (attrs.noRemove === "true") {
+                    $(".actRemoveItem", element).remove();
                 }
-                else {
-                    $scope.availableTemplates = _masterTemplateList;
+                if (attrs.noOverride === "true") {
+                    $(".actProposeControl", element).remove();
                 }
-            })
-            
-
-        }],
-        link: function(scope, element, attrs) {
-
-            if(attrs.noAdd === "true") {
-                $(".actAddItem", element).remove();
-            }
-            if(attrs.noRemove === "true") {
-                $(".actRemoveItem", element).remove();
-            }
-            if(attrs.noOverride === "true") {
-                $(".actProposeControl", element).remove();
-            }
-            if(attrs.noHeader === "true") {
-                $(".actHeader", element).remove();
-            }
-
-            // Are we viewing or editing?
-            _mode = attrs.readonly === true ? 'view' : 'edit';
-            _noCdss = attrs.disableCdss;
-
-            if(scope.model && scope.model.templateModel && scope.model.templateModel.mnemonic) {
-    
-                if(_mode == 'edit') {
-                    scope.model.$templateUrl = SanteDB.application.resolveTemplateForm(scope.model.templateModel.mnemonic);
+                if (attrs.noHeader === "true") {
+                    $(".actHeader", element).remove();
                 }
-                else {
-                    scope.model.$templateUrl = SanteDB.application.resolveTemplateView(scope.model.templateModel.mnemonic);
+
+                // Are we viewing or editing?
+                _mode = attrs.readonly === true ? 'view' : 'edit';
+                _noCdss = attrs.disableCdss;
+
+                if (scope.model && scope.model.relationship && scope.model.relationship.HasComponent) {
+                    scope.currentActions = scope.model.relationship.HasComponent.filter(a => !a.targetModel.tag || a.targetModel.tag.isBackEntry[0] == 'False');
+                    scope.backEntryActions = scope.model.relationship.HasComponent.filter(a => a.targetModel.tag && a.targetModel.tag.isBackEntry[0] == 'True')
+                        .groupBy(
+                            o => o.targetModel.templateModel.mnemonic,
+                            o => o.targetModel
+                        );
+                }
+
+                if (scope.model && scope.model.templateModel && scope.model.templateModel.mnemonic) {
+
+                    if (_mode == 'edit') {
+                        scope.model.$templateUrl = SanteDB.application.resolveTemplateForm(scope.model.templateModel.mnemonic);
+                    }
+                    else {
+                        scope.model.$templateUrl = SanteDB.application.resolveTemplateView(scope.model.templateModel.mnemonic);
+                    }
                 }
             }
         }
-    }
-  }]);
+    }]);

@@ -747,6 +747,8 @@
               <property name="playerModel" behavior="always" ref="Material" />
             </property>
           </property>
+          <property name="tag" behavior="always" />
+
         </property>
       </property>
     </property>

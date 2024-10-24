@@ -25,11 +25,18 @@
                 <div class="d-flex justify-content-between">
                     <div class="m-1 flex-grow-1">
                         <div class="btn-group" ng-if="actions">
-                            <button ng-repeat="action in actions track by $index" class="btn"
-                                ng-class="action.className" ng-click="doAction(action)" demand="{{action.demand}}">
+                            <button ng-repeat="action in actions track by $index" type="button" data-toggle="{{ action.children ? 'dropdown' : '' }}" data-target="actionList_{{$index}}" class="btn"
+                                ng-class="[ action.className, { 'dropdown-toggle' : action.children }]" ng-click="doAction(action)" demand="{{action.demand}}" id="actionList_button_{{$index}}">
                                 <i class="fas fa-fw" ng-class="action.icon"></i>
                                 {{ action.label || 'ui.action.' + action.name | i18n }}
                             </button>
+                            <div class="dropdown-menu overflow-auto" id="actionList_{{$index}}" ng-repeat="action in actions track by $index" ng-if="action.children">
+                                <button class="dropdown-item" type="button" ng-click="doAction(child, { id: child.id }, $index)"
+                                    ng-repeat="child in action.children track by $index" >
+                                    <i class="fas fa-fw" ng-class="child.icon"></i> {{ child.label || 'ui.action.' + child.name | i18n }}
+
+                                </button>
+                            </div>
                         </div>
                     </div>
                     <div class="m-1 resultSize d-none">

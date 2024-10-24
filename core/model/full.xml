@@ -974,15 +974,7 @@
     <property name="scopeModel" behavior="always" />
   </type>
 
-  <type type="Act" name="ComponentAct" all="true">
-    <property name="id" />
-    <property name="moodConcept" />
-    <property name="relationship" behavior="always" all="false">
-      <property name="Fulfills" all="true">
-        <property name="targetModel" behavior="always" ref="ComponentAct" />
-      </property>
-    </property>
-  </type>
+
   <!-- Encounters -->
   <type type="PatientEncounter" all="true">
     <property name="templateModel" behavior="always" />
@@ -990,7 +982,7 @@
     <property name="statusConceptModel" behavior="always" ref="ConceptNested" />
     <property name="relationship" all="true" behavior="always">
       <property name="HasComponent" all="true">
-        <property name="targetModel" behavior="always" ref="ComponentAct" />
+        <property name="targetModel" behavior="always" ref="Act" />
       </property>
       <property name="Fulfills" all="true">
         <property name="targetModel" behavior="always" ref="Act" />
@@ -1010,6 +1002,10 @@
         <property name="playerModel" ref="Place" behavior="always" />
       </property>
       <property name="Informant" all="true">
+        <property name="relationshipTypeModel" behavior="always" />
+        <property name="playerModel" ref="Person" behavior="always" />
+      </property>
+      <property name="Performer" all="true">
         <property name="relationshipTypeModel" behavior="always" />
         <property name="playerModel" ref="Person" behavior="always" />
       </property>

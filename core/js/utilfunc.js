@@ -785,21 +785,10 @@ async function setEntityState(entityId, entityTag, newStatus) {
 /**
  * Remove all properties which are delay loaded models
  * @param {Any} objectToRemove The object to remove properties from 
+ * @deprecated Use {@link:scrubModelProperties}
  */
 function deleteModelProperties(objectToRemove) {
-
-    if (typeof objectToRemove === 'object') {
-        Object.keys(objectToRemove).forEach(p => {
-            if (p.endsWith("Model")) {
-                delete objectToRemove[p];
-            }
-            else if (Array.isArray(objectToRemove[p])) {
-                objectToRemove[p].forEach(e=>deleteModelProperties(objectToRemove[p][e]));
-            }
-        });
-    }
-
-    return objectToRemove;
+    scrubModelProperties(objectToRemove);
 
 }
 
@@ -816,7 +805,8 @@ function bundleRelatedObjects(object, ignoreRelations, existingBundle) {
         ignoreRelations = [ignoreRelations];
     }
 
-    var retVal = existingBundle || new Bundle({ resource: [ angular.copy(object) ], focal: [ object.id ]});
+    object = angular.copy(object);
+    var retVal = existingBundle || new Bundle({ resource: [ object ], focal: [ object.id ]});
 
     if(object.relationship) {
 
@@ -826,23 +816,14 @@ function bundleRelatedObjects(object, ignoreRelations, existingBundle) {
                 if(rel.targetModel) {
                     var relatedObject = angular.copy(rel.targetModel);
                     rel.target = relatedObject.id = relatedObject.id || SanteDB.application.newGuid();
-
-                    if(!relatedObject.version) // new object
-                    {
-                        retVal.resource.push(relatedObject);
-                    }
-
+                    retVal.resource.push(relatedObject);
                     bundleRelatedObjects(relatedObject, ignoreRelations, retVal);
                     delete rel.targetModel;
                 }
                 if(rel.holderModel) {
                     var relatedObject = angular.copy(rel.holderModel);
                     rel.holder = rel.source = relatedObject.id = relatedObject.id || SanteDB.application.newGuid();
-                    
-                    if(!relatedObject.version) {
-                        retVal.resource.push(relatedObject);
-                    }
-
+                    retVal.resource.push(relatedObject);
                     delete rel.holderModel;
                 }
                 
@@ -883,7 +864,9 @@ function bundleRelatedObjects(object, ignoreRelations, existingBundle) {
         })
     }
 
-    retVal.resource.forEach(res => deleteModelProperties(res));
+    if(!existingBundle) {
+        retVal.resource.forEach(res => deleteModelProperties(res));
+    }
     return retVal;
 }
 
