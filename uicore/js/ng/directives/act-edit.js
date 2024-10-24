@@ -120,6 +120,15 @@ angular.module('santedb-lib')
                         action.action();
                     }
                 }
+
+                $scope.filterAction = function (action) {
+                    if (action.when) {
+                        return $scope.$eval(action.when, { r: $scope.model, item: $scope.model });
+                    }
+                    else {
+                        return true;
+                    }
+                };
             }],
             link: function (scope, element, attrs) {
 

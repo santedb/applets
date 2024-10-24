@@ -404,6 +404,11 @@ SanteDBWrapper.prototype.display = new function () {
         }
         retVal += "</span>";
 
+        if(patient.address) {
+            retVal += "<br/><span class='mr-1'><i class='fas fa-fw fa-house'></i> ";
+            retVal += SanteDB.display.renderEntityAddress(patient.address);
+            retVal += "</span>";
+        }
 
         if (patient.determinerConcept == "6b1d6764-12be-42dc-a5dc-52fc275c4935") {
             retVal += `<span class='badge badge-success' title='${SanteDB.locale.getString("ui.mdm.rot")}'><i class='fas fa-gavel'></i> </span>`

@@ -171,7 +171,7 @@
                     data-target="#addActionDropdown" aria-haspopup="true" id="btnAddAction">
                     <i class="fas fa-fw fa-plus-circle"></i> {{ 'ui.action.add' | i18n }}
                 </button>
-                <button ng-repeat="action in actions track by $index" class="btn ml-1" ng-class="action.className"
+                <button ng-repeat="action in actions track by $index" ng-if="filterAction(action)" class="btn ml-1" ng-class="action.className"
                     ng-click="doAction(action)" demand="{{action.demand}}" type="{{ action.type || 'button' }}" id="btnActEdit{{action.name}}">
                     <i class="fas fa-fw" ng-class="action.icon"></i>
                     {{ action.label || 'ui.action.' + action.name | i18n }}
