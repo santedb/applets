@@ -29,6 +29,11 @@
   </type>
 
 
+  <type type="Concept" name="ConceptNested" all="false">
+    <property name="id" />
+    <property name="name" behavior="always" all="true" />
+    <property name="mnemonic" />
+  </type>
   <type type="EntityRelationship" all="false">
     <property name="source" all="true" />
     <property name="target" all="true" />
@@ -39,7 +44,7 @@
     <property name="relationshipType" all="true" behavior="always" />
     <property name="holderModel" behavior="never" />
     <property name="sourceModel" behavior="never" />
-    <property name="relationshipTypeModel" behavior="always" all="true" ref="Concept" />
+    <property name="relationshipTypeModel" behavior="always" all="true" ref="ConceptNested" />
     <property name="key" all="true" />
     <property name="quantity" all="true" />
     <property name="strength" all="true" />
@@ -57,7 +62,7 @@
     <property name="relationshipType" all="true" behavior="always" />
     <property name="holderModel" behavior="never" />
     <property name="sourceModel" behavior="never" />
-    <property name="relationshipTypeModel" behavior="always" all="true" ref="Concept" />
+    <property name="relationshipTypeModel" behavior="always" all="true" ref="ConceptNested" />
     <property name="key" all="true" />
     <property name="quantity" all="true" />
   </type>
@@ -87,20 +92,20 @@
   </type>
 
   <type type="IdentityDomain" all="true">
-    <property name="scopeModel" behavior="always" ref="Concept" />
+    <property name="scopeModel" behavior="always" ref="ConceptNested" />
   </type>
   <!-- Entity Information -->
   <type type="Entity" all="true">
     <property name="templateModel" behavior="always" all="false">
       <property name="mnemonic" />
     </property>
-    <property name="statusConceptModel" behavior="always" ref="Concept" />
+    <property name="statusConceptModel" behavior="always" ref="ConceptNested" />
     <property name="classConcept" behavior="always" />
 
     <property name="classConceptModel" behavior="always" />
     <property name="previousVersionModel" behavior="never" />
     <property name="determinerConceptModel" behavior="never" />
-    <property name="typeConceptModel" behavior="always" ref="Concept" />
+    <property name="typeConceptModel" behavior="always" ref="ConceptNested" />
     <property name="createdBy" behavior="always" all="true" />
     <property name="creationTime" behavior="always" />
     <property name="creationTimeModel" behavior="never" />
@@ -138,9 +143,9 @@
     <property name="creationTime" behavior="never" />
     <property name="creationTimeModel" behavior="never" />
     <property name="version" />
-    <property name="occupationModel" all="true" behavior="always" ref="Concept" />
-    <property name="nationalityModel" all="true" behavior="always" ref="Concept" />
-    <property name="vipStatusModel" all="true" behavior="always" ref="Concept" />
+    <property name="occupationModel" all="true" behavior="always" ref="ConceptNested" />
+    <property name="nationalityModel" all="true" behavior="always" ref="ConceptNested" />
+    <property name="vipStatusModel" all="true" behavior="always" ref="ConceptNested" />
 
     <property name="name" all="true" behavior="always">
       <property name="*" ref="EntityName" />
@@ -152,7 +157,7 @@
       <property name="*" ref="EntityIdentifier" />
     </property>
     <property name="telecom" all="true" behavior="always" />
-    <property name="occupationModel" all="true" behavior="always" ref="Concept" />
+    <property name="occupationModel" all="true" behavior="always" ref="ConceptNested" />
     <property name="classConceptModel" behavior="never" />
     <property name="relationship" all="true" behavior="always">
       <property name="*" ref="EntityRelationship" all="true" />
@@ -180,7 +185,7 @@
       <property name="*" ref="EntityIdentifier" />
     </property>
     <property name="telecom" all="true" behavior="always" />
-    <property name="occupationModel" all="true" behavior="always" ref="Concept" />
+    <property name="occupationModel" all="true" behavior="always" ref="ConceptNested" />
     <property name="classConceptModel" behavior="never" />
     <property name="relationship" all="true" behavior="always">
       <property name="*" ref="EntityRelationship" all="true" />
@@ -197,15 +202,15 @@
     <property name="creationTime" behavior="always" />
     <property name="creationTimeModel" behavior="never" />
     <property name="version" behavior="always" />
-    <property name="educationLevelModel" all="true" behavior="always" ref="Concept" />
-    <property name="maritalStatusModel" all="true" behavior="always" ref="Concept" />
-    <property name="livingArrangementModel" all="true" behavior="always" ref="Concept" />
-    <property name="religionModel" all="true" behavior="always" ref="Concept" />
-    <property name="ethnicityModel" all="true" behavior="always" ref="Concept" />
-    <property name="statusConceptModel" behavior="always" ref="Concept" />
-    <property name="occupationModel" all="true" behavior="always" ref="Concept" />
-    <property name="nationalityModel" all="true" behavior="always" ref="Concept" />
-    <property name="vipStatusModel" all="true" behavior="always" ref="Concept" />
+    <property name="educationLevelModel" all="true" behavior="always" ref="ConceptNested" />
+    <property name="maritalStatusModel" all="true" behavior="always" ref="ConceptNested" />
+    <property name="livingArrangementModel" all="true" behavior="always" ref="ConceptNested" />
+    <property name="religionModel" all="true" behavior="always" ref="ConceptNested" />
+    <property name="ethnicityModel" all="true" behavior="always" ref="ConceptNested" />
+    <property name="statusConceptModel" behavior="always" ref="ConceptNested" />
+    <property name="occupationModel" all="true" behavior="always" ref="ConceptNested" />
+    <property name="nationalityModel" all="true" behavior="always" ref="ConceptNested" />
+    <property name="vipStatusModel" all="true" behavior="always" ref="ConceptNested" />
 
 
     <property name="telecom" all="true" behavior="always" />
@@ -213,7 +218,7 @@
     <property name="determinerConcept" behavior="always" />
     <property name="determinerConceptModel" behavior="never" />
     <property name="tag" all="true" behavior="always" />
-    <property name="genderConceptModel" behavior="always" ref="Concept" />
+    <property name="genderConceptModel" behavior="always" ref="ConceptNested" />
     <property name="extension" all="true" behavior="always" />
     <property name="name" all="true" behavior="always">
       <property name="*" ref="EntityName" />
@@ -229,7 +234,7 @@
       <property name="DedicatedServiceDeliveryLocation">
         <property name="id" />
         <property name="relationshipType" />
-        <property name="relationshipTypeModel" ref="Concept" behavior="always" />
+        <property name="relationshipTypeModel" ref="ConceptNested" behavior="always" />
         <property name="source" />
         <property name="target" />
         <property name="targetModel" behavior="always">
@@ -243,7 +248,7 @@
       <property name="ServiceDeliveryLocation">
         <property name="id" />
         <property name="relationshipType" />
-        <property name="relationshipTypeModel" ref="Concept" behavior="always" />
+        <property name="relationshipTypeModel" ref="ConceptNested" behavior="always" />
         <property name="source" />
         <property name="target" />
         <property name="targetModel" behavior="always">
@@ -255,14 +260,14 @@
         </property>
       </property>
       <property name="Contact" all="true">
-        <property name="relationshipTypeModel" behavior="always" ref="Concept" />
-        <property name="relationshipRoleModel" behavior="always" ref="Concept" />
+        <property name="relationshipTypeModel" behavior="always" ref="ConceptNested" />
+        <property name="relationshipRoleModel" behavior="always" ref="ConceptNested" />
         <property name="targetModel" behavior="always" ref="Entity" />
       </property>
       <property name="Birthplace" all="true">
         <property name="id" />
         <property name="relationshipType" />
-        <property name="relationshipTypeModel" ref="Concept" behavior="always" />
+        <property name="relationshipTypeModel" ref="ConceptNested" behavior="always" />
         <property name="source" />
         <property name="target" />
         <property name="targetModel" behavior="always" all="false">
@@ -302,7 +307,7 @@
     <property name="identifier" all="true">
       <property name="*" all="true" ref="EntityIdentifier" />
     </property>
-    <property name="typeConceptModel" behavior="always" ref="Concept" />
+    <property name="typeConceptModel" behavior="always" ref="ConceptNested" />
     <property name="relationship" all="true" behavior="always">
       <property name="HasGeneralization" all="true">
         <property name="targetModel" behavior="always" ref="Material" />
@@ -365,19 +370,7 @@
       </property>
     </property>
     <property name="typeConcept" />
-    <property name="typeConceptModel" behavior="always" all="false">
-      <property name="id" />
-      <property name="mnemonic" />
-      <property name="name" all="true" />
-      <property name="conceptSet" all="true" />
-      <property name="referenceTerm" behavior="always" all="true">
-        <property name="*" all="true">
-          <property name="relationshipType" />
-          <property name="term" behavior="always" />
-          <property name="termModel" behavior="always" ref="ReferenceTerm" />
-        </property>
-      </property>
-    </property>
+    <property name="typeConceptModel" behavior="always" all="false" ref="ConceptNested" />
     <property name="note" behavior="always">
       <property name="text" />
       <property name="authorModel" behavior="always" ref="UserEntity" />
@@ -403,21 +396,21 @@
     <property name="name" all="true" behavior="always">
       <property name="*" ref="EntityName" />
     </property>
-    <property name="statusConceptModel" ref="Concept" behavior="always" />
+    <property name="statusConceptModel" ref="ConceptNested" behavior="always" />
     <property name="address" all="true" behavior="always">
       <property name="*" ref="EntityAddress" />
     </property>
-    <property name="classConceptModel" behavior="always" ref="Concept" />
+    <property name="classConceptModel" behavior="always" ref="ConceptNested" />
     <property name="classConcept" behavior="always" />
     <property name="determinerConceptModel" behavior="never" />
-    <property name="typeConceptModel" all="true" behavior="always" ref="Concept" />
+    <property name="typeConceptModel" all="true" behavior="always" ref="ConceptNested" />
     <property name="extension" all="true" behavior="always" />
     <property name="relationship" all="true" behavior="always">
       <property name="Parent" all="false">
         <property name="id" />
         <property name="target" />
         <property name="targetModel" behavior="always" all="false">
-          <property name="classConceptModel" behavior="always" ref="Concept" />
+          <property name="classConceptModel" behavior="always" ref="ConceptNested" />
           <property name="id" />
           <property name="version" />
           <property name="relationship" behavior="never" />
@@ -430,7 +423,7 @@
         <property name="id" />
         <property name="target" />
         <property name="targetModel" behavior="always" all="false">
-          <property name="classConceptModel" behavior="always" ref="Concept" />
+          <property name="classConceptModel" behavior="always" ref="ConceptNested" />
           <property name="id" />
           <property name="version" />
           <property name="relationship" behavior="never" />
@@ -443,7 +436,7 @@
         <property name="id" />
         <property name="target" />
         <property name="targetModel" behavior="always" all="false">
-          <property name="classConceptModel" behavior="always" ref="Concept" />
+          <property name="classConceptModel" behavior="always" ref="ConceptNested" />
           <property name="id" />
           <property name="version" />
           <property name="relationship" behavior="never" />
@@ -461,7 +454,7 @@
           <property name="version" />
           <property name="lotNumber" />
           <property name="expiryDate" />
-          <property name="typeConceptModel" behavior="always" ref="Concept" />
+          <property name="typeConceptModel" behavior="always" ref="ConceptNested" />
           <property name="identifier" all="true" />
           <property name="name" all="true" behavior="always">
             <property name="*" ref="EntityName" />
@@ -480,7 +473,7 @@
     <property name="service" all="false" behavior="always">
       <property name="serviceConcept" />
       <property name="serviceSchedule" />
-      <property name="serviceConceptModel" behavior="always" ref="Concept" />
+      <property name="serviceConceptModel" behavior="always" ref="ConceptNested" />
     </property>
     <property name="participation" all="true">
       <property name="*" all="true">
@@ -505,19 +498,19 @@
     <property name="name" all="true" behavior="always">
       <property name="*" ref="EntityName" />
     </property>
-    <property name="statusConceptModel" ref="Concept" behavior="always" />
+    <property name="statusConceptModel" ref="ConceptNested" behavior="always" />
     <property name="address" all="true" behavior="always">
       <property name="*" ref="EntityAddress" />
     </property>
     <property name="determinerConcept" />
-    <property name="typeConceptModel" all="true" behavior="always" ref="Concept" />
+    <property name="typeConceptModel" all="true" behavior="always" ref="ConceptNested" />
     <property name="extension" all="true" behavior="always" />
     <property name="relationship" all="false" behavior="always">
       <property name="Parent" all="false">
         <property name="id" />
         <property name="target" />
         <property name="targetModel" behavior="always" all="false">
-          <property name="classConceptModel" behavior="always" ref="Concept" />
+          <property name="classConceptModel" behavior="always" ref="ConceptNested" />
           <property name="id" />
           <property name="version" />
           <property name="relationship" behavior="never" />
@@ -531,7 +524,7 @@
         <property name="targetModel" behavior="always" all="false">
           <property name="id" />
           <property name="version" />
-          <property name="typeConceptModel" behavior="always" ref="Concept" />
+          <property name="typeConceptModel" behavior="always" ref="ConceptNested" />
           <property name="identifier" all="true" />
           <property name="name" all="true" behavior="always">
             <property name="*" ref="EntityName" />
@@ -546,7 +539,7 @@
           <property name="version" />
           <property name="lotNumber" />
           <property name="expiryDate" />
-          <property name="typeConceptModel" behavior="always" ref="Concept" />
+          <property name="typeConceptModel" behavior="always" ref="ConceptNested" />
           <property name="identifier" all="true" />
           <property name="name" all="true" behavior="always">
             <property name="*" ref="EntityName" />
@@ -563,7 +556,7 @@
       </property>
     </property>
     <property name="industryConcept" />
-    <property name="industryConceptModel" all="false" behavior="always" ref="Concept" />
+    <property name="industryConceptModel" all="false" behavior="always" ref="ConceptNested" />
     <property name="tag" all="true" />
   </type>
 
@@ -578,21 +571,21 @@
     <property name="templateModel" behavior="always" all="false">
       <property name="mnemonic" />
     </property>
-    <property name="valueModel" all="true" ref="Concept" behavior="always" />
+    <property name="valueModel" all="true" ref="ConceptNested" behavior="always" />
     <property name="classConcept" behavior="always" />
     <property name="classConceptModel" behavior="always" />
     <property name="previousVersion" behavior="never" />
     <property name="previousVersionModel" behavior="never" />
-    <property name="typeConceptModel" behavior="always" ref="Concept" />
-    <property name="statusConceptModel" ref="Concept" behavior="always" />
-    <property name="doseUnitModel" behavior="always" ref="Concept" />
+    <property name="typeConceptModel" behavior="always" ref="ConceptNested" />
+    <property name="statusConceptModel" ref="ConceptNested" behavior="always" />
+    <property name="doseUnitModel" behavior="always" ref="ConceptNested" />
     <property name="moodConceptModel" behavior="never" />
-    <property name="interpretationConceptModel" behavior="always" ref="Concept" />
+    <property name="interpretationConceptModel" behavior="always" ref="ConceptNested" />
     <property name="protocol" behavior="always" all="true" />
-    <property name="routeModel" behavior="always" ref="Concept" />
+    <property name="routeModel" behavior="always" ref="ConceptNested" />
     <property name="protocol" behavior="always" />
-    <property name="siteModel" behavior="always" ref="Concept" />
-    <property name="reasonConceptModel" behavior="always" ref="Concept" />
+    <property name="siteModel" behavior="always" ref="ConceptNested" />
+    <property name="reasonConceptModel" behavior="always" ref="ConceptNested" />
     <property name="relationship" behavior="always">
       <property name="*" ref="ActRelationship">
         <property name="target" />
@@ -608,7 +601,7 @@
         <property name="playerModel" behavior="always" all="true">
           <property name="id" />
           <property name="version" />
-          <property name="typeConceptModel" behavior="always" ref="Concept" />
+          <property name="typeConceptModel" behavior="always" ref="ConceptNested" />
           <property name="identifier" all="true" behavior="always" />
           <property name="name" all="true" behavior="always" />
         </property>
@@ -621,7 +614,7 @@
         <property name="playerModel" all="false" behavior="always">
           <property name="id" />
           <property name="version" />
-          <property name="typeConceptModel" behavior="always" ref="Concept" />
+          <property name="typeConceptModel" behavior="always" ref="ConceptNested" />
           <property name="identifier" all="true" />
           <property name="name" all="true" behavior="always">
             <property name="*" ref="EntityName" />
@@ -650,7 +643,7 @@
         <property name="playerModel" all="false" behavior="always">
           <property name="id" />
           <property name="version" />
-          <property name="typeConceptModel" behavior="always" ref="Concept" />
+          <property name="typeConceptModel" behavior="always" ref="ConceptNested" />
           <property name="identifier" all="true" />
           <property name="name" all="true" behavior="always" />
           <property name="tag" all="true" />
@@ -672,7 +665,7 @@
         <property name="playerModel" all="false" behavior="always">
           <property name="id" />
           <property name="version" />
-          <property name="typeConceptModel" behavior="always" ref="Concept" />
+          <property name="typeConceptModel" behavior="always" ref="ConceptNested" />
           <property name="identifier" all="true" />
           <property name="name" all="true" behavior="always">
             <property name="*" ref="EntityName" />
@@ -688,7 +681,7 @@
         <property name="playerModel" all="false" behavior="always">
           <property name="id" />
           <property name="version" />
-          <property name="typeConceptModel" behavior="always" ref="Concept" />
+          <property name="typeConceptModel" behavior="always" ref="ConceptNested" />
           <property name="identifier" all="true" />
           <property name="name" all="true" behavior="always" />
           <property name="tag" all="true" />
@@ -738,15 +731,15 @@
     <property name="classConceptModel" behavior="always" />
     <property name="previousVersion" behavior="never" />
     <property name="previousVersionModel" behavior="never" />
-    <property name="typeConceptModel" behavior="always" ref="Concept" />
+    <property name="typeConceptModel" behavior="always" ref="ConceptNested" />
     <property name="statusConceptModel" behavior="never" />
-    <property name="doseUnitModel" behavior="always" ref="Concept" />
+    <property name="doseUnitModel" behavior="always" ref="ConceptNested" />
     <property name="moodConceptModel" behavior="never" />
-    <property name="interpretationConceptModel" behavior="always" ref="Concept" />
+    <property name="interpretationConceptModel" behavior="always" ref="ConceptNested" />
     <property name="protocol" behavior="never" />
-    <property name="routeModel" behavior="always" ref="Concept" />
-    <property name="siteModel" behavior="always" ref="Concept" />
-    <property name="reasonConceptModel" behavior="always" ref="Concept" />
+    <property name="routeModel" behavior="always" ref="ConceptNested" />
+    <property name="siteModel" behavior="always" ref="ConceptNested" />
+    <property name="reasonConceptModel" behavior="always" ref="ConceptNested" />
     <property name="protocol" behavior="always" />
     <property name="relationship" all="true" behavior="always">
       <property name="Replaces" all="false">
@@ -764,7 +757,7 @@
         <property name="playerModel" all="false" behavior="always">
           <property name="id" />
           <property name="version" />
-          <property name="typeConceptModel" behavior="always" ref="Concept" />
+          <property name="typeConceptModel" behavior="always" ref="ConceptNested" />
           <property name="identifier" all="true" />
           <property name="name" all="true" behavior="always" />
           <property name="tag" all="true" />
@@ -782,7 +775,7 @@
         <property name="playerModel" behavior="always" all="false">
           <property name="id" />
           <property name="version" />
-          <property name="typeConceptModel" behavior="always" ref="Concept" />
+          <property name="typeConceptModel" behavior="always" ref="ConceptNested" />
           <property name="identifier" all="true" />
           <property name="name" all="true" behavior="always" />
           <property name="lotNumber" all="true" />
@@ -796,7 +789,7 @@
         <property name="playerModel" all="false" behavior="always">
           <property name="id" />
           <property name="version" />
-          <property name="typeConceptModel" behavior="always" ref="Concept" />
+          <property name="typeConceptModel" behavior="always" ref="ConceptNested" />
           <property name="identifier" all="true" />
           <property name="name" all="true" behavior="always" />
           <property name="tag" all="true" />
@@ -837,10 +830,10 @@
     <property name="classConceptModel" behavior="always" />
     <property name="previousVersion" behavior="never" />
     <property name="previousVersionModel" behavior="never" />
-    <property name="typeConceptModel" behavior="always" ref="Concept" />
+    <property name="typeConceptModel" behavior="always" ref="ConceptNested" />
     <property name="statusConceptModel" behavior="never" />
     <property name="moodConceptModel" behavior="never" />
-    <property name="interpretationConceptModel" behavior="always" ref="Concept" />
+    <property name="interpretationConceptModel" behavior="always" ref="ConceptNested" />
     <property name="relationship" all="true" behavior="always">
       <property name="Replaces" all="false">
         <property name="target" />
@@ -849,7 +842,7 @@
 
       <property name="*" ref="ActRelationship" all="false" />
     </property>
-    <property name="unitOfMeasureModel" behavior="always" ref="Concept" />
+    <property name="unitOfMeasureModel" behavior="always" ref="ConceptNested" />
     <property name="protocol" behavior="always" />
     <property name="participation" all="true" behavior="always">
       <property name="Location" all="false">
@@ -859,7 +852,7 @@
         <property name="playerModel" all="false" behavior="always">
           <property name="id" />
           <property name="version" />
-          <property name="typeConceptModel" behavior="always" ref="Concept" />
+          <property name="typeConceptModel" behavior="always" ref="ConceptNested" />
           <property name="identifier" all="true" />
           <property name="name" all="true" behavior="always" />
           <property name="tag" all="true" />
@@ -909,14 +902,14 @@
     <property name="protocol" behavior="always" />
     <property name="previousVersion" behavior="never" />
     <property name="previousVersionModel" behavior="never" />
-    <property name="typeConceptModel" behavior="always" ref="Concept" />
+    <property name="typeConceptModel" behavior="always" ref="ConceptNested" />
     <property name="statusConceptModel" behavior="never" />
     <property name="moodConceptModel" behavior="never" />
-    <property name="interpretationConceptModel" behavior="always" ref="Concept" />
+    <property name="interpretationConceptModel" behavior="always" ref="ConceptNested" />
     <property name="relationship" all="true" behavior="always">
       <property name="*" ref="ActRelationship" all="true" />
     </property>
-    <property name="valueModel" all="true" ref="Concept" behavior="always" />
+    <property name="valueModel" all="true" ref="ConceptNested" behavior="always" />
     <property name="participation" all="true" behavior="always">
       <property name="Location" all="false">
         <property name="actModel" behavior="never" />
@@ -925,7 +918,7 @@
         <property name="playerModel" all="false" behavior="always">
           <property name="id" />
           <property name="version" />
-          <property name="typeConceptModel" behavior="always" ref="Concept" />
+          <property name="typeConceptModel" behavior="always" ref="ConceptNested" />
           <property name="identifier" all="true" />
           <property name="name" all="true" behavior="always" />
           <property name="tag" all="true" />
@@ -949,7 +942,6 @@
     <property name="name" behavior="always" all="true" />
     <property name="mnemonic" behavior="always" />
     <property name="id" behavior="always" />
-    <property name="conceptSetModel" behavior="never" />
     <property name="statusConcept" />
     <property name="conceptClass" />
     <property name="conceptSet" />
@@ -994,8 +986,8 @@
   <!-- Encounters -->
   <type type="PatientEncounter" all="true">
     <property name="templateModel" behavior="always" />
-    <property name="typeConceptModel" behavior="always" ref="Concept" />
-    <property name="statusConceptModel" behavior="always" ref="Concept" />
+    <property name="typeConceptModel" behavior="always" ref="ConceptNested" />
+    <property name="statusConceptModel" behavior="always" ref="ConceptNested" />
     <property name="relationship" all="true" behavior="always">
       <property name="HasComponent" all="true">
         <property name="targetModel" behavior="always" ref="ComponentAct" />
