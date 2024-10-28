@@ -43,7 +43,7 @@ angular.module('santedb-lib')
             ],
             link: function (scope, element, attrs) {
 
-                if(attrs.scopedObjectName) {
+                if (attrs.scopedObjectName) {
                     scope[attrs.scopedObjectName] = scope.scopedObject;
                 }
                 _contextName = attrs.contextName;
@@ -66,32 +66,38 @@ angular.module('santedb-lib')
      * <widget-panel context-name="'org.santedb.patient'"/>
     */
     .directive('widgetPanels', ["$timeout", function ($timeout) {
-        var _view = undefined,
-            _canCustomize = undefined,
-            _contextName = undefined,
-            _userPreferences = undefined;
+        
+        var _userPreferences = undefined;
 
+        function WidgetConfig(view, canCustomize, contextName) {
+            this.view = view;
+            this.canCustomize = canCustomize;
+            this.contextName = contextName;
+        }
 
         // Fetch the widgets which are valid in this context
-        async function getWidgets(scope, context) {
+        async function getWidgets(scope, settings) {
             try {
-                var widgets = await SanteDB.application.getWidgetsAsync(context, "Panel");
-                var userSettings  = (_canCustomize ?
-                    (scope.$root.session ? scope.$root.session.userSettings : await SanteDB.configuration.getUserSettingsAsync()) : []) 
-                    || [];
-                var widgetPreferences = userSettings.find(o=>o.key == "widgets") || { value:"{}" };
-                _userPreferences = JSON.parse(widgetPreferences.value);
-                var thisWidgetConfig = _userPreferences[_contextName];
+                var widgets = await SanteDB.application.getWidgetsAsync(settings.contextName, "Panel");
+
+                if(!_userPreferences) {
+                    var userSettings = (settings.canCustomize ?
+                        (scope.$root.session ? scope.$root.session.userSettings : await SanteDB.configuration.getUserSettingsAsync()) : [])
+                        || [];
+                    var widgetPreferences = userSettings.find(o => o.key == "widgets") || { value: "{}" };
+                    _userPreferences = JSON.parse(widgetPreferences.value);
+                }
+                var thisWidgetConfig = _userPreferences[settings.contextName];
 
                 var renderWidgets = [];
-                if(thisWidgetConfig) {
+                if (thisWidgetConfig) {
                     var tempWidgets = widgets
-                        .map(w => { 
-                            return { widget: w, config: thisWidgetConfig.find(c=>c.name == w.name) };
+                        .map(w => {
+                            return { widget: w, config: thisWidgetConfig.find(c => c.name == w.name) };
                         })
-                        .filter(w=>w.config)
+                        .filter(w => w.config)
                         .sort((a, b) => a.config.order <= b.config.order ? -1 : 1);
-                    renderWidgets = tempWidgets.map(tw => { 
+                    renderWidgets = tempWidgets.map(tw => {
                         tw.widget.size = tw.config.size || tw.widget.size;
                         tw.widget.order = tw.config.order || tw.widget.order;
                         return tw.widget;
@@ -105,7 +111,7 @@ angular.module('santedb-lib')
                 var widgetGroups = [];
                 renderWidgets.forEach(function (w) {
                     w.id = w.name.replaceAll(".", "_");
-                    w.view = _view;
+                    w.view = settings.view;
                     w.isVisible = true;
                     widgetGroups.push({ size: w.size, widgets: [w] });
 
@@ -119,7 +125,7 @@ angular.module('santedb-lib')
                     scope.widgetGroups = widgetGroups;
                     scope.availableWidgets = renderWidgets;
                     widgets.forEach(wd => {
-                        if(!scope.availableWidgets.find(aw=>aw.name == wd.name)) {
+                        if (!scope.availableWidgets.find(aw => aw.name == wd.name)) {
                             scope.availableWidgets.push(wd);
                         }
                     })
@@ -141,7 +147,7 @@ angular.module('santedb-lib')
             replace: true,
             transclude: false,
             templateUrl: './org.santedb.uicore/directives/widgetPanel.html',
-            controller: ['$scope','$rootScope', '$state', '$transitions',
+            controller: ['$scope', '$rootScope', '$state', '$transitions',
                 function ($scope, $rootScope, $state, $transitions) {
 
                     function checkNavigateAway(e) {
@@ -211,7 +217,7 @@ angular.module('santedb-lib')
                                     await SanteDB.resources[$scope.scopedObject.$type.toCamelCase()].checkoutAsync($scope.scopedObject.id);
                                 }
                                 catch (e) {
-                                    if(e.$type == "ObjectLockedException") {
+                                    if (e.$type == "ObjectLockedException") {
                                         $rootScope.errorHandler(e);
                                         return;
                                     }
@@ -284,20 +290,20 @@ angular.module('santedb-lib')
                         }
                     }
 
-                    $scope.customizePanels = async function(form) {
-                        if(form.$invalid) { return; }
+                    $scope.customizePanels = async function (form) {
+                        if (form.$invalid) { return; }
 
                         try {
                             SanteDB.display.buttonWait("#btnSaveView", true);
 
                             // Get the setting object at this
-                            var thisContextSettings = _userPreferences[_contextName] = [];
+                            var thisContextSettings = _userPreferences[$scope.settings.contextName] = [];
 
                             // iterate through the widgets in order and add them 
                             var order = 0;
-                            $scope.availableWidgets.filter(o=>o.isVisible).forEach(w => {
+                            $scope.availableWidgets.filter(o => o.isVisible).forEach(w => {
                                 thisContextSettings.push({
-                                    name: w.name, 
+                                    name: w.name,
                                     order: order++,
                                     size: w.size
                                 });
@@ -305,32 +311,30 @@ angular.module('santedb-lib')
 
                             await SanteDB.configuration.saveUserSettingsAsync(
                                 [
-                                    { "key" : "widgets", "value" : JSON.stringify(_userPreferences)} 
+                                    { "key": "widgets", "value": JSON.stringify(_userPreferences) }
                                 ]);
                             $rootScope.session.userSettings = await SanteDB.configuration.getUserSettingsAsync();
-                            await getWidgets($scope, _contextName);
+                            await getWidgets($scope, $scope.settings);
                             $("#customizeViewModal").modal("hide");
                         }
-                        catch(e) {
+                        catch (e) {
                             $rootScope.errorHandler(e);
                         }
                         finally {
                             SanteDB.display.buttonWait("#btnSaveView", false);
                         }
                     }
-                    
+
                 }
             ],
             link: function (scope, element, attrs) {
                 scope.renderSize = attrs.renderSize;
-                _view = attrs.view;
-                _canCustomize = attrs.canCustomize == "true";
-                _contextName = attrs.contextName;
-                if (_contextName) {
-                    _contextName = _contextName.replaceAll("'", "");
-                    getWidgets(scope, _contextName);
+                var settings = scope.settings = new WidgetConfig(attrs.view, attrs.canCustomize === "true", attrs.contextName);
+                if (settings.contextName) {
+                    settings.contextName = settings.contextName.replaceAll("'", "");
+                    getWidgets(scope, settings);
                 }
-                if (_canCustomize) {
+                if (settings.canCustomize) {
                     $(".customizeViewBar", element).removeClass("d-none");
                 }
             }

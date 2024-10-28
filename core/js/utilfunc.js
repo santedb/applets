@@ -105,6 +105,14 @@ Date.prototype.addDays = function (days) {
     return retVal;
 }
 
+/**
+ * @summary Gets the age of the date
+ * @param {string} measure The unit of measure
+ * @returns The difference between the date and this date
+ */
+Date.prototype.age = function(measure) {
+    return moment().diff(this, measure || 'years', false);
+}
 
 /**
  * @summary Adds the specified number of seconds to the date

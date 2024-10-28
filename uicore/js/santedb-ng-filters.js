@@ -63,6 +63,7 @@ angular.module('santedb-lib')
     */
     .filter('leftEllipsis', function () {
         return function (modelValue, nCharacters) {
+            modelValue = modelValue || "";
             nCharacters = nCharacters || 20;
             if (modelValue.length < nCharacters)
                 return modelValue;

@@ -61,7 +61,6 @@ angular.module('santedb-lib')
                         }
                         scopeArr.push(`:(nocase)${$scope.model.typeConcept}`);
 
-                        await SanteDB.application.getTemplateDefinitionsAsync();
                         _masterTemplateList = await SanteDB.application.getTemplateDefinitionsAsync({
                             scope: scopeArr,
                             public: true
@@ -108,6 +107,37 @@ angular.module('santedb-lib')
                         $scope.availableTemplates = _masterTemplateList;
                     }
                 })
+
+                $scope.addItem = async function(tpl) {
+                    try {
+                        SanteDB.display.buttonWait('#btnAddAction', true);
+                        var content = await SanteDB.application.getTemplateContentAsync(tpl.mnemonic, {
+                            recordTargetId: $scope.model.participation.RecordTarget[0].player,
+                            facilityId: await SanteDB.authentication.getCurrentFacilityId(),
+                            userEntityId: await SanteDB.authentication.getCurrentUserEntityId()
+                        });
+
+                        // Next we want to set the performer on the action
+                        content.operation = BatchOperationType.InsertInt;
+                        content.id = content.id || SanteDB.application.newGuid();
+                        $timeout(() => {
+                            $scope.model.relationship = $scope.model.relationship || {};
+                            $scope.model.relationship.HasComponent = $scope.model.relationship.HasComponent || [];
+                            var ar = new ActRelationship({
+                                targetModel: content,
+                                target: content.id
+                            });
+                            $scope.model.relationship.HasComponent.push(ar);
+                            $scope.currentActions.push(ar);
+                        });
+                    }
+                    catch(e) {
+                        $rootScope.errorHandler(e);
+                    }
+                    finally {
+                        SanteDB.display.buttonWait("#btnAddAction", false);
+                    }
+                }
 
                 $scope.doAction = function (action) {
                     if (action.sref) {
