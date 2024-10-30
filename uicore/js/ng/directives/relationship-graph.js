@@ -46,9 +46,10 @@ angular.module('santedb-lib')
          * @param {*} fallbackRelationship The fallback relationship information (if it cannot be retrieved)
          * @param {*} reverse True if the relationship is reverse (target to source)
          * @param {*} viewMode The mode of viewing the relationship (simple or advanced)
+         * @param {Array} excludeRelationships The relationship keys to exclude
          * @returns The graph data
          */
-        async function renderRelationship(entity, entityRelationship, fallbackRelationship, reverse, viewMode) {
+        async function renderRelationship(entity, entityRelationship, fallbackRelationship, reverse, viewMode, excludeRelationships) {
             try {
                 var rootNode = entityRelationship.holder || entity.id;
 
@@ -209,14 +210,14 @@ angular.module('santedb-lib')
                         for (e in renderEntity) {
                             var ent = renderEntity[e];
                             if (ent.relationship) {
-                                var promises = Object.keys(ent.relationship).filter(k => !k.startsWith('$')).map(function (k) {
+                                var promises = Object.keys(ent.relationship).filter(k => !k.startsWith('$') || viewData.excludeRelationships.indexOf(k) > -1).map(function (k) {
                                     var retVal = [];
                                     if (Array.isArray(ent.relationship[k]))
                                         retVal = ent.relationship[k].filter(r=>r.target || r.source).map(function (r) {
-                                            return renderRelationship(ent, r, k, false, viewData.mode);
+                                            return renderRelationship(ent, r, k, false, viewData.mode, viewData.excludeRelationships);
                                         });
                                     else if(ent.relationship[k].target || ent.relationship[k].source)
-                                        retVal = renderRelationship(ent, ent.relationship[k], k, false, viewData.mode);
+                                        retVal = renderRelationship(ent, ent.relationship[k], k, false, viewData.mode, viewData.excludeRelationships);
                                     return retVal;
                                 }).flat();
                                 var results = await Promise.all(promises);
@@ -242,7 +243,7 @@ angular.module('santedb-lib')
                         var subEntity = [];
                         for (var e in renderEntity) {
                             var ent = renderEntity[e];
-                            var reverseRelationships = await SanteDB.resources.entityRelationship.findAsync({ target: ent.id, _viewModel: 'reverseRelationship' });
+                            var reverseRelationships = await SanteDB.resources.entityRelationship.findAsync({ target: ent.id, _viewModel: 'reverseRelationship', "relationshipType.mnemonic" : viewData.excludeRelationships.map(k=>`!${k}`) });
 
                             if (reverseRelationships.resource) {
                                 var promises = reverseRelationships.resource.map(function (r) {
@@ -360,6 +361,7 @@ angular.module('santedb-lib')
                     scope.viewData = {
                         _id: SanteDB.application.newGuid().substring(0, 6),
                         mode: "simple",
+                        excludeRelationships: scope.excludeRelationships || [],
                         graphs: {
                             simple: null,
                             advanced: null,

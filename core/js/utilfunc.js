@@ -115,6 +115,14 @@ Date.prototype.age = function(measure) {
 }
 
 /**
+ * @summary Gets the ISO week number 
+ * @returns {number} The current week number
+ */
+Date.prototype.isoWeek = function() {
+    return moment(this).isoWeek();
+}
+
+/**
  * @summary Adds the specified number of seconds to the date
  * @method
  * @memberof Date

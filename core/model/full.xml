@@ -591,7 +591,8 @@
     <property name="tag" all="true" behavior="always" />
     <property name="templateModel" behavior="always" all="false">
       <property name="mnemonic" />
-    </property>
+      <property name="name" />
+      </property>
     <property name="valueModel" all="true" ref="ConceptNested" behavior="always" />
     <property name="classConcept" behavior="always" />
     <property name="classConceptModel" behavior="always" />
@@ -995,6 +996,7 @@
     <property name="templateModel" behavior="always" />
     <property name="typeConceptModel" behavior="always" ref="ConceptNested" />
     <property name="statusConceptModel" behavior="always" ref="ConceptNested" />
+    <property name="dischargeDispositionModel" behavior="always" ref="ConceptNested" />
     <property name="relationship" all="true" behavior="always">
       <property name="HasComponent" all="true">
         <property name="targetModel" behavior="always" ref="Act" />
