@@ -53,17 +53,17 @@ oc-lazy-load="{name:'HierarchyWidgetController', files: ['/org.santedb.admin/con
             </div>
             <div class="form-group row">
                 <label class="col-12 font-weight-bold" for="reporting">{{
-                    'ui.model.place.relationship.Scoper' | i18n }} <hint-popover
-                        hint-title="ui.model.place.relationship.Scoper" /></label>
+                    'ui.model.place.relationship.ReportTarget' | i18n }} <hint-popover
+                        hint-title="ui.model.place.relationship.ReportTarget" /></label>
                 <div class="col-12">
-                    <div ng-show="panel.view != 'Edit'" ng-if="scopedObject.relationship.Scoper[0].targetModel">
-                        <a target="_blank" ui-sref="santedb-admin.data.place.view({id: scopedObject.relationship.Scoper[0].target})"><i class="fas fa-map-pin"></i> {{ scopedObject.relationship.Scoper[0].targetModel.name | name }} - (<i class="fas fa-map-marker"></i> {{ scopedObject.relationship.Scoper[0].targetModel.address | address }}) <sup><i class="fas fa-external-link-alt"></i></sup></a>
+                    <div ng-show="panel.view != 'Edit'" ng-if="scopedObject.relationship.ReportTarget[0].targetModel">
+                        <a target="_blank" ui-sref="santedb-admin.data.place.view({id: scopedObject.relationship.ReportTarget[0].target})"><i class="fas fa-map-pin"></i> {{ scopedObject.relationship.ReportTarget[0].targetModel.name | name }} - (<i class="fas fa-map-marker"></i> {{ scopedObject.relationship.ReportTarget[0].targetModel.address | address }}) <sup><i class="fas fa-external-link-alt"></i></sup></a>
                     </div>
                     <div ng-show="panel.view == 'Edit'">
                     <entity-search type="'Place'"
-                    group-by="['address.PhysicalVisit[0].component.State[0]','address.Direct[0].component.State[0]']" ng-model="scopedObject.relationship.Scoper[0].target"
+                    group-by="['address.PhysicalVisit[0].component.State[0]','address.Direct[0].component.State[0]']" ng-model="scopedObject.relationship.ReportTarget[0].target"
                         search-field="'name.component.value'"
-                        for-relationship-type="'bfcbb345-86db-43ba-b47e-e7411276ac7c'"
+                        for-relationship-type="'34D144E0-4F3B-4555-8F0B-BEE370D05719'"
                         with-relationship-source-class="scopedObject.classConcept"></entity-search>
                     </div>
                 </div>

@@ -391,12 +391,9 @@ angular.module('santedb-lib')
                                     targetClass: scope.withRelationshipTargetClass,
                                     relationshipType: scope.forRelationshipType
                                 })).resource;
-                                if (serverRules.length > 0) {
+                                if (serverRules && serverRules.length > 0) {
 
                                     filter.classConcept = serverRules.map(o => scope.withRelationshipSourceClass ? o.targetClass : o.sourceClass);
-                                }
-                                else {
-                                    filter.classConcept = EmptyGuid;
                                 }
                             }
                         });

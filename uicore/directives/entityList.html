@@ -138,7 +138,7 @@
             <div class="card-footer" xg-if="itemActions">
                 <div class="btn-group float-right">
                     <button xg-repeat="action in itemActions track by $index" class="btn {{ action.className }}"
-                        id="$idRoot_action_{{action.name}}_{{$index}}" xg-click="doAction(action, item, $index)"
+                        id="$idRoot_action_{{action.name}}_{{$parent.$parent.$index}}" xg-click="doAction(action, item, $parent.$parent.$index)"
                         xg-if="filterAction(action, item)" demand="{{ action.demand }}">
                         <i class="fas fa-fw {{action.icon}}"></i>
                         {{ action.label || 'ui.action.' + action.name | i18n }}

@@ -2599,10 +2599,11 @@ function SanteDBWrapper() {
          * @method doUpdateAsync
          * @memberof SanteDBWrapper.ApplicationApi
          */
-        this.doUpdateAsync = function () {
+        this.doUpdateAsync = function (noPrompt) {
             return _app.postAsync({
-                resource: "Update",
-                contentType: 'application/json'
+                resource: "$update",
+                contentType: 'application/json',
+                data: { _apply: noPrompt }
             });
         }
         /**

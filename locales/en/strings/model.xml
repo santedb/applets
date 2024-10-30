@@ -387,8 +387,10 @@
   <string name="ui.model.place.saveSuccess">Place updated successfully</string>
   <string name="ui.model.place.name.component.other">Official Name</string>
   <string name="ui.model.place.name.component.other.hint">Enter the official name of the place</string>
-  <string name="ui.model.place.relationship.Scoper">Scope / Reporting Area</string>
+  <string name="ui.model.place.relationship.Scoper">Scoper</string>
   <string name="ui.model.place.relationship.Scoper.hint"><![CDATA[The scoper relationship describes the place/organization under which this place operates - this is typically used for reporting purposes and attributing ownership]]></string>
+  <string name="ui.model.place.relationship.ReportTarget">Reporting Area</string>
+  <string name="ui.model.place.relationship.ReportTarget.hint"><![CDATA[Indicates where the entities and actions attributed to this facility are reported under. This is used for roll-up reporting (fallback is to roll-up to parent)]]></string>
   <string name="ui.model.organization.name">Name</string>
   <string name="ui.model.organization.typeConcept">Type</string>
   <string name="ui.model.organization.typeConcept.hint"><![CDATA[The primary classification or type of organization that this entry represents]]></string>
@@ -934,6 +936,11 @@
    <string name="ui.model.carePathwayDefinition.name.hint">A short name for this care pathway</string>
 
    <!-- Patient Encounters -->
-    <string name="ui.model.patientEncounter.dischargeDisposition">Mode/Reason</string>
+   <string name="ui.model.patientEncounter.relationship.HasComponent">Action(s) Performed</string>
+   <string name="ui.model.patientEncounter.relationship.HasComponent.hint">Indicates what actions were performed during the visit</string>
+   <string name="ui.model.patientEncounter.relationship.Fulfills">Fulfills</string>
+   <string name="ui.model.patientEncounter.relationship.Fulfills.hint">Indicates that this visit fulfills another proposed or booked appointment</string>
+
+    <string name="ui.model.patientEncounter.dischargeDisposition">Discharge Reason</string>
     <string name="ui.model.patientEncounter.dischargeDisposition.hint">Indicate how the patient/person left the clinic</string>
 </resources>
