@@ -23,6 +23,14 @@
     <name lang="en">SanteDB Core Applet</name>
     <author>SanteSuite Community Partners (see: santesuite.org)</author>
   </info>
+
+  <errors>
+    <add code="403" asset="/org.santedb.core/views/error/403.html" />
+    <add code="404" asset="/org.santedb.core/views/error/404.html" />
+    <add code="500" asset="/org.santedb.core/views/error/500.html" />
+  </errors>
+
+
   <viewModel key="base">
     <definition>/org.santedb.core/model/base.xml</definition>
   </viewModel>

@@ -64,7 +64,7 @@
             <fixed>Day</fixed>
             <target>dateOfBirthPrecision</target>
           </map>
-          <map required="true" whenTargetMissing="Warning">
+          <map required="false" whenTargetMissing="Warning">
             <source>GENDER</source>
             <transform transformer="EntityLookup">
               <args>
