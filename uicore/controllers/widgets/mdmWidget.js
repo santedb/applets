@@ -34,7 +34,8 @@ angular.module('santedb').controller('MasterDataManagementController', ['$scope'
     $scope.renderCreatedBy = function (entity) {
         if(entity.creationActModel) {
             return `<provenance provenance-id="'${entity.creationActModel.createdBy}'" application-provenance="true"  provenance-time="'${entity.creationActModel.creationTime}'"></provenance>`;
-        } else {
+        }
+        else {
             return `<provenance provenance-id="'${entity.createdBy}'" application-provenance="true"  provenance-time="'${entity.creationTime}'"></provenance>`;
         }
     }
