@@ -132,8 +132,9 @@
         <property name="participationRoleModel" behavior="never" />
       </property>
     </property>
-  </type>
+    <property name="creationActModel" behavior="always" all="false" ref="CreationAct"/>
 
+  </type>
   <type type="Person" all="true">
     <property name="templateModel" behavior="always" all="false">
       <property name="mnemonic" />
@@ -211,7 +212,7 @@
     <property name="occupationModel" all="true" behavior="always" ref="ConceptNested" />
     <property name="nationalityModel" all="true" behavior="always" ref="ConceptNested" />
     <property name="vipStatusModel" all="true" behavior="always" ref="ConceptNested" />
-
+    <property name="creationActModel" behavior="always" ref="CreationAct" />
 
     <property name="telecom" all="true" behavior="always" />
     <property name="classConceptModel" behavior="never" />
@@ -1028,4 +1029,14 @@
       </property>
     </property>
   </type>
+
+  <type type="Act" all="false" name="CreationAct">
+    <property name="id" />
+    <property name="createdBy" />
+    <property name="creationTime" />
+    <property name="typeConcept" />
+    <property name="classConcept"/>
+    <property name="statusConcept"/>
+  </type>
+
 </ViewModel>

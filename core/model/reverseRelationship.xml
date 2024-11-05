@@ -55,7 +55,14 @@
     </property>
     <property name="relationship" behavior="never"/>
     <property name="securityUserModel" behavior="always" all="true"/>
-
+    <property name="creationActModel" behavior="always" all="false">
+      <property name="id" />
+      <property name="createdBy" />
+      <property name="creationTime" />
+      <property name="typeConcept" />
+      <property name="classConcept"/>
+      <property name="statusConcept"/>
+    </property>
   </type>
 
   <type type="ConceptRelationship" all="true">

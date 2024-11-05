@@ -48,6 +48,7 @@
        <string name="ui.common.since.minutes">Minutes Ago</string>
        <string name="ui.common.since.hours">Hours Ago</string>
        <string name="ui.common.since.days">Days Ago</string>
+       <string name="ui.common.since.weeks">Weeks Ago</string>
        <string name="ui.common.since.months">Months Ago</string>
        <string name="ui.common.since.years">Years Ago</string>
       <!-- Login Translations -->
