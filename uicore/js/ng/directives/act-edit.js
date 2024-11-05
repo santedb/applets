@@ -108,7 +108,32 @@ angular.module('santedb-lib')
                     }
                 })
 
-                $scope.addItem = async function(tpl) {
+                $scope.removeItem = function (index) {
+                    // Remove from the current actions
+                    var itm = $scope.currentActions[index];
+                    var hidx = $scope.model.relationship.HasComponent.indexOf(itm);
+                    $scope.model.relationship.HasComponent.splice(hidx, 1);
+                    $scope.currentActions.splice(index, 1);
+                }
+
+                $scope.moveHistory = function (index) {
+                    if (confirm(SanteDB.locale.getString("ui.model.act.tag.backEntry.confirm"))) {
+                        try {
+                            var itm = $scope.currentActions[index];
+                            var tpl = itm.targetModel.templateModel.mnemonic;
+                            var histEntry = $scope.backEntryActions[tpl] || [];
+                            histEntry.push(itm);
+                            itm.targetModel.tag = itm.targetModel.tag || {};
+                            itm.targetModel.tag.isBackEntry = [true];
+                            $scope.removeItem(index);
+                        }
+                        catch (e) {
+                            $rootScope.errorHandler(e);
+                        }
+                    }
+                }
+
+                $scope.addItem = async function (tpl) {
                     try {
                         SanteDB.display.buttonWait('#btnAddAction', true);
                         var content = await SanteDB.application.getTemplateContentAsync(tpl.mnemonic, {
@@ -116,6 +141,7 @@ angular.module('santedb-lib')
                             facilityId: await SanteDB.authentication.getCurrentFacilityId(),
                             userEntityId: await SanteDB.authentication.getCurrentUserEntityId()
                         });
+
 
                         // Next we want to set the performer on the action
                         content.operation = BatchOperationType.InsertInt;
@@ -129,9 +155,11 @@ angular.module('santedb-lib')
                             });
                             $scope.model.relationship.HasComponent.push(ar);
                             $scope.currentActions.push(ar);
+                            content.tag = content.tag || {};
+                            content.tag.userAdded = [true];
                         });
                     }
-                    catch(e) {
+                    catch (e) {
                         $rootScope.errorHandler(e);
                     }
                     finally {
@@ -162,21 +190,30 @@ angular.module('santedb-lib')
             }],
             link: function (scope, element, attrs) {
 
-                if (attrs.noAdd === "true") {
-                    $(".actAddItem", element).remove();
-                }
-                if (attrs.noRemove === "true") {
-                    $(".actRemoveItem", element).remove();
-                }
-                if (attrs.noOverride === "true") {
-                    $(".actProposeControl", element).remove();
-                }
-                if (attrs.noHeader === "true") {
-                    $(".actHeader", element).remove();
-                }
-
                 // Are we viewing or editing?
-                _mode = attrs.readonly === true ? 'view' : 'edit';
+                _mode = attrs.readonly === "true" ? 'view' : 'edit';
+                setTimeout(() => { // allow the DOM to catch up 
+
+                    if (attrs.noAdd === "true") {
+                        $(".actAddItem", element).remove();
+                    }
+                    if (attrs.noRemove === "true") {
+                        $(".actRemoveItem", element).remove();
+                    }
+                    if (attrs.noOverride === "true") {
+                        $(".actProposeControl", element).remove();
+                    }
+                    if (attrs.noHeader === "true") {
+                        $(".actHeader", element).remove();
+                    }
+                    if (attrs.noBackEntry === "true") {
+                        $(".actBackEntry", element).remove();
+                    }
+                    if (_mode == "view") {
+                        $(".editOnly", element).remove();
+                    }
+                }, 500);
+
                 _noCdss = attrs.disableCdss;
 
                 if (scope.model && scope.model.relationship && scope.model.relationship.HasComponent) {

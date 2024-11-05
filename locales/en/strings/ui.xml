@@ -254,6 +254,7 @@
       <string name="ui.action.refresh">Refresh</string>
       <string name="ui.action.build">Build</string>
       <string name="ui.action.add">Add</string>
+      <string name="ui.action.historical">Back-Enter</string>
       <string name="ui.action.add.then.new">Add &amp; Create Another</string>
       <string name="ui.action.add.then.another">Add &amp; Enter Another</string>
       <string name="ui.action.add.then.goto">Add &amp; Go To</string>

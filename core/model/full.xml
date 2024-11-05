@@ -18,9 +18,6 @@
  -->
 <ViewModel xmlns="http://santedb.org/model/view">
   <include>base</include>
-
-  <type type="Act" name="CreationAct" all="true">
-  </type>
   
   <type type="ActProtocol" all="false">
     <property name="protocol" behavior="always" />
@@ -639,7 +636,7 @@
           <property name="name" all="true" behavior="always" />
         </property>
       </property>
-      <property name="Product" all="false">
+      <property name="Product" all="true">
         <property name="sourceModel" behavior="never" />
         <property name="actModel" behavior="never" />
         <property name="participationRoleModel" behavior="never" />
