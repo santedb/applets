@@ -18,6 +18,10 @@
 <ViewModel xmlns="http://santedb.org/model/view">
   <include>full</include>
 
+  <type type="Act" name="CreationAct" all="true">
+
+  </type>
+
   <type type="EntityRelationship" all="false">
     <property name="source" all="true"/>
     <property name="target" all="true"/>
@@ -41,6 +45,8 @@
   <type type="Entity" all="true">
     <property name="classConcept"/>
     <property name="classConceptModel" behavior="always" ref="Concept"/>
+    <property name="creationActModel" behavior="always" ref="CreationAct" />
+
    <property name="name" all="true"  behavior="always">
       <property name="*" ref="EntityName"/>
     </property>

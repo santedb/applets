@@ -18,6 +18,9 @@
  -->
 <ViewModel xmlns="http://santedb.org/model/view">
   <include>base</include>
+  <type type="Act" name="CreationAct" all="true">
+
+  </type>
 
   <type type="ActProtocol" all="false">
     <property name="protocol" behavior="always"/>
@@ -55,6 +58,7 @@
 
   <!-- Entity Information -->
   <type type="Entity" all="true">
+    <property name="creationActModel" behavior="always" ref="CreationAct" />
 
     <property name="createdBy" />
     <property name="createdByModel" behavior="always" />
@@ -80,6 +84,7 @@
 
 
   <type type="Patient" all="true">
+    <property name="creationActModel" behavior="always" ref="CreationAct" />
     <property name="templateModel" behavior="always" all="false">
       <property name="mnemonic"/>
     </property>

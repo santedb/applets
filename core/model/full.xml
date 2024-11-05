@@ -19,6 +19,9 @@
 <ViewModel xmlns="http://santedb.org/model/view">
   <include>base</include>
 
+  <type type="Act" name="CreationAct" all="true">
+
+  </type>
   <type type="ActProtocol" all="false">
     <property name="protocol" behavior="always" />
     <property name="protocolModel" behavior="always" all="false">
@@ -134,12 +137,14 @@
     </property>
   </type>
 
+
   <type type="Person" all="true">
     <property name="templateModel" behavior="always" all="false">
       <property name="mnemonic" />
     </property>
     <property name="classConcept" behavior="always" />
     <property name="createdBy" behavior="never" />
+    <property name="creationActModel" behavior="always" ref="CreationAct" />
     <property name="creationTime" behavior="never" />
     <property name="creationTimeModel" behavior="never" />
     <property name="version" />
@@ -172,6 +177,7 @@
     </property>
     <property name="classConcept" behavior="always" />
     <property name="createdBy" behavior="never" />
+    <property name="creationActModel" behavior="always" ref="CreationAct" />
     <property name="creationTime" behavior="never" />
     <property name="creationTimeModel" behavior="never" />
     <property name="version" />
@@ -200,6 +206,7 @@
     <property name="classConcept" behavior="always" />
     <property name="createdBy" behavior="always" />
     <property name="creationTime" behavior="always" />
+    <property name="creationActModel" behavior="always" ref="CreationAct" />
     <property name="creationTimeModel" behavior="never" />
     <property name="version" behavior="always" />
     <property name="educationLevelModel" all="true" behavior="always" ref="ConceptNested" />
@@ -300,6 +307,7 @@
 
     <property name="classConceptModel" behavior="never" />
     <property name="classConcept" behavior="always" />
+    <property name="creationActModel" behavior="always" ref="CreationAct" />
     <property name="determinerConceptModel" behavior="always" />
     <property name="name" all="true" behavior="always">
       <property name="*" ref="EntityName" />
@@ -334,6 +342,7 @@
 
     <property name="createdBy" />
     <property name="creationTime" />
+    <property name="creationActModel" behavior="always" ref="CreationAct" />
     <property name="creationTimeModel" behavior="never" />
     <property name="version" />
     <property name="name" all="true" behavior="always">
@@ -388,6 +397,7 @@
     </property>
     <property name="createdBy" behavior="always" />
     <property name="creationTime" behavior="always" />
+    <property name="creationActModel" behavior="always" ref="CreationAct" />
     <property name="creationTimeModel" behavior="never" />
     <property name="version" />
     <property name="identifier" behavior="always">
@@ -506,6 +516,7 @@
   </type>
 
   <type type="Organization" all="true">
+    <property name="creationActModel" behavior="always" ref="CreationAct" />
     <property name="templateModel" behavior="always" all="false">
       <property name="mnemonic" />
     </property>
