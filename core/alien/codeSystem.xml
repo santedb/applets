@@ -96,7 +96,7 @@
           <value>*</value>
         </when>
         <existing>
-          <where>source.mnemonic=:(trim)$Concept&amp;term.mnemonic=:(trim)$Mnemonic&amp;relationshipType.mnemonic=$Mapping</where>
+          <where>source.mnemonic=:(trim)$Concept&amp;term.codeSystem=$codeSystemKey&amp;term.mnemonic=:(trim)$Mnemonic&amp;relationshipType.mnemonic=$Mapping</where>
         </existing>
         <maps>
           <map required="true">
@@ -109,7 +109,7 @@
             <transform transformer="Trim" />
             <xref>
               <previousEntry type="Concept" />
-              <expression>mnemonic=$input</expression>
+              <expression>mnemonic=:(trim)$input</expression>
             </xref>
             <target>source</target>
           </map>
@@ -123,7 +123,7 @@
             <transform transformer="Trim" />
             <xref>
               <previousEntry type="ReferenceTerm" />
-              <expression>mnemonic=$input</expression>
+              <expression>mnemonic=:(trim)$input</expression>
             </xref>
             <target>term</target>
           </map>
