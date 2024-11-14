@@ -19,9 +19,9 @@
 angular.module('santedb').controller('DataQualityWidgetController', ['$scope', '$rootScope', function ($scope, $rootScope) {
     
     $scope.$watch("scopedObject", function(n, o) {
-        if(n && n.extension && n.extension['http://santedb.org/extensions/core/detectedIssue'] && !n.dataQualityIssues)
+        if(n && n._issues && (n.extension['http://santedb.org/extensions/core/detectedIssue'] || n._issues) && !n.dataQualityIssues)
             try {
-                n.dataQualityIssues = n.extension['http://santedb.org/extensions/core/detectedIssue'][0].b64DecodeJson();
+                n.dataQualityIssues = n._issues || n.extension['http://santedb.org/extensions/core/detectedIssue'][0].b64DecodeJson();
                 n.dataQualityIssues.forEach((issue) => {
                     issue.typeModel = Object.keys(DetectedIssueKeys).find((o)=> DetectedIssueKeys[o] == issue.type);
                 });

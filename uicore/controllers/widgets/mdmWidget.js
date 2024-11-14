@@ -1,4 +1,4 @@
-/// <reference path="../../.ref/js/santedb.js"/>
+/// <reference path="../../../core/js/santedb.js"/>
 /*
  * Copyright (C) 2021 - 2024, SanteSuite Inc. and the SanteSuite Contributors (See NOTICE.md for full copyright notices)
  * Copyright (C) 2019 - 2021, Fyfe Software Inc. and the SanteSuite Contributors
