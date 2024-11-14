@@ -34,7 +34,7 @@
           <value>*</value>
         </when>
         <existing>
-          <where>mnemonic=$Concept</where>
+          <where>mnemonic=:(trim)$Concept</where>
         </existing>
         <maps>
           <map>
@@ -43,6 +43,12 @@
           </map>
           <map required="true">
             <source>Concept</source>
+            <transform transformer="Cast">
+              <args>
+                <string>string</string>
+              </args>
+            </transform>
+            <transform transformer="Trim" />
             <target>mnemonic</target>
           </map>
           <map replace="true">
@@ -57,11 +63,17 @@
       </resource>
       <resource type="ReferenceTerm">
         <existing>
-          <where>codeSystem=$codeSystemKey&amp;mnemonic=$Mnemonic</where>
+          <where>codeSystem=$codeSystemKey&amp;mnemonic=:(trim)$Mnemonic</where>
         </existing>
         <maps>
           <map required="true" replace="true">
             <source>Mnemonic</source>
+            <transform transformer="Cast">
+              <args>
+                <string>string</string>
+              </args>
+            </transform>
+            <transform transformer="Trim" />
             <target>mnemonic</target>
           </map>
           <map required="false" replace="true">
@@ -84,22 +96,34 @@
           <value>*</value>
         </when>
         <existing>
-          <where>source.mnemonic=$Concept&amp;term.mnemonic=$Mnemonic&amp;relationshipType.mnemonic=$Mapping</where>
+          <where>source.mnemonic=:(trim)$Concept&amp;term.codeSystem=$codeSystemKey&amp;term.mnemonic=:(trim)$Mnemonic&amp;relationshipType.mnemonic=$Mapping</where>
         </existing>
         <maps>
           <map required="true">
             <source>Concept</source>
+            <transform transformer="Cast">
+              <args>
+                <string>string</string>
+              </args>
+            </transform>
+            <transform transformer="Trim" />
             <xref>
               <previousEntry type="Concept" />
-              <expression>mnemonic=$input</expression>
+              <expression>mnemonic=:(trim)$input</expression>
             </xref>
             <target>source</target>
           </map>
           <map>
             <source>Mnemonic</source>
+            <transform transformer="Cast">
+              <args>
+                <string>string</string>
+              </args>
+            </transform>
+            <transform transformer="Trim" />
             <xref>
               <previousEntry type="ReferenceTerm" />
-              <expression>mnemonic=$input</expression>
+              <expression>mnemonic=:(trim)$input</expression>
             </xref>
             <target>term</target>
           </map>
