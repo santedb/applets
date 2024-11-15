@@ -1,4 +1,4 @@
-/// <reference path="../../.ref/js/santedb.js"/>
+/// <reference path="../../../core/js/santedb.js"/>
 /*
  * Copyright (C) 2021 - 2024, SanteSuite Inc. and the SanteSuite Contributors (See NOTICE.md for full copyright notices)
  * Copyright (C) 2019 - 2021, Fyfe Software Inc. and the SanteSuite Contributors
@@ -32,7 +32,12 @@ angular.module('santedb').controller('MasterDataManagementController', ['$scope'
 
     // Render entity information
     $scope.renderCreatedBy = function (entity) {
-        return `<provenance provenance-id="'${entity.createdBy}'" application-provenance="true"  provenance-time="'${entity.creationTime}'"></provenance>`;
+        if(entity.creationActModel) {
+            return `<provenance provenance-id="'${entity.creationActModel.createdBy}'" application-provenance="true"  provenance-time="'${entity.creationActModel.creationTime}'"></provenance>`;
+        }
+        else {
+            return `<provenance provenance-id="'${entity.createdBy}'" application-provenance="true"  provenance-time="'${entity.creationTime}'"></provenance>`;
+        }
     }
 
     // Render classification concept

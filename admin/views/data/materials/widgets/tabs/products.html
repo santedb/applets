@@ -98,7 +98,7 @@
                                         <entity-search type="'Concept'"
                                             ng-model="editProduct.typeConcept"
                                             search-field="'name.value'"
-                                            filter="{ 'relationship[MemberOf].targetConcept' : scopedObject.typeConcept }"
+                                            filter="{ 'relationship[MemberOf].targetConcept||id' : scopedObject.typeConcept }"
                                             class="form-control" required="required" name="editTypeConcept" />
                                         <div class="text-danger" ng-if="editProductForm.editTypeConcept.$error['required']">
                                             <i class="fas fa-exclamation-triangle"></i> {{ 'ui.error.required' | i18n }}

@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <!--
  - Copyright 2021-2024 SanteSuite Contributors (See NOTICE.md for full copyright notices)
  - Copyright (C) 2019 - 2021, Fyfe Software Inc. and the SanteSuite Contributors
@@ -33,235 +33,241 @@
     </property>
   </type>
   <type type="ActProtocol" all="false">
-    <property name="protocol" behavior="always"/>
+    <property name="protocol" behavior="always" />
     <property name="protocolModel" behavior="always" all="false">
-      <property name="name"/>
-      <property name="handlerClass" behavior="never"/>
-      <property name="definition" behavior="never"/>
+      <property name="name" />
+      <property name="handlerClass" behavior="never" />
+      <property name="definition" behavior="never" />
     </property>
   </type>
   <type type="Concept" all="false">
     <property name="mnemonic" />
-    <property name="name" all="true" />
+    <property name="name" all="true" behavior="always" />
   </type>
   <type type="EntityRelationship" all="false">
-    <property name="source" all="true"/>
-    <property name="target" all="true"/>
-    <property name="holder" all="true"/>
+    <property name="source" all="true" />
+    <property name="target" all="true" />
+    <property name="holder" all="true" />
     <property name="targetModel" all="true" behavior="always">
       <property name="identifier" behavior="always" all="true">
-        <property name="*" ref="EntityIdentifier"/>
+        <property name="*" ref="EntityIdentifier" />
       </property>
       <property name="name" behavior="always" all="true">
-        <property name="*" ref="EntityName"/>
+        <property name="*" ref="EntityName" />
       </property>
       <property name="address" behavior="always" all="true">
-        <property name="*" ref="EntityAddress"/>
+        <property name="*" ref="EntityAddress" />
       </property>
       <property name="telecom" behavior="always" all="true">
-        <property name="typeModel" behavior="always" ref="Concept"/>
-        <property name="useModel" behavior="always" ref="Concept"/>
+        <property name="typeModel" behavior="always" ref="Concept" />
+        <property name="useModel" behavior="always" ref="Concept" />
       </property>
       <property name="relationship" behavior="never" />
     </property>
-    <property name="relationshipType" all="true" behavior="always"/>
-    <property name="holderModel" behavior="never"/>
-    <property name="sourceModel" behavior="never"/>
+    <property name="relationshipType" all="true" behavior="always" />
+    <property name="holderModel" behavior="never" />
+    <property name="sourceModel" behavior="never" />
     <property name="relationshipTypeModel" behavior="always" all="false">
-        <property name="name" />
-        <property name="mnemonic" />
+      <property name="name" />
+      <property name="mnemonic" />
     </property>
 
-    <property name="key" all="true"/>
-    <property name="quantity" all="true"/>
-     <property name="strength" all="true"/>
-    <property name="classification" all="true"/>
-    <property name="relationshipRole" all="true"/>
+    <property name="key" all="true" />
+    <property name="quantity" all="true" />
+    <property name="strength" all="true" />
+    <property name="classification" all="true" />
+    <property name="relationshipRole" all="true" />
   </type>
-  
+
   <type type="ActRelationship" all="false">
-    <property name="source" all="true"/>
-    <property name="target" all="true"/>
-    <property name="targetModel" all="true" behavior="always" ref="Act"/>
-    <property name="relationshipType" all="true"/>
-    <property name="holderModel" behavior="never"/>
-    <property name="sourceModel" behavior="never"/>
+    <property name="source" all="true" />
+    <property name="target" all="true" />
+    <property name="targetModel" all="true" behavior="always" />
+    <property name="relationshipType" all="true" />
+    <property name="holderModel" behavior="never" />
+    <property name="sourceModel" behavior="never" />
     <property name="relationshipTypeModel" behavior="always" all="false">
-        <property name="name" />
-        <property name="mnemonic" />
+      <property name="name" />
+      <property name="mnemonic" />
     </property>
-    <property name="key" all="true"/>
-    <property name="quantity" all="true"/>
+    <property name="key" all="true" />
+    <property name="quantity" all="true" />
   </type>
   <type type="ActParticipation" all="false">
-    <property name="source" all="true"/>
-    <property name="target" all="true"/>
-    <property name="playerModel" all="true" ref="Entity" behavior="always"/>
-    <property name="participationRole" all="true"/>
-    <property name="key" all="true"/>
-    <property name="quantity" all="true"/>
+    <property name="source" all="true" />
+    <property name="target" all="true" />
+    <property name="playerModel" all="true" behavior="always" />
+    <property name="participationRole" all="true" />
+    <property name="key" all="true" />
+    <property name="quantity" all="true" />
+  </type>
+
+  <type name="EntityName" all="true">
+    <property name="component" behavior="always" all="true">
+      <property name="*" all="true" />
+    </property>
+    <property name="useModel" behavior="always" ref="Concept" />
   </type>
 
   <type name="EntityTelecomAddress" all="true">
     <property name="value" />
-    <property name="useModel" behavior="always" ref="Concept"/>
-    <property name="typeModel" behavior="always" ref="Concept"/>
-    <property name="type" behavior="never" ref="Concept"/>
+    <property name="useModel" behavior="always" ref="Concept" />
+    <property name="typeModel" behavior="always" ref="Concept" />
+    <property name="type" behavior="never" ref="Concept" />
   </type>
   <!-- Entity Information -->
   <type type="Entity" all="true">
     <property name="templateModel" behavior="always" all="false">
-      <property name="mnemonic"/>
+      <property name="mnemonic" />
     </property>
 
-    <property name="classConcept" behavior="always"/>
-    <property name="classConceptModel" behavior="always"/>
-    <property name="previousVersionModel" behavior="never"/>
-    <property name="determinerConceptModel" behavior="never"/>
-    <property name="typeConceptModel" behavior="always" ref="Concept"/>
-    <property name="createdBy" behavior="never"/>
-    <property name="creationTime" behavior="never"/>
-    <property name="creationTimeModel" behavior="never"/>
-    <property name="version" behavior="never"/>
-    <property name="name" all="true" ref="EntityName" behavior="always"/>
-    <property name="identifier" all="true" ref="EntityIdentifier" behavior="always"/>
+    <property name="classConcept" behavior="always" />
+    <property name="classConceptModel" behavior="always" />
+    <property name="previousVersionModel" behavior="never" />
+    <property name="determinerConceptModel" behavior="never" />
+    <property name="typeConceptModel" behavior="always" ref="Concept" />
+    <property name="createdBy" behavior="never" />
+    <property name="creationTime" behavior="never" />
+    <property name="creationTimeModel" behavior="never" />
+    <property name="version" behavior="never" />
+    <property name="name" all="true" ref="EntityName" behavior="always" />
+    <property name="identifier" all="true" ref="EntityIdentifier" behavior="always" />
     <property name="relationship" all="true" behavior="always">
-      <property name="*" ref="EntityRelationship"/>
+      <property name="*" ref="EntityRelationship" />
     </property>
     <property name="participation" all="true">
       <property name="*" all="true">
-        <property name="actModel" all="true"/>
-        <property name="playerModel" behior="never"/>
-        <property name="participationRoleModel" behavior="never"/>
+        <property name="actModel" all="true" />
+        <property name="playerModel" behior="never" />
+        <property name="participationRoleModel" behavior="never" />
       </property>
     </property>
   </type>
 
   <type type="Person" all="true">
-    <property name="templateModel" behavior="always" all="false">
-      <property name="mnemonic"/>
-    </property>
-
-    <property name="createdBy" behavior="never"/>
-    <property name="creationTime" behavior="never"/>
-    <property name="creationTimeModel" behavior="never"/>
-    <property name="version" behavior="never"/>
-    <property name="name" all="true" ref="EntityName" behavior="always"/>
-    <property name="address" all="true" ref="EntityAddress" behavior="always"/>
-    <property name="identifier" all="true" ref="EntityIdentifier" behavior="always"/>
-    <property name="telecom" all="true" behavior="always"/>
-
-    <property name="classConceptModel" behavior="always"/>
-    <property name="classConcept" behavior="always"/>
-    <property name="determinerConceptModel" behavior="never"/>
-  </type>
-
-  <type type="Patient" all="true">
-    <property name="templateModel" behavior="always" all="false">
-      <property name="mnemonic"/>
-    </property>
-    <property name="createdBy" behavior="never"/>
-    <property name="version" behavior="always"/>
-    <property name="creationTime" behavior="never"/>
-    <property name="creationTimeModel" behavior="never"/>
-    <property name="version" behavior="always"/>
     <property name="name" all="true" behavior="always">
       <property name="*" ref="EntityName" />
     </property>
     <property name="address" all="true" behavior="always">
       <property name="*" ref="EntityAddress" />
     </property>
-    
     <property name="telecom" all="true" behavior="always">
       <property name="*" ref="EntityTelecomAddress" />
     </property>
-    <property name="classConceptModel" behavior="always"/>
-    <property name="classConcept" behavior="always"/>
-    <property name="determinerConceptModel" behavior="never"/>
-    <property name="tag" all="true" behavior="always"/>
-    <property name="genderConceptModel" behavior="always" ref="Concept"/>
-    <property name="extension" all="true" behavior="always"/>
+    <property name="identifier" all="true" behavior="always">
+      <property name="*" all="true" behavior="always" />
+    </property>
+    <property name="classConceptModel" behavior="always" />
+    <property name="classConcept" behavior="always" />
+    <property name="determinerConceptModel" behavior="never" />
+  </type>
+
+  <type type="Patient" all="true">
+    <property name="templateModel" behavior="always" all="false">
+      <property name="mnemonic" />
+    </property>
+    <property name="createdBy" behavior="never" />
+    <property name="version" behavior="always" />
+    <property name="creationTime" behavior="never" />
+    <property name="creationTimeModel" behavior="never" />
+    <property name="version" behavior="always" />
+    <property name="name" all="true" behavior="always">
+      <property name="*" ref="EntityName" />
+    </property>
+    <property name="address" all="true" behavior="always">
+      <property name="*" ref="EntityAddress" />
+    </property>
+
+    <property name="telecom" all="true" behavior="always">
+      <property name="*" ref="EntityTelecomAddress" />
+    </property>
+    <property name="classConceptModel" behavior="always" />
+    <property name="classConcept" behavior="always" />
+    <property name="determinerConceptModel" behavior="never" />
+    <property name="tag" all="true" behavior="always" />
+    <property name="genderConceptModel" behavior="always" ref="Concept" />
+    <property name="extension" all="true" behavior="always" />
     <property name="identifier" all="true" behavior="always">
       <property name="*" all="true" behavior="always" />
     </property>
     <property name="relationship" all="true" behavior="always">
       <property name="DedicatedServiceDeliveryLocation">
-        <property name="id"/>
-        <property name="relationshipType"/>
-        <property name="source"/>
-        <property name="target"/>
+        <property name="id" />
+        <property name="relationshipType" />
+        <property name="source" />
+        <property name="target" />
         <property name="targetModel" behavior="always">
-          <property name="id"/>
-          <property name="name" behavior="always" ref="EntityName"/>
+          <property name="id" />
+          <property name="name" behavior="always" ref="EntityName" />
         </property>
       </property>
       <property name="ServiceDeliveryLocation">
-        <property name="id"/>
-        <property name="relationshipType"/>
-        <property name="source"/>
-        <property name="target"/>
+        <property name="id" />
+        <property name="relationshipType" />
+        <property name="source" />
+        <property name="target" />
         <property name="targetModel" behavior="always">
-          <property name="id"/>
-          <property name="name" behavior="always" ref="EntityName"/>
+          <property name="id" />
+          <property name="name" behavior="always" ref="EntityName" />
         </property>
       </property>
       <property name="IncidentalServiceDeliveryLocation">
-        <property name="id"/>
-        <property name="relationshipType"/>
-        <property name="source"/>
-        <property name="target"/>
+        <property name="id" />
+        <property name="relationshipType" />
+        <property name="source" />
+        <property name="target" />
         <property name="targetModel" behavior="always">
-          <property name="id"/>
-          <property name="name" behavior="always" ref="EntityName"/>
+          <property name="id" />
+          <property name="name" behavior="always" ref="EntityName" />
         </property>
       </property>
       <property name="*" ref="EntityRelationship" />
     </property>
     <property name="participation" all="false">
       <property name="*" all="true">
-        <property name="actModel" all="true"/>
-        <property name="playerModel" behavior="never"/>
-        <property name="participationRoleModel" behavior="never"/>
+        <property name="actModel" all="true" />
+        <property name="playerModel" behavior="never" />
+        <property name="participationRoleModel" behavior="never" />
       </property>
     </property>
   </type>
 
   <type type="ManufacturedMaterial" all="true">
     <property name="templateModel" behavior="always" all="false">
-      <property name="mnemonic"/>
+      <property name="mnemonic" />
     </property>
 
-    <property name="classConceptModel" behavior="always"/>
-    <property name="classConcept" behavior="always"/>
-    <property name="determinerConceptModel" behavior="never"/>
-    <property name="statusConceptModel" behavior="never"/>
-    <property name="quantityConceptModel" behavior="always" ref="Concept"/>
-    <property name="name" all="true" ref="EntityName" behavior="always"/>
+    <property name="classConceptModel" behavior="always" />
+    <property name="classConcept" behavior="always" />
+    <property name="determinerConceptModel" behavior="never" />
+    <property name="statusConceptModel" behavior="never" />
+    <property name="quantityConceptModel" behavior="always" ref="Concept" />
+    <property name="name" all="true" ref="EntityName" behavior="always" />
     <property name="identifier" all="true" behavior="always">
       <property name="GTIN" all="true" />
-      </property>
-    <property name="typeConceptModel" behavior="always"/>
+    </property>
+    <property name="typeConceptModel" behavior="always" />
     <property name="relationship" all="true">
-      <property name="*" all="true" ref="EntityRelationship"/>
+      <property name="*" all="true" ref="EntityRelationship" />
     </property>
     <property name="participation" all="false">
       <property name="*" all="true">
         <property name="targetAct" behavior="never">
         </property>
-        <property name="participationRoleModel" behavior="never"/>
+        <property name="participationRoleModel" behavior="never" />
       </property>
     </property>
   </type>
 
   <type type="UserEntity" all="true">
     <property name="templateModel" behavior="always" all="false">
-      <property name="mnemonic"/>
+      <property name="mnemonic" />
     </property>
 
-    <property name="createdBy" behavior="never"/>
-    <property name="creationTime" behavior="never"/>
-    <property name="creationTimeModel" behavior="never"/>
-    <property name="version" behavior="never"/>
+    <property name="createdBy" behavior="never" />
+    <property name="creationTime" behavior="never" />
+    <property name="creationTimeModel" behavior="never" />
+    <property name="version" behavior="never" />
     <property name="name" all="true" behavior="always">
       <property name="*" ref="EntityName" />
     </property>
@@ -269,145 +275,146 @@
       <property name="*" ref="EntityAddress" />
     </property>
     <property name="identifier" all="true" behavior="always">
-      <property name="*" ref="EntityIdentifier"/>
+      <property name="*" ref="EntityIdentifier" />
     </property>
-    <property name="telecom" all="true" behavior="always"/>
+    <property name="telecom" all="true" behavior="always" />
 
     <property name="relationship" all="true">
       <property name="DedicatedServiceDeliveryLocation" all="true">
-        <property name="targetModel" all="true" ref="Place" behavior="always"/>
+        <property name="targetModel" all="true" ref="Place" behavior="always" />
       </property>
-      <property name="Employee" all="true" >
-        <property name="targetModel" all="true" ref="Organization" behavior="always"/>
+      <property name="Employee" all="true">
+        <property name="targetModel" all="true" ref="Organization" behavior="always" />
       </property>
     </property>
-    <property name="classConceptModel" behavior="always"/>
-    <property name="classConcept" behavior="always"/>
-    <property name="determinerConceptModel" behavior="never"/>
+    <property name="classConceptModel" behavior="always" />
+    <property name="classConcept" behavior="always" />
+    <property name="determinerConceptModel" behavior="never" />
   </type>
 
   <type type="Material" all="true">
     <property name="createdBy" />
     <property name="creationTime" />
-    <property name="creationTimeModel" behavior="never"/>
-    <property name="version" behavior="never"/>
-    <property name="name" all="true" ref="EntityName" behavior="always"/>
+    <property name="creationTimeModel" behavior="never" />
+    <property name="version" behavior="never" />
+    <property name="name" all="true" behavior="always">
+      <property name="*" ref="EntityName" />
+    </property>
     <property name="identifier" all="true">
       <property name="*" ref="EntityIdentifier" />
     </property>
-    <property name="classConceptModel" behavior="always" ref="Concept"/>
-    <property name="classConcept" behavior="always"/>
-    <property name="determinerConceptModel" behavior="never"/>
-    <property name="quantityConceptModel" behavior="always" ref="Concept"/>
-    <property name="statusConceptModel" behavior="always" ref="Concept"/>
-    <property name="typeConceptModel" behavior="always" ref="Concept"/>
+    <property name="classConceptModel" behavior="always" ref="Concept" />
+    <property name="classConcept" behavior="always" />
+    <property name="determinerConceptModel" behavior="never" />
+    <property name="quantityConceptModel" behavior="always" ref="Concept" />
+    <property name="statusConceptModel" behavior="always" ref="Concept" />
+    <property name="typeConceptModel" behavior="always" ref="Concept" />
     <property name="formConceptModel" behavior="always" ref="Concept" />
   </type>
 
 
-  
   <type type="Container" all="true">
     <property name="createdBy" />
     <property name="creationTime" />
-    <property name="creationTimeModel" behavior="never"/>
-    <property name="version" behavior="never"/>
-    <property name="name" all="true" ref="EntityName" behavior="always"/>
+    <property name="creationTimeModel" behavior="never" />
+    <property name="version" behavior="never" />
+    <property name="name" all="true" ref="EntityName" behavior="always" />
     <property name="identifier" all="true">
       <property name="*" ref="EntityIdentifier" />
     </property>
-    <property name="classConceptModel" behavior="always" ref="Concept"/>
-    <property name="classConcept" behavior="always"/>
-    <property name="determinerConceptModel" behavior="never"/>
-    <property name="statusConceptModel" behavior="always" ref="Concept"/>
-    <property name="typeConceptModel" behavior="always" ref="Concept"/>
+    <property name="classConceptModel" behavior="always" ref="Concept" />
+    <property name="classConcept" behavior="always" />
+    <property name="determinerConceptModel" behavior="never" />
+    <property name="statusConceptModel" behavior="always" ref="Concept" />
+    <property name="typeConceptModel" behavior="always" ref="Concept" />
     <property name="quantityConceptModel" behavior="always" ref="Concept" />
   </type>
 
   <type type="Place" all="true">
     <property name="templateModel" behavior="always" all="false">
-      <property name="mnemonic"/>
+      <property name="mnemonic" />
     </property>
 
-    <property name="createdBy" behavior="never"/>
-    <property name="creationTime" behavior="never"/>
-    <property name="creationTimeModel" behavior="never"/>
-    <property name="version" behavior="never"/>
+    <property name="createdBy" behavior="never" />
+    <property name="creationTime" behavior="never" />
+    <property name="creationTimeModel" behavior="never" />
+    <property name="version" behavior="never" />
     <property name="name" all="true" behavior="always">
-      <property name="*"  ref="EntityName"/>
+      <property name="*" ref="EntityName" />
     </property>
     <property name="address" all="true" behavior="always">
-      <property name="*" ref="EntityAddress"/>
+      <property name="*" ref="EntityAddress" />
     </property>
-    <property name="classConceptModel" behavior="always"/>
-    <property name="classConcept" behavior="always"/>
-    <property name="determinerConceptModel" behavior="never"/>
-    <property name="typeConceptModel" all="true" behavior="always" ref="Concept"/>
-    <property name="extension" all="true" behavior="always"/>
+    <property name="classConceptModel" behavior="always" />
+    <property name="classConcept" behavior="always" />
+    <property name="determinerConceptModel" behavior="never" />
+    <property name="typeConceptModel" all="true" behavior="always" ref="Concept" />
+    <property name="extension" all="true" behavior="always" />
     <property name="relationship" all="false" behavior="always">
       <property name="Parent" all="false">
-        <property name="id"/>
-        <property name="target"/>
+        <property name="id" />
+        <property name="target" />
         <property name="targetModel" behavior="always" all="false">
-          <property name="name" ref="EntityName" all="true"/>
-          <property name="id"/>
-          <property name="version"/>
-          <property name="relationship" behavior="never"/>
+          <property name="name" ref="EntityName" all="true" />
+          <property name="id" />
+          <property name="version" />
+          <property name="relationship" behavior="never" />
         </property>
       </property>
       <property name="OwnedEntity" all="false">
-        <property name="id"/>
-        <property name="target"/>
-        <property name="quantity"/>
+        <property name="id" />
+        <property name="target" />
+        <property name="quantity" />
         <property name="targetModel" behavior="always">
-          <property name="id"/>
-          <property name="version"/>
-          <property name="lotNumber"/>
-          <property name="expiryDate"/>
-          <property name="typeConceptModel" behavior="always" ref="Concept"/>
-          <property name="identifier" all="true"/>
-          <property name="name" all="true" behavior="always" ref="EntityName"/>
+          <property name="id" />
+          <property name="version" />
+          <property name="lotNumber" />
+          <property name="expiryDate" />
+          <property name="typeConceptModel" behavior="always" ref="Concept" />
+          <property name="identifier" all="true" />
+          <property name="name" all="true" behavior="always" ref="EntityName" />
         </property>
       </property>
       <property name="*" all="true">
-        <property name="source" behavior="never"/>
-        <property name="holder" behavior="never"/>
-        <property name="holderModel" behavior="never"/>
-        <property name="sourceModel" behavior="never"/>
-        <property name="relationshipTypeModel" behavior="never"/>
+        <property name="source" behavior="never" />
+        <property name="holder" behavior="never" />
+        <property name="holderModel" behavior="never" />
+        <property name="sourceModel" behavior="never" />
+        <property name="relationshipTypeModel" behavior="never" />
       </property>
     </property>
     <property name="participation" all="true">
       <property name="*" all="true">
-        <property name="targetAct" all="true"/>
+        <property name="targetAct" all="true" />
       </property>
     </property>
   </type>
 
-  
+
   <type type="Organization" all="true">
-    <property name="createdBy" behavior="always"/>
-    <property name="creationTime" behavior="always"/>
-    <property name="creationTimeModel" behavior="never"/>
-    <property name="version" behavior="never"/>
+    <property name="createdBy" behavior="always" />
+    <property name="creationTime" behavior="always" />
+    <property name="creationTimeModel" behavior="never" />
+    <property name="version" behavior="never" />
     <property name="name" all="true" behavior="always">
-      <property name="*"  ref="EntityName"/>
+      <property name="*" ref="EntityName" />
     </property>
     <property name="address" all="true" behavior="always">
-      <property name="*" ref="EntityAddress"/>
+      <property name="*" ref="EntityAddress" />
     </property>
-    <property name="classConceptModel" behavior="always"/>
-    <property name="classConcept" behavior="always"/>
-    <property name="determinerConceptModel" behavior="never"/>
-    <property name="typeConceptModel" all="true" behavior="always" ref="Concept"/>
-    <property name="industryConceptModel" all="true" behavior="always" ref="Concept"/>
-    <property name="extension" all="true" behavior="always"/>
+    <property name="classConceptModel" behavior="always" />
+    <property name="classConcept" behavior="always" />
+    <property name="determinerConceptModel" behavior="never" />
+    <property name="typeConceptModel" all="true" behavior="always" ref="Concept" />
+    <property name="industryConceptModel" all="true" behavior="always" ref="Concept" />
+    <property name="extension" all="true" behavior="always" />
     <property name="relationship" all="false" behavior="always">
       <property name="*" all="true">
-        <property name="source" behavior="never"/>
-        <property name="holder" behavior="never"/>
-        <property name="holderModel" behavior="never"/>
-        <property name="sourceModel" behavior="never"/>
-        <property name="relationshipTypeModel" behavior="never"/>
+        <property name="source" behavior="never" />
+        <property name="holder" behavior="never" />
+        <property name="holderModel" behavior="never" />
+        <property name="sourceModel" behavior="never" />
+        <property name="relationshipTypeModel" behavior="never" />
       </property>
     </property>
   </type>
@@ -415,321 +422,349 @@
   <!-- Act Information -->
   <type type="Act" all="true">
 
-    <property name="createdBy" behavior="never"/>
-    <property name="creationTime"/>
-    <property name="creationTimeModel" behavior="never"/>
-    <property name="version" behavior="never"/>
-    <property name="tag" all="true" behavior="always"/>
+    <property name="createdBy" behavior="never" />
+    <property name="creationTime" />
+    <property name="creationTimeModel" behavior="never" />
+    <property name="version" behavior="never" />
+    <property name="tag" all="true" behavior="always" />
     <property name="templateModel" behavior="always" all="false">
-      <property name="mnemonic"/>
+      <property name="mnemonic" />
     </property>
 
-    <property name="valueModel" all="true" ref="Concept" behavior="always"/>
+    <property name="valueModel" all="true" ref="Concept" behavior="always" />
 
-    <property name="classConcept" behavior="always"/>
-    <property name="classConceptModel" behavior="always"/>
-    <property name="previousVersion" behavior="never"/>
-    <property name="previousVersionModel" behavior="never"/>
-    <property name="typeConceptModel" behavior="always" ref="Concept"/>
-    <property name="statusConceptModel" behavior="never"/>
-    <property name="doseUnitModel" behavior="always" ref="Concept"/>
-    <property name="moodConceptModel" behavior="never"/>
-    <property name="interpretationConceptModel" behavior="always" ref="Concept"/>
-    <property name="protocol" behavior="never"/>
-    <property name="routeModel" behavior="always"  ref="Concept"/>
-    <property name="protocol" behavior="always"/>
-    <property name="siteModel" behavior="always"  ref="Concept"/>
-    <property name="reasonConceptModel" behavior="always"  ref="Concept"/>
+    <property name="classConcept" behavior="always" />
+    <property name="classConceptModel" behavior="always" />
+    <property name="previousVersion" behavior="never" />
+    <property name="previousVersionModel" behavior="never" />
+    <property name="typeConceptModel" behavior="always" ref="Concept" />
+    <property name="statusConceptModel" behavior="never" />
+    <property name="doseUnitModel" behavior="always" ref="Concept" />
+    <property name="moodConceptModel" behavior="never" />
+    <property name="interpretationConceptModel" behavior="always" ref="Concept" />
+    <property name="protocol" behavior="never" />
+    <property name="routeModel" behavior="always" ref="Concept" />
+    <property name="protocol" behavior="always" />
+    <property name="siteModel" behavior="always" ref="Concept" />
+    <property name="reasonConceptModel" behavior="always" ref="Concept" />
     <property name="relationship" all="true" behavior="always">
       <property name="*" all="false">
-        <property name="target"/>
-        <property name="source"/>
+        <property name="target" />
+        <property name="source" />
       </property>
     </property>
     <property name="participation" all="true" behavior="always">
       <property name="RecordTarget" behavior="never">
-        <property name="actModel" behavior="never"/>
-        <property name="sourceModel" behavior="never"/>
-        <property name="participationRoleModel" behavior="never"/>
-        <property name="playerModel" all="false" behavior="never"/>
-        <property name="player" behavior="always"/>
+        <property name="actModel" behavior="never" />
+        <property name="sourceModel" behavior="never" />
+        <property name="participationRoleModel" behavior="never" />
+        <property name="playerModel" all="false" behavior="never" />
+        <property name="player" behavior="always" />
       </property>
       <property name="Product" all="false">
-        <property name="sourceModel" behavior="never"/>
-        <property name="actModel" behavior="never"/>
-        <property name="participationRoleModel" behavior="never"/>
-        <property name="player" all="true"/>
+        <property name="sourceModel" behavior="never" />
+        <property name="actModel" behavior="never" />
+        <property name="participationRoleModel" behavior="never" />
+        <property name="player" all="true" />
         <property name="playerModel" all="false" behavior="always">
-          <property name="id"/>
-          <property name="version"/>
-          <property name="typeConceptModel" behavior="always" ref="Concept"/>
-          <property name="identifier" all="true"/>
-          <property name="name" all="true" behavior="always"/>
-          <property name="tag" all="true"/>
-          <property name="extension" all="true"/>
+          <property name="id" />
+          <property name="version" />
+          <property name="typeConceptModel" behavior="always" ref="Concept" />
+          <property name="identifier" all="true" />
+          <property name="name" all="true" behavior="always" />
+          <property name="tag" all="true" />
+          <property name="extension" all="true" />
           <property name="participation" all="true">
             <property name="*" all="false">
-              <property name="participationRole"/>
-              <property name="player"/>
+              <property name="participationRole" />
+              <property name="player" />
             </property>
           </property>
         </property>
       </property>
       <property name="Consumable" all="false">
-        <property name="actModel" behavior="never"/>
-        <property name="sourceModel" behavior="never"/>
-        <property name="participationRoleModel" behavior="never"/>
-        <property name="player" all="true"/>
+        <property name="actModel" behavior="never" />
+        <property name="sourceModel" behavior="never" />
+        <property name="participationRoleModel" behavior="never" />
+        <property name="player" all="true" />
 
         <property name="playerModel" all="false" behavior="always">
-          <property name="id"/>
-          <property name="version"/>
-          <property name="typeConceptModel" behavior="always" ref="Concept"/>
-          <property name="identifier" all="true"/>
-          <property name="name" all="true" behavior="always"/>
-          <property name="tag" all="true"/>
-          <property name="extension" all="true"/>
-          <property name="lotNumber" all="true"/>
+          <property name="id" />
+          <property name="version" />
+          <property name="typeConceptModel" behavior="always" ref="Concept" />
+          <property name="identifier" all="true" />
+          <property name="name" all="true" behavior="always" />
+          <property name="tag" all="true" />
+          <property name="extension" all="true" />
+          <property name="lotNumber" all="true" />
           <property name="participation" all="true">
             <property name="*" all="false">
-              <property name="participationRole"/>
-              <property name="player"/>
+              <property name="participationRole" />
+              <property name="player" />
             </property>
           </property>
         </property>
       </property>
       <property name="Location" all="false">
-        <property name="actModel" behavior="never"/>
-        <property name="sourceModel" behavior="never"/>
-        <property name="participationRoleModel" behavior="never"/>
-        <property name="player" all="true"/>
+        <property name="actModel" behavior="never" />
+        <property name="sourceModel" behavior="never" />
+        <property name="participationRoleModel" behavior="never" />
+        <property name="player" all="true" />
         <property name="playerModel" all="false" behavior="always">
-          <property name="id"/>
-          <property name="version"/>
-          <property name="name" all="true" behavior="always"/>
+          <property name="id" />
+          <property name="version" />
+          <property name="name" all="true" behavior="always" />
         </property>
       </property>
       <property name="EntryLocation" all="false">
-        <property name="actModel" behavior="never"/>
-        <property name="sourceModel" behavior="never"/>
-        <property name="participationRoleModel" behavior="never"/>
+        <property name="actModel" behavior="never" />
+        <property name="sourceModel" behavior="never" />
+        <property name="participationRoleModel" behavior="never" />
         <property name="playerModel" all="false" behavior="always">
-          <property name="id"/>
-          <property name="version"/>
-          <property name="name" all="true" behavior="always"/>
+          <property name="id" />
+          <property name="version" />
+          <property name="name" all="true" behavior="always" />
         </property>
       </property>
       <property name="Authororiginator" all="false">
-        <property name="actModel" behavior="never"/>
-        <property name="sourceModel" behavior="never"/>
-        <property name="act" all="true"/>
-        <property name="participationRoleModel" behavior="never"/>
-        <property name="player" all="true"/>
+        <property name="actModel" behavior="never" />
+        <property name="sourceModel" behavior="never" />
+        <property name="act" all="true" />
+        <property name="participationRoleModel" behavior="never" />
+        <property name="player" all="true" />
         <property name="playerModel" all="false" behavior="always">
-          <property name="name" ref="EntityName"/>
+          <property name="name" ref="EntityName" />
         </property>
       </property>
       <property name="*" all="false">
-        <property name="actModel" behavior="never"/>
-        <property name="sourceModel" behavior="never"/>
-        <property name="act" all="true"/>
-        <property name="participationRoleModel" behavior="never"/>
-        <property name="player" all="true"/>
-        <property name="playerModel" all="true"/>
+        <property name="actModel" behavior="never" />
+        <property name="sourceModel" behavior="never" />
+        <property name="act" all="true" />
+        <property name="participationRoleModel" behavior="never" />
+        <property name="player" all="true" />
+        <property name="playerModel" all="true" />
       </property>
     </property>
   </type>
 
   <type type="SubstanceAdministration" all="true">
-    <property name="createdBy" behavior="never"/>
-    <property name="creationTime"/>
+    <property name="createdBy" behavior="never" />
+    <property name="creationTime" />
 
-    <property name="creationTimeModel" behavior="never"/>
-    <property name="version" behavior="never"/>
+    <property name="creationTimeModel" behavior="never" />
+    <property name="version" behavior="never" />
     <property name="templateModel" behavior="always" all="false">
-      <property name="mnemonic"/>
+      <property name="mnemonic" />
     </property>
-    <property name="classConcept" behavior="always"/>
-    <property name="classConceptModel" behavior="always"/>
-    <property name="previousVersion" behavior="never"/>
-    <property name="previousVersionModel" behavior="never"/>
-    <property name="typeConceptModel" behavior="always" ref="Concept"/>
-    <property name="statusConceptModel" behavior="never"/>
-    <property name="doseUnitModel" behavior="always" ref="Concept"/>
-    <property name="moodConceptModel" behavior="never"/>
-    <property name="interpretationConceptModel" behavior="always" ref="Concept"/>
-    <property name="protocol" behavior="never"/>
-    <property name="routeModel" behavior="always"  ref="Concept"/>
-    <property name="siteModel" behavior="always"  ref="Concept"/>
-    <property name="reasonConceptModel" behavior="always"  ref="Concept"/>
-    <property name="protocol" behavior="always"/>
-    <property name="relationship" all="true" behavior="always">
-      <property name="*" all="false">
-        <property name="target"/>
-        <property name="source"/>
-      </property>
-    </property>
+    <property name="classConcept" behavior="always" />
+    <property name="classConceptModel" behavior="always" />
+    <property name="previousVersion" behavior="never" />
+    <property name="previousVersionModel" behavior="never" />
+    <property name="typeConceptModel" behavior="always" ref="Concept" />
+    <property name="statusConceptModel" behavior="never" />
+    <property name="doseUnitModel" behavior="always" ref="Concept" />
+    <property name="moodConceptModel" behavior="never" />
+    <property name="interpretationConceptModel" behavior="always" ref="Concept" />
+    <property name="protocol" behavior="never" />
+    <property name="routeModel" behavior="always" ref="Concept" />
+    <property name="siteModel" behavior="always" ref="Concept" />
+    <property name="reasonConceptModel" behavior="always" ref="Concept" />
+    <property name="protocol" behavior="always" />
     <property name="participation" all="true" behavior="always">
       <property name="Product" all="false">
-        <property name="sourceModel" behavior="never"/>
-        <property name="actModel" behavior="never"/>
-        <property name="participationRoleModel" behavior="never"/>
-        <property name="player" all="true"/>
+        <property name="sourceModel" behavior="never" />
+        <property name="actModel" behavior="never" />
+        <property name="participationRoleModel" behavior="never" />
+        <property name="player" all="true" />
         <property name="playerModel" all="false" behavior="always">
-          <property name="id"/>
-          <property name="version"/>
-          <property name="typeConceptModel" behavior="always" ref="Concept"/>
+          <property name="id" />
+          <property name="version" />
+          <property name="typeConceptModel" behavior="always" ref="Concept" />
           <property name="identifier" all="true" />
-          <property name="name" all="true" behavior="always"/>
-          <property name="tag" all="true"/>
-          <property name="extension" all="true"/>
-          <property name="participation" behavior="never"/>
-          <property name="formConcept"/>
+          <property name="name" all="true" behavior="always" />
+          <property name="tag" all="true" />
+          <property name="extension" all="true" />
+          <property name="participation" behavior="never" />
+          <property name="formConcept" />
         </property>
       </property>
       <property name="Consumable" all="false">
-        <property name="actModel" behavior="never"/>
-        <property name="sourceModel" behavior="never"/>
-        <property name="participationRoleModel" behavior="never"/>
-        <property name="player" all="true"/>
-        <property name="quantity"/>
+        <property name="actModel" behavior="never" />
+        <property name="sourceModel" behavior="never" />
+        <property name="participationRoleModel" behavior="never" />
+        <property name="player" all="true" />
+        <property name="quantity" />
         <property name="playerModel" behavior="always" all="false">
-          <property name="id"/>
-          <property name="version"/>
-          <property name="typeConceptModel" behavior="always" ref="Concept"/>
-          <property name="identifier" all="true"/>
-          <property name="name" all="true" behavior="always"/>
-          <property name="lotNumber" all="true"/>
-          <property name="participation" behavior="never"/>
+          <property name="id" />
+          <property name="version" />
+          <property name="typeConceptModel" behavior="always" ref="Concept" />
+          <property name="identifier" all="true" />
+          <property name="name" all="true" behavior="always" />
+          <property name="lotNumber" all="true" />
+          <property name="participation" behavior="never" />
         </property>
       </property>
       <property name="Location" all="false">
-        <property name="actModel" behavior="never"/>
-        <property name="sourceModel" behavior="never"/>
-        <property name="participationRoleModel" behavior="never"/>
-        <property name="player" all="true"/>
-        
+        <property name="actModel" behavior="never" />
+        <property name="sourceModel" behavior="never" />
+        <property name="participationRoleModel" behavior="never" />
+        <property name="player" all="true" />
+
         <property name="playerModel" all="false" behavior="always">
-          <property name="name" all="true" behavior="always"/>
+          <property name="name" all="true" behavior="always" />
         </property>
       </property>
       <property name="Authororiginator" all="true">
-        <property name="actModel" behavior="never"/>
-        <property name="sourceModel" behavior="never"/>
-        <property name="participationRoleModel" behavior="never"/>
-        <property name="player"/>
+        <property name="actModel" behavior="never" />
+        <property name="sourceModel" behavior="never" />
+        <property name="participationRoleModel" behavior="never" />
+        <property name="player" />
         <property name="playerModel" all="false" behavior="always">
-          <property name="name" all="true" behavior="always"/>
+          <property name="name" all="true" behavior="always" />
         </property>
       </property>
       <property name="*" all="false">
-        <property name="actModel" behavior="never"/>
-        <property name="sourceModel" behavior="never"/>
-        <property name="act" all="true"/>
-        <property name="participationRoleModel" behavior="never"/>
-        <property name="player" all="true"/>
-        <property name="playerModel" behavior="never"/>
+        <property name="actModel" behavior="never" />
+        <property name="sourceModel" behavior="never" />
+        <property name="act" all="true" />
+        <property name="participationRoleModel" behavior="never" />
+        <property name="player" all="true" />
+        <property name="playerModel" behavior="never" />
       </property>
     </property>
   </type>
 
   <type type="QuantityObservation" all="true">
-    <property name="createdBy" behavior="never"/>
-    <property name="creationTime"/>
+    <property name="createdBy" behavior="never" />
+    <property name="creationTime" />
 
-    <property name="creationTimeModel" behavior="never"/>
-    <property name="version" behavior="never"/>
+    <property name="creationTimeModel" behavior="never" />
+    <property name="version" behavior="never" />
     <property name="templateModel" behavior="always" all="false">
-      <property name="mnemonic"/>
+      <property name="mnemonic" />
     </property>
-    <property name="classConcept" behavior="always"/>
-    <property name="classConceptModel" behavior="always"/>
-    <property name="previousVersion" behavior="never"/>
-    <property name="previousVersionModel" behavior="never"/>
-    <property name="typeConceptModel" behavior="always" ref="Concept"/>
-    <property name="statusConceptModel" behavior="never"/>
-    <property name="moodConceptModel" behavior="never"/>
-    <property name="interpretationConceptModel" behavior="always" ref="Concept"/>
+    <property name="classConcept" behavior="always" />
+    <property name="classConceptModel" behavior="always" />
+    <property name="previousVersion" behavior="never" />
+    <property name="previousVersionModel" behavior="never" />
+    <property name="typeConceptModel" behavior="always" ref="Concept" />
+    <property name="statusConceptModel" behavior="never" />
+    <property name="moodConceptModel" behavior="never" />
+    <property name="interpretationConceptModel" behavior="always" ref="Concept" />
     <property name="relationship" all="true" behavior="always">
       <property name="*" all="false">
-        <property name="target"/>
-        <property name="source"/>
+        <property name="target" />
+        <property name="source" />
       </property>
     </property>
-    <property name="unitOfMeasureModel" behavior="always" ref="Concept"/>
-    <property name="protocol" behavior="always"/>
+    <property name="unitOfMeasureModel" behavior="always" ref="Concept" />
+    <property name="protocol" behavior="always" />
     <property name="participation" all="true" behavior="always">
       <property name="Location" all="false">
-        <property name="actModel" behavior="never"/>
-        <property name="sourceModel" behavior="never"/>
-        <property name="participationRoleModel" behavior="never"/>
-        <property name="player"/>
+        <property name="actModel" behavior="never" />
+        <property name="sourceModel" behavior="never" />
+        <property name="participationRoleModel" behavior="never" />
+        <property name="player" />
         <property name="playerModel" all="false" behavior="always">
-          <property name="name" all="true" behavior="always"/>
+          <property name="name" all="true" behavior="always" />
         </property>
       </property>
       <property name="Authororiginator" all="false">
-        <property name="actModel" behavior="never"/>
-        <property name="sourceModel" behavior="never"/>
-        <property name="participationRoleModel" behavior="never"/>
+        <property name="actModel" behavior="never" />
+        <property name="sourceModel" behavior="never" />
+        <property name="participationRoleModel" behavior="never" />
         <property name="playerModel" all="false" behavior="always">
-          <property name="name" all="true" behavior="always"/>
+          <property name="name" all="true" behavior="always" />
         </property>
       </property>
       <property name="*" all="false">
-        <property name="actModel" behavior="never"/>
-        <property name="sourceModel" behavior="never"/>
-        <property name="act" all="true"/>
-        <property name="participationRoleModel" behavior="never"/>
-        <property name="player" all="true"/>
-        <property name="playerModel" behavior="never"/>
+        <property name="actModel" behavior="never" />
+        <property name="sourceModel" behavior="never" />
+        <property name="act" all="true" />
+        <property name="participationRoleModel" behavior="never" />
+        <property name="player" all="true" />
+        <property name="playerModel" behavior="never" />
       </property>
     </property>
   </type>
 
   <type type="CodedObservation" all="true">
-    <property name="createdBy" behavior="never"/>
+    <property name="createdBy" behavior="never" />
     <property name="creationTime" />
-    <property name="creationTimeModel" behavior="never"/>
-    <property name="version" behavior="never"/>
+    <property name="creationTimeModel" behavior="never" />
+    <property name="version" behavior="never" />
     <property name="templateModel" behavior="always" all="false">
-      <property name="mnemonic"/>
+      <property name="mnemonic" />
     </property>
-    <property name="classConcept" behavior="always"/>
-    <property name="classConceptModel" behavior="always"/>
-    <property name="protocol" behavior="always"/>
-    <property name="previousVersion" behavior="never"/>
-    <property name="previousVersionModel" behavior="never"/>
-    <property name="typeConceptModel" behavior="always" ref="Concept"/>
-    <property name="statusConceptModel" behavior="never"/>
-    <property name="moodConceptModel" behavior="never"/>
-    <property name="interpretationConceptModel" behavior="always" ref="Concept"/>
+    <property name="classConcept" behavior="always" />
+    <property name="classConceptModel" behavior="always" />
+    <property name="protocol" behavior="always" />
+    <property name="previousVersion" behavior="never" />
+    <property name="previousVersionModel" behavior="never" />
+    <property name="typeConceptModel" behavior="always" ref="Concept" />
+    <property name="statusConceptModel" behavior="never" />
+    <property name="moodConceptModel" behavior="never" />
+    <property name="interpretationConceptModel" behavior="always" ref="Concept" />
     <property name="relationship" all="true" behavior="always">
       <property name="*" all="false">
-        <property name="target"/>
-        <property name="source"/>
+        <property name="target" />
+        <property name="source" />
       </property>
     </property>
-    <property name="valueModel" all="true" ref="Concept" behavior="always"/>
+    <property name="valueModel" all="true" ref="Concept" behavior="always" />
     <property name="participation" all="true" behavior="always">
       <property name="Location" all="false">
-        <property name="actModel" behavior="never"/>
-        <property name="player" all="true"/>
-        <property name="sourceModel" behavior="never"/>
-        <property name="participationRoleModel" behavior="never"/>
+        <property name="actModel" behavior="never" />
+        <property name="player" all="true" />
+        <property name="sourceModel" behavior="never" />
+        <property name="participationRoleModel" behavior="never" />
         <property name="playerModel" all="false" behavior="always">
-          <property name="name" all="true" behavior="always"/>
+          <property name="name" all="true" behavior="always" />
         </property>
       </property>
       <property name="*" all="false">
-        <property name="actModel" behavior="never"/>
-        <property name="sourceModel" behavior="never"/>
-        <property name="act" all="true"/>
-        <property name="participationRoleModel" behavior="never"/>
-        <property name="player" all="true"/>
-        <property name="playerModel" behavior="never"/>
+        <property name="actModel" behavior="never" />
+        <property name="sourceModel" behavior="never" />
+        <property name="act" all="true" />
+        <property name="participationRoleModel" behavior="never" />
+        <property name="player" all="true" />
+        <property name="playerModel" behavior="never" />
       </property>
     </property>
   </type>
 
+  <type type="PatientEncounter" all="true">
+    <property name="typeConceptModel" behavior="always" ref="Concept" />
+    <property name="statusConceptModel" behavior="always" ref="Concept" />
+    <property name="templateModel" behavior="always" />
+    <property name="protocolModel" behavior="always" />
+    <property name="relationship" behavior="always">
+      <property name="HasComponent" all="true">
+        <property name="targetModel" all="true" behavior="always">
+          <property name="templateModel" behavior="always" />
+          <property name="participation" behavior="always">
+            <property name="Product">
+              <property name="playerModel" behavior="always" ref="Material" />
+            </property>
+          </property>
+          <property name="tag" behavior="always" />
+
+        </property>
+      </property>
+    </property>
+    <property name="participation" behavior="always" all="true">
+      <property name="Authororiginator" all="true">
+        <property name="playerModel" behavior="always" ref="UserEntity" />
+      </property>
+      <property name="Location" all="true">
+        <property name="playerModel" behavior="always" ref="Place" />
+      </property>
+      <property name="RecordTarget" all="true">
+        <property name="playerModel" behavior="always" ref="Patient" />
+      </property>
+      <property name="Informant" all="true">
+        <property name="playerModel" behavior="always" ref="Person" />
+      </property>
+    </property>
+  </type>
 </ViewModel>

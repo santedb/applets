@@ -55,6 +55,8 @@ angular.module('santedb').controller('HierarchyWidgetController', ["$scope", "$r
         }
     }
 
+    $scope.$parent.scopedObject.relationship.ReportTarget = $scope.$parent.scopedObject.relationship.ReportTarget || [{}];
+
     // 
     $scope.addChild = async function (newChildId) {
         try {
@@ -119,28 +121,39 @@ angular.module('santedb').controller('HierarchyWidgetController', ["$scope", "$r
             return;
         }
 
-        if (!originalParent || originalParent != $scope.scopedObject.relationship.Parent[0].target && confirm(SanteDB.locale.getString("ui.admin.entity.edit.parent.change"))) {
+        if (!originalParent || originalParent == $scope.scopedObject.relationship.Parent[0].target || confirm(SanteDB.locale.getString("ui.admin.entity.edit.parent.change"))) {
             // Delete the current parent relationship from the object
             try {
 
                 var submissionBundle = new Bundle({ resource: [] });
-                if (originalParent) {
+
+                if (!originalParent || originalParent != $scope.scopedObject.relationship.Parent[0].target) {
+                    if (originalParent) {
+                        submissionBundle.resource.push(new EntityRelationship({
+                            id: $scope.scopedObject.relationship.Parent[0].id,
+                            operation: BatchOperationType.Delete
+                        }));
+                    }
                     submissionBundle.resource.push(new EntityRelationship({
-                        id: $scope.scopedObject.relationship.Parent[0].id,
-                        operation: BatchOperationType.Delete
+                        source: $scope.scopedObject.id,
+                        target: $scope.scopedObject.relationship.Parent[0].target,
+                        relationshipType: EntityRelationshipTypeKeys.Parent
                     }));
                 }
-                submissionBundle.resource.push(new EntityRelationship({
-                    source: $scope.scopedObject.id,
-                    target: $scope.scopedObject.relationship.Parent[0].target,
-                    relationshipType: EntityRelationshipTypeKeys.Parent
-                }));
+
+                if($scope.scopedObject.relationship.ReportTarget[0].target) {
+                    submissionBundle.resource.push(new EntityRelationship({
+                        source: $scope.scopedObject.id,
+                        target: $scope.scopedObject.relationship.ReportTarget[0].target,
+                        relationshipType: EntityRelationshipTypeKeys.ReportTarget
+                    }));
+                }
 
                 var result = await SanteDB.resources.bundle.insertAsync(submissionBundle);
                 toastr.success(SanteDB.locale.getString("ui.admin.entity.edit.parent.change.success"));
 
                 var updated = await SanteDB.resources[$scope.scopedObject.$type.toCamelCase()].getAsync($scope.scopedObject.id, "full"); // re-fetch the place
-         
+
                 $timeout(() => {
                     $scope.scopedObject.relationship.Parent[0] = result.resource.find(o => o.$type == "EntityRelationship" && o.operation == BatchOperationType.Insert || o.operation == BatchOperationType.InsertInt);
                     SanteDB.display.cascadeScopeObject(SanteDB.display.getRootScope($scope), ['scopedObject', 'entity'], updated);

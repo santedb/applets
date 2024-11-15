@@ -19,6 +19,11 @@
 <ViewModel xmlns="http://santedb.org/model/view">
   <include>base</include>
 
+  <type type="Concept" name="ConceptNested" all="false">
+    <property name="id" />
+    <property name="name" behavior="always" all="true" />
+    <property name="mnemonic"/>
+  </type>
   <type type="ActProtocol" all="false">
     <property name="protocol" behavior="always"/>
     <property name="protocolModel" behavior="always" all="false">
@@ -100,7 +105,7 @@
     <property name="name" behavior="always">
       <property name="*"  all="true" ref="EntityName"/>
     </property>
-    <property name="typeConceptModel" behavior="always" ref="Concept"/>
+    <property name="typeConceptModel" behavior="always" ref="ConceptNested"/>
   </type>
 
   <type type="Material" all="true">
@@ -123,9 +128,9 @@
     <property name="address" behavior="always">
       <property name="*"  all="true" ref="EntityAddress"/>
     </property>
-    <property name="typeConceptModel" all="true" ref="Concept" behavior="always"/>
+    <property name="typeConceptModel" all="true" ref="ConceptNested" behavior="always"/>
     <property name="classConcept" behavior="always"/>
-    <property name="classConceptModel" all="true" ref="Concept" behavior="always"/>
+    <property name="classConceptModel" all="true" ref="ConceptNested" behavior="always"/>
   </type>
 
 
@@ -140,9 +145,9 @@
     <property name="address" behavior="always">
       <property name="*"  all="true" ref="EntityAddress"/>
     </property>
-    <property name="typeConceptModel" all="true" ref="Concept" behavior="always"/>
+    <property name="typeConceptModel" all="true" ref="ConceptNested" behavior="always"/>
     <property name="classConcept" behavior="always"/>
-    <property name="classConceptModel" all="true" ref="Concept" behavior="always"/>
+    <property name="classConceptModel" all="true" ref="ConceptNested" behavior="always"/>
   </type>
 
   <type type="UserEntity" all="true">

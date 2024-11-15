@@ -19,6 +19,10 @@
 /// <reference path="../../core/js/santedb.js"/>
 /// <reference path="./santedb-ui.js"/>
 
+const ___uomprec = [
+    'seconds', 'minutes', 'hours', 'days', 'weeks', 'months', 'years'
+];
+
 angular.module('santedb-lib')
     /**
      * @method i18n
@@ -30,37 +34,38 @@ angular.module('santedb-lib')
             return SanteDB.locale.getString(value, parmObject);
         }
     })
-   
-     /**
-     * @method rightEllipsis
-     * @memberof Angular
-     * @summary Shows the rightmost n characters prefixing an elipsis 
-     * @param {number} nCharacters The number of characters to show
-     * @example
-     *      <div class="col-md-2">{{ identifier.authority.name | rightEllipsis: 20 }}</div>
-     */
+
+    /**
+    * @method rightEllipsis
+    * @memberof Angular
+    * @summary Shows the rightmost n characters prefixing an elipsis 
+    * @param {number} nCharacters The number of characters to show
+    * @example
+    *      <div class="col-md-2">{{ identifier.authority.name | rightEllipsis: 20 }}</div>
+    */
     .filter('rightEllipsis', function () {
         return function (modelValue, nCharacters) {
             nCharacters = nCharacters || 20;
-            if(modelValue.length < nCharacters)
+            if (modelValue.length < nCharacters)
                 return modelValue;
             else {
                 return `...${modelValue.substring(modelValue.length - nCharacters)}`;
             }
         };
     })
-     /**
-     * @method leftEllipsis
-     * @memberof Angular
-     * @summary Shows the leftmost n characters prefixing an elipsis 
-     * @param {number} nCharacters The number of characters to show
-     * @example
-     *      <div class="col-md-2">{{ identifier.authority.name | leftEllipsis: 20 }}</div>
-     */
+    /**
+    * @method leftEllipsis
+    * @memberof Angular
+    * @summary Shows the leftmost n characters prefixing an elipsis 
+    * @param {number} nCharacters The number of characters to show
+    * @example
+    *      <div class="col-md-2">{{ identifier.authority.name | leftEllipsis: 20 }}</div>
+    */
     .filter('leftEllipsis', function () {
         return function (modelValue, nCharacters) {
+            modelValue = modelValue || "";
             nCharacters = nCharacters || 20;
-            if(modelValue.length < nCharacters)
+            if (modelValue.length < nCharacters)
                 return modelValue;
             else {
                 return `${modelValue.substring(0, nCharacters)}...`;
@@ -113,8 +118,8 @@ angular.module('santedb-lib')
      * @memberof Angular
      * @summary Decode 
      */
-     .filter('base64decode', function() {
-        return function(modelValue) {
+    .filter('base64decode', function () {
+        return function (modelValue) {
             return atob(modelValue);
         }
     })
@@ -145,12 +150,12 @@ angular.module('santedb-lib')
 
             var candidateKey = Object.keys(modelValue)[0];
             var name = modelValue[candidateKey];
-            if(type)
+            if (type)
                 name = modelValue[type];
 
-            if(name.useModel)
+            if (name.useModel)
                 return SanteDB.display.renderConcept(name.useModel);
-            else if(name.$type) 
+            else if (name.$type)
                 return candidateKey;
             return 'TODO';
         }
@@ -185,6 +190,53 @@ angular.module('santedb-lib')
         }
     })
     /**
+     * @method since
+     * @memberof Angular
+     * @summary Renders the time since another date
+     * @param {string} display The age to display (let this choose)
+     */
+    .filter('since', function () {
+        return function (date, display, other) {
+
+            var source = other ? moment(other) : moment();
+            var diff = null, suffix = null;
+            switch (display) {
+                case 'h':
+                    diff = source.diff(date, 'minutes');
+                    suffix = 'ui.common.since.hours';
+                    break;
+                case 'D':
+                    diff = source.diff(date, 'days');
+                    suffix = 'ui.common.since.days';
+                    break;
+                case 'M':
+                    diff = source.diff(date, 'months');
+                    suffix = 'ui.common.since.months';
+                    break;
+                case 'Y':
+                    diff = source.diff(date, 'years');
+                    suffix = 'ui.common.since.years';
+                    break;
+                case 'm':
+                    diff = source.diff(date, 'minutes');
+                    suffix = 'ui.common.since.minutes';
+                    break;
+                default:
+                    ___uomprec.forEach(p =>
+                    {
+                         var pdf = source.diff(date, p);
+                        if(pdf > 0) {
+                            diff = pdf;
+                            suffix = `ui.common.since.${p}`;
+                        }
+                    });
+
+            }
+            return `${diff} ${SanteDB.locale.getString(suffix)}`;
+        }
+    })
+
+    /**
      * @method age
      * @memberof Angular
      * @summary Renders the age from the date
@@ -195,10 +247,10 @@ angular.module('santedb-lib')
 
             var source = other ? moment(other) : moment();
             var diff = source.diff(date, 'days');
-            if(display == 'D' || diff < 45)
+            if (display == 'D' || diff < 45)
                 return diff + ' ' + SanteDB.locale.getString('ui.model.patient.age.suffix.daysOld');
             diff = source.diff(date, 'months');
-            if(display == 'M' || diff < 18)
+            if (display == 'M' || diff < 18)
                 return diff + ' ' + SanteDB.locale.getString('ui.model.patient.age.suffix.monthsOld');
             return source.diff(date, 'years') + ' ' + SanteDB.locale.getString('ui.model.patient.age.suffix.yearsOld');
         }
@@ -210,16 +262,15 @@ angular.module('santedb-lib')
      */
     .filter('dotNetType', function () {
         return function (aqm) {
-            if(!aqm)
+            if (!aqm)
                 return '';
-            else 
-            {
+            else {
                 var aqmPattern = /^([A-Za-z0-9\.]*?),\s?([A-Za-z0-9\.]*?),?\s?.*$/i;
                 var aqmMatch = aqmPattern.exec(aqm);
-                if(aqmMatch !== null)
+                if (aqmMatch !== null)
                     aqm = aqmMatch[1]; // Get full name
                 aqm = aqm.substring(aqm.lastIndexOf('.') + 1);
-                return aqm;                
+                return aqm;
             }
         }
     })
@@ -230,14 +281,14 @@ angular.module('santedb-lib')
      */
     .filter('rawValueSummary', function () {
         return function (v) {
-            
-            if(Array.isArray(v))
+
+            if (Array.isArray(v))
                 return `[${(v[0] || {}).$type}] - size = ${v.length}`;
-            else if(v.value)
+            else if (v.value)
                 return v.value;
-            else if(v.$type)
+            else if (v.$type)
                 return `${v.$type}`;
-            else 
+            else
                 return v;
         }
     })
@@ -248,13 +299,13 @@ angular.module('santedb-lib')
      */
     .filter('exceptionType', function () {
         return function (v) {
-            
+
             // Is there a server exception?
             var parseResult = SanteDB.application.parseException(v);
 
-            if(parseResult.rules && parseResult.rules.length > 0)
+            if (parseResult.rules && parseResult.rules.length > 0)
                 return parseResult.rules[0].text;
-            else 
+            else
                 return parseResult.$type;
         }
     })
@@ -265,14 +316,14 @@ angular.module('santedb-lib')
      */
     .filter('exceptionDetail', function () {
         return function (v) {
-            
+
             var rawValue = atob(v);
             // Is there a server exception?
             var parseResult = SanteDB.application.parseException(rawValue);
 
-            if(parseResult.rules && parseResult.rules.length > 0)
+            if (parseResult.rules && parseResult.rules.length > 0)
                 return parseResult.rules[0].text;
-            else 
+            else
                 return parseResult.message;
         }
     })
@@ -283,11 +334,11 @@ angular.module('santedb-lib')
      */
     .filter('geo', function () {
         return function (geo) {
-            
+
             var lat = SanteDB.display.convertToDegrees(geo.lat);
             var lng = SanteDB.display.convertToDegrees(geo.lng);
-            
-            return `${lat.deg}\xB0 ${lat.min}' ${lat.sec}" ${geo.lat < 0 ? 'S' : 'N'} / ${lng.deg}\xB0 ${lng.min}' ${lng.sec}" ${geo.lng < 0 ? 'W' : 'E'} ` 
+
+            return `${lat.deg}\xB0 ${lat.min}' ${lat.sec}" ${geo.lat < 0 ? 'S' : 'N'} / ${lng.deg}\xB0 ${lng.min}' ${lng.sec}" ${geo.lng < 0 ? 'W' : 'E'} `
         }
     })
     /**
@@ -295,7 +346,7 @@ angular.module('santedb-lib')
      * @memberof Angular
      * @summary Renders a structured JSON schedule into text
      */
-    .filter('scheduleJson', function() {
+    .filter('scheduleJson', function () {
 
         var dayStrings = [
             'ui.date.day.sunday',
@@ -308,22 +359,20 @@ angular.module('santedb-lib')
         ];
 
         return function (sched) {
-            
-            if(typeof sched === 'string') 
-            {
+
+            if (typeof sched === 'string') {
                 sched = JSON.parse(sched);
             }
-            
-            if(sched.schedule) {
+
+            if (sched.schedule) {
                 sched = sched.schedule;
             }
 
-            if(sched.length == 0) {
+            if (sched.length == 0) {
                 return SanteDB.locale.getString("ui.unknown");
             }
             else {
-                return sched.map(o=> `${SanteDB.locale.getString(dayStrings[o.days[0]])} ${moment(o.start).format('HH:mm')} - ${moment(o.stop).format('HH:mm')}` + (o.capacity ? ` (max: ${o.capacity})` : '')).join(' , ');
+                return sched.map(o => `${SanteDB.locale.getString(dayStrings[o.days[0]])} ${moment(o.start).format('HH:mm')} - ${moment(o.stop).format('HH:mm')}` + (o.capacity ? ` (max: ${o.capacity})` : '')).join(' , ');
             }
         }
     });
-    

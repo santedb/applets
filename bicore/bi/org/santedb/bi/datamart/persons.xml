@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <!--
  - Copyright 2021-2024 SanteSuite Contributors (See NOTICE.md for full copyright notices)
  - Copyright (C) 2019 - 2021, Fyfe Software Inc. and the SanteSuite Contributors
@@ -23,7 +23,7 @@
   </parameters>
   <pipeline>
     <log name="log_start" priority="Verbose">Start Persons {{input}}</log>
-    <reader name="input_psns">
+    <reader name="input_psns_src">
       <connection ref="input" />
       <sql>
         <add>
@@ -38,23 +38,18 @@
 	          wrk.TEL_VAL AS tel_work,
 	          psn_tbl.DOB,
 	          psn_tbl.DCSD_UTC,
-	          gndr.MNEMONIC AS gender,
+	          gndr_cd_id AS gender,
 	          plt.LNG_CS AS primary_language,
-	          occ.MNEMONIC AS occupation,
-	          vip.MNEMONIC AS vip,
-	          nat.MNEMONIC AS nationality
+	          occ_cd_id AS occupation,
+	          vip_cd_id AS vip,
+	          nat_cd_id AS nationality
           FROM 
 	          psn_tbl 
 	          INNER JOIN ent_vrsn_tbl USING (ent_vrsn_id)
-	          LEFT JOIN CD_VRSN_TBL gndr ON (GNDR.cd_id = psn_tbl.GNDR_CD_ID AND gndr.HEAD = 1)
-	          LEFT JOIN cd_vrsn_tbl occ ON (occ.CD_ID = psn_tbl.OCC_CD_ID AND occ.HEAD = 1)
-	          LEFT JOIN cd_vrsn_tbl vip ON (vip.CD_ID = psn_tbl.VIP_STS_CD_ID AND vip.HEAD = 1)
-	          LEFT JOIN cd_vrsn_tbl nat ON (nat.CD_ID = psn_tbl.NAT_CD_ID AND nat.HEAD = 1)
 	          LEFT JOIN ent_tel_tbl home ON (home.ent_id = ENT_VRSN_tbl.ENT_ID AND home.OBSLT_VRSN_SEQ_ID IS NULL AND home.USE_CD_ID = x'D8AFFAC490FC30438B4BE4E64C86B87B')
-	          LEFT JOIN ent_tel_tbl cell ON (cell.ent_id = ENT_VRSN_TBL.ent_id AND cell.OBSLT_VRSN_SEQ_ID IS NULL AND cell.TYP_CD_ID  = x'E9A4C0C138424440B89B9C9798995B90' OR cell.USE_CD_ID = x'0EF961E139590E43861AF8E885CC353D')
+	          LEFT JOIN ent_tel_tbl cell ON (cell.ent_id = ENT_VRSN_TBL.ent_id AND cell.OBSLT_VRSN_SEQ_ID IS NULL AND (cell.TYP_CD_ID  = x'E9A4C0C138424440B89B9C9798995B90' OR cell.USE_CD_ID = x'0EF961E139590E43861AF8E885CC353D'))
 	          LEFT JOIN ent_tel_tbl wrk ON (wrk.ENT_ID = ENT_VRSN_TBL.ENT_ID AND wrk.OBSLT_VRSN_SEQ_ID IS NULL AND wrk.USE_CD_ID = x'8EF0A6EA8EBB57449DC03A1555FADF5C')
 	          LEFT JOIN PSN_LNG_TBL PLT ON (plt.ent_id = ent_vrsn_tbl.ENT_ID AND plt.obslt_vrsn_Seq_id IS NULL AND plt.PREF_IND = 1)
-          GROUP BY ent_vrsn_tbl.ent_id -- HACK: Use grouping to get distinct on first of the rels (multi-facility persons)
 	           ]]>
         </add>
         <add>
@@ -63,36 +58,90 @@
           </providers>
           <![CDATA[
           SELECT DISTINCT
-	          ent_vrsn_tbl.ent_id,
-	          FIRST_NVL(home.TEL_VAL) AS tel_home,
-	          FIRST_NVL(cell.TEL_VAL) AS tel_cell,
-	          FIRST_NVL(wrk.TEL_VAL) AS tel_work,
-	          FIRST_NVL(psn_tbl.DOB) AS dob,
-	          FIRST_NVL(psn_tbl.DCSD_UTC) AS DCSD_UTC,
-	          FIRST_NVL(gndr.MNEMONIC)  AS gender,
-	          FIRST_NVL(plt.LNG_CS)  AS primary_language,
-	          FIRST_NVL(occ.MNEMONIC)  AS occupation,
-	          FIRST_NVL(vip.MNEMONIC) AS vip,
-	          FIRST_NVL(nat.MNEMONIC) AS nationality
-          FROM 
-	          psn_tbl 
-	          INNER JOIN ent_vrsn_tbl USING (ent_vrsn_id)
-	          LEFT JOIN CD_VRSN_TBL gndr ON (GNDR.cd_id = psn_tbl.GNDR_CD_ID AND gndr.HEAD)
-	          LEFT JOIN cd_vrsn_tbl occ ON (occ.CD_ID = psn_tbl.OCC_CD_ID AND occ.HEAD)
-	          LEFT JOIN cd_vrsn_tbl vip ON (vip.CD_ID = psn_tbl.VIP_STS_CD_ID AND vip.HEAD)
-	          LEFT JOIN cd_vrsn_tbl nat ON (nat.CD_ID = psn_tbl.NAT_CD_ID AND nat.HEAD)
-	          LEFT JOIN ent_tel_tbl home ON (home.ent_id = ENT_VRSN_tbl.ENT_ID AND home.OBSLT_VRSN_SEQ_ID IS NULL AND home.USE_CD_ID = 'f3132fc0-aadd-40b7-b875-961c40695389')
-	          LEFT JOIN ent_tel_tbl cell ON (cell.ent_id = ENT_VRSN_TBL.ent_id AND cell.OBSLT_VRSN_SEQ_ID IS NULL AND cell.TYP_CD_ID  = 'c1c0a4e9-4238-4044-b89b-9c9798995b90' OR cell.USE_CD_ID = 'E161F90E-5939-430E-861A-F8E885CC353D')
-	          LEFT JOIN ent_tel_tbl wrk ON (wrk.ENT_ID = ENT_VRSN_TBL.ENT_ID AND wrk.OBSLT_VRSN_SEQ_ID IS NULL AND wrk.USE_CD_ID = 'EAA6F08E-BB8E-4457-9DC0-3A1555FADF5C')
-	          LEFT JOIN PSN_LNG_TBL PLT ON (plt.ent_id = ent_vrsn_tbl.ENT_ID AND plt.obslt_vrsn_Seq_id IS NULL AND plt.PREF_IND)
-          GROUP BY ent_vrsn_tbl.ent_id -- HACK: Use grouping to get distinct on first of the rels (multi-facility persons)
+              ent_vrsn_tbl.ent_id,
+              (home.TEL_VAL) AS tel_home,
+              (cell.TEL_VAL) AS tel_cell,
+              (wrk.TEL_VAL) AS tel_work,
+              (psn_tbl.DOB) AS dob,
+              (psn_tbl.DCSD_UTC) AS DCSD_UTC,
+              (gndr_cd_id) AS gender,
+              (plt.LNG_CS) AS primary_language,
+              (occ_cd_id) AS occupation,
+              (vip_sts_cd_id) AS vip,
+              (nat_cd_id) AS nationality
+            FROM 
+              psn_tbl 
+              INNER JOIN ent_vrsn_tbl USING (ent_vrsn_id)
+              LEFT JOIN ent_tel_tbl home ON (home.ent_id = ENT_VRSN_tbl.ENT_ID AND home.OBSLT_VRSN_SEQ_ID IS NULL AND home.USE_CD_ID = 'f3132fc0-aadd-40b7-b875-961c40695389')
+              LEFT JOIN ent_tel_tbl cell ON (cell.ent_id = ENT_VRSN_TBL.ent_id AND cell.OBSLT_VRSN_SEQ_ID IS NULL AND (cell.TYP_CD_ID  = 'c1c0a4e9-4238-4044-b89b-9c9798995b90' OR cell.USE_CD_ID = 'E161F90E-5939-430E-861A-F8E885CC353D'))
+              LEFT JOIN ent_tel_tbl wrk ON (wrk.ENT_ID = ENT_VRSN_TBL.ENT_ID AND wrk.OBSLT_VRSN_SEQ_ID IS NULL AND wrk.USE_CD_ID = 'EAA6F08E-BB8E-4457-9DC0-3A1555FADF5C')
+              LEFT JOIN PSN_LNG_TBL PLT ON (plt.ent_id = ent_vrsn_tbl.ENT_ID AND plt.obslt_vrsn_Seq_id IS NULL AND plt.PREF_IND)
 
           ]]>
         </add>
       </sql>
     </reader>
+    <transform name="input_psns_map">
+      <input ref="input_psns_src" />
+      <map>
+        <source name="ent_id" />
+        <target name="ent_id" />
+      </map>
+      <map>
+        <source name="tel_home" />
+        <target name="tel_home" />
+      </map>
+      <map>
+        <source name="tel_cell" />
+        <target name="tel_cell" />
+      </map>
+      <map>
+        <source name="tel_work" />
+        <target name="tel_work" />
+      </map>
+      <map>
+        <source name="dob" />
+        <target name="dob" />
+      </map>
+      <map>
+        <source name="dcsd_utc" />
+        <target name="dcsd_utc" />
+      </map>
+      <map>
+        <source name="gender">
+          <concept />
+        </source>
+        <target name="gender" />
+      </map>
+      <map>
+        <source name="primary_language" />
+        <target name="primary_language" />
+      </map>
+      <map>
+        <source name="occupation">
+          <concept />
+        </source>
+        <target name="occupation" />
+      </map>
+      <map>
+        <source name="vip">
+          <concept />
+        </source>
+        <target name="vip" />
+      </map>
+      <map>
+        <source name="nationality">
+          <concept />
+        </source>
+        <target name="nationality" />
+      </map>
+    </transform>
+    <distinct name="input_psns">
+      <input ref="input_psns_map" />
+      <on>ent_id</on>
+    </distinct>
     <reader name="input_staff">
-      <connection ref="input"/>
+      <connection ref="input" />
       <sql>
         <add>
           <providers>
@@ -182,6 +231,7 @@
         </add>
       </sql>
     </reader>
+
     <writer name="output_psns" truncate="true" mode="insert">
       <input ref="input_psns" />
       <connection ref="output" />
@@ -194,7 +244,7 @@
     </writer>
     <writer name="output_pvd" truncate="true" mode="insert">
       <input ref="input_pvdr" />
-      <connection ref="output"/>
+      <connection ref="output" />
       <target ref="PVD_TBL" />
     </writer>
     <writer name="output_staff" truncate="true" mode="insert">
@@ -208,7 +258,7 @@
       <with ref="output_pvd" />
       <with ref="output_staff" />
     </union>
-    
+
     <filter name="filter_rejects">
       <input ref="union_psns" />
       <all>
@@ -218,24 +268,24 @@
       </all>
     </filter>
     <transform name="transform_rejects">
-      <input ref="filter_rejects"/>
+      <input ref="filter_rejects" />
       <map>
         <source name="ENT_ID" />
-        <target name="RECORD_ID"/>
+        <target name="RECORD_ID" />
       </map>
       <map>
         <source>
           <fixed>PSN_TBL</fixed>
         </source>
-        <target name="RECORD_TYP"/>
+        <target name="RECORD_TYP" />
       </map>
       <map>
         <source name="$reject.reason" />
-        <target name="REASON"/>
+        <target name="REASON" />
       </map>
     </transform>
     <writer name="write_rejects" truncate="false" mode="insertUpdate">
-      <input ref="transform_rejects"/>
+      <input ref="transform_rejects" />
       <connection ref="output" />
       <target ref="REJECT_TBL" />
     </writer>
@@ -251,5 +301,5 @@
       <input ref="filter_rejects2" />
     </halt>
   </pipeline>
-  
+
 </BiDataFlowDefinition>

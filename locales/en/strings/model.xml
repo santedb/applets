@@ -387,8 +387,10 @@
   <string name="ui.model.place.saveSuccess">Place updated successfully</string>
   <string name="ui.model.place.name.component.other">Official Name</string>
   <string name="ui.model.place.name.component.other.hint">Enter the official name of the place</string>
-  <string name="ui.model.place.relationship.Scoper">Scope / Reporting Area</string>
+  <string name="ui.model.place.relationship.Scoper">Scoper</string>
   <string name="ui.model.place.relationship.Scoper.hint"><![CDATA[The scoper relationship describes the place/organization under which this place operates - this is typically used for reporting purposes and attributing ownership]]></string>
+  <string name="ui.model.place.relationship.ReportTarget">Reporting Area</string>
+  <string name="ui.model.place.relationship.ReportTarget.hint"><![CDATA[Indicates where the entities and actions attributed to this facility are reported under. This is used for roll-up reporting (fallback is to roll-up to parent)]]></string>
   <string name="ui.model.organization.name">Name</string>
   <string name="ui.model.organization.typeConcept">Type</string>
   <string name="ui.model.organization.typeConcept.hint"><![CDATA[The primary classification or type of organization that this entry represents]]></string>
@@ -529,8 +531,8 @@
   <string name="ui.model.act.reasonConcept.other">Other Reason</string>
   <string name="ui.model.act.reasonConcept.other.hint">Because you selected "other" as the reason for the action, you should enter description of the reason</string>
   <string name="ui.model.act.actTime">Timestamp</string>
-  <string name="ui.model.act.startTime">Start Time</string>
-  <string name="ui.model.act.stopTime">Stop Time</string>
+  <string name="ui.model.act.startTime">Started</string>
+  <string name="ui.model.act.stopTime">Completed</string>
   <string name="ui.model.act.typeConcept">Event Type</string>
   <string name="ui.model.act.participation.Location">Location(s)</string>
   <string name="ui.model.act.participation.Authororiginator">Author / Reporter</string>
@@ -538,6 +540,12 @@
   <string name="ui.model.act.participation.Attender">Attending Physician</string>
   <string name="ui.model.act.participation.RecordTarget">Subject</string>
   <string name="ui.model.act.participation.RecordTarget.container">Container</string>
+  <string name="ui.model.act.participation.Informant">Informant</string>
+  <string name="ui.model.act.isNegated">Not Performed</string>
+  <string name="ui.model.act.isNegated.reason">Reason for Not Performing</string>
+  <string name="ui.model.act.tag.isBackentryFalse">Performing Today</string>
+  <string name="ui.model.act.tag.isBackentryTrue">Back-Entry</string>
+  
   <!-- Help Text -->
   <string name="ui.model.act.template.help">Identifies the type of event</string>
   <string name="ui.model.act.typeConcept.help">Identifies the classification of the event</string>
@@ -926,4 +934,13 @@
    <string name="ui.model.carePathwayDefinition.encounter.hint">For proposals of encounters, this is the template which is to be used (also used when checking in a patient for the care pathway)</string>
    <string name="ui.model.carePathwayDefinition.name">Name</string>
    <string name="ui.model.carePathwayDefinition.name.hint">A short name for this care pathway</string>
+
+   <!-- Patient Encounters -->
+   <string name="ui.model.patientEncounter.relationship.HasComponent">Action(s) Performed</string>
+   <string name="ui.model.patientEncounter.relationship.HasComponent.hint">Indicates what actions were performed during the visit</string>
+   <string name="ui.model.patientEncounter.relationship.Fulfills">Fulfills</string>
+   <string name="ui.model.patientEncounter.relationship.Fulfills.hint">Indicates that this visit fulfills another proposed or booked appointment</string>
+
+    <string name="ui.model.patientEncounter.dischargeDisposition">Discharge Reason</string>
+    <string name="ui.model.patientEncounter.dischargeDisposition.hint">Indicate how the patient/person left the clinic</string>
 </resources>

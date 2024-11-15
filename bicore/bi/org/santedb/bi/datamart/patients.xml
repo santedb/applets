@@ -23,7 +23,7 @@
   </parameters>
   <pipeline>
     <log name="log_start" priority="Verbose">Start Patients on {{input}}</log>
-    <reader name="source_patients">
+    <reader name="source_patients_db">
       <connection ref="input" />
       <schema ref="PAT_TBL"/>
       <sql>
@@ -35,11 +35,11 @@
             SELECT DISTINCT
 	            ENT_VRSN_TBL.ENT_ID, 
 	            PAT_TBL.MB_ORD ,
-	            LVNR.MNEMONIC AS LIVING_ARR,
-	            RLGN.MNEMONIC AS RELIGION,
-	            ETHG.MNEMONIC AS ETHNICITY,
-	            EDUC.MNEMONIC AS EDUCATION,
-	            MRTL.MNEMONIC AS MARITAL_STS,
+	            LVN_ARG_CD_ID AS LIVING_ARR,
+	            RLGN_CD_ID AS RELIGION,
+	            ETH_GRP_CD_ID AS ETHNICITY,
+	            EDU_LVL_CD_ID AS EDUCATION,
+	            MRTL_STS_CD_ID AS MARITAL_STS,
 	            MOTHER.TRG_ENT_ID AS MOTHER,
 	            FATHER.TRG_ENT_ID AS FATHER,
 	            GUARD.TRG_ENT_ID AS GUARDIAN,
@@ -52,11 +52,6 @@
             FROM 
 	            pat_tbl 
 	            INNER JOIN ent_vrsn_tbl USING (ent_vrsn_id)
-	            LEFT JOIN cd_vrsn_tbl RLGN ON (RLGN_CD_ID = rlgn.cd_id AND RLGN.OBSLT_UTC IS NULL)
-	            LEFT JOIN cd_vrsn_tbl LVNR ON (LVNR.CD_ID = LVN_ARG_CD_ID AND LVNR.OBSLT_UTC IS NULL)
-	            LEFT JOIN cd_vrsn_tbl ETHG ON (ETH_GRP_CD_ID = ETHG.CD_ID AND ETHG.OBSLT_UTC IS NULL)
-	            LEFT JOIN cd_vrsn_tbl EDUC ON (EDUC.CD_ID = EDU_LVL_CD_ID AND EDUC.OBSLT_UTC IS NULL)
-	            LEFT JOIN cd_vrsn_tbl MRTL ON (MRTL.CD_ID = MRTL_STS_CD_ID  AND MRTL.OBSLT_UTC IS NULL)
 	            LEFT JOIN ENT_REL_TBL MOTHER ON (MOTHER.SRC_ENT_ID = ENT_VRSN_ID AND MOTHER.REL_TYP_CD_ID = X'E564FF2964B51A4192C76818C02A9E48' AND MOTHER.OBSLT_VRSN_SEQ_ID IS NULL)
 	            LEFT JOIN ENT_REL_TBL FATHER ON (FATHER.SRC_ENT_ID = ENT_VRSN_ID AND FATHER.REL_TYP_CD_ID = X'CC8ED140F88F034E8E5897A980F04060' AND FATHER.OBSLT_VRSN_SEQ_ID IS NULL)
 	            LEFT JOIN ENT_REL_TBL GUARD ON (GUARD.SRC_ENT_ID = ENT_VRSN_ID AND GUARD.REL_TYP_CD_ID = X'34238E3BCC4C244F8AAE37341EA03D3E' AND GUARD.OBSLT_VRSN_SEQ_ID IS NULL)
@@ -78,11 +73,11 @@
             SELECT DISTINCT
 	            ENT_VRSN_TBL.ENT_ID, 
 	            PAT_TBL.MB_ORD ,
-	            LVNR.MNEMONIC AS LIVING_ARR,
-	            RLGN.MNEMONIC AS RELIGION,
-	            ETHG.MNEMONIC AS ETHNICITY,
-	            EDUC.MNEMONIC AS EDUCATION,
-	            MRTL.MNEMONIC AS MARITAL_STS,
+	            LVN_ARG_CD_ID AS LIVING_ARR,
+	            RLGN_CD_ID AS RELIGION,
+	            ETH_GRP_CD_ID AS ETHNICITY,
+	            EDU_LVL_CD_ID AS EDUCATION,
+	            MRTL_STS_CD_ID AS MARITAL_STS,
 	            MOTHER.TRG_ENT_ID AS MOTHER,
 	            FATHER.TRG_ENT_ID AS FATHER,
 	            GUARD.TRG_ENT_ID AS GUARDIAN,
@@ -95,11 +90,6 @@
             FROM 
 	            pat_tbl 
 	            INNER JOIN ent_vrsn_tbl USING (ent_vrsn_id)
-	            LEFT JOIN cd_vrsn_tbl RLGN ON (RLGN_CD_ID = rlgn.cd_id AND RLGN.OBSLT_UTC IS NULL)
-	            LEFT JOIN cd_vrsn_tbl LVNR ON (LVNR.CD_ID = LVN_ARG_CD_ID AND LVNR.OBSLT_UTC IS NULL)
-	            LEFT JOIN cd_vrsn_tbl ETHG ON (ETH_GRP_CD_ID = ETHG.CD_ID AND ETHG.OBSLT_UTC IS NULL)
-	            LEFT JOIN cd_vrsn_tbl EDUC ON (EDUC.CD_ID = EDU_LVL_CD_ID AND EDUC.OBSLT_UTC IS NULL)
-	            LEFT JOIN cd_vrsn_tbl MRTL ON (MRTL.CD_ID = MRTL_STS_CD_ID  AND MRTL.OBSLT_UTC IS NULL)
 	            LEFT JOIN ENT_REL_TBL MOTHER ON (MOTHER.SRC_ENT_ID = ENT_VRSN_ID AND MOTHER.REL_TYP_CD_ID = '29ff64e5-b564-411a-92c7-6818c02a9e48' AND MOTHER.OBSLT_VRSN_SEQ_ID IS NULL)
 	            LEFT JOIN ENT_REL_TBL FATHER ON (FATHER.SRC_ENT_ID = ENT_VRSN_ID AND FATHER.REL_TYP_CD_ID = '40d18ecc-8ff8-4e03-8e58-97a980f04060' AND FATHER.OBSLT_VRSN_SEQ_ID IS NULL)
 	            LEFT JOIN ENT_REL_TBL GUARD ON (GUARD.SRC_ENT_ID = ENT_VRSN_ID AND GUARD.REL_TYP_CD_ID = '3b8e2334-4ccc-4f24-8aae-37341ea03d3e' AND GUARD.OBSLT_VRSN_SEQ_ID IS NULL)
@@ -115,6 +105,83 @@
         </add>
       </sql>
     </reader>
+    <transform name="source_patients">
+      <input ref="source_patients_db"/>
+      <map>
+        <source name="ENT_ID"/>
+        <target name="ENT_ID"/>
+      </map>
+      <map>
+        <source name="MB_ORD"/>
+        <target name="MB_ORD"/>
+      </map>
+      <map>
+        <source name="LIVING_ARR">
+          <concept/>
+          </source>
+        <target name="LIVING_ARR"/>
+      </map>
+      <map>
+        <source name="RELIGION">
+          <concept/>
+          </source>
+        <target name="RELIGION"/>
+      </map>
+      <map>
+        <source name="ETHNICITY">
+          <concept/>
+          </source>
+        <target name="ETHNICITY"/>
+      </map>
+      <map>
+        <source name="EDUCATION">
+          <concept/>
+          </source>
+        <target name="EDUCATION"/>
+      </map>
+      <map>
+        <source name="MARITAL_STS">
+          <concept/>
+          </source>
+        <target name="MARITAL_STS"/>
+      </map>
+      <map>
+        <source name="MOTHER"/>
+        <target name="MOTHER"/>
+      </map>
+      <map>
+        <source name="FATHER"/>
+        <target name="FATHER"/>
+      </map>
+      <map>
+        <source name="GUARDIAN"/>
+        <target name="GUARDIAN"/>
+      </map>
+      <map>
+        <source name="REGISTRATION_FACILITY"/>
+        <target name="REGISTRATION_FACILITY"/>
+      </map>
+      <map>
+        <source name="BIRTHPLACE"/>
+        <target name="BIRTHPLACE"/>
+      </map>
+      <map>
+        <source name="CITIZENSHIP"/>
+        <target name="CITIZENSHIP"/>
+      </map>
+      <map>
+        <source name="SCHOOL"/>
+        <target name="SCHOOL"/>
+      </map>
+      <map>
+        <source name="PROVIDER"/>
+        <target name="PROVIDER"/>
+      </map>
+      <map>
+        <source name="SCOPER"/>
+        <target name="SCOPER"/>
+      </map>
+    </transform>
     <writer truncate="true" mode="insert" name="write_patients">
       <input ref="source_patients"/>
       <connection ref="output" />

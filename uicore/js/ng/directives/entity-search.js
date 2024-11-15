@@ -312,7 +312,7 @@ angular.module('santedb-lib')
                             });
 
                             var form = SanteDB.display.getParentScopeVariable($scope, selectControl[0].form.name);
-                            if(form) {
+                            if(form && form[selectControl[0].name]) {
                                 form[selectControl[0].name].$setValidity("required", true);
                             }
                         }
@@ -391,12 +391,9 @@ angular.module('santedb-lib')
                                     targetClass: scope.withRelationshipTargetClass,
                                     relationshipType: scope.forRelationshipType
                                 })).resource;
-                                if (serverRules.length > 0) {
+                                if (serverRules && serverRules.length > 0) {
 
                                     filter.classConcept = serverRules.map(o => scope.withRelationshipSourceClass ? o.targetClass : o.sourceClass);
-                                }
-                                else {
-                                    filter.classConcept = EmptyGuid;
                                 }
                             }
                         });
@@ -444,9 +441,13 @@ angular.module('santedb-lib')
                                 //params.page = params.page || 0;
 
                                 var retVal = { results: [], pagination: { more: data.totalResults > data.count } };
-                                var data = data.$type == "Bundle" ? data.resource : data.resource || data;
+                                var data = (data.$type == "Bundle" ? data.resource : data.resource || data) || [];
 
                                 if(scope.jsFilter) {
+
+                                    if(typeof scope.jsFilter === "string") {
+                                        scope.jsFilter = SanteDB.display.getParentScopeVariable(scope, scope.jsFilter);
+                                    }
                                     data = data.filter(flt => scope.jsFilter(flt));
                                 }
 

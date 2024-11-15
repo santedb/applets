@@ -25,7 +25,7 @@
             <sdb:title lang="en">Index</sdb:title>
         </sdb:view>
     </sdb:state>
-    <entity-table id="SecurityPolicyTable" type="SecurityPolicy" search-field="name"
+    <entity-table id="SecurityPolicyTable" type="SecurityPolicy" search-field="name||oid"
         default-query="{ 'obsoletionTime' : 'null' }" i18n-prefix="'ui.admin.policy.'"
         render="{ updatedBy: 'renderUpdatedBy', state: 'renderState' }"
         item-actions="[ 

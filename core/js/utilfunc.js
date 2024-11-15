@@ -105,6 +105,22 @@ Date.prototype.addDays = function (days) {
     return retVal;
 }
 
+/**
+ * @summary Gets the age of the date
+ * @param {string} measure The unit of measure
+ * @returns The difference between the date and this date
+ */
+Date.prototype.age = function(measure) {
+    return moment().diff(this, measure || 'years', false);
+}
+
+/**
+ * @summary Gets the ISO week number 
+ * @returns {number} The current week number
+ */
+Date.prototype.isoWeek = function() {
+    return moment(this).isoWeek();
+}
 
 /**
  * @summary Adds the specified number of seconds to the date
@@ -547,8 +563,9 @@ function applyCascadeInstructions(source) {
 /**
  * @summary Ensures that the entity being submitted doesn't have any odd or nasty data - also ensures that the 
  * @param {Entity} entity The entity to be corrected
+ * @param {boolean} splitCompoundNames When true, instructs the function to split any compound names like "John Jacob Jinglehiemer" into an array
  */
-async function prepareEntityForSubmission(entity) {
+async function prepareEntityForSubmission(entity, splitCompoundNames) {
 
     if (entity.tag && entity.tag["$generated"]) {
         entity.tag["$mdm.type"] = "T"; // Set a ROT tag
@@ -651,6 +668,14 @@ async function prepareEntityForSubmission(entity) {
                             else {
                                 nameItem.component[o] = [nameItem.component[o]]
                             }
+                        }
+
+                        if(splitCompoundNames) {
+                            var compoundArray = [];
+                            nameItem.component[o].forEach(name => {
+                                name.split(' ').forEach(c=>compoundArray.push(c));
+                            });
+                            nameItem.component[o] = compoundArray; 
                         }
                     });
                 }
@@ -776,21 +801,10 @@ async function setEntityState(entityId, entityTag, newStatus) {
 /**
  * Remove all properties which are delay loaded models
  * @param {Any} objectToRemove The object to remove properties from 
+ * @deprecated Use {@link:scrubModelProperties}
  */
 function deleteModelProperties(objectToRemove) {
-
-    if (typeof objectToRemove === 'object') {
-        Object.keys(objectToRemove).forEach(p => {
-            if (p.endsWith("Model")) {
-                delete objectToRemove[p];
-            }
-            else if (Array.isArray(objectToRemove[p])) {
-                objectToRemove[p].forEach(e=>deleteModelProperties(objectToRemove[p][e]));
-            }
-        });
-    }
-
-    return objectToRemove;
+    scrubModelProperties(objectToRemove);
 
 }
 
@@ -807,7 +821,8 @@ function bundleRelatedObjects(object, ignoreRelations, existingBundle) {
         ignoreRelations = [ignoreRelations];
     }
 
-    var retVal = existingBundle || new Bundle({ resource: [ angular.copy(object) ], focal: [ object.id ]});
+    object = angular.copy(object);
+    var retVal = existingBundle || new Bundle({ resource: [ object ], focal: [ object.id ]});
 
     if(object.relationship) {
 
@@ -817,23 +832,14 @@ function bundleRelatedObjects(object, ignoreRelations, existingBundle) {
                 if(rel.targetModel) {
                     var relatedObject = angular.copy(rel.targetModel);
                     rel.target = relatedObject.id = relatedObject.id || SanteDB.application.newGuid();
-
-                    if(!relatedObject.version) // new object
-                    {
-                        retVal.resource.push(relatedObject);
-                    }
-
+                    retVal.resource.push(relatedObject);
                     bundleRelatedObjects(relatedObject, ignoreRelations, retVal);
                     delete rel.targetModel;
                 }
                 if(rel.holderModel) {
                     var relatedObject = angular.copy(rel.holderModel);
                     rel.holder = rel.source = relatedObject.id = relatedObject.id || SanteDB.application.newGuid();
-                    
-                    if(!relatedObject.version) {
-                        retVal.resource.push(relatedObject);
-                    }
-
+                    retVal.resource.push(relatedObject);
                     delete rel.holderModel;
                 }
                 
@@ -874,7 +880,9 @@ function bundleRelatedObjects(object, ignoreRelations, existingBundle) {
         })
     }
 
-    retVal.resource.forEach(res => deleteModelProperties(res));
+    if(!existingBundle) {
+        retVal.resource.forEach(res => deleteModelProperties(res));
+    }
     return retVal;
 }
 

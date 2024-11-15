@@ -37,9 +37,20 @@
       <string name="ui.common.size.small">Small</string>
       <string name="ui.common.kilobytes">KB</string>
       <string name="ui.common.show">Show:</string>
+      <string name="ui.common.from">From</string>
+      <string name="ui.common.until">Until</string>
       <string name="ui.search.onlineResult">Online Result</string>
       <string name="ui.common.ontime">On-Time</string>
       <string name="ui.common.pastdue">Past-Due</string>
+
+      <!-- Time Phrases -->
+       <string name="ui.common.since.seconds">Seconds Ago</string>
+       <string name="ui.common.since.minutes">Minutes Ago</string>
+       <string name="ui.common.since.hours">Hours Ago</string>
+       <string name="ui.common.since.days">Days Ago</string>
+       <string name="ui.common.since.weeks">Weeks Ago</string>
+       <string name="ui.common.since.months">Months Ago</string>
+       <string name="ui.common.since.years">Years Ago</string>
       <!-- Login Translations -->
       <string name="ui.login.input.username">Username</string>
       <string name="ui.login.input.password">Password</string>
@@ -243,6 +254,7 @@
       <string name="ui.action.refresh">Refresh</string>
       <string name="ui.action.build">Build</string>
       <string name="ui.action.add">Add</string>
+      <string name="ui.action.historical">Back-Enter</string>
       <string name="ui.action.add.then.new">Add &amp; Create Another</string>
       <string name="ui.action.add.then.another">Add &amp; Enter Another</string>
       <string name="ui.action.add.then.goto">Add &amp; Go To</string>
@@ -285,6 +297,7 @@
       <string name="ui.action.resubmit">Resubmit</string>
       <string name="ui.action.redirecting">Redirecting to appropriate page</string>
       <string name="ui.action.export">Export</string>
+      <string name="ui.action.undo">Undo</string>
       <string name="ui.action.recompute">Re-Compute</string>
       <string name="ui.action.export.confirm">You are about to export potentially sensitive data from the CDR in XML format. Extra audits will be generated and your actions may be reviewed by an administrator. Do you want to continue?</string>
       <!-- Data Tables -->
@@ -322,6 +335,7 @@
       <string name="ui.table.search.field.source.name.value">Search by Source</string>
       <string name="ui.table.search.field.lotNumber">Search by Lot</string>
       <string name="ui.table.search.field.securityUser.userName">Search by username</string>
+      <string name="ui.table.search.field.name||oid">Search by name or OID</string>
       <string name="ui.table.search.field.source@UserEntity.securityUser.userName">Search by username</string>
       <!-- Common --> 
       <string name="ui.common.interop.hl7v2">HL7v2</string>

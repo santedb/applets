@@ -1100,7 +1100,7 @@ function ResourceWrapper(_config) {
         if (etag) {
             headers['If-Match'] = etag;
         }
-        
+
         if (upstream !== undefined) {
             headers["X-SanteDB-Upstream"] = upstream;
         }
@@ -1726,7 +1726,7 @@ function ResourceWrapper(_config) {
         var headers = {
             Accept: _config.accept
         };
-        if(viewModel) 
+        if (viewModel)
             headers["X-SanteDB-ViewModel"] = viewModel;
         else if (_config.viewModel)
             headers["X-SanteDB-ViewModel"] = _config.viewModel;
@@ -1825,13 +1825,13 @@ function SanteDBWrapper() {
      * @param {*} faultJson The Fault message
      * @returns {bool} True if the fault JSON inidcates a policy violation
      */
-    var _getPolicyException = function(faultJson) {
+    var _getPolicyException = function (faultJson) {
         do {
-            if(faultJson.$type == "PolicyViolationException") {
+            if (faultJson.$type == "PolicyViolationException") {
                 return faultJson;
             }
             faultJson = faultJson.cause;
-        } while(faultJson)
+        } while (faultJson)
         return null;
     }
 
@@ -1851,7 +1851,7 @@ function SanteDBWrapper() {
                 !_elevator.getToken() ||
                 (_session == null || !_session.access_token) && _elevator) {
 
-                    var pve = _getPolicyException(data.responseJSON);
+                var pve = _getPolicyException(data.responseJSON);
                 // Was the response a security policy exception where the back end is asking for elevation on the same user account?
                 if (data.responseJSON &&
                     pve &&
@@ -1926,7 +1926,7 @@ function SanteDBWrapper() {
      */
     function ApplicationApi() {
 
-        const _skipCopy = [ "$type", "$objId", "$id", "previousVersion", "holder", "source", "act", "creationTime", "createdBy", "updatedBy", "updatedTime", "id", "version", "sequence", "effectiveVersionSequence", "obsoleteVersionSequence" ];
+        const _skipCopy = ["$type", "$objId", "$id", "previousVersion", "holder", "source", "act", "creationTime", "createdBy", "updatedBy", "updatedTime", "id", "version", "sequence", "effectiveVersionSequence", "obsoleteVersionSequence"];
         var _idGenerators = {};
         var _resourceStates = {};
         var _idParsers = {};
@@ -1985,15 +1985,15 @@ function SanteDBWrapper() {
          */
         function copyValues(toObject, fromObject) {
 
-            if(Array.isArray(fromObject)) {
-                for(var i = 0; i < fromObject.length; i++) {
+            if (Array.isArray(fromObject)) {
+                for (var i = 0; i < fromObject.length; i++) {
                     var copyElement = toObject[i] || {};
-                    if(fromObject[i] == copyElement) continue; // No need to process same value
-                    else if(!copyValues(copyElement, fromObject[i])) {
+                    if (fromObject[i] == copyElement) continue; // No need to process same value
+                    else if (!copyValues(copyElement, fromObject[i])) {
                         copyElement = fromObject[i];
                     }
 
-                    if(toObject.length <= i) {
+                    if (toObject.length <= i) {
                         toObject.push(copyElement);
                     } else {
                         toObject[i] = copyElement;
@@ -2001,19 +2001,19 @@ function SanteDBWrapper() {
                 }
                 return true;
             }
-            else if(angular.isObject(fromObject) && !angular.isDate(fromObject)) {
-                Object.keys(fromObject).filter(k=>_skipCopy.indexOf(k) == -1).forEach(k => {
-                    if(!fromObject[k]) { 
+            else if (angular.isObject(fromObject) && !angular.isDate(fromObject)) {
+                Object.keys(fromObject).filter(k => _skipCopy.indexOf(k) == -1).forEach(k => {
+                    if (!fromObject[k]) {
                         return; // no copy
                     }
 
-                    if(Array.isArray(fromObject[k])) {
+                    if (Array.isArray(fromObject[k])) {
                         toObject[k] = toObject[k] || [];
                     }
                     else {
                         toObject[k] = toObject[k] || {};
                     }
-                    if(!copyValues(toObject[k], fromObject[k])) {
+                    if (!copyValues(toObject[k], fromObject[k])) {
                         toObject[k] = fromObject[k];
                     }
                 });
@@ -2095,6 +2095,56 @@ function SanteDBWrapper() {
         }
 
         /**
+         * @summary Encode an extension reference
+         * @param {string} type The type of reference being created
+         * @param {guid} key The key of the reference or the object
+         * @returns {string} An appropriately formatted reference extension
+         */
+        this.encodeReferenceExtension = function (type, key) {
+            switch (type) {
+                case Entity.name:
+                case Patient.name:
+                case Person.name:
+                case Place.name:
+                case UserEntity.name:
+                case Organization.name:
+                case DeviceEntity.name:
+                case ApplicationEntity.name:
+                    return btoa(`0^${key}`);
+                case Act.name:
+                case PatientEncounter.name:
+                case SubstanceAdministration.name:
+                case Observation.name:
+                case Narrative.name:
+                case Procedure.name:
+                    return btoa(`1^${key}`);
+                case Concept.name:
+                    return btoa(`2^${key}`);
+                default:
+                    throw Exception("ArgumentOutOfRangeException", "Unknown reference type");
+            }
+        }
+
+        /**
+         * @summary Resolves the object which is referenced in the extension
+         * @param {string} extensionValue The value of the reference extension
+         * @returns {IdentifiedData} The resolved object
+         */
+        this.resolveReferenceExtensionAsync = function (extensionValue) {
+            var valPart = atob(extensionValue).split('^');
+            switch (valPart[0]) {
+                case '0':
+                    return SanteDB.resources.entity.getAsync(valPart[1], "fastview");
+                case '1':
+                    return SanteDB.resources.act.getAsync(valPart[1], "fastview");
+                case '2':
+                    return SanteDB.resources.concept.getAsync(valPart[1], "fastview");
+                default:
+                    throw new Exception("InvalidOperationException", "Unknown reference type");
+            }
+        }
+
+        /**
          * @memberof SanteDBWrapper.ApplicationApi
         * @summary Wraps native printing functionality for the host operating system
         */
@@ -2149,7 +2199,7 @@ function SanteDBWrapper() {
             try {
                 if (!qrCodeData)
                     qrCodeData = await SanteDB.application.scanBarcodeAsync();
-                
+
                 // QR Code is a signed code
                 if (svrpPattern.test(qrCodeData) || jwsDataPattern.test(qrCodeData)) {
                     var match = svrpPattern.exec(qrCodeData) || jwsDataPattern.exec(qrCodeData);
@@ -2182,7 +2232,7 @@ function SanteDBWrapper() {
                     }
 
                     var result = {};
-                    if(!noExec) result = await SanteDB.resources.entity.findAsync(query);
+                    if (!noExec) result = await SanteDB.resources.entity.findAsync(query);
                     result.$search = qrCodeData;
                     return result;
                 }
@@ -2194,7 +2244,7 @@ function SanteDBWrapper() {
                 else if (e.rules && e.rules.length > 0 && e.rules.filter(o => o.id == "jws.verification" || o.id == "jws.app" || o.id == "jws.key").length == e.rules.length) {
                     return await SanteDB.application.searchByBarcodeAsync(qrCodeData, true, upstream);
                 }
-                else if(e.rules && e.rules.length > 0 && e.rules.filter(o => o.id == "jws.algorithm" || o.id == "jws.format").length == e.rules.length && 
+                else if (e.rules && e.rules.length > 0 && e.rules.filter(o => o.id == "jws.algorithm" || o.id == "jws.format").length == e.rules.length &&
                     confirm(SanteDB.locale.getString("ui.error.vrp.invalidFormat"))) {
                     return await SanteDB.application.searchByBarcodeAsync(qrCodeData, true, upstream);
                 }
@@ -2312,7 +2362,7 @@ function SanteDBWrapper() {
          * @param {*} algorithmName The name of the algorithm
          * @param {*} validator The validator callback
          */
-        this.addCheckDigitValidator = function(algorithmName, validator) {
+        this.addCheckDigitValidator = function (algorithmName, validator) {
             _identifierValidator[algorithmName] = validator;
         }
 
@@ -2322,15 +2372,15 @@ function SanteDBWrapper() {
          * @summary Get the specified identifier validator
          * @param {*} algorithmName The name of the algorithm
          */
-        this.getCheckDigitValidator = function(algorithmName) {
-            if(_identifierValidator[algorithmName]) {
+        this.getCheckDigitValidator = function (algorithmName) {
+            if (_identifierValidator[algorithmName]) {
                 return _identifierValidator[algorithmName];
             }
             else {
                 return () => true;
             }
         }
-        
+
         /**
          * @method addIdentifierClassifier
          * @summary Adds a new classification map for an  identifier 
@@ -2549,10 +2599,11 @@ function SanteDBWrapper() {
          * @method doUpdateAsync
          * @memberof SanteDBWrapper.ApplicationApi
          */
-        this.doUpdateAsync = function () {
+        this.doUpdateAsync = function (noPrompt) {
             return _app.postAsync({
-                resource: "Update",
-                contentType: 'application/json'
+                resource: "$update",
+                contentType: 'application/json',
+                data: { _apply: noPrompt }
             });
         }
         /**
@@ -2750,8 +2801,8 @@ function SanteDBWrapper() {
          * @description This method allows a plugin to resolve a template identifier (like: entity.tanzania.child) to an actual HTML summary
          */
         this.resolveTemplateSummary = function (templateId) {
-            var entry = (_templateCache || []).find(o=>o.mnemonic == templateId);
-            if(entry) {
+            var entry = (_templateCache || []).find(o => o.mnemonic == templateId);
+            if (entry) {
                 return entry.summaryView;
             }
             else {
@@ -2767,9 +2818,26 @@ function SanteDBWrapper() {
          * @param {string} templateId The id of the template for which HTML input should be gathered
          * @description This method allows a plugin to resolve a template identifier (like: entity.tanzania.child) to an actual HTML input form
          */
+        this.resolveTemplateBackentry = function(templateId) {
+            var entry = (_templateCache || []).find(o => o.mnemonic == templateId);
+            if (entry) {
+                return entry.backEntry;
+            }
+            else {
+                return null;
+            }
+        }
+        /**
+         * @summary Resolves the HTML input form for the specified template
+         * @method resolveTemplateForm
+         * @memberof SanteDBWrapper.ApplicationApi
+         * @returns {string} The HTML content of the input form for the specified template
+         * @param {string} templateId The id of the template for which HTML input should be gathered
+         * @description This method allows a plugin to resolve a template identifier (like: entity.tanzania.child) to an actual HTML input form
+         */
         this.resolveTemplateForm = function (templateId) {
-            var entry = (_templateCache || []).find(o=>o.mnemonic == templateId);
-            if(entry) {
+            var entry = (_templateCache || []).find(o => o.mnemonic == templateId);
+            if (entry) {
                 return entry.form;
             }
             else {
@@ -2785,8 +2853,8 @@ function SanteDBWrapper() {
          * @description This method allows a plugin to resolve a template view (to display informaton from the template)
          */
         this.resolveTemplateView = function (templateId) {
-            var entry = (_templateCache || []).find(o=>o.mnemonic == templateId);
-            if(entry) {
+            var entry = (_templateCache || []).find(o => o.mnemonic == templateId);
+            if (entry) {
                 return entry.view;
             }
             else {
@@ -2800,8 +2868,8 @@ function SanteDBWrapper() {
          * @param {string} templateId The template mnemonic to fetch data for
          * @returns {object} The template definition metadata
          */
-        this.getTemplateMetadata = function(templateId) {
-            return (_templateCache || []).find(o=>o.mnemonic == templateId);
+        this.getTemplateMetadata = function (templateId) {
+            return (_templateCache || []).find(o => o.mnemonic == templateId);
         }
 
         /**
@@ -2812,12 +2880,17 @@ function SanteDBWrapper() {
          * @returns {Array<string>} The list of template definitions
          */
         this.getTemplateDefinitionsAsync = async function (query) {
-            if(_templateCache) {
-                return _templateCache;
+            if (!query) {
+                if (_templateCache) {
+                    return _templateCache;
+                }
+                else {
+                    _templateCache = await _resources.template.findAsync(query);
+                    return _templateCache;
+                }
             }
             else {
-                _templateCache = await _resources.template.findAsync(query);
-                return _templateCache;
+                return _resources.template.findAsync(query);
             }
         }
         /**
@@ -2912,7 +2985,7 @@ function SanteDBWrapper() {
         this.ptrSearchAsync = function (jwsData, validateSignature, upstream) {
             try {
 
-                
+
                 var configuration = {
                     resource: "_ptr",
                     headers: {
@@ -3150,6 +3223,19 @@ function SanteDBWrapper() {
             resource: "EntityRelationship",
             api: _hdsi
         });
+
+
+        /**
+         * @type {ResourceWrapper}
+         * @summary Represents the act relationship resource
+         * @memberof SanteDBWrapper.ResourceApi
+         */
+        this.actRelationship = new ResourceWrapper({
+            accept: _viewModelJsonMime,
+            resource: "ActRelationship",
+            api: _hdsi
+        });
+
         /**
             * @type {ResourceWrapper}
             * @memberof SanteDBWrapper.ResourceApi
@@ -3929,7 +4015,7 @@ function SanteDBWrapper() {
         this.getOwnerId = function () {
             return __SanteDBAppService.GetAssignedOwnerId();
         }
-        
+
         /**
             * @method getRealm
             * @memberof SanteDBWrapper.ConfigurationApi
@@ -4357,7 +4443,7 @@ function SanteDBWrapper() {
                     var headers = {};
                     claims = claims || {};
 
-                    if(!Array.isArray(scope)) {
+                    if (!Array.isArray(scope)) {
                         scope = [scope];
                     }
 
@@ -4476,7 +4562,7 @@ function SanteDBWrapper() {
                         headers["X-SanteDBClient-Claim"] =
                             btoa(Object.keys(claims).map(o => `${o}=${claims[o]}`).join(";"));
                     }
-                    
+
                     _auth.postAsync({
                         resource: "oauth2_token",
                         data: {
@@ -4628,9 +4714,9 @@ function SanteDBWrapper() {
          * @param {string} userName The name of the user which is to be expired
          * @param {bool} upstream True if the request should be sent to the upstream
          */
-        this.expirePasswordAsync = function(sid, userName, upstream) {
+        this.expirePasswordAsync = function (sid, userName, upstream) {
             if (!_session && !(_elevator && _elevator.getToken()))
-            throw new Exception("SecurityException", "error.security", "Can only set password with active session");
+                throw new Exception("SecurityException", "error.security", "Can only set password with active session");
             return _ami.putAsync({
                 id: sid,
                 resource: "SecurityUser",
@@ -4689,13 +4775,13 @@ function SanteDBWrapper() {
          * @memberof SanteDBWrapper.AuthenticationApi
          * @returns {String} The UUID of the current facility identifier
          */
-        this.getCurrentFacilityId = async function() {
-            try { 
+        this.getCurrentFacilityId = async function () {
+            try {
                 var sessionInfo = await SanteDB.authentication.getSessionInfoAsync();
                 var sessionFacility = sessionInfo.claims["urn:oasis:names:tc:xspa:1.0:subject:facility"];
                 return sessionFacility ? sessionFacility.value || sessionFacility : SanteDB.configuration.getAssignedFacilityId();
             }
-            catch(e) {
+            catch (e) {
                 console.warn(e);
                 return SanteDB.configuration.getAssignedFacilityId();
             }
@@ -4706,20 +4792,20 @@ function SanteDBWrapper() {
          * @memberof SanteDBWrapper.AuthenticationApi
          * @returns {String} The UUID of the current user's CDR entity id
          */
-        this.getCurrentUserEntityId = async function() {
+        this.getCurrentUserEntityId = async function () {
             try {
                 var sessionInfo = await SanteDB.authentication.getSessionInfoAsync();
-                if(sessionInfo.entity) {
+                if (sessionInfo.entity) {
                     return sessionInfo.entity.id;
                 }
                 else {
                     var ue = await SanteDB.resources.userEntity.findAsync({ securityUser: sessionInfo.user.id, _includeTotal: false, _count: 1 });
-                    if(ue.resource) {
+                    if (ue.resource) {
                         return ue.resource[0].id;
                     }
                 }
             }
-            catch(e) {
+            catch (e) {
                 console.warn(e);
             }
         }
@@ -5011,8 +5097,8 @@ function ApplicationPrincipalElevator(multiuse) {
 
 
 // Add default check digit handlers
-SanteDB.application.addCheckDigitValidator("SanteDB.Core.Model.DataTypes.CheckDigitAlgorithms.InlineMod97Validator, SanteDB.Core.Model", function(id) {
-    if(!id.value) {
+SanteDB.application.addCheckDigitValidator("SanteDB.Core.Model.DataTypes.CheckDigitAlgorithms.InlineMod97Validator, SanteDB.Core.Model", function (id) {
+    if (!id.value) {
         return false;
     }
 
@@ -5020,15 +5106,15 @@ SanteDB.application.addCheckDigitValidator("SanteDB.Core.Model.DataTypes.CheckDi
 });
 
 // Add default check digit handlers
-SanteDB.application.addCheckDigitValidator("SanteDB.Core.Model.DataTypes.CheckDigitAlgorithms.Mod97CheckDigitAlgorithm, SanteDB.Core.Model", function(id) {
+SanteDB.application.addCheckDigitValidator("SanteDB.Core.Model.DataTypes.CheckDigitAlgorithms.Mod97CheckDigitAlgorithm, SanteDB.Core.Model", function (id) {
     return validateMod97CheckDigit(id.value, id.checkDigit);
 });
 
 
 
 // Add default check digit handlers
-SanteDB.application.addCheckDigitValidator("SanteDB.Core.Model.DataTypes.CheckDigitAlgorithms.InlineMod97Validator, SanteDB.Core.Model", function(id) {
-    if(!id.value) {
+SanteDB.application.addCheckDigitValidator("SanteDB.Core.Model.DataTypes.CheckDigitAlgorithms.InlineMod97Validator, SanteDB.Core.Model", function (id) {
+    if (!id.value) {
         return false;
     }
 
@@ -5036,6 +5122,6 @@ SanteDB.application.addCheckDigitValidator("SanteDB.Core.Model.DataTypes.CheckDi
 });
 
 // Add default check digit handlers
-SanteDB.application.addCheckDigitValidator("SanteDB.Core.Model.DataTypes.CheckDigitAlgorithms.Mod97CheckDigitAlgorithm, SanteDB.Core.Model", function(id) {
+SanteDB.application.addCheckDigitValidator("SanteDB.Core.Model.DataTypes.CheckDigitAlgorithms.Mod97CheckDigitAlgorithm, SanteDB.Core.Model", function (id) {
     return validateIso7064Mod97CheckDigit(id.value, id.checkDigit);
 });
