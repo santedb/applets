@@ -3100,6 +3100,18 @@ function SanteDBWrapper() {
         /**
             * @type {ResourceWrapper}
             * @memberof SanteDBWrapper.ResourceApi
+            * @summary Represents an resource wrapper that interoperates with the concept relationship type handler
+            */
+        this.conceptRelationshipType = new ResourceWrapper({
+            accept: _viewModelJsonMime,
+            resource: "ConceptRelationshipType",
+            api: _hdsi
+        });
+
+        
+        /**
+            * @type {ResourceWrapper}
+            * @memberof SanteDBWrapper.ResourceApi
             * @summary Represents an resource wrapper that interoperates with the care planner
             */
         this.carePlan = new ResourceWrapper({
@@ -3107,6 +3119,7 @@ function SanteDBWrapper() {
             resource: "CarePlan",
             api: _hdsi
         });
+
         /**
         * @type {ResourceWrapper}
         * @memberof SanteDBWrapper.ResourceApi
