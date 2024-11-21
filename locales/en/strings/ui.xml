@@ -322,6 +322,7 @@
       <string name="ui.table.search.field.identifier.value">Search by id</string>
       <string name="ui.table.search.field.name.component.value">Search by name</string>
       <string name="ui.table.search.field.name">Search by name</string>
+      <string name="ui.table.search.field.name.value||mnemonic">Search by name or mnemonic</string>
       <string name="ui.table.search.field.userName">Search by user name</string>
       <string name="ui.table.search.field.user.userName">Search by user name</string>
       <string name="ui.table.search.field.actor.uname">Search by actor</string>
