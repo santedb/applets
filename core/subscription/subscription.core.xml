@@ -23,11 +23,7 @@
     <!-- All Reference Terms Should be Downloaded -->
     <definition resource="ReferenceTerm" name="ui.subscription.referenceTerm.all" mode="*" ignoreModifiedOn="false" trigger="on-start on-x-net" />
     <!-- All Concept Sets be Downloaded -->
-    <definition resource="ConceptSet" name="ui.subscription.conceptSet.all" mode="*" ignoreModifiedOn="false" trigger="on-start">
-      <filters>
-        <add>_exclude=concept</add>
-      </filters>
-    </definition>
+    <definition resource="ConceptSet" name="ui.subscription.conceptSet.all" mode="*" ignoreModifiedOn="false" trigger="on-start"/>
     <definition resource="CarePathwayDefinition" name="ui.subscription.carePathway.all" mode="*" ignoreModifiedOn="false" trigger="on-start on-x-net" />
     <!-- All Concepts Terms Should be Downloaded -->
     <definition resource="Concept" name="ui.subscription.concept.all" mode="*" ignoreModifiedOn="false" trigger="on-start">
@@ -35,6 +31,9 @@
         <add>statusConcept=!CD4AA3C4-02D5-4CC9-9088-EF8F31E321C5</add>
       </filters>
     </definition>
+    <!-- All Code Systems Should be Downloaded -->
+    <definition resource="Protocol" name="ui.subscription.protocol.all" mode="*" ignoreModifiedOn="false" trigger="on-start on-x-net" />
+
     <!-- All Validation Rules -->
     <definition resource="RelationshipValidationRule" name="ui.relationship.all" mode="*" ignoreModifiedOn="false" trigger="on-start on-x-net" />
     <!-- Ensure all relationships are synchronized -->
