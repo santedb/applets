@@ -376,3 +376,9 @@ div.object-header {
 .strikethrough {
     text-decoration: line-through;
 }
+
+.actEntryComponentRemoved {
+    text-decoration: line-through;
+    color: var(--gray);
+    
+}

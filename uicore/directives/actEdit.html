@@ -101,10 +101,14 @@
             <!-- START CURRENT ENTRY -->
             <ul class="nav nav-tabs actBackEntry editOnly">
                 <li class="nav-item">
-                    <button class="nav-link active" data-toggle="tab" data-target="#currentActionTab"><i class="fas fa-fw fa-list-check"></i> {{ 'ui.model.act.tag.isBackentryFalse' | i18n }}</button>
+                    <button class="nav-link active" data-toggle="tab" data-target="#currentActionTab"><i
+                            class="fas fa-fw fa-list-check"></i> {{ 'ui.model.act.tag.isBackentryFalse' | i18n
+                        }}</button>
                 </li>
                 <li class="nav-item">
-                    <button class="nav-link" data-toggle="tab" data-target="#historyActionTab"><i class="fas fa-fw fa-clock-rotate-left"></i> {{ 'ui.model.act.tag.isBackentryTrue' | i18n }}</button>
+                    <button class="nav-link" data-toggle="tab" data-target="#historyActionTab"><i
+                            class="fas fa-fw fa-clock-rotate-left"></i> {{ 'ui.model.act.tag.isBackentryTrue' | i18n
+                        }}</button>
                 </li>
             </ul>
             <div class="tab-content mb-2">
@@ -116,16 +120,18 @@
                                 <div class="actProposeControl editOnly"
                                     ng-if="comp.targetModel.moodConcept == 'acf7baf2-221f-4bc2-8116-ceb5165be079' || comp.targetModel.relationship.Fulfills[0].targetModel.moodConcept == 'acf7baf2-221f-4bc2-8116-ceb5165be079'">
                                     <label class="checkbox-container">
-                                        <input type="checkbox" class="checkbox-control" ng-model="comp.targetModel.isNegated"
-                                            id="negate{{$index}}" ng-true-value="false" ng-false-value="true" />
+                                        <input type="checkbox" class="checkbox-control"
+                                            ng-model="comp.targetModel.isNegated" id="negate{{$index}}"
+                                            ng-true-value="false" ng-false-value="true" />
                                         <span></span>
                                     </label>
                                 </div>
                                 <!-- Render the main act entry content -->
                                 <div class="flex-grow-1 actEntryComponent">
-                                    <div ng-if="!comp.targetModel.isNegated" class="editOnly" ng-init="act = comp.targetModel">
+                                    <div ng-if="!comp.targetModel.isNegated" class="editOnly"
+                                        ng-init="act = comp.targetModel" ng-class="{ 'actEntryComponentRemoved' : comp.operation == '4' }" >
                                         <ng-include src="resolveTemplate(comp.targetModel.templateModel.mnemonic)">
-        
+
                                         </ng-include>
                                     </div>
                                     <div ng-if="comp.targetModel.isNegated">
@@ -136,8 +142,8 @@
                                                 </span>
                                             </div>
                                             <concept-select ng-model="comp.targetModel.reasonConcept"
-                                                concept-set="'ProtocolViolationReason'" required="required" class="form-control"
-                                                name="violationReason{{$index}}" />
+                                                concept-set="'ProtocolViolationReason'" required="required"
+                                                class="form-control" name="violationReason{{$index}}" />
                                         </div>
                                         <div class="text-danger"
                                             ng-if="ownerForm['violationReason' + $index].$error['required']">
@@ -146,18 +152,23 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="actMoveToHistory editOnly" ng-if="comp.targetModel.moodConcept == 'acf7baf2-221f-4bc2-8116-ceb5165be079' || comp.targetModel.relationship.Fulfills[0].targetModel.moodConcept == 'acf7baf2-221f-4bc2-8116-ceb5165be079'">
-                                    <button type="button" ng-click="moveHistory($index)"
-                                        class="btn btn-info">
-                                        <i class="fas fa-fw fa-clock-rotate-left"></i> <span class="d-none d-lg-inline">{{
+                                <div class="actMoveToHistory editOnly"
+                                    ng-if="comp.targetModel.moodConcept == 'acf7baf2-221f-4bc2-8116-ceb5165be079' || comp.targetModel.relationship.Fulfills[0].targetModel.moodConcept == 'acf7baf2-221f-4bc2-8116-ceb5165be079'">
+                                    <button type="button" ng-click="moveHistory($index)" class="btn btn-info">
+                                        <i class="fas fa-fw fa-clock-rotate-left"></i> <span
+                                            class="d-none d-lg-inline">{{
                                             'ui.action.historical' | i18n }}</span>
                                     </button>
                                 </div>
-                                <div class="actRemoveItem editOnly" ng-if="!(comp.targetModel.moodConcept == 'acf7baf2-221f-4bc2-8116-ceb5165be079' || comp.targetModel.relationship.Fulfills[0].targetModel.moodConcept == 'acf7baf2-221f-4bc2-8116-ceb5165be079')">
-                                    <button type="button" ng-click="removeItem($index)"
-                                        class="btn btn-danger">
+                                <div class="actRemoveItem editOnly"
+                                    ng-if="!(comp.targetModel.moodConcept == 'acf7baf2-221f-4bc2-8116-ceb5165be079' || comp.targetModel.relationship.Fulfills[0].targetModel.moodConcept == 'acf7baf2-221f-4bc2-8116-ceb5165be079')">
+                                    <button type="button" ng-click="removeItem($index)" class="btn btn-danger" ng-if="comp.operation != '4'">
                                         <i class="fas fa-fw fa-times-circle"></i> <span class="d-none d-lg-inline">{{
                                             'ui.action.remove' | i18n }}</span>
+                                    </button>
+                                    <button type="button" ng-click="comp.operation = undefined" class="btn btn-success" ng-if="comp.operation == '4'">
+                                        <i class="fa-solid fa-arrow-rotate-left"></i> <span class="d-none d-lg-inline">{{
+                                            'ui.action.undo' | i18n }}</span>
                                     </button>
                                 </div>
                             </div>
@@ -172,26 +183,40 @@
                     </ul>
                 </div>
             </div>
-            
-            <div class="btn-group float-right dropup">
-                <button type="button" class="btn btn-dark dropdown-toggle editOnly actAddItem" data-display="static" data-toggle="dropdown"
-                    data-target="#addActionDropdown" aria-haspopup="true" id="btnAddAction">
-                    <i class="fas fa-fw fa-plus-circle"></i> {{ 'ui.action.add' | i18n }}
-                </button>
-                <button ng-repeat="action in actions track by $index" ng-if="filterAction(action)" class="btn ml-1" ng-class="action.className"
-                    ng-click="doAction(action)" demand="{{action.demand}}" type="{{ action.type || 'button' }}" id="btnActEdit{{action.name}}">
-                    <i class="fas fa-fw" ng-class="action.icon"></i>
-                    {{ action.label || 'ui.action.' + action.name | i18n }}
-                </button>
-                <div class="dropdown-menu overflow-auto" id="addActionDropdown">
-                    <button class="dropdown-item" type="button" ng-click="addItem(tpl)"
-                        ng-repeat="tpl in availableTemplates track by $index">
-                        <i ng-class="tpl.icon"></i> {{ tpl.description | i18n }}
+
+            <div class="btn-group float-right">
+                <div class="dropup btn-group">
+                    <button type="button" class="btn btn-dark dropdown-toggle editOnly actAddItem" data-display="static"
+                        data-toggle="dropdown" data-target="#addActionDropdown" aria-haspopup="true" id="btnAddAction">
+                        <i class="fas fa-fw fa-plus-circle"></i> {{ 'ui.action.add' | i18n }}
                     </button>
-                    <div class="dropdown-divider"></div>
-                    <div class="dropdown-item">
-                        <input type="search" name="_none" ng-model="filterTemplates" class="form-control"
-                            placeholder="{{ 'ui.action.search' | i18n }}" />
+                    <div class="dropdown-menu overflow-auto" id="addActionDropdown">
+                        <button class="dropdown-item" type="button" ng-click="addItem(tpl)"
+                            ng-repeat="tpl in availableTemplates track by $index">
+                            <i ng-class="tpl.icon"></i> {{ tpl.description | i18n }}
+                        </button>
+                        <div class="dropdown-divider"></div>
+                        <div class="dropdown-item">
+                            <input type="search" name="_none" ng-model="filterTemplates" class="form-control"
+                                placeholder="{{ 'ui.action.search' | i18n }}" />
+                        </div>
+                    </div>
+                </div>
+                <div ng-repeat="action in actions track by $index" ng-if="filterAction(action)" class="btn-group" ng-class="{ 'dropup' : action.children }">
+                    <button class="btn" ng-click="action.children ? null : doAction(action)" ng-class="[{ 'dropdown-toggle' : action.children }, action.className]"
+                    data-toggle="{{ action.children ? 'dropdown' : null }}"
+                        demand="{{action.demand}}" type="{{ action.type || 'button' }}" id="btnActEdit{{action.name}}">
+                        <i class="fas fa-fw" ng-class="action.icon"></i>
+                        {{ action.label || 'ui.action.' + action.name | i18n }}
+                    </button>
+
+                    <div class="dropdown-menu" data-display="static">
+                        <button class="dropdown-item" type="button" ng-click="doAction(child, { id: child.id }, $index)"
+                            ng-repeat="child in action.children track by $index">
+                            <i class="fas fa-fw" ng-class="child.icon"></i> {{ child.label || 'ui.action.' + child.name
+                            | i18n }}
+
+                        </button>
                     </div>
                 </div>
             </div>

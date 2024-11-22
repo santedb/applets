@@ -49,7 +49,7 @@ angular.module('santedb-lib')
                 cdssValidationCallback: '<',
                 actions: '<'
             },
-            controller: ['$scope', '$rootScope', function ($scope, $rootScope) {
+            controller: ['$scope', '$rootScope', '$state', function ($scope, $rootScope, $state) {
 
                 var _masterTemplateList;
 
@@ -110,10 +110,17 @@ angular.module('santedb-lib')
 
                 $scope.removeItem = function (index) {
                     // Remove from the current actions
+
                     var itm = $scope.currentActions[index];
-                    var hidx = $scope.model.relationship.HasComponent.indexOf(itm);
-                    $scope.model.relationship.HasComponent.splice(hidx, 1);
-                    $scope.currentActions.splice(index, 1);
+
+                    if (itm && itm.targetModel.version) {
+                        itm.operation = BatchOperationType.DeleteInt;
+                    }
+                    else {
+                        var hidx = $scope.model.relationship.HasComponent.indexOf(itm);
+                        $scope.model.relationship.HasComponent.splice(hidx, 1);
+                        $scope.currentActions.splice(index, 1);
+                    }
                 }
 
                 $scope.moveHistory = function (index) {
@@ -169,7 +176,7 @@ angular.module('santedb-lib')
 
                 $scope.doAction = function (action) {
                     if (action.sref) {
-                        $state.go(action.sref);
+                        $state.go(action.sref, { id: $scope.model.id });
                     }
                     else if (typeof (action.action) === "string") {
                         $scope.$parent[action.action]();

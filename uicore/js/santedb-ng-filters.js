@@ -186,9 +186,23 @@ angular.module('santedb-lib')
      */
     .filter('extDate', function () {
         return function (date, precision) {
-            return SanteDB.display.renderDate(date, precision);
+            return SanteDB.display.renderDate(date, precision, false);
         }
     })
+    /**
+     * @method humanDate
+     * @memberof Angular
+     * @summary Renders an extended date with a specified precision
+     * @param {string} precision The precision of the date to render
+     * @example
+     *      <div class="col-md-2">Date Of Birth:</div>
+     *      <div class="col-md-2">{{ patient.dateOfBirth | humanDate: patient.dateOfBirthPrecision }}</div>
+     */
+        .filter('humanDate', function () {
+            return function (date, precision) {
+                return SanteDB.display.renderDate(date, precision, true);
+            }
+        })
     /**
      * @method since
      * @memberof Angular

@@ -21,7 +21,13 @@ SanteDB.locale.dateFormats = {
     day: 'DD MM YYYY',
     hour: 'DD MM YYYY HH',
     minute: 'DD MM YYYY HH:mm',
-    second: 'DD MM YYYY HH:mm:ss'
+    second: 'DD MM YYYY HH:mm:ss',
+    human: {
+        month: 'MMMM, YYYY',
+        day: 'dddd MMMM D, YYYY',
+        hour: 'dddd MMMM D, YYYY [at] hh A',
+        minute: 'dddd MMMM D, YYYY [at] hh:mm A'
+    }
 }
 
 SanteDB.display.setPreferredNameType("Phonetic");

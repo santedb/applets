@@ -4851,7 +4851,13 @@ function SanteDBWrapper() {
             day: 'YYYY-MM-DD',
             hour: 'YYYY-MM-DD HH',
             minute: 'YYYY-MM-DD HH:mm',
-            second: 'YYYY-MM-DD HH:mm:ss'
+            second: 'YYYY-MM-DD HH:mm:ss',
+            human: {
+                month: 'MMMM, YYYY',
+                day: 'dddd MMMM D, YYYY',
+                hour: 'dddd MMMM D, YYYY [at] hh A',
+                minute: 'dddd MMMM D, YYYY [at] hh:mm A'
+            }
         };
 
 
