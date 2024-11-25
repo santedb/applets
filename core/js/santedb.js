@@ -3100,6 +3100,18 @@ function SanteDBWrapper() {
         /**
             * @type {ResourceWrapper}
             * @memberof SanteDBWrapper.ResourceApi
+            * @summary Represents an resource wrapper that interoperates with the concept relationship type handler
+            */
+        this.conceptRelationshipType = new ResourceWrapper({
+            accept: _viewModelJsonMime,
+            resource: "ConceptRelationshipType",
+            api: _hdsi
+        });
+
+        
+        /**
+            * @type {ResourceWrapper}
+            * @memberof SanteDBWrapper.ResourceApi
             * @summary Represents an resource wrapper that interoperates with the care planner
             */
         this.carePlan = new ResourceWrapper({
@@ -3107,6 +3119,7 @@ function SanteDBWrapper() {
             resource: "CarePlan",
             api: _hdsi
         });
+
         /**
         * @type {ResourceWrapper}
         * @memberof SanteDBWrapper.ResourceApi
@@ -4838,7 +4851,13 @@ function SanteDBWrapper() {
             day: 'YYYY-MM-DD',
             hour: 'YYYY-MM-DD HH',
             minute: 'YYYY-MM-DD HH:mm',
-            second: 'YYYY-MM-DD HH:mm:ss'
+            second: 'YYYY-MM-DD HH:mm:ss',
+            human: {
+                month: 'MMMM, YYYY',
+                day: 'dddd MMMM D, YYYY',
+                hour: 'dddd MMMM D, YYYY [at] hh A',
+                minute: 'dddd MMMM D, YYYY [at] hh:mm A'
+            }
         };
 
 

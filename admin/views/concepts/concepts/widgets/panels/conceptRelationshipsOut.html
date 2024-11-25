@@ -40,7 +40,7 @@
 
         <div class="modal" id="addConceptRelationshipModal" role="dialog" aria-labelledby="addConceptRelationshipModalTitle"
             data-backdrop="static" aria-hidden="true">
-            <div class="modal-dialog" role="document">
+            <div class="modal-dialog modal-lg" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title" id="addConceptRelationshipModalTitle">
@@ -63,19 +63,7 @@
                                     </label>
                                     <div class="col-sm-12 col-md-8">
                                         <select class="form-control" name="relationship" ng-model="newConceptRelationship.relationshipType" required="required">
-                                            <option value="2c4dafc2-566a-41ae-9ebc-3097d7d22f4a">SAME_AS
-                                            </option>
-                                            <option value="ad27293d-433c-4b75-88d2-b5360cd95450">INVERSE_OF
-                                            </option>
-                                            <option value="ae8b4f2f-009f-4e0d-b35e-5a89555c5947">NEGATION_OF
-                                            </option>
-                                            <option value="ae8b4f2f-009f-4e0d-b35e-5a89555c5980">WIDER_THAN
-                                            </option>
-                                            <option value="ae8b4f2f-009f-4e0d-b35e-5a89555c5990">
-                                                NARROWER_THAN</option>
-                                                <option value="a159d45b-3c34-4e1b-9b75-9193a7528ced">
-                                                    MEMBER_OF
-                                                </option>
+                                            <option ng-repeat="opt in $root.system.conceptRelationshipTypes track by $index" value="{{ opt.id }}">{{ opt.name }}</option>
                                         </select>
                                         <div class="text-danger" ng-if="conceptRelationshipForm.relationship.$error['required']">
                                             <i class="fas fa-exclamation-triangle"></i> {{ 'ui.error.required' | i18n }}
@@ -90,7 +78,7 @@
                                     <div class="col-sm-12 col-md-8">
                                         <entity-search is-required="true" class="form-control" type="'Concept'" required="required"
                                         filter="{ statusConcept : [ 'c8064cbd-fa06-4530-b430-1a52f1530c27', 'afc33800-8225-4061-b168-bacc09cdbae3', 'c34fcbf1-e0fe-4989-90fd-0dc49e1b9685' ] }"
-                                        ng-model="newConceptRelationship.targetConcept" search-field="'name.value'"
+                                        ng-model="newConceptRelationship.targetConcept" search-field="'name.value||mnemonic'"
                                         name="targetConcept"></entity-search>
                                         <div class="text-danger" ng-if="conceptRelationshipForm.targetConcept.$error['required']">
                                             <i class="fas fa-exclamation-triangle"></i> {{ 'ui.error.required' | i18n }}

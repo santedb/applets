@@ -125,7 +125,7 @@ angular.module('santedb').controller('PlaceIndexController', ["$scope", "$rootSc
         if (confirm(SanteDB.locale.getString("ui.action.export.confirm"))) {
             try {
 
-                window.location = `/hdsi/Place/_export?classConcept=ff34dfa7-c6d3-4f8b-bc9f-14bcdc13ba6c&statusConcept=${StatusKeys.Active}`;
+                window.location = `/hdsi/Place/_export?classConcept=ff34dfa7-c6d3-4f8b-bc9f-14bcdc13ba6c&statusConcept=${StatusKeys.Active}&_include=Place:relationship[CommunityServiceDeliveryLocation].target.classConcept=ff34dfa7-c6d3-4f8b-bc9f-14bcdc13ba6c`;
             }
             catch(e) {
                 $rootScope.errorHandler(e);

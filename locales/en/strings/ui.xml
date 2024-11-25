@@ -231,6 +231,7 @@
       <string name="ui.action.create">Create</string>
       <string name="ui.action.delete">Delete</string>
       <string name="ui.action.nullify">Nullify</string>
+      <string name="ui.action.open">Open</string>
       <string name="ui.action.upload">Upload</string>
       <string name="ui.action.backup">Backup Now</string>
       <string name="ui.action.restore">Restore</string>
@@ -321,6 +322,7 @@
       <string name="ui.table.search.field.identifier.value">Search by id</string>
       <string name="ui.table.search.field.name.component.value">Search by name</string>
       <string name="ui.table.search.field.name">Search by name</string>
+      <string name="ui.table.search.field.name.value||mnemonic">Search by name or mnemonic</string>
       <string name="ui.table.search.field.userName">Search by user name</string>
       <string name="ui.table.search.field.user.userName">Search by user name</string>
       <string name="ui.table.search.field.actor.uname">Search by actor</string>
@@ -474,8 +476,8 @@
       <string name="ui.config.data.options.label">Options</string>
       <string name="ui.config.data.options.setting">Setting</string>
       <string name="ui.config.data.options.value">Value</string>
-      <string name="ui.config.data.basic.title">Basic Configuration</string>
-      <string name="ui.config.data.advanced.title">Advanced Configuration</string>
+      <string name="ui.config.data.basic.title">Basic Database Configuration</string>
+      <string name="ui.config.data.advanced.title">Advanced Database Configuration</string>
       <string name="ui.config.log.title">Logging</string>
       <string name="ui.config.log.description">SanteDB disconnected clients keep logs about the activities that occur on the mobile. While these are helpful for debugging and bug reports, they may impact performance or take up a lot of space. Use this panel to adjust the logging levels</string>
       <string name="ui.config.log.verbosity.label">Log Detail</string>
@@ -628,6 +630,13 @@
       <string name="security.challenge.text1">Your favorite pet\'s name</string>
       <string name="security.challenge.text2">Your oldest sibling\'s name</string>
       <string name="security.challenge.text3">The city where you were born</string>
+      <string name="security.challenge.text4">Your favorite food</string>
+      <string name="security.challenge.text5">Secondary school you attended</string>
+      <string name="security.challenge.text6">First care you owned</string>
+      <string name="security.challenge.text7">Favourite book or author</string>
+      <string name="security.challenge.text8">Your favorite movie</string>
+      <string name="security.challenge.text9">Your first job/employer</string>
+      <string name="security.challenge.text10">Your favourite cartoon character</string>
 
             <!-- Master Data Management -->
       <string name="org.santedb.widget.patient.mdm">Master Data Management</string>

@@ -92,8 +92,9 @@ SanteDBWrapper.prototype.display = new function () {
      * @summary Renders a date in the specified format
      * @param {Date} date The date to be rendered
      * @param {String} precision The precision of the date
+     * @param {boolean} inHumanFormat True if the date should be in human format
      */
-    this.renderDate = function (date, precision) {
+    this.renderDate = function (date, precision, inHumanFormat) {
         var dateFormat;
 
         if (!SanteDB.locale.dateFormats) {
@@ -108,33 +109,34 @@ SanteDBWrapper.prototype.display = new function () {
             });
         }
 
+        var root = inHumanFormat ? SanteDB.locale.dateFormats.human || SanteDB.locale.dateFormats : SanteDB.locale.dateFormats ;
         switch (precision) {
             case 1:   // Year     "Y"
             case 'Y':
-                dateFormat = SanteDB.locale.dateFormats.year;
+                dateFormat = root.year;
                 break;
             case 2:   // Month    "m"
             case 'm':
-                dateFormat = SanteDB.locale.dateFormats.month;
+                dateFormat = root.month;
                 break;
             case 3:   // Day      "D"
             case 'D':
-                dateFormat = SanteDB.locale.dateFormats.day;
+                dateFormat = root.day;
                 break;
             case 4:   // Hour     "H"
             case 'H':
-                dateFormat = SanteDB.locale.dateFormats.hour;
+                dateFormat = root.hour;
                 break;
             case 5:   // Minute   "M"
             case 'M':
-                dateFormat = SanteDB.locale.dateFormats.minute;
+                dateFormat = root.minute;
                 break;
             case 6:   // Second   "S"
             case 'S':
             case 0:   // Full     "F"
             case 'F':
             default:
-                dateFormat = SanteDB.locale.dateFormats.second;
+                dateFormat = root.second;
                 break;
         }
 

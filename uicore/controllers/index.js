@@ -78,7 +78,7 @@ var santedbApp = angular.module('santedb', ['ngSanitize', 'ui.router', 'oc.lazyL
                 if (uiMode && uiMode.value === "dark") {
                     $(["*[class*='-light']"]).each((i, ele) => {
                         var classValue = $(ele).attr("class");
-                        if(!classValue) {
+                        if (!classValue) {
                             return;
                         }
                         if (classValue.indexOf('bg-light') > -1) {
@@ -126,9 +126,12 @@ var santedbApp = angular.module('santedb', ['ngSanitize', 'ui.router', 'oc.lazyL
                 var session = await SanteDB.authentication.getSessionInfoAsync();
                 var configuration = {};
                 var uqDomains = [];
+                var conceptRelationshipTypes = [];
                 if (session) {
                     configuration = await SanteDB.configuration.getAsync();
-                    uqDomains = (await SanteDB.resources.identityDomain.findAsync({ isUnique: true})).resource.map(o=>o.domainName);
+                    uqDomains = (await SanteDB.resources.identityDomain.findAsync({ isUnique: true })).resource.map(o => o.domainName);
+                    conceptRelationshipTypes = await SanteDB.resources.conceptRelationshipType.findAsync();
+
                 } else {
                     configuration._isConfigured = SanteDB.configuration.getRealm() != null;
                     $rootScope.$watch("session", async function (n, o) {
@@ -178,6 +181,7 @@ var santedbApp = angular.module('santedb', ['ngSanitize', 'ui.router', 'oc.lazyL
                     $rootScope.system.config.owner = SanteDB.configuration.getOwnerId();
 
                     $rootScope.system.uniqueDomains = uqDomains;
+                    $rootScope.system.conceptRelationshipTypes = conceptRelationshipTypes.resource;
                     // Make app settings easier to handle
                     var appSettings = {};
                     if (configuration.application) {
@@ -304,7 +308,7 @@ var santedbApp = angular.module('santedb', ['ngSanitize', 'ui.router', 'oc.lazyL
         });
         $rootScope.StatusKeys = StatusKeys;
         $rootScope.windowSize = window.innerWidth;
-        
+
         // Extend toast information
         var _extendToast = null;
 
