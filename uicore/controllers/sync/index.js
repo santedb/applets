@@ -66,9 +66,9 @@ angular.module("santedb").controller("SyncController", ['$scope', '$rootScope', 
                 else
                     filter += "&_count=0&_includeTotal=true";
 
-                if (filter.indexOf("_subscription") > -1)
-                    s.local = "-";
-                else {
+                // if (filter.indexOf("_subscription") > -1)
+                //     s.local = "-";
+                // else {
                     try {
                         var localCount = await SanteDB.resources[resource].findAsync(filter, null, null, s);
                         s.local = localCount.totalResults === undefined ? localCount.size : localCount.totalResults;
@@ -76,7 +76,7 @@ angular.module("santedb").controller("SyncController", ['$scope', '$rootScope', 
                     catch (e) {
                         s.local = '-';
                     }
-                }
+                // }
 
                 if ($scope.showRemoteCounts) {
                     try {

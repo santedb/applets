@@ -481,6 +481,52 @@ SanteDBWrapper.prototype.display = new function () {
     }
 
     /**
+     * @summary Render a date difference
+     * @param {Date} date1 The date which serves as the source date
+     * @param {Date} date2 The date on which the date1 is to be differenced
+     * @param {string} units The units (days, weeks, etc.)
+     * @param {string} prefix The UI prefix
+     */
+    this.renderDateDifference = function(date1, date2, units, prefix) {
+
+        var diff = null, suffix = null;
+        switch (units) {
+            case 'h':
+                diff = date2.diff(date1, 'minutes');
+                suffix = `${prefix}.hours`;
+                break;
+            case 'D':
+                diff = date2.diff(date1, 'days');
+                suffix = `${prefix}.days`;
+                break;
+            case 'M':
+                diff = date2.diff(date1, 'months');
+                suffix = `${prefix}.months`;
+                break;
+            case 'Y':
+                diff = date2.diff(date1, 'years');
+                suffix = `${prefix}.years`;
+                break;
+            case 'm':
+                diff = date2.diff(date1, 'minutes');
+                suffix = `${prefix}.minutes`;
+                break;
+            default:
+                ___uomprec.forEach(p =>
+                {
+                     var pdf = date2.diff(date1, p);
+                    if(pdf > 0) {
+                        diff = pdf;
+                        suffix = `${prefix}.${p}`;
+                    }
+                });
+
+        }
+        return `${diff} ${SanteDB.locale.getString(suffix)}`;
+
+    }
+
+    /**
      * @method
      * @summary Iterates up the parent scope via scope.$parent until {see: nameOfVariable} is encountered
      * @param {*} scope The Angular scope that is in the current controller
