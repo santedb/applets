@@ -51,6 +51,13 @@
        <string name="ui.common.since.weeks">Weeks Ago</string>
        <string name="ui.common.since.months">Months Ago</string>
        <string name="ui.common.since.years">Years Ago</string>
+       <string name="ui.common.time.seconds">Seconds</string>
+       <string name="ui.common.time.minutes">Minutes</string>
+       <string name="ui.common.time.hours">Hours</string>
+       <string name="ui.common.time.days">Days</string>
+       <string name="ui.common.time.weeks">Weeks</string>
+       <string name="ui.common.time.months">Months</string>
+       <string name="ui.common.time.years">Years</string>
       <!-- Login Translations -->
       <string name="ui.login.input.username">Username</string>
       <string name="ui.login.input.password">Password</string>

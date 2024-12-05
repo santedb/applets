@@ -95,7 +95,9 @@
                                     class="btn btn-link text-xs font-weight-bold text-primary text-uppercase p-0 ">{{
                                     'ui.sync.deadletter' | i18n }}</button>
                                 <div class="h5 mb-0 font-weight-bold text-gray">
-                                    {{ 'ui.sync.deadletter.text' | i18n }} </div>
+                                    {{ 'ui.sync.deadletter.text' | i18n }} 
+                                    
+                                </div>
                             </div>
                             <div class="col-auto">
                                 <i class="fas fa-code-branch fa-2x text-gray"></i>
@@ -150,6 +152,7 @@
                             <td class="d-none d-lg-table-cell" ng-if="showRemoteCounts">
                                 <i class="fas fa-spin fa-circle-notch" ng-if="log.remote == undefined"></i>
                                 {{ log.remote }}
+                                <i class="fas fa-fw" ng-class="{ 'fa-check-circle text-success' : log.remote &lt;= log.local, 'fa-exclamation-circle text-warning' : log.remote !== undefined &amp;&amp; log.remote &gt; log.local, 'fa-question-circle text-info' : log.remote === undefined }"></i>
                             </td>
                             <td>{{ log.LastSync | extDate: 'f' }}</td>
                             <td>

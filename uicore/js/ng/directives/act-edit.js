@@ -194,6 +194,11 @@ angular.module('santedb-lib')
                         return true;
                     }
                 };
+
+                function flagDataUpdated(index) {
+
+                }
+
             }],
             link: function (scope, element, attrs) {
 
@@ -219,7 +224,23 @@ angular.module('santedb-lib')
                     if (_mode == "view") {
                         $(".editOnly", element).remove();
                     }
+                    else {
+                        $(".viewOnly", element).remove();
+                    }
                 }, 500);
+
+                
+                // Monitor for form touches - needs to be done after initialization
+                setTimeout(() => {
+
+                    $("input", element).each((i, e) => {
+                        $(e).on("blur", function(evt) {
+                            var eventIndexChanged = $(evt.currentTarget).closest("[data-actindex]").attr('data-actindex');
+                            scope.currentActions[eventIndexChanged].operation = scope.currentActions[eventIndexChanged].targetModel.operation = BatchOperationType.UpdateInt;
+                        });
+                    })
+
+                }, 1000);
 
                 _noCdss = attrs.disableCdss;
 

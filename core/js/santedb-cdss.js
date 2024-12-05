@@ -52,6 +52,14 @@ function SanteDBCdssWrapper() {
 
         try {
 
+            // Submission needs to clear fields
+            if(object.$type == Bundle.name || object.resource) {
+                object.resource.forEach(o => delete o.interpretationConcept);
+            }
+            else {
+                delete object.interpretationConcept;
+            }
+
             // Submit the bundle to the analyze endpoint
             var analysis = await SanteDB.resources.bundle.invokeOperationAsync(null, "analyze", { target: object, libraryId: libraryIds }, null, "fastview");
 

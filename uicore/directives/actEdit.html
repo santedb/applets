@@ -114,7 +114,7 @@
             <div class="tab-content mb-2">
                 <div id="currentActionTab" class="tab-pane show active">
                     <ul class="overflow-auto list-group">
-                        <li class="list-group-item" ng-repeat="comp in currentActions track by $index">
+                        <li class="list-group-item" ng-repeat="comp in currentActions track by $index" data-actindex="{{$index}}" ng-class="{ 'bg-light' : comp.targetModel.operation == '3'}">
                             <div class="d-flex justify-content-left">
                                 <!-- PROPOSE Should allow users to select an override -->
                                 <div class="actProposeControl editOnly"
@@ -169,6 +169,11 @@
                                     <button type="button" ng-click="comp.operation = undefined" class="btn btn-success" ng-if="comp.operation == '4'">
                                         <i class="fa-solid fa-arrow-rotate-left"></i> <span class="d-none d-lg-inline">{{
                                             'ui.action.undo' | i18n }}</span>
+                                    </button>
+                                </div>
+                                <div class="actEditItem viewOnly">
+                                    <button type="button" ng-click="editItem($index)" class="btn btn-primary" ng-disabled="comp.targetModel.actTime.age('hour') &gt; 24">
+                                        <i class="fas fa-fw fa-pencil"></i> <span class="d-none d-lg-inline">{{ 'ui.action.edit' | i18n }}</span>
                                     </button>
                                 </div>
                             </div>

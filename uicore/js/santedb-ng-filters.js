@@ -209,47 +209,19 @@ angular.module('santedb-lib')
      * @summary Renders the time since another date
      * @param {string} display The age to display (let this choose)
      */
-    .filter('since', function () {
-        return function (date, display, other) {
+    .filter('dateDiff', function () {
+        return function (date, display, other, prefix) {
+
+            if(angular.isObject(display)) {
+                other = display.other;
+                prefix = display.prefix;
+                display = display.display;
+            }
 
             var source = other ? moment(other) : moment();
-            var diff = null, suffix = null;
-            switch (display) {
-                case 'h':
-                    diff = source.diff(date, 'minutes');
-                    suffix = 'ui.common.since.hours';
-                    break;
-                case 'D':
-                    diff = source.diff(date, 'days');
-                    suffix = 'ui.common.since.days';
-                    break;
-                case 'M':
-                    diff = source.diff(date, 'months');
-                    suffix = 'ui.common.since.months';
-                    break;
-                case 'Y':
-                    diff = source.diff(date, 'years');
-                    suffix = 'ui.common.since.years';
-                    break;
-                case 'm':
-                    diff = source.diff(date, 'minutes');
-                    suffix = 'ui.common.since.minutes';
-                    break;
-                default:
-                    ___uomprec.forEach(p =>
-                    {
-                         var pdf = source.diff(date, p);
-                        if(pdf > 0) {
-                            diff = pdf;
-                            suffix = `ui.common.since.${p}`;
-                        }
-                    });
-
-            }
-            return `${diff} ${SanteDB.locale.getString(suffix)}`;
+            return SanteDB.display.renderDateDifference(date, source, display, prefix || 'ui.common.time');
         }
     })
-
     /**
      * @method age
      * @memberof Angular
