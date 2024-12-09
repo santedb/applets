@@ -195,10 +195,10 @@
                         data-toggle="dropdown" data-target="#addActionDropdown" aria-haspopup="true" id="btnAddAction">
                         <i class="fas fa-fw fa-plus-circle"></i> {{ 'ui.action.add' | i18n }}
                     </button>
-                    <div class="dropdown-menu overflow-auto" id="addActionDropdown">
+                    <div class="dropdown-menu overflow-auto" style="max-height: 50vh;" id="addActionDropdown">
                         <button class="dropdown-item" type="button" ng-click="addItem(tpl)"
                             ng-repeat="tpl in availableTemplates track by $index">
-                            <i ng-class="tpl.icon"></i> {{ tpl.description | i18n }}
+                            <i ng-class="tpl.icon"></i> {{ tpl.name | i18n }}
                         </button>
                         <div class="dropdown-divider"></div>
                         <div class="dropdown-item">

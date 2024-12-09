@@ -101,7 +101,7 @@ angular.module('santedb-lib')
 
                 $scope.$watch("filterTemplates", function (n, o) {
                     if (n && n != o) {
-                        $scope.availableTemplates = _masterTemplateList.filter(f => f.description.toLowerCase().indexOf(n.toLowerCase()) > -1);
+                        $scope.availableTemplates = _masterTemplateList.filter(f => f.name.toLowerCase().indexOf(n.toLowerCase()) > -1);
                     }
                     else {
                         $scope.availableTemplates = _masterTemplateList;

@@ -2902,7 +2902,7 @@ function SanteDBWrapper() {
          * @returns {any} The templated object
          */
         this.getTemplateContentAsync = async function (templateId, parms) {
-            var template = await _resources.template.getAsync(templateId, "full", parms);
+            var template = await _resources.template.getAsync(`${templateId}/skel`, "full", parms);
             if (template.relationship) { // Find relationship templates
                 template.relationship = await getSubTemplates(template.relationship, parms);
             }
