@@ -20,7 +20,7 @@
         <div ng-if="::model.$templateUrl" ng-init="act = model">
             <ng-include src="model.$templateUrl" />
         </div>
-        <div class="actInputList">
+        <div class="actInputList" ng-if="::!model.$templateUrl">
             <!-- Header Information for the core act-->
             <div class="scroll-sticky">
                 <div class="actHeader object-header card">

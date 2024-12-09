@@ -408,6 +408,7 @@
       <string name="ui.subscription.act.PatientEncounter.me">Only patient encounters performed at my facility</string>
 
       <!-- Configuration Translations -->
+       <string name="ui.configuration.alreadyConfigured">This instance of SanteDB is already configured</string>
       <string name="ui.config.advancedMode.active">The configuration tooling has been placed into advanced mode. Additional options are now available</string>
       <string name="ui.config.advancedMode.count">Tap this option {away} more times to enter advanced mode</string>
       <string name="ui.config.network.clientCert.label">Client Certificate</string>

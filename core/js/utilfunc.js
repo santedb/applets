@@ -540,7 +540,9 @@ function applyCascadeInstructions(source) {
                     .forEach(function (instruction) {
                         
                         // Apply the cascade for actTime, startTime, stopTime
-                        //relationship.targetModel.actTime = relationship.targetModel.actTime || source.actTime;
+                        if(relationship.targetModel.statusConcept == StatusKeys.Completed) {
+                            relationship.targetModel.actTime = relationship.targetModel.actTime || source.actTime;
+                        }
                         relationship.targetModel.moodConcept = relationship.targetModel.moodConcept || source.moodConcept;
 
                         if (!relationship.targetModel.participation[instruction.targetRole]
