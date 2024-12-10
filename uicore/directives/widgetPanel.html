@@ -26,7 +26,7 @@
     <div class="row">
         <div class="col" ng-repeat="group in widgetGroups track by $index"
             ng-class="{ 'col-12' : !renderSize &amp;&amp; group.size == 'Large' || renderSize == 'Large', 'col-sm-12 col-lg-6' : !renderSize &amp;&amp; group.size == 'Medium' || renderSize == 'Medium', 'col-sm-6 col-lg-3': !renderSize &amp;&amp; group.size == 'Small' || renderSize == 'Small' }">
-            <div class="mt-2 p-0 col" ng-repeat="panel in group.widgets" ng-if="$eval(panel.guard[0] || 'true')">
+            <div class="mt-2 p-0 col" ng-repeat="panel in group.widgets" ng-if="::$eval(panel.guard[0] || 'true')">
                 <div class="card widget-card">
                     <div class="card-header d-flex align-items-center justify-content-between"
                         ng-class="panel.headerClass">
@@ -39,7 +39,7 @@
                             </button>
                             <button class="btn btn-info" type="button" ng-click="setView(panel, 'Edit')"
                                 id="pnl{{panel.id}}Edit"
-                                ng-if="panel.view != 'Edit' &amp;&amp; !altView &amp;&amp; hasView(panel, 'Edit')"
+                                ng-if="::panel.view != 'Edit' &amp;&amp; !altView &amp;&amp; hasView(panel, 'Edit')"
                                 ng-init="::disableView(panel, 'Edit')">
                                 <i class="fas fa-pencil-alt"></i>
                             </button>
@@ -49,7 +49,7 @@
                             </button>
                             <button class="btn btn-dark" type="button" ng-init="disableView(panel, 'Edit')"
                                 ng-click="setView(panel, 'Setting')" id="pnl{{panel.id}}Setting"
-                                ng-if="hasView(panel, 'Setting') &amp;&amp; !altView"
+                                ng-if="::hasView(panel, 'Setting') &amp;&amp; !altView"
                                 ng-class="{ 'active' : panel.view == 'Setting' }">
                                 <i class="fa fa-cog"></i>
                             </button>

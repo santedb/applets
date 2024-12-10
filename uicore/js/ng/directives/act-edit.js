@@ -236,7 +236,9 @@ angular.module('santedb-lib')
                     $("input", element).each((i, e) => {
                         $(e).on("blur", function(evt) {
                             var eventIndexChanged = $(evt.currentTarget).closest("[data-actindex]").attr('data-actindex');
-                            scope.currentActions[eventIndexChanged].operation = scope.currentActions[eventIndexChanged].targetModel.operation = BatchOperationType.UpdateInt;
+                            if(scope.currentActions[eventIndexChanged] && scope.currentActions[eventIndexChanged].targetModel) {
+                                scope.currentActions[eventIndexChanged].operation = scope.currentActions[eventIndexChanged].targetModel.operation = BatchOperationType.UpdateInt;
+                            }
                         });
                     })
 

@@ -179,7 +179,14 @@ angular.module('santedb-lib')
                     $scope.hasView = function (panel, viewName) {
                         if (panel.views) {
                             var view = panel.views.find(o => o.type == viewName);
-                            return view != null;
+
+                            // Guard?
+                            if(!view || !view.guard || view.guard.length == 0 || $scope.$eval(view.guard[0])) {
+                                return view != null;
+                            }
+                            else {
+                                return false;
+                            }
                         }
                     }
 

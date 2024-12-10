@@ -956,5 +956,13 @@
     <string name="ui.model.dataTemplateDefinition.status.inactive">Inactive</string>
     <string name="ui.model.dataTemplateDefinition.status.public">Public</string>
     <string name="ui.model.dataTemplateDefinition.views">Views</string>
+    <string name="ui.model.dataTemplateDefinition.views.Entry">Current Entry</string>
+    <string name="ui.model.dataTemplateDefinition.views.BackEntry">Back-Entry</string>
+    <string name="ui.model.dataTemplateDefinition.views.DetailView">Detailed View</string>
+    <string name="ui.model.dataTemplateDefinition.views.SummaryView">Summary View</string>
     <string name="ui.model.dataTemplateDefinition.scope">Applies To</string>
+    <string name="ui.model.dataTemplateDefinition.version">Revision</string>
+    <string name="ui.model.dataTemplateDefinition.oid">Universal ID</string>
+    <string name="ui.model.dataTemplateDefinition.author">Author(s)</string>
+    <string name="ui.model.dataTemplateDefinition.template">Template</string>
 </resources>

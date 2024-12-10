@@ -2048,7 +2048,7 @@ function SanteDBWrapper() {
                             var targetProperty = rel.playerModel || rel.targetModel;
 
                             if (targetProperty && !targetProperty.classConcept && targetProperty.templateModel) {
-                                var object = await _resources.template.getAsync(targetProperty.templateModel.mnemonic, "full", parms);
+                                var object = await _resources.template.getAsync(`${targetProperty.templateModel.mnemonic}/skel`, "full", parms);
 
                                 // Initialize the template 
                                 if (object.tag) {
