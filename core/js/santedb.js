@@ -3098,6 +3098,17 @@ function SanteDBWrapper() {
         });
 
         /**
+        * @type {ResourceWrapper}
+        * @memberof SanteDBWrapper.ResourceApi
+        * @summary Represents a resource wrapper that persists a data template definition
+        */
+        this.dataTemplateDefinition = new ResourceWrapper({
+            accpet: _viewModelJsonMime,
+            resource: 'DataTemplateDefinition', 
+            api: _ami
+        });
+
+        /**
             * @type {ResourceWrapper}
             * @memberof SanteDBWrapper.ResourceApi
             * @summary Represents an resource wrapper that interoperates with the concept relationship type handler

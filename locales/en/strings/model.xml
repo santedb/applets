@@ -945,4 +945,16 @@
 
     <string name="ui.model.patientEncounter.dischargeDisposition">Discharge Reason</string>
     <string name="ui.model.patientEncounter.dischargeDisposition.hint">Indicate how the patient/person left the clinic</string>
+
+    <!-- Data Templates -->
+    <string name="ui.model.dataTemplateDefinition.name">Name</string>
+    <string name="ui.model.dataTemplateDefinition.description">Description</string>
+    <string name="ui.model.dataTemplateDefinition.mnemonic">Mnemonic</string>
+    <string name="ui.model.dataTemplateDefinition.status">Status</string>
+    <string name="ui.model.dataTemplateDefinition.status.readonly">Readonly</string>
+    <string name="ui.model.dataTemplateDefinition.status.active">Active</string>
+    <string name="ui.model.dataTemplateDefinition.status.inactive">Inactive</string>
+    <string name="ui.model.dataTemplateDefinition.status.public">Public</string>
+    <string name="ui.model.dataTemplateDefinition.views">Views</string>
+    <string name="ui.model.dataTemplateDefinition.scope">Applies To</string>
 </resources>

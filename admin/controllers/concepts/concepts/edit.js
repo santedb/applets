@@ -169,7 +169,7 @@ angular.module('santedb').controller('EditConceptController', ["$scope", "$rootS
                 });
             });
         } 
-        var win = window.open(`/hdsi/Concept/${id}/_export?_include=ConceptSet:concept%3d${id}%26_exclude=concept&_include=CodeSystem:${codeSys.join('%26')}&_include=ReferenceTerm:${refTerms.join('%26')}&_exclude=previousVersion&_includesFirst=true&_include=ConceptSet:compose.source=${id}%26_include=ReferenceTerm:concept.source=${id}%26_include=CodeSystem:referenceTerm.concept.source=${id}`, '_blank');
+        var win = window.open(`/hdsi/Concept/${id}/_export`); // ?_include=CodeSystem:${codeSys.join('%26')}&_include=ReferenceTerm:${refTerms.join('%26')}&_exclude=previousVersion&_includesFirst=true`, '_blank');
         win.onload = function (e) {
             win.close();
         };
