@@ -3103,7 +3103,7 @@ function SanteDBWrapper() {
         * @summary Represents a resource wrapper that persists a data template definition
         */
         this.dataTemplateDefinition = new ResourceWrapper({
-            accpet: _viewModelJsonMime,
+            accept: "application/json",
             resource: 'DataTemplateDefinition', 
             api: _ami
         });

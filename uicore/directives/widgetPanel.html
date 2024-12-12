@@ -39,7 +39,7 @@
                             </button>
                             <button class="btn btn-info" type="button" ng-click="setView(panel, 'Edit')"
                                 id="pnl{{panel.id}}Edit"
-                                ng-if="::panel.view != 'Edit' &amp;&amp; !altView &amp;&amp; hasView(panel, 'Edit')"
+                                ng-if="panel.view != 'Edit' &amp;&amp; !altView &amp;&amp; hasView(panel, 'Edit')"
                                 ng-init="::disableView(panel, 'Edit')">
                                 <i class="fas fa-pencil-alt"></i>
                             </button>
