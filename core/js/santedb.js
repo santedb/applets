@@ -856,6 +856,13 @@ function APIWrapper(_config) {
 function ResourceWrapper(_config) {
 
     /**
+     * @summary Get the resource this resource wrapper is configured 
+     * @memberof ResourceWrapper
+     * @returns (string} The resource that this handler handes
+     */
+    this.getResource = () => _config.resource;
+
+    /**
      * @method getUrl
      * @summary Gets the URL to this resource base
      * @memberof ResourceWrapper
