@@ -28,6 +28,7 @@ angular.module('santedb-lib')
         this.$get = ['$state', '$transitions', function ($state, $transitions) {
 
             var breadcrumb = function () {
+                this._rootNode = null;
                 var _this = this;
                 this.list = [];
                 this.getProperty = function (object, path) {
@@ -73,8 +74,14 @@ angular.module('santedb-lib')
                         title = breadcrumb.title;
                     });
                 };
-                this.generate = function () {
+                this.generate = function (rootNode) {
                     _this.list = [];
+                    if(rootNode) {
+                        _this._rootNode = rootNode;
+                    }
+                    if(_this._rootNode) {
+                        _this.list.push(_this._rootNode);
+                    }
                     _this.generateBreadcrumbs($state.$current);
                     _this.generateTitle();
                     if (_this.change)
