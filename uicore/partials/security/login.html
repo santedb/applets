@@ -54,12 +54,12 @@
         </div>
     </div>
     <div class="form-group row" ng-if="login.requireTfa">
-        <div class="col-12 alert-primary p-1 m-2">
-            <i class="fas fa-info-circle"></i> {{ login._mfaDetail | i18n  }}
-        </div>
         <label for="loginPou" class="col-sm-3 control-label">{{ 'ui.login.input.tfa' | i18n }}</label>
         <div class="col-sm-9">
-            <input type="text" pattern="^\d{4,}$" maxlength="10" class="form-control" ng-model="login.tfaSecret" ng-required="login.requireTfa"/>
+            <div class="col-12 alert-primary p-1 m-2">
+                <i class="fas fa-info-circle"></i> {{ login._mfaDetail | i18n  }}
+            </div>
+                <input type="text" pattern="^\d{4,}$" maxlength="10" class="form-control" ng-model="login.tfaSecret" ng-required="login.requireTfa"/>
         </div>
     </div>
     <div class="form-group row" ng-if="login.requireFacility">

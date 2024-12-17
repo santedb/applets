@@ -145,10 +145,15 @@ angular.module('santedb').controller('UserProfileWidgetController', ['$scope', '
         if (tfaForm.$invalid) return;
 
         try {
+            var userSubmission = {
+                $type: "SecurityUserInfo",
+                entity: $scope.editObject.securityUserModel
+            };
+
             SanteDB.display.buttonWait("#btnCompleteTfaSetup", true);
             await SanteDB.authentication.setupTfaSecretAsync($scope.tfaSetup.id, $scope.tfaSetup.code, $scope.editObject.isUpstreamUser);
             toastr.success(SanteDB.locale.getString("ui.tfa.setup.success"));
-            await SanteDB.resources.securityUser.updateAsync(userSubmission.entity.id, userSubmission);
+            var result = await SanteDB.resources.securityUser.updateAsync(userSubmission.entity.id, userSubmission);
             $("#setupTfaModal").modal('hide');
         }
         catch (e) {
@@ -165,7 +170,7 @@ angular.module('santedb').controller('UserProfileWidgetController', ['$scope', '
 
         if (userForm.$invalid) return;
         else if ($scope.editObject.isUpstreamUser &&
-            ($rootScope.session.authType != 'OAUTH' || !$rootScope.system.serviceState.ami)) {
+            ($rootScope.session.authType != 'OAUTH' || !SanteDB.application.getOnlineState())) {
             alert(SanteDB.locale.getString('ui.model.securityUser._changesPremittedOnlineOnly'));
             return;
         }
@@ -180,7 +185,6 @@ angular.module('santedb').controller('UserProfileWidgetController', ['$scope', '
             var result = await SanteDB.resources.securityUser.updateAsync(userSubmission.entity.id, userSubmission);
             // Now it is time to set the security challenges if they are set
             if ($scope.editObject.challenges) {
-
 
                 var setSecurityFn = async function () {
                     try {
