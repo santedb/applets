@@ -41,7 +41,7 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarResponsive"
                 ng-class="{'navbar-collapse-small' : windowSize &lt; 1100}">
-                <ul class="navbar-nav navbar-sidenav" id="menuAccordian">
+                <ul class="navbar-nav navbar-sidenav overflow-auto" id="menuAccordian">
                     <li ng-if="!menuItems" class="nav-item">
                         <a class="nav-link" href="javascript:"><i class="fas fa-circle-notch fa-spin"></i> {{ 'ui.wait'
                             | i18n }}</a>
