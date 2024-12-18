@@ -856,6 +856,13 @@ function APIWrapper(_config) {
 function ResourceWrapper(_config) {
 
     /**
+     * @summary Get the resource this resource wrapper is configured 
+     * @memberof ResourceWrapper
+     * @returns (string} The resource that this handler handes
+     */
+    this.getResource = () => _config.resource;
+
+    /**
      * @method getUrl
      * @summary Gets the URL to this resource base
      * @memberof ResourceWrapper
@@ -2048,7 +2055,7 @@ function SanteDBWrapper() {
                             var targetProperty = rel.playerModel || rel.targetModel;
 
                             if (targetProperty && !targetProperty.classConcept && targetProperty.templateModel) {
-                                var object = await _resources.template.getAsync(targetProperty.templateModel.mnemonic, "full", parms);
+                                var object = await _resources.template.getAsync(`${targetProperty.templateModel.mnemonic}/skel`, "full", parms);
 
                                 // Initialize the template 
                                 if (object.tag) {
@@ -2902,7 +2909,7 @@ function SanteDBWrapper() {
          * @returns {any} The templated object
          */
         this.getTemplateContentAsync = async function (templateId, parms) {
-            var template = await _resources.template.getAsync(templateId, "full", parms);
+            var template = await _resources.template.getAsync(`${templateId}/skel`, "full", parms);
             if (template.relationship) { // Find relationship templates
                 template.relationship = await getSubTemplates(template.relationship, parms);
             }
@@ -3095,6 +3102,17 @@ function SanteDBWrapper() {
             accept: _viewModelJsonMime,
             resource: 'CarePathwayDefinition',
             api: _hdsi
+        });
+
+        /**
+        * @type {ResourceWrapper}
+        * @memberof SanteDBWrapper.ResourceApi
+        * @summary Represents a resource wrapper that persists a data template definition
+        */
+        this.dataTemplateDefinition = new ResourceWrapper({
+            accept: "application/json",
+            resource: 'DataTemplateDefinition', 
+            api: _ami
         });
 
         /**

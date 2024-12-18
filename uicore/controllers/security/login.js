@@ -181,7 +181,7 @@ angular.module("santedb").controller("LoginController", ['$scope', '$rootScope',
         try {
             SanteDB.display.buttonWait("#verifyChallengeButton", true);
 
-            var session = await SanteDB.authentication.challengeLoginAsync($scope.reset.username, $scope.reset.challenge.challenge, $scope.reset.challengeResponse, $scope.login.tfaSecret, null);
+            var session = await SanteDB.authentication.challengeLoginAsync($scope.reset.username, $scope.reset.challenge.challenge, $scope.reset.challengeResponse, $scope.reset.tfaSecret, null);
             SanteDB.authentication.setElevator({ getToken: function () { return session.access_token; } });
 
             $timeout(_ => {
@@ -191,6 +191,27 @@ angular.module("santedb").controller("LoginController", ['$scope', '$rootScope',
             });
         }
         catch (e) {
+            switch(e.data.error) {
+                case "mfa_required":
+                    $timeout(() => {
+                        $scope.reset.requireTfa =
+                            $scope.reset._lockPassword =
+                            $scope.reset._lockUserName = true;
+                        $scope.reset._mfaDetail = e.data.error_description;
+                    });
+                    return;
+              
+                default:
+                    if (e.data && e.data.error_description) {
+                        e.userMessage = e.data.error_description;
+                        e.expiry = new Date(new Date().getTime() + e.data.expires_in);
+                    }
+                    else {
+                        e.userMessage = e.message;
+                    }
+                    $rootScope.errorHandler(e);
+                    break;
+            }
             $rootScope.errorHandler(e);
         }
         finally {

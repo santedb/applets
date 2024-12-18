@@ -32,9 +32,12 @@ angular.module('santedb-lib')
             replace: true,
             priority: 100,
             templateUrl: './org.santedb.uicore/directives/breadcrumb.html',
+            scope: {
+                rootNode: "<"
+            },
             link: {
                 pre: function (scope, element, attrs) {
-                    breadcrumbService.generate();
+                    breadcrumbService.generate(scope.rootNode);
                     scope.breadcrumbs = breadcrumbService.list;
                     breadcrumbService.change = () => scope.breadcrumbs = breadcrumbService.list;
                 }

@@ -38,6 +38,8 @@
     <string name="ui.admin.users.confirmLock">Are you sure you want to lock this user account?</string>
     <string name="ui.admin.users.confirmUnlock">Are you sure you want to unlock this user account?</string>
     <string name="ui.admin.users.systemUser">This action cannot be performed on a system user</string>
+    <string name="ui.admin.users.saveConfirm">User updated successfully</string>
+    <string name="ui.tfa.setup.success">TFA has been setup successfully</string>
     <string name="ui.admin.users.reactivate.confirm">Are you sure you want to reactivate this user
         account?</string>
     <string name="ui.admin.users.invalidLogin.reset">Are you sure you want to reset this user's

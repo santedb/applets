@@ -105,7 +105,7 @@
                                         <option ng-repeat="opt in unSelectedChallenges(chl.id)" value="{{ opt.id }}">{{
                                             opt.text | i18n }}</option>
                                     </select>
-                                    <input class="form-control" type="password" ng-model="chl.response" />
+                                    <input class="form-control" type="password" ng-model="chl.response" ng-change="chl.configured = false" />
                                 </div>
                             </div>
                         </div>

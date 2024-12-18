@@ -101,7 +101,7 @@ angular.module('santedb-lib')
 
                 $scope.$watch("filterTemplates", function (n, o) {
                     if (n && n != o) {
-                        $scope.availableTemplates = _masterTemplateList.filter(f => f.description.toLowerCase().indexOf(n.toLowerCase()) > -1);
+                        $scope.availableTemplates = _masterTemplateList.filter(f => f.name.toLowerCase().indexOf(n.toLowerCase()) > -1);
                     }
                     else {
                         $scope.availableTemplates = _masterTemplateList;
@@ -236,7 +236,9 @@ angular.module('santedb-lib')
                     $("input", element).each((i, e) => {
                         $(e).on("blur", function(evt) {
                             var eventIndexChanged = $(evt.currentTarget).closest("[data-actindex]").attr('data-actindex');
-                            scope.currentActions[eventIndexChanged].operation = scope.currentActions[eventIndexChanged].targetModel.operation = BatchOperationType.UpdateInt;
+                            if(scope.currentActions[eventIndexChanged] && scope.currentActions[eventIndexChanged].targetModel) {
+                                scope.currentActions[eventIndexChanged].operation = scope.currentActions[eventIndexChanged].targetModel.operation = BatchOperationType.UpdateInt;
+                            }
                         });
                     })
 
