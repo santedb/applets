@@ -485,7 +485,7 @@ ace.define("ace/mode/jsdoc_comment_highlight_rules",["require","exports","module
                         regex: escapedRe
                     }, {
                         token: "paren.quasi.start",
-                        regex: /\${/,
+                        regex: /\$\{/,
                         push: "start"
                     }, {
                         token: "string.quasi.end",
