@@ -99,14 +99,14 @@ angular.module('santedb-lib')
                     return templateValue;
                 }
 
-                $scope.$watch("filterTemplates", function (n, o) {
-                    if (n && n != o) {
+                $scope.doFilter = function(n) {
+                    if (n) {
                         $scope.availableTemplates = _masterTemplateList.filter(f => f.name.toLowerCase().indexOf(n.toLowerCase()) > -1);
                     }
                     else {
                         $scope.availableTemplates = _masterTemplateList;
                     }
-                })
+                }
 
                 $scope.removeItem = function (index) {
                     // Remove from the current actions
