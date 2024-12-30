@@ -169,8 +169,11 @@ angular.module('santedb-lib')
 
                     // Transitions
                     $transitions.onBefore({}, function (transition) {
-                        var navMessage = checkNavigateAway({})
-                        if (navMessage && !confirm(navMessage)) {
+                        var navMessage = checkNavigateAway({});
+
+                        // Transition to login?
+                        var toLogin = transition._targetState._definition.self.name == "login";
+                        if (!toLogin && navMessage && !confirm(navMessage)) {
                             $("#pageTransitioner").hide();
                             transition.abort();
                         }

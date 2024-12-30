@@ -96,7 +96,7 @@ angular.module('santedb').controller('CdssEditController', ["$scope", "$rootScop
                 _editor.onAnnotationChange((issues) => $timeout(() => $scope.validationIssues = issues));
                 validateInterval = $interval(_editor.validateEditor, 5000);
                 window.onbeforeunload = (e) => _editorDirty ? SanteDB.locale.getString("ui.action.abandon.confirm") : null;
-                $transitions.onBefore({ from: "santedb-admin.emr.cdss.*", to: "santedb-admin.*" },
+                $transitions.onBefore({ from: "santedb-admin.cdr.cdss.*", to: "santedb-admin.*" },
                     (transition) => {
                         if (_editorDirty && !confirm(SanteDB.locale.getString("ui.action.abandon.confirm"))) {
                             $("#pageTransitioner").hide();

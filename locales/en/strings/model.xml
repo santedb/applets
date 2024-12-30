@@ -948,9 +948,13 @@
 
     <!-- Data Templates -->
     <string name="ui.model.dataTemplateDefinition.name">Name</string>
+    <string name="ui.model.dataTemplateDefinition.name.hint">A short name for the clinical data template (appears in drop downs)</string>
     <string name="ui.model.dataTemplateDefinition.description">Description</string>
+    <string name="ui.model.dataTemplateDefinition.description.hint">A longer description about the data template, its use, guidance, etc.</string>
     <string name="ui.model.dataTemplateDefinition.mnemonic">Mnemonic</string>
+    <string name="ui.model.dataTemplateDefinition.mnemonic.hint">A unique string which is used to identify the clinical data template on APIs and CDSS rules</string>
     <string name="ui.model.dataTemplateDefinition.status">Status</string>
+    <string name="ui.model.dataTemplateDefinition.status.hint">The current status of the template</string>
     <string name="ui.model.dataTemplateDefinition.status.readonly">Readonly</string>
     <string name="ui.model.dataTemplateDefinition.status.active">Active</string>
     <string name="ui.model.dataTemplateDefinition.status.inactive">Inactive</string>
@@ -961,8 +965,12 @@
     <string name="ui.model.dataTemplateDefinition.views.DetailView">Detailed View</string>
     <string name="ui.model.dataTemplateDefinition.views.SummaryView">Summary View</string>
     <string name="ui.model.dataTemplateDefinition.scope">Applies To</string>
+    <string name="ui.model.dataTemplateDefinition.scope.hint">Identifies the types of encounters or screens where this template can be used</string>
     <string name="ui.model.dataTemplateDefinition.version">Revision</string>
     <string name="ui.model.dataTemplateDefinition.oid">Universal ID</string>
+    <string name="ui.model.dataTemplateDefinition.oid.hint">A universal identifier for the data template which is disclosed to other systems on APIs so that they can understand the template used for constructing an object</string>
     <string name="ui.model.dataTemplateDefinition.author">Author(s)</string>
-    <string name="ui.model.dataTemplateDefinition.template">Template</string>
+    <string name="ui.model.dataTemplateDefinition.author.hint">The people/organizations that wrote the template</string>
+    <string name="ui.model.dataTemplateDefinition.template">Model / Template</string>
+    <string name="ui.model.dataTemplateDefinition.template.hint">The RIM based model which is used for constructing the template data</string>
 </resources>
