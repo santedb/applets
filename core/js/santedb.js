@@ -1724,7 +1724,7 @@ function ResourceWrapper(_config) {
     *   }
     * }
     */
-    this.invokeOperationAsync = function (id, operation, parameters, upstream, viewModel, state) {
+    this.invokeOperationAsync = function (id, operation, parameters, upstream, viewModel, expectType, state) {
 
 
         if (!operation)
@@ -1763,8 +1763,8 @@ function ResourceWrapper(_config) {
             data: requestParms,
             state: state,
             resource: url,
-            contentType: _config.accept
-
+            contentType: _config.accept,
+            dataType: expectType
         });
     }
 };

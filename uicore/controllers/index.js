@@ -247,6 +247,7 @@ var santedbApp = angular.module('santedb', ['ngSanitize', 'ui.router', 'oc.lazyL
                             $rootScope.session = null;
                             delete ($rootScope.session);
                             toastr.clear();
+                            window.onbeforeunload = null;
                             $state.go("login");
                         });
                     }

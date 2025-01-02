@@ -171,7 +171,7 @@
                                             'ui.action.undo' | i18n }}</span>
                                     </button>
                                 </div>
-                                <div class="actEditItem viewOnly">
+                                <div class="actEditItem viewOnly" ng-if="comp.targetModel.statusConcept == 'afc33800-8225-4061-b168-bacc09cdbae3'">
                                     <button type="button" ng-click="editItem($index)" class="btn btn-primary" ng-disabled="comp.targetModel.actTime.age('hour') &gt; 24">
                                         <i class="fas fa-fw fa-pencil"></i> <span class="d-none d-lg-inline">{{ 'ui.action.edit' | i18n }}</span>
                                     </button>
@@ -202,7 +202,7 @@
                         </button>
                         <div class="dropdown-divider"></div>
                         <div class="dropdown-item">
-                            <input type="search" name="_none" ng-model="filterTemplates" class="form-control"
+                            <input type="search" ng-model="searchTemplateString" ng-change="doFilter(searchTemplateString)" class="form-control"
                                 placeholder="{{ 'ui.action.search' | i18n }}" />
                         </div>
                     </div>
