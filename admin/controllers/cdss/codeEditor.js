@@ -240,19 +240,23 @@ function CdssAceEditor(controlName, initialText, fileName, libraryUuid) {
             }
         }
 
-        function consumeJsonStructure(tokenIterator) {
+        function consumeCurrentRawContent(tokenIterator) {
             var definition = "";
-            while (tokenIterator.stepBackward()) {
+            do {
                 var currentToken = tokenIterator.getCurrentToken();
                 switch (currentToken.type) {
                     case "markup.raw":
-                        if (currentToken.value.trim() == "$$") {
+                        if (currentToken.value.trim() === "$$") {
                             return definition;
+                        }
+                        else if(currentToken.value.indexOf("$$") === 0) {
+                            definition = currentToken.value.substring(2).trim() + definition;
+                            return definition;  
                         }
                     default:
                         definition = currentToken.value + definition;
                 }
-            }
+            } while (tokenIterator.stepBackward());
             return definition;
         }
 
@@ -260,7 +264,7 @@ function CdssAceEditor(controlName, initialText, fileName, libraryUuid) {
             try {
                 // Consume the JSON object back to the raw
                 var tokenIterator = new TokenIterator(session, row, column);
-                var definition = consumeJsonStructure(tokenIterator);
+                var definition = consumeCurrentRawContent(tokenIterator);
                 var retVal = [];
 
                 // Attempt to extract the "$type" from the definition
@@ -380,7 +384,7 @@ function CdssAceEditor(controlName, initialText, fileName, libraryUuid) {
             var tokenIterator = new TokenIterator(session, pos.row, pos.column);
             var rawTokens = 0;
             var lastFunction = null;
-            var lastKeyword = null;
+            var lastType = null;
             do {
                 var currentToken = tokenIterator.getCurrentToken();
                 switch (currentToken.type) {
@@ -392,6 +396,13 @@ function CdssAceEditor(controlName, initialText, fileName, libraryUuid) {
                     case "support.function":
                     case "support.constant":
                         lastFunction = lastFunction || currentToken.value;
+                        break;
+                    case "storage.type":
+                        tokenIterator.stepBackward(); // text
+                        tokenIterator.stepBackward(); // control
+                        if(tokenIterator.getCurrentToken().value == "context") {
+                            lastType = lastType || currentToken.value;
+                        }
                         break;
                 }
             } while (tokenIterator.stepBackward());
@@ -456,6 +467,35 @@ function CdssAceEditor(controlName, initialText, fileName, libraryUuid) {
                         }
                         break;
                     case "hdsi":
+                        var api = SanteDB.resources[lastType.toCamelCase()];
+                        if(api){
+                            tokenIterator = new TokenIterator(session, pos.row, pos.column);
+                            var hdsiExpression = consumeCurrentRawContent(tokenIterator).trim().replaceAll("\r","").replaceAll("\n","");
+                            // vars 
+                            try {
+                                hdsiExpression = hdsiExpression.split('&');
+                                hdsiExpression = hdsiExpression[hdsiExpression.length -1];
+                                var vars = _factList.filter(o=>o.type == "Fact").map(f=> `$${f.name}`);
+                                var result = await api.invokeOperationAsync(null, "schema-complete", {
+                                    "expression": hdsiExpression,
+                                    "vars": vars
+                                }, false, null, null, "application/json");
+                                if(Array.isArray(result)) {
+                                    _scopedList = result.map(r=> {
+                                        return {
+                                            name: r,
+                                            type: "Classifier"
+                                        }
+                                    });
+                                }
+                                else {
+                                    _scopedList = result.properties;
+                                }
+                            }
+                            catch(e) {
+                                console.warn(e);
+                            }
+                        }
                         break;
                     case "csharp":
                         if(token.type == "string") {
@@ -501,7 +541,7 @@ function CdssAceEditor(controlName, initialText, fileName, libraryUuid) {
                     value: r.value || r.name,
                     snippet: snippetMaker ? snippetMaker(r) : r.snippet,
                     score: 10,
-                    docText: r.documentation.trim(),
+                    docText: (r.documentation || "No Documentation").trim(),
                     meta: r.type
                 }
             });
