@@ -17,24 +17,51 @@
  */
 function CdssAceEditor(controlName, initialText, fileName, libraryUuid) {
 
+    // TODO:
+    var _defaultAutoComplete = {
+        "keyword": "define include as end having with where from select order by metadata type",
+        "structure": "rule model fact library protocol data logic",
+        "action" : "repeat propose apply assign raise",
+        "control": "iterations until when then",
+        "format": "json xml",
+        "id": "id uuid oid",
+        "severity" : "warn info danger error",
+        "constants": "true false for active dont-use trial-use retired context",
+        "modifier": "negation track-by normalize computed scoped-to",
+        "function": "hdsi csharp all none any query first last average ",
+        "variable": "format type scope const priority",
+        "type": "string bool int real long"
+    };
+    _defaultAutoComplete = Object.keys(_defaultAutoComplete).map(k => {
+        return _defaultAutoComplete[k].split(' ').map(v => {
+            return {
+                type: k,
+                name: v
+            }
+        });
+    }).reduce((a,b) => a.concat(b) );
+
     var _editor;
     var _completor;
     var _saveHandlers = [];
     var _tooltipElement = document.createElement("div");
     var _uuidRegex = /.*?([a-fA-F0-9]{8}\-(?:[a-fA-F0-9]{4}\-){3}[a-fA-F0-9]{12}).*/;
+    const jsonTypeExtractor = /"\$type"\s*\:\s*\"(\w+)\"/mi;
     var _lookupApi = [
         SanteDB.resources.entity,
         SanteDB.resources.concept,
         SanteDB.resources.conceptSet
     ];
     var _validationCallback = [];
+    var _basicTypes = Object.keys(SanteDB.resources).filter(o => SanteDB.resources[o] instanceof ResourceWrapper).map(o => { return { name: SanteDB.resources[o].getResource(), type: "Resource" } });
 
     // Require
     var LanguageTools = ace.require("ace/ext/language_tools");
     var Range = ace.require("ace/range").Range;
     var { HoverTooltip } = ace.require("ace/tooltip");
+    var { TokenIterator } = ace.require("ace/token_iterator");
 
-    
+
     async function _validateEditor(force) {
         try {
             var value = _editor.getValue();
@@ -69,13 +96,13 @@ function CdssAceEditor(controlName, initialText, fileName, libraryUuid) {
                     };
                 });
                 _editor.getSession().setAnnotations(annotations);
-                _validationCallback.forEach(o=>o(annotations));
+                _validationCallback.forEach(o => o(annotations));
 
             }
             var isValid = issues.issue.find(o => o.priority == 'Error') == null;
-            
-            if(isValid) {
-                _completor.refreshOptions();
+
+            if (isValid) {
+                _completor.refreshCdssSymbols();
             }
             return isValid;
         }
@@ -89,66 +116,398 @@ function CdssAceEditor(controlName, initialText, fileName, libraryUuid) {
     // CDSS Auto-completor
     function _cdssCompletor() {
         const _typeMaps = {
-            "CdssLibrary" : "Library",
-            "CdssDecisionLogicBlockDefinition" : "Logic",
-            "CdssFactAssetDefinition" : "Fact",
+            "CdssLibrary": "Library",
+            "CdssDecisionLogicBlockDefinition": "Logic",
+            "CdssFactAssetDefinition": "Fact",
             "CdssProtocolAssetDefinition": "Protocol",
             "CdssModelAssetDefinition": "Model",
             "CdssDataBlockDefinition": "Data"
         };
-        var _scopedList;
+        var _cdssSymbols = [];
 
-        async function _refreshOptions()
-        { 
+        // TODO: Interact with a more intelligent C# completion 
+        const _dateFunctions = [
+            { name: "AddDays", snippet: "AddDays(${1:days})", type: "DateTime", documentation: "Add the specified number of days to date time. Example: AddDays(3)" },
+            { name: "AddMonths", snippet: "AddMonths(${1:months})", type: "DateTime", documentation: "Add the specified number of months to the date/time. Example: AddMonths(12)" },
+            { name: "Subtract (fact)", snippet: "Subtract(date(\"${1:fact_name}\")", type: "TimeSpan", documentation: "Get the difference in two times. Example: Subtract(date(\"Patient Date Of Birth\"))" },
+            { name: "Subtract", snippet: "Subtract(${1:date})", type: "TimeSpan", documentation: "Get the difference in two times. Example: Subtract(otherDate)" }
+        ];
+        const _csharpKeywords =
+            [
+                { name: "DateTime", type: "C# Type", documentation: "Functions for interacting with dates & times with timezone information", children: [
+                    { name: "Now", type: "DateTimeOffset", documentation: "The current date and time", children: _dateFunctions },
+                    { name: "Today", type: "DateTimeOffset", documentation: "The current date and time", children: _dateFunctions }
+                ] },
+                { name: "String", type: "C# Type", documentation: "Functions for dealing with strings", children: [
+                    { name: "IsNullOrEmpty", snippet: "IsNullOrEmpty(${1:string})", type: "Boolean" }
+                ] },
+                { name: "Int32", type: "C# Type", documentation: "Functions for dealing with integers", children: [
+                    { name: "Parse (fact)", snippet: "Parse(string(\"${1:fact_name}\"))", documentation: "Parse a fact into an integer" },
+                    { name: "Parse", snippet: "Parse(${1:numberString})", documentation: "Parse a string into an integer" },
+                    { name: "MaxValue", snippet: "MaxValue", documentation: "Maximum value of integer" },
+                    { name: "MinValue", snippet: "MinValue", documentation: "Minimum value of integer" }
+                ] },
+                { name: "scopedObject", type: "Object", documentation: "The currently scoped object (the output of the assignment)"},
+                { name: "true", type: "Boolean", documentation: "Constant representing TRUE"},
+                { name: "false", type: "Boolean", documentation: "Constant representing FALSE"},
+                { name: "int", type: "Int32", snippet: "int(\"${1:fact_name}\")", documentation: "Retrieve an Integer based fact from the context" },
+                { name: "real", type: "Double", snippet: "real(\"${1:fact_name}\")", documentation: "Retrieve a double precision decimal number fact from context" },
+                { name: "bool", type: "Boolean", snippet: "bool(\"${1:fact_name}\")", documentation: "Retrieve a boolean value fact from the context" },
+                { name: "date", type: "DateTime", snippet: "date(\"${1:fact_name}\")", documentation: "Retrieve a date value fact from the context" },
+                { name: "string", type: "String", snippet: "string(\"${1:fact_name}\")", documentation: "Retrieve a string fact from the context" },
+                { name: "data", type: "Dataset", snippet: "data(\"${1:data_name}\")", documentation: "Get a CDSS defined dataset for reference value lookup" },
+                { name: "act", type: "Act", snippet: "act(\"${1:fact_name}\")", documentation: "Retrieve an Act based fact from the context" },
+                { name: "entity", type: "Entity", snippet: "entity(\"${1:fact_name}\")", documentation: "Retrieve an Entity based fact from the context" },
+                { name: "Lookup", type: "Dataset", snippet: "Lookup(\"${1:column}\", ${2:filterValue})", documentation: "Filter the dataset by the specified data (must be applied to a dataset)"},
+                { name: "Between", type: "Dataset", snippet: "Between(\"${1:column}\", ${2:lowerValue}, ${3:upperValue})", documentation: "Filter the dataset by values between upper and lower values"},
+                { name: "Select", type: "Enumeration of Object", snippet: "Select(\"${1:column}\")", documentation: "Select a single column from the dataset"},
+                { name: "SelectReal", type: "Enumeration of Real", snippet: "SelectReal(\"${1:column}\")", documentation: "Select a single column only returning the REAL (double precision decimal) values from the dataset"},
+                { name: "SelectInt", type: "Enumeration", snippet: "SelectInt(\"${1:column}\")", documentation: "Select a single column only returning INTEGER values from the dataset"},
+                { name: "SelectDate", type: "Enumeration", snippet: "SelectDate(\"${1:column}\")", documentation: "Select a single column only returning DATE values from the dataset"},
+                { name: "Min", type: "Object", snippet: "Min()", documentation: "Return the minimum value in the dataset enumeration"},
+                { name: "Max", type: "Object", snippet: "Max()", documentation: "Return the maximum value in the dataset enumeration"},
+                { name: "Average", type: "Object", snippet: "Average()", documentation: "Return the average value in the dataset enumeration"},
+
+                { name: "context", type: "CDSS Context", document: "The current CDSS execution context", children: [
+                    { name: "Int", type: "Int32", snippet: "Int(\"${1:fact_name}\")", documentation: "Retrieve an Integer based fact from the context" },
+                    { name: "Real", type: "Double", snippet: "Real(\"${1:fact_name}\")", documentation: "Retrieve a double precision decimal number fact from context" },
+                    { name: "Bool", type: "Boolean", snippet: "Bool(\"${1:fact_name}\")", documentation: "Retrieve a boolean value fact from the context" },
+                    { name: "Date", type: "DateTime", snippet: "Date(\"${1:fact_name}\")", documentation: "Retrieve a date value fact from the context" },
+                    { name: "String", type: "String", snippet: "String(\"${1:fact_name}\")", documentation: "Retrieve a string fact from the context" },
+                    { name: "GetFact", type: "Object", snippet: "GetFact(\"${1:fact_name}\")", documentation: "Retrieve the raw fact for the data" },
+                    { name: "data", type: "Dataset", snippet: "GetDataset(\"${1:data_name}\")", documentation: "Get a CDSS defined dataset for reference value lookup" },
+
+                    { name: "Target", type: "IdentifiedData", documentation: "The current target object of the CDSS context" }
+                ]}
+            ];
+
+        async function _refreshSymbols() {
             try {
                 var definition = _editor.getValue();
-                _scopedList = await SanteDB.resources.cdssLibraryDefinition.invokeOperationAsync(null, "symbol", {
+                _cdssSymbols = await SanteDB.resources.cdssLibraryDefinition.invokeOperationAsync(null, "symbol", {
                     definition: definition
                 }, true);
-            } catch(e) {
+                _cdssSymbols = _cdssSymbols.symbol.map(o => {
+                    return {
+                        type: _typeMaps[o.typeName],
+                        name: o.name,
+                        documentation: o.meta ? o.meta.documentation : "No Documentation",
+                        id: o.id
+                    }
+                })
+            } catch (e) {
 
             }
         }
 
-        _refreshOptions();
+        _refreshSymbols();
 
-        this.refreshOptions = _refreshOptions;
+        this.refreshCdssSymbols = _refreshSymbols;
+
+        // Consume the token name
+        function consumeTokenName(tokenIterator, keepRow) {
+            // Move to the "STRING"
+            var tokenType = null;
+            var rt = null;
+            while (tokenIterator.stepBackward()) {
+                var currentToken = tokenIterator.getCurrentToken();
+                if (keepRow === undefined || keepRow === tokenIterator.$row) {
+                    switch (currentToken.type) {
+                        case "variable":
+                            return { name: currentToken.value.trim().replaceAll("\"", ""), type: tokenType, resourceType: rt };
+                        case "paren.lparen":
+                            tokenType = currentToken.value.trim();
+                            break;
+                        case "paren.rparen": // Consume
+                            consumeObjectTokens(tokenIterator);
+                            break;
+                    }
+                }
+            }
+        }
+
+        // Consume all token objects from the iterator
+        function consumeObjectTokens(tokenIterator) {
+            while (tokenIterator.stepBackward()) {
+                var currentToken = tokenIterator.getCurrentToken();
+                switch (currentToken.type) {
+                    case "paren.rparen":
+                        consumeObjectTokens(tokenIterator);
+                        break;
+                    case "paren.lparen":
+                        return;
+                }
+            }
+        }
+
+        function consumeJsonStructure(tokenIterator) {
+            var definition = "";
+            while (tokenIterator.stepBackward()) {
+                var currentToken = tokenIterator.getCurrentToken();
+                switch (currentToken.type) {
+                    case "markup.raw":
+                        if (currentToken.value.trim() == "$$") {
+                            return definition;
+                        }
+                    default:
+                        definition = currentToken.value + definition;
+                }
+            }
+            return definition;
+        }
+
+        async function _getRimSchemaCompletion(session, row, column, forDocumentation) {
+            try {
+                // Consume the JSON object back to the raw
+                var tokenIterator = new TokenIterator(session, row, column);
+                var definition = consumeJsonStructure(tokenIterator);
+                var retVal = [];
+
+                // Attempt to extract the "$type" from the definition
+                var match = jsonTypeExtractor.exec(definition);
+                var api = null;
+                if (match) {
+                    var type = match[1].toCamelCase();
+                    var api = SanteDB.resources[type];
+                }
+
+                if (api) {
+                    var tokenIterator = new TokenIterator(session, row, column);
+                    // Var token extractor - 
+                    var tokenPath = [];
+                    var lastString = null;
+                    var cObjectType = null;
+                    var lastVariable = null;
+                    while (tokenIterator.stepBackward()) {
+                        var currentToken = tokenIterator.getCurrentToken();
+                        if (currentToken.type == "markup.raw" && currentToken.value.indexOf("$$") >= 0) {
+                            break;
+                        }
+                        switch (currentToken.type) {
+                            case "paren.lparen":
+                                // Get property
+                                var tokenData = consumeTokenName(tokenIterator);
+                                if (tokenData) {
+                                    tokenData.castAs = cObjectType;
+                                }
+                                tokenPath.push(tokenData);
+                                break;
+                            case "paren.rparen":
+                                consumeObjectTokens(tokenIterator);
+                                consumeTokenName(tokenIterator); // Get the token name
+                                break;
+                            case "string":
+                                lastString = currentToken.value;
+                                break;
+                            case "variable":
+                                if (currentToken.value == '"$type"') {
+                                    cObjectType = lastString.replaceAll("\"", "");
+                                }
+                                else {
+                                    lastVariable = currentToken.value;
+                                }
+                        }
+                    }
+                    // Translate the token 
+                    tokenPath = tokenPath.reverse().filter(o => o !== undefined && o.name !== undefined);
+                    var expressionPath = "";
+                    if (tokenPath.length > 1) {
+                        expressionPath = tokenPath.reduce((o, c, i) => {
+                            var retVal = "";
+                            if (c.type == "[") // Guard
+                            {
+                                retVal = `${o.name || o}[${c.name}]`;
+                            }
+                            else {
+                                retVal = `${o.name || o}.${c.name}`;
+                            }
+
+                            if (c.castAs && i == tokenPath.length - 1) {
+                                retVal += `@${c.castAs}`;
+                            }
+                            return retVal;
+                        });
+                    }
+                    else if (tokenPath.length == 1) {
+                        expressionPath = tokenPath[0].name;
+                    }
+
+                    if (!forDocumentation && (expressionPath.endsWith("Model") || expressionPath.indexOf("@") > -1)) {
+                        expressionPath += "."; // HACK: The auto complete
+                    }
+
+                    var schemaComplete = await SanteDB.resources[type].invokeOperationAsync(null, "schema-complete", { expression: expressionPath }, false);
+
+                    // Does the current path have any classifier values?
+                    if (schemaComplete.properties) {
+                        var myProperty = tokenPath.length == 0 ? null : schemaComplete.properties.find(o => o.name == tokenPath[tokenPath.length - 1].name);
+                        if (myProperty && myProperty.classifierValues) {
+                            retVal = myProperty.classifierValues.map(o => { return { name: o, type: "Classifier" } });
+                        }
+                        else {
+                            // All properties can have a Model 
+                            schemaComplete.properties.filter(o => o.delayLoadable).forEach(r => {
+                                schemaComplete.properties.push({
+                                    name: `${r.name}`,
+                                    type: "Guid",
+                                    values: r.values,
+                                    documentation: r.documentation
+                                });
+                                r.name += "Model";
+                                r.values = null;
+                            });
+                            retVal = schemaComplete.properties;
+                        }
+                    }
+                }
+                else {
+                    // TODO: call a symbol lookup function here
+                    retVal = [{ name: "$type" }];
+                }
+                return retVal;
+            } catch (e) {
+                console.error(e);
+            }
+        }
 
         this.getCompletions = async function (editor, session, pos, prefix, callback) {
 
-            var searchField = "name";
-            var closeChar = "x\"";
+            // We need to determine what scope we're in 
             var token = session.getTokenAt(pos.row, pos.column);
-            if (token) {
-                var tokenValue = token.value.trim();
-                switch (tokenValue[0]) {
-                    case "<":
-                        searchField = "id";
-                        closeChar = "x>";
-                    case "\"":
-                        
-                        var results = _scopedList.symbol.filter(sc => {
-                            return sc[searchField] && sc[searchField].indexOf(tokenValue.substring(1) == 0)
-                        }).map((result) => {
-                            return {
-                                value: result[searchField],
-                                name: result.name,
-                                score: 1,
-                                meta: _typeMaps[result.typeName] || "Other"
-                            }
-                        });
+            if (!token) { return; } // no token
 
-                        callback(null, results);
+            var snippetMaker = null;
+            var tokenIterator = new TokenIterator(session, pos.row, pos.column);
+            var rawTokens = 0;
+            var lastFunction = null;
+            var lastKeyword = null;
+            do {
+                var currentToken = tokenIterator.getCurrentToken();
+                switch (currentToken.type) {
+                    case "markup.raw":
+                        if (currentToken.value.indexOf("$$") >= 0) {
+                            rawTokens++;
+                        }
                         break;
-                    default:
-                        callback(null, []);
+                    case "support.function":
+                    case "support.constant":
+                        lastFunction = lastFunction || currentToken.value;
+                        break;
+                }
+            } while (tokenIterator.stepBackward());
+
+            var _scopedList = [];
+            
+            var _factList = angular.copy(_cdssSymbols);
+            if (rawTokens % 2 == 1) // we're in a raw text block
+            {
+                switch (lastFunction) {
+                    case "json":
+
+                        _scopedList = await _getRimSchemaCompletion(session, pos.row, pos.column, false);
+                        if (token.type !== "variable") {
+                            var tokenIterator = new TokenIterator(session, pos.row, pos.column);
+                            var variableName = consumeTokenName(tokenIterator, pos.row);
+                            if (variableName && variableName.name == "$type") {
+                                _scopedList = _basicTypes;
+                            } else if (_scopedList) {
+                                var fnVar = variableName === undefined ? null : _scopedList.find(c => c.name == variableName.name);
+                                if (fnVar) {
+                                    var modelVar = _scopedList.find(c => c.name == `${variableName.name}Model`);
+                                    if (fnVar.values) {
+                                        _scopedList = Object.keys(fnVar.values).map(o => { return { name: fnVar.values[o], value: o, type: "Concept" } });
+                                    }
+                                    else {
+                                        _scopedList = [];
+                                    }
+
+                                    // For GUID we need to also provide lookup data - so let's do that
+                                    if (!fnVar.values && modelVar) {
+                                        var query = { _count: 10, _includeTotal: false };
+                                        switch (modelVar.type) {
+                                            case Concept.name:
+                                                query["name.value||mnemonic"] = `~${token.value.replaceAll("\"", "")}`;
+                                                break;
+                                            case Entity.name:
+                                                query["name.component.value"] = `~${token.value.replaceAll("\"", "")}`;
+                                                break;
+                                        }
+
+                                        var api = SanteDB.resources[modelVar.type.toCamelCase()];
+                                        if (Object.keys(query).length > 2 && api) {
+                                            if (api) {
+                                                var matches = await api.findAsync(query, "dropdown");
+                                                if (matches.resource) {
+                                                    matches.resource.map(r => {
+                                                        return {
+                                                            name: r.$type == "Concept" ? SanteDB.display.renderConcept(r) : SanteDB.display.renderEntityName(r.name),
+                                                            value: r.id,
+                                                            type: r.$type,
+                                                            documentation: r.mnemonic
+                                                        }
+                                                    }).forEach(r => _scopedList.push(r));
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+
+                            }
+                        }
+                        break;
+                    case "hdsi":
+                        break;
+                    case "csharp":
+                        if(token.type == "string") {
+                            _scopedList = _factList;
+                        }
+                        else {
+                            var _currentList = _csharpKeywords;
+                            var _currentCompleteData = {};
+                            token.value.split(".").forEach(currentKeyword => 
+                            {
+                                _currentCompleteData = _currentList.find(o=>o.name == currentKeyword || o.name == _currentCompleteData.type);
+                                if(!_currentCompleteData) { _currentCompleteData = {}; return; }
+                                _currentList = _currentCompleteData.children || _csharpKeywords;
+                            });
+                            _scopedList = _currentList;
+                        }
+                        break;
                 }
             }
-            // your code
-            /* for example
-            * let TODO = ...;
-            * callback(null, [{name: TODO, value: TODO, score: 1, meta: TODO}]);
-            */
+            else if (token.type === "string.id" || token.type === "string") {
+
+                _scopedList = _factList;
+                switch (token.value.trim()[0]) {
+                    case "<":
+                        _scopedList = _scopedList.filter(s => s.id);
+                        _scopedList.forEach(r => r.name = r.id);
+                        snippetMaker = (s) => `${s.id}>`;
+                        break;
+                    case "\"":
+                        snippetMaker = (s) => `${s.name}"`;
+                        break;
+                }
+            }
+
+            else {
+                _scopedList = _defaultAutoComplete;
+
+            }
+
+            var results = _scopedList.map(r => {
+                return {
+                    caption: r.name,
+                    value: r.value || r.name,
+                    snippet: snippetMaker ? snippetMaker(r) : r.snippet,
+                    score: 10,
+                    docText: r.documentation.trim(),
+                    meta: r.type
+                }
+            });
+
+            callback(null, results);
+
         }
     };
 
@@ -167,7 +526,8 @@ function CdssAceEditor(controlName, initialText, fileName, libraryUuid) {
             enableLiveAutocompletion: true
         });
         _completor = new _cdssCompletor();
-        LanguageTools.addCompleter(_completor);
+        LanguageTools.setCompleters([_completor]);
+        // LanguageTools.addCompleter(_completor);
         _addTestKeyboardShortcut();
         _addGotoKeyboardShortcut();
         _addSaveKeyboardShortcut();
@@ -239,7 +599,7 @@ function CdssAceEditor(controlName, initialText, fileName, libraryUuid) {
                         });
                         _editorDirty = false;
                         toastr.success(SanteDB.locale.getString("ui.admin.cdss.publish.success"));
-                        _saveHandlers.forEach(o=>o());
+                        _saveHandlers.forEach(o => o());
                     }
                     catch (e) {
                         if (e.message) {
@@ -268,7 +628,7 @@ function CdssAceEditor(controlName, initialText, fileName, libraryUuid) {
             // Get the word rage
             var wordRange = session.getWordRange(docPosition.row, docPosition.column);
             var cdssToken = session.getTokenAt(docPosition.row, docPosition.column);
-
+            console.info(cdssToken);
             if (cdssToken.value != _lastLookupSymbol) {
                 _lastLookupSymbol = cdssToken.value;
 
@@ -343,15 +703,15 @@ function CdssAceEditor(controlName, initialText, fileName, libraryUuid) {
     }
     this.setAnnotations = function (annotations) {
         _editor.getSession().setAnnotations(annotations);
-        _validationCallback.forEach(o=>o(annotations));
+        _validationCallback.forEach(o => o(annotations));
     }
     this.onChange = function (changeHandler) {
         _editor.getSession().on('change', changeHandler);
     }
-    this.onSave = function(saveHandler) {
+    this.onSave = function (saveHandler) {
         _saveHandlers.push(saveHandler);
     }
-    this.onAnnotationChange = function(callback) {
+    this.onAnnotationChange = function (callback) {
         _validationCallback.push(callback);
     }
     this.setReadonly = function (readonly) {
@@ -360,7 +720,7 @@ function CdssAceEditor(controlName, initialText, fileName, libraryUuid) {
     this.gotoIssue = function (issue) {
         _editor.gotoLine(issue.row + 1, issue.column);
     }
-    this.validateEditor = function() {
+    this.validateEditor = function () {
         _validateEditor();
     }
 }
