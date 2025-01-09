@@ -17,13 +17,13 @@
  -->
 <div xmlns="http://www.w3.org/1999/xhtml" class="card shadow">
     <div class="card-header">
-        <h5 class="mb-0">{{ report.label | i18n }} {{ filter}}</h5>
+        <h5 class="mb-0">{{ report.name | i18n }} {{ filter}}</h5>
     </div>
     <form class="form card-body" name="reportFilterForm" ng-submit="updateParameterValues(reportFilterForm)" autocomplete="off">
         <div class="tab-content">
             <div ng-if="report.parameterDefinitions.length"  class="tab-pane show active" id="{{htmlId}}_parms">
                 <div class="container-fluid">
-                    <div ng-repeat="parm in report.parameterDefinitions track by $index">
+                    <div ng-repeat="parm in ::report.parameterDefinitions track by $index">
                         <report-parameter values="parameterValues" parameter="parm" />
                     </div>
                     <div class="float-right btn-group">
@@ -44,8 +44,8 @@
                 </div>
                
                 <div class="float-right btn-group dropup">
-                    <button type="button"  class="btn btn-secondary dropdown-toggle" aria-haspopup="true" data-toggle="dropdown" id="btnDownloadReport_{{viewDefinition.name}}"><i class="fas fa-save"></i> {{ 'ui.action.download' | i18n }}</button>
-                    <button type="button"  id="btnPrintReport_{{viewDefinition.name}}" ng-click="printReport(viewDefinition.name)" class="btn btn-primary"><i class="fas fa-print"></i> {{ 'ui.action.print' | i18n }}</button>
+                    <button type="button"  class="btn btn-secondary dropdown-toggle" ng-disabled="viewDefinition.noExport || viewDefinition.type == 'Chart'" aria-haspopup="true" data-toggle="dropdown" id="btnDownloadReport_{{viewDefinition.name}}"><i class="fas fa-save"></i> {{ 'ui.action.download' | i18n }}</button>
+                    <button type="button"  id="btnPrintReport_{{viewDefinition.name}}" ng-disabled="viewDefinition.noPrint || viewDefinition.type == 'Chart'" ng-click="printReport(viewDefinition)" class="btn btn-primary"><i class="fas fa-print"></i> {{ 'ui.action.print' | i18n }}</button>
                     <div class="dropdown-menu" aria-labelledby="btnDownloadReport_{{viewDefinition.name}}" style="z-index:100">
                         <button class="dropdown-item" type="button" ng-repeat="fmt in formats" ng-click="downloadReport(viewDefinition.name, fmt.extension)">{{ fmt.label | i18n }}</button>
                       </div>
@@ -63,7 +63,7 @@
                 ng-repeat="viewDefinition in report.views">
                 <a class="nav-link" 
                     data-target="#{{htmlId}}_{{viewDefinition.name}}" data-toggle="tab"><i class="fas"
-                        ng-class="{ 'fa-chart-pie' : viewDefinition.name == 'chart' , 'fa-table' : viewDefinition.name == 'tabular', 'fa-file-alt' : null }"></i>
+                        ng-class="{ 'fa-chart-pie' : viewDefinition.type == 'Chart' , 'fa-table' : viewDefinition.type == 'Tabular', 'fa-file-alt' : true }"></i>
                     {{ viewDefinition.label | i18n }}</a>
             </li>
             

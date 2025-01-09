@@ -92,7 +92,7 @@ angular.module('santedb-lib')
             controller: ['$scope', '$rootScope', '$timeout', '$compile', function ($scope, $rootScope, $timeout, $compile) {
 
                 var dt = {};
-                $scope.parameterValues = { foo:"bar"};
+                $scope.parameterValues = {};
 
                 function setReportContent (elementId, content) {
 
@@ -117,12 +117,15 @@ angular.module('santedb-lib')
                 // Prints the current report with the specified parameters
                 $scope.printReport = async function (view) {
                     try {
-                        console.info(view);
-                        SanteDB.display.buttonWait(`#btnPrintReport_${view}`, true);
-                        var report = await SanteDBBi.renderReportAsync($scope.reportId, view, "html", $scope.parameterValues );
+                        SanteDB.display.buttonWait(`#btnPrintReport_${view.name}`, true);
+                        var report = await SanteDBBi.renderReportAsync($scope.reportId, view.name, "html", $scope.parameterValues );
+
+                        var headerInjection = `<link rel="stylesheet" type="text/css" href="/org.santedb.bicore/css/print.css?${new Date()}" />`;
+                        report = report.replace(`<title>${view.name}</title>`, `<title>${SanteDB.locale.getString($scope.report.label)} - ${SanteDB.locale.getString(view.label)}</title>`);
+                        // replace report output wrapper
+                        report = report.replace("</head>", `${headerInjection}</head>`);
 
                         var printFn = function (printWindow) {
-                            printWindow.document.write(`<html><head><title>${SanteDB.locale.getString($scope.report.label)}</title><link rel="stylesheet" type="text/css" href="/org.santedb.bicore/css/print.css" /></head><body>`);
                             printWindow.document.write(report);
                             printWindow.document.close();
                             printWindow.focus();
@@ -131,7 +134,7 @@ angular.module('santedb-lib')
                             $(printWindow.document).ready(function () {
                                 setTimeout(function () {
                                     printWindow.print();
-                                    printWindow.close();
+                                    //printWindow.close();
                                 }, 400);
 
                             });
@@ -154,7 +157,7 @@ angular.module('santedb-lib')
                         $rootScope.errorHandler(e);
                     }
                     finally {
-                        SanteDB.display.buttonWait(`#btnPrintReport_${view}`, false);
+                        SanteDB.display.buttonWait(`#btnPrintReport_${view.name}`, false);
 
                     }
                 }
@@ -231,7 +234,7 @@ angular.module('santedb-lib')
                             report.dataSources.forEach(function (r) {
                                 if (r.query)
                                     r.query.parameters.forEach(function (p) {
-                                        if (parameters.find(function (ep) { ep.name == p.name }) == null) {
+                                        if (parameters.find(ep => ep.name == p.name) == null) {
                                             if ($scope.parameters)
                                                 p.value = $scope.parameters[p.name];
                                             parameters.push(p);
@@ -239,7 +242,7 @@ angular.module('santedb-lib')
                                     });
                                 else if (r.parameters)
                                     r.parameters.forEach(function (p) {
-                                        if (parameters.find(function (ep) { ep.name == p.name }) == null) {
+                                        if (parameters.find(ep => ep.name == p.name) == null) {
                                             if ($scope.parameters)
                                                 p.value = $scope.parameters[p.name];
                                             parameters.push(p);
