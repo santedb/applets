@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!--
+ - Copyright 2021-2024 SanteSuite Contributors (See NOTICE.md for full copyright notices)
+ - Copyright (C) 2019 - 2021, Fyfe Software Inc. and the SanteSuite Contributors
+ - Portions Copyright (C) 2015-2018 Mohawk College of Applied Arts and Technology
+ - 
+ - Licensed under the Apache License, Version 2.0 (the "License"); you 
+ - may not use this file except in compliance with the License. You may 
+ - obtain a copy of the License at 
+ - 
+ - http://www.apache.org/licenses/LICENSE-2.0 
+ - 
+ - Unless required by applicable law or agreed to in writing, software
+ - distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+ - WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the 
+ - License for the specific language governing permissions and limitations under 
+ - the License.
+ -->
+<?xml-model href="../../../../../../../../../.ref/schema/BusinessIntelligence.xsd" type="application/xml" schematypens="http://www.w3.org/2001/XMLSchema"?>
+<BiParameterDefinition xmlns="http://santedb.org/bi" id="org.santedb.bi.core.parameter.common.place.withChildren" name="parent" label="ui.bi.core.common.place.withChildren" type="uuid" status="active">
+  <meta>
+    <authors>
+      <add>Justin Fyfe (Fyfe Software Inc.) &lt;justin@fyfesoftware.ca></add>
+    </authors>
+    <annotation lang="en">
+      <div xmlns="http://www.w3.org/1999/xhtml">
+        <p>This parameter defines values for place sub-classifications</p>
+      </div>
+    </annotation>
+  </meta>
+  <query>
+    <dataSources>
+      <add ref="#org.santedb.bi.dataSource.main" name="main"/>
+    </dataSources>
+    <definitions>
+      <add>
+        <providers>
+          <invariant>npgsql</invariant>
+        </providers>
+        <![CDATA[
+           SELECT ENT_VRSN_TBL.ENT_ID AS ID, ENT_NAME_CMP_TBL.VAL AS VAL
+          FROM 
+            ENT_VRSN_TBL 
+            INNER JOIN PLC_TBL USING (ENT_VRSN_ID)
+            INNER JOIN ENT_NAME_TBL ON (ENT_VRSN_TBL.ENT_ID = ENT_NAME_TBL.ENT_ID  AND ENT_NAME_TBL.USE_CD_ID = '1EC9583A-B019-4BAA-B856-B99CAF368656' AND ENT_NAME_TBL.OBSLT_VRSN_SEQ_ID IS NULL)
+            INNER JOIN ENT_NAME_CMP_TBL USING (NAME_ID)
+          WHERE 
+            HEAD
+            -- HAS A PARENT
+            AND EXISTS (SELECT 1 FROM ENT_REL_TBL WHERE TRG_ENT_ID = ENT_VRSN_TBL.ENT_ID AND REL_TYP_CD_ID = 'BFCBB345-86DB-43BA-B47E-E7411276AC7C')
+            ]]>
+      </add>
+      <add>
+        <providers>
+          <invariant>fbsql</invariant>
+        </providers>
+        <![CDATA[
+           SELECT ENT_VRSN_TBL.ENT_ID AS ID, ENT_NAME_CMP_TBL.VAL AS VAL
+            FROM 
+              ENT_VRSN_TBL 
+              INNER JOIN PLC_TBL USING (ENT_VRSN_ID)
+              INNER JOIN ENT_NAME_TBL ON (ENT_VRSN_TBL.ENT_ID = ENT_NAME_TBL.ENT_ID  AND ENT_NAME_TBL.USE_CD_ID = char_to_uuid('1EC9583A-B019-4BAA-B856-B99CAF368656') AND ENT_NAME_TBL.OBSLT_VRSN_SEQ_ID IS NULL)
+              INNER JOIN ENT_NAME_CMP_TBL USING (NAME_ID)
+            WHERE 
+              HEAD
+              -- HAS A PARENT
+              AND EXISTS (SELECT 1 FROM ENT_REL_TBL WHERE TRG_ENT_ID = ENT_VRSN_TBL.ENT_ID AND REL_TYP_CD_ID = char_to_uuid('BFCBB345-86DB-43BA-B47E-E7411276AC7C'))
+            ]]>
+      </add>
+      <add>
+        <providers>
+          <invariant>sqlite</invariant>
+        </providers>
+        <![CDATA[
+          SELECT ENT_VRSN_TBL.ENT_ID AS ID, ENT_NAME_CMP_TBL.VAL AS VAL
+FROM 
+	ENT_VRSN_TBL 
+	INNER JOIN PLC_TBL USING (ENT_VRSN_ID)
+	INNER JOIN ENT_NAME_TBL ON (ENT_VRSN_TBL.ENT_ID = ENT_NAME_TBL.ENT_ID  AND ENT_NAME_TBL.USE_CD_ID = x'3A58C91E19B0AA4BB856B99CAF368656' AND ENT_NAME_TBL.OBSLT_VRSN_SEQ_ID IS NULL)
+	INNER JOIN ENT_NAME_CMP_TBL USING (NAME_ID)
+WHERE 
+	HEAD
+	-- HAS A PARENT
+	AND EXISTS (SELECT 1 FROM ENT_REL_TBL WHERE TRG_ENT_ID = ENT_VRSN_TBL.ENT_ID AND REL_TYP_CD_ID = x'45B3CBBFDB86BA43B47EE7411276AC7C')
+            ]]>
+      </add>
+    </definitions>
+  </query>
+</BiParameterDefinition>

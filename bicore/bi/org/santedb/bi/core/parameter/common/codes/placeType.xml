@@ -17,14 +17,14 @@
  - the License.
  -->
 <?xml-model href="../../../../../../../../../.ref/schema/BusinessIntelligence.xsd" type="application/xml" schematypens="http://www.w3.org/2001/XMLSchema"?>
-<BiParameterDefinition xmlns="http://santedb.org/bi" id="org.santedb.bi.core.parameter.common.entity.status" name="status" label="ui.bi.core.common.entity.status" type="uuid" status="active">
+<BiParameterDefinition xmlns="http://santedb.org/bi" id="org.santedb.bi.core.parameter.common.place.type" name="class" label="ui.bi.core.common.place.type" type="uuid" status="active">
   <meta>
     <authors>
       <add>Justin Fyfe (Fyfe Software Inc.) &lt;justin@fyfesoftware.ca></add>
     </authors>
     <annotation lang="en">
       <div xmlns="http://www.w3.org/1999/xhtml">
-        <p>This parameter defines values for statuses</p>
+        <p>This parameter defines values for place sub-classifications</p>
       </div>
     </annotation>
   </meta>
@@ -38,11 +38,12 @@
           <invariant>npgsql</invariant>
         </providers>
         <![CDATA[
-           SELECT cd_id AS id, MNEMONIC  AS val
+           SELECT cd_id AS id, val
           FROM cd_vrsn_tbl
             INNER JOIN CD_SET_MEM_ASSOC_TBL USING (cd_id)
+            INNER JOIN CD_NAME_TBL USING (CD_ID)
           WHERE
-            SET_ID = 'c7578340-a8ff-4d7d-8105-581016324e68'
+            SET_ID = 'c65719ec-0795-47ec-8aaf-dcb867c5ca56'
             AND HEAD
             ]]>
       </add>
@@ -51,11 +52,12 @@
           <invariant>fbsql</invariant>
         </providers>
         <![CDATA[
-           SELECT cd_id AS id, MNEMONIC AS val
+           SELECT cd_id AS id, val
           FROM cd_vrsn_tbl
             INNER JOIN CD_SET_MEM_ASSOC_TBL USING (cd_id)
+            INNER JOIN CD_NAME_TBL USING (CD_ID)
           WHERE
-            SET_ID = char_to_uuid('c7578340-a8ff-4d7d-8105-581016324e68')
+            SET_ID = char_to_uuid('c65719ec-0795-47ec-8aaf-dcb867c5ca56')
             AND HEAD
             ]]>
       </add>
@@ -64,11 +66,12 @@
           <invariant>sqlite</invariant>
         </providers>
         <![CDATA[
-          SELECT cd_id AS id, MNEMONIC AS val
+            SELECT cd_id AS id, val
           FROM cd_vrsn_tbl
             INNER JOIN CD_SET_MEM_ASSOC_TBL USING (cd_id)
+            INNER JOIN CD_NAME_TBL USING (CD_ID)
           WHERE
-            SET_ID = x'408357C7FFA87D4D8105581016324E68'
+            SET_ID = x'EC1957C69507EC478AAFDCB867C5CA56'
             AND HEAD
             ]]>
       </add>

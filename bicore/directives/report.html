@@ -60,7 +60,7 @@
                     {{ 'ui.bi.common.parameters' | i18n }}</a>
             </li>
             <li id="{{htmlId}}_{{viewDefinition.name}}_tab" class="nav-item"
-                ng-repeat="viewDefinition in report.views">
+                ng-repeat="viewDefinition in report.views" ng-if="report.hasRun">
                 <a class="nav-link" 
                     data-target="#{{htmlId}}_{{viewDefinition.name}}" data-toggle="tab"><i class="fas"
                         ng-class="{ 'fa-chart-pie' : viewDefinition.type == 'Chart' , 'fa-table' : viewDefinition.type == 'Tabular', 'fa-file-alt' : true }"></i>

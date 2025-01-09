@@ -38,7 +38,8 @@
     <string name="ui.bi.core.common.state">State</string>
     <string name="ui.bi.core.common.facility">Facility</string>
     <string name="ui.bi.core.patient.gender">Gender</string>
-
+    <string name="ui.bi.core.common.place.class">Classification</string>
+    <string name="ui.bi.core.common.place.type">Type (sub-classification)</string>
     <string name="ui.bi.core.report.audit.objectAccess">Object Access</string>
 
     <!-- Common Output -->

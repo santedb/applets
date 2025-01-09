@@ -206,11 +206,19 @@ angular.module('santedb-lib')
                             var html = await SanteDBBi.renderReportAsync($scope.reportId, v.name, "html", parameters);
                             setReportContent(`${$scope.htmlId}_${v.name}view`, html);
                         }));
-                        // Select the view
-                        if ($scope.view)
-                            $(`#${$scope.htmlId}_${$scope.view}_tab a`).click();
-                        else
-                            $(`#${$scope.htmlId}_${$scope.report.views[0].name}_tab a`).click();
+                        $timeout(() => {
+                            $scope.report.hasRun = true;
+
+                            $timeout(() => {
+                                // Select the view
+                                if ($scope.view)
+                                    $(`#${$scope.htmlId}_${$scope.view}_tab a`).click();
+                                else
+                                    $(`#${$scope.htmlId}_${$scope.report.views[0].name}_tab a`).click();
+                            })
+                        });
+
+
                     }
                     catch(e) {
                         $rootScope.errorHandler(e);
