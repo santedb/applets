@@ -46,8 +46,9 @@
             INNER JOIN ENT_NAME_CMP_TBL USING (NAME_ID)
           WHERE 
             HEAD
-            -- HAS A PARENT
+            -- IS A PARENT
             AND EXISTS (SELECT 1 FROM ENT_REL_TBL WHERE TRG_ENT_ID = ENT_VRSN_TBL.ENT_ID AND REL_TYP_CD_ID = 'BFCBB345-86DB-43BA-B47E-E7411276AC7C')
+            
             ]]>
       </add>
       <add>

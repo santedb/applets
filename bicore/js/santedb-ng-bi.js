@@ -134,7 +134,7 @@ angular.module('santedb-lib')
                             $(printWindow.document).ready(function () {
                                 setTimeout(function () {
                                     printWindow.print();
-                                    //printWindow.close();
+                                    printWindow.close();
                                 }, 400);
 
                             });
