@@ -31,26 +31,28 @@ angular.module('santedb-lib')
       return {
          restrict: 'A',
          link: function (scope, element, attrs, ngModel) {
+            var cdssInteractiveConfig = scope.$eval(attrs.cdssInteractive);
+            var library = cdssInteractiveConfig.libraries;
+            var targetObject = cdssInteractiveConfig.target || cdssInteractiveConfig;
+            var inputName = attrs.name;
+            var form = SanteDB.display.getParentScopeVariable(scope, element[0].form.name);
+            $(element).on('input', function() {
+               form[inputName].$setValidity("cdss", $(element).val() == ""); // Assume CDSS is not valid until run
+            });
             $(element).on('blur', async function() {
-
                try {
-                  var cdssInteractiveConfig = scope.$eval(attrs.cdssInteractive);
-                  var library = cdssInteractiveConfig.libraries;
-                  var targetObject = cdssInteractiveConfig.target || cdssInteractiveConfig;
-                  var inputName = attrs.name;
-                  var form = SanteDB.display.getParentScopeVariable(scope, element[0].form.name);
-                  var issues = await SanteDBCdss.analyzeAsync(new Bundle({ resource: [ targetObject ] }), true, library);
-                  
-                  $timeout(() => 
-                  {
-                     // Set the validity
-                     if(inputName) {
-                        form[inputName].$setValidity("cdss", !issues.find(o=>o.priority == "Error"));
-                        form[inputName].$cdss = issues;
-                     }
-
-
-                  })
+                  var val = $(element).val();
+                  if(val !== "") {
+                     var issues = await SanteDBCdss.analyzeAsync(new Bundle({ resource: [ targetObject ] }), true, library);
+                     $timeout(() => 
+                     {
+                        // Set the validity
+                        if(inputName) {
+                           form[inputName].$setValidity("cdss", !issues.find(o=>o.priority == "Error"));
+                           form[inputName].$cdss = issues;
+                        }
+                     });
+                  }
                }
                catch (e){
                   console.error("Error running CDSS", e);

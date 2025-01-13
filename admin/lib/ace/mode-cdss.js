@@ -34,7 +34,6 @@ ace.define("ace/mode/cdss_highlight_rules", ["require", "exports", "module", "ac
     var CdssHilightRules = function () {
 
         var keywordMapper = this.createKeywordMapper({
-            "variable.language": "this",
             "keyword.control": "define include as end having repeat when then with propose apply assign where from select order by raise",
             "keyword.other": "fact data logic rule protocol library model metadata type",
             "constant.language": "true false iterations until for",
@@ -44,15 +43,15 @@ ace.define("ace/mode/cdss_highlight_rules", ["require", "exports", "module", "ac
             "support.constant": "active dont-use trial-use retired json xml error danger warn info context proposal",
             "suppoort.variable": "uuid id status format type scope oid const priority",
             "support.type": "string bool int real long",
-
+            "variable.language" : "this id oid uuid"
         }, "text", true, " ");
 
         this.$rules = {
             "start": [
-                { token: "string", regex: /\"(?:.|\"\")*\"/ },
+                { token: "string", regex: /\"(?:[^\"]|\"\")*(?:\"|\n)?/ },
                 { token: "markup.raw", regex: /\$\$/, next: "markup.raw" },
-                { token: "string", regex: /\{.*?\}/ },
-                { token: "string", regex: /\<.*?\>/ },
+                { token: "string.uuid", regex: /\{(?:[^\}]+)(?:\}|\n)?/ },
+                { token: "string.id", regex: /\<(?:[^\>]+)(?:\>|\n)?/ },
                 { token: "doc.comment", regex: /(doc|version|author).*$/ },
                 { token: "doc.comment", regex: /\/\/.+$/ },
                 { token: "comment", regex: /\/\/.+$/ },
@@ -68,9 +67,26 @@ ace.define("ace/mode/cdss_highlight_rules", ["require", "exports", "module", "ac
                 { token: "variable.parameter", regex: /\w(\w|\d|\[|\])*/, next: "start" }
             ],
             "markup.raw": [
+                { token: "variable", regex: '["](?:(?:\\\\.)|(?:[^"\\\\]))*?["]\\s*(?=:)' },
+                { token: "string", regex: /\"(?:[^\"]||\\\")+\"/ }, 
+                { token: "constant.numeric", regex: "0[xX][0-9a-fA-F]+\\b" }, 
+                { token: "constant.numeric", regex: "[+-]?\\d+(?:(?:\\.\\d*)?(?:[eE][+-]?\\d+)?)?\\b" }, 
+                { token: "constant.language.boolean", regex: "(?:true|false)\\b" }, 
+                { token: "text", regex: "['](?:(?:\\\\.)|(?:[^'\\\\]))*?[']" }, 
+                { token: "comment", regex: "\\/\\/.*$" }, 
+                { token: "comment.start", regex: "\\/\\*", next: "comment" }, 
+                { token: "paren.lparen", regex: "[[({]" }, 
+                { token: "paren.rparen", regex: "[\\])}]" }, 
+                { token: "punctuation.operator", regex: /[,]/ }, 
+                { token: "text", regex: "\\s+" },
                 { token: "constant.language.escape", regex: /\\\$\\\$/ },
                 { token: "markup.raw", regex: /\$\$/, next: "start" },
                 { defaultToken: "markup.raw" }
+            ],
+            string: [
+                { token: "constant.language.escape", regex: /\\(?:x[0-9a-fA-F]{2}|u[0-9a-fA-F]{4}|["\\\/bfnrt])/ }, 
+                { token: "string", regex: '"|$', next: "start" }, 
+                { defaultToken: "string" }
             ]
         };
     };

@@ -26,11 +26,21 @@
     <string name="ui.bi.common.view.outcome">Outcome</string>
     <string name="ui.bi.common.view.user">User</string>
 
-    <string name="ui.bi.core.report.audit.objectAccess">Object Access</string>
     <!-- Common Parameter Labels -->
     <string name="ui.bi.core.user.class">User Class</string>
     <string name="ui.bi.core.date.from">From</string>
     <string name="ui.bi.core.date.to">Until</string>
+    <string name="ui.bi.core.common.entity.status">Status</string>
+    <string name="ui.bi.core.common.occupation">Occupation</string>
+    <string name="ui.bi.core.common.act.status">Status</string>
+    <string name="ui.bi.core.common.name">Name</string>
+    <string name="ui.bi.core.common.conceptSet">Concept Set</string>
+    <string name="ui.bi.core.common.state">State</string>
+    <string name="ui.bi.core.common.facility">Facility</string>
+    <string name="ui.bi.core.patient.gender">Gender</string>
+    <string name="ui.bi.core.common.place.class">Classification</string>
+    <string name="ui.bi.core.common.place.type">Type (sub-classification)</string>
+    <string name="ui.bi.core.report.audit.objectAccess">Object Access</string>
 
     <!-- Common Output -->
     <string name="ui.bi.core.label.date">Date</string>
@@ -45,8 +55,6 @@
     <string name="ui.bi.fileFormat.xls.xml">Excel 2003 XML (XML)</string>
     <string name="ui.bi.fileFormat.xls">Excel 2007 (XLSX)</string>
 
-    <string name="ui.bi.core.patient.gender">Gender</string>
-    <string name="ui.bi.core.common.state">State</string>
     <string name="ui.bi.rc.name">Report Name</string>
     <string name="ui.bi.rc.description">Report Description</string>
     <string name="ui.bi.reports.name">Report Name</string>
@@ -81,4 +89,5 @@
     <string name="ui.model.bi.datamart.exec">Datamart Refresh Executions</string>
     <string name="org.santedb.widget.bi.dataMart.execs">Execution Log</string>
     <string name="org.santedb.widget.bi.dataMart.schema">Schema</string>
+
 </resources>

@@ -11,14 +11,6 @@
         font-family: "Poppins", sans-serif;
     }
 
-    table { 
-        border-spacing: 2px;
-        border-collapse: collapse;
-        table-layout: initial;
-        font-size: 80%
-
-    }
-
     .pp-1 { padding: 1em }
     .pp-2 { padding: 2em }
     .text-right { text-align: right; }
@@ -38,3 +30,22 @@
     .pw-50 { width: 400pt; max-width: 400pt; min-width:400pt }
 }
 
+
+table { 
+    border-spacing: 2px;
+    border-collapse: collapse;
+    table-layout: initial;
+    font-size: 80%
+}
+
+table tbody tr:nth-of-type(odd){background-color:rgba(0,0,0,.05)}
+
+table thead tr {
+    border-bottom: solid 1px #000
+}
+
+table tbody tr td {
+    border-left: solid 1px #aaa;
+    border-right: solid 1px #aaa;
+    border-bottom: solid 1px #aaa;
+}

@@ -122,6 +122,22 @@ function SanteDBBusinessIntelligence() {
             accept: 'application/json',
             api: _bis
         });
+        /**
+         * @type {ResourceWrapper}
+         */
+        this.indicator = new ResourceWrapper({
+            resource: "BiIndicatorDefinition",
+            accept: "application/json",
+            api: _bis
+        });
+        /**
+         * @type {ResourceWrapper}
+         */
+        this.period = new ResourceWrapper({
+            resource: "BiIndicatorPeriodDefinition",
+            accept: "application/json",
+            api: _bis
+        })
 
     };
 

@@ -186,7 +186,7 @@ angular.module("santedb").controller("LoginController", ['$scope', '$rootScope',
 
             $timeout(_ => {
                 $scope.reset.challengeResponse = "XXXX";
-                $scope.reset.password = {};
+                $scope.reset.password = { _show: true };
                 $scope.reset.user = SanteDB.authentication.parseJwt(session.id_token);
             });
         }

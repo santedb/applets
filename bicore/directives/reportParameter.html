@@ -16,7 +16,7 @@
  - the License.
  -->
 <div xmlns="http://www.w3.org/1999/xhtml" class="form-group row">
-    <label class="control-label col-sm-12 col-md-4" ng-class="{'required': parameter.required == 'true'}" for="{{parameter.name}}">{{ parameter.label | i18n }} 
+    <label class="control-label col-sm-12 col-md-4" ng-class="{'required': parameter.required == 'true'}" for="{{parameter.name}}">{{ parameter.label || parameter.name | i18n }} 
         <hint-popover ng-if="parameter.meta.doc" hint-title="{{ parameter.label }}" hint-text="{{parameter.meta.doc.doc}}" />
     </label>
     <div class="col-sm-12 col-md-8" ng-switch="parameter.type">

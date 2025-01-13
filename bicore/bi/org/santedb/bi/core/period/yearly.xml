@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-model href="../../../../../../../.ref/schema/BusinessIntelligence.xsd" type="application/xml" schematypens="http://www.w3.org/2001/XMLSchema"?>
+<BiIndicatorPeriodDefinition xmlns="http://santedb.org/bi" id="org.santedb.bi.core.period.yearly"
+    name="annual" label="ui.bi.common.period.yearly">
+    <meta>
+        <authors>
+            <add>Justin Fyfe (Fyfe Software Inc.)</add>
+        </authors>
+        <annotation>
+            <div xmlns="http://www.w3.org/1999/xhtml">
+                <p>Period Repeats Every First of the Year at Mignight</p>
+            </div>
+        </annotation>
+        <public>true</public>
+    </meta>
+    <spec>2015-01-01T00:00:00</spec>
+    <period>P1Y</period>
+</BiIndicatorPeriodDefinition>
