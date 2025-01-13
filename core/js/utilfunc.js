@@ -383,14 +383,12 @@ function scrubModelProperties(source) {
 
             rawValue.forEach(function (value) {
                 if (value && key.endsWith("Model")) {
-
-
                     // Get the key property
                     var keyProperty = key.substring(0, key.length - 5);
                     var keyValue = object[keyProperty];
 
                     // Set the key property to the selected / item value if present
-                    if (value.id) {
+                    if (!keyValue && value.id) {
                         object[keyProperty] = value.id;
                         // Remove the detail object
                         delete (object[key]);
@@ -822,7 +820,7 @@ function bundleRelatedObjects(object, ignoreRelations, existingBundle) {
         ignoreRelations = [ignoreRelations];
     }
 
-    object = angular.copy(object);
+    //object = angular.copy(object);
     var retVal = existingBundle || new Bundle({ resource: [ object ], focal: [ object.id ]});
 
     if(object.relationship) {
