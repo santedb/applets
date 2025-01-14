@@ -1,0 +1,245 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://santedb.org/audit" elementFormDefault="qualified" targetNamespace="http://santedb.org/audit" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import namespace="http://santedb.org/model" schemaLocation="Model.xsd"/>
+  <xs:simpleType name="ActionType">
+    <xs:list>
+      <xs:simpleType>
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="c" />
+          <xs:enumeration value="r" />
+          <xs:enumeration value="u" />
+          <xs:enumeration value="d" />
+          <xs:enumeration value="x" />
+        </xs:restriction>
+      </xs:simpleType>
+    </xs:list>
+  </xs:simpleType>
+  <xs:simpleType name="AuditableObjectType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="u" />
+      <xs:enumeration value="p" />
+      <xs:enumeration value="s" />
+      <xs:enumeration value="o" />
+      <xs:enumeration value="x" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:complexType name="AuditableObject">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="1" name="customCode" type="tns:AuditCode" />
+      <xs:element minOccurs="0" maxOccurs="1" name="idType" type="tns:AuditableObjectIdType" />
+      <xs:element minOccurs="0" maxOccurs="1" name="lifecycle" type="tns:AuditableObjectLifecycle" />
+      <xs:element minOccurs="0" maxOccurs="1" name="name" type="xs:string" />
+      <xs:element minOccurs="0" maxOccurs="1" name="data" type="tns:ArrayOfObjectDataExtension" />
+      <xs:element minOccurs="0" maxOccurs="1" name="id" type="xs:string" />
+      <xs:element minOccurs="0" maxOccurs="1" name="queryData" type="xs:string" />
+      <xs:element minOccurs="0" maxOccurs="1" name="role" type="tns:AuditableObjectRole" />
+      <xs:element minOccurs="1" maxOccurs="1" name="type" type="tns:AuditableObjectType" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="AuditCode">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="1" name="code" type="xs:string" />
+      <xs:element minOccurs="0" maxOccurs="1" name="system" type="xs:string" />
+      <xs:element minOccurs="0" maxOccurs="1" name="systemName" type="xs:string" />
+      <xs:element minOccurs="0" maxOccurs="1" name="systemVersion" type="xs:string" />
+      <xs:element minOccurs="0" maxOccurs="1" name="display" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:simpleType name="AuditableObjectIdType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="na" />
+      <xs:enumeration value="mrn" />
+      <xs:enumeration value="pid" />
+      <xs:enumeration value="ern" />
+      <xs:enumeration value="enrl" />
+      <xs:enumeration value="ssn" />
+      <xs:enumeration value="acct" />
+      <xs:enumeration value="guar" />
+      <xs:enumeration value="rpt" />
+      <xs:enumeration value="rpn" />
+      <xs:enumeration value="srch" />
+      <xs:enumeration value="uid" />
+      <xs:enumeration value="uri" />
+      <xs:enumeration value="ext" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="AuditableObjectLifecycle">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="none" />
+      <xs:enumeration value="create" />
+      <xs:enumeration value="import" />
+      <xs:enumeration value="amend" />
+      <xs:enumeration value="verif" />
+      <xs:enumeration value="xfrm" />
+      <xs:enumeration value="access" />
+      <xs:enumeration value="deid" />
+      <xs:enumeration value="agg" />
+      <xs:enumeration value="rpt" />
+      <xs:enumeration value="export" />
+      <xs:enumeration value="disclose" />
+      <xs:enumeration value="rcpdisclose" />
+      <xs:enumeration value="arch" />
+      <xs:enumeration value="obsolete" />
+      <xs:enumeration value="delete" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:complexType name="ArrayOfObjectDataExtension">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="d" nillable="true" type="tns:ObjectDataExtension" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ObjectDataExtension">
+    <xs:attribute name="key" type="xs:string" />
+    <xs:attribute name="value" type="xs:base64Binary" />
+  </xs:complexType>
+  <xs:simpleType name="AuditableObjectRole">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="pat" />
+      <xs:enumeration value="loc" />
+      <xs:enumeration value="rpt" />
+      <xs:enumeration value="res" />
+      <xs:enumeration value="mf" />
+      <xs:enumeration value="usr" />
+      <xs:enumeration value="lst" />
+      <xs:enumeration value="doc" />
+      <xs:enumeration value="sub" />
+      <xs:enumeration value="guar" />
+      <xs:enumeration value="usr" />
+      <xs:enumeration value="rol" />
+      <xs:enumeration value="secres" />
+      <xs:enumeration value="secdef" />
+      <xs:enumeration value="pvdr" />
+      <xs:enumeration value="dest" />
+      <xs:enumeration value="repo" />
+      <xs:enumeration value="sched" />
+      <xs:enumeration value="cust" />
+      <xs:enumeration value="job" />
+      <xs:enumeration value="jobstr" />
+      <xs:enumeration value="tbl" />
+      <xs:enumeration value="route" />
+      <xs:enumeration value="qry" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:complexType name="AuditActorData">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="role" type="tns:AuditCode" />
+      <xs:element minOccurs="0" maxOccurs="1" name="apId" type="xs:string" />
+      <xs:element minOccurs="0" maxOccurs="1" name="apType" type="tns:NetworkAccessPointType" />
+      <xs:element minOccurs="0" maxOccurs="1" name="uid" type="xs:string" />
+      <xs:element minOccurs="1" maxOccurs="1" name="isReq" type="xs:boolean" />
+      <xs:element minOccurs="0" maxOccurs="1" name="uname" type="xs:string" />
+    </xs:sequence>
+    <xs:attribute name="altUid" type="xs:string" />
+  </xs:complexType>
+  <xs:simpleType name="NetworkAccessPointType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="name" />
+      <xs:enumeration value="ip" />
+      <xs:enumeration value="tel" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="Audit" nillable="true" type="tns:AuditEventData" />
+  <xs:complexType name="AuditEventData">
+    <xs:complexContent mixed="false">
+      <xs:extension xmlns:q1="http://santedb.org/model" base="q1:IdentifiedData">
+        <xs:sequence>
+          <xs:element minOccurs="1" maxOccurs="1" name="action" type="tns:ActionType" />
+          <xs:element minOccurs="0" maxOccurs="unbounded" name="actor" type="tns:AuditActorData" />
+          <xs:element minOccurs="0" maxOccurs="unbounded" name="object" type="tns:AuditableObject" />
+          <xs:element minOccurs="1" maxOccurs="1" name="event" type="tns:EventIdentifierType" />
+          <xs:element minOccurs="0" maxOccurs="1" name="type" type="tns:AuditCode" />
+          <xs:element minOccurs="1" maxOccurs="1" name="sensitivity" type="tns:ResourceSensitivityClassification" />
+          <xs:element minOccurs="1" maxOccurs="1" name="outcome" type="tns:OutcomeIndicator" />
+          <xs:element minOccurs="0" maxOccurs="1" name="timestamp" type="xs:string" />
+          <xs:element minOccurs="0" maxOccurs="unbounded" name="meta" type="tns:AuditMetadata" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:simpleType name="EventIdentifierType">
+    <xs:list>
+      <xs:simpleType>
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="provision" />
+          <xs:enumeration value="medication" />
+          <xs:enumeration value="resource" />
+          <xs:enumeration value="careep" />
+          <xs:enumeration value="careprotocol" />
+          <xs:enumeration value="procedure" />
+          <xs:enumeration value="query" />
+          <xs:enumeration value="patient" />
+          <xs:enumeration value="order" />
+          <xs:enumeration value="network" />
+          <xs:enumeration value="import" />
+          <xs:enumeration value="export" />
+          <xs:enumeration value="application" />
+          <xs:enumeration value="security" />
+          <xs:enumeration value="auth" />
+          <xs:enumeration value="btg" />
+          <xs:enumeration value="restrictedFn" />
+          <xs:enumeration value="login" />
+          <xs:enumeration value="logout" />
+        </xs:restriction>
+      </xs:simpleType>
+    </xs:list>
+  </xs:simpleType>
+  <xs:simpleType name="ResourceSensitivityClassification">
+    <xs:list>
+      <xs:simpleType>
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="phi" />
+          <xs:enumeration value="admin" />
+          <xs:enumeration value="meta" />
+        </xs:restriction>
+      </xs:simpleType>
+    </xs:list>
+  </xs:simpleType>
+  <xs:simpleType name="OutcomeIndicator">
+    <xs:list>
+      <xs:simpleType>
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="ok" />
+          <xs:enumeration value="fail.minor" />
+          <xs:enumeration value="fail.major" />
+          <xs:enumeration value="fail.epic" />
+        </xs:restriction>
+      </xs:simpleType>
+    </xs:list>
+  </xs:simpleType>
+  <xs:complexType name="AuditMetadata">
+    <xs:attribute name="key" type="tns:AuditMetadataKey" use="required" />
+    <xs:attribute name="value" type="xs:string" />
+  </xs:complexType>
+  <xs:simpleType name="AuditMetadataKey">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="pid" />
+      <xs:enumeration value="process" />
+      <xs:enumeration value="remoteHost" />
+      <xs:enumeration value="proxy" />
+      <xs:enumeration value="localEp" />
+      <xs:enumeration value="submission_time" />
+      <xs:enumeration value="format" />
+      <xs:enumeration value="status" />
+      <xs:enumeration value="priority" />
+      <xs:enumeration value="classification" />
+      <xs:enumeration value="sessionId" />
+      <xs:enumeration value="enterpriseSiteId" />
+      <xs:enumeration value="auditSourceId" />
+      <xs:enumeration value="auditSourceType" />
+      <xs:enumeration value="correlationToken" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="AuditSourceType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="ui" />
+      <xs:enumeration value="dev" />
+      <xs:enumeration value="web" />
+      <xs:enumeration value="app" />
+      <xs:enumeration value="db" />
+      <xs:enumeration value="sec" />
+      <xs:enumeration value="isol1" />
+      <xs:enumeration value="isol4" />
+      <xs:enumeration value="other" />
+    </xs:restriction>
+  </xs:simpleType>
+</xs:schema>

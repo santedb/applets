@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://santedb.org/issue" elementFormDefault="qualified" targetNamespace="http://santedb.org/issue" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import namespace="http://microsoft.com/wsdl/types/" schemaLocation="BaseTypes.xsd" />
+  <xs:element name="issue" type="tns:DetectedIssue" />
+  <xs:complexType name="DetectedIssue">
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:attribute name="id" type="xs:string" />
+        <xs:attribute name="priority" type="tns:DetectedIssuePriorityType" use="required" />
+        <xs:attribute name="type" xmlns:q1="http://microsoft.com/wsdl/types/" type="q1:guid" use="optional" />
+        <xs:attribute name="refersTo" type="xs:string" />
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+  <xs:simpleType name="DetectedIssuePriorityType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Error" />
+      <xs:enumeration value="Warning" />
+      <xs:enumeration value="Information" />
+    </xs:restriction>
+  </xs:simpleType>
+</xs:schema>

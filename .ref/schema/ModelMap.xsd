@@ -1,77 +1,55 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!--
- - Copyright 2021-2024 SanteSuite Contributors (See NOTICE.md for full copyright notices)
- - Copyright (C) 2019 - 2021, Fyfe Software Inc. and the SanteSuite Contributors
- - Portions Copyright (C) 2015-2018 Mohawk College of Applied Arts and Technology
- - 
- - Licensed under the Apache License, Version 2.0 (the "License"); you 
- - may not use this file except in compliance with the License. You may 
- - obtain a copy of the License at 
- - 
- - http://www.apache.org/licenses/LICENSE-2.0 
- - 
- - Unless required by applicable law or agreed to in writing, software
- - distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
- - WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the 
- - License for the specific language governing permissions and limitations under 
- - the License.
- -->
-
-<!-- edited with XMLSpy v2015 rel. 4 (http://www.altova.com) by Justin Fyfe (Mohawk College) -->
-<xs:schema xmlns:tns="http://santedb.org/model/map" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://santedb.org/model/map" elementFormDefault="qualified">
-	<xs:element name="modelMap" type="tns:ModelMap" nillable="true"/>
-	<xs:complexType name="ModelMap">
-		<xs:sequence>
-			<xs:element name="class" type="tns:ClassMap" minOccurs="0" maxOccurs="unbounded"/>
-		</xs:sequence>
-	</xs:complexType>
-	<xs:complexType name="ClassMap">
-		<xs:sequence>
-			<xs:element name="collapseKey" type="tns:CollapseKey" minOccurs="0" maxOccurs="unbounded"/>
-			<xs:element name="property" type="tns:PropertyMap" minOccurs="0" maxOccurs="unbounded"/>
-			<xs:element name="base" type="tns:PropertyMap" minOccurs="0" maxOccurs="1"/>
-			<xs:element name="cast" type="tns:CastMap" minOccurs="0" maxOccurs="unbounded"/>
-		</xs:sequence>
-		<xs:attribute name="modelClass" type="xs:string"/>
-		<xs:attribute name="domainClass" type="xs:string"/>
-	</xs:complexType>
-	<xs:complexType name="CollapseKey">
-		<xs:attribute name="propertyName" type="xs:string"/>
-		<xs:attribute name="keyName" type="xs:string"/>
-	</xs:complexType>
-	<xs:complexType name="PropertyMap">
-		<xs:sequence>
-			<xs:element name="via" type="tns:PropertyMap" minOccurs="0" maxOccurs="1"/>
-		</xs:sequence>
-		<xs:attribute name="modelName" type="xs:string"/>
-		<xs:attribute name="domainName" type="xs:string"/>
-		<xs:attribute name="dontLoad" type="xs:boolean"/>
-		<xs:attribute name="aggregate" type="tns:AggregationFunctionType" />
-		<xs:attribute name="orderBy" type="xs:string"/>
-		<xs:attribute name="sortOrder" type="tns:SortOrderType"/>
-		<xs:attribute name="isAssociation" type="xs:boolean"/>
-	</xs:complexType>
-	<xs:simpleType name="AggregationFunctionType">
-		<xs:restriction base="xs:string">
-			<xs:enumeration value="None"/>
-			<xs:enumeration value="last"/>
-			<xs:enumeration value="first"/>
-			<xs:enumeration value="single"/>
-			<xs:enumeration value="count"/>
-			<xs:enumeration value="sum"/>
-		</xs:restriction>
-	</xs:simpleType>
-	<xs:simpleType name="SortOrderType">
-		<xs:restriction base="xs:string">
-			<xs:enumeration value="asc"/>
-			<xs:enumeration value="desc"/>
-		</xs:restriction>
-	</xs:simpleType>
-	<xs:complexType name="CastMap" mixed="false">
-		<xs:complexContent>
-			<xs:extension base="tns:PropertyMap">
-				<xs:attribute name="type" type="xs:string"/>
-			</xs:extension>
-		</xs:complexContent>
-	</xs:complexType>
+<xs:schema xmlns:tns="http://santedb.org/model/map" elementFormDefault="qualified" targetNamespace="http://santedb.org/model/map" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="modelMap" nillable="true" type="tns:ModelMap" />
+  <xs:complexType name="ModelMap">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="class" type="tns:ClassMap" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ClassMap">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="collapseKey" type="tns:CollapseKey" />
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="property" type="tns:PropertyMap" />
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="cast" type="tns:CastMap" />
+    </xs:sequence>
+    <xs:attribute name="modelClass" type="xs:string" />
+    <xs:attribute name="domainClass" type="xs:string" />
+  </xs:complexType>
+  <xs:complexType name="CollapseKey">
+    <xs:attribute name="propertyName" type="xs:string" />
+    <xs:attribute name="keyName" type="xs:string" />
+  </xs:complexType>
+  <xs:complexType name="PropertyMap">
+    <xs:attribute name="modelName" type="xs:string" />
+    <xs:attribute name="domainName" type="xs:string" />
+    <xs:attribute name="dontLoad" type="xs:boolean" use="required" />
+    <xs:attribute name="queryOnly" type="xs:boolean" use="required" />
+    <xs:attribute name="aggregate" type="tns:AggregationFunctionType" use="required" />
+    <xs:attribute name="orderBy" type="xs:string" />
+    <xs:attribute name="sortOrder" type="tns:SortOrderType" use="required" />
+    <xs:attribute name="isAssociation" type="xs:boolean" use="required" />
+  </xs:complexType>
+  <xs:simpleType name="AggregationFunctionType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="None" />
+      <xs:enumeration value="last" />
+      <xs:enumeration value="first" />
+      <xs:enumeration value="single" />
+      <xs:enumeration value="count" />
+      <xs:enumeration value="sum" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="SortOrderType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="asc" />
+      <xs:enumeration value="desc" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:complexType name="CastMap">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:PropertyMap">
+        <xs:attribute name="type" type="xs:string" />
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
 </xs:schema>

@@ -17,7 +17,7 @@
  - the License.
  -->
 <xs:schema xmlns:tns="http://santedb.org/data" elementFormDefault="qualified" targetNamespace="http://santedb.org/data" xmlns:xs="http://www.w3.org/2001/XMLSchema">
-  <xs:import namespace="http://santedb.org/model" schemaLocation="SanteDBModel.xsd" />
+  <xs:import namespace="http://santedb.org/model" schemaLocation="Model.xsd" />
   <xs:element name="dataset" nillable="true" type="tns:Dataset" />
   <xs:complexType name="Dataset">
     <xs:sequence>
@@ -42,7 +42,7 @@
     <xs:sequence>
       <xs:choice minOccurs="1" maxOccurs="1">
         <xs:element minOccurs="0" maxOccurs="1" xmlns:q1="http://santedb.org/model" ref="q1:ConceptReferenceTerm" />
-        <xs:element minOccurs="0" maxOccurs="1" xmlns:q2="http://santedb.org/model" ref="q2:ConceptName" />
+        <xs:element minOccurs="0" maxOccurs="1" xmlns:q2="http://santedb.org/model" name="ConceptName" type="q2:ConceptName" />
         <xs:element minOccurs="0" maxOccurs="1" xmlns:q3="http://santedb.org/model" ref="q3:EntityRelationship" />
         <xs:element minOccurs="0" maxOccurs="1" xmlns:q4="http://santedb.org/model" ref="q4:Concept" />
         <xs:element minOccurs="0" maxOccurs="1" xmlns:q5="http://santedb.org/model" ref="q5:ConceptSet" />
@@ -58,8 +58,8 @@
         <xs:element minOccurs="0" maxOccurs="1" xmlns:q15="http://santedb.org/model" ref="q15:ExtensionType" />
         <xs:element minOccurs="0" maxOccurs="1" xmlns:q16="http://santedb.org/model" ref="q16:CodeSystem" />
         <xs:element minOccurs="0" maxOccurs="1" xmlns:q17="http://santedb.org/model" ref="q17:ReferenceTerm" />
-        <xs:element minOccurs="0" maxOccurs="1" xmlns:q18="http://santedb.org/model" ref="q18:IdentifierType" />
-        <xs:element minOccurs="0" maxOccurs="1" xmlns:q19="http://santedb.org/model" ref="q19:UserEntity" />
+        <xs:element minOccurs="0" maxOccurs="1" xmlns:q18="http://santedb.org/model" ref="q18:UserEntity" />
+        <xs:element minOccurs="0" maxOccurs="1" xmlns:q19="http://santedb.org/model" ref="q19:Container" />
         <xs:element minOccurs="0" maxOccurs="1" xmlns:q20="http://santedb.org/model" ref="q20:Entity" />
         <xs:element minOccurs="0" maxOccurs="1" xmlns:q21="http://santedb.org/model" ref="q21:Organization" />
         <xs:element minOccurs="0" maxOccurs="1" xmlns:q22="http://santedb.org/model" ref="q22:Person" />
@@ -73,7 +73,7 @@
         <xs:element minOccurs="0" maxOccurs="1" xmlns:q30="http://santedb.org/model" ref="q30:SubstanceAdministration" />
         <xs:element minOccurs="0" maxOccurs="1" xmlns:q31="http://santedb.org/model" ref="q31:QuantityObservation" />
         <xs:element minOccurs="0" maxOccurs="1" xmlns:q32="http://santedb.org/model" ref="q32:CodedObservation" />
-        <xs:element minOccurs="0" maxOccurs="1" xmlns:q33="http://santedb.org/model" ref="q33:EntityIdentifier" />
+        <xs:element minOccurs="0" maxOccurs="1" xmlns:q33="http://santedb.org/model" name="EntityIdentifier" type="q33:EntityIdentifier" />
         <xs:element minOccurs="0" maxOccurs="1" xmlns:q34="http://santedb.org/model" ref="q34:TextObservation" />
         <xs:element minOccurs="0" maxOccurs="1" xmlns:q35="http://santedb.org/model" ref="q35:PatientEncounter" />
       </xs:choice>
