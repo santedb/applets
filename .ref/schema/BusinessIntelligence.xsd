@@ -59,9 +59,9 @@
 			<xs:element minOccurs="0" maxOccurs="1" name="authors" type="tns:ArrayOfString" />
 			<xs:element minOccurs="0" maxOccurs="1" name="annotation" type="tns:BiAnnotation" />
 			<xs:element minOccurs="0" maxOccurs="1" name="policies" type="tns:ArrayOfString1" />
-			<xs:element minOccurs="1" maxOccurs="1" name="public" type="xs:boolean" />
-			<xs:element minOccurs="1" maxOccurs="1" name="lastModified" type="xs:dateTime" />
-			<xs:element minOccurs="1" maxOccurs="1" name="lastModifiedProvenance"
+			<xs:element minOccurs="0" maxOccurs="1" name="public" type="xs:boolean" />
+			<xs:element minOccurs="0" maxOccurs="1" name="lastModified" type="xs:dateTime" />
+			<xs:element minOccurs="0" maxOccurs="1" name="lastModifiedProvenance"
 				xmlns:q2="http://microsoft.com/wsdl/types/" type="q2:guid" />
 		</xs:sequence>
 		<xs:attribute name="version" type="xs:string" />
@@ -425,7 +425,7 @@
 		</xs:complexContent>
 	</xs:complexType>
 	<xs:complexType name="ArrayOfChoice6">
-		<xs:choice minOccurs="0" maxOccurs="unbounded">
+		<xs:choice minOccurs="1" maxOccurs="unbounded">
 			<xs:element minOccurs="1" maxOccurs="1" name="denominator-exclusion" nillable="true"
 				type="tns:BiMeasureComputationDenominatorExclusion" />
 			<xs:element minOccurs="1" maxOccurs="1" name="numerator" nillable="true"
@@ -450,7 +450,7 @@
 				<xs:sequence>
 					<xs:element minOccurs="0" maxOccurs="1" name="notBefore" type="xs:string" />
 					<xs:element minOccurs="0" maxOccurs="1" name="notAfter" type="xs:string" />
-					<xs:element minOccurs="1" maxOccurs="1" name="spec" type="xs:dateTime" />
+					<xs:element minOccurs="0" maxOccurs="1" name="spec" type="xs:dateTime" />
 					<xs:element minOccurs="0" maxOccurs="1" name="period" type="xs:string" />
 					<xs:element minOccurs="0" maxOccurs="1" name="startParameter" type="xs:string" />
 					<xs:element minOccurs="0" maxOccurs="1" name="endParameter" type="xs:string" />
@@ -491,7 +491,7 @@
 						type="tns:ArrayOfBiDataFlowDefinition" />
 					<xs:element minOccurs="0" maxOccurs="1" name="startFlow"
 						type="tns:BiObjectReference" />
-					<xs:element minOccurs="1" maxOccurs="1" name="refreshFrequency" nillable="true"
+					<xs:element minOccurs="0" maxOccurs="1" name="refreshFrequency" nillable="true"
 						type="tns:BiDataMartFrequency" />
 				</xs:sequence>
 			</xs:extension>
@@ -848,7 +848,7 @@
 	</xs:complexType>
 	<xs:complexType name="BiVariableLookupTransform" mixed="true">
 		<xs:sequence>
-			<xs:element minOccurs="1" maxOccurs="1" name="ThrowIfNotFound" type="xs:boolean" />
+			<xs:element minOccurs="0" maxOccurs="1" name="ThrowIfNotFound" type="xs:boolean" />
 		</xs:sequence>
 	</xs:complexType>
 	<xs:complexType name="BiConceptMappingTransform" />
@@ -904,8 +904,8 @@
 		<xs:sequence>
 			<xs:choice minOccurs="1" maxOccurs="1">
 				<xs:element minOccurs="0" maxOccurs="1" name="string" type="xs:string" />
-				<xs:element minOccurs="1" maxOccurs="1" name="int" nillable="true" type="xs:long" />
-				<xs:element minOccurs="1" maxOccurs="1" name="bool" nillable="true"
+				<xs:element minOccurs="0" maxOccurs="1" name="int" nillable="true" type="xs:long" />
+				<xs:element minOccurs="0" maxOccurs="1" name="bool" nillable="true"
 					type="xs:boolean" />
 			</xs:choice>
 		</xs:sequence>
@@ -1052,9 +1052,9 @@
 	<xs:complexType name="BiDefinitionCollection">
 		<xs:sequence>
 			<xs:element minOccurs="0" maxOccurs="unbounded" name="resource" type="tns:BiDefinition" />
-			<xs:element minOccurs="1" maxOccurs="1" name="offset" type="xs:int" />
-			<xs:element minOccurs="1" maxOccurs="1" name="count" type="xs:int" />
-			<xs:element minOccurs="1" maxOccurs="1" name="totalResults" nillable="true"
+			<xs:element minOccurs="0" maxOccurs="1" name="offset" type="xs:int" />
+			<xs:element minOccurs="0" maxOccurs="1" name="count" type="xs:int" />
+			<xs:element minOccurs="0" maxOccurs="1" name="totalResults" nillable="true"
 				type="xs:int" />
 		</xs:sequence>
 	</xs:complexType>

@@ -15,7 +15,7 @@
  - License for the specific language governing permissions and limitations under 
  - the License.
  -->
-<ForeignDataMap xmlns="http://santedb.org/import">
+<ForeignDataMap xmlns="http://santedb.org/import" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://santedb.org/import http://santedb.org/schema/v3.0/SanteDBForeignData.xsd" priority="0">
   <id>4a5cafe0-b975-4623-92a2-7ef105e0c428</id>
   <name>Code System Import</name>
   <description>Imports a flat list of reference terms into the SanteDB database for a specified code

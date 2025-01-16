@@ -18,14 +18,14 @@
 <div xmlns="http://www.w3.org/1999/xhtml">
     <div ng-if="widgets.length &gt; 1">
         <ul class="nav nav-tabs" role="tablist">
-            <li class="nav-item" ng-repeat="tabWidget in widgets" ng-if="::$eval(tabWidget.guard[0] || 'true')">
+            <li class="nav-item" ng-repeat="tabWidget in widgets" ng-if="$eval(tabWidget.guard[0] || 'true')">
                 <a name="{{ tabWidget.name }}" class="nav-link" href="javascript:" ng-class="{'active' : $index == 0}"
                     id="tabWidget-{{tabWidget.name}}" data-toggle="tab" data-target="#widget_{{$index}}" role="tab"><i
                         ng-class="tabWidget.icon"></i> {{ tabWidget.name | i18n }}</a>
             </li>
         </ul>
         <div class="tab-content">
-            <div class="tab-pane" ng-if="::$eval(panel.guard[0] || 'true')" ng-repeat="tabWidget in widgets"
+            <div class="tab-pane" ng-if="$eval(panel.guard[0] || 'true')" ng-repeat="tabWidget in widgets"
                 ng-class="{ 'show active' : $index == 0 }" id="widget_{{$index}}" role="tabpanel">
                 <ng-include src="'/app/Widgets/' + tabWidget.name"></ng-include>
             </div>
