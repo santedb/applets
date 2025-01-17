@@ -299,7 +299,7 @@ var santedbApp = angular.module('santedb', ['ngSanitize', 'ui.router', 'oc.lazyL
         $.extend(true, $.fn.dataTable.defaults, {
             "language": {
                 "infoFiltered": "",
-                "processing": "<i class='fa fa-circle-notch fa-spin'></i> " + SanteDB.locale.getString("ui.wait")
+                "processing": SanteDB.locale.getString("ui.wait")
             }
         });
 

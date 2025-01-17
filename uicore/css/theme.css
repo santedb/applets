@@ -395,3 +395,8 @@ div.object-header {
     }
 
 }
+
+table.dataTable thead > tr > th.sorting::before,
+table.dataTable thead > tr > th.sorting::after {
+  font-size: 1em;
+}
