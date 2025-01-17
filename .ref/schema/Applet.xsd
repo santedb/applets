@@ -205,7 +205,6 @@
     </xs:sequence>
     <xs:attribute name="code" type="xs:string" />
   </xs:complexType>
-  <xs:element name="AppletManifest" nillable="true" type="tns:AppletManifest" />
   <xs:complexType name="AppletManifest">
     <xs:sequence>
       <xs:element minOccurs="0" maxOccurs="1" name="info" type="tns:AppletInfo" />
@@ -317,4 +316,10 @@
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>
+  <xs:element name="AppletManifest" nillable="true" type="tns:AppletManifest" />
+  <xs:element name="widget" type="tns:AppletWidget" />
+  <xs:element name="state" type="tns:AppletViewState" />
+  <xs:element name="title" type="tns:LocaleString" />
+  <xs:element name="style" type="tns:AssetScriptReference" />
+  <xs:element name="script" type="tns:AssetScriptReference"></xs:element>
 </xs:schema>

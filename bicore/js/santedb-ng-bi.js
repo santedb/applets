@@ -493,6 +493,7 @@ angular.module('santedb-lib')
                 scope.data = scope.data.map(d=> {
                     if(d.type == "bubble") {
                         d.data = d.data.map((p,i)=>{ 
+                            p = p || {};
                             return { 
                                 y: p.y || 0,
                                 r: p.r || p,

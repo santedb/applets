@@ -221,7 +221,7 @@ angular.module('santedb-lib')
 
                     $scope.setView = async function (panel, view) {
                         try {
-                            if ($scope.scopedObject.$type && view == 'Edit') {
+                            if ($scope.scopedObject.$type && (view == 'Edit')) {
                                 // lock the object for our user
                                 try {
                                     await SanteDB.resources[$scope.scopedObject.$type.toCamelCase()].checkoutAsync($scope.scopedObject.id);
@@ -258,46 +258,84 @@ angular.module('santedb-lib')
                     }
 
                     $scope.closeView = async function (panel) {
-                        if (panel.editForm.$pristine || confirm(SanteDB.locale.getString("ui.action.abandon.confirm"))) {
-                            if ($scope.scopedObject.$type) {
-                                try {
-                                    await SanteDB.resources[$scope.scopedObject.$type.toCamelCase()].checkinAsync($scope.scopedObject.id);
+                        switch(panel.view) {
+                            case 'Edit':
+                                if (panel.editForm.$pristine || confirm(SanteDB.locale.getString("ui.action.abandon.confirm"))) {
+                                    if ($scope.scopedObject.$type) {
+                                        try {
+                                            await SanteDB.resources[$scope.scopedObject.$type.toCamelCase()].checkinAsync($scope.scopedObject.id);
+                                        }
+                                        catch (e) {
+                                            console.warn(e.message);
+                                        }
+                                        delete ($scope.editObject);
+                                    }
+                                    $timeout(() => {
+                                        $scope.scopedObject = $scope.original;
+                                        delete (panel.view);
+                                        $scope.altView = false;
+        
+                                    })
                                 }
-                                catch (e) {
-                                    console.warn(e.message);
+                                break;
+                            case 'Settings':
+                                if (panel.settingsForm.$pristine || confirm(SanteDB.locale.getString("ui.action.abandon.confirm"))) {
+                                    
+                                    $timeout(() => {
+                                        $scope.scopedObject = $scope.original;
+                                        delete (panel.view);
+                                        $scope.altView = false;
+        
+                                    })
                                 }
-                                delete ($scope.editObject);
-                            }
-                            $timeout(() => {
-                                $scope.scopedObject = $scope.original;
-                                delete (panel.view);
-                                $scope.altView = false;
-
-                            })
+                                break;
+                            case 'Alternate':
+                                $timeout(() => {
+                                    delete (panel.view);
+                                    $scope.altView = false;
+                                });
+                                break;
                         }
+                        
                     }
 
-                    $scope.submitEditForm = async function (panel) {
+                    $scope.submitForm = async function (panel) {
 
-                        if (panel.view == 'Edit') {
-                            if (panel.editForm) {
-                                if (panel.editForm.$valid) {
-                                    $timeout(() => {
-                                        var formElement = panel.editForm.$$element;
-                                        formElement[0].action = "javascript:void(0);";
-                                        var submitResult = formElement.submit();
-                                        panel.view = null;
-                                        $scope.altView = false;
-                                    });
-
+                        switch(panel.view) {
+                            case 'Edit':
+                            case 'Add':
+                                if (panel.editForm) {
+                                    if (panel.editForm.$valid) {
+                                        $timeout(() => {
+                                            var formElement = panel.editForm.$$element;
+                                            formElement[0].action = "javascript:void(0);";
+                                            var submitResult = formElement.submit();
+                                            panel.view = null;
+                                            $scope.altView = false;
+                                        });
+    
+                                    }
                                 }
-                            }
-                            else
-                                panel.view = null;
+                                else
+                                    panel.view = null;
+                                break;
+                            case 'Settings':
+                                if (panel.settingsForm) {
+                                    if (panel.settingsForm.$valid) {
+                                        $timeout(() => {
+                                            var formElement = panel.settingsForm.$$element;
+                                            formElement[0].action = "javascript:void(0);";
+                                            var submitResult = formElement.submit();
+                                            panel.view = null;
+                                            $scope.altView = false;
+                                        });
+                                    }
+                                }
+                                else
+                                    panel.view = null;
+                                break;
                         }
-                        else {
-                            panel.view = 'Edit';
-                        }
+                        
                     }
 
                     $scope.customizePanels = async function (form) {

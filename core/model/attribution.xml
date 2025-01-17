@@ -1,0 +1,33 @@
+<ViewModel xmlns="http://santedb.org/model/view" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://santedb.org/model/view http://santedb.org/schema/v3.0/ViewModelDescription.xsd">
+
+  <type type="Entity" all="false">
+    <property name="id" />
+    <property name="createdBy" />
+    <property name="creationTime" />
+    <property name="obsoletedBy" />
+    <property name="obsoletionTime" />
+    <property name="version" />
+    <property name="previousVersion" />
+  </type>
+
+  <type type="Act" all="false">
+    <property name="id" />
+    <property name="createdBy" />
+    <property name="creationTime" />
+    <property name="obsoletedBy" />
+    <property name="obsoletionTime" />
+    <property name="version" />
+    <property name="previousVersion" />
+  </type>
+
+  <type type="Concept" all="false">
+    <property name="id" />
+    <property name="createdBy" />
+    <property name="creationTime" />
+    <property name="obsoletedBy" />
+    <property name="obsoletionTime" />
+    <property name="version" />
+    <property name="previousVersion" />
+  </type>
+</ViewModel>

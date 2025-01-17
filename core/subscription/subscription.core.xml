@@ -61,7 +61,7 @@
     <!-- All Manufactured Materials Should be Downloaded (for ordering and stock transfer purposes) -->
     <definition resource="ManufacturedMaterial" name="ui.subscription.manufacturedMaterial.all" mode="subscription" ignoreModifiedOn="false" trigger="always">
       <filters>
-        <add>classConcept=D39073BE-0F8F-440E-B8C8-7034CC138A95&amp;statusConcept=!CD4AA3C4-02D5-4CC9-9088-EF8F31E321C5</add>
+        <add>classConcept=!D39073BE-0F8F-440E-B8C8-7034CC138A95&amp;statusConcept=!CD4AA3C4-02D5-4CC9-9088-EF8F31E321C5</add>
       </filters>
     </definition>
     <!-- All User Entities Should be Downloaded (for authoriship purposes) -->

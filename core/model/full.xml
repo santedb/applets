@@ -29,6 +29,16 @@
   </type>
 
 
+  <type type="Act" name="ActPreviousVersion" all="false">
+    <property name="version" />
+    <property name="createdBy" />
+    <property name="creationTime" />
+  </type>
+  <type type="Entity" name="EntityPreviousVersion" all="false">
+    <property name="version" />
+    <property name="createdBy" />
+    <property name="creationTime" />
+  </type>
   <type type="Concept" name="ConceptNested" all="false">
     <property name="id" />
     <property name="name" behavior="always" all="true" />
@@ -101,15 +111,16 @@
     </property>
     <property name="statusConceptModel" behavior="always" ref="ConceptNested" />
     <property name="classConcept" behavior="always" />
-
     <property name="classConceptModel" behavior="always" />
-    <property name="previousVersionModel" behavior="never" />
     <property name="determinerConceptModel" behavior="never" />
     <property name="typeConceptModel" behavior="always" ref="ConceptNested" />
     <property name="createdBy" behavior="always" all="true" />
     <property name="creationTime" behavior="always" />
     <property name="creationTimeModel" behavior="never" />
+
     <property name="version" />
+    <property name="previousVersion" />
+    <property name="previousVersionModel" behavior="always" ref="EntityPreviousVersion" />
     <property name="name" all="true" behavior="always">
       <property name="*" ref="EntityName" />
     </property>
@@ -135,6 +146,8 @@
     <property name="creationActModel" behavior="always" all="false" ref="CreationAct"/>
 
   </type>
+
+
   <type type="Person" all="true">
     <property name="templateModel" behavior="always" all="false">
       <property name="mnemonic" />
@@ -194,6 +207,24 @@
       <property name="*" ref="EntityRelationship" all="true" />
     </property>
     <property name="securityUserModel" behavior="always" all="true" />
+  </type>
+
+  <type type="UserEntity" name="UserEntityNested" all="false">
+    <property name="name" all="true" behavior="always">
+      <property name="*" ref="EntityName" />
+    </property>
+    <property name="address" all="true" behavior="always">
+      <property name="*" ref="EntityAddress" />
+    </property>
+    <property name="identifier" all="true" behavior="always">
+      <property name="*" ref="EntityIdentifier" />
+    </property>
+    <property name="telecom" all="true" behavior="always" />
+    <property name="relationship" all="true" behavior="never"/>
+    <property name="securityUserModel" behavior="always" all="false">
+      <property name="userName" />
+      <property name="email" />
+      </property>
   </type>
 
   <type type="Patient" all="true">
@@ -342,6 +373,8 @@
     <property name="creationActModel" behavior="always" ref="CreationAct" />
     <property name="creationTimeModel" behavior="never" />
     <property name="version" />
+    <property name="previousVersion" />
+    <property name="previousVersionModel" behavior="always" ref="EntityPreviousVersion" />
     <property name="name" all="true" behavior="always">
       <property name="*" ref="EntityName" />
     </property>
@@ -386,6 +419,44 @@
     </property>
     <property name="participation" all="false">
     </property>
+  </type>
+
+  <type type="Container" all="true">
+    <property name="templateModel" behavior="always" all="false">
+      <property name="mnemonic" />
+    </property>
+    <property name="createdBy" />
+    <property name="creationTime" />
+    <property name="creationActModel" behavior="always" ref="CreationAct" />
+    <property name="creationTimeModel" behavior="never" />
+    <property name="version" />
+    <property name="previousVersion" />
+    <property name="name" all="true" behavior="always">
+      <property name="*" ref="EntityName" />
+    </property>
+    <property name="identifier" all="true" behavior="always">
+      <property name="*" ref="EntityIdentifier" />
+    </property>
+    <property name="classConceptModel" behavior="always" all="false">
+      <property name="id" />
+      <property name="mnemonic" />
+      <property name="name" all="true" />
+    </property>
+    <property name="classConcept" behavior="always" />
+    <property name="determinerConceptModel" behavior="never" />
+    <property name="statusConceptModel" behavior="always" ref="ConceptNested"/>
+    <property name="formConceptModel" behavior="never" />
+    <property name="quantityConceptModel" ref="ConceptNested" />
+    <property name="typeConcept" />
+    <property name="typeConceptModel" behavior="always" all="false" ref="ConceptNested" />
+    <property name="note" behavior="always">
+      <property name="text" />
+      <property name="authorModel" behavior="always" ref="UserEntity" />
+    </property>
+    <property name="relationship" all="true" behavior="always">
+      <property name="*" all="true" ref="EntityRelationship" />
+    </property>
+    
   </type>
 
   <type type="Place" all="true">
@@ -605,7 +676,7 @@
     <property name="classConcept" behavior="always" />
     <property name="classConceptModel" behavior="always" />
     <property name="previousVersion" behavior="never" />
-    <property name="previousVersionModel" behavior="never" />
+    <property name="previousVersionModel" behavior="always" ref="ActPreviousVersion" />
     <property name="typeConceptModel" behavior="always" ref="ConceptNested" />
     <property name="statusConceptModel" ref="ConceptNested" behavior="always" />
     <property name="doseUnitModel" behavior="always" ref="ConceptNested" />
@@ -730,9 +801,7 @@
         <property name="act" all="true" />
         <property name="participationRoleModel" behavior="never" />
         <property name="player" all="true" />
-        <property name="playerModel" all="true" behavior="always">
-          <property name="name" ref="EntityName" />
-        </property>
+        <property name="playerModel" all="true" behavior="always" ref="UserEntityNested" />
       </property>
       <property name="Performer" all="false">
         <property name="actModel" behavior="never" />
@@ -760,7 +829,7 @@
     <property name="classConcept" behavior="always" />
     <property name="classConceptModel" behavior="always" />
     <property name="previousVersion" behavior="never" />
-    <property name="previousVersionModel" behavior="never" />
+    <property name="previousVersionModel" behavior="always" ref="ActPreviousVersion" />
     <property name="typeConceptModel" behavior="always" ref="ConceptNested" />
     <property name="statusConceptModel" behavior="never" />
     <property name="doseUnitModel" behavior="always" ref="ConceptNested" />
@@ -844,7 +913,6 @@
   <type type="QuantityObservation" all="true">
     <property name="createdBy" behavior="never" />
     <property name="creationTime" />
-
     <property name="creationTimeModel" behavior="never" />
     <property name="version" />
     <property name="templateModel" behavior="always" all="false">
@@ -853,7 +921,7 @@
     <property name="classConcept" behavior="always" />
     <property name="classConceptModel" behavior="always" />
     <property name="previousVersion" behavior="never" />
-    <property name="previousVersionModel" behavior="never" />
+    <property name="previousVersionModel" behavior="always" ref="ActPreviousVersion" />
     <property name="typeConceptModel" behavior="always" ref="ConceptNested" />
     <property name="statusConceptModel" behavior="never" />
     <property name="moodConceptModel" behavior="never" />
@@ -863,7 +931,12 @@
         <property name="target" />
         <property name="source" />
       </property>
-
+      <property name="*" all="true">
+        <property name="target" />
+        <property name="relationshipTypeModel" behavior="never" />
+        <property name="targetModel" behavior="always" all="true"/>
+        <property name="source" />
+      </property>
       <property name="*" ref="ActRelationship" all="false" />
     </property>
     <property name="unitOfMeasureModel" behavior="always" ref="ConceptNested" />
@@ -925,7 +998,7 @@
     <property name="classConceptModel" behavior="always" />
     <property name="protocol" behavior="always" />
     <property name="previousVersion" behavior="never" />
-    <property name="previousVersionModel" behavior="never" />
+    <property name="previousVersionModel" behavior="always" ref="ActPreviousVersion" />
     <property name="typeConceptModel" behavior="always" ref="ConceptNested" />
     <property name="statusConceptModel" behavior="never" />
     <property name="moodConceptModel" behavior="never" />

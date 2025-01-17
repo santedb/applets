@@ -155,6 +155,7 @@
   <string name="ui.model.version.initial">Initial Version</string>
   <string name="ui.model.entity.properties">Properties</string>
   <string name="ui.model.entity.versionSequence">Version #</string>
+  <string name="ui.model.entity.previousVersion">Previous Version</string>
   <string name="ui.model.entity.createdBy">Created By</string>
   <string name="ui.model.entity.id">UUID</string>
   <string name="ui.model.entity.classConcept">Classification</string>
@@ -903,6 +904,8 @@
   <string name="ui.model.container.statusConcept">Status</string>
   <string name="ui.model.container.statusConcept.hint">Primary status of the container - note this differs from the functional status of the container</string>
   <string name="ui.model.container.modifiedOn">Last Modified</string>
+  <string name="ui.model.container.relationship.LocatedEntity">Facility</string>
+  <string name="ui.model.container.relationship.LocatedEntity.hint">The facility in which the container is located</string>
   <string name="ui.model.container.relationship.ManufacturedProduct">Manufacturer</string>
   <string name="ui.model.container.relationship.ManufacturedProduct.hint">The company which manufactures this container</string>
   <string name="ui.model.container.lotNumber">Serial #</string>

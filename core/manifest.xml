@@ -62,4 +62,7 @@
   <viewModel key="concept">
     <definition>/org.santedb.core/model/concept.xml</definition>
   </viewModel>
+  <viewModel key="attribution">
+    <definition>/org.santedb.core/model/attribution.xml</definition>
+  </viewModel>
 </AppletManifest>

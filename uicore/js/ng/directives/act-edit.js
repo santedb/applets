@@ -256,7 +256,6 @@ angular.module('santedb-lib')
                 }
 
                 if (scope.model && scope.model.templateModel && scope.model.templateModel.mnemonic) {
-
                     if (_mode == 'edit') {
                         scope.model.$templateUrl = SanteDB.application.resolveTemplateForm(scope.model.templateModel.mnemonic);
                     }

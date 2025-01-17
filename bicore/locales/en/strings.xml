@@ -18,6 +18,8 @@
 <resources>
     <string name="ui.bi.common.tabular">Tabular</string>
     <string name="ui.bi.common.chart">Chart</string>
+    <string name="ui.bi.common.detail">Detail</string>
+    <string name="ui.bi.common.trend">Trend</string>
     <string name="ui.bi.common.parameters">Filter</string>
     <string name="ui.bi.common.view.week">Weekday</string>
     <string name="ui.bi.common.view.date">Date</string>

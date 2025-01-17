@@ -408,10 +408,6 @@ var santedbApp = angular.module('santedb', ['ngSanitize', 'ui.router', 'oc.lazyL
                             if (bugCallList[i]()) return;
                     }
                 $("#errorModal").modal({ backdrop: 'static' });
-                try {
-                    $rootScope.$apply();
-                }
-                catch (e) { }
             })
         }
 
