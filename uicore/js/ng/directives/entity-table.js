@@ -212,7 +212,7 @@ angular.module('santedb-lib')
                         serverSide: true,
                         searching: scope.canFilter,
                         layout: {
-                            topStart: scope.noButtons ? null : 'buttons'
+                            topStart: scope.noButtons && !scope.buttonBar ? null : 'buttons'
                         },
                         search: {
                             return: true,
@@ -371,11 +371,8 @@ angular.module('santedb-lib')
                             $timeout(() => bindButtons(element, buttonBar), 200);
                         } else if (buttonBar) {
                             $(buttonBar).appendTo($(buttonSelector, dt.table().container()));
-                        }
-
-                        if (!scope.canFilter) {
-                            $(buttonSelector, dt.table().container()).removeClass("col-md-6").addClass("col-md-12");
-                            buttonSelector = '.col-md-12:eq(0)';
+                            dt.buttons().container().parent().removeClass("col-md-auto").addClass("col-6");
+                            dt.buttons().container().removeClass("flex-wrap").addClass("w-100");
                         }
 
                     };
