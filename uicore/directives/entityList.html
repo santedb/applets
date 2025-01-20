@@ -24,7 +24,7 @@
             <div class="d-flex justify-content-between align-items-stretch">
                 <div class="d-flex justify-content-between">
                     <div class="m-1 flex-grow-1">
-                        <div class="btn-group" ng-if="actions">
+                        <div class="btn-group globalActions" ng-if="actions">
                             <div ng-repeat="action in actions track by $index" class="btn-group">
                                 <button type="button" data-toggle="{{ action.children ? 'dropdown' : '' }}" class="btn"
                                     ng-class="[ action.className, { 'dropdown-toggle' : action.children }]" ng-click="doAction(action)" demand="{{action.demand}}" id="actionList_button_{{$index}}">
@@ -69,6 +69,7 @@
                             {{ 'ui.action.search' | i18n }}:
                             <input class="form-control w-75 d-inline"
                                 placeholder="{{ 'ui.table.search.field.' + searchField | i18n }}"
+                                ng-model-options="{updateOn : 'change blur'}"
                                 ng-model="queryControl.filter" />
                         </div>
                     </div>

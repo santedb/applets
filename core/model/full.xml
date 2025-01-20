@@ -79,7 +79,7 @@
   <type type="ActRelationship" all="false">
     <property name="source" all="true" />
     <property name="target" all="true" />
-    <property name="targetModel" all="true" behavior="always" ref="Act" />
+    <property name="targetModel" all="true" behavior="always" />
     <property name="relationshipType" all="true" />
     <property name="holderModel" behavior="never" />
     <property name="sourceModel" behavior="never" />
@@ -820,6 +820,7 @@
   <type type="SubstanceAdministration" all="true">
     <property name="createdBy" behavior="never" />
     <property name="creationTime" />
+    <property name="protocol" behavior="always" />
 
     <property name="creationTimeModel" behavior="never" />
     <property name="version" />
@@ -835,7 +836,6 @@
     <property name="doseUnitModel" behavior="always" ref="ConceptNested" />
     <property name="moodConceptModel" behavior="never" />
     <property name="interpretationConceptModel" behavior="always" ref="ConceptNested" />
-    <property name="protocol" behavior="never" />
     <property name="routeModel" behavior="always" ref="ConceptNested" />
     <property name="siteModel" behavior="always" ref="ConceptNested" />
     <property name="reasonConceptModel" behavior="always" ref="ConceptNested" />
@@ -857,7 +857,6 @@
         <property name="participationRoleModel" behavior="never" />
         <property name="player" all="true" />
         <property name="playerModel" all="false" behavior="always" ref="MaterialParticipant" />
-          
       </property>
       <property name="Consumable" all="false">
         <property name="actModel" behavior="never" />
@@ -915,6 +914,7 @@
     <property name="creationTime" />
     <property name="creationTimeModel" behavior="never" />
     <property name="version" />
+    <property name="protocol" behavior="always" />
     <property name="templateModel" behavior="always" all="false">
       <property name="mnemonic" />
     </property>
@@ -980,7 +980,7 @@
     <property name="pathwayModel" behavior="always" all="true" />
     <property name="relationship" all="true">
       <property name="HasComponent" all="true">
-        <property name="targetModel" all="true" behavior="always" ref="Act" />
+        <property name="targetModel" all="true" behavior="always" />
       </property>
     </property>
   </type>
@@ -990,6 +990,7 @@
     <property name="creationTime" />
     <property name="creationTimeModel" behavior="never" />
     <property name="version" />
+    <property name="protocol" behavior="always" />
     <property name="templateModel" behavior="always" all="false">
       <property name="mnemonic" />
     </property>
@@ -1080,10 +1081,10 @@
     <property name="dischargeDispositionModel" behavior="always" ref="ConceptNested" />
     <property name="relationship" all="true" behavior="always">
       <property name="HasComponent" all="true">
-        <property name="targetModel" behavior="always" ref="Act" />
+        <property name="targetModel" behavior="always" />
       </property>
       <property name="Fulfills" all="true">
-        <property name="targetModel" behavior="always" ref="Act" />
+        <property name="targetModel" behavior="always" />
       </property>
     </property>
     <property name="participation" all="true" behavior="always">
