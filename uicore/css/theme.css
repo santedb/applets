@@ -378,7 +378,6 @@ div.object-header {
 
 .actEntryComponentRemoved {
     text-decoration: line-through;
-    color: var(--gray);
     
 }
 

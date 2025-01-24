@@ -81,6 +81,26 @@ angular.module('santedb-lib')
                     }
                 });
 
+                $scope.loadReasonConcept = async function (entry) {
+                    if (entry && entry._reasonConcept != entry.reasonConcept) {
+                        entry._reasonConcept = entry.reasonConcept;
+                        try {
+                            if (entry.isNegated) {
+                                var concept = await SanteDB.resources.concept.getAsync(entry.reasonConcept, "fastview");
+                                $timeout(() => {
+                                    entry.reasonConceptModel = concept;
+                                });
+                            }
+                            else {
+                                delete entry.reasonConcept;
+                                delete entry.reasonConceptModel;
+                            }
+                        }
+                        catch (e) {
+                            console.warn(e);
+                        }
+                    }
+                }
                 $scope.resolveBackentryTemplate = function (templateId) {
 
                     var templateValue = _mode == 'edit' ? SanteDB.application.resolveTemplateBackentry(templateId) : SanteDB.application.resolveTemplateView(templateId);
@@ -99,7 +119,7 @@ angular.module('santedb-lib')
                     return templateValue;
                 }
 
-                $scope.doFilter = function(n) {
+                $scope.doFilter = function (n) {
                     if (n) {
                         $scope.availableTemplates = _masterTemplateList.filter(f => f.name.toLowerCase().indexOf(n.toLowerCase()) > -1);
                     }
@@ -123,6 +143,10 @@ angular.module('santedb-lib')
                     }
                 }
 
+                $scope.markComplete = function (index) {
+                    var itm = $scope.currentActions[index];
+                    itm.operation = itm.targetModel.operation = BatchOperationType.InsertOrUpdate;
+                }
                 $scope.moveHistory = function (index) {
                     if (confirm(SanteDB.locale.getString("ui.model.act.tag.backEntry.confirm"))) {
                         try {
@@ -229,15 +253,18 @@ angular.module('santedb-lib')
                     }
                 }, 500);
 
-                
+
                 // Monitor for form touches - needs to be done after initialization
                 setTimeout(() => {
 
                     $("input", element).each((i, e) => {
-                        $(e).on("blur", function(evt) {
+                        $(e).on("blur", function (evt) {
                             var eventIndexChanged = $(evt.currentTarget).closest("[data-actindex]").attr('data-actindex');
-                            if(scope.currentActions[eventIndexChanged] && scope.currentActions[eventIndexChanged].targetModel) {
-                                scope.currentActions[eventIndexChanged].operation = scope.currentActions[eventIndexChanged].targetModel.operation = BatchOperationType.UpdateInt;
+                            if (scope.currentActions[eventIndexChanged] && scope.currentActions[eventIndexChanged].targetModel) {
+                                SanteDB.authentication.getCurrentUserEntityId().then(result => {
+                                    var targetAct = scope.currentActions[eventIndexChanged].targetModel;
+                                    scope.currentActions[eventIndexChanged].operation = targetAct.operation = BatchOperationType.InsertOrUpdate;
+                                });
                             }
                         });
                     })

@@ -221,6 +221,7 @@
       <string name="ui.action.assign">Assign</string>
       <string name="ui.action.submit">Submit</string>
       <string name="ui.action.search">Search</string>
+      <string name="ui.action.done">Done</string>
       <string name="ui.action.search.advanced">Advanced Search</string>
       <string name="ui.action.search.basic">Basic Search</string>
       <string name="ui.action.search.upstream">Search Upstream</string>

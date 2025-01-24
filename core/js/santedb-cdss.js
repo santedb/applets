@@ -42,10 +42,11 @@ function SanteDBCdssWrapper() {
      * @param {Bundle} object The bundle or the object that is to be analyzed via the CDSS
      * @param {Array} libraryIds The library identifiers which are to be used to analyze the provided object
      * @param {boolean} replaceValues True if fields which were originally populated in the object should be replaced with the CDSS value
+     * @package {Array} outProposals The proposals that were generated. Set this to an empty array if you wish to capture this output
      * @returns {DetectedIssue} The detected issues from the analysie
      * @remarks The ${object} is updated with selected fields such as interpretationConcept, etc.
      */
-    this.analyzeAsync = async function (object, replaceValues, libraryIds) {
+    this.analyzeAsync = async function (object, replaceValues, libraryIds, outProposals) {
         if (object.$type !== "Bundle") {
             throw new Exception("ArgumentException", "Object must be a bundle");
         }
@@ -66,6 +67,13 @@ function SanteDBCdssWrapper() {
             // Analysis issues 
             var issues = analysis.issue;
             var objectReturn = analysis.submission;
+            if(analysis.propose  && Array.isArray(outProposals)) {
+                // Expand the data 
+                var proposals = await Promise.all(analysis.propose.map(async action => {
+                    return await SanteDB.resources.act.invokeOperationAsync(null, "expand", { object: action }, null, "full");
+                }));
+                proposals.forEach(p=> outProposals.push(p));
+            }
 
             // We want to update any item in the submitted object with any interpretation concept or fields that have changed 
             objectReturn.resource.forEach(r => {

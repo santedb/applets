@@ -451,10 +451,10 @@ function CdssAceEditor(controlName, initialText, fileName, libraryUuid) {
                                                 if (matches.resource) {
                                                     matches.resource.map(r => {
                                                         return {
-                                                            name: r.$type == "Concept" ? SanteDB.display.renderConcept(r) : SanteDB.display.renderEntityName(r.name),
+                                                            name: r.$type == "Concept" ? r.mnemonic : SanteDB.display.renderEntityName(r.name),
                                                             value: r.id,
                                                             type: r.$type,
-                                                            documentation: r.mnemonic
+                                                            documentation: r.$type == "Concept" ? `${SanteDB.display.renderConcept(r)} (${r.mnemonic})` : SanteDB.display.renderEntityName(r.name)
                                                         }
                                                     }).forEach(r => _scopedList.push(r));
                                                 }

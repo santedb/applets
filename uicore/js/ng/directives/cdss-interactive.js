@@ -43,13 +43,42 @@ angular.module('santedb-lib')
                try {
                   var val = $(element).val();
                   if(val !== "") {
-                     var issues = await SanteDBCdss.analyzeAsync(new Bundle({ resource: [ targetObject ] }), true, library);
+                     var proposals = [];
+                     var issues = await SanteDBCdss.analyzeAsync(new Bundle({ resource: [ targetObject ] }), true, library, proposals);
                      $timeout(() => 
                      {
                         // Set the validity
                         if(inputName) {
                            form[inputName].$setValidity("cdss", !issues.find(o=>o.priority == "Error"));
                            form[inputName].$cdss = issues;
+                        }
+
+                        // We want to remove any action in the actEditBeingSet which is derived from the same thing we're derived from
+                        var actEditCurrentActions = SanteDB.display.getParentScopeVariable(scope, "currentActions");
+                        var actSourceModel = SanteDB.display.getParentScopeVariable(scope, "model");
+                        if(!actEditCurrentActions || !actSourceModel) {
+                           return;
+                        }
+                        
+                        var previousProposedActs = actEditCurrentActions.filter(o => o && o.targetModel && o.targetModel.relationship && o.targetModel.relationship.IsDerivedFrom && o.targetModel.relationship.IsDerivedFrom[0].target == targetObject.id);
+                        previousProposedActs.forEach(p => {
+                           actEditCurrentActions.splice(actEditCurrentActions.indexOf(p), 1);
+                           actSourceModel.relationship.HasComponent.splice(actSourceModel.relationship.HasComponent.indexOf(p), 1);
+                        });
+
+                        // New proposals? 
+                        if(proposals.length > 0) {
+                           
+                           // Next we want to push these proposals onto the current act
+                           proposals.forEach(p => {
+                              var ar = new ActRelationship({ 
+                                 targetModel: p,
+                                 relationshipType: ActRelationshipTypeKeys.HasComponent
+                              });
+
+                              actEditCurrentActions.push(ar);
+                              actSourceModel.relationship.HasComponent.push(ar);
+                           });
                         }
                      });
                   }

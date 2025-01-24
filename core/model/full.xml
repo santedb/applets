@@ -803,15 +803,13 @@
         <property name="player" all="true" />
         <property name="playerModel" all="true" behavior="always" ref="UserEntityNested" />
       </property>
-      <property name="Performer" all="false">
-        <property name="actModel" behavior="never" />
-        <property name="sourceModel" behavior="never" />
-        <property name="act" all="true" />
-        <property name="participationRoleModel" behavior="never" />
-        <property name="player" all="true" />
-        <property name="playerModel" all="false" behavior="always">
-          <property name="name" ref="EntityName" />
-        </property>
+      <property name="Performer" all="true">
+        <property name="relationshipTypeModel" behavior="always" />
+        <property name="playerModel" ref="UserEntityNested" behavior="always" />
+      </property>
+      <property name="SecondaryPerformer" all="true">
+        <property name="relationshipTypeModel" behavior="always" />
+        <property name="playerModel" ref="UserEntityNested" behavior="always" />
       </property>
       <property name="*" ref="ActParticipation" all="true" />
     </property>
@@ -821,9 +819,11 @@
     <property name="createdBy" behavior="never" />
     <property name="creationTime" />
     <property name="protocol" behavior="always" />
+    <property name="tag" all="true" behavior="always" />
 
     <property name="creationTimeModel" behavior="never" />
     <property name="version" />
+    <property name="template" />
     <property name="templateModel" behavior="always" all="false">
       <property name="mnemonic" />
     </property>
@@ -848,7 +848,7 @@
       <property name="Fulfills" all="true">
         <property name="targetModel" behavior="always" ref="Act" />
       </property>
-      <property name="*" behavior="never" all="false" />
+      <property name="*" behavior="always" all="true" />
     </property>
     <property name="participation" all="true" behavior="always">
       <property name="Product" all="false">
@@ -898,6 +898,14 @@
           <property name="name" all="true" behavior="always" />
         </property>
       </property>
+      <property name="Performer" all="true">
+        <property name="relationshipTypeModel" behavior="always" />
+        <property name="playerModel" ref="UserEntityNested" behavior="always" />
+      </property>
+      <property name="SecondaryPerformer" all="true">
+        <property name="relationshipTypeModel" behavior="always" />
+        <property name="playerModel" ref="UserEntityNested" behavior="always" />
+      </property>
       <property name="*" all="false">
         <property name="actModel" behavior="never" />
         <property name="sourceModel" behavior="never" />
@@ -910,6 +918,7 @@
   </type>
 
   <type type="QuantityObservation" all="true">
+    <property name="tag" all="true" behavior="always" />
     <property name="createdBy" behavior="never" />
     <property name="creationTime" />
     <property name="creationTimeModel" behavior="never" />
@@ -965,6 +974,12 @@
           <property name="name" all="true" behavior="always" />
         </property>
       </property>
+      <property name="Performer" all="true">
+        <property name="playerModel" ref="UserEntityNested" behavior="always" />
+      </property>
+      <property name="SecondaryPerformer" all="true">
+        <property name="playerModel" ref="UserEntityNested" behavior="always" />
+      </property>
       <property name="*" all="false">
         <property name="actModel" behavior="never" />
         <property name="sourceModel" behavior="never" />
@@ -987,6 +1002,59 @@
 
   <type type="CodedObservation" all="true">
     <property name="createdBy" behavior="never" />
+    <property name="tag" all="true" behavior="always" />
+    <property name="creationTime" />
+    <property name="creationTimeModel" behavior="never" />
+    <property name="version" />
+    <property name="protocol" behavior="always" />
+    <property name="templateModel" behavior="always" all="false">
+      <property name="mnemonic" />
+    </property>
+    <property name="classConcept" behavior="always" />
+
+    <property name="classConceptModel" behavior="always" />
+    <property name="protocol" behavior="always" />
+    <property name="previousVersion" behavior="never" />
+    <property name="previousVersionModel" behavior="always" ref="ActPreviousVersion" />
+    <property name="typeConceptModel" behavior="always" ref="ConceptNested" />
+    <property name="statusConceptModel" behavior="never" />
+    <property name="moodConceptModel" behavior="never" />
+    <property name="interpretationConceptModel" behavior="always" ref="ConceptNested" />
+    <property name="relationship" all="true" behavior="always">
+      <property name="*" ref="ActRelationship" all="true" />
+    </property>
+    <property name="valueModel" all="true" ref="ConceptNested" behavior="always" />
+    <property name="participation" all="true" behavior="always">
+      <property name="Location" all="false">
+        <property name="actModel" behavior="never" />
+        <property name="sourceModel" behavior="never" />
+        <property name="participationRoleModel" behavior="never" />
+        <property name="playerModel" all="false" behavior="always">
+          <property name="id" />
+          <property name="version" />
+          <property name="typeConceptModel" behavior="always" ref="ConceptNested" />
+          <property name="identifier" all="true" />
+          <property name="name" all="true" behavior="always" />
+          <property name="tag" all="true" />
+          <property name="extension" all="true" />
+          <property name="participation" behavior="never" />
+        </property>
+      </property>
+      <property name="*" all="false">
+        <property name="actModel" behavior="never" />
+        <property name="sourceModel" behavior="never" />
+        <property name="act" all="true" />
+        <property name="participationRoleModel" behavior="never" />
+        <property name="player" all="true" />
+        <property name="playerModel" behavior="never" />
+      </property>
+    </property>
+  </type>
+
+
+  <type type="TextObservation" all="true">
+    <property name="createdBy" behavior="never" />
+    <property name="tag" all="true" behavior="always" />
     <property name="creationTime" />
     <property name="creationTimeModel" behavior="never" />
     <property name="version" />
@@ -1094,7 +1162,7 @@
       </property>
       <property name="Authororiginator" all="true">
         <property name="relationshipTypeModel" behavior="always" />
-        <property name="playerModel" ref="Entity" behavior="always" />
+        <property name="playerModel" ref="UserEntityNested" behavior="always" />
       </property>
       <property name="Location" all="true">
         <property name="relationshipTypeModel" behavior="always" />
@@ -1106,7 +1174,11 @@
       </property>
       <property name="Performer" all="true">
         <property name="relationshipTypeModel" behavior="always" />
-        <property name="playerModel" ref="Person" behavior="always" />
+        <property name="playerModel" ref="UserEntityNested" behavior="always" />
+      </property>
+      <property name="SecondaryPerformer" all="true">
+        <property name="relationshipTypeModel" behavior="always" />
+        <property name="playerModel" ref="UserEntityNested" behavior="always" />
       </property>
     </property>
   </type>
