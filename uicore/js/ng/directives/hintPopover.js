@@ -37,7 +37,9 @@ angular.module('santedb-lib')
 
         return {
             restrict: 'E',
-            scope: {},
+            scope: {
+                hintTextBinding: '<'
+            },
             replace: true,
             templateUrl: './org.santedb.uicore/directives/hintPopover.html',
             link: function (scope, element, attrs) {
@@ -48,7 +50,7 @@ angular.module('santedb-lib')
                         $(element).removeClass("d-inline");
                         break;
                     case 'show':
-                        $(element).html(SanteDB.locale.getString(attrs.hintText || `${attrs.hintTitle}.hint`));
+                        $(element).html(SanteDB.locale.getString(attrs.hintText || `${attrs.hintTitle}.hint`, scope.hintTextBinding));
                         $(element).addClass("text-muted");
                         $(element).addClass("d-block");
                         $(element).removeClass("d-inline");
@@ -59,10 +61,10 @@ angular.module('santedb-lib')
                             $(element).attr('data-title', SanteDB.locale.getString(attrs.hintTitle));
                         }
                         if(attrs.hintText) {
-                            $(element).attr('data-content', SanteDB.locale.getString(attrs.hintText));
+                            $(element).attr('data-content', SanteDB.locale.getString(attrs.hintText, scope.hintTextBinding));
                         }
                         else {
-                            $(element).attr('data-content', SanteDB.locale.getString(`${attrs.hintTitle}.hint`));
+                            $(element).attr('data-content', SanteDB.locale.getString(`${attrs.hintTitle}.hint`, scope.hintTextBinding));
                         }
         
                 }
