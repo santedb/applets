@@ -219,6 +219,31 @@ Date.prototype.lastWeekDay = function (month, year) {
 }
 
 /**
+ * @summary Format the date
+ * @method
+ * @memberof Date
+ * @param {String} formatString The formatting string for the date
+ * @returns {String} The formatted date
+ */
+Date.prototype.format = function(formatString) {
+    formatString = SanteDB.locale.dateFormats[formatString] || formatString;
+    return moment(this).format(formatString);
+}
+
+/**
+ * @summary Format the date so a human can read it according to the local formatting rules
+ * @method
+ * @memberof Date
+ * @param {String} formatString The formatting string for the date
+ * @returns {String} The formatted date
+ */
+Date.prototype.formatHuman = function(formatString) {
+    formatString = SanteDB.locale.dateFormats.human[formatString] || formatString;
+    return moment(this).format(formatString);
+}
+
+
+/**
  * @returns The decoded base64 data as a JSON object
  */
 String.prototype.b64DecodeJson = function() {

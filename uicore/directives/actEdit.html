@@ -123,6 +123,7 @@
                             </div>
                             <div class="d-flex justify-content-left">
                                 <!-- PROPOSE Should allow users to select an override -->
+                                 {{comp.target}}
                                 <div class="actProposeControl editOnly"
                                     ng-if="comp.targetModel.moodConcept == 'acf7baf2-221f-4bc2-8116-ceb5165be079' || comp.targetModel.relationship.Fulfills[0].targetModel.moodConcept == 'acf7baf2-221f-4bc2-8116-ceb5165be079'">
                                     <label class="checkbox-container">
