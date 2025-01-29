@@ -54,7 +54,7 @@ label.control-label > small.d-block {
 }
 
 
-label.control-label.required:after {
+label.control-label.required:before {
     content: '*';
 }
 

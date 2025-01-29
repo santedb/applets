@@ -83,7 +83,7 @@
                     </a>
                 </li>
             </ul>
-            <div class="tab-content">
+            <div class="tab-content base-demographics-tab">
                 <div role="tabpanel" class="tab-pane" id="demoAdmin">
                     <div class="p-2">
                         <div class="form-group row">
@@ -196,17 +196,17 @@
                     <telecom-edit owner-form="panel.editForm" model="editObject.telecom" />
                 </div>
                 <div role="tabpanel" class="tab-pane fade show active" id="demoBirth">
-                    <div class="p-2">
+                    <div class="p-2 py-3">
                         <div class="form-group row">
                             <label
                                 class="col-sm-12 col-md-3 control-label required">{{ 'ui.model.patient.dateOfBirth' | i18n }}</label>
-                            <div class="col-sm-12 col-md-9">
+                            <div class="col-sm-12 col-md-8">
                                 <div class="input-group">
                                     <input  max="{{ $root.page.maxEventTime | date: 'yyyy-MM-dd' }}" class="form-control" type="date" ng-model="editObject.dateOfBirth"
                                         required="required" />
                                     <div class="input-group-append">
                                         <div class="input-group-text">
-                                            <label>
+                                            <label class="m-0">
                                                 <input type="checkbox" ng-model="editObject.dateOfBirthPrecision"
                                                     ng-true-value="1" ng-false-value="3" />
                                                 {{ 'ui.model.patient.dateOfBirth.approx' | i18n }}
@@ -219,17 +219,17 @@
                         <div class="form-group row">
                             <label
                                 class="col-sm-12 col-md-3 control-label required">{{ 'ui.model.patient.genderConcept' | i18n }}</label>
-                            <div class="col-sm-12 col-md-9">
+                            <div class="col-sm-12 col-md-8">
                                 <concept-select class="form-control" required="required"
                                     name="birthGender"
                                     concept-set="'AdministrativeGenderCode'" ng-model="editObject.genderConcept" />
-                                    <div class="alert text-danger" ng-if="panel.editForm['birthGender'].$invalid">{{ 'ui.error.required' | i18n }}</div>
+                                    <div class="text-danger" ng-if="panel.editForm['birthGender'].$invalid">{{ 'ui.error.required' | i18n }}</div>
                             </div>
                         </div>
                         <div class="form-group row">
                             <label
                                 class="col-sm-12 col-md-3 control-label">{{ 'ui.model.patient.multipleBirthOrder' | i18n }}</label>
-                            <div class="col-sm-12 col-md-9">
+                            <div class="col-sm-12 col-md-8">
                                 <div class="input-group">
                                     <div class="input-group-prepend">
                                         <label class="input-group-text">
@@ -245,14 +245,14 @@
                                         <option value="5">{{ 'ui.model.patient.multipleBirthOrder.5' | i18n }}</option>
                                     </select>
                                 </div>
-                                <div class="alert text-danger" ng-if="panel.editForm['birthOrder'].$invalid">{{ 'ui.error.required' | i18n }}</div>
+                                <div class="text-danger" ng-if="panel.editForm['birthOrder'].$invalid">{{ 'ui.error.required' | i18n }}</div>
 
                             </div>
                         </div>
                         <div class="form-group row">
                             <label
                                 class="col-sm-12 col-md-3 control-label">{{ 'ui.model.patient.birthplace' | i18n }}</label>
-                            <div class="col-sm-12 col-md-9">
+                            <div class="col-sm-12 col-md-8">
                                 <entity-search type="'Place'" group-by="'address.PhysicalVisit.component.State'"
                                     ng-model="editObject.relationship.Birthplace[0].target" search-field="'name.component.value'"
                                     filter="{ 'statusConcept': 'c8064cbd-fa06-4530-b430-1a52f1530c27' }" />
@@ -260,12 +260,14 @@
                         </div>
                     </div>
                 </div>
+
+                <!-- Death Tab -->
                 <div role="tabpanel" class="tab-pane fade" id="demoDeath">
-                    <div class="p-2">
+                    <div class="p-2 pt-4">
                         <div class="form-group row">
                             <label
                                 class="col-sm-12 col-md-3 control-label">{{ 'ui.model.patient.deceased' | i18n }}</label>
-                            <div class="col-sm-12 col-md-9">
+                            <div class="col-sm-12 col-md-8">
                                 <div class="input-group">
                                     <div class="input-group-prepend">
                                         <label class="input-group-text">
@@ -275,7 +277,7 @@
                                     <input type="date" class="form-control" ng-disabled="!editObject.deceasedIndicator" ng-model="editObject.deceasedDate" />
                                     <div class="input-group-append">
                                         <div class="input-group-text">
-                                            <label>
+                                            <label class="m-0">
                                                 <input type="checkbox" ng-disabled="!editObject.deceasedIndicator" ng-model="editObject.deceasedDatePrecision"
                                                     ng-true-value="4" ng-false-value="10" />
                                                 {{ 'ui.model.patient.dateOfBirth.approx' | i18n }}
@@ -285,10 +287,11 @@
                                 </div>
                             </div>
                         </div>
+
                         <div class="form-group row">
                             <label
                                 class="col-sm-12 col-md-3 control-label">{{ 'ui.model.patient.placeOfDeath' | i18n }}</label>
-                            <div class="col-sm-12 col-md-9">
+                            <div class="col-sm-12 col-md-8">
                                 <entity-search type="'Place'" group-by="'address.PhysicalVisit.component.State'"
                                     ng-model="editObject.relationship.PlaceOfDeath.target" search-field="'name.component.value'"
                                     filter="{ 'statusConcept': 'c8064cbd-fa06-4530-b430-1a52f1530c27' }"
@@ -297,6 +300,7 @@
                         </div>
                     </div>
                 </div>
+
                 <div role="tabpanel" class="tab-pane fade" id="demoAddress">
                     <address-edit owner-form="panel.editForm" model="editObject.address" />
                 </div>

@@ -16,9 +16,17 @@
  - the License.
  -->
 <div xmlns="http://www.w3.org/1999/xhtml">
-    <div ng-if="!simpleEntry">
+    <div class="row">
+        <div class="col-12">
+            <div class="btn-group float-right mt-2 mr-3" ng-if="!noAdd">
+                <button type="button" ng-click="addAddress()" class="btn btn-sm btn-primary"><i class="fas fa-plus"></i> {{ 'ui.action.add' | i18n }}</button>
+            </div>
+        </div>
+    </div>
+
+    <div ng-if="!simpleEntry" class="mx-3 mb-3">
         <fieldset ng-repeat="addr in addressEdit">
-            <legend ng-if="addr.operation != 'Delete'">
+            <legend class="w-auto" ng-if="addr.operation != 'Delete'">
                 <div class="my-2">{{ addr.useModel | concept }}</div>
             </legend>
             <legend ng-if="addr.operation == 'Delete'" class="bg-secondary d-flex"><div class="my-2 flex-grow-1">{{ addr.useModel | concept }}</div><button type="button" class="btn btn-sm btn-info" ng-click="addr.operation = 'InsertOrUpdate'"><i class="fas fa-undo"></i> {{ 'ui.action.restore' | i18n }}</button></legend>
@@ -27,12 +35,10 @@
             </div>
         </fieldset>
     </div>
-    <div ng-if="simpleEntry">
+
+    <div ng-if="simpleEntry" class="mx-3 mb-3">
         <div ng-if="$index == 0" ng-repeat="addr in addressEdit track by $index">
             <!-- #include virtual="/org.santedb.uicore/directives/partials/addressEdit.html" -->
         </div>
-    </div>
-    <div class="btn-group float-right" ng-if="!noAdd">
-        <button type="button" ng-click="addAddress()" class="btn btn-primary"><i class="fas fa-plus"></i> {{ 'ui.action.add' | i18n }}</button>
     </div>
 </div>
