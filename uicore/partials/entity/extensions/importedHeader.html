@@ -1,0 +1,15 @@
+<!-- Imported -->
+<div class="m-0 alert alert-info" ng-if="entity.tag['imported'] == 'true'">
+    <div class="d-flex justify-content-between">
+        <div>
+            <i class="fas fa-file-import"></i> {{ 'ui.notices.imported' | i18n }}
+        </div>
+        <div class="flex-grow-1">
+            <div class="float-right btn-group">
+                <button id="btnClearTag" class="btn btn-sm btn-info" ng-click="setTag('imported', null)"><i
+                        class="fas fa-check"></i> {{
+                    'ui.action.clear' | i18n }}</button>
+            </div>
+        </div>
+    </div>
+</div>

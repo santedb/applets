@@ -1,0 +1,11 @@
+
+<div class="m-0 alert alert-warning" ng-if="patient._upstream" xmlns="http://www.w3.org/1999/xhtml">
+    <span>
+        <i class="fas fa-cloud"></i>
+        {{ 'ui.view.upstream' | i18n }}
+    </span>
+    <a ng-click='downloadRecord()' class="btn btn-sm btn-warning">
+        <i class="fas fa-cloud-download-alt"></i>
+        {{ 'ui.action.download' | i18n }}
+    </a>
+</div>

@@ -1,0 +1,6 @@
+
+<div class="m-0 alert alert-secondary"
+ng-if="patient.tag['$checkoutState'] &amp;&amp; patient.tag['$checkoutState'] != $root.session.username" xmlns="http://www.w3.org/1999/xhtml">
+<i ng-init="patient._readonly = true" class="fas fa-lock"></i> {{ 'ui.notices.checkout' | i18n: { user:
+patient.tag['$checkoutState'] } }}
+</div>
