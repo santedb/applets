@@ -1,0 +1,8 @@
+
+<div
+ng-if="entity.obsoletionTime || entity.statusConcept == '0bbec253-21a1-49cb-b376-7fe4d0592cda' || entity.statusConcept == 'cd4aa3c4-02d5-4cc9-9088-ef8f31e321c5' || entity.statusConcept == 'bdef5f90-5497-4f26-956c-8f818cce2bd2'">
+<div class=" alert alert-dark">
+    <i class="fas fa-trash" ng-init="entity._readonly=true"></i>
+    {{ 'ui.view.deletedRecord' | i18n }}
+</div>
+</div>

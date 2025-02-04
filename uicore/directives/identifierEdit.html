@@ -20,7 +20,7 @@
         <label
             class="col-sm-12 col-md-3 control-label required">{{ 'ui.model.entity.identifier.authority' | i18n }}</label>
         <div class="col-sm-12 col-md-9">
-            <select class="form-control" ng-model="model.domainModel.domainName">
+            <select class="form-control" ng-model="model.domainModel.domainName" ng-model-options="{ updateOn: 'change blur'}">
                 <option ng-repeat="(k, auth) in authorities" ng-selected="$index == 0" value="{{auth.domainName}}">
                     {{ auth.name }}</option>
             </select>
@@ -32,14 +32,14 @@
         </label>
         <div ng-class="{ 'col-sm-12 col-md-9' : noDomain , 'col-12' : !noDomain }">
             <div class="input-group">
-                <input ng-pattern="authorities[model.domainModel.domainName].validation" ng-model="model.value"
+                <input ng-pattern="authorities[model.domainModel.domainName].validation" ng-model="model.value" ng-model-options="{ updateOn: 'change blur'}"
                     class="form-control" name="identifier{{identifier.id}}" ng-required="isRequired"
                     ng-disabled="!model.domainModel.domainName" ng-readonly="!authorities[model.domainModel.domainName]"
                     placeholder="{{ authorities[model.domainModel.domainName].validationHint }}" />
                     <div class="input-group-append"  ng-if="authorities[model.domainModel.domainName].checkDigitAlgorithm">
                         <span class="input-group-text">{{ 'ui.model.entityidentifier.checkDigit.short' | i18n }}                                     <hint-popover hint-title="ui.model.entityIdentifier.checkDigit" />
                         </span>
-                        <input class="form-control" name="identifier{{model.id}}cd" ng-model="model.checkDigitAlgorithm" />
+                        <input class="form-control" name="identifier{{model.id}}cd" ng-model="model.checkDigitAlgorithm" ng-model-options="{ updateOn: 'change blur'}" />
                     </div>
                     <div class="input-group-append" ng-if="!noScan">
                         <div class="btn-group" ng-if="authorities[model.domainModel.domainName]">
@@ -61,14 +61,14 @@
     </div>
     <div ng-if="noLabel">
         <div class="input-group mb-0" ng-if="noLabel">
-            <input ng-pattern="authorities[model.domainModel.domainName].validation" ng-model="model.value"
+            <input ng-pattern="authorities[model.domainModel.domainName].validation" ng-model="model.value" ng-model-options="{ updateOn: 'change blur'}"
                 class="form-control" name="identifier{{model.id}}" ng-required="isRequired"
                 ng-disabled="!model.domainModel.domainName" ng-readonly="!authorities[model.domainModel.domainName]"
                 placeholder="{{ authorities[model.domainModel.domainName].validationHint }}" />
                 <div class="input-group-append"  ng-if="authorities[model.domainModel.domainName].checkDigitAlgorithm">
                                     <hint-popover hint-title="ui.model.entityIdentifier.checkDigit" />
                                     <span class="input-group-text">{{ 'ui.model.entityidentifier.checkDigit.short' | i18n }} </span>
-                    <input class="form-control" name="identifier{{model.id}}cd" ng-model="model.checkDigitAlgorithm" />
+                    <input class="form-control" name="identifier{{model.id}}cd" ng-model="model.checkDigitAlgorithm" ng-model-options="{ updateOn: 'change blur'}" />
                 </div>
             <div class="input-group-append" ng-if="!noScan">
                     <div class="btn-group" ng-if="authorities[model.domainModel.domainName]">

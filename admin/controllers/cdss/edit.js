@@ -137,6 +137,7 @@ angular.module('santedb').controller('CdssEditController', ["$scope", "$rootScop
         $scope.test = {
             type: 'Patient',
             source: 'db',
+            mode: 'execute',
             new: '{ "$type": "Patient" }',
             parameters: [
                 { name: "debug", value: "true" }
@@ -296,6 +297,7 @@ angular.module('santedb').controller('CdssEditController', ["$scope", "$rootScop
             var parms = {
                 "isTesting": true,
                 "debug": true,
+                "_mode": $scope.test.mode,
                 "definition": _editor.getValue(),
                 "targetType": $scope.test.type
             };

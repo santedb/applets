@@ -747,6 +747,7 @@
         ]]></string>
         
     <string name="ui.admin.cdss.edit.test">Test Rules</string>
+    <string name="ui.admin.cdss.edit.test.mode">Test Mode</string>
     <string name="ui.admin.cdss.edit.test.object">Object Type</string>
     <string name="ui.admin.cdss.edit.test.object.hint">Select the type of object against which the rules will tested</string>
     <string name="ui.admin.cdss.edit.test.source">Object Source</string>

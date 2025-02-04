@@ -87,48 +87,7 @@
 
         </div>
     </div>
-    <div class="m-0 alert alert-secondary"
-        ng-if="entity.tag['$checkoutState'] &amp;&amp; entity.tag['$checkoutState'] != $root.session.username">
-        <i ng-init="entity._readonly = true" class="fas fa-lock"></i> {{ 'ui.notices.checkout' | i18n: { user:
-        entity.tag['$checkoutState'] } }}
-    </div>
-    <div class="m-0 alert alert-dark" ng-if="entity.tag['$pep.masked'] == 'true'">
-        <i class="fas fa-exclamation-circle"></i> {{ 'ui.notices.privacyControls.masked' | i18n }}
-    </div>
-    <div class="m-0 alert alert-warning" ng-if="entity._upstream">
-        <span>
-            <i class="fas fa-cloud"></i>
-            {{ 'ui.view.upstream' | i18n }}
-        </span>
-        <a ng-click='downloadRecord()' class="btn btn-sm btn-warning">
-            <i class="fas fa-cloud-download-alt"></i>
-            {{ 'ui.action.download' | i18n }}
-        </a>
-    </div>
-    <div
-        ng-if="entity.obsoletionTime || entity.statusConcept == '0bbec253-21a1-49cb-b376-7fe4d0592cda' || entity.statusConcept == 'cd4aa3c4-02d5-4cc9-9088-ef8f31e321c5' || entity.statusConcept == 'bdef5f90-5497-4f26-956c-8f818cce2bd2'">
-        <div class=" alert alert-dark">
-            <i class="fas fa-trash" ng-init="entity._readonly=true"></i>
-            {{ 'ui.view.deletedRecord' | i18n }}
-        </div>
-    </div>
-    <!-- Imported -->
-    <div class="m-0 alert alert-info" ng-if="entity.tag['imported'] == 'true'">
-        <div class="d-flex justify-content-between">
-            <div>
-                <i class="fas fa-file-import"></i> {{ 'ui.notices.imported' | i18n }}
-            </div>
-            <div class="flex-grow-1">
-                <div class="float-right btn-group">
-                    <button id="btnClearTag" class="btn btn-sm btn-info" ng-click="setTag('imported', null)"><i
-                            class="fas fa-check"></i> {{
-                        'ui.action.clear' | i18n }}</button>
-                </div>
-
-            </div>
-
-        </div>
-
-    </div>
+    <ng-include src="'/_dynamic/EntityHeaderExtensions.html'" />
+    
 
 </div>

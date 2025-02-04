@@ -846,7 +846,7 @@ function bundleRelatedObjects(object, ignoreRelations, existingBundle) {
     }
 
     //object = angular.copy(object);
-    var retVal = existingBundle || new Bundle({ resource: [ object ], focal: [ object.id ]});
+    var retVal = existingBundle || new Bundle({ resource: [ object ], focal: [ object.id ], correlationId: object.id });
 
     if(object.relationship) {
 

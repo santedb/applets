@@ -1,0 +1,5 @@
+<div class="m-0 alert alert-secondary"
+        ng-if="entity.tag['$checkoutState'] &amp;&amp; entity.tag['$checkoutState'] != $root.session.username">
+        <i ng-init="entity._readonly = true" class="fas fa-lock"></i> {{ 'ui.notices.checkout' | i18n: { user:
+        entity.tag['$checkoutState'] } }}
+    </div>
