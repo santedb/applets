@@ -135,7 +135,7 @@
                                     </label>
                                 </div>
                                 <!-- Render the main act entry content -->
-                                <div class="flex-grow-1 actEntryComponent">
+                                <div class="flex-grow-1 actEntryComponent my-auto">
                                     <div ng-if="!comp.targetModel.isNegated" class="editOnly"
                                         ng-init="act = comp.targetModel"
                                         ng-class="{ 'actEntryComponentRemoved' : comp.operation == '4' }">
@@ -192,9 +192,11 @@
                                         </button>
                                     </div>
                                 </div>
-                                <div ng-if="comp.targetModel.participation.Performer" class="alert alert-secondary d-flex">
-                                    <h5 class="align-self-center text-success"><i class="m-auto fas fa-fw fa-check-circle"></i></h5>
-                                    <div class="d-flex flex-column">
+
+                                <!-- Performer -->
+                                <div ng-if="comp.targetModel.participation.Performer" class="alert alert-secondary d-flex my-auto">
+                                    <h5 class="align-self-center text-success my-auto"><i class="m-auto fas fa-fw fa-check-circle"></i></h5>
+                                    <div class="d-flex flex-column my-auto">
                                         <div>
                                             <i class="fas fa-fw fa-user-doctor"></i> {{
                                             comp.targetModel.participation.Performer[0].playerModel.name | name }}
