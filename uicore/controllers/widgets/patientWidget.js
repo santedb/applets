@@ -31,7 +31,7 @@ angular.module('santedb').controller('PatientDemographicsWidgetController', ['$s
         try {
             var submissionObject = angular.copy($scope.editObject);
             submissionObject = await prepareEntityForSubmission(submissionObject);
-
+            
             // Bundle to be submitted
             var bundle = new Bundle({ resource: [submissionObject] });
             
@@ -159,15 +159,16 @@ angular.module('santedb').controller('PatientDemographicsWidgetController', ['$s
                     }
                 }
             }
-            else if ($scope.panel.name == 'org.santedb.widget.patient.base') {
+            else if ($scope.panel.name == 'org.santedb.widget.patient.base') {                
                 // Look up domicile
                 if ($rootScope.system.config.application.setting['input.address'] == "select" && $scope.editObject.address) {
                     var promises = Object.keys($scope.editObject.address).map(async function (prop) {
-                        var addr = $scope.editObject.address[prop];
+                        var addr = $scope.editObject.address[prop]?.[0];
                         // query by census tract if possible
                         var query = {
                             _count: 2
                         };
+                        
                         if (addr.component && addr.component.CensusTract)
                             query["identifier.value"] = addr.component.CensusTract;
                         else {
