@@ -53,5 +53,12 @@
       <include>js/ng/directives/.*\.js</include>
     </virtual>
   </asset>
-  
+
+  <!-- Allow other plugins to expose raw HTML into an include place -->  
+  <dynamicHtml name="PatientHeaderExtensions.html">
+    <include>partials/patient/extensions/.*\.html</include>
+  </dynamicHtml>
+  <dynamicHtml name="EntityHeaderExtensions.html">
+    <include>partials/entity/extensions/.*\.html</include>
+  </dynamicHtml>
 </AppletManifest>

@@ -1,0 +1,613 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+ - Copyright 2021-2024 SanteSuite Contributors (See NOTICE.md for full copyright notices)
+ - Copyright (C) 2019 - 2021, Fyfe Software Inc. and the SanteSuite Contributors
+ - Portions Copyright (C) 2015-2018 Mohawk College of Applied Arts and Technology
+ - 
+ - Licensed under the Apache License, Version 2.0 (the "License"); you 
+ - may not use this file except in compliance with the License. You may 
+ - obtain a copy of the License at 
+ - 
+ - http://www.apache.org/licenses/LICENSE-2.0 
+ - 
+ - Unless required by applicable law or agreed to in writing, software
+ - distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+ - WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the 
+ - License for the specific language governing permissions and limitations under 
+ - the License.
+ -->
+
+<!-- edited with XMLSpy v2015 rel. 4 (http://www.altova.com) by Justin Fyfe (Mohawk College) -->
+<xs:schema xmlns:tns="http://santedb.org/cdss" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:q1="http://microsoft.com/wsdl/types/" xmlns:q2="http://santedb.org/model/view" xmlns:q3="http://santedb.org/model" xmlns:q4="http://santedb.org/model" xmlns:q5="http://santedb.org/model" xmlns:q6="http://santedb.org/model" xmlns:q7="http://santedb.org/model" xmlns:q8="http://santedb.org/model" xmlns:q9="http://santedb.org/model/view" targetNamespace="http://santedb.org/cdss" elementFormDefault="qualified">
+	<xs:import namespace="http://microsoft.com/wsdl/types/" schemaLocation="BaseTypes.xsd"/>
+	<xs:import namespace="http://santedb.org/model" schemaLocation="Model.xsd"/>
+	<xs:import namespace="http://santedb.org/model/view" schemaLocation="ViewModelDescription.xsd"/>
+	<xs:import namespace="http://santedb.org/issue" schemaLocation="DetectedIssue.xsd" />
+
+	<xs:complexType name="CdssBaseObjectDefinition" abstract="true">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="1" name="status" type="tns:CdssObjectState" />
+      <xs:element minOccurs="0" maxOccurs="1" name="meta" type="tns:CdssObjectMetadata" />
+      <xs:element minOccurs="0" maxOccurs="1" name="source" type="tns:CdssTranspileMapMetaData" />
+    </xs:sequence>
+    <xs:attribute name="id" type="xs:string" />
+    <xs:attribute name="name" type="xs:string" />
+    <xs:attribute name="uuid" xmlns:q1="http://microsoft.com/wsdl/types/" type="q1:guid" />
+    <xs:attribute name="oid" type="xs:string" />
+  </xs:complexType>
+  <xs:simpleType name="CdssObjectState">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="unk" />
+      <xs:enumeration value="trial-use" />
+      <xs:enumeration value="active" />
+      <xs:enumeration value="retired" />
+      <xs:enumeration value="dont-use" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:complexType name="CdssObjectMetadata">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="1" name="authors" type="tns:ArrayOfString" />
+      <xs:element minOccurs="0" maxOccurs="1" name="version" type="xs:string" />
+      <xs:element minOccurs="0" maxOccurs="1" name="documentation" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ArrayOfString">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="add" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="CdssTranspileMapMetaData">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="1" name="src" type="xs:base64Binary" />
+    </xs:sequence>
+    <xs:attribute name="source" type="xs:string" />
+    <xs:attribute name="start" type="xs:string" />
+    <xs:attribute name="stop" type="xs:string" />
+  </xs:complexType>
+   <xs:simpleType name="HttpCompressionAlgorithm">
+    <xs:list>
+      <xs:simpleType>
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="off" />
+          <xs:enumeration value="df" />
+          <xs:enumeration value="gz" />
+          <xs:enumeration value="bz2" />
+          <xs:enumeration value="7z" />
+        </xs:restriction>
+      </xs:simpleType>
+    </xs:list>
+  </xs:simpleType>
+  <xs:complexType name="CdssDatasetDefinition" mixed="true">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:CdssBaseObjectDefinition">
+        <xs:attribute name="compress" type="tns:HttpCompressionAlgorithm" use="required" />
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="CdssDecisionLogicBlockDefinition">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:CdssBaseObjectDefinition">
+        <xs:sequence>
+          <xs:element minOccurs="0" maxOccurs="1" name="context" type="tns:CdssResourceTypeReference" />
+          <xs:element minOccurs="0" maxOccurs="1" name="when" type="tns:CdssWhenDefinition" />
+          <xs:element minOccurs="0" maxOccurs="1" name="define" type="tns:ArrayOfChoice1" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="ResourceTypeReferenceConfiguration">
+    <xs:attribute name="type" type="xs:string" />
+  </xs:complexType>
+  <xs:complexType name="CdssResourceTypeReference">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:ResourceTypeReferenceConfiguration" />
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="CdssWhenDefinition">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:CdssBaseObjectDefinition">
+        <xs:sequence>
+          <xs:choice minOccurs="1" maxOccurs="1">
+            <xs:element minOccurs="0" maxOccurs="1" name="csharp" type="tns:CdssCsharpExpressionDefinition" />
+            <xs:element minOccurs="0" maxOccurs="1" name="hdsi" type="tns:CdssHdsiExpressionDefinition" />
+            <xs:element minOccurs="0" maxOccurs="1" name="xml" type="tns:CdssXmlLinqExpressionDefinition" />
+            <xs:element minOccurs="0" maxOccurs="1" name="query" type="tns:CdssQueryExpressionDefinition" />
+            <xs:element minOccurs="0" maxOccurs="1" name="all" type="tns:CdssAllExpressionDefinition" />
+            <xs:element minOccurs="0" maxOccurs="1" name="none" type="tns:CdssNoneExpressionDefinition" />
+            <xs:element minOccurs="0" maxOccurs="1" name="any" type="tns:CdssAnyExpressionDefinition" />
+            <xs:element minOccurs="0" maxOccurs="1" name="fact" type="tns:CdssFactReferenceExpressionDefinition" />
+          </xs:choice>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="CdssCsharpExpressionDefinition" mixed="true">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:CdssExpressionDefinition" />
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="CdssExpressionDefinition" abstract="true">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="1" name="source" type="tns:CdssTranspileMapMetaData" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="CdssFactReferenceExpressionDefinition">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:CdssExpressionDefinition">
+        <xs:attribute name="ref" type="xs:string" />
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="CdssAggregateExpressionDefinition" abstract="true">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:CdssExpressionDefinition">
+        <xs:sequence>
+          <xs:choice minOccurs="0" maxOccurs="unbounded">
+            <xs:element minOccurs="0" maxOccurs="1" name="csharp" type="tns:CdssCsharpExpressionDefinition" />
+            <xs:element minOccurs="0" maxOccurs="1" name="hdsi" type="tns:CdssHdsiExpressionDefinition" />
+            <xs:element minOccurs="0" maxOccurs="1" name="xml" type="tns:CdssXmlLinqExpressionDefinition" />
+            <xs:element minOccurs="0" maxOccurs="1" name="fact" type="tns:CdssFactReferenceExpressionDefinition" />
+            <xs:element minOccurs="0" maxOccurs="1" name="all" type="tns:CdssAllExpressionDefinition" />
+            <xs:element minOccurs="0" maxOccurs="1" name="none" type="tns:CdssNoneExpressionDefinition" />
+            <xs:element minOccurs="0" maxOccurs="1" name="any" type="tns:CdssAnyExpressionDefinition" />
+          </xs:choice>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="CdssHdsiExpressionDefinition" mixed="true">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:CdssExpressionDefinition">
+        <xs:attribute name="scope" type="tns:CdssHdsiExpressionScopeType" use="required" />
+        <xs:attribute name="negate" type="xs:boolean" use="required" />
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:simpleType name="CdssHdsiExpressionScopeType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="scopedObject" />
+      <xs:enumeration value="context" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:complexType name="CdssXmlLinqExpressionDefinition">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:CdssExpressionDefinition">
+        <xs:sequence>
+          <xs:element minOccurs="0" maxOccurs="1" name="linq" type="tns:XmlExpression" />
+        </xs:sequence>
+        <xs:attribute name="scope" type="tns:CdssHdsiExpressionScopeType" use="required" />
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="XmlExpression" abstract="true" />
+  <xs:complexType name="CdssAllExpressionDefinition">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:CdssAggregateExpressionDefinition" />
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="CdssNoneExpressionDefinition">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:CdssAggregateExpressionDefinition" />
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="CdssAnyExpressionDefinition">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:CdssAggregateExpressionDefinition" />
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="CdssQueryExpressionDefinition" mixed="true">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:CdssExpressionDefinition">
+        <xs:attribute name="scope" type="tns:CdssHdsiExpressionScopeType" use="required" />
+        <xs:attribute name="order-by" type="xs:string" />
+        <xs:attribute name="select" type="xs:string" />
+        <xs:attribute name="source" type="xs:string" />
+        <xs:attribute name="fn" type="tns:CdssCollectionSelectorType" use="required" />
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:simpleType name="CdssCollectionSelectorType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="first" />
+      <xs:enumeration value="last" />
+      <xs:enumeration value="single" />
+      <xs:enumeration value="avg" />
+      <xs:enumeration value="sum" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:complexType name="ArrayOfChoice1">
+    <xs:choice minOccurs="0" maxOccurs="unbounded">
+      <xs:element minOccurs="1" maxOccurs="1" name="protocol" nillable="true" type="tns:CdssProtocolAssetDefinition" />
+      <xs:element minOccurs="1" maxOccurs="1" name="rule" nillable="true" type="tns:CdssRuleAssetDefinition" />
+      <xs:element minOccurs="1" maxOccurs="1" name="model" nillable="true" type="tns:CdssModelAssetDefinition" />
+      <xs:element minOccurs="1" maxOccurs="1" name="fact" nillable="true" type="tns:CdssFactAssetDefinition" />
+    </xs:choice>
+  </xs:complexType>
+  <xs:complexType name="CdssProtocolAssetDefinition">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:CdssRuleAssetDefinition">
+        <xs:sequence>
+          <xs:element minOccurs="0" maxOccurs="1" name="scopes" type="tns:ArrayOfCdssProtocolGroupDefinition" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="CdssRuleAssetDefinition">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:CdssComputableAssetDefinition">
+        <xs:sequence>
+          <xs:element minOccurs="0" maxOccurs="1" name="when" type="tns:CdssWhenDefinition" />
+          <xs:element minOccurs="0" maxOccurs="1" name="then" type="tns:CdssActionCollectionDefinition" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="CdssComputableAssetDefinition" abstract="true">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:CdssBaseObjectDefinition">
+        <xs:attribute name="priority" type="xs:int" use="required" />
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="CdssModelAssetDefinition">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:CdssComputableAssetDefinition">
+        <xs:sequence>
+          <xs:choice minOccurs="1" maxOccurs="1">
+            <xs:element minOccurs="0" maxOccurs="1" name="json" type="xs:string" />
+            <xs:element minOccurs="0" maxOccurs="1" xmlns:q4="http://santedb.org/model" ref="q4:Act" />
+            <xs:element minOccurs="0" maxOccurs="1" xmlns:q5="http://santedb.org/model" ref="q5:TextObservation" />
+            <xs:element minOccurs="0" maxOccurs="1" xmlns:q6="http://santedb.org/model" ref="q6:SubstanceAdministration" />
+            <xs:element minOccurs="0" maxOccurs="1" xmlns:q7="http://santedb.org/model" ref="q7:QuantityObservation" />
+            <xs:element minOccurs="0" maxOccurs="1" xmlns:q8="http://santedb.org/model" ref="q8:CodedObservation" />
+            <xs:element minOccurs="0" maxOccurs="1" xmlns:q9="http://santedb.org/model" ref="q9:PatientEncounter" />
+            <xs:element minOccurs="0" maxOccurs="1" xmlns:q10="http://santedb.org/model" ref="q10:Procedure" />
+            <xs:element minOccurs="0" maxOccurs="1" xmlns:q11="http://santedb.org/model" ref="q11:Narrative" />
+          </xs:choice>
+        </xs:sequence>
+        <xs:attribute name="ref" type="xs:string" />
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="CdssFactAssetDefinition">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:CdssComputableAssetDefinition">
+        <xs:sequence>
+          <xs:choice minOccurs="1" maxOccurs="1">
+            <xs:element minOccurs="0" maxOccurs="1" name="csharp" type="tns:CdssCsharpExpressionDefinition" />
+            <xs:element minOccurs="0" maxOccurs="1" name="hdsi" type="tns:CdssHdsiExpressionDefinition" />
+            <xs:element minOccurs="0" maxOccurs="1" name="query" type="tns:CdssQueryExpressionDefinition" />
+            <xs:element minOccurs="0" maxOccurs="1" name="xml" type="tns:CdssXmlLinqExpressionDefinition" />
+            <xs:element minOccurs="0" maxOccurs="1" name="all" type="tns:CdssAllExpressionDefinition" />
+            <xs:element minOccurs="0" maxOccurs="1" name="none" type="tns:CdssNoneExpressionDefinition" />
+            <xs:element minOccurs="0" maxOccurs="1" name="any" type="tns:CdssAnyExpressionDefinition" />
+          </xs:choice>
+          <xs:element minOccurs="0" maxOccurs="unbounded" name="normalize" type="tns:CdssFactNormalizationDefinition" />
+        </xs:sequence>
+        <xs:attribute name="negate" type="xs:boolean" use="required" />
+        <xs:attribute name="type" type="tns:CdssValueType" />
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="CdssFactNormalizationDefinition">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:CdssBaseObjectDefinition">
+        <xs:sequence>
+          <xs:element minOccurs="0" maxOccurs="1" name="when" type="tns:CdssWhenDefinition" />
+          <xs:choice minOccurs="1" maxOccurs="1">
+            <xs:element minOccurs="0" maxOccurs="1" name="csharp" type="tns:CdssCsharpExpressionDefinition" />
+            <xs:element minOccurs="0" maxOccurs="1" name="hdsi" type="tns:CdssHdsiExpressionDefinition" />
+            <xs:element minOccurs="0" maxOccurs="1" name="xml" type="tns:CdssXmlLinqExpressionDefinition" />
+            <xs:element minOccurs="0" maxOccurs="1" name="all" type="tns:CdssAllExpressionDefinition" />
+            <xs:element minOccurs="0" maxOccurs="1" name="none" type="tns:CdssNoneExpressionDefinition" />
+            <xs:element minOccurs="0" maxOccurs="1" name="any" type="tns:CdssAnyExpressionDefinition" />
+          </xs:choice>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:simpleType name="CdssValueType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="auto" />
+      <xs:enumeration value="date" />
+      <xs:enumeration value="integer" />
+      <xs:enumeration value="long" />
+      <xs:enumeration value="string" />
+      <xs:enumeration value="bool" />
+      <xs:enumeration value="real" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:complexType name="CdssActionCollectionDefinition">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:CdssBaseObjectDefinition">
+        <xs:sequence>
+          <xs:choice minOccurs="0" maxOccurs="unbounded">
+            <xs:element minOccurs="0" maxOccurs="1" name="propose" type="tns:CdssProposeActionDefinition" />
+            <xs:element minOccurs="0" maxOccurs="1" name="assign" type="tns:CdssPropertyAssignActionDefinition" />
+            <xs:element minOccurs="0" maxOccurs="1" name="raise" type="tns:CdssIssueActionDefinition" />
+            <xs:element minOccurs="0" maxOccurs="1" name="repeat" type="tns:CdssRepeatActionDefinition" />
+            <xs:element minOccurs="0" maxOccurs="1" name="apply" type="tns:CdssRuleReferenceActionDefinition" />
+            <xs:element minOccurs="0" maxOccurs="1" name="rule" type="tns:CdssInlineRuleActionDefinition" />
+          </xs:choice>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="CdssProposeActionDefinition">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:CdssActionDefinition">
+        <xs:sequence>
+          <xs:element minOccurs="0" maxOccurs="1" name="model" type="tns:CdssModelAssetDefinition" />
+          <xs:element minOccurs="0" maxOccurs="unbounded" name="assign" type="tns:CdssPropertyAssignActionDefinition" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="CdssActionDefinition" abstract="true">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:CdssBaseObjectDefinition" />
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="CdssInlineRuleActionDefinition">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:CdssActionDefinition">
+        <xs:sequence>
+          <xs:element minOccurs="0" maxOccurs="1" name="when" type="tns:CdssWhenDefinition" />
+          <xs:element minOccurs="0" maxOccurs="1" name="then" type="tns:CdssActionCollectionDefinition" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="CdssRuleReferenceActionDefinition">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:CdssActionDefinition">
+        <xs:attribute name="ref" type="xs:string" />
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="CdssRepeatActionDefinition">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:CdssActionDefinition">
+        <xs:sequence>
+          <xs:element minOccurs="0" maxOccurs="1" name="until" type="tns:CdssWhenDefinition" />
+          <xs:element minOccurs="0" maxOccurs="1" name="execute" type="tns:CdssActionCollectionDefinition" />
+        </xs:sequence>
+        <xs:attribute name="iterations" type="xs:int" />
+        <xs:attribute name="trackBy" type="xs:string" />
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="CdssIssueActionDefinition">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:CdssActionDefinition">
+        <xs:sequence>
+          <xs:element minOccurs="0" maxOccurs="1" xmlns:q12="http://santedb.org/issue" ref="q12:issue" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="CdssPropertyAssignActionDefinition">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:CdssActionDefinition">
+        <xs:sequence>
+          <xs:choice minOccurs="1" maxOccurs="1">
+            <xs:element minOccurs="0" maxOccurs="1" name="csharp" type="tns:CdssCsharpExpressionDefinition" />
+            <xs:element minOccurs="0" maxOccurs="1" name="hdsi" type="tns:CdssHdsiExpressionDefinition" />
+            <xs:element minOccurs="0" maxOccurs="1" name="query" type="tns:CdssQueryExpressionDefinition" />
+            <xs:element minOccurs="0" maxOccurs="1" name="fact" type="tns:CdssFactReferenceExpressionDefinition" />
+            <xs:element minOccurs="0" maxOccurs="1" name="fixed" type="xs:string" />
+          </xs:choice>
+        </xs:sequence>
+        <xs:attribute name="path" type="xs:string" />
+        <xs:attribute name="overwrite" type="xs:boolean" use="required" />
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="ArrayOfCdssProtocolGroupDefinition">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="add" nillable="true" type="tns:CdssProtocolGroupDefinition" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="CdssProtocolGroupDefinition">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:CdssBaseObjectDefinition" />
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:simpleType name="CdssEvaluationMode">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="any" />
+      <xs:enumeration value="all" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="CdssLibrary" nillable="true" type="tns:CdssLibraryDefinition" />
+  <xs:complexType name="CdssLibraryDefinition">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:CdssBaseObjectDefinition">
+        <xs:sequence>
+          <xs:element minOccurs="0" maxOccurs="unbounded" name="include" type="xs:string" />
+          <xs:choice minOccurs="0" maxOccurs="unbounded">
+            <xs:element minOccurs="0" maxOccurs="1" name="logic" type="tns:CdssDecisionLogicBlockDefinition" />
+            <xs:element minOccurs="0" maxOccurs="1" name="data" type="tns:CdssDatasetDefinition" />
+          </xs:choice>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="CdssDiagnositcReport">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="1" name="target" type="xs:string" />
+      <xs:element minOccurs="0" maxOccurs="1" name="references" type="tns:ArrayOfString1" />
+      <xs:element minOccurs="0" maxOccurs="1" name="frame" type="tns:CdssDiagnosticFrame" />
+    </xs:sequence>
+    <xs:attribute name="start" type="xs:dateTime" use="required" />
+    <xs:attribute name="end" type="xs:dateTime" use="required" />
+  </xs:complexType>
+  <xs:complexType name="ArrayOfString1">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="ref" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="CdssDiagnosticFrame">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:CdssDiagnosticSample">
+        <xs:sequence>
+          <xs:element minOccurs="0" maxOccurs="1" name="defn" type="tns:CdssDiagnosticObjectReference" />
+          <xs:element minOccurs="0" maxOccurs="1" name="activities" type="tns:ArrayOfChoice2" />
+        </xs:sequence>
+        <xs:attribute name="exitTime" type="xs:dateTime" use="required" />
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="CdssDiagnosticSample" abstract="true">
+    <xs:attribute name="ts" type="xs:dateTime" />
+  </xs:complexType>
+  <xs:complexType name="CdssIssueDiagnosticSample">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:CdssDiagnosticSample">
+        <xs:sequence>
+          <xs:element minOccurs="0" maxOccurs="1" name="issue" xmlns:q13="http://santedb.org/issue" type="q13:DetectedIssue" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="CdssProposalDiagnosticSample">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:CdssDiagnosticSample">
+        <xs:sequence>
+          <xs:element minOccurs="0" maxOccurs="1" name="value" xmlns:q14="http://santedb.org/model" type="q14:Reference" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="CdssExceptionDiagnosticSample">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:CdssDiagnosticSample">
+        <xs:sequence>
+          <xs:element minOccurs="0" maxOccurs="1" name="summary" type="xs:string" />
+          <xs:element minOccurs="0" maxOccurs="1" name="detail" type="xs:string" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="CdssFactDiagnosticSample">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:CdssDiagnosticSample">
+        <xs:sequence>
+          <xs:element minOccurs="0" maxOccurs="1" name="name" type="xs:string" />
+          <xs:element minOccurs="0" maxOccurs="1" name="value" type="tns:CdssDiagnosticSampleValueWrapper" />
+          <xs:element minOccurs="0" maxOccurs="1" name="factRef" type="tns:CdssDiagnosticObjectReference" />
+        </xs:sequence>
+        <xs:attribute name="computationMs" type="xs:long" use="required" />
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="CdssDiagnosticSampleValueWrapper">
+    <xs:sequence>
+      <xs:choice minOccurs="1" maxOccurs="1">
+        <xs:element minOccurs="1" maxOccurs="1" name="int" type="xs:int" />
+        <xs:element minOccurs="1" maxOccurs="1" name="guid" xmlns:q15="http://microsoft.com/wsdl/types/" type="q15:guid" />
+        <xs:element minOccurs="0" maxOccurs="1" name="string" type="xs:string" />
+        <xs:element minOccurs="1" maxOccurs="1" name="long" type="xs:long" />
+        <xs:element minOccurs="1" maxOccurs="1" name="bool" type="xs:boolean" />
+        <xs:element minOccurs="1" maxOccurs="1" name="date" type="xs:dateTime" />
+        <xs:element minOccurs="1" maxOccurs="1" name="double" type="xs:double" />
+        <xs:element minOccurs="0" maxOccurs="1" name="act" xmlns:q16="http://santedb.org/model" type="q16:Act" />
+        <xs:element minOccurs="0" maxOccurs="1" name="substanceAdministration" xmlns:q17="http://santedb.org/model" type="q17:SubstanceAdministration" />
+        <xs:element minOccurs="0" maxOccurs="1" name="quantityObservation" xmlns:q18="http://santedb.org/model" type="q18:QuantityObservation" />
+        <xs:element minOccurs="0" maxOccurs="1" name="codedObservation" xmlns:q19="http://santedb.org/model" type="q19:CodedObservation" />
+        <xs:element minOccurs="0" maxOccurs="1" name="textObservation" xmlns:q20="http://santedb.org/model" type="q20:TextObservation" />
+        <xs:element minOccurs="0" maxOccurs="1" name="procedure" xmlns:q21="http://santedb.org/model" type="q21:Procedure" />
+        <xs:element minOccurs="0" maxOccurs="1" name="narrative" xmlns:q22="http://santedb.org/model" type="q22:Narrative" />
+        <xs:element minOccurs="0" maxOccurs="1" name="encounter" xmlns:q23="http://santedb.org/model" type="q23:PatientEncounter" />
+        <xs:element minOccurs="0" maxOccurs="1" name="patient" xmlns:q24="http://santedb.org/model" type="q24:Patient" />
+        <xs:element minOccurs="0" maxOccurs="1" name="provider" xmlns:q25="http://santedb.org/model" type="q25:Provider" />
+        <xs:element minOccurs="0" maxOccurs="1" name="entity" xmlns:q26="http://santedb.org/model" type="q26:Entity" />
+        <xs:element minOccurs="0" maxOccurs="1" name="material" xmlns:q27="http://santedb.org/model" type="q27:Material" />
+        <xs:element minOccurs="0" maxOccurs="1" name="person" xmlns:q28="http://santedb.org/model" type="q28:Person" />
+        <xs:element minOccurs="0" maxOccurs="1" name="manufacturedMaterial" xmlns:q29="http://santedb.org/model" type="q29:ManufacturedMaterial" />
+      </xs:choice>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="CdssDiagnosticObjectReference">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:CdssBaseObjectDefinition">
+        <xs:attribute name="type" type="xs:string" />
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="CdssValueLookupDiagnosticSample">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:CdssDiagnosticSample">
+        <xs:sequence>
+          <xs:element minOccurs="0" maxOccurs="1" name="value" type="tns:CdssDiagnosticSampleValueWrapper" />
+        </xs:sequence>
+        <xs:attribute name="name" type="xs:string" />
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="CdssValueDiagnosticSample">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:CdssDiagnosticSample">
+        <xs:sequence>
+          <xs:element minOccurs="0" maxOccurs="1" name="name" type="xs:string" />
+          <xs:element minOccurs="0" maxOccurs="1" name="value" type="tns:CdssDiagnosticSampleValueWrapper" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="CdssPropertyAssignDiagnosticSample">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:CdssDiagnosticSample">
+        <xs:sequence>
+          <xs:element minOccurs="0" maxOccurs="1" name="path" type="xs:string" />
+          <xs:element minOccurs="0" maxOccurs="1" name="value" type="tns:CdssDiagnosticSampleValueWrapper" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="ArrayOfChoice2">
+    <xs:choice minOccurs="0" maxOccurs="unbounded">
+      <xs:element minOccurs="1" maxOccurs="1" name="let" nillable="true" type="tns:CdssValueDiagnosticSample" />
+      <xs:element minOccurs="1" maxOccurs="1" name="get" nillable="true" type="tns:CdssValueLookupDiagnosticSample" />
+      <xs:element minOccurs="1" maxOccurs="1" name="raise" nillable="true" type="tns:CdssIssueDiagnosticSample" />
+      <xs:element minOccurs="1" maxOccurs="1" name="throw" nillable="true" type="tns:CdssExceptionDiagnosticSample" />
+      <xs:element minOccurs="1" maxOccurs="1" name="compute" nillable="true" type="tns:CdssDiagnosticFrame" />
+      <xs:element minOccurs="1" maxOccurs="1" name="propose" nillable="true" type="tns:CdssProposalDiagnosticSample" />
+      <xs:element minOccurs="1" maxOccurs="1" name="fact" nillable="true" type="tns:CdssFactDiagnosticSample" />
+      <xs:element minOccurs="1" maxOccurs="1" name="assign" nillable="true" type="tns:CdssPropertyAssignDiagnosticSample" />
+    </xs:choice>
+  </xs:complexType>
+  <xs:complexType name="CdssChangeScopeObjectActionDefinition">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:CdssActionDefinition">
+        <xs:sequence>
+          <xs:choice minOccurs="1" maxOccurs="1">
+            <xs:element minOccurs="0" maxOccurs="1" name="csharp" type="tns:CdssCsharpExpressionDefinition" />
+            <xs:element minOccurs="0" maxOccurs="1" name="hdsi" type="tns:CdssHdsiExpressionDefinition" />
+            <xs:element minOccurs="0" maxOccurs="1" name="fact" type="tns:CdssFactReferenceExpressionDefinition" />
+            <xs:element minOccurs="0" maxOccurs="1" name="query" type="tns:CdssQueryExpressionDefinition" />
+          </xs:choice>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="CdssCollectionComputableAssetDefinition" abstract="true">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:CdssComputableAssetDefinition">
+        <xs:sequence>
+          <xs:element minOccurs="0" maxOccurs="1" name="then" type="tns:ArrayOfChoice3" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="ArrayOfChoice3">
+    <xs:choice minOccurs="0" maxOccurs="unbounded">
+      <xs:element minOccurs="1" maxOccurs="1" name="raise" nillable="true" type="tns:CdssIssueActionDefinition" />
+      <xs:element minOccurs="1" maxOccurs="1" name="rule" nillable="true" type="tns:CdssRuleAssetDefinition" />
+      <xs:element minOccurs="1" maxOccurs="1" name="apply" nillable="true" type="tns:CdssRuleReferenceActionDefinition" />
+      <xs:element minOccurs="1" maxOccurs="1" name="propose" nillable="true" type="tns:CdssProposeActionDefinition" />
+      <xs:element minOccurs="1" maxOccurs="1" name="repeat" nillable="true" type="tns:CdssRepeatActionDefinition" />
+      <xs:element minOccurs="1" maxOccurs="1" name="assign" nillable="true" type="tns:CdssPropertyAssignActionDefinition" />
+    </xs:choice>
+  </xs:complexType>
+</xs:schema>

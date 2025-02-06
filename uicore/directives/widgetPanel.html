@@ -43,15 +43,20 @@
                                 ng-init="::disableView(panel, 'Edit')">
                                 <i class="fas fa-pencil-alt"></i>
                             </button>
-                            <button class="btn btn-success" type="button" ng-click="submitEditForm(panel)"
-                                ng-disabled="panel.editForm.$invalid" ng-if="panel.view == 'Edit'">
+                            <button class="btn btn-success" type="button" ng-click="submitForm(panel)"
+                                ng-disabled="(panel.editForm || panel.settingsForm).$invalid" ng-if="panel.view === 'Edit' || panel.view === 'Settings'">
                                 <i class="fas fa-check"></i>
                             </button>
-                            <button class="btn btn-dark" type="button" ng-init="disableView(panel, 'Edit')"
-                                ng-click="setView(panel, 'Setting')" id="pnl{{panel.id}}Setting"
-                                ng-if="::hasView(panel, 'Setting') &amp;&amp; !altView"
-                                ng-class="{ 'active' : panel.view == 'Setting' }">
+                            <button class="btn btn-dark" type="button" ng-init="disableView(panel, 'Settings')"
+                                ng-click="setView(panel, 'Settings')" id="pnl{{panel.id}}Setting"
+                                ng-if="panel.view != 'Settings' &amp;&amp; hasView(panel, 'Settings') &amp;&amp; !altView">
                                 <i class="fa fa-cog"></i>
+                            </button>
+                            <button class="btn btn-primary" type="button" ng-init="disableView(panel, 'Alternate')"
+                                ng-click="setView(panel, 'Alternate')" id="pnl{{panel.id}}Alternate"
+                                ng-if="panel.view != 'Alternate' &amp;&amp; hasView(panel, 'Alternate') &amp;&amp; !altView"
+                                ng-class="{ 'active' : panel.view == 'Alternate' }">
+                                <i class="fa fa-shuffle"></i>
                             </button>
                         </div>
                     </div>

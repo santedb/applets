@@ -1,0 +1,64 @@
+
+<div ng-if="!patient._upstream &amp;&amp; patient &amp;&amp; patient.relationship['MDM-Master'] "
+ng-switch="patient.tag['$mdm.type']" xmlns="http://www.w3.org/1999/xhtml">
+<!-- master - we should let the user know and allow them to override the edit lock (since this will redirect to ROT on server)-->
+<div class="m-0" ng-switch-when="M">
+    <div class=" alert alert-primary" ng-if="!patient.relationship['MDM-RecordOfTruth']">
+        <i class="fas fa-coins"></i>
+        {{ 'ui.mdm.view.master' | i18n }}
+    </div>
+    <div class="alert alert-success" ng-if="patient.relationship['MDM-RecordOfTruth']">
+        <div class="d-flex justify-content-between">
+            <div><i class="fas fa-gavel" ng-init="patient._readonly = true"></i>
+                {{ 'ui.mdm.view.masterAdjudicated' | i18n }}
+            </div>
+            <div class="flex-grow-1">
+                <div class="float-right btn-group" ng-if="patient._readonly">
+                    <a class="btn btn-sm btn-success"
+                        ui-sref=".({ id: patient.relationship['MDM-RecordOfTruth'][0].target })"><i
+                            class="fas fa-chevron-right"></i> {{
+                        'ui.mdm.action.openRot' | i18n }}</a>
+                    <button class="btn btn-sm btn-warning" ng-click="patient._readonly=false"><i
+                            class="fas fa-pencil-alt"></i> {{ 'ui.mdm.action.unlock' | i18n }}</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Already looking at ROT - notify user -->
+<div class="m-0 alert alert-warning" ng-switch-when="T">
+    <i class="fas fa-asterisk"></i>
+    {{ 'ui.mdm.view.recordOfTruth' | i18n }}
+</div>
+<!-- Looking at something different -->
+<div ng-switch-default="ng-switch-default" class="m-0">
+    <!-- Determiner is that of ROT -->
+    <div ng-switch="patient.determinerConcept">
+        <div class="alert alert-warning" ng-switch-when="6b1d6764-12be-42dc-a5dc-52fc275c4935">
+            <i class="fas fa-asterisk"></i>
+            {{ 'ui.mdm.view.recordOfTruth' | i18n }}
+        </div>
+        <!-- Local record -->
+        <div ng-switch-default="ng-switch-default" class="alert alert-info">
+            <div class="d-flex justify-content-between">
+                <div>
+                    <i class="fas fa-database" ng-init="patient._readonly = true"></i>
+                    {{ 'ui.mdm.view.local' | i18n }}
+                </div>
+                <div class="flex-grow-1">
+                    <div class="float-right btn-group" ng-if="patient._readonly">
+                        <a class="btn btn-sm btn-success"
+                            ui-sref=".({ id: patient.relationship['MDM-Master'][0].target })"><i
+                                class="fas fa-chevron-right"></i> {{
+                            'ui.mdm.action.openMaster' | i18n }}</a>
+                        <!-- Dont allow editing of a local - reason: The A local record comes from a source - if we update it on the admin panel then the 
+                                admin panel becomes the source of that information - this means that the admin panel is dictating this is a ROT
+                            <button class="btn btn-sm btn-warning" ng-click="patient._readonly=false"><i
+                                class="fas fa-pencil-alt"></i> {{ 'ui.mdm.action.unlock' | i18n }}</button> -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>

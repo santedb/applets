@@ -81,7 +81,7 @@ angular.module('santedb-lib')
                         var renderer = scope.render ? scope.render[m] : null;
 
                         return {
-                            orderable: scope.sort && scope.sort[m] !== undefined ? scope.sort[m] : renderer == null,
+                            orderable: scope.sort && scope.sort[m] !== undefined ? true : renderer == null,
                             data: m,
                             expectedType: expectedType,
                             class: scope.itemClass ? scope.itemClass[m] : null,
@@ -210,8 +210,14 @@ angular.module('santedb-lib')
                         processing: true,
                         buttons: buttons,
                         serverSide: true,
-                        searchDelay: 1000,
                         searching: scope.canFilter,
+                        layout: {
+                            topStart: scope.noButtons && !scope.buttonBar ? null : 'buttons'
+                        },
+                        search: {
+                            return: true,
+
+                        },
                         "oSearch": scope.defaultFilter ? { "sSearch": scope.defaultFilter } : undefined,
                         ajax: async function (data, callback, settings) {
 
@@ -220,7 +226,9 @@ angular.module('santedb-lib')
                                 if (data.search.value.length > 0)
                                     query[attrs.searchField] = `~${data.search.value}`;
                             }
-                            if (data.order[0].column != 0) {
+                            
+                            
+                            if (data.order && data.order[0] && data.order[0].column != 0) {
                                 var orderExpr = colname = scope.properties[data.order[0].column - 1]; // -1 because the ID column is hidden
                                 if (scope.sort && scope.sort[colname])
                                     orderExpr = scope.sort[colname];
@@ -357,18 +365,14 @@ angular.module('santedb-lib')
                     });
 
                     //$("input",element).attr('placeholder', `search ${SanteDB.getString(attrs.searchField)}`);
-                    var buttonSelector = '.col-md-6:eq(0)';
+                    var buttonSelector = '.dt-buttons'; //'.col-md-6:eq(0)';
                     var bindButtons = function (element, buttonBar) {
-                        dt.buttons().container().appendTo($(buttonSelector, dt.table().container()));
                         if (dt.buttons().container().length == 0) {
                             $timeout(() => bindButtons(element, buttonBar), 200);
                         } else if (buttonBar) {
                             $(buttonBar).appendTo($(buttonSelector, dt.table().container()));
-                        }
-
-                        if (!scope.canFilter) {
-                            $(buttonSelector, dt.table().container()).removeClass("col-md-6").addClass("col-md-12");
-                            buttonSelector = '.col-md-12:eq(0)';
+                            dt.buttons().container().parent().removeClass("col-md-auto").addClass("col-6");
+                            dt.buttons().container().removeClass("flex-wrap").addClass("w-100");
                         }
 
                     };

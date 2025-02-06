@@ -23,7 +23,7 @@
         <label class="col-sm-12 col-md-3 control-label" ng-class="{'required': isRequired  &amp;&amp; $index == 0 || !noType &amp;&amp; (name.component.Given  || name.component.Family)}">{{ 'ui.model.entity.name.use' | i18n }} <hint-popover hint-title="ui.model.entity.name.use" /> </label>
         <div class="col-sm-12 col-md-9">
             <concept-select class="form-control" id="{{::controlPrefix}}name{{$index}}use" ng-required="isRequired  &amp;&amp; $index == 0 || !noType &amp;&amp; (name.component.Given  || name.component.Family)" name="{{::controlPrefix}}name{{ $index }}use" concept-set="'NameUse'"
-                ng-model="name.use" />
+                ng-model="name.use" ng-model-options="{ updateOn: 'change blur'}" />
             <div class="text-danger" ng-if="ownerForm[controlPrefix + 'name' + $index  + 'use'].$invalid">
                 <i class="fas fa-exclamation-triangle"></i> {{ 'ui.error.required' | i18n }}</div>
         </div>
@@ -33,9 +33,9 @@
             class="col-sm-12 col-md-3 control-label">{{ 'ui.model.entity.name.component.prefix' | i18n }} <hint-popover hint-title="ui.model.entity.name.component.prefix" /> </label>
         <div class="col-sm-12 col-md-9" ng-switch="$root.system.config.application.setting['input.name'] || inputStyle">
             <tag-input  ng-switch-when="tag" name="{{::controlPrefix}}name{{$index }}prefix" class="form-control"
-                ng-model="name.component.Prefix" />
+                ng-model="name.component.Prefix" ng-model-options="{ updateOn: 'change blur'}" />
             <input autocomplete="__away"   ng-switch-default="" name="{{::controlPrefix}}name{{$index }}prefix" type="text" class="form-control"
-                ng-model="name.component.Prefix[0]"/>
+                ng-model="name.component.Prefix[0]" ng-model-options="{ updateOn: 'change blur'}"/>
         </div>
     </div>
     <div class="form-group row" ng-if="$root.system.config.application.setting['forbid.patient.name.given'] != 'true' &amp;&amp; allowedComponents.indexOf('given') > -1">
@@ -43,9 +43,9 @@
             class="col-sm-12 col-md-3 control-label" ng-class="{'required': isRequired || isRequired === undefined &amp;&amp;  !$root.system.config.application.setting['optional.patient.name.given']}">{{ 'ui.model.entity.name.component.given' | i18n }} <hint-popover hint-title="ui.model.entity.name.component.given" /></label>
         <div class="col-sm-12 col-md-9" ng-switch="$root.system.config.application.setting['input.name'] || inputStyle">
             <tag-input ng-required="isRequired" ng-switch-when="tag" name="{{::controlPrefix}}name{{$index }}given" class="form-control"
-                ng-model="name.component.Given"  />
+                ng-model="name.component.Given" ng-model-options="{ updateOn: 'change blur'}"  />
             <input autocomplete="__away"  ng-required="isRequired || isRequired === undefined &amp;&amp;  !$root.system.config.application.setting['optional.patient.name.given']" ng-switch-default="" name="{{::controlPrefix}}name{{$index }}given" type="text" class="form-control"
-                ng-model="name.component.Given[0]" />
+                ng-model="name.component.Given[0]" ng-model-options="{ updateOn: 'change blur'}" />
             <div class="text-danger" ng-if="ownerForm[controlPrefix + 'name' + $index  + 'given'].$invalid">
                 <i class="fas fa-exclamation-triangle"></i> {{ 'ui.error.required' | i18n }}</div>
         </div>
@@ -55,9 +55,9 @@
             class="col-sm-12 col-md-3 control-label" ng-class="{'required': isRequired || isRequired === undefined &amp;&amp;  !$root.system.config.application.setting['optional.patient.name.family']}">{{ 'ui.model.entity.name.component.family' | i18n }} <hint-popover hint-title="ui.model.entity.name.component.family" /></label>
         <div class="col-sm-12 col-md-9" ng-switch="$root.system.config.application.setting['input.name'] || inputStyle">
             <tag-input ng-required="isRequired" ng-switch-when="tag" name="{{::controlPrefix}}name{{ $index }}family" class="form-control"
-                ng-model="name.component.Family"  />
+                ng-model="name.component.Family" ng-model-options="{ updateOn: 'change blur'}"  />
             <input autocomplete="__away" ng-required="isRequired || isRequired === undefined &amp;&amp;  !$root.system.config.application.setting['optional.patient.name.family']" ng-switch-default="" name="{{::controlPrefix}}name{{ $index }}family" type="text" class="form-control"
-                ng-model="name.component.Family[0]" />
+                ng-model="name.component.Family[0]"  ng-model-options="{ updateOn: 'change blur'}"/>
             <div class="text-danger" ng-if="ownerForm[controlPrefix + 'name' + $index + 'family'].$invalid">
                 <i class="fas fa-exclamation-triangle"></i> {{ 'ui.error.required' | i18n }}</div>
         </div>
@@ -67,9 +67,9 @@
             class="col-sm-12 col-md-3 control-label">{{ 'ui.model.entity.name.component.suffix' | i18n }} <hint-popover hint-title="ui.model.entity.name.component.suffix" /></label>
             <div class="col-sm-12 col-md-9" ng-switch="$root.system.config.application.setting['input.name'] || inputStyle">
                 <tag-input ng-switch-when="tag" name="{{::controlPrefix}}name{{$index }}suffix" class="form-control"
-                    ng-model="name.component.Suffix"  />
+                    ng-model="name.component.Suffix"  ng-model-options="{ updateOn: 'change blur'}" />
                 <input autocomplete="__away"   ng-switch-default="" name="{{::controlPrefix}}name{{$index }}suffix" type="text" class="form-control"
-                    ng-model="name.component.Suffix[0]"  />
+                    ng-model="name.component.Suffix[0]" ng-model-options="{ updateOn: 'change blur'}"  />
             </div>
     </div>
     <div class="form-group row" ng-if="allowedComponents.indexOf('$other') == -1 &amp;&amp; !simpleEntry">
@@ -83,9 +83,9 @@
         <label class="col-sm-12 col-md-3 control-label">{{ 'ui.model.entity.name.component.other' | i18n }} <hint-popover hint-title="ui.model.entity.name.component.other" /></label>
         <div class="col-sm-12 col-md-9" ng-switch="$root.system.config.application.setting['input.name'] || inputStyle">
             <tag-input ng-required="isRequired" ng-switch-default="" name="{{::controlPrefix}}name{{$index }}$other" class="form-control"
-                ng-model="name.component.$other" />
+                ng-model="name.component.$other" ng-model-options="{ updateOn: 'change blur'}" />
             <input ng-required="isRequired" autocomplete="__away" ng-switch-when="simple" name="{{::controlPrefix}}name{{$index }}$other" type="text" class="form-control"
-                ng-model="name.component.$other[0]" />
+                ng-model="name.component.$other[0]"  ng-model-options="{ updateOn: 'change blur'}"/>
                 <div class="text-danger" ng-if="ownerForm[controlPrefix + 'name' + $index + '$other'].$invalid">
                     <i class="fas fa-exclamation-triangle"></i> {{ 'ui.error.required' | i18n }}</div>
         </div>

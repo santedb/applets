@@ -16,11 +16,13 @@
  - License for the specific language governing permissions and limitations under 
  - the License.
  -->
-<ViewModel xmlns="http://santedb.org/model/view">
+<ViewModel xmlns="http://santedb.org/model/view" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://santedb.org/model/view http://santedb.org/schema/v3.0/ViewModelDescription.xsd">
+
 
   <!-- Base types -->
   <type type="TemplateDefinition" all="false">
-    <property name="mnemonic"/>
+    <property name="mnemonic" />
   </type>
 
   <type type="IdentifiedData" all="true">

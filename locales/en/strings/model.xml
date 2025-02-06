@@ -155,6 +155,7 @@
   <string name="ui.model.version.initial">Initial Version</string>
   <string name="ui.model.entity.properties">Properties</string>
   <string name="ui.model.entity.versionSequence">Version #</string>
+  <string name="ui.model.entity.previousVersion">Previous Version</string>
   <string name="ui.model.entity.createdBy">Created By</string>
   <string name="ui.model.entity.id">UUID</string>
   <string name="ui.model.entity.classConcept">Classification</string>
@@ -534,6 +535,9 @@
   <string name="ui.model.act.startTime">Started</string>
   <string name="ui.model.act.stopTime">Completed</string>
   <string name="ui.model.act.typeConcept">Event Type</string>
+  <string name="ui.model.act.relationship.IsDerivedFrom">Derived From</string>
+  <string name="ui.model.act.relationship.IsDerivedFrom.hint">This action was derived from another act</string>
+  <string name="ui.model.act.relationship.IsDerivedFrom.cdss">The decision support system recommends performing this action based on the inputs provided on another input</string>
   <string name="ui.model.act.participation.Location">Location(s)</string>
   <string name="ui.model.act.participation.Authororiginator">Author / Reporter</string>
   <string name="ui.model.act.participation.Performer">Performer(s)</string>
@@ -903,6 +907,8 @@
   <string name="ui.model.container.statusConcept">Status</string>
   <string name="ui.model.container.statusConcept.hint">Primary status of the container - note this differs from the functional status of the container</string>
   <string name="ui.model.container.modifiedOn">Last Modified</string>
+  <string name="ui.model.container.relationship.LocatedEntity">Facility</string>
+  <string name="ui.model.container.relationship.LocatedEntity.hint">The facility in which the container is located</string>
   <string name="ui.model.container.relationship.ManufacturedProduct">Manufacturer</string>
   <string name="ui.model.container.relationship.ManufacturedProduct.hint">The company which manufactures this container</string>
   <string name="ui.model.container.lotNumber">Serial #</string>
@@ -947,6 +953,7 @@
     <string name="ui.model.patientEncounter.dischargeDisposition.hint">Indicate how the patient/person left the clinic</string>
 
     <!-- Data Templates -->
+    
     <string name="ui.model.dataTemplateDefinition.name">Name</string>
     <string name="ui.model.dataTemplateDefinition.name.hint">A short name for the clinical data template (appears in drop downs)</string>
     <string name="ui.model.dataTemplateDefinition.description">Description</string>
@@ -973,4 +980,7 @@
     <string name="ui.model.dataTemplateDefinition.author.hint">The people/organizations that wrote the template</string>
     <string name="ui.model.dataTemplateDefinition.template">Model / Template</string>
     <string name="ui.model.dataTemplateDefinition.template.hint">The RIM based model which is used for constructing the template data</string>
+    <string name="ui.model.dataTemplateDefinition.public">Is Public</string>
+    <string name="ui.model.dataTemplateDefinition.public.hint">Making a template public means that users can manually add this to their encounters in the EMR view</string>
+
 </resources>

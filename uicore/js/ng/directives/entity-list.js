@@ -67,38 +67,30 @@ angular.module('santedb-lib')
      */
     .directive("entityList", ["$compile", "$timeout", function ($compile, $timeout) {
 
-        var _type = undefined,
-            _noActions = undefined,
-            _keyProperty = undefined,
-            _orderBy = undefined,
-            _itemTemplate = undefined,
-            _listTemplate = undefined,
-            _sourceApi = undefined,
-            _scid = undefined,
-            _queryId = undefined,
-            _id = undefined,
-            _operation = undefined,
-            _subResource = undefined,
-            _throttleGuard = 0;
 
         (function($) {
-
-            var _scopeRef = null;
-
-            $.fn.EntityList = function() {
-                _scopeRef = angular.element("div", $(this)).scope();
-            };
-            $.fn.EntityList.refresh = function()
-            {
-                if (_queryId !== undefined) {
-                    _queryId = SanteDB.application.newGuid();
+            function EntityListApi(scope) {
+                this.refresh = function(e)
+                {
+                    if (scope.$$queryId !== undefined) {
+                        scope.$$queryId = SanteDB.application.newGuid();
+                    }
+                    refreshItems(scope);
+                };
+            }
+            $.fn.extend({
+                entityList : function(scope) {
+                    this.each(function() {
+                        if(!this.EntityList) {
+                            this.EntityList = new EntityListApi(scope || angular.element($(this).scope()));
+                        }
+                    });
                 }
-                refreshItems(_scopeRef);
-            };
+            });
         })(jQuery);
 
-        async function refreshItems(scope, filter) {
-            var waiterDiv = $(`#${_id}_${_scid}`);
+        async function refreshItems(scope) {
+            var waiterDiv = $(`#${scope.$$eleId}_${scope.$$scid}`);
             try {
                 waiterDiv.removeClass('d-none');
                 var query = angular.copy(scope.defaultQuery) || {};
@@ -107,25 +99,25 @@ angular.module('santedb-lib')
                 query._count = scope.queryControl.resultsPerPage;
                 query._offset = (scope.queryControl.currentPage - 1) * scope.queryControl.resultsPerPage;
                 query._includeTotal = true;
-                query._queryId = _queryId;
+                query._queryId = scope.$$queryId;
 
                 // Is there a search term?
                 if (scope.queryControl.filter && scope.queryControl.filter !== "") {
                     query[scope.searchField] = `~${scope.queryControl.filter}`;
                 }
-                if (_orderBy) {
-                    query._orderBy = _orderBy;
+                if (scope.$$orderBy) {
+                    query._orderBy = scope.$$orderBy;
                 }
 
                 var results = null;
                 var viewModel = query._viewModel || 'full';
-                if (_operation) {
-                    results = await _sourceApi.invokeOperationAsync(scope.operationScope, _operation, query, scope.upstream == true);
-                } else if (_subResource) {
-                    results = await _sourceApi.findAssociatedAsync(scope.subResourceScope, _subResource, query, viewModel, scope.upstream == true);
+                if (scope.$$operation) {
+                    results = await scope.$$sourceApi.invokeOperationAsync(scope.operationScope, scope.$$operation, query, scope.upstream == true);
+                } else if (scope.$$subResource) {
+                    results = await scope.$$sourceApi.findAssociatedAsync(scope.subResourceScope, scope.$$subResource, query, viewModel, scope.upstream == true);
                 }
                 else {
-                    results = await _sourceApi.findAsync(query, viewModel, scope.upstream == true);
+                    results = await scope.$$sourceApi.findAsync(query, viewModel, scope.upstream == true);
                 }
 
                 // Check if there are search results and an array of one or more item supplement functions to add additional information for the resource.
@@ -142,8 +134,6 @@ angular.module('santedb-lib')
                 $timeout(() => {
                     scope.results = results;
                     scope.queryControl._maxPages = Math.ceil(results.totalResults / scope.queryControl.resultsPerPage);
-                    _throttleGuard = 0;
-
                     // If the first page then we show up to 5
                     scope.queryControl._paginationVals = [];
 
@@ -165,7 +155,6 @@ angular.module('santedb-lib')
             }
         }
 
-
         return {
             scope: {
                 defaultQuery: '=',
@@ -186,8 +175,8 @@ angular.module('santedb-lib')
 
                 $scope.$watch("defaultQuery", function (n, o) {
                     if (n && n != o) {
-                        if (_queryId !== undefined) {
-                            _queryId = SanteDB.application.newGuid();
+                        if ($scope.$$queryId !== undefined) {
+                            $scope.$$queryId = SanteDB.application.newGuid();
                         }
                         refreshItems($scope);
                     }
@@ -195,24 +184,12 @@ angular.module('santedb-lib')
 
                 $scope.$watch("queryControl.filter", function (n, o) {
                     if (n != o) {
-                        if (_queryId !== undefined) {
-                            _queryId = SanteDB.application.newGuid();
+                        if ($scope.$$queryId !== undefined) {
+                            $scope.$$queryId = SanteDB.application.newGuid();
                         }
                         $scope.queryControl.currentPage = 1;
 
-                        if (!_throttleGuard) // throttle requests to the server
-                        {
-                            _throttleGuard = 1;
-                            refreshItems($scope);
-                        }
-                        else if (_throttleGuard == 1) {
-                            _throttleGuard = 2;
-                            $timeout(() => {
-                                if (!_throttleGuard) {
-                                    refreshItems($scope);
-                                }
-                            }, 1000)
-                        }
+                        refreshItems($scope);
                     }
                 });
 
@@ -246,7 +223,7 @@ angular.module('santedb-lib')
                 $scope.doAction = function (action, record, index) {
                     if (action.sref) {
                         if (record) {
-                            $state.go(action.sref, { id: record[_keyProperty] });
+                            $state.go(action.sref, { id: record[$scope.$$keyProperty] });
                         }
                         else {
                             $state.go(action.sref);
@@ -254,7 +231,7 @@ angular.module('santedb-lib')
                     }
                     else if (typeof (action.action) === "string") {
                         if (record) {
-                            $scope.$parent[action.action](record[_keyProperty], index, record);
+                            $scope.$parent[action.action](record[$scope.$$keyProperty], index, record);
                         }
                         else {
                             $scope.$parent[action.action]();
@@ -262,7 +239,7 @@ angular.module('santedb-lib')
                     }
                     else if (action.action) {
                         if (record) {
-                            action.action(record[_keyProperty], index, record);
+                            action.action(record[$scope.$$keyProperty], index, record);
                         }
                         else {
                             action.action();
@@ -273,41 +250,44 @@ angular.module('santedb-lib')
             }],
             link: function (scope, element, attrs) {
 
-                $(element).EntityList(scope);
+                $(element).entityList(scope);
 
-                _type = attrs.type;
-                _noActions = attrs.noActions;
+                scope.$$type = attrs.type;
                 scope._display = attrs.display || 'list';
 
-                _keyProperty = attrs.keyProperty || 'id';
-                _orderBy = attrs.orderBy || 'creationTime:asc';
+                scope.$$keyProperty = attrs.keyProperty || 'id';
+                scope.$$orderBy = attrs.orderBy || 'creationTime:asc';
                 _operaation = attrs.operation;
-                _subResource = attrs.subResource;
-                _id = attrs.id;
-                _scid = scope.scid = SanteDB.application.newGuid().substring(0, 8);
-                _sourceApi = SanteDB.resources[_type.toCamelCase()];
-                _itemTemplate = $("div[ng-transclude]", element).html();
+                scope.$$subResource = attrs.subResource;
+                scope.$$eleId = attrs.id;
+                scope.$$scid = scope.scid = SanteDB.application.newGuid().substring(0, 8);
+                scope.$$sourceApi = SanteDB.resources[scope.$$type.toCamelCase()];
+                var _itemTemplate = $("div[ng-transclude]", element).html();
 
+                var _listTemplate = null;
                 // item template?
                 if (attrs.itemTemplate) {
                     _listTemplate = $("#listTemplate", element).html()
                         .replaceAll("xg-", "ng-")
                         .replace("$template", `<ng-include src="'${attrs.itemTemplate}'" />`)
                         .replace("$itemClass", attrs.itemClass)
-                        .replace("$idRoot", _id);
+                        .replace("$idRoot", scope.$$eleId);
                 }
                 else {
                     _listTemplate = $("#listTemplate", element).html()
                         .replaceAll("xg-", "ng-")
                         .replace("$template", _itemTemplate)
                         .replace("$itemClass", attrs.itemClass)
-                        .replace("$idRoot", _id);
+                        .replace("$idRoot", scope.$$eleId);
                 }
                 $("#listContainer", element).html(_listTemplate);
                 $compile(angular.element("#listContainer"))(scope);
 
-                $(".entity-list-waiter", element).attr("id", `${_id}_${_scid}`);
+                $(".entity-list-waiter", element).attr("id", `${scope.$$eleId}_${scope.$$scid}`);
 
+                if(attrs.noActions) {
+                    $(".globalActions", element).addClass("d-none");
+                }
                 if (attrs.canChangeView == "true") {
                     $(".viewChange", element).removeClass("d-none");
                 }
@@ -325,11 +305,11 @@ angular.module('santedb-lib')
                 }
 
                 if (attrs.stateless !== "true") {
-                    _queryId = SanteDB.application.newGuid();
+                    scope.$$queryId = SanteDB.application.newGuid();
                 }
 
-                if (!_type) { throw "@type required on entity-list"; }
-                else if (!_sourceApi) { throw `No SanteDB API exists for ${_type}`; }
+                if (!scope.$$type) { throw "@type required on entity-list"; }
+                else if (!scope.$$sourceApi) { throw `No SanteDB API exists for ${scope.$$type}`; }
                 //else if (!_itemTemplate) { throw "entity-list missing item template"; }
 
                 refreshItems(scope);

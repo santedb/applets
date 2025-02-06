@@ -16,8 +16,9 @@
  - License for the specific language governing permissions and limitations under 
  - the License.
  -->
-<AppletManifest  xmlns="http://santedb.org/applet">
-  
+<AppletManifest  xmlns="http://santedb.org/applet" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://santedb.org/applet http://santedb.org/schema/v3.0/Applet.xsd">
+
   <info id="org.santedb.core" version="3.0.0.0" uuid="1f5825da-8c11-400c-939a-94c3507da427">
     <icon>/org.santedb.core/img/icon.png</icon>
     <name lang="en">SanteDB Core Applet</name>
@@ -58,7 +59,10 @@
   <viewModel key="relationship">
     <definition>/org.santedb.core/model/relationship.xml</definition>
   </viewModel>
-    <viewModel key="concept">
+  <viewModel key="concept">
     <definition>/org.santedb.core/model/concept.xml</definition>
+  </viewModel>
+  <viewModel key="attribution">
+    <definition>/org.santedb.core/model/attribution.xml</definition>
   </viewModel>
 </AppletManifest>

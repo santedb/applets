@@ -129,14 +129,10 @@ angular.module('santedb-lib')
                     lengthChange: false,
                     searching: true,
                     serverSide: true,
-                    columnDefs: [
-                        {
-                            orderable: false,
-                            targets: [0, 1, 2]
-                        }
-                    ],
+                    layout: {
+                        topStart: 'buttons'
+                    },
                     buttons: [
-                        'copy'
                     ],
                     columns: [
                         {
@@ -217,12 +213,16 @@ angular.module('santedb-lib')
                 });
                 // Bind buttons
                 var bindButtons = function () {
-                    dt.buttons().container().appendTo($('.col-md-6:eq(1)', dt.table().container()));
+                    // dt.buttons().container().appendTo($('.col-md-6:eq(1)', dt.table().container()));
                     if (dt.buttons().container().length == 0)
                         $timeout(bindButtons, 100);
                     else {
-                        $("#addPolicy", element).appendTo($('.col-md-6:eq(0)', dt.table().container()));
+                        $("#addPolicy", element).appendTo($('.dt-buttons', dt.table().container()));
                     }
+
+                    dt.buttons().container().parent().removeClass("col-md-auto").addClass("col-6");
+                    dt.buttons().container().removeClass("flex-wrap").addClass("w-100");
+
                 };
                 bindButtons();
 

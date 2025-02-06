@@ -27,22 +27,19 @@
                 <th></th>
             </tr>
         </thead>
-        
+
     </table>
-    <div id="addPolicy" class="mb-3">
-            <div class="d-flex align-items-baseline justify-content-start">
-                    <span class="mr-2 me-2 font-weight-bold">{{ 'ui.action.add' | i18n }}</span> 
-            <entity-search 
-                placeholder="{{ 'ui.model.securityPolicyInstance.search' | i18n }}" 
-                type="'SecurityPolicy'" 
-                class="form-control me-2 mr-2" 
-                style="width:75%" 
-                search-field="'name'"
-                ng-model="newPolicy.id"
-                filter="{ obsoletionTime: 'null' }"/>
-                <button type="button" class="btn btn-primary mx-2 align-self-center" ng-disabled="!newPolicy || newPolicy.exec"
-                    ng-click="addPolicy()"><i class="fas" ng-class="{'fa-plus-circle': !newPolicy.exec, 'fa-circle-notch fa-spin': newPolicy.exec }"></i> <span class="sr-only">{{ 'ui.action.add' | i18n }}</span></button>
-                </div>
-       
+    <div id="addPolicy" class="input-group">
+        <div class="input-group-prepend">
+            <span class="font-weight-bold input-group-text">{{ 'ui.action.add' | i18n }}</span>
+        </div>
+        <entity-search placeholder="{{ 'ui.model.securityPolicyInstance.search' | i18n }}" type="'SecurityPolicy'"
+            class="form-control" search-field="'name'" ng-model="newPolicy.id" filter="{ obsoletionTime: 'null' }" style="width:75%" />
+            <div class="input-group-append">
+            <button type="button" class="btn btn-primary"
+                ng-disabled="!newPolicy || newPolicy.exec" ng-click="addPolicy()"><i class="fas fa-fw"
+                    ng-class="{'fa-plus-circle': !newPolicy.exec, 'fa-circle-notch fa-spin': newPolicy.exec }"></i>
+                <span class="d-none d-sm-inline">{{ 'ui.action.add' | i18n }}</span></button>
+            </div>
     </div>
 </div>

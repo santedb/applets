@@ -1,0 +1,5 @@
+<div class="m-0 alert alert-info" ng-if="patient.vipStatus" xmlns="http://www.w3.org/1999/xhtml">
+    <i class="fas fa-fw"
+        ng-class="{ 'fa-person-burst' : patient.genderConceptModel.mnemonic == 'Male' || patient.genderConcept == 'f4e3a6bb-612e-46b2-9f77-ff844d971198', 'fa-person-dress-burst' :  patient.genderConceptModel.mnemonic == 'Female' || patient.genderConcept == '094941e9-a3db-48b5-862c-bc289bd7f86c' }"></i>
+    {{ 'ui.model.patient.vipStatus.notification' | i18n }}
+</div>

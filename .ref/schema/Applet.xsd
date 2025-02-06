@@ -1,0 +1,325 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!--
+ - Copyright 2021-2024 SanteSuite Contributors (See NOTICE.md for full copyright notices)
+ - Copyright (C) 2019 - 2021, Fyfe Software Inc. and the SanteSuite Contributors
+ - Portions Copyright (C) 2015-2018 Mohawk College of Applied Arts and Technology
+ - 
+ - Licensed under the Apache License, Version 2.0 (the "License"); you 
+ - may not use this file except in compliance with the License. You may 
+ - obtain a copy of the License at 
+ - 
+ - http://www.apache.org/licenses/LICENSE-2.0 
+ - 
+ - Unless required by applicable law or agreed to in writing, software
+ - distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+ - WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the 
+ - License for the specific language governing permissions and limitations under 
+ - the License.
+ -->
+<xs:schema xmlns:tns="http://santedb.org/applet" elementFormDefault="qualified"
+  targetNamespace="http://santedb.org/applet" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import namespace="http://microsoft.com/wsdl/types/" schemaLocation="BaseTypes.xsd" />
+  <xs:complexType name="AppletAsset">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="demand" type="xs:string" />
+      <xs:choice minOccurs="1" maxOccurs="1">
+        <xs:element minOccurs="0" maxOccurs="1" name="contentText" type="xs:string" />
+        <xs:element minOccurs="0" maxOccurs="1" name="contentBin" type="xs:base64Binary" />
+        <xs:element minOccurs="0" maxOccurs="1" name="contentXml">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:any processContents="lax" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element minOccurs="0" maxOccurs="1" name="contentHtml" type="tns:AppletAssetHtml" />
+        <xs:element minOccurs="0" maxOccurs="1" name="widgetHtml" type="tns:AppletWidget" />
+        <xs:element minOccurs="0" maxOccurs="1" name="virtual" type="tns:AppletAssetVirtual" />
+      </xs:choice>
+    </xs:sequence>
+    <xs:attribute name="name" type="xs:string" />
+    <xs:attribute name="lang" type="xs:string" />
+    <xs:attribute name="mimeType" type="xs:string" />
+  </xs:complexType>
+  <xs:complexType name="AppletAssetHtml">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="title" type="tns:LocaleString" />
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="bundle" type="xs:string" />
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="script" type="tns:AssetScriptReference" />
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="style" type="xs:string" />
+      <xs:element minOccurs="0" maxOccurs="1" name="view" type="tns:AppletViewState" />
+      <xs:element minOccurs="0" maxOccurs="1" name="content">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:any processContents="lax" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+    <xs:attribute name="static" type="xs:boolean" use="required" />
+  </xs:complexType>
+  <xs:complexType name="LocaleString">
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:attribute name="lang" type="xs:string" />
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+  <xs:complexType name="AssetScriptReference">
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:attribute name="static" type="xs:string" />
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+  <xs:complexType name="AppletViewState">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="1" name="route" type="xs:string" />
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="view" type="tns:AppletView" />
+    </xs:sequence>
+    <xs:attribute name="name" type="xs:string" />
+    <xs:attribute name="priority" type="xs:int" use="required" />
+    <xs:attribute name="abstract" type="xs:boolean" use="required" />
+  </xs:complexType>
+  <xs:complexType name="AppletView">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:AppletViewState">
+        <xs:sequence>
+          <xs:element minOccurs="0" maxOccurs="1" name="controller" type="xs:string" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="AppletWidget">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:AppletAssetHtml">
+        <xs:sequence>
+          <xs:element minOccurs="0" maxOccurs="1" name="views" type="tns:ArrayOfAppletWidgetView" />
+          <xs:element minOccurs="0" maxOccurs="unbounded" name="guard" type="xs:string" />
+          <xs:element minOccurs="0" maxOccurs="1" name="controller" type="xs:string" />
+          <xs:element minOccurs="0" maxOccurs="unbounded" name="description" type="tns:LocaleString" />
+          <xs:element minOccurs="0" maxOccurs="1" name="icon" type="xs:string" />
+        </xs:sequence>
+        <xs:attribute name="context">
+          <xs:simpleType>
+            <xs:list itemType="xs:string" />
+          </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="type" type="tns:AppletWidgetType" use="required" />
+        <xs:attribute name="size" type="tns:AppletWidgetSize" use="required" />
+        <xs:attribute name="name" type="xs:string" />
+        <xs:attribute name="priority" type="xs:int" use="required" />
+        <xs:attribute name="maxStack" type="xs:int" use="required" />
+        <xs:attribute name="order" type="xs:int" use="required" />
+        <xs:attribute name="headerClass" type="xs:string" />
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:simpleType name="CarePathwayEnrollmentMode">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="manual" />
+      <xs:enumeration value="automatic" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:complexType name="ArrayOfAppletWidgetView">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="view" nillable="true" type="tns:AppletWidgetView" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="AppletWidgetView">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="demand" type="xs:string" />
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="guard" type="xs:string" />
+    </xs:sequence>
+    <xs:attribute name="type" type="tns:AppletWidgetViewType" use="required" />
+  </xs:complexType>
+  <xs:simpleType name="AppletWidgetViewType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="none" />
+      <xs:enumeration value="alternate" />
+      <xs:enumeration value="edit" />
+      <xs:enumeration value="setting" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="AppletWidgetType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="panel" />
+      <xs:enumeration value="tab" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="AppletWidgetSize">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="l" />
+      <xs:enumeration value="m" />
+      <xs:enumeration value="s" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:complexType name="AppletAssetVirtual">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="include" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="AppletAssetHtml" nillable="true" type="tns:AppletAssetHtml" />
+  <xs:complexType name="AppletCarePathwayDefinition">
+    <xs:sequence>
+      <xs:element minOccurs="1" maxOccurs="1" name="uuid" xmlns:q1="http://microsoft.com/wsdl/types/" type="q1:guid" />
+      <xs:element minOccurs="0" maxOccurs="1" name="name" type="xs:string" />
+      <xs:element minOccurs="0" maxOccurs="1" name="description" type="xs:string" />
+      <xs:element minOccurs="0" maxOccurs="1" name="eligibility" type="xs:string" />
+      <xs:element minOccurs="1" maxOccurs="1" name="enrollment" type="tns:CarePathwayEnrollmentMode" />
+      <xs:element minOccurs="0" maxOccurs="1" name="encounter" type="xs:string" />
+    </xs:sequence>
+    <xs:attribute name="mnemonic" type="xs:string" />
+  </xs:complexType>
+  <xs:complexType name="AppletErrorAssetDefinition">
+    <xs:attribute name="code" type="xs:int" use="required" />
+    <xs:attribute name="asset" type="xs:string" />
+  </xs:complexType>
+  <xs:complexType name="AppletInfo">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:AppletName">
+        <xs:sequence>
+          <xs:element minOccurs="0" maxOccurs="1" name="icon" type="xs:string" />
+          <xs:element minOccurs="0" maxOccurs="unbounded" name="name" type="tns:LocaleString" />
+          <xs:element minOccurs="0" maxOccurs="unbounded" name="groupName" type="tns:LocaleString" />
+          <xs:element minOccurs="0" maxOccurs="1" name="author" type="xs:string" />
+          <xs:element minOccurs="0" maxOccurs="unbounded" name="dependency" type="tns:AppletName" />
+          <xs:element minOccurs="0" maxOccurs="1" name="hash" type="xs:base64Binary" />
+          <xs:element minOccurs="1" maxOccurs="1" name="ts" nillable="true" type="xs:dateTime" />
+        </xs:sequence>
+        <xs:attribute name="uuid" xmlns:q3="http://microsoft.com/wsdl/types/" type="q3:guid" use="required" />
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="AppletName">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="1" name="signature" type="xs:base64Binary" />
+    </xs:sequence>
+    <xs:attribute name="id" type="xs:string" />
+    <xs:attribute name="version" type="xs:string" />
+    <xs:attribute name="publicKeyToken" type="xs:string" />
+  </xs:complexType>
+  <xs:complexType name="AppletLocale">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="asset" type="xs:string" />
+    </xs:sequence>
+    <xs:attribute name="code" type="xs:string" />
+  </xs:complexType>
+  <xs:complexType name="AppletManifest">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="1" name="info" type="tns:AppletInfo" />
+      <xs:element minOccurs="0" maxOccurs="1" name="locales" type="tns:ArrayOfAppletLocale" />
+      <xs:element minOccurs="0" maxOccurs="1" name="startupAsset" type="xs:string" />
+      <xs:element minOccurs="0" maxOccurs="1" name="loginAsset" type="xs:string" />
+      <xs:element minOccurs="0" maxOccurs="1" name="errors" type="tns:ArrayOfAppletErrorAssetDefinition" />
+      <xs:element minOccurs="0" maxOccurs="1" name="settings" type="tns:ArrayOfAppletSettingEntry" />
+      <xs:element minOccurs="0" maxOccurs="1" name="configuration" type="tns:AppletConfigurationSettings" />
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="menuItem" type="tns:AppletMenu" />
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="template" type="tns:AppletTemplateDefinition" />
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="viewModel" type="tns:AppletViewModelDefinition" />
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="asset" type="tns:AppletAsset" />
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="strings" type="tns:AppletStrings" />
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="carepath" type="tns:AppletCarePathwayDefinition" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ArrayOfAppletLocale">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="locale" nillable="true" type="tns:AppletLocale" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ArrayOfAppletErrorAssetDefinition">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="add" nillable="true" type="tns:AppletErrorAssetDefinition" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ArrayOfAppletSettingEntry">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="add" nillable="true" type="tns:AppletSettingEntry" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="AppletSettingEntry">
+    <xs:attribute name="name" type="xs:string" />
+    <xs:attribute name="value" type="xs:string" />
+  </xs:complexType>
+  <xs:complexType name="AppletConfigurationSettings">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="1" name="appSettings" type="tns:ArrayOfAppletSettingEntry" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="AppletMenu">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="1" name="icon" type="xs:string" />
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="text" type="tns:LocaleString" />
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="menuItem" type="tns:AppletMenu" />
+    </xs:sequence>
+    <xs:attribute name="context" type="xs:string" />
+    <xs:attribute name="order" type="xs:int" use="required" />
+    <xs:attribute name="launch" type="xs:string" />
+    <xs:attribute name="asset" type="xs:string" />
+  </xs:complexType>
+  <xs:complexType name="AppletTemplateDefinition">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="1" name="form" type="xs:string" />
+      <xs:element minOccurs="0" maxOccurs="1" name="view" type="xs:string" />
+      <xs:element minOccurs="0" maxOccurs="1" name="summaryView" type="xs:string" />
+      <xs:element minOccurs="0" maxOccurs="1" name="backEntry" type="xs:string" />
+      <xs:element minOccurs="0" maxOccurs="1" name="definition" type="xs:string" />
+      <xs:element minOccurs="0" maxOccurs="1" name="description" type="xs:string" />
+      <xs:element minOccurs="0" maxOccurs="1" name="oid" type="xs:string" />
+      <xs:element minOccurs="1" maxOccurs="1" name="uuid" xmlns:q4="http://microsoft.com/wsdl/types/" type="q4:guid" />
+      <xs:element minOccurs="0" maxOccurs="1" name="guard" type="xs:string" />
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="scope" type="xs:string" />
+      <xs:element minOccurs="0" maxOccurs="1" name="icon" type="xs:string" />
+    </xs:sequence>
+    <xs:attribute name="public" type="xs:boolean" use="required" />
+    <xs:attribute name="mnemonic" type="xs:string" />
+    <xs:attribute name="priority" type="xs:int" use="required" />
+  </xs:complexType>
+  <xs:complexType name="AppletViewModelDefinition">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="1" name="definition" type="xs:string" />
+    </xs:sequence>
+    <xs:attribute name="key" type="xs:string" />
+  </xs:complexType>
+  <xs:complexType name="AppletStrings">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="string" type="tns:AppletStringData" />
+    </xs:sequence>
+    <xs:attribute name="lang" type="xs:string" />
+    <xs:attribute name="extern" type="xs:string" />
+  </xs:complexType>
+  <xs:complexType name="AppletStringData">
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:attribute name="key" type="xs:string" />
+        <xs:attribute name="priority" type="xs:int" use="required" />
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+  <xs:element name="AppletPackage" nillable="true" type="tns:AppletPackage" />
+  <xs:complexType name="AppletPackage">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="1" name="info" type="tns:AppletInfo" />
+      <xs:element minOccurs="0" maxOccurs="1" name="manifest" type="xs:base64Binary" />
+      <xs:element minOccurs="0" maxOccurs="1" name="certificate" type="xs:base64Binary" />
+      <xs:element minOccurs="0" maxOccurs="1" name="settings" type="tns:ArrayOfAppletSettingEntry" />
+    </xs:sequence>
+    <xs:attribute name="pakVersion" type="xs:string" />
+  </xs:complexType>
+  <xs:element name="AppletSolution" nillable="true" type="tns:AppletSolution" />
+  <xs:complexType name="AppletSolution">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:AppletPackage">
+        <xs:sequence>
+          <xs:element minOccurs="0" maxOccurs="unbounded" name="include" type="tns:AppletPackage" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="AppletManifest" nillable="true" type="tns:AppletManifest" />
+  <xs:element name="widget" type="tns:AppletWidget" />
+  <xs:element name="state" type="tns:AppletViewState" />
+  <xs:element name="title" type="tns:LocaleString" />
+  <xs:element name="style" type="tns:AssetScriptReference" />
+  <xs:element name="script" type="tns:AssetScriptReference"></xs:element>
+</xs:schema>

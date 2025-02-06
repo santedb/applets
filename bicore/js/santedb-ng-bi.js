@@ -291,6 +291,26 @@ angular.module('santedb-lib')
      */
     .directive('reportView', ['$compile', '$rootScope', function ($compile, $rootScope) {
 
+        
+        (function($) {
+            function ReportViewJquery(scope) {
+                this.refresh = function(e)
+                {
+                    scope.isRendering = false;
+                    scope.renderReport();
+                };
+            }
+            $.fn.extend({
+                reportView : function(scope) {
+                    this.each(function() {
+                        if(!this.ReportView) {
+                            this.ReportView = new ReportViewJquery(scope || angular.element($(this).scope()));
+                        }
+                    });
+                }
+            });
+        })(jQuery);
+
         return {
             scope: {
                 reportId: "<",
@@ -363,6 +383,10 @@ angular.module('santedb-lib')
                         scope.renderReport(n, o);
                     }
                 });
+
+                if(attrs.id) {
+                    $(element).reportView(scope);
+                }
             }
         }
     }])
@@ -493,6 +517,7 @@ angular.module('santedb-lib')
                 scope.data = scope.data.map(d=> {
                     if(d.type == "bubble") {
                         d.data = d.data.map((p,i)=>{ 
+                            p = p || {};
                             return { 
                                 y: p.y || 0,
                                 r: p.r || p,

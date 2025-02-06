@@ -78,6 +78,7 @@ angular.module('santedb-lib')
                             _AddressPlaceRef: []
                         }
                     });
+                    
                     $scope.addressEdit.push(newAddr);
                     $scope.model["$other"].push(newAddr);
                 }
@@ -106,7 +107,6 @@ angular.module('santedb-lib')
                         })]
                     };
                 }
-
                
                 function fixAddressUse(addr) {
                     if ((!addr.useModel || !addr.useModel.id) && addr != '$other')
@@ -117,8 +117,7 @@ angular.module('santedb-lib')
                             });
                         };
 
-                function syncEditToAddress() {
-
+                function syncEditToAddress() {                    
                     var flatAddressList = [];
                     if(Array.isArray(scope.model)) {
                         flatAddressList = scope.model;
@@ -152,9 +151,11 @@ angular.module('santedb-lib')
                             a.component._AddressPlaceRef = a.component._AddressPlaceRef || []
                     });
                     scope.addressEdit = flatAddressList;
+                    scope.model["$other"] = scope.model["$other"] || [];
                 }
 
                 syncEditToAddress();
+
                 scope.$watch("model", function(n, o ) {
                     if(n && n.id) {
                         syncEditToAddress();
@@ -288,7 +289,7 @@ angular.module('santedb-lib')
                         else
                             flatNameList.push(name);
                     });
-
+                    
                     if (scope.simpleEntry && scope.noAdd)
                         flatNameList = [flatNameList[0]]; // simple entry, only edit first name
 
