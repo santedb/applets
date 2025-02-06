@@ -49,7 +49,7 @@
         <label class="col-sm-3 col-xs-4 control-label">{{ 'ui.model.patient.genderConcept' | i18n }}</label>
         <div class="col-sm-9 col-xs-8 d-flex">
             <span class="my-auto">
-                <i class="fas"
+                <i ng-if="scopedObject.genderConceptModel.mnemonic == 'Male' || scopedObject.genderConceptModel.mnemonic == 'Female'" class="fas"
                     ng-class="{ 'fa-male' : scopedObject.genderConceptModel.mnemonic == 'Male' , 'fa-female' :  scopedObject.genderConceptModel.mnemonic == 'Female' }"></i>
                 {{ scopedObject.genderConceptModel | concept }}
             </span>
@@ -167,7 +167,7 @@
 
     <div ng-if="scopedObject.nationalityModel" class="row">
         <label class="col-sm-3 col-xs-12 control-label">{{ 'ui.model.person.nationality' | i18n }}</label>
-        <div class="col-sm-9 col-xs-12 ">
+        <div class="col-sm-9 col-xs-12 my-auto">
             {{ scopedObject.nationalityModel | concept }}
         </div>
     </div>
@@ -185,7 +185,6 @@
         </div>
     </div>
 
-
     <!-- Relationships -->
     <div ng-repeat="(k,v) in scopedObject.relationship"
         ng-if="k == 'Citizen' || k == 'Employer' || k == 'Caregiver' || k == 'CoverageSponsor' || k == 'Student'"
@@ -194,7 +193,7 @@
         <div ng-if="v.targetModel" class="col-sm-9 col-xs-12">
             {{ v.targetModel.name | name }}
         </div>
-        <div ng-if="v.length" class="col-sm-9 col-xs-12">
+        <div ng-if="v.length" class="col-sm-9 col-xs-12 my-auto">
             <ul class="list-group">
                 <li ng-repeat="i in v track by $index">
                     {{ i.targetModel.name | name }}
