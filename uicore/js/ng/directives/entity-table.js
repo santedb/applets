@@ -85,6 +85,7 @@ angular.module('santedb-lib')
                             data: m,
                             expectedType: expectedType,
                             class: scope.itemClass ? scope.itemClass[m] : null,
+                            type: 'string',
                             defaultContent: '',
                             render: renderer ?
                                 function (d, t, r) {
@@ -111,7 +112,7 @@ angular.module('santedb-lib')
                         columns.push({
                             orderable: false,
                             render: function (d, t, r, m) {
-                                var retVal = `<div class='btn-group' id='action_grp_${m.row}'>`;
+                                var retVal = `<div class='btn-group' style="width: max-content" id='action_grp_${m.row}'>`;
                                 scope.itemActions.forEach(function (b) {
 
                                     if (b.demand && $rootScope.session &&

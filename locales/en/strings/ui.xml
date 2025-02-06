@@ -207,6 +207,7 @@
       <string name="ui.action">Actions</string>
       <string name="ui.action.ok">Ok</string>
       <string name="ui.action.dismiss">Dismiss</string>
+      <string name="ui.action.show">Show</string>
       <string name="ui.action.cancel">Cancel</string>
       <string name="ui.action.clear">Clear</string>
       <string name="ui.action.complete">Complete</string>
@@ -290,6 +291,7 @@
       <string name="ui.action.bug">Report Bug</string>
       <string name="ui.action.logout">Logout</string>
       <string name="ui.action.close">Close</string>
+      <string name="ui.action.setting">Settings</string>
       <string name="ui.action.findDuplicates">Find Duplicates</string>
       <string name="ui.action.unlink">Unlink</string>
       <string name="ui.action.detail">Details</string>

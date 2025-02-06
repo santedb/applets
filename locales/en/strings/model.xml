@@ -564,6 +564,7 @@
   <!-- Account management -->
   <string name="ui.model.act.accm.participation.Consumable.id">Material Lot/Batch</string>
   <string name="ui.model.act.accm.participation.quantity">Count</string>
+  <string name="ui.model.act.accm.participation.expiry">Expiration Date</string>
   <string name="ui.model.act.participation.Consumable.partialQuantity">Partial {unit}</string>
   <!-- Audit Logs -->
   <string name="ui.model.audit.action">Action</string>

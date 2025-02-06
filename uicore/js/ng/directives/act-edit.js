@@ -219,9 +219,6 @@ angular.module('santedb-lib')
                     }
                 };
 
-                function flagDataUpdated(index) {
-
-                }
 
             }],
             link: function (scope, element, attrs) {
@@ -254,22 +251,6 @@ angular.module('santedb-lib')
                 }, 500);
 
 
-                // Monitor for form touches - needs to be done after initialization
-                setTimeout(() => {
-
-                    $("input", element).each((i, e) => {
-                        $(e).on("blur", function (evt) {
-                            var eventIndexChanged = $(evt.currentTarget).closest("[data-actindex]").attr('data-actindex');
-                            if (scope.currentActions[eventIndexChanged] && scope.currentActions[eventIndexChanged].targetModel) {
-                                SanteDB.authentication.getCurrentUserEntityId().then(result => {
-                                    var targetAct = scope.currentActions[eventIndexChanged].targetModel;
-                                    scope.currentActions[eventIndexChanged].operation = targetAct.operation = BatchOperationType.InsertOrUpdate;
-                                });
-                            }
-                        });
-                    })
-
-                }, 1000);
 
                 _noCdss = attrs.disableCdss;
 
@@ -289,6 +270,26 @@ angular.module('santedb-lib')
                     else {
                         scope.model.$templateUrl = SanteDB.application.resolveTemplateView(scope.model.templateModel.mnemonic);
                     }
+
+                }
+
+                // Monitor for form touches - needs to be done after initialization
+                if (!scope.model.$templateUrl) {
+                    setTimeout(() => {
+
+                        $("input", element).each((i, e) => {
+                            $(e).on("blur", function (evt) {
+                                var eventIndexChanged = $(evt.currentTarget).closest("[data-actindex]").attr('data-actindex');
+                                if (scope.currentActions[eventIndexChanged] && scope.currentActions[eventIndexChanged].targetModel) {
+                                    SanteDB.authentication.getCurrentUserEntityId().then(result => {
+                                        var targetAct = scope.currentActions[eventIndexChanged].targetModel;
+                                        scope.currentActions[eventIndexChanged].operation = targetAct.operation = BatchOperationType.InsertOrUpdate;
+                                    });
+                                }
+                            });
+                        })
+
+                    }, 1000);
                 }
             }
         }
