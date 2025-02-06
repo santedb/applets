@@ -15,11 +15,10 @@
  - License for the specific language governing permissions and limitations under 
  - the License.
  -->
-<div xmlns="http://www.w3.org/1999/xhtml" class="container-fluid ">
-
+<div xmlns="http://www.w3.org/1999/xhtml">
     <div class="form-group row" ng-repeat="(type, relReg) in adminRelationTypes" ng-if="relReg.applyTo.indexOf(containerClass) > -1">
-        <label class="control-label col-md-3 col-sm-12">{{ 'ui.model.entity.relationship.' + type | i18n }}</label>
-        <div class="col-md-9 col-sm-12">
+        <label class="control-label col-md-4 col-sm-12">{{ 'ui.model.entity.relationship.' + type | i18n }}</label>
+        <div class="col-md-7 col-sm-12">
             <entity-search ng-if="!relReg.multiple" ng-model="relationship[type]"
                 type="relReg.entityType"
                 filter="relReg.filter"

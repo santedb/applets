@@ -15,8 +15,19 @@
  - License for the specific language governing permissions and limitations under 
  - the License.
  -->
-<div xmlns="http://www.w3.org/1999/xhtml"  ng-if="addr.operation != 'Delete'">
+<div xmlns="http://www.w3.org/1999/xhtml"  ng-if="addr.operation != 'Delete'" class="mx-3">
     <input type="text" class="d-none" ng-if="controlPrefix &amp;&amp; $index == 0" ng-model="addr._away" name="{{::controlPrefix}}" /> <!-- CONTROL PREFIX BINDER-->
+    
+    <div class="form-group row" ng-if="$index &gt; 0">
+        <div class="col">
+            <div class="btn-group float-right">
+                <button type="button" ng-click="removeAddress(addr)" class="btn btn-sm btn-danger"><i
+                        class="fas fa-times"></i> {{ 'ui.action.remove' | i18n }}</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Address Type -->
     <div class="form-group row" ng-if="!noType">
         <label class="col-sm-12 col-md-3 control-label"
             ng-class="{'required': isRequired  &amp;&amp; $index == 0 || !noType &amp;&amp; (addr.component.Country || addr.component.State || addr.component.City)}">{{ 'ui.model.entity.address.use' | i18n }} <hint-popover hint-title="ui.model.entity.address.use" /></label>
@@ -26,8 +37,9 @@
         </div>
         <div class="text-danger" ng-if="ownerForm[controlPrefix + 'address' + $index + 'use'].$invalid"><i
                 class="fas fa-exclamation-triangle"></i> {{ 'ui.error.required' | i18n }}</div>
-
     </div>
+
+    <!-- City -->
     <div ng-if="$root.system.config.application.setting['input.address'] == 'select'">
         <div class="form-group row">
             <label class="col-sm-12 col-md-3 control-label"
@@ -46,6 +58,8 @@
             </div>
         </div>
     </div>
+
+    <!-- Country -->
     <div ng-if="$root.system.config.application.setting['input.address'] != 'select'">
         <div class="form-group row" ng-if="$root.system.config.application.setting['forbid.patient.address.country'] != 'true'">
             <label class="col-sm-12 col-md-3 control-label"
@@ -64,6 +78,8 @@
                         class="fas fa-exclamation-triangle"></i> {{ 'ui.error.required' | i18n }}</div>
             </div>
         </div>
+
+        <!-- Province -->
         <div class="form-group row" ng-if="$root.system.config.application.setting['forbid.patient.address.state'] != 'true'">
             <label class="col-sm-12 col-md-3 control-label"
                 ng-class="{'required': isRequired &amp;&amp; $index == 0  &amp;&amp; !$root.system.config.application.setting['optional.patient.address.state']}">{{ 'ui.model.entity.address.component.state' | i18n }} <hint-popover hint-title="ui.model.entity.address.component.state" /></label>
@@ -84,6 +100,8 @@
 
             </div>
         </div>
+
+        <!-- County -->
         <div class="form-group row" ng-if="$root.system.config.application.setting['forbid.patient.address.county'] != 'true'">
             <label class="col-sm-12 col-md-3 control-label"
                 ng-class="{'required': isRequired &amp;&amp; $index == 0  &amp;&amp; !$root.system.config.application.setting['optional.patient.address.county']}">{{ 'ui.model.entity.address.component.county' | i18n }} <hint-popover hint-title="ui.model.entity.address.component.county" /></label>
@@ -106,6 +124,8 @@
 
             </div>
         </div>
+
+        <!-- City -->
         <div class="form-group row" ng-if="$root.system.config.application.setting['forbid.patient.address.city'] != 'true'">
             <label class="col-sm-12 col-md-3 control-label" 
             ng-class="{'required': isRequired &amp;&amp; $index == 0  &amp;&amp; !$root.system.config.application.setting['optional.patient.address.city']}">{{ 'ui.model.entity.address.component.city' | i18n }} <hint-popover hint-title="ui.model.entity.address.component.city" /></label>
@@ -125,6 +145,8 @@
 
             </div>
         </div>
+
+        <!-- Precinct -->
         <div class="form-group row" ng-if="$root.system.config.application.setting['forbid.patient.address.precinct'] != 'true'">
             <label class="col-sm-12 col-md-3 control-label">{{ 'ui.model.entity.address.component.precinct' | i18n }} <hint-popover hint-title="ui.model.entity.address.component.precinct" /></label>
             <div class="col-sm-12 col-md-9" ng-switch="$root.system.config.application.setting['input.address']">
@@ -140,42 +162,55 @@
             </div>
         </div>
     </div>
+
+    <!-- Postbox -->
     <div class="form-group row" ng-if="addr._showExtra &amp;&amp; $root.system.config.application.setting['forbid.patient.address.postbox'] != 'true' &amp;&amp; (addr.use != '5724a9b6-24b6-43b7-8075-7a0d61fcb814' || addr.component.PostBox.length > 0) ">
         <label class="col-sm-12 col-md-3 control-label">{{ 'ui.model.entity.address.component.postbox' | i18n }} <hint-popover hint-title="ui.model.entity.address.component.postbox" /></label>
         <div class="col-sm-12 col-md-9">
             <input autocomplete="__away" type="text" class="form-control" ng-model="addr.component.PostBox[0]" ng-model-options="{ updateOn: 'change blur'}" />
         </div>
     </div>
+
+    <!-- Unit -->
     <div class="form-group row" ng-if="addr._showExtra &amp;&amp; $root.system.config.application.setting['forbid.patient.address.unitidentifier'] != 'true' ">
         <label class="col-sm-12 col-md-3 control-label">{{ 'ui.model.entity.address.component.unitidentifier' | i18n }} <hint-popover hint-title="ui.model.entity.address.component.unitidentifier" /></label>
         <div class="col-sm-12 col-md-9">
             <input autocomplete="__away" type="text" class="form-control" ng-model="addr.component.UnitIdentifier[0]" ng-model-options="{ updateOn: 'change blur'}" />
         </div>
     </div>
+
+    <!-- Street -->
     <div class="form-group row" ng-if="$root.system.config.application.setting['forbid.patient.address.street'] != 'true'">
         <label class="col-sm-12 col-md-3 control-label">{{ 'ui.model.entity.address.component.street' | i18n }} <hint-popover hint-title="ui.model.entity.address.component.street" /></label>
         <div class="col-sm-12 col-md-9">
             <input autocomplete="__away" type="text" class="form-control" ng-model="addr.component.StreetAddressLine[0]" ng-model-options="{ updateOn: 'change blur'}" />
         </div>
     </div>
+
+    <!-- Additional -->
     <div class="form-group row" ng-if="addr._showExtra &amp;&amp; $root.system.config.application.setting['forbid.patient.address.additionalLocator'] != 'true'">
         <label class="col-sm-12 col-md-3 control-label">{{ 'ui.model.entity.address.component.additionalLocator' | i18n }} <hint-popover hint-title="ui.model.entity.address.component.additionalLocator" /></label>
         <div class="col-sm-12 col-md-9">
             <input autocomplete="__away" type="text" class="form-control" ng-model="addr.component.AdditionalLocator[0]" ng-model-options="{ updateOn: 'change blur'}" />
         </div>
     </div>
+
+    <!-- Postal Code -->
     <div class="form-group row" ng-if="$root.system.config.application.setting['forbid.patient.address.postalcode'] != 'true'">
         <label class="col-sm-12 col-md-3 control-label">{{ 'ui.model.entity.address.component.postalcode' | i18n }} <hint-popover hint-title="ui.model.entity.address.component.postalcode" /></label>
         <div class="col-sm-12 col-md-9">
             <input autocomplete="__away" type="text" class="form-control" ng-model="addr.component.PostalCode[0]" ng-model-options="{ updateOn: 'change blur'}" />
         </div>
     </div>
+
+    <!-- Care Of -->
     <div class="form-group row" ng-if="addr._showExtra &amp;&amp; $root.system.config.application.setting['forbid.patient.address.careof'] != 'true' ">
         <label class="col-sm-12 col-md-3 control-label">{{ 'ui.model.entity.address.component.careof' | i18n }} <hint-popover hint-title="ui.model.entity.address.component.careof" /></label>
         <div class="col-sm-12 col-md-9">
             <input autocomplete="__away" type="text" class="form-control" ng-model="addr.component.CareOf[0]" ng-model-options="{ updateOn: 'change blur'}" />
         </div>
     </div>
+
     <div class="form-group row">
         <div class="col">
             <div class="btn-group float-right">
@@ -183,13 +218,4 @@
             </div>
         </div>
     </div>
-    <div class="form-group row" ng-if="$index &gt; 0">
-        <div class="col">
-            <div class="btn-group float-right">
-                <button type="button" ng-click="removeAddress(addr)" class="btn btn-danger"><i
-                        class="fas fa-times"></i> {{ 'ui.action.remove' | i18n }}</button>
-            </div>
-        </div>
-    </div>
-
 </div>

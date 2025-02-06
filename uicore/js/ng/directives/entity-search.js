@@ -93,7 +93,7 @@ angular.module('santedb-lib')
                     if (selection.classConcept == EntityClassKeys.ServiceDeliveryLocation)
                         retVal += "<i class='fa fa-fw fa-hospital'></i> ";
                     else
-                        retVal += "<i class='fa fa-fw fa-map-pin'></i> ";
+                        retVal += "<i class='fa fa-fw fa-map-pin'></i>";
                     break;
                 case "Organization":
                     retVal += "<i class='fa fa-fw fa-sitemap'></i> ";
@@ -170,16 +170,16 @@ angular.module('santedb-lib')
                 if(selection.securityUserModel) 
                     retVal += `<code class='d-non d-sm-inline ml-2'><i class='fas fa-fw fa-shield-alt'></i> ${selection.securityUserModel.userName}</code> `;
                 if (selection.address)
-                    retVal += "<small class='d-none d-sm-inline ml-2'> - (<i class='fa fa-map-marker'></i> " + SanteDB.display.renderEntityAddress(selection.address) + ")</small>";
+                    retVal += "<small class='d-none d-sm-inline'>- (<i class='fa fa-map-marker'></i> " + SanteDB.display.renderEntityAddress(selection.address) + ")</small>";
                 else if (selection.oid)
                     retVal += "<small class='d-none d-sm-inline ml-2'> - (<i class='fa fa-cogs'></i> " + selection.oid + ")</small>";
                 else if (selection.mnemonic)
                     retVal += `<small class='d-none d-sm-inline ml-2'>(${selection.mnemonic})</small>`;
             }
             if (selection.classConceptModel && !selection.typeConceptModel)
-                retVal += ` <span class='badge badge-secondary ml-2'>${SanteDB.display.renderConcept(selection.classConceptModel)}</span>`;
+                retVal += ` <span class='badge badge-secondary'>${SanteDB.display.renderConcept(selection.classConceptModel)}</span>`;
             else if (selection.typeConceptModel) {
-                retVal += `<span class="badge badge-secondary ml-2">${SanteDB.display.renderConcept(selection.typeConceptModel)}</span> `;
+                retVal += `<span class="badge badge-secondary">${SanteDB.display.renderConcept(selection.typeConceptModel)}</span> `;
             }
 
             if (selection.identifier) {

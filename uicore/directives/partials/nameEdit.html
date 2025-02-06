@@ -17,8 +17,16 @@
  -->
 <div  xmlns="http://www.w3.org/1999/xhtml" ng-if="name.operation != 'Delete'">
     <input type="text" class="d-none" ng-if="controlPrefix &amp;&amp; $index == 0" ng-model="name._away" name="{{::controlPrefix}}" /> <!-- CONTROL PREFIX BINDER-->
+
+    <div class="form-group row" ng-if="nameEdit.length &gt; 1 &amp;&amp; !noAdd">
+        <div class="col">
+            <div class="btn-group float-right">
+                <button type="button" ng-click="removeName(name)" class="btn btn-sm btn-danger"><i
+                        class="fas fa-times"></i> {{ 'ui.action.remove' | i18n }}</button>
+            </div>
+        </div>
+    </div>
   
-    <hr ng-if="$index > 0"/>
     <div class="form-group row" ng-if="!noType">
         <label class="col-sm-12 col-md-3 control-label" ng-class="{'required': isRequired  &amp;&amp; $index == 0 || !noType &amp;&amp; (name.component.Given  || name.component.Family)}">{{ 'ui.model.entity.name.use' | i18n }} <hint-popover hint-title="ui.model.entity.name.use" /> </label>
         <div class="col-sm-12 col-md-9">
@@ -28,6 +36,8 @@
                 <i class="fas fa-exclamation-triangle"></i> {{ 'ui.error.required' | i18n }}</div>
         </div>
     </div>
+
+    <!-- Prefix -->
     <div class="form-group row" ng-if="name._showExtra &amp;&amp; $root.system.config.application.setting['forbid.patient.name.prefix'] != 'true' &amp;&amp; allowedComponents.indexOf('prefix') > -1">
         <label
             class="col-sm-12 col-md-3 control-label">{{ 'ui.model.entity.name.component.prefix' | i18n }} <hint-popover hint-title="ui.model.entity.name.component.prefix" /> </label>
@@ -38,10 +48,12 @@
                 ng-model="name.component.Prefix[0]" ng-model-options="{ updateOn: 'change blur'}"/>
         </div>
     </div>
+
+    <!-- Given Name -->
     <div class="form-group row" ng-if="$root.system.config.application.setting['forbid.patient.name.given'] != 'true' &amp;&amp; allowedComponents.indexOf('given') > -1">
         <label
-            class="col-sm-12 col-md-3 control-label" ng-class="{'required': isRequired || isRequired === undefined &amp;&amp;  !$root.system.config.application.setting['optional.patient.name.given']}">{{ 'ui.model.entity.name.component.given' | i18n }} <hint-popover hint-title="ui.model.entity.name.component.given" /></label>
-        <div class="col-sm-12 col-md-9" ng-switch="$root.system.config.application.setting['input.name'] || inputStyle">
+            class="col-sm-12 col-md-3 offset-md-1 control-label" ng-class="{'required': isRequired || isRequired === undefined &amp;&amp;  !$root.system.config.application.setting['optional.patient.name.given']}">{{ 'ui.model.entity.name.component.given' | i18n }} <hint-popover hint-title="ui.model.entity.name.component.given" /></label>
+        <div class="col-sm-12 col-md-7" ng-switch="$root.system.config.application.setting['input.name'] || inputStyle">
             <tag-input ng-required="isRequired" ng-switch-when="tag" name="{{::controlPrefix}}name{{$index }}given" class="form-control"
                 ng-model="name.component.Given" ng-model-options="{ updateOn: 'change blur'}"  />
             <input autocomplete="__away"  ng-required="isRequired || isRequired === undefined &amp;&amp;  !$root.system.config.application.setting['optional.patient.name.given']" ng-switch-default="" name="{{::controlPrefix}}name{{$index }}given" type="text" class="form-control"
@@ -50,10 +62,12 @@
                 <i class="fas fa-exclamation-triangle"></i> {{ 'ui.error.required' | i18n }}</div>
         </div>
     </div>
+
+    <!-- Family Name -->
     <div class="form-group row" ng-if="$root.system.config.application.setting['forbid.patient.name.family'] != 'true' &amp;&amp; allowedComponents.indexOf('family') > -1">
         <label
-            class="col-sm-12 col-md-3 control-label" ng-class="{'required': isRequired || isRequired === undefined &amp;&amp;  !$root.system.config.application.setting['optional.patient.name.family']}">{{ 'ui.model.entity.name.component.family' | i18n }} <hint-popover hint-title="ui.model.entity.name.component.family" /></label>
-        <div class="col-sm-12 col-md-9" ng-switch="$root.system.config.application.setting['input.name'] || inputStyle">
+            class="col-sm-12 col-md-3 offset-md-1 control-label" ng-class="{'required': isRequired || isRequired === undefined &amp;&amp;  !$root.system.config.application.setting['optional.patient.name.family']}">{{ 'ui.model.entity.name.component.family' | i18n }} <hint-popover hint-title="ui.model.entity.name.component.family" /></label>
+        <div class="col-sm-12 col-md-7" ng-switch="$root.system.config.application.setting['input.name'] || inputStyle">
             <tag-input ng-required="isRequired" ng-switch-when="tag" name="{{::controlPrefix}}name{{ $index }}family" class="form-control"
                 ng-model="name.component.Family" ng-model-options="{ updateOn: 'change blur'}"  />
             <input autocomplete="__away" ng-required="isRequired || isRequired === undefined &amp;&amp;  !$root.system.config.application.setting['optional.patient.name.family']" ng-switch-default="" name="{{::controlPrefix}}name{{ $index }}family" type="text" class="form-control"
@@ -62,7 +76,9 @@
                 <i class="fas fa-exclamation-triangle"></i> {{ 'ui.error.required' | i18n }}</div>
         </div>
     </div>
-    <div class="form-group row" ng-if="name._showExtra &amp;&amp; $root.system.config.application.setting['forbid.patient.name.suffix'] != 'true' &amp;&amp; allowedComponents.indexOf('suffix') > -1">
+
+    <!-- More Fields Button -->
+    <div class="form-group row mb-0" ng-if="name._showExtra &amp;&amp; $root.system.config.application.setting['forbid.patient.name.suffix'] != 'true' &amp;&amp; allowedComponents.indexOf('suffix') > -1">
         <label
             class="col-sm-12 col-md-3 control-label">{{ 'ui.model.entity.name.component.suffix' | i18n }} <hint-popover hint-title="ui.model.entity.name.component.suffix" /></label>
             <div class="col-sm-12 col-md-9" ng-switch="$root.system.config.application.setting['input.name'] || inputStyle">
@@ -88,14 +104,6 @@
                 ng-model="name.component.$other[0]"  ng-model-options="{ updateOn: 'change blur'}"/>
                 <div class="text-danger" ng-if="ownerForm[controlPrefix + 'name' + $index + '$other'].$invalid">
                     <i class="fas fa-exclamation-triangle"></i> {{ 'ui.error.required' | i18n }}</div>
-        </div>
-    </div>
-    <div class="form-group row" ng-if="nameEdit.length &gt; 1 &amp;&amp; !noAdd">
-        <div class="col">
-            <div class="btn-group float-right">
-                <button type="button" ng-click="removeName(name)" class="btn btn-danger"><i
-                        class="fas fa-times"></i> {{ 'ui.action.remove' | i18n }}</button>
-            </div>
         </div>
     </div>
 </div>

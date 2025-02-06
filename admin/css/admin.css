@@ -103,3 +103,8 @@ label.checkbox-container {
     position: relative;
 }
 
+.base-demographics-tab .tab-pane {
+    border-width: 0 1px 1px 1px;
+    border-color: #dee2e6;
+    border-style: solid;
+}
