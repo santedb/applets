@@ -672,8 +672,8 @@
       <string name="ui.mdm.action.unlock">Edit Anyways</string>
       <string name="ui.mdm.view.local">You are viewing a LOCAL record - this represents an unverified source of data from a source system. Editing this record would cause a mismatch in data between systems.</string>
       <string name="ui.mdm.view.recordOfTruth">You are looking at a RECORD OF TRUTH. You may update this record with official registration information for the patient.</string>
-      <string name="ui.mdm.view.master">You are looking at a &lt;strong&gt;MASTER&lt;/strong&gt; record. This record is synthesized from multiple &lt;strong&gt;LOCAL&lt;/strong&gt; records. Editing the record will create a &lt;strong&gt;RECORD OF TRUTH&lt;/strong&gt;</string>
-      <string name="ui.mdm.view.masterAdjudicated">You are looking at a &lt;strong&gt;MASTER&lt;/strong&gt; record with a &lt;strong&gt;RECORD OF TRUTH&lt;/strong&gt;. Changes should be made on the &lt;strong&gt;RECORD OF TRUTH&lt;/strong&gt;</string>
+      <string name="ui.mdm.view.master">You are looking at a MASTER record. This record is synthesized from multiple LOCAL records. Editing the record will create a RECORD OF TRUTH.</string>
+      <string name="ui.mdm.view.masterAdjudicated">You are looking at a MASTER record with a RECORD OF TRUTH. Changes should be made on the RECORD OF TRUTH.</string>
       <string name="ui.mdm.isTrue">This MASTER record has been verified. The data you are seeing is the OFFICIAL data from the RECORD OF TRUTH.</string>
       <string name="ui.mdm.edit.master">This is a MASTER record. Editing it will result in the creation a new LOCAL record for the administrative panel which will be.</string>
       <string name="ui.mdm.edit.recordOfTruth">You are editing a RECORD OF TRUTH, this record should contain the &quot;official&quot; data for this object.</string>
