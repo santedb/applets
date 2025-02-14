@@ -224,8 +224,6 @@ angular.module('santedb-lib')
                 function ($scope, $rootScope) {
 
                     $scope.setValue = (selectControl, resource, value) => {
-
-
                         if (!value || Array.isArray(value) && value.length == 0) {
                             $(selectControl).find('option').remove();
                             $(selectControl).trigger('change.select2');
@@ -538,7 +536,8 @@ angular.module('santedb-lib')
                         templateSelection: function (o) { return renderObject(o, scope.minRender); },
                         keepSearchResults: true,
                         templateResult: function (o) { return renderObject(o, scope.minRender); },
-                        placeholder: SanteDB.locale.getString(`ui.table.search.field.${searchProperty}`)
+                        placeholder: SanteDB.locale.getString(`ui.table.search.field.${searchProperty}`),
+                        allowClear: true
                     });
 
 

@@ -608,7 +608,7 @@ async function prepareEntityForSubmission(entity, splitCompoundNames) {
             try {
                 var addr = ensureIsArray(entity.address[k]);
 
-                var intlPromises = addr.map(async function (addrItem) {
+                var intlPromises = addr.map(async function (addrItem) {                    
                     if (addrItem.useModel) // have to load use
                         addrItem.use = addrItem.useModel.id;
                     if (!addrItem.use)
@@ -622,11 +622,10 @@ async function prepareEntityForSubmission(entity, splitCompoundNames) {
                         {
                             try {
                                 var pr = await SanteDB.resources.place.getAsync(addrItem.component._AddressPlaceRef[0], 'fastview');
+                                
                                 var copyAddress = pr.address.Direct || pr.address.PhysicalVisit;
                                 Object.keys(copyAddress[0].component).forEach(k => {
-                                    if(!addrItem.component[k] || addrItem.component[k].length == 0) {
-                                        addrItem.component[k] = copyAddress[0].component[k];
-                                    }
+                                    addrItem.component[k] = copyAddress[0].component[k];
                                 });
                             }
                             catch(e) {

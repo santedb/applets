@@ -15,7 +15,7 @@
  - License for the specific language governing permissions and limitations under 
  - the License.
  -->
-<div xmlns="http://www.w3.org/1999/xhtml" class="p-4">
+<div xmlns="http://www.w3.org/1999/xhtml">
     <div ng-repeat="(t, value) in model" ng-if="!allowedTypes || allowedTypes.indexOf(t) !== -1">
         <div ng-class="{ 'row' : !noLabel }" class="mb-2" ng-repeat="tel in value track by $index"
             ng-if="!singleEdit || singleEdit == t">

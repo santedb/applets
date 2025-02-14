@@ -48,6 +48,9 @@ angular.module('santedb-lib')
                 noAdd: '<',
                 noType: '<',
                 simpleEntry: '<',
+                keepPanelsOpen: '<',
+                canRemove: '<',
+                canClear: '<',
                 isRequired: '<',
                 ownerForm: '<',
                 controlPrefix: '<',
@@ -55,10 +58,19 @@ angular.module('santedb-lib')
                 catchmentAreaFor: '<'
             },
             controller: ['$scope', '$rootScope', function ($scope, $rootScope) {
-
-
                 $scope.removeAddress = function (addr) {
                     addr.operation = BatchOperationType.Delete;
+                }
+
+                $scope.clearAddress = function (addr) {
+                    const foundAddress = $scope.addressEdit.find((address) => {
+                        return address.id === addr.id;
+                    })
+                    
+                    delete foundAddress.id;
+                    foundAddress.component = {
+                        "$other": []
+                    }
                 }
 
                 $scope.addAddress = function () {
@@ -228,6 +240,7 @@ angular.module('santedb-lib')
                 noType: '<',
                 simpleEntry: '<',
                 isRequired: '<',
+                isDisabled: '<',
                 ownerForm: '<',
                 controlPrefix: '<',
                 inputStyle: '<',
