@@ -104,6 +104,19 @@ label.control-label.required:before {
 }
 
 
+.collapse-indicator-horizontal i:last-child {
+    -moz-transition: all 0.2s linear;
+    -webkit-transition: all 0.2s linear;
+    transition: all 0.2s linear;
+}
+
+.collapse-indicator-horizontal[aria-expanded="true"] i:last-child {
+    -ms-transform: rotate(180deg);
+    -moz-transform: rotate(190deg);
+    -webkit-transform: rotate(180deg);
+    transform: rotate(180deg) translate(-20%, 10%);
+}
+
 .select2-container .select2-selection--single, 
 .select2-container .select2-selection--multiple {
     line-height: 1.5;

@@ -176,6 +176,7 @@ angular.module('santedb-lib')
                 else if (selection.mnemonic)
                     retVal += `<small class='d-none d-sm-inline ml-2'>(${selection.mnemonic})</small>`;
             }
+            
             if (selection.classConceptModel && !selection.typeConceptModel)
                 retVal += ` <span class='badge badge-secondary'>${SanteDB.display.renderConcept(selection.classConceptModel)}</span>`;
             else if (selection.typeConceptModel) {

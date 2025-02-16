@@ -55,6 +55,14 @@ Exception.prototype.getRootCause = function() {
 
 /**
  * @method
+ * @memberof Number
+ * @summary Determines if the number is a whole number
+ */
+Number.prototype.isWholeNumber = function() {
+    return Math.trunc(this) == this;
+}
+/**
+ * @method
  * @memberof Date
  * @summary Get the week of the year
  */
@@ -401,6 +409,12 @@ function scrubModelProperties(source) {
 
     tSource.forEach(function (object) {
         Object.keys(object).forEach(function (key) {
+
+            // Hidden properties
+            if(key.indexOf("_") == 0) {
+                delete object[key];
+                return;
+            }
             var rawValue = object[key];
 
             if (!Array.isArray(rawValue))
@@ -415,13 +429,10 @@ function scrubModelProperties(source) {
                     // Set the key property to the selected / item value if present
                     if (!keyValue && value.id) {
                         object[keyProperty] = value.id;
-                        // Remove the detail object
-                        delete (object[key]);
                     }
+                    delete object[key];
                 }
-
-                // Scan down 
-                if (value && typeof (value) == "object" && !(value instanceof Date))
+                else if (value && typeof (value) == "object" && !(value instanceof Date))
                     scrubModelProperties(value);
             });
         });
