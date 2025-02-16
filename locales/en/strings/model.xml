@@ -281,6 +281,7 @@
   <string name="ui.model.entity.identifier.authority">Domain</string>
   <string name="ui.model.patient.administrativeInfo">Extra</string>
   <string name="ui.model.patient.demographics">Demographics</string>
+  <string name="ui.model.patient.other">Other</string>
   <string name="ui.model.patient.birth">Birth</string>
   <string name="ui.model.patient.death">Death</string>
   <string name="ui.model.patient.name">Name</string>
@@ -303,7 +304,7 @@
   <string name="ui.model.patient.age.suffix.daysOld">d/o</string>
   <string name="ui.model.patient.age.suffix.monthsOld">m/o</string>
   <string name="ui.model.patient.age.suffix.yearsOld">y/o</string>
-  <string name="ui.model.patient.dateOfBirth">DOB</string>
+  <string name="ui.model.patient.dateOfBirth">Date of Birth</string>
   <string name="ui.model.patient.dateOfBirth.hint"><![CDATA[The date on which the patient was born. If the exact date is unknown, or you wish to enter the age, use the <code>approx</code> checkbox]]></string>
   <string name="ui.model.patient.dateOfBirth.age">Age</string>
   <string name="ui.model.patient.dateOfBirth.approx">Approx.</string>

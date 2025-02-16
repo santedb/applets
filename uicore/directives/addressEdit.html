@@ -24,16 +24,27 @@
         </div>
     </div>
 
-    <div ng-if="!simpleEntry" class="mx-3 mb-3">
-        <fieldset ng-repeat="addr in addressEdit">
-            <legend class="w-auto" ng-if="addr.operation != 'Delete'">
-                <div class="my-2">{{ addr.useModel | concept }}</div>
-            </legend>
-            <legend ng-if="addr.operation == 'Delete'" class="bg-secondary d-flex"><div class="my-2 flex-grow-1">{{ addr.useModel | concept }}</div><button type="button" class="btn btn-sm btn-info" ng-click="addr.operation = 'InsertOrUpdate'"><i class="fas fa-undo"></i> {{ 'ui.action.restore' | i18n }}</button></legend>
-            <div class="container-fluid">
-                <!-- #include virtual="/org.santedb.uicore/directives/partials/addressEdit.html" -->
+    <div ng-if="!simpleEntry">
+        <div class="accordion" id="address-edit-accordion">
+            <div class="card mb-0" ng-repeat="addr in addressEdit track by $index">
+                <div class="card-header">
+                    <h2 class="mb-0">
+                        <button class="btn btn-block text-left collapse-indicator p-0" type="button" data-toggle="{{ keepPanelsOpen ? '' : 'collapse' }}" data-target="#address-accordion-{{ addr.useModel | concept }}" aria-expanded="{{ keepPanelsOpen || $index == 0 ? 'true' : 'false' }}">
+                            {{ addr.useModel | concept }}
+
+                            <i ng-if="!keepPanelsOpen" class="fas fa-fw fa-chevron-right float-right"></i>               
+                        </button>
+                    </h2>
+                </div>
+          
+                <div id="address-accordion-{{ addr.useModel | concept }}" class="collapse {{ keepPanelsOpen || $index == 0 ? 'show' : '' }}" data-parent="#address-edit-accordion">
+                    <div class="card-body">
+                        <!-- #include virtual="/org.santedb.uicore/directives/partials/addressEdit.html" -->
+                    </div>
+                </div>
             </div>
-        </fieldset>
+        </div>
+
     </div>
 
     <div ng-if="simpleEntry" class="mx-3 mb-3">
