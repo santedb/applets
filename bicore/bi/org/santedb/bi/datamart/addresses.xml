@@ -65,7 +65,7 @@
           <add>City</add>
           <add>PostalCode</add>
           <add>CensusTract</add>
-          <add>_AddressPlaceRef</add>
+          <add>PlaceRef</add>
         </columns>
       </pivot>
     </crosstab>
@@ -116,7 +116,7 @@
         <target name="ADDR_CENSUS" />
       </map>
       <map>
-        <source name="_AddressPlaceRef">
+        <source name="PlaceRef">
           <cast>uuid</cast>
         </source>
         <target name="ADDR_REF" />

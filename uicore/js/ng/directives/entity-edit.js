@@ -87,7 +87,7 @@ angular.module('santedb-lib')
                             PostBox: [],
                             CareOf: [],
                             UnitIdentifier: [],
-                            _AddressPlaceRef: []
+                            PlaceRef: []
                         }
                     });
                     
@@ -114,7 +114,7 @@ angular.module('santedb-lib')
                                 AddressLine: [],
                                 CareOf: [],
                                 AdditionalLocator: [],
-                                _AddressPlaceRef: []
+                                PlaceRef: []
                             }
                         })]
                     };
@@ -160,7 +160,7 @@ angular.module('santedb-lib')
                             a.component.PostBox = a.component.PostBox || [],
                             a.component.CareOf = a.component.CareOf || [],
                             a.component.UnitIdentifier = a.component.UnitIdentifier || [],
-                            a.component._AddressPlaceRef = a.component._AddressPlaceRef || []
+                            a.component.PlaceRef = a.component.PlaceRef || []
                     });
                     scope.addressEdit = flatAddressList;
                     scope.model["$other"] = scope.model["$other"] || [];

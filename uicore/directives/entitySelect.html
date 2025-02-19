@@ -15,7 +15,7 @@
  - License for the specific language governing permissions and limitations under 
  - the License.
  -->
-<select xmlns="http://www.w3.org/1999/xhtml">
+<select xmlns="http://www.w3.org/1999/xhtml" class="form-control" style="width:100%">
     <option value=""></option>
     <option ng-repeat="opt in values" ng-if="!excludeEntities || excludeEntities.indexOf(opt.id) == -1" value="{{opt.id}}">{{ opt.name | name }}</option>
 </select>

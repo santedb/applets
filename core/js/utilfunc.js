@@ -628,11 +628,11 @@ async function prepareEntityForSubmission(entity, splitCompoundNames) {
 
                     if (addrItem.component) {
                         // If the component contains a reference to a place copy the place data elements
-                        if(addrItem.component._AddressPlaceRef && addrItem.component._AddressPlaceRef.length > 0 &&
-                            addrItem.component._AddressPlaceRef[0] !== "")
+                        if(addrItem.component.PlaceRef && addrItem.component.PlaceRef.length > 0 &&
+                            addrItem.component.PlaceRef[0] !== "")
                         {
                             try {
-                                var pr = await SanteDB.resources.place.getAsync(addrItem.component._AddressPlaceRef[0], 'fastview');
+                                var pr = await SanteDB.resources.place.getAsync(addrItem.component.PlaceRef[0], 'fastview');
                                 
                                 var copyAddress = pr.address.Direct || pr.address.PhysicalVisit;
                                 Object.keys(copyAddress[0].component).forEach(k => {
