@@ -15,23 +15,24 @@
  - License for the specific language governing permissions and limitations under 
  - the License.
  -->
-<div xmlns="http://www.w3.org/1999/xhtml" class="container-fluid">
-
+<div xmlns="http://www.w3.org/1999/xhtml">
     <div class="form-group row" ng-repeat="domain in idDomains track by $index" ng-if="(!allowedDomains || allowedDomains.indexOf(domain.domainName) != -1) &amp;&amp; (allowGenerated || !domain._generator) &amp;&amp; model[domain.domainName]">
         <label class="control-label col-md-3 col-sm-12">{{ domain.name }} <hint-popover hint-title="{{ domain.name }}" hint-text="{{ 'ui.model.identityDomain.validateHint' | i18n: { pattern: domain._validationHint || 'any' } }}" /></label>
-        <div class="col-md-9 col-sm-12">
-            
+        
+        <div class="col-md-8 col-sm-12">    
             <!-- When multiple identifiers per domain are allowed - then we want to be able to add/remove them -->
             <ul class="list-group" ng-if="!allowMultiple">
                 <li class="list-group-item py-0 my-0" ng-repeat="id in model[domain.domainName] track by $index">
                     <div class="input-group my-1">
                         <input type="text" ng-readonly="id.id &amp;&amp; !createMode" placeholder="{{ domain._validationHint }}" class="form-control" ng-pattern="domain.validation" ng-model="id.value" 
                             name="{{::controlPrefix}}id{{ domain.domainName }}{{ $index }}" ng-change="validateCheckDigit(domain, $index)" ng-required="requiredDomains.indexOf(domain.domainName) &gt; -1"/>
-                        <div class="input-group-append" ng-if="domain.checkDigitAlgorithm || id.checkDigit">
+                        
+                            <div class="input-group-append" ng-if="domain.checkDigitAlgorithm || id.checkDigit">
                             <hint-popover hint-title="ui.model.entityIdentifier.checkDigit" />
                             <span class="input-group-text d-none d-sm-inline">{{ 'ui.model.entityidentifier.checkDigit.short' | i18n }} </span>
                             <input type="text" class="form-control w-25" ng-model="id.checkDigit" name="{{::controlPrefix}}cd{{domain.domainName}}{{$index}}" ng-change="validateCheckDigit(domain, $index)" ng-readonly="id.id" maxlength="5" />
                         </div>
+                        
                         <div class="input-group-apppend">
                             <div class="btn-group">
                                 <button ng-click="generateId(domain, $index)" ng-if="domain._generator &amp;&amp; !id.id" class="btn btn-sm btn-outline-secondary" type="button" ><i class="fas fa-robot"></i><span class="d-none d-sm-inline">{{ 'ui.action.generate' | i18n }}</span></button>
@@ -42,22 +43,24 @@
                             </div>
                         </div>
                     </div>
+
                     <div class="text-danger" ng-if="ownerForm[controlPrefix + 'id' + domain.domainName + $index].$error['pattern']">
                         <i class="fas fa-exclamation-triangle"></i> {{ 'ui.error.pattern.ext' | i18n: { pattern: domain._validationHint } }}
                     </div>
+
                     <div class="text-danger" ng-if="ownerForm[controlPrefix + 'id' + domain.domainName + $index].$error['checkDigit']">
                         <i class="fas fa-exclamation-triangle"></i> {{ 'ui.error.checkDigit' | i18n}}
                     </div>
+
                     <div class="text-danger" ng-if="ownerForm[controlPrefix + 'id' + domain.domainName + $index].$error['duplicate']">
                         <i class="fas fa-exclamation-triangle"></i> {{ 'ui.error.duplicate' | i18n}}
                     </div>
+
                     <div class="text-danger" ng-if="ownerForm[controlPrefix + 'id' + domain.domainName + $index].$error['required'] || ownerForm[controlPrefix + 'cd' + domain.domainName + $index].$error['required']">
                         <i class="fas fa-exclamation-triangle"></i> {{ 'ui.error.required' | i18n}}
                     </div>
-                    
                 </li>
             </ul>
         </div>
     </div>
-
 </div>

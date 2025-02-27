@@ -112,6 +112,7 @@
   <string name="ui.model.entityName.use">Type</string>
   <string name="ui.model.entityAddress.use">Type</string>
   <string name="ui.model.entityTelecom.use">Use</string>
+  <string name="ui.model.entityRelationship.new">New Relative</string>
   <string name="ui.model.entityRelationship.type">Type</string>
   <string name="ui.model.entityRelationship.prefix">Has a</string>
   <string name="ui.model.entityRelationship.inverse.prefix">Is a</string>
