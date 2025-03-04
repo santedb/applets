@@ -121,13 +121,14 @@ angular.module('santedb-lib')
                 }
                
                 function fixAddressUse(addr) {
-                    if ((!addr.useModel || !addr.useModel.id) && addr != '$other')
-                        SanteDB.resources.concept.findAsync({ mnemonic: addr })
-                            .then(function (bundle) {
-                                if (bundle.resource && bundle.resource.length > 0)
-                                    addr.useModel = addr.resource[0];
-                            });
-                        };
+                    if ((!addr.useModel || !addr.useModel.id) && addr != '$other') {
+                        SanteDB.resources.concept.findAsync({ mnemonic: addr }).then(function (bundle) {
+                            if (bundle.resource && bundle.resource.length > 0) {
+                                addr.useModel = addr.resource[0];
+                            }
+                        });
+                    }
+                };
 
                 function syncEditToAddress() {                    
                     var flatAddressList = [];
@@ -352,22 +353,20 @@ angular.module('santedb-lib')
     *       <telecom-edit telecom="scopedObject.telecom" single-edit="false" owner-form="myForm" />
     */
     .directive('telecomEdit', ['$rootScope', function ($rootScope) {
-
         var keys = Object.keys(TelecomAddressUseKeys);
-        // are there settings which prevent a type of edit from ocurring
+
+        // are there settings which prevent a type of edit from occurring
         try {
-            keys = keys.filter(o =>
-                !($rootScope &&
-                    $rootScope.system &&
-                    $rootScope.system.config &&
-                    $rootScope.system.config.application &&
-                    $rootScope.system.config.application.setting &&
-                    $rootScope.system.config.application.setting[`forbid.patient.telecom.${o}`]));
+            keys = keys.filter((o) => {
+                return !$rootScope?.system?.config?.application?.setting?.[`forbid.patient.telecom.${o}`]
+            });
         }
         catch (e) {
             console.warn(e);
         }
+
         keys.push("NullFlavor-NoInformation");
+
         return {
             restrict: 'E',
             replace: true,
@@ -382,12 +381,10 @@ angular.module('santedb-lib')
                 requiredTypes: '<'
             },
             controller: ['$scope', '$rootScope', function ($scope, $rootScope) {
-
-
             }],
             link: function (scope, element, attrs) {
-
                 scope.controlPrefix = scope.controlPrefix || attrs.name;
+
                 if (!scope.controlPrefix)
                     scope.controlPrefix = attrs.name || '';
 
@@ -552,7 +549,7 @@ angular.module('santedb-lib')
             controller: ["$scope", function ($scope) {
 
                 // Validate checkdigit
-                $scope.validateCheckDigit = function (domain, index) {
+                $scope.validateCheckDigit = function (domain, index) {                    
                     if (domain._customValidator) {
                         var result = domain._customValidator($scope.model[domain.domainName][index]);
                         $scope.ownerForm[($scope.controlPrefix || '') + 'id' + domain.domainName + index].$setValidity('checkDigit', result);
@@ -599,8 +596,7 @@ angular.module('santedb-lib')
                 }
 
             }],
-            link: function (scope, element, attrs) {
-
+            link: function (scope, element, attrs) {                
                 scope.controlPrefix = scope.controlPrefix || attrs.name;
 
                 // Scope identifier
