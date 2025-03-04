@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="utf-8"?>
 <!--
  - Copyright 2021-2024 SanteSuite Contributors (See NOTICE.md for full copyright notices)
  - Copyright (C) 2019 - 2021, Fyfe Software Inc. and the SanteSuite Contributors
@@ -16,8 +16,10 @@
  - License for the specific language governing permissions and limitations under 
  - the License.
  -->
-<NotificationTemplate xmlns="http://santedb.org/notification" lang="en" id="org.santedb.notifications.server.monitor">
-    <subject>SanteDB Server Event on ${sourceHost} - ${event}</subject>
+<NotificationTemplate xmlns="http://santedb.org/notification"
+    id="org.santedb.notifications.server.monitor">
+    <content lang="en">
+        <subject>SanteDB Server Event on ${sourceHost} - ${event}</subject>
     <![CDATA[
     The SanteDB server running on ${sourceMachine} has raised an event ${event}:
 
@@ -25,4 +27,5 @@
     Event Type: ${type}
     Summary: ${summary}
     ]]>
+    </content>
 </NotificationTemplate>

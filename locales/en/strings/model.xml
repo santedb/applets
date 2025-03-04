@@ -546,6 +546,7 @@
   <string name="ui.model.act.participation.RecordTarget">Subject</string>
   <string name="ui.model.act.participation.RecordTarget.container">Container</string>
   <string name="ui.model.act.participation.Informant">Informant</string>
+  <string name="ui.model.act.participation.ResponsibleParty">Responsible Party</string>
   <string name="ui.model.act.isNegated">Not Performed</string>
   <string name="ui.model.act.isNegated.reason">Reason for Not Performing</string>
   <string name="ui.model.act.tag.isBackentryFalse">Performing Today</string>

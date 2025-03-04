@@ -139,6 +139,8 @@ label.control-label.required:before {
     font-size: 10px;
 }
 
+@media (min-width:576px){.modal-xl{max-width:90%}}
+@media (min-width:992px){.modal-xl{max-width:950px}}
 @media (min-width:1100px){.modal-xl{max-width:1000px}}
 @media(min-width:1400px){ .modal-xl{max-width:1350px}}
 div.pseudo-input {

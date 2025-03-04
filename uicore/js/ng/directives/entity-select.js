@@ -37,7 +37,9 @@ angular.module('santedb-lib')
                 entityType: '<',
                 filter: '<',
                 excludeEntities: '=',
-                key: "<"
+                key: "<",
+                display: "<",
+                autoSelectSingles: "<"
             },
             controller: ['$scope', '$rootScope', function ($scope, $rootScope) {
             }],
@@ -46,6 +48,15 @@ angular.module('santedb-lib')
                 if (scope.excludeEntities && !Array.isArray(scope.excludeEntities))
                     scope.excludeEntities = [scope.excludeEntities];
 
+                scope.render = function(i) {
+                    if(scope.display) {
+                        return scope.$eval(scope.display, { item: i });
+                    }
+                    else {
+                        return SanteDB.display.renderEntityName(i.name);
+                    }
+
+                }
                 // Load Entities
                 async function loadEntities(entityType, filter) {
                     try {
@@ -56,7 +67,17 @@ angular.module('santedb-lib')
                         filter._count = 30;
                         filter._includeTotal = false;
                         var results = await api.findAsync(filter, "fastload");
-                        $timeout(() => scope.values = results.resource);
+                        $timeout(() => {
+                            if(!ngModel.$viewValue && scope.autoSelectSingles && results.resource.length == 1) {
+                                if(scope.key) {
+                                    ngModel.$setViewValue(results.resource[0][scope.key]);
+                                }
+                                else {
+                                    ngModel.$setViewValue(results.resource[0].id);
+                                }
+                            } 
+                            scope.values = results.resource;
+                        });
                     }
                     catch (e) {
                         console.error(e);

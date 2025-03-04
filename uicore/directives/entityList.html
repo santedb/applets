@@ -133,7 +133,7 @@
         xg-* is replaced with ng-* when injecting the HTML into the template-->
     <div class="d-none entityListTemplate"> 
         <div class="card $itemClass"
-            xg-class="{ 'col-xs-12 col-lg-6 col-xl-4' : _display != 'list', 'col-12' : _display == 'list' }"
+            xg-class="{ 'col-xs-12 col-lg-6 col-xl-4' : _display == 'grid', 'col-xs-12 col-lg-6' : _display == 'gallery', 'col-12' : _display == 'list' }"
             xg-repeat="item in results.resource track by $index">         
             $template
             <div class="card-footer" xg-if="itemActions">
