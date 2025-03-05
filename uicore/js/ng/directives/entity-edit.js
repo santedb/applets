@@ -569,6 +569,14 @@ angular.module('santedb-lib')
                     }
                 }
 
+                $scope.removeDomainIdentifier = (domain, identifier) => {
+                    const filteredIdentifiers = $scope.model[domain.domainName].filter((_identifier) => {
+                        return _identifier.id != identifier.id;
+                    });
+                    
+                    $scope.model[domain.domainName] = filteredIdentifiers.length == 0 ? [{}] : filteredIdentifiers;
+                }
+
                 $scope.scanId = async function (domain, index) {
                     try {
                         var data = await SanteDB.application.scanBarcodeAsync();
