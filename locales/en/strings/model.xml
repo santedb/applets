@@ -987,4 +987,7 @@
     <string name="ui.model.dataTemplateDefinition.public">Is Public</string>
     <string name="ui.model.dataTemplateDefinition.public.hint">Making a template public means that users can manually add this to their encounters in the EMR view</string>
 
+    <!-- Care Plans-->
+    <string name="ui.model.carePlan.pathway">Care Pathway</string>
+    <string name="ui.model.carePlan.pathway.hint">Select the care pathway for which the plan applies</string>
 </resources>

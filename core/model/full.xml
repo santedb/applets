@@ -716,7 +716,7 @@
         <property name="playerModel" all="false" behavior="always">
           <property name="id" />
           <property name="version" />
-          <property name="typeConceptModel" behavior="always" ref="ConceptNested" />
+          <property name="typeConceptModel" behavior="always" ref="ConceptNested" all="true" />
           <property name="identifier" all="true" />
           <property name="name" all="true" behavior="always">
             <property name="*" ref="EntityName" />
@@ -724,16 +724,16 @@
           <property name="tag" all="true" />
           <property name="quantityConceptModel" behavior="always" ref="ConceptNested"/>
           <property name="quantityConcept" behavior="always" ref="ConceptNested"/>
-
           <property name="extension" all="true" />
-          <property name="relationship" all="false" behavior="always">
+          <property name="relationship" all="true" behavior="always">
             <property name="HasGeneralization" all="true">
               <property name="targetModel" behavior="always" ref="MaterialParticipant" />
             </property>
             <property name="*" all="false">
               <property name="target" all="true" />
               <property name="targetModel" all="true" />
-            </property>
+              <property name="quantity" />
+              </property>
           </property>
           <property name="participation" all="true">
             <property name="*" all="false">

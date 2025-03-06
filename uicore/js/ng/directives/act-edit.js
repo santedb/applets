@@ -230,23 +230,41 @@ angular.module('santedb-lib')
                     if (attrs.noAdd === "true") {
                         $(".actAddItem", element).remove();
                     }
+                    else {
+                        $(".actAddItem", element).removeClass("d-none");
+                    }
                     if (attrs.noRemove === "true") {
                         $(".actRemoveItem", element).remove();
+                    }
+                    else {
+                        $(".actRemoveItem", element).removeClass("d-none");
                     }
                     if (attrs.noOverride === "true") {
                         $(".actProposeControl", element).remove();
                     }
+                    else {
+                        $(".actProposeControl", element).removeClass("d-none");
+                    }
                     if (attrs.noHeader === "true") {
                         $(".actHeader", element).remove();
+                    }
+                    else {
+                        $(".actHeader", element).removeClass("d-none");
                     }
                     if (attrs.noBackEntry === "true") {
                         $(".actBackEntry", element).remove();
                     }
+                    else {
+                        $(".actBackEntry", element).removeClass();
+                    }
+
                     if (_mode == "view") {
                         $(".editOnly", element).remove();
+                        $(".viewOnly", element).removeClass("d-none");
                     }
                     else {
                         $(".viewOnly", element).remove();
+                        $(".editOnly", element).removeClass("d-none");
                     }
                 }, 500);
 

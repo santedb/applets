@@ -23,7 +23,7 @@
         <div class="actInputList" ng-if="::!model.$templateUrl">
             <!-- Header Information for the core act-->
             <div class="scroll-sticky">
-                <div class="actHeader object-header card">
+                <div class="actHeader object-header card d-none">
                     <div class="row">
                         <label class="col-sm-12 col-md-3 col-xl-2 control-label">
                             {{ 'ui.model.act.template' | i18n }}
@@ -99,7 +99,7 @@
             </div>
 
             <!-- START CURRENT ENTRY -->
-            <ul class="nav nav-tabs actBackEntry editOnly">
+            <ul class="nav nav-tabs actBackEntry editOnly d-none">
                 <li class="nav-item">
                     <button class="nav-link active" data-toggle="tab" data-target="#currentActionTab"><i
                             class="fas fa-fw fa-list-check"></i> {{ 'ui.model.act.tag.isBackentryFalse' | i18n
@@ -123,7 +123,7 @@
                             </div>
                             <div class="d-flex justify-content-left">
                                 <!-- PROPOSE Should allow users to select an override -->
-                                <div class="actProposeControl editOnly"
+                                <div class="actProposeControl editOnly d-none"
                                     ng-if="comp.targetModel.moodConcept == 'acf7baf2-221f-4bc2-8116-ceb5165be079' || comp.targetModel.relationship.Fulfills[0].targetModel.moodConcept == 'acf7baf2-221f-4bc2-8116-ceb5165be079'">
                                     <label class="checkbox-container">
                                         <input type="checkbox" class="checkbox-control"
@@ -135,7 +135,7 @@
                                 </div>
                                 <!-- Render the main act entry content -->
                                 <div class="flex-grow-1 actEntryComponent my-auto">
-                                    <div ng-if="!comp.targetModel.isNegated" class="editOnly"
+                                    <div ng-if="!comp.targetModel.isNegated" class="editOnly d-none"
                                         ng-init="act = comp.targetModel"
                                         ng-class="{ 'actEntryComponentRemoved' : comp.operation == '4' }">
                                         <ng-include src="::resolveTemplate(comp.targetModel.templateModel.mnemonic)">
@@ -162,20 +162,20 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="editOnly btn-group"
+                                <div class="editOnly btn-group d-none"
                                     ng-if="comp.targetModel.operation !== 'InsertOrUpdate' &amp;&amp; !comp.targetModel.participation.Performer">
                                     <button type="button" ng-click="markComplete($index)" class="btn btn-primary">
                                         <i class="fas fa-fw fa-check"></i> <span class="d-none d-lg-inline">{{
                                             'ui.action.complete' | i18n }}</span>
                                     </button>
                                     <button type="button" ng-click="moveHistory($index)"
-                                        class="btn btn-secondary actMoveToHistory"
+                                        class="btn btn-secondary actMoveToHistory d-none"
                                         ng-if="comp.targetModel.moodConcept == 'acf7baf2-221f-4bc2-8116-ceb5165be079' || comp.targetModel.relationship.Fulfills[0].targetModel.moodConcept == 'acf7baf2-221f-4bc2-8116-ceb5165be079'">
                                         <i class="fas fa-fw fa-clock-rotate-left"></i> <span
                                             class="d-none d-lg-inline">{{
                                             'ui.action.historical' | i18n }}</span>
                                     </button>
-                                    <div class="actRemoveItem editOnly btn-group"
+                                    <div class="actRemoveItem editOnly btn-group d-none"
                                         ng-if="!(comp.targetModel.moodConcept == 'acf7baf2-221f-4bc2-8116-ceb5165be079' || comp.targetModel.relationship.Fulfills[0].targetModel.moodConcept == 'acf7baf2-221f-4bc2-8116-ceb5165be079')">
                                         <button type="button" ng-click="removeItem($index)" class="btn btn-danger"
                                             ng-if="comp.operation != '4'">
@@ -207,7 +207,7 @@
                                     </div>
                                 </div>
 
-                                <div class="actEditItem viewOnly"
+                                <div class="actEditItem viewOnly d-none"
                                     ng-if="comp.targetModel.statusConcept == 'afc33800-8225-4061-b168-bacc09cdbae3'">
                                     <button type="button" ng-click="editItem($index)" class="btn btn-primary"
                                         ng-disabled="comp.targetModel.actTime.age('hour') &gt; 24">
@@ -219,7 +219,7 @@
                         </li>
                     </ul>
                 </div>
-                <div id="historyActionTab" class="tab-pane actBackEntry editOnly">
+                <div id="historyActionTab" class="tab-pane actBackEntry editOnly d-none">
                     <ul class="overflow-auto list-group">
                         <li class="list-group-item" ng-repeat="(tpl, acts) in backEntryActions track by $index">
                             <ng-include src="resolveBackentryTemplate(tpl)"></ng-include>
@@ -230,7 +230,7 @@
 
             <div class="btn-group float-right">
                 <div class="dropup btn-group">
-                    <button type="button" class="btn btn-dark dropdown-toggle editOnly actAddItem" data-display="static"
+                    <button type="button" class="btn btn-dark dropdown-toggle editOnly actAddItem d-none" data-display="static"
                         data-toggle="dropdown" data-target="#addActionDropdown" aria-haspopup="true" id="btnAddAction">
                         <i class="fas fa-fw fa-plus-circle"></i> {{ 'ui.action.add' | i18n }}
                     </button>

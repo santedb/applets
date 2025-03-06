@@ -57,6 +57,7 @@ angular.module('santedb-lib')
                     }
 
                 }
+                
                 // Load Entities
                 async function loadEntities(entityType, filter) {
                     try {
@@ -85,6 +86,12 @@ angular.module('santedb-lib')
                 }
 
                 loadEntities(scope.entityType, scope.filter || {});
+
+                scope.$watch((s) => JSON.stringify(s.filter), function(n, o) {
+                    if(n != o && n) {
+                        loadEntities(scope.entityType, scope.filter);
+                    }
+                });
 
                 // Element has changed
                 element.on('change', function (e) {
