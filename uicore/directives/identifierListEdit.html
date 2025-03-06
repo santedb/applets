@@ -17,27 +17,36 @@
  -->
 <div xmlns="http://www.w3.org/1999/xhtml">
     <div class="form-group row" ng-repeat="domain in idDomains track by $index" ng-if="(!allowedDomains || allowedDomains.indexOf(domain.domainName) != -1) &amp;&amp; (allowGenerated || !domain._generator) &amp;&amp; model[domain.domainName]">
-        <label class="control-label col-md-3 col-sm-12">{{ domain.name }} <hint-popover hint-title="{{ domain.name }}" hint-text="{{ 'ui.model.identityDomain.validateHint' | i18n: { pattern: domain._validationHint || 'any' } }}" /></label>
+        <label class="control-label col-md-3 col-sm-12 my-auto">
+            <hint-popover hint-title="{{ domain.name }}" hint-text="{{ 'ui.model.identityDomain.validateHint' | i18n: { pattern: domain._validationHint || 'any' } }}" />
+            {{ domain.name }} 
+        </label>
         
-        <div class="col-md-8 col-sm-12">    
+        <div class="col-md-8 col-sm-12 my-auto">    
             <!-- When multiple identifiers per domain are allowed - then we want to be able to add/remove them -->
-            <ul class="list-group" ng-if="!allowMultiple">
+            <ul class="list-group">
                 <li class="list-group-item py-0 my-0" ng-repeat="id in model[domain.domainName] track by $index">
                     <div class="input-group my-1">
                         <input type="text" ng-readonly="id.id &amp;&amp; !createMode" placeholder="{{ domain._validationHint }}" class="form-control" ng-pattern="domain.validation" ng-model="id.value" 
                             name="{{::controlPrefix}}id{{ domain.domainName }}{{ $index }}" ng-change="validateCheckDigit(domain, $index)" ng-required="requiredDomains.indexOf(domain.domainName) &gt; -1"/>
                         
-                            <div class="input-group-append" ng-if="domain.checkDigitAlgorithm || id.checkDigit">
+                        <div class="input-group-append" ng-if="domain.checkDigitAlgorithm || id.checkDigit">
                             <hint-popover hint-title="ui.model.entityIdentifier.checkDigit" />
-                            <span class="input-group-text d-none d-sm-inline">{{ 'ui.model.entityidentifier.checkDigit.short' | i18n }} </span>
+                            <span class="input-group-text d-none d-sm-inline">{{ 'ui.model.entityIdentifier.checkDigit.short' | i18n }}</span>
                             <input type="text" class="form-control w-25" ng-model="id.checkDigit" name="{{::controlPrefix}}cd{{domain.domainName}}{{$index}}" ng-change="validateCheckDigit(domain, $index)" ng-readonly="id.id" maxlength="5" />
                         </div>
                         
                         <div class="input-group-apppend">
                             <div class="btn-group">
-                                <button ng-click="generateId(domain, $index)" ng-if="domain._generator &amp;&amp; !id.id" class="btn btn-sm btn-outline-secondary" type="button" ><i class="fas fa-robot"></i><span class="d-none d-sm-inline">{{ 'ui.action.generate' | i18n }}</span></button>
-                                <button ng-click="scanId(domain, $index)" ng-if="!noScan &amp;&amp; !id.id" class="btn btn-sm btn-outline-info" type="button" ><i class="fas fa-qrcode"></i><span class="d-none d-sm-inline">{{ 'ui.action.scan' | i18n }}</span></button>
-                                <button ng-if="id.id &amp;&amp; !createMode" class="btn btn-outline-danger btn-sm" ng-click="model[domain.domainName].splice($index, 1)" type="button">
+                                <button ng-click="generateId(domain, $index)" ng-if="domain._generator &amp;&amp; !id.id" class="btn btn-sm btn-outline-secondary" type="button" >
+                                    <i class="fas fa-robot"></i><span class="d-none d-sm-inline">{{ 'ui.action.generate' | i18n }}</span>
+                                </button>
+
+                                <button ng-click="scanId(domain, $index)" ng-if="!noScan &amp;&amp; !id.id" class="btn btn-sm btn-outline-info" type="button">
+                                    <i class="fas fa-qrcode"></i><span class="d-none d-sm-inline">{{ 'ui.action.scan' | i18n }}</span>
+                                </button>
+                                
+                                <button ng-if="id.id &amp;&amp; !createMode" class="btn btn-outline-danger btn-sm" ng-click="removeDomainIdentifier(domain, id)" type="button">
                                     <i class="fas fa-fw fa-times-circle"></i><span class="d-none d-sm-inline">{{ 'ui.action.remove' | i18n }}</span>
                                 </button>
                             </div>
