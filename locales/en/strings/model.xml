@@ -365,6 +365,8 @@
   <string name="ui.model.person.deceasedIndicator">Person is Deceased</string>
   <string name="ui.model.person.deceasedDate.approx">Approximate Date</string>
   <string name="ui.model.patient.summary">Patient Summary</string>
+  <string name="ui.model.person.relationship.Student">School</string>
+  <string name="ui.model.person.relationship.Student.hint">Select the school that the person is currently registered in</string>
   <string name="ui.model.person.relationship.Employee">Employer(s)</string>
   <string name="ui.model.person.relationship.Employee.hint">Select one or more employers under which the person has active employment</string>
   <string name="ui.model.place.name">Name</string>

@@ -18,8 +18,9 @@
 <div xmlns="http://www.w3.org/1999/xhtml">
     <div class="form-group row" ng-repeat="domain in idDomains track by $index" ng-if="(!allowedDomains || allowedDomains.indexOf(domain.domainName) != -1) &amp;&amp; (allowGenerated || !domain._generator) &amp;&amp; model[domain.domainName]">
         <label class="control-label col-md-3 col-sm-12 my-auto">
-            <hint-popover hint-title="{{ domain.name }}" hint-text="{{ 'ui.model.identityDomain.validateHint' | i18n: { pattern: domain._validationHint || 'any' } }}" />
             {{ domain.name }} 
+            <hint-popover hint-title="{{ domain.name }}" hint-text="{{ 'ui.model.identityDomain.validateHint' | i18n: { pattern: domain._validationHint || 'any' } }}" />
+            
         </label>
         
         <div class="col-md-8 col-sm-12 my-auto">    
