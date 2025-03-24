@@ -231,7 +231,8 @@ angular.module('santedb-lib')
                 ownerForm: '<',
                 controlPrefix: '<',
                 inputStyle: '<',
-                allowedComponents: '<'
+                allowedComponents: '<', 
+                readonlyTypes: '<'
             },
             controller: ['$scope', '$rootScope', function ($scope, $rootScope) {
 
@@ -530,6 +531,7 @@ angular.module('santedb-lib')
                 ownerForm: '<',
                 containerClass: '<',
                 noScan: '<',
+                noAdd: '<',
                 onScanId: '<',
                 allowedDomains: '<',
                 requiredDomains: '<',

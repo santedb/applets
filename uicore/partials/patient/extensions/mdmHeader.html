@@ -5,12 +5,12 @@ ng-switch="patient.tag['$mdm.type']" xmlns="http://www.w3.org/1999/xhtml">
 <div class="m-0" ng-switch-when="M">
     <div class=" alert alert-primary" ng-if="!patient.relationship['MDM-RecordOfTruth']">
         <i class="fas fa-coins"></i>
-        {{ 'ui.mdm.view.master' | i18n }}
+        <span ng-bind-html="'ui.mdm.view.master' | i18n"></span>
     </div>
     <div class="alert alert-success" ng-if="patient.relationship['MDM-RecordOfTruth']">
         <div class="d-flex justify-content-between">
             <div><i class="fas fa-gavel" ng-init="patient._readonly = true"></i>
-                {{ 'ui.mdm.view.masterAdjudicated' | i18n }}
+                <span ng-bind-html="'ui.mdm.view.masterAdjudicated' | i18n"></span>
             </div>
             <div class="flex-grow-1">
                 <div class="float-right btn-group" ng-if="patient._readonly">
