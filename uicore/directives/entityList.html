@@ -27,11 +27,11 @@
                         <div class="btn-group globalActions" ng-if="actions">
                             <div ng-repeat="action in actions track by $index" class="btn-group">
                                 <button type="button" data-toggle="{{ action.children ? 'dropdown' : '' }}" class="btn"
-                                    ng-class="[ action.className, { 'dropdown-toggle' : action.children }]" ng-click="doAction(action)" demand="{{action.demand}}" id="actionList_button_{{$index}}">
+                                    ng-class="[ action.className, { 'dropdown-toggle' : action.children }]" ng-click="doAction(action)" demand="{{action.demand}}" id="{{::$$eleId}}actionList_button_{{$index}}">
                                     <i class="fas fa-fw" ng-class="action.icon"></i>
                                     {{ action.label || 'ui.action.' + action.name | i18n }}
                                 </button>
-                                <div class="dropdown-menu overflow-auto" id="actionList_{{$index}}" ng-if="action.children" data-display="static">
+                                <div class="dropdown-menu overflow-auto" id="{{::$$eleId}}actionList_{{$index}}" ng-if="action.children" data-display="static">
                                     <button class="dropdown-item" type="button" ng-click="doAction(child, { id: child.id }, $index)"
                                         ng-repeat="child in action.children track by $index" >
                                         <i class="fas fa-fw" ng-class="child.icon"></i> {{ child.label || 'ui.action.' + child.name | i18n }}
@@ -81,7 +81,7 @@
             <hr />
         </div>
     </div>
-    <div id="listContainer" class="row">
+    <div class="entityListContainer row">
 
     </div>
     <div class="row" ng-if="results.totalResults == 0">
@@ -131,9 +131,9 @@
 
     <!-- The following is used as a template for each of the list items 
         xg-* is replaced with ng-* when injecting the HTML into the template-->
-    <div class="d-none" id="listTemplate"> 
+    <div class="d-none entityListTemplate"> 
         <div class="card $itemClass"
-            xg-class="{ 'col-xs-12 col-lg-6 col-xl-4' : _display != 'list', 'col-12' : _display == 'list' }"
+            xg-class="{ 'col-xs-12 col-lg-6 col-xl-4' : _display == 'grid', 'col-xs-12 col-lg-6' : _display == 'gallery', 'col-12' : _display == 'list' }"
             xg-repeat="item in results.resource track by $index">         
             $template
             <div class="card-footer" xg-if="itemActions">

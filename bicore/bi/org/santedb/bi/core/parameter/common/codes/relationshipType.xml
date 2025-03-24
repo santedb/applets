@@ -16,17 +16,20 @@
  - License for the specific language governing permissions and limitations under 
  - the License.
  -->
-<BiParameterDefinition xmlns="http://santedb.org/bi" 
-  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<BiParameterDefinition xmlns="http://santedb.org/bi" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://santedb.org/bi http://santedb.org/schema/v3.0/BusinessIntelligence.xsd" 
-  id="org.santedb.bi.core.parameter.common.place.type" name="class" label="ui.bi.core.common.place.type" type="uuid" status="active">
+  id="org.santedb.bi.core.parameter.common.relationshipType" 
+  name="class" 
+  label="ui.bi.core.common.relationship.type" 
+  type="uuid" 
+  status="active">
   <meta>
     <authors>
       <add>Justin Fyfe (Fyfe Software Inc.) &lt;justin@fyfesoftware.ca></add>
     </authors>
     <annotation lang="en">
       <div xmlns="http://www.w3.org/1999/xhtml">
-        <p>This parameter defines values for place sub-classifications</p>
+        <p>Defines values for the concept set for relationship type</p>
       </div>
     </annotation>
   </meta>
@@ -45,7 +48,7 @@
             INNER JOIN CD_SET_MEM_ASSOC_TBL USING (cd_id)
             INNER JOIN CD_NAME_TBL USING (CD_ID)
           WHERE
-            SET_ID = 'c65719ec-0795-47ec-8aaf-dcb867c5ca56'
+            SET_ID = 'ee16a667-2085-440a-b1e7-4032d10b9f40'
             AND HEAD
             ]]>
       </add>
@@ -59,7 +62,7 @@
             INNER JOIN CD_SET_MEM_ASSOC_TBL USING (cd_id)
             INNER JOIN CD_NAME_TBL USING (CD_ID)
           WHERE
-            SET_ID = char_to_uuid('c65719ec-0795-47ec-8aaf-dcb867c5ca56')
+            SET_ID = char_to_uuid('ee16a667-2085-440a-b1e7-4032d10b9f40')
             AND HEAD
             ]]>
       </add>
@@ -73,7 +76,7 @@
             INNER JOIN CD_SET_MEM_ASSOC_TBL USING (cd_id)
             INNER JOIN CD_NAME_TBL USING (CD_ID)
           WHERE
-            SET_ID = x'EC1957C69507EC478AAFDCB867C5CA56'
+            SET_ID = x'67A616EE85200A44B1E74032D10B9F40'
             AND HEAD
             ]]>
       </add>

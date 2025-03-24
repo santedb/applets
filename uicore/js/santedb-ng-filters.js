@@ -176,6 +176,24 @@ angular.module('santedb-lib')
         }
     })
     /**
+     * @method entityCount
+     * @memberof Angular
+     * @summary Returns the total entity count within the object tracking entities 
+     * @see {SanteDBModel.Entity}
+     * @param {object} entityObject The entity object to tally entities from
+     */
+    .filter('entityCount', function () {
+        return function (entityObject) {            
+            let count = 0;
+
+            for (const key of Object.keys(entityObject)) {
+                count += entityObject[key].length;
+            }
+
+            return count;
+        }
+    })
+    /**
      * @method extDate
      * @memberof Angular
      * @summary Renders an extended date with a specified precision

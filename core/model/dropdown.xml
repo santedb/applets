@@ -109,6 +109,7 @@
   </type>
 
   <type type="Material" all="true">
+    <property name="typeConceptModel" behavior="always" />
     <property name="identifier" behavior="always">
       <property name="*"  all="true" ref="EntityIdentifier"/>
     </property>

@@ -48,6 +48,9 @@ angular.module('santedb-lib')
                 noAdd: '<',
                 noType: '<',
                 simpleEntry: '<',
+                keepPanelsOpen: '<',
+                canRemove: '<',
+                canClear: '<',
                 isRequired: '<',
                 ownerForm: '<',
                 controlPrefix: '<',
@@ -55,10 +58,19 @@ angular.module('santedb-lib')
                 catchmentAreaFor: '<'
             },
             controller: ['$scope', '$rootScope', function ($scope, $rootScope) {
-
-
                 $scope.removeAddress = function (addr) {
                     addr.operation = BatchOperationType.Delete;
+                }
+
+                $scope.clearAddress = function (addr) {
+                    const foundAddress = $scope.addressEdit.find((address) => {
+                        return address.id === addr.id;
+                    })
+                    
+                    delete foundAddress.id;
+                    foundAddress.component = {
+                        "$other": []
+                    }
                 }
 
                 $scope.addAddress = function () {
@@ -75,7 +87,7 @@ angular.module('santedb-lib')
                             PostBox: [],
                             CareOf: [],
                             UnitIdentifier: [],
-                            _AddressPlaceRef: []
+                            PlaceRef: []
                         }
                     });
                     
@@ -102,20 +114,21 @@ angular.module('santedb-lib')
                                 AddressLine: [],
                                 CareOf: [],
                                 AdditionalLocator: [],
-                                _AddressPlaceRef: []
+                                PlaceRef: []
                             }
                         })]
                     };
                 }
                
                 function fixAddressUse(addr) {
-                    if ((!addr.useModel || !addr.useModel.id) && addr != '$other')
-                        SanteDB.resources.concept.findAsync({ mnemonic: addr })
-                            .then(function (bundle) {
-                                if (bundle.resource && bundle.resource.length > 0)
-                                    addr.useModel = addr.resource[0];
-                            });
-                        };
+                    if ((!addr.useModel || !addr.useModel.id) && addr != '$other') {
+                        SanteDB.resources.concept.findAsync({ mnemonic: addr }).then(function (bundle) {
+                            if (bundle.resource && bundle.resource.length > 0) {
+                                addr.useModel = addr.resource[0];
+                            }
+                        });
+                    }
+                };
 
                 function syncEditToAddress() {                    
                     var flatAddressList = [];
@@ -148,7 +161,7 @@ angular.module('santedb-lib')
                             a.component.PostBox = a.component.PostBox || [],
                             a.component.CareOf = a.component.CareOf || [],
                             a.component.UnitIdentifier = a.component.UnitIdentifier || [],
-                            a.component._AddressPlaceRef = a.component._AddressPlaceRef || []
+                            a.component.PlaceRef = a.component.PlaceRef || []
                     });
                     scope.addressEdit = flatAddressList;
                     scope.model["$other"] = scope.model["$other"] || [];
@@ -228,6 +241,7 @@ angular.module('santedb-lib')
                 noType: '<',
                 simpleEntry: '<',
                 isRequired: '<',
+                isDisabled: '<',
                 ownerForm: '<',
                 controlPrefix: '<',
                 inputStyle: '<',
@@ -340,22 +354,20 @@ angular.module('santedb-lib')
     *       <telecom-edit telecom="scopedObject.telecom" single-edit="false" owner-form="myForm" />
     */
     .directive('telecomEdit', ['$rootScope', function ($rootScope) {
-
         var keys = Object.keys(TelecomAddressUseKeys);
-        // are there settings which prevent a type of edit from ocurring
+
+        // are there settings which prevent a type of edit from occurring
         try {
-            keys = keys.filter(o =>
-                !($rootScope &&
-                    $rootScope.system &&
-                    $rootScope.system.config &&
-                    $rootScope.system.config.application &&
-                    $rootScope.system.config.application.setting &&
-                    $rootScope.system.config.application.setting[`forbid.patient.telecom.${o}`]));
+            keys = keys.filter((o) => {
+                return !$rootScope?.system?.config?.application?.setting?.[`forbid.patient.telecom.${o}`]
+            });
         }
         catch (e) {
             console.warn(e);
         }
+
         keys.push("NullFlavor-NoInformation");
+
         return {
             restrict: 'E',
             replace: true,
@@ -370,12 +382,10 @@ angular.module('santedb-lib')
                 requiredTypes: '<'
             },
             controller: ['$scope', '$rootScope', function ($scope, $rootScope) {
-
-
             }],
             link: function (scope, element, attrs) {
-
                 scope.controlPrefix = scope.controlPrefix || attrs.name;
+
                 if (!scope.controlPrefix)
                     scope.controlPrefix = attrs.name || '';
 
@@ -541,7 +551,7 @@ angular.module('santedb-lib')
             controller: ["$scope", function ($scope) {
 
                 // Validate checkdigit
-                $scope.validateCheckDigit = function (domain, index) {
+                $scope.validateCheckDigit = function (domain, index) {                    
                     if (domain._customValidator) {
                         var result = domain._customValidator($scope.model[domain.domainName][index]);
                         $scope.ownerForm[($scope.controlPrefix || '') + 'id' + domain.domainName + index].$setValidity('checkDigit', result);
@@ -559,6 +569,14 @@ angular.module('santedb-lib')
                     } catch (e) {
                         $rootScope.errorHandler(e);
                     }
+                }
+
+                $scope.removeDomainIdentifier = (domain, identifier) => {
+                    const filteredIdentifiers = $scope.model[domain.domainName].filter((_identifier) => {
+                        return _identifier.id != identifier.id;
+                    });
+                    
+                    $scope.model[domain.domainName] = filteredIdentifiers.length == 0 ? [{}] : filteredIdentifiers;
                 }
 
                 $scope.scanId = async function (domain, index) {
@@ -588,8 +606,7 @@ angular.module('santedb-lib')
                 }
 
             }],
-            link: function (scope, element, attrs) {
-
+            link: function (scope, element, attrs) {                
                 scope.controlPrefix = scope.controlPrefix || attrs.name;
 
                 // Scope identifier

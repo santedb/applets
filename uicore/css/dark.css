@@ -5572,11 +5572,17 @@ a.close.disabled {
   .modal-sm {
     max-width: 300px;
   }
+  
+  .modal-xl {
+    max-width: 90%;
+  }
 }
 @media (min-width: 992px) {
-  .modal-lg,
-.modal-xl {
+  .modal-lg {
     max-width: 800px;
+  }
+.modal-xl {
+    max-width: 950px;
   }
 }
 @media (min-width: 1200px) {

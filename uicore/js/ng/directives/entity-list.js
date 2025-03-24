@@ -256,7 +256,7 @@ angular.module('santedb-lib')
                 scope._display = attrs.display || 'list';
 
                 scope.$$keyProperty = attrs.keyProperty || 'id';
-                scope.$$orderBy = attrs.orderBy || 'creationTime:asc';
+                scope.$$orderBy = attrs.orderBy?.split(',') || 'creationTime:asc';
                 _operaation = attrs.operation;
                 scope.$$subResource = attrs.subResource;
                 scope.$$eleId = attrs.id;
@@ -267,21 +267,21 @@ angular.module('santedb-lib')
                 var _listTemplate = null;
                 // item template?
                 if (attrs.itemTemplate) {
-                    _listTemplate = $("#listTemplate", element).html()
+                    _listTemplate = $(".entityListTemplate", element).html()
                         .replaceAll("xg-", "ng-")
                         .replace("$template", `<ng-include src="'${attrs.itemTemplate}'" />`)
                         .replace("$itemClass", attrs.itemClass)
                         .replace("$idRoot", scope.$$eleId);
                 }
                 else {
-                    _listTemplate = $("#listTemplate", element).html()
+                    _listTemplate = $(".entityListTemplate", element).html()
                         .replaceAll("xg-", "ng-")
                         .replace("$template", _itemTemplate)
                         .replace("$itemClass", attrs.itemClass)
                         .replace("$idRoot", scope.$$eleId);
                 }
-                $("#listContainer", element).html(_listTemplate);
-                $compile(angular.element("#listContainer"))(scope);
+                $(`.entityListContainer`, element).html(_listTemplate);
+                $compile(angular.element(".entityListContainer"))(scope);
 
                 $(".entity-list-waiter", element).attr("id", `${scope.$$eleId}_${scope.$$scid}`);
 

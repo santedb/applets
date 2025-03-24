@@ -16,37 +16,57 @@
  - the License.
  -->
 <div xmlns="http://www.w3.org/1999/xhtml">
-
+    <!-- Name -->
     <div class="row d-flex my-auto">
-        <label class="col-sm-3 col-xs-4 control-label d-flex my-auto justify-content-end">{{ 'ui.model.patient.name' | i18n }}</label>
+        <label class="col-sm-3 col-xs-4 control-label d-flex my-auto justify-content-end">
+            {{ 'ui.model.patient.name' | i18n }}
+        </label>
+
         <div class="col-sm-9 col-xs-8 d-flex">
             <ul class="list-group my-auto">
                 <li class="d-flex" ng-repeat="(n, name) in scopedObject.name">
-                    <ul class="list-group list-unstyled" ng-if="!name.use">
+                    <ul class="list-group list-unstyled" ng-class="{ 'pt-2': (scopedObject.name | entityCount) > 1 }" ng-if="!name.use">
                         <li ng-repeat="r in name">
-                            {{ r | name }} <span class=" d-none d-sm-inline"><span class="badge badge-dark">{{
-                                    r.useModel | concept }}</span></span>
+                            <span class=" d-none d-sm-inline"><span class="badge badge-dark">
+                                {{ r.useModel | concept }}
+                            </span></span>
+
+                            {{ r | name }} 
                         </li>
                     </ul>
-                    <span ng-if="name.use">
-                        {{ name | name }} <span class=" d-none d-sm-inline"><span class="badge badge-dark">{{
-                                name.useModel | concept }}</span></span>
-                    </span>
 
+                    <span ng-if="name.use">
+                        <span class=" d-none d-sm-inline"><span class="badge badge-dark">
+                            {{ name.useModel | concept }}
+                        </span></span>
+                        
+                        {{ name | name }} 
+                    </span>
                 </li>
             </ul>
         </div>
     </div>
     
+    <!-- Date of Birth -->
     <div class="row">
-        <label class="col-sm-3 col-xs-4 control-label">{{ 'ui.model.patient.dateOfBirth' | i18n }}</label>
+        <label class="col-sm-3 col-xs-4 control-label">
+            {{ 'ui.model.patient.dateOfBirth' | i18n }}
+        </label>
+
         <div class="col-sm-9 col-xs-8 d-flex">
             <span class="my-auto">
                 {{ scopedObject.dateOfBirth | extDate: scopedObject.dateOfBirthPrecision }}
                 <span ng-if="!scopedObject.deceasedDate"> ({{ scopedObject.dateOfBirth | age }})</span>
             </span>
         </div>
-        <label class="col-sm-3 col-xs-4 control-label">{{ 'ui.model.patient.genderConcept' | i18n }}</label>
+    </div>
+
+    <!-- Gender -->
+    <div class="row">
+        <label class="col-sm-3 col-xs-4 control-label">
+            {{ 'ui.model.patient.genderConcept' | i18n }}
+        </label>
+
         <div class="col-sm-9 col-xs-8 d-flex">
             <span class="my-auto">
                 <i ng-if="scopedObject.genderConceptModel.mnemonic == 'Male' || scopedObject.genderConceptModel.mnemonic == 'Female'" class="fas"
@@ -54,47 +74,40 @@
                 {{ scopedObject.genderConceptModel | concept }}
             </span>
         </div>
-        <label class="col-sm-3 col-xs-12 control-label">{{ 'ui.model.patient.address' | i18n }}</label>
+    </div>
+
+    <!-- Address -->
+    <div class="row">
+        <label class="col-sm-3 col-xs-12 control-label">
+            {{ 'ui.model.patient.address' | i18n }}
+        </label>
+
         <div class="col-sm-9 col-xs-12 d-flex">
             <span class="my-auto">
                 <div ng-if="scopedObject.address">
-                    <ul class="list-group">
-                        <li class="d-flex align-items-center" ng-repeat="(n, address) in scopedObject.address">
+                    <ul class="list-group" ng-class="{ 'pt-2': (scopedObject.address | entityCount) > 1 }">
+                        <li class="d-flex align-items-center" ng-repeat="(n, address) in scopedObject.address track by $index">
                             <ul class="list-group list-unstyled" ng-if="!address.use">
                                 <li ng-repeat="r in address">
-                                    {{ r | address }} <span class=" d-none d-sm-inline"><span class="badge badge-dark">{{
-                                            r.useModel | concept }}</span></span>
+                                    <span class=" d-none d-sm-inline"><span class="badge badge-dark">
+                                        {{ r.useModel | concept }}
+                                    </span></span>
+                                    
+                                    {{ r | address }}
                                 </li>
                             </ul>
+
                             <span ng-if="address.use">
-                                {{ address | address }} <span class=" d-none d-sm-inline"><span class="badge badge-dark">{{
-                                        address.useModel | concept }}</span></span></span>
+                                <span class=" d-none d-sm-inline"><span class="badge badge-dark">
+                                    {{ address.useModel | concept }}
+                                </span></span>
+                                
+                                {{ address | address }} 
+                            </span>
                         </li>
                     </ul>
                 </div>
-                <div ng-if="!scopedObject.address">
-                    {{ 'ui.unknown' | i18n }}
-                </div>
-            </span>
-        </div>
-        <label class="col-sm-3 col-xs-12 control-label">{{ 'ui.model.patient.telecom' | i18n }}</label>
-        <div class="col-sm-9 col-xs-12 d-flex">
-            <span class="my-auto">
-                <div ng-if="scopedObject.telecom">
-                    <ul class="list-group">
-                        <li class="d-flex align-items-center" ng-repeat="(n, telecom) in scopedObject.telecom">
-                            <ul class="list-group list-unstyled" ng-if="!telecom.use">
-                                <li ng-repeat="r in telecom">
-                                    <a href="{{r.value}}">{{r.value}}</a><span class=" d-none d-sm-inline ml-1"><span class="badge badge-dark">{{ r.useModel |
-                                            concept }}</span></span>
-                                </li>
-                            </ul>
-                            <span ng-if="telecom.use">
-                                <a href="{{telecom.value}}">{{telecom.value}}</a> <span class=" d-none d-sm-inline ml-1"><span
-                                        class="badge badge-dark">{{ address.useModel | concept }}</span></span></span>
-                        </li>
-                    </ul>
-                </div>
+
                 <div ng-if="!scopedObject.address">
                     {{ 'ui.unknown' | i18n }}
                 </div>
@@ -102,15 +115,62 @@
         </div>
     </div>
 
-    <div ng-if="scopedObject.relationship.Birthplace.targetModel" class="row">
+    <!-- Telecom -->
+    <div class="row">
+        <span class="col-12" ng-if="scopedObject.telecom">
+            <div class="row">
+                <label class="col-sm-3 col-xs-12 control-label">
+                    {{ 'ui.model.patient.telecom' | i18n }}
+                </label>
+    
+                <div class="col-sm-9 col-xs-12 d-flex">
+                    <span class="my-auto">
+                        <div ng-if="scopedObject.telecom">
+                            <ul class="list-group" ng-class="{ 'pt-2': (scopedObject.telecom | entityCount) > 1 }">
+                                <li class="d-flex align-items-center" ng-repeat="(n, telecom) in scopedObject.telecom">
+                                    <ul class="list-group list-unstyled" ng-if="!telecom.use">
+                                        <li ng-repeat="r in telecom">
+                                            <span class="mr-1 d-none d-sm-inline"><span class="badge badge-dark">
+                                                {{ r.useModel | concept }}
+                                            </span></span>
+                                            
+                                            <a href="{{r.value}}">{{r.value}}</a>
+                                        </li>
+                                    </ul>
+
+                                    <span ng-if="telecom.use">
+                                        <span class="mr-1 d-none d-sm-inline"><span class="badge badge-dark">
+                                            {{ address.useModel | concept }}
+                                        </span></span>
+
+                                        <a href="{{telecom.value}}">{{telecom.value}}</a> 
+                                    </span>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <div ng-if="!scopedObject.address">
+                            {{ 'ui.unknown' | i18n }}
+                        </div>
+                    </span>
+                </div>
+            </div>
+        </span>
+    </div>
+   
+
+    <!-- Birthplace -->
+    <div ng-if="scopedObject.relationship.Birthplace[0].targetModel" class="row">
         <label class="col-sm-3 col-xs-12 control-label">{{ 'ui.model.patient.birthplace' | i18n }}</label>
-        <div class="col-sm-9 col-xs-12">
+        <div class="col-sm-9 col-xs-12 my-auto">
             <i class="fas"
-                ng-class="{ 'fa-hospital-alt' : scopedObject.relationship.Birthplace.targetModel.classConcept == 'ff34dfa7-c6d3-4f8b-bc9f-14bcdc13ba6c' , 'fa-map-marked' : scopedObject.relationship.Birthplace.targetModel.classConcept != 'ff34dfa7-c6d3-4f8b-bc9f-14bcdc13ba6c'}"></i>
-            {{ scopedObject.relationship.Birthplace.targetModel.name | name }} <br />
-            <small> ({{ scopedObject.relationship.Birthplace.targetModel.address | address }})</small>
+                ng-class="{ 'fa-hospital-alt' : scopedObject.relationship.Birthplace[0].targetModel.classConcept == 'ff34dfa7-c6d3-4f8b-bc9f-14bcdc13ba6c' , 'fa-map-marked' : scopedObject.relationship.Birthplace[0].targetModel.classConcept != 'ff34dfa7-c6d3-4f8b-bc9f-14bcdc13ba6c'}"></i>
+            {{ scopedObject.relationship.Birthplace[0].targetModel.name | name }} <br />
+            <small ng-if="Object.keys(scopedObject.relationship.Birthplace[0].targetModel.address).length > 0"> ({{ scopedObject.relationship.Birthplace[0].targetModel.address | address }})</small>
         </div>
     </div>
+
+    <!-- Date Deceased -->
     <div ng-if="scopedObject.deceasedDate" class="row">
         <label class="col-sm-3 col-xs-12 control-label">{{ 'ui.model.patient.deceased' | i18n }}</label>
         <div class="col-sm-9 col-xs-12">
@@ -118,6 +178,8 @@
             ( {{ scopedObject.dateOfBirth | age: 'y':scopedObject.deceasedDate }} )
         </div>
     </div>
+
+    <!-- Place of Death -->
     <div ng-if="scopedObject.deceasedDate &amp;&amp; scopedObject.relationship.PlaceOfDeath.targetModel" class="row">
         <label class="col-sm-3 col-xs-12 control-label">{{ 'ui.model.patient.placeOfDeath' | i18n }}</label>
         <div class="col-sm-9 col-xs-12">
@@ -127,60 +189,99 @@
             <small> ({{ scopedObject.relationship.PlaceOfDeath.targetModel.address | address }})</small>
         </div>
     </div>
+
+    <!-- Multiple Birth Indicators -->
     <div ng-if="scopedObject.multipleBirthOrder" class="row">
         <label class="col-sm-3 col-xs-12 control-label">{{ 'ui.model.patient.multipleBirthOrder' | i18n }}</label>
-        <div class="col-sm-9 col-xs-12 ">
+        <div class="col-sm-9 col-xs-12 my-auto">
             {{ 'ui.model.patient.multipleBirthOrder.' + scopedObject.multipleBirthOrder | i18n }}
         </div>
     </div>
 
+    <!-- VIP Status -->
     <div ng-if="scopedObject.vipStatusModel" class="row text-light bg-info">
-        <label class="col-sm-3 col-xs-12 control-label">{{ 'ui.model.patient.vipStatus' | i18n }}</label>
-        <div class="col-sm-9 col-xs-12 ">
+        <label class="col-sm-3 col-xs-12 control-label">
+            {{ 'ui.model.patient.vipStatus' | i18n }}
+        </label>
+
+        <div class="col-sm-9 col-xs-12 my-auto">
             {{ scopedObject.vipStatusModel | concept }}
         </div>
     </div>
+
+    <!-- Occupation -->
     <div ng-if="scopedObject.occupationModel" class="row">
-        <label class="col-sm-3 col-xs-12 control-label">{{ 'ui.model.person.occupation' | i18n }}</label>
-        <div class="col-sm-9 col-xs-12 ">
+        <label class="col-sm-3 col-xs-12 control-label">
+            {{ 'ui.model.person.occupation' | i18n }}
+        </label>
+
+        <div class="col-sm-9 col-xs-12 my-auto">
             {{ scopedObject.occupationModel | concept }}
         </div>
     </div>
+
+    <!-- Marital Status -->
     <div ng-if="scopedObject.maritalStatusModel" class="row">
-        <label class="col-sm-3 col-xs-12 control-label">{{ 'ui.model.patient.maritalStatus' | i18n }}</label>
-        <div class="col-sm-9 col-xs-12 ">
+        <label class="col-sm-3 col-xs-12 control-label">
+            {{ 'ui.model.patient.maritalStatus' | i18n }}
+        </label>
+
+        <div class="col-sm-9 col-xs-12 my-auto">
             {{ scopedObject.maritalStatusModel | concept }}
         </div>
     </div>
+
+    <!-- Living Arrangements -->
     <div ng-if="scopedObject.livingArrangementModel" class="row">
-        <label class="col-sm-3 col-xs-12 control-label">{{ 'ui.model.patient.livingArrangement' | i18n }}</label>
-        <div class="col-sm-9 col-xs-12 ">
+        <label class="col-sm-3 col-xs-12 control-label">
+            {{ 'ui.model.patient.livingArrangement' | i18n }}
+        </label>
+
+        <div class="col-sm-9 col-xs-12 my-auto">
             {{ scopedObject.livingArrangementModel | concept }}
         </div>
     </div>
+
+    <!-- Education Level -->
     <div ng-if="scopedObject.educationLevelModel" class="row">
-        <label class="col-sm-3 col-xs-12 control-label">{{ 'ui.model.patient.educationLevel' | i18n }}</label>
-        <div class="col-sm-9 col-xs-12 ">
+        <label class="col-sm-3 col-xs-12 control-label">
+            {{ 'ui.model.patient.educationLevel' | i18n }}
+        </label>
+
+        <div class="col-sm-9 col-xs-12 my-auto">
             {{ scopedObject.educationLevelModel | concept }}
         </div>
     </div>
 
+    <!-- Nationality -->
     <div ng-if="scopedObject.nationalityModel" class="row">
-        <label class="col-sm-3 col-xs-12 control-label">{{ 'ui.model.person.nationality' | i18n }}</label>
+        <label class="col-sm-3 col-xs-12 control-label">
+            {{ 'ui.model.person.nationality' | i18n }}
+        </label>
+
         <div class="col-sm-9 col-xs-12 my-auto">
             {{ scopedObject.nationalityModel | concept }}
         </div>
     </div>
 
+    <!-- Religion -->
     <div ng-if="scopedObject.religionModel &amp;&amp; $root.system.config.application.setting['allow.patient.religion']" class="row">
-        <label class="col-sm-3 col-xs-12 control-label">{{ 'ui.model.patient.religion' | i18n }}</label>
-        <div class="col-sm-9 col-xs-12 ">
+        <label class="col-sm-3 col-xs-12 control-label">
+            {{ 'ui.model.patient.religion' | i18n }}
+        </label>
+
+        <div class="col-sm-9 col-xs-12 my-auto">
             {{ scopedObject.religionModel | concept }}
         </div>
     </div>
+
+    <!-- Ethnicity -->
     <div ng-if="scopedObject.ethnicityModel &amp;&amp; $root.system.config.application.setting['allow.patient.ethnicity']" class="row">
-        <label class="col-sm-3 col-xs-12 control-label">{{ 'ui.model.patient.ethnicity' | i18n }}</label>
-        <div class="col-sm-9 col-xs-12 ">
+        <label class="col-sm-3 col-xs-12 control-label">
+            {{ 'ui.model.patient.ethnicity' | i18n }}
+        </label>
+
+        <div class="col-sm-9 col-xs-12 my-auto">
             {{ scopedObject.ethnicityModel | concept }}
         </div>
     </div>
@@ -189,12 +290,16 @@
     <div ng-repeat="(k,v) in scopedObject.relationship"
         ng-if="k == 'Citizen' || k == 'Employer' || k == 'Caregiver' || k == 'CoverageSponsor' || k == 'Student'"
         class="row">
-        <label class="col-sm-3 col-xs-12 control-label">{{ 'ui.model.entity.relationship.' + k | i18n }}</label>
-        <div ng-if="v.targetModel" class="col-sm-9 col-xs-12">
+        <label class="col-sm-3 col-xs-12 control-label">
+            {{ 'ui.model.entity.relationship.' + k | i18n }}
+        </label>
+
+        <div ng-if="v.targetModel" class="col-sm-9 col-xs-12 my-auto">
             {{ v.targetModel.name | name }}
         </div>
+
         <div ng-if="v.length" class="col-sm-9 col-xs-12 my-auto">
-            <ul class="list-group">
+            <ul class="list-group" ng-class="{ 'pt-2': (scopedObject.relationship | entityCount) > 1 }">
                 <li ng-repeat="i in v track by $index">
                     {{ i.targetModel.name | name }}
                 </li>

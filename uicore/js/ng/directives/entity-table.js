@@ -84,7 +84,7 @@ angular.module('santedb-lib')
                             orderable: scope.sort && scope.sort[m] !== undefined ? true : renderer == null,
                             data: m,
                             expectedType: expectedType,
-                            class: scope.itemClass ? scope.itemClass[m] : null,
+                            className: scope.itemClass ? scope.itemClass[m] : null,
                             type: 'string',
                             defaultContent: '',
                             render: renderer ?

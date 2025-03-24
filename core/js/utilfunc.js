@@ -55,6 +55,14 @@ Exception.prototype.getRootCause = function() {
 
 /**
  * @method
+ * @memberof Number
+ * @summary Determines if the number is a whole number
+ */
+Number.prototype.isWholeNumber = function() {
+    return Math.trunc(this) == this;
+}
+/**
+ * @method
  * @memberof Date
  * @summary Get the week of the year
  */
@@ -401,6 +409,12 @@ function scrubModelProperties(source) {
 
     tSource.forEach(function (object) {
         Object.keys(object).forEach(function (key) {
+
+            // Hidden properties
+            if(key.indexOf("_") == 0) {
+                delete object[key];
+                return;
+            }
             var rawValue = object[key];
 
             if (!Array.isArray(rawValue))
@@ -415,13 +429,10 @@ function scrubModelProperties(source) {
                     // Set the key property to the selected / item value if present
                     if (!keyValue && value.id) {
                         object[keyProperty] = value.id;
-                        // Remove the detail object
-                        delete (object[key]);
                     }
+                    delete object[key];
                 }
-
-                // Scan down 
-                if (value && typeof (value) == "object" && !(value instanceof Date))
+                else if (value && typeof (value) == "object" && !(value instanceof Date))
                     scrubModelProperties(value);
             });
         });
@@ -608,7 +619,7 @@ async function prepareEntityForSubmission(entity, splitCompoundNames) {
             try {
                 var addr = ensureIsArray(entity.address[k]);
 
-                var intlPromises = addr.map(async function (addrItem) {
+                var intlPromises = addr.map(async function (addrItem) {                    
                     if (addrItem.useModel) // have to load use
                         addrItem.use = addrItem.useModel.id;
                     if (!addrItem.use)
@@ -617,16 +628,15 @@ async function prepareEntityForSubmission(entity, splitCompoundNames) {
 
                     if (addrItem.component) {
                         // If the component contains a reference to a place copy the place data elements
-                        if(addrItem.component._AddressPlaceRef && addrItem.component._AddressPlaceRef.length > 0 &&
-                            addrItem.component._AddressPlaceRef[0] !== "")
+                        if(addrItem.component.PlaceRef && addrItem.component.PlaceRef.length > 0 &&
+                            addrItem.component.PlaceRef[0] !== "")
                         {
                             try {
-                                var pr = await SanteDB.resources.place.getAsync(addrItem.component._AddressPlaceRef[0], 'fastview');
+                                var pr = await SanteDB.resources.place.getAsync(addrItem.component.PlaceRef[0], 'fastview');
+                                
                                 var copyAddress = pr.address.Direct || pr.address.PhysicalVisit;
                                 Object.keys(copyAddress[0].component).forEach(k => {
-                                    if(!addrItem.component[k] || addrItem.component[k].length == 0) {
-                                        addrItem.component[k] = copyAddress[0].component[k];
-                                    }
+                                    addrItem.component[k] = copyAddress[0].component[k];
                                 });
                             }
                             catch(e) {

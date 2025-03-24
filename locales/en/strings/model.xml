@@ -112,6 +112,7 @@
   <string name="ui.model.entityName.use">Type</string>
   <string name="ui.model.entityAddress.use">Type</string>
   <string name="ui.model.entityTelecom.use">Use</string>
+  <string name="ui.model.entityRelationship.new">New Relative</string>
   <string name="ui.model.entityRelationship.type">Type</string>
   <string name="ui.model.entityRelationship.prefix">Has a</string>
   <string name="ui.model.entityRelationship.inverse.prefix">Is a</string>
@@ -160,6 +161,7 @@
   <string name="ui.model.entity.id">UUID</string>
   <string name="ui.model.entity.classConcept">Classification</string>
   <string name="ui.model.entity.typeConcept">Type</string>
+  <string name="ui.model.entity.relationship.requiresRelationship">Children under the age of 18 require at least one relative.</string>
   <string name="ui.model.entity.relationship.relationshipType">Relationship</string>
   <string name="ui.model.entity.relationship.hasA">HAS A</string>
   <string name="ui.model.entity.relationship.isA">IS A</string>
@@ -281,6 +283,7 @@
   <string name="ui.model.entity.identifier.authority">Domain</string>
   <string name="ui.model.patient.administrativeInfo">Extra</string>
   <string name="ui.model.patient.demographics">Demographics</string>
+  <string name="ui.model.patient.other">Other</string>
   <string name="ui.model.patient.birth">Birth</string>
   <string name="ui.model.patient.death">Death</string>
   <string name="ui.model.patient.name">Name</string>
@@ -303,7 +306,7 @@
   <string name="ui.model.patient.age.suffix.daysOld">d/o</string>
   <string name="ui.model.patient.age.suffix.monthsOld">m/o</string>
   <string name="ui.model.patient.age.suffix.yearsOld">y/o</string>
-  <string name="ui.model.patient.dateOfBirth">DOB</string>
+  <string name="ui.model.patient.dateOfBirth">Date of Birth</string>
   <string name="ui.model.patient.dateOfBirth.hint"><![CDATA[The date on which the patient was born. If the exact date is unknown, or you wish to enter the age, use the <code>approx</code> checkbox]]></string>
   <string name="ui.model.patient.dateOfBirth.age">Age</string>
   <string name="ui.model.patient.dateOfBirth.approx">Approx.</string>
@@ -362,6 +365,8 @@
   <string name="ui.model.person.deceasedIndicator">Person is Deceased</string>
   <string name="ui.model.person.deceasedDate.approx">Approximate Date</string>
   <string name="ui.model.patient.summary">Patient Summary</string>
+  <string name="ui.model.person.relationship.Student">School</string>
+  <string name="ui.model.person.relationship.Student.hint">Select the school that the person is currently registered in</string>
   <string name="ui.model.person.relationship.Employee">Employer(s)</string>
   <string name="ui.model.person.relationship.Employee.hint">Select one or more employers under which the person has active employment</string>
   <string name="ui.model.place.name">Name</string>
@@ -545,6 +550,7 @@
   <string name="ui.model.act.participation.RecordTarget">Subject</string>
   <string name="ui.model.act.participation.RecordTarget.container">Container</string>
   <string name="ui.model.act.participation.Informant">Informant</string>
+  <string name="ui.model.act.participation.ResponsibleParty">Responsible Party</string>
   <string name="ui.model.act.isNegated">Not Performed</string>
   <string name="ui.model.act.isNegated.reason">Reason for Not Performing</string>
   <string name="ui.model.act.tag.isBackentryFalse">Performing Today</string>
@@ -984,4 +990,7 @@
     <string name="ui.model.dataTemplateDefinition.public">Is Public</string>
     <string name="ui.model.dataTemplateDefinition.public.hint">Making a template public means that users can manually add this to their encounters in the EMR view</string>
 
+    <!-- Care Plans-->
+    <string name="ui.model.carePlan.pathway">Care Pathway</string>
+    <string name="ui.model.carePlan.pathway.hint">Select the care pathway for which the plan applies</string>
 </resources>
