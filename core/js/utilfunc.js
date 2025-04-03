@@ -39,6 +39,17 @@ Object.defineProperty(Array.prototype, 'groupBy', { value: function(keySelector,
 }, enumerable: false });
 
 /**
+ * @summary Select a child property from each element in the array
+ * @param {String} keySelector The selector of the sub-property
+ */
+Object.defineProperty(Array.prototype, 'selectField', {
+    value: function(keySelector) {
+        return this.map(e => e[keySelector])
+    },
+    enumerable: false
+});
+
+/**
  * @method
  * @memberof Exception
  * @summary Get the root cause of the exception
@@ -447,7 +458,10 @@ function scrubModelProperties(source) {
  */
 function ensureIsArray(objectToMakeArray) {
 
-    if(!Array.isArray(objectToMakeArray)) {
+    if(objectToMakeArray === null || objectToMakeArray === undefined) {
+        return null;
+    }
+    else if(!Array.isArray(objectToMakeArray)) {
         if(objectToMakeArray[0]) // not an array but has a '0' element so we convert
         {
             var arr = [];
@@ -573,19 +587,24 @@ function applyCascadeInstructions(source) {
                 })
                     .forEach(function (instruction) {
                         
+                        var sourcePlayer = source.participation[instruction.sourceRole];
+                        if(!sourcePlayer) return;
                         // Apply the cascade for actTime, startTime, stopTime
                         if(relationship.targetModel.statusConcept == StatusKeys.Completed) {
                             relationship.targetModel.actTime = relationship.targetModel.actTime || source.actTime;
                         }
                         relationship.targetModel.moodConcept = relationship.targetModel.moodConcept || source.moodConcept;
 
-                        if (!relationship.targetModel.participation[instruction.targetRole]
-                        ) // Only cascade if not specified
+                        if (!relationship.targetModel.participation[instruction.targetRole]) // Only cascade if not specified
                         {
-                            relationship.targetModel.participation[instruction.targetRole] = source.participation[instruction.sourceRole];
+                            relationship.targetModel.participation[instruction.targetRole] = sourcePlayer.map(ptcpt => {
+                                ptcpt = angular.copy(ptcpt);
+                                ptcpt.act = relationship.targetModel.id;
+                                return ptcpt;
+                            });
                         }
                         else if(!relationship.targetModel.participation[instruction.targetRole][0].player) {
-                            relationship.targetModel.participation[instruction.targetRole][0].player =  source.participation[instruction.sourceRole][0].player;
+                            relationship.targetModel.participation[instruction.targetRole][0].player = sourcePlayer[0].player;
                             delete relationship.targetModel.participation[instruction.targetRole][0].playerModel;
                         }
                     });

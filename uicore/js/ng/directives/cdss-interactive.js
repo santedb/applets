@@ -31,9 +31,6 @@ angular.module('santedb-lib')
       return {
          restrict: 'A',
          link: function (scope, element, attrs, ngModel) {
-            var cdssInteractiveConfig = scope.$eval(attrs.cdssInteractive);
-            var library = cdssInteractiveConfig.libraries;
-            var targetObject = cdssInteractiveConfig.target || cdssInteractiveConfig;
             var inputName = attrs.name;
             var form = SanteDB.display.getParentScopeVariable(scope, element[0].form.name);
             $(element).on('input', function() {
@@ -41,6 +38,10 @@ angular.module('santedb-lib')
             });
             $(element).on('blur', async function() {
                try {
+                  var cdssInteractiveConfig = (scope.$eval(attrs.cdssInteractive) || scope.$parent.$eval(attrs.cdssInteractive));
+                  var library = cdssInteractiveConfig?.libraries;
+                  var targetObject = cdssInteractiveConfig?.target || cdssInteractiveConfig;
+
                   var val = $(element).val();
                   if(val !== "") {
                      var proposals = [];

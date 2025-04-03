@@ -3094,6 +3094,17 @@ function SanteDBWrapper() {
         });
 
         /**
+         * @type {ResourceWrapper}
+         * @memberof SanteDBWrapper.ResourceApi
+         * @summary Wrapper for entity extensions
+         */
+        this.entityExtension = new ResourceWrapper({
+            accept: "application/json", 
+            resource: "EntityExtension", 
+            api: _hdsi
+        });
+
+        /**
         * @type {ResourceWrapper}
         * @memberof SanteDBWrapper.ResourceApi
         * @summary Represents a resource wrapper that persists care pathway definitions

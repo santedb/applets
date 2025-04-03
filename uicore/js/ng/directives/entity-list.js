@@ -112,12 +112,12 @@ angular.module('santedb-lib')
                 var results = null;
                 var viewModel = query._viewModel || 'full';
                 if (scope.$$operation) {
-                    results = await scope.$$sourceApi.invokeOperationAsync(scope.operationScope, scope.$$operation, query, scope.upstream == true);
+                    results = await scope.$$sourceApi.invokeOperationAsync(scope.operationScope, scope.$$operation, query, scope.upstream); // == true);
                 } else if (scope.$$subResource) {
-                    results = await scope.$$sourceApi.findAssociatedAsync(scope.subResourceScope, scope.$$subResource, query, viewModel, scope.upstream == true);
+                    results = await scope.$$sourceApi.findAssociatedAsync(scope.subResourceScope, scope.$$subResource, query, viewModel, scope.upstream);// == true);
                 }
                 else {
-                    results = await scope.$$sourceApi.findAsync(query, viewModel, scope.upstream == true);
+                    results = await scope.$$sourceApi.findAsync(query, viewModel, scope.upstream); // == true);
                 }
 
                 // Check if there are search results and an array of one or more item supplement functions to add additional information for the resource.

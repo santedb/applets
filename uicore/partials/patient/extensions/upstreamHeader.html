@@ -1,5 +1,5 @@
 
-<div class="m-0 alert alert-warning" ng-if="patient._upstream" xmlns="http://www.w3.org/1999/xhtml">
+<div class="m-0 alert alert-warning" ng-if="patient.$upstream || patient.tag.$upstream[0] === 'true'" xmlns="http://www.w3.org/1999/xhtml">
     <span>
         <i class="fas fa-cloud"></i>
         {{ 'ui.view.upstream' | i18n }}

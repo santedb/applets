@@ -578,6 +578,7 @@ function attachStickyScrollEvent() {
         });
     }
     else {
+
         setTimeout(attachStickyScrollEvent, 50);
     }
 }
