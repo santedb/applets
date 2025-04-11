@@ -3060,7 +3060,7 @@ function SanteDBWrapper() {
      * @property {ResourceWrapper} applet Functions for interacting with system applets
      * @property {ResourceWrapper} conceptRelationship Functions for interacting with concept relationships
      * @property {ResoruceWrapper} notificationTemplate Functions for interacting with notification templates
-     * @property {ResoruceWrapper} notification Functions for interacting with notifications
+     * @property {ResoruceWrapper} notificationInstance Functions for interacting with notification instances
      */
     function ResourceApi() {
 
@@ -3839,10 +3839,10 @@ function SanteDBWrapper() {
         /**
          * @type {ResourceWrapper}
          * @memberof SanteDbWrapper.resources
-         * @summary Wrapper for notifications
+         * @summary Wrapper for notification instances
          */
         this.notification = new ResourceWrapper({
-            resource: "Notification",
+            resource: "NotificationInstance",
             accept: _viewModelJsonMime,
             api: _ami
         });
