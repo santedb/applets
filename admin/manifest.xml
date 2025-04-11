@@ -161,18 +161,20 @@
       <icon>fas fa-tasks</icon>
       <text lang="en">Data Quality Rules</text>
     </menuItem>
-     <menuItem context="org.santedb.admin" launch="santedb-admin.cdr.match.index" asset="/org.santedb.admin/views/cdr/match/index.html">
-        <icon>fas fa-users-cog</icon>
-        <text lang="en">Match Configuration</text>
-      </menuItem>
-      <menuItem context="org.santedb.admin" launch="santedb-admin.cdr.cdss.dashboard" asset="/org.santedb.admin/views/cds/cdss/index.html">
-        <icon>fas fa-swatchbook</icon>
-        <text lang="en">Decision Support</text>
-      </menuItem>
-      <menuItem context="org.santedb.admin" launch="santedb-admin.cdr.ext.index"
-        asset="/org.santedb.admin/views/cdr/extensions/index.html" order="50">
-        <icon>fas fa-square-up-right</icon>
-        <text lang="en">Extensions</text>
+    <menuItem context="org.santedb.admin" launch="santedb-admin.cdr.match.index"
+      asset="/org.santedb.admin/views/cdr/match/index.html">
+      <icon>fas fa-users-cog</icon>
+      <text lang="en">Match Configuration</text>
+    </menuItem>
+    <menuItem context="org.santedb.admin" launch="santedb-admin.cdr.cdss.dashboard"
+      asset="/org.santedb.admin/views/cds/cdss/index.html">
+      <icon>fas fa-swatchbook</icon>
+      <text lang="en">Decision Support</text>
+    </menuItem>
+    <menuItem context="org.santedb.admin" launch="santedb-admin.cdr.ext.index"
+      asset="/org.santedb.admin/views/cdr/extensions/index.html" order="50">
+      <icon>fas fa-square-up-right</icon>
+      <text lang="en">Extensions</text>
     </menuItem>
   </menuItem>
   <menuItem context="org.santedb.admin" launch="santedb-admin.data.index"
@@ -208,7 +210,7 @@
   </menuItem>
 
   <menuItem context="org.santedb.admin" launch="santedb-admin.concept.dashboard"
-  asset="/org.santedb.admin/views/concepts/index.html" order="10">
+    asset="/org.santedb.admin/views/concepts/index.html" order="10">
     <icon>fas fa-book-medical</icon>
     <text lang="en">Concept Dictionary</text>
     <menuItem order="0" context="org.santedb.admin" launch="santedb-admin.concept.codeSystem.index"
@@ -226,6 +228,12 @@
       <icon>fas fa-disease</icon>
       <text lang="en">Concepts</text>
     </menuItem>
+  </menuItem>
+
+  <menuItem context="org.santedb.admin" launch="santedb-admin.notifications.dashboard"
+    asset="/org.santedb.admin/views/notifications/index.html" order="0">
+    <icon>fa-solid fa-paper-plane</icon>
+    <text lang="en">Scheduled Notifications</text>
   </menuItem>
 
 
