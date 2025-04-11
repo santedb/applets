@@ -3059,8 +3059,8 @@ function SanteDBWrapper() {
      * @property {ResourceWrapper} appletSolution Functions for interacting with system applet solutions
      * @property {ResourceWrapper} applet Functions for interacting with system applets
      * @property {ResourceWrapper} conceptRelationship Functions for interacting with concept relationships
-     * @property {ResoruceWrapper} notificationTemplate Functions for interacting with notification templates
-     * @property {ResoruceWrapper} notificationInstance Functions for interacting with notification instances
+     * @property {ResourceWrapper} notificationTemplate Functions for interacting with notification templates
+     * @property {ResourceWrapper} notificationInstance Functions for interacting with notification instances
      */
     function ResourceApi() {
 
