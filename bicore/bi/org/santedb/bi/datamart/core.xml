@@ -347,7 +347,7 @@
       <column type="ref" name="OBSOLETE_BY">
         <otherTable ref="SEC_OBJ_TBL" />
       </column>
-      <column type="ref" notNull="true" name="RECORD_TARGET">
+      <column type="ref" notNull="false" name="RECORD_TARGET">
         <otherTable ref="ENT_TBL" />
       </column>
       <column type="ref" name="AUTHOR">

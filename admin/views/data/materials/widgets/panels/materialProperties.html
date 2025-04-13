@@ -38,7 +38,7 @@
                     {{ 'ui.model.material.typeConcept' | i18n }}
                 </label>
                 <div class="col-md-9 col-sm-12 pt-2">
-                    {{ scopedObject.typeConceptModel | concept }}
+                    {{ scopedObject.typeConceptModel | concept }} ({{scopedObject.typeConceptModel.mnemonic}})
                     <span ng-repeat="(dmn, rt) in scopedObject.typeConceptModel.referenceTerm"
                         class="badge badge-light">{{ rt[0].termModel.mnemonic }} ({{dmn}})</span>
                 </div>

@@ -21,7 +21,7 @@
         <li ng-repeat="(prop, val) in object">
             <div ng-if="::isExpandible(val)">
                 <a class="btn btn-link collapse-indicator p-0 m-0" data-toggle="collapse" data-target="#{{scoper}}_{{prop}}" aria-controls="{{scoper}}_{{prop}}" aria-expanded="false">
-                    <i class="fas fa-fw fa-chevron-right"></i> {{ prop }}
+                    <i class="fas fa-fw fa-chevron-right"></i> {{ prop }} [{{ val.$type }}]
                 </a>
                 <div id="{{scoper}}_{{prop}}" class="collapse">
                     <object-tree depth="depth + 1" object="::val" scoper="scoper + '_' + prop" />

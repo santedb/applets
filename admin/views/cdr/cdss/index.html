@@ -44,7 +44,7 @@
         ]"
         render="{ 'modifiedOn' : 'renderModifiedOn', 'status': renderStatus, version: renderVersion, name: renderName }"
         properties="[  'name', 'version', 'status', 'modifiedOn' ]"
-        sort="{ 'modifiedOn' : 'creationTime' }"
+        sort="{ 'modifiedOn' : 'storage.creationTime', 'status' : 'status' }"
         default-sort="{ 'storage.creationTime' : 'desc'}"
         >
     </entity-table>
