@@ -234,6 +234,11 @@
     asset="/org.santedb.admin/views/notifications/index.html" order="0">
     <icon>fa-solid fa-paper-plane</icon>
     <text lang="en">Scheduled Notifications</text>
+    <menuItem order="30" context="org.santedb.admin" launch="santedb-admin.notifications.notificationsTable.index"
+      asset="/org.santedb.admin/views/notifications/notificationsTable/index.html">
+      <icon>fas fa-table</icon>
+      <text lang="en">Notifications</text>
+    </menuItem>
   </menuItem>
 
 
