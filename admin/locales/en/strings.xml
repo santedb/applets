@@ -862,4 +862,12 @@
      <string name="ui.admin.cdr.extensionType.restore.confirm">Are you sure you want to un-delete this extension type?</string>
      <string name="ui.admin.cdr.extensionType.restore.success">Extension type has been un-deleted successfully</string>
      <string name="ui.admin.cdr.extensionType.restore.error">Could not restore extension type due to error: {error}</string>
+    <!-- Scheduled Notifications -->
+    <string name="ui.admin.notifications.templates.title">Notification Templates</string>
+    <string name="ui.admin.notifications.templates.count">Notification Templates Management</string>
+    <string name="santedb-admin.notifications.template.create">Create a Template</string>
+    <string name="ui.admin.notifications.instances.title">Notification Instances</string>
+    <string name="ui.admin.notifications.instances.count">Notifications Management</string>
+    <string name="ui.admin.notifications.instances.create">Create a Notification</string>
+    <string name="ui.admin.notifications.reports">Sent Notifications Snapshot</string>
 </resources>

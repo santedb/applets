@@ -1,11 +1,94 @@
 <div xmlns="http://www.w3.org/1999/xhtml" xmlns:sdb="http://santedb.org/applet">
-    <sdb:script static="false">~/controllers/notifications/index.js</sdb:script>
+    <sdb:script static="false">~/controllers/notifications/templates/index.js</sdb:script>
     <sdb:state name="santedb-admin.notifications.dashboard">
         <sdb:url></sdb:url>
-        <sdb:demand>1.3.6.1.4.1.33349.3.1.5.9.2.0.7</sdb:demand>
+        <sdb:demand>1.3.6.1.4.1.33349.3.1.5.9.2.0.100</sdb:demand>
         <sdb:view>
-            <sdb:controller>NotificationsDashboardController</sdb:controller>
+            <sdb:controller>NotificationsTemplateController</sdb:controller>
         </sdb:view>
     </sdb:state>
-    <h2>Notifications Dashboard</h2>
+    <h2>{{ place }}</h2>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-6 col-lg-3 mb-2">
+                <div class="card shadow">
+                    <div class="card-body">
+                        <div class="row no-gutters align-items-center">
+                            <div class="col-auto">
+                                <h1 class="mb-0">{{ numberOfInstances }}</h1>
+                            </div>
+                            <div class="col mr-2 ml-2">
+                                <a ui-sref="santedb-admin.notifications.templates.index"
+                                    class="text-xs font-weight-bold text-primary text-uppercase mb-1">{{
+                                    'ui.admin.notifications.templates.title' | i18n }}</a>
+                                <div class="h5 mb-0 font-weight-bold text-gray">
+                                    {{ 'ui.admin.notifications.templates.count' | i18n }} </div>
+                            </div>
+                            <div class="col-auto">
+                                <i class="fas fa-solid fa-notes-medical fa-2x text-gray"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-footer bg-light">
+                        <div class="text-right">
+                            <a ui-sref="santedb-admin.notifications.template.create" class="btn btn-secondary"> <i
+                                    class="fas fa-plus-circle"></i> {{ 'santedb-admin.notifications.template.create' |
+                                i18n }}</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-3 mb-2">
+                <div class="card shadow">
+                    <div class="card-body">
+                        <div class="row no-gutters align-items-center">
+                            <div class="col-auto">
+                                <h1 class="mb-0">{{ numberOfInstances }}</h1>
+                            </div>
+                            <div class="col mr-2 ml-2">
+                                <a ui-sref="santedb-admin.notifications.instances.index"
+                                    class="text-xs font-weight-bold text-primary text-uppercase mb-1">{{
+                                    'ui.admin.notifications.instances.title' | i18n }}</a>
+                                <div class="h5 mb-0 font-weight-bold text-gray">
+                                    {{ 'ui.admin.notifications.instances.count' | i18n }} </div>
+                            </div>
+                            <div class="col-auto">
+                                <i class="fas fa-solid fa-paper-plane fa-2x text-gray"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-footer bg-light">
+                        <div class="text-right">
+                            <a ui-sref="santedb-admin.notifications.instances.create" class="btn btn-secondary"> <i
+                                    class="fas fa-plus-circle"></i> {{ 'ui.admin.notifications.instances.create' | i18n
+                                }}</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- TBD Reports Section -->
+        <div class="row mt-3">
+            <div class="col">
+                <div class="card shadow">
+                    <div class="card-header bg-light">
+                        <h2 class="m-2">{{ 'ui.admin.notifications.reports' | i18n }}</h2>
+                    </div>
+                    <div class="card-body">
+                        <div class="container-fluid">
+                            <div class="row">
+                                REPORT ROW
+                                <!-- <div class="col-4">
+                                    <report-view ledgend='false'  report-id="'org.santedb.bi.core.reports.audit.eventType'"
+                                        parameters="dashboard.sessions" view="'chart'" />
+                                </div> -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
 </div>
