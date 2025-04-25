@@ -231,15 +231,34 @@
   </menuItem>
 
   <menuItem context="org.santedb.admin" launch="santedb-admin.notifications.dashboard"
-    asset="/org.santedb.admin/views/notifications/index.html" order="-100">
+    asset="/org.santedb.admin/views/notifications/index.html" order="0">
     <icon>fas fa-solid fa-paper-plane</icon>
     <text lang="en">Scheduled Notifications</text>
-    <menuItem order="30" context="org.santedb.admin" launch="santedb-admin.notifications.notificationsTable.index"
-      asset="/org.santedb.admin/views/notifications/notificationsTable/index.html">
+    <menuItem order="10" context="org.santedb.admin"
+      launch="santedb-admin.notifications.templates.index"
+      asset="/org.santedb.admin/views/notifications/templates/index.html">
+      <icon>fas fa-table</icon>
+      <text lang="en">Templates</text>
+    </menuItem>
+    <menuItem order="20" context="org.santedb.admin"
+      launch="santedb-admin.notifications.instances.index"
+      asset="/org.santedb.admin/views/notifications/instances/index.html">
       <icon>fas fa-table</icon>
       <text lang="en">Notifications</text>
     </menuItem>
   </menuItem>
+
+  <!-- <menuItem context="org.santedb.admin" launch="santedb-admin.notifications.dashboard"
+    asset="/org.santedb.admin/views/notifications/index.html" order="0">
+    <icon>fas fa-solid fa-paper-plane</icon>
+    <text lang="en">Scheduled Notifications</text>
+    <menuItem order="0" context="org.santedb.admin"
+      launch="santedb-admin.notifications.instances.index"
+      asset="/org.santedb.admin/views/notifications/instances/index.html">
+      <icon>fas fa-table</icon>
+      <text lang="en">Notifications</text>
+    </menuItem>
+  </menuItem> -->
 
 
   <viewModel key="relationship_full">
