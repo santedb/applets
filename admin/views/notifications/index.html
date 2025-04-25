@@ -7,7 +7,7 @@
             <sdb:controller>NotificationsTemplateController</sdb:controller>
         </sdb:view>
     </sdb:state>
-    <h2>{{ place }}</h2>
+    <h2>Scheduled Notifications</h2>
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-6 col-lg-3 mb-2">
@@ -15,7 +15,7 @@
                     <div class="card-body">
                         <div class="row no-gutters align-items-center">
                             <div class="col-auto">
-                                <h1 class="mb-0">{{ numberOfInstances }}</h1>
+                                <h1 class="mb-0">10</h1>
                             </div>
                             <div class="col mr-2 ml-2">
                                 <a ui-sref="santedb-admin.notifications.templates.index"
@@ -31,9 +31,9 @@
                     </div>
                     <div class="card-footer bg-light">
                         <div class="text-right">
-                            <a ui-sref="santedb-admin.notifications.template.create" class="btn btn-secondary"> <i
-                                    class="fas fa-plus-circle"></i> {{ 'santedb-admin.notifications.template.create' |
-                                i18n }}</a>
+                            <a ui-sref="santedb-admin.notifications.instances.create" class="btn btn-secondary"> <i
+                                    class="fas fa-plus-circle"></i> {{ 'ui.admin.notifications.template.create' | i18n
+                                }}</a>
                         </div>
                     </div>
                 </div>
@@ -43,7 +43,7 @@
                     <div class="card-body">
                         <div class="row no-gutters align-items-center">
                             <div class="col-auto">
-                                <h1 class="mb-0">{{ numberOfInstances }}</h1>
+                                <h1 class="mb-0">10</h1>
                             </div>
                             <div class="col mr-2 ml-2">
                                 <a ui-sref="santedb-admin.notifications.instances.index"

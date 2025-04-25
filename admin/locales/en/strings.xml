@@ -865,7 +865,7 @@
     <!-- Scheduled Notifications -->
     <string name="ui.admin.notifications.templates.title">Notification Templates</string>
     <string name="ui.admin.notifications.templates.count">Notification Templates Management</string>
-    <string name="santedb-admin.notifications.template.create">Create a Template</string>
+    <string name="ui.admin.notifications.template.create">Create a Template</string>
     <string name="ui.admin.notifications.instances.title">Notification Instances</string>
     <string name="ui.admin.notifications.instances.count">Notifications Management</string>
     <string name="ui.admin.notifications.instances.create">Create a Notification</string>
