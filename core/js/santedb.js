@@ -3841,7 +3841,7 @@ function SanteDBWrapper() {
          * @memberof SanteDbWrapper.resources
          * @summary Wrapper for notification instances
          */
-        this.notification = new ResourceWrapper({
+        this.notificationInstance = new ResourceWrapper({
             resource: "NotificationInstance",
             accept: _viewModelJsonMime,
             api: _ami
