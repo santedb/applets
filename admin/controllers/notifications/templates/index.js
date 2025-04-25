@@ -1,4 +1,4 @@
-angular.module('santedb').controller('NotificationsDashboardController', ["$scope", "$timeout", function ($scope, $timeout) {
+angular.module('santedb').controller('NotificationTemplateTableController', ["$scope", "$timeout", function ($scope, $timeout) {
 
     async function initializeView() { }
 
