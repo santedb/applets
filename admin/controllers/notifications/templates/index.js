@@ -5,7 +5,7 @@ angular.module('santedb').controller('NotificationTemplateTableController', ["$s
             try {
                 await SanteDB.resources.notificationTemplate.deleteAsync(id, true);
                 toastr.success(SanteDB.locale.getString("ui.admin.notifications.template.delete.success"));
-                $("#NotificationTemplateTable table").DataTable().draw();
+                $("#NotificationTemplateTable table").DataTable().ajax.reload();
             }
             catch(e) {
                 toastr.error(SanteDB.locale.getString("ui.admin.notifications.template.delete.error", { e: e.message }));
