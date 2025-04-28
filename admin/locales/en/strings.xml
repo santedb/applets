@@ -873,4 +873,7 @@
     <string name="ui.admin.notifications.template.delete.confirm">Are you sure you want to delete this notification template?</string>
     <string name="ui.admin.notifications.template.delete.success">Notification template was saved successfully</string>
     <string name="ui.admin.notifications.template.delete.error">Notification template could not be deleted due to {e}</string>
+    <string name="ui.admin.notifications.template.clone.success">Notification template was cloned successfully</string>
+    <string name="ui.admin.notifications.template.clone.error">Notification template could not be cloned due to {e}</string>
+
 </resources>
