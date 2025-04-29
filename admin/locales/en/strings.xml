@@ -127,7 +127,8 @@
     <!-- Security Dashboard -->
     <string name="ui.admin.security.dashboard.index">SanteDB Security Center</string>
     <string name="ui.admin.securityEntity.certificate.uploadlabel">Upload Certificate</string>
-    <string name="ui.admin.application.cert.remove.confirm">Once removed, this certificate will no longer be mapped to this security object. Are you sure?</string>
+    <string name="ui.admin.application.cert.remove.confirm">Once removed, this certificate will no
+        longer be mapped to this security object. Are you sure?</string>
     <string name="ui.admin.security.users.title">Users</string>
     <string name="ui.admin.security.users.create">New User</string>
     <string name="ui.admin.security.users.count">User management</string>
@@ -158,7 +159,8 @@
         packaged and digitally signed file which contains new features and functions in SanteDB.
         ]]></string>
     <string name="ui.admin.system.applet.manage.solutionapplets">Solution Applets</string>
-    <string name="ui.admin.system.applet.remove.confirm">Are you sure you want to remove the applet {id} from the server?</string>
+    <string name="ui.admin.system.applet.remove.confirm">Are you sure you want to remove the applet
+        {id} from the server?</string>
     <string name="ui.admin.system.applet.upload.success">Applet solution was uploaded successfully</string>
     <string name="ui.admin.system.applet.upload.error">Failed to upload applet solution to server</string>
     <string name="ui.admin.system.applets.title">Applets</string>
@@ -262,7 +264,6 @@
     <string name="org.santedb.widget.admin.panel.facility.profile.location">Location</string>
     <string name="org.santedb.widget.admin.panel.facility.profile.telecom">Telecom</string>
     <string name="org.santedb.widget.admin.panel.facility.profile.services">Services</string>
-  
 
 
     <!-- Edit Identity Domain -->
@@ -281,7 +282,8 @@
     <string name="ui.admin.job.register.title">Register Job</string>
     <string name="ui.admin.job.register.help"><![CDATA[This modal allows you to register or activate a SanteDB background job which was not otherwise activated on application startup. The
     SanteDB iCDR or dCDR will attempt to register the job and will update your configuration.]]></string>
-    <string name="ui.admin.job.register.confirm">Are you sure you want to register {job} with this instance of SanteDB?</string>
+    <string name="ui.admin.job.register.confirm">Are you sure you want to register {job} with this
+        instance of SanteDB?</string>
     <string name="ui.admin.job.register.success">Job {job} was successfully registered</string>
     <string name="ui.admin.job.register.error">Error registering job instance {error}</string>
 
@@ -386,7 +388,8 @@
     <string name="ui.admin.place.edit.associate.title">Associate Facility</string>
     <string name="ui.admin.place.edit.associate.new">Associate a New Facility</string>
     <string name="ui.admin.place.edit.associate.existing">Associate an Existing Facility</string>
-    <string name="ui.admin.place.export.heirarchy">You are about to export a dataset containing this place and all its descendants. This may take up to 2 minutes, are you sure?</string>
+    <string name="ui.admin.place.export.heirarchy">You are about to export a dataset containing this
+        place and all its descendants. This may take up to 2 minutes, are you sure?</string>
     <string name="ui.admin.place.edit.associate.success">Association successfully created</string>
     <string name="ui.admin.place.edit.associate.failure">Association was not created: {e}</string>
     <string name="ui.admin.place.edit.associate.remove.confirm">Are you sure you want to remove the
@@ -408,14 +411,20 @@
     <string name="ui.admin.facility.services.none">Facility Proivdes No Services</string>
     <string name="ui.admin.facility.services.save.success">Facility services saved successfully</string>
     <string name="ui.admin.facility.services.save.failure">Facility services save failed: {e}</string>
-    <string name="ui.admin.facility.staff.manager.remove.confirm">Are you sure you want to remove the management role for {user}?</string>
-    <string name="ui.admin.facility.staff.manager.remove.success">Manager has been removed successfully</string>
+    <string name="ui.admin.facility.staff.manager.remove.confirm">Are you sure you want to remove
+        the management role for {user}?</string>
+    <string name="ui.admin.facility.staff.manager.remove.success">Manager has been removed
+        successfully</string>
     <string name="ui.admin.facility.staff.manager.remove.error">Error removing manager: {error}</string>
-    <string name="ui.admin.facility.staff.manager.promote.confirm">Are you sure you want to promote this staff member to manager?</string>
-    <string name="ui.admin.facility.staff.manager.promote.success">Staff member has been promoted successfully</string>
+    <string name="ui.admin.facility.staff.manager.promote.confirm">Are you sure you want to promote
+        this staff member to manager?</string>
+    <string name="ui.admin.facility.staff.manager.promote.success">Staff member has been promoted
+        successfully</string>
     <string name="ui.admin.facility.staff.manager.promote.error">Error promoting to manager: {error}</string>
-    <string name="ui.admin.facility.staff.manager.promote.administrator">Would you like to add this user to the local administrators group?</string>
-    <string name="ui.admin.facility.staff.remove.confirm">Are you sure you want to remove the staff member {user} from this facility? (note: any management role will also be removed)</string>
+    <string name="ui.admin.facility.staff.manager.promote.administrator">Would you like to add this
+        user to the local administrators group?</string>
+    <string name="ui.admin.facility.staff.remove.confirm">Are you sure you want to remove the staff
+        member {user} from this facility? (note: any management role will also be removed)</string>
     <string name="ui.admin.facility.staff.remove.success">Staff has been removed successfully</string>
     <string name="ui.admin.facility.staff.add.success">Staff has been added successfully</string>
     <string name="ui.admin.facility.staff.remove.error">Error removing staff: {error}</string>
@@ -579,8 +588,10 @@
     <string name="ui.admin.concept.conceptSet.upload.file">Upload File</string>
     <string name="ui.admin.concept.conceptSet.upload.language">Language of File</string>
     <string name="ui.admin.concept.conceptSet.upload.template">Download Sample Concept Set CSV</string>
-    <string name="ui.admin.concept.conceptSet.upload.file.hint">The comma-save (CSV) file to be imported</string>
-    <string name="ui.admin.concept.conceptSet.upload.language.hint">The language of the &lt;code&gt;Name&lt;code&gt; column in the file</string>
+    <string name="ui.admin.concept.conceptSet.upload.file.hint">The comma-save (CSV) file to be
+        imported</string>
+    <string name="ui.admin.concept.conceptSet.upload.language.hint">The language of the
+        &lt;code&gt;Name&lt;code&gt; column in the file</string>
     <string name="ui.admin.concept.conceptSet.edit.profile.title">New Concept Set</string>
     <string name="ui.admin.concept.conceptSet.assign">Assign Concept to Set</string>
     <string name="ui.admin.concept.conceptSet.assign.existing">Assign an existing concept</string>
@@ -588,41 +599,60 @@
     <string name="ui.admin.concept.conceptSet.assign.existing.search">Assign Concept</string>
     <string name="ui.admin.concept.concept.edit.profile.title">Concept Properties</string>
     <string name="ui.admin.concept.save.success">Concept saved successfully</string>
-    <string name="ui.admin.concept.concept.delete.confirm">Are you sure you want to delete the identified concept?</string>
+    <string name="ui.admin.concept.concept.delete.confirm">Are you sure you want to delete the
+        identified concept?</string>
     <string name="ui.admin.concept.concept.delete.success">Concept deleted successfully</string>
-    <string name="ui.admin.concept.concept.unDelete.confirm">Are you sure you want to un-delete this concept?</string>
+    <string name="ui.admin.concept.concept.unDelete.confirm">Are you sure you want to un-delete this
+        concept?</string>
     <string name="ui.admin.concept.concept.unDelete.success">Concept un-deleted successfully</string>
-    <string name="ui.admin.concept.conceptRelationship.delete.confirm">Are you sure you want to remove this concept relationship?</string>
-    <string name="ui.admin.concept.conceptRelationship.delete.success">Concept relationship has been deleted successfully</string>
-    <string name="ui.admin.concept.conceptRelationship.delete.error">Error deleting the concept relationship {error}</string>
-    <string name="ui.admin.concept.conceptRelationship.create.success">Concept relationship has been created successfully</string>
-    <string name="ui.admin.concept.conceptRelationship.create.error">Error creating concept relationship {error}</string>
-    <string name="ui.admin.conceptui.admin.concept.conceptRelationship.create">Create Concept Relationship</string>
-    <string name="ui.admin.conceptui.admin.concept.conceptRelationship.create.help">A concept relationship is used to link one or more concepts together. For example, instructing the CDR that two concepts have the same meaning or that one is a narrower concept than another.</string>
+    <string name="ui.admin.concept.conceptRelationship.delete.confirm">Are you sure you want to
+        remove this concept relationship?</string>
+    <string name="ui.admin.concept.conceptRelationship.delete.success">Concept relationship has been
+        deleted successfully</string>
+    <string name="ui.admin.concept.conceptRelationship.delete.error">Error deleting the concept
+        relationship {error}</string>
+    <string name="ui.admin.concept.conceptRelationship.create.success">Concept relationship has been
+        created successfully</string>
+    <string name="ui.admin.concept.conceptRelationship.create.error">Error creating concept
+        relationship {error}</string>
+    <string name="ui.admin.conceptui.admin.concept.conceptRelationship.create">Create Concept
+        Relationship</string>
+    <string name="ui.admin.conceptui.admin.concept.conceptRelationship.create.help">A concept
+        relationship is used to link one or more concepts together. For example, instructing the CDR
+        that two concepts have the same meaning or that one is a narrower concept than another.</string>
     <string name="org.santedb.widget.concept.concepts.core.terms">Reference Terms</string>
     <string name="org.santedb.widget.concept.concepts.core.sets">Concept Sets</string>
     <string name="org.santedb.widget.concept.concepts.core.properties">Concept Properties</string>
     <string name="org.santedb.widget.concept.concepts.core.versions">Version History</string>
 
-    
+
     <!-- Match Configuration -->
     <string name="ui.admin.matches.config.id">Configuration ID</string>
     <string name="ui.admin.matches.config.state">Status</string>
     <string name="ui.admin.matches.config.modifiedOn">Last Updated</string>
-    <string name="ui.admin.matches.config.backgroundRunning">Enabling or Disabling match configurations while a background match task is running is not advised, and can result in unpredictable results</string>
+    <string name="ui.admin.matches.config.backgroundRunning">Enabling or Disabling match
+        configurations while a background match task is running is not advised, and can result in
+        unpredictable results</string>
     <string name="ui.admin.matches.config.backgroundState">rematching complete</string>
     <string name="ui.admin.matches.config.html">HTML</string>
     <string name="ui.admin.matches.config.xml">Source</string>
-    <string name="ui.admin.matches.config.enable.confirm">Are you sure you want to enable match configuration {id}? It will be used to score future registration and re-matches</string>
+    <string name="ui.admin.matches.config.enable.confirm">Are you sure you want to enable match
+        configuration {id}? It will be used to score future registration and re-matches</string>
     <string name="ui.admin.matches.config.enable.success">Match configuration {id} is now enabled</string>
-    <string name="ui.admin.matches.config.enable.error">Match configuration {id} could not be enabled  ({e})</string>
-    <string name="ui.admin.matches.config.enable.confirm">Are you sure you want to enable match configuration {id}? It will be used to score future registration and re-matches</string>
-    <string name="ui.admin.matches.config.disable.confirm">Are you sure you want to disable match configuration {id}? It will no longer be used to score matches</string>
+    <string name="ui.admin.matches.config.enable.error">Match configuration {id} could not be
+        enabled ({e})</string>
+    <string name="ui.admin.matches.config.enable.confirm">Are you sure you want to enable match
+        configuration {id}? It will be used to score future registration and re-matches</string>
+    <string name="ui.admin.matches.config.disable.confirm">Are you sure you want to disable match
+        configuration {id}? It will no longer be used to score matches</string>
     <string name="ui.admin.matches.config.disable.success">Match configuration {id} is now disabled</string>
-    <string name="ui.admin.matches.config.disable.error">Match configuration {id} could not be disabled ({e})</string>
-    <string name="ui.admin.matches.config.delete.confirm">Are you sure you want permanently delete match configuration {id}? After deletion it can not be retrieved.</string>
+    <string name="ui.admin.matches.config.disable.error">Match configuration {id} could not be
+        disabled ({e})</string>
+    <string name="ui.admin.matches.config.delete.confirm">Are you sure you want permanently delete
+        match configuration {id}? After deletion it can not be retrieved.</string>
     <string name="ui.admin.matches.config.delete.success">Match configuration {id} was deleted</string>
-    <string name="ui.admin.matches.config.delete.error">Match configuration {id} could not be deleted ({e})</string>
+    <string name="ui.admin.matches.config.delete.error">Match configuration {id} could not be
+        deleted ({e})</string>
     <string name="ui.admin.matches.config.general">General</string>
     <string name="ui.admin.matches.config.blocking">Blocking</string>
     <string name="ui.admin.matches.config.scoring">Scoring</string>
@@ -633,16 +663,22 @@
     <string name="ui.admin.matches.config.test">Testing</string>
     <string name="ui.admin.matches.config.general.diagram">Explain</string>
     <string name="ui.admin.matches.config.general.properties">Properties</string>
-    <string name="ui.admin.matches.config.save.success">Match configuration {id} was updated successfully</string>
+    <string name="ui.admin.matches.config.save.success">Match configuration {id} was updated
+        successfully</string>
     <string name="ui.admin.matches.config.save.error">Could not save match configuration {id}</string>
-    <string name="ui.admin.matches.config.save.overwrite">A match configuration with id {id} already exists (created by {author}). Do you want to overwrite the current configuration with this empty configuration? (This cannot be undone)</string>
+    <string name="ui.admin.matches.config.save.overwrite">A match configuration with id {id} already
+        exists (created by {author}). Do you want to overwrite the current configuration with this
+        empty configuration? (This cannot be undone)</string>
     <string name="ui.admin.matches.config.blocking.diagram">Explain</string>
     <string name="ui.admin.matches.config.scoring.properties">Scored Attributes</string>
     <string name="ui.admin.matches.config.classification.properties">Classification Ranges</string>
-    <string name="ui.admin.matches.config.classification.noAttributes">This match configuration does not have any scoring attributes! You cannot set the classification score ranges until the match configuration has at least one scoring attribute </string>
+    <string name="ui.admin.matches.config.classification.noAttributes">This match configuration does
+        not have any scoring attributes! You cannot set the classification score ranges until the
+        match configuration has at least one scoring attribute </string>
     <string name="ui.admin.matches.config.scoring.diagram">Explain</string>
     <string name="ui.admin.matches.config.blocking.properties">Blocking Filters</string>
-    <string name="ui.admin.matches.config.block.none">This match configuration does not contain any block statements or filters. Use the ADD button to create a block statement.</string>
+    <string name="ui.admin.matches.config.block.none">This match configuration does not contain any
+        block statements or filters. Use the ADD button to create a block statement.</string>
     <string name="ui.admin.matches.config.block.filter.whenHeader">When Expression</string>
     <string name="ui.model.matchConfiguration.blocking.description">Notes</string>
     <string name="ui.admin.matches.config.oddballScore"><![CDATA[Hmmm - something seems off with your weight configuration. If your <strong>M</strong> value is less than your <strong>U</strong> value the match score will be negative. If this attribute is a negative indicator of a match (i.e. you intend this) you can ignore this message. Otherwise it is recommended you check your M and U values]]></string>
@@ -651,7 +687,8 @@
     <string name="ui.admin.matches.config.block.filter.filterHeader.hint"><![CDATA[The HDSI guard expression to apply to the database. <strong>Note:</strong> This expression is translated to SQL statements - the functions used in your expression must be compatible with the expressions supported on the database technology being used.]]></string>
     <string name="ui.admin.matches.config.block.filter.filterHeader">Filter Expression</string>
     <string name="ui.admin.matches.config.block.filter.info"><![CDATA[When the incoming record ($input) has property <strong>WHEN</strong> then the <strong>FILTER</strong> is applied. See <a href="https://help.santesuite.org/santedb/extending-santedb/service-apis/health-data-service-interface-hdsi/hdsi-query-syntax" target="_blank">HDSI Query Syntax</a> on the SanteSuite WIKI]]></string>
-    <string name="ui.admin.matches.config.scoring.none">This match configuration does not contain any attributes for scoring. Use the ADD button to create a scoring statement</string>
+    <string name="ui.admin.matches.config.scoring.none">This match configuration does not contain
+        any attributes for scoring. Use the ADD button to create a scoring statement</string>
     <string name="ui.admin.matches.config.addScore">Add Scored Attribute</string>
     <string name="ui.admin.matches.config.removeScore">Remove Scored Attribute</string>
     <string name="ui.admin.matches.config.addTransform">Add Value Transform</string>
@@ -675,14 +712,16 @@
     <string name="ui.admin.matches.config.test.knownMatch">Test Target</string>
     <string name="ui.admin.matches.config.test.knownMatch.hint"><![CDATA[Specifies one or more other records which you want to test against the <code>$input</code> - if no objects are specified here, the match engine will perform an entire block. Use this option if you're attempting to diagnose scoring results with particular record pairs]]></string>
     <string name="ui.admin.matches.config.test.analysis">Hints / Analysis</string>
-        <string name="ui.admin.match.vector.attribute">Attribute</string>
+    <string name="ui.admin.match.vector.attribute">Attribute</string>
     <string name="ui.admin.match.vector.value.a">A Value</string>
     <string name="ui.admin.match.vector.value.b">B Value</string>
     <string name="ui.admin.match.vector.mu">M / U</string>
     <string name="ui.admin.match.vector.score">Score</string>
     <string name="ui.admin.match.vector.weight">Weight</string>
-    <string name="ui.admin.match.vector.evaluated.yes">This attribute was evaluated - the score is an actual evaluation of A and B</string>
-    <string name="ui.admin.match.vector.evaluated.no">This attribute was not evaluated - the score represents the whenNull configuration option</string>
+    <string name="ui.admin.match.vector.evaluated.yes">This attribute was evaluated - the score is
+        an actual evaluation of A and B</string>
+    <string name="ui.admin.match.vector.evaluated.no">This attribute was not evaluated - the score
+        represents the whenNull configuration option</string>
 
     <string name="ui.admin.matches.config.doctor.poorBlocking.title"><![CDATA[<i class="fas fa-info-circle"></i> Excessive results in blocking result]]></string>
     <string name="ui.admin.matches.config.doctor.poorBlocking.description"><![CDATA[The proportion of results which are non-matches ({NonMatch}) was the majority of records blocked ({count}). This indicates that your blocking configuration is too liberal. Try reducing the number of NonMatch by adding more stringent blocking criteria to your dataset.]]></string>
@@ -691,8 +730,11 @@
     <string name="ui.admin.matches.config.doctor.poorScoring.title"><![CDATA[<i class="fas fa-info-circle"></i> Check your Scoring Weights]]></string>
     <string name="ui.admin.matches.config.doctor.poorScoring.description"><![CDATA[The median score ({median}) is higher than the average score ({avg}), this might indicate that your scoring may be too stringent. Try: <ul><li>Ensuring your <code>U</code> values are appropriate (for example: if using <code>genderConcept</code> then your U should be close to 0.5)</li><li>Ensure that your extractions and partial scores are applied properly (for example: Ensure that appropriate <code>extract</code> functions are applied, and proper thresholds apply</li><li>Ensure your exclusion or <code>when</code> conditions are appropriate</li></ul>)]]></string>
     <string name="ui.admin.matches.config.test.diagram">Test Result</string>
-    <string name="ui.admin.matches.config.test.nav.missing">There doesn't appear to be a registered resource viewer for Match, ensure that the appropriate plugins are configured for this environment</string>
-    <string name="ui.admin.matches.rematch.confirm">This operation will run a re-matching process for this record. Are you sure?</string>
+    <string name="ui.admin.matches.config.test.nav.missing">There doesn't appear to be a registered
+        resource viewer for Match, ensure that the appropriate plugins are configured for this
+        environment</string>
+    <string name="ui.admin.matches.rematch.confirm">This operation will run a re-matching process
+        for this record. Are you sure?</string>
     <string name="ui.admin.matches.config.doctor.wideBlocking.title"><![CDATA[<i class="fas fa-exclamation-triangle"></i> Blocking Criteria &amp; Performance]]></string>
     <string name="ui.admin.matches.config.doctor.wideBlocking.description"><![CDATA[Your blocking criteria has returned a large number of results ({count}) from the database. This may have serious performance impacts if scoring requires complex criteria. Consider adding more blocking criteria to speed up your matching configuration]]></string>
     <string name="ui.model.matchConfiguration.blocking.useLowerLayer">Block Strategy</string>
@@ -701,9 +743,14 @@
     <li>LOCAL/SOURCE - Instructs the blocking to be considered on SOURCE records (this is faster but ignore instructions may be less accurate)</li>
     </ul>
     ]]></string>
-    <string name="ui.model.matchConfiguration.blocking.useLowerLayer.true">PERSISTENCE LAYER - Blocking occurs against the persistence layer without using the data management pattern configured</string>
-    <string name="ui.model.matchConfiguration.blocking.useLowerLayer.false">REPOSITORY LAYER - Blocking occurs against the repository layer using the data management pattern configured</string>
-    <string name="ui.model.matchConfiguration.blocking.useLowerLayer.set">Use PERSISTENCE LAYER blocking. This may result in better performance however generated properties or combined properties of the master may not be considered</string>
+    <string name="ui.model.matchConfiguration.blocking.useLowerLayer.true">PERSISTENCE LAYER -
+        Blocking occurs against the persistence layer without using the data management pattern
+        configured</string>
+    <string name="ui.model.matchConfiguration.blocking.useLowerLayer.false">REPOSITORY LAYER -
+        Blocking occurs against the repository layer using the data management pattern configured</string>
+    <string name="ui.model.matchConfiguration.blocking.useLowerLayer.set">Use PERSISTENCE LAYER
+        blocking. This may result in better performance however generated properties or combined
+        properties of the master may not be considered</string>
 
     <!-- CDSS Editing-->
     <!-- Administration for CDSS rules -->
@@ -729,9 +776,13 @@
             ]]>
     </string>
 
-    <string name="ui.admin.cdss.publish.invalid">Cannot publish an invalid CDSS file. Please ensure all validation errors are corrected</string>
-    <string name="ui.admin.cdss.publish.confirm">Are you sure you want to publish this CDSS definition? Note: If your CDSS definition lists a state of ACTIVE it will apply to all patient encounters on this system</string>
-    <string name="ui.admin.cdss.publish.success">CDSS definition has been published successfully to the server</string>
+    <string name="ui.admin.cdss.publish.invalid">Cannot publish an invalid CDSS file. Please ensure
+        all validation errors are corrected</string>
+    <string name="ui.admin.cdss.publish.confirm">Are you sure you want to publish this CDSS
+        definition? Note: If your CDSS definition lists a state of ACTIVE it will apply to all
+        patient encounters on this system</string>
+    <string name="ui.admin.cdss.publish.success">CDSS definition has been published successfully to
+        the server</string>
     <string name="ui.admin.cdss.edit.source">Source</string>
     <string name="ui.admin.cdss.edit.source.hint"><![CDATA[
         <p>Use the source editor to change the CDSS definition. Shortcuts:</p>
@@ -745,23 +796,28 @@
             <li><code>CTRL+SHIFT+U</code>: Convert text to lower case</li>
         </ul>
         ]]></string>
-        
+
     <string name="ui.admin.cdss.edit.test">Test Rules</string>
     <string name="ui.admin.cdss.edit.test.mode">Test Mode</string>
     <string name="ui.admin.cdss.edit.test.object">Object Type</string>
-    <string name="ui.admin.cdss.edit.test.object.hint">Select the type of object against which the rules will tested</string>
+    <string name="ui.admin.cdss.edit.test.object.hint">Select the type of object against which the
+        rules will tested</string>
     <string name="ui.admin.cdss.edit.test.source">Object Source</string>
-    <string name="ui.admin.cdss.edit.test.source.hint">Select whether the test object will be an arbitrary object (specified by you) or an existing record from the database</string>
+    <string name="ui.admin.cdss.edit.test.source.hint">Select whether the test object will be an
+        arbitrary object (specified by you) or an existing record from the database</string>
     <string name="ui.admin.cdss.edit.test.source.new">Specify An Object</string>
     <string name="ui.admin.cdss.edit.test.source.db">Find from Database</string>
     <string name="ui.admin.cdss.edit.test.parms">Parameters</string>
-    <string name="ui.admin.cdss.edit.test.parms.hint">CDSS libraries, rules and protocols can obtain interactive data from the evaludation session via parameters. Use this area to input any parameters that your CDSS library may use.</string>
+    <string name="ui.admin.cdss.edit.test.parms.hint">CDSS libraries, rules and protocols can obtain
+        interactive data from the evaludation session via parameters. Use this area to input any
+        parameters that your CDSS library may use.</string>
     <string name="ui.admin.cdss.edit.test.result.target">Output Target (with modification)</string>
     <string name="ui.admin.cdss.edit.test.results">Outputs</string>
     <string name="ui.admin.cdss.edit.test.result.issue">Raised Issues</string>
     <string name="ui.admin.cdss.edit.test.result.debug">Debug Trace</string>
     <string name="ui.admin.cdss.edit.test.result.proposal">Proposals</string>
-    <string name="ui.admin.cdss.edit.test.result.proposal.computed">computed proposals shown below. Please reduce the output of your library, or include more restrictive inputs</string>
+    <string name="ui.admin.cdss.edit.test.result.proposal.computed">computed proposals shown below.
+        Please reduce the output of your library, or include more restrictive inputs</string>
     <string name="ui.admin.cdss.edit.test.debug.set">Set Variable</string>
     <string name="ui.admin.cdss.edit.test.debug.read">Read Variable</string>
     <string name="ui.admin.cdss.edit.test.debug.assign">Assign Property</string>
@@ -783,18 +839,25 @@
     <string name="ui.admin.dataQuality.create.title">Create Data Quality Ruleset</string>
     <string name="ui.admin.dataQuality.create.upload.option">Upload Existing Ruleset</string>
     <string name="ui.admin.dataQuality.create.upload.file">Ruleset File</string>
-    <string name="ui.admin.dataQuality.create.upload.file.hint">The file that was exported from another SanteDB iCDR instance or a file which your development partner has prepared for you</string>
+    <string name="ui.admin.dataQuality.create.upload.file.hint">The file that was exported from
+        another SanteDB iCDR instance or a file which your development partner has prepared for you</string>
     <string name="ui.admin.dataQuality.create.manual.option">Manually Create Ruleset</string>
     <string name="ui.admin.dataQuality.upload.success">Ruleset Uploaded Successfully</string>
     <string name="ui.admin.dataQuality.upload.error">Error uploading ruleset file : {error}</string>
-    <string name="ui.admin.dataQuality.purge.confirm">Are you sure you want to purge this data quality configuration? It cannot be restored after this action</string>
-    <string name="ui.admin.dataQuality.purge.success">Data quality configuration has been successfully purged</string>
+    <string name="ui.admin.dataQuality.purge.confirm">Are you sure you want to purge this data
+        quality configuration? It cannot be restored after this action</string>
+    <string name="ui.admin.dataQuality.purge.success">Data quality configuration has been
+        successfully purged</string>
     <string name="ui.admin.dataQuality.purge.error">Could not purge data quality rule: {error}</string>
-    <string name="ui.admin.dataQuality.delete.confirm">Are you sure you want to delete this data quality configuration?</string>
-    <string name="ui.admin.dataQuality.delete.success">Data quality configuration has been successfully deleted</string>
+    <string name="ui.admin.dataQuality.delete.confirm">Are you sure you want to delete this data
+        quality configuration?</string>
+    <string name="ui.admin.dataQuality.delete.success">Data quality configuration has been
+        successfully deleted</string>
     <string name="ui.admin.dataQuality.delete.error">Could not delete data quality rule: {error}</string>
-    <string name="ui.admin.dataQuality.restore.confirm">Are you sure you want to restore this data quality configuration? (it will be deactivated prior to restore)</string>
-    <string name="ui.admin.dataQuality.restore.success">Data quality configuration has been successfully restored</string>
+    <string name="ui.admin.dataQuality.restore.confirm">Are you sure you want to restore this data
+        quality configuration? (it will be deactivated prior to restore)</string>
+    <string name="ui.admin.dataQuality.restore.success">Data quality configuration has been
+        successfully restored</string>
     <string name="ui.admin.dataQuality.restore.error">Could not restore data quality rule: {error}</string>
     <string name="ui.admin.dataQuality.save.success">Data quality rule has been saved successfully</string>
     <!-- Materials Management -->
@@ -821,10 +884,14 @@
     <string name="org.santedb.material.admin.widget.panel.history">History</string>
     <string name="org.santedb.material.admin.widget.panel.regulation">Regulation &amp; Manufacture</string>
     <string name="org.santedb.material.admin.widget.panel.parts">Components &amp; Hierarchy</string>
-    <string name="ui.admin.material.confirmDelete">Are you sure you want to delete this material definition?</string>
-    <string name="ui.admin.material.delete.success">Material definition has been successfully deleted</string>
-    <string name="ui.admin.material.confirmUnDelete">Are you sure you wish to re-activate this material definition?</string>
-    <string name="ui.admin.material.undelete.success">Material definition has been successfully restored</string>
+    <string name="ui.admin.material.confirmDelete">Are you sure you want to delete this material
+        definition?</string>
+    <string name="ui.admin.material.delete.success">Material definition has been successfully
+        deleted</string>
+    <string name="ui.admin.material.confirmUnDelete">Are you sure you wish to re-activate this
+        material definition?</string>
+    <string name="ui.admin.material.undelete.success">Material definition has been successfully
+        restored</string>
     <string name="ui.admin.data.material.editProduct.help">Editing a Product</string>
     <string name="ui.admin.data.material.editProduct">New Product</string>
     <string name="ui.admin.data.material.editProduct.help.text">
@@ -833,10 +900,14 @@
     each product will represent a certain quantity of a particular material for which it is a product. For example, if the manufactured product comes in 
     <strong>5 dose vials</strong> then you will set the quantity per material to <strong>5</strong>, you should then set the quantity on this product to <strong>1 VIAL</strong>]]>
     </string>
-    <string name="ui.admin.data.material.product.save.success">Material product has been saved sucessfully</string>
-    <string name="ui.admin.data.material.product.delete.confirm">Are you sure you want to delete this product definition?</string>
-    <string name="ui.admin.data.material.product.delete.success">Material product definition deleted successfully</string>
-    <string name="ui.admin.data.material.product.delete.error">Error deleting material product definition {error}</string>
+    <string name="ui.admin.data.material.product.save.success">Material product has been saved
+        sucessfully</string>
+    <string name="ui.admin.data.material.product.delete.confirm">Are you sure you want to delete
+        this product definition?</string>
+    <string name="ui.admin.data.material.product.delete.success">Material product definition deleted
+        successfully</string>
+    <string name="ui.admin.data.material.product.delete.error">Error deleting material product
+        definition {error}</string>
     <string name="ui.admin.data.material.editLot">Edit Lot Instance</string>
     <string name="ui.admin.data.material.editLot.help">Lot / Batch Number Instances</string>
     <string name="ui.admin.data.material.editLot.help.text"><![CDATA[
@@ -844,24 +915,33 @@
         which is manufactured. A <strong>Lot/Batch</strong> number represents a particular instance of the <c>Product</c> that has been produced and is administered
         to patients.
         ]]></string>
-        <string name="ui.admin.data.material.lot.save.success">Lot has been saved successfully</string>
-        <string name="ui.admin.data.material.lot.delete.confirm">Are you sure you want to delete this lot/batch?</string>
-        <string name="ui.admin.data.material.lot.delete.success">Material lot/batch has been successfully deleted</string>
-        <string name="ui.admin.data.material.lot.delete.error">Error deleting material lot/batch definition {error}</string>
+    <string name="ui.admin.data.material.lot.save.success">Lot has been saved successfully</string>
+    <string name="ui.admin.data.material.lot.delete.confirm">Are you sure you want to delete this
+        lot/batch?</string>
+    <string name="ui.admin.data.material.lot.delete.success">Material lot/batch has been
+        successfully deleted</string>
+    <string name="ui.admin.data.material.lot.delete.error">Error deleting material lot/batch
+        definition {error}</string>
     <string name="org.santedb.widget.concept.concepts.core.relationship.out">Related To Concept</string>
     <string name="org.santedb.widget.concept.concepts.core.relationship.in">Concepts Related</string>
-    
+
     <!-- Extension Type -->
-     <string name="ui.admin.cdr.extensionType.properties">Extension Type Properties</string>
-     <string name="ui.admin.cdr.extensionType.provenance">Provenance / Tracking</string>
-     <string name="ui.admin.cdr.extensionType.create.success">Extension type was created successfully</string>
-     <string name="ui.admin.cdr.extensionType.save.success">Extension type was saved successfully</string>
-     <string name="ui.admin.cdr.extensionType.delete.confirm">Are you sure you want to delete this extension type?</string>
-     <string name="ui.admin.cdr.extensionType.delete.success">Extension type has been deleted successfully</string>
-     <string name="ui.admin.cdr.extensionType.delete.error">Extension could not be deleted due to {error}</string>
-     <string name="ui.admin.cdr.extensionType.restore.confirm">Are you sure you want to un-delete this extension type?</string>
-     <string name="ui.admin.cdr.extensionType.restore.success">Extension type has been un-deleted successfully</string>
-     <string name="ui.admin.cdr.extensionType.restore.error">Could not restore extension type due to error: {error}</string>
+    <string name="ui.admin.cdr.extensionType.properties">Extension Type Properties</string>
+    <string name="ui.admin.cdr.extensionType.provenance">Provenance / Tracking</string>
+    <string name="ui.admin.cdr.extensionType.create.success">Extension type was created successfully</string>
+    <string name="ui.admin.cdr.extensionType.save.success">Extension type was saved successfully</string>
+    <string name="ui.admin.cdr.extensionType.delete.confirm">Are you sure you want to delete this
+        extension type?</string>
+    <string name="ui.admin.cdr.extensionType.delete.success">Extension type has been deleted
+        successfully</string>
+    <string name="ui.admin.cdr.extensionType.delete.error">Extension could not be deleted due to
+        {error}</string>
+    <string name="ui.admin.cdr.extensionType.restore.confirm">Are you sure you want to un-delete
+        this extension type?</string>
+    <string name="ui.admin.cdr.extensionType.restore.success">Extension type has been un-deleted
+        successfully</string>
+    <string name="ui.admin.cdr.extensionType.restore.error">Could not restore extension type due to
+        error: {error}</string>
     <!-- Scheduled Notifications -->
     <string name="ui.admin.notifications.templates.title">Notification Templates</string>
     <string name="ui.admin.notifications.templates.count">Notification Templates Management</string>
@@ -870,13 +950,23 @@
     <string name="ui.admin.notifications.instances.count">Notifications Management</string>
     <string name="ui.admin.notifications.instances.create">Create a Notification</string>
     <string name="ui.admin.notifications.reports">Sent Notifications Snapshot</string>
-    <string name="ui.admin.notifications.template.delete.confirm">Are you sure you want to delete this notification template?</string>
-    <string name="ui.admin.notifications.template.delete.success">Notification template was saved successfully</string>
-    <string name="ui.admin.notifications.template.delete.error">Notification template could not be deleted due to {e}</string>
-    <string name="ui.admin.notifications.template.clone.success">Notification template was cloned successfully</string>
-    <string name="ui.admin.notifications.template.clone.error">Notification template could not be cloned due to {e}</string>
-    <string name="ui.admin.notifications.instances.delete.confirm">Are you sure you want to delete this notification instance?</string>
-    <string name="ui.admin.notifications.instances.delete.success">Notification instance was saved successfully</string>
-    <string name="ui.admin.notifications.instances.delete.error">Notification instance could not be deleted due to {e}</string>
+    <string name="ui.admin.notifications.template.delete.confirm">Are you sure you want to delete
+        this notification template?</string>
+    <string name="ui.admin.notifications.template.delete.success">Notification template was saved
+        successfully</string>
+    <string name="ui.admin.notifications.template.delete.error">Notification template could not be
+        deleted due to {e}</string>
+    <string name="ui.admin.notifications.template.clone.success">Notification template was cloned
+        successfully</string>
+    <string name="ui.admin.notifications.template.clone.error">Notification template could not be
+        cloned due to {e}</string>
+    <string name="ui.admin.notifications.instances.delete.confirm">Are you sure you want to delete
+        this notification instance?</string>
+    <string name="ui.admin.notifications.instances.delete.success">Notification instance was saved
+        successfully</string>
+    <string name="ui.admin.notifications.instances.delete.error">Notification instance could not be
+        deleted due to {e}</string>
+    <string name="ui.admin.notificationTemplate.save.success">Notification Template saved
+        successfully</string>
 
 </resources>

@@ -248,19 +248,6 @@
     </menuItem>
   </menuItem>
 
-  <!-- <menuItem context="org.santedb.admin" launch="santedb-admin.notifications.dashboard"
-    asset="/org.santedb.admin/views/notifications/index.html" order="0">
-    <icon>fas fa-solid fa-paper-plane</icon>
-    <text lang="en">Scheduled Notifications</text>
-    <menuItem order="0" context="org.santedb.admin"
-      launch="santedb-admin.notifications.instances.index"
-      asset="/org.santedb.admin/views/notifications/instances/index.html">
-      <icon>fas fa-table</icon>
-      <text lang="en">Notifications</text>
-    </menuItem>
-  </menuItem> -->
-
-
   <viewModel key="relationship_full">
     <definition>/org.santedb.admin/model/relationship_full.xml</definition>
   </viewModel>
