@@ -1000,7 +1000,8 @@
     <string name="ui.model.notification.schedule">Schedule</string>
     <string name="ui.model.notification.state">State</string>
     <string name="ui.model.notification.lastSentAt">Last Sent</string>
-    <string name="ui.model.notification.creationTime">Created On</string>
+    <string name="ui.model.notification.creationTime">Created</string>
     <string name="ui.model.notification.updatedTime">Last Update</string>
+    <string name="ui.model.notification.obsoletionTime">Deleted</string>
 
 </resources>
