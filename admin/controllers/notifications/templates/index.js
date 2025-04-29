@@ -1,5 +1,27 @@
 angular.module('santedb').controller('NotificationTemplateTableController', ["$scope", "$timeout", function ($scope, $timeout) {
 
+    $scope.renderCreationTime = function(r) {
+        if (r.createdBy != null && r.creationTime != null)
+            return `<provenance provenance-id="'${r.createdBy}'" sessionfn="$parent.sessionFunction" provenance-time="'${r.creationTime}'"></provenance>`;
+        return "";
+    }
+
+    $scope.renderObsoletionTime = function(r) {
+        if (r.obsoletedBy != null && r.obsoletionTime != null)
+            return `<provenance provenance-id="'${r.obsoletedBy}'" sessionfn="$parent.sessionFunction" provenance-time="'${r.obsoletionTime}'"></provenance>`;
+        return "";
+    }
+
+    $scope.renderUpdatedTime = function(r) {
+        if (r.obsoletedBy != null)
+            return `<provenance provenance-id="'${r.obsoletedBy}'" sessionfn="$parent.sessionFunction" provenance-time="'${r.obsoletionTime}'"></provenance>`;
+        else if (r.updatedBy != null)
+            return `<provenance provenance-id="'${r.updatedBy}'" sessionfn="$parent.sessionFunction" provenance-time="'${r.updatedTime}'"></provenance>`;
+        else if (r.createdBy != null)
+            return `<provenance provenance-id="'${r.createdBy}'" sessionfn="$parent.sessionFunction" provenance-time="'${r.creationTime}'"></provenance>`;
+        return "";
+    }
+
     $scope.delete = async function(id, index) {
         if(confirm(SanteDB.locale.getString("ui.admin.notifications.template.delete.confirm"))) {
             try {
