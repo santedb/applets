@@ -33,6 +33,7 @@ angular.module('santedb').controller('NotificationTemplateTableController', ["$s
         try {
             await SanteDB.resources.notificationTemplate.insertAsync(template, true);
             toastr.success(SanteDB.locale.getString("ui.admin.notifications.template.clone.success"));
+            $("#NotificationTemplateTable table").DataTable().ajax.reload();
         } catch (e) {
             toastr.error(SanteDB.locale.getString("ui.admin.notifications.template.clone.error", { e: e.message }));
         }
