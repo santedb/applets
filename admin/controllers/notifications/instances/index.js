@@ -23,6 +23,29 @@ angular.module('santedb').controller('NotificationInstanceIndexController', ["$s
             return "";
         }
 
+        $scope.clone = async function(id, t) {
+            const instance = await SanteDB.resources.notificationInstance.getAsync(id, 'full', null, true);
+    
+            delete (instance.id);
+            instance.name += '-clone';
+            instance.mnemonic += '-clone';
+
+            if ('instanceParameter' in instance) {
+                for (i = 0; i < instance.instanceParameter.length; i++) {
+                    delete (instance.instanceParameter[i].id);
+                    delete (instance.instanceParameter[i].notificationInstance);
+                }
+            }
+    
+            try {
+                await SanteDB.resources.notificationInstance.insertAsync(instance, true);
+                toastr.success(SanteDB.locale.getString("ui.admin.notifications.instance.clone.success"));
+                $("#NotificationInstanceTable table").DataTable().ajax.reload();
+            } catch (e) {
+                toastr.error(SanteDB.locale.getString("ui.admin.notifications.instance.clone.error", { e: e.message }));
+            }
+        }
+
         $scope.delete = async function(id, index) {
             if(confirm(SanteDB.locale.getString("ui.admin.notifications.instances.delete.confirm"))) {
                 try {

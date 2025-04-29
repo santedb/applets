@@ -968,5 +968,9 @@
         deleted due to {e}</string>
     <string name="ui.admin.notificationTemplate.save.success">Notification Template saved
         successfully</string>
+    <string name="ui.admin.notifications.instance.clone.success">Notification instance was cloned
+        successfully</string>
+    <string name="ui.admin.notifications.instance.clone.error">Notification instance could not be
+        cloned due to {e}</string>
 
 </resources>
