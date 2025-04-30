@@ -147,19 +147,22 @@ angular.module('santedb-lib')
                     itm.operation = itm.targetModel.operation = BatchOperationType.InsertOrUpdate;
                 }
                 $scope.moveHistory = function (index) {
-                    if (confirm(SanteDB.locale.getString("ui.model.act.tag.backEntry.confirm"))) {
-                        try {
-                            var itm = $scope.currentActions[index];
-                            var tpl = itm.targetModel.templateModel.mnemonic;
-                            var histEntry = $scope.backEntryActions[tpl] || [];
-                            histEntry.push(itm);
-                            itm.targetModel.tag = itm.targetModel.tag || {};
+                    try {
+                        var itm = $scope.currentActions[index];
+                        itm.targetModel.tag = itm.targetModel.tag || {};
+
+                        if (itm.targetModel.tag.isBackEntry) {
+                            delete itm.targetModel.tag.isBackEntry;
+                        }
+                        else {
                             itm.targetModel.tag.isBackEntry = [true];
-                            $scope.removeItem(index);
+
+                            // Relationship
+                            itm.targetModel.actTime = itm.targetModel.relationship?.Fulfills[0]?.targetModel.startTime || itm.targetModel.startTime;
                         }
-                        catch (e) {
-                            $rootScope.errorHandler(e);
-                        }
+                    }
+                    catch (e) {
+                        $rootScope.errorHandler(e);
                     }
                 }
 
@@ -186,7 +189,8 @@ angular.module('santedb-lib')
                             $scope.model.relationship.HasComponent.push(ar);
                             $scope.currentActions.push(ar);
                             content.tag = content.tag || {};
-                            content.tag.userAdded = [true];
+                            content.tag.$userAdded = [true];
+                            $scope.applyVisibilityAttributes();
                         });
                     }
                     catch (e) {
@@ -224,48 +228,56 @@ angular.module('santedb-lib')
 
                 // Are we viewing or editing?
                 _mode = attrs.readonly === "true" ? 'view' : 'edit';
-                setTimeout(() => { // allow the DOM to catch up 
 
-                    if (attrs.noAdd === "true") {
-                        $(".actAddItem", element).remove();
-                    }
-                    else {
-                        $(".actAddItem", element).removeClass("d-none");
-                    }
-                    if (attrs.noRemove === "true") {
-                        $(".actRemoveItem", element).remove();
-                    }
-                    else {
-                        $(".actRemoveItem", element).removeClass("d-none");
-                    }
-                    if (attrs.noOverride === "true") {
-                        $(".actProposeControl", element).remove();
-                    }
-                    else {
-                        $(".actProposeControl", element).removeClass("d-none");
-                    }
-                    if (attrs.noHeader === "true") {
-                        $(".actHeader", element).remove();
-                    }
-                    else {
-                        $(".actHeader", element).removeClass("d-none");
-                    }
-                    if (attrs.noBackEntry === "true") {
-                        $(".actBackEntry", element).remove();
-                    }
-                    else {
-                        $(".actBackEntry", element).removeClass();
-                    }
+                scope.applyVisibilityAttributes = function () {
+                    setTimeout(() => { // allow the DOM to catch up 
 
-                    if (_mode == "view") {
-                        $(".editOnly", element).remove();
-                        $(".viewOnly", element).removeClass("d-none");
-                    }
-                    else {
-                        $(".viewOnly", element).remove();
-                        $(".editOnly", element).removeClass("d-none");
-                    }
-                }, 500);
+                        if (attrs.noAdd === "true") {
+                            $(".actAddItem", element).remove();
+                        }
+                        else {
+                            $(".actAddItem", element).removeClass("d-none");
+                        }
+                        if (attrs.noRemove === "true") {
+                            $(".actRemoveItem", element).remove();
+                        }
+                        else {
+                            $(".actRemoveItem", element).removeClass("d-none");
+                        }
+                        if (attrs.noOverride === "true") {
+                            $(".actProposeControl", element).remove();
+                        }
+                        else {
+                            $(".actProposeControl", element).removeClass("d-none");
+                        }
+                        if (attrs.noHeader === "true") {
+                            $(".actHeader", element).remove();
+                        }
+                        else {
+                            $(".actHeader", element).removeClass("d-none");
+                        }
+
+                        if (attrs.noBackEntry === "true") {
+                            $(".actBackEntry", element).remove();
+                            $(".actMoveToHistory", element).remove();
+                        }
+                        else {
+                            $(".actBackEntry", element).removeClass('d-none');
+                            $(".actMoveToHistory", element).removeClass('d-none');
+
+                        }
+
+                        if (_mode == "view") {
+                            $(".editOnly", element).remove();
+                            $(".viewOnly", element).removeClass("d-none");
+                        }
+                        else {
+                            $(".viewOnly", element).remove();
+                            $(".editOnly", element).removeClass("d-none");
+                        }
+                    }, 500);
+                }
+                scope.applyVisibilityAttributes();
 
 
 
@@ -278,6 +290,11 @@ angular.module('santedb-lib')
                             o => o.targetModel.templateModel.mnemonic,
                             o => o.targetModel
                         );
+
+                    // Bind utility functions
+                    scope.model.relationship.HasComponent.forEach(comp => {
+                        comp.targetModel._getEncounter = () => scope.model;
+                    });
                 }
 
                 if (scope.model && scope.model.templateModel && scope.model.templateModel.mnemonic) {

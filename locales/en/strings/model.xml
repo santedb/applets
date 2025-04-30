@@ -537,12 +537,16 @@
   <string name="ui.model.act.reasonConcept.other">Other Reason</string>
   <string name="ui.model.act.reasonConcept.other.hint">Because you selected "other" as the reason for the action, you should enter description of the reason</string>
   <string name="ui.model.act.actTime">Timestamp</string>
+  <string name="ui.model.act.actTime.date">Date Performed</string>
   <string name="ui.model.act.startTime">Started</string>
   <string name="ui.model.act.stopTime">Completed</string>
   <string name="ui.model.act.typeConcept">Event Type</string>
   <string name="ui.model.act.relationship.IsDerivedFrom">Derived From</string>
   <string name="ui.model.act.relationship.IsDerivedFrom.hint">This action was derived from another act</string>
   <string name="ui.model.act.relationship.IsDerivedFrom.cdss">The decision support system recommends performing this action based on the inputs provided on another input</string>
+  <string name="ui.model.act.relationship.Fulfills">Fulfills</string>
+  <string name="ui.model.act.relationship.Fulfills.target.startTime">Scheduled Start</string>
+  <string name="ui.model.act.relationship.Fulfills.target.actTime">Scheduled Date</string>
   <string name="ui.model.act.participation.Location">Location(s)</string>
   <string name="ui.model.act.participation.Authororiginator">Author / Reporter</string>
   <string name="ui.model.act.participation.Performer">Performer(s)</string>
@@ -993,4 +997,9 @@
     <!-- Care Plans-->
     <string name="ui.model.carePlan.pathway">Care Pathway</string>
     <string name="ui.model.carePlan.pathway.hint">Select the care pathway for which the plan applies</string>
+
+    <!-- Substance Administrations -->
+     <string name="ui.model.substanceAdministration.doseSequence">Dose #</string>
+     <string name="ui.model.substanceAdministration.typeConcept">Type</string>
+     <string name="ui.model.substanceAdministration.Consumable.lotNumber">Lot #</string>
 </resources>

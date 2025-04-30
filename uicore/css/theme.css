@@ -423,3 +423,11 @@ table.dataTable thead > tr > th.sorting::after {
 .select2-container .select2-selection--single .select2-selection__rendered .select2-selection__clear {
     z-index:1;
 }
+
+.bg-secondary.bg-lighten-25 {
+    background-color: #90989f !important;
+}
+
+.bg-secondary.bg-lighten-50 {
+    background-color: #b5babf !important;
+}

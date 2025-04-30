@@ -860,7 +860,7 @@
         <property name="source" />
       </property>
       <property name="Fulfills" all="true">
-        <property name="targetModel" behavior="always" ref="Act" />
+        <property name="targetModel" behavior="always" ref="SubstanceAdministration" />
       </property>
       <property name="*" behavior="always" all="true" />
     </property>
@@ -930,6 +930,7 @@
       </property>
     </property>
   </type>
+
 
   <type type="QuantityObservation" all="true">
     <property name="tag" all="true" behavior="always" />
