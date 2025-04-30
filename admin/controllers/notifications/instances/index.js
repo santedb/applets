@@ -58,4 +58,20 @@ angular.module('santedb').controller('NotificationInstanceIndexController', ["$s
         }
     }
 
+    $scope.restore = async function(id) {
+        if(confirm(SanteDB.locale.getString("ui.admin.notifications.instance.restore.confirm"))) {
+            try {
+                var instance = await SanteDB.resources.notificationInstance.getAsync(id, null, null, true);
+                instance.obsoletionTime = null;
+                instance.obsoletedBy = null;
+                await SanteDB.resources.notificationInstance.updateAsync(id, instance, true);
+                $("#NotificationInstanceTable table").attr("newQueryId", true);
+                $("#NotificationInstanceTable table").DataTable().ajax.reload();
+            }
+            catch(e) {
+                toastr.error(SanteDB.locale.getString("ui.admin.notifications.instance.restore.error", { error: e.message }));
+            }
+        }
+    }
+
 }]);
