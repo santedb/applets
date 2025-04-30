@@ -1,4 +1,4 @@
-angular.module('santedb').controller('NotificationTemplateTableController', ["$scope", "$timeout", function ($scope, $timeout) {
+angular.module('santedb').controller('NotificationTemplateTableController', ["$scope", "$timeout", "$state", function ($scope, $timeout, $state) {
 
     $scope.renderCreationTime = function(r) {
         if (r.createdBy != null && r.creationTime != null)
@@ -36,7 +36,7 @@ angular.module('santedb').controller('NotificationTemplateTableController', ["$s
     }
 
     $scope.clone = async function(id, t) {
-        let template = await SanteDB.resources.notificationTemplate.getAsync(id, 'full', null, true);
+        const template = await SanteDB.resources.notificationTemplate.getAsync(id, 'full', null, true);
 
         delete (template.id);
         template.name += '-clone';
@@ -53,9 +53,9 @@ angular.module('santedb').controller('NotificationTemplateTableController', ["$s
         }
 
         try {
-            await SanteDB.resources.notificationTemplate.insertAsync(template, true);
+            const clonedTemplate = await SanteDB.resources.notificationTemplate.insertAsync(template, true);
             toastr.success(SanteDB.locale.getString("ui.admin.notifications.template.clone.success"));
-            $("#NotificationTemplateTable table").DataTable().ajax.reload();
+            $state.transitionTo("santedb-admin.notifications.templates.edit", { id: clonedTemplate.id });
         } catch (e) {
             toastr.error(SanteDB.locale.getString("ui.admin.notifications.template.clone.error", { e: e.message }));
         }
