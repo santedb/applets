@@ -37,9 +37,9 @@ angular.module('santedb').controller('NotificationInstanceIndexController', ["$s
         }
 
         try {
-            await SanteDB.resources.notificationInstance.insertAsync(instance, true);
+            const clonedInstance = await SanteDB.resources.notificationInstance.insertAsync(instance, true);
             toastr.success(SanteDB.locale.getString("ui.admin.notifications.instance.clone.success"));
-            $("#NotificationInstanceTable table").DataTable().ajax.reload();
+            $state.transitionTo("santedb-admin.notifications.instances.edit", { id: clonedInstance.id });
         } catch (e) {
             toastr.error(SanteDB.locale.getString("ui.admin.notifications.instance.clone.error", { e: e.message }));
         }
