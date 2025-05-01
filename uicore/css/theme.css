@@ -431,3 +431,20 @@ table.dataTable thead > tr > th.sorting::after {
 .bg-secondary.bg-lighten-50 {
     background-color: #b5babf !important;
 }
+
+.table-striped {
+    background-color: white;
+}
+
+.card-header {
+    min-height: 55px;
+}
+
+.tab-content {
+    border: 1px solid #e2e3e5;
+    padding: 25px;
+}
+
+.nav-tabs {
+    border: none;
+}
