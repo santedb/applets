@@ -101,7 +101,7 @@
             <!-- START CURRENT ENTRY -->
             <ul class="nav nav-tabs editOnly d-none">
                 <li class="nav-item">
-                    <button class="nav-link active" data-toggle="tab" data-target="#currentActionTab"><i
+                    <button class="nav-link active" data-toggle="tab" data-target="#current-actions"><i
                             class="fas fa-fw fa-list-check"></i> {{ 'ui.model.act.tag.isBackentryFalse' | i18n
                         }}</button>
                 </li>
@@ -111,8 +111,9 @@
                         }}</button>
                 </li>
             </ul>
-            <div class="tab-content mb-2">
-                <div id="currentActionTab" class="tab-pane show active">
+
+            <div class="tab-content">
+                <div class="tab-pane fade show active" id="current-actions" role="tabpanel" aria-labelledby="current-actions-tab">
                     <ul class="overflow-auto list-group">
                         <li class="list-group-item d-flex flex-column"
                             ng-repeat="comp in currentActions track by $index" data-actindex="{{$index}}"

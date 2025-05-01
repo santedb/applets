@@ -38,7 +38,7 @@
                                 <i class="fa fa-times"></i>
                                 <span class="d-none d-lg-inline">{{ 'ui.action.cancel' | i18n }}</span>
                             </button>
-                            <button class="btn btn-info" type="button" ng-click="setView(panel, 'Edit')"
+                            <button class="btn btn-sm btn-info" type="button" ng-click="setView(panel, 'Edit')"
                                 id="pnl{{panel.id}}Edit"
                                 ng-if="panel.view != 'Edit' &amp;&amp; !altView &amp;&amp; hasView(panel, 'Edit')"
                                 ng-init="::disableView(panel, 'Edit')">

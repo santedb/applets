@@ -176,6 +176,18 @@ angular.module('santedb-lib')
         }
     })
     /**
+     * @method telecom
+     * @memberof Angular
+     * @summary Renders an telecom address to the display
+     * @see {SanteDBModel.EntityTelecomAddress}
+     * TODO - enhance this function, added because it was missing
+     */
+    .filter('telecom', function () {
+        return function (modelValue) {
+            return modelValue.value;
+        }
+    })
+    /**
      * @method entityCount
      * @memberof Angular
      * @summary Returns the total entity count within the object tracking entities 
@@ -191,6 +203,17 @@ angular.module('santedb-lib')
             }
 
             return count;
+        }
+    })
+    /**
+     * @method convertToId
+     * @memberof Angular
+     * @summary Returns a transformed snake case string for ids
+     * @param {string} stringToConvert The string to convert
+     */
+    .filter('convertToId', function () {
+        return function (stringToConvert) {            
+            return stringToConvert.toLowerCase().replace(/ /g, '-');
         }
     })
     /**
