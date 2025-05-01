@@ -124,7 +124,12 @@
                             <div class="d-flex justify-content-left">
                                 <!-- PROPOSE Should allow users to select an override -->
                                 <div class="actProposeControl editOnly d-none"
-                                    ng-if="!comp.targetModel.tag.isBackEntry &amp;&amp; (comp.targetModel.moodConcept == 'acf7baf2-221f-4bc2-8116-ceb5165be079' || comp.targetModel.relationship.Fulfills[0].targetModel.moodConcept == 'acf7baf2-221f-4bc2-8116-ceb5165be079')">
+                                    ng-if="!comp.targetModel.tag.isBackEntry &amp;&amp; 
+                                        (
+                                            !comp.targetModel.tag.$userAdded &amp;&amp; comp.targetModel.statusConcept != 'afc33800-8225-4061-b168-bacc09cdbae3' ||
+                                            comp.targetModel.moodConcept == 'acf7baf2-221f-4bc2-8116-ceb5165be079' || 
+                                            comp.targetModel.relationship.Fulfills[0].targetModel.moodConcept == 'acf7baf2-221f-4bc2-8116-ceb5165be079'
+                                        )">
                                     <label class="checkbox-container">
                                         <input type="checkbox" class="checkbox-control"
                                             ng-model="comp.targetModel.isNegated" id="negate{{$index}}"
@@ -135,7 +140,7 @@
                                 </div>
                                 <!-- Render the main act entry content -->
                                 <div class="flex-grow-1 actEntryComponent my-auto">
-                                    <div ng-if="!comp.targetModel.isNegated" class="editOnly d-none"
+                                    <div ng-if="!comp.targetModel.isNegated" class="editOnly"
                                         ng-init="act = comp.targetModel"
                                         ng-class="{ 'actEntryComponentRemoved' : comp.operation == '4' }">
                                         <ng-include src="::resolveTemplate(comp.targetModel.templateModel.mnemonic)">
@@ -163,8 +168,8 @@
                                     </div>
                                 </div>
                                 <div class="editOnly btn-group d-none"
-                                    ng-if="comp.targetModel.operation !== 'InsertOrUpdate' &amp;&amp; !comp.targetModel.participation.Performer">
-                                    <button ng-if="!comp.targetModel.tag.isBackEntry" type="button" ng-click="markComplete($index)" class="btn btn-primary">
+                                    ng-if="comp.targetModel.statusConcept != 'afc33800-8225-4061-b168-bacc09cdbae3'">
+                                    <button ng-if="!comp.targetModel.tag.isBackEntry" id="action_{{$index}}complete" type="button" ng-click="markComplete($index)" class="btn btn-primary">
                                         <i class="fas fa-fw fa-check"></i> <span class="d-none d-lg-inline">{{
                                             'ui.action.complete' | i18n }}</span>
                                     </button>
@@ -193,7 +198,7 @@
                                 </div>
 
                                 <!-- Performer -->
-                                <div ng-if="comp.targetModel.participation.Performer" class="alert alert-secondary d-flex my-auto">
+                                <div ng-if="comp.targetModel.participation.Performer &amp;&amp; comp.targetModel.statusConcept == 'afc33800-8225-4061-b168-bacc09cdbae3'" class="alert alert-secondary d-flex my-auto">
                                     <h5 class="align-self-center text-success my-auto"><i class="m-auto fas fa-fw fa-check-circle"></i></h5>
                                     <div class="d-flex flex-column my-auto">
                                         <div>

@@ -142,9 +142,34 @@ angular.module('santedb-lib')
                     }
                 }
 
-                $scope.markComplete = function (index) {
-                    var itm = $scope.currentActions[index];
-                    itm.operation = itm.targetModel.operation = BatchOperationType.InsertOrUpdate;
+                $scope.markComplete = async function (index) {
+
+                    try {
+                        SanteDB.display.buttonWait(`#action_${index}complete`, true);
+                        var itm = $scope.currentActions[index];
+                        var userEntityId = await SanteDB.authentication.getCurrentUserEntityId();
+                        var thisUser = await SanteDB.resources.userEntity.getAsync(userEntityId, "dropdown");
+                        $timeout(() => {
+                            itm.operation = itm.targetModel.operation = BatchOperationType.InsertOrUpdate;
+                            itm.targetModel.statusConcept = StatusKeys.Completed;
+                            itm.targetModel.participation = itm.targetModel.participation || {};
+                            itm.targetModel.participation.Performer = itm.targetModel.participation.Performer || [];
+
+                            // Ensure that the performer doesn't already exist on this object
+                            if(!itm.targetModel.participation.Performer.find(p => p.player == thisUser.id)) {
+                                itm.targetModel.participation.Performer.push(new ActParticipation({
+                                    player: thisUser.id,
+                                    playerModel: thisUser
+                                }));
+                            }
+                        });
+                    }
+                    catch(e) {
+                        console.error(e);
+                    }
+                    finally {
+                        SanteDB.display.buttonWait(`#action_${index}complete`, false);
+                    }
                 }
                 $scope.moveHistory = function (index) {
                     try {
@@ -284,8 +309,8 @@ angular.module('santedb-lib')
                 _noCdss = attrs.disableCdss;
 
                 if (scope.model && scope.model.relationship && scope.model.relationship.HasComponent) {
-                    scope.currentActions = scope.model.relationship.HasComponent.filter(a => !a.targetModel.tag || a.targetModel.tag.isBackEntry[0] == 'False');
-                    scope.backEntryActions = scope.model.relationship.HasComponent.filter(a => a.targetModel.tag && a.targetModel.tag.isBackEntry[0] == 'True')
+                    scope.currentActions = scope.model.relationship.HasComponent.filter(a => !a.targetModel.tag || !a.targetModel.tag.isBackEntry || a.targetModel.tag.isBackEntry[0] == 'False').sort((a,b) => a.targetModel.classConcept < b.targetModel.classConcept ? -1 : 1);
+                    scope.backEntryActions = scope.model.relationship.HasComponent.filter(a => a.targetModel.tag && a.targetModel.tag.isBackEntry && a.targetModel.tag.isBackEntry[0] == 'True')
                         .groupBy(
                             o => o.targetModel.templateModel.mnemonic,
                             o => o.targetModel
@@ -295,6 +320,7 @@ angular.module('santedb-lib')
                     scope.model.relationship.HasComponent.forEach(comp => {
                         comp.targetModel._getEncounter = () => scope.model;
                     });
+
                 }
 
                 if (scope.model && scope.model.templateModel && scope.model.templateModel.mnemonic) {
