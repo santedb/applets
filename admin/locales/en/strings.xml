@@ -1000,5 +1000,10 @@
     <string name="ui.admin.notifications.templates.saveDraft">Save Draft</string>
     <string name="ui.admin.notifications.templates.publish">Publish</string>
     <string name="ui.admin.notifications.templates.newTemplate">New Template</string>
+    <string name="ui.admin.notifications.templates.names">Template Names</string>
+    <string name="ui.admin.notifications.templates.parameters">Template Parameters</string>
+    <string name="ui.admin.notifications.templates.templateVariation">Template Variation</string>
+    <string name="ui.admin.notifications.templates.defaultTemplate">Default Template</string>
+
 
 </resources>
