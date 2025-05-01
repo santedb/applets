@@ -950,6 +950,12 @@
     <string name="ui.admin.notifications.instances.count">Notifications Management</string>
     <string name="ui.admin.notifications.instances.create">Create a Notification</string>
     <string name="ui.admin.notifications.reports">Sent Notifications Snapshot</string>
+    <string name="ui.admin.notifications.template.id">Id</string>
+    <string name="ui.admin.notifications.template.mnemonic">Mnemonic</string>
+    <string name="ui.admin.notifications.template.tags">Tags</string>
+    <string name="ui.admin.notifications.template.status">Status</string>
+    <string name="ui.admin.notifications.template.creationTime">Creation Time</string>
+    <string name="ui.admin.notifications.template.updatedTime">Updated Time</string>
     <string name="ui.admin.notifications.template.delete.confirm">Are you sure you want to delete this notification template?</string>
     <string name="ui.admin.notifications.template.delete.success">Notification template was saved successfully</string>
     <string name="ui.admin.notifications.template.delete.error">Notification template could not be deleted due to {e}</string>
@@ -963,5 +969,4 @@
     <string name="ui.admin.notifications.instance.clone.error">Notification instance could not be cloned due to {e}</string>
     <string name="ui.admin.notifications.instance.restore.confirm">Are you sure you want to restore this notification instance?</string>
     <string name="ui.admin.notifications.instance.restore.error">Could not restore notification instance: {error}</string>
-
 </resources>
