@@ -7,38 +7,5 @@
             <sdb:controller>NotificationsTemplateEditController</sdb:controller>
         </sdb:view>
     </sdb:state>
-    <form class="form" ng-submit="saveNotificationTemplate(createNotificationTemplateForm)"
-        name="createNotificationTemplateForm" novalidate="novalidate" autocomplete="off">
-
-        <!-- name -->
-        <div class="form-group row">
-            <label class="col-sm-12 col-md-3 control-label">
-                Template Name
-            </label>
-            <div class="col-sm-12 col-md-9">
-                <input autocomplete="__away" type="text" maxlength="64" ng-model="notificationTemplate.name"
-                    name="notificationTemplateName" required="required" class="form-control"
-                    pattern="^[a-zA-Z0-9_\-]{2,}$" />
-            </div>
-        </div>
-
-        <!-- mnemonic -->
-        <div class="form-group row">
-            <label class="col-sm-12 col-md-3 control-label">
-                Template Mnemonic
-            </label>
-            <div class="col-sm-12 col-md-9">
-                <input autocomplete="__away" type="text" maxlength="64" ng-model="notificationTemplate.mnemonic"
-                    name="notificationTemplateMnemonic" required="required" class="form-control"
-                    pattern="^[a-zA-Z0-9_\-]{2,}$" />
-            </div>
-        </div>
-
-        <div class="float-right btn-group">
-            <button type="submit" ng-disabled="createNotificationTemplateForm.$invalid" class="btn btn-primary"
-                id="saveNotificationTemplateButton">
-                <i class="fas fa-check"></i> {{ 'ui.action.save' | i18n }}
-            </button>
-        </div>
-    </form>
+    <!-- #include virtual="~/views/notifications/templates/partial/edit.html" -->
 </div>

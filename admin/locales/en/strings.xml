@@ -956,21 +956,49 @@
     <string name="ui.admin.notifications.template.status">Status</string>
     <string name="ui.admin.notifications.template.creationTime">Creation Time</string>
     <string name="ui.admin.notifications.template.updatedTime">Updated Time</string>
-    <string name="ui.admin.notifications.template.delete.confirm">Are you sure you want to delete this notification template?</string>
-    <string name="ui.admin.notifications.template.delete.success">Notification template was saved successfully</string>
-    <string name="ui.admin.notifications.template.delete.error">Notification template could not be deleted due to {e}</string>
-    <string name="ui.admin.notifications.template.clone.success">Notification template was cloned successfully</string>
-    <string name="ui.admin.notifications.template.clone.error">Notification template could not be cloned due to {e}</string>
-    <string name="ui.admin.notifications.template.restore.confirm">Are you sure you want to restore this notification template?</string>
-    <string name="ui.admin.notifications.template.restore.error">Could not restore notification template: {e}</string>
-    <string name="ui.admin.notifications.template.restore.success">Notification template was restored successfully</string>
-    <string name="ui.admin.notifications.instances.delete.confirm">Are you sure you want to delete this notification instance?</string>
-    <string name="ui.admin.notifications.instances.delete.success">Notification instance was saved successfully</string>
-    <string name="ui.admin.notifications.instances.delete.error">Notification instance could not be deleted due to {e}</string>
-    <string name="ui.admin.notificationTemplate.save.success">Notification Template saved successfully</string>
-    <string name="ui.admin.notifications.instance.clone.success">Notification instance was cloned successfully</string>
-    <string name="ui.admin.notifications.instance.clone.error">Notification instance could not be cloned due to {e}</string>
-    <string name="ui.admin.notifications.instance.restore.confirm">Are you sure you want to restore this notification instance?</string>
-    <string name="ui.admin.notifications.instance.restore.error">Could not restore notification instance: {error}</string>
-    
+    <string name="ui.admin.notifications.template.delete.confirm">Are you sure you want to delete
+        this notification template?</string>
+    <string name="ui.admin.notifications.template.delete.success">Notification template was saved
+        successfully</string>
+    <string name="ui.admin.notifications.template.delete.error">Notification template could not be
+        deleted due to {e}</string>
+    <string name="ui.admin.notifications.template.clone.success">Notification template was cloned
+        successfully</string>
+    <string name="ui.admin.notifications.template.clone.error">Notification template could not be
+        cloned due to {e}</string>
+    <string name="ui.admin.notifications.template.restore.confirm">Are you sure you want to restore
+        this notification template?</string>
+    <string name="ui.admin.notifications.template.restore.error">Could not restore notification
+        template: {e}</string>
+    <string name="ui.admin.notifications.template.restore.success">Notification template was
+        restored successfully</string>
+    <string name="ui.admin.notifications.instances.delete.confirm">Are you sure you want to delete
+        this notification instance?</string>
+    <string name="ui.admin.notifications.instances.delete.success">Notification instance was saved
+        successfully</string>
+    <string name="ui.admin.notifications.instances.delete.error">Notification instance could not be
+        deleted due to {e}</string>
+    <string name="ui.admin.notificationTemplate.save.success">Notification Template saved
+        successfully</string>
+    <string name="ui.admin.notifications.instance.clone.success">Notification instance was cloned
+        successfully</string>
+    <string name="ui.admin.notifications.instance.clone.error">Notification instance could not be
+        cloned due to {e}</string>
+    <string name="ui.admin.notifications.instance.restore.confirm">Are you sure you want to restore
+        this notification instance?</string>
+    <string name="ui.admin.notifications.instance.restore.error">Could not restore notification
+        instance: {error}</string>
+
+    <!-- scheduled notification template form -->
+    <string name="ui.admin.notifications.templates.addParameter">Add new parameter</string>
+    <string name="ui.admin.notifications.templates.parameterName">Parameter Name</string>
+    <string name="ui.admin.notifications.templates.parameterDescription">Parameter Description</string>
+    <string name="ui.admin.notifications.templates.templateName">Template Name</string>
+    <string name="ui.admin.notifications.templates.templateMnemonic">Template Mnemonic</string>
+    <string name="ui.admin.notifications.templates.templateSubject">Subject</string>
+    <string name="ui.admin.notifications.templates.templateBody">Body</string>
+    <string name="ui.admin.notifications.templates.saveDraft">Save Draft</string>
+    <string name="ui.admin.notifications.templates.publish">Publish</string>
+    <string name="ui.admin.notifications.templates.newTemplate">New Template</string>
+
 </resources>

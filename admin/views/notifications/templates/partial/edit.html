@@ -1,0 +1,92 @@
+<div xmlns="http://www.w3.org/1999/xhtml">
+    <form class="form" ng-submit="saveNotificationTemplate(createNotificationTemplateForm)"
+        name="createNotificationTemplateForm" novalidate="novalidate" autocomplete="off">
+
+        <!-- name -->
+        <div class="form-group row">
+            <label class="col-sm-12 col-md-3 control-label">
+                {{'ui.admin.notifications.templates.templateName' | i18n}}
+            </label>
+            <div class="col-sm-12 col-md-9">
+                <input autocomplete="__away" type="text" maxlength="64" ng-model="notificationTemplate.name"
+                    name="notificationTemplateName" required="required" class="form-control"
+                    pattern="^[a-zA-Z0-9_\-]{2,}$" />
+            </div>
+        </div>
+
+        <!-- mnemonic -->
+        <div class="form-group row">
+            <label class="col-sm-12 col-md-3 control-label">
+                {{'ui.admin.notifications.templates.templateMnemonic' | i18n}}
+            </label>
+            <div class="col-sm-12 col-md-9">
+                <input autocomplete="__away" type="text" maxlength="64" ng-model="notificationTemplate.mnemonic"
+                    name="notificationTemplateMnemonic" required="required" class="form-control"
+                    pattern="^[a-zA-Z0-9_\-]{2,}$" />
+            </div>
+        </div>
+
+        <!-- Parameters -->
+        <div class="form-group row">
+            <label class="col-sm-12 col-md-6">
+                <input autocomplete="__away" type="text" maxlength="64" ng-model="notificationTemplate.Parameters.Name"
+                    name="notificationTemplateParameterName" required="required" class="form-control"
+                    placeholder="{{'ui.admin.notifications.templates.parameterName' | i18n}}"
+                    pattern="^[a-zA-Z0-9_\-]{2,}$" />
+            </label>
+            <div class="col-sm-12 col-md-6">
+                <input autocomplete="__away" type="text" maxlength="64"
+                    ng-model="notificationTemplate.Parameters.Description"
+                    name="notificationTemplateParameterDescription" required="required" class="form-control"
+                    pattern="^[a-zA-Z0-9_\-]{2,}$"
+                    placeholder="{{ 'ui.admin.notifications.templates.parameterDescription' | i18n }}" />
+            </div>
+        </div>
+        <button type="button" ng-click="addParameter()" class="btn btn-success">
+            <i class="fas fa-plus-cricle"></i> {{ 'ui.admin.notifications.templates.addParameter' | i18n }}
+        </button>
+
+        <!-- Default Template -->
+        <div class="form-group">
+            <div class="row">
+                <label class="col-sm-12 col-md-3 control-label">
+                    {{ 'ui.admin.notifications.templates.templateSubject' | i18n }}
+                </label>
+                <div class="col-sm-12 col-md-9">
+                    <input autocomplete="__away" type="text" maxlength="64" ng-model="notificationTemplate.name"
+                        name="notificationTemplateDefaultSubject" required="required" class="form-control"
+                        pattern="^[a-zA-Z0-9_\-]{2,}$" />
+                </div>
+            </div>
+            <div class="row">
+                <label class="col-sm-12 col-md-3 control-label">
+                    {{ 'ui.admin.notifications.templates.templateBody' | i18n }}
+                </label>
+                <div class="col-sm-12 col-md-9">
+                    <input autocomplete="__away" type="text" maxlength="64" ng-model="notificationTemplate.name"
+                        name="notificationTemplateDefaultSubject" required="required" class="form-control"
+                        pattern="^[a-zA-Z0-9_\-]{2,}$" />
+                </div>
+            </div>
+        </div>
+
+        <button type="button" ng-click="addTemplate()" class="btn btn-success">
+            <i class="fas fa-plus-cricle"></i> {{ 'ui.admin.notifications.templates.newTemplate' | i18n }}
+        </button>
+
+        <div class="float-right btn-group">
+            <button type="button" ng-disabled="createNotificationTemplateForm.$invalid" class="btn btn-danger"
+                id="saveNotificationTemplateButton">
+                <i class="fas fa-times"></i> {{ 'ui.action.cancel' | i18n }}
+            </button>
+            <button type="button" ng-disabled="createNotificationTemplateForm.$invalid" class="btn btn-primary"
+                id="saveNotificationTemplateButton">
+                <i class="fas fa-pen-ruler"></i> {{ 'ui.admin.notifications.templates.saveDraft' | i18n }}
+            </button>
+            <button type="submit" ng-disabled="createNotificationTemplateForm.$invalid" class="btn btn-success"
+                id="saveNotificationTemplateButton">
+                <i class="fas fa-check"></i> {{ 'ui.admin.notifications.templates.publish' | i18n }}
+            </button>
+        </div>
+    </form>
+</div>
