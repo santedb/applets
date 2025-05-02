@@ -1,5 +1,12 @@
 angular.module('santedb').controller('NotificationInstanceIndexController', ["$scope", "$rootScope", "$state", "$templateCache", function ($scope, $rootScope, $state, $templateCache) {
     
+    $scope.renderState = function(r) {
+        if(r.stateModel) {
+            return r.stateModel.mnemonic;
+        }
+        return r.state || "";
+    }
+
     $scope.renderCreationTime = function(r) {
         if (r.createdBy != null && r.creationTime != null)
             return `<provenance provenance-id="'${r.createdBy}'" sessionfn="$parent.sessionFunction" provenance-time="'${r.creationTime}'"></provenance>`;
@@ -65,13 +72,19 @@ angular.module('santedb').controller('NotificationInstanceIndexController', ["$s
                 instance.obsoletionTime = null;
                 instance.obsoletedBy = null;
                 await SanteDB.resources.notificationInstance.updateAsync(id, instance, true);
-                $("#NotificationInstanceTable table").attr("newQueryId", true);
+                $("#NotificationInstanceTable").attr("newQueryId", true);
                 $("#NotificationInstanceTable table").DataTable().ajax.reload();
             }
             catch(e) {
                 toastr.error(SanteDB.locale.getString("ui.admin.notifications.instance.restore.error", { error: e.message }));
             }
         }
+    }
+
+    $scope.loadState = async function(r) {
+        if(r.state)
+            r.stateModel = await SanteDB.resources.concept.getAsync(r.state);
+        return r;
     }
 
 }]);

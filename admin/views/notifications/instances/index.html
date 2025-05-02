@@ -43,6 +43,7 @@
         ]"
         i18n-prefix="'ui.model.notification.'"
         properties="[ 'id', 'mnemonic', 'schedule', 'state', 'lastSentAt', 'creationTime', 'updatedTime', 'obsoletionTime' ]"
-        render="{ creationTime: 'renderCreationTime', updatedTime: 'renderUpdatedTime', obsoletionTime: 'renderObsoletionTime' }"
+        render="{ state: 'renderState', creationTime: 'renderCreationTime', updatedTime: 'renderUpdatedTime', obsoletionTime: 'renderObsoletionTime' }"
+        item-supplement="[ loadState ]"
     />
 </div>
