@@ -2,15 +2,15 @@ angular.module('santedb').controller('NotificationsDashboardController', ["$scop
 
     async function initializeView() {
         try {
-            var refData = await SanteDB.resources.notificationTemplate;
+            refData = await Promise.all([
+                await SanteDB.resources.notificationTemplate.getAsync(null, null, { _count: 0, _includeTotal: true }, true),
+                await SanteDB.resources.notificationInstance.getAsync(null, null, { _count: 0, _includeTotal: true }, true)
+            ])
 
-            $timeout(() => {
-                $scope.dashboard = {};
-                refData.forEach(o => $scope.dashboard[Object.keys(o)[0]] = o[Object.keys(o)[0]].totalResults);
-            });
-
-            console.log("TEST")
-            console.log(refData)
+            $scope.dashboard = {
+                "templateCount": refData[0].size,
+                "instanceCount": refData[1].size
+            }
         }
         catch (e) {
             $rootScope.errorHandler(e);

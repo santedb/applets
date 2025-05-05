@@ -949,7 +949,6 @@
     <string name="ui.admin.notifications.instances.title">Notification Instances</string>
     <string name="ui.admin.notifications.instances.count">Notifications Management</string>
     <string name="ui.admin.notifications.instances.create">Create a Notification</string>
-    <string name="ui.admin.notifications.reports">Sent Notifications Snapshot</string>
     <string name="ui.admin.notifications.template.id">Id</string>
     <string name="ui.admin.notifications.template.mnemonic">Mnemonic</string>
     <string name="ui.admin.notifications.template.tags">Tags</string>
