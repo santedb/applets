@@ -1,0 +1,161 @@
+<!--
+ - Copyright 2021-2025 SanteSuite Contributors (See NOTICE.md for full copyright notices)
+ - Copyright (C) 2019 - 2021, Fyfe Software Inc. and the SanteSuite Contributors
+ - Portions Copyright (C) 2015-2018 Mohawk College of Applied Arts and Technology
+ - 
+ - Licensed under the Apache License, Version 2.0 (the "License"); you 
+ - may not use this file except in compliance with the License. You may 
+ - obtain a copy of the License at 
+ - 
+ - http://www.apache.org/licenses/LICENSE-2.0 
+ - 
+ - Unless required by applicable law or agreed to in writing, software
+ - distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+ - WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the 
+ - License for the specific language governing permissions and limitations under 
+ - the License.
+ -->
+<div xmlns="http://www.w3.org/1999/xhtml">
+    <form class="form" ng-submit="saveNotificationInstance(createNotificationInstnaceForm)"
+    name="createNotificationInstanceForm" novalidate="novalidate" autocomplete="off">
+        <div class="card">
+            <!-- Name -->
+            <div class="form-group row">
+                <label class="col-sm-12 col-md-3 control-label">
+                    {{'ui.admin.notifications.instance.name' | i18n}}
+                </label>
+                <div class="col-sm-12 col-md-9">
+                    <input autocomplete="__away" type="text" maxlength="64"
+                        ng-model="notificationInstance.name" name="notificationInstanceName"
+                        required="required" class="form-control" pattern="^[a-zA-Z0-9_\-]{2,}$" />
+                </div>
+            </div>
+            <!-- Entity Type -->
+            <div class="form-group row">
+                <label class="col-sm-12 col-md-3 control-label">
+                    {{'ui.admin.notifications.instance.entityType' | i18n}}
+                </label>
+                <div class="col-sm-12 col-md-9">
+                    <concept-select ng-model="editObject.occupation"
+                        concept-set="'EntityType'"
+                        add-concept="['6052712a-340e-4480-ad6b-409ba320db4f','61d8f65c-747e-4a99-982f-a42ac5437473']"
+                        class="form-control" />
+                </div>
+            </div>
+            <!-- Description -->
+            <div class="form-group row">
+                <label class="col-sm-12 col-md-3 control-label">
+                    {{'ui.admin.notifications.instance.description' | i18n}}
+                </label>
+                <div class="col-sm-12 col-md-9">
+                    <textarea autocomplete="__away" ng-model="notificationInstance.description" name="notificationInstanceDescription"
+                        required="required" class="form-control" pattern="^[a-zA-Z0-9_\-]{2,}$" />
+                </div>
+            </div>
+            <!-- Template -->
+            <div class="form-group row">
+                <label class="col-sm-12 col-md-3 control-label">
+                    {{'ui.admin.notifications.instance.template' | i18n}}
+                </label>
+                <div class="col-sm-12 col-md-9">
+                    <entity-select ng-model="notificationInstance.template" entity-type="'NotificationTemplate'"
+                    class="form-control" />
+                </div>
+            </div>
+            <div class="align-items-end">
+                <button class="btn btn-primary col-sm-12 col-md-2 col-lg-1 float-end">New Template</button>
+            </div>
+            <!-- Parameters -->
+            <div class="accordion mb-2" id="parametersAccordion">
+                <div class="card-header">
+                    <h2 class="mb-0">
+                        <button type="button" class="collapse-indicator btn btn-link p-0" data-toggle="collapse"
+                            data-target="#notificationParameters" aria-expanded="true">
+                            <i class="fa fa-clipboard"></i> {{ 'ui.admin.notifications.instance.parameters' | i18n }}
+                            <i class="fa fa-chevron-right"></i>
+                        </button>
+                    </h2>
+                </div>
+                <div class="collapse show" id="notificationParameters">
+                    <div class="card-body container">
+                        <!-- Parameter Name -->
+                        <div class="form-group row">
+                            <label class="control-label col-sm-12 col-md-6">
+                                {{ 'ui.admin.notification.instance.parameterName' | i18n }}
+                                <i class="fa-solid fa-circle-question" style="color: #0275d8" data-toggle="popover" data-trigger="focus"
+                                data-title="Parameter Info" data-content=""></i>
+                            </label>
+                            <div class="col-sm-12 col-md-6">
+                                <hdsi-expression class="form-control"
+                                    focal-type="scopedObject.target[0].resource"
+                                    name="expr{{flt._id}}when"
+                                    simple-input="true"
+                                    ng-model="flt.when[0]"
+                                    aria-placeholder="Expression" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Filter -->
+            <div class="form-group row">
+                <label class="col-sm-12 col-md-3 control-label">
+                    {{'ui.admin.notifications.instance.filter' | i18n}}
+                    <i class="fa-solid fa-circle-question" style="color: #0275d8" data-toggle="popover" data-trigger="focus"
+                    data-title="Parameter Info" data-content=""></i>
+                </label>
+                <div class="col-sm-12 col-md-9">
+                    <textarea autocomplete="__away" ng-model="notificationInstance.filter" name="notificationInstanceFilter"
+                        required="required" class="form-control" pattern="^[a-zA-Z0-9_\-]{2,}$" />
+                </div>
+            </div>
+            <!-- Filter -->
+            <div class="form-group row">
+                <label class="col-sm-12 col-md-3 control-label">
+                    {{'ui.admin.notifications.instance.filter' | i18n}}
+                    <i class="fa-solid fa-circle-question" style="color: #0275d8" data-toggle="popover" data-trigger="focus"
+                    data-title="Parameter Info" data-content=""></i>
+                </label>
+                <div class="col-sm-12 col-md-9">
+                    <hdsi-expression class="form-control"
+                        focal-type="scopedObject.target[0].resource"
+                        name="expr{{flt._id}}when"
+                        simple-input="true"
+                        ng-model="flt.when[0]"
+                        aria-placeholder="Expression" />
+                </div>
+            </div>
+            <!-- Target -->
+            <div class="form-group row">
+                <label class="col-sm-12 col-md-3 control-label">
+                    {{'ui.admin.notifications.instance.target' | i18n}}
+                    <i class="fa-solid fa-circle-question" style="color: #0275d8" data-toggle="popover" data-trigger="focus"
+                    data-title="Parameter Info" data-content=""></i>
+                </label>
+                <div class="col-sm-12 col-md-9">
+                    <hdsi-expression class="form-control"
+                        focal-type="scopedObject.target[0].resource"
+                        name="expr{{flt._id}}when"
+                        simple-input="true"
+                        ng-model="flt.when[0]"
+                        aria-placeholder="Expression" />
+                </div>
+            </div>
+        </div>
+        <!-- Bottom Action Buttons -->
+        <div class="float-right btn-group">
+            <button type="button" ng-disabled="createNotificationInstanceForm.$invalid" class="btn btn-success"
+                id="saveNotificationInstanceButton">
+                {{ 'ui.admin.notifications.instance.test' | i18n }}
+            </button>
+            <button type="button" ng-disabled="createNotificationInstanceForm.$invalid" class="btn btn-danger"
+                id="saveNotificationInstanceButton">
+                {{ 'ui.action.cancel' | i18n }}
+            </button>
+            <button type="submit" ng-disabled="createNotificationInstanceForm.$invalid" class="btn btn-primary"
+                id="saveNotificationInstanceButton">
+                {{ 'ui.action.save' | i18n }}
+            </button>
+        </div>
+    </form>
+</div>
