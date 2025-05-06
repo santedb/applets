@@ -432,6 +432,29 @@ table.dataTable thead > tr > th.sorting::after {
     background-color: #b5babf !important;
 }
 
+.bg-success.bg-lighten-25 {
+    background-color: #48d367 !important;
+}
+
+.bg-success.bg-lighten-50 {
+    background-color: #85e29a !important;
+}
+
+.bg-success.bg-lighten-75 {
+    background-color: #c2f0cc !important;
+}
+
+.bg-danger.bg-lighten-25 {
+    background-color: #e56773 !important;
+}
+
+.bg-danger.bg-lighten-50 {
+    background-color: #ed9aa2 !important;
+}
+
+.bg-danger.bg-lighten-75 {
+    background-color: #f6ccd0 !important;
+}
 .table-striped {
     background-color: white;
 }
