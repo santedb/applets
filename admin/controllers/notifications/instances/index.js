@@ -29,6 +29,32 @@ angular.module('santedb').controller('NotificationInstanceIndexController', ["$s
         return "";
     }
 
+    $scope.enable = async function(id) {
+        if (confirm(SanteDB.locale.getString("ui.admin.notifications.instance.enable.confirm", {id: id}))) {
+            try {
+                await SanteDB.resources.notificationInstance.invokeOperationAsync(id, "configure", { "isEnableState": true }, true);
+                $("#NotificationInstanceTable table").DataTable().ajax.reload();
+                toastr.success(SanteDB.locale.getString("ui.admin.notifications.instance.enable.success", { id: id }));
+            }
+            catch (e) {
+                toastr.error(SanteDB.locale.getString("ui.admin.notifications.instance.enable.error", { id: id, e: e.message }));
+            }
+        }
+    }
+
+    $scope.disable = async function(id) {
+        if (confirm(SanteDB.locale.getString("ui.admin.notifications.instance.disable.confirm", {id: id}))) {
+            try {
+                await SanteDB.resources.notificationInstance.invokeOperationAsync(id, "configure", { "isEnableState": false }, true);
+                $("#NotificationInstanceTable table").DataTable().ajax.reload();
+                toastr.success(SanteDB.locale.getString("ui.admin.notifications.instance.disable.success", { id: id }));
+            }
+            catch (e) {
+                toastr.error(SanteDB.locale.getString("ui.admin.notifications.instance.disable.error", { id: id, e: e.message }));
+            }
+        }
+    }
+
     $scope.clone = async function(id, t) {
         const instance = await SanteDB.resources.notificationInstance.getAsync(id, 'full', null, true);
 
