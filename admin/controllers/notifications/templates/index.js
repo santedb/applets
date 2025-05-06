@@ -82,6 +82,23 @@ angular.module('santedb').controller('NotificationTemplateTableController', ["$s
         }
     }
 
+    $scope.purge = async function(id) {
+        if(confirm(SanteDB.locale.getString("ui.admin.notifications.template.purge.confirm"))) {
+            try {
+                await SanteDB.resources.notificationTemplate.deleteAsync(id, true);
+
+                $("#NotificationTemplateTable").attr("newQueryId", true);
+                $("#NotificationTemplateTable table").DataTable().ajax.reload();
+                
+                toastr.success(SanteDB.locale.getString("ui.admin.notifications.template.purge.success"));
+            }
+            catch(e) {
+                toastr.error(SanteDB.locale.getString("ui.admin.notifications.template.purge.error", { e: e.message }));
+            }
+
+        }
+    }
+
     async function initializeView() { }
 
     initializeView();

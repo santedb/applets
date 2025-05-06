@@ -36,7 +36,8 @@
         { name: 'edit', sref: 'santedb-admin.notifications.templates.edit', demand: '1.3.6.1.4.1.33349.3.1.5.9.2.0.5', className: 'btn-primary', icon: 'fa fa-pencil-alt', when: 'r.obsoletionTime == null' },
         { name: 'clone', action: 'clone', demand: '1.3.6.1.4.1.33349.3.1.5.9.2.0.5', className: 'btn-info', icon: 'fas fa-copy', when: 'r.obsoletionTime == null' },
         { name: 'delete', action: 'delete', demand: '1.3.6.1.4.1.33349.3.1.5.9.2.0.5', className: 'btn-danger', icon: 'fa fa-trash', when: 'r.obsoletionTime == null' },
-        { name: 'restore', action: 'restore', demand: '1.3.6.1.4.1.33349.3.1.5.9.2.0.8', className: 'btn-success', icon: 'fa fa-trash-restore', when: 'r.obsoletionTime' }, 
+        { name: 'restore', action: 'restore', demand: '1.3.6.1.4.1.33349.3.1.5.9.2.0.8', className: 'btn-success', icon: 'fa fa-trash-restore', when: 'r.obsoletionTime' },
+        { action: 'purge', name: 'purge', className: 'btn btn-danger', icon: 'fas fa-fire-flame-curved', demand: '1.3.6.1.4.1.33349.3.1.5.9.2.0.5', when: 'r.obsoletionTime' },  
     ]"
     properties="[ 'id','mnemonic', 'tags', 'status', 'creationTime', 'updatedTime' ]"
     render="{ creationTime: 'renderCreationTime', updatedTime: 'renderUpdatedTime', obsoletionTime: 'renderObsoletionTime' }"
