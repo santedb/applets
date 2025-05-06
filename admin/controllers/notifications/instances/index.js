@@ -2,7 +2,7 @@ angular.module('santedb').controller('NotificationInstanceIndexController', ["$s
     
     $scope.renderState = function(r) {
         if(r.stateModel) {
-            return r.stateModel.mnemonic;
+            return SanteDB.display.renderConcept(r.stateModel);
         }
         return r.state || "";
     }
