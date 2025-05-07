@@ -1,5 +1,14 @@
 angular.module('santedb').controller('NotificationsTemplateEditController', ["$scope", "$rootScope", "$state", "$stateParams", "$timeout", function ($scope, $rootScope, $state, $stateParams, $timeout) {
 
+    function initializeView() {
+        $scope.formData = {
+            parameters: [{}],
+            templates: [{}]
+        }
+        $scope.newParameter = {}
+        $scope.newTemplate = {}
+    }
+
     // Save notification template
     async function saveNotificationTemplate(createNotificationTemplateForm) {
         if (createNotificationTemplateForm.$invalid) return;
