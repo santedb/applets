@@ -972,13 +972,11 @@
         template: {e}</string>
     <string name="ui.admin.notifications.template.restore.success">Notification template was
         restored successfully</string>
-    <string name="ui.admin.notifications.template.purge.confirm">Are you sure you want to purge this
-        notification
+    <string name="ui.admin.notifications.template.purge.confirm">Are you sure you want to purge this notification 
         template? It cannot be restored after this action</string>
     <string name="ui.admin.notifications.template.purge.success">Notification template has been
         successfully purged</string>
-    <string name="ui.admin.notifications.template.purge.error">Could not purge notification
-        template: {e}</string>
+    <string name="ui.admin.notifications.template.purge.error">Could not purge notification template: {e}</string>
     <string name="ui.admin.notifications.instances.delete.confirm">Are you sure you want to delete
         this notification instance?</string>
     <string name="ui.admin.notifications.instances.delete.success">Notification instance was saved
@@ -995,24 +993,15 @@
         this notification instance?</string>
     <string name="ui.admin.notifications.instance.restore.error">Could not restore notification
         instance: {error}</string>
-    <string name="ui.admin.notifications.instance.enable.confirm">Are you sure you want to enable
-        notification instance {id}?</string>
-    <string name="ui.admin.notifications.instance.enable.success">Notification instance {id} is now
-        enabled</string>
-    <string name="ui.admin.notifications.instance.enable.error">Notification instance {id} could not
-        be enabled ({e})</string>
-    <string name="ui.admin.notifications.instance.disable.confirm">Are you sure you want to disable
-        notification instance {id}?</string>
-    <string name="ui.admin.notifications.instance.disable.success">Notification instance {id} is now
-        disabled</string>
-    <string name="ui.admin.notifications.instance.disable.error">Notification instance {id} could
-        not be disabled ({e})</string>
-    <string name="ui.admin.notifications.instance.purge.confirm">Are you sure you want to purge this
-        notification instance? It cannot be restored after this action</string>
-    <string name="ui.admin.notifications.instance.purge.success">Notification instance has been
-        successfully purged</string>
-    <string name="ui.admin.notifications.instance.purge.error">Could not purge notification
-        instance: {error}</string>
+    <string name="ui.admin.notifications.instance.enable.confirm">Are you sure you want to enable notification instance {id}?</string>
+    <string name="ui.admin.notifications.instance.enable.success">Notification instance {id} is now enabled</string>
+    <string name="ui.admin.notifications.instance.enable.error">Notification instance {id} could not be enabled ({e})</string>
+    <string name="ui.admin.notifications.instance.disable.confirm">Are you sure you want to disable notification instance {id}?</string>
+    <string name="ui.admin.notifications.instance.disable.success">Notification instance {id} is now disabled</string>
+    <string name="ui.admin.notifications.instance.disable.error">Notification instance {id} could not be disabled ({e})</string>
+    <string name="ui.admin.notifications.instance.purge.confirm">Are you sure you want to purge this notification instance? It cannot be restored after this action</string>
+    <string name="ui.admin.notifications.instance.purge.success">Notification instance has been successfully purged</string>
+    <string name="ui.admin.notifications.instance.purge.error">Could not purge notification instance: {error}</string>
 
     <!-- scheduled notification template form -->
     <string name="ui.admin.notifications.templates.addParameter">Add new parameter</string>
