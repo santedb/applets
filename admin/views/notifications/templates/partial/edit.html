@@ -73,21 +73,22 @@
                             <div class="card-body container-fluid">
                                 <!-- Parameters -->
                                 <ul class="list-unstyled mb-0">
-                                    <li ng-repeat="param in formData.parameters track by $index">
+                                    <li ng-repeat="param in notificationTemplate.parameters track by $index">
                                         <div class="form-group row">
                                             <label class="col-sm-12 col-md-3">
-                                                <input type="text" maxlength="64" ng-model="param.Name"
-                                                    name="notificationTemplateParameterName" class="form-control"
+                                                <input type="text" maxlength="64" ng-model="param.name"
+                                                    name="parameters[$index].name" class="form-control"
                                                     placeholder="{{'ui.admin.notifications.templates.parameterName' | i18n}}" />
                                             </label>
                                             <div class="col-sm-11 col-md-8">
                                                 <input autocomplete="__away" type="text" maxlength="128"
-                                                    ng-model="param.Description"
-                                                    name="notificationTemplateParameterDescription" class="form-control"
+                                                    ng-model="param.description" name="parameters[$index].description"
+                                                    class="form-control"
                                                     placeholder="{{ 'ui.admin.notifications.templates.parameterDescription' | i18n }}" />
                                             </div>
                                             <div class="col-sm-1 col-md-1" ng-if="$index!==0">
-                                                <button type="button" ng-click="formData.parameters.splice($index, 1)"
+                                                <button type="button"
+                                                    ng-click="notificationTemplate.parameters.splice($index, 1)"
                                                     class="btn btn-danger mt-1"><i
                                                         class="fas fa-fw fa-times-circle"></i></button>
                                             </div>
@@ -96,7 +97,7 @@
                                 </ul>
 
                                 <button type="button"
-                                    ng-click="formData.parameters.push(newParameter); newParameter = {}"
+                                    ng-click="notificationTemplate.parameters.push(newParameter); newParameter = {}"
                                     class="btn btn-success">
                                     <i class="fas fa-plus-cricle"></i> {{
                                     'ui.admin.notifications.templates.addParameter' |
@@ -108,7 +109,7 @@
                     </div>
                 </li>
 
-                <li ng-repeat="template in formData.templates track by $index">
+                <li ng-repeat="template in notificationTemplate.contents track by $index">
                     <div class="card">
                         <div class="card-header">
                             <h2 class="mb-0">
@@ -136,7 +137,7 @@
                                     </label>
                                     <div class="col-sm-12 col-md-9">
                                         <input autocomplete="__away" type="text" maxlength="64" ng-model="template.lang"
-                                            name="language{{$index}}" class="form-control" />
+                                            name="template[{{$index}}].language" class="form-control" />
                                     </div>
                                 </div>
                                 <div class="form-group row">
@@ -145,7 +146,8 @@
                                     </label>
                                     <div class="col-sm-12 col-md-9">
                                         <input autocomplete="__away" type="text" maxlength="64"
-                                            ng-model="template.subject" name="subject{{$index}}" class="form-control" />
+                                            ng-model="template.subject" name="template[{{$index}}].subject"
+                                            class="form-control" />
                                     </div>
                                 </div>
                                 <div class="form-group row">
@@ -153,13 +155,14 @@
                                         {{ 'ui.admin.notifications.templates.templateBody' | i18n }}
                                     </label>
                                     <div class="col-sm-12 col-md-9">
-                                        <input autocomplete="__away" type="text" ng-model="template.body"
-                                            name="body{{$index}}" class="form-control" />
+                                        <input autocomplete="__away" type="text" ng-model="template.text"
+                                            name="template[{{$index}}].text" class="form-control" />
                                     </div>
                                 </div>
                             </div>
                             <div class="form-group">
-                                <button type="button" ng-if="$index!==0" ng-click="formData.templates.splice($index, 1)"
+                                <button type="button" ng-if="$index!==0"
+                                    ng-click="notificationTemplate.templates.splice($index, 1)"
                                     class="btn btn-danger ml-3"><i class="fas fa-fw fa-times-circle"></i> {{
                                     'ui.admin.notifications.templates.removeTemplate' | i18n }}
                                 </button>
@@ -173,7 +176,7 @@
                         <div class="card-header">
                             <h2 class="mb-0">
                                 <button type="button" class="collapse-indicator btn btn-link p-0"
-                                    ng-click="formData.templates.push(newTemplate); newTemplate = {}">
+                                    ng-click="notificationTemplate.templates.push(newTemplate); newTemplate = {}">
                                     <i class="fa fa-plus-circle"></i> {{
                                     'ui.admin.notifications.templates.addTemplate' | i18n }}
                                 </button>
