@@ -1,5 +1,6 @@
 <div xmlns="http://www.w3.org/1999/xhtml">
-    <form class="form" ng-submit="saveNotificationTemplate(createNotificationTemplateForm)"
+    <form class="form"
+        ng-submit="saveNotificationTemplate(createNotificationTemplateForm, $event.originalEvent.submitter.id)"
         name="createNotificationTemplateForm" novalidate="novalidate" autocomplete="off">
         <div class="accordion mb-2" id="templateAccordion">
             <ul class="list-unstyled mb-0">
