@@ -1023,5 +1023,16 @@
     <string name="ui.admin.notifications.templates.templateVariation">Template Variation</string>
     <string name="ui.admin.notifications.templates.defaultTemplate">Default Template</string>
 
+    <!-- Notification Instance Form -->
+    <string name="ui.admin.notifications.instance.name">Name</string>
+    <string name="ui.admin.notifications.instance.entityType">Entity Type</string>
+    <string name="ui.admin.notifications.instance.description">Description</string>
+    <string name="ui.admin.notifications.instance.template">Template</string>
+    <string name="ui.admin.notifications.instance.newTemplate">New Template</string>
+    <string name="ui.admin.notifications.instance.parameters">Parameters</string>
+    <string name="ui.admin.notifications.instance.filter">Filter</string>
+    <string name="ui.admin.notifications.instance.trigger">Trigger</string>
+    <string name="ui.admin.notifications.instance.target">Target</string>
+    <string name="ui.admin.notifications.instance.test">Test</string>
 
 </resources>
