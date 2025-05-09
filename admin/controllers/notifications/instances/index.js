@@ -29,6 +29,12 @@ angular.module('santedb').controller('NotificationInstanceIndexController', ["$s
         return "";
     }
 
+    $scope.renderLastSentAt = function(r) {
+        if (r.lastSentAt != null && new Date(r.lastSentAt).getFullYear() != 1)
+            return SanteDB.display.renderDate(r.lastSentAt);
+        return "";
+    }
+
     $scope.enable = async function(id) {
         if (confirm(SanteDB.locale.getString("ui.admin.notifications.instance.enable.confirm", {id: id}))) {
             try {
