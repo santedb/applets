@@ -1002,6 +1002,9 @@
     <string name="ui.admin.notifications.instance.purge.confirm">Are you sure you want to purge this notification instance? It cannot be restored after this action</string>
     <string name="ui.admin.notifications.instance.purge.success">Notification instance has been successfully purged</string>
     <string name="ui.admin.notifications.instance.purge.error">Could not purge notification instance: {error}</string>
+    <string name="ui.admin.notifications.instance.modal.lastRun">Last Run</string>
+    <string name="ui.admin.notifications.instance.modal.successful">Successful</string>
+    <string name="ui.admin.notifications.instance.modal.error">Could not retrieve last run data: {error}</string>
 
     <!-- scheduled notification template form -->
     <string name="ui.admin.notifications.templates.addParameter">Add new parameter</string>

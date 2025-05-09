@@ -311,6 +311,8 @@
       <string name="ui.action.undo">Undo</string>
       <string name="ui.action.recompute">Re-Compute</string>
       <string name="ui.action.export.confirm">You are about to export potentially sensitive data from the CDR in XML format. Extra audits will be generated and your actions may be reviewed by an administrator. Do you want to continue?</string>
+      <string name="ui.action.lastRun">Last Run</string>
+
       <!-- Data Tables -->
 
       <string name="ui.common.results">Showing {start} to {end} of {total} results</string>

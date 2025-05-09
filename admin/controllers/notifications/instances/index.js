@@ -1,5 +1,12 @@
-angular.module('santedb').controller('NotificationInstanceIndexController', ["$scope", "$rootScope", "$state", "$templateCache", function ($scope, $rootScope, $state, $templateCache) {
+angular.module('santedb').controller('NotificationInstanceIndexController', ["$scope", "$rootScope", "$state", "$templateCache", "$timeout", function ($scope, $rootScope, $state, $templateCache, $timeout) {
     
+    async function initializeView() {
+        $scope.totalSentCount;
+        $scope.succeededSentCount;
+    }
+
+    initializeView();
+
     $scope.renderState = function(r) {
         if(r.stateModel) {
             return SanteDB.display.renderConcept(r.stateModel);
@@ -134,4 +141,18 @@ angular.module('santedb').controller('NotificationInstanceIndexController', ["$s
         return r;
     }
 
+    $scope.handleLastRun = async function(r) {
+        try {
+            const sentInstances = await SanteDB.resources.notificationInstance.findAsync({"lastSentAt": "!null"}, "full", true);
+            $timeout(() => {
+                $scope.totalSentCount = sentInstances.resource.length;
+                $scope.succeededSentCount = sentInstances.resource.filter(i => i.state == "2726bc79-a55a-4fea-be2c-627265872db5").length;
+                $("#lastRunModal").modal("show");
+            });
+            
+        }
+        catch(e) {
+            toastr.error(SanteDB.locale.getString("ui.admin.notifications.instance.modal.error", { error: e.message }));
+        }  
+    }
 }]);
