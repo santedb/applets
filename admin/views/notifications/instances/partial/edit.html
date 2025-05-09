@@ -58,8 +58,8 @@
                     {{'ui.admin.notifications.instance.template' | i18n}}
                 </label>
                 <div class="col-sm-12 col-md-9">
-                    <entity-search type="'NotificationTemplate'" ng-model="notificationInstance.template"
-                    search-field="'name'"  filter="{ 'obsoletionTime' : 'null', '_upstream': true }" name="template">
+                    <entity-search type="'NotificationTemplate'" ng-model="notificationInstance.notificationTemplate"
+                    search-field="'name'"  filter="{ 'obsoletionTime' : 'null', '_upstream': true }" name="template" key="'id'">
                     </entity-search>
                 </div>
             </div>
