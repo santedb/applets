@@ -947,8 +947,9 @@
     <string name="ui.admin.notifications.templates.title">Notification Templates</string>
     <string name="ui.admin.notifications.templates.count">Notification Templates Management</string>
     <string name="ui.admin.notifications.template.create">Create a Template</string>
+    <string name="ui.admin.notifications.templates.templateTags">Tags</string>
     <string name="ui.admin.notifications.instances.title">Notification Instances</string>
-    <string name="ui.admin.notifications.instances.count">Notifications Management</string>
+    <string name="ui.admin.notifications.instances.count">Notification Instances Management</string>
     <string name="ui.admin.notifications.instances.create">Create a Notification</string>
     <string name="ui.admin.notifications.template.id">Id</string>
     <string name="ui.admin.notifications.template.mnemonic">Mnemonic</string>

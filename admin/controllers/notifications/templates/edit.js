@@ -1,10 +1,12 @@
+/// <reference path="../../../../core/js/santedb.js"/>
+
 angular.module('santedb').controller('NotificationsTemplateEditController', ["$scope", "$rootScope", "$state", "$stateParams", "$timeout", function ($scope, $rootScope, $state, $stateParams, $timeout) {
 
     async function initializeView(id) {
-        if (id !== undefined) {
+        if (id) {
             try {
                 var notificationTemplate = await Promise.all([
-                    await SanteDB.resources.notificationTemplate.getAsync(id, null, null, true),
+                    await SanteDB.resources.NotificationTemplate.getAsync(id, null, null, true),
                 ])
                 console.log(notificationTemplate[0])
                 $scope.notificationTemplate = notificationTemplate[0]
@@ -14,16 +16,13 @@ angular.module('santedb').controller('NotificationsTemplateEditController', ["$s
             }
         }
         else {
-            $scope.notificationTemplate = new notificationTemplate({
+            $scope.notificationTemplate = new NotificationTemplate({
                 id: SanteDB.application.newGuid(),
+                tags: [],
                 parameters: [{}],
                 contents: [{}]
             })
         }
-
-        $scope.newParameter = {}
-        $scope.newTemplate = {}
-
     }
 
     // Save notification template
@@ -67,6 +66,8 @@ angular.module('santedb').controller('NotificationsTemplateEditController', ["$s
     }
 
     $scope.saveNotificationTemplate = saveNotificationTemplate
+    $scope.newParameter = {}
+    $scope.newTemplate = {}
 
     if ($stateParams.id) {
         $scope.isLoading = true;

@@ -27,8 +27,6 @@
                                         <input autocomplete="__away" type="text" maxlength="64"
                                             ng-model="notificationTemplate.name" name="name" required="required"
                                             class="form-control" />
-                                    </div>
-                                    <div class="col-sm-12 col-md-10 offset-md-2">
                                         <div ng-show="createNotificationTemplateForm.name.$error['required'] &amp;&amp; createNotificationTemplateForm.$submitted"
                                             class="text-danger">
                                             <i class="fa fa-exclamation-triangle"></i> {{ 'ui.error.required' | i18n }}
@@ -45,9 +43,22 @@
                                         <input autocomplete="__away" type="text" maxlength="64"
                                             ng-model="notificationTemplate.mnemonic" name="mnemonic" required="required"
                                             class="form-control" />
-                                    </div>
-                                    <div class="col-sm-12 col-md-10 offset-md-2">
                                         <div ng-show="createNotificationTemplateForm.mnemonic.$error['required'] &amp;&amp; createNotificationTemplateForm.$submitted"
+                                            class="text-danger">
+                                            <i class="fa fa-exclamation-triangle"></i> {{ 'ui.error.required' | i18n }}
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- tags -->
+                                <div class="form-group row">
+                                    <label class="col-sm-12 col-md-3 control-label">
+                                        {{'ui.admin.notifications.templates.templateTags' | i18n}}
+                                    </label>
+                                    <div class="col-xs-12 col-md-9">
+                                        <tag-input name="tags" ng-model="notificationTemplate.tags" required="required"
+                                            class="form-control" />
+                                        <div ng-show="createNotificationTemplateForm.tags.$error['required'] &amp;&amp; createNotificationTemplateForm.$submitted"
                                             class="text-danger">
                                             <i class="fa fa-exclamation-triangle"></i> {{ 'ui.error.required' | i18n }}
                                         </div>
@@ -158,6 +169,8 @@
                                     <div class="col-sm-12 col-md-9">
                                         <input autocomplete="__away" type="text" ng-model="template.text"
                                             name="template[{{$index}}].text" class="form-control" />
+                                        <div id="cdssEditor" style="max-height:calc(100vh - 300px)">
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -171,13 +184,12 @@
                         </div>
                     </div>
                 </li>
-
                 <li>
                     <div class="card">
                         <div class="card-header">
                             <h2 class="mb-0">
                                 <button type="button" class="collapse-indicator btn btn-link p-0"
-                                    ng-click="notificationTemplate.templates.push(newTemplate); newTemplate = {}">
+                                    ng-click="notificationTemplate.contents.push(newTemplate); newTemplate = {}">
                                     <i class="fa fa-plus-circle"></i> {{
                                     'ui.admin.notifications.templates.addTemplate' | i18n }}
                                 </button>
@@ -197,4 +209,5 @@
             </button>
         </div>
     </form>
+    <div>{{notificationTemplate}}</div>
 </div>
