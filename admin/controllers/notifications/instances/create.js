@@ -3,8 +3,9 @@ angular.module('santedb').controller('NewNotificationController', ["$scope", "$r
     async function initializeView() {
         $scope.notificationInstance = new notificationInstance({
             id: SanteDB.application.newGuid(),
-            parameters: [{}],
-        }) 
+            notificationTemplate: null,
+            parameters: [],
+        })
     }
     
     $scope.saveNotificationInstance = async function(notificationInstanceForm, event) {
@@ -33,5 +34,16 @@ angular.module('santedb').controller('NewNotificationController', ["$scope", "$r
         }
     }
 
+    $scope.goToNewTemplate = async function() {
+        $state.go("santedb-admin.notifications.templates.create")
+    }
+
     initializeView()
+
+    $scope.$watch("notificationInstance.notificationTemplate", async function(n, o) {
+        if(n != o) {
+            const template = await SanteDB.resources.notificationTemplate.getAsync($scope.notificationInstance.notificationTemplate, null, null, true);
+            $scope.notificationInstance.parameters = template.parameters
+        }
+    })
 }]);
