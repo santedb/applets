@@ -1,14 +1,10 @@
-/// <reference path="../../../../core/js/santedb.js"/>
-
 angular.module('santedb').controller('NotificationsTemplateEditController', ["$scope", "$rootScope", "$state", "$stateParams", "$timeout", function ($scope, $rootScope, $state, $stateParams, $timeout) {
 
     async function initializeView(id) {
         if (id) {
             try {
-                var notificationTemplate = await Promise.all([
-                    await SanteDB.resources.NotificationTemplate.getAsync(id, null, null, true),
-                ])
-                console.log(notificationTemplate[0])
+                var notificationTemplate = await SanteDB.resources.NotificationTemplate.getAsync(id, null, null, true)
+
                 $scope.notificationTemplate = notificationTemplate[0]
             }
             catch (e) {
@@ -16,12 +12,13 @@ angular.module('santedb').controller('NotificationsTemplateEditController', ["$s
             }
         }
         else {
-            $scope.notificationTemplate = new NotificationTemplate({
+            $scope.notificationTemplate = {
+                $type: "NotificationTemplate",
                 id: SanteDB.application.newGuid(),
                 tags: [],
                 parameters: [{}],
                 contents: [{}]
-            })
+            }
         }
     }
 
@@ -36,6 +33,10 @@ angular.module('santedb').controller('NotificationsTemplateEditController', ["$s
             $scope.notificationTemplate.status = "0AC6638B-4E72-466A-A20F-1ADB3B8F2139"
         }
 
+        // convert list of tags into a single string
+        var tagList = $scope.notificationTemplate.tags.join(',')
+        $scope.notificationTemplate.tags = tagList
+
         try {
             SanteDB.display.buttonWait("#publishTemplateButton", true);
             SanteDB.display.buttonWait("#saveDraftTemplateButton", true);
@@ -49,12 +50,7 @@ angular.module('santedb').controller('NotificationsTemplateEditController', ["$s
             }
             toastr.success(SanteDB.locale.getString("ui.admin.notificationTemplate.save.success"));
 
-            if (!$stateParams.id) {
-                $state.go("santedb-admin.notifications.templates.index");
-            }
-            else {
-                $timeout(() => $scope.notificationTemplate = notificationTemplate);
-            }
+            $state.go("santedb-admin.notifications.templates.index");
         }
         catch (e) {
             $rootScope.errorHandler(e);
