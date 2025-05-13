@@ -2,21 +2,25 @@ angular.module('santedb').controller('NotificationsInstanceEditController', ["$s
     async function initializeView(id) {
         if (id !== undefined) {
             try {
-                const notificationInstance = await SanteDB.resources.notificationInstance.getAsync(id, null, null, true);
-                $scope.notificationInstance = notificationInstance;
+                const notificationInstance = await SanteDB.resources.notificationInstance.getAsync(id, null, null, true, null);
+                
+                setTimeout(() => {
+                    $scope.notificationInstance = notificationInstance
+                })
             } catch (e) {
                 $rootScope.errorHandler(e);
             }
         } else {
-            $scope.notificationInstance = new notificationInstance({
-                id: SanteDB.application.newGuid(),
-                parameters: [{}],
-            }) 
+            $scope.notificationInstance = {
+                $type: 'NotificationInstance',
+                state: 'AC843892-F7E0-47B6-8F84-11C14E7E96C6',
+                template: null,
+                parameters: [],
+            }
         }
     }
     
     $scope.saveNotificationInstance = async function(notificationInstanceForm, event) {
-        console.log($scope.notificationInstance);
         if (notificationInstanceForm.$invalid) return;
 
 
@@ -24,13 +28,11 @@ angular.module('santedb').controller('NotificationsInstanceEditController', ["$s
             SanteDB.display.buttonWait("#saveNotificationInstanceButton", true);
             SanteDB.display.buttonWait("#cancelNotificationInstanceButton", true);
 
-            var notificationInstance = null;
-
-            notificationInstance = await SanteDB.resources.notificationInstance.updateAsync($stateParams.id, $scope.notificationInstance);
+            await SanteDB.resources.notificationInstance.updateAsync($stateParams.id, $scope.notificationInstance, true);
             
             toastr.success(SanteDB.locale.getString("ui.admin.notification.instance.save.success"));
             
-            $state.go("santedb-admin.notifications.Instances.index");
+            $state.go("santedb-admin.notifications.instances.index");
         }
         catch (e) {
             $rootScope.errorHandler(e);
@@ -46,4 +48,14 @@ angular.module('santedb').controller('NotificationsInstanceEditController', ["$s
     }
 
     initializeView($stateParams.id)
+
+    $scope.$watch("notificationInstance.template", async function(n, o) {
+        if(n != o && n) {
+            const template = await SanteDB.resources.notificationTemplate.getAsync($scope.notificationInstance.template, null, null, true)
+
+            $timeout(() => {
+                $scope.notificationInstance.parameters = template.parameters           
+            })
+        }
+    })
 }]);
